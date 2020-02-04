@@ -4,10 +4,10 @@ function B = remove_negative_weights(A, rule)
 
     switch (rule)
         case '0'
-            B = max(A); %  change negative values to zeros
+            B = max(A,0); %  change negative values to zeros
 
         case 'zero'
-            B = max(A); %  change negative values to zeros
+            B = max(A,0); %  change negative values to zeros
             
         case 'null'
             A(isnan(A))=0 ; %  change NaN values to zeros
