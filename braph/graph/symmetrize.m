@@ -1,14 +1,14 @@
 function B = symmetrize(A, varargin)
 
-    % 'Rule' (input from varargin)
-    rule = 'max';
+    % 'SymmetrizeRule' (input from varargin)
+    symmetrize_rule = 'max';
     for n = 1:1:length(varargin)-1
         if strcmpi(varargin{n}, 'rule')
-            rule = varargin{n+1};
+            symmetrize_rule = varargin{n+1};
         end
     end
 
-    switch lower(rule)
+    switch lower(symmetrize_rule)
         case {'sum', 'add'}  % sum rule
             B = A + transpose(A);
         case {'av', 'average'}  % average rule

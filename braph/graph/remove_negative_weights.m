@@ -1,20 +1,18 @@
-function B = remove_negative_weights(A, rule)
+function B = remove_negative_weights(A, varargin)
 
-%the rule is going to get pass as a string? int?
+    % 'RemoveNegativeWeightsRule' (input from varargin)
+    remove_negative_weights_rule = 'zero';
+    for n = 1:1:length(varargin)-1
+        if strcmpi(varargin{n}, 'rule')
+            remove_negative_weights_rule = varargin{n+1};
+        end
+    end
 
-    switch (rule)
-        case '0'
-            B = max(A,0); %  change negative values to zeros
-
-        case 'zero'
-            B = max(A,0); %  change negative values to zeros
-            
-        case 'null'
-            A(isnan(A))=0 ; %  change NaN values to zeros
-            B = A;
-            
-        otherwise
-            B = abs(A); %  want the absolute value of every element in the matrix A
+    switch lower(remove_negative_weights_rule)
+        case {'abs', 'absolute', 'modulus'}  % take-absolute-value rule
+            B = abs(A);        
+        otherwise % {'zero', '0', 'null'}  % set-to-zero rule
+            B = max(A, 0); 
     end
 
 end

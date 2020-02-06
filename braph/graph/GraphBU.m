@@ -2,8 +2,9 @@ classdef GraphBU < Graph
     methods
         function g = GraphBU(A, varargin)
 
-            A = removediagonal(A); % removes self-connections by removing diagonal from adjacency matrix
+            A = removediagonal(A);  % removes self-connections by removing diagonal from adjacency matrix
             A = remove_negative_weights(A, varargin{:});  % removes negative weights
+            A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
 
             g = g@Graph(A, varargin{:});
         end
