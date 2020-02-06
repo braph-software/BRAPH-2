@@ -1,27 +1,13 @@
-classdef GraphBU < Graph
+classdef GraphBU < GraphBD
     methods
         function g = GraphBU(A, varargin)
 
-            A = remove_diagonal(A);  % removes self-connections by removing diagonal from adjacency matrix
-            A = remove_negative_weights(A, varargin{:});  % removes negative weights
             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
 
-            g = g@Graph(A, varargin{:});
+            g = g@GraphBD(A, varargin{:});
         end
     end
     methods (Static)
-        function bool = is_selfconnected()
-            bool = false;
-        end        
-        function bool = is_nonnegative()
-            bool = true;
-        end        
-        function bool = is_weighted()
-            bool = false;
-        end
-        function bool = is_binary()
-            bool = true;
-        end
         function bool = is_directed()
             bool = false;
         end
