@@ -11,12 +11,8 @@ classdef Degree < Measure
         end
     end
     methods
-        function  val = getValue(obj)
-             if isempty(obj.deg)
-                obj.calculate();
-            end
-            
-           val =  obj.deg;
+        function  val = getValue()
+            val = d.deg;
         end
     end
     methods(Access = protected)
@@ -33,9 +29,9 @@ classdef Degree < Measure
                 int_deg = obj.g.indeg + obj.g.outdeg;  % degree = indegree + outdegree
             end
             
-            obj.deg = int_deg / 2; %  As braph 1
-            obj.indeg = int_indeg;
-            obj.outdeg = int_outdeg;
+            d.deg = int_indeg / 2; %  As braph 1
+            d.indeg = int_indeg;
+            d.outdeg = int_outdeg;
         end
     end
     methods (Static)

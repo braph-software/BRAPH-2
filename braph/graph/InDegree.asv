@@ -20,7 +20,7 @@ classdef InDegree < Measure
         end
     end
     methods(Access = protected)
-        function calculate(g)
+        function calculate(obj.g)
              if  isempty(obj.indeg) 
                %  matrix is already created with this properties check with
                %  giovanni

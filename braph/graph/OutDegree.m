@@ -6,22 +6,32 @@ classdef OutDegree < Measure
 
     end
     methods
-        function outd = Degree(g,varargin)
-           outd = m@Measure(g,varargin);
+        function outd = OutDegree(g,varargin)
+           outd = outd@Measure(g,varargin);
         end
     end
+     methods
+        function  val = getValue(obj)
+             if isempty(obj.deg)
+                obj.calculate();
+            end
+            
+           val =  obj.deg;
+        end
+    end
+    
     methods(Access = protected)
-        function calculate()
-             if isempty(outd.g.deg) || isempty(outd.g.indeg) || isempty(outd.g.outdeg)
+        function calculate(g)
+             if isempty(obj.outdeg)
                %  matrix is already created with this properties check with
                %  giovanni
                %  A = double(d.g.A~=0);  % binarizes connection matrix
                %  A = Graph.removediagonal(A); 
                 
-               outd.g.outdeg = sum(outd.A,2)';  % outdegree = row sum of A           
+               int_outdeg = sum(obj.A,2)';  % outdegree = row sum of A           
              end           
           
-            outd.indeg = outd.g.indeg;
+            obj.outd = int_outdeg;
            
         end
     end
