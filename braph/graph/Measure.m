@@ -11,16 +11,16 @@ classdef Measure < handle & matlab.mixin.Copyable
         end
     end
     methods
-        function getGraph(m)
-            return m.g;
+        function g = getGraph(m)
+            g = m.g;
         end
-        function getValue(m)
+        function value = getValue(m)
             
             if isempty(m.value)
                 m.calculate();
             end
             
-           return m.value;
+            value = m.value;
         end
     end
     methods (Abstract, Access=protected)
