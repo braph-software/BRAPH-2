@@ -7,6 +7,11 @@ classdef Graph < handle & matlab.mixin.Copyable
             g.A = A;
         end
     end
+    methods
+        function A = getA(g)
+            A = g.A;
+        end
+    end
     methods (Static, Abstract)
         is_weighted()  % whether is weighted graph
         is_binary()  % whether is binary graph
