@@ -41,7 +41,7 @@ classdef Measure < handle & matlab.mixin.Copyable
     end
     methods (Static, Abstract)
         is_global()  % whether is global measure
-        is_nodal()  % whether is nodal measure
+        %is_nodal()  % whether is nodal measure
         is_compatible_graph(g)  % whether measure works for a graph
         compatible_graph_list()  % list of graphs with which measure works
     end
