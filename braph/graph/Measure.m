@@ -9,6 +9,9 @@ classdef Measure < handle & matlab.mixin.Copyable
         function m = Measure(g, varargin)
             m.g = g;
         end
+        function setValue(m, value)
+            m.value = value;
+        end
     end
     methods
         function g = getGraph(m)
