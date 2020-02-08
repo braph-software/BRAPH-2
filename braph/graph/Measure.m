@@ -34,14 +34,14 @@ classdef Measure < handle & matlab.mixin.Copyable
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure
     end
-    methods (Static)
-        function bool = is_nodal()
-            bool = ~Measure.is_global();
-        end
-    end
+%     methods (Static) % implementation on hold
+%         function bool = is_nodal()
+%             bool = ~Measure.is_global();
+%         end
+%     end
     methods (Static, Abstract)
         is_global()  % whether is global measure
-        %is_nodal()  % whether is nodal measure
+        is_nodal()  % whether is nodal measure
         is_compatible_graph(g)  % whether measure works for a graph
         compatible_graph_list()  % list of graphs with which measure works
     end

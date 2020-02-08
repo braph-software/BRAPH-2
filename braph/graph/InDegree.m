@@ -16,6 +16,9 @@ classdef InDegree < Measure
         function bool = is_global()
             bool = false;
         end
+        function bool = is_nodal()
+            bool = true;
+        end
         function bool = is_compatible_graph(g)
             bool = g.is_directed();
         end
