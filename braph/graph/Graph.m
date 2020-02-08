@@ -1,25 +1,28 @@
 classdef Graph < handle & matlab.mixin.Copyable
     properties (GetAccess=public, SetAccess=protected)
         A   % adjacency matrix
-    end
-    properties (Access=protected)
         mdict  % dictionary with calculated measures
+        settings  % structure with the constructor varagin
     end
     methods (Access=protected)
         function g = Graph(A, varargin)
             g.A = A;
             g.mdict = containers.Map;
+            g.settings = varargin;
         end
     end
     methods
-        function A = getA(g)
-            A = g.A;
-        end
         function graph_code = getGraphCode(g)
             % measure code (same as the measure object name)
                         
             graph_code = class(g);
         end        
+        function A = getA(g)
+            A = g.A;
+        end
+        function settings = getSettings(g)
+            settings = g.settings;
+        end
         function m = getMeasure(g, measure_code, varargin)
             
             if isKey(g.mdict, measure_code)

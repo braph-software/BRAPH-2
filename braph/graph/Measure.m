@@ -1,6 +1,7 @@
 classdef Measure < handle & matlab.mixin.Copyable
     properties (GetAccess=public, SetAccess=protected)
         g  % graph
+        settings  % structure with the constructor varagin
         value  % graph measure value
                % scalar for global measures
                % column vector for nodal measures
@@ -13,14 +14,23 @@ classdef Measure < handle & matlab.mixin.Copyable
             end
             
             m.g = g;
+            m.settings = varargin;
         end
         function setValue(m, value)
             m.value = value;
         end
     end
     methods
+        function measure_code = getMeasureCode(m)
+            % measure code (same as the measure object name)
+            
+            measure_code = class(m);
+        end
         function g = getGraph(m)
             g = m.g;
+        end
+        function settings = getSettings(m)
+            settings = m.settings;
         end
         function value = getValue(m)
             
@@ -29,11 +39,6 @@ classdef Measure < handle & matlab.mixin.Copyable
             end
             
             value = m.value;
-        end
-        function measure_code = getMeasureCode(m)
-            % measure code (same as the measure object name)
-            
-            measure_code = class(m);
         end
     end
     methods (Abstract, Access=protected)
