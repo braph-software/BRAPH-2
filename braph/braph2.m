@@ -1,4 +1,3 @@
-clc
 format long
 
 dir = fileparts(which('braph2'));

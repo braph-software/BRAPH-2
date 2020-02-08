@@ -23,12 +23,12 @@ classdef Graph < handle & matlab.mixin.Copyable
         function settings = getSettings(g)
             settings = g.settings;
         end
-        function m = getMeasure(g, measure_code, varargin)
+        function m = getMeasure(g, measure_code)
             
             if isKey(g.mdict, measure_code)
                 m = g.mdict(measure_code);
             else
-                m = Measure.getMeasure(measure_code, g, varargin{:});
+                m = Measure.getMeasure(measure_code, g, g.getSettings());
                 g.mdict(measure_code) = m;
             end 
         end
@@ -49,10 +49,14 @@ classdef Graph < handle & matlab.mixin.Copyable
             for i = 1:1:length(measure_list)
                 measure = measure_list{i};
                 
-                if are_compatible(measure, graph_code)
+                if Graph.is_compatible_with_measure(graph_code, measure)
                     list{end+1} = measure;
                 end
             end
+        end
+        function n = compatible_measure_number(g)
+            measure_list = Graph.compatible_measure_list(g);
+            n = numel(measure_list);            
         end
         function bool = is_compatible_with_measure(g, m)
             % whether measure and graph are compatible
