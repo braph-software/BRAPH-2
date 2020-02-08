@@ -13,6 +13,9 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
     methods (Static, Abstract)
+        getCode()  % graph code (same as the graph object name)
+        getName()  % graph name
+        getDescription()  % graph description
         is_weighted()  % whether is weighted graph
         is_binary()  % whether is binary graph
         is_directed()  % whether is directed graph

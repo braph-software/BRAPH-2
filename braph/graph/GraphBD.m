@@ -10,6 +10,20 @@ classdef GraphBD < Graph
         end
     end
     methods (Static)
+        function name = getCode()
+            name = mfilename('class');
+        end
+        function name = getName()
+            name = 'Binary Directed Graph';
+        end
+        function description = getDescription()
+            description = [ ...
+                'In a binary directed (BD) graph, ' ...
+                'the edges can be either 0 (absence of connection) ' ...
+                'or 1 (existence of connection), ' ...
+                'and they are directed.' ...
+                ];
+        end
         function bool = is_selfconnected()
             bool = false;
         end        
