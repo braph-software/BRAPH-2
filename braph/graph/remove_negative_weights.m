@@ -10,7 +10,7 @@ function B = remove_negative_weights(A, varargin)
 
     switch lower(remove_negative_weights_rule)
         case {'abs', 'absolute', 'modulus'}  % take-absolute-value rule
-            B = abs(A);        
+            B = abs(A);
         otherwise % {'zero', '0', 'null'}  % set-to-zero rule
             B = max(A, 0); 
     end
