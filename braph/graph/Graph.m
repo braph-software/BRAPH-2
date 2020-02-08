@@ -17,6 +17,28 @@ classdef Graph < handle & matlab.mixin.Copyable
             code = class(g);
         end        
     end
+    methods (Static)
+        function list = compatible_measure_list(g)
+            % list of measures which work with graph
+            
+            if isa(g, 'Graph')
+                graph_code = g.getGraphCode();
+            else % g should be a string with the graph code
+                graph_code = g;
+            end
+            
+            measure_list = subclasses('Measure');
+            
+            list = {};
+            for i = 1:1:length(measure_list)
+                measure = measure_list{i};
+                
+                if are_compatible(measure, graph_code)
+                    list{end+1} = measure;
+                end
+            end
+        end
+    end
     methods (Static, Abstract)
         getName()  % graph name
         getDescription()  % graph description
