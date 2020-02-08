@@ -35,6 +35,8 @@ classdef Measure < handle & matlab.mixin.Copyable
         calculate(m)  % calculates the value of the measure
     end
     methods (Static, Abstract)
+        getName()  % measure name
+        getDescription()  % measure description
         is_global()  % whether is global measure
         is_nodal()  % whether is nodal measure
         is_compatible_graph(g)  % whether measure works for a graph
