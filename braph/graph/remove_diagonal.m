@@ -1,11 +1,11 @@
 function B = remove_diagonal(A, value)
     % REMOVE_DIAGONAL removes the diagonal values of a matrix
     %
-    % B = REMOVE_DIAGONAL(A,VALUE) removes the diagonal
-    % values of a matrix A and sets them to VALUE.
-    %
     % B = REMOVE_DIAGONAL(A) removes the diagonal
     % values of a matrix A and sets them to 0.
+    %
+    % B = REMOVE_DIAGONAL(A, VALUE) removes the diagonal
+    % values of a matrix A and sets them to VALUE.
     %
     % See also SYMMETRIZE, REMOVE_NEGATIVE_WEIGHTS.
 
