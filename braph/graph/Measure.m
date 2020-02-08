@@ -9,7 +9,7 @@ classdef Measure < handle & matlab.mixin.Copyable
     methods (Access=protected)
         function m = Measure(g, varargin)
             
-            if ~are_compatible(m, g)
+            if ~Measure.is_compatible_with_graph(m, g)
                 error([class(g) ' is not compatible with ' class(m)])
             end
             
@@ -47,6 +47,9 @@ classdef Measure < handle & matlab.mixin.Copyable
     methods (Static)
         function m = getMeasure(measure_code, g, varargin)
             eval(['m = ' measure_code '(g, varargin{:});'])
+        end
+        function bool = is_compatible_with_graph(m, g)
+            bool = Graph.is_compatible_with_measure(g, m);
         end
     end
     methods (Static, Abstract)
