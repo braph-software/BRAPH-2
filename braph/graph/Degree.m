@@ -13,6 +13,9 @@ classdef Degree < Measure
         end
     end        
     methods (Static)
+        function name = getCode()
+            name = mfilename('class');
+        end
         function name = getName()
             name = 'Degree';
         end

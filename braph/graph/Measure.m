@@ -35,6 +35,7 @@ classdef Measure < handle & matlab.mixin.Copyable
         calculate(m)  % calculates the value of the measure
     end
     methods (Static, Abstract)
+        getCode()  % measure code (same as the measure object name)
         getName()  % measure name
         getDescription()  % measure description
         is_global()  % whether is global measure
