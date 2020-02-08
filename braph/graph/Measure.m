@@ -8,7 +8,7 @@ classdef Measure < handle & matlab.mixin.Copyable
     methods (Access=protected)
         function m = Measure(g, varargin)
             
-            if ~m.is_compatible_graph(g)
+            if ~are_compatible(m, g)
                 error([class(g) ' is not compatible with ' class(m)])
             end
             
@@ -30,17 +30,20 @@ classdef Measure < handle & matlab.mixin.Copyable
             
             value = m.value;
         end
+        function code = getMeasureCode(m)
+            % measure code (same as the measure object name)
+            
+            code = class(m);
+        end
     end
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure
     end
     methods (Static, Abstract)
-        getCode()  % measure code (same as the measure object name)
         getName()  % measure name
         getDescription()  % measure description
         is_global()  % whether is global measure
-        is_nodal()  % whether is nodal measure
-        is_compatible_graph(g)  % whether measure works for a graph
+        is_nodal()  % whether is global measure
         compatible_graph_list()  % list of graphs with which measure works
     end
 end

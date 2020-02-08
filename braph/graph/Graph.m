@@ -11,9 +11,13 @@ classdef Graph < handle & matlab.mixin.Copyable
         function A = getA(g)
             A = g.A;
         end
+        function code = getGraphCode(g)
+            % measure code (same as the measure object name)
+                        
+            code = class(g);
+        end        
     end
     methods (Static, Abstract)
-        getCode()  % graph code (same as the graph object name)
         getName()  % graph name
         getDescription()  % graph description
         is_weighted()  % whether is weighted graph

@@ -13,9 +13,6 @@ classdef Degree < Measure
         end
     end        
     methods (Static)
-        function name = getCode()
-            name = mfilename('class');
-        end
         function name = getName()
             name = 'Degree';
         end
@@ -27,13 +24,11 @@ classdef Degree < Measure
                 ];
         end
         function bool = is_global()
+                        
             bool = false;
         end
         function bool = is_nodal()
             bool = true;
-        end
-        function bool = is_compatible_graph(g)
-            bool = g.is_undirected();
         end
         function list = compatible_graph_list()  
             list = { ...

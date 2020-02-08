@@ -9,9 +9,6 @@ classdef GraphWD < Graph
         end
     end
     methods (Static)
-        function name = getCode()
-            name = mfilename('class');
-        end
         function name = getName()
             name = 'Weighted Directed Graph';
         end
