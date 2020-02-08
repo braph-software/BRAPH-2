@@ -30,14 +30,19 @@ classdef Measure < handle & matlab.mixin.Copyable
             
             value = m.value;
         end
-        function code = getMeasureCode(m)
+        function measure_code = getMeasureCode(m)
             % measure code (same as the measure object name)
             
-            code = class(m);
+            measure_code = class(m);
         end
     end
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure
+    end
+    methods (Static)
+        function m = getMeasure(measure_code, g, varargin)
+            eval(['m = ' measure_code '(g, varargin{:});'])
+        end
     end
     methods (Static, Abstract)
         getName()  % measure name
