@@ -8,6 +8,7 @@ classdef Degree < Measure
         function calculate(m)
             g = m.getGraph();
             A = g.getA();
+            A = binarize(A);
             degree = sum(A, 2);
             m.setValue(degree);
         end
