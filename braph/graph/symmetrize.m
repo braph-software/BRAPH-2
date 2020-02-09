@@ -3,7 +3,7 @@ function B = symmetrize(A, varargin)
     % 'SymmetrizeRule' (input from varargin)
     symmetrize_rule = 'max';
     for n = 1:1:length(varargin)-1
-        if strcmpi(varargin{n}, 'rule')
+        if strcmpi(varargin{n}, 'SymmetrizeRule')
             symmetrize_rule = varargin{n+1};
         end
     end
