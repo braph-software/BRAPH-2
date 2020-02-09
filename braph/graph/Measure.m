@@ -1,5 +1,5 @@
 classdef Measure < handle & matlab.mixin.Copyable
-    properties (GetAccess=public, SetAccess=protected)
+    properties % (GetAccess=public, SetAccess=protected)
         g  % graph
         settings  % structure with the constructor varagin
         value  % graph measure value
@@ -12,9 +12,26 @@ classdef Measure < handle & matlab.mixin.Copyable
             if ~Measure.is_compatible_with_graph(m, g)
                 error([class(g) ' is not compatible with ' class(m)])
             end
+                        
+            % 'Value' (input from varargin)
+            value = [];
+            for n = 1:1:length(varargin)-1
+                if strcmpi(varargin{n}, 'Value')
+                    value = varargin{n+1};
+                end
+            end
             
+            % 'Settings' (input from varargin)
+            settings = varargin;
+            for n = 1:1:length(varargin)-1
+                if strcmpi(varargin{n}, 'Value')
+                    settings = varargin{n+1};
+                end
+            end
+
             m.g = g;
-            m.settings = varargin;
+            m.value = value;
+            m.settings = settings;
         end
         function setValue(m, value)
             m.value = value;
@@ -32,9 +49,12 @@ classdef Measure < handle & matlab.mixin.Copyable
         function settings = getSettings(m)
             settings = m.settings;
         end
+        function bool = is_value_calculated(m)
+            bool = ~isempty(m.value);
+        end
         function value = getValue(m)
             
-            if isempty(m.value)
+            if ~is_value_calculated(m)
                 m.calculate();
             end
             
@@ -45,8 +65,8 @@ classdef Measure < handle & matlab.mixin.Copyable
         calculate(m)  % calculates the value of the measure
     end
     methods (Static)
-        function m = getMeasure(measure_code, g, varargin)
-            eval(['m = ' measure_code '(g, varargin{:});'])
+        function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
+            m = eval([measure_code '(g, varargin{:})']);
         end
         function bool = is_compatible_with_graph(m, g)
             bool = Graph.is_compatible_with_measure(g, m);
