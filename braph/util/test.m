@@ -1,8 +1,8 @@
-close all
-clear all
-clc
+% Test BRAPH by running all unit tests
 
-braph2
+close all
+clear all 
+clc
 
 dir = fileparts(which('braph2'));
 
