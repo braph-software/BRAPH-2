@@ -4,7 +4,7 @@ function B = remove_negative_weights(A, varargin)
     % B = REMOVE_NEGATIVE_WEIGHTS(A) removes the negative weights of a
     %   matrix A using default RULE 'zero'.
     %
-    % B = REMOVE_NEGATIVE_WEIGHTS(A, RULE) removes the negative
+    % B = REMOVE_NEGATIVE_WEIGHTS(A, 'RemoveNegativeWeightsRule, RULE) removes the negative
     %   weights of a matrix A using the RULE specified.
     %   Admissible RULE options are:
     %       RULE    -   'zero' (default) | 'abs' | 'absolute' | 'modulus' 
@@ -31,7 +31,7 @@ function B = remove_negative_weights(A, varargin)
     switch lower(remove_negative_weights_rule)
         case {'abs', 'absolute', 'modulus'}  %  take-absolute-value rule
             B = abs(A);        
-        otherwise %  {'zero', '0', 'null'}  set-to-zero rule
+        otherwise %  {'zero', '0', 'null'} % set-to-zero rule
             B = max(A, 0); 
     end
 
