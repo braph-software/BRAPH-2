@@ -8,8 +8,8 @@ classdef OutDegree < Measure
         function calculate(m)
             g = m.getGraph();
             A = g.getA();
-            degree = sum(A, 2); % row sum of A
-            m.setValue(degree);
+            out_degree = sum(A, 2); % row sum of A
+            m.setValue(out_degree);
         end
     end
     methods (Static)
