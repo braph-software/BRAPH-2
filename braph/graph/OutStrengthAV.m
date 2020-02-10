@@ -9,9 +9,9 @@ classdef OutStrengthAV < Measure
             g = m.getGraph();          
             % get out strength measure 
             % of the graph.
-            out_strength = g.getMeasure(g, 'OutStrength');
+            out_strength = g.getMeasure('OutStrength');
 
-            av_out_strength = mean(out_strength);
+            av_out_strength = mean(out_strength.value, 'all');
             m.setValue(av_out_strength);
         end
     end

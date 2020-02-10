@@ -9,9 +9,9 @@ classdef InStrengthAV < Measure
             g = m.getGraph();          
             % get in strength measure 
             % of the graph.
-            in_strength = g.getMeasure(g, 'InStrength');
+            in_strength = g.getMeasure('InStrength');
 
-            av_in_strength = mean(in_strength);
+            av_in_strength = mean(in_strength.value, 'all');
             m.setValue(av_in_strength);
         end
     end
