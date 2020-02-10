@@ -1,18 +1,15 @@
-classdef OutStrengthAV < Measure
+classdef OutStrengthAV < OutStrength
     methods
         function m = OutStrengthAV(g, varargin)
-            m = m@Measure(g, varargin{:});
+            m = m@OutStrength(g, varargin{:});
         end
     end
     methods (Access=protected)
        function calculate(m)
-            g = m.getGraph();          
-            % get out strength measure 
-            % of the graph.
-            out_strength = g.getMeasure('OutStrength');
-
-            av_out_strength = mean(out_strength.value, 'all');
-            m.setValue(av_out_strength);
+            calculate@OutStrength(g);
+            out_strength = m.value;
+            out_strength_av = mean(out_strength);
+            m.setValue(out_strength_av);
         end
     end
     methods(Static)
