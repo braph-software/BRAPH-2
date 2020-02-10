@@ -8,9 +8,9 @@ classdef InStrength < Measure
         function calculate(m)
             g = m.getGraph();
             A = g.getA();
-            A = remove_diagonal(A); % enforces diagonal remove
+           
             
-            in_strength = sum(A,1)';         
+            in_strength = sum(A, 1)';         
             m.setValue(in_strength);
         end
     end  
@@ -23,6 +23,7 @@ classdef InStrength < Measure
                 'The in-strength of a node is ' ...
                 'the sum of the weights of all ' ...
                 'the inward edges connected to a node.' ...
+                'INSTRENGTH =  in_strength = sum(A, 1)'...
                 ];
         end
         function bool = is_global()                        

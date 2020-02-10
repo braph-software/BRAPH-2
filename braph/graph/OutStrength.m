@@ -7,8 +7,7 @@ classdef OutStrength < Measure
     methods (Access=protected)
         function calculate(m)
             g = m.getGraph();
-            A = g.getA();
-            A = remove_diagonal(A); % enforces diagonal remove
+            A = g.getA();           
             
             out_strength = sum(A,2);         
             m.setValue(out_strength);
@@ -23,6 +22,7 @@ classdef OutStrength < Measure
                 'The out-strength of a node is ' ...
                 'the sum of the weights of all ' ...
                 'the outward edges connected to a node.' ...
+                'OUTSTRENGTH =  out_strength = sum(A, 2)'...
                 ];
         end
         function bool = is_global()                        

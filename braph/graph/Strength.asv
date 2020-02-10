@@ -10,7 +10,7 @@ classdef Strength < Measure
             A = g.getA();
             A = remove_diagonal(A); % enforces diagonal remove
             
-            in_strength = sum(A, 1)'; % choosed instrength, but can be
+            in_strength = sum(A,1)'; % choosed instrength, but can be
                                     % either one fo WU.
 
             strength = in_strenth;
@@ -31,7 +31,7 @@ classdef Strength < Measure
                 'For WU graphs, strengths are calculated' ...
                 'as sums over either rows or colums of' ...
                 'the weighted connectivity matrix.' ...
-                'STRENGTH = sum(A,1)' ...
+                'STRENGTH = sum(A,)' ...
                 ];
         end
         function bool = is_global()
