@@ -78,6 +78,10 @@ classdef Graph < handle & matlab.mixin.Copyable
         function n = node_number(g)
             n = length(g.getA());
         end
+        function sg = subgraph(g, nodes) %#ok<INUSD>
+            settings = g.getSettings(); %#ok<NASGU,PROPLC>
+            sg = eval([g.getGraphCode() '(g.A(nodes,nodes), settings{:})']);
+        end
     end
     methods (Static)
         function g = getGraph(graph_code, A, varargin) %#ok<INUSD>
