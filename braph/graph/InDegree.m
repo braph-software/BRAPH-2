@@ -12,7 +12,17 @@ classdef InDegree < Measure
             m.setValue(in_degree);
         end
     end
-    methods (Static)        
+    methods (Static) 
+        function name = getName()
+            name = 'In-Degree';
+        end
+        function description = getDescription()
+            description = [ ...
+                'The in-degree of a node is ' ...
+                'the number of inward edges connected to the node. ' ...
+                'Connection weights are ignored in calculations.' ...
+                ];
+        end
         function bool = is_global()
             bool = false;
         end
