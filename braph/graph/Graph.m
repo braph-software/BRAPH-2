@@ -1,5 +1,5 @@
 classdef Graph < handle & matlab.mixin.Copyable
-    properties % (GetAccess=public, SetAccess=protected)
+    properties (GetAccess=public, SetAccess=protected)
         A   % adjacency matrix
         mdict  % dictionary with calculated measures
         settings  % structure with the constructor varagin

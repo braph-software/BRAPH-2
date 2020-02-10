@@ -1,5 +1,5 @@
 classdef Measure < handle & matlab.mixin.Copyable
-    properties % (GetAccess=public, SetAccess=protected)
+    properties (GetAccess=public, SetAccess=protected)
         g  % graph
         settings  % structure with the constructor varagin
         value  % graph measure value
