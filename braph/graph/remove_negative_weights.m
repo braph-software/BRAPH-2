@@ -23,7 +23,7 @@ function B = remove_negative_weights(A, varargin)
     
     remove_negative_weights_rule = 'zero';
     for n = 1:1:length(varargin)-1
-        if strcmpi(varargin{n}, 'rule')
+        if strcmpi(varargin{n}, 'RemoveNegativeWeightsRule')
             remove_negative_weights_rule = varargin{n+1};
         end
     end
