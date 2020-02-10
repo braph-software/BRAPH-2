@@ -4,7 +4,7 @@ classdef StrengthAV < Measure
             m = m@Measure(g, varargin{:});
         end
     end
-    methods
+    methods (Access=protected)
        function calculate(m)
             g = m.getGraph();          
             % get strength measure 
