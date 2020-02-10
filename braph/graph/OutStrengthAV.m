@@ -1,6 +1,6 @@
-classdef OutStrengthAV < OutStrength
+classdef OutStrengthAv < OutStrength
     methods
-        function m = OutStrengthAV(g, varargin)
+        function m = OutStrengthAv(g, varargin)
             m = m@OutStrength(g, varargin{:});
         end
     end
@@ -19,7 +19,7 @@ classdef OutStrengthAV < OutStrength
         function description = getDescription()
             description = [ ...
                 'The average out-strength of a graph is ' ...
-                'the average of the sum of the weights' ...
+                'the average of the sum of the weights ' ...
                 'of all outward edges connected to the node. ' ...              
                 ];
         end
@@ -32,7 +32,7 @@ classdef OutStrengthAV < OutStrength
         end
         function list = compatible_graph_list()  
             list = { ...
-                'GraphWD', ...               
+                'GraphWD', ...
                 };
         end
     end

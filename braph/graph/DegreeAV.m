@@ -1,6 +1,6 @@
-classdef DegreeAV < Degree
+classdef DegreeAv < Degree
     methods
-        function m = DegreeAV(g, varargin)
+        function m = DegreeAv(g, varargin)
             m = m@Degree(g, varargin{:});
         end
     end

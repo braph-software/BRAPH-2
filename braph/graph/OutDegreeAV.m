@@ -1,6 +1,6 @@
-classdef OutDegreeAV < OutDegree
+classdef OutDegreeAv < OutDegree
     methods
-        function m = OutDegreeAV(g, varargin)
+        function m = OutDegreeAv(g, varargin)
             m = m@OutDegree(g, varargin{:});
         end
     end
@@ -19,13 +19,12 @@ classdef OutDegreeAV < OutDegree
         function description = getDescription()
             description = [ ...
                 'The average of out degrees of a graph is ' ...
-                'the average of all number of outward edges'...
+                'the average of all number of outward edges '...
                 'connected to the node. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
         end
         function bool = is_global()
-                        
             bool = true;
         end
         function bool = is_nodal()

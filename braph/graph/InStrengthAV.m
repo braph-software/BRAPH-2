@@ -1,6 +1,6 @@
-classdef InStrengthAV < InStrength
+classdef InStrengthAv < InStrength
     methods
-        function m = InStrengthAV(g, varargin)
+        function m = InStrengthAv(g, varargin)
             m = m@InStrength(g, varargin{:});
         end
     end
@@ -19,7 +19,7 @@ classdef InStrengthAV < InStrength
         function description = getDescription()
             description = [ ...
                 'The average in-strength of a graph is ' ...
-                'the average of the sum of the weights' ...
+                'the average of the sum of the weights ' ...
                 'of all inward edges connected to the node. ' ...              
                 ];
         end

@@ -1,6 +1,6 @@
-classdef StrengthAV < Strength
+classdef StrengthAv < Strength
     methods
-        function m = StrengthAV(g, varargin)
+        function m = StrengthAv(g, varargin)
             m = m@Strength(g, varargin{:});
         end
     end
@@ -19,12 +19,11 @@ classdef StrengthAV < Strength
         function description = getDescription()
             description = [ ...
                 'The average strength of a graph is ' ...
-                'the average of the sum of the weights' ...
+                'the average of the sum of the weights ' ...
                 'of all edges connected to the node. ' ...              
                 ];
         end
         function bool = is_global()
-
             bool = true;
         end
         function bool = is_nodal()
@@ -32,7 +31,7 @@ classdef StrengthAV < Strength
         end
         function list = compatible_graph_list()  
             list = { ...
-                'GraphWD', ...               
+                'GraphWU', ...               
                 };
         end
     end
