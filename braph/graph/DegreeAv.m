@@ -5,9 +5,17 @@ classdef DegreeAv < Degree
         end
     end
     methods (Access=protected)
-       function calculate(m)
-            calculate@Degree(g);
-            degree = m.value;            
+        function calculate(m)
+            
+            g = m.getGraph();
+            
+            if g.is_measure_calculated('Degree')
+                degree = g.getMeasureValue('Degree');
+            else
+                calculate@Degree(g);
+                degree = m.value;
+            end
+            
             degree_av = mean(degree);
             m.setValue(degree_av);
         end
@@ -24,13 +32,13 @@ classdef DegreeAv < Degree
                 ];
         end
         function bool = is_global()
-                        
+            
             bool = true;
         end
         function bool = is_nodal()
             bool = false;
         end
-        function list = compatible_graph_list()  
+        function list = compatible_graph_list()
             list = { ...
                 'GraphBU', ...
                 'GraphWU' ...
