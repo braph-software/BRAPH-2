@@ -8,7 +8,7 @@ classdef InDegree < Measure
         function calculate(m)
             g = m.getGraph();
             A = g.getA();
-            in_degree = sum(A, 1)'; % column sum of A
+            in_degree = sum(A, 1)';  % column sum of A
             m.setValue(in_degree);
         end
     end

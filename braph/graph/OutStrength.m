@@ -8,7 +8,7 @@ classdef OutStrength < Measure
         function calculate(m)
             g = m.getGraph();
             A = g.getA();           
-            out_strength = sum(A, 2);         
+            out_strength = sum(A, 2);  % row sum of A        
             m.setValue(out_strength);
         end
     end  

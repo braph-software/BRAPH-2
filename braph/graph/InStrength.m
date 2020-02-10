@@ -8,7 +8,7 @@ classdef InStrength < Measure
         function calculate(m)
             g = m.getGraph();
             A = g.getA();
-            in_strength = sum(A, 1)';         
+            in_strength = sum(A, 1)';  % column sum of A        
             m.setValue(in_strength);
         end
     end  
