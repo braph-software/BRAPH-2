@@ -82,6 +82,27 @@ classdef Graph < handle & matlab.mixin.Copyable
             settings = g.getSettings(); %#ok<NASGU,PROPLC>
             sg = eval([g.getGraphCode() '(g.A(nodes,nodes), settings{:})']);
         end
+        function ga = nodeattack(g, nodes)
+            
+            A = g.getA(); %#ok<PROPLC>
+            for i = 1:1:numel(nodes)
+                A(nodes(i), :) = 0; %#ok<PROPLC>
+                A(:, nodes(i)) = 0; %#ok<PROPLC>
+            end
+            
+            settings = g.getSettings(); %#ok<NASGU,PROPLC>
+            
+            ga = eval([g.getGraphCode() '(A, settings{:})']);
+        end
+        function ga = edgeattack(g, nodes1, nodes2)
+                        
+            A = g.getA(); %#ok<PROPLC>
+            A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<NASGU,PROPLC>
+
+            settings = g.getSettings(); %#ok<NASGU,PROPLC>
+
+            ga = eval([g.getGraphCode() '(A, settings{:})']);
+        end
     end
     methods (Static)
         function g = getGraph(graph_code, A, varargin) %#ok<INUSD>
