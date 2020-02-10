@@ -9,6 +9,17 @@ classdef GraphWD < Graph
         end
     end
     methods (Static)
+        function name = getName()
+            name = 'Weighted Directed Graph';
+        end
+        function description = getDescription()
+            description = [ ...
+                'In a weighted directed (WD) graph, ' ...
+                'The edges are associated with a non-negative real number ' ...
+                'indicating the strength of the connection, ' ...
+                'and they are directed.' ...
+                ];
+        end
         function bool = is_selfconnected()
             bool = false;
         end        
