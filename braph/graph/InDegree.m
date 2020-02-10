@@ -4,7 +4,7 @@ classdef InDegree < Measure
             m = m@Measure(g, varargin{:});
         end
     end
-    methods(Access = protected)
+    methods(Access=protected)
         function calculate(m)
             g = m.getGraph();
             A = g.getA();

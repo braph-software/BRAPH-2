@@ -5,9 +5,17 @@ classdef InStrengthAv < InStrength
         end
     end
     methods (Access=protected)
-       function calculate(m)
-            calculate@InStrength(g);
-            in_strength = m.value;
+        function calculate(m)
+            
+            g = m.getGraph();
+            
+            if g.is_measure_calculated('InStrength')
+                in_strength = g.getMeasureValue('InStrength');
+            else
+                calculate@InStrength(g);
+                in_strength = m.value;
+            end
+            
             in_strength_av = mean(in_strength);
             m.setValue(in_strength_av);
         end
@@ -20,19 +28,19 @@ classdef InStrengthAv < InStrength
             description = [ ...
                 'The average in-strength of a graph is ' ...
                 'the average of the sum of the weights ' ...
-                'of all inward edges connected to the node. ' ...              
+                'of all inward edges connected to the node. ' ...
                 ];
         end
         function bool = is_global()
-
+            
             bool = true;
         end
         function bool = is_nodal()
             bool = false;
         end
-        function list = compatible_graph_list()  
+        function list = compatible_graph_list()
             list = { ...
-                'GraphWD', ...               
+                'GraphWD', ...
                 };
         end
     end

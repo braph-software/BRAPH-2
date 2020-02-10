@@ -5,9 +5,17 @@ classdef StrengthAv < Strength
         end
     end
     methods (Access=protected)
-       function calculate(m)
-            calculate@Strength(g);
-            strength = m.value;
+        function calculate(m)
+            
+            g = m.getGraph();
+            
+            if g.is_measure_calculated('Strength')
+                strength = g.getMeasureValue('Strength');
+            else
+                calculate@Strength(g);
+                strength = m.value;
+            end
+            
             strength_av = mean(strength);
             m.setValue(strength_av);
         end
@@ -20,7 +28,7 @@ classdef StrengthAv < Strength
             description = [ ...
                 'The average strength of a graph is ' ...
                 'the average of the sum of the weights ' ...
-                'of all edges connected to the node. ' ...              
+                'of all edges connected to the node. ' ...
                 ];
         end
         function bool = is_global()
@@ -29,9 +37,9 @@ classdef StrengthAv < Strength
         function bool = is_nodal()
             bool = false;
         end
-        function list = compatible_graph_list()  
+        function list = compatible_graph_list()
             list = { ...
-                'GraphWU', ...               
+                'GraphWU', ...
                 };
         end
     end
