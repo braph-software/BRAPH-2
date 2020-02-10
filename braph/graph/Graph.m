@@ -92,7 +92,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
         function ga = edgeattack(g, nodes1, nodes2)
                         
-            A = g.A; %#ok<PROPLC>
+            A = g.getA(); %#ok<PROPLC>
             A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<NASGU,PROPLC>
 
             settings = g.getSettings(); %#ok<NASGU,PROPLC>
