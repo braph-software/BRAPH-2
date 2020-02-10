@@ -75,6 +75,14 @@ classdef Graph < handle & matlab.mixin.Copyable
                 g.mdict(measure_code) = m;
             end 
         end
+        function bool = is_measure_calculated(g, measure_code)
+
+            if isKey(g.mdict, measure_code)
+                bool = g.mdict(measure_code).is_value_calculated();
+            else
+                bool = false;
+            end
+        end
         function n = node_number(g)
             n = length(g.getA());
         end
