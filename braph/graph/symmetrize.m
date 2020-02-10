@@ -4,14 +4,14 @@ function B = symmetrize(A, varargin)
     % B = SYMETRIZE(A) symmetrizes the matrix A with default RULE 'max'.s
     %
     % B = SYMMETRIZE(A, 'SymmetryzeRule', RULE) symmetrizes the matrix A by the
-    %   Symmetrize RULE specified by the PropertyName.
-    %   Admissible RULE options are:
+    % Symmetrize RULE specified by the PropertyName.
+    % Admissible RULE options are:
     %       RULE    -   'max' (default) | 'sum' | 'add' | 'av' | 'average' |
     %                   'min' | 'minimum' | 'or' | 'weak'
     %                   'max' - maximum between inconnection and outconnection (default)
     %                   'sum' - sum of inconnection and outconnection
     %                   'add' - sum of inconnection and outconnection
-    %                   'av'  - average of inconnection and outconnection
+    %                   'av' - average of inconnection and outconnection
     %                   'average' - average of inconnection and
     %                               outconnnection
     %                   'min' - minimum between inconnection and outconnection
@@ -36,9 +36,9 @@ function B = symmetrize(A, varargin)
             B = A + transpose(A);
         case {'av', 'average'}  % average rule
             B = (A + transpose(A)) / 2;
-        case {'min', 'minimum', 'or', 'weak'}  %  minimum rule
+        case {'min', 'minimum', 'or', 'weak'}  % minimum rule
             B = min(A, transpose(A));
-        otherwise  %  {'max', 'maximum', 'and', 'strong'} % maximum rule
+        otherwise  % {'max', 'maximum', 'and', 'strong'}  % maximum rule
             B = max(A, transpose(A));
     end
 end
