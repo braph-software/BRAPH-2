@@ -4,14 +4,14 @@ classdef InDegreeAV < Measure
             m = m@Measure(g, varargin{:});
         end
     end
-    methods
+    methods (Access=protected)
        function calculate(m)
             g = m.getGraph();          
             % get in_degree measure 
             % of the graph.
-            in_degree = g.getMeasure(g, 'InDegree');
+            in_degree = g.getMeasure('InDegree');
             
-            av_in_degree = mean(in_degree);
+            av_in_degree = mean(in_degree.value, 'all');
             m.setValue(av_in_degree);
         end
     end
