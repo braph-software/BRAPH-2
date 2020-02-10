@@ -1,18 +1,15 @@
-classdef DegreeAV < Measure
+classdef DegreeAV < Degree
     methods
         function m = DegreeAV(g, varargin)
-            m = m@Measure(g, varargin{:});
+            m = m@Degree(g, varargin{:});
         end
     end
     methods (Access=protected)
        function calculate(m)
-            g = m.getGraph();          
-            % get degree measure 
-            % of the graph.
-            degree = g.getMeasure('Degree');
-            
-            av_degree = mean(degree.value,'all');
-            m.setValue(av_degree);
+            calculate@Degree(g);
+            degree = m.value;            
+            degree_av = mean(degree);
+            m.setValue(degree_av);
         end
     end
     methods(Static)

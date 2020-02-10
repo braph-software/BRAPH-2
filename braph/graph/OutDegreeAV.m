@@ -1,18 +1,15 @@
-classdef OutDegreeAV < Measure
+classdef OutDegreeAV < OutDegree
     methods
         function m = OutDegreeAV(g, varargin)
-            m = m@Measure(g, varargin{:});
+            m = m@OutDegree(g, varargin{:});
         end
     end
     methods (Access=protected)
        function calculate(m)
-            g = m.getGraph();          
-            % get out_degree measure 
-            % of the graph.
-            out_degree = g.getMeasure('OutDegree');
-            
-            av_out_degree = mean(out_degree.value, 'all');
-            m.setValue(av_out_degree);
+            calculate@OutDegree(g);
+            out_degree = m.value;            
+            out_degree_av = mean(out_degree);
+            m.setValue(out_degree_av);
         end
     end
     methods(Static)
