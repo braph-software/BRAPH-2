@@ -7,15 +7,12 @@ classdef Strength < Measure
     methods (Access=protected)
         function calculate(m)
             g = m.getGraph();
-            A = g.getA();
-            A = remove_diagonal(A); % enforces diagonal remove
+            A = g.getA();    
             
             in_strength = sum(A, 1)'; % choosed instrength, but can be
                                     % either one fo WU.
 
-            strength = in_strenth;
-                     
-             
+            strength = in_strength;             
             m.setValue(strength);
         end
     end  
