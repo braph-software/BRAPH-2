@@ -9,25 +9,15 @@ classdef Measure < handle & matlab.mixin.Copyable
     methods (Access=protected)
         function m = Measure(g, varargin)
             
-            if ~Measure.is_compatible_with_graph(m, g)
-                error([class(g) ' is not compatible with ' class(m)])
+            if ~are_compatible(g, m)
+                error( ...
+                    'BRAPH:Measure:IncompatibleGM', ...
+                    [class(g) ' is not compatible with ' class(m)] ...
+                    )
             end
-                        
-            % 'Value' (input from varargin)
-            value = [];
-            for n = 1:1:length(varargin)-1
-                if strcmpi(varargin{n}, 'Value')
-                    value = varargin{n+1};
-                end
-            end
-            
-            % 'Settings' (input from varargin)
-            settings = varargin;
-            for n = 1:1:length(varargin)-1
-                if strcmpi(varargin{n}, 'Value')
-                    settings = varargin{n+1};
-                end
-            end
+                       
+            value = get_from_varargin([], 'Value', varargin{:});
+            settings = get_from_varargin(varargin, 'Settings', varargin{:});
 
             m.g = g;
             m.value = value;
@@ -38,11 +28,6 @@ classdef Measure < handle & matlab.mixin.Copyable
         end
     end
     methods
-        function measure_code = getMeasureCode(m)
-            % measure code (same as the measure object name)
-            
-            measure_code = class(m);
-        end
         function g = getGraph(m)
             g = m.g;
         end
@@ -54,7 +39,7 @@ classdef Measure < handle & matlab.mixin.Copyable
         end
         function value = getValue(m)
             
-            if ~is_value_calculated(m)
+            if ~m.is_value_calculated()
                 m.calculate();
             end
             
@@ -90,9 +75,6 @@ classdef Measure < handle & matlab.mixin.Copyable
             
             name = eval([Measure.getClass(m) '.getDescription()']);
         end
-        function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
-            m = eval([measure_code '(g, varargin{:})']);
-        end
         function bool = is_global(m)
             % whether is global measure
             
@@ -102,6 +84,9 @@ classdef Measure < handle & matlab.mixin.Copyable
             % whether is nodal measure
             
             bool = eval([Measure.getClass(m) '.is_nodal()']);
+        end
+        function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
+            m = eval([measure_code '(g, varargin{:})']);
         end
         function list = getCompatibleGraphList(m)
             % list of graphs with which measure works
