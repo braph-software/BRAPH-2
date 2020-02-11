@@ -41,5 +41,11 @@ classdef GraphWD < Graph
         function bool = is_undirected()
             bool = false;
         end        
+        function list = getCompatibleMeasureList()
+            list = Graph.getCompatibleMeasureList('GraphWD');
+        end
+        function n = getCompatibleMeasureNumber()
+            n = Graph.getCompatibleMeasureNumber('GraphWD');
+        end
     end
 end

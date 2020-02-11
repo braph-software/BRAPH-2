@@ -42,5 +42,11 @@ classdef GraphBD < Graph
         function bool = is_undirected()
             bool = false;
         end        
+        function list = getCompatibleMeasureList()
+            list = Graph.getCompatibleMeasureList('GraphBD');
+        end
+        function n = getCompatibleMeasureNumber()
+            n = Graph.getCompatibleMeasureNumber('GraphBD');
+        end
     end
 end
