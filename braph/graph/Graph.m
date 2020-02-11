@@ -7,22 +7,9 @@ classdef Graph < handle & matlab.mixin.Copyable
     methods (Access=protected)
         function g = Graph(A, varargin)
             
-            % 'MeasureDictionary' (input from varargin)
-            mdict = containers.Map;
-            for n = 1:1:length(varargin)-1
-                if strcmpi(varargin{n}, 'MeasureDictionary')
-                    mdict = varargin{n+1};
-                end
-            end            
-            
-            % 'Settings' (input from varargin)
-            settings = varargin;
-            for n = 1:1:length(varargin)-1
-                if strcmpi(varargin{n}, 'Value')
-                    settings = varargin{n+1};
-                end
-            end
-            
+            mdict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
+            settings = get_from_varargin(varargin, 'Settings', varargin{:});
+                        
             g.A = A;
             g.mdict = mdict;
             g.settings = settings;
@@ -76,6 +63,9 @@ classdef Graph < handle & matlab.mixin.Copyable
         function settings = getSettings(g)
             settings = g.settings;
         end
+        function n = nodenumber(g)
+            n = length(g.getA());
+        end
         function m = getMeasure(g, measure_class)
             
             if isKey(g.mdict, measure_class)
@@ -95,9 +85,6 @@ classdef Graph < handle & matlab.mixin.Copyable
             else
                 bool = false;
             end
-        end
-        function n = nodenumber(g)
-            n = length(g.getA());
         end
         function sg = subgraph(g, nodes) %#ok<INUSD>
             settings = g.getSettings(); %#ok<NASGU,PROPLC>
