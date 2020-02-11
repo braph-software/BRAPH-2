@@ -1,4 +1,4 @@
-% test remove_diagonal
+% test dediagonalize
 A = [
     1 1 1; 
     1 1 1; 
@@ -6,24 +6,24 @@ A = [
     ];
 
 %% Test 1: Remove diagonal
-B = remove_diagonal(A);
+B = dediagonalize(A);
 assert(isequal(B, ...
     [
     0 1 1; 
     1 0 1; 
     1 1 0
     ]), ...
-    'BRAPH:remove_diagonal:Bug', ...
+    'BRAPH:dediagonalize:Bug', ...
     'Diagonal not correctly set to 0')
 
 %% Test 2: Remove diagonal and set value
 value = randn();
-B = remove_diagonal(A, 'RemoveDiagonalValue', value);
+B = dediagonalize(A, 'DediagonalizeRule', value);
 assert(isequal(B, ...
     [
     value 1 1; 
     1 value 1; 
     1 1 value
     ]), ...
-    'BRAPH:remove_diagonal:Bug', ...
+    'BRAPH:dediagonalize:Bug', ...
     'Diagonal not correctly set to value')
