@@ -65,18 +65,48 @@ classdef Measure < handle & matlab.mixin.Copyable
         calculate(m)  % calculates the value of the measure
     end
     methods (Static)
+        function measure_list = getList()
+            measure_list = subclasses( ...
+                'Measure', ...
+                [fileparts(which('Measure')) filesep 'measures'] ...
+                );
+        end
+        function measure_class = getClass(m)
+            % measure class (same as the measure object name)
+            
+            if isa(m, 'Measure')
+                measure_class = class(m);
+            else % g should be a string with the measure class
+                measure_class = m;
+            end
+        end        
+        function name = getName(m)
+            % measure name
+            
+            name = eval([Measure.getClass(m) '.getName()']);
+        end
+        function name = getDescription(m)
+            % measure description
+            
+            name = eval([Measure.getClass(m) '.getDescription()']);
+        end
         function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
             m = eval([measure_code '(g, varargin{:})']);
         end
-        function bool = is_compatible_with_graph(m, g)
-            bool = Graph.is_compatible_with_measure(g, m);
+        function bool = is_global(m)
+            % whether is global measure
+            
+            bool = eval([Measure.getClass(m) '.is_global()']);
         end
-    end
-    methods (Static, Abstract)
-        getName()  % measure name
-        getDescription()  % measure description
-        is_global()  % whether is global measure
-        is_nodal()  % whether is global measure
-        compatible_graph_list()  % list of graphs with which measure works
+        function bool = is_nodal(m)
+            % whether is nodal measure
+            
+            bool = eval([Measure.getClass(m) '.is_nodal()']);
+        end
+        function list = getCompatibleGraphList(m)
+            % list of graphs with which measure works
+            
+            list = eval([Measure.getClass(m) '.getCompatibleGraphList()']);
+        end
     end
 end

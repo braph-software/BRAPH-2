@@ -13,6 +13,9 @@ classdef OutStrength < Measure
         end
     end  
     methods (Static)
+         function measure_class = getClass()
+            measure_class = 'OutStrength';
+        end
         function name = getName()
             name = 'Out-Strength';
         end
@@ -32,7 +35,7 @@ classdef OutStrength < Measure
         function bool = is_nodal()
             bool = true;
         end
-        function list = compatible_graph_list()  
+        function list = getCompatibleGraphList()  
             list = { ...
                 'GraphWD' ...
                 };

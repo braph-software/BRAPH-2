@@ -21,6 +21,9 @@ classdef InDegreeAv < InDegree
         end
     end
     methods(Static)
+         function measure_class = getClass()
+            measure_class = 'InDegreeAv';
+        end
         function name = getName()
             name = 'Average In Degree';
         end
@@ -39,7 +42,7 @@ classdef InDegreeAv < InDegree
         function bool = is_nodal()
             bool = false;
         end
-        function list = compatible_graph_list()
+        function list = getCompatibleGraphList()  
             list = { ...
                 'GraphBD', ...
                 'GraphWD' ...

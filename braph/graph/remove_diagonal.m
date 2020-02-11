@@ -12,14 +12,9 @@ function B = remove_diagonal(A, varargin)
 % Author: Emiliano Gomez & Giovanni Volpe
 % Date: 2020/02/07
 
+value = get_from_varargin(0, 'RemoveDiagonalValue', varargin{:})
 
-    remove_diagonal_value = 0;
-    for n = 1:1:length(varargin)-1
-        if strcmpi(varargin{n}, 'RemoveDiagonalValue')
-            remove_diagonal_value = varargin{n+1};
-        end
-    end
+B = A;
+B(1:length(A)+1:numel(A)) = value;
 
-    B = A;
-    B(1:length(A)+1:numel(A)) = remove_diagonal_value;
 end
