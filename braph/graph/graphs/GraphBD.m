@@ -10,6 +10,9 @@ classdef GraphBD < Graph
         end
     end
     methods (Static)
+        function graph_class = getClass()
+            graph_class = 'GraphBD';
+        end
         function name = getName()
             name = 'Binary Directed Graph';
         end
