@@ -40,5 +40,8 @@ classdef Degree < Measure
                 'GraphWU' ...
                 };
         end
+        function n = getCompatibleGraphNumber()
+            n = Measure.getCompatibleGraphNumber('Degree');
+        end
     end
 end

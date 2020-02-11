@@ -41,5 +41,8 @@ classdef OutDegree < Measure
                 'GraphWD' ...
                 };
         end
+        function n = getCompatibleGraphNumber()
+            n = Measure.getCompatibleGraphNumber('OutDegree');
+        end
     end
 end

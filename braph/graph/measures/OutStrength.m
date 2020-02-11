@@ -40,5 +40,8 @@ classdef OutStrength < Measure
                 'GraphWD' ...
                 };
         end
+        function n = getCompatibleGraphNumber()
+            n = Measure.getCompatibleGraphNumber('OutStrength');
+        end
     end
 end

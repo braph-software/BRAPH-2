@@ -40,6 +40,9 @@ classdef InDegree < Measure
                 'GraphBD', ...
                 'GraphWD' ...
                 };
-        end        
+        end
+        function n = getCompatibleGraphNumber()
+            n = Measure.getCompatibleGraphNumber('InDegree');
+        end
     end
 end

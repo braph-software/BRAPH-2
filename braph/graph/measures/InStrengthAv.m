@@ -46,5 +46,8 @@ classdef InStrengthAv < InStrength
                 'GraphWD', ...
                 };
         end
+        function n = getCompatibleGraphNumber()
+            n = Measure.getCompatibleGraphNumber('InStrengthAv');
+        end
     end
 end

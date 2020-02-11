@@ -48,5 +48,8 @@ classdef InDegreeAv < InDegree
                 'GraphWD' ...
                 };
         end
+        function n = getCompatibleGraphNumber()
+            n = Measure.getCompatibleGraphNumber('InDegreeAv');
+        end
     end
 end
