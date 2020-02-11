@@ -16,18 +16,20 @@ classdef Measure < handle & matlab.mixin.Copyable
                     )
             end
                        
-            value = get_from_varargin([], 'Value', varargin{:});
             settings = get_from_varargin(varargin, 'Settings', varargin{:});
+            value = get_from_varargin([], 'Value', varargin{:});
 
             m.g = g;
-            m.value = value;
             m.settings = settings;
+            m.value = value;
         end
         function setValue(m, value)
             m.value = value;
         end
     end
     methods
+        % function str = tostring(g)
+        % function disp(g)
         function g = getGraph(m)
             g = m.g;
         end
@@ -92,6 +94,11 @@ classdef Measure < handle & matlab.mixin.Copyable
             % list of graphs with which measure works
             
             list = eval([Measure.getClass(m) '.getCompatibleGraphList()']);
+        end
+        function n = getCompatibleGraphNumber(m)
+            
+            list = Graph.getCompatibleGraphList(m);
+            n = numel(list);
         end
     end
 end
