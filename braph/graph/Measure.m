@@ -65,6 +65,12 @@ classdef Measure < handle & matlab.mixin.Copyable
         calculate(m)  % calculates the value of the measure
     end
     methods (Static)
+        function measure_list = getMeasureList()
+            measure_list = subclasses( ...
+                'Measure', ...
+                [fileparts(which('Measure')) filesep 'measures'] ...
+                );
+        end
         function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
             m = eval([measure_code '(g, varargin{:})']);
         end

@@ -1,5 +1,5 @@
 classdef Graph < handle & matlab.mixin.Copyable
-    properties (GetAccess=public, SetAccess=protected)
+    properties (GetAccess=protected, SetAccess=protected)
         A   % adjacency matrix
         mdict  % dictionary with calculated measures
         settings  % structure with the constructor varagin
@@ -55,38 +55,48 @@ classdef Graph < handle & matlab.mixin.Copyable
         end        
     end
     methods
-        function graph_code = getGraphCode(g)
-            % measure code (same as the measure object name)
-                        
-            graph_code = class(g);
-        end        
+        function str = tostring(g)
+            str = [Graph.getClass(g) ' ' int2str(size(randn(2), 1)) ' rows x ' int2str(size(randn(2), 2)) ' columns'];
+        end
+        function disp(g)
+            
+            disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
+            disp([' size: ' int2str(size(randn(2), 1)) ' rows x ' int2str(size(randn(2), 2)) ' columns'])
+            disp([' measures: ' int2str(length(g.mdict))]);
+            disp([' settings']);
+            
+            settings = g.getSettings();
+            for i = 1:2:length(settings)
+                disp(['  ' int2str(i) ' - ' settings{i} ' - ' tostring(settings{i+1})]);
+            end
+        end
         function A = getA(g)
             A = g.A;
         end
         function settings = getSettings(g)
             settings = g.settings;
         end
-        function m = getMeasure(g, measure_code)
+        function m = getMeasure(g, measure_class)
             
-            if isKey(g.mdict, measure_code)
-                m = g.mdict(measure_code);
+            if isKey(g.mdict, measure_class)
+                m = g.mdict(measure_class);
             else
-                m = Measure.getMeasure(measure_code, g, g.getSettings());
-                g.mdict(measure_code) = m;
+                m = Measure.getMeasure(measure_class, g, g.getSettings());
+                g.mdict(measure_class) = m;
             end 
         end
-        function value = getMeasureValue(g, measure_code)
-            value = g.getMeasure(measure_code).getValue();
+        function value = getMeasureValue(g, measure_class)
+            value = g.getMeasure(measure_class).getValue();
         end
-        function bool = is_measure_calculated(g, measure_code)
+        function bool = is_measure_calculated(g, measure_class)
 
-            if isKey(g.mdict, measure_code)
-                bool = g.mdict(measure_code).is_value_calculated();
+            if isKey(g.mdict, measure_class)
+                bool = g.mdict(measure_class).is_value_calculated();
             else
                 bool = false;
             end
         end
-        function n = node_number(g)
+        function n = nodenumber(g)
             n = length(g.getA());
         end
         function sg = subgraph(g, nodes) %#ok<INUSD>
@@ -116,8 +126,64 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)
-        function g = getGraph(graph_code, A, varargin) %#ok<INUSD>
-            g = eval([graph_code '(A, varargin{:})']);
+        function graph_class = getClass(g)
+            % measure class (same as the measure object name)
+            
+            if isa(g, 'Graph')
+                graph_class = class(g);
+            else % g should be a string with the graph code
+                graph_class = g;
+            end
+        end        
+        function name = getName(g)
+            % graph name
+            
+            name = eval([Graph.getClass(g) '.getName()']);
+        end
+        function name = getDescription(g)
+            % graph description
+            
+            name = eval([Graph.getClass(g) '.getDescription()']);
+        end
+        function bool = is_selfconnected(g)
+            % whether is self-connected
+            
+            bool = eval([Graph.getClass(g) '.is_selfconnected()']);
+        end
+        function bool = is_nonnegative(g)
+            % whether is non-negative graph
+            
+            bool = eval([Graph.getClass(g) '.is_nonnegative()']);
+        end
+        function bool = is_weighted(g)
+            % whether is weighted graph
+            
+            bool = eval([Graph.getClass(g) '.is_weighted()']);
+        end
+        function bool = is_binary(g)
+            % whether is binary graph
+            
+            bool = eval([Graph.getClass(g) '.is_binary()']);
+        end
+        function bool = is_directed(g)
+            % whether is directed graph
+            
+            bool = eval([Graph.getClass(g) '.is_directed()']);
+        end
+        function bool = is_undirected(g)
+            % whether is undirected graph
+            
+            bool = eval([Graph.getClass(g) '.is_undirected()']);
+        end
+        function graph_class_list = getList()
+            graph_class_list = subclasses( ...
+                'Graph', ...
+                [fileparts(which('Graph')) filesep 'graphs'] ...
+                );
+        end
+        function g_new = getGraph(g, A, varargin) %#ok<INUSD>
+            
+            g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
         end
         function list = compatible_measure_list(g)
             % list of measures which work with graph
@@ -128,7 +194,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                 graph_code = g;
             end
             
-            measure_list = subclasses('Measure');
+            measure_list = Measure.getMeasureList();
             
             list = cell(1, length(measure_list));
             for i = 1:1:length(measure_list)
@@ -162,15 +228,5 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             bool = any(strcmp(compatible_graph_list, graph_code));
         end        
-    end
-    methods (Static, Abstract)
-        getName()  % graph name
-        getDescription()  % graph description
-        is_weighted()  % whether is weighted graph
-        is_binary()  % whether is binary graph
-        is_directed()  % whether is directed graph
-        is_undirected()  % whether is undirected graph
-        is_selfconnected()  % whether is self-connected
-        is_nonnegative()  % whether is non-negative graph
     end
 end

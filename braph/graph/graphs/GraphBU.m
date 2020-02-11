@@ -8,6 +8,9 @@ classdef GraphBU < GraphBD
         end
     end
     methods (Static)
+        function graph_class = getClass()
+            graph_class = 'GraphBU';
+        end
         function name = getName()
             name = 'Binary Undirected Graph';
         end
