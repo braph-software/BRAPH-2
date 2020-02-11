@@ -12,7 +12,7 @@ function B = remove_diagonal(A, varargin)
 % Author: Emiliano Gomez & Giovanni Volpe
 % Date: 2020/02/07
 
-value = get_from_varargin(0, 'RemoveDiagonalValue', varargin{:})
+value = get_from_varargin(0, 'RemoveDiagonalValue', varargin{:});
 
 B = A;
 B(1:length(A)+1:numel(A)) = value;

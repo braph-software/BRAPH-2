@@ -1,8 +1,8 @@
 classdef Graph < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         A   % adjacency matrix
-        mdict  % dictionary with calculated measures
         settings  % structure with the constructor varagin
+        mdict  % dictionary with calculated measures
     end
     methods (Access=protected)
         function g = Graph(A, varargin)
@@ -50,21 +50,20 @@ classdef Graph < handle & matlab.mixin.Copyable
             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
             disp([' size: ' int2str(size(randn(2), 1)) ' rows x ' int2str(size(randn(2), 2)) ' columns'])
             disp([' measures: ' int2str(length(g.mdict))]);
-            disp([' settings']);
-            
-            settings = g.getSettings();
-            for i = 1:2:length(settings)
-                disp(['  ' int2str(i) ' - ' settings{i} ' - ' tostring(settings{i+1})]);
+            disp([' settings']); %#ok<NBRAK>
+            settings = g.getSettings(); %#ok<PROP>
+            for i = 1:2:length(settings) %#ok<PROP>
+                disp(['  ' int2str(i) ' - ' settings{i} ' - ' tostring(settings{i+1})]); %#ok<PROP>
             end
         end
         function A = getA(g)
             A = g.A;
         end
-        function settings = getSettings(g)
-            settings = g.settings;
-        end
         function n = nodenumber(g)
             n = length(g.getA());
+        end
+        function settings = getSettings(g)
+            settings = g.settings;
         end
         function m = getMeasure(g, measure_class)
             
@@ -75,9 +74,6 @@ classdef Graph < handle & matlab.mixin.Copyable
                 g.mdict(measure_class) = m;
             end 
         end
-        function value = getMeasureValue(g, measure_class)
-            value = g.getMeasure(measure_class).getValue();
-        end
         function bool = is_measure_calculated(g, measure_class)
 
             if isKey(g.mdict, measure_class)
@@ -86,10 +82,14 @@ classdef Graph < handle & matlab.mixin.Copyable
                 bool = false;
             end
         end
-        function sg = subgraph(g, nodes) %#ok<INUSD>
+        function value = getMeasureValue(g, measure_class)
+            value = g.getMeasure(measure_class).getValue();
+        end
+        function sg = subgraph(g, nodes)
             
-            settings = g.getSettings(); %#ok<NASGU,PROPLC>
-            sg = eval([g.getGraphCode() '(g.A(nodes,nodes), settings{:})']);
+            settings = g.getSettings(); %#ok<PROPLC>
+            
+            sg = Graph.getGraph(g.getGraphCode(), g.A(nodes,nodes), settings{:}); %#ok<PROPLC>
         end
         function ga = nodeattack(g, nodes)
             
@@ -99,18 +99,18 @@ classdef Graph < handle & matlab.mixin.Copyable
                 A(:, nodes(i)) = 0; %#ok<PROPLC>
             end
             
-            settings = g.getSettings(); %#ok<NASGU,PROPLC>
+            settings = g.getSettings(); %#ok<PROPLC>
             
-            ga = eval([g.getGraphCode() '(A, settings{:})']);
+            ga = Graph.getGraph(g.getGraphCode(), A, settings{:}); %#ok<PROPLC>
         end
         function ga = edgeattack(g, nodes1, nodes2)
                         
             A = g.getA(); %#ok<PROPLC>
-            A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<NASGU,PROPLC>
+            A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<PROPLC>
 
-            settings = g.getSettings(); %#ok<NASGU,PROPLC>
+            settings = g.getSettings(); %#ok<PROPLC>
 
-            ga = eval([g.getGraphCode() '(A, settings{:})']);
+            ga = Graph.getGraph(g.getGraphCode(), A, settings{:}); %#ok<PROPLC>
         end
     end
     methods (Static)
@@ -173,48 +173,27 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
         end
-        function list = compatible_measure_list(g)
+        function list = getCompatibleMeasureList(g)
             % list of measures which work with graph
             
-            if isa(g, 'Graph')
-                graph_code = g.getGraphCode();
-            else % g should be a string with the graph code
-                graph_code = g;
-            end
+            graph_class = Graph.getClass(g);
             
-            measure_list = Measure.getMeasureList();
+            measure_code_list = Measure.getMeasureList();
             
-            list = cell(1, length(measure_list));
-            for i = 1:1:length(measure_list)
-                measure = measure_list{i};
+            list = cell(1, length(measure_code_list));
+            for i = 1:1:length(measure_code_list)
+                measure_code = measure_code_list{i};
                 
-                if Graph.is_compatible_with_measure(graph_code, measure)
-                    list{i} = measure;
+                if are_compatible(graph_class, measure_code)
+                    list{i} = measure_code;
                 end
             end
             list(cellfun('isempty', list)) = [];
         end
-        function n = compatible_measure_number(g)
-            measure_list = Graph.compatible_measure_list(g);
-            n = numel(measure_list);            
-        end
-        function bool = is_compatible_with_measure(g, m)
-            % whether measure and graph are compatible
-
-            if isa(g, 'Graph')
-                graph_code = g.getGraphCode();
-            else % g should be a string with the graph code
-                graph_code = g;
-            end 
-
-            compatible_graph_list = {};
-            if isa(m, 'Measure')
-                compatible_graph_list = m.compatible_graph_list();
-            else % m should be a string with the measure code
-                eval(['compatible_graph_list = ' m '.compatible_graph_list();'])
-            end
+        function n = getCompatibleMeasureNumber(g)
             
-            bool = any(strcmp(compatible_graph_list, graph_code));
-        end        
+            list = Graph.getCompatibleMeasureList(g);
+            n = numel(list);
+        end       
     end
 end
