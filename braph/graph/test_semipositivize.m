@@ -1,21 +1,14 @@
 % test semipositivize
-
 A = rand(randi(10));
 
 %% Test 1: Semipositivize Zero Default
-
 B = semipositivize(A);
-A = max(A, 0);
-
-assert(isequal(B,A),...
+assert(isequal(B, max(A, 0)),...
     'BRAPH:semipositivize:Bug',...
-    'Symmetrize max (default) case not working correctly')
+    'Symmetrize default case (''Max'') not working correctly')
 
 %% Test 2: Semipositivize Absolute
-
-B = semipositivize(A);
-A = abs(A);
-
-assert(isequal(B,A),...
+B = semipositivize(A, 'SemipositivizeRule', 'Absolute');
+assert(isequal(B, abs(A)),...
     'BRAPH:semipositivize:Bug',...
-    'Symmetrize Absoltue case not working correctly')
+    'Symmetrize ''Absoltue'' case not working correctly')
