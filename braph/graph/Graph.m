@@ -178,7 +178,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             graph_class = Graph.getClass(g);
             
-            measure_code_list = Measure.getMeasureList();
+            measure_code_list = Measure.getList();
             
             list = cell(1, length(measure_code_list));
             for i = 1:1:length(measure_code_list)
