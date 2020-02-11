@@ -27,5 +27,6 @@ for i = 1:1:length(struc.m)  % selects all files *.m
         list_subclasses{i} = name;  % fills cell with names of subclasses
     end
 end
+list_subclasses(cellfun('isempty', list_subclasses)) = [];
 
 end
