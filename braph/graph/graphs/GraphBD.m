@@ -2,8 +2,8 @@ classdef GraphBD < Graph
     methods
         function g = GraphBD(A, varargin)
 
-            A = remove_diagonal(A);  % removes self-connections by removing diagonal from adjacency matrix
-            A = remove_negative_weights(A, varargin{:});  % removes negative weights
+            A = dediagonalize(A);  % removes self-connections by removing diagonal from adjacency matrix
+            A = semipositivize(A, varargin{:});  % removes negative weights
             A = binarize(A);  % enforces binary adjacency matrix
 
             g = g@Graph(A, varargin{:});

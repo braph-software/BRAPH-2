@@ -19,7 +19,7 @@ function B = symmetrize(A, varargin)
 %                   'or' - minimum between inconnection and outconnection
 %                   'weak' - minimum between inconnection and outconnection
 % 
-% See also REMOVE_DIAGONAL, REMOVE_NEGATIVE_WEIGHTS, BINARIZE.
+% See also DEDIAGONALIZE, SEMIPOSITIVIZE, BINARIZE.
 
 % Author: Emiliano Gomez & Giovanni Volpe
 % Date: 2020/02/07
