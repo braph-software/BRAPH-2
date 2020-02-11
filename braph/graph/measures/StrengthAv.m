@@ -45,5 +45,8 @@ classdef StrengthAv < Strength
                 'GraphWU', ...
                 };
         end
+        function n = getCompatibleGraphNumber()
+            n = Measure.getCompatibleGraphNumber('StrengthAv');
+        end
     end
 end

@@ -41,5 +41,8 @@ classdef Strength < Measure
                 'GraphWU' ...
                 };
         end
+        function n = getCompatibleGraphNumber()
+            n = Measure.getCompatibleGraphNumber('Strength');
+        end
     end
 end

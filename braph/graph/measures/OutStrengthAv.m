@@ -46,5 +46,8 @@ classdef OutStrengthAv < OutStrength
                 'GraphWD', ...
                 };
         end
+        function n = getCompatibleGraphNumber()
+            n = Measure.getCompatibleGraphNumber('OutStrengthAv');
+        end
     end
 end

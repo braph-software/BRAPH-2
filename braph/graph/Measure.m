@@ -96,8 +96,9 @@ classdef Measure < handle & matlab.mixin.Copyable
             list = eval([Measure.getClass(m) '.getCompatibleGraphList()']);
         end
         function n = getCompatibleGraphNumber(m)
+            % number of graphs with which measure works
             
-            list = Graph.getCompatibleGraphList(m);
+            list = Measure.getCompatibleGraphList(m);
             n = numel(list);
         end
     end
