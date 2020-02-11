@@ -4,7 +4,7 @@ function B = remove_diagonal(A, varargin)
 % B = REMOVE_DIAGONAL(A) removes the diagonal
 % values of a matrix A and sets them to 0.
 %
-% B = REMOVE_DIAGONAL(A, 'RemoveDiagonalValue' VALUE) removes the diagonal
+% B = REMOVE_DIAGONAL(A, 'RemoveDiagonalValue', VALUE) removes the diagonal
 % values of a matrix A and sets them to VALUE.
 %
 % See also SYMMETRIZE, REMOVE_NEGATIVE_WEIGHTS, BINARIZE.
