@@ -18,7 +18,7 @@ assert(isequal(B, ...
 
 %% Test 2: Remove diagonal and set value
 value = randn();
-B = remove_diagonal(A, value);
+B = remove_diagonal(A, 'RemoveDiagonalValue', value);
 assert(isequal(B, ...
     [
     value 1 1; 
