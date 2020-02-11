@@ -2,7 +2,7 @@ classdef GraphWD < Graph
     methods
         function g = GraphWD(A, varargin)
 
-            A = dediagonalize(A);  % removes self-connections by removing diagonal from adjacency matrix
+            A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
             A = semipositivize(A, varargin{:});  % removes negative weights
 
             g = g@Graph(A, varargin{:});
