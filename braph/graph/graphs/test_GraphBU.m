@@ -1,13 +1,11 @@
 % test GraphBU
-
 A = rand(randi(10));
 
-%% Test 1: GraphBU instantiate well
-
+%% Test 1: GraphBU instantiates well
 g = GraphBU(A);
 
-A = remove_diagonal(A); 
-A = remove_negative_weights(A); 
+A = dediagonalize(A); 
+A = semipositivize(A); 
 A = binarize(A);
 A = symmetrize(A); 
 
