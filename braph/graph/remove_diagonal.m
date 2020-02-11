@@ -12,10 +12,11 @@ function B = remove_diagonal(A, value)
 % Author: Emiliano Gomez & Giovanni Volpe
 % Date: 2020/02/07
 
-    if nargin < 2
-        value = 0;
-    end
+if nargin < 2
+    value = 0;
+end
 
-    B = A;
-    B(1:length(A)+1:numel(A)) = value;
+B = A;
+B(1:length(A)+1:numel(A)) = value;
+
 end

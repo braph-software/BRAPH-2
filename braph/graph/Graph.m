@@ -114,6 +114,12 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)
+        function graph_class_list = getList()
+            graph_class_list = subclasses( ...
+                'Graph', ...
+                [fileparts(which('Graph')) filesep 'graphs'] ...
+                );
+        end
         function graph_class = getClass(g)
             % measure class (same as the measure object name)
             
@@ -162,12 +168,6 @@ classdef Graph < handle & matlab.mixin.Copyable
             % whether is undirected graph
             
             bool = eval([Graph.getClass(g) '.is_undirected()']);
-        end
-        function graph_class_list = getList()
-            graph_class_list = subclasses( ...
-                'Graph', ...
-                [fileparts(which('Graph')) filesep 'graphs'] ...
-                );
         end
         function g_new = getGraph(g, A, varargin) %#ok<INUSD>
             

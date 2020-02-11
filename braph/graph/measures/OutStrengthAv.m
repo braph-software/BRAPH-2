@@ -21,6 +21,9 @@ classdef OutStrengthAv < OutStrength
         end
     end
     methods(Static)
+         function measure_class = getClass()
+            measure_class = 'OutStrengthAv';
+        end
         function name = getName()
             name = 'Average Out-Strength';
         end
@@ -38,7 +41,7 @@ classdef OutStrengthAv < OutStrength
         function bool = is_nodal()
             bool = false;
         end
-        function list = compatible_graph_list()
+        function list = getCompatibleGraphList()  
             list = { ...
                 'GraphWD', ...
                 };

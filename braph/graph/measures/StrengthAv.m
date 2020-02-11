@@ -21,6 +21,9 @@ classdef StrengthAv < Strength
         end
     end
     methods(Static)
+        function measure_class = getClass()
+            measure_class = 'StrengthAv';
+        end
         function name = getName()
             name = 'Average Strength';
         end
@@ -37,7 +40,7 @@ classdef StrengthAv < Strength
         function bool = is_nodal()
             bool = false;
         end
-        function list = compatible_graph_list()
+        function list = getCompatibleGraphList()  
             list = { ...
                 'GraphWU', ...
                 };

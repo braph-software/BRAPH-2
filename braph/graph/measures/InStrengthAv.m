@@ -21,6 +21,9 @@ classdef InStrengthAv < InStrength
         end
     end
     methods(Static)
+         function measure_class = getClass()
+            measure_class = 'InStrengthAv';
+        end
         function name = getName()
             name = 'Average In-Strength';
         end
@@ -38,7 +41,7 @@ classdef InStrengthAv < InStrength
         function bool = is_nodal()
             bool = false;
         end
-        function list = compatible_graph_list()
+        function list = getCompatibleGraphList()  
             list = { ...
                 'GraphWD', ...
                 };

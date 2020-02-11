@@ -13,6 +13,9 @@ classdef OutDegree < Measure
         end
     end
     methods (Static)
+         function measure_class = getClass()
+            measure_class = 'OutDegree';
+        end
         function name = getName()
             name = 'Out-Degree';
         end
@@ -32,7 +35,7 @@ classdef OutDegree < Measure
         function bool = is_compatible_graph(g)
             bool = g.is_directed();
         end
-        function list = compatible_graph_list()
+        function list = getCompatibleGraphList()  
             list = { ...
                 'GraphBD', ...
                 'GraphWD' ...

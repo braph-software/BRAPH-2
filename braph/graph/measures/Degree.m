@@ -14,6 +14,9 @@ classdef Degree < Measure
         end
     end        
     methods (Static)
+         function measure_class = getClass()
+            measure_class = 'Degree';
+        end
         function name = getName()
             name = 'Degree';
         end
@@ -31,7 +34,7 @@ classdef Degree < Measure
         function bool = is_nodal()
             bool = true;
         end
-        function list = compatible_graph_list()  
+        function list = getCompatibleGraphList()  
             list = { ...
                 'GraphBU', ...
                 'GraphWU' ...

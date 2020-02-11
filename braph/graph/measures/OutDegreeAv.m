@@ -21,6 +21,9 @@ classdef OutDegreeAv < OutDegree
         end
     end
     methods(Static)
+         function measure_class = getClass()
+            measure_class = 'OutDegreeAv';
+        end
         function name = getName()
             name = 'Average Out Degree';
         end
@@ -38,7 +41,7 @@ classdef OutDegreeAv < OutDegree
         function bool = is_nodal()
             bool = false;
         end
-        function list = compatible_graph_list()
+        function list = getCompatibleGraphList()  
             list = { ...
                 'GraphBD', ...
                 'GraphWD' ...
