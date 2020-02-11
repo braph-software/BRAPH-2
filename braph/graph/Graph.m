@@ -87,6 +87,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
         end
         function sg = subgraph(g, nodes) %#ok<INUSD>
+            
             settings = g.getSettings(); %#ok<NASGU,PROPLC>
             sg = eval([g.getGraphCode() '(g.A(nodes,nodes), settings{:})']);
         end
