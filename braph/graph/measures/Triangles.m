@@ -8,14 +8,14 @@ classdef Triangles < Measure
         function calculate(m)
             g = m.getGraph();
             A = g.getA();
-            N = length(A);
+            N = g.nodenumber();
             if isa(g, 'GraphBU') || isa(g, 'GraphWU')
                 A3 = (A.^(1/3))^3;
-                temp = diag(A3)'/2;
-                temp(isnan(temp)) = 0; % Should return zeros, not nan
-                m.setValue(temp);
+                clustering = diag(A3)'/2;
+                clustering(isnan(clustering)) = 0; % Should return zeros, not nan
+                m.setValue(clustering);
             elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
-                temp = zeros(1,N);
+                clustering = zeros(1,N);
                 W = A.^(1/3); % No imaginary numbers for negative matrix, Binary matrix won't change
                 for u = 1:1:N
                     nodesout = find(W(u,:));
@@ -24,10 +24,10 @@ classdef Triangles < Measure
                         % We have a triangle if one of the out nodes goes to the one of the in nodes
                         % u--> out-node --> in-node --> u
                         temp_num = W(u,nodesout)*W(nodesout,nodesin)*W(nodesin,u);
-                        temp(u) = sum(sum(temp_num));
+                        clustering(u) = sum(sum(temp_num));
                     end
                 end
-                m.setValue(temp);
+                m.setValue(clustering);
             end
         end
     end
