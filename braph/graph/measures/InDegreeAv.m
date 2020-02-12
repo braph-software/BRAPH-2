@@ -12,7 +12,7 @@ classdef InDegreeAv < InDegree
             if g.is_measure_calculated('InDegree')
                 in_degree = g.getMeasureValue('InDegree');
             else
-                calculate@InDegree(m);
+                calculate@InDegree(g);
                 in_degree = m.value;
             end
             

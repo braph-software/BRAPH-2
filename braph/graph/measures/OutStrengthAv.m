@@ -12,7 +12,7 @@ classdef OutStrengthAv < OutStrength
             if g.is_measure_calculated('OutStrength')
                 out_strength = g.getMeasureValue('OutStrength');
             else
-                calculate@OutStrength(m);
+                calculate@OutStrength(g);
                 out_strength = m.value;
             end
             

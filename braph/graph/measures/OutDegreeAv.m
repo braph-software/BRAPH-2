@@ -12,7 +12,7 @@ classdef OutDegreeAv < OutDegree
             if g.is_measure_calculated('OutDegree')
                 out_degree = g.getMeasureValue('OutDegree');
             else
-                calculate@OutDegree(m);
+                calculate@OutDegree(g);
                 out_degree = m.value;
             end
             

@@ -12,7 +12,7 @@ classdef DegreeAv < Degree
             if g.is_measure_calculated('Degree')
                 degree = g.getMeasureValue('Degree');
             else
-                calculate@Degree(m);
+                calculate@Degree(g);
                 degree = m.value;
             end
             
