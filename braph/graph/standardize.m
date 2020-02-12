@@ -15,7 +15,7 @@ function B = standardize(A, varargin)
 standardize_rule = get_from_varargin('range', 'StandardizeRule', varargin{:});
 
 switch lower(standardize_rule)
-    case {'one'} % normalize-mean-zero-std-1
+    case {'one'} % one-rule
         B = A;
         B(B <0) = 0;
         B(B>1) = 1 ;
