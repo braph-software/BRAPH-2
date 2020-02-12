@@ -1,7 +1,7 @@
 % test GraphWU
 A = rand(randi(10));
 
-%% Test 1: GraphWU instantiate well
+%% Test 1: GraphWU instantiates well
 g = GraphWU(A);
 
 A = dediagonalize(A);
