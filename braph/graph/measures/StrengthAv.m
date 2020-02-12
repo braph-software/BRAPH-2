@@ -12,7 +12,7 @@ classdef StrengthAv < Strength
             if g.is_measure_calculated('Strength')
                 strength = g.getMeasureValue('Strength');
             else
-                calculate@Strength(g);
+                calculate@Strength(m);
                 strength = m.value;
             end
             

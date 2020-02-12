@@ -12,7 +12,7 @@ classdef InStrengthAv < InStrength
             if g.is_measure_calculated('InStrength')
                 in_strength = g.getMeasureValue('InStrength');
             else
-                calculate@InStrength(g);
+                calculate@InStrength(m);
                 in_strength = m.value;
             end
             
