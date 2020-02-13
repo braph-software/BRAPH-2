@@ -47,6 +47,13 @@ classdef Measure < handle & matlab.mixin.Copyable
             
             value = m.value;
         end
+        function str = toString(m)
+            str = [Measure.getClass(m) ' ' int2str(size(randn(2), 1)) ' rows x ' int2str(size(randn(2), 2)) ' columns'];
+        end
+         function disp(m)
+            disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
+            disp([' size: ' int2str(size(randn(2), 1)) ' rows x ' int2str(size(randn(2), 2)) ' columns'])
+        end
     end
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure
