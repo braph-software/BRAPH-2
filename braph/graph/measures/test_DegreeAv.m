@@ -30,27 +30,3 @@ average_degree_test = mean(degree_test);
 assert(isequal(average_degree.getValue(), average_degree_test), ...
     'BRAPH:DegreeAv:Bug', ...
     'DegreeAv is not beeing calculated correctly for GraphWU')
-
-%% Test 3: Degree get Class correctly
-g = GraphWU(A);
-average_degree = DegreeAv(g);
-
-assert(isequal(average_degree.getClass, 'DegreeAv'), ...
-    'BRAPH:DegreeAv:Bug', ...
-    'DegreeAv is not getting class correctly')
-
-%% Test 4: DegreeAv get Name correctly
-g = GraphWU(A);
-average_degree = DegreeAv(g);
-
-assert(isequal(average_degree.getName(), 'Average Degree'), ...
-    'BRAPH:DegreeAv:Bug', ...
-    'DegreeAv is not getting class correctly')
-
-%% Test 5: DegreeAv get Description works
-g = GraphWU(A);
-average_degree = DegreeAv(g);
-
-assert(ischar(average_degree.getDescription()), ...
-    'BRAPH:DegreeAv:Bug', ...
-    'DegreeAv is not getting class correctly')
