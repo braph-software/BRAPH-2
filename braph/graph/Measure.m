@@ -28,8 +28,6 @@ classdef Measure < handle & matlab.mixin.Copyable
         end
     end
     methods
-        % function str = tostring(g)
-        % function disp(g)
         function g = getGraph(m)
             g = m.g;
         end
@@ -47,12 +45,18 @@ classdef Measure < handle & matlab.mixin.Copyable
             
             value = m.value;
         end
-        function str = toString(m)
-            str = [Measure.getClass(m) ' ' int2str(size(randn(2), 1)) ' rows x ' int2str(size(randn(2), 2)) ' columns'];
+        function str = tostring(m)
+            value_measure = m.getValue();
+            rows = size(value_measure, 1);
+            cols = size(value_measure, 2);
+            str = [Measure.getClass(m) ' size:'  int2str(rows) ' rows x '  int2str(cols) ' columns'];
         end
          function disp(m)
+            value_measure = m.getValue();
+            rows = size(value_measure, 1);
+            cols = size(value_measure, 2);
             disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
-            disp([' size: ' int2str(size(randn(2), 1)) ' rows x ' int2str(size(randn(2), 2)) ' columns'])
+            disp([' size: ' int2str(rows)  ' rows x ' int2str(cols) ' columns'])
         end
     end
     methods (Abstract, Access=protected)
