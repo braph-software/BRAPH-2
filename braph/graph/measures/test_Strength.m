@@ -6,12 +6,12 @@ A = rand(randi(10));
 
 g = GraphWU(A);
 Strength = Strength(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-A = symmetrize(A);
-sA = sum(A, 1)';
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+A = max(A, A');
+strength_test = sum(A, 1)';
 
-assert(isequal(Strength.getValue, sA), ...
+assert(isequal(Strength.getValue, strength_test), ...
     'BRAPH:Strength:Bug', ...
     'Strength is not beeing calculated correctly for GraphWU')
 

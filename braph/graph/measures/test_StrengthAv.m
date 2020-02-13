@@ -6,13 +6,13 @@ A = rand(randi(10));
 
 g = GraphWU(A);
 StrengthAv = StrengthAv(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-A = symmetrize(A);
-sA = sum(A, 1)';
-av_sA = mean(sA);
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+A = max(A, A');
+strength_test = sum(A, 1)';
+average_strength_test = mean(strength_test);
 
-assert(isequal(StrengthAv.getValue, av_sA), ...
+assert(isequal(StrengthAv.getValue, average_strength_test), ...
     'BRAPH:StrengthAv:Bug', ...
     'StrengthAv is not beeing calculated correctly for GraphWU')
 

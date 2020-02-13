@@ -6,12 +6,12 @@ A = rand(randi(10));
 
 g = GraphWD(A);
 OutStrengthAv = OutStrengthAv(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-out_sA = sum(A, 2);
-out_sA_av = mean(out_sA);
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+out_strength_test = sum(A, 2);
+average_out_strength_test = mean(out_strength_test);
 
-assert(isequal(OutStrengthAv.getValue, out_sA_av), ...
+assert(isequal(OutStrengthAv.getValue, average_out_strength_test), ...
     'BRAPH:OutStrengthAv:Bug', ...
     'OutStrengthAv is not beeing calculated correctly for GraphWD')
 

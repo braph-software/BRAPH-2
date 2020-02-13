@@ -6,11 +6,11 @@ A = rand(randi(10));
 
 g = GraphWD(A);
 OutStrength = OutStrength(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-out_sA = sum(A, 2);
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+out_strength = sum(A, 2);
 
-assert(isequal(OutStrength.getValue, out_sA), ...
+assert(isequal(OutStrength.getValue, out_strength), ...
     'BRAPH:OutStrength:Bug', ...
     'OutStrength is not beeing calculated correctly for GraphWD')
 

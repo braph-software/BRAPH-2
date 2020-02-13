@@ -6,12 +6,12 @@ A = rand(randi(10));
 
 g = GraphBD(A);
 out_degree = OutDegree(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-A = binarize(A);
-out_dA = sum(A, 2);
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+A(A>0) = 1;
+out_degree_test = sum(A, 2);
 
-assert(isequal(out_degree.getValue, out_dA), ...
+assert(isequal(out_degree.getValue, out_degree_test), ...
     'BRAPH:OutDegree:Bug', ...
     'OutDegree is not beeing calculated correctly for GraphBD')
 
@@ -21,9 +21,9 @@ g = GraphWD(A);
 out_degree = OutDegree(g);
 A = dediagonalize(A);
 A = semipositivize(A);
-out_dA = sum(A, 2);
+out_degree_test = sum(A, 2);
 
-assert(isequal(out_degree.getValue, out_dA), ...
+assert(isequal(out_degree.getValue, out_degree_test), ...
     'BRAPH:OutDegree:Bug', ...
     'OutDegree is not beeing calculated correctly for GraphWD')
 

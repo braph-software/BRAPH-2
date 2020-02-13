@@ -5,56 +5,56 @@ A = rand(randi(10));
 %% Test 1: DegreeAv calculates correctly for GraphBU
 
 g = GraphBU(A);
-degree_av = DegreeAv(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-A = binarize(A);
-A = symmetrize(A);
-dA = sum(A, 2);
-dav_A = mean(dA);
+average_degree = DegreeAv(g);
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+A(A>0) = 1;
+A = max(A, A');
+degree_test = sum(A, 2);
+average_degree_test = mean(degree_test);
 
-assert(isequal(degree_av.getValue, dav_A), ...
+assert(isequal(average_degree.getValue, average_degree_test), ...
     'BRAPH:DegreeAv:Bug', ...
     'DegreeAv is not beeing calculated correctly for GraphBU')
 
 %% Test 2: DegreeAv calculates correctly for GraphWU
 
 g = GraphWU(A);
-degree_av = DegreeAv(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-A = symmetrize(A);
-A = binarize(A);
-dA = sum(A, 2);
-dav_A = mean(dA);
+average_degree = DegreeAv(g);
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+A(A>0) = 1;
+A = max(A, A');
+degree_test = sum(A, 2);
+average_degree_test = mean(degree_test);
 
-assert(isequal(degree_av.getValue, dav_A), ...
+assert(isequal(average_degree.getValue, average_degree_test), ...
     'BRAPH:DegreeAv:Bug', ...
     'DegreeAv is not beeing calculated correctly for GraphWU')
 
 %% Test 3: Degree get Class correctly
 
 g = GraphWU(A);
-degree_av = DegreeAv(g);
+average_degree = DegreeAv(g);
 
-assert(isequal(degree_av.getClass, 'DegreeAv'), ...
+assert(isequal(average_degree.getClass, 'DegreeAv'), ...
     'BRAPH:DegreeAv:Bug', ...
     'DegreeAv is not getting class correctly')
 
 %% Test 4: DegreeAv get Name correctly
 
 g = GraphWU(A);
-degree_av = DegreeAv(g);
+average_degree = DegreeAv(g);
 
-assert(isequal(degree_av.getName(), 'Average Degree'), ...
+assert(isequal(average_degree.getName(), 'Average Degree'), ...
     'BRAPH:DegreeAv:Bug', ...
     'DegreeAv is not getting class correctly')
 
 %% Test 5: DegreeAv get Description works
 
 g = GraphWU(A);
-degree_av = DegreeAv(g);
+average_degree = DegreeAv(g);
 
-assert(ischar(degree_av.getDescription()), ...
+assert(ischar(average_degree.getDescription()), ...
     'BRAPH:DegreeAv:Bug', ...
     'DegreeAv is not getting class correctly')

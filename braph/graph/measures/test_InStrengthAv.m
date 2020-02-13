@@ -6,13 +6,13 @@ A = rand(randi(10));
 
 g = GraphWD(A);
 InStrengthAv = InStrengthAv(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-in_sA = sum(A, 1)';
-in_sA_av = mean(in_sA);
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+in_strength = sum(A, 1)';
+average_in_strength = mean(in_strength);
 
 
-assert(isequal(InStrengthAv.getValue, in_sA_av), ...
+assert(isequal(InStrengthAv.getValue, average_in_strength), ...
     'BRAPH:InStrengthAv:Bug', ...
     'InStrengthAv is not beeing calculated correctly for GraphWD')
 

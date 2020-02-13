@@ -6,12 +6,12 @@ A = rand(randi(10));
 
 g = GraphBD(A);
 in_degree = InDegree(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-A = binarize(A);
-in_dA = sum(A, 1)';
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+A(A>0) = 1;
+in_degree_test = sum(A, 1)';
 
-assert(isequal(in_degree.getValue, in_dA), ...
+assert(isequal(in_degree.getValue, in_degree_test), ...
     'BRAPH:InDegree:Bug', ...
     'InDegree is not beeing calculated correctly for GraphBD')
 
@@ -19,11 +19,11 @@ assert(isequal(in_degree.getValue, in_dA), ...
 
 g = GraphWD(A);
 in_degree = InDegree(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-in_dA = sum(A, 1)';
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+in_degree_test = sum(A, 1)';
 
-assert(isequal(in_degree.getValue, in_dA), ...
+assert(isequal(in_degree.getValue, in_degree_test), ...
     'BRAPH:InDegree:Bug', ...
     'InDegree is not beeing calculated correctly for GraphWD')
 

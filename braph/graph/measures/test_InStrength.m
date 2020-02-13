@@ -6,11 +6,11 @@ A = rand(randi(10));
 
 g = GraphWD(A);
 InStrength = InStrength(g);
-A = dediagonalize(A);
-A = semipositivize(A);
-in_sA = sum(A, 1)';
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+in_strength = sum(A, 1)';
 
-assert(isequal(InStrength.getValue, in_sA), ...
+assert(isequal(InStrength.getValue, in_strength), ...
     'BRAPH:InStrength:Bug', ...
     'InStrength is not beeing calculated correctly for GraphWD')
 
