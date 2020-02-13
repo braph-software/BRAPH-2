@@ -79,8 +79,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             if isKey(g.mdict, measure_class)
                 m = g.mdict(measure_class);
             else
-                settings = g.getSettings();
-                m = Measure.getMeasure(measure_class, g, settings{:});
+                m = Measure.getMeasure(measure_class, g, g.settings{:});
                 g.mdict(measure_class) = m;
             end 
         end
