@@ -3,12 +3,12 @@ A = rand(randi(10));
 
 %% Test 1: OutStrength calculates correctly for GraphWD
 g = GraphWD(A);
-OutStrength = OutStrength(g);
+out_strength = OutStrength(g);
 
 A(1:length(A)+1:end) = 0;
 A(A<0) = 0;
-out_strength = sum(A, 2);
+out_strength_test = sum(A, 2);
 
-assert(isequal(OutStrength.getValue(), out_strength), ...
+assert(isequal(out_strength.getValue(), out_strength_test), ...
     'BRAPH:OutStrength:Bug', ...
     'OutStrength is not beeing calculated correctly for GraphWD')

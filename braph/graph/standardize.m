@@ -29,7 +29,11 @@ switch lower(standardize_rule)
         B(B<0) = 0;
         B(B>1) = 1 ;
     otherwise  % 'range' | 'compress' - scaled interval
-        B = A - min(min(A)) / (max(max(A)) - min(min(A)));
+        if numel(A) > 1
+            B = A - min(A(:)) / (max(A(:)) - min(A(:)));
+        else
+            B = 0;
+        end
 end
 
 end
