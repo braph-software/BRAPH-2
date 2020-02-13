@@ -7,17 +7,14 @@ function B = standardize(A, varargin)
 % B = STANDARDIZE(A, 'StandardizeRule', RULE) 
 % normalizes the matrix A using the specified RULE.
 % Admissible RULE options are:
-%       RULE    -   'range' (default) | 'compress' |'one' | '1' | 1 | 'threshold'
-%                   'range' - normalizes the matrix A in order to have
-%                   values scaled between 0 and 1 by using a linear function
-%                   'compress' - normalizes the matrix A in order to have
-%                   values scaled between 0 and 1 by using a linear function
-%                   'one' -  normalizes the matrix A following one-rule: 
-%                   by converting negative values to zero and values larger 
-%                   than 1 to 1
-%                   '1' - normalizes the matrix A following one-rule
-%                   1 - normalizes the matrix A following one-rule
-%                   'threshold' - normalizes the matrix A following one-rule
+% RULE = 'range' (default) - normalizes the matrix A in order to have
+%                   values scaled between 0 and 1 by using a linear
+%                   function.
+%        'compress' - normalizes the matrix A in order to have values
+%                   scaled between 0 and 1 by using a linear function.
+%        'one' | '1' | 1 | 'threshold' - normalizes the matrix A following
+%                   one-rule: by converting negative values to zero and
+%                   values larger than 1 to 1.
 %
 % See also BINARIZE, DEDIAGONALIZE, SEMIPOSITIVIZE, SYMMETRIZE.
 
