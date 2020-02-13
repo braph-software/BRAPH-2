@@ -2,7 +2,6 @@
 A = rand(randi(10));
 
 %% Test 1: OutDegree calculates correctly for GraphBD
-
 g = GraphBD(A);
 out_degree = OutDegree(g);
 
@@ -16,7 +15,6 @@ assert(isequal(out_degree.getValue, out_degree_test), ...
     'OutDegree is not beeing calculated correctly for GraphBD')
 
 %% Test 2: OutDegree calculates correctly for GraphWD
-
 g = GraphWD(A);
 out_degree = OutDegree(g);
 
@@ -29,7 +27,6 @@ assert(isequal(out_degree.getValue, out_degree_test), ...
     'OutDegree is not beeing calculated correctly for GraphWD')
 
 %% Test 3: OutDegree get Class correctly
-
 g = GraphWD(A);
 out_degree = OutDegree(g);
 
@@ -38,7 +35,6 @@ assert(isequal(out_degree.getClass, 'OutDegree'), ...
     'OutDegree is not getting class correctly')
 
 %% Test 4: OutDegree get Name correctly
-
 g = GraphWD(A);
 out_degree = OutDegree(g);
 
@@ -47,7 +43,6 @@ assert(isequal(out_degree.getName(), 'Out-Degree'), ...
     'OutDegree is not getting class correctly')
 
 %% Test 5: OutDegree get Description works
-
 g = GraphWD(A);
 out_degree = OutDegree(g);
 

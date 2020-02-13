@@ -2,7 +2,6 @@
 A = rand(randi(10));
 
 %% Test 1: InDegree calculates correctly for GraphBD
-
 g = GraphBD(A);
 in_degree = InDegree(g);
 
@@ -16,7 +15,6 @@ assert(isequal(in_degree.getValue(), in_degree_test), ...
     'InDegree is not beeing calculated correctly for GraphBD')
 
 %% Test 2: InDegree calculates correctly for GraphWD
-
 g = GraphWD(A);
 in_degree = InDegree(g);
 
@@ -29,7 +27,6 @@ assert(isequal(in_degree.getValue(), in_degree_test), ...
     'InDegree is not beeing calculated correctly for GraphWD')
 
 %% Test 3: InDegree get Class correctly
-
 g = GraphWD(A);
 in_degree = InDegree(g);
 
@@ -38,7 +35,6 @@ assert(isequal(in_degree.getClass(), 'InDegree'), ...
     'InDegree is not getting class correctly')
 
 %% Test 4: InDegree get Name correctly
-
 g = GraphWD(A);
 in_degree = InDegree(g);
 
@@ -47,7 +43,6 @@ assert(isequal(in_degree.getName(), 'In-Degree'), ...
     'InDegree is not getting class correctly')
 
 %% Test 5: InDegree get Description works
-
 g = GraphWD(A);
 in_degree = InDegree(g);
 

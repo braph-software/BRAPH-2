@@ -2,7 +2,6 @@
 A = rand(randi(10));
 
 %% Test 1: StrengthAv calculates correctly for GraphWU
-
 g = GraphWU(A);
 StrengthAv = StrengthAv(g);
 
@@ -17,7 +16,6 @@ assert(isequal(StrengthAv.getValue(), average_strength_test), ...
     'StrengthAv is not beeing calculated correctly for GraphWU')
 
 %% Test 2: StrengthAv get Class correctly
-
 g = GraphWU(A);
 StrengthAv = StrengthAv(g);
 
@@ -26,7 +24,6 @@ assert(isequal(StrengthAv.getClass(), 'StrengthAv'), ...
     'StrengthAv is not getting class correctly')
 
 %% Test 3: StrengthAv get Name correctly
-
 g = GraphWU(A);
 StrengthAv = StrengthAv(g);
 
@@ -35,7 +32,6 @@ assert(isequal(StrengthAv.getName(), 'Average Strength'), ...
     'StrengthAv is not getting class correctly')
 
 %% Test 4: StrengthAv get Description works
-
 g = GraphWU(A);
 StrengthAv = StrengthAv(g);
 
