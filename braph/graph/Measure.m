@@ -1,5 +1,5 @@
 classdef Measure < handle
-    properties (GetAccess=public, SetAccess=protected)
+    properties (GetAccess=protected, SetAccess=protected)
         g  % graph
         settings  % structure with the constructor varagin
         value  % graph measure value
