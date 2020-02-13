@@ -62,8 +62,13 @@ classdef Graph < handle & matlab.mixin.Copyable
         function n = nodenumber(g)
             n = length(g.getA());
         end
-        function setting = getSettings(g, setting_code)
-            setting = get_from_varargin([], setting_code, g.settings{:});
+        function res = getSettings(g, setting_code)
+
+            if nargin<2
+                res = g.settings;
+            else
+                res = get_from_varargin([], setting_code, g.settings{:});
+            end
         end
         function m = getMeasure(g, measure_class)
             

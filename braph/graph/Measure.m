@@ -33,8 +33,13 @@ classdef Measure < handle
         function g = getGraph(m)
             g = m.g;
         end
-        function setting = getSettings(m, setting_code)
-            setting = get_from_varargin([], setting_code, m.settings{:});
+        function res = getSettings(m, setting_code)
+            
+            if nargin<2
+                res = m.settings;
+            else
+                res = get_from_varargin([], setting_code, m.settings{:});
+            end
         end
         function bool = is_value_calculated(m)
             bool = ~isempty(m.value);
