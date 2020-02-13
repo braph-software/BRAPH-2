@@ -1,4 +1,4 @@
-classdef Measure < handle & matlab.mixin.Copyable
+classdef Measure < handle
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
         settings  % structure with the constructor varagin
