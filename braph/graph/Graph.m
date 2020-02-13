@@ -96,7 +96,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
         function sg = subgraph(g, nodes)            
             settings = g.getSettings(); %#ok<PROPLC>            
-            sg = Graph.getGraph(class(g), g.A(nodes,nodes), settings{:}); %#ok<PROPLC>
+            sg = Graph.getGraph(Graph.getClass(g), g.A(nodes,nodes), settings{:}); %#ok<PROPLC>
         end
         function ga = nodeattack(g, nodes)            
             A = g.getA(); %#ok<PROPLC>
@@ -107,13 +107,13 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
             
             settings = g.getSettings(); %#ok<PROPLC>            
-            ga = Graph.getGraph(class(g), A, settings{:}); %#ok<PROPLC>
+            ga = Graph.getGraph(Graph.getClass(g), A, settings{:}); %#ok<PROPLC>
         end
         function ga = edgeattack(g, nodes1, nodes2)                        
             A = g.getA(); %#ok<PROPLC>
             A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<PROPLC>
             settings = g.getSettings(); %#ok<PROPLC>
-            ga = Graph.getGraph(class(g), A, settings{:}); %#ok<PROPLC>
+            ga = Graph.getGraph(Graph.getClass(g), A, settings{:}); %#ok<PROPLC>
         end
     end
     methods (Static)
