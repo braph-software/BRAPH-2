@@ -46,17 +46,11 @@ classdef Measure < handle & matlab.mixin.Copyable
             value = m.value;
         end
         function str = tostring(m)
-            value_measure = m.getValue();
-            rows = size(value_measure, 1);
-            cols = size(value_measure, 2);
-            str = [Measure.getClass(m) ' size:'  int2str(rows) ' rows x '  int2str(cols) ' columns'];
+            str = [Measure.getClass(m) ' size:'  int2str(size(m.getValue(), 1)) ' rows x '  int2str(size(m.getValue(), 2)) ' columns'];
         end
          function disp(m)
-            value_measure = m.getValue();
-            rows = size(value_measure, 1);
-            cols = size(value_measure, 2);
             disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
-            disp([' size: ' int2str(rows)  ' rows x ' int2str(cols) ' columns'])
+            disp([' value: ' int2str(size(m.getValue(), 1))  ' rows x ' int2str(size(m.getValue(), 2)) ' columns'])
         end
     end
     methods (Abstract, Access=protected)
