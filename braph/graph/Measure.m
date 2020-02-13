@@ -28,6 +28,19 @@ classdef Measure < handle & matlab.mixin.Copyable
         end
     end
     methods
+        function str = tostring(m)
+            str = [Measure.getClass(m) ' size:'  int2str(size(m.getValue(), 1)) ' rows x '  int2str(size(m.getValue(), 2)) ' columns'];
+        end
+         function disp(m)
+            disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
+            disp([' value: ' int2str(size(m.getValue(), 1))  ' rows x ' int2str(size(m.getValue(), 2)) ' columns'])
+            disp(['graph: ' m.getGraph().tostring()]);
+            disp([' settings']); %#ok<NBRAK>
+            settings = m.getSettings(); %#ok<PROP>
+            for i = 1:2:length(settings) %#ok<PROP>
+                disp(['  ' int2str(i) ' - ' settings{i} ' - ' tostring(settings{i+1})]); %#ok<PROP>
+            end
+        end
         function g = getGraph(m)
             g = m.g;
         end
@@ -44,14 +57,7 @@ classdef Measure < handle & matlab.mixin.Copyable
             end
             
             value = m.value;
-        end
-        function str = tostring(m)
-            str = [Measure.getClass(m) ' size:'  int2str(size(m.getValue(), 1)) ' rows x '  int2str(size(m.getValue(), 2)) ' columns'];
-        end
-         function disp(m)
-            disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
-            disp([' value: ' int2str(size(m.getValue(), 1))  ' rows x ' int2str(size(m.getValue(), 2)) ' columns'])
-        end
+        end      
     end
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure
