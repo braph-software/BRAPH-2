@@ -5,7 +5,7 @@ A = rand(randi(10));
 g = GraphWD(A);
 
 A = dediagonalize(A);
-A = semipositivize(A);  
+A = semipositivize(A);
 
 assert(isequal(g.getA(), A), ...
        'BRAPH:GraphWD:Bug', ...

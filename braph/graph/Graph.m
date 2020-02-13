@@ -93,9 +93,10 @@ classdef Graph < handle & matlab.mixin.Copyable
         function value = getMeasureValue(g, measure_class)
             value = g.getMeasure(measure_class).getValue();
         end
-        function sg = subgraph(g, nodes)            
-            settings = g.getSettings(); %#ok<PROPLC>            
-            sg = Graph.getGraph(Graph.getClass(g), g.A(nodes,nodes), settings{:}); %#ok<PROPLC>
+        function sg = subgraph(g, nodes)  
+            A = g.getA(); %#ok<PROPLC>
+            settings = g.getSettings(); %#ok<PROPLC>
+            sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), settings{:}); %#ok<PROPLC>
         end
         function ga = nodeattack(g, nodes)            
             A = g.getA(); %#ok<PROPLC>
