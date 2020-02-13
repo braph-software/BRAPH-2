@@ -1,25 +1,17 @@
 function B = symmetrize(A, varargin)
 % SYMMETRIZE symmetrizes a matrix
 %
-% B = SYMETRIZE(A) symmetrizes the matrix A with default RULE 'max'.s
+% B = SYMETRIZE(A) symmetrizes the matrix A with default RULE 'max'.
 %
 % B = SYMMETRIZE(A, 'SymmetryzeRule', RULE) symmetrizes the matrix A by the
 % Symmetrize RULE specified by the PropertyName.
 % Admissible RULE options are:
-%       RULE    -   'max' (default) | 'sum' | 'add' | 'av' | 'average' |
-%                   'min' | 'minimum' | 'or' | 'weak'
-%                   'max' - maximum between inconnection and outconnection (default)
-%                   'sum' - sum of inconnection and outconnection
-%                   'add' - sum of inconnection and outconnection
-%                   'av' - average of inconnection and outconnection
-%                   'average' - average of inconnection and
-%                               outconnnection
-%                   'min' - minimum between inconnection and outconnection
-%                   'minimum' - minimum between inconnection and outconnection
-%                   'or' - minimum between inconnection and outconnection
-%                   'weak' - minimum between inconnection and outconnection
+% RULE = 'max' (default) - maximum between inconnection and outconnection.
+%        'sum' | 'add' - sum of inconnection and outconnection.
+%        'av' | 'average' - average of inconnection and outconnection.
+%        'min' | 'minimum' |'or' | 'weak' - minimum between inconnection and outconnection.
 % 
-% See also DEDIAGONALIZE, SEMIPOSITIVIZE, BINARIZE.
+% See also BINARIZE, DEDIAGONALIZE, SEMIPOSITIVIZE, STANDARDIZE.
 
 % Author: Emiliano Gomez & Giovanni Volpe
 % Date: 2020/02/07
