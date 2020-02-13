@@ -78,3 +78,19 @@ for i = 1:1:length(graph_class_list)
         ['BRAPH:Gra' graph_class 'ph:DirectedOrUndirected'], ...
         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
 end
+
+%% Test 5: Test subgraph
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    n = randi([1 10],1,1);
+    A =  rand(n);
+    g = Graph.getGraph(graph_class, A);
+    nodes = [randi([1 n],1,1), randi([1 n],1,1)];
+    sub_graph = g.subgraph(nodes);
+    removing_nodes_A = A(nodes, nodes);
+    removed_nodes_g = Graph.getGraph(graph_class, removing_nodes_A);
+    
+    assert( isequal(g.getA(), removed_nodes_g.getA()), ...
+        ['BRAPH:Gra' graph_class 'ph:DirectedOrUndirected'], ...
+        [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
+end
