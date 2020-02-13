@@ -9,7 +9,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             mdict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
             settings = get_from_varargin(varargin, 'Settings', varargin{:});
-                        
+
             g.A = A;
             g.mdict = mdict;
             g.settings = settings;
@@ -19,23 +19,27 @@ classdef Graph < handle & matlab.mixin.Copyable
             % Make a shallow copy
             g_copy = copyElement@matlab.mixin.Copyable(g);
             
+            % Make a deep copy of settings
+            g_copy.settings = copy_varargin(g.settings{:});
+
             % Make a deep copy of mdict
             g_copy.mdict = containers.Map;
             measures = values(g.mdict);
             for i = 1:1:length(measures)
                 m = measures{i};
+                m_settings = m.getSettings();
                 if m.is_value_calculated()
                     g_copy.mdict(m.getMeasureCode()) = Measure.getMeasure( ...
                         m.getMeasureCode(), ...
                         g_copy, ...
                         'Value', m.getValue(), ...
-                        'Settings', m.getSettings() ...
+                        'Settings', copy_varargin(m_settings{:}) ...
                         );
                 else
                     g_copy.mdict(m.getMeasureCode()) = Measure.getMeasure( ...
                         m.getMeasureCode(), ...
                         g_copy, ...
-                        'Settings', m.getSettings() ...
+                        'Settings', copy_varargin(m_settings{:}) ...
                         );                    
                 end
             end
@@ -53,7 +57,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             disp([' settings']); %#ok<NBRAK>
             settings = g.getSettings(); %#ok<PROP>
             for i = 1:2:length(settings) %#ok<PROP>
-                disp(['  ' int2str(i) ' - ' settings{i} ' - ' tostring(settings{i+1})]); %#ok<PROP>
+                disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
             end
         end
         function A = getA(g)
@@ -62,15 +66,20 @@ classdef Graph < handle & matlab.mixin.Copyable
         function n = nodenumber(g)
             n = length(g.getA());
         end
-        function settings = getSettings(g)
-            settings = g.settings;
+        function res = getSettings(g, setting_code)
+
+            if nargin<2
+                res = g.settings;
+            else
+                res = get_from_varargin([], setting_code, g.settings{:});
+            end
         end
         function m = getMeasure(g, measure_class)
             
             if isKey(g.mdict, measure_class)
                 m = g.mdict(measure_class);
             else
-                m = Measure.getMeasure(measure_class, g, g.getSettings());
+                m = Measure.getMeasure(measure_class, g, g.settings{:});
                 g.mdict(measure_class) = m;
             end 
         end
