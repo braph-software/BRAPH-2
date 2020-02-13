@@ -4,6 +4,7 @@ classdef GraphWD < Graph
 
             A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
             A = semipositivize(A, varargin{:});  % removes negative weights
+            A = standardize(A, varargin{:});  % ensures all weights are between 0 and 1
 
             g = g@Graph(A, varargin{:});
         end
