@@ -93,32 +93,26 @@ classdef Graph < handle & matlab.mixin.Copyable
         function value = getMeasureValue(g, measure_class)
             value = g.getMeasure(measure_class).getValue();
         end
-        function sg = subgraph(g, nodes)
-            
-            settings = g.getSettings(); %#ok<PROPLC>
-            
-            sg = Graph.getGraph(g.getGraphCode(), g.A(nodes,nodes), settings{:}); %#ok<PROPLC>
+        function sg = subgraph(g, nodes)            
+            settings = g.getSettings(); %#ok<PROPLC>            
+            sg = Graph.getGraph(Graph.getClass(g), g.A(nodes,nodes), settings{:}); %#ok<PROPLC>
         end
-        function ga = nodeattack(g, nodes)
-            
+        function ga = nodeattack(g, nodes)            
             A = g.getA(); %#ok<PROPLC>
+            
             for i = 1:1:numel(nodes)
                 A(nodes(i), :) = 0; %#ok<PROPLC>
                 A(:, nodes(i)) = 0; %#ok<PROPLC>
             end
             
-            settings = g.getSettings(); %#ok<PROPLC>
-            
-            ga = Graph.getGraph(g.getGraphCode(), A, settings{:}); %#ok<PROPLC>
+            settings = g.getSettings(); %#ok<PROPLC>            
+            ga = Graph.getGraph(Graph.getClass(g), A, settings{:}); %#ok<PROPLC>
         end
-        function ga = edgeattack(g, nodes1, nodes2)
-                        
+        function ga = edgeattack(g, nodes1, nodes2)                        
             A = g.getA(); %#ok<PROPLC>
             A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<PROPLC>
-
             settings = g.getSettings(); %#ok<PROPLC>
-
-            ga = Graph.getGraph(g.getGraphCode(), A, settings{:}); %#ok<PROPLC>
+            ga = Graph.getGraph(Graph.getClass(g), A, settings{:}); %#ok<PROPLC>
         end
     end
     methods (Static)
