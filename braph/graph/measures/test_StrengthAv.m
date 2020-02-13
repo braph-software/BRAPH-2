@@ -14,27 +14,3 @@ average_strength_test = mean(strength_test);
 assert(isequal(StrengthAv.getValue(), average_strength_test), ...
     'BRAPH:StrengthAv:Bug', ...
     'StrengthAv is not beeing calculated correctly for GraphWU')
-
-%% Test 2: StrengthAv get Class correctly
-g = GraphWU(A);
-StrengthAv = StrengthAv(g);
-
-assert(isequal(StrengthAv.getClass(), 'StrengthAv'), ...
-    'BRAPH:StrengthAv:Bug', ...
-    'StrengthAv is not getting class correctly')
-
-%% Test 3: StrengthAv get Name correctly
-g = GraphWU(A);
-StrengthAv = StrengthAv(g);
-
-assert(isequal(StrengthAv.getName(), 'Average Strength'), ...
-    'BRAPH:StrengthAv:Bug', ...
-    'StrengthAv is not getting class correctly')
-
-%% Test 4: StrengthAv get Description works
-g = GraphWU(A);
-StrengthAv = StrengthAv(g);
-
-assert(ischar(StrengthAv.getDescription()), ...
-    'BRAPH:StrengthAv:Bug', ...
-    'StrengthAv is not getting class correctly')
