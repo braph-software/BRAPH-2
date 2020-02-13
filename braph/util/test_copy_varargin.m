@@ -1,6 +1,6 @@
 % test copy_varargin
-g = GraphBU(randn(3), 'ddd', 1);
-m = Degree(g);
+g = GraphBU(randn(3), 'hg', 1);
+m = Degree(g, 'hm', 2);
 varargin = {1, 2, 3, 'Four', 'Five', m, g};
 
 varargin_copy = copy_varargin(varargin{:});
