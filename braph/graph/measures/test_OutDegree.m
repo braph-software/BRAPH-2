@@ -25,27 +25,3 @@ out_degree_test = sum(A, 2);
 assert(isequal(out_degree.getValue, out_degree_test), ...
     'BRAPH:OutDegree:Bug', ...
     'OutDegree is not beeing calculated correctly for GraphWD')
-
-%% Test 3: OutDegree get Class correctly
-g = GraphWD(A);
-out_degree = OutDegree(g);
-
-assert(isequal(out_degree.getClass, 'OutDegree'), ...
-    'BRAPH:OutDegree:Bug', ...
-    'OutDegree is not getting class correctly')
-
-%% Test 4: OutDegree get Name correctly
-g = GraphWD(A);
-out_degree = OutDegree(g);
-
-assert(isequal(out_degree.getName(), 'Out-Degree'), ...
-    'BRAPH:OutDegree:Bug', ...
-    'OutDegree is not getting class correctly')
-
-%% Test 5: OutDegree get Description works
-g = GraphWD(A);
-out_degree = OutDegree(g);
-
-assert(ischar(out_degree.getDescription()), ...
-    'BRAPH:OutDegree:Bug', ...
-    'OutDegree is not getting class correctly')
