@@ -5,13 +5,13 @@ A = rand(randi(10));
 g = GraphBU(A);
 degree = Degree(g);
 
-A = dediagonalize(A);
-A = semipositivize(A);
-A = binarize(A);
-A = symmetrize(A);
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+A = max(A, A');
+A(A>0) = 1;
 degree_test = sum(A, 2);
 
-assert(isequal(degree.getValue(0, degree_test), ...
+assert(isequal(degree.getValue(), degree_test), ...
     'BRAPH:Degree:Bug', ...
     'Degree is not beeing calculated correctly for GraphBU')
 
@@ -19,10 +19,10 @@ assert(isequal(degree.getValue(0, degree_test), ...
 g = GraphWU(A);
 degree = Degree(g);
 
-A = dediagonalize(A);
-A = semipositivize(A);
-A = symmetrize(A);
-A = binarize(A);
+A(1:length(A)+1:end) = 0;
+A(A<0) = 0;
+A = max(A, A');
+A(A>0) = 1;
 degree_test = sum(A, 2);
 
 assert(isequal(degree.getValue(), degree_test), ...
