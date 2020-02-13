@@ -43,17 +43,11 @@ classdef Graph < handle & matlab.mixin.Copyable
     end
     methods
         function str = tostring(g)
-            graph_matrix =  g.getA();
-            rows = size(graph_matrix, 1);
-            cols = size(graph_matrix, 2);
-            str = [Graph.getClass(g) ' ' int2str(rows) ' rows x ' int2str(cols) ' columns'];
+            str = [Graph.getClass(g) ' ' int2str(size(g.getA(), 1)) ' rows x ' int2str(size(g.getA(), 2)) ' columns'];
         end
         function disp(g)
-            graph_matrix =  g.getA();
-            rows = size(graph_matrix, 1);
-            cols = size(graph_matrix, 2);
             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
-            disp([' size: ' int2str(rows) ' rows x ' int2str(cols) ' columns'])
+            disp([' size: ' int2str(size(g.getA(), 1)) ' rows x ' int2str(size(g.getA(), 2)) ' columns'])
             disp([' measures: ' int2str(length(g.mdict))]);
             disp([' settings']); %#ok<NBRAK>
             settings = g.getSettings(); %#ok<PROP>
