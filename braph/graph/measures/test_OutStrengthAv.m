@@ -1,7 +1,7 @@
 % test OutStrengthAv
 A = rand(randi(10));
 
-%% Test 1: OutStrengthAv calculates correctly for GraphWD
+%% Test 1: Calculation GraphWD
 g = GraphWD(A);
 out_strength_av = OutStrengthAv(g);
 

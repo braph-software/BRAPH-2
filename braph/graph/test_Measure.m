@@ -1,7 +1,7 @@
 % test Measure
 measure_class_list = Measure.getList();
 
-%% Test 1: Check all measures are not abstract
+%% Test 1: All measures not abstract
 for i = 1:1:length(measure_class_list)
     measure_class = measure_class_list{i};
 
@@ -25,7 +25,7 @@ for i = 1:1:length(measure_class_list)
     end
 end
 
-%% Test 2: Check implementation of static functions
+%% Test 2: Implementation static methods
 for i = 1:1:length(measure_class_list)
     measure_class = measure_class_list{i};
     

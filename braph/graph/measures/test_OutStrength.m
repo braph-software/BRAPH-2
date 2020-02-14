@@ -1,7 +1,7 @@
 % test OutStrength
 A = rand(randi(10));
 
-%% Test 1: OutStrength calculates correctly for GraphWD
+%% Test 1: Calculation GraphWD
 g = GraphWD(A);
 out_strength = OutStrength(g);
 

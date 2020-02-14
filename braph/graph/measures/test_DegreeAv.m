@@ -1,7 +1,7 @@
 % test DegreeAv
 A = rand(randi(10));
 
-%% Test 1: DegreeAv calculates correctly for GraphBU
+%% Test 1: Calculation GraphBU
 g = GraphBU(A);
 degree_av = DegreeAv(g);
 
@@ -16,7 +16,7 @@ assert(isequal(degree_av.getValue(), degree_av_test), ...
     'BRAPH:DegreeAv:Bug', ...
     'DegreeAv is not beeing calculated correctly for GraphBU')
 
-%% Test 2: DegreeAv calculates correctly for GraphWU
+%% Test 2: Calculation GraphWU
 g = GraphWU(A);
 degree_av = DegreeAv(g);
 

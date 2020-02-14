@@ -1,14 +1,14 @@
 % test Measure
 graph_class_list = Graph.getList();
 
-%% Test 1: Check all graphs are not abstract
+%% Test 1: All graphs not abstract
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
 	A = rand(randi(10));
     g = Graph.getGraph(graph_class, A);
 end
 
-%% Test 2: Check implementation of static functions
+%% Test 2: Implementation static methods
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
 	A = rand(randi(10));
@@ -79,7 +79,7 @@ for i = 1:1:length(graph_class_list)
         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
 end
 
-%% Test 5: Test Graph copy method
+%% Test 5: Copy
 for i = 1:1:length(graph_class_list)
     A = rand(randi(10));
     graph_class = graph_class_list{i};
@@ -111,7 +111,7 @@ for i = 1:1:length(graph_class_list)
     end
 end
 
-%% Test 6: Test subgraph
+%% Test 6: Subgraph
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     n = randi(10);

@@ -15,3 +15,9 @@ results = runtests({ ...
 
 
 results_table = table(results)
+
+if all([results(:).Passed])
+    disp('*** All good! ***')
+else
+    disp('*** Something went wrong! ***')
+end

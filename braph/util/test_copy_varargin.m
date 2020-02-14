@@ -5,14 +5,14 @@ varargin = {1, 2, 3, 'Four', 'Five', m, g};
 
 varargin_copy = copy_varargin(varargin{:});
 
-%% Test 1: Check general functionality
+%% Test 1: General functionality
 for i = 1:1:length(varargin)
     assert(isequal(varargin(i), varargin_copy(i)), ...
         'BRAPH:copy_varargin:Bug', ...
         'Element not copied correctly.')
 end
 
-%% Test 2: Handle objects are shallow-copied
+%% Test 2: Handle objects shallow-copied
 m_copy = varargin_copy{6};  % should NOT make a deep copy of the Measure
 
 assert(m.is_value_calculated() == false, ...
@@ -30,7 +30,7 @@ assert(m_copy.is_value_calculated() == true, ...
         'BRAPH:copy_varargin:Bug', ...
         'Handle object not copied correctly.')
 
-%% Test 3: Copiable objects are deep-copied
+%% Test 3: Copiable objects deep-copied
 g_copy = varargin_copy{7};
 
 assert(g.getMeasure('Degree').is_value_calculated() == false, ...

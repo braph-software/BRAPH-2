@@ -1,7 +1,7 @@
 % test StrengthAv
 A = rand(randi(10));
 
-%% Test 1: StrengthAv calculates correctly for GraphWU
+%% Test 1: Calculation GraphWU
 g = GraphWU(A);
 strength_av = StrengthAv(g);
 
