@@ -79,7 +79,38 @@ for i = 1:1:length(graph_class_list)
         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
 end
 
-%% Test 5: Test subgraph
+%% Test 5: Test Graph copy method
+for i = 1:1:length(graph_class_list)
+    A = rand(randi(10));
+    graph_class = graph_class_list{i};
+    g = Graph.getGraph(graph_class, A);
+
+    g_copy = copy(g);
+    
+    measure_class_list = g.getCompatibleMeasureList();
+    for j = 1:1:length(measure_class_list)
+        measure_class = measure_class_list{j};
+        g.getMeasure(measure_class).getValue();
+    end
+    for j = 1:1:length(measure_class_list)
+        assert(g.is_measure_calculated(measure_class) ~= g_copy.is_measure_calculated(measure_class), ...
+            ['BRAPH:' graph_class ':Copy'], ...
+            [graph_class '.copy() not working properly'])
+        assert(isequal(g.getMeasure(measure_class).getGraph(), g), ...
+            ['BRAPH:' graph_class ':Copy'], ...
+            [graph_class '.copy() not working properly'])
+        assert(isequal(g_copy.getMeasure(measure_class).getGraph(), g_copy), ...
+            ['BRAPH:' graph_class ':Copy'], ...
+            [graph_class '.copy() not working properly'])
+        assert(~isequal(g.getMeasure(measure_class).getGraph(), g_copy), ...
+            ['BR~APH:' graph_class ':Copy'], ...
+            [graph_class '.copy() not working properly'])
+        assert(~isequal(g_copy.getMeasure(measure_class).getGraph(), g), ...
+            ['BRAPH:' graph_class ':Copy'], ...
+            [graph_class '.copy() not working properly'])
+    end
+
+%% Test 6: Test subgraph
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     n = randi(10);
@@ -96,4 +127,5 @@ for i = 1:1:length(graph_class_list)
     assert( isequal(sg.getA(), sg_test.getA()), ...
         ['BRAPH:' graph_class ':Subgraph'], ...
         [graph_class '.subgraph() is not working' ])
+
 end
