@@ -4,60 +4,60 @@ graph_class_list = Graph.getList();
 %% Test 1: All graphs not abstract
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
-	A = rand(randi(10));
+    A = rand(randi(10));
     g = Graph.getGraph(graph_class, A);
 end
 
 %% Test 2: Implementation static methods
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
-	A = rand(randi(10));
+    A = rand(randi(10));
     g = Graph.getGraph(graph_class, A);
-
+    
     assert(isequal(g.getClass(), graph_class), ...
-    ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-    [graph_class '.getClass() should return ''' graph_class ''''])
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.getClass() should return ''' graph_class ''''])
     
     assert(ischar(g.getClass()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.getClass() should return a char array'])
-
+    
     assert(ischar(g.getName()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.getName() should return a char array'])
-
+    
     assert(ischar(g.getDescription()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.getDescription() should return a char array'])
-
+    
     assert(islogical(g.is_weighted()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.is_weighted() should return a logical'])
-
+    
     assert(islogical(g.is_binary()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.is_binary() should return a logical'])
-
+    
     assert(islogical(g.is_directed()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.is_directed() should return a logical'])
-
+    
     assert(islogical(g.is_undirected()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.is_undirected() should return a logical'])
-
+    
     assert(islogical(g.is_selfconnected()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.is_selfconnected() should return a logical'])
-
+    
     assert(islogical(g.is_nonnegative()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.is_nonnegative() should return a logical'])
-
+    
     assert(iscell(g.getCompatibleMeasureList()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.getCompatibleMeasureList() should return a cell array'])
-
+    
     assert(isnumeric(g.getCompatibleMeasureNumber()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.getCompatibleMeasureNumber() should return a number'])
@@ -84,7 +84,7 @@ for i = 1:1:length(graph_class_list)
     A = rand(randi(10));
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-
+    
     g_copy = copy(g);
     
     measure_class_list = g.getCompatibleMeasureList();
@@ -128,7 +128,7 @@ for i = 1:1:length(graph_class_list)
     assert( isequal(sg.getA(), sg_test.getA()), ...
         ['BRAPH:' graph_class ':Subgraph'], ...
         [graph_class '.subgraph() is not working' ])
-
+    
 end
 
 %% Test 7: NodeAttack
@@ -139,36 +139,36 @@ for i = 1:1:length(graph_class_list)
     nodes = [randi(n), randi(n)];
     
     g = Graph.getGraph(graph_class, A);
-    ng = g.nodeattack(nodes);  
+    ng = g.nodeattack(nodes);
     
-    B=A;    
     switch(graph_class)
         case 'GraphBD'
-            B = dediagonalize(B);
-            B = semipositivize(B);
-            B = binarize(B);
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A(A>0) = 1;
+            
         case 'GraphBU'
-            B = dediagonalize(B);
-            B = semipositivize(B);
-            B = binarize(B);
-            B = symmetrize(B);
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A(A>0) = 1;
+            A = max(A, A');
         case 'GraphWD'
-            B = dediagonalize(B);
-            B = semipositivize(B);
-            B = standardize(B);
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A = standardize(A);
         case 'GraphWU'
-            B = dediagonalize(B);
-            B = semipositivize(B);
-            B = standardize(B);
-            B = symmetrize(B);
-    end  
-    
-    for j = 1:1:numel(nodes)
-        B(nodes(j), :) = 0; %#ok<PROPLC>
-        B(:, nodes(j)) = 0; %#ok<PROPLC>
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A = max(A, A');
+            A = standardize(A);
     end
     
-    assert( isequal(ng.getA(), B), ...
+    for j = 1:1:numel(nodes)
+        A(nodes(j), :) = 0; %#ok<PROPLC>
+        A(:, nodes(j)) = 0; %#ok<PROPLC>
+    end
+    
+    assert( isequal(ng.getA(), A), ...
         ['BRAPH:' graph_class ':NodeAttack'], ...
         [graph_class '.nodeattack() is not working' ])
 end
@@ -183,31 +183,31 @@ for i = 1:1:length(graph_class_list)
     
     eg = g.edgeattack(nodes, nodes);
     
-    B=A;
     switch(graph_class)
         case 'GraphBD'
-            B = dediagonalize(B);
-            B = semipositivize(B);
-            B = binarize(B);
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A(A>0) = 1;
+            
         case 'GraphBU'
-            B = dediagonalize(B);
-            B = semipositivize(B);
-            B = binarize(B);
-            B = symmetrize(B);
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A(A>0) = 1;
+            A = max(A, A');
         case 'GraphWD'
-            B = dediagonalize(B);
-            B = semipositivize(B);
-            B = standardize(B);
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A = standardize(A);
         case 'GraphWU'
-            B = dediagonalize(B);
-            B = semipositivize(B);
-            B = standardize(B);
-            B = symmetrize(B);
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A = max(A, A');
+            A = standardize(A);
     end
     
-    B(sub2ind(size(B), nodes, nodes)) = 0; %#ok<PROPLC>
+    A(sub2ind(size(A), nodes, nodes)) = 0; %#ok<PROPLC>
     
-    assert( isequal(eg.getA(), B), ...
+    assert( isequal(eg.getA(), A), ...
         ['BRAPH:' graph_class ':EdgeAttack'], ...
         [graph_class '.edgeattack() is not working' ])
 end
