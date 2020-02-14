@@ -7,7 +7,7 @@ function B = dediagonalize(A, varargin)
 % B = DEDIAGONALIZE(A, 'DediagonalizeRule', VALUE) removes the diagonal
 % values of a matrix A and sets them to VALUE.
 %
-% See also SYMMETRIZE, SEMIPOSITIVIZE, BINARIZE.
+% See also BINARIZE, SEMIPOSITIVIZE, STANDARDIZE, SYMMETRIZE.
 
 % Author: Emiliano Gomez & Giovanni Volpe
 % Date: 2020/02/07

@@ -1,4 +1,4 @@
-classdef Measure < handle & matlab.mixin.Copyable
+classdef Measure < handle
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
         settings  % structure with the constructor varagin
@@ -28,13 +28,29 @@ classdef Measure < handle & matlab.mixin.Copyable
         end
     end
     methods
-        % function str = tostring(g)
-        % function disp(g)
+        function str = tostring(m)
+            str = [Measure.getClass(m) ' size:'  int2str(size(m.getValue(), 1)) ' x '  int2str(size(m.getValue(), 2))];
+        end
+         function disp(m)
+            disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
+            disp([' value: ' int2str(size(m.getValue(), 1))  ' x ' int2str(size(m.getValue(), 2))])
+            disp(['graph: ' m.getGraph().tostring()]);
+            disp([' settings']); %#ok<NBRAK>
+            settings = m.getSettings(); %#ok<PROP>
+            for i = 1:2:length(settings) %#ok<PROP>
+                disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
+            end
+        end
         function g = getGraph(m)
             g = m.g;
         end
-        function settings = getSettings(m)
-            settings = m.settings;
+        function res = getSettings(m, setting_code)
+            
+            if nargin<2
+                res = m.settings;
+            else
+                res = get_from_varargin([], setting_code, m.settings{:});
+            end
         end
         function bool = is_value_calculated(m)
             bool = ~isempty(m.value);
@@ -46,7 +62,7 @@ classdef Measure < handle & matlab.mixin.Copyable
             end
             
             value = m.value;
-        end
+        end      
     end
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure

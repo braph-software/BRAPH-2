@@ -110,4 +110,22 @@ for i = 1:1:length(graph_class_list)
             [graph_class '.copy() not working properly'])
     end
 
+%% Test 6: Test subgraph
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    n = randi(10);
+    A =  randn(n);
+    g = Graph.getGraph(graph_class, A);
+    
+    nodes = [randi(n), randi(n)];
+    
+    sg = g.subgraph(nodes);
+    
+    A_test = g.getA();
+    sg_test = Graph.getGraph(graph_class, A_test(nodes, nodes));
+    
+    assert( isequal(sg.getA(), sg_test.getA()), ...
+        ['BRAPH:' graph_class ':Subgraph'], ...
+        [graph_class '.subgraph() is not working' ])
+
 end
