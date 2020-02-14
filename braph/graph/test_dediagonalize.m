@@ -5,7 +5,7 @@ A = [
     1 1 1
     ];
 
-%% Test 1: Remove diagonal
+%% Test 1: Diagonal to 0
 B = dediagonalize(A);
 assert(isequal(B, ...
     [
@@ -16,7 +16,7 @@ assert(isequal(B, ...
     'BRAPH:dediagonalize:Bug', ...
     'Diagonal not correctly set to 0')
 
-%% Test 2: Remove diagonal and set value
+%% Test 2: Diagonal to value
 value = randn();
 B = dediagonalize(A, 'DediagonalizeRule', value);
 assert(isequal(B, ...

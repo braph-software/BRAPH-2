@@ -1,7 +1,7 @@
 % test InStrength
 A = rand(randi(10));
 
-%% Test 1: InStrength calculates correctly for GraphWD
+%% Test 1: Calculation GraphWD
 g = GraphWD(A);
 in_strength = InStrength(g);
 

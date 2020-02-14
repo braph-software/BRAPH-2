@@ -1,7 +1,7 @@
 % test GraphBD
 A = rand(randi(10));
 
-%% Test 1: GraphBD instantiates well
+%% Test 1: Constructor
 g = GraphBD(A);
 
 A = dediagonalize(A); 

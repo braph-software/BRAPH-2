@@ -1,7 +1,7 @@
 % test standardize
 A = randn(randi([2 10]));
 
-%% Test 1: Standardize Threshold
+%% Test 1: Rule Threshold
 B = standardize(A);
 
 C = A;
@@ -18,7 +18,7 @@ assert(~any(B(:) > 1), ...
     'BRAPH:standardize:Bug', ...
     'Standardize case ''Threshold'' giving values > 1')
 
-%% Test 1: Standardize Range
+%% Test 1: Rule Range
 B = standardize(A, 'StandardizeRule', 'range');
 
 assert(isequal(B, (A - min(A(:))) / (max(A(:)) - min(A(:)))), ...
