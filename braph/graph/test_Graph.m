@@ -130,3 +130,84 @@ for i = 1:1:length(graph_class_list)
         [graph_class '.subgraph() is not working' ])
 
 end
+
+%% Test 7: NodeAttack
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    n = randi(10);
+    A =  randn(n);
+    nodes = [randi(n), randi(n)];
+    
+    g = Graph.getGraph(graph_class, A);
+    ng = g.nodeattack(nodes);  
+    
+    B=A;    
+    switch(graph_class)
+        case 'GraphBD'
+            B = dediagonalize(B);
+            B = semipositivize(B);
+            B = binarize(B);
+        case 'GraphBU'
+            B = dediagonalize(B);
+            B = semipositivize(B);
+            B = binarize(B);
+            B = symmetrize(B);
+        case 'GraphWD'
+            B = dediagonalize(B);
+            B = semipositivize(B);
+            B = standardize(B);
+        case 'GraphWU'
+            B = dediagonalize(B);
+            B = semipositivize(B);
+            B = standardize(B);
+            B = symmetrize(B);
+    end  
+    
+    for j = 1:1:numel(nodes)
+        B(nodes(j), :) = 0; %#ok<PROPLC>
+        B(:, nodes(j)) = 0; %#ok<PROPLC>
+    end
+    
+    assert( isequal(ng.getA(), B), ...
+        ['BRAPH:' graph_class ':NodeAttack'], ...
+        [graph_class '.nodeattack() is not working' ])
+end
+
+%% Test 7: EdgeAttack
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    n = randi(10);
+    A =  randn(n);
+    nodes = [randi(n), randi(n)];
+    g = Graph.getGraph(graph_class, A);
+    
+    eg = g.edgeattack(nodes, nodes);
+    
+    B=A;
+    switch(graph_class)
+        case 'GraphBD'
+            B = dediagonalize(B);
+            B = semipositivize(B);
+            B = binarize(B);
+        case 'GraphBU'
+            B = dediagonalize(B);
+            B = semipositivize(B);
+            B = binarize(B);
+            B = symmetrize(B);
+        case 'GraphWD'
+            B = dediagonalize(B);
+            B = semipositivize(B);
+            B = standardize(B);
+        case 'GraphWU'
+            B = dediagonalize(B);
+            B = semipositivize(B);
+            B = standardize(B);
+            B = symmetrize(B);
+    end
+    
+    B(sub2ind(size(B), nodes, nodes)) = 0; %#ok<PROPLC>
+    
+    assert( isequal(eg.getA(), B), ...
+        ['BRAPH:' graph_class ':EdgeAttack'], ...
+        [graph_class '.edgeattack() is not working' ])
+end
