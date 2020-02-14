@@ -5,11 +5,10 @@ classdef InStrength < Measure
         end
     end    
     methods (Access=protected)
-        function calculate(m)
+        function in_strength = calculate(m)
             g = m.getGraph();
             A = g.getA();
             in_strength = sum(A, 1)';  % column sum of A        
-            m.setValue(in_strength);
         end
     end  
     methods (Static)

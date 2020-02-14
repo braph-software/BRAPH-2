@@ -5,19 +5,17 @@ classdef StrengthAv < Strength
         end
     end
     methods (Access=protected)
-        function calculate(m)
+        function strength_av = calculate(m)
             
             g = m.getGraph();
             
             if g.is_measure_calculated('Strength')
                 strength = g.getMeasureValue('Strength');
             else
-                calculate@Strength(m);
-                strength = m.value;
+                strength = calculate@Strength(m);
             end
             
             strength_av = mean(strength);
-            m.setValue(strength_av);
         end
     end
     methods(Static)
