@@ -146,7 +146,6 @@ for i = 1:1:length(graph_class_list)
             A(1:length(A)+1:end) = 0;
             A(A<0) = 0;
             A(A>0) = 1;
-            
         case 'GraphBU'
             A(1:length(A)+1:end) = 0;
             A(A<0) = 0;
@@ -188,7 +187,6 @@ for i = 1:1:length(graph_class_list)
             A(1:length(A)+1:end) = 0;
             A(A<0) = 0;
             A(A>0) = 1;
-            
         case 'GraphBU'
             A(1:length(A)+1:end) = 0;
             A(A<0) = 0;
