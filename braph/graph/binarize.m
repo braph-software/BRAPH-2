@@ -1,4 +1,4 @@
 function B = binarize(A, varargin)
 
-    B = A~=0;
+    B = double(A~=0);
 end
