@@ -5,29 +5,35 @@ classdef Triangles < Measure
         end
     end
     methods (Access=protected)
-        function clustering = calculate(m)
+        function triangles = calculate(m)
             g = m.getGraph();
             A = g.getA();
-            N = g.nodenumber();
             if isa(g, 'GraphBU') || isa(g, 'GraphWU')
-                A3 = (A.^(1/3))^3;
-                clustering = diag(A3)'/2;
-                clustering(isnan(clustering)) = 0; % Should return zeros, not nan
-                clustering = clustering';
+                triangles = diag((A.^(1/3))^3)/2;
+                triangles(isnan(triangles)) = 0; % Should return zeros, not nan
             elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
-                clustering = zeros(1,N);
-                W = A.^(1/3); % No imaginary numbers for negative matrix, Binary matrix won't change
-                for u = 1:1:N
-                    nodesout = find(W(u,:));
-                    nodesin = find(W(:,u))';
-                    if ~isempty(nodesout) && ~isempty(nodesin)
-                        % We have a triangle if one of the out nodes goes to the one of the in nodes
-                        % u--> out-node --> in-node --> u
-                        temp_num = W(u,nodesout)*W(nodesout,nodesin)*W(nodesin,u);
-                        clustering(u) = sum(sum(temp_num));
+                
+                settings = m.getSettings();
+                directed_triangles_rule = get_from_varargin(0, 'DirectedTrianglesRule', settings{:});
+
+                switch lower(directed_triangles_rule)
+                    case {'all'}  % all rule
+                        A = double(A);
+                        triangles = diag((A + transpose(A))^3)/2;
+                    case {'middleman'}  % middleman rule
+                        A = double(A);
+                        triangles = diag(A * transpose(A) * A);
+                    case {'in'}  % in rule
+                        A = double(A);
+                        triangles = diag(transpose(A)*A^2);
+                    case {'out'}  % in rule
+                        A = double(A);
+                        triangles = diag(A^2*transpose(A));
+                    otherwise  % {'cycle'}  % cycle rule
+                        A = double(A);
+                        triangles = diag(A^3);
                     end
                 end
-                clustering = clustering';
             end
         end
     end
