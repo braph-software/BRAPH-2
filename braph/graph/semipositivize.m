@@ -7,16 +7,10 @@ function B = semipositivize(A, varargin)
 % B = SEMIPOSITIVIZE(A, 'SemipositivizeRule', RULE) 
 % removes the negative weights of a matrix A using the specified RULE.
 % Admissible RULE options are:
-%       RULE    -   'zero' (default) | 'abs' | 'absolute' | 'modulus' 
-%                   'zero' - convert negative values to zeros.
-%                   'abs' - convert negative values to its absolute
-%                           value.
-%                   'absolute' - convert negative values to its absolute
-%                           value.
-%                   'modulus' - convert negative values to its absolute
-%                           value.
+% RULE = 'zero' (default) - convert negative values to zeros.
+%        'abs' | 'absolute' | 'modulus' - convert negative values to absolute value.
 %
-% See also SYMMETRIZE, DEDIAGONALIZE, BINARIZE.
+% See also BINARIZE, DEDIAGONALIZE, STANDARDIZE, SYMMETRIZE.
 
 % Author: Emiliano Gomez & Giovanni Volpe
 % Date: 2020/02/07

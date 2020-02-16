@@ -5,11 +5,10 @@ classdef Strength < Measure
         end
     end    
     methods (Access=protected)
-        function calculate(m)
+        function strength = calculate(m)
             g = m.getGraph();
             A = g.getA();    
             strength = sum(A, 1)';
-            m.setValue(strength);
         end
     end  
     methods (Static)

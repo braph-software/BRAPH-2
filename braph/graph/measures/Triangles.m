@@ -32,6 +32,7 @@ classdef Triangles < Measure
                     otherwise  % {'cycle'}  % cycle rule
                         A = double(A);
                         triangles = diag(A^3);
+                    end
                 end
             end
         end

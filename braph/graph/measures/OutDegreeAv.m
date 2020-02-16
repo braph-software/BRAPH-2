@@ -5,19 +5,17 @@ classdef OutDegreeAv < OutDegree
         end
     end
     methods (Access=protected)
-        function calculate(m)
+        function out_degree_av = calculate(m)
             
             g = m.getGraph();
             
             if g.is_measure_calculated('OutDegree')
                 out_degree = g.getMeasureValue('OutDegree');
             else
-                calculate@OutDegree(g);
-                out_degree = m.value;
+                out_degree = calculate@OutDegree(m);
             end
             
             out_degree_av = mean(out_degree);
-            m.setValue(out_degree_av);
         end
     end
     methods(Static)

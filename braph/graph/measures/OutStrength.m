@@ -5,11 +5,10 @@ classdef OutStrength < Measure
         end
     end    
     methods (Access=protected)
-        function calculate(m)
+        function out_strength = calculate(m)
             g = m.getGraph();
             A = g.getA();           
             out_strength = sum(A, 2);  % row sum of A        
-            m.setValue(out_strength);
         end
     end  
     methods (Static)
