@@ -15,7 +15,7 @@ classdef Triangles < Measure
                 
                 settings = m.getSettings();
                 directed_triangles_rule = get_from_varargin(0, 'DirectedTrianglesRule', settings{:});
-
+                
                 switch lower(directed_triangles_rule)
                     case {'all'}  % all rule
                         A = double(A);
@@ -32,7 +32,6 @@ classdef Triangles < Measure
                     otherwise  % {'cycle'}  % cycle rule
                         A = double(A);
                         triangles = diag(A^3);
-                    end
                 end
             end
         end
@@ -55,7 +54,6 @@ classdef Triangles < Measure
                 ];
         end
         function bool = is_global()
-            
             bool = false;
         end
         function bool = is_nodal()
