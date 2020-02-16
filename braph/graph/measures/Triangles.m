@@ -12,28 +12,26 @@ classdef Triangles < Measure
                 triangles = diag((A.^(1/3))^3)/2;
                 triangles(isnan(triangles)) = 0; % Should return zeros, not nan
             elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
-                if ~isempty(m.getSettings()) % if parameter is passed as Settings
-                    directedtriangles_rule = m.getSettings();
-                    switch lower(directedtriangles_rule)
-                        case {'all'}  % all rule
-                            A = double(A);
-                            triangles = diag((A + transpose(A))^3)/2;
-                        case {'middleman'}  % middleman rule
-                            A = double(A);
-                            triangles = diag(A * transpose(A) * A);
-                        case {'in'}  % in rule
-                            A = double(A);
-                            triangles = diag(transpose(A)*A^2);
-                        case {'out'}  % in rule
-                            A = double(A);
-                            triangles = diag(A^2*transpose(A));
-                        otherwise  % {'cycle'}  % cycle rule
-                            A = double(A);
-                            triangles = diag(A^3);
-                    end
-                elseif isempty(m.getSettings()) % if no parameter is passed as Settings
-                    A = double(A);
-                    triangles = diag(A^3);
+                
+                settings = m.getSettings();
+                directed_triangles_rule = get_from_varargin(0, 'DirectedTrianglesRule', settings{:});
+
+                switch lower(directed_triangles_rule)
+                    case {'all'}  % all rule
+                        A = double(A);
+                        triangles = diag((A + transpose(A))^3)/2;
+                    case {'middleman'}  % middleman rule
+                        A = double(A);
+                        triangles = diag(A * transpose(A) * A);
+                    case {'in'}  % in rule
+                        A = double(A);
+                        triangles = diag(transpose(A)*A^2);
+                    case {'out'}  % in rule
+                        A = double(A);
+                        triangles = diag(A^2*transpose(A));
+                    otherwise  % {'cycle'}  % cycle rule
+                        A = double(A);
+                        triangles = diag(A^3);
                 end
             end
         end
