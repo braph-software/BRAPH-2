@@ -5,7 +5,7 @@ classdef Triangles < Measure
         end
     end
     methods (Access=protected)
-        function calculate(m)
+        function clustering = calculate(m)
             g = m.getGraph();
             A = g.getA();
             N = g.nodenumber();
@@ -13,7 +13,7 @@ classdef Triangles < Measure
                 A3 = (A.^(1/3))^3;
                 clustering = diag(A3)'/2;
                 clustering(isnan(clustering)) = 0; % Should return zeros, not nan
-                m.setValue(clustering');
+                clustering = clustering';
             elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
                 clustering = zeros(1,N);
                 W = A.^(1/3); % No imaginary numbers for negative matrix, Binary matrix won't change
@@ -27,7 +27,7 @@ classdef Triangles < Measure
                         clustering(u) = sum(sum(temp_num));
                     end
                 end
-                m.setValue(clustering');
+                clustering = clustering';
             end
         end
     end

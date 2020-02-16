@@ -5,19 +5,17 @@ classdef OutStrengthAv < OutStrength
         end
     end
     methods (Access=protected)
-        function calculate(m)
+        function out_strength_av = calculate(m)
             
             g = m.getGraph();
             
             if g.is_measure_calculated('OutStrength')
                 out_strength = g.getMeasureValue('OutStrength');
             else
-                calculate@OutStrength(m);
-                out_strength = m.value;
+                out_strength = calculate@OutStrength(m);
             end
             
             out_strength_av = mean(out_strength);
-            m.setValue(out_strength_av);
         end
     end
     methods(Static)

@@ -5,11 +5,10 @@ classdef InDegree < Measure
         end
     end
     methods(Access=protected)
-        function calculate(m)
+        function in_degree = calculate(m)
             g = m.getGraph();
             A = g.getA();
             in_degree = sum(A, 1)';  % column sum of A
-            m.setValue(in_degree);
         end
     end
     methods (Static) 

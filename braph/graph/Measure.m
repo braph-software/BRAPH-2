@@ -3,8 +3,8 @@ classdef Measure < handle
         g  % graph
         settings  % structure with the constructor varagin
         value  % graph measure value
-               % scalar for global measures
-               % column vector for nodal measures
+        % scalar for global measures
+        % column vector for nodal measures
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
@@ -15,15 +15,12 @@ classdef Measure < handle
                     [class(g) ' is not compatible with ' class(m)] ...
                     )
             end
-                       
+            
             settings = get_from_varargin(varargin, 'Settings', varargin{:});
             value = get_from_varargin([], 'Value', varargin{:});
-
+            
             m.g = g;
             m.settings = settings;
-            m.value = value;
-        end
-        function setValue(m, value)
             m.value = value;
         end
     end
@@ -31,7 +28,7 @@ classdef Measure < handle
         function str = tostring(m)
             str = [Measure.getClass(m) ' size:'  int2str(size(m.getValue(), 1)) ' x '  int2str(size(m.getValue(), 2))];
         end
-         function disp(m)
+        function disp(m)
             disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
             disp([' value: ' int2str(size(m.getValue(), 1))  ' x ' int2str(size(m.getValue(), 2))])
             disp(['graph: ' m.getGraph().tostring()]);
@@ -58,11 +55,11 @@ classdef Measure < handle
         function value = getValue(m)
             
             if ~m.is_value_calculated()
-                m.calculate();
+                m.value = m.calculate();
             end
             
             value = m.value;
-        end      
+        end
     end
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure
@@ -82,7 +79,7 @@ classdef Measure < handle
             else % g should be a string with the measure class
                 measure_class = m;
             end
-        end        
+        end
         function name = getName(m)
             % measure name
             

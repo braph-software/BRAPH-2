@@ -5,12 +5,11 @@ classdef Degree < Measure
         end
     end
     methods (Access=protected)
-        function calculate(m)
+        function degree = calculate(m)
             g = m.getGraph();
             A = g.getA();
             A = binarize(A);
             degree = sum(A, 2);
-            m.setValue(degree);
         end
     end        
     methods (Static)

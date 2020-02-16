@@ -5,19 +5,17 @@ classdef DegreeAv < Degree
         end
     end
     methods (Access=protected)
-        function calculate(m)
+        function degree_av = calculate(m)
             
             g = m.getGraph();
             
             if g.is_measure_calculated('Degree')
                 degree = g.getMeasureValue('Degree');
             else
-                calculate@Degree(m);
-                degree = m.value;
+                degree = calculate@Degree(m);
             end
             
             degree_av = mean(degree);
-            m.setValue(degree_av);
         end
     end
     methods(Static)

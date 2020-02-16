@@ -5,11 +5,10 @@ classdef OutDegree < Measure
         end
     end
     methods(Access = protected)
-        function calculate(m)
+        function out_degree = calculate(m)
             g = m.getGraph();
             A = g.getA();
             out_degree = sum(A, 2);  % row sum of A
-            m.setValue(out_degree);
         end
     end
     methods (Static)
