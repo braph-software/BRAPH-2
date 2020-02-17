@@ -117,10 +117,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             ga = Graph.getGraph(Graph.getClass(g), A, settings{:}); %#ok<PROPLC>
         end
         function D = getDistance(g)
-            if ~isempty(g.D)
+            if isempty(g.D)
                 g.D = g.distance();
             end
-            D = g.distance();
+            D = g.D;
         end
     end
     methods (Abstract, Access=protected)

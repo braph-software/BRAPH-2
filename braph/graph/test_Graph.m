@@ -212,9 +212,8 @@ end
 
 %% Test 8: Distance
 for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-    n = randi(10);
-    A =  randn(n);     
+    graph_class = graph_class_list{i};   
+    A =  randn(randi(10));     
     g = Graph.getGraph(graph_class, A);
     dg = g.getDistance();   
     
@@ -296,6 +295,63 @@ for i = 1:1:length(graph_class_list)
     end 
 
     assert( isequal(dg, distance_test), ...
+        ['BRAPH:' graph_class ':Distance'], ...
+        [graph_class '.distance() is not working' ])
+    
+    assert( isequal(size(dg), size(A)), ...
+        ['BRAPH:' graph_class ':Distance'], ...
+        [graph_class '.distance() not returning same dim' ])
+end
+
+%% Test 9: Distance vs know solution
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i}; 
+    n = 5;
+    L = [0 .1 .2 .25 0; .125 0 0 0 0; .2 .5 0 .25 0; .125 10 0 0 0];
+    A = [L;zeros(1,n)];     
+    g = Graph.getGraph(graph_class, A);
+    dg = g.getDistance();
+    
+    known_solution = A;
+    
+    switch (graph_class)
+        case 'GraphWD'
+            known_solution = [
+                0 5 5 4 Inf;
+                8 0 13 12 Inf;
+                5 2 0 4 Inf;
+                8 1 13 0 Inf;
+                Inf Inf Inf Inf 0;
+                ];
+        case 'GraphWU'
+            known_solution = [
+                0 5 5 4 Inf;
+                5 0 2 1 Inf;
+                5 2 0 3 Inf;
+                4 1 3 0 Inf;
+                Inf Inf Inf Inf 0;
+                ];
+            
+        case 'GraphBD'
+            known_solution = [
+                0 1 1 1 Inf;
+                1 0 2 2 Inf;
+                1 1 0 1 Inf;
+                1 1 2 0 Inf;
+                Inf Inf Inf Inf 0;
+                ];
+            
+        case 'GraphBU'
+             known_solution = [
+                0 1 1 1 Inf;
+                1 0 1 1 Inf;
+                1 1 0 1 Inf;
+                1 1 1 0 Inf;
+                Inf Inf Inf Inf 0;
+                ];          
+    end
+
+    assert( isequal(dg, known_solution), ...
         ['BRAPH:' graph_class ':Distance'], ...
         [graph_class '.distance() is not working' ])
 end
