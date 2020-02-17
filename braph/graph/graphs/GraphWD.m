@@ -1,4 +1,8 @@
 classdef GraphWD < Graph
+    properties
+        L  % edge length matrix
+        B  % number of edges in shortest weighted path matrix
+    end
     methods
         function g = GraphWD(A, varargin)
 
@@ -7,6 +11,49 @@ classdef GraphWD < Graph
             A = standardize(A, varargin{:});  % ensures all weights are between 0 and 1
 
             g = g@Graph(A, varargin{:});
+        end
+    end
+    methods (Access=protected)
+        function [D, L, B] = distance(g)
+            % The algorithm used is Dijkstra's algorithm.
+            L = g.getA();
+            ind = L~=0;
+            L(ind) = L(ind).^-1;
+            
+            n = length(L);
+            D = inf(n);
+            D(1:n+1:end) = 0;  % distance matrix
+            B = zeros(n);  % number of edges matrix
+            
+            for u = 1:n
+                S = true(1,n);  % distance permanence (true is temporary)
+                L1 = L;
+                V = u;
+                
+                while 1
+                    S(V) = 0;  % distance u->V is now permanent
+                    L1(:,V) = 0;  % no in-edges as already shortest
+                    
+                    for v = V
+                        T = find(L1(v,:));  % neighbours of shortest nodes
+                        [d wi] = min([D(u,T);D(u,v)+L1(v,T)]);
+                        D(u,T) = d;  % smallest of old/new path lengths
+                        ind = T(wi==2);  % indices of lengthened paths
+                        B(u,ind) = B(u,v)+1;  % increment no. of edges in lengthened paths
+                    end
+                    
+                    minD = min(D(u,S));
+                    if isempty(minD) || isinf(minD),  % isempty: all nodes reached;
+                        break,  % isinf: some nodes cannot be reached
+                    end;
+                    
+                    V = find(D(u,:)==minD);
+                end
+            end
+            
+            g.D = D;
+            g.L = L;
+            g.B = B;
         end
     end
     methods (Static)

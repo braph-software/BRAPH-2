@@ -9,6 +9,28 @@ classdef GraphBD < Graph
             g = g@Graph(A, varargin{:});
         end
     end
+    methods(Access=protected)
+        function D = distance(g)
+            calc_D()          
+            D = g.D;            
+            function calc_D()
+                l = 1;  % path length
+                g.D = g.A;  % distance matrix
+                
+                Lpath = g.A;
+                Idx = true;
+                while any(Idx(:))
+                    l = l+1;
+                    Lpath = Lpath*g.A;
+                    Idx = (Lpath~=0)&(g.D==0);
+                    g.D(Idx) = l;
+                end
+                
+                g.D(~g.D) = inf;  % assign inf to disconnected nodes
+                g.D = dediagonalize(g.D);  % assign 0 to the diagonal
+            end
+        end
+    end
     methods (Static)
         function graph_class = getClass()
             graph_class = 'GraphBD';

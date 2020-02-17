@@ -209,3 +209,93 @@ for i = 1:1:length(graph_class_list)
         ['BRAPH:' graph_class ':EdgeAttack'], ...
         [graph_class '.edgeattack() is not working' ])
 end
+
+%% Test 8: Distance
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    n = randi(10);
+    A =  randn(n);     
+    g = Graph.getGraph(graph_class, A);
+    dg = g.getDistance();   
+    
+    switch(graph_class)
+        case 'GraphBD'
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A(A>0) = 1;
+        case 'GraphBU'
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A(A>0) = 1;
+            A = max(A, A');
+        case 'GraphWD'
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A = standardize(A);
+        case 'GraphWU'
+            A(1:length(A)+1:end) = 0;
+            A(A<0) = 0;
+            A = max(A, A');
+            A = standardize(A);
+    end
+    
+    distance_test = A;
+    
+    if graph_class == 'GraphWD' | graph_class == 'GraphWU'
+        L = distance_test;
+        ind = L~=0;
+        L(ind) = L(ind).^-1;
+        
+        n = length(L);
+        D = inf(n);
+        D(1:n+1:end) = 0;  % distance matrix
+        B = zeros(n);  % number of edges matrix
+        
+        for u = 1:n
+            S = true(1,n);  % distance permanence (true is temporary)
+            L1 = L;
+            V = u;
+            
+            while 1
+                S(V) = 0;  % distance u->V is now permanent
+                L1(:,V) = 0;  % no in-edges as already shortest
+                
+                for v = V
+                    T = find(L1(v,:));  % neighbours of shortest nodes
+                    [d wi] = min([D(u,T);D(u,v)+L1(v,T)]);
+                    D(u,T) = d;  % smallest of old/new path lengths
+                    ind = T(wi==2);  % indices of lengthened paths
+                    B(u,ind) = B(u,v)+1;  % increment no. of edges in lengthened paths
+                end
+                
+                minD = min(D(u,S));
+                if isempty(minD) || isinf(minD),  % isempty: all nodes reached;
+                    break,  % isinf: some nodes cannot be reached
+                end;
+                
+                V = find(D(u,:)==minD);
+            end
+        end
+        distance_test = D;
+    else
+        holdA = distance_test;
+        l = 1;  % path length
+        holdD = holdA;  % distance matrix
+        
+        Lpath = holdA;
+        Idx = true;
+        while any(Idx(:))
+            l = l+1;
+            Lpath = Lpath*holdA;
+            Idx = (Lpath~=0)&(holdD==0);
+            holdD(Idx) = l;
+        end
+        
+        holdD(~holdD) = inf;  % assign inf to disconnected nodes
+        distance_test = dediagonalize(holdD);  % assign 0 to the diagonal        
+    end 
+
+    assert( isequal(dg, distance_test), ...
+        ['BRAPH:' graph_class ':Distance'], ...
+        [graph_class '.distance() is not working' ])
+end

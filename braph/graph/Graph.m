@@ -3,6 +3,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         A   % adjacency matrix
         settings  % structure with the constructor varagin
         mdict  % dictionary with calculated measures
+        D  % distance matrix for the graph
     end
     methods (Access=protected)
         function g = Graph(A, varargin)
@@ -115,6 +116,15 @@ classdef Graph < handle & matlab.mixin.Copyable
             settings = g.getSettings(); %#ok<PROPLC>
             ga = Graph.getGraph(Graph.getClass(g), A, settings{:}); %#ok<PROPLC>
         end
+        function D = getDistance(g)
+            if ~isempty(g.D)
+                g.D = g.distance();
+            end
+            D = g.distance();
+        end
+    end
+    methods (Abstract, Access=protected)
+        distance(g)  % distance between nodes
     end
     methods (Static)
         function graph_class_list = getList()
