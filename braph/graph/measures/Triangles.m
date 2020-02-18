@@ -19,19 +19,19 @@ classdef Triangles < Measure
                 switch lower(directed_triangles_rule)
                     case {'all'}  % all rule
                         A = double(A);
-                        triangles = diag((A + transpose(A))^3)/2;
+                        triangles = diag((A.^(1/3) + transpose(A).^(1/3))^3)/2;
                     case {'middleman'}  % middleman rule
                         A = double(A);
-                        triangles = diag(A * transpose(A) * A);
+                        triangles = diag(A.^(1/3) * transpose(A).^(1/3) * A.^(1/3));
                     case {'in'}  % in rule
                         A = double(A);
-                        triangles = diag(transpose(A)*A^2);
+                        triangles = diag(transpose(A).^(1/3) * (A.^(1/3))^2);
                     case {'out'}  % in rule
                         A = double(A);
-                        triangles = diag(A^2*transpose(A));
+                        triangles = diag((A.^(1/3))^2 * transpose(A).^(1/3));
                     otherwise  % {'cycle'}  % cycle rule
                         A = double(A);
-                        triangles = diag(A^3);
+                        triangles = diag((A.^(1/3))^3);
                 end
             end
         end
