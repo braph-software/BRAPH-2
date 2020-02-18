@@ -1,8 +1,19 @@
 % test Triangles
-A_BD = [0 0 1 1; 1 0 0 1; 0 1 0 1; 0 0 0 0];
-triangles_BD = [0; 0; 0; 3]; % in rule
-A_BU = [0 1 1 1; 1 0 1 0; 1 1 0 1; 1 0 1 0];
-triangles_BU = [2; 1; 2; 1];
+A_BD = [
+    0 0 1 1; 
+    1 0 0 1; 
+    0 1 0 1; 
+    0 0 0 0
+    ];
+triangles_BD = [0 0 0 3]'; % in rule
+
+A_BU = [
+    0 1 1 1; 
+    1 0 1 0; 
+    1 1 0 1; 
+    1 0 1 0
+    ];
+triangles_BU = [2 1 2 1]';
 
 A_test = randn(randi(10));
 
@@ -62,7 +73,7 @@ assert(isequal(valueWU_braph2, valueWU_std), ...
     'BRAPH:Triangles:Bug', ...
     'Triangles is not beeing calculated correctly for GraphWU')
 
-% standard functions to calculate triangles
+% Functions to calcualte triangled from 2019_03_03_BCT
 function stdvalue_BD = triangles_standard_BD(A)
 S=A+A.';                    %symmetrized input graph
 cyc3=diag(S^3)/2;           %number of 3-cycles (ie. directed triangles)
