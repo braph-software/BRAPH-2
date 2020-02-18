@@ -75,12 +75,13 @@ for i = 1:1:length(measure_class_list)
 
 end
 
-%% Test 3: Either nodal or global
+%% Test 3: Either nodal or global or binodal
 for i = 1:1:length(measure_class_list)
     measure_class = measure_class_list{i};
-    if ~isequal(measure_class, 'Distance')
-         assert(Measure.is_global(measure_class) ~= Measure.is_nodal(measure_class), ...
-        ['BRAPH:' measure_class ':NodalOrGlobal'], ...
+    
+        assert(Measure.is_global(measure_class) + Measure.is_nodal(measure_class) + ...
+             Measure.is_binodal(measure_class) == 1, ...
+        ['BRAPH:' measure_class ':NodalOrGlobalOrBinodal'], ...
         [measure_class '.is_nodal() == ' measure_class '.is_global()'])
-    end   
+      
 end
