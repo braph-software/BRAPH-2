@@ -22,7 +22,12 @@ end
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     n = 5;
-    L = [0 .1 .2 .25 0; .125 0 0 0 0; .2 .5 0 .25 0; .125 10 0 0 0];
+    L = [
+        0 .1 .2 .25 0; 
+        .125 0 0 0 0; 
+        .2 .5 0 .25 0; 
+        .125 10 0 0 0
+        ];
     A = [L;zeros(1,n)];
     g = Graph.getGraph(graph_class, A);
     dg = Distance(g);
@@ -116,6 +121,7 @@ for i = 1:1:length(graph_class_list)
     
 end
 
+% Functions from 2019_03_03_BCT
 function [D,B]=distance_wei(L)
 % DISTANCE_WEI       Distance matrix (Dijkstra's algorithm)
 %
