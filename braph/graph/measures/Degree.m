@@ -33,6 +33,9 @@ classdef Degree < Measure
         function bool = is_nodal()
             bool = true;
         end
+        function bool = is_binodal()
+            bool = false;
+        end
         function list = getCompatibleGraphList()  
             list = { ...
                 'GraphBU', ...

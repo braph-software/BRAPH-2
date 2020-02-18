@@ -39,6 +39,9 @@ classdef OutDegreeAv < OutDegree
         function bool = is_nodal()
             bool = false;
         end
+        function bool = is_binodal()
+            bool = false;
+        end
         function list = getCompatibleGraphList()  
             list = { ...
                 'GraphBD', ...
