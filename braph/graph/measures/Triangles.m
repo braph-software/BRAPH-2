@@ -11,27 +11,21 @@ classdef Triangles < Measure
             if isa(g, 'GraphBU') || isa(g, 'GraphWU')
                 triangles = diag((A.^(1/3))^3)/2;
                 triangles(isnan(triangles)) = 0; % Should return zeros, not nan
-            elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
                 
+            elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
                 settings = m.getSettings();
                 directed_triangles_rule = get_from_varargin(0, 'DirectedTrianglesRule', settings{:});
-                
                 switch lower(directed_triangles_rule)
                     case {'all'}  % all rule
-                        A = double(A);
-                        triangles = diag((A + transpose(A))^3)/2;
+                        triangles = diag((A.^(1/3) + transpose(A).^(1/3))^3)/2;
                     case {'middleman'}  % middleman rule
-                        A = double(A);
-                        triangles = diag(A * transpose(A) * A);
+                        triangles = diag(A.^(1/3) * transpose(A).^(1/3) * A.^(1/3));
                     case {'in'}  % in rule
-                        A = double(A);
-                        triangles = diag(transpose(A)*A^2);
+                        triangles = diag(transpose(A).^(1/3) * (A.^(1/3))^2);
                     case {'out'}  % in rule
-                        A = double(A);
-                        triangles = diag(A^2*transpose(A));
+                        triangles = diag((A.^(1/3))^2 * transpose(A).^(1/3));
                     otherwise  % {'cycle'}  % cycle rule
-                        A = double(A);
-                        triangles = diag(A^3);
+                        triangles = diag((A.^(1/3))^3);
                 end
             end
         end
