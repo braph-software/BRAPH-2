@@ -73,7 +73,7 @@ assert(isequal(valueWU_braph2, valueWU_std), ...
     'BRAPH:Triangles:Bug', ...
     'Triangles is not beeing calculated correctly for GraphWU')
 
-% Functions to calcualte triangled from 2019_03_03_BCT
+% Functions to calcualte triangles from 2019_03_03_BCT
 function stdvalue_BD = triangles_standard_BD(A)
 S=A+A.';                    %symmetrized input graph
 cyc3=diag(S^3)/2;           %number of 3-cycles (ie. directed triangles)
