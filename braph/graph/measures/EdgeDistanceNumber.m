@@ -20,12 +20,12 @@ classdef EdgeDistanceNumber < Distance
             measure_class = 'EdgeDistanceNumber';
         end
         function name = getName()
-            name = 'EdgeDistanceNumber';
+            name = 'Distance in number of edges';
         end
         function description = getDescription()
             description = [ ...
                 'The edge distance number of a graph is ' ...
-                'number of edges in shortest weighted path matrix (Distance). ' ...
+                'the number of edges in the shortest weighted path between two nodes. ' ...
                 ];
         end
         function bool = is_global()
