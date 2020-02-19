@@ -1,16 +1,16 @@
 % test Triangles
 A_BD = [
-    0 0 1 1; 
-    1 0 0 1; 
-    0 1 0 1; 
+    0 0 1 1;
+    1 0 0 1;
+    0 1 0 1;
     0 0 0 0
     ];
 triangles_BD = [0 0 0 3]'; % in rule
 
 A_BU = [
-    0 1 1 1; 
-    1 0 1 0; 
-    1 1 0 1; 
+    0 1 1 1;
+    1 0 1 0;
+    1 1 0 1;
     1 0 1 0
     ];
 triangles_BU = [2 1 2 1]';
@@ -79,6 +79,7 @@ S=A+A.';                    %symmetrized input graph
 cyc3=diag(S^3)/2;           %number of 3-cycles (ie. directed triangles)
 stdvalue_BD=cyc3;           %clustering coefficient
 end
+
 function stdvalue_BU = triangles_standard_BU(A)
 n = length(A);
 stdvalue_BU = zeros(n,1);
@@ -91,11 +92,13 @@ for u = 1:n
     end
 end
 end
+
 function stdvalue_WD = triangles_standard_WD(A)
 S=A.^(1/3)+(A.').^(1/3);	%symmetrized weights matrix ^1/3
 cyc3=diag(S^3)/2;           %number of 3-cycles (ie. directed triangles)
 stdvalue_WD=cyc3;               %clustering coefficient
 end
+
 function stdvalue_WU = triangles_standard_WU(A)
 cyc3=diag((A.^(1/3))^3);
 stdvalue_WU=cyc3/2;
