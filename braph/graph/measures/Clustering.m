@@ -1,41 +1,38 @@
-classdef Clustering < Measure
+classdef Clustering < Triangles
     methods
         function m = Clustering (g, varargin)
-            m = m@Measure(g, varargin{:});
+            m = m@Triangles(g, varargin{:});
         end
     end
     methods (Access=protected)
         function clustering_coef = calculate(m)
-            g = m.getGraph();
+            g = m.getGraph(); 
             A = g.getA();
-            if isa(g, 'GraphBU') || isa(g, 'GraphWU')
+            if g.is_measure_calculated('Triangles')
                 triangles = g.getMeasureValue('Triangles');
-                degree = g.getMeasureValue('Degree');
+            else
+                triangles = calculate@Triangles(m);
+            end
+            settings = g.getSettings();
+            if isa(g, 'GraphBU') || isa(g, 'GraphWU')
+                degree = Degree(g, settings{:}).getValue();
                 clustering_coef = 2*triangles./(degree.*(degree-1));
-            elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
-                inDegree = g.getMeasureValue('InDegree');
-                outDegree = g.getMeasureValue('OutDegree');
+                
+            elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')     
+                inDegree = InDegree(g, settings{:}).getValue();
+                outDegree = OutDegree(g, settings{:}).getValue();
                 settings = m.getSettings();
                 directed_triangles_rule = get_from_varargin(0, 'DirectedTrianglesRule', settings{:});
                 switch lower(directed_triangles_rule)
                     case {'all'}  % all rule
-                        %triangles =  g.getMeasureValue('Triangles', 'DirectedTrianglesRule','all');
-                        triangles = Triangles(g,'DirectedTrianglesRule', 'all').getValue();
                         clustering_coef = triangles./((outDegree+inDegree).*(outDegree+inDegree-1)- 2*diag(A^2));
                     case {'middleman'}  % middleman rule
-                        %triangles = g.getMeasureValue('Triangles', 'DirectedTrianglesRule','middleman');
-                        triangles = Triangles(g,'DirectedTrianglesRule', 'middleman').getValue();
                         clustering_coef = triangles./((outDegree.*inDegree)- diag(A^2));
                     case {'in'}  % in rule
-                        %triangles = g.getMeasure(g,'Triangles','DirectedTrianglesRule','in');
-                        triangles = Triangles(g,'DirectedTrianglesRule', 'in').getValue();
                         clustering_coef = triangles./(inDegree.*(inDegree-1));
                     case {'out'}  % out rule
-                        %triangles = g.getMeasureValue('Triangles', 'DirectedTrianglesRule','out');
-                        triangles = Triangles(g,'DirectedTrianglesRule', 'out').getValue();
                         clustering_coef = triangles./(outDegree.*(outDegree-1));
                     otherwise  % {'cycle'}  % cycle rule
-                        triangles = g.getMeasureValue('Triangles');
                         clustering_coef = triangles./((outDegree.*inDegree)- diag(A^2));
                 end
                 
@@ -52,7 +49,7 @@ classdef Clustering < Measure
         end
         function description = getDescription()
             description = [ ...
-                'The Clustering Coefficient of a node is ' ...
+                'The clustering coefficient of a node is ' ...
                 'the fraction of triangles present around a node.' ...
                 'The clustering coefficient is calculated as the ratio between' ...
                 'the number of triangles present around a node and' ...
