@@ -50,7 +50,7 @@ clustering_av_1 = ClusteringAv(g,'DirectedTrianglesRule', 'in').getValue();
 clustering_av_2 = mean(clustering_BD_in);
 assert(isequal(clustering_av_1, clustering_av_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering (''DirectedTrianglesRule'', ''in'') is not being calculated correctly for GraphBD')
+    'ClusteringAv(''DirectedTrianglesRule'', ''in'') is not being calculated correctly for GraphBD')
 
 %% Test 5: Comparison with known BD graph - out rule
 g = GraphBD(A_BD);
@@ -58,7 +58,7 @@ clustering_av_1 = ClusteringAv(g,'DirectedTrianglesRule', 'out').getValue();
 clustering_av_2 = mean(clustering_BD_out);
 assert(isequal(clustering_av_1, clustering_av_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering (''DirectedTrianglesRule'', ''out'') is not being calculated correctly for GraphBD')
+    'ClusteringAv(''DirectedTrianglesRule'', ''out'') is not being calculated correctly for GraphBD')
 
 %% Test 6: Comparison with known BD graph - middleman rule
 g = GraphBD(A_BD);
@@ -66,7 +66,7 @@ clustering_av_1 = ClusteringAv(g,'DirectedTrianglesRule', 'middleman').getValue(
 clustering_av_2 = mean(clustering_BD_mid);
 assert(isequal(clustering_av_1, clustering_av_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering (''DirectedTrianglesRule'', ''middleman'') is not being calculated correctly for GraphBD')
+    'ClusteringAv(''DirectedTrianglesRule'', ''middleman'') is not being calculated correctly for GraphBD')
 
 %% Test 7: Comparison with known BD graph - all rule
 g = GraphBD(A_BD);
@@ -74,7 +74,7 @@ clustering_av_1 = ClusteringAv(g,'DirectedTrianglesRule', 'all').getValue();
 clustering_av_2 = mean(clustering_BD_all);
 assert(isequal(clustering_av_1, clustering_av_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering (''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphBD')
+    'ClusteringAv(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphBD')
 
 %% Test 8: Comparison with standard method for BU graphs
 g = GraphBU(A_test);
@@ -83,7 +83,7 @@ clustering_av_1 = ClusteringAv(g).getValue();
 clustering_av_2 = clustering_standard_BU(A_BU);
 assert(isequal(clustering_av_1, clustering_av_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering is not being calculated correctly for GraphBU')
+    'ClusteringAv is not being calculated correctly for GraphBU')
 
 %% Test 9: Comparison with standard method for BD graphs - all
 g = GraphBD(A_test);
@@ -92,7 +92,7 @@ clustering_av_1 = ClusteringAv(g,'DirectedTrianglesRule', 'all').getValue();
 clustering_av_2 = clustering_standard_BD(A_BD);
 assert(isequal(clustering_av_1, clustering_av_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering (''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphBD')
+    'ClusteringAv(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphBD')
 
 %% Test 10: Comparison with standard method for WU graphs
 g = GraphWU(A_test);
@@ -101,7 +101,7 @@ clustering_av_1 = ClusteringAv(g).getValue();
 clustering_av_2 = clustering_standard_WU(A_WU);
 assert(isequal(clustering_av_1, clustering_av_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering is not being calculated correctly for GraphWU')
+    'ClusteringAv is not being calculated correctly for GraphWU')
 
 %% Test 11: Comparison with standard method for WD graphs - all
 g = GraphWD(A_test);
@@ -110,7 +110,7 @@ clustering_av_1 = round(ClusteringAv(g,'DirectedTrianglesRule', 'all').getValue(
 clustering_av_2 = round(clustering_standard_WD(A_WD),10);
 assert(isequal(clustering_av_1, clustering_av_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering (''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphWD')
+    'ClusteringAv(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphWD')
 
 %% Functions to calcualte triangles from 2019_03_03_BCT
 

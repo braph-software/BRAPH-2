@@ -5,130 +5,112 @@ A_BU = [
     1 1 0 1; 
     1 0 1 0
     ];
-clustering_BU = [2/3 ; 1; 2/3; 1];
+clustering_BU = [2/3 1 2/3 1]';
 
-A_BD_cycle = [
-    0 0 1 ; 
-    1 0 0 ; 
+A_BD = [
+    0 0 1; 
+    1 0 0; 
     0 1 0 
     ];
-clustering_BD_cycle = [1;1;1]; % cycle rule
-
-A_BD_in = [
-    0 0 1 ; 
-    1 0 1 ; 
-    0 0 0 
-    ];
-clustering_BD_in = [0;0;1/2]; % in rule 
-
-A_BD_out = [
-    0 0 0 ; 
-    1 0 0 ; 
-    1 1 0 
-    ];
-clustering_BD_out = [0;0;1/2]; % out rule 
-
-A_BD_mid = [
-    0 0 0 ; 
-    1 0 1 ; 
-    1 0 0 
-    ];
-clustering_BD_mid = [0;0;1]; % middleman rule 
-
-A_BD_all = [
-    0 0 0 ; 
-    1 0 1 ; 
-    1 0 0 
-    ];
-clustering_BD_all = [1/2;1/2;1/2]; % all rule 
+clustering_BD_cycle = [1 1 1]';  % cycle rule
+clustering_BD_in = [0 0 0]';  % in rule 
+clustering_BD_out = [0 0 0]';  % out rule 
+clustering_BD_mid = [0 0 0]';  % middleman rule 
+clustering_BD_all = [1/2 1/2 1/2]';  % all rule 
 
 A_test = rand(randi(10));
 
 %% Test 1: Comparison with known BU graph
 g = GraphBU(A_BU);
-clustering = Clustering(g);
-assert(isequal(clustering.getValue(), clustering_BU), ...
+clustering_1 = Clustering(g).getValue();
+clustering_2 = clustering_BU;
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
     'Clustering is not being calculated correctly for GraphBU')
 
-%% Test 2: Comparison with known BD graph - cycle
-g = GraphBD(A_BD_cycle);
-clustering = Clustering(g);
-assert(isequal(clustering.getValue(), clustering_BD_cycle), ...
+%% Test 2: BD graph - default case is cycle
+g = GraphBD(A_BD);
+clustering_1 = Clustering(g).getValue();
+clustering_2 = Clustering(g, 'DirectedTrianglesRule', 'cycle').getValue();
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering [cycle] is not being calculated correctly for GraphBD')
+    'Clustering(''DirectedTrianglesRule'', ''cycle'') is not being calculated correctly for GraphBD')
 
-%% Test 3: Comparison with known BD graph - in rule
-g = GraphBD(A_BD_in);
-clustering = Clustering(g,'DirectedTrianglesRule', 'in');
-assert(isequal(clustering.getValue(), clustering_BD_in), ...
+%% Test 3: Comparison with known BD graph - cycle
+g = GraphBD(A_BD);
+clustering_1 = Clustering(g, 'DirectedTrianglesRule', 'cycle').getValue();
+clustering_2 = clustering_BD_cycle;
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering [in] is not being calculated correctly for GraphBD')
+    'Clustering(''DirectedTrianglesRule'', ''cycle'') is not being calculated correctly for GraphBD')
 
-%% Test 4: Comparison with known BD graph - out rule
-g = GraphBD(A_BD_out);
-clustering = Clustering(g,'DirectedTrianglesRule', 'out');
-assert(isequal(clustering.getValue(), clustering_BD_out), ...
+%% Test 4: Comparison with known BD graph - in rule
+g = GraphBD(A_BD);
+clustering_1 = Clustering(g,'DirectedTrianglesRule', 'in').getValue();
+clustering_2 = clustering_BD_in;
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering [out] is not being calculated correctly for GraphBD')
+    'Clustering(''DirectedTrianglesRule'', ''in'') is not being calculated correctly for GraphBD')
 
-%% Test 5: Comparison with known BD graph - middleman rule
-g = GraphBD(A_BD_mid);
-clustering = Clustering(g,'DirectedTrianglesRule', 'middleman');
-assert(isequal(clustering.getValue(), clustering_BD_mid), ...
+%% Test 5: Comparison with known BD graph - out rule
+g = GraphBD(A_BD);
+clustering_1 = Clustering(g,'DirectedTrianglesRule', 'out').getValue();
+clustering_2 = clustering_BD_out;
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering [middleman] is not being calculated correctly for GraphBD')
+    'Clustering(''DirectedTrianglesRule'', ''out'') is not being calculated correctly for GraphBD')
 
-%% Test 6: Comparison with known BD graph - all rule
-g = GraphBD(A_BD_all);
-clustering = Clustering(g,'DirectedTrianglesRule', 'all');
-assert(isequal(clustering.getValue(), clustering_BD_all), ...
+%% Test 6: Comparison with known BD graph - middleman rule
+g = GraphBD(A_BD);
+clustering_1 = Clustering(g,'DirectedTrianglesRule', 'middleman').getValue();
+clustering_2 = clustering_BD_mid;
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering [all] is not being calculated correctly for GraphBD')
+    'Clustering(''DirectedTrianglesRule'', ''middleman'') is not being calculated correctly for GraphBD')
 
-%% Test 7: Comparison with standard method for BU graphs
+%% Test 7: Comparison with known BD graph - all rule
+g = GraphBD(A_BD);
+clustering_1 = Clustering(g,'DirectedTrianglesRule', 'all').getValue();
+clustering_2 = clustering_BD_all;
+assert(isequal(clustering_1, clustering_2), ...
+    'BRAPH:Clustering:Bug', ...
+    'Clustering(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphBD')
+
+%% Test 8: Comparison with standard method for BU graphs
 g = GraphBU(A_test);
 A_BU = g.getA();
-clustering = Clustering(g);
-% calculate the values by Braph2 and standard methods
-value_braph2 = clustering.getValue();
-value_std = clustering_standard_BU(A_BU);
-assert(isequal(value_braph2, value_std), ...
+clustering_1 = Clustering(g).getValue();
+clustering_2 = clustering_standard_BU(A_BU);
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
     'Clustering is not being calculated correctly for GraphBU')
 
-%% Test 8: Comparison with standard method for BD graphs - all
+%% Test 9: Comparison with standard method for BD graphs - all
 g = GraphBD(A_test);
 A_BD = g.getA();
-clustering = Clustering(g,'DirectedTrianglesRule', 'all');
-% calculate the values by Braph2 and standard methods
-value_braph2 = clustering.getValue();
-value_std = clustering_standard_BD(A_BD);
-assert(isequal(value_braph2, value_std), ...
+clustering_1 = Clustering(g,'DirectedTrianglesRule', 'all').getValue();
+clustering_2 = clustering_standard_BD(A_BD);
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering [all] is not being calculated correctly for GraphBD')
+    'Clustering(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphBD')
 
-%% Test 9: Comparison with standard method for WU graphs
+%% Test 10: Comparison with standard method for WU graphs
 g = GraphWU(A_test);
 A_WU = g.getA();
-clustering = Clustering(g);
-% calculate the values by Braph2 and standard methods
-value_braph2 = clustering.getValue();
-value_std = clustering_standard_WU(A_WU);
-assert(isequal(value_braph2, value_std), ...
+clustering_1 = Clustering(g).getValue();
+clustering_2 = clustering_standard_WU(A_WU);
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
     'Clustering is not being calculated correctly for GraphWU')
 
-%% Test 10: Comparison with standard method for WD graphs - all
+%% Test 11: Comparison with standard method for WD graphs - all
 g = GraphWD(A_test);
 A_WD = g.getA();
-clustering = Clustering(g,'DirectedTrianglesRule', 'all');
-% calculate the values by Braph2 and standard methods
-value_braph2 = clustering.getValue();
-value_std = clustering_standard_WD(A_WD);
-assert(isequal(round(value_braph2,10), round(value_std,10)), ...
+clustering_1 = round(Clustering(g,'DirectedTrianglesRule', 'all').getValue(),10);
+clustering_2 = round(clustering_standard_WD(A_WD),10);
+assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
-    'Clustering [all] is not being calculated correctly for GraphWD')
+    'Clustering(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphWD')
 
 %% Functions to calcualte triangles from 2019_03_03_BCT
 
