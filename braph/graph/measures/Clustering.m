@@ -5,39 +5,45 @@ classdef Clustering < Triangles
         end
     end
     methods (Access=protected)
-        function clustering_coef = calculate(m)
+        function clustering = calculate(m)
             g = m.getGraph(); 
             A = g.getA();
+            
             if g.is_measure_calculated('Triangles')
                 triangles = g.getMeasureValue('Triangles');
             else
                 triangles = calculate@Triangles(m);
             end
+            
             settings = g.getSettings();
             if isa(g, 'GraphBU') || isa(g, 'GraphWU')
-                degree = Degree(g, settings{:}).getValue();
-                clustering_coef = 2*triangles./(degree.*(degree-1));
                 
-            elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')     
+                degree = Degree(g, settings{:}).getValue();
+                clustering = 2 * triangles ./ (degree .* (degree-1));
+                
+            elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')  
+                
                 inDegree = InDegree(g, settings{:}).getValue();
                 outDegree = OutDegree(g, settings{:}).getValue();
+                
                 settings = m.getSettings();
                 directed_triangles_rule = get_from_varargin(0, 'DirectedTrianglesRule', settings{:});
                 switch lower(directed_triangles_rule)
                     case {'all'}  % all rule
-                        clustering_coef = triangles./((outDegree+inDegree).*(outDegree+inDegree-1)- 2*diag(A^2));
+                        clustering = triangles ./ ((outDegree+inDegree) .* (outDegree+inDegree-1) - 2 * diag(A^2));
                     case {'middleman'}  % middleman rule
-                        clustering_coef = triangles./((outDegree.*inDegree)- diag(A^2));
+                        clustering = triangles ./ ((outDegree .* inDegree) - diag(A^2));
                     case {'in'}  % in rule
-                        clustering_coef = triangles./(inDegree.*(inDegree-1));
+                        clustering = triangles ./ (inDegree .* (inDegree-1));
                     case {'out'}  % out rule
-                        clustering_coef = triangles./(outDegree.*(outDegree-1));
+                        clustering = triangles ./ (outDegree .* (outDegree-1));
                     otherwise  % {'cycle'}  % cycle rule
-                        clustering_coef = triangles./((outDegree.*inDegree)- diag(A^2));
+                        clustering = triangles ./ ((outDegree .* inDegree) - diag(A^2));
                 end
                 
             end
-            clustering_coef(isnan(clustering_coef)) = 0; % Should return zeros, not nan
+            
+            clustering(isnan(clustering)) = 0;  % Should return zeros, not NaN
         end
     end  
     methods (Static)
