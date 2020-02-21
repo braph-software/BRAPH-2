@@ -23,14 +23,14 @@ A_test = randn(randi(10));
 %% Test 1: BD graph - default case is cycle
 g = GraphBD(A_BD);
 triangles_1 = Triangles(g).getValue();
-triangles_2 = Triangles(g,'DirectedTrianglesRule', 'cycle').getValue();
+triangles_2 = Triangles(g, 'DirectedTrianglesRule', 'cycle').getValue();
 assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
     'Triangles(''DirectedTrianglesRule'', ''cycle'') is not being calculated correctly for GraphBD')
 
 %% Test 2: Comparison with known BD graph - in 
 g = GraphBD(A_BD);
-triangles_1 = Triangles(g,'DirectedTrianglesRule', 'in').getValue();
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'in').getValue();
 triangles_2 = triangles_BD_in;
 assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
@@ -38,7 +38,7 @@ assert(isequal(triangles_1, triangles_2), ...
 
 %% Test 3: Comparison with known BD graph - out 
 g = GraphBD(A_BD);
-triangles_1 = Triangles(g,'DirectedTrianglesRule', 'out').getValue();
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'out').getValue();
 triangles_2 = triangles_BD_out;
 assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
@@ -46,7 +46,7 @@ assert(isequal(triangles_1, triangles_2), ...
 
 %% Test 4: Comparison with known BD graph - cycle 
 g = GraphBD(A_BD);
-triangles_1 = Triangles(g,'DirectedTrianglesRule', 'cycle').getValue();
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'cycle').getValue();
 triangles_2 = triangles_BD_cycle;
 assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
@@ -54,7 +54,7 @@ assert(isequal(triangles_1, triangles_2), ...
 
 %% Test 5: Comparison with known BD graph - middleman 
 g = GraphBD(A_BD);
-triangles_1 = Triangles(g,'DirectedTrianglesRule', 'middleman').getValue();
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'middleman').getValue();
 triangles_2 = triangles_BD_mid;
 assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
@@ -62,7 +62,7 @@ assert(isequal(triangles_1, triangles_2), ...
 
 %% Test 6: Comparison with known BD graph - all 
 g = GraphBD(A_BD);
-triangles_1 = Triangles(g,'DirectedTrianglesRule', 'all').getValue();
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'all').getValue();
 triangles_2 = triangles_BD_all;
 assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
@@ -112,7 +112,8 @@ assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
     'Triangles is not being calculated correctly for GraphWU')
 
-% Functions to calcualte triangles from 2019_03_03_BCT
+% Functions to calculate triangles ADAPTED from 2019_03_03_BCT
+
 function stdvalue_BD = triangles_standard_BD(A)
 S=A+A.';                    %symmetrized input graph
 cyc3=diag(S^3)/2;           %number of 3-cycles (ie. directed triangles)
