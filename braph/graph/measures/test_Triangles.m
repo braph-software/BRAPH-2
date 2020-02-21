@@ -83,7 +83,7 @@ triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'all').getValue();
 triangles_2 = triangles_standard_BD(A_BD);
 assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
-    'Triangles is not being calculated correctly for GraphBD')
+    'Triangles(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphBD')
 
 %% Test 9: Comparison with standard method for BU graphs
 g = GraphBU(A_test); 
@@ -101,7 +101,7 @@ triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'all').getValue();
 triangles_2 = triangles_standard_WD(A_WD);
 assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
-    'Triangles is not being calculated correctly for GraphWD')
+    'Triangles(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphWD')
 
 %% Test 11: Comparison with standard method for WU graphs
 g = GraphWU(A_test); 
