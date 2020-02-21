@@ -1,12 +1,4 @@
 % test Triangles
-A_BD = [
-    0 0 1 1;
-    1 0 0 1;
-    0 1 0 1;
-    0 0 0 0
-    ];
-triangles_BD = [0 0 0 3]'; % in rule
-
 A_BU = [
     0 1 1 1;
     1 0 1 0;
@@ -15,65 +7,113 @@ A_BU = [
     ];
 triangles_BU = [2 1 2 1]';
 
+A_BD = [
+    0 0 1; 
+    1 0 0; 
+    0 1 0 
+    ];
+triangles_BD_cycle = [1 1 1]';  % cycle rule
+triangles_BD_in = [0 0 0]';  % in rule 
+triangles_BD_out = [0 0 0]';  % out rule 
+triangles_BD_mid = [0 0 0]';  % middleman rule 
+triangles_BD_all = [1 1 1]';  % all rule 
+
 A_test = randn(randi(10));
 
-%% Test 1: Comparison with known BD graph
-gBD = GraphBD(A_BD);
-mBD = Triangles(gBD,'DirectedTrianglesRule', 'in');
-valueBD = mBD.getValue();
-assert(isequal(valueBD, triangles_BD), ...
+%% Test 1: BD graph - default case is cycle
+g = GraphBD(A_BD);
+triangles_1 = Triangles(g).getValue();
+triangles_2 = Triangles(g, 'DirectedTrianglesRule', 'cycle').getValue();
+assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
-    'Triangles is not beeing calculated correctly for GraphBD')
+    'Triangles(''DirectedTrianglesRule'', ''cycle'') is not being calculated correctly for GraphBD')
 
-%% Test 2: Comparison with known BU graphs
-gBU = GraphBU(A_BU);
-mBU = Triangles(gBU);
-valueBU = mBU.getValue();
-assert(isequal(valueBU, triangles_BU), ...
+%% Test 2: Comparison with known BD graph - in 
+g = GraphBD(A_BD);
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'in').getValue();
+triangles_2 = triangles_BD_in;
+assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
-    'Triangles is not beeing calculated correctly for GraphBU')
+    'Triangles(''DirectedTrianglesRule'', ''in'') is not being calculated correctly for GraphBD')
 
-%% Test 3: Comparison with standard method for BD graphs
-gBD_braph2 = GraphBD(A_test); A_BD = gBD_braph2.getA();
-mBD_braph2 = Triangles(gBD_braph2, 'DirectedTrianglesRule', 'all');
-% calculate the values by Braph2 and standard methods
-valueBD_braph2 = mBD_braph2.getValue();
-valueBD_std = triangles_standard_BD(A_BD);
-assert(isequal(valueBD_braph2, valueBD_std), ...
+%% Test 3: Comparison with known BD graph - out 
+g = GraphBD(A_BD);
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'out').getValue();
+triangles_2 = triangles_BD_out;
+assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
-    'Triangles is not beeing calculated correctly for GraphBD')
+    'Triangles(''DirectedTrianglesRule'', ''out'') is not being calculated correctly for GraphBD')
 
-%% Test 4: Comparison with standard method for BU graphs
-gBU_braph2 = GraphBU(A_test); A_BU = gBU_braph2.getA();
-mBU_braph2 = Triangles(gBU_braph2);
-% calculate the values by Braph2 and standard methods
-valueBU_braph2 = mBU_braph2.getValue();
-valueBU_std = triangles_standard_BU(A_BU);
-assert(isequal(valueBU_braph2, valueBU_std), ...
+%% Test 4: Comparison with known BD graph - cycle 
+g = GraphBD(A_BD);
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'cycle').getValue();
+triangles_2 = triangles_BD_cycle;
+assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
-    'Triangles is not beeing calculated correctly for GraphBU')
+    'Triangles(''DirectedTrianglesRule'', ''cycle'') is not being calculated correctly for GraphBD')
 
-%% Test 5: Comparison with standard method for WD graphs
-gWD_braph2 = GraphWD(A_test); A_WD = gWD_braph2.getA();
-mWD_braph2 = Triangles(gWD_braph2, 'DirectedTrianglesRule', 'all');
-% calculate the values by Braph2 and standard methods
-valueWD_braph2 = mWD_braph2.getValue();
-valueWD_std = triangles_standard_WD(A_WD);
-assert(isequal(valueWD_braph2, valueWD_std), ...
+%% Test 5: Comparison with known BD graph - middleman 
+g = GraphBD(A_BD);
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'middleman').getValue();
+triangles_2 = triangles_BD_mid;
+assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
-    'Triangles is not beeing calculated correctly for GraphWD')
+    'Triangles(''DirectedTrianglesRule'', ''middleman'') is not being calculated correctly for GraphBD')
 
-%% Test 6: Comparison with standard method for WU graphs
-gWU_braph2 = GraphWU(A_test); A_WU = gWU_braph2.getA();
-mWU_braph2 = Triangles(gWU_braph2);
-% calculate the values by Braph2 and standard methods
-valueWU_braph2 = mWU_braph2.getValue();
-valueWU_std = triangles_standard_WU(A_WU);
-assert(isequal(valueWU_braph2, valueWU_std), ...
+%% Test 6: Comparison with known BD graph - all 
+g = GraphBD(A_BD);
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'all').getValue();
+triangles_2 = triangles_BD_all;
+assert(isequal(triangles_1, triangles_2), ...
     'BRAPH:Triangles:Bug', ...
-    'Triangles is not beeing calculated correctly for GraphWU')
+    'Triangles(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphBD')
 
-% Functions to calcualte triangles from 2019_03_03_BCT
+%% Test 7: Comparison with known BU graphs
+g = GraphBU(A_BU);
+triangles_1 = Triangles(g).getValue();
+triangles_2 = triangles_BU;
+assert(isequal(triangles_1, triangles_2), ...
+    'BRAPH:Triangles:Bug', ...
+    'Triangles is not being calculated correctly for GraphBU')
+
+%% Test 8: Comparison with standard method for BD graphs
+g = GraphBD(A_test); 
+A_BD = g.getA();
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'all').getValue();
+triangles_2 = triangles_standard_BD(A_BD);
+assert(isequal(triangles_1, triangles_2), ...
+    'BRAPH:Triangles:Bug', ...
+    'Triangles(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphBD')
+
+%% Test 9: Comparison with standard method for BU graphs
+g = GraphBU(A_test); 
+A_BU = g.getA();
+triangles_1 = Triangles(g).getValue();
+triangles_2 = triangles_standard_BU(A_BU);
+assert(isequal(triangles_1, triangles_2), ...
+    'BRAPH:Triangles:Bug', ...
+    'Triangles is not being calculated correctly for GraphBU')
+
+%% Test 10: Comparison with standard method for WD graphs
+g = GraphWD(A_test); 
+A_WD = g.getA();
+triangles_1 = Triangles(g, 'DirectedTrianglesRule', 'all').getValue();
+triangles_2 = triangles_standard_WD(A_WD);
+assert(isequal(triangles_1, triangles_2), ...
+    'BRAPH:Triangles:Bug', ...
+    'Triangles(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphWD')
+
+%% Test 11: Comparison with standard method for WU graphs
+g = GraphWU(A_test); 
+A_WU = g.getA();
+triangles_1 = Triangles(g).getValue();
+triangles_2 = triangles_standard_WU(A_WU);
+assert(isequal(triangles_1, triangles_2), ...
+    'BRAPH:Triangles:Bug', ...
+    'Triangles is not being calculated correctly for GraphWU')
+
+% Functions to calculate triangles ADAPTED from 2019_03_03_BCT
+
 function stdvalue_BD = triangles_standard_BD(A)
 S=A+A.';                    %symmetrized input graph
 cyc3=diag(S^3)/2;           %number of 3-cycles (ie. directed triangles)
