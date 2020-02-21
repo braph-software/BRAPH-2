@@ -112,7 +112,7 @@ assert(isequal(clustering_1, clustering_2), ...
     'BRAPH:Clustering:Bug', ...
     'Clustering(''DirectedTrianglesRule'', ''all'') is not being calculated correctly for GraphWD')
 
-%% Functions to calcualte triangles from 2019_03_03_BCT
+%% Functions to calculate clustering from 2019_03_03_BCT
 
 function stdvalue_BD = clustering_standard_BD(A)
 S=A+A.';                    %symmetrized input graph
