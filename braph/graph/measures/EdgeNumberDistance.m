@@ -1,6 +1,6 @@
-classdef EdgeDistanceNumber < Distance
+classdef EdgeNumberDistance < Distance
     methods
-        function m = EdgeDistanceNumber(g, varargin)
+        function m = EdgeNumberDistance(g, varargin)
             m = m@Distance(g, varargin{:});
         end
     end
@@ -17,7 +17,7 @@ classdef EdgeDistanceNumber < Distance
     end
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'EdgeDistanceNumber';
+            measure_class = 'EdgeNumberDistance';
         end
         function name = getName()
             name = 'Distance in number of edges';

@@ -1,4 +1,4 @@
-% test EdgeDistanceNumber
+% test EdgeNumberDistance
 A = rand(randi(5));
 graph_class_list = Graph.getList();
 
@@ -8,12 +8,12 @@ for i = 1:1:length(graph_class_list)
     
     if isequal(graph_class, 'GraphWD') | isequal(graph_class, 'GraphWD')
         g = Graph.getGraph(graph_class, A);
-        edn = EdgeDistanceNumber(g);
+        edn = EdgeNumberDistance(g);
         value = edn.getValue();
         
         assert(~isempty(value), ...
-            ['BRAPH:' graph_class ':EdgeDistanceNumber'], ...
-            ['EdgeDistanceNumber is not calculated for ' graph_class])
+            ['BRAPH:' graph_class ':EdgeNumberDistance'], ...
+            ['EdgeNumberDistance is not calculated for ' graph_class])
     end
 end
 
@@ -31,7 +31,7 @@ for i = 1:1:length(graph_class_list)
             ];
         A = [L;zeros(1,n)];
         g = Graph.getGraph(graph_class, A);
-        edn = EdgeDistanceNumber(g);
+        edn = EdgeNumberDistance(g);
         value = edn.getValue();
         
         known_solution = A;
@@ -56,7 +56,7 @@ for i = 1:1:length(graph_class_list)
         end
         
         assert(isequal(value, known_solution), ...
-            ['BRAPH:' graph_class ':EdgeDistanceNumber'], ...
-            ['EdgeDistanceNumber is not calculated for ' graph_class])
+            ['BRAPH:' graph_class ':EdgeNumberDistance'], ...
+            ['EdgeNumberDistance is not calculated for ' graph_class])
     end
 end
