@@ -30,7 +30,11 @@ classdef Measure < handle
         end
         function disp(m)
             disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
-            disp([' value: ' int2str(size(m.getValue(), 1))  ' x ' int2str(size(m.getValue(), 2))])
+            if m.is_value_calculated()
+                disp([' value: ' int2str(size(m.getValue(), 1))  ' x ' int2str(size(m.getValue(), 2))])
+            else
+                disp(' value: not calculated yet')
+            end
             disp(['graph: ' m.getGraph().tostring()]);
             disp([' settings']); %#ok<NBRAK>
             settings = m.getSettings(); %#ok<PROP>
