@@ -9,16 +9,15 @@ classdef Triangles < Measure
             g = m.getGraph();
             A = g.getA();
             if isa(g, 'GraphBU') || isa(g, 'GraphWU')
-                triangles = diag((A.^(1/3))^3)/2;
-                triangles(isnan(triangles)) = 0; % Should return zeros, not nan
-            elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
+                triangles = diag((A.^(1/3))^3) / 2;
+                triangles(isnan(triangles)) = 0;  % Should return zeros, not NaN
                 
+            elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
                 settings = m.getSettings();
                 directed_triangles_rule = get_from_varargin(0, 'DirectedTrianglesRule', settings{:});
-                
                 switch lower(directed_triangles_rule)
                     case {'all'}  % all rule
-                        triangles = diag((A.^(1/3) + transpose(A).^(1/3))^3)/2;
+                        triangles = diag((A.^(1/3) + transpose(A).^(1/3))^3) / 2;
                     case {'middleman'}  % middleman rule
                         triangles = diag(A.^(1/3) * transpose(A).^(1/3) * A.^(1/3));
                     case {'in'}  % in rule
