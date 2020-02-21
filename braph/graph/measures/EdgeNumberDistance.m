@@ -44,7 +44,7 @@ classdef EdgeNumberDistance < Distance
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('EdgeDistanceNumber');
+            n = Measure.getCompatibleGraphNumber('EdgeNumberDistance');
         end
     end
 end
