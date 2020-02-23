@@ -1,4 +1,4 @@
-classdef BrainRegion < handle
+classdef BrainRegion < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         label  % few-letter code (unique for each brain region)
         name  % extended name
@@ -8,6 +8,26 @@ classdef BrainRegion < handle
     end
     methods
         function br = BrainRegion(label, name, x, y, z)
+            
+            if nargin < 5
+                z = 0;
+            end
+            
+            if nargin < 4
+                y = 0;
+            end
+                
+            if nargin < 3
+                x = 0;
+            end
+            
+            if nargin < 2
+                name = 'br name';
+            end
+            
+            if nargin < 1
+                label = 'BR';
+            end
             
             br.label = label;
             br.name = name;
