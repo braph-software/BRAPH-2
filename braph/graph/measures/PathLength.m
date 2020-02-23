@@ -14,18 +14,17 @@ classdef PathLength < Measure
             D = g.getMeasure('Distance').getValue();
             D = dediagonalize(D);            
             N = g.nodenumber();
+            Dout = D;
             
             m.pathLengthIn = zeros(1, N);
-            for u = 1:1:N
-                Du = D(:, u);
-                m.pathLengthIn(u) = sum(Du(Du~=Inf))/length(nonzeros(Du~=Inf));
-            end
             
-            m.pathLengthOut = zeros(1, N);
-            for u = 1:1:N
-                Du = D(u, :);
-               m.pathLengthOut(u) = sum(Du(Du~=Inf))/length(nonzeros(Du~=Inf));
-            end
+            in_cond1 = D(:,1)==Inf;  % locates all not connected nodes           
+            D(in_cond1,:) = [];  % removes conditions          
+            m.pathLengthIn= mean(D,1);
+            
+            out_cond1 = Dout(1, :) == Inf;  % locates all not connected nodes      
+            Dout(:,out_cond1 ) = [];  % removes conditions
+            m.pathLengthOut =mean(Dout,2)';           
             
             P = mean([m.pathLengthIn; m.pathLengthOut], 1);
         end

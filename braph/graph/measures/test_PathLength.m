@@ -35,21 +35,21 @@ for i = 1:1:length(graph_class_list)
     switch (graph_class)
         case 'GraphWD'
             known_solution = [
-                4.3750 5.125 5.25 5.25 0;
+                4.3750 5.125 5.25 5.25 Inf;
                 ];
         case 'GraphWU'
             known_solution = [
-                3.5 2 2.5 2 0;
+                3.5 2 2.5 2 Inf;
                 ];
             
         case 'GraphBD'
             known_solution = [
-               0.75 1 1 1 0;
+               0.75 1 1 1 Inf;
                 ];
             
         case 'GraphBU'
             known_solution = [
-               0.75 0.75 0.75 0.75 0
+               0.75 0.75 0.75 0.75 Inf
                 ];
     end
     
