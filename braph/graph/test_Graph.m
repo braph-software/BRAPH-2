@@ -1,4 +1,4 @@
-% test Measure
+% test Graph
 graph_class_list = Graph.getList();
 
 %% Test 1: All graphs not abstract
