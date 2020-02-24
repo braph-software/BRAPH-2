@@ -6,9 +6,8 @@ classdef EdgeNumberDistance < Distance
     end
     methods (Access=protected)
         function EDN = calculate(m)            
-            if ~isempty(m.B)
-              EDN = m.B;
-            else
+
+            if isempty(m.B)
                 d =  calculate@Distance(m);
             end
             

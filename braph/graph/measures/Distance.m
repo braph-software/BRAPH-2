@@ -1,5 +1,5 @@
 classdef Distance < Measure
-    properties
+    properties (GetAccess=protected, SetAccess=protected)
         B  % number of edges matrix 
     end
     methods
