@@ -9,7 +9,7 @@ classdef PathLength < Measure
             g = m.getGraph();                          
             D = g.getMeasure('Distance').getValue();
             N = g.nodenumber();
-            P = zeros(1, N);
+            B = zeros(1, N);
             
             settings = m.getSettings();
             pathLength_rule = get_from_varargin(0,'PathLengthAvRule', settings{:});
