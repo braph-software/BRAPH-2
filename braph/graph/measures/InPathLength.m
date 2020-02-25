@@ -1,6 +1,6 @@
-classdef PathLength < Measure  
+classdef InPathLength < Measure
     methods
-        function m = PathLength(g, varargin)
+        function m = InPathLength(g, varargin)
             m = m@Measure(g, varargin{:});
         end
     end
@@ -12,7 +12,7 @@ classdef PathLength < Measure
             P = zeros(1, N);
             
             settings = m.getSettings();
-            pathLength_rule = get_from_varargin(0,'PathLengthAvRule', settings{:});
+            pathLength_rule = get_from_varargin(0,'InPathLengthAvRule', settings{:});
             switch lower(pathLength_rule)
                 case {'subgraphs'}                    
                     for u = 1:1:N
@@ -34,17 +34,18 @@ classdef PathLength < Measure
             P = B';
         end
     end
-     methods (Static)
+    methods (Static)
         function measure_class = getClass()
-            measure_class = 'PathLength';
+            measure_class = 'InPathLength';
         end
         function name = getName()
-            name = 'PathLength';
+            name = 'InPathLength';
         end
         function description = getDescription()
             description = [ ...                
-              'The path length is the average shortest path lengths of one node to all ' ...
-              'other nodes.' ...
+              'The in path length is the average shortest ' ...
+              'in path lengths of one node to all ' ...
+              'other nodes. ' ...
                 ];
         end
         function bool = is_global()
@@ -58,12 +59,12 @@ classdef PathLength < Measure
         end
         function list = getCompatibleGraphList()
             list = { ...               
-                'GraphBU', ...                
-                'GraphWU' ...
+                'GraphBD', ...                
+                'GraphWD' ...
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('PathLength');
+            n = Measure.getCompatibleGraphNumber('InPathLength');
         end
     end
 end

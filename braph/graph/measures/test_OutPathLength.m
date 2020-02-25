@@ -1,17 +1,17 @@
-% test PathLength
-graph_class_list = {'GraphBU', 'GraphWU'};
+% test OutPathLength
+graph_class_list = {'GraphBD', 'GraphWD'};
 
 %% Test 1: Calculation AllGraphs
 for i = 1:1:length(graph_class_list)
     A = rand(randi(5));
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    pathL = g.getMeasure('PathLength');
+    pathL = g.getMeasure('OutPathLength');
     value = pathL.getValue();
     
     assert(~isempty(value), ...
-        ['BRAPH:' graph_class ':PathLength'], ...
-        ['PathLength is not calculated for ' graph_class])
+        ['BRAPH:' graph_class ':OutPathLength'], ...
+        ['OutPathLength is not calculated for ' graph_class])
     
 end
 
@@ -27,38 +27,38 @@ for i = 1:1:length(graph_class_list)
         ];
     A = [L;zeros(1,n)];
     g = Graph.getGraph(graph_class, A);
-    p = PathLength(g);
+    p = OutPathLength(g);
     p_value = p.getValue();
-    p_value = round(p_value,4);
+    p_value = round(p_value, 4);
     
     known_solution = A;
     
     switch (graph_class)
-        case 'GraphWU'
+        case 'GraphWD'
             known_solution = [
                 4.6667;
-                2.6667;
-                3.3333;
-                2.6667;
+                11;
+                3.6667;
+                7.3333;
                 Inf;
                 ];
             
-        case 'GraphBU'
+        case 'GraphBD'
             known_solution = [
                 1;
+                1.6667;
                 1;
-                1;
-                1;
+                1.3333;
                 Inf;
                 ];
     end
     
     assert( isequal(p_value, known_solution), ...
-        ['BRAPH:PathLength: ' graph_class], ...
-        ['PathLength is not working for: ' graph_class ])
+        ['BRAPH:OutPathLength: ' graph_class], ...
+        ['OutPathLength is not working for: ' graph_class ])
 end
 
-%% Test 3: Calculation Harmonic WU vs know Value
+%% Test 3: Calculation Harmonic WD vs know Value
 
 n = 5;
 L = [
@@ -68,24 +68,24 @@ L = [
     .125 10 0 0 0
     ];
 A = [L;zeros(1,n)];
-g = GraphWU(A);
-p = PathLength(g, 'PathLengthAvRule', 'harmonic');
+g = GraphWD(A);
+p = OutPathLength(g, 'OutPathLengthAvRule', 'harmonic');
 p_value = p.getValue();
-p_value = round(p_value,4);
+p_value = round(p_value, 4);
 
 known_solution = [
     4.6154;
-    1.7647;
-    2.9032;
-    1.8947;
+    10.5169;
+    3.1579;
+    2.496;
     Inf;
     ];
 
 assert( isequal(p_value, known_solution), ...
-    ['BRAPH:PathLength:Harmonic '], ...
-    ['PathLength is not working for: Harmonic mean'])
+    ['BRAPH:OutPathLength:Harmonic '], ...
+    ['OutPathLength is not working for: Harmonic mean'])
 
-%% Test 4: Calculation subgraphs WU vs know Value
+%% Test 4: Calculation subgraphs WD vs know Value
 n = 5;
 L = [
     0 .1 .2 .25 0;
@@ -94,19 +94,19 @@ L = [
     .125 10 0 0 0
     ];
 A = [L;zeros(1,n)];
-g = GraphWU(A);
-p = PathLength(g, 'PathLengthAvRule', 'subgraphs');
+g = GraphWD(A);
+p = InPathLength(g, 'OutPathLengthAvRule', 'subgraphs');
 p_value = p.getValue();
-p_value = round(p_value,4);
+p_value = round(p_value, 4);
 
 known_solution = [
-    4.6667;
+    7;
     2.6667;
-    3.3333;
-    2.6667;
+    10.3333;
+    6.6667;
     Inf;
     ];
 
 assert( isequal(p_value, known_solution), ...
-    ['BRAPH:PathLength:Subgraphs '], ...
-    ['PathLength is not working for: Subgraphs mean'])
+    ['BRAPH:OutPathLength:Subgraphs '], ...
+    ['OutPathLength is not working for: Subgraphs mean'])
