@@ -8,6 +8,7 @@ addpath([dir filesep 'graph'])
 addpath([dir filesep 'graph' filesep 'graphs'])
 addpath([dir filesep 'graph' filesep 'measures'])
 addpath([dir filesep 'atlas'])
+addpath([dir filesep 'cohort'])
 addpath([dir filesep 'test'])
 
 clear dir
