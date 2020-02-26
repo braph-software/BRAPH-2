@@ -89,10 +89,10 @@ classdef Measure < handle
             
             name = eval([Measure.getClass(m) '.getName()']);
         end
-        function name = getDescription(m)
+        function description = getDescription(m)
             % measure description
             
-            name = eval([Measure.getClass(m) '.getDescription()']);
+            description = eval([Measure.getClass(m) '.getDescription()']);
         end
         function bool = is_global(m)
             % whether is global measure
