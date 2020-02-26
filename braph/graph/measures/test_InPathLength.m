@@ -36,19 +36,19 @@ for i = 1:1:length(graph_class_list)
     switch (graph_class)
         case 'GraphWD'
             known_solution = [
-                7;
-                2.6667;
-                10.3333;
-                6.6667;
+                Inf;
+                Inf;
+                Inf;
+                Inf;
                 Inf;
                 ];
             
         case 'GraphBD'
             known_solution = [
-                1;
-                1;
-                1.6667;
-                1.3333;
+                Inf;
+                Inf;
+                Inf;
+                Inf;
                 Inf;
                 ];
     end
@@ -74,10 +74,10 @@ p_value = p.getValue();
 p_value = round(p_value, 4);
 
 known_solution = [
-    6.6667;
-    1.7647;
-    8.4783;
-    5.1429;
+    8.8889;
+    2.3529;
+    11.3043;
+    6.8571;
     Inf;
     ];
 
@@ -95,7 +95,7 @@ L = [
     ];
 A = [L;zeros(1,n)];
 g = GraphWD(A);
-p = InPathLength(g, 'PathLengthAvRule', 'subgraphs');
+p = InPathLength(g, 'InPathLengthAvRule', 'subgraphs');
 p_value = p.getValue();
 p_value = round(p_value, 4);
 
