@@ -9,12 +9,12 @@ classdef InPathLengthAv < InPathLength
             g = m.getGraph();
             
             if g.is_measure_calculated('InPathLength')
-                inpathLength = g.getMeasureValue('InPathLength');
+                inpl = g.getMeasureValue('InPathLength');
             else
-                inpathLength = calculate@InPathLength(m);
+                inpl = calculate@InPathLength(m);
             end
   
-            inplav =mean(inpathLength(inpathLength~=Inf));
+            inplav =mean(inpl);
         end
     end
      methods(Static)
@@ -22,7 +22,7 @@ classdef InPathLengthAv < InPathLength
             measure_class = 'InPathLengthAv';
         end
         function name = getName()
-            name = 'Average InPathLength';
+            name = 'Average In Path Length';
         end
         function description = getDescription()
             description = [ ...

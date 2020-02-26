@@ -9,12 +9,12 @@ classdef PathLengthAv < PathLength
             g = m.getGraph();
             
             if g.is_measure_calculated('PathLength')
-                pathLength = g.getMeasureValue('PathLength');
+                pl = g.getMeasureValue('PathLength');
             else
-                pathLength = calculate@PathLength(m);
+                pl = calculate@PathLength(m);
             end
   
-            plav =mean(pathLength(pathLength~=Inf));
+            plav = mean(pl);
         end
     end
      methods(Static)
@@ -22,7 +22,7 @@ classdef PathLengthAv < PathLength
             measure_class = 'PathLengthAv';
         end
         function name = getName()
-            name = 'Average PathLength';
+            name = 'Average Path Length';
         end
         function description = getDescription()
             description = [ ...

@@ -9,12 +9,12 @@ classdef OutPathLengthAv < OutPathLength
             g = m.getGraph();
             
             if g.is_measure_calculated('OutPathLength')
-                outpathLength = g.getMeasureValue('OutPathLength');
+                outpl = g.getMeasureValue('OutPathLength');
             else
-                outpathLength = calculate@OutPathLength(m);
+                outpl = calculate@OutPathLength(m);
             end
   
-            outplav =mean(outpathLength(outpathLength~=Inf));
+            outplav =mean(outpl);
         end
     end
      methods(Static)
@@ -22,7 +22,7 @@ classdef OutPathLengthAv < OutPathLength
             measure_class = 'OutPathLengthAv';
         end
         function name = getName()
-            name = 'Average OutPathLength';
+            name = 'Average Out Path Length';
         end
         function description = getDescription()
             description = [ ...
