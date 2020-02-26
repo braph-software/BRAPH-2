@@ -6,8 +6,15 @@ classdef InPathLength < Measure
     end
     methods (Access = protected)
         function in_pl =  calculate(m)
-            g = m.getGraph();                          
-            D = g.getMeasure('Distance').getValue();
+            g = m.getGraph();    
+            
+            settings = g.getSettings();
+            if g.is_measure_calculated('Distance')
+                D = g.getMeasureValue('Distance');
+            else
+                D = Distance(g, settings{:}).getValue();
+            end
+            
             N = g.nodenumber();
             in_pl = zeros(N, 1);
             
@@ -17,20 +24,20 @@ classdef InPathLength < Measure
                 case {'subgraphs'}                    
                     for u = 1:1:N
                         Du = D(:, u);
-                        in_pl(u) = sum(Du(Du~=Inf))/length(Du(Du~=Inf & Du~=0));
+                        in_pl(u) = mean(Du(Du~=0 & Du~=Inf));
                     end
                 case {'harmonic'}
                     for u = 1:1:N
-                        Du = D(:,u);
+                        Du = D(:, u);
                         in_pl(u) = harmmean(Du(Du~=0));
                     end
                 otherwise
                     for u = 1:1:N
-                        Du = D(:,u);
+                        Du = D(:, u);
                         in_pl(u) = mean(Du(Du~=0));
                     end
             end
-            in_pl(isnan(in_pl))=Inf;
+            in_pl(isnan(in_pl)) = Inf;
         end
     end
     methods (Static)
@@ -38,7 +45,7 @@ classdef InPathLength < Measure
             measure_class = 'InPathLength';
         end
         function name = getName()
-            name = 'InPathLength';
+            name = 'In Path Length';
         end
         function description = getDescription()
             description = [ ...                

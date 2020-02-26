@@ -7,7 +7,14 @@ classdef OutPathLength < Measure
     methods (Access = protected)
         function out_pl =  calculate(m)
             g = m.getGraph();
-            D = g.getMeasure('Distance').getValue();
+            
+            settings = g.getSettings();
+            if g.is_measure_calculated('Distance')
+                D = g.getMeasureValue('Distance');
+            else
+                D = Distance(g, settings{:}).getValue();
+            end
+            
             N = g.nodenumber();
             out_pl = zeros(N, 1);
             
@@ -30,7 +37,7 @@ classdef OutPathLength < Measure
                         out_pl(u) = mean(Du(Du~=0));
                     end
             end
-            out_pl(isnan(out_pl))=Inf;
+            out_pl(isnan(out_pl)) = Inf;
         end
     end
     methods (Static)
@@ -38,7 +45,7 @@ classdef OutPathLength < Measure
             measure_class = 'OutPathLength';
         end
         function name = getName()
-            name = 'OutPathLength';
+            name = 'Out Path Length';
         end
         function description = getDescription()
             description = [ ...
