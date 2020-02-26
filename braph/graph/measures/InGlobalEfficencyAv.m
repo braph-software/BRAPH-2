@@ -5,15 +5,15 @@ classdef InGlobalEfficencyAv < InGlobalEfficency
         end
     end
     methods (Access = protected)
-        function gbav = calculate(m)
+        function in_global_efficency = calculate(m)
             g = m.getGraph();            
             if g.is_measure_calculated('InGlobalEfficency')
-                ge = g.getMeasureValue('InGlobalEfficency');
+                in_global_efficiency = g.getMeasureValue('InGlobalEfficency');
             else
-                ge = calculate@InGlobalEfficency(m);
+                in_global_efficiency = calculate@InGlobalEfficency(m);
             end
             
-            gbav = mean(ge);
+            in_global_efficency = mean(in_global_efficiency);
         end
     end
     methods (Static)
