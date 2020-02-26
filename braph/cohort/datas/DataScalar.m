@@ -23,7 +23,7 @@ classdef DataScalar < Data
         function description = getDescription()
             description = [ ...
                 'A single number representing a scalar value.' ...
-                ];
+                ]; %#ok<NBRAK>
         end
     end  
 end
