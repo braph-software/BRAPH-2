@@ -9,6 +9,24 @@ classdef Subject < handle & matlab.mixin.Copyable
             sub.initialize_datadict();
         end
     end
+    methods
+        function str = tostring(sub)
+            str = [Subject.getClass(sub) ' ' int2str(size(sub.getA(), 1)) ' rows x ' int2str(size(sub.getA(), 2)) ' columns'];
+        end
+        function disp(sub)
+            disp(['<a href="matlab:help ' Subject.getClass(sub) '">' Subject.getClass(sub) '</a>'])
+            % disp([' size: ' int2str(size(sub.getA(), 1)) ' rows x ' int2str(size(sub.getA(), 2)) ' columns'])
+            % disp([' measures: ' int2str(length(sub.mdict))]);
+            % disp([' settings']); %#ok<NBRAK>
+            % settings = sub.getSettings(); %#ok<PROP>
+            % for i = 1:2:length(settings) %#ok<PROP>
+            %     disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
+            % end
+        end
+        function d = getData(sub, data_key)
+            d = sub.mdict(data_key);            
+        end
+    end
     methods (Abstract, Access=protected)
         initialize_datadict(m)  % initialized the data_dict
     end
