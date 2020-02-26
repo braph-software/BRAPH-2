@@ -16,7 +16,11 @@ classdef Data < handle
     end
     methods
         function str = tostring(d)
-            str = [Data.getClass(d)]; %#ok<NBRAK>
+            str = [Data.getClass(d) ' ' int2str(size(d.getValue(), 1)) ' x ' int2str(size(d.getValue(), 2))]; %#ok<NBRAK>
+        end
+        function disp(d)
+            disp(['<a href="matlab:help ' Data.getClass(d) '">' Data.getClass(d) '</a>'])
+            disp([' size: ' int2str(size(d.getValue(), 1)) ' rows x ' int2str(size(d.getValue(), 2)) ' columns'])
         end
         function atlas = getBrainAtlas(d)
             atlas = d.atlas;
