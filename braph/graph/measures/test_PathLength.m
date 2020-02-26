@@ -36,19 +36,19 @@ for i = 1:1:length(graph_class_list)
     switch (graph_class)
         case 'GraphWU'
             known_solution = [
-                4.6667;
-                2.6667;
-                3.3333;
-                2.6667;
+                Inf;
+                Inf;
+                Inf;
+                Inf;
                 Inf;
                 ];
             
         case 'GraphBU'
             known_solution = [
-                1;
-                1;
-                1;
-                1;
+                Inf;
+                Inf;
+                Inf;
+                Inf;
                 Inf;
                 ];
     end
@@ -74,10 +74,10 @@ p_value = p.getValue();
 p_value = round(p_value,4);
 
 known_solution = [
-    4.6154;
-    1.7647;
-    2.9032;
-    1.8947;
+    6.1538;
+    2.3529;
+    3.871;
+    2.5263;
     Inf;
     ];
 

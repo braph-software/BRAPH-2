@@ -5,33 +5,32 @@ classdef PathLength < Measure
         end
     end
     methods (Access = protected)
-        function P =  calculate(m)
+        function pl =  calculate(m)
             g = m.getGraph();                          
             D = g.getMeasure('Distance').getValue();
             N = g.nodenumber();
-            B = zeros(1, N);
+            pl = zeros(N, 1);
             
             settings = m.getSettings();
-            pathLength_rule = get_from_varargin(0,'PathLengthAvRule', settings{:});
+            pathLength_rule = get_from_varargin(0, 'PathLengthAvRule', settings{:});
             switch lower(pathLength_rule)
                 case {'subgraphs'}                    
                     for u = 1:1:N
                         Du = D(:, u);
-                        B(u) = sum(Du(Du~=Inf))/length(Du(Du~=Inf & Du~=0));
+                        pl(u) = mean(Du(Du~=Inf & Du~=0));
                     end
                 case {'harmonic'}
                     for u = 1:1:N
-                        Du = D(:,u);
-                        B(u) = harmmean(Du(Du~=Inf & Du~=0));
+                        Du = D(:, u);
+                        pl(u) = harmmean(Du(Du~=0));
                     end
                 otherwise
                     for u = 1:1:N
-                        Du = D(:,u);
-                        B(u) = mean(Du(Du~=Inf & Du~=0));
+                        Du = D(:, u);
+                        pl(u) = mean(Du(Du~=0));
                     end
             end
-            B(isnan(B))=Inf;
-            P = B';
+            pl(isnan(pl))=Inf;
         end
     end
      methods (Static)
