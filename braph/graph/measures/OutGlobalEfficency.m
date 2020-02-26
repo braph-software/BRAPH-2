@@ -8,7 +8,12 @@ classdef OutGlobalEfficency < Measure
         function ge = calculate(m)
             g = m.getGraph();
             N = g.nodenumber();
-            D = g.getMeasure('Distance').getValue();
+            settings = g.getSettings();
+            if g.is_measure_calculated('Distance')
+                D = g.getMeasure('Distance').getValue();
+            else
+                D = Distance(g, settings{:}).getValue();
+            end
             Di = D.^-1;  % inverse distance
             Di(1:N+1:end) = 0;   
             ge = (sum(Di, 2)'/(N-1))';               
