@@ -98,6 +98,5 @@ classdef Clustering < Triangles
         function n = getCompatibleGraphNumber()
             n = Measure.getCompatibleGraphNumber('Clustering');
         end
-    end
-    
+    end  
 end
