@@ -11,7 +11,7 @@ classdef OutGlobalEfficency < Measure
             D = g.getMeasure('Distance').getValue();
             Di = D.^-1;  % inverse distance
             Di(1:N+1:end) = 0;   
-            ge = (sum(Di,2)'/(N-1))';               
+            ge = (sum(Di, 2)'/(N-1))';               
         end
     end
     methods (Static)
