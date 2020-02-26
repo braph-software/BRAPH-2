@@ -5,17 +5,23 @@ classdef DataConnectivity < Data
             if nargin < 2
                 value = zeros(atlas.brainregionnumber(), atlas.brainregionnumber());
             end
-            
-            assert(isnumeric(value) && isequal(size(value), [atlas.brainregionnumber(), atlas.brainregionnumber()]), ...
+                        
+            d = d@Data(atlas, value);
+        end
+    end
+    methods
+        function setValue(d, value)
+
+            regionnumber = d.getBrainAtlas().brainregionnumber();
+            assert(isnumeric(value) && isequal(size(value), [regionnumber, regionnumber]), ...
                 'BRAPH:DataConnectivity:WrongValue', ...
                 [ ...
                 'The value of DataConnectivity must be a connectivity matrix ' ...
                 'with the same number of rows and columns as the BrainAtlas, ' ...
-                'in this case ' mat2str(atlas.brainregionnumber()) ' rows x ' ...
-                mat2str(atlas.brainregionnumber()) ' columns' ...
+                'in this case ' int2str(regionnumber) ' rows x ' int2str(regionnumber) ' columns' ...
                 ])
-            
-            d = d@Data(atlas, value);
+
+            d.value = value;
         end
     end
     methods (Static)

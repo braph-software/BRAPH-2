@@ -11,16 +11,22 @@ classdef Data < handle
                 'Data must be constructed with a BrainAtlas.')
             
             d.atlas = atlas;
-            d.value = value;
+            d.setValue(value);
         end
     end
     methods
+        function str = tostring(d)
+            str = [Data.getClass(d)]; %#ok<NBRAK>
+        end
         function atlas = getBrainAtlas(d)
             atlas = d.atlas;
         end
         function value = getValue(d)
             value = d.value;
         end
+    end
+    methods (Abstract)
+        setValue(d, value)  % set the value of the data
     end
     methods (Static)
         function data_list = getList()
@@ -48,8 +54,8 @@ classdef Data < handle
             
             description = eval([Data.getClass(d) '.getDescription()']);
         end
-        function d = getData(data_code, atlas, varargin) %#ok<INUSD>
-            d = eval([data_code '(atlas, varargin{:})']);
+        function d = getData(data_class, atlas, varargin) %#ok<INUSD>
+            d = eval([data_class '(atlas, varargin{:})']);
         end
     end
 end

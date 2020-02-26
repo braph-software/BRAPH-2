@@ -107,8 +107,8 @@ classdef Measure < handle
         function bool = is_binodal(m)
             bool = eval([Measure.getClass(m) '.is_binodal()']);
         end
-        function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
-            m = eval([measure_code '(g, varargin{:})']);
+        function m = getMeasure(measure_class, g, varargin) %#ok<INUSD>
+            m = eval([measure_class '(g, varargin{:})']);
         end
         function list = getCompatibleGraphList(m)
             % list of graphs with which measure works

@@ -13,6 +13,8 @@ for i = 1:1:length(data_class_list)
     data_class = data_class_list{i};
 
     d = Data.getData(data_class, ba);
+    
+    d.setValue(d.getValue());
 end
 
 %% Test 2: Implementation static methods

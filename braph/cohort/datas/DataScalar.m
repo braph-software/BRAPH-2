@@ -6,11 +6,17 @@ classdef DataScalar < Data
                 value = 0;
             end
             
+            d = d@Data(atlas, value);
+        end
+    end
+    methods
+        function setValue(d, value)
+                        
             assert(isnumeric(value) && numel(value)==1, ...
                 'BRAPH:DataScalar:WrongValue', ...
                 'The value of DataScalar must be a scalar')
-            
-            d = d@Data(atlas, value);
+
+            d.value = value;
         end
     end
     methods (Static)

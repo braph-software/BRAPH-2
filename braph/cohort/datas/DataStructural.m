@@ -6,15 +6,22 @@ classdef DataStructural < Data
                 value = zeros(atlas.brainregionnumber(), 1);
             end
             
-            assert(isnumeric(value) && isequal(size(value), [atlas.brainregionnumber(), 1]), ...
+            d = d@Data(atlas, value);
+        end
+    end
+    methods
+        function setValue(d, value)
+                        
+            regionnumber = d.getBrainAtlas().brainregionnumber();
+            assert(isnumeric(value) && isequal(size(value), [regionnumber, 1]), ...
                 'BRAPH:DataStructural:WrongValue', ...
                 [ ...
                 'The value of DataStructural must be a column vector ' ...
                 'with the same number of element as the BrainAtlas, ' ...
-                'in this case ' mat2str(atlas.brainregionnumber()) ' elements' ...
+                'in this case ' int2str(regionnumber) ' elements' ...
                 ])
-            
-            d = d@Data(atlas, value);
+
+            d.value = value;
         end
     end
     methods (Static)
