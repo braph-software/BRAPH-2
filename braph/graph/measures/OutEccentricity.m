@@ -14,7 +14,7 @@ classdef OutEccentricity < Measure
                 D = Distance(g, settings{:}).getValue();
             end
             
-            ecc = max(D.*(D~=Inf),[], 2);
+            ecc = max(D.*(D~=Inf), [], 2);
         end
     end
     methods (Static)
