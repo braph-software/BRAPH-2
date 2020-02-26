@@ -1,13 +1,23 @@
-classdef Data < handle & matlab.mixin.Copyable
+classdef Data < handle
     properties (GetAccess=protected, SetAccess=protected)
+        atlas  % brain atlas
         value  % data value
     end
     methods (Access=protected)
-        function d = Data(value)
+        function d = Data(atlas, value)
+            
+            assert(isa(atlas, 'BrainAtlas'), ...
+                'BRAPH:Data:BrainAtlas', ...
+                'Data must be constructed with a BrainAtlas.')
+            
+            d.atlas = atlas;
             d.value = value;
         end
     end
     methods
+        function atlas = getBrainAtlas(d)
+            atlas = d.atlas;
+        end
         function value = getValue(d)
             value = d.value;
         end
@@ -16,7 +26,7 @@ classdef Data < handle & matlab.mixin.Copyable
         function data_list = getList()
             data_list = subclasses( ...
                 'Data', ...
-                [fileparts(which('Data')) filesep 'data'] ...
+                [fileparts(which('Data')) filesep 'datas'] ...
                 );
         end
         function data_class = getClass(d)
@@ -38,8 +48,8 @@ classdef Data < handle & matlab.mixin.Copyable
             
             description = eval([Data.getClass(d) '.getDescription()']);
         end
-        function d = getData(data_code, varargin)
-            d = eval([data_code '(varargin{:})']);
+        function d = getData(data_code, atlas, varargin) %#ok<INUSD>
+            d = eval([data_code '(atlas, varargin{:})']);
         end
     end
 end
