@@ -1,7 +1,10 @@
 classdef EdgeNumberDistance < Distance
     methods
         function m = EdgeNumberDistance(g, varargin)
-            m = m@Distance(g, varargin{:});
+
+            settings = clean_varargin({}, varargin{:});
+
+            m = m@Distance(g, settings{:});
         end
     end
     methods (Access=protected)

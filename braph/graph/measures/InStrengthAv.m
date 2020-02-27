@@ -1,7 +1,10 @@
 classdef InStrengthAv < InStrength
     methods
         function m = InStrengthAv(g, varargin)
-            m = m@InStrength(g, varargin{:});
+
+            settings = clean_varargin({}, varargin{:});
+
+            m = m@InStrength(g, settings{:});
         end
     end
     methods (Access=protected)

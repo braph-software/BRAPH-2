@@ -1,5 +1,9 @@
 function varargin_clean = clean_varargin(handles, varargin)
 
+if length(varargin) == 1
+    varargin = varargin{:};
+end
+
 varargin_clean = varargin;
 
 for n = 1:2:length(varargin)-1

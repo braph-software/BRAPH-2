@@ -1,7 +1,10 @@
 classdef OutDegreeAv < OutDegree
     methods
         function m = OutDegreeAv(g, varargin)
-            m = m@OutDegree(g, varargin{:});
+
+            settings = clean_varargin({}, varargin{:});
+
+            m = m@OutDegree(g, settings{:});
         end
     end
     methods (Access=protected)
