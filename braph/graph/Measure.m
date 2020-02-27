@@ -1,7 +1,7 @@
 classdef Measure < handle
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
-        settings  % structure with the constructor varagin
+        settings  % structure with the constructor varargin
         value  % graph measure value
         % scalar for global measures
         % column vector for nodal measures
