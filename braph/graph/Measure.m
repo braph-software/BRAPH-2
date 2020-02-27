@@ -1,10 +1,11 @@
 classdef Measure < handle
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
-        settings  % structure with the constructor varargin
+        settings  % structure with the constructor settings
         value  % graph measure value
-        % scalar for global measures
-        % column vector for nodal measures
+               % scalar for global measures
+               % column vector for nodal measures
+               % square matrix for binodal measures
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
@@ -16,7 +17,7 @@ classdef Measure < handle
                     )
             end
             
-            settings = get_from_varargin(varargin, 'Settings', varargin{:});
+            settings = get_from_varargin(varargin, 'Settings', varargin{:});  % returns varargin if no key 'Settings'
             value = get_from_varargin([], 'Value', varargin{:});
             
             m.g = g;
