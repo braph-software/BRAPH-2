@@ -17,6 +17,10 @@ classdef Measure < handle
                     )
             end
             
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
+            
             settings = get_from_varargin(varargin, 'Settings', varargin{:});  % returns varargin if no key 'Settings'
             value = get_from_varargin([], 'Value', varargin{:});
             

@@ -1,7 +1,10 @@
 classdef Clustering < Triangles
     methods
         function m = Clustering (g, varargin)
-            m = m@Triangles(g, varargin{:});
+
+            settings = clean_varargin({'DirectedTrianglesRule'}, varargin{:});
+            
+            m = m@Triangles(g, settings{:});
         end
     end
     methods (Access=protected)
@@ -15,14 +18,13 @@ classdef Clustering < Triangles
                 triangles = calculate@Triangles(m);
             end
             
-            settings = g.getSettings();
             if isa(g, 'GraphBU') || isa(g, 'GraphWU')
                 
                 
                 if g.is_measure_calculated('Degree')
                     degree = g.getMeasureValue('Degree');                    
                 else
-                    degree = Degree(g, settings{:}).getValue();
+                    degree = Degree(g, g.getSettings()).getValue();
                 end
                 
                 clustering = 2 * triangles ./ (degree .* (degree - 1));
@@ -32,17 +34,16 @@ classdef Clustering < Triangles
                 if g.is_measure_calculated('InDegree')
                     in_degree = g.getMeasureValue('InDegree');
                 else 
-                    in_degree = InDegree(g, settings{:}).getValue();
+                    in_degree = InDegree(g, g.getSettings()).getValue();
                 end
                 
                 if g.is_measure_calculated('OutDegree')
                     out_degree = g.getMeasureValue('OutDegree');
                 else
-                    out_degree = OutDegree(g, settings{:}).getValue();
+                    out_degree = OutDegree(g, g.getSettings()).getValue();
                 end
                 
-                settings = m.getSettings();
-                directed_triangles_rule = get_from_varargin(0, 'DirectedTrianglesRule', settings{:});
+                directed_triangles_rule = get_from_varargin('cycle', 'DirectedTrianglesRule', m.getSettings());
                 switch lower(directed_triangles_rule)
                     case {'all'}  % all rule
                         clustering = triangles ./ ((out_degree + in_degree) .* (out_degree + in_degree - 1) - 2 * diag(A^2));
