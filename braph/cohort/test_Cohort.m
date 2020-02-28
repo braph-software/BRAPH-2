@@ -49,197 +49,317 @@ for i = 1:1:length(sub_class_list)
         'Cohort.getSubject does not work')
 end
 
-% %% Test 3: Add
-% ba = BrainAtlas('brain atlas', {br1, br2, br4, br5});
-% ba.addBrainRegion(br3, 3)
+%% Test 3: Add
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub4, sub5});
+   
+    cohort.addSubject(sub3, 3)
+
+    assert(cohort.subjectnumber()==5, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addSubject does not work')
+    assert(isequal(cohort.getSubject(3).getID(), '3'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addSubject does not work')
+
+    cohort.addSubject(sub6)
+
+    assert(cohort.subjectnumber()==6, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addSubject does not work')
+    assert(isequal(cohort.getSubject(6).getID(), '6'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addSubject does not work')
+end
+
+%% Test 4: Remove
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+    
+    cohort.removeSubject(3)
+
+    assert(cohort.subjectnumber()==4, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.removeSubject does not work')
+    assert(isequal(cohort.getSubject(2).getID(), '2'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.removeSubject does not work')
+    assert(isequal(cohort.getSubject(3).getID(), '4'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.removeSubject does not work')
+
+    cohort.removeSubject(1)
+
+    assert(cohort.subjectnumber()==3, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.removeSubject does not work')
+    assert(isequal(cohort.getSubject(1).getID(), '2'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.removeSubject does not work')
+end
+
+%% Test 5: Replace
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+ 
+    cohort.replaceSubject(3, sub6)
+
+    assert(cohort.subjectnumber()==5, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.replaceSubject does not work')
+    assert(isequal(cohort.getSubject(3).getID(), '6'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.replaceSubject does not work')
+end
+
+%% Test 6: Invert
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+ 
+    cohort.invertSubjects(2, 4)
+
+    assert(cohort.subjectnumber()==5, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.invertSubjects does not work')
+    assert(isequal(cohort.getSubject(2).getID(), '4'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.invertSubjects does not work')
+    assert(isequal(cohort.getSubject(4).getID(), '2'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.invertSubjects does not work')
+end
+
+%% Test 7: MoveTo
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+ 
+    cohort.movetoSubject(4, 2)
+
+    assert(cohort.subjectnumber()==5, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.movetoSubject does not work')
+    assert(isequal(cohort.getSubject(2).getID(), '4'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.movetoSubject does not work')
+
+    cohort.movetoSubject(1, 5)
+
+    assert(cohort.subjectnumber()==5, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.movetoSubject does not work')
+    assert(isequal(cohort.getSubject(5).getID(), '1'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.movetoSubject does not work')
+end
+
+%% Test 8: Remove All
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+
+    selected = cohort.removeSubjects([2, 4]);
+
+    assert(cohort.subjectnumber()==3, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.removeSubjects does not work')
+    assert(isequal(cohort.getSubject(3).getID(), '5'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.removeSubjects does not work')
+    assert(isempty(selected), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.removeSubjects does not work')
+end
+
+%% Test 9: Add Above
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+
+% [selected, added] = cohort.addaboveBrainRegions([1 3 5]);
 % 
-% assert(ba.brainregionnumber()==5, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
-% assert(isequal(ba.getBrainRegion(3).getLabel(), 'BR3'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% 
-% ba.addBrainRegion(br6)
-% 
-% assert(ba.brainregionnumber()==6, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
-% assert(isequal(ba.getBrainRegion(6).getLabel(), 'BR6'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% 
-% %% Test 4: Remove
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% ba.removeBrainRegion(3)
-% 
-% assert(ba.brainregionnumber()==4, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
-% assert(isequal(ba.getBrainRegion(2).getLabel(), 'BR2'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% assert(isequal(ba.getBrainRegion(3).getLabel(), 'BR4'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% 
-% ba.removeBrainRegion(1)
-% 
-% assert(ba.brainregionnumber()==3, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
-% assert(isequal(ba.getBrainRegion(1).getLabel(), 'BR2'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% 
-% %% Test 5: Replace
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% ba.replaceBrainRegion(3, br9)
-% 
-% assert(ba.brainregionnumber()==5, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
-% assert(isequal(ba.getBrainRegion(3).getLabel(), 'BR9'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% 
-% %% Test 6: Invert
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% ba.invertBrainRegions(2, 4)
-% 
-% assert(ba.brainregionnumber()==5, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
-% assert(isequal(ba.getBrainRegion(2).getLabel(), 'BR4'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% assert(isequal(ba.getBrainRegion(4).getLabel(), 'BR2'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% 
-% %% Test 7: MoveTo
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% ba.movetoBrainRegion(4, 2)
-% 
-% assert(ba.brainregionnumber()==5, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
-% assert(isequal(ba.getBrainRegion(2).getLabel(), 'BR4'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% 
-% ba.movetoBrainRegion(1, 5)
-% 
-% assert(ba.brainregionnumber()==5, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
-% assert(isequal(ba.getBrainRegion(5).getLabel(), 'BR1'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% 
-% %% Test 8: Remove All
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% selected = ba.removeBrainRegions([2, 4]);
-% 
-% assert(ba.brainregionnumber()==3, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
-% assert(isequal(ba.getBrainRegion(3).getLabel(), 'BR5'), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% assert(isempty(selected), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
-% 
-% %% Test 9: Add Above
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% [selected, added] = ba.addaboveBrainRegions([1 3 5]);
-% 
-% assert(ba.brainregionnumber()==8, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
+% assert(cohort.subjectnumber()==8, ...
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.subjectnumber does not work')
 % for i = [1 4 7]
-%     assert(isequal(ba.getBrainRegion(i).getLabel(), 'BR'), ...
-%         'BRAPH:BrainAtlas:Bug', ...
-%         'BrainAtlas.getBrainRegion does not work')
+%     assert(isequal(cohort.getSubject(i).getID(), ''), ...
+%         'BRAPH:Cohort:Bug', ...
+%         'Cohort.getSubject does not work')
 % end
 % assert(isequal(selected, [2 5 8]), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.getSubject does not work')
 % assert(isequal(added, [1 4 7]), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.getSubject does not work')
+end
+
+%% Test 10: Add Below
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+
+% [selected, added] = cohort.addbelowBrainRegions([1 3 5]);
 % 
-% %% Test 9: Add Below
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% [selected, added] = ba.addbelowBrainRegions([1 3 5]);
-% 
-% assert(ba.brainregionnumber()==8, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
+% assert(cohort.subjectnumber()==8, ...
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.subjectnumber does not work')
 % for i = [2 5 8]
-%     assert(isequal(ba.getBrainRegion(i).getLabel(), 'BR'), ...
-%         'BRAPH:BrainAtlas:Bug', ...
-%         'BrainAtlas.getBrainRegion does not work')
+%     assert(isequal(cohort.getSubject(i).getID(), ''), ...
+%         'BRAPH:Cohort:Bug', ...
+%         'Cohort.getSubject does not work')
 % end
 % assert(isequal(selected, [1 4 7]), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.getSubject does not work')
 % assert(isequal(added, [2 5 8]), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.getSubject does not work')
 % 
 % %% Test 10: Move Up
 % ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 % 
-% selected = ba.moveupBrainRegions([1 3 5]);
+% selected = cohort.moveupBrainRegions([1 3 5]);
 % 
-% assert(ba.brainregionnumber()==5, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
+% assert(cohort.subjectnumber()==5, ...
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.subjectnumber does not work')
 % assert(isequal(selected, [1 2 4]), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.getSubject does not work')
+end
+
+%% Test 11: Move Down
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+
+% selected = cohort.movedownBrainRegions([1 3 5]);
 % 
-% %% Test 11: Move Down
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% selected = ba.movedownBrainRegions([1 3 5]);
-% 
-% assert(ba.brainregionnumber()==5, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
+% assert(cohort.subjectnumber()==5, ...
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.subjectnumber does not work')
 % assert(isequal(selected, [2 4 5]), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.getSubject does not work')
+end
+
+%% Test 12: Move to Top
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+
+% selected = cohort.move2topBrainRegions([1 3 5]);
 % 
-% %% Test 12: Move to Top
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% selected = ba.move2topBrainRegions([1 3 5]);
-% 
-% assert(ba.brainregionnumber()==5, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
+% assert(cohort.subjectnumber()==5, ...
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.subjectnumber does not work')
 % assert(isequal(selected, [1 2 3]), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.getSubject does not work')
+end
+
+%% Test 12: Move to Bottom
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+
+    cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3, sub4, sub5});
+
+% selected = cohort.move2bottomBrainRegions([1 3 5]);
 % 
-% %% Test 12: Move to Bottom
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% selected = ba.move2bottomBrainRegions([1 3 5]);
-% 
-% assert(ba.brainregionnumber()==5, ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.brainregionnumber does not work')
+% assert(cohort.subjectnumber()==5, ...
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.subjectnumber does not work')
 % assert(isequal(selected, [3 4 5]), ...
-%     'BRAPH:BrainAtlas:Bug', ...
-%     'BrainAtlas.getBrainRegion does not work')
+%     'BRAPH:Cohort:Bug', ...
+%     'Cohort.getSubject does not work')
+end
