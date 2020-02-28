@@ -6,6 +6,9 @@ classdef Subject < handle & matlab.mixin.Copyable
     methods (Access=protected)
         function sub = Subject(varargin)
             
+            id = get_from_varargin(now(), 'SubID', varargin{:});
+            sub.id = id;
+            
             sub.datadict = sub.initialize_datadict(varargin{:});
         end
     end
@@ -21,6 +24,9 @@ classdef Subject < handle & matlab.mixin.Copyable
                 d = sub.getData(data_code);
                 disp([data_code ' = ' d.tostring()])
             end
+        end
+        function id = getID(sub)
+            id = sub.id;
         end
         function d = getData(sub, data_code)
             d = sub.datadict(data_code);            
