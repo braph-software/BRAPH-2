@@ -104,7 +104,7 @@ known_solution = [
     2.6667;
     10.3333;
     6.6667;
-    Inf;
+    0;
     ];
 
 assert( isequal(p_value, known_solution), ...

@@ -17,15 +17,14 @@ end
 
 %% Test 2: Calculation vs Known Values
 for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-    n = 5;
-    L = [
-        0 .1 .2 .25 0;
-        .125 0 0 0 0;
-        .2 .5 0 .25 0;
-        .125 10 0 0 0
-        ];
-    A = [L;zeros(1,n)];
+    graph_class = graph_class_list{i};    
+    A = [
+        0   .1  0   0   0
+        .2   0  0   0   0
+        0    0  0  .2   0
+        0    0 .1   0   0
+        0    0  0   0   0
+        ];    
     g = Graph.getGraph(graph_class, A);
     p = PathLength(g);
     p_value = p.getValue();
@@ -60,24 +59,24 @@ end
 
 %% Test 3: Calculation Harmonic WU vs know Value
 
-n = 5;
-L = [
-    0 .1 .2 .25 0;
-    .125 0 0 0 0;
-    .2 .5 0 .25 0;
-    .125 10 0 0 0
+A = [
+    0   .1  0   0   0
+    .2   0  0   0   0
+    0    0  0  .2   0
+    0    0 .1   0   0
+    0    0  0   0   0
     ];
-A = [L;zeros(1,n)];
+
 g = GraphWU(A);
 p = PathLength(g, 'PathLengthAvRule', 'harmonic');
 p_value = p.getValue();
 p_value = round(p_value,4);
 
 known_solution = [
-    6.1538;
-    2.3529;
-    3.871;
-    2.5263;
+    20;
+    20;
+    20;
+    20;
     Inf;
     ];
 
@@ -86,25 +85,24 @@ assert( isequal(p_value, known_solution), ...
     ['PathLength is not working for: Harmonic mean'])
 
 %% Test 4: Calculation subgraphs WU vs know Value
-n = 5;
-L = [
-    0 .1 .2 .25 0;
-    .125 0 0 0 0;
-    .2 .5 0 .25 0;
-    .125 10 0 0 0
+A = [
+    0   .1  0   0   0
+    .2   0  0   0   0
+    0    0  0  .2   0
+    0    0 .1   0   0
+    0    0  0   0   0
     ];
-A = [L;zeros(1,n)];
 g = GraphWU(A);
 p = PathLength(g, 'PathLengthAvRule', 'subgraphs');
 p_value = p.getValue();
 p_value = round(p_value,4);
 
 known_solution = [
-    4.6667;
-    2.6667;
-    3.3333;
-    2.6667;
-    Inf;
+    5;
+    5;
+    5;
+    5;
+    0;
     ];
 
 assert( isequal(p_value, known_solution), ...
@@ -112,14 +110,13 @@ assert( isequal(p_value, known_solution), ...
     ['PathLength is not working for: Subgraphs mean'])
 
 %% Test 5: Calculation subgraphs WU vs BCT
-n = 5;
-L = [
-    0 .1 .2 .25 0;
-    .125 0 0 0 0;
-    .2 .5 0 .25 0;
-    .125 10 0 0 0
+A = [
+    0   .1  0   0   0    
+    .2   0  0   0   0
+    0    0  0  .2   0
+    0    0 .1   0   0
+    0    0  0   0   0
     ];
-A = [L;zeros(1,n)];
 g = GraphWU(A);
 p = PathLength(g, 'PathLengthAvRule', 'subgraphs');
 p_value = p.getValue();
@@ -130,8 +127,7 @@ value_bct = round(charpath(d), 4);
 
 assert( isequal(p_value(1, 1), value_bct), ...
     ['BRAPH:PathLength:Subgraphs '], ...
-    ['PathLength is not working for: Subgraphs mean'])
-
+    ['PathLength is not working for: modified BCT comparision'])
 
 
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
@@ -199,9 +195,9 @@ end
 Dv = D(~isnan(D));                  % get non-NaN indices of D
 
 % Mean of entries of D(G)
-% Modified version in order to get the first vector Emiliano Gomez 
+% Modified version in order to get the first vector Emiliano Gomez
 
-lambda     = mean(Dv(1:3));  % 1:3 since function is ignoring diagonal and inf in this case
+lambda     = mean(Dv(1:1));  % 1:3 since function is ignoring diagonal and inf in this case
 
 % Efficiency: mean of inverse entries of D(G)
 efficiency = mean(1./Dv);

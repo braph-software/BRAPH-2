@@ -5,39 +5,39 @@ classdef OutPathLength < Measure
         end
     end
     methods (Access = protected)
-        function out_pl =  calculate(m)
+        function out_path_length =  calculate(m)
             g = m.getGraph();
             
             settings = g.getSettings();
             if g.is_measure_calculated('Distance')
-                D = g.getMeasureValue('Distance');
+                distance = g.getMeasureValue('Distance');
             else
-                D = Distance(g, settings{:}).getValue();
+                distance = Distance(g, settings{:}).getValue();
             end
             
             N = g.nodenumber();
-            out_pl = zeros(N, 1);
+            out_path_length = zeros(N, 1);
             
             settings = m.getSettings();
             pathLength_rule = get_from_varargin(0, 'OutPathLengthAvRule', settings{:});
             switch lower(pathLength_rule)
                 case {'subgraphs'}
                     for u = 1:1:N
-                        Du = D(u, :);
-                        out_pl(u) = mean(Du(Du~=0 & Du~=Inf));
+                        Du = distance(u, :);
+                        out_path_length(u) = mean(Du(Du~=0 & Du~=Inf));
                     end
+                    out_path_length(isnan(out_path_length)) = 0;
                 case {'harmonic'}
                     for u = 1:1:N
-                        Du = D(u, :);
-                        out_pl(u) = harmmean(Du(Du~=0));
+                        Du = distance(u, :);
+                        out_path_length(u) = harmmean(Du(Du~=0));
                     end
                 otherwise
                     for u = 1:1:N
-                        Du = D(u, :);
-                        out_pl(u) = mean(Du(Du~=0));
+                        Du = distance(u, :);
+                        out_path_length(u) = mean(Du(Du~=0));
                     end
             end
-            out_pl(isnan(out_pl)) = Inf;
         end
     end
     methods (Static)
@@ -50,8 +50,7 @@ classdef OutPathLength < Measure
         function description = getDescription()
             description = [ ...
                 'The out path length is the average shortest ' ...
-                'out path lengths of one node to all ' ...
-                'other nodes. ' ...
+                'out path lengths of one node to all other nodes.' ...
                 ];
         end
         function bool = is_global()

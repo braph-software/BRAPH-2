@@ -5,39 +5,39 @@ classdef PathLength < Measure
         end
     end
     methods (Access = protected)
-        function pl =  calculate(m)
+        function path_length =  calculate(m)
             g = m.getGraph();
             
             settings = g.getSettings();
             if g.is_measure_calculated('Distance')
-                D = g.getMeasureValue('Distance');
+                distance = g.getMeasureValue('Distance');
             else
-                D = Distance(g, settings{:}).getValue();
+                distance = Distance(g, settings{:}).getValue();
             end
             
             N = g.nodenumber();
-            pl = zeros(N, 1);
+            path_length = zeros(N, 1);
             
             settings = m.getSettings();
             pathLength_rule = get_from_varargin(0, 'PathLengthAvRule', settings{:});
             switch lower(pathLength_rule)
                 case {'subgraphs'}
                     for u = 1:1:N
-                        Du = D(:, u);
-                        pl(u) = mean(Du(Du~=Inf & Du~=0));
+                        Du = distance(:, u);
+                        path_length(u) = mean(Du(Du~=Inf & Du~=0));                        
                     end
+                     path_length(isnan(path_length)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
                 case {'harmonic'}
                     for u = 1:1:N
-                        Du = D(:, u);
-                        pl(u) = harmmean(Du(Du~=0));
+                        Du = distance(:, u);
+                        path_length(u) = harmmean(Du(Du~=0));
                     end
                 otherwise
                     for u = 1:1:N
-                        Du = D(:, u);
-                        pl(u) = mean(Du(Du~=0));
+                        Du = distance(:, u);
+                        path_length(u) = mean(Du(Du~=0));
                     end
-            end
-            pl(isnan(pl)) = Inf;
+            end           
         end
     end
     methods (Static)
@@ -49,8 +49,8 @@ classdef PathLength < Measure
         end
         function description = getDescription()
             description = [ ...
-                'The path length is the average shortest path lengths of one node to all ' ...
-                'other nodes.' ...
+                'The path length is the average shortest ' ...
+                'path lengths of one node to all other nodes.' ...
                 ];
         end
         function bool = is_global()
