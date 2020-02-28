@@ -1,8 +1,8 @@
 classdef SubjectDTI < Subject
     methods
-        function sub = SubjectDTI(atlas)
+        function sub = SubjectDTI(atlas, varargin)
 
-            sub = sub@Subject('BrainAtlas', atlas);
+            sub = sub@Subject('BrainAtlas', atlas, varargin{:});
         end
     end
     methods (Access=protected)
