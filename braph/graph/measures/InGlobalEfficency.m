@@ -17,7 +17,7 @@ classdef InGlobalEfficency < Measure
             
             Di = D.^-1;  % inverse distance
             Di(1:N+1:end) = 0;
-            ge = (sum(Di, 1)/(N-1))';
+            ge = (sum(Di, 1) / (N-1))';
         end
     end
     methods (Static)
