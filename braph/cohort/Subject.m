@@ -55,6 +55,11 @@ classdef Subject < handle & matlab.mixin.Copyable
             
             description = eval([Subject.getClass(sub) '.getDescription()']);
         end
+        function atlas_number = getBrainAtlasNumber(sub)
+            % number of differetn brain atlases
+
+            atlas_number = eval([Subject.getClass(sub) '.getBrainAtlasNumber()']);
+        end
         function datalist = getDataList(sub)
             % list of subject data keys
             
