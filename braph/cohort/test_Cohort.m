@@ -29,9 +29,9 @@ end
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
     
     cohort = Cohort('cohort', sub_class, {sub1, sub2, sub3});
 
@@ -41,12 +41,12 @@ for i = 1:1:length(sub_class_list)
     assert(cohort.contains_subject(1), ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.contains_subject does not work')
-    assert(~cohort.contains_subject(6), ...
+    assert(~cohort.contains_subject(4), ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.contains_subject does not work')
-%     assert(isequal(ba.getBrainRegion(1).getLabel(), 'BR1'), ...
-%         'BRAPH:Cohort:Bug', ...
-%         'Cohort.getBrainRegion does not work')
+    assert(isequal(cohort.getSubject(2).getID(), '2'), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.getSubject does not work')
 end
 
 % %% Test 3: Add
