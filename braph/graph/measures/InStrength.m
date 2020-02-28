@@ -1,7 +1,10 @@
 classdef InStrength < Measure
     methods
         function m = InStrength(g, varargin)
-            m = m@Measure(g, varargin{:});
+
+            settings = clean_varargin({}, varargin{:});
+
+            m = m@Measure(g, settings{:});
         end
     end    
     methods (Access=protected)

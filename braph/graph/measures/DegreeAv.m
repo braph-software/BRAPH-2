@@ -1,7 +1,10 @@
 classdef DegreeAv < Degree
     methods
         function m = DegreeAv(g, varargin)
-            m = m@Degree(g, varargin{:});
+
+            settings = clean_varargin({}, varargin{:});
+
+            m = m@Degree(g, settings{:});
         end
     end
     methods (Access=protected)

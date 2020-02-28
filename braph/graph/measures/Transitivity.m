@@ -1,14 +1,14 @@
-classdef Clustering < Triangles
+classdef Transitivity < Triangles
     methods
-        function m = Clustering (g, varargin)
-
-            settings = clean_varargin({'DirectedTrianglesRule'}, varargin{:});
+        function m = Transitivity (g, varargin)
+            
+            settings = clean_varargin({'DirectedTrianglesRule'}, varargin{:});            
             
             m = m@Triangles(g, settings{:});
         end
     end
     methods (Access=protected)
-        function clustering = calculate(m)
+        function transitivity = calculate(m)
             g = m.getGraph(); 
             A = g.getA();
             
@@ -20,14 +20,13 @@ classdef Clustering < Triangles
             
             if isa(g, 'GraphBU') || isa(g, 'GraphWU')
                 
-                
                 if g.is_measure_calculated('Degree')
                     degree = g.getMeasureValue('Degree');                    
                 else
                     degree = Degree(g, g.getSettings()).getValue();
                 end
                 
-                clustering = 2 * triangles ./ (degree .* (degree - 1));
+                transitivity = 2 * sum(triangles) ./ sum((degree .* (degree - 1)));
                 
             elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')  
                 
@@ -42,48 +41,32 @@ classdef Clustering < Triangles
                 else
                     out_degree = OutDegree(g, g.getSettings()).getValue();
                 end
-                
-                directed_triangles_rule = get_from_varargin('cycle', 'DirectedTrianglesRule', m.getSettings());
-                switch lower(directed_triangles_rule)
-                    case {'all'}  % all rule
-                        clustering = triangles ./ ((out_degree + in_degree) .* (out_degree + in_degree - 1) - 2 * diag(A^2));
-                    case {'middleman'}  % middleman rule
-                        clustering = triangles ./ ((out_degree .* in_degree) - diag(A^2));
-                    case {'in'}  % in rule
-                        clustering = triangles ./ (in_degree .* (in_degree - 1));
-                    case {'out'}  % out rule
-                        clustering = triangles ./ (out_degree .* (out_degree - 1));
-                    otherwise  % {'cycle'}  % cycle rule
-                        clustering = triangles ./ ((out_degree .* in_degree) - diag(A^2));
-                end
-                
+
+                transitivity = sum(triangles) ./ sum(((out_degree + in_degree) .* (out_degree + in_degree - 1) - 2 * diag(A^2)));      
             end
             
-            clustering(isnan(clustering)) = 0;  % Should return zeros, not NaN
+            transitivity(isnan(transitivity)) = 0;  % Should return zeros, not NaN
         end
     end  
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'Clustering';
+            measure_class = 'Transitivity';
         end
         function name = getName()
-            name = 'Clustering';
+            name = 'Transitivity';
         end
         function description = getDescription()
             description = [ ...
-                'The clustering coefficient of a node is ' ...
-                'the fraction of triangles present around a node.' ...
-                'The clustering coefficient is calculated as the ratio between' ...
-                'the number of triangles present around a node and' ...
-                'the maximum number of triangles that could possibly' ...
-                'be formed around that node.' ...
+                'The transitivity of a graph is ' ...
+                'the fraction of triangles to the number' ...
+                'of (unordered) triplets in the graph.' ...
                 ];
         end
         function bool = is_global()                
-            bool = false;
+            bool = true;
         end
         function bool = is_nodal()
-            bool = true;
+            bool = false;
         end
         function bool = is_binodal()
             bool = false;
@@ -97,7 +80,7 @@ classdef Clustering < Triangles
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('Clustering');
+            n = Measure.getCompatibleGraphNumber('Transitivity');
         end
     end
     

@@ -1,7 +1,10 @@
 classdef InDegree < Measure
     methods
         function m = InDegree(g, varargin)
-            m = m@Measure(g, varargin{:});
+
+            settings = clean_varargin({}, varargin{:});
+
+            m = m@Measure(g, settings{:});
         end
     end
     methods(Access=protected)
