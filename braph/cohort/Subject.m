@@ -4,9 +4,9 @@ classdef Subject < handle & matlab.mixin.Copyable
         datadict  % dictionary with subject data
     end
     methods (Access=protected)
-        function sub = Subject()
+        function sub = Subject(varargin)
             
-            sub.initialize_datadict();
+            sub.datadict = sub.initialize_datadict(varargin{:});
         end
     end
     methods
@@ -15,20 +15,19 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
         function disp(sub)
             disp(['<a href="matlab:help ' Subject.getClass(sub) '">' Subject.getClass(sub) '</a>'])
-            % disp([' size: ' int2str(size(sub.getA(), 1)) ' rows x ' int2str(size(sub.getA(), 2)) ' columns'])
-            % disp([' measures: ' int2str(length(sub.mdict))]);
-            % disp([' settings']); %#ok<NBRAK>
-            % settings = sub.getSettings(); %#ok<PROP>
-            % for i = 1:2:length(settings) %#ok<PROP>
-            %     disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
-            % end
+            data_codes = sub.getDataCodes();
+            for i = 1:1:sub.getDataNumber()
+                data_code = data_codes{i};
+                d = sub.getData(data_code);
+                disp([data_code ' = ' d.tostring()])
+            end
         end
-        function d = getData(sub, data_key)
-            d = sub.mdict(data_key);            
+        function d = getData(sub, data_code)
+            d = sub.datadict(data_code);            
         end
     end
     methods (Abstract, Access=protected)
-        initialize_datadict(m)  % initialized the data_dict
+        initialize_datadict(sub)  % initialized the data_dict
     end
     methods (Static)
         function subject_list = getList()
@@ -56,14 +55,29 @@ classdef Subject < handle & matlab.mixin.Copyable
             
             description = eval([Subject.getClass(sub) '.getDescription()']);
         end
-        function sub = getDataList(sub)
+        function datalist = getDataList(sub)
             % list of subject data keys
             
-            name = eval([Subject.getClass(sub) '.getDataList()']);            
+            datalist = eval([Subject.getClass(sub) '.getDataList()']);
+        end
+        function data_number = getDataNumber(sub)
+            datalist = Subject.getDataList(sub);
+            data_number = length(datalist);
+        end
+        function data_codes = getDataCodes(sub)
+            datalist = Subject.getDataList(sub);
+            data_codes = keys(datalist);
+        end
+        function data_classes = getDataClasses(sub)
+            datalist = Subject.getDataList(sub);
+            data_classes = values(datalist);
+        end
+        function data_class = getDataClass(sub, data_code)
+            datalist = Subject.getDataList(sub);
+            data_class = datalist(data_code);
         end
         function sub = getSubject(subject_class, varargin)
             sub = eval([subject_class '(varargin{:})']);
         end
-    end
-    
+    end   
 end
