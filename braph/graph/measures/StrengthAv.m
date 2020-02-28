@@ -1,7 +1,10 @@
 classdef StrengthAv < Strength
     methods
         function m = StrengthAv(g, varargin)
-            m = m@Strength(g, varargin{:});
+            
+            settings = clean_varargin({}, varargin{:});
+            
+            m = m@Strength(g, settings{:});
         end
     end
     methods (Access=protected)
