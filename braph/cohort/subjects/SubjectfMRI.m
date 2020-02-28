@@ -1,8 +1,8 @@
 classdef SubjectfMRI < Subject
     methods
-        function sub = SubjectfMRI(atlas)
+        function sub = SubjectfMRI(atlas, varargin)
 
-            sub = sub@Subject('BrainAtlas', atlas);
+            sub = sub@Subject('BrainAtlas', atlas, varargin{:});
         end
     end
     methods (Access=protected)
