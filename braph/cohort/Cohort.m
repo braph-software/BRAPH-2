@@ -54,7 +54,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function bool = contains_subject(cohort, sub_index)
             bool = isKey(cohort.subdict, sub_index);
         end
-        function sub = getBrainRegion(cohort, sub_index)
+        function sub = getSubject(cohort, sub_index)
             sub = cohort.subdict(sub_index);
         end
 %         function brain_regions = getBrainRegions(ba)
