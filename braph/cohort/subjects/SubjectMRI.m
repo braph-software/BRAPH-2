@@ -28,6 +28,9 @@ classdef SubjectMRI < Subject
                 'such as cortical thickness for each brain region' ...
                 ];
         end
+        function atlas_number = getBrainAtlasNumber()
+            atlas_number = 1;
+        end
         function datalist = getDataList()
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
