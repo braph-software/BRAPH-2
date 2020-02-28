@@ -7,12 +7,12 @@ classdef GlobalEfficency < Measure
     methods (Access = protected)
         function ge = calculate(m)
             g = m.getGraph();
-            N = g.nodenumber();
-            settings = g.getSettings();
+            N = g.nodenumber();            
+           
             if g.is_measure_calculated('Distance')
                 D = g.getMeasure('Distance').getValue();
             else
-                D = Distance(g, settings{:}).getValue();
+                D = Distance(g, g.getSettings()).getValue();
             end
             
             Di = D.^-1;  % inverse distance
