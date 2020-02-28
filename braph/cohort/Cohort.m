@@ -2,6 +2,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
 	properties (GetAccess=protected, SetAccess=protected) 
         name  % brain atlas name
         sub_class  % class of the subjects
+        atlases  % cell array with brain atlases
         subdict  % dictionary with subjects
     end
     methods (Access=protected)
@@ -57,47 +58,47 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function sub = getSubject(cohort, sub_index)
             sub = cohort.subdict(sub_index);
         end
-%         function brain_regions = getBrainRegions(ba)
-%             brain_regions = values(ba.subdict);
-%         end
+        function subs = getSubjects(cohort)
+            subs = values(cohort.subdict);
+        end
 %         function br_labels = getBrainRegionLabels(ba)
-%             br_labels = cell(1, ba.brainregionnumber());
-%             for i = 1:1:ba.brainregionnumber()
+%             br_labels = cell(1, ba.subjectnumber());
+%             for i = 1:1:ba.subjectnumber()
 %                 br = ba.getBrainRegion(i);
 %                 br_labels{i} = br.getLabel();
 %             end
 %         end
 %         function br_names = getBrainRegionNames(ba)
-%             br_names = cell(1, ba.brainregionnumber());
-%             for i = 1:1:ba.brainregionnumber()
+%             br_names = cell(1, ba.subjectnumber());
+%             for i = 1:1:ba.subjectnumber()
 %                 br = ba.getBrainRegion(i);
 %                 br_names{i} = br.getName();
 %             end
 %         end
 %         function br_xs = getBrainRegionXs(ba)
-%             br_xs = cell(1, ba.brainregionnumber());
-%             for i = 1:1:ba.brainregionnumber()
+%             br_xs = cell(1, ba.subjectnumber());
+%             for i = 1:1:ba.subjectnumber()
 %                 br = ba.getBrainRegion(i);
 %                 br_xs{i} = br.getX();
 %             end
 %         end
 %         function br_ys = getBrainRegionYs(ba)
-%             br_ys = cell(1, ba.brainregionnumber());
-%             for i = 1:1:ba.brainregionnumber()
+%             br_ys = cell(1, ba.subjectnumber());
+%             for i = 1:1:ba.subjectnumber()
 %                 br = ba.getBrainRegion(i);
 %                 br_ys{i} = br.getY();
 %             end
 %         end
 %         function br_zs = getBrainRegionZs(ba)
-%             br_zs = cell(1, ba.brainregionnumber());
-%             for i = 1:1:ba.brainregionnumber()
+%             br_zs = cell(1, ba.subjectnumber());
+%             for i = 1:1:ba.subjectnumber()
 %                 br = ba.getBrainRegion(i);
 %                 br_zs{i} = br.getZ();
 %             end
 %         end
 %         function br_positions = getBrainRegionPositions(ba)
-%             br_positions = cell(1, ba.brainregionnumber());
-%             for i = 1:1:ba.brainregionnumber()
+%             br_positions = cell(1, ba.subjectnumber());
+%             for i = 1:1:ba.subjectnumber()
 %                 br = ba.getBrainRegion(i);
 %                 br_positions{i} = br.getPosition();
 %             end
@@ -107,7 +108,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             if nargin < 3 || i < 0 || i > cohort.subjectnumber()
                 i = cohort.subjectnumber() + 1;
             end
-
+            
             assert(isa(sub, cohort.getSubjectClass()), ...
                 ['BRAPH:Cohort:SubjectClassErr'], ...
                 ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' sub.getClass()])
@@ -121,66 +122,66 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 cohort.subdict(i) = sub;
             end
         end
-%         function removeBrainRegion(ba, i)
-%             
-%             for j = i:1:ba.brainregionnumber()-1
-%                 ba.subdict(j) = ba.subdict(j+1);
-%             end
-%             remove(ba.subdict, ba.brainregionnumber());
-%         end
-%         function replaceBrainRegion(ba, i, br)
-% 
-%             assert(isa(br, 'BrainRegion'), ...
-%                     'BRAPH:BrainAtlas:ObjectNotBR', ...
-%                     'Only BrainRegion objects can be added to a BrainAtlas' ...
-%                     )
-%             
-%             if i > 0 || i <= ba.brainregionnumber()
-%                 ba.subdict(i) = br;
-%             end
-%             
-%         end
-%         function invertBrainRegions(ba, i, j)
-%             
-%             if i > 0 && i <= ba.brainregionnumber() && j > 0 && j <= ba.brainregionnumber() && i ~= j
-%                 br_i = ba.getBrainRegion(i);
-%                 br_j = ba.getBrainRegion(j);
-%                 ba.replaceBrainRegion(i, br_j)
-%                 ba.replaceBrainRegion(j, br_i)
-%             end
-%         end
-%         function movetoBrainRegion(ba, i, j)
-%             
-%             if i > 0 && i <= ba.brainregionnumber() && j > 0 && j <= ba.brainregionnumber() && i ~= j
-%                 br = ba.getBrainRegion(i);
-%                 if i > j
-%                     ba.removeBrainRegion(i)
-%                     ba.addBrainRegion(br, j)
-%                 else  % j < i
-%                     ba.addBrainRegion(br, j+1)
-%                     ba.removeBrainRegion(i)
-%                 end
-%             end            
-%         end
-%         function selected = removeBrainRegions(ba, selected)
+        function removeSubject(cohort, i)
+            
+            for j = i:1:cohort.subjectnumber()-1
+                cohort.subdict(j) = cohort.subdict(j+1);
+            end
+            remove(cohort.subdict, cohort.subjectnumber());
+        end
+        function replaceSubject(cohort, i, sub)
+
+            assert(isa(sub, cohort.getSubjectClass()), ...
+                ['BRAPH:Cohort:SubjectClassErr'], ...
+                ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' sub.getClass()])
+
+            if i > 0 || i <= cohort.subjectnumber()
+                cohort.subdict(i) = sub;
+            end
+            
+        end
+        function invertSubjects(cohort, i, j)
+            
+            if i > 0 && i <= cohort.subjectnumber() && j > 0 && j <= cohort.subjectnumber() && i ~= j
+                sub_i = cohort.getSubject(i);
+                sub_j = cohort.getSubject(j);
+                cohort.replaceSubject(i, sub_j)
+                cohort.replaceSubject(j, sub_i)
+            end
+        end
+        function movetoSubject(cohort, i, j)
+            
+            if i > 0 && i <= cohort.subjectnumber() && j > 0 && j <= cohort.subjectnumber() && i ~= j
+                sub = cohort.getSubject(i);
+                if i > j
+                    cohort.removeSubject(i)
+                    cohort.addSubject(sub, j)
+                else  % j < i
+                    cohort.addSubject(sub, j+1)
+                    cohort.removeSubject(i)
+                end
+            end            
+        end
+        function selected = removeSubjects(ba, selected)
+            
+            for i = length(selected):-1:1
+                ba.removeSubject(selected(i))
+            end
+            selected = [];
+        end
+%         function [selected, added] = addaboveSubjects(cohort, selected)
 %             
 %             for i = length(selected):-1:1
-%                 ba.removeBrainRegion(selected(i))
-%             end
-%             selected = [];
-%         end
-%         function [selected, added] = addaboveBrainRegions(ba, selected)
-%             
-%             for i = length(selected):-1:1
-%                 ba.addBrainRegion(BrainRegion(), selected(i))
+%                 sub = Subject.getSubject();
+%                 cohort.addSubject(BrainRegion(), selected(i))
 %             end
 %             selected = selected + reshape(1:1:numel(selected), size(selected));
 %             added = selected - 1;
 %         end
-%         function [selected, added] = addbelowBrainRegions(ba, selected)
+%         function [selected, added] = addbelowSubjects(cohort, selected)
 %             
 %             for i = length(selected):-1:1
-%                 ba.addBrainRegion(BrainRegion(), selected(i) + 1)
+%                 cohort.addSubject(BrainRegion(), selected(i) + 1)
 %             end
 %             selected = selected + reshape(0:1:numel(selected)-1, size(selected));
 %             added = selected + 1;
@@ -191,7 +192,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
 %                 
 %                 first_index_to_process = 1;
 %                 unprocessable_length = 1;
-%                 while first_index_to_process <= ba.brainregionnumber() ...
+%                 while first_index_to_process <= ba.subjectnumber() ...
 %                         && first_index_to_process <= numel(selected) ...
 %                         && selected(first_index_to_process) == unprocessable_length
 %                     first_index_to_process = first_index_to_process + 1;
@@ -209,7 +210,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
 %             if ~isempty(selected)
 % 
 %                 last_index_to_process = numel(selected);
-%                 unprocessable_length = ba.brainregionnumber();
+%                 unprocessable_length = ba.subjectnumber();
 %                 while last_index_to_process > 0 ...
 %                         && selected(last_index_to_process) == unprocessable_length
 %                     last_index_to_process = last_index_to_process - 1;
@@ -235,9 +236,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
 %             
 %             if ~isempty(selected)
 %                 for i = numel(selected):-1:1
-%                     ba.movetoBrainRegion(selected(i), ba.brainregionnumber() - (numel(selected)-i));
+%                     ba.movetoBrainRegion(selected(i), ba.subjectnumber() - (numel(selected)-i));
 %                 end
-%                 selected = reshape(ba.brainregionnumber() - numel(selected)+1:1:ba.brainregionnumber(), size(selected));
+%                 selected = reshape(ba.subjectnumber() - numel(selected)+1:1:ba.subjectnumber(), size(selected));
 %             end
 %         end
     end
