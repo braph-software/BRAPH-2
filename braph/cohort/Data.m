@@ -1,4 +1,4 @@
-classdef Data < handle
+classdef Data < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         atlas  % brain atlas
         value  % data value
@@ -13,6 +13,12 @@ classdef Data < handle
             d.atlas = atlas;
             d.setValue(value);
         end
+        function d_copy = copyElement(d)
+            % IMPORTANT! It does NOT make a deep copy of the BrainAtlas atlas
+            
+            % Make a shallow copy
+            d_copy = copyElement@matlab.mixin.Copyable(d);
+        end
     end
     methods
         function str = tostring(d)
@@ -21,6 +27,13 @@ classdef Data < handle
         function disp(d)
             disp(['<a href="matlab:help ' Data.getClass(d) '">' Data.getClass(d) '</a>'])
             disp([' size: ' int2str(size(d.getValue(), 1)) ' rows x ' int2str(size(d.getValue(), 2)) ' columns'])
+        end
+        function setBrainAtlas(d, atlas)
+            
+            assert(d.getBrainAtlas().brainregionnumber() == atlas.brainregionnumber(), ...
+                ['BRAPH:' d.getClass() ':AtlasErr'], ...
+                ['When substituting the brain atlas in ' d.getClass() ', the size of the brain atlas must remain the same'])
+            d.atlas = atlas;
         end
         function atlas = getBrainAtlas(d)
             atlas = d.atlas;
