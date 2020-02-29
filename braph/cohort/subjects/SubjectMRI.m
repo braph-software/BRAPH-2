@@ -14,6 +14,16 @@ classdef SubjectMRI < Subject
             datadict('age') = DataScalar(atlas);
             datadict('MRI') = DataStructural(atlas);
         end
+        function update_brainatlases(sub, atlases)
+
+            atlas = atlases{1};
+
+            d1 = sub.datadict('age');
+            d1.setBrainAtlas(atlas)
+            
+            d2 = sub.datadict('MRI');
+            d2.setBrainAtlas(atlas);
+        end
     end
     methods (Static)
         function subject_class = getClass()

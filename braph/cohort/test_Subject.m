@@ -81,7 +81,32 @@ for i = 1:1:length(subject_class_list)
         ['Group managemenr for ' subject_class ' not working'])
 end
 
-%% Test 4: Copy
+%% Test 4: Change BrainAtlas
+for i = 1:1:length(subject_class_list)
+    subject_class = subject_class_list{i};
+    
+    sub = eval(['Subject.getSubject(subject_class' ...
+        repmat(', atlas', 1, Subject.getBrainAtlasNumber(subject_class)) ...
+        ', ''SubjectGroups'', {1 3 5})']);
+
+    atlas_copy = atlas.copy();
+    atlasses_copy = repmat({atlas_copy}, 1, sub.getBrainAtlasNumber());
+    sub.setBrainAtlases(atlasses_copy)
+    
+    try
+        atlas_wrong = BrainAtlas('wrong brain atlas', {br1, br2, br3});
+        atlasses_wrong = repmat({atlas_wrong}, 1, sub.getBrainAtlasNumber());
+        sub.setBrainAtlases(atlasses_wrong)
+        error = false;
+    catch
+        error = true;
+    end
+    assert(error, ...
+        ['BRAPH:' subject_class ':Copy'], ...
+        [subject_class '.setBrainAtlases() does not work'])
+end
+
+%% Test 5: Copy
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
@@ -107,16 +132,22 @@ for i = 1:1:length(subject_class_list)
             [subject_class '.copy() does not work'])
         
         d_copy.setValue(ones(size(d_copy.getValue())))
-
-        assert(d ~= d_copy, ... % different objects
-            ['BRAPH:' subject_class ':Copy'], ...
-            [subject_class '.copy() does not work'])
-        assert(d.getBrainAtlas() == d_copy.getBrainAtlas(), ... % pointer to same BrainAtlas
-            ['BRAPH:' subject_class ':Copy'], ...
-            [subject_class '.copy() does not work'])
     end
+
+    sub_copy2 = sub_copy.copy();
     
-    assert(sub ~= sub_copy, ... % different objects, but same values
-        ['BRAPH:' subject_class ':Copy'], ...
-        [subject_class '.copy() does not work'])
+    for j = 1:1:length(data_codes)
+        data_code = data_codes{j};
+        d_copy = sub_copy.getData(data_code);
+        d_copy2 = sub_copy2.getData(data_code);
+        assert(d_copy ~= d_copy2, ... % different objects
+            ['BRAPH:' subject_class ':Copy'], ...
+            [subject_class '.copy() does not work'])
+        assert(d_copy.getBrainAtlas() == d_copy2.getBrainAtlas(), ... % pointer to same BrainAtlas
+            ['BRAPH:' subject_class ':Copy'], ...
+            [subject_class '.copy() does not work'])
+        assert(isequal(d_copy.getValue(), d_copy2.getValue), ...
+            ['BRAPH:' subject_class ':Copy'], ...
+            [subject_class '.copy() does not work'])        
+    end
 end

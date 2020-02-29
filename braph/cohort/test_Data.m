@@ -51,8 +51,8 @@ for i = 1:1:length(data_class_list)
     d.setBrainAtlas(atlas_copy)
 
     try
-        ba_wrong = BrainAtlas('wrong brain atlas', {br1, br2, br3});
-        d.setBrainAtlas(ba_wrong);
+        atlas_wrong = BrainAtlas('wrong brain atlas', {br1, br2, br3});
+        d.setBrainAtlas(atlas_wrong);
         error = false;
     catch
         error = true;

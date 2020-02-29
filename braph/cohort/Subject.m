@@ -23,7 +23,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             sub_copy = copyElement@matlab.mixin.Copyable(sub);
             
             % Make a deep copy of datadict
-            sub_copy.datadict = containers.Map();
+            sub_copy.datadict = containers.Map;
             data_codes = keys(sub.datadict);
             for i = 1:1:length(data_codes)
                 code = data_codes{i};
@@ -66,9 +66,13 @@ classdef Subject < handle & matlab.mixin.Copyable
         function d = getData(sub, data_code)
             d = sub.datadict(data_code);            
         end
+        function setBrainAtlases(sub, atlases)
+            sub.update_brainatlases(atlases);
+        end
     end
     methods (Abstract, Access=protected)
         initialize_datadict(sub)  % initialized the data_dict
+        update_brainatlases(sub)  % updates brainatlases also in datadict
     end
     methods (Static)
         function subject_list = getList()
