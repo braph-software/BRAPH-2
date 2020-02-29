@@ -15,6 +15,22 @@ classdef Subject < handle & matlab.mixin.Copyable
             
             sub.datadict = sub.initialize_datadict(varargin{:});
         end
+        function sub_copy = copyElement(sub)
+            % IMPORTANT! It does NOT make a deep copy of the BrainAtlas
+            % atlas in the data objects
+            
+            % Make a shallow copy
+            sub_copy = copyElement@matlab.mixin.Copyable(sub);
+            
+            % Make a deep copy of datadict
+            sub_copy.datadict = containers.Map();
+            data_codes = keys(sub.datadict);
+            for i = 1:1:length(data_codes)
+                code = data_codes{i};
+                d = sub.getData(code);
+                sub_copy.datadict(code) = d.copy();
+            end
+        end        
     end
     methods
         function str = tostring(sub)
