@@ -31,9 +31,9 @@ end
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
@@ -56,12 +56,12 @@ end
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
-    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub4, sub5});
@@ -89,12 +89,12 @@ end
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
-    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
@@ -125,12 +125,12 @@ end
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
-    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
@@ -149,12 +149,12 @@ end
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
-    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
@@ -176,11 +176,11 @@ end
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
@@ -208,11 +208,11 @@ end
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
@@ -234,146 +234,158 @@ end
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
-    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlas, {sub1, sub2, sub3, sub4, sub5});
 
-% [selected, added] = cohort.addaboveBrainRegions([1 3 5]);
-% 
-% assert(cohort.subjectnumber()==8, ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.subjectnumber does not work')
-% for i = [1 4 7]
-%     assert(isequal(cohort.getSubject(i).getID(), ''), ...
-%         'BRAPH:Cohort:Bug', ...
-%         'Cohort.getSubject does not work')
-% end
-% assert(isequal(selected, [2 5 8]), ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.getSubject does not work')
-% assert(isequal(added, [1 4 7]), ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.getSubject does not work')
+    [selected, added] = cohort.addaboveSubjects([1 3 5]);
+
+    assert(cohort.subjectnumber()==8, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addaboveSubjects does not work')
+    for i = [1 4 7]
+        assert(isa(cohort.getSubject(i), sub_class), ...
+            'BRAPH:Cohort:Bug', ...
+            'Cohort.addaboveSubjects does not work')
+    end
+    assert(isequal(selected, [2 5 8]), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addaboveSubjects does not work')
+    assert(isequal(added, [1 4 7]), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addaboveSubjects does not work')
 end
 
 %% Test 10: Add Below
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
-    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlas, {sub1, sub2, sub3, sub4, sub5});
 
-% [selected, added] = cohort.addbelowBrainRegions([1 3 5]);
-% 
-% assert(cohort.subjectnumber()==8, ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.subjectnumber does not work')
-% for i = [2 5 8]
-%     assert(isequal(cohort.getSubject(i).getID(), ''), ...
-%         'BRAPH:Cohort:Bug', ...
-%         'Cohort.getSubject does not work')
-% end
-% assert(isequal(selected, [1 4 7]), ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.getSubject does not work')
-% assert(isequal(added, [2 5 8]), ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.getSubject does not work')
-% 
-% %% Test 10: Move Up
-% ba = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-% 
-% selected = cohort.moveupBrainRegions([1 3 5]);
-% 
-% assert(cohort.subjectnumber()==5, ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.subjectnumber does not work')
-% assert(isequal(selected, [1 2 4]), ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.getSubject does not work')
+    [selected, added] = cohort.addbelowSubjects([1 3 5]);
+
+    assert(cohort.subjectnumber()==8, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addbelowSubjects does not work')
+    for i = [2 5 8]
+        assert(isa(cohort.getSubject(i), sub_class), ...
+            'BRAPH:Cohort:Bug', ...
+            'Cohort.addbelowSubjects does not work')
+    end
+    assert(isequal(selected, [1 4 7]), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addbelowSubjects does not work')
+    assert(isequal(added, [2 5 8]), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.addbelowSubjects does not work')
+end
+
+%% Test 10: Move Up
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
+
+    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
+    cohort = Cohort('cohort', sub_class, atlas, {sub1, sub2, sub3, sub4, sub5});
+
+    selected = cohort.moveupSubjects([1 3 5]);
+
+    assert(cohort.subjectnumber()==5, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.moveupSubjects does not work')
+    assert(isequal(selected, [1 2 4]), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.moveupSubjects does not work')
 end
 
 %% Test 11: Move Down
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
-    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlas, {sub1, sub2, sub3, sub4, sub5});
 
-% selected = cohort.movedownBrainRegions([1 3 5]);
-% 
-% assert(cohort.subjectnumber()==5, ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.subjectnumber does not work')
-% assert(isequal(selected, [2 4 5]), ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.getSubject does not work')
+    selected = cohort.movedownSubjects([1 3 5]);
+
+    assert(cohort.subjectnumber()==5, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.movedownSubjects does not work')
+    assert(isequal(selected, [2 4 5]), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.movedownSubjects does not work')
 end
 
 %% Test 12: Move to Top
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
-    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlas, {sub1, sub2, sub3, sub4, sub5});
 
-% selected = cohort.move2topBrainRegions([1 3 5]);
-% 
-% assert(cohort.subjectnumber()==5, ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.subjectnumber does not work')
-% assert(isequal(selected, [1 2 3]), ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.getSubject does not work')
+    selected = cohort.move2topSubjects([1 3 5]);
+
+    assert(cohort.subjectnumber()==5, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.move2topSubjects does not work')
+    assert(isequal(selected, [1 2 3]), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.move2topSubjects does not work')
 end
 
 %% Test 12: Move to Bottom
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
-    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''1'')']);
-    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''2'')']);
-    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''3'')']);
-    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''4'')']);
-    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''5'')']);
-    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubID'', ''6'')']);
+    sub1 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''1'')']);
+    sub2 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''2'')']);
+    sub3 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''3'')']);
+    sub4 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''4'')']);
+    sub5 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''5'')']);
+    sub6 = eval(['Subject.getSubject(sub_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(sub_class)) ', ''SubjectID'', ''6'')']);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort', sub_class, atlas, {sub1, sub2, sub3, sub4, sub5});
 
-% selected = cohort.move2bottomBrainRegions([1 3 5]);
-% 
-% assert(cohort.subjectnumber()==5, ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.subjectnumber does not work')
-% assert(isequal(selected, [3 4 5]), ...
-%     'BRAPH:Cohort:Bug', ...
-%     'Cohort.getSubject does not work')
+    selected = cohort.move2bottomSubjects([1 3 5]);
+
+    assert(cohort.subjectnumber()==5, ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.move2bottomSubjects does not work')
+    assert(isequal(selected, [3 4 5]), ...
+        'BRAPH:Cohort:Bug', ...
+        'Cohort.move2bottomSubjects does not work')
 end
