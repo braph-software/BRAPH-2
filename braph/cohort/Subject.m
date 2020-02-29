@@ -1,13 +1,17 @@
 classdef Subject < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         id  % subject id
+        groups  % cell array with the groups of the subjects
         datadict  % dictionary with subject data
     end
     methods (Access=protected)
         function sub = Subject(varargin)
             
-            id = get_from_varargin(now(), 'SubID', varargin{:});
-            sub.id = id;
+            id = get_from_varargin(now(), 'SubjectID', varargin{:});
+            sub.setID(id)
+            
+            groups = get_from_varargin({}, 'SubjectGroups', varargin{:});
+            sub.setGroups(groups)
             
             sub.datadict = sub.initialize_datadict(varargin{:});
         end
@@ -17,7 +21,9 @@ classdef Subject < handle & matlab.mixin.Copyable
             str = [Subject.getClass(sub) ' ' int2str(size(sub.getA(), 1)) ' rows x ' int2str(size(sub.getA(), 2)) ' columns'];
         end
         function disp(sub)
-            disp(['<a href="matlab:help ' Subject.getClass(sub) '">' Subject.getClass(sub) '</a>'])
+            disp(['<a href="matlab:help ' Subject.getClass(sub) '">' Subject.getClass(sub) '</a>' ...
+                ' ID:' tostring(sub.getID()) ...
+                ' Groups: ' tostring(cellfun(@(group) group, sub.getGroups()))])
             data_codes = sub.getDataCodes();
             for i = 1:1:sub.getDataNumber()
                 data_code = data_codes{i};
@@ -25,8 +31,21 @@ classdef Subject < handle & matlab.mixin.Copyable
                 disp([data_code ' = ' d.tostring()])
             end
         end
+        function setID(sub, id)
+            sub.id = id;
+        end
         function id = getID(sub)
             id = sub.id;
+        end
+        function setGroups(sub, groups)
+            
+            assert(all(cellfun(@isnumeric, groups)), ...
+                ['BRAPH:Subject:Groups'], ...
+                ['Groups must be a numeric cell array']) %#ok<*NBRAK>
+            sub.groups = groups;
+        end
+        function groups = getGroups(sub)
+            groups = sub.groups;
         end
         function d = getData(sub, data_code)
             d = sub.datadict(data_code);            
