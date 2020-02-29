@@ -28,7 +28,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
             assert(any(strcmp(Subject.getList(), sub_class)), ...
                 ['BRAPH:Cohort:SubjectClassErr'], ...
-                [sub_class ' is not a valid Subject class'])
+                [sub_class ' is not a valid Subject class']) %#ok<NBRAK>
             cohort.sub_class = sub_class;
             
             if ~iscell(atlases)
@@ -37,8 +37,8 @@ classdef Cohort < handle & matlab.mixin.Copyable
             assert(all(cellfun(@(atlas) isa(atlas, 'BrainAtlas'), atlases)) ...
                 && length(atlases) == Subject.getBrainAtlasNumber(sub_class), ...
                 ['BRAPH:Cohort:AtlasErr'], ...
-                ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(sub_class)) ' BrainAtlas'])
-            sub.atlases = atlases;
+                ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(sub_class)) ' BrainAtlas']) %#ok<NBRAK>
+            cohort.atlases = atlases;
 
             cohort.subdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
             for i = 1:1:length(subs)
@@ -73,48 +73,20 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function subs = getSubjects(cohort)
             subs = values(cohort.subdict);
         end
-%         function br_labels = getBrainRegionLabels(ba)
-%             br_labels = cell(1, ba.subjectnumber());
-%             for i = 1:1:ba.subjectnumber()
-%                 br = ba.getBrainRegion(i);
-%                 br_labels{i} = br.getLabel();
-%             end
-%         end
-%         function br_names = getBrainRegionNames(ba)
-%             br_names = cell(1, ba.subjectnumber());
-%             for i = 1:1:ba.subjectnumber()
-%                 br = ba.getBrainRegion(i);
-%                 br_names{i} = br.getName();
-%             end
-%         end
-%         function br_xs = getBrainRegionXs(ba)
-%             br_xs = cell(1, ba.subjectnumber());
-%             for i = 1:1:ba.subjectnumber()
-%                 br = ba.getBrainRegion(i);
-%                 br_xs{i} = br.getX();
-%             end
-%         end
-%         function br_ys = getBrainRegionYs(ba)
-%             br_ys = cell(1, ba.subjectnumber());
-%             for i = 1:1:ba.subjectnumber()
-%                 br = ba.getBrainRegion(i);
-%                 br_ys{i} = br.getY();
-%             end
-%         end
-%         function br_zs = getBrainRegionZs(ba)
-%             br_zs = cell(1, ba.subjectnumber());
-%             for i = 1:1:ba.subjectnumber()
-%                 br = ba.getBrainRegion(i);
-%                 br_zs{i} = br.getZ();
-%             end
-%         end
-%         function br_positions = getBrainRegionPositions(ba)
-%             br_positions = cell(1, ba.subjectnumber());
-%             for i = 1:1:ba.subjectnumber()
-%                 br = ba.getBrainRegion(i);
-%                 br_positions{i} = br.getPosition();
-%             end
-%         end
+        function sub_ids = getSubjectIDs(cohort)
+            sub_ids = cell(1, cohort.subjectnumber());
+            for i = 1:1:cohort.subjectnumber()
+                sub = cohort.getSubject(i);
+                sub_ids{i} = sub.getID();
+            end
+        end
+        function sub_groups = getSubjectGroups(cohort)
+            sub_groups = cell(1, cohort.subjectnumber());
+            for i = 1:1:cohort.subjectnumber()
+                sub = cohort.getSubject(i);
+                sub_groups{i} = sub.getGroups();
+            end
+        end
         function addSubject(cohort, sub, i)
             
             if nargin < 3 || i < 0 || i > cohort.subjectnumber()
@@ -123,7 +95,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
             assert(isa(sub, cohort.getSubjectClass()), ...
                 ['BRAPH:Cohort:SubjectClassErr'], ...
-                ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' sub.getClass()])
+                ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' sub.getClass()]) %#ok<NBRAK>
             
             if i <= cohort.subjectnumber()
                 for j = cohort.subjectnumber():-1:i
@@ -145,7 +117,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
 
             assert(isa(sub, cohort.getSubjectClass()), ...
                 ['BRAPH:Cohort:SubjectClassErr'], ...
-                ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' sub.getClass()])
+                ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' sub.getClass()]) %#ok<NBRAK>
 
             if i > 0 || i <= cohort.subjectnumber()
                 cohort.subdict(i) = sub;
@@ -181,77 +153,78 @@ classdef Cohort < handle & matlab.mixin.Copyable
             end
             selected = [];
         end
-%         function [selected, added] = addaboveSubjects(cohort, selected)
-%             
-%             for i = length(selected):-1:1
-%                 sub = Subject.getSubject();
-%                 cohort.addSubject(BrainRegion(), selected(i))
-%             end
-%             selected = selected + reshape(1:1:numel(selected), size(selected));
-%             added = selected - 1;
-%         end
-%         function [selected, added] = addbelowSubjects(cohort, selected)
-%             
-%             for i = length(selected):-1:1
-%                 cohort.addSubject(BrainRegion(), selected(i) + 1)
-%             end
-%             selected = selected + reshape(0:1:numel(selected)-1, size(selected));
-%             added = selected + 1;
-%         end
-%         function selected = moveupBrainRegions(ba, selected)
-%             
-%             if ~isempty(selected)
-%                 
-%                 first_index_to_process = 1;
-%                 unprocessable_length = 1;
-%                 while first_index_to_process <= ba.subjectnumber() ...
-%                         && first_index_to_process <= numel(selected) ...
-%                         && selected(first_index_to_process) == unprocessable_length
-%                     first_index_to_process = first_index_to_process + 1;
-%                     unprocessable_length = unprocessable_length + 1;
-%                 end
-% 
-%                 for i = first_index_to_process:1:numel(selected)
-%                     ba.invertBrainRegions(selected(i), selected(i)-1);
-%                     selected(i) = selected(i) - 1;
-%                 end
-%             end
-%         end
-%         function selected = movedownBrainRegions(ba, selected)
-%             
-%             if ~isempty(selected)
-% 
-%                 last_index_to_process = numel(selected);
-%                 unprocessable_length = ba.subjectnumber();
-%                 while last_index_to_process > 0 ...
-%                         && selected(last_index_to_process) == unprocessable_length
-%                     last_index_to_process = last_index_to_process - 1;
-%                     unprocessable_length = unprocessable_length - 1;
-%                 end
-% 
-%                 for i = last_index_to_process:-1:1
-%                     ba.invertBrainRegions(selected(i), selected(i) + 1);
-%                     selected(i) = selected(i) + 1;
-%                 end
-%             end
-%         end
-%         function selected = move2topBrainRegions(ba, selected)
-%             
-%             if ~isempty(selected)
-%                 for i = 1:1:numel(selected)
-%                     ba.movetoBrainRegion(selected(i), i);
-%                 end
-%                 selected = reshape(1:1:numel(selected), size(selected));
-%             end
-%         end
-%         function selected = move2bottomBrainRegions(ba, selected)
-%             
-%             if ~isempty(selected)
-%                 for i = numel(selected):-1:1
-%                     ba.movetoBrainRegion(selected(i), ba.subjectnumber() - (numel(selected)-i));
-%                 end
-%                 selected = reshape(ba.subjectnumber() - numel(selected)+1:1:ba.subjectnumber(), size(selected));
-%             end
-%         end
+        function [selected, added] = addaboveSubjects(cohort, selected)
+            
+            for i = length(selected):-1:1
+                sub = Subject.getSubject(cohort.getSubjectClass(), cohort.atlases{:});
+                cohort.addSubject(sub, selected(i))
+            end
+            selected = selected + reshape(1:1:numel(selected), size(selected));
+            added = selected - 1;
+        end
+        function [selected, added] = addbelowSubjects(cohort, selected)
+            
+            for i = length(selected):-1:1
+                sub = Subject.getSubject(cohort.getSubjectClass(), cohort.atlases{:});
+                cohort.addSubject(sub, selected(i) + 1)
+            end
+            selected = selected + reshape(0:1:numel(selected)-1, size(selected));
+            added = selected + 1;
+        end
+        function selected = moveupSubjects(cohort, selected)
+            
+            if ~isempty(selected)
+                
+                first_index_to_process = 1;
+                unprocessable_length = 1;
+                while first_index_to_process <= cohort.subjectnumber() ...
+                        && first_index_to_process <= numel(selected) ...
+                        && selected(first_index_to_process) == unprocessable_length
+                    first_index_to_process = first_index_to_process + 1;
+                    unprocessable_length = unprocessable_length + 1;
+                end
+
+                for i = first_index_to_process:1:numel(selected)
+                    cohort.invertSubjects(selected(i), selected(i)-1);
+                    selected(i) = selected(i) - 1;
+                end
+            end
+        end
+        function selected = movedownSubjects(cohort, selected)
+            
+            if ~isempty(selected)
+
+                last_index_to_process = numel(selected);
+                unprocessable_length = cohort.subjectnumber();
+                while last_index_to_process > 0 ...
+                        && selected(last_index_to_process) == unprocessable_length
+                    last_index_to_process = last_index_to_process - 1;
+                    unprocessable_length = unprocessable_length - 1;
+                end
+
+                for i = last_index_to_process:-1:1
+                    cohort.invertSubjects(selected(i), selected(i) + 1);
+                    selected(i) = selected(i) + 1;
+                end
+            end
+        end
+        function selected = move2topSubjects(cohort, selected)
+            
+            if ~isempty(selected)
+                for i = 1:1:numel(selected)
+                    cohort.movetoSubject(selected(i), i);
+                end
+                selected = reshape(1:1:numel(selected), size(selected));
+            end
+        end
+        function selected = move2bottomSubjects(cohort, selected)
+            
+            if ~isempty(selected)
+                for i = numel(selected):-1:1
+                    cohort.movetoSubject(selected(i), cohort.subjectnumber() - (numel(selected)-i));
+                end
+                selected = reshape(cohort.subjectnumber() - numel(selected)+1:1:cohort.subjectnumber(), size(selected));
+            end
+        end
     end
 end
