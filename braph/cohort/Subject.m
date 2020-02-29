@@ -5,15 +5,19 @@ classdef Subject < handle & matlab.mixin.Copyable
         datadict  % dictionary with subject data
     end
     methods (Access=protected)
-        function sub = Subject(varargin)
+        function sub = Subject(atlases, varargin)
             
+            assert(iscell(atlases), ...
+                ['BRAIN:Subject:AtlasErr'], ...
+                ['The input must be a cell containing BrainAtlas objects'])
+
             id = get_from_varargin(now(), 'SubjectID', varargin{:});
             sub.setID(id)
             
             groups = get_from_varargin({}, 'SubjectGroups', varargin{:});
             sub.setGroups(groups)
             
-            sub.datadict = sub.initialize_datadict(varargin{:});
+            sub.initialize_datadict(atlases, varargin{:})
         end
         function sub_copy = copyElement(sub)
             % IMPORTANT! It does NOT make a deep copy of the BrainAtlas
@@ -71,8 +75,8 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
     end
     methods (Abstract, Access=protected)
-        initialize_datadict(sub)  % initialized the data_dict
-        update_brainatlases(sub)  % updates brainatlases also in datadict
+        initialize_datadict(sub, atlases, varargin)  % initialized the data_dict
+        update_brainatlases(sub, atlases)  % updates brainatlases also in datadict
     end
     methods (Static)
         function subject_list = getList()

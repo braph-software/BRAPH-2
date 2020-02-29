@@ -11,14 +11,19 @@ atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 %% Test 1: All subjects not abstract
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
-    sub = eval(['Subject.getSubject(subject_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(subject_class)) ')']);
+    if Subject.getBrainAtlasNumber(subject_class) == 1
+        sub = Subject.getSubject(subject_class, {atlas});
+        sub = Subject.getSubject(subject_class, atlas);
+    else
+        sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    end
 end
 
 %% Test 2: Implementation static methods
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = eval(['Subject.getSubject(subject_class' repmat(', atlas', 1, Subject.getBrainAtlasNumber(subject_class)) ')']);
+    sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
     
     assert(isequal(sub.getClass(), subject_class), ...
         ['BRAPH:' subject_class ':StaticFuncImplementation'], ...
@@ -65,9 +70,9 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = eval(['Subject.getSubject(subject_class' ...
-        repmat(', atlas', 1, Subject.getBrainAtlasNumber(subject_class)) ...
-        ', ''SubjectGroups'', {1 3 5})']);
+    sub = Subject.getSubject(subject_class, ...
+        repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), ...
+        'SubjectGroups', {1 3 5});
    
     groups = sub.getGroups();
     assert(isequal(groups, {1 3 5}), ...
@@ -85,9 +90,9 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = eval(['Subject.getSubject(subject_class' ...
-        repmat(', atlas', 1, Subject.getBrainAtlasNumber(subject_class)) ...
-        ', ''SubjectGroups'', {1 3 5})']);
+    sub = Subject.getSubject(subject_class, ...
+        repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), ...
+        'SubjectGroups', {1 3 5});
 
     atlas_copy = atlas.copy();
     atlasses_copy = repmat({atlas_copy}, 1, sub.getBrainAtlasNumber());

@@ -2,17 +2,26 @@ classdef SubjectMRI < Subject
     methods
         function sub = SubjectMRI(atlas, varargin)
 
-            sub = sub@Subject('BrainAtlas', atlas, varargin{:});
+            if isa(atlas, 'BrainAtlas') 
+                atlases = {atlas};
+            else
+                assert(iscell(atlas) && length(atlas)==1, ...
+                    ['BRAIN:SubjectMRI:AtlasErr'], ...
+                    ['The input must be a BrainAtlas or a cell with one BrainAtlas'])
+                atlases = atlas;
+            end
+            
+            sub = sub@Subject(atlases, varargin{:});
         end
     end
     methods (Access=protected)
-        function datadict = initialize_datadict(sub, varargin) %#ok<INUSL>
-
-            atlas = get_from_varargin([], 'BrainAtlas', varargin{:});
+        function initialize_datadict(sub, atlases, varargin) %#ok<INUSL>
             
-            datadict = containers.Map;
-            datadict('age') = DataScalar(atlas);
-            datadict('MRI') = DataStructural(atlas);
+            atlas = atlases{1};
+            
+            sub.datadict = containers.Map;
+            sub.datadict('age') = DataScalar(atlas);
+            sub.datadict('MRI') = DataStructural(atlas);
         end
         function update_brainatlases(sub, atlases)
 

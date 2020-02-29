@@ -2,17 +2,26 @@ classdef SubjectDTI < Subject
     methods
         function sub = SubjectDTI(atlas, varargin)
 
-            sub = sub@Subject('BrainAtlas', atlas, varargin{:});
+            if isa(atlas, 'BrainAtlas') 
+                atlases = {atlas};
+            else
+                assert(iscell(atlas) && length(atlas)==1, ...
+                    ['BRAIN:SubjectMRI:AtlasErr'], ...
+                    ['The input must be a BrainAtlas or a cell with one BrainAtlas'])
+                atlases = atlas;
+            end
+            
+            sub = sub@Subject(atlases, varargin{:});
         end
     end
     methods (Access=protected)
-        function datadict = initialize_datadict(sub, varargin) %#ok<INUSL>
+        function initialize_datadict(sub, atlases, varargin) %#ok<INUSL>
 
-            atlas = get_from_varargin([], 'BrainAtlas', varargin{:});
+            atlas = atlases{1};
             
-            datadict = containers.Map;
-            datadict('age') = DataScalar(atlas);
-            datadict('DTI') = DataConnectivity(atlas);
+            sub.datadict = containers.Map;
+            sub.datadict('age') = DataScalar(atlas);
+            sub.datadict('DTI') = DataConnectivity(atlas);
         end
         function update_brainatlases(sub, atlases)
 
