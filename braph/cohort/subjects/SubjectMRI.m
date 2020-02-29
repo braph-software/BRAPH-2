@@ -7,7 +7,7 @@ classdef SubjectMRI < Subject
             else
                 assert(iscell(atlas) && length(atlas)==1, ...
                     ['BRAIN:SubjectMRI:AtlasErr'], ...
-                    ['The input must be a BrainAtlas or a cell with one BrainAtlas'])
+                    ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
                 atlases = atlas;
             end
             
@@ -15,8 +15,9 @@ classdef SubjectMRI < Subject
         end
     end
     methods (Access=protected)
-        function initialize_datadict(sub, atlases, varargin) %#ok<INUSL>
+        function initialize_datadict(sub, varargin)
             
+            atlases = sub.getBrainAtlases();
             atlas = atlases{1};
             
             sub.datadict = containers.Map;
@@ -25,6 +26,7 @@ classdef SubjectMRI < Subject
         end
         function update_brainatlases(sub, atlases)
 
+            sub.atlases = atlases;
             atlas = atlases{1};
 
             d1 = sub.datadict('age');

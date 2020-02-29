@@ -1,6 +1,7 @@
 classdef Subject < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         id  % subject id
+        atlases % cell array with brain atlases
         groups  % cell array with the groups of the subjects
         datadict  % dictionary with subject data
     end
@@ -10,6 +11,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             assert(iscell(atlases), ...
                 ['BRAIN:Subject:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects'])
+            sub.atlases = atlases;
 
             id = get_from_varargin(now(), 'SubjectID', varargin{:});
             sub.setID(id)
@@ -73,9 +75,12 @@ classdef Subject < handle & matlab.mixin.Copyable
         function setBrainAtlases(sub, atlases)
             sub.update_brainatlases(atlases);
         end
+        function atlases = getBrainAtlases(sub)
+            atlases = sub.atlases;
+        end
     end
     methods (Abstract, Access=protected)
-        initialize_datadict(sub, atlases, varargin)  % initialized the data_dict
+        initialize_datadict(sub, varargin)  % initialized the data_dict
         update_brainatlases(sub, atlases)  % updates brainatlases also in datadict
     end
     methods (Static)
