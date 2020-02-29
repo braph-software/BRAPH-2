@@ -60,3 +60,23 @@ for i = 1:1:length(subject_class_list)
         [subject_class '.getDataClasses() should return a cell array as long as the number of data'])
     
 end
+
+%% Test 3: Groups
+for i = 1:1:length(subject_class_list)
+    subject_class = subject_class_list{i};
+    
+    sub = eval(['Subject.getSubject(subject_class' ...
+        repmat(', atlas', 1, Subject.getBrainAtlasNumber(subject_class)) ...
+        ', ''SubjectGroups'', {1 3 5})']);
+   
+    groups = sub.getGroups();
+    assert(isequal(groups, {1 3 5}), ...
+        ['BRAPH:' subject_class ':Groups'], ...
+        ['Group managemenr for ' subject_class ' not working'])
+
+    sub.setGroups({ 2 4});
+    groups = sub.getGroups();
+    assert(isequal(groups, {2 4}), ...
+        ['BRAPH:' subject_class ':Groups'], ...
+        ['Group managemenr for ' subject_class ' not working'])
+end
