@@ -80,3 +80,43 @@ for i = 1:1:length(subject_class_list)
         ['BRAPH:' subject_class ':Groups'], ...
         ['Group managemenr for ' subject_class ' not working'])
 end
+
+%% Test 4: Copy
+for i = 1:1:length(subject_class_list)
+    subject_class = subject_class_list{i};
+    
+    sub = eval(['Subject.getSubject(subject_class' ...
+        repmat(', atlas', 1, Subject.getBrainAtlasNumber(subject_class)) ...
+        ', ''SubjectGroups'', {1 3 5})']);
+    
+    sub_copy = sub.copy();
+    assert(sub ~= sub_copy, ... % different objects, but same values
+        ['BRAPH:' subject_class ':Copy'], ...
+        [subject_class '.copy() does not work'])
+    
+    data_codes = sub.getDataCodes();
+    for j = 1:1:length(data_codes)
+        data_code = data_codes{j};
+        d = sub.getData(data_code);
+        d_copy = sub_copy.getData(data_code);
+        assert(d ~= d_copy, ... % different objects
+            ['BRAPH:' subject_class ':Copy'], ...
+            [subject_class '.copy() does not work'])
+        assert(d.getBrainAtlas() == d_copy.getBrainAtlas(), ... % pointer to same BrainAtlas
+            ['BRAPH:' subject_class ':Copy'], ...
+            [subject_class '.copy() does not work'])
+        
+        d_copy.setValue(ones(size(d_copy.getValue())))
+
+        assert(d ~= d_copy, ... % different objects
+            ['BRAPH:' subject_class ':Copy'], ...
+            [subject_class '.copy() does not work'])
+        assert(d.getBrainAtlas() == d_copy.getBrainAtlas(), ... % pointer to same BrainAtlas
+            ['BRAPH:' subject_class ':Copy'], ...
+            [subject_class '.copy() does not work'])
+    end
+    
+    assert(sub ~= sub_copy, ... % different objects, but same values
+        ['BRAPH:' subject_class ':Copy'], ...
+        [subject_class '.copy() does not work'])
+end
