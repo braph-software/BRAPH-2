@@ -21,7 +21,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
 %         end        
     end        
     methods
-        function cohort = Cohort(name, sub_class, subs)
+        function cohort = Cohort(name, sub_class, atlases, subs)
             % subs must be a cell array of Subjects of class sub_class
                         
             cohort.name = name;
@@ -30,6 +30,15 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 ['BRAPH:Cohort:SubjectClassErr'], ...
                 [sub_class ' is not a valid Subject class'])
             cohort.sub_class = sub_class;
+            
+            if ~iscell(atlases)
+                atlases = {atlases};
+            end
+            assert(all(cellfun(@(atlas) isa(atlas, 'BrainAtlas'), atlases)) ...
+                && length(atlases) == Subject.getBrainAtlasNumber(sub_class), ...
+                ['BRAPH:Cohort:AtlasErr'], ...
+                ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(sub_class)) ' BrainAtlas'])
+            sub.atlases = atlases;
 
             cohort.subdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
             for i = 1:1:length(subs)
@@ -48,6 +57,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
         end
         function sub_class = getSubjectClass(cohort)
             sub_class = cohort.sub_class;
+        end
+        function atlases = getBrainAtlases(cohort)
+            atlases = cohort.atlases;
         end
         function n = subjectnumber(cohort)
             n = length(cohort.subdict);
