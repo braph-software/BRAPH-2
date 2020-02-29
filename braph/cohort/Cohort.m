@@ -6,23 +6,24 @@ classdef Cohort < handle & matlab.mixin.Copyable
         subdict  % dictionary with subjects
     end
     methods (Access=protected)
-%         function cohort_copy = copyElement(cohort)
-%             
-%             % Make a shallow copy
-%             cohort_copy = copyElement@matlab.mixin.Copyable(cohort);
-%  
-% % TBI
-% 
-% %            % Make a deep copy of atlases
-%             
-% %             % Make a deep copy of subdict
-% %             cohort_copy.subdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-% %             brain_regions = values(cohort.subdict);
-% %             for i = 1:1:length(brain_regions)
-% %                 br = brain_regions{i};
-% %                 cohort_copy.subdict(i) = br.copy();
-% %             end
-%         end        
+        function cohort_copy = copyElement(cohort)
+            
+            % Make a shallow copy
+            cohort_copy = copyElement@matlab.mixin.Copyable(cohort);
+
+            % Make a deep copy of atlases
+            cohort_copy.atlases = cellfun(@(atlas) {atlas.copy()}, cohort.atlases);
+            
+            % Make a deep copy of subdict
+            cohort_copy.subdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            subs = values(cohort.subdict);
+            for i = 1:1:length(subs)
+                sub = subs{i};
+                sub_copy = sub.copy();
+                sub_copy.setBrainAtlases(cohort_copy.getBrainAtlases());
+                cohort_copy.subdict(i) = sub_copy;
+            end
+        end
     end        
     methods
         function cohort = Cohort(name, sub_class, atlases, subs)
