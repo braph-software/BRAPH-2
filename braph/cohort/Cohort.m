@@ -106,10 +106,8 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 for j = cohort.subjectnumber():-1:i
                     cohort.subdict(j+1) = cohort.subdict(j);
                 end
-                cohort.subdict(i) = sub;
-            else
-                cohort.subdict(i) = sub;
             end
+	    cohort.subdict(i) = sub;
         end
         function removeSubject(cohort, i)
             
