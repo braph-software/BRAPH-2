@@ -113,10 +113,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 for j = atlas.brainregionnumber():-1:i
                     atlas.brdict(j+1) = atlas.brdict(j);
                 end
-                atlas.brdict(i) = br;
-            else
-                atlas.brdict(i) = br;
             end
+            atlas.brdict(i) = br;
         end
         function removeBrainRegion(atlas, i)
             
