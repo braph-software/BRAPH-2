@@ -151,10 +151,10 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 end
             end            
         end
-        function selected = removeSubjects(ba, selected)
+        function selected = removeSubjects(cohort, selected)
             
             for i = length(selected):-1:1
-                ba.removeSubject(selected(i))
+                cohort.removeSubject(selected(i))
             end
             selected = [];
         end
