@@ -1,4 +1,55 @@
 classdef Measure < handle
+    % Measure < handle (Abstract) : Creates and implements measure
+    %   Measure represents the methods all measures of a graph have. 
+    %   Instances of this class cannot be created. Use one of the
+    %   subclasses (e.g., Degree, Strength, Distance, Efficency).
+    % 
+    % Measure properties (GetAccess=protected, SetAccess=protected):
+    %   g        -   graph
+    %   settings -   structure with the constructor settings
+    %   value    -   garph measure value, the value is:
+    %                   scalar for global measures
+    %                   column vector for nodal measures
+    %                   square matrix for binodal measures
+    % 
+    % Measure methods (Access=protected):
+    %   Measure  -   constructor
+    %
+    % Measure methods:
+    %   tostring    -   returns a string with the class of the measure and 
+    %                   the size of its value.
+    %   disp        -   displays the class of the measure, the size of its
+    %                   value, if the value has been calculated, the graph
+    %                   associated with the measure and the measure settings.
+    %   getGraph    -   returns the graph associated with the measure.
+    %   getSettings -   returns the settings the measure settings.
+    %   is_value_calculated  -   boolean, checks if the measure has been
+    %                            calculated.
+    %   getValue    -   returns the value of the measure.
+    %   
+    % Measure methods (Abstract, Access=protected):
+    %   calculate   -   abstract function, inheriting classes must
+    %                   implement this function.
+    %
+    % Measure methods (Static)
+    %   getList     -   return a list with subclasses of measure.
+    %   getClass    -   return the class type of the measure.
+    %   getName     -   return the name of the measure.
+    %   getDescription   -   return the description of the measure.
+    %   is_global   -   boolean, checks if the measure is global.
+    %   is_nodal    -   boolean, checks if the measure is nodal.
+    %   is_binodal  -   boolean, checks if the measure if binodal.
+    %   getMeasure  -   returns the measure class.
+    %   getCompatibleGraphList  -  returns a list of compatible measures.
+    %   getCompatibleGraphNumber  -  returns the number of compatible
+    %                                measures.
+    %
+    % See also Graph, handle, Degree, Strength, Distance, Efficency
+    
+    % Author: Emiliano Gomez & Giovanni Volpe
+    % Date: 2020/02/03
+    
+    
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
         settings  % structure with the constructor settings
