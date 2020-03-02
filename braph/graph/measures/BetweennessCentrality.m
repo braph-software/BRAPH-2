@@ -1,7 +1,9 @@
 classdef BetweennessCentrality < Measure
     methods
         function m = BetweennessCentrality(g, varargin)
+            
             settings = clean_varargin({}, varargin{:});
+            
             m = m@Measure(g, settings{:});
         end
     end
