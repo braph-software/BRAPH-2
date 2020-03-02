@@ -22,6 +22,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function atlas = BrainAtlas(name, brain_regions)
             % brain_regions must be a cell array of BrainRegion
             
+            assert(iscell(brain_regions), ...
+                ['BRAPH:BrainAtlas:BrainRegionsErr'], ...
+                ['The input brain regions should be a cell array of BrainRegion']) %#ok<NBRAK>
+
             atlas.name = name;
             
             atlas.brdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
