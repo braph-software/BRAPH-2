@@ -24,7 +24,7 @@ classdef OutPathLength < Measure
                         Du = distance(u, :);
                         out_path_length(u) = mean(Du(Du~=0 & Du~=Inf));
                     end
-                    out_path_length(isnan(out_path_length)) = 0;
+                    out_path_length(isnan(out_path_length)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
                 case {'harmonic'}
                     for u = 1:1:N
                         Du = distance(u, :);

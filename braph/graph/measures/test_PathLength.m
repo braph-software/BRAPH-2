@@ -119,7 +119,7 @@ assert( isequal(p_value(1, 1), value_bct), ...
     ['BRAPH:PathLength:BCT '], ...
     ['PathLength is not working for: modified BCT comparision'])
 
-
+%% Functions to calculate Path Length from 2019_03_03_BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
 %CHARPATH       Characteristic path length, global efficiency and related statistics
 %

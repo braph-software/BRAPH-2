@@ -125,6 +125,7 @@ p = InPathLength(g, 'InPathLengthAvRule', 'subgraphs');
 p_value = p.getValue();
 p_value = round(p_value,4);
 
+
 d = Distance(g).getValue();
 value_bct = round(charpath(d), 4);
 
@@ -133,7 +134,7 @@ assert( isequal(p_value(1, 1), value_bct), ...
     ['InPathLength is not working for: BCT'])
 
 
-
+%% Functions to calculate In Path Length from 2019_03_03_BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
 %CHARPATH       Characteristic path length, global efficiency and related statistics
 %
