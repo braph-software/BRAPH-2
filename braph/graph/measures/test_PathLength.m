@@ -17,14 +17,13 @@ end
 
 %% Test 2: Calculation vs Known Values
 for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};    
+    graph_class = graph_class_list{i};
     A = [
-        0   .1  0   0   0
-        .2   0  0   0   0
-        0    0  0  .2   0
-        0    0 .1   0   0
-        0    0  0   0   0
-        ];    
+        0   .1  0   0
+        .2   0 .1   0
+        0   .1  0  .2
+        0    0 .1   0
+        ];
     g = Graph.getGraph(graph_class, A);
     p = PathLength(g);
     p_value = p.getValue();
@@ -35,20 +34,18 @@ for i = 1:1:length(graph_class_list)
     switch (graph_class)
         case 'GraphWU'
             known_solution = [
-                Inf;
-                Inf;
-                Inf;
-                Inf;
-                Inf;
+                13.3333;
+                10;
+                10;
+                13.3333;
                 ];
             
         case 'GraphBU'
             known_solution = [
-                Inf;
-                Inf;
-                Inf;
-                Inf;
-                Inf;
+                2;
+                1.3333;
+                1.3333;
+                2;
                 ];
     end
     
@@ -58,26 +55,22 @@ for i = 1:1:length(graph_class_list)
 end
 
 %% Test 3: Calculation Harmonic WU vs know Value
-
 A = [
-    0   .1  0   0   0
-    .2   0  0   0   0
-    0    0  0  .2   0
-    0    0 .1   0   0
-    0    0  0   0   0
+    0   .1  0   0
+    .2   0 .1   0
+    0   .1  0  .2
+    0    0 .1   0
     ];
-
 g = GraphWU(A);
 p = PathLength(g, 'PathLengthAvRule', 'harmonic');
 p_value = p.getValue();
 p_value = round(p_value,4);
 
 known_solution = [
-    20;
-    20;
-    20;
-    20;
-    Inf;
+    13.3333;
+    10;
+    10;
+    13.3333;
     ];
 
 assert( isequal(p_value, known_solution), ...
@@ -86,11 +79,10 @@ assert( isequal(p_value, known_solution), ...
 
 %% Test 4: Calculation subgraphs WU vs know Value
 A = [
-    0   .1  0   0   0
-    .2   0  0   0   0
-    0    0  0  .2   0
-    0    0 .1   0   0
-    0    0  0   0   0
+    0   .1  0   0
+    .2   0 .1   0
+    0   .1  0  .2
+    0    0 .1   0
     ];
 g = GraphWU(A);
 p = PathLength(g, 'PathLengthAvRule', 'subgraphs');
@@ -98,11 +90,10 @@ p_value = p.getValue();
 p_value = round(p_value,4);
 
 known_solution = [
-    5;
-    5;
-    5;
-    5;
-    0;
+    13.3333;
+    10;
+    10;
+    13.3333;
     ];
 
 assert( isequal(p_value, known_solution), ...
@@ -111,11 +102,10 @@ assert( isequal(p_value, known_solution), ...
 
 %% Test 5: Calculation subgraphs WU vs BCT
 A = [
-    0   .1  0   0   0    
-    .2   0  0   0   0
-    0    0  0  .2   0
-    0    0 .1   0   0
-    0    0  0   0   0
+    0   .1  0   0
+    .2   0 .1   0
+    0   .1  0  .2
+    0    0 .1   0
     ];
 g = GraphWU(A);
 p = PathLength(g, 'PathLengthAvRule', 'subgraphs');
@@ -126,7 +116,7 @@ d = Distance(g).getValue();
 value_bct = round(charpath(d), 4);
 
 assert( isequal(p_value(1, 1), value_bct), ...
-    ['BRAPH:PathLength:Subgraphs '], ...
+    ['BRAPH:PathLength:BCT '], ...
     ['PathLength is not working for: modified BCT comparision'])
 
 

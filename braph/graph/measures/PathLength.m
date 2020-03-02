@@ -7,19 +7,17 @@ classdef PathLength < Measure
     methods (Access = protected)
         function path_length =  calculate(m)
             g = m.getGraph();
-            
-            settings = g.getSettings();
+
             if g.is_measure_calculated('Distance')
                 distance = g.getMeasureValue('Distance');
             else
-                distance = Distance(g, settings{:}).getValue();
+                distance = Distance(g, g.getSettings()).getValue();
             end
             
             N = g.nodenumber();
-            path_length = zeros(N, 1);
-            
-            settings = m.getSettings();
-            pathLength_rule = get_from_varargin(0, 'PathLengthAvRule', settings{:});
+            path_length = zeros(N, 1);            
+          
+            pathLength_rule = get_from_varargin(0, 'PathLengthAvRule', g.getSettings());
             switch lower(pathLength_rule)
                 case {'subgraphs'}
                     for u = 1:1:N
