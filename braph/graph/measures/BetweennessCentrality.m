@@ -8,7 +8,7 @@ classdef BetweennessCentrality < Measure
         end
     end
     methods (Access=protected)
-        function bc = calculate(m)
+        function betweenness_centrality = calculate(m)
             g = m.getGraph(); 
             A = g.getA();
             
@@ -43,15 +43,15 @@ classdef BetweennessCentrality < Measure
                     DPd1 = (((L==d).*(1+DP)./NSP)*(A.')).*((L==(d-1)).*NSP);
                     DP = DP + DPd1;  %DPd1: dependencies on vertices |d-1| from source        
                 end
-                bc = sum(DP, 1);  % compute betweenness
-                bc = bc';
+                betweenness_centrality = sum(DP, 1);  % compute betweenness
+                betweenness_centrality = betweenness_centrality';
                 
             % Weighted graphs WU and WD
             elseif isa(g, 'GraphWU') || isa(g, 'GraphWD')  
                 N = size(A, 2);  % number of nodes
                 E = find(A); 
                 A(E) = 1./A(E);  % invert weights
-                bc = zeros(N, 1);  % init vertex betweenness
+                betweenness_centrality = zeros(N, 1);  % init vertex betweenness
 
                 % Compute the distances and number of 
                 % shortest paths between all pairs of vertices
@@ -76,13 +76,13 @@ classdef BetweennessCentrality < Measure
                         for v = V
                             Q(q) = v; 
                             q = q-1;
-                            neighbours = find(G(v, :));  % neighbours of v
+                            neighbours = find(G(v,:));  % neighbours of v
                             for neighbour = neighbours
-                                Duw = D(v)+ G(v, neighbour);  % Duw path length to be tested
+                                Duw = D(v) + G(v, neighbour);  % Duw path length to be tested
                                 if Duw<D(neighbour)  % if new u->w shorter than old
                                     D(neighbour) = Duw;
                                     NP(neighbour) = NP(v);  % NP(u->w) = NP of new path
-                                    P(neighbour, :) = 0;
+                                    P(neighbour,:) = 0;
                                     P(neighbour, v) = 1;  % v is the only predecessor
                                 elseif Duw==D(neighbour)  % if new u->w equal to old
                                     NP(neighbour) = NP(neighbour)+NP(v);  % NP(u->w) sum of old and new
@@ -101,14 +101,14 @@ classdef BetweennessCentrality < Measure
                     % Compute dependencies (DP)
                     DP = zeros(N, 1);  
                     for n = Q(1:N-1)           
-                        bc(n) = bc(n)+DP(n);  % update betweenness 
-                        for v = find(P(n, :))
+                        betweenness_centrality(n) = betweenness_centrality(n)+DP(n);  % update betweenness 
+                        for v = find(P(n,:))
                             DP(v) = DP(v)+(1+DP(n)).*NP(v)./NP(n);  % dependency
                         end
                     end
                 end
             end
-            bc = bc/((N-1)*(N-2));  % Normalize betweenness
+            betweenness_centrality = betweenness_centrality/((N-1)*(N-2));  % Normalize betweenness
         end
     end
     methods (Static)
