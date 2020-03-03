@@ -1,7 +1,8 @@
 classdef PathLength < Measure
     methods
         function m = PathLength(g, varargin)
-            m = m@Measure(g, varargin{:});
+            settings = clean_varargin({'PathLengthAvRule'}, varargin{:});
+            m = m@Measure(g, settings{:});
         end
     end
     methods (Access = protected)
@@ -17,7 +18,7 @@ classdef PathLength < Measure
             N = g.nodenumber();
             path_length = zeros(N, 1);            
           
-            pathLength_rule = get_from_varargin(0, 'PathLengthAvRule', g.getSettings());
+            pathLength_rule = get_from_varargin('default', 'PathLengthAvRule', m.getSettings());
             switch lower(pathLength_rule)
                 case {'subgraphs'}
                     for u = 1:1:N

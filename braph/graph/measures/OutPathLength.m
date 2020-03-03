@@ -1,12 +1,13 @@
 classdef OutPathLength < Measure
     methods
-        function m = OutPathLength(g, varargin)
-            m = m@Measure(g, varargin{:});
+        function m = OutPathLength(g, varargin) 
+            settings = clean_varargin({'OutPathLengthAvRule'}, varargin{:});
+            m = m@Measure(g, settings{:});
         end
     end
     methods (Access = protected)
         function out_path_length =  calculate(m)
-            g = m.getGraph();
+            g = m.getGraph();          
 
             if g.is_measure_calculated('Distance')
                 distance = g.getMeasureValue('Distance');
@@ -17,7 +18,7 @@ classdef OutPathLength < Measure
             N = g.nodenumber();
             out_path_length = zeros(N, 1);
             
-            pathLength_rule = get_from_varargin(0, 'OutPathLengthAvRule', g.getSettings());
+            pathLength_rule = get_from_varargin('default', 'OutPathLengthAvRule', m.getSettings());
             switch lower(pathLength_rule)
                 case {'subgraphs'}
                     for u = 1:1:N

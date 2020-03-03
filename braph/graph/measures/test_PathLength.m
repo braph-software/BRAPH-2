@@ -67,10 +67,10 @@ p_value = p.getValue();
 p_value = round(p_value,4);
 
 known_solution = [
-    13.3333;
-    10;
-    10;
-    13.3333;
+    9.4737;
+    8.1818;
+    8.1818;
+    9.4737;
     ];
 
 assert( isequal(p_value, known_solution), ...
@@ -187,7 +187,7 @@ Dv = D(~isnan(D));                  % get non-NaN indices of D
 % Mean of entries of D(G)
 % Modified version in order to get the first vector Emiliano Gomez
 
-lambda     = mean(Dv(1:1));  % 1:3 since function is ignoring diagonal and inf in this case
+lambda     = mean(Dv(1:3));  % 1:3 since function is ignoring diagonal and inf in this case
 
 % Efficiency: mean of inverse entries of D(G)
 efficiency = mean(1./Dv);
