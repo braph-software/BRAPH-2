@@ -94,10 +94,10 @@ classdef Measure < handle
             
             name = eval([Measure.getClass(m) '.getName()']);
         end
-        function name = getDescription(m)
+        function description = getDescription(m)
             % measure description
             
-            name = eval([Measure.getClass(m) '.getDescription()']);
+            description = eval([Measure.getClass(m) '.getDescription()']);
         end
         function bool = is_global(m)
             % whether is global measure
@@ -112,8 +112,8 @@ classdef Measure < handle
         function bool = is_binodal(m)
             bool = eval([Measure.getClass(m) '.is_binodal()']);
         end
-        function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
-            m = eval([measure_code '(g, varargin{:})']);
+        function m = getMeasure(measure_class, g, varargin) %#ok<INUSD>
+            m = eval([measure_class '(g, varargin{:})']);
         end
         function list = getCompatibleGraphList(m)
             % list of graphs with which measure works
