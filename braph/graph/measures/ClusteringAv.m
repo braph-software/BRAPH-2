@@ -1,7 +1,10 @@
 classdef ClusteringAv < Clustering
     methods
         function m = ClusteringAv(g, varargin)
-            m = m@Clustering(g, varargin{:});
+
+            settings = clean_varargin({'DirectedTrianglesRule'}, varargin{:});
+
+            m = m@Clustering(g, settings{:});
         end
     end
     methods (Access=protected)

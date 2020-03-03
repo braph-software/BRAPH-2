@@ -7,12 +7,16 @@ classdef Graph < handle & matlab.mixin.Copyable
     methods (Access=protected)
         function g = Graph(A, varargin)
             
-            mdict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
+
             settings = get_from_varargin(varargin, 'Settings', varargin{:});
+            mdict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
 
             g.A = A;
-            g.mdict = mdict;
             g.settings = settings;
+            g.mdict = mdict;
         end
         function g_copy = copyElement(g)
             
@@ -27,23 +31,22 @@ classdef Graph < handle & matlab.mixin.Copyable
             measures = values(g.mdict);
             for i = 1:1:length(measures)
                 m = measures{i};
-                m_settings = m.getSettings();
                 if m.is_value_calculated()
                     g_copy.mdict(m.getMeasureCode()) = Measure.getMeasure( ...
                         m.getMeasureCode(), ...
                         g_copy, ...
                         'Value', m.getValue(), ...
-                        'Settings', copy_varargin(m_settings{:}) ...
+                        'Settings', copy_varargin(m.getSettings()) ...
                         );
                 else
                     g_copy.mdict(m.getMeasureCode()) = Measure.getMeasure( ...
                         m.getMeasureCode(), ...
                         g_copy, ...
-                        'Settings', copy_varargin(m_settings{:}) ...
+                        'Settings', copy_varargin(m.getSettings()) ...
                         );                    
                 end
             end
-        end        
+        end
     end
     methods
         function str = tostring(g)
@@ -95,8 +98,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
         function sg = subgraph(g, nodes)  
             A = g.getA(); %#ok<PROPLC>
-            settings = g.getSettings(); %#ok<PROPLC>
-            sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), settings{:}); %#ok<PROPLC>
+            sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings()); %#ok<PROPLC>
         end
         function ga = nodeattack(g, nodes)            
             A = g.getA(); %#ok<PROPLC>
@@ -106,14 +108,12 @@ classdef Graph < handle & matlab.mixin.Copyable
                 A(:, nodes(i)) = 0; %#ok<PROPLC>
             end
             
-            settings = g.getSettings(); %#ok<PROPLC>            
-            ga = Graph.getGraph(Graph.getClass(g), A, settings{:}); %#ok<PROPLC>
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings()); %#ok<PROPLC>
         end
         function ga = edgeattack(g, nodes1, nodes2)                        
             A = g.getA(); %#ok<PROPLC>
             A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<PROPLC>
-            settings = g.getSettings(); %#ok<PROPLC>
-            ga = Graph.getGraph(Graph.getClass(g), A, settings{:}); %#ok<PROPLC>
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings()); %#ok<PROPLC>
         end
     end
     methods (Static)

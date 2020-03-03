@@ -22,6 +22,11 @@ for i = 1:1:length(measure_class_list)
                 ['BRAPH:' measure_class ':getValueBroken'], ...
                 [measure_class '.getValue() used with ' graph_class ' should return a column vector with length equal to the number of nodes'])
         end
+        if m.is_binodal()
+            assert(isnumeric(value) && isequal(size(value), [g.nodenumber() g.nodenumber()]), ...
+                ['BRAPH:' measure_class ':getValueBroken'], ...
+                [measure_class '.getValue() used with ' graph_class ' should return a matrix with dimensions equal to the numebr of nodes'])
+        end
     end
 end
 

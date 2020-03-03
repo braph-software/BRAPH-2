@@ -1,7 +1,13 @@
 classdef Distance < Measure
+    properties (GetAccess=protected, SetAccess=protected)
+        B  % number of edges matrix 
+    end
     methods
         function m = Distance(g, varargin)
-            m = m@Measure(g, varargin{:});
+            
+            settings = clean_varargin({}, varargin{:});
+
+            m = m@Measure(g, settings{:});
         end
     end
     methods (Access=protected)
@@ -19,23 +25,23 @@ classdef Distance < Measure
                 B = zeros(n);  % number of edges matrix
                 
                 for u = 1:n
-                    S = true(1,n);  % distance permanence (true is temporary)
+                    S = true(1, n);  % distance permanence (true is temporary)
                     L1 = A;
                     V = u;
                     
                     while 1
                         S(V) = 0;  % distance u->V is now permanent
-                        L1(:,V) = 0;  % no in-edges as already shortest
+                        L1(:, V) = 0;  % no in-edges as already shortest
                         
                         for v = V
-                            T = find(L1(v,:));  % neighbours of shortest nodes
-                            [d, wi] = min([D(u,T);D(u,v)+L1(v,T)]);
-                            D(u,T) = d;  % smallest of old/new path lengths
+                            T = find(L1(v, :));  % neighbours of shortest nodes
+                            [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
+                            D(u, T) = d;  % smallest of old/new path lengths
                             ind = T(wi==2);  % indices of lengthened paths
-                            B(u,ind) = B(u,v) + 1;  % increment no. of edges in lengthened paths
+                            B(u, ind) = B(u, v) + 1;  % increment no. of edges in lengthened paths
                         end
                         
-                        minD = min(D(u,S));
+                        minD = min(D(u, S));
                         if isempty(minD) || isinf(minD)  % isempty: all nodes reached;
                             break  % isinf: some nodes cannot be reached
                         end
@@ -43,6 +49,7 @@ classdef Distance < Measure
                         V = find(D(u,:)==minD);
                     end
                 end
+                m.B = B;
             else
                 l = 1;  % path length
                 D = A;  % distance matrix
@@ -70,8 +77,8 @@ classdef Distance < Measure
         end
         function description = getDescription()
             description = [ ...
-                'The degree of a graph is ' ...
-                'shortest path between all pairs of nodes in the graph. ' ...
+                'The distance of a graph is ' ...
+                'the shortest path between all pairs of nodes in the graph. ' ...
                 ];
         end
         function bool = is_global()
