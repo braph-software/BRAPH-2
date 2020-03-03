@@ -22,7 +22,7 @@ classdef Measure < handle
     %                   value, if the value has been calculated, the graph
     %                   associated with the measure and the measure settings.
     %   getGraph    -   returns the graph associated with the measure.
-    %   getSettings -   returns the settings the measure settings.
+    %   getSettings -   returns the settings of the measure.
     %   is_value_calculated  -   boolean, checks if the measure has been
     %                            calculated.
     %   getValue    -   returns the value of the measure.
