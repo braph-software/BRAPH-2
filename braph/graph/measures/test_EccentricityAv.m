@@ -46,7 +46,7 @@ ecc = EccentricityAv(g, 'EccentricityRule', 'subgraphs').getValue();
 d = Distance(g).getValue();
 [~,~,bct_value,~,~] = charpath(d);
 
-assert(isequal(ecc, known_solution), ...
+assert(isequal(round(ecc,3), round(mean(bct_value),3)), ...
     ['BRAPH:EccentricityAv'], ...
     ['EccentricityAv is not calculated for BCT.'])
 
@@ -123,7 +123,8 @@ efficiency = mean(1./Dv);
 
 % Eccentricity for each vertex
 % Modified by Emiliano Gomez to get average global eccentricity.
-ecc        = nanmax(D,[],2);
+D(isnan(D)) = 0;
+ecc        = max(D.*(D~=Inf), [], 2);
 
 % Radius of graph
 radius     = min(ecc);

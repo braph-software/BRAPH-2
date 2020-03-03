@@ -13,7 +13,7 @@ for i = 1:1:length(graph_class_list)
         ['InEccentricityAv is not calculated for ' graph_class])   
 end
 
-%% Test 2: Calculation AllGraphs vs Known Solution
+%% Test 2: Calculation AllGraphs vs Known Solution subgraph
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
       A = [
@@ -24,14 +24,14 @@ for i = 1:1:length(graph_class_list)
         0    0  0   0   0
         ];
     g = Graph.getGraph(graph_class, A);
-    ecc = InEccentricityAv(g).getValue();
+    ecc = InEccentricityAv(g, 'InEccentricityRule', 'subgraphs').getValue();
     
     switch (graph_class)
         case 'GraphWD'
-            known_solution = 7.6;
+            known_solution = 6;
             
         case 'GraphBD'
-            known_solution = 1.2;
+            known_solution = 0.8;
     end  
     
     assert(isequal(ecc, known_solution), ...
@@ -46,9 +46,9 @@ ecc = InEccentricityAv(g, 'InEccentricityRule', 'subgraphs').getValue();
 d = Distance(g).getValue();
 [~, ~, bct_value, ~, ~] = charpath(d);
 
-assert(isequal(ecc, bct_value), ...
-    ['BRAPH:' graph_class ':EccentricityAv'], ...
-    ['EccentricityAv is not calculated for ' graph_class])
+assert(isequal(round(ecc,3), round(mean(bct_value),3)), ...
+    ['BRAPH:EccentricityAv'], ...
+    ['EccentricityAv is not calculated for for BCT.'])
 
 %% Functions to calculate Eccentricity from 2019_03_03_BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
@@ -123,7 +123,8 @@ efficiency = mean(1./Dv);
 
 % Eccentricity for each vertex
 % Modified by Emiliano Gomez to get average global eccentricity.
-ecc        = nanmax(D,[],2);
+D(isnan(D)) = 0;
+ecc        = max(D.*(D~=Inf), [], 1)';
 
 % Radius of graph
 radius     = min(ecc);

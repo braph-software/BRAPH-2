@@ -14,11 +14,11 @@ classdef OutEccentricity < Measure
                 D = Distance(g, g.getSettings()).getValue();
             end
             
-            ecc_rule = get_from_varargin('standard', 'OutEccentricityRule', m.getSettings());
+            ecc_rule = get_from_varargin('default', 'OutEccentricityRule', m.getSettings());
             switch(ecc_rule)
                 case {'subgraphs'}
                     ecc = max(D.*(D~=Inf), [], 2); 
-                case {'standard'}
+                otherwise 
                     ecc = max(D, [], 2);
             end 
         end

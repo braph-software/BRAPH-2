@@ -99,8 +99,8 @@ d = Distance(g).getValue();
 [~, ~, bct_value, ~, ~]= charpath(d);
 
 assert(isequal(ecc(2,1), bct_value), ...
-    ['BRAPH:' graph_class ':Eccentricity'], ...
-    ['Eccentricity is not calculated for ' graph_class])
+    ['BRAPH:Eccentricity'], ...
+    ['Eccentricity is not calculated for BCT.'])
 
 %% Functions to calculate Eccentricity from 2019_03_03_BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
