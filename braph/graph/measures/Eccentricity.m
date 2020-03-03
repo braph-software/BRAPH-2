@@ -1,20 +1,27 @@
 classdef Eccentricity < Measure
     methods
         function m = Eccentricity(g, varargin)
-            m = m@Measure(g, varargin{:});
+            settings = clean_varargin({'EccentricityRule'}, varargin{:}); 
+            m = m@Measure(g, settings{:});
         end
     end
     methods (Access = protected)
         function ecc = calculate(m)
             g = m.getGraph();
-            settings = g.getSettings();
+            
             if g.is_measure_calculated('Distance')
                 D = g.getMeasure('Distance').getValue();
             else
-                D = Distance(g, settings{:}).getValue();
+                D = Distance(g, g.getSettings()).getValue();
             end
             
-            ecc = max(D.*(D~=Inf), [], 2);  
+            ecc_rule = get_from_varargin('standard', 'EccentricityRule', m.getSettings());
+            switch(ecc_rule)
+                case {'subgraphs'}
+                    ecc = max(D.*(D~=Inf), [], 2); 
+                case {'standard'}
+                    ecc = max(D, [], 2);
+            end           
         end
     end
     methods (Static)
