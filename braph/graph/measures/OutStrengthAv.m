@@ -1,7 +1,10 @@
 classdef OutStrengthAv < OutStrength
     methods
         function m = OutStrengthAv(g, varargin)
-            m = m@OutStrength(g, varargin{:});
+
+            settings = clean_varargin({}, varargin{:});
+
+            m = m@OutStrength(g, settings{:});
         end
     end
     methods (Access=protected)
