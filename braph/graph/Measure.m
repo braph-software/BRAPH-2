@@ -16,7 +16,7 @@ classdef Measure < handle
     %   Measure  -   constructor.
     %
     % Measure methods:
-    %   tostring    -   eturns a string representing the measure.
+    %   tostring    -   returns a string representing the measure.
     %   disp        -   displays the measure.
     %   getGraph    -   returns the graph associated with the measure.
     %   getSettings -   returns the settings of the measure.
