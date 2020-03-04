@@ -30,8 +30,7 @@ classdef PathLengthAv < PathLength
                 'the average of the sum of the path lengths ' ...                
                 ];
         end
-        function bool = is_global()
-            
+        function bool = is_global()            
             bool = true;
         end
         function bool = is_nodal()

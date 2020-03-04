@@ -14,7 +14,7 @@ classdef OutPathLengthAv < OutPathLength
                 outpl = calculate@OutPathLength(m);
             end
   
-            outplav =mean(outpl);
+            outplav = mean(outpl);
         end
     end
      methods(Static)
@@ -30,8 +30,7 @@ classdef OutPathLengthAv < OutPathLength
                 'the average of the sum of the out path lengths ' ...                
                 ];
         end
-        function bool = is_global()
-            
+        function bool = is_global()            
             bool = true;
         end
         function bool = is_nodal()

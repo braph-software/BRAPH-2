@@ -14,7 +14,7 @@ classdef InPathLengthAv < InPathLength
                 inpl = calculate@InPathLength(m);
             end
   
-            inplav =mean(inpl);
+            inplav = mean(inpl);
         end
     end
      methods(Static)
@@ -30,8 +30,7 @@ classdef InPathLengthAv < InPathLength
                 'the average of the sum of the in path lengths ' ...                
                 ];
         end
-        function bool = is_global()
-            
+        function bool = is_global()            
             bool = true;
         end
         function bool = is_nodal()
