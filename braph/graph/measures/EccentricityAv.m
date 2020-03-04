@@ -1,7 +1,8 @@
 classdef EccentricityAv < Eccentricity
     methods
         function m = EccentricityAv(g, varargin)
-            m = m@Eccentricity(g, varargin{:});
+            settings = clean_varargin({'EccentricityRule'}, varargin{:}); 
+            m = m@Eccentricity(g, settings{:});
         end
     end
     methods (Access = protected)

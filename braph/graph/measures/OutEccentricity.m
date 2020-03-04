@@ -1,7 +1,8 @@
 classdef OutEccentricity < Measure
     methods
         function m = OutEccentricity(g, varargin)
-            m = m@Measure(g, varargin{:});
+            settings = clean_varargin({'OutEccentricityRule'}, varargin{:});
+            m = m@Measure(g, settings{:});
         end
     end
     methods (Access = protected)
@@ -18,7 +19,7 @@ classdef OutEccentricity < Measure
             switch(ecc_rule)
                 case {'subgraphs'}
                     ecc = max(D.*(D~=Inf), [], 2); 
-                otherwise 
+                otherwise  % {'default'}
                     ecc = max(D, [], 2);
             end 
         end

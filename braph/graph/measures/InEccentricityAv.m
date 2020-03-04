@@ -1,7 +1,8 @@
 classdef InEccentricityAv < InEccentricity
     methods
         function m = InEccentricityAv(g, varargin)
-            m = m@InEccentricity(g, varargin{:});
+            settings = clean_varargin({'InEccentricityRule'}, varargin{:});
+            m = m@InEccentricity(g, settings{:});
         end
     end
     methods (Access = protected)

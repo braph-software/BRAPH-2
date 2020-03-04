@@ -19,7 +19,7 @@ classdef InEccentricity < Measure
             switch(ecc_rule)
                 case {'subgraphs'}
                     ecc = max(D.*(D~=Inf), [], 1)'; 
-                otherwise 
+                otherwise  % {'default'}
                     ecc = max(D, [], 1)';
             end 
         end

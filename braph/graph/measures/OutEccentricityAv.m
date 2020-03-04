@@ -1,7 +1,8 @@
 classdef OutEccentricityAv < OutEccentricity
     methods
         function m = OutEccentricityAv(g, varargin)
-            m = m@OutEccentricity(g, varargin{:});
+            settings = clean_varargin({'OutEccentricityRule'}, varargin{:});
+            m = m@OutEccentricity(g, settings{:});
         end
     end
     methods (Access = protected)
