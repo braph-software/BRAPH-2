@@ -57,8 +57,9 @@ classdef Measure < handle
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
+            % constructor of measure 
             
-            if ~are_compatible(g, m)
+            if ~are_compatible(g, m)  % checks wheter the graph and the measure are compatible.
                 error( ...
                     'BRAPH:Measure:IncompatibleGM', ...
                     [class(g) ' is not compatible with ' class(m)] ...
@@ -72,16 +73,20 @@ classdef Measure < handle
             settings = get_from_varargin(varargin, 'Settings', varargin{:});  % returns varargin if no key 'Settings'
             value = get_from_varargin([], 'Value', varargin{:});
             
-            m.g = g;
-            m.settings = settings;
-            m.value = value;
+            m.g = g;  % initialize the property g
+            m.settings = settings;  % initialize the property settings
+            m.value = value;  % initialize the property value
         end
     end
     methods
         function str = tostring(m)
+            % returns a string representing the measure
+            
             str = [Measure.getClass(m) ' size:'  int2str(size(m.getValue(), 1)) ' x '  int2str(size(m.getValue(), 2))];
         end
         function disp(m)
+            % displays information about the measure 
+            
             disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
             if m.is_value_calculated()
                 disp([' value: ' int2str(size(m.getValue(), 1))  ' x ' int2str(size(m.getValue(), 2))])
@@ -96,9 +101,13 @@ classdef Measure < handle
             end
         end
         function g = getGraph(m)
+            % returns the property g of the measure
+            
             g = m.g;
         end
         function res = getSettings(m, setting_code)
+            % returns the settings of the measure, 
+            % this settings are whitin varargin
             
             if nargin<2
                 res = m.settings;
@@ -107,9 +116,12 @@ classdef Measure < handle
             end
         end
         function bool = is_value_calculated(m)
+            % checks if the property value is not empty
+            
             bool = ~isempty(m.value);
         end
         function value = getValue(m)
+            % returns the value of the measure
             
             if ~m.is_value_calculated()
                 m.value = m.calculate();
@@ -123,6 +135,7 @@ classdef Measure < handle
     end
     methods (Static)
         function measure_list = getList()
+            % measure list, returns a list with all measures
             measure_list = subclasses( ...
                 'Measure', ...
                 [fileparts(which('Measure')) filesep 'measures'] ...
@@ -158,9 +171,13 @@ classdef Measure < handle
             bool = eval([Measure.getClass(m) '.is_nodal()']);
         end
         function bool = is_binodal(m)
+            % wheter is binodal measure
+            
             bool = eval([Measure.getClass(m) '.is_binodal()']);
         end
         function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
+            % returns a measure with the especified varargin
+            
             m = eval([measure_code '(g, varargin{:})']);
         end
         function list = getCompatibleGraphList(m)
