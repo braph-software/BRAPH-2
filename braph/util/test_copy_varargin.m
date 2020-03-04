@@ -3,9 +3,15 @@ g = GraphBU(randn(3), 'hg', 1);
 m = Degree(g, 'hm', 2);
 varargin = {1, 2, 3, 'Four', 'Five', m, g};
 
-varargin_copy = copy_varargin(varargin{:});
-
 %% Test 1: General functionality
+varargin_copy = copy_varargin(varargin{:});
+for i = 1:1:length(varargin)
+    assert(isequal(varargin(i), varargin_copy(i)), ...
+        'BRAPH:copy_varargin:Bug', ...
+        'Element not copied correctly.')
+end
+
+varargin_copy = copy_varargin(varargin);
 for i = 1:1:length(varargin)
     assert(isequal(varargin(i), varargin_copy(i)), ...
         'BRAPH:copy_varargin:Bug', ...
@@ -13,6 +19,8 @@ for i = 1:1:length(varargin)
 end
 
 %% Test 2: Handle objects shallow-copied
+varargin_copy = copy_varargin(varargin);
+
 m_copy = varargin_copy{6};  % should NOT make a deep copy of the Measure
 
 assert(m.is_value_calculated() == false, ...
@@ -31,7 +39,9 @@ assert(m_copy.is_value_calculated() == true, ...
         'Handle object not copied correctly.')
 
 %% Test 3: Copiable objects deep-copied
-g_copy = varargin_copy{7};
+varargin_copy = copy_varargin(varargin);
+
+g_copy = varargin_copy{7};  % should make a deep copy of the Graph
 
 assert(g.getMeasure('Degree').is_value_calculated() == false, ...
         'BRAPH:copy_varargin:Bug', ...

@@ -1,7 +1,10 @@
 classdef Triangles < Measure
     methods
         function m = Triangles(g, varargin)
-            m = m@Measure(g, varargin{:});
+            
+            settings = clean_varargin({'DirectedTrianglesRule'}, varargin{:});
+            
+            m = m@Measure(g, settings{:});
         end
     end
     methods (Access=protected)
@@ -13,8 +16,7 @@ classdef Triangles < Measure
                 triangles(isnan(triangles)) = 0;  % Should return zeros, not NaN
                 
             elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
-                settings = m.getSettings();
-                directed_triangles_rule = get_from_varargin(0, 'DirectedTrianglesRule', settings{:});
+                directed_triangles_rule = get_from_varargin('cycle', 'DirectedTrianglesRule', m.getSettings());
                 switch lower(directed_triangles_rule)
                     case {'all'}  % all rule
                         triangles = diag((A.^(1/3) + transpose(A).^(1/3))^3) / 2;

@@ -1,10 +1,11 @@
 classdef Measure < handle
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
-        settings  % structure with the constructor varagin
+        settings  % structure with the constructor settings
         value  % graph measure value
-        % scalar for global measures
-        % column vector for nodal measures
+               % scalar for global measures
+               % column vector for nodal measures
+               % square matrix for binodal measures
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
@@ -16,7 +17,11 @@ classdef Measure < handle
                     )
             end
             
-            settings = get_from_varargin(varargin, 'Settings', varargin{:});
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
+            
+            settings = get_from_varargin(varargin, 'Settings', varargin{:});  % returns varargin if no key 'Settings'
             value = get_from_varargin([], 'Value', varargin{:});
             
             m.g = g;
@@ -89,10 +94,10 @@ classdef Measure < handle
             
             name = eval([Measure.getClass(m) '.getName()']);
         end
-        function name = getDescription(m)
+        function description = getDescription(m)
             % measure description
             
-            name = eval([Measure.getClass(m) '.getDescription()']);
+            description = eval([Measure.getClass(m) '.getDescription()']);
         end
         function bool = is_global(m)
             % whether is global measure
@@ -107,8 +112,8 @@ classdef Measure < handle
         function bool = is_binodal(m)
             bool = eval([Measure.getClass(m) '.is_binodal()']);
         end
-        function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
-            m = eval([measure_code '(g, varargin{:})']);
+        function m = getMeasure(measure_class, g, varargin) %#ok<INUSD>
+            m = eval([measure_class '(g, varargin{:})']);
         end
         function list = getCompatibleGraphList(m)
             % list of graphs with which measure works
