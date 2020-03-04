@@ -6,7 +6,8 @@ classdef OutGlobalEfficencyAv < OutGlobalEfficency
     end
     methods (Access = protected)
         function out_global_efficency = calculate(m)
-            g = m.getGraph();            
+            g = m.getGraph();   
+            
             if g.is_measure_calculated('OutGlobalEfficency')
                 out_global_efficiency = g.getMeasureValue('OutGlobalEfficency');
             else
