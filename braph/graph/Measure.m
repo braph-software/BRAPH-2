@@ -1,26 +1,23 @@
 classdef Measure < handle
     % Measure < handle (Abstract) : Creates and implements measure
-    %   Measure represents the methods all measures of a graph have. 
+    %   Measure provides the methods necessary for all measures of a graph. 
     %   Instances of this class cannot be created. Use one of the
     %   subclasses (e.g., Degree, Strength, Distance, Efficency).
     % 
     % Measure properties (GetAccess=protected, SetAccess=protected):
-    %   g        -   graph
-    %   settings -   structure with the constructor settings
-    %   value    -   garph measure value, the value is:
-    %                   scalar for global measures
-    %                   column vector for nodal measures
-    %                   square matrix for binodal measures
+    %   g        -   graph.
+    %   settings -   structure with the constructor settings.
+    %   value    -   graph measure value, the value is:
+    %                   scalar for global measures.
+    %                   column vector for nodal measures.
+    %                   square matrix for binodal measures.
     % 
     % Measure methods (Access=protected):
-    %   Measure  -   constructor
+    %   Measure  -   constructor.
     %
     % Measure methods:
-    %   tostring    -   returns a string with the class of the measure and 
-    %                   the size of its value.
-    %   disp        -   displays the class of the measure, the size of its
-    %                   value, if the value has been calculated, the graph
-    %                   associated with the measure and the measure settings.
+    %   tostring    -   eturns a string representing the measure.
+    %   disp        -   displays the measure.
     %   getGraph    -   returns the graph associated with the measure.
     %   getSettings -   returns the settings of the measure.
     %   is_value_calculated  -   boolean, checks if the measure has been
@@ -44,7 +41,7 @@ classdef Measure < handle
     %   getCompatibleGraphNumber  -  returns the number of compatible
     %                                measures.
     %
-    % See also Graph, handle, Degree, Strength, Distance, Efficency
+    % See also Graph, handle, Degree, Strength, Distance, Efficency.
     
     % Author: Emiliano Gomez & Giovanni Volpe
     % Date: 2020/02/03
