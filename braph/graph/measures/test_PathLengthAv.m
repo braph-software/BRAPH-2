@@ -1,140 +1,99 @@
-% test InPathLength
-graph_class_list = {'GraphBD', 'GraphWD'};
+% test PathLengthAv
+graph_class_list = {'GraphBU', 'GraphWU'};
 
 %% Test 1: Calculation AllGraphs
 for i = 1:1:length(graph_class_list)
     A = rand(randi(5));
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    pathL = g.getMeasure('InPathLength');
+    pathL = g.getMeasure('PathLengthAv');
     value = pathL.getValue();
     
     assert(~isempty(value), ...
-        ['BRAPH:' graph_class ':InPathLength'], ...
-        ['InPathLength is not calculated for ' graph_class])
+        ['BRAPH:' graph_class ':PathLengthAv'], ...
+        ['PathLengthAv is not calculated for ' graph_class])
     
 end
 
-%% Test 2: Calculation vs Known Values
+%% Test 2: Calculation vs know value
 for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-    n = 5;
-    L = [
-        0 .1 .2 .25 0;
-        .125 0 0 0 0;
-        .2 .5 0 .25 0;
-        .125 10 0 0 0
+ graph_class = graph_class_list{i};
+    A = [
+        0   .1  0   0
+        .2   0 .1   0
+        0   .1  0  .2
+        0    0 .1   0
         ];
-    A = [L;zeros(1,n)];
     g = Graph.getGraph(graph_class, A);
-    p = InPathLength(g);
+    p = PathLengthAv(g);
     p_value = p.getValue();
-    p_value = round(p_value, 4);
+    p_value = round(p_value,4);
     
     known_solution = A;
     
     switch (graph_class)
-        case 'GraphWD'
-            known_solution = [
-                Inf;
-                Inf;
-                Inf;
-                Inf;
-                Inf;
-                ];
+        case 'GraphWU'
+            known_solution = 11.6667;
             
-        case 'GraphBD'
-            known_solution = [
-                Inf;
-                Inf;
-                Inf;
-                Inf;
-                Inf;
-                ];
+        case 'GraphBU'
+            known_solution = 1.6667;
     end
     
     assert( isequal(p_value, known_solution), ...
-        ['BRAPH:InPathLength: ' graph_class], ...
-        ['InPathLength is not working for: ' graph_class ])
+        ['BRAPH:PathLength: ' graph_class], ...
+        ['PathLength is not working for: ' graph_class ])
+    
 end
 
-%% Test 3: Calculation Harmonic WD vs know Value
+%% Test 3: Calculation vs know value subgraphs
+for i = 1:1:length(graph_class_list)
+ graph_class = graph_class_list{i};
+    A = [
+        0   .1  0   0
+        .2   0 .1   0
+        0   .1  0  .2
+        0    0 .1   0
+        ];
+    g = Graph.getGraph(graph_class, A);
+    p = PathLengthAv(g, 'PathLengthAvRule', 'subgraphs');
+    p_value = p.getValue();
+    p_value = round(p_value,4);  
 
-n = 5;
-L = [
-    0 .1 .2 .25 0;
-    .125 0 0 0 0;
-    .2 .5 0 .25 0;
-    .125 10 0 0 0
+    
+    switch (graph_class)
+        case 'GraphWU'
+            known_solution = 11.6667;
+            
+        case 'GraphBU'
+            known_solution = 1.6667;
+    end
+    
+    assert( isequal(p_value, known_solution), ...
+        ['BRAPH:PathLength: ' graph_class], ...
+        ['PathLength is not working for: ' graph_class ])
+    
+end
+
+%% Test 4: Calculation WU vs BCT subgraphs
+A = [
+    0   .1  0   0
+    .2   0 .1   0
+    0   .1  0  .2
+    0    0 .1   0
     ];
-A = [L;zeros(1,n)];
-g = GraphWD(A);
-p = InPathLength(g, 'InPathLengthAvRule', 'harmonic');
-p_value = p.getValue();
-p_value = round(p_value, 4);
-
-known_solution = [
-    8.8889;
-    2.3529;
-    11.3043;
-    6.8571;
-    Inf;
-    ];
-
-assert( isequal(p_value, known_solution), ...
-    ['BRAPH:InPathLength:Harmonic '], ...
-    ['PathLength is not working for: Harmonic mean'])
-
-%% Test 4: Calculation subgraphs WD vs know Value
-n = 5;
-L = [
-    0 .1 .2 .25 0;
-    .125 0 0 0 0;
-    .2 .5 0 .25 0;
-    .125 10 0 0 0
-    ];
-A = [L;zeros(1,n)];
-g = GraphWD(A);
-p = InPathLength(g, 'InPathLengthAvRule', 'subgraphs');
-p_value = p.getValue();
-p_value = round(p_value, 4);
-
-known_solution = [
-    7;
-    2.6667;
-    10.3333;
-    6.6667;
-    0;
-    ];
-
-assert( isequal(p_value, known_solution), ...
-    ['BRAPH:InPathLength:Subgraphs '], ...
-    ['InPathLength is not working for: Subgraphs mean'])
-
-%% Test 5: Calculation subgraphs WD vs BCT
-n = 5;
-L = [
-    0 .1 .2 .25 0;
-    .125 0 0 0 0;
-    .2 .5 0 .25 0;
-    .125 10 0 0 0
-    ];
-A = [L;zeros(1,n)];
-g = GraphWD(A);
-p = InPathLength(g, 'InPathLengthAvRule', 'subgraphs');
-p_value = p.getValue();
-p_value = round(p_value,4);
-
+g = Graph.getGraph('GraphWU', A);
+p = PathLengthAv(g, 'PathLengthAvRule', 'subgraphs').getValue();
+p = round(p,4);
 
 d = Distance(g).getValue();
-value_bct = round(charpath(d), 4);
-
-assert( isequal(p_value(1, 1), value_bct), ...
-    ['BRAPH:InPathLength:Subgraphs '], ...
-    ['InPathLength is not working for: BCT'])
+[bct_value, ~, ~, ~, ~] = charpath(d);
 
 
-%% Functions to calculate In Path Length from 2019_03_03_BCT
+assert( isequal(p, round(bct_value, 4)), ...
+    ['BRAPH:PathLength:'], ...
+    ['PathLength is not working for BCT.' ])
+
+%% Functions to calculate Path Length from 2019_03_03_BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
 %CHARPATH       Characteristic path length, global efficiency and related statistics
 %
@@ -200,10 +159,9 @@ end
 Dv = D(~isnan(D));                  % get non-NaN indices of D
 
 % Mean of entries of D(G)
-% Modified version in order to get the first vector 
-% Emiliano Gomez 
+% Modified version in order to get the first vector Emiliano Gomez
 
-lambda     = mean(Dv(1:3));  % 1:3 since function is ignoring diagonal and inf in this case
+lambda     = mean(Dv); 
 
 % Efficiency: mean of inverse entries of D(G)
 efficiency = mean(1./Dv);
