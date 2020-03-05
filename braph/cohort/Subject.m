@@ -12,6 +12,10 @@ classdef Subject < handle & matlab.mixin.Copyable
                 ['BRAIN:Subject:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects'])
             sub.atlases = atlases;
+            
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
 
             id = get_from_varargin(now(), 'SubjectID', varargin{:});
             sub.setID(id)
