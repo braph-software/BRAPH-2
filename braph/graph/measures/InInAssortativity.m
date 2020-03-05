@@ -39,6 +39,7 @@ classdef InInAssortativity < Measure
             
             % compute assortativity
             in_in_assortativity = ( sum(k_i.*k_j)/M - (sum(0.5*(k_i+k_j))/M)^2 ) / ( sum(0.5*(k_i.^2+k_j.^2))/M - (sum(0.5*(k_i+k_j))/M)^2 );
+            in_in_assortativity(isnan(in_in_assortativity)) = 0;  % Should return zeros, not NaN
         end
     end
     methods (Static)

@@ -13,24 +13,24 @@ classdef Assortativity < Measure
             A = g.getA();
             [i,j] = find(triu(A) ~= 0); % nodes [i , j]
             M = length(i); % Number of edges
-                
+            
             % Binary undirected
             if isa(g, 'GraphBU')
                 
                 if g.is_measure_calculated('Degree')
-                    degree = g.getMeasureValue('Degree');                    
+                    degree = g.getMeasureValue('Degree');
                 else
                     degree = Degree(g, g.getSettings()).getValue();
                 end
                 
                 k_i = degree(i); % degree node i
                 k_j = degree(j); % degree node j
-
-            % Weighted undirected
+                
+                % Weighted undirected
             elseif isa(g, 'GraphWU')
                 
                 if g.is_measure_calculated('Strength')
-                    strength = g.getMeasureValue('Strength');                    
+                    strength = g.getMeasureValue('Strength');
                 else
                     strength = Strength(g, g.getSettings()).getValue();
                 end
@@ -38,7 +38,7 @@ classdef Assortativity < Measure
                 k_i = strength(i); % strength node i
                 k_j = strength(j); % strength node j
             end
-
+            
             % compute assortativity
             assortativity = ( sum(k_i.*k_j)/M - (sum(0.5*(k_i+k_j))/M)^2 ) / ( sum(0.5*(k_i.^2+k_j.^2))/M - (sum(0.5*(k_i+k_j))/M)^2 );
             assortativity(isnan(assortativity)) = 0;  % Should return zeros, not NaN
