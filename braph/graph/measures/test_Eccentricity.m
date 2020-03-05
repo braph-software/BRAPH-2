@@ -98,7 +98,7 @@ ecc = Eccentricity(g, 'EccentricityRule', 'subgraphs').getValue();
 d = Distance(g).getValue();
 [~, ~, bct_value, ~, ~]= charpath(d);
 
-assert(isequal(ecc(2,1), bct_value), ...
+assert(isequal(ecc(1,1), bct_value), ...
    ('BRAPH:Eccentricity'), ...
     ('Eccentricity is not calculated for BCT.'))
 
@@ -175,7 +175,8 @@ efficiency = mean(1./Dv);
 
 % Eccentricity for each vertex
 % Modified by Emiliano Gomez to get nodal eccentricity.
-ecc        = nanmax(D(2:2,1),[],2);
+D(D==Inf) = 0;
+ecc        = nanmax(D(1,:),[],2);
 
 % Radius of graph
 radius     = min(ecc);
