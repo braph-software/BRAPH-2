@@ -57,7 +57,17 @@ classdef Measure < handle
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
-            % constructor of measure 
+            % Measure(g) creates a measure with default properties.
+            %   g is a generic graph (Binary or Weighted, Directed or
+            %   Undirected). This method is only accessible by the
+            %   subclasses of Measure.
+            %
+            % Measure(g, property 1, value 1, property 2, value 2, ....)
+            %   ceates a measure with properties and values.  Initializes
+            %   the property settings with the properties and values.
+            %   
+            % See also Degree, Strength, Distance, Efficency. 
+
             
             if ~are_compatible(g, m)  % checks wheter the graph and the measure are compatible.
                 error( ...
@@ -80,12 +90,22 @@ classdef Measure < handle
     end
     methods
         function str = tostring(m)
-            % returns a string representing the measure
+            % TOSTRING displays information about the measure
+            %
+            % STR = TOSTRING(M) returns string with the measure class and size.
+            %
+            % See also disp(). 
             
             str = [Measure.getClass(m) ' size:'  int2str(size(m.getValue(), 1)) ' x '  int2str(size(m.getValue(), 2))];
         end
         function disp(m)
-            % displays information about the measure 
+            % DISP displays information about the measure
+            %
+            % DISP(M) displays the information about the measure. The
+            % given information is: measure class, measure size, value
+            % check, associated graph, measure settings.
+            %
+            % See also tostring().  
             
             disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
             if m.is_value_calculated()
@@ -101,13 +121,21 @@ classdef Measure < handle
             end
         end
         function g = getGraph(m)
-            % returns the property g of the measure
+            % GETGRAPH returns the property g
+            %
+            % G = GETGRAPH(M) returns the associated
+            %
+            % See also getSettings().  
             
             g = m.g;
         end
         function res = getSettings(m, setting_code)
-            % returns the settings of the measure, 
-            % this settings are whitin varargin
+            % GETSETTINGS returns the property g
+            %
+            % G = GETSETTINGS(M, SETTING_CODE) returns the settings of the 
+            %     measure.
+            %
+            % See also getGraph().
             
             if nargin<2
                 res = m.settings;
@@ -116,12 +144,21 @@ classdef Measure < handle
             end
         end
         function bool = is_value_calculated(m)
-            % checks if the property value is not empty
+            % IS_VALUE_CALCULATED checks if values is calculated
+            %
+            % BOOL = IS_VALUE_CALCULATED(M) returns true if value is not
+            % empty.
+            %
+            % See also getValue().
             
             bool = ~isempty(m.value);
         end
         function value = getValue(m)
-            % returns the value of the measure
+            % GETVALUE returns the value
+            %
+            % VALUE = GETVALUE(M) returns the value.
+            %
+            % See also is_value_calculted().
             
             if ~m.is_value_calculated()
                 m.value = m.calculate();
@@ -135,14 +172,24 @@ classdef Measure < handle
     end
     methods (Static)
         function measure_list = getList()
-            % measure list, returns a list with all measures
+            % GETLIST returns the list of measures
+            %
+            % MEASURE_LIST = GETLIST() returns the list of measures that
+            % are subclasses of Measure.
+            %
+            % See also getClass(), getCompatibleGraphList().
+            
             measure_list = subclasses( ...
                 'Measure', ...
                 [fileparts(which('Measure')) filesep 'measures'] ...
                 );
         end
         function measure_class = getClass(m)
-            % measure class (same as the measure object name)
+            % GETCLASS returns the list of measures
+            %
+            % MEASURE_CLASS = GETCLASS() returns the class of the measure.
+            %
+            % See also getList(), getCompatibleGraphList().
             
             if isa(m, 'Measure')
                 measure_class = class(m);
@@ -151,42 +198,78 @@ classdef Measure < handle
             end
         end
         function name = getName(m)
-            % measure name
+            % GETNAME returns the name of the measure
+            %
+            % NAME = GETNAME() returns the name of the measure.
+            %
+            % See also getList(), getCompatibleGraphList().
             
             name = eval([Measure.getClass(m) '.getName()']);
         end
         function name = getDescription(m)
-            % measure description
+            % GETDESCRIPTION returns the description of the measure
+            %
+            % NAME = GETDESCRIPTION() returns the description of the measure.
+            %
+            % See also getList(), getCompatibleGraphList().
             
             name = eval([Measure.getClass(m) '.getDescription()']);
         end
         function bool = is_global(m)
-            % whether is global measure
+            % IS_GLOBAL checks if measure is nodal
+            %
+            % BOOL = IS_GLOBAL(M) returns true if measure M is global and false otherwise.
+            %
+            % See also is_nodal, is_binodal.
             
             bool = eval([Measure.getClass(m) '.is_global()']);
-        end
+        end        
         function bool = is_nodal(m)
-            % whether is nodal measure
+            % IS_NODAL checks if measure is nodal
+            %
+            % BOOL = IS_NODAL(M) returns true if measure M is nodal and false otherwise.
+            %
+            % See also is_global, is_binodal.
             
             bool = eval([Measure.getClass(m) '.is_nodal()']);
         end
         function bool = is_binodal(m)
-            % wheter is binodal measure
+            % IS_BINODAL checks if measure is nodal
+            %
+            % BOOL = IS_BINODAL(M) returns true if measure M is binodal and false otherwise.
+            %
+            % See also is_global, is_nodal.
             
             bool = eval([Measure.getClass(m) '.is_binodal()']);
         end
         function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
-            % returns a measure with the especified varargin
+            % GETMEASURE returns a measure
+            %
+            % M = GETMEASURE(MEASURE_CODE, G, VARARGIN{:}) returns a measure
+            % with the specified varargin.
+            %
+            % See also getList(), getCompatibleGraphList().
             
             m = eval([measure_code '(g, varargin{:})']);
         end
         function list = getCompatibleGraphList(m)
-            % list of graphs with which measure works
+            % GETCOMPATIBLEGRAPHLIST returns the a list of graphs
+            %
+            % LIST = GETCOMPATIBLEGRAPHLIST(M) returns a list of
+            % compatible graphs to the measure. Measure will not work if
+            % the graph is not compatible.
+            %
+            % See also getList(), getCompatibleGraphNumber().
             
             list = eval([Measure.getClass(m) '.getCompatibleGraphList()']);
         end
         function n = getCompatibleGraphNumber(m)
-            % number of graphs with which measure works
+            % GETCOMPATIBLEGRAPHNUMBER returns the a number of compatible graphs
+            %
+            % N = GETCOMPATIBLEGRAPHNUMBER(M) returns a number of
+            % compatible graphs to the measure.
+            %
+            % See also getList(), getCompatibleGraphList().
             
             list = Measure.getCompatibleGraphList(m);
             n = numel(list);
