@@ -57,18 +57,17 @@ classdef Measure < handle
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
-            % Measure(g) creates a measure with default properties.
-            %   g is a generic graph (Binary or Weighted, Directed or
-            %   Undirected). This method is only accessible by the
+            % MEASURE creates a measure with default properties.
+            %   G is a generic graph (e.g, an instance of GraphBD, GraphBU,
+            %   GraphWD, Graph WU). This method is only accessible by the
             %   subclasses of Measure.
             %
-            % Measure(g, property 1, value 1, property 2, value 2, ....)
-            %   ceates a measure with properties and values.  Initializes
+            % MEASURE(G, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... )
+            %   ceates a measure with properties and values.  It initializes
             %   the property settings with the properties and values.
             %   
-            % See also Degree, Strength, Distance, Efficency. 
+            % See also Graph, Degree, Strength, Distance, Efficency. 
 
-            
             if ~are_compatible(g, m)  % checks wheter the graph and the measure are compatible.
                 error( ...
                     'BRAPH:Measure:IncompatibleGM', ...
@@ -101,9 +100,9 @@ classdef Measure < handle
         function disp(m)
             % DISP displays information about the measure
             %
-            % DISP(M) displays the information about the measure. The
-            % given information is: measure class, measure size, value
-            % check, associated graph, measure settings.
+            % DISP(M) displays the information about the measure. 
+            % It provides information about measure class, measure size,
+            % value, associated graph, measure settings.
             %
             % See also tostring().  
             
@@ -121,16 +120,16 @@ classdef Measure < handle
             end
         end
         function g = getGraph(m)
-            % GETGRAPH returns the property g
+            % GETGRAPH returns the property graph associated to the measure
             %
-            % G = GETGRAPH(M) returns the associated
+            % G = GETGRAPH(M) returns the graph associated to the measure M.
             %
             % See also getSettings().  
             
             g = m.g;
         end
         function res = getSettings(m, setting_code)
-            % GETSETTINGS returns the property g
+            % GETSETTINGS returns the settings
             %
             % G = GETSETTINGS(M, SETTING_CODE) returns the settings of the 
             %     measure.
