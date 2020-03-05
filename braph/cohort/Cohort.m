@@ -92,6 +92,14 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 sub_groups{i} = sub.getGroups();
             end
         end
+        function newSubject = getNewSubject(cohort, subclass)
+            
+           assert(isequal(subclass, cohort.getSubjectClass()), ...
+                ['BRAPH:Cohort:SubjectClassErr'], ...
+                ['Subject class should be ' cohort.getSubjectClass() '.' ]) %#ok<NBRAK>
+
+            newSubject = Subject.getSubject(subclass, cohort.atlases);           
+        end
         function addSubject(cohort, sub, i)
             
             if nargin < 3 || i < 0 || i > cohort.subjectnumber()

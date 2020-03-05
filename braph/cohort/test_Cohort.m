@@ -461,3 +461,14 @@ for i = 1:1:length(sub_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
 
 end
+
+%% Test 15: Cohort getNewSubject
+for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
+    cohort = Cohort('cohort', sub_class, atlas, {});
+    
+    newSubject = cohort.getNewSubject(sub_class); 
+    assert(~isempty(newSubject), ... 
+                ['BRAPH:Cohort:getNewSubject'], ...
+                ['Cohort.getNewSubject() does not work']) 
+end
