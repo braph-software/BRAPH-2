@@ -57,7 +57,7 @@ classdef Measure < handle
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
-            % MEASURE creates a measure with default properties.
+            % MEASURE(G) creates a measure with default properties.
             %   G is a generic graph (e.g, an instance of GraphBD, GraphBU,
             %   GraphWD, Graph WU). This method is only accessible by the
             %   subclasses of Measure.
@@ -101,8 +101,8 @@ classdef Measure < handle
             % DISP displays information about the measure
             %
             % DISP(M) displays the information about the measure. 
-            % It provides information about measure class, measure size,
-            % value, associated graph, measure settings.
+            %   It provides information about measure class, measure size,
+            %   value, associated graph, measure settings.
             %
             % See also tostring().  
             
@@ -130,9 +130,11 @@ classdef Measure < handle
         end
         function res = getSettings(m, setting_code)
             % GETSETTINGS returns the settings
-            % G = GETSETTINGS(M) returns the settings of the measure
-            % G = GETSETTINGS(M, SETTING_CODE) returns the settings of the 
-            %     measure SETING_CODE.
+            %
+            % SETTINGS = GETSETTINGS(M) returns the settings of the measure
+            %
+            % SETTING = GETSETTINGS(M, SETTING_CODE) returns the settings of the 
+            %	measure SETING_CODE.
             %
             % See also getGraph().
             
@@ -146,7 +148,7 @@ classdef Measure < handle
             % IS_VALUE_CALCULATED checks if values is calculated
             %
             % BOOL = IS_VALUE_CALCULATED(M) returns true  if value has been
-            % already calculated.
+            %   already calculated.
             %
             % See also getValue().
             
@@ -156,7 +158,7 @@ classdef Measure < handle
             % GETVALUE returns the value
             %
             % VALUE = GETVALUE(M) returns the value if already calculated,
-            % otherwise it will call calculate function.
+            %   otherwise it will call calculate function.
             %
             % See also is_value_calculated().
             
@@ -174,8 +176,8 @@ classdef Measure < handle
         function measure_list = getList()
             % GETLIST returns the list of measures
             %
-            % CELL ARRAY = GETLIST() returns the list of measures that
-            % are subclasses of Measure.
+            % MEASURE_LIST = GETLIST() returns the list of measures (cell array)
+            %   that are subclasses of Measure.
             %
             % See also getClass(), getCompatibleGraphList().
             
@@ -219,7 +221,7 @@ classdef Measure < handle
             % IS_GLOBAL checks if measure is global
             %
             % BOOL = IS_GLOBAL(M) returns true if measure M is global
-            % and false otherwise.
+            %   and false otherwise.
             %
             % See also is_nodal, is_binodal.
             
@@ -229,7 +231,7 @@ classdef Measure < handle
             % IS_NODAL checks if measure is nodal
             %
             % BOOL = IS_NODAL(M) returns true if measure M is nodal
-            % and false otherwise.
+            %   and false otherwise.
             %
             % See also is_global, is_binodal.
             
@@ -239,7 +241,7 @@ classdef Measure < handle
             % IS_BINODAL checks if measure is bi-nodal
             %
             % BOOL = IS_BINODAL(M) returns true if measure M is binodal
-            % and false otherwise.
+            %   and false otherwise.
             %
             % See also is_global, is_nodal.
             
@@ -249,7 +251,7 @@ classdef Measure < handle
             % GETMEASURE returns a measure
             %
             % M = GETMEASURE(MEASURE_CODE, G, VARARGIN{:}) returns a instance
-            % of the class MEASURE_CODE.
+            %   of the class MEASURE_CODE.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -259,8 +261,8 @@ classdef Measure < handle
             % GETCOMPATIBLEGRAPHLIST returns the list of graphs
             %
             % CELL ARRAY = GETCOMPATIBLEGRAPHLIST(M) returns a cell array of
-            % compatible graphs to the measure M. Measure will not work if
-            % the graph is not compatible.
+            %   compatible graphs to the measure M. Measure will not work if
+            %   the graph is not compatible.
             %
             % See also getList(), getCompatibleGraphNumber().
             
@@ -270,7 +272,7 @@ classdef Measure < handle
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs
             %
             % N = GETCOMPATIBLEGRAPHNUMBER(M) returns the number of
-            % compatible graphs to the measure M.
+            %   compatible graphs to the measure M.
             %
             % See also getList(), getCompatibleGraphList().
             
