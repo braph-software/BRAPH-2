@@ -208,14 +208,14 @@ classdef Measure < handle
             
             name = eval([Measure.getClass(m) '.getName()']);
         end
-        function name = getDescription(m)
+        function description = getDescription(m)
             % GETDESCRIPTION returns the description of the measure
             %
             % STRINGS = GETDESCRIPTION() returns the description of the measure M.
             %
             % See also getList(), getCompatibleGraphList().
             
-            name = eval([Measure.getClass(m) '.getDescription()']);
+            description = eval([Measure.getClass(m) '.getDescription()']);
         end
         function bool = is_global(m)
             % IS_GLOBAL checks if measure is global
