@@ -8,6 +8,10 @@ classdef Subject < handle & matlab.mixin.Copyable
     methods (Access=protected)
         function sub = Subject(atlases, varargin)
             
+             if length(varargin) == 1
+                varargin = varargin{:};
+            end
+            
             assert(iscell(atlases), ...
                 ['BRAIN:Subject:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects'])
@@ -17,9 +21,22 @@ classdef Subject < handle & matlab.mixin.Copyable
             sub.setID(id)
             
             groups = get_from_varargin({}, 'SubjectGroups', varargin{:});
-            sub.setGroups(groups)
+            sub.setGroups(groups)      
+    
+            codes = sub.getDataCodes();        
+           
+            count = 0;
+            for i = 1:1:numel(codes)
+            dataValue{i} = get_from_varargin({}, codes{i}, varargin);
+            dataCodes{i} = codes{i};
+           
+            settings{(i*2) - 1 } = dataCodes{i};
+            settings{(i*2)} = dataValue{i};          
             
-            sub.initialize_datadict(atlases, varargin{:})
+            count = count + 1;
+            end
+            
+            sub.initialize_datadict(atlases, settings{:})
         end
         function sub_copy = copyElement(sub)
             % IMPORTANT! It does NOT make a deep copy of the BrainAtlas

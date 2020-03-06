@@ -156,3 +156,14 @@ for i = 1:1:length(subject_class_list)
             [subject_class '.copy() does not work'])        
     end
 end
+
+%% Test 6: Initialize Subclasses with the datacodes.
+for i = 1:1:length(subject_class_list)
+    subject_class = subject_class_list{i};    
+    codes = Subject.getDataCodes(subject_class);    
+    sub = Subject.getSubject(subject_class, atlas, codes);   
+  
+    assert(~isempty(sub), ...
+        ['BRAPH:' subject_class ':Constructor'], ...
+        ['Constructos for ' subject_class ' not initializing with data codes.'])
+end
