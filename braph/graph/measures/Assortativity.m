@@ -38,8 +38,8 @@ classdef Assortativity < Measure
             end
             
             % compute assortativity
-            assortativity = (sum(k_i.*k_j) / M - (sum(0.5*(k_i+k_j)) / M)^2)... 
-                / (sum(0.5*(k_i.^2+k_j.^2)) / M - (sum(0.5*(k_i+k_j)) / M)^2);
+            assortativity = (sum(k_i .* k_j) / M - (sum(0.5 * (k_i + k_j)) / M)^2)... 
+                / (sum(0.5 * (k_i.^2 + k_j.^2)) / M - (sum(0.5 * (k_i + k_j)) / M)^2);
             assortativity(isnan(assortativity)) = 0;  % Should return zeros, not NaN
         end
     end
