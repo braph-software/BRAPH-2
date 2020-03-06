@@ -130,9 +130,9 @@ classdef Measure < handle
         end
         function res = getSettings(m, setting_code)
             % GETSETTINGS returns the settings
-            %
+            % G = GETSETTINGS(M) returns the settings of the measure
             % G = GETSETTINGS(M, SETTING_CODE) returns the settings of the 
-            %     measure.
+            %     measure SETING_CODE.
             %
             % See also getGraph().
             
@@ -145,8 +145,8 @@ classdef Measure < handle
         function bool = is_value_calculated(m)
             % IS_VALUE_CALCULATED checks if values is calculated
             %
-            % BOOL = IS_VALUE_CALCULATED(M) returns true if value is not
-            % empty.
+            % BOOL = IS_VALUE_CALCULATED(M) returns true  if value has been
+            % already calculated.
             %
             % See also getValue().
             
@@ -155,9 +155,10 @@ classdef Measure < handle
         function value = getValue(m)
             % GETVALUE returns the value
             %
-            % VALUE = GETVALUE(M) returns the value.
+            % VALUE = GETVALUE(M) returns the value if already calculated,
+            % otherwise it will call calculate function.
             %
-            % See also is_value_calculted().
+            % See also is_value_calculated().
             
             if ~m.is_value_calculated()
                 m.value = m.calculate();
@@ -173,7 +174,7 @@ classdef Measure < handle
         function measure_list = getList()
             % GETLIST returns the list of measures
             %
-            % MEASURE_LIST = GETLIST() returns the list of measures that
+            % CELL ARRAY = GETLIST() returns the list of measures that
             % are subclasses of Measure.
             %
             % See also getClass(), getCompatibleGraphList().
@@ -186,7 +187,7 @@ classdef Measure < handle
         function measure_class = getClass(m)
             % GETCLASS returns the list of measures
             %
-            % MEASURE_CLASS = GETCLASS() returns the class of the measure.
+            % CLASS = GETCLASS() returns the class of the measure M.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -199,7 +200,7 @@ classdef Measure < handle
         function name = getName(m)
             % GETNAME returns the name of the measure
             %
-            % NAME = GETNAME() returns the name of the measure.
+            % STRING = GETNAME() returns the name of the measure M.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -208,16 +209,17 @@ classdef Measure < handle
         function name = getDescription(m)
             % GETDESCRIPTION returns the description of the measure
             %
-            % NAME = GETDESCRIPTION() returns the description of the measure.
+            % STRINGS = GETDESCRIPTION() returns the description of the measure M.
             %
             % See also getList(), getCompatibleGraphList().
             
             name = eval([Measure.getClass(m) '.getDescription()']);
         end
         function bool = is_global(m)
-            % IS_GLOBAL checks if measure is nodal
+            % IS_GLOBAL checks if measure is global
             %
-            % BOOL = IS_GLOBAL(M) returns true if measure M is global and false otherwise.
+            % BOOL = IS_GLOBAL(M) returns true if measure M is global
+            % and false otherwise.
             %
             % See also is_nodal, is_binodal.
             
@@ -226,16 +228,18 @@ classdef Measure < handle
         function bool = is_nodal(m)
             % IS_NODAL checks if measure is nodal
             %
-            % BOOL = IS_NODAL(M) returns true if measure M is nodal and false otherwise.
+            % BOOL = IS_NODAL(M) returns true if measure M is nodal
+            % and false otherwise.
             %
             % See also is_global, is_binodal.
             
             bool = eval([Measure.getClass(m) '.is_nodal()']);
         end
         function bool = is_binodal(m)
-            % IS_BINODAL checks if measure is nodal
+            % IS_BINODAL checks if measure is bi-nodal
             %
-            % BOOL = IS_BINODAL(M) returns true if measure M is binodal and false otherwise.
+            % BOOL = IS_BINODAL(M) returns true if measure M is binodal
+            % and false otherwise.
             %
             % See also is_global, is_nodal.
             
@@ -244,18 +248,18 @@ classdef Measure < handle
         function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
             % GETMEASURE returns a measure
             %
-            % M = GETMEASURE(MEASURE_CODE, G, VARARGIN{:}) returns a measure
-            % with the specified varargin.
+            % M = GETMEASURE(MEASURE_CODE, G, VARARGIN{:}) returns a instance
+            % of the class MEASURE_CODE.
             %
             % See also getList(), getCompatibleGraphList().
             
             m = eval([measure_code '(g, varargin{:})']);
         end
         function list = getCompatibleGraphList(m)
-            % GETCOMPATIBLEGRAPHLIST returns the a list of graphs
+            % GETCOMPATIBLEGRAPHLIST returns the list of graphs
             %
-            % LIST = GETCOMPATIBLEGRAPHLIST(M) returns a list of
-            % compatible graphs to the measure. Measure will not work if
+            % CELL ARRAY = GETCOMPATIBLEGRAPHLIST(M) returns a cell array of
+            % compatible graphs to the measure M. Measure will not work if
             % the graph is not compatible.
             %
             % See also getList(), getCompatibleGraphNumber().
@@ -263,10 +267,10 @@ classdef Measure < handle
             list = eval([Measure.getClass(m) '.getCompatibleGraphList()']);
         end
         function n = getCompatibleGraphNumber(m)
-            % GETCOMPATIBLEGRAPHNUMBER returns the a number of compatible graphs
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs
             %
-            % N = GETCOMPATIBLEGRAPHNUMBER(M) returns a number of
-            % compatible graphs to the measure.
+            % N = GETCOMPATIBLEGRAPHNUMBER(M) returns the number of
+            % compatible graphs to the measure M.
             %
             % See also getList(), getCompatibleGraphList().
             
