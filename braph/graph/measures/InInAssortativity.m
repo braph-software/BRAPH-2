@@ -11,20 +11,18 @@ classdef InInAssortativity < Measure
         function in_in_assortativity = calculate(m)
             g = m.getGraph();
             A = g.getA();
-            [i,j] = find(A ~= 0); % nodes [i , j]
+            [i, j] = find(A ~= 0); % nodes [i, j]
             M = length(i); % Number of edges  
             
-            % binary 
-            if isa(g, 'GraphBD')
+            if isa(g, 'GraphBD') % Binary directed
                 
                 if g.is_measure_calculated('InDegree')
                     in_k = g.getMeasureValue('InDegree');
                 else 
                     in_k = InDegree(g, g.getSettings()).getValue();
                 end
-
-            % weighted  
-            elseif isa(g, 'GraphWD')
+            
+            elseif isa(g, 'GraphWD') % Weighted weighted
                 
                 if g.is_measure_calculated('InStrength')
                     in_k = g.getMeasureValue('InStrength');
@@ -38,7 +36,9 @@ classdef InInAssortativity < Measure
             k_j = in_k(j);
             
             % compute assortativity
-            in_in_assortativity = ( sum(k_i.*k_j)/M - (sum(0.5*(k_i+k_j))/M)^2 ) / ( sum(0.5*(k_i.^2+k_j.^2))/M - (sum(0.5*(k_i+k_j))/M)^2 );
+            in_in_assortativity = (sum(k_i.*k_j) / M - ...
+                (sum(0.5*(k_i+k_j)) / M)^2) /...
+                (sum(0.5*(k_i.^2+k_j.^2)) / M - (sum(0.5*(k_i+k_j)) / M)^2);
             in_in_assortativity(isnan(in_in_assortativity)) = 0;  % Should return zeros, not NaN
         end
     end
