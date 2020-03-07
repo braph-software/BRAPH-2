@@ -3,7 +3,8 @@ classdef Cohort < handle & matlab.mixin.Copyable
         name  % brain atlas name
         subject_class  % class of the subjects
         atlases  % cell array with brain atlases
-        subdict  % dictionary with subjects
+        subject_dict  % indexed dictionary with subjects
+        groups_dict  % indexed dictionary with groups
     end
     methods
         function cohort = Cohort(name, subject_class, atlases, subjects)
@@ -25,7 +26,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas']) %#ok<NBRAK>
             cohort.atlases = atlases;
 
-            cohort.subdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            cohort.subject_dict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
             for i = 1:1:length(subjects)
                 cohort.addSubject(subjects{i}, i);
             end
@@ -47,16 +48,16 @@ classdef Cohort < handle & matlab.mixin.Copyable
             atlases = cohort.atlases;
         end
         function n = subjectnumber(cohort)
-            n = length(cohort.subdict);
+            n = length(cohort.subject_dict);
         end
         function bool = contains_subject(cohort, subject_index)
-            bool = isKey(cohort.subdict, subject_index);
+            bool = isKey(cohort.subject_dict, subject_index);
         end
         function subject = getSubject(cohort, subject_index)
-            subject = cohort.subdict(subject_index);
+            subject = cohort.subject_dict(subject_index);
         end
         function subjects = getSubjects(cohort)
-            subjects = values(cohort.subdict);
+            subjects = values(cohort.subject_dict);
         end
         function subject_ids = getSubjectIDs(cohort)
             subject_ids = cell(1, cohort.subjectnumber());
@@ -84,17 +85,17 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
             if i <= cohort.subjectnumber()
                 for j = cohort.subjectnumber():-1:i
-                    cohort.subdict(j+1) = cohort.subdict(j);
+                    cohort.subject_dict(j+1) = cohort.subject_dict(j);
                 end
             end
-	    cohort.subdict(i) = subject;
+	    cohort.subject_dict(i) = subject;
         end
         function removeSubject(cohort, i)
             
             for j = i:1:cohort.subjectnumber()-1
-                cohort.subdict(j) = cohort.subdict(j+1);
+                cohort.subject_dict(j) = cohort.subject_dict(j+1);
             end
-            remove(cohort.subdict, cohort.subjectnumber());
+            remove(cohort.subject_dict, cohort.subjectnumber());
         end
         function replaceSubject(cohort, i, subject)
 
@@ -103,7 +104,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' subject.getClass()]) %#ok<NBRAK>
 
             if i > 0 || i <= cohort.subjectnumber()
-                cohort.subdict(i) = subject;
+                cohort.subject_dict(i) = subject;
             end
             
         end
@@ -219,14 +220,14 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % Make a deep copy of atlases
             cohort_copy.atlases = cellfun(@(atlas) {atlas.copy()}, cohort.atlases);
             
-            % Make a deep copy of subdict
-            cohort_copy.subdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            subjects = values(cohort.subdict);
+            % Make a deep copy of subject_dict
+            cohort_copy.subject_dict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            subjects = values(cohort.subject_dict);
             for i = 1:1:length(subjects)
                 subject = subjects{i};
                 subject_copy = subject.copy();
                 subject_copy.setBrainAtlases(cohort_copy.getBrainAtlases());
-                cohort_copy.subdict(i) = subject_copy;
+                cohort_copy.subject_dict(i) = subject_copy;
             end
         end
     end
