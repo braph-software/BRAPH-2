@@ -35,16 +35,16 @@ classdef Subject < handle & matlab.mixin.Copyable
         end        
     end
     methods
-        function str = tostring(sub)
-            str = [Subject.getClass(sub) ' ' int2str(size(sub.getA(), 1)) ' rows x ' int2str(size(sub.getA(), 2)) ' columns'];
+        function str = tostring(subject)
+            str = [Subject.getClass(subject) ' ' int2str(size(subject.getA(), 1)) ' rows x ' int2str(size(subject.getA(), 2)) ' columns'];
         end
-        function disp(sub)
-            disp(['<a href="matlab:help ' Subject.getClass(sub) '">' Subject.getClass(sub) '</a>' ...
-                ' ID:' tostring(sub.getID())])
-            data_codes = sub.getDataCodes();
-            for i = 1:1:sub.getDataNumber()
+        function disp(subject)
+            disp(['<a href="matlab:help ' Subject.getClass(subject) '">' Subject.getClass(subject) '</a>' ...
+                ' ID:' tostring(subject.getID())])
+            data_codes = subject.getDataCodes();
+            for i = 1:1:subject.getDataNumber()
                 data_code = data_codes{i};
-                d = sub.getData(data_code);
+                d = subject.getData(data_code);
                 disp([data_code ' = ' d.tostring()])
             end
         end
