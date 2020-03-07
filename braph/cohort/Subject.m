@@ -2,7 +2,6 @@ classdef Subject < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         id  % subject id
         atlases % cell array with brain atlases
-        groups  % cell array with the groups of the subjects
         datadict  % dictionary with subject data
     end
     methods (Access=protected)
@@ -15,9 +14,6 @@ classdef Subject < handle & matlab.mixin.Copyable
 
             id = get_from_varargin(now(), 'SubjectID', varargin{:});
             sub.setID(id)
-            
-            groups = get_from_varargin({}, 'SubjectGroups', varargin{:});
-            sub.setGroups(groups)
             
             sub.initialize_datadict(atlases, varargin{:})
         end
@@ -44,8 +40,7 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
         function disp(sub)
             disp(['<a href="matlab:help ' Subject.getClass(sub) '">' Subject.getClass(sub) '</a>' ...
-                ' ID:' tostring(sub.getID()) ...
-                ' Groups: ' tostring(cellfun(@(group) group, sub.getGroups()))])
+                ' ID:' tostring(sub.getID())])
             data_codes = sub.getDataCodes();
             for i = 1:1:sub.getDataNumber()
                 data_code = data_codes{i};
@@ -58,16 +53,6 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
         function id = getID(sub)
             id = sub.id;
-        end
-        function setGroups(sub, groups)
-            
-            assert(all(cellfun(@isnumeric, groups)), ...
-                ['BRAPH:Subject:Groups'], ...
-                ['Groups must be a numeric cell array']) %#ok<*NBRAK>
-            sub.groups = groups;
-        end
-        function groups = getGroups(sub)
-            groups = sub.groups;
         end
         function d = getData(sub, data_code)
             d = sub.datadict(data_code);            
