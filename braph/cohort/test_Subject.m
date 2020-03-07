@@ -70,9 +70,7 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = Subject.getSubject(subject_class, ...
-        repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)) ...
-        );
+    sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
 
     atlas_copy = atlas.copy();
     atlasses_copy = repmat({atlas_copy}, 1, sub.getBrainAtlasNumber());
@@ -95,9 +93,7 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = Subject.getSubject(subject_class, ...
-        repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)) ...
-        );
+    sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
     
     sub_copy = sub.copy();
     assert(sub ~= sub_copy, ... % different objects, but same values
