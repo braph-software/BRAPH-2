@@ -36,7 +36,7 @@ classdef Subject < handle & matlab.mixin.Copyable
     end
     methods
         function str = tostring(subject)
-            str = [Subject.getClass(subject) ' ' int2str(size(subject.getA(), 1)) ' rows x ' int2str(size(subject.getA(), 2)) ' columns'];
+            str = [Subject.getClass(subject) ' ' tostring(subject.getID())];
         end
         function disp(subject)
             disp(['<a href="matlab:help ' Subject.getClass(subject) '">' Subject.getClass(subject) '</a>' ...
