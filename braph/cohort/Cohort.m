@@ -66,13 +66,6 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 subject_ids{i} = subject.getID();
             end
         end
-        function subject_groups = getSubjectGroups(cohort)
-            subject_groups = cell(1, cohort.subjectnumber());
-            for i = 1:1:cohort.subjectnumber()
-                sub = cohort.getSubject(i);
-                subject_groups{i} = sub.getGroups();
-            end
-        end
         function addSubject(cohort, subject, i)
             
             if nargin < 3 || i < 0 || i > cohort.subjectnumber()
