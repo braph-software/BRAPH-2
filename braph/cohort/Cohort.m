@@ -418,6 +418,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 group.addSubject(subject);
             end
         end
+        function addSubjectsToGroup(cohort, subject_indices, group)
+            
+            for i = 1:1:length(subject_indices)
+                cohort.addSubjectToGroup(subject_indices(i), group);
+            end
+        end
         function removeSubjectFromGroup(cohort, subject, group)
             if cohort.contains_subject(subject) && cohort.contains_group(group)
                 
@@ -432,6 +438,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 end
                 
                 group.removeSubject(subject);
+            end
+        end
+        function removeSubjectsFromGroup(cohort, subject_indices, group)
+            
+            for i = 1:1:length(subject_indices)
+                cohort.removeSubjectFromGroup(subject_indices(i), group);
             end
         end
     end
@@ -452,6 +464,13 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 subject_copy = subject.copy();
                 subject_copy.setBrainAtlases(cohort_copy.getBrainAtlases());
                 cohort_copy.subject_dict(i) = subject_copy;
+            end
+            
+            % Make a deep copy of group_dict
+            cohort_copy.group_dict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            for i = 1:1:cohort.groupnumber()
+                cohort_copy.addGroup()
+                cohort_copy.addSubjectsToGroup(cohort.getGroupSubjects(i), i)
             end
         end
     end
