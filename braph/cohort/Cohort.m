@@ -1,5 +1,5 @@
 classdef Cohort < handle & matlab.mixin.Copyable
-	properties (GetAccess=protected, SetAccess=protected) 
+    properties (GetAccess=protected, SetAccess=protected)
         name  % brain atlas name
         subject_class  % class of the subjects
         atlases  % cell array with brain atlases
@@ -9,7 +9,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
     methods
         function cohort = Cohort(name, subject_class, atlases, subjects)
             % subjects must be a cell array of Subjects of class
-                        
+            
             cohort.name = name;
             
             assert(any(strcmp(Subject.getList(), subject_class)), ...
@@ -25,7 +25,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 ['BRAPH:Cohort:AtlasErr'], ...
                 ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas']) %#ok<NBRAK>
             cohort.atlases = atlases;
-
+            
             cohort.subject_dict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
             for i = 1:1:length(subjects)
                 cohort.addSubject(subjects{i}, i);
@@ -81,7 +81,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
                     cohort.subject_dict(j+1) = cohort.subject_dict(j);
                 end
             end
-	    cohort.subject_dict(i) = subject;
+            cohort.subject_dict(i) = subject;
         end
         function removeSubject(cohort, i)
             
@@ -91,11 +91,11 @@ classdef Cohort < handle & matlab.mixin.Copyable
             remove(cohort.subject_dict, cohort.subjectnumber());
         end
         function replaceSubject(cohort, i, subject)
-
+            
             assert(isa(subject, cohort.getSubjectClass()), ...
                 ['BRAPH:Cohort:SubjectClassErr'], ...
                 ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' subject.getClass()]) %#ok<NBRAK>
-
+            
             if i > 0 || i <= cohort.subjectnumber()
                 cohort.subject_dict(i) = subject;
             end
@@ -121,7 +121,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
                     cohort.addSubject(subject, j+1)
                     cohort.removeSubject(i)
                 end
-            end            
+            end
         end
         function selected = removeSubjects(cohort, selected)
             
@@ -160,7 +160,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
                     first_index_to_process = first_index_to_process + 1;
                     unprocessable_length = unprocessable_length + 1;
                 end
-
+                
                 for i = first_index_to_process:1:numel(selected)
                     cohort.invertSubjects(selected(i), selected(i)-1);
                     selected(i) = selected(i) - 1;
@@ -170,7 +170,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function selected = movedownSubjects(cohort, selected)
             
             if ~isempty(selected)
-
+                
                 last_index_to_process = numel(selected);
                 unprocessable_length = cohort.subjectnumber();
                 while last_index_to_process > 0 ...
@@ -178,7 +178,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
                     last_index_to_process = last_index_to_process - 1;
                     unprocessable_length = unprocessable_length - 1;
                 end
-
+                
                 for i = last_index_to_process:-1:1
                     cohort.invertSubjects(selected(i), selected(i) + 1);
                     selected(i) = selected(i) + 1;
@@ -203,13 +203,145 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 selected = reshape(cohort.subjectnumber() - numel(selected)+1:1:cohort.subjectnumber(), size(selected));
             end
         end
+        %         function subject = getSubject(cohort, subject_index)
+        %             subject = cohort.subject_dict(subject_index);
+        %         end
+        %         function subjects = getSubjects(cohort)
+        %             subjects = values(cohort.subject_dict);
+        %         end
+        %         function subject_ids = getSubjectIDs(cohort)
+        %             subject_ids = cell(1, cohort.subjectnumber());
+        %             for i = 1:1:cohort.subjectnumber()
+        %                 subject = cohort.getSubject(i);
+        %                 subject_ids{i} = subject.getID();
+        %             end
+        %         end
+        %         function addSubject(cohort, subject, i)
+        %
+        %             if nargin < 3 || i < 0 || i > cohort.subjectnumber()
+        %                 i = cohort.subjectnumber() + 1;
+        %             end
+        %
+        %             assert(isa(subject, cohort.getSubjectClass()), ...
+        %                 ['BRAPH:Cohort:SubjectClassErr'], ...
+        %                 ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' subject.getClass()]) %#ok<NBRAK>
+        %
+        %             if i <= cohort.subjectnumber()
+        %                 for j = cohort.subjectnumber():-1:i
+        %                     cohort.subject_dict(j+1) = cohort.subject_dict(j);
+        %                 end
+        %             end
+        % 	    cohort.subject_dict(i) = subject;
+        %         end
+        %         function removeSubject(cohort, i)
+        %
+        %             for j = i:1:cohort.subjectnumber()-1
+        %                 cohort.subject_dict(j) = cohort.subject_dict(j+1);
+        %             end
+        %             remove(cohort.subject_dict, cohort.subjectnumber());
+        %         end
+        %         function replaceSubject(cohort, i, subject)
+        %
+        %             assert(isa(subject, cohort.getSubjectClass()), ...
+        %                 ['BRAPH:Cohort:SubjectClassErr'], ...
+        %                 ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' subject.getClass()]) %#ok<NBRAK>
+        %
+        %             if i > 0 || i <= cohort.subjectnumber()
+        %                 cohort.subject_dict(i) = subject;
+        %             end
+        %
+        %         end
+        %         function invertSubjects(cohort, i, j)
+        %
+        %             if i > 0 && i <= cohort.subjectnumber() && j > 0 && j <= cohort.subjectnumber() && i ~= j
+        %                 subject_i = cohort.getSubject(i);
+        %                 subject_j = cohort.getSubject(j);
+        %                 cohort.replaceSubject(i, subject_j)
+        %                 cohort.replaceSubject(j, subject_i)
+        %             end
+        %         end
+        %         function movetoSubject(cohort, i, j)
+        %
+        %             if i > 0 && i <= cohort.subjectnumber() && j > 0 && j <= cohort.subjectnumber() && i ~= j
+        %                 subject = cohort.getSubject(i);
+        %                 if i > j
+        %                     cohort.removeSubject(i)
+        %                     cohort.addSubject(subject, j)
+        %                 else  % j < i
+        %                     cohort.addSubject(subject, j+1)
+        %                     cohort.removeSubject(i)
+        %                 end
+        %             end
+        %         end
+        %         function selected = removeSubjects(cohort, selected)
+        %
+        %             for i = length(selected):-1:1
+        %                 cohort.removeSubject(selected(i))
+        %             end
+        %             selected = [];
+        %         end
+        %         function selected = moveupSubjects(cohort, selected)
+        %
+        %             if ~isempty(selected)
+        %
+        %                 first_index_to_process = 1;
+        %                 unprocessable_length = 1;
+        %                 while first_index_to_process <= cohort.subjectnumber() ...
+        %                         && first_index_to_process <= numel(selected) ...
+        %                         && selected(first_index_to_process) == unprocessable_length
+        %                     first_index_to_process = first_index_to_process + 1;
+        %                     unprocessable_length = unprocessable_length + 1;
+        %                 end
+        %
+        %                 for i = first_index_to_process:1:numel(selected)
+        %                     cohort.invertSubjects(selected(i), selected(i)-1);
+        %                     selected(i) = selected(i) - 1;
+        %                 end
+        %             end
+        %         end
+        %         function selected = movedownSubjects(cohort, selected)
+        %
+        %             if ~isempty(selected)
+        %
+        %                 last_index_to_process = numel(selected);
+        %                 unprocessable_length = cohort.subjectnumber();
+        %                 while last_index_to_process > 0 ...
+        %                         && selected(last_index_to_process) == unprocessable_length
+        %                     last_index_to_process = last_index_to_process - 1;
+        %                     unprocessable_length = unprocessable_length - 1;
+        %                 end
+        %
+        %                 for i = last_index_to_process:-1:1
+        %                     cohort.invertSubjects(selected(i), selected(i) + 1);
+        %                     selected(i) = selected(i) + 1;
+        %                 end
+        %             end
+        %         end
+        %         function selected = move2topSubjects(cohort, selected)
+        %
+        %             if ~isempty(selected)
+        %                 for i = 1:1:numel(selected)
+        %                     cohort.movetoSubject(selected(i), i);
+        %                 end
+        %                 selected = reshape(1:1:numel(selected), size(selected));
+        %             end
+        %         end
+        %         function selected = move2bottomSubjects(cohort, selected)
+        %
+        %             if ~isempty(selected)
+        %                 for i = numel(selected):-1:1
+        %                     cohort.movetoSubject(selected(i), cohort.subjectnumber() - (numel(selected)-i));
+        %                 end
+        %                 selected = reshape(cohort.subjectnumber() - numel(selected)+1:1:cohort.subjectnumber(), size(selected));
+        %             end
+        %         end
     end
     methods (Access=protected)
         function cohort_copy = copyElement(cohort)
             
             % Make a shallow copy
             cohort_copy = copyElement@matlab.mixin.Copyable(cohort);
-
+            
             % Make a deep copy of atlases
             cohort_copy.atlases = cellfun(@(atlas) {atlas.copy()}, cohort.atlases);
             
