@@ -68,6 +68,15 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 bool = isKey(cohort.subject_dict, subject_index);
             end
         end
+        function subject_index = getSubjectIndex(cohort, subject)
+            
+            for i = 1:1:cohort.subjectnumber()
+                if cohort.getSubject(i) == subject
+                    subject_index = i;
+                    break
+                end
+            end
+        end
         function subject = getSubject(cohort, subject_index)
             subject = cohort.subject_dict(subject_index);
         end
@@ -250,6 +259,14 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 group_names{i} = group.getName();
             end
         end
+        function group_descriptions = getGroupDescriptions(cohort)
+            
+            group_descriptions = cell(1, cohort.groupnumber());
+            for i = 1:1:cohort.groupnumber()
+                group = cohort.getGroup(i);
+                group_descriptions{i} = group.getDescription();
+            end
+        end
         function addGroup(cohort, group, i)
             
             if nargin < 3 || i < 0 || i > cohort.groupnumber()
@@ -371,6 +388,50 @@ classdef Cohort < handle & matlab.mixin.Copyable
                     cohort.movetoGroup(selected(i), cohort.groupnumber() - (numel(selected)-i));
                 end
                 selected = reshape(cohort.groupnumber() - numel(selected)+1:1:cohort.groupnumber(), size(selected));
+            end
+        end
+        function [subject_indices, subjects] = getGroupSubjects(cohort, i)
+            
+            subjects = cohort.getGroup(i).getSubjects();
+            
+            subject_indices = zeros(1, length(subjects));
+            for j = 1:1:length(subjects)
+                subject = subjects{j};
+                subject_index = cohort.getSubjectIndex(subject);
+                subject_indices(j) = subject_index;
+            end
+        end
+        function addSubjectToGroup(cohort, subject, group)
+
+            if cohort.contains_subject(subject) && cohort.contains_group(group)
+                
+                if ~isa(subject, cohort.getSubjectClass())
+                    subject_index = subject;
+                    subject = cohort.getSubject(subject_index);
+                end
+                
+                if ~isa(group, 'Group')
+                    group_index = group;
+                    group = cohort.getGroup(group_index);
+                end
+                
+                group.addSubject(subject);
+            end
+        end
+        function removeSubjectFromGroup(cohort, subject, group)
+            if cohort.contains_subject(subject) && cohort.contains_group(group)
+                
+                if ~isa(subject, cohort.getSubjectClass())
+                    subject_index = subject;
+                    subject = cohort.getSubject(subject_index);
+                end
+                
+                if ~isa(group, 'Group')
+                    group_index = group;
+                    group = cohort.getGroup(group_index);
+                end
+                
+                group.removeSubject(subject);
             end
         end
     end
