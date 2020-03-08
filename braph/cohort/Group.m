@@ -19,6 +19,7 @@ classdef Group < handle & matlab.mixin.Copyable
                 [subject_class ' is not a valid Subject class']) %#ok<NBRAK>
             group.subject_class = subject_class;
 
+            group.subjects = {};
             for i = 1:1:length(subjects)
                 group.addSubject(subjects{i});
             end            
