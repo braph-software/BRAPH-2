@@ -13,7 +13,7 @@ classdef Radius < Measure
                 ecc = g.getMeasure('Eccentricity').getValue();
             else
                 rad_rule = get_from_varargin('default', 'RadiusRule', m.getSettings());
-                ecc = Eccentric ity(g, 'EccentricityRule', rad_rule).getValue();
+                ecc = Eccentricity(g, 'EccentricityRule', rad_rule).getValue();
             end
             radius = min(ecc);
         end
