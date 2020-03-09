@@ -23,18 +23,14 @@ for i = 1:1:length(graph_class_list)
     0    0 .1   0
     ];
     g = Graph.getGraph(graph_class, A);
-    r = Radius(g, 'RadiusRule', 'subgraphs').getValue();
+    r = Radius(g, 'RadiusRule', 'default').getValue();
     
     switch (graph_class)
         case 'GraphWU'
-            known_solution = [
-                0;
-                ];
+            known_solution = 15;
             
         case 'GraphBU'
-            known_solution = [
-                0;
-                ];
+            known_solution = 2;
     end  
     
     assert(isequal(r, known_solution), ...
@@ -42,48 +38,23 @@ for i = 1:1:length(graph_class_list)
         ['Radius is not calculated for ' graph_class])   
 end
 
-%% Test 3: Calculation AllGraphs vs Known Solution standard
-for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-     A = [
+%% Test 3: Calculation WU subgraphs vs BCT
+A = [
     0   .1  0   0
     .2   0 .1   0
     0   .1  0  .2
     0    0 .1   0
     ];
-    g = Graph.getGraph(graph_class, A);
-    r = Radius(g).getValue();
-    
-    switch (graph_class)
-        case 'GraphWU'
-            known_solution = [
-                Inf;
-                ];
-            
-        case 'GraphBU'
-            known_solution = [
-                Inf;
-                ];
-    end  
-    
-    assert(isequal(r, known_solution), ...
-        ['BRAPH:' graph_class ':Eccentricity'], ...
-        ['Eccentricity is not calculated for ' graph_class])   
-end
-
-%% Test 4: Calculation WU subgraphs vs BCT
 g = Graph.getGraph('GraphWU', A);
-ecc = Eccentricity(g, 'EccentricityRule', 'subgraphs').getValue();
-r = Radius(g, 'RadiusRule', 'subgraphs').getValue();
-
+r = Radius(g, 'RadiusRule', 'default').getValue();
 d = Distance(g).getValue();
 [~, ~, ~, bct_value, ~]= charpath(d);
 
 assert(isequal(r, bct_value), ...
    ('BRAPH:Radius'), ...
-    ('Radius is not calculated for BCT.'))
+   ('Radius is not calculated for BCT.'))
 
-%% Functions to calculate Eccentricity from 2019_03_03_BCT
+%% Functions to calculate Eccentricity from BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
 %CHARPATH       Characteristic path length, global efficiency and related statistics
 %
@@ -135,34 +106,31 @@ function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,inf
 %   2015: exclusion of diagonal weights by default (MR)
 %   2016: inclusion of infinite distances by default (MR)
 
-n = size(D,1);
-if any(any(isnan(D)))
-    error('The distance matrix must not contain NaN values');
-end
-if ~exist('diagonal_dist','var') || ~diagonal_dist || isempty(diagonal_dist)
-    D(1:n+1:end) = NaN;             % set diagonal distance to NaN
-end
-if  exist('infinite_dist','var') && ~infinite_dist
-    D(isinf(D))  = NaN;             % ignore infinite path lengths
-end
+    n = size(D,1);
+    if any(any(isnan(D)))
+        error('The distance matrix must not contain NaN values');
+    end
+    if ~exist('diagonal_dist','var') || ~diagonal_dist || isempty(diagonal_dist)
+        D(1:n+1:end) = NaN;             % set diagonal distance to NaN
+    end
+    if  exist('infinite_dist','var') && ~infinite_dist
+        D(isinf(D))  = NaN;             % ignore infinite path lengths
+    end
 
-Dv = D(~isnan(D));                  % get non-NaN indices of D
+    Dv = D(~isnan(D));                  % get non-NaN indices of D
 
-% Mean of entries of D(G)
-lambda     = mean(Dv);
+    % Mean of entries of D(G)
+    lambda     = mean(Dv);
 
-% Efficiency: mean of inverse entries of D(G)
-efficiency = mean(1./Dv);
+    % Efficiency: mean of inverse entries of D(G)
+    efficiency = mean(1./Dv);
 
-% Eccentricity for each vertex
-% Modified by Emiliano Gomez to get nodal eccentricity.
-D(D==Inf) = 0;
-ecc        = nanmax(D(1,:),[],2);
+    % Eccentricity for each vertex
+    ecc        = nanmax(D,[],2);
 
-% Radius of graph
-radius     = min(ecc);
+    % Radius of graph
+    radius     = min(ecc);
 
-% Diameter of graph
-diameter   = max(ecc);
-
+    % Diameter of graph
+    diameter   = max(ecc);
 end
