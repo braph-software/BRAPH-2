@@ -28,7 +28,7 @@ classdef Diameter < Measure
         function description = getDescription()
             description = [ ...
                 'The diameter is the maximum eccentricity ' ...
-                'among the vertice. '
+                'among the vertice.'
                 ];
         end
         function bool = is_global()                

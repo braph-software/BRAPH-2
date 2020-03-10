@@ -28,7 +28,7 @@ classdef Radius < Measure
         function description = getDescription()
             description = [ ...
                 'The radius is the minimum eccentricity ' ...
-                'among the vertice. '
+                'among the vertice.'
                 ];
         end
         function bool = is_global()                
