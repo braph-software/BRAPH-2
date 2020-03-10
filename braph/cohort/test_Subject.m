@@ -73,12 +73,12 @@ for i = 1:1:length(subject_class_list)
     sub = Subject.getSubject(subject_class, ...
         repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), ...
         'SubjectGroups', {1 3 5});
-   
+    
     groups = sub.getGroups();
     assert(isequal(groups, {1 3 5}), ...
         ['BRAPH:' subject_class ':Groups'], ...
         ['Group managemenr for ' subject_class ' not working'])
-
+    
     sub.setGroups({ 2 4});
     groups = sub.getGroups();
     assert(isequal(groups, {2 4}), ...
@@ -93,7 +93,7 @@ for i = 1:1:length(subject_class_list)
     sub = Subject.getSubject(subject_class, ...
         repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), ...
         'SubjectGroups', {1 3 5});
-
+    
     atlas_copy = atlas.copy();
     atlasses_copy = repmat({atlas_copy}, 1, sub.getBrainAtlasNumber());
     sub.setBrainAtlases(atlasses_copy)
@@ -138,7 +138,7 @@ for i = 1:1:length(subject_class_list)
         
         d_copy.setValue(ones(size(d_copy.getValue())))
     end
-
+    
     sub_copy2 = sub_copy.copy();
     
     for j = 1:1:length(data_codes)
@@ -153,16 +153,16 @@ for i = 1:1:length(subject_class_list)
             [subject_class '.copy() does not work'])
         assert(isequal(d_copy.getValue(), d_copy2.getValue), ...
             ['BRAPH:' subject_class ':Copy'], ...
-            [subject_class '.copy() does not work'])        
+            [subject_class '.copy() does not work'])
     end
 end
 
 %% Test 6: Initialize Subclasses with the datacodes.
 for i = 1:1:length(subject_class_list)
-    subject_class = subject_class_list{i};    
-    codes = Subject.getDataCodes(subject_class);    
-    sub = Subject.getSubject(subject_class, atlas, codes);   
-  
+    subject_class = subject_class_list{i};
+    codes = Subject.getDataCodes(subject_class);
+    sub = Subject.getSubject(subject_class, atlas, codes);
+    
     assert(~isempty(sub), ...
         ['BRAPH:' subject_class ':Constructor'], ...
         ['Constructos for ' subject_class ' not initializing with data codes.'])

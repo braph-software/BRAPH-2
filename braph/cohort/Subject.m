@@ -8,35 +8,26 @@ classdef Subject < handle & matlab.mixin.Copyable
     methods (Access=protected)
         function sub = Subject(atlases, varargin)
             
-             if length(varargin) == 1
-                varargin = varargin{:};
-            end
-            
             assert(iscell(atlases), ...
                 ['BRAIN:Subject:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects'])
             sub.atlases = atlases;
-
+            
             id = get_from_varargin(now(), 'SubjectID', varargin{:});
             sub.setID(id)
             
             groups = get_from_varargin({}, 'SubjectGroups', varargin{:});
-            sub.setGroups(groups)      
-    
-            codes = sub.getDataCodes();        
-           
-            count = 0;
+            sub.setGroups(groups)
+            
+            sub.initialize_datadict(atlases, varargin{:})
+            codes = sub.getDataCodes();
+            
             for i = 1:1:numel(codes)
-            dataValue{i} = get_from_varargin({}, codes{i}, varargin);
-            dataCodes{i} = codes{i};
-           
-            settings{(i*2) - 1 } = dataCodes{i};
-            settings{(i*2)} = dataValue{i};          
-            
-            count = count + 1;
+                code = codes{i};
+                value = get_from_varargin(sub.getData(code).getValue(), ...
+                    code, varargin);
+                sub.getData(code).setValue(value);
             end
-            
-            sub.initialize_datadict(atlases, settings{:})
         end
         function sub_copy = copyElement(sub)
             % IMPORTANT! It does NOT make a deep copy of the BrainAtlas
@@ -53,7 +44,7 @@ classdef Subject < handle & matlab.mixin.Copyable
                 d = sub.getData(code);
                 sub_copy.datadict(code) = d.copy();
             end
-        end        
+        end
     end
     methods
         function str = tostring(sub)
@@ -87,7 +78,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             groups = sub.groups;
         end
         function d = getData(sub, data_code)
-            d = sub.datadict(data_code);            
+            d = sub.datadict(data_code);
         end
         function setBrainAtlases(sub, atlases)
             sub.update_brainatlases(atlases);
@@ -128,7 +119,7 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
         function atlas_number = getBrainAtlasNumber(sub)
             % number of differetn brain atlases
-
+            
             atlas_number = eval([Subject.getClass(sub) '.getBrainAtlasNumber()']);
         end
         function datalist = getDataList(sub)
@@ -155,5 +146,5 @@ classdef Subject < handle & matlab.mixin.Copyable
         function sub = getSubject(subject_class, varargin)
             sub = eval([subject_class '(varargin{:})']);
         end
-    end   
+    end
 end
