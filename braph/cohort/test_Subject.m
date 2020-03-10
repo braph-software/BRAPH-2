@@ -161,7 +161,18 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     codes = Subject.getDataCodes(subject_class);
-    sub = Subject.getSubject(subject_class, atlas, codes);
+    newCodes = codes;
+    
+    for i= 1:1:numel(codes)
+        newCodes{(2*i)-1} = codes{i};
+        if isequal(codes{i}, 'age')
+            newCodes{(2*i)} = 33;
+        else
+            newCodes{(2*i)} = rand(5);
+        end
+    end
+    
+    sub = Subject.getSubject(subject_class, atlas, newCodes);
     
     assert(~isempty(sub), ...
         ['BRAPH:' subject_class ':Constructor'], ...
