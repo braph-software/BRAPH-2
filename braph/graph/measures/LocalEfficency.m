@@ -1,0 +1,2 @@
+classdef LocalEfficency < Efficency
+end
