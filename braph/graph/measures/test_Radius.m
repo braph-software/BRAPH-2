@@ -23,7 +23,7 @@ for i = 1:1:length(graph_class_list)
     0    0 .1   0
     ];
     g = Graph.getGraph(graph_class, A);
-    r = Radius(g, 'RadiusRule', 'default').getValue();
+    r = Radius(g, 'EccentricityRule', 'default').getValue();
     
     switch (graph_class)
         case 'GraphWU'
@@ -46,7 +46,7 @@ A = [
     0    0 .1   0
     ];
 g = Graph.getGraph('GraphWU', A);
-r = Radius(g, 'RadiusRule', 'default').getValue();
+r = Radius(g, 'EccentricityRule', 'default').getValue();
 d = Distance(g).getValue();
 [~, ~, ~, bct_value, ~]= charpath(d);
 

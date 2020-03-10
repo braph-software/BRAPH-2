@@ -1,7 +1,7 @@
 classdef Radius < Measure
     methods
         function m = Radius(g, varargin)
-            settings = clean_varargin({'RadiusRule'}, varargin{:});           
+            settings = clean_varargin({'EccentricityRule'}, varargin{:});           
             m = m@Measure(g, settings{:});
         end
     end
@@ -10,12 +10,12 @@ classdef Radius < Measure
             g = m.getGraph();
             
             if g.is_measure_calculated('Eccentricity')
-                ecc = g.getMeasure('Eccentricity').getValue();
+                eccentricity = g.getMeasure('Eccentricity').getValue();
             else
-                rad_rule = get_from_varargin('default', 'RadiusRule', m.getSettings());
-                ecc = Eccentricity(g, 'EccentricityRule', rad_rule).getValue();
+                eccentricity_rule = get_from_varargin('default', 'EccentricityRule', m.getSettings());
+                eccentricity = Eccentricity(g, 'EccentricityRule', eccentricity_rule).getValue();
             end
-            radius = min(ecc);
+            radius = min(eccentricity);
         end
     end  
     methods (Static)
