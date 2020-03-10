@@ -465,10 +465,13 @@ end
 %% Test 15: Cohort getNewSubject
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
-    cohort = Cohort('cohort', sub_class, atlas, {});
     
-    newSubject = cohort.getNewSubject(sub_class, {}); 
-    assert(~isempty(newSubject), ... 
-                ['BRAPH:Cohort:getNewSubject'], ...
-                ['Cohort.getNewSubject() does not work']) 
+    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
+
+    cohort = Cohort('cohort', sub_class, atlases, {});
+    
+    new_subject = cohort.getNewSubject({}); 
+    assert(isa(new_subject, sub_class), ... 
+        ['BRAPH:Cohort:getNewSubject'], ...
+        ['Cohort.getNewSubject() does not work']) 
 end
