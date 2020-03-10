@@ -90,6 +90,10 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 subject_ids{i} = subject.getID();
             end
         end
+        function subject = getNewSubject(cohort, varargin)
+            
+            subject = Subject.getSubject(cohort.getSubjectClass(), cohort.getBrainAtlases(), varargin{:});
+        end
         function addSubject(cohort, subject, i)
             
             if nargin < 3 || i < 0 || i > cohort.subjectnumber()
