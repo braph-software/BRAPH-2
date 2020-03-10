@@ -15,7 +15,7 @@ A_WU = [
 
 bc_WU =[1, 0, 0]'; 
 
-A_test = rand(randi(30));
+A_test = rand(randi(10));
 
 %% Test 1: Comparison with known BU graph
 g = GraphBU(A_BU);
@@ -72,11 +72,11 @@ assert(isequal(bc_1, bc_2), ...
 %% Functions to calculate betweenness centrality adapted from 2019_03_03_BCT
 
 % Function for undirected graphs
-function bc_standard_B = betweenness_binary_standard(G)
-n=length(G);                %number of nodes
+function bc_standard_B = betweenness_binary_standard(A)
+n=length(A);                %number of nodes
 I=eye(n)~=0;                %logical identity matrix
 d=1;                     	%path length
-NPd=G;                      %number of paths of length |d|
+NPd=A;                      %number of paths of length |d|
 NSPd=NPd;                  	%number of shortest paths of length |d|
 NSP=NSPd; NSP(I)=1;        	%number of shortest paths of any length
 L=NSPd; L(I)=1;           	%length of shortest paths
@@ -84,7 +84,7 @@ L=NSPd; L(I)=1;           	%length of shortest paths
 %calculate NSP and L
 while find(NSPd,1)
     d=d+1;
-    NPd=NPd*G;
+    NPd=NPd*A;
     NSPd=NPd.*(L==0);
     NSP=NSP+NSPd;
     L=L+d.*(NSPd~=0);
@@ -92,7 +92,7 @@ end
 L(~L)=inf; L(I)=0;          %L for disconnected vertices is inf
 NSP(~NSP)=1;                %NSP for disconnected vertices is 1
 
-Gt=G.';
+Gt=A.';
 DP=zeros(n);            	%vertex on vertex dependency
 diam=d-1;                  	%graph diameter
 
@@ -105,12 +105,13 @@ end
 bc_standard_B=sum(DP,1);               %compute betweenness
 bc_standard_B = bc_standard_B';
 bc_standard_B = bc_standard_B / ((n-1)*(n-2)); % normalization
+bc_standard_B(isnan(bc_standard_B)) = 0; % Should return zeros, not NaN
 end
 
 % Function for directed graphs
-function bc_standard_W = betweenness_weighted_standard(G)
-n=length(G);
-E=find(G); G(E)=1./G(E);        %invert weights
+function bc_standard_W = betweenness_weighted_standard(A)
+n=length(A);
+E=find(A); A(E)=1./A(E);        %invert weights
 bc_standard_W=zeros(n,1);                  %vertex betweenness
 
 for u=1:n
@@ -120,7 +121,7 @@ for u=1:n
     P=false(n);                 %predecessors
     Q=zeros(1,n); q=n;          %order of non-increasing distance
 
-    G1=G;
+    G1=A;
     V=u;
     while 1
         S(V)=0;                 %distance u->V is now permanent
@@ -159,4 +160,5 @@ for u=1:n
     end
 end
 bc_standard_W = bc_standard_W / ((n-1)*(n-2)); % normalization
+bc_standard_W(isnan(bc_standard_W)) = 0; % Should return zeros, not NaN
 end

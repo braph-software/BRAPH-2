@@ -109,6 +109,7 @@ classdef BetweennessCentrality < Measure
                 end
             end
             betweenness_centrality = betweenness_centrality/((N-1)*(N-2));  % Normalize betweenness
+            betweenness_centrality(isnan(betweenness_centrality)) = 0; % Should return zeros, not NaN
         end
     end
     methods (Static)
