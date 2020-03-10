@@ -5,17 +5,17 @@ classdef OutLocalEfficency < Measure
         end
     end
     methods (Access = protected)
-        function in_le = calculate(m)
+        function out_le = calculate(m)
             g = m.getGraph();
             A = g.getA();
             n = g.nodenumber();
-            in_le = zeros(n,1);
             
+            out_le = zeros(n,1);
             for i = 1:1:n
                 nodes = find(A(i, :)  | A(:, i).');  % neighbours of u
                 if numel(nodes) > 1
                     sub_graph = g.subgraph(nodes);
-                    in_le(i) = mean(OutGlobalEfficency(sub_graph, g.getSettings()).getValue());
+                    out_le(i) = mean(OutGlobalEfficency(sub_graph, g.getSettings()).getValue());
                 end
             end
         end

@@ -9,8 +9,8 @@ classdef LocalEfficency < Measure
             g = m.getGraph();
             A = g.getA();
             n = g.nodenumber();
-            le = zeros(n,1);
             
+            le = zeros(n,1);
             for i = 1:1:n
                 nodes = find(A(i, :)  | A(:, i).');  % neighbours of u
                 if numel(nodes) > 1
