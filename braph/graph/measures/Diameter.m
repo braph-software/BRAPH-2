@@ -1,7 +1,7 @@
 classdef Diameter < Measure
     methods
         function m = Diameter(g, varargin)
-            settings = clean_varargin({'DiameterRule'}, varargin{:});           
+            settings = clean_varargin({'EccentricityRule'}, varargin{:});           
             m = m@Measure(g, settings{:});
         end
     end
@@ -10,12 +10,12 @@ classdef Diameter < Measure
             g = m.getGraph();
             
             if g.is_measure_calculated('Eccentricity')
-                ecc = g.getMeasure('Eccentricity').getValue();
+                eccentricity = g.getMeasure('Eccentricity').getValue();
             else
-                rad_rule = get_from_varargin('default', 'DiameterRule', m.getSettings());
-                ecc = Eccentricity(g, 'EccentricityRule', rad_rule).getValue();
+                eccentricity_rule = get_from_varargin('default', 'EccentricityRule', m.getSettings());
+                eccentricity = Eccentricity(g, 'EccentricityRule', eccentricity_rule).getValue();
             end
-            diameter = max(ecc);
+            diameter = max(eccentricity);
         end
     end  
     methods (Static)
@@ -27,7 +27,7 @@ classdef Diameter < Measure
         end
         function description = getDescription()
             description = [ ...
-                'The Diameter is the maximum eccentricity' ...
+                'The diameter is the maximum eccentricity' ...
                 'among the vertice.'
                 ];
         end
