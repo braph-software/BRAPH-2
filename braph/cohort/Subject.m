@@ -20,10 +20,10 @@ classdef Subject < handle & matlab.mixin.Copyable
             sub.setGroups(groups)
             
             sub.initialize_datadict(atlases, varargin{:})
-            codes = sub.getDataCodes();
             
-            for i = 1:1:numel(codes)
-                code = codes{i};
+            data_codes = sub.getDataCodes();            
+            for i = 1:1:numel(data_codes)
+                code = data_codes{i};
                 value = get_from_varargin(sub.getData(code).getValue(), ...
                     code, varargin);
                 sub.getData(code).setValue(value);

@@ -161,20 +161,29 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     codes = Subject.getDataCodes(subject_class);
-    newCodes = codes;
-    
+    datalist = Subject.getDataList(subject_class);
+    n = atlas.brainregionnumber();
+    varargin = codes;
     for i= 1:1:numel(codes)
-        newCodes{(2*i)-1} = codes{i};
-        if isequal(codes{i}, 'age')
-            newCodes{(2*i)} = 33;
+        varargin{(2*i)-1} = codes{i};
+        if isequal(datalist(codes{i}), 'DataScalar')
+            varargin{(2*i)} = 33;
+        elseif isequal(datalist(codes{i}), 'DataFunctional') | isequal(datalist(codes{i}), 'DataConnectivity') 
+            varargin{(2*i)} = rand(n);
         else
-            newCodes{(2*i)} = rand(5);
+            varargin{(2*i)} = rand(n,1) ;
         end
     end
     
-    sub = Subject.getSubject(subject_class, atlas, newCodes);
+    sub = Subject.getSubject(subject_class, atlas, varargin{:});
     
-    assert(~isempty(sub), ...
+    assert(isequal(sub.getDataCodes(), codes), ...
         ['BRAPH:' subject_class ':Constructor'], ...
-        ['Constructos for ' subject_class ' not initializing with data codes.'])
+        ['Constructors for ' subject_class ' not initializing with data codes.'])
+    
+    for j = 1:1:numel(codes)
+         assert(isequal(sub.getData(codes{j}).getValue(), varargin{2*j}), ...
+        ['BRAPH:' subject_class ':Constructor'], ...
+        ['Constructors for ' subject_class ' not initializing with correct data codes.'])
+    end
 end
