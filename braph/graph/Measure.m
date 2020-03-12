@@ -187,7 +187,7 @@ classdef Measure < handle
                 );
         end
         function measure_class = getClass(m)
-            % GETCLASS returns the list of measures
+            % GETCLASS returns the class of measures
             %
             % CLASS = GETCLASS() returns the class of the measure M.
             %
