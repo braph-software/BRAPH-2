@@ -89,7 +89,7 @@ classdef Measure < handle
     end
     methods
         function str = tostring(m)
-            % TOSTRING displays information about the measure
+            % TOSTRING string with information about the measure
             %
             % STR = TOSTRING(M) returns string with the measure class and size.
             %
@@ -187,9 +187,12 @@ classdef Measure < handle
                 );
         end
         function measure_class = getClass(m)
-            % GETCLASS returns the class of measures
+            % GETCLASS returns the list of the classes of all measures
             %
-            % CLASS = GETCLASS() returns the class of the measure M.
+            % CLASS = GETCLASS(M) returns the class of the concrete measure M.
+            %
+            % CLASS = GETCLASS(MEASURE_CLASS) returns the class of the
+            % measure whose class if MEASURE_CLASS.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -202,7 +205,10 @@ classdef Measure < handle
         function name = getName(m)
             % GETNAME returns the name of the measure
             %
-            % STRING = GETNAME() returns the name of the measure M.
+            % STRING = GETNAME(M) returns the name of the concrete measure M.
+            %
+            % STRING = GETNAME(MEASURE_CLASS) returns the name of the
+            % measure whose class is MEASURE_CLASS.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -211,7 +217,11 @@ classdef Measure < handle
         function description = getDescription(m)
             % GETDESCRIPTION returns the description of the measure
             %
-            % STRINGS = GETDESCRIPTION() returns the description of the measure M.
+            % STRINGS = GETDESCRIPTION(M) returns the description of the
+            % concrete measure M.
+            %
+            % STRINGS = GETDESCRIPTION(MEASURE_CLASS) returns the
+            % description of the measure whose class is MEASURE_CLASS.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -220,8 +230,11 @@ classdef Measure < handle
         function bool = is_global(m)
             % IS_GLOBAL checks if measure is global
             %
-            % BOOL = IS_GLOBAL(M) returns true if measure M is global
-            %   and false otherwise.
+            % BOOL = IS_GLOBAL(M) returns true if the concrete measure M
+            % is global and false otherwise.
+            %
+            % BOOL = IS_GLOBAL(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is global and false otherwise.
             %
             % See also is_nodal, is_binodal.
             
@@ -230,8 +243,11 @@ classdef Measure < handle
         function bool = is_nodal(m)
             % IS_NODAL checks if measure is nodal
             %
-            % BOOL = IS_NODAL(M) returns true if measure M is nodal
+            % BOOL = IS_NODAL(M) returns true if the concrete measure M is nodal
             %   and false otherwise.
+            %
+            % BOOL = IS_NODAL(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is nodal and false otherwise.
             %
             % See also is_global, is_binodal.
             
@@ -240,8 +256,11 @@ classdef Measure < handle
         function bool = is_binodal(m)
             % IS_BINODAL checks if measure is bi-nodal
             %
-            % BOOL = IS_BINODAL(M) returns true if measure M is binodal
+            % BOOL = IS_BINODAL(M) returns true if concrete measure M is binodal
             %   and false otherwise.
+            %
+            % BOOL = IS_BINODAL(MEASURE_CLASS) returns true if a  measure
+            % whose class is MEASURE_CALSS is binodal and false otherwise.
             %
             % See also is_global, is_nodal.
             
@@ -261,8 +280,12 @@ classdef Measure < handle
             % GETCOMPATIBLEGRAPHLIST returns the list of graphs
             %
             % CELL ARRAY = GETCOMPATIBLEGRAPHLIST(M) returns a cell array of
-            %   compatible graphs to the measure M. Measure will not work if
-            %   the graph is not compatible.
+            %   compatible graphs to the concrete measure M. Measure will
+            %   not work if the graph is not compatible.
+            %
+            % CELL ARRAY = GETCOMPATIBLEGRAPHLIST(MEASURE_CLASS) returns a 
+            % cell array of compatible graphs to the measure whose class 
+            % is MEASURE_CLASS. Measure will not work if the graph is not compatible.
             %
             % See also getList(), getCompatibleGraphNumber().
             
@@ -272,7 +295,11 @@ classdef Measure < handle
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs
             %
             % N = GETCOMPATIBLEGRAPHNUMBER(M) returns the number of
-            %   compatible graphs to the measure M.
+            %   compatible graphs to the concrete measure M.
+            %
+            % N = GETCOMPATIBLEGRAPHNUMBER(MEASURE_CLASS) returns the number of
+            %   compatible graphs to the a measure whose class is
+            %   MEASURE_CLASS.
             %
             % See also getList(), getCompatibleGraphList().
             
