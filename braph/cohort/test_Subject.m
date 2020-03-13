@@ -161,6 +161,8 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     codes = Subject.getDataCodes(subject_class);
+    % we included this case in the event that theres a new data type and the user does not change the unit test.
+    sub_unknownDataType = Subject.getSubject(subject_class, atlas, codes);  
     datalist = Subject.getDataList(subject_class);
     n = atlas.brainregionnumber();
     varargin = codes;
@@ -170,8 +172,10 @@ for i = 1:1:length(subject_class_list)
             varargin{(2*i)} = 33;
         elseif isequal(datalist(codes{i}), 'DataFunctional') | isequal(datalist(codes{i}), 'DataConnectivity') 
             varargin{(2*i)} = rand(n);
-        else
+        elseif isequal(datalist(codes{i}), 'DataStructural')
             varargin{(2*i)} = rand(n,1) ;
+        else
+            varargin{(2*i)} = sub_unknownDataType.getData(codes{i}).getValue();            
         end
     end
     
