@@ -192,7 +192,7 @@ classdef Measure < handle
             % CLASS = GETCLASS(M) returns the class of the concrete measure M.
             %
             % CLASS = GETCLASS(MEASURE_CLASS) returns the class of the
-            % measure whose class if MEASURE_CLASS.
+            %   measure whose class if MEASURE_CLASS.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -208,7 +208,7 @@ classdef Measure < handle
             % STRING = GETNAME(M) returns the name of the concrete measure M.
             %
             % STRING = GETNAME(MEASURE_CLASS) returns the name of the
-            % measure whose class is MEASURE_CLASS.
+            %   measure whose class is MEASURE_CLASS.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -218,10 +218,10 @@ classdef Measure < handle
             % GETDESCRIPTION returns the description of the measure
             %
             % STRINGS = GETDESCRIPTION(M) returns the description of the
-            % concrete measure M.
+            %   concrete measure M.
             %
             % STRINGS = GETDESCRIPTION(MEASURE_CLASS) returns the
-            % description of the measure whose class is MEASURE_CLASS.
+            %   description of the measure whose class is MEASURE_CLASS.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -231,10 +231,10 @@ classdef Measure < handle
             % IS_GLOBAL checks if measure is global
             %
             % BOOL = IS_GLOBAL(M) returns true if the concrete measure M
-            % is global and false otherwise.
+            %   is global and false otherwise.
             %
             % BOOL = IS_GLOBAL(MEASURE_CLASS) returns true if the measure
-            % whose class is MEASURE_CLASS is global and false otherwise.
+            %   whose class is MEASURE_CLASS is global and false otherwise.
             %
             % See also is_nodal, is_binodal.
             
@@ -247,7 +247,7 @@ classdef Measure < handle
             %   and false otherwise.
             %
             % BOOL = IS_NODAL(MEASURE_CLASS) returns true if the measure
-            % whose class is MEASURE_CLASS is nodal and false otherwise.
+            %   whose class is MEASURE_CLASS is nodal and false otherwise.
             %
             % See also is_global, is_binodal.
             
@@ -260,7 +260,7 @@ classdef Measure < handle
             %   and false otherwise.
             %
             % BOOL = IS_BINODAL(MEASURE_CLASS) returns true if a  measure
-            % whose class is MEASURE_CALSS is binodal and false otherwise.
+            %   whose class is MEASURE_CALSS is binodal and false otherwise.
             %
             % See also is_global, is_nodal.
             
@@ -284,8 +284,9 @@ classdef Measure < handle
             %   not work if the graph is not compatible.
             %
             % CELL ARRAY = GETCOMPATIBLEGRAPHLIST(MEASURE_CLASS) returns a 
-            % cell array of compatible graphs to the measure whose class 
-            % is MEASURE_CLASS. Measure will not work if the graph is not compatible.
+            %   cell array of compatible graphs to the measure whose class 
+            %   is MEASURE_CLASS. Measure will not work if the graph is not
+            %   compatible.
             %
             % See also getList(), getCompatibleGraphNumber().
             
