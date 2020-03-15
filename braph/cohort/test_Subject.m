@@ -160,33 +160,35 @@ end
 %% Test 6: Initialize Subclasses with the datacodes.
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
-    codes = Subject.getDataCodes(subject_class);
-    % we included this case in the event that theres a new data type and the user does not change the unit test.
-    sub_unknownDataType = Subject.getSubject(subject_class, atlas, codes);  
-    datalist = Subject.getDataList(subject_class);
+    data_codes = Subject.getDataCodes(subject_class);
+    data_list = Subject.getDataList(subject_class);
+
+    varargin = data_codes;
+    sub_emptydata = Subject.getSubject(subject_class, atlas);
     n = atlas.brainregionnumber();
-    varargin = codes;
-    for i= 1:1:numel(codes)
-        varargin{(2*i)-1} = codes{i};
-        if isequal(datalist(codes{i}), 'DataScalar')
-            varargin{(2*i)} = 33;
-        elseif isequal(datalist(codes{i}), 'DataFunctional') | isequal(datalist(codes{i}), 'DataConnectivity') 
-            varargin{(2*i)} = rand(n);
-        elseif isequal(datalist(codes{i}), 'DataStructural')
-            varargin{(2*i)} = rand(n,1) ;
-        else
-            varargin{(2*i)} = sub_unknownDataType.getData(codes{i}).getValue();            
+    for i = 1:1:numel(data_codes)
+        varargin{(2*i)-1} = data_codes{i};
+        if isequal(data_list(data_codes{i}), 'DataScalar')
+            varargin{(2*i)} = rand();
+        elseif isequal(data_list(data_codes{i}), 'DataFunctional') 
+            varargin{(2*i)} = rand(n, 10);
+        elseif isequal(data_list(data_codes{i}), 'DataConnectivity') 
+            varargin{(2*i)} = rand(n, n);
+        elseif isequal(data_list(data_codes{i}), 'DataStructural')
+            varargin{(2*i)} = rand(n, 1) ;
+        else  % we included this case in the event that theres a new data type and the user does not change the unit test.
+            varargin{(2*i)} = sub_emptydata.getData(data_codes{i}).getValue();            
         end
     end
     
     sub = Subject.getSubject(subject_class, atlas, varargin{:});
     
-    assert(isequal(sub.getDataCodes(), codes), ...
+    assert(isequal(sub.getDataCodes(), data_codes), ...
         ['BRAPH:' subject_class ':Constructor'], ...
         ['Constructors for ' subject_class ' not initializing with data codes.'])
     
-    for j = 1:1:numel(codes)
-         assert(isequal(sub.getData(codes{j}).getValue(), varargin{2*j}), ...
+    for j = 1:1:numel(data_codes)
+         assert(isequal(sub.getData(data_codes{j}).getValue(), varargin{2*j}), ...
         ['BRAPH:' subject_class ':Constructor'], ...
         ['Constructors for ' subject_class ' not initializing with correct data codes.'])
     end
