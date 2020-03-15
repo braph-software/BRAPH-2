@@ -23,10 +23,9 @@ classdef Subject < handle & matlab.mixin.Copyable
             
             data_codes = sub.getDataCodes();            
             for i = 1:1:numel(data_codes)
-                code = data_codes{i};
-                value = get_from_varargin(sub.getData(code).getValue(), ...
-                    code, varargin);
-                sub.getData(code).setValue(value);
+                data_code = data_codes{i};
+                value = get_from_varargin(sub.getData(data_code).getValue(), data_code, varargin);
+                sub.getData(data_code).setValue(value);
             end
         end
         function sub_copy = copyElement(sub)
@@ -40,9 +39,9 @@ classdef Subject < handle & matlab.mixin.Copyable
             sub_copy.datadict = containers.Map;
             data_codes = keys(sub.datadict);
             for i = 1:1:length(data_codes)
-                code = data_codes{i};
-                d = sub.getData(code);
-                sub_copy.datadict(code) = d.copy();
+                data_code = data_codes{i};
+                d = sub.getData(data_code);
+                sub_copy.datadict(data_code) = d.copy();
             end
         end
     end
