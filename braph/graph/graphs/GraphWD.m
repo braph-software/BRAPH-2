@@ -1,33 +1,25 @@
 classdef GraphWD < Graph
-    % GraphWD < Graph : Creates GraphWD.
-    %   GraphWD inherits methods from Graph. GraphWD overrides the static
-    %   methods from Graph. 
+    % GraphWD < Graph: A weighted directed graph
+    % GraphWD represents a weighted directed graph.
     %   
     % GraphWD methods:
-    %   GraphWD    -    constructor.
+    %   GraphWD     - constructor.
     %
     % GraphWD methods (static):
-    %   getClass   -    return the class type GraphWD.
-    %   getName    -    return the complete name of GraphWD.
-    %   getDescription  -   return the description of GraphWD.
-    %   is_selfconnected     -  boolean, checks if the graph is self
-    %                           connected.
-    %   is_nonnegative       -  boolean, checks if the graph is non
-    %                           negative.
-    %   is_weighted          -  boolean, checks if the graph is weighted.
-    %   is_binary            -  boolean, checks if the graph is binary.
-    %   is_directed          -  boolean, checks if the graph is directed.
-    %   is_undirected        -  boolean, checks if the graph is undirected.
-    %   getCompatibleMeasureList   - returns a list with compatible
-    %                                measures.
-    %   getCompatibleMeasureNumber - returns the number of compatible 
-    %                                measures. 
+    %   getClass    - return the class type GraphWD.
+    %   getName     - return the complete name of GraphWD.
+    %   getDescription - return the description of GraphWD.
+    %   is_selfconnected - boolean, checks if the graph is self-connected.
+    %   is_nonnegative - boolean, checks if the graph is non-negative.
+    %   is_weighted - boolean, checks if the graph is weighted.
+    %   is_binary   - boolean, checks if the graph is binary.
+    %   is_directed - boolean, checks if the graph is directed.
+    %   is_undirected - boolean, checks if the graph is undirected.
+    %   getCompatibleMeasureList - returns a list with compatible measures.
+    %   getCompatibleMeasureNumber - returns the number of compatible measures. 
     %
     % See also Graph, GraphBU, GraphBD, GraphWU.
 
-    % Author: Emiliano Gomez & Giovanni Volpe
-    % Date: 2020/02/03
-    
     methods
         function g = GraphWD(A, varargin)
             % GRAPHWD(A) creates a GRAPHWD class with adjacency matrix A.
@@ -57,7 +49,7 @@ classdef GraphWD < Graph
         function graph_class = getClass()
             % GETCLASS returns the class of the graph.
             %
-            % STRING = GETCLASS() returns the class, 'GRAPHWD'.
+            % GRAPH_CLASS = GETCLASS() returns the class, 'GraphWD'.
             %
             % See also getName().
             
@@ -66,7 +58,7 @@ classdef GraphWD < Graph
         function name = getName()
             % GETNAME returns the name of the graph.
             %
-            % STRING = GETCLASS() returns the name, 'Weighted Directed Graph'.
+            % NAME = GETCLASS() returns the name, 'Weighted Directed Graph'.
             %
             % See also getClass().
             
@@ -75,8 +67,7 @@ classdef GraphWD < Graph
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
             %
-            % STRINGS = GETDESCRIPTION() returns the description of
-            % GRAPHWD.
+            % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHWD.
             %
             % See also getName()
             
@@ -142,8 +133,7 @@ classdef GraphWD < Graph
             bool = false;
         end        
         function list = getCompatibleMeasureList()
-            % GETCOMPATIBLEMEASURELIST returns a list with compatible
-            % measures.
+            % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
             %
             % LIST = GETCOMPATIBLEMEASURELIST() returns a list with
             % compatible measures to the graph.
@@ -153,8 +143,7 @@ classdef GraphWD < Graph
             list = Graph.getCompatibleMeasureList('GraphWD');
         end
         function n = getCompatibleMeasureNumber()
-            % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible
-            % measures.
+            % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible measures.
             %
             % N = GETCOMPATIBLEMEASURENUMBER() returns the number of 
             % compatible measures to the graph.

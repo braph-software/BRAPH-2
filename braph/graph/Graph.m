@@ -1,59 +1,54 @@
 classdef Graph < handle & matlab.mixin.Copyable
-    % Graph < handle & matlab.mixin.Copyable (Abstract): Creates and implements graph.
+    % Graph < handle & matlab.mixin.Copyable (Abstract): A graph
     % Graph provides the methods necessary for all graphs.
-    % Instances of this class cannot be created. Use one of the subclasses
-    % (e.g., GraphBD, GraphBU, GraphWD, GraphWU). The subclasses must be
-    % created inside the folder braph/graph/graphs.
+    % Instances of this class cannot be created. 
+    % Use one of the subclasses (e.g., GraphBD, GraphBU, GraphWD, GraphWU). 
+    % The subclasses must be created inside the folder ./braph/graph/graphs/.
     %
     % Graph properties (GetAccess=protected, SetAccess=protected):
-    %   A        -  adjacency matrix.
-    %   settings -  structure with the constructor settings.
-    %   mdict    -  dictionary with the calculated measure.
-    %               (key, value) = (measure code, measure value)
+    %   A           - adjacency matrix.
+    %   settings    - structure with the constructor settings.
+    %   measure_dict - dictionary with the calculated measure.
+    %                  (key, value) = (measure code, measure value)
     %
     % Graph methods (Access=protected)
-    %   Graph    -  constructor.
-    %   g_copy   -  deep copy community structure.
+    %   Graph       - constructor.
+    %   copyElement - deep copy community structure.
     %
     % Graph methods:
-    %   tostring    -   returns a string representing the graph.
-    %   disp        -   displays the graph.
-    %   getA        -   returns the adjacency matrix.
-    %   nodenumber  -   returns the number of nodes in a graph.
-    %   getSettings -   returns the settings of the graph.
-    %   getMeasure  -   returns the measure of the graph.
+    %   tostring    - returns a string representing the graph.
+    %   disp        - displays the graph.
+    %   getA        - returns the adjacency matrix.
+    %   nodenumber  - returns the number of nodes in a graph.
+    %   getSettings - returns the settings of the graph.
+    %   getMeasure  - returns the measure of the graph.
     %   is_measure_calculated - checks if the measure is calculated.
     %   getMeasureValue - returns the value of a measure of the graph.
-    %   subgraph    -   returns a subgraph from given nodes.
-    %   nodeattack  -   removes given nodes from a graph.
-    %   edgeattack  -   removes given edges from a graph.
+    %   subgraph    - returns a subgraph from given nodes.
+    %   nodeattack  - removes given nodes from a graph.
+    %   edgeattack  - removes given edges from a graph.
     %
     % Graph methods (Static):
-    %   getList     -   return a list with subclasses of graph.
-    %   getClass    -   returns the class type of the graph.
-    %   getName     -   returns the name of the graph.
-    %   getDescription   - returns the description of the graph.
+    %   getList     - return a list with subclasses of graph.
+    %   getClass    - returns the class type of the graph.
+    %   getName     - returns the name of the graph.
+    %   getDescription - returns the description of the graph.
     %   is_selfconnected - checks if the graph is self connected.
-    %   is_nonnegative   - checks if the graph is non negative.
-    %   is_weighted -   checks if the graph is weighted.
-    %   is_binary   -   checks if the graph is binary.
-    %   is_directed -   checks if the graph is directed.
-    %   is_undirected    - checks if the graph is undirected.
-    %   getGraph    -   returns a graph with the given inputs.
-    %   getCompatibleMeasureList   - returns a list with the compatible
-    %                              measures.
-    %   getCompatibleMeasureNumber - returns a number of the compatible
-    %                              measures.
+    %   is_nonnegative - checks if the graph is non negative.
+    %   is_weighted - checks if the graph is weighted.
+    %   is_binary   - checks if the graph is binary.
+    %   is_directed - checks if the graph is directed.
+    %   is_undirected - checks if the graph is undirected.
+    %   getGraph    - returns a graph with the given inputs.
+    %   getCompatibleMeasureList - returns a list with the compatible measures.
+    %   getCompatibleMeasureNumber - returns a number of the compatible measures.
     %
     % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD.
-    
-    % Author: Emiliano Gomez & Giovanni Volpe
-    % Date: 2020/02/03
-    
+        
     properties (GetAccess=protected, SetAccess=protected)
-        A   % adjacency matrix
+        A  % adjacency matrix
         settings  % structure with the constructor varagin
-        mdict  % dictionary with calculated measures
+        measure_dict  % dictionary with calculated measures
     end
     methods (Access=protected)
         function g = Graph(A, varargin)
@@ -65,6 +60,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             % creates a graph with properties and values. It initializes
             % he property settings with the properties and values.
             %
+            % GRAPH(A, 'Settings', SETTINGS) ceates a graph and
+            % initializes the property settings with SETTINGS.
+            %
             % See also Meaasure, GraphBD, GraphBU, GraphWD, GraphWU.
             
             if length(varargin) == 1
@@ -72,16 +70,16 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
             
             settings = get_from_varargin(varargin, 'Settings', varargin{:});
-            mdict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
+            measure_dict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
             
             g.A = A;  % initialize the property A
             g.settings = settings;  % initialize the property settings
-            g.mdict = mdict;  % initialize the property mdict
+            g.measure_dict = measure_dict;  % initialize the property measure_dict
         end
         function g_copy = copyElement(g)
             % COPYELEMENT(G) copies elements of graph
             %
-            % G_COPY = COPYELEMENT(G) copues elemetns of the graph G.
+            % G_COPY = COPYELEMENT(G) copues elements of the graph G.
             % Makes a deep copy of the structure of the graph.
             %
             % See also Cohort.
@@ -92,20 +90,20 @@ classdef Graph < handle & matlab.mixin.Copyable
             % Make a deep copy of settings
             g_copy.settings = copy_varargin(g.settings{:});
             
-            % Make a deep copy of mdict
-            g_copy.mdict = containers.Map;
-            measures = values(g.mdict);
+            % Make a deep copy of measure_dict
+            g_copy.measure_dict = containers.Map;
+            measures = values(g.measure_dict);
             for i = 1:1:length(measures)
                 m = measures{i};
                 if m.is_value_calculated()
-                    g_copy.mdict(m.getMeasureCode()) = Measure.getMeasure( ...
+                    g_copy.measure_dict(m.getMeasureCode()) = Measure.getMeasure( ...
                         m.getMeasureCode(), ...
                         g_copy, ...
                         'Value', m.getValue(), ...
                         'Settings', copy_varargin(m.getSettings()) ...
                         );
                 else
-                    g_copy.mdict(m.getMeasureCode()) = Measure.getMeasure( ...
+                    g_copy.measure_dict(m.getMeasureCode()) = Measure.getMeasure( ...
                         m.getMeasureCode(), ...
                         g_copy, ...
                         'Settings', copy_varargin(m.getSettings()) ...
@@ -127,15 +125,15 @@ classdef Graph < handle & matlab.mixin.Copyable
         function disp(g)
             % DISP displays information about the graph
             %
-            % DISP(G) displays the information about the graph.
-            % It provides information about graph class, graph size,
-            % value, associated measures, graph settings.
+            % DISP(G) displays information about the graph.
+            % It provides information about graph class, size,
+            % value, associated measures, and settings.
             %
             % See also tostring().
             
             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
             disp([' size: ' int2str(size(g.getA(), 1)) ' rows x ' int2str(size(g.getA(), 2)) ' columns'])
-            disp([' measures: ' int2str(length(g.mdict))]);
+            disp([' measures: ' int2str(length(g.measure_dict))]);
             disp([' settings']); %#ok<NBRAK>
             settings = g.getSettings(); %#ok<PROP>
             for i = 1:2:length(settings) %#ok<PROP>
@@ -145,10 +143,10 @@ classdef Graph < handle & matlab.mixin.Copyable
         function A = getA(g)
             % GETA returns the adjacency matrix.
             %
-            % A = GETA(G) returns the adjacency matrix associated to the
+            % A = GETA(G) returns the adjacency matrix A associated to the
             % graph G.
             %
-            % See also getSettings().
+            % See also getSettings(), nodenumber().
             
             A = g.A;
         end
@@ -157,7 +155,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % N = NODENUMBER(G) returns the number of nodes in the graph.
             %
-            % See also getGraph().
+            % See also getA(), getSettings().
             
             n = length(g.getA());
         end
@@ -166,10 +164,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % SETTINGS = GETSETTINGS(G) returns the settings of the graph
             %
-            % SETTINGS = GETSETTINGS(G, SETTING_CODE) returns the settings of the
-            % graph SETING_CODE.
+            % SETTINGS = GETSETTINGS(G, SETTING_CODE) returns the settings
+            % of the graph SETTING_CODE. 
             %
-            % See also getA().
+            % See also getA(), nodenumber().
             
             if nargin<2
                 res = g.settings;
@@ -178,21 +176,21 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
         end
         function m = getMeasure(g, measure_class)
-            % GETMEASURE returns the measure
+            % GETMEASURE returns measure
             %
             % M = GETMEASURE(G, MEASURE_CLASS) checks if the measure
             % exists in the property MDICT. If not it creates a new measure
-            % M of class MEASURE_CLASS with properties SETTINGS. User must
-            % call getValue() for the new measure M to retrieve the value
-            % of measure M.
+            % M of class MEASURE_CLASS with properties defined by the graph
+            % settings. The user must call getValue() for the new measure M
+            % to retrieve the value of measure M.
             %
-            % See also getGraph().
+            % See also getMeasureValue(), is_measure_calculated().
             
-            if isKey(g.mdict, measure_class)
-                m = g.mdict(measure_class);
+            if isKey(g.measure_dict, measure_class)
+                m = g.measure_dict(measure_class);
             else
                 m = Measure.getMeasure(measure_class, g, g.settings{:});
-                g.mdict(measure_class) = m;
+                g.measure_dict(measure_class) = m;
             end
         end
         function bool = is_measure_calculated(g, measure_class)
@@ -200,14 +198,14 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % BOOL = IS_MEASURE_CALCULATED(G) returns true if a value of a
             % measure has been already calculated. If a measure M is
-            % created by using getMeasure funtion, the user will need to
-            % call getValue function in order to calculate the measure and
+            % created by using the function getMeasure(), the user needs to
+            % call the function getMeasureValue() to calculate the measure and
             % obtain a value.
             %
-            % See also getValue().
+            % See also getMeasure(), getMeasureValue().
             
-            if isKey(g.mdict, measure_class)
-                bool = g.mdict(measure_class).is_value_calculated();
+            if isKey(g.measure_dict, measure_class)
+                bool = g.measure_dict(measure_class).is_value_calculated();
             else
                 bool = false;
             end
@@ -218,7 +216,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % VALUE = GETMEASUREVALUE(G, MEASURE_CLASS) returns the value of
             % a measure of type MEASURE_CLASS.
             %
-            % See also getGraph().
+            % See also getMeasure(), is_measure_calculated().
             
             value = g.getMeasure(measure_class).getValue();
         end
@@ -227,8 +225,6 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % SG = SUBGRAPH(G, NODES) creates the graph SG as a subgraph of G
             % containing only the nodes specified by NODES.
-            %
-            % See also Graph, eval.
             
             A = g.getA(); %#ok<PROPLC>
             sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings()); %#ok<PROPLC>
@@ -242,7 +238,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % NODES are removed by setting all the connections from and to
             % the nodes in the connection matrix to 0.
             %
-            % See also Graph, edgeattack
+            % See also edgeattack().
             
             A = g.getA(); %#ok<PROPLC>
             
@@ -264,7 +260,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % NODES1 and NODES2 must have the same dimensions.
             %
-            % See also Graph, nodeattack
+            % See also nodeattack().
             
             A = g.getA(); %#ok<PROPLC>
             A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<PROPLC>
@@ -273,7 +269,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     end
     methods (Static)
         function graph_class_list = getList()
-            % GETLIST returns the list of graphs
+            % GETLIST returns the list of available graphs
             %
             % GRAPH_CLASS_LIST = GETLIST() returns the list of graphs
             % (cell array) that are subclasses of Graph.
@@ -305,10 +301,10 @@ classdef Graph < handle & matlab.mixin.Copyable
         function name = getName(g)
             % GETNAME returns the name of the graph
             %
-            % STRING = GETNAME(G) returns the name of the concrete instance
+            % NAME = GETNAME(G) returns the name (string) of the concrete instance
             % of graph G.
             %
-            % STRING = GETNAME(GRAPH_CLASS) returns the name of the
+            % NAME = GETNAME(GRAPH_CLASS) returns the name (string) of the
             % graph whose class is the string GRAPH_CLASS.
             %
             % See also getList(), getCompatibleMeasureList().
@@ -318,40 +314,35 @@ classdef Graph < handle & matlab.mixin.Copyable
         function name = getDescription(g)
             % GETDESCRIPTION returns the description of the graph
             %
-            % STRINGS = GETDESCRIPTION(G) returns the description of the
-            % concrete instance of graph G.
+            % DESCRIPTION = GETDESCRIPTION(G) returns the description
+            % (string) of the concrete instance of graph G.
             %
-            % STRINGS = GETDESCRIPTION(GRAPH_CLASS) returns the description
-            % of the graph whose class is GRAPH_CLASS.
+            % DESCRIPTION = GETDESCRIPTION(GRAPH_CLASS) returns the
+            % description (string) of the graph whose class is GRAPH_CLASS.
             %
             % See also getList(), getCompatibleMeasureList().
             
             name = eval([Graph.getClass(g) '.getDescription()']);
         end
         function bool = is_selfconnected(g)
-            % IS_SELFCONNECTED checks if graph is selfconnected
+            % IS_SELFCONNECTED checks if graph is self-connected
             %
             % BOOL = IS_SELFCONNECTED(G) returns true if the instance of the
-            % concrete graph H is selfconnected and false otherwise.
+            % concrete graph H is self-connected and false otherwise.
             %
             % BOOL = IS_SELFCONNECTED(GRAPH_CLASS) returns true if graph
-            % whose class is GRAPH_CLASS is selfconnected and false otherwise.
-            %
-            % See also is_nonnegative, is_weighted.
+            % whose class is GRAPH_CLASS is self-connected and false otherwise.
             
             bool = eval([Graph.getClass(g) '.is_selfconnected()']);
         end
         function bool = is_nonnegative(g)
-            % IS_NONNEGATIVE checks if graph is non negative
+            % IS_NONNEGATIVE checks if graph is non-negative
             %
             % BOOL = IS_NONNEGATIVE(G) returns true if the concrete instance
-            % of graph G is non negative and false otherwise.
+            % of graph G is non-negative and false otherwise.
             %
             % BOOL = IS_NONNEGATIVE(GRAPH_CLASS) returns true if the graph
-            % whose class is GRAPH_CLASS is non negative and false otherwise.
-            %
-            % See also is_selfconnected, is_weighted.
-            
+            % whose class is GRAPH_CLASS is non-negative and false otherwise.
             
             bool = eval([Graph.getClass(g) '.is_nonnegative()']);
         end
@@ -364,7 +355,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_WEIGHTED(GRAPH_CLASS) returns true if a graph whose
             % class is GRAPH_CLASS is weighted and false otherwise.
             %
-            % See also is_selfconnected, is_binary.
+            % See also is_binary().
             
             bool = eval([Graph.getClass(g) '.is_weighted()']);
         end
@@ -377,7 +368,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_BINARY(GRAPH_CLASS) returns true if a graph whose
             % class if GRAPH_CLASS is binary and false otherwise.
             %
-            % See also is_selfconnected, is_weighted.
+            % See also is_weighted().
             
             bool = eval([Graph.getClass(g) '.is_binary()']);
         end
@@ -390,7 +381,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_DIRECTED(GRAPH_CLASS) returns true if a graph whose
             % class is GRAPH_CLASS is directed and false otherwise.
             %
-            % See also is_selfconnected, is_undirected.
+            % See also is_undirected().
             
             bool = eval([Graph.getClass(g) '.is_directed()']);
         end
@@ -403,18 +394,26 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_UNDIRECTED(GRAPH_CLASS) returns true if a graph
             % whose class is GRAPH_CLASS is undirected and false otherwise.
             %
-            % See also is_selfconnected, is_directed.
+            % See also is_directed().
             
             bool = eval([Graph.getClass(g) '.is_undirected()']);
         end
         function g_new = getGraph(g, A, varargin) %#ok<INUSD>
             % GETGRAPH returns a graph
             %
-            % G = GETGRAPH(G, A, VARARGIN{:}) returns a instance
+            % G = GETGRAPH(G, A) returns an instance
             % of the class of the graph G with adjacency matrix A.
             %
-            % G = GETGRAPH(GRAPH_CLASS, A, VARARGIN{:}) returns a instance
+            % G = GETGRAPH(GRAPH_CLASS, A) returns an instance
             % of the class whose class is GRAPH_CLASS with adjacency matrix A.
+            %
+            % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % initializes he property settings with the properties and values.
+            %
+            % G = GETGRAPH(G, A, 'Settings', SETTINGS) 
+            % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS) 
+            % initializes the property settings with SETTINGS.
             %
             % See also getList(), getCompatibleMeasureList().
             

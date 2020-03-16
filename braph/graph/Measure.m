@@ -268,8 +268,14 @@ classdef Measure < handle
         function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
             % GETMEASURE returns a measure
             %
-            % M = GETMEASURE(MEASURE_CODE, G, VARARGIN{:}) returns a instance
+            % M = GETMEASURE(MEASURE_CODE, G) returns a instance
             % of the class MEASURE_CODE with the properties in VARARGIN.
+            %
+            % M = GETMEASURE(MEASURE_CODE, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... )
+            % initializes the property settings with the properties and values.
+            %   
+            % M = GETMEASURE(MEASURE_CODE, 'Settings', SETTINGS) 
+            % initializes the property settings with SETTINGS. 
             %
             % See also getList(), getCompatibleGraphList().
             

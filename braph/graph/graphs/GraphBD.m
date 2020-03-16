@@ -1,28 +1,24 @@
 classdef GraphBD < Graph
-    % GraphBD < Graph : Creates GraphBD.
-    %   GraphBD represents a binary directed graph.
+    % GraphBD < Graph: A bnary directed graph
+    % GraphBD represents a binary directed graph.
     %   
     % GraphBD methods:
-    %   GraphBD    -    constructor.
+    %   GraphBD     - constructor.
     %
     % GraphBD methods (static):
-    %   getClass        -    return the class type GraphBD.
-    %   getName         -    return the complete name of GraphBD.
-    %   getDescription  -   return the description of GraphBD.
-    %   is_selfconnected -  boolean, checks if the graph is self-connected.
-    %   is_nonnegative  -  boolean, checks if the graph is non-negative.
-    %   is_weighted     -  boolean, checks if the graph is weighted.
-    %   is_binary       -  boolean, checks if the graph is binary.
-    %   is_directed     -  boolean, checks if the graph is directed.
-    %   is_undirected   -  boolean, checks if the graph is undirected.
+    %   getClass	- return the class type GraphBD.
+    %   getName     - return the complete name of GraphBD.
+    %   getDescription - return the description of GraphBD.
+    %   is_selfconnected - boolean, checks if the graph is self-connected.
+    %   is_nonnegative - boolean, checks if the graph is non-negative.
+    %   is_weighted - boolean, checks if the graph is weighted.
+    %   is_binary   - boolean, checks if the graph is binary.
+    %   is_directed - boolean, checks if the graph is directed.
+    %   is_undirected - boolean, checks if the graph is undirected.
     %   getCompatibleMeasureList - returns a list with compatible measures.
     %   getCompatibleMeasureNumber - returns the number of compatible measures. 
     %
     % See also Graph, GraphBU, GraphWD, GraphWU.
-    
-    % Author: Emiliano Gomez & Giovanni Volpe
-    % Date: 2020/02/03
-    
     
     methods
         function g = GraphBD(A, varargin)
@@ -53,7 +49,7 @@ classdef GraphBD < Graph
         function graph_class = getClass()
             % GETCLASS returns the class of the graph.
             %
-            % STRING = GETCLASS() returns the class, 'GraphBD'.
+            % GRAPH_CLASS = GETCLASS() returns the class, 'GraphBD'.
             %
             % See also getName().
             
@@ -62,7 +58,7 @@ classdef GraphBD < Graph
         function name = getName()
             % GETNAME returns the name of the graph.
             %
-            % STRING = GETCLASS() returns the name, 'Binary Directed Graph'.
+            % NAME = GETCLASS() returns the name, 'Binary Directed Graph'.
             %
             % See also getClass().
             
@@ -71,8 +67,7 @@ classdef GraphBD < Graph
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
             %
-            % STRINGS = GETDESCRIPTION() returns the description of
-            % GRAPHBD.
+            % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHBD.
             %
             % See also getName().
             
@@ -138,8 +133,7 @@ classdef GraphBD < Graph
             bool = false;
         end        
         function list = getCompatibleMeasureList()
-            % GETCOMPATIBLEMEASURELIST returns a list with compatible
-            % measures.
+            % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
             %
             % LIST = GETCOMPATIBLEMEASURELIST() returns a list with
             % compatible measures to the graph.
@@ -149,8 +143,7 @@ classdef GraphBD < Graph
             list = Graph.getCompatibleMeasureList('GraphBD');
         end
         function n = getCompatibleMeasureNumber()
-            % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible
-            % measures.
+            % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible measures.
             %
             % N = GETCOMPATIBLEMEASURENUMBER() returns the number of 
             % compatible measures to the graph.
