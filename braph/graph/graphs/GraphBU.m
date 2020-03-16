@@ -41,7 +41,7 @@ classdef GraphBU < GraphBD
             % properties and values to the superclass as VARARGIN. 
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
-            % functions: DEDIAGONALIZE, SEMIPOSITIVE, BINARIZE. 
+            % functions: SYMMETRIZE. 
             % It calls the superclass constructor GRAPHBD.
             %
             % See also Graph, GraphBD, GraphWD, GraphWU.
