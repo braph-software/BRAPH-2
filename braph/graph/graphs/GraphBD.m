@@ -1,5 +1,5 @@
 classdef GraphBD < Graph
-    % GraphBD < Graph : Creates GraphBD and implements Graph
+    % GraphBD < Graph : Creates GraphBD.
     %   GraphBD inherits methods from Graph. GraphBD overrides the static
     %   methods from Graph. 
     %   
@@ -146,8 +146,8 @@ classdef GraphBD < Graph
             % GETCOMPATIBLEMEASURELIST returns a list with compatible
             % measures.
             %
-            % CELL ARRAY = GETCOMPATIBLEMEASURELIST() returns a cell array
-            % with compatible measures to the graph.
+            % LIST = GETCOMPATIBLEMEASURELIST() returns a list with
+            % compatible measures to the graph.
             %
             % See also getCompatibleMeasureNumber().
             
