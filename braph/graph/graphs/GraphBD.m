@@ -1,27 +1,22 @@
 classdef GraphBD < Graph
     % GraphBD < Graph : Creates GraphBD.
-    %   GraphBD inherits methods from Graph. GraphBD overrides the static
-    %   methods from Graph. 
+    %   GraphBD represents a binary directed graph.
     %   
     % GraphBD methods:
     %   GraphBD    -    constructor.
     %
     % GraphBD methods (static):
-    %   getClass   -    return the class type GraphBD.
-    %   getName    -    return the complete name of GraphBD.
+    %   getClass        -    return the class type GraphBD.
+    %   getName         -    return the complete name of GraphBD.
     %   getDescription  -   return the description of GraphBD.
-    %   is_selfconnected     -  boolean, checks if the graph is self
-    %                           connected.
-    %   is_nonnegative       -  boolean, checks if the graph is non
-    %                           negative.
-    %   is_weighted          -  boolean, checks if the graph is weighted.
-    %   is_binary            -  boolean, checks if the graph is binary.
-    %   is_directed          -  boolean, checks if the graph is directed.
-    %   is_undirected        -  boolean, checks if the graph is undirected.
-    %   getCompatibleMeasureList   - returns a list with compatible
-    %                                measures.
-    %   getCompatibleMeasureNumber - returns the number of compatible 
-    %                                measures. 
+    %   is_selfconnected -  boolean, checks if the graph is self-connected.
+    %   is_nonnegative  -  boolean, checks if the graph is non-negative.
+    %   is_weighted     -  boolean, checks if the graph is weighted.
+    %   is_binary       -  boolean, checks if the graph is binary.
+    %   is_directed     -  boolean, checks if the graph is directed.
+    %   is_undirected   -  boolean, checks if the graph is undirected.
+    %   getCompatibleMeasureList - returns a list with compatible measures.
+    %   getCompatibleMeasureNumber - returns the number of compatible measures. 
     %
     % See also Graph, GraphBU, GraphWD, GraphWU.
     
@@ -58,7 +53,7 @@ classdef GraphBD < Graph
         function graph_class = getClass()
             % GETCLASS returns the class of the graph.
             %
-            % STRING = GETCLASS() returns the class, 'GRAPHBD'.
+            % STRING = GETCLASS() returns the class, 'GraphBD'.
             %
             % See also getName().
             
