@@ -66,33 +66,11 @@ for i = 1:1:length(subject_class_list)
     
 end
 
-%% Test 3: Groups
+%% Test 3: Change BrainAtlas
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = Subject.getSubject(subject_class, ...
-        repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), ...
-        'SubjectGroups', {1 3 5});
-   
-    groups = sub.getGroups();
-    assert(isequal(groups, {1 3 5}), ...
-        ['BRAPH:' subject_class ':Groups'], ...
-        ['Group managemenr for ' subject_class ' not working'])
-
-    sub.setGroups({ 2 4});
-    groups = sub.getGroups();
-    assert(isequal(groups, {2 4}), ...
-        ['BRAPH:' subject_class ':Groups'], ...
-        ['Group managemenr for ' subject_class ' not working'])
-end
-
-%% Test 4: Change BrainAtlas
-for i = 1:1:length(subject_class_list)
-    subject_class = subject_class_list{i};
-    
-    sub = Subject.getSubject(subject_class, ...
-        repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), ...
-        'SubjectGroups', {1 3 5});
+    sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
 
     atlas_copy = atlas.copy();
     atlasses_copy = repmat({atlas_copy}, 1, sub.getBrainAtlasNumber());
@@ -111,13 +89,11 @@ for i = 1:1:length(subject_class_list)
         [subject_class '.setBrainAtlases() does not work'])
 end
 
-%% Test 5: Copy
+%% Test 4: Copy
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = eval(['Subject.getSubject(subject_class' ...
-        repmat(', atlas', 1, Subject.getBrainAtlasNumber(subject_class)) ...
-        ', ''SubjectGroups'', {1 3 5})']);
+    sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
     
     sub_copy = sub.copy();
     assert(sub ~= sub_copy, ... % different objects, but same values
@@ -138,7 +114,7 @@ for i = 1:1:length(subject_class_list)
         
         d_copy.setValue(ones(size(d_copy.getValue())))
     end
-
+    
     sub_copy2 = sub_copy.copy();
     
     for j = 1:1:length(data_codes)
@@ -153,6 +129,43 @@ for i = 1:1:length(subject_class_list)
             [subject_class '.copy() does not work'])
         assert(isequal(d_copy.getValue(), d_copy2.getValue), ...
             ['BRAPH:' subject_class ':Copy'], ...
-            [subject_class '.copy() does not work'])        
+            [subject_class '.copy() does not work'])
+    end
+end
+
+%% Test 6: Initialize Subclasses with the datacodes.
+for i = 1:1:length(subject_class_list)
+    subject_class = subject_class_list{i};
+    data_codes = Subject.getDataCodes(subject_class);
+    data_list = Subject.getDataList(subject_class);
+
+    varargin = data_codes;
+    sub_emptydata = Subject.getSubject(subject_class, atlas);
+    n = atlas.brainregionnumber();
+    for i = 1:1:numel(data_codes)
+        varargin{(2*i)-1} = data_codes{i};
+        if isequal(data_list(data_codes{i}), 'DataScalar')
+            varargin{(2*i)} = rand();
+        elseif isequal(data_list(data_codes{i}), 'DataFunctional') 
+            varargin{(2*i)} = rand(n, 10);
+        elseif isequal(data_list(data_codes{i}), 'DataConnectivity') 
+            varargin{(2*i)} = rand(n, n);
+        elseif isequal(data_list(data_codes{i}), 'DataStructural')
+            varargin{(2*i)} = rand(n, 1) ;
+        else  % we included this case in the event that theres a new data type and the user does not change the unit test.
+            varargin{(2*i)} = sub_emptydata.getData(data_codes{i}).getValue();            
+        end
+    end
+    
+    sub = Subject.getSubject(subject_class, atlas, varargin{:});
+    
+    assert(isequal(sub.getDataCodes(), data_codes), ...
+        ['BRAPH:' subject_class ':Constructor'], ...
+        ['Constructors for ' subject_class ' not initializing with data codes.'])
+    
+    for j = 1:1:numel(data_codes)
+         assert(isequal(sub.getData(data_codes{j}).getValue(), varargin{2*j}), ...
+        ['BRAPH:' subject_class ':Constructor'], ...
+        ['Constructors for ' subject_class ' not initializing with correct data codes.'])
     end
 end
