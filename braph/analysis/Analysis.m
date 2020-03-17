@@ -1,6 +1,7 @@
 classdef Analysis < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected) 
         cohort  % cohort
+        measurement_dict  % indexed dictionary with measurements
     end
     methods (Access=protected)
         function analysis = Analysis(cohort, varargin)
@@ -10,6 +11,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 ['The first argument must be a Cohort with subjects of class ' analysis.getSubjectClass()]) %#ok<NBRAK>
             analysis.cohort = cohort;
         end
+        % copyElement() %TODO
     end
     methods
     end
