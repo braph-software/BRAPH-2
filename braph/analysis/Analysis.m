@@ -11,9 +11,27 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 ['The first argument must be a Cohort with subjects of class ' analysis.getSubjectClass()]) %#ok<NBRAK>
             analysis.cohort = cohort;
         end
-        % copyElement() %TODO
+        % function copyElement() %TODO
     end
     methods
+        % function n = measurementnumber(analysis) %TODO
+        % function bool = contains_measurement(analysis, measurement) %TODO
+        % function measurement_index = getMeasurementIndex(analysis, measurement) %TODO
+        % function measurement = getMeasurement(analysis, measurement_index) %TODO
+        % function measurement_ids = getMeasurementIDs(analysis) %TODO
+        % function measurement = getNewMeasurement(analysis, varargin) %TODO
+        % function addMeasurement(analysis, measurement, i) %TODO
+        % function removeMeasurement(analysis, i) %TODO
+        % function replaceMeasurement(analysis, i, measurement) %TODO
+        % function invertMeasurements(analysis, i, j) %TODO
+        % function movetoMeasurement(analysis, i, j) %TODO
+        % function selected = removeMeasurements(analysis, selected) %TODO
+        % function [selected, added] = addaboveMeasurements(analysis, selected) %TODO
+        % function [selected, added] = addbelowMeasurements(analysis, selected) %TODO
+        % function selected = moveupMeasurements(analysis, selected) %TODO
+        % function selected = movedownMeasurements(analysis, selected) %TODO
+        % function selected = move2topMeasurements(analysis, selected) %TODO
+        % function selected = move2bottomMeasurements(analysis, selected) %TODO
     end
     methods (Static)
         function analysis_list = getList()
