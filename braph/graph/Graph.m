@@ -63,7 +63,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % GRAPH(A, 'Settings', SETTINGS) ceates a graph and
             % initializes the property settings with SETTINGS.
             %
-            % See also Meaasure, GraphBD, GraphBU, GraphWD, GraphWU.
+            % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
             
             if length(varargin) == 1
                 varargin = varargin{:};
@@ -79,7 +79,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         function g_copy = copyElement(g)
             % COPYELEMENT(G) copies elements of graph
             %
-            % G_COPY = COPYELEMENT(G) copues elements of the graph G.
+            % G_COPY = COPYELEMENT(G) copies elements of the graph G.
             % Makes a deep copy of the structure of the graph.
             %
             % See also Cohort.
