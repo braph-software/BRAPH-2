@@ -58,12 +58,12 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % Graph(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
             % creates a graph with properties and values. It initializes
-            % he property settings with the properties and values.
+            % the property settings with the properties and values.
             %
             % GRAPH(A, 'Settings', SETTINGS) ceates a graph and
             % initializes the property settings with SETTINGS.
             %
-            % See also Meaasure, GraphBD, GraphBU, GraphWD, GraphWU.
+            % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
             
             if length(varargin) == 1
                 varargin = varargin{:};

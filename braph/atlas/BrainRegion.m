@@ -1,4 +1,31 @@
 classdef BrainRegion < handle & matlab.mixin.Copyable
+    % BrainRegion < handle & matlab.mixin.Copyable: A brain region.
+    % BrainRegion contains the information of a brain region.
+    %
+    % BrainRegion properties (GetAccess=protected, SetAccess=protected):
+    %   label       -    unique identifier for the brain region. 
+    %   name        -    extended name of the brain region.
+    %   x           -    x-coordinate of the brain region.
+    %   y           -    y-coordinate of the brain region.
+    %   z           -    z-coordinate of the brain region.
+    %
+    % BrainRegion methods
+    %   Graph       - constructor.
+    %   copyElement - deep copy community structure.
+    %
+    % Graph methods:
+    %   BrainRegion    -    Constructor.
+    %   tostring       -    returns a string representing the brain region.
+    %   disp           -    displays the brain region.
+    %   getLabel       -    returns the label.
+    %   getName        -    returns the name.
+    %   getX           -    returns the x coordinate.
+    %   getY           -    returns the y coordinate.
+    %   getZ           -    returns the z coordinate.
+    %   getPosition    -    retuns an array with the x, y, z coordinates. 
+    %
+    % See also BrainAtlas.
+    
     properties (GetAccess=protected, SetAccess=protected)
         label  % few-letter code (unique for each brain region)
         name  % extended name
@@ -8,7 +35,15 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     end
     methods
         function br = BrainRegion(label, name, x, y, z)
+            % BrainRegion(varargin) creates a barin region with
+            % default properties for each missing argument.
+            %
+            % BrainRegion(label, name, x, y, z) creates a brain region with
+            % the corresponding arguments: label, name, x, y, z. 
+            %
+            % See also BrainAtlas.
             
+            % default arguments check
             if nargin < 5
                 z = 0;
             end
@@ -29,7 +64,8 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
                 label = 'BR';
             end
             
-            br.label = label;
+            % initialization of brain region propeties.
+            br.label = label;  
             br.name = name;
             br.x = x;
             br.y = y;
