@@ -72,30 +72,85 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             br.z = z;
         end
         function str = tostring(br)
+            % TOSTRING string with information about the brain region.
+            %
+            % STR = TOSTRING(BR) returns string with the brain class, label,
+            % name and position.
+            %
+            % See also disp().
+            
             str = [class(br) ' '  br.getLabel() ' ' br.getName() ' ' mat2str(br.getPosition())];
         end
         function disp(br)
+            % DISP displays information about the brain region.
+            %
+            % DISP(BR) displays information about the brain region.
+            % It provides information about brain region class, label,
+            % name, and position.
+            %
+            % See also tostring().
+            
             disp(['<a href="matlab:help ' class(br) '">' class(br) '</a>'])
             disp([' label: ' br.getLabel()])
             disp([' name: ' br.getName()])
             disp([' position: ' mat2str(br.getPosition())])            
         end
         function label = getLabel(br)
+            % GETLABEL returns the label of the brain region.
+            %
+            % LABEL = GETLABEL(BR) returns the label of the brain region.
+            %
+            % See also getName(), getX(), getPosition().
+            
             label = br.label;
         end
         function name = getName(br)
+            % GETNAME returns the name of the brain region.
+            %
+            % STRING = GETNAME(BR) returns the extendend name of the brain
+            % region.
+            %
+            % See also getLabel(), getX(), getPosition().
+            
             name = br.name;
         end
         function x = getX(br)
+            % GETX returns the x coordinate.
+            %
+            % DOUBLE = GETX(BR) returns the x coordinate of the brain
+            % region.
+            %
+            % See also getLabel(), getY(), getPosition().
+            
             x = br.x;
         end
         function y = getY(br)
+            % GETY returns the y coordinate.
+            %
+            % DOUBLE = GETY(BR) returns the y coordinate of the brain
+            % region.
+            %
+            % See also getLabel(), getX(), getPosition().
+            
             y = br.y;
         end
         function z = getZ(br)
+            % GETZ returns the z coordinate.
+            %
+            % DOUBLE = GETZ(BR) returns the z coordinate of the brain
+            % region.
+            %
+            % See also getLabel(), getX(), getPosition().
+            
             z = br.z;
         end
         function r = getPosition(br)
+            % GETPOSITION returns the x,y,z coordinates.
+            %
+            % ARRAY = GETZ(BR) returns the x, y, z coordinates of the brain
+            % region in an array.
+            %
+            % See also getLabel(), getX(), getPosition().
             r = [br.getX() br.getY() br.getZ()];
         end
     end
