@@ -57,7 +57,7 @@ classdef EdgeBetweennessCentrality < Measure
                         end
                     end
                 end
-                edge_betweenness_centrality = EBC';                
+                edge_betweenness_centrality = EBC;                
                 % Weighted graphs WU and WD
             elseif isa(g, 'GraphWU') || isa(g, 'GraphWD')
                 for u=1:n
@@ -107,7 +107,7 @@ classdef EdgeBetweennessCentrality < Measure
                         end
                     end
                 end
-                edge_betweenness_centrality = EBC';
+                edge_betweenness_centrality = EBC;
             end
             edge_betweenness_centrality(isnan(edge_betweenness_centrality)) = 0; % Should return zeros, not NaN
         end
@@ -132,10 +132,10 @@ classdef EdgeBetweennessCentrality < Measure
             bool = false;
         end
         function bool = is_nodal()
-            bool = true;
+            bool = false;
         end
         function bool = is_binodal()
-            bool = false;
+            bool = true;
         end
         function list = getCompatibleGraphList()
             list = { ...
