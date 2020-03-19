@@ -3,26 +3,26 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     % BrainRegion contains the information of a brain region.
     %
     % BrainRegion properties (GetAccess=protected, SetAccess=protected):
-    %   label       -    unique identifier for the brain region. 
-    %   name        -    extended name of the brain region.
-    %   x           -    x-coordinate of the brain region.
-    %   y           -    y-coordinate of the brain region.
-    %   z           -    z-coordinate of the brain region.
+    %   label        - unique identifier for the brain region. 
+    %   name         - extended name of the brain region.
+    %   x            - x-coordinate of the brain region.
+    %   y            - y-coordinate of the brain region.
+    %   z            - z-coordinate of the brain region.
     %
     % BrainRegion methods
-    %   Graph       - constructor.
-    %   copyElement - deep copy community structure.
+    %   Graph        - constructor.
+    %   copyElement  - deep copy community structure.
     %
     % Graph methods:
-    %   BrainRegion    -    Constructor.
-    %   tostring       -    returns a string representing the brain region.
-    %   disp           -    displays the brain region.
-    %   getLabel       -    returns the label.
-    %   getName        -    returns the name.
-    %   getX           -    returns the x coordinate.
-    %   getY           -    returns the y coordinate.
-    %   getZ           -    returns the z coordinate.
-    %   getPosition    -    retuns an array with the x, y, z coordinates. 
+    %   BrainRegion  - Constructor.
+    %   tostring     - returns a string representing the brain region.
+    %   disp         - displays the brain region.
+    %   getLabel     - returns the label.
+    %   getName      - returns the name.
+    %   getX         - returns the x coordinate.
+    %   getY         - returns the y coordinate.
+    %   getZ         - returns the z coordinate.
+    %   getPosition  - retuns an array with the x, y, z coordinates. 
     %
     % See also BrainAtlas.
     
@@ -35,8 +35,8 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     end
     methods
         function br = BrainRegion(label, name, x, y, z)
-            % BrainRegion(varargin) creates a barin region with
-            % default properties for each missing argument.
+            % BrainRegion() creates a brain region with
+            % default properties.
             %
             % BrainRegion(label, name, x, y, z) creates a brain region with
             % the corresponding arguments: label, name, x, y, z. 
@@ -64,7 +64,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
                 label = 'BR';
             end
             
-            % initialization of brain region propeties.
+            % initialization of brain region properties.
             br.label = label;  
             br.name = name;
             br.x = x;
@@ -100,7 +100,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             %
             % LABEL = GETLABEL(BR) returns the label of the brain region.
             %
-            % See also getName(), getX(), getPosition().
+            % See also getName(), getX(), getY(), getZ(), getPosition().
             
             label = br.label;
         end
@@ -110,7 +110,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % STRING = GETNAME(BR) returns the extendend name of the brain
             % region.
             %
-            % See also getLabel(), getX(), getPosition().
+            % See also getLabel(), getX(), getY(), getZ(), getPosition().
             
             name = br.name;
         end
@@ -120,7 +120,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % DOUBLE = GETX(BR) returns the x coordinate of the brain
             % region.
             %
-            % See also getLabel(), getY(), getPosition().
+            % See also getLabel(), getY(), getZ(), getPosition().
             
             x = br.x;
         end
@@ -130,7 +130,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % DOUBLE = GETY(BR) returns the y coordinate of the brain
             % region.
             %
-            % See also getLabel(), getX(), getPosition().
+            % See also getLabel(), getX(), getZ(), getPosition().
             
             y = br.y;
         end
@@ -140,7 +140,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % DOUBLE = GETZ(BR) returns the z coordinate of the brain
             % region.
             %
-            % See also getLabel(), getX(), getPosition().
+            % See also getLabel(), getX(), getY(), getPosition().
             
             z = br.z;
         end
@@ -150,7 +150,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % ARRAY = GETZ(BR) returns the x, y, z coordinates of the brain
             % region in an array.
             %
-            % See also getLabel(), getX(), getPosition().
+            % See also getLabel(), getX(), getY(), getZ().
             r = [br.getX() br.getY() br.getZ()];
         end
     end
