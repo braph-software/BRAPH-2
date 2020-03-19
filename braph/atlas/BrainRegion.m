@@ -107,7 +107,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
         function name = getName(br)
             % GETNAME returns the name of the brain region.
             %
-            % STRING = GETNAME(BR) returns the extendend name of the brain
+            % NAME = GETNAME(BR) returns the extendend name of the brain
             % region.
             %
             % See also getLabel(), getX(), getY(), getZ(), getPosition().
@@ -117,7 +117,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
         function x = getX(br)
             % GETX returns the x coordinate.
             %
-            % DOUBLE = GETX(BR) returns the x coordinate of the brain
+            % X = GETX(BR) returns the x coordinate of the brain
             % region.
             %
             % See also getLabel(), getY(), getZ(), getPosition().
@@ -127,7 +127,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
         function y = getY(br)
             % GETY returns the y coordinate.
             %
-            % DOUBLE = GETY(BR) returns the y coordinate of the brain
+            % Y = GETY(BR) returns the y coordinate of the brain
             % region.
             %
             % See also getLabel(), getX(), getZ(), getPosition().
@@ -137,7 +137,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
         function z = getZ(br)
             % GETZ returns the z coordinate.
             %
-            % DOUBLE = GETZ(BR) returns the z coordinate of the brain
+            % Z = GETZ(BR) returns the z coordinate of the brain
             % region.
             %
             % See also getLabel(), getX(), getY(), getPosition().
@@ -147,10 +147,11 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
         function r = getPosition(br)
             % GETPOSITION returns the x,y,z coordinates.
             %
-            % ARRAY = GETZ(BR) returns the x, y, z coordinates of the brain
+            % POSITION = GETZ(BR) returns the x, y, z coordinates of the brain
             % region in an array.
             %
             % See also getLabel(), getX(), getY(), getZ().
+            
             r = [br.getX() br.getY() br.getZ()];
         end
     end
