@@ -1,27 +1,25 @@
 classdef Degree < Measure
     % Degree < Measure: Degree measure
     % Degree provides the degree of a node for binary undirected (BU) and 
-    % weighted undirected (WU) graphs. 
-    % The degree of a node is calculated as the number of edges connected 
-    % to the node. 
-    % In this calculation, the diagonal of connection matrix is removed 
-    % i.e. self-connections are not considered.
+    % weighted undirected (WU) graphs. It is calculated as the number of
+    % edges connected to the node. Self-connections are excluded (i.e. the
+    % diagonal of the connection matrix is removed).
     % 
     % Degree methods:
-    %   Degree                   - constructor with Measure properties.
+    %   Degree      - constructor with Measure properties.
     %
     % Degree methods (Access=protected):
-    %   calculate                - calculates the degree of a node.
+    %   calculate	- calculates the degree of a node.
     % 
     % Degree methods (Static)
-    %   getClass                 - returns the degree class.
-    %   getName                  - returns the name of degree measure.
-    %   getDescription           - returns the description of degree measure.
-    %   is_global                - boolean, checks if degree measure is global.
-    %   is_nodal                 - boolean, checks if degree measure is nodal.
-    %   is_binodal               - boolean, checks if degree measure if binodal.
-    %   getMeasure               - returns the degree class.
-    %   getCompatibleGraphList   - returns a list of compatible graphs.
+    %   getClass	- returns the degree class.
+    %   getName     - returns the name of degree measure.
+    %   getDescription - returns the description of degree measure.
+    %   is_global	- boolean, checks if degree measure is global.
+    %   is_nodal    - boolean, checks if degree measure is nodal.
+    %   is_binodal	- boolean, checks if degree measure if binodal.
+    %   getMeasure  - returns the degree class.
+    %   getCompatibleGraphList - returns a list of compatible graphs.
     %   getCompatibleGraphNumber - returns the number of compatible graphs.
     %
     % See also Measure, Graph, Strength, Distance, Efficency.
