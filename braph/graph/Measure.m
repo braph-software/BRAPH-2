@@ -10,9 +10,9 @@ classdef Measure < handle
     %   settings    - structure with the constructor settings.
     %   value       - graph measure value
     %                 the value can be:
-    %                 SCALAR for GLOBAL measures
+    %                 a SCALAR for GLOBAL measures
     %                 a COLUMN VECTOR for NODAL measures
-    %                 A SQUARE MATRIX for BINODAL measures
+    %                 a SQUARE MATRIX for BINODAL measures
     % 
     % Measure methods (Access=protected):
     %   Measure     - constructor.
@@ -21,25 +21,25 @@ classdef Measure < handle
     %   tostring    - returns a string representing the measure.
     %   disp        - displays the measure.
     %   getGraph    - returns the graph associated with the measure.
-    %   getSettings - returns the settings of the measure.
+    %   getSettings	- returns the settings of the measure.
     %   is_value_calculated - boolean, checks if the measure has been calculated.
-    %   getValue    - returns the value of the measure.
+    %   getValue	- returns the value of the measure.
     %   
     % Measure methods (Abstract, Access=protected):
-    %   calculate   - abstract function
+    %   calculate	- abstract function
     %                 inheriting classes must implement this method.
     %
     % Measure methods (Static)
-    %   getList     - return a list with subclasses of measure.
-    %   getClass    - return the class type of the measure.
-    %   getName     - return the name of the measure.
-    %   getDescription - return the description of the measure.
-    %   is_global   - boolean, checks if the measure is global.
-    %   is_nodal    - boolean, checks if the measure is nodal.
-    %   is_binodal  - boolean, checks if the measure if binodal.
-    %   getMeasure  - returns the measure class.
-    %   getCompatibleGraphList - returns a list of compatible measures.
-    %   getCompatibleGraphNumber - returns the number of compatible measures.
+    %   getList     - returns a list with subclasses of measure.
+    %   getClass    - returns the class type of the measure.
+    %   getName     - returns the name of the measure.
+    %   getDescription  - returns the description of the measure.
+    %   is_global	- boolean, checks if the measure is global.
+    %   is_nodal	- boolean, checks if the measure is nodal.
+    %   is_binodal	- boolean, checks if the measure if binodal.
+    %   getMeasure	- returns the measure class.
+    %   getCompatibleGraphList - returns a list of compatible graphs.
+    %   getCompatibleGraphNumber - returns the number of compatible graphs.
     %
     % See also Graph, handle, Degree, Strength, Distance, Efficency.
         
