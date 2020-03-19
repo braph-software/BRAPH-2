@@ -22,7 +22,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     %   getX         - returns the x coordinate.
     %   getY         - returns the y coordinate.
     %   getZ         - returns the z coordinate.
-    %   getPosition  - retuns an array with the x, y, z coordinates. 
+    %   getPosition  - returns an array with the x, y, z coordinates. 
     %
     % See also BrainAtlas.
     
