@@ -2,6 +2,7 @@
 classdef ComparisionMRI < Measurement
     methods
         function m =  ComparisionMRI(atlas, group, varargin)
+            
             if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
             else
@@ -10,7 +11,7 @@ classdef ComparisionMRI < Measurement
                     ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
                 atlases = atlas;
             end
-            %         % grousps
+            
             if isa(atlas, 'Group')
                 groups = {group};
             else
@@ -19,6 +20,7 @@ classdef ComparisionMRI < Measurement
                     ['The input must be a Group or a cell with one Group']) %#ok<NBRAK>
                 groups = group;
             end
+            
             m = m@Measurement(atlases, groups, varargin{:});
         end
     end
@@ -63,20 +65,20 @@ classdef ComparisionMRI < Measurement
             data_class = Measuremente.getDataNumber(...
                         'ComparisionMRI', data_code);
         end
-        function bool = is_global(m)
-            bool = true;  % all global for now
-        end
-        function bool = is_nodal(m)
-            bool = false;
-        end
-        function bool = is_binodal(m)
-            bool = false;
-        end
-        function list = getCompatibleDataTypeList(m)  % ???
-            list = Measurement.getCompatibleDataTypeList('ComparisionMRI');
-        end
-        function n = getCompatibleDataTypeNumber(m)           
-            n = Measurement.getCompatibleDataTypeNumber('ComparisionMRI');
-        end
+%         function bool = is_global(m)
+%             bool = true;  % all global for now
+%         end
+%         function bool = is_nodal(m)
+%             bool = false;
+%         end
+%         function bool = is_binodal(m)
+%             bool = false;
+%         end
+%         function list = getCompatibleDataTypeList(m)  % ???
+%             list = Measurement.getCompatibleDataTypeList('ComparisionMRI');
+%         end
+%         function n = getCompatibleDataTypeNumber(m)           
+%             n = Measurement.getCompatibleDataTypeNumber('ComparisionMRI');
+%         end
      end    
 end
