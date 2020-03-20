@@ -87,7 +87,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function str = tostring(atlas)
             % TOSTRING string with information about the BrainAtlas
             %
-            % STR = TOSTRING(ATLAS) returns string with the BrainAtlas name
+            % STRING = TOSTRING(ATLAS) returns string with the BrainAtlas name
             % and brain atlas size.
             %
             % See also disp().
@@ -113,7 +113,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function name = getName(atlas)
             % GETNAME returns the name of the BrainAtlas.
             %
-            % STRING = GETNAME(ATLAS) returns the name of the BrainAtlas.
+            % NAME = GETNAME(ATLAS) returns the name of the BrainAtlas.
             %
             % See also brainregionnumber().
             
@@ -142,7 +142,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function br = getBrainRegion(atlas, br_index)
             % GETBRAINREGION returns the brain region.
             %
-            % BrainRegion = GETBRAINREGION(ATLAS, BRINDEX) returns the
+            % BR = GETBRAINREGION(ATLAS, BRINDEX) returns the
             % BrainRegion indicated with BRINDEX from the dictionary
             % BRDICT.
             %
@@ -153,7 +153,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function brain_regions = getBrainRegions(atlas)
             % GETBRAINREGIONS returns all brain regions.
             %
-            % BrainRegions = GETBRAINREGIONS(ATLAS) returns all the
+            % BRS = GETBRAINREGIONS(ATLAS) returns all the
             % BrainRegions from the dictionary the BRDICT.
             %
             % See also getBrainRegionLabels().
@@ -163,7 +163,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function br_labels = getBrainRegionLabels(atlas)
             % GETBRAINREGIONLABELS returns all BrainRegion labels.
             %
-            % ARRAY(LABEL) = GETBRAINREGIONLABELS(ATLAS) returns all the
+            % BR_LABELS = GETBRAINREGIONLABELS(ATLAS) returns all the
             % BrainRegions labels from the dictionary the BRDICT.
             %
             % See also getBrainRegions(), getBrainNames().
@@ -177,7 +177,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function br_names = getBrainRegionNames(atlas)
             % GETBRAINREGIONNAMES returns all brain region names.
             %
-            % ARRAY(STRING) = GETBRAINREGIONNAMES(ATLAS) returns all the
+            % BR_NAMES = GETBRAINREGIONNAMES(ATLAS) returns all the
             % BrainRegions names from the dictionary the BRDICT.
             %
             % See also getBrainRegions(), getBrainLabels()
@@ -191,7 +191,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function br_xs = getBrainRegionXs(atlas)
             % GETBRAINREGIONXS returns all BrainRegion x coordinates.
             %
-            % ARRAY(DOUBLE) = GETBRAINREGIONXS(ATLAS) returns all the
+            % BR_XS = GETBRAINREGIONXS(ATLAS) returns all the
             % BrainRegions x coordinates from the dictionary the BRDICT.
             %
             % See also getBrainRegions(), getBrainLabels().
@@ -205,7 +205,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function br_ys = getBrainRegionYs(atlas)
             % GETBRAINREGIONYS returns all BrainRegion y coordinates.
             %
-            % ARRAY(DOUBLE) = GETBRAINREGIONYS(ATLAS) returns all the
+            % BR_YS = GETBRAINREGIONYS(ATLAS) returns all the
             % BrainRegions y coordinates from the dictionary the BRDICT.
             %
             % See also getBrainRegions(), getBrainLabels().
@@ -219,7 +219,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function br_zs = getBrainRegionZs(atlas)
             % GETBRAINREGIONZS returns all BrainRegion z coordinates.
             %
-            % ARRAY(DOUBLE) = GETBRAINREGIONZS(ATLAS) returns all the
+            % BR_ZS = GETBRAINREGIONZS(ATLAS) returns all the
             % BrainRegions z coordinates from the dictionary the BRDICT.
             %
             % See also getBrainRegions(), getBrainLabels().
@@ -233,7 +233,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function br_positions = getBrainRegionPositions(atlas)
             % GETBRAINREGIONPOSITIONS returns all BrainRegion positions.
             %
-            % ARRAY(DOUBLE) = GETBRAINREGIONPOSITIONS(ATLAS) returns all the
+            % BR_POSITION = GETBRAINREGIONPOSITIONS(ATLAS) returns all the
             % BrainRegions positions from the dictionary the BRDICT.
             %
             % See also getBrainRegions(), getBrainLabels().
