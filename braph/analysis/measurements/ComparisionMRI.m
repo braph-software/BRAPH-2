@@ -6,7 +6,7 @@ classdef ComparisionMRI < Measurement
                 atlases = {atlas};
             else
                 assert(iscell(atlas) && length(atlas)==1, ...
-                    ['BRAIN:MeasurmentMRI:AtlasErr'], ...
+                    ['BRAIN:ComparisionMRI:AtlasErr'], ...
                     ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
                 atlases = atlas;
             end
@@ -15,7 +15,7 @@ classdef ComparisionMRI < Measurement
                 groups = {group};
             else
                 assert(iscell(group) && length(group)==1, ...
-                    ['BRAIN:MeasurmentMRI:GroupErr'], ...
+                    ['BRAIN:ComparisionMRI:GroupErr'], ...
                     ['The input must be a Group or a cell with one Group']) %#ok<NBRAK>
                 groups = group;
             end
@@ -24,34 +24,59 @@ classdef ComparisionMRI < Measurement
     end
     % data : single datascalar & datastructer use only depending on the
     % measure.
-    methods (Access = protected)
-        function initialize_datadict(m, varargin)
-            
-            atlases = m.getBrainAtlases();
-            atlas = atlases{1};
-            
-            m.datadict = containers.Map;
-            %             m.datadict('age') = DataScalar(atlas);
-            %             m.datadict('DTI') = DataConnectivity(atlas);
+     methods (Static)
+        function measurementClass = getClass(m)
+          measurementClass = 'ComparisionMRI';
         end
-        function update_brainatlases(m, atlases)
-            
-            m.atlases = atlases;
-            % this has to be inside a for?
-            %for i = 1:1:numel(atlases)
-            atlas = atlases{1}; %atlas = atlases{i};
-            
-%             d1 = m.datadict('age');  % d1 = m.datadict(key);
-%             d1.setBrainAtlas(atlas)  % d1.setBrainAtlas(atlas);
-%             
-%             d2 = m.datadict('DTI');
-%             d2.setBrainAtlas(atlas);
-            %end
+        function name = getName(m)
+            name = 'Comparision MRI';
         end
-        function update_groups(m, groups)
-            m.groups = groups;
-            group = groups{1};
+        function description = getDescription(m)
+            % measurement description missing
+            description = '';
         end
-    end
-    
+        function atlasNumber = getAtlasesNumber(m)
+            atlasNumber = numel(m.atlases);
+        end
+        function groupsNumber = getGroupsNumber(m)
+            groupsNumber = numel(m.groups);
+        end
+        function datalist = getDataList(m)
+            % list of measurments data keys
+            datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
+            datalist('graphMeasure') = 'DataScalar';
+            datalist('graphValue') = 'DataScalar';  % all globals for now
+        end
+        function sub = getMeasurement(measurementClass, varargin)
+            sub = eval([measurementClass '(varargin{:})']);
+        end
+        function data_codes = getDataCodes(m)
+            data_codes = Measurement.getDataCodes('ComparisionMRI');
+        end
+        function data_number = getDataNumber(m)
+            data_number = Measurement.getDataNumber('ComparisionMRI');
+        end
+        function data_classes = getDataClasses(m)
+            data_classes = Measurement.getDataClasses('ComparisionMRI');
+        end
+        function data_class = getDataClass(m, data_code)
+            data_class = Measuremente.getDataNumber(...
+                        'ComparisionMRI', data_code);
+        end
+        function bool = is_global(m)
+            bool = true;  % all global for now
+        end
+        function bool = is_nodal(m)
+            bool = false;
+        end
+        function bool = is_binodal(m)
+            bool = false;
+        end
+        function list = getCompatibleDataTypeList(m)  % ???
+            list = Measurement.getCompatibleDataTypeList('ComparisionMRI');
+        end
+        function n = getCompatibleDataTypeNumber(m)           
+            n = Measurement.getCompatibleDataTypeNumber('ComparisionMRI');
+        end
+     end    
 end

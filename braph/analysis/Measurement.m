@@ -143,16 +143,16 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
         function list = getCompatibleDataTypeList(m)  % ???
             measurement_class = Measurment.getClass(m);
-           % dataType_List =  ;  ????
-%             list = cell(1, length(dataType_List));
-%             for i = 1:1:length(dataType_List)
-%                 datatype_code = dataType_List{i};
-%                 
-%                 if are_compatible(measurement_class, datatype_code)
-%                     list{i} = datatype_code;
-%                 end
-%             end
-%             list(cellfun('isempty', list)) = [];
+            dataType_List = Measurement.getList();  % ????
+            list = cell(1, numel(dataType_List));
+            for i = 1:1:numel(dataType_List)
+                datatype_code = dataType_List{i};
+                
+                if are_compatible(measurement_class, datatype_code)
+                    list{i} = datatype_code;
+                end
+            end
+            list(cellfun('isempty', list)) = [];
         end
         function n = getCompatibleDataTypeNumber(m)
             list = Measurement.getCompatibleDataTypeList(m);
