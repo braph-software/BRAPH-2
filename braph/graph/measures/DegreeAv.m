@@ -7,21 +7,21 @@ classdef DegreeAv < Degree
     % matrix is removed).
     % 
     % DegreeAv methods:
-    %   DegreeAv      - constructor with Degree properties.
+    %   DegreeAv                    - constructor with Degree properties.
     %
     % DegreeAv methods (Access=protected):
-    %   calculate	- calculates the average degree of a node.
+    %   calculate                   - calculates the average degree of a node.
     % 
     % DegreeAv methods (Static)
-    %   getClass	- returns the average degree class.
-    %   getName     - returns the name of average degree measure.
-    %   getDescription - returns the description of average degree measure.
-    %   is_global	- boolean, checks if average degree measure is global.
-    %   is_nodal    - boolean, checks if average degree measure is nodal.
-    %   is_binodal	- boolean, checks if average degree measure if binodal.
-    %   getMeasure  - returns the average degree class.
-    %   getCompatibleGraphList - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber - returns the number of compatible graphs.
+    %   getClass                    - returns the average degree class.
+    %   getName                     - returns the name of average degree measure.
+    %   getDescription              - returns the description of average degree measure.
+    %   is_global                   - boolean, checks if average degree measure is global.
+    %   is_nodal                    - boolean, checks if average degree measure is nodal.
+    %   is_binodal                  - boolean, checks if average degree measure if binodal.
+    %   getMeasure                  - returns the average degree class.
+    %   getCompatibleGraphList      - returns a list of compatible graphs.
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
     % See also Measure, Degree, Graph, Strength, Distance, Efficency.
     
@@ -31,7 +31,7 @@ classdef DegreeAv < Degree
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % DEGREEAV(G, 'Settings', SETTINGS) ceates average degree measure 
+            % DEGREEAV(G, 'Settings', SETTINGS) creates average degree measure 
             % and initializes the property settings with SETTINGS. 
             %   
             % See also Degree, Measure, Graph, StrengthAv, PathLengthAv. 
