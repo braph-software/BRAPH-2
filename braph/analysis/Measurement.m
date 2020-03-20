@@ -3,21 +3,21 @@ classdef Measurement < handle & matlab.mixin.Copyable
         groups  % cell array with groups
         atlases  % cell array with brain atlases
         settings  % settings of the measurement
-        datadict  % data for measurements
+        data_dict  % dictionary with measurement data
     end
     methods (Access = protected)
         function m = Measurement(atlases, groups, varargin)
+                        
+            assert(iscell(atlases), ...
+                ['BRAIN:Measurement:AtlasErr'], ...
+                ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
+            m.atlases = atlases;
             
             assert(iscell(groups), ...
                 ['BRAIN:Measurement:GroupErr'], ...
-                ['The input must be a cell containing Groups objects'])
+                ['The input must be a cell containing Groups objects']) %#ok<NBRAK>
             m.groups = groups;
-            
-            assert(iscell(atlases), ...
-                ['BRAIN:Measurement:AtlasErr'], ...
-                ['The input must be a cell containing BrainAtlas objects'])
-            m.atlases = atlases;
-            
+
             m.settings = get_from_varargin(varargin, ...
                 'MeasurementSettings', varargin{:});
             
@@ -54,7 +54,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods
         function str = tostring(m)
-            str = [Measurement.getClass(m)];
+            str = [Measurement.getClass(m)]; %#ok<NBRAK>
         end
         function disp(m)
             disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])
@@ -132,31 +132,31 @@ classdef Measurement < handle & matlab.mixin.Copyable
             datalist = Measurement.getDataList(m);
             data_class = datalist(data_code);
         end
-        function bool = is_global(m)
-            bool = eval([Measurement.getClass(m) '.is_global()']);
-        end
-        function bool = is_nodal(m)
-            bool = eval([Measurement.getClass(m) '.is_nodal()']);
-        end
-        function bool = is_binodal(m)
-            bool = eval([Measurement.getClass(m) '.is_binodal()']);
-        end
-        function list = getCompatibleDataTypeList(m)  % ???
-            measurement_class = Measurment.getClass(m);
-            dataType_List = Measurement.getList();  % ????
-            list = cell(1, numel(dataType_List));
-            for i = 1:1:numel(dataType_List)
-                datatype_code = dataType_List{i};
-                
-                if are_compatible(measurement_class, datatype_code)
-                    list{i} = datatype_code;
-                end
-            end
-            list(cellfun('isempty', list)) = [];
-        end
-        function n = getCompatibleDataTypeNumber(m)
-            list = Measurement.getCompatibleDataTypeList(m);
-            n = numel(list);
-        end
+%         function bool = is_global(m)
+%             bool = eval([Measurement.getClass(m) '.is_global()']);
+%         end
+%         function bool = is_nodal(m)
+%             bool = eval([Measurement.getClass(m) '.is_nodal()']);
+%         end
+%         function bool = is_binodal(m)
+%             bool = eval([Measurement.getClass(m) '.is_binodal()']);
+%         end
+%         function list = getCompatibleDataTypeList(m)  % ???
+%             measurement_class = Measurment.getClass(m);
+%             dataType_List = Measurement.getList();  % ????
+%             list = cell(1, numel(dataType_List));
+%             for i = 1:1:numel(dataType_List)
+%                 datatype_code = dataType_List{i};
+%                 
+%                 if are_compatible(measurement_class, datatype_code)
+%                     list{i} = datatype_code;
+%                 end
+%             end
+%             list(cellfun('isempty', list)) = [];
+%         end
+%         function n = getCompatibleDataTypeNumber(m)
+%             list = Measurement.getCompatibleDataTypeList(m);
+%             n = numel(list);
+%         end
     end
 end
