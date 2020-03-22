@@ -94,30 +94,27 @@ classdef DegreeAv < Degree
                 ];
         end
         function bool = is_global()
-            % IS_GLOBAL checks if degree measure is global
+            % IS_GLOBAL checks if degree measure is global (true)
             %
-            % BOOL = IS_GLOBAL() returns true if the average degree measure 
-            % is global and false otherwise.
+            % BOOL = IS_GLOBAL() returns true.
             %
             % See also is_nodal, is_binodal.
                                             
             bool = true;
         end
         function bool = is_nodal()
-            % IS_NODAL checks if degree measure is nodal
+            % IS_NODAL checks if degree measure is nodal (false)
             %
-            % BOOL = IS_NODAL() returns true if the average degree measure 
-            % is nodal and false otherwise.
+            % BOOL = IS_NODAL() returns false.
             %
             % See also is_global, is_binodal. 
                        
             bool = false;
         end
         function bool = is_binodal()
-            % IS_BINODAL checks if degree measure is binodal
+            % IS_BINODAL checks if degree measure is binodal (false)
             %
-            % BOOL = IS_BINODAL() returns true if the average degree measure 
-            % is binodal and false otherwise.
+            % BOOL = IS_BINODAL() returns false.
             %
             % See also is_global, is_nodal.
                        
@@ -125,10 +122,10 @@ classdef DegreeAv < Degree
         end
         function list = getCompatibleGraphList() 
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to average degree measure
+            % to average degree 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to average degree measure. 
+            % of compatible graph classes to average degree. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -140,10 +137,10 @@ classdef DegreeAv < Degree
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to average degree measure
+            % graphs to average degree 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to average degree measure.
+            % compatible graphs to average degree.
             % 
             % See also getCompatibleGraphList().
                       

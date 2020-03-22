@@ -86,30 +86,27 @@ classdef Degree < Measure
                 ];
         end
         function bool = is_global()
-            % IS_GLOBAL checks if degree measure is global
+            % IS_GLOBAL checks if degree measure is global (false)
             %
-            % BOOL = IS_GLOBAL() returns true if the degree measure is
-            % global and false otherwise.
+            % BOOL = IS_GLOBAL() returns false.
             %
             % See also is_nodal, is_binodal.
                                    
             bool = false;
         end
         function bool = is_nodal()
-            % IS_NODAL checks if degree measure is nodal
+            % IS_NODAL checks if degree measure is nodal (true)
             %
-            % BOOL = IS_NODAL() returns true if the degree measure is
-            % nodal and false otherwise.
+            % BOOL = IS_NODAL() returns true.
             %
             % See also is_global, is_binodal. 
             
             bool = true;
         end
         function bool = is_binodal()
-            % IS_BINODAL checks if degree measure is binodal
+            % IS_BINODAL checks if degree measure is binodal (false)
             %
-            % BOOL = IS_BINODAL() returns true if the degree measure is
-            % binodal and false otherwise.
+            % BOOL = IS_BINODAL() returns false.
             %
             % See also is_global, is_nodal.
             
@@ -117,10 +114,10 @@ classdef Degree < Measure
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to degree measure
+            % to degree 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to degree measure. 
+            % of compatible graph classes to degree. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -132,10 +129,10 @@ classdef Degree < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to degree measure
+            % graphs to degree 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to degree measure.
+            % compatible graphs to degree.
             % 
             % See also getCompatibleGraphList().
             
