@@ -62,7 +62,7 @@ for i = 1:1:length(graph_class_list)
         .2 .5 0 .25 0; 
         .125 10 0 0 0
         ];
-    A = [L;zeros(1,n)];
+    A = [L; zeros(1, n)];
     g = Graph.getGraph(graph_class, A);
     ecc = Eccentricity(g).getValue();
     
@@ -98,7 +98,7 @@ ecc = Eccentricity(g, 'EccentricityRule', 'subgraphs').getValue();
 d = Distance(g).getValue();
 [~, ~, bct_value, ~, ~]= charpath(d);
 
-assert(isequal( round(ecc(1,1), 3), round(bct_value, 3)), ...
+assert(isequal( round(ecc(1, 1), 3), round(bct_value, 3)), ...
    ('BRAPH:Eccentricity'), ...
     ('Eccentricity is not calculated for BCT.'))
 
