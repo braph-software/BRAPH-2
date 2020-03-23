@@ -3,7 +3,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
         groups  % cell array with groups
         atlases  % cell array with brain atlases
         settings  % settings of the measurement
-        data_dict  % dictionary with measurement data
+        data_dict  % dictionary with data for measurements
     end
     methods (Access = protected)
         function m = Measurement(atlases, groups, varargin)
@@ -18,8 +18,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 ['The input must be a cell containing Groups objects']) %#ok<NBRAK>
             m.groups = groups;
             
-            m.settings = get_from_varargin(varargin, ...
-                'MeasurementSettings', varargin{:});
+            m.settings = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});
             
             m.initialize_datadict(atlases, groups, varargin{:});
             
