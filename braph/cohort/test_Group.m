@@ -18,7 +18,7 @@ for i = 1:1:length(subject_class_list)
     sub4 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 4);
     sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 5);
     
-    group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
+    group = Group(subject_class, {sub1, sub2, sub3, sub4, sub5});
 end
 
 %% Test 2: Basic functions
