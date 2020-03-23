@@ -1,5 +1,5 @@
 classdef Measurement < handle & matlab.mixin.Copyable
-    properties
+    properties (GetAccess=protected, SetAccess=protected)
         groups  % cell array with groups
         atlases  % cell array with brain atlases
         settings  % settings of the measurement
@@ -7,7 +7,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods (Access = protected)
         function m = Measurement(atlases, groups, varargin)
-                        
+            
             assert(iscell(atlases), ...
                 ['BRAIN:Measurement:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
@@ -17,7 +17,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 ['BRAIN:Measurement:GroupErr'], ...
                 ['The input must be a cell containing Groups objects']) %#ok<NBRAK>
             m.groups = groups;
-
+            
             m.settings = get_from_varargin(varargin, ...
                 'MeasurementSettings', varargin{:});
             
@@ -38,8 +38,8 @@ classdef Measurement < handle & matlab.mixin.Copyable
             measurement_copy = copyElement@matlab.mixin.Copyable(m);
             
             % Make a deep copy of datadict
-            measurement_copy.datadict = containers.Map;
-            data_codes = keys(m.datadict);
+            measurement_copy.data_dict = containers.Map;
+            data_codes = keys(m.data_dict);
             for i = 1:1:length(data_codes)
                 data_code = data_codes{i};
                 d = m.getData(data_code);
@@ -66,7 +66,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             end
         end
         function d = getData(m, data_code)
-            d = m.datadict(data_code);
+            d = m.data_dict(data_code);
         end
         function setBrainAtlases(m, atlases)
             % adds a atlas to the end of the cell array
@@ -80,6 +80,12 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
         function groups = getGroups(m)
             groups = m.groups;
+        end
+        function atlasNumber = getAtlasesNumber(m)
+            atlasNumber = numel(m.atlases);
+        end
+        function groupsNumber = getGroupsNumber(m)        
+            groupsNumber = numel(m.groups);
         end
     end
     methods (Static)
@@ -102,13 +108,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
         function description = getDescription(m)
             % measurement description
             description = eval([Measurement.getClass(m) '.getDescription()']);
-        end
-        function atlasNumber = getAtlasesNumber(m)
-            atlasNumber = eval([Measurement.getClass(m) '.getAtlasesNumber()']);
-        end
-        function groupsNumber = getGroupsNumber(m)
-            groupsNumber = eval([Measurement.getClass(m) '.getGroupsNumber()']);
-        end
+        end              
         function datalist = getDataList(m)
             % list of measurments data keys
             datalist = eval([Measurement.getClass(m) '.getDataList()']);
@@ -132,31 +132,5 @@ classdef Measurement < handle & matlab.mixin.Copyable
             datalist = Measurement.getDataList(m);
             data_class = datalist(data_code);
         end
-%         function bool = is_global(m)
-%             bool = eval([Measurement.getClass(m) '.is_global()']);
-%         end
-%         function bool = is_nodal(m)
-%             bool = eval([Measurement.getClass(m) '.is_nodal()']);
-%         end
-%         function bool = is_binodal(m)
-%             bool = eval([Measurement.getClass(m) '.is_binodal()']);
-%         end
-%         function list = getCompatibleDataTypeList(m)  % ???
-%             measurement_class = Measurment.getClass(m);
-%             dataType_List = Measurement.getList();  % ????
-%             list = cell(1, numel(dataType_List));
-%             for i = 1:1:numel(dataType_List)
-%                 datatype_code = dataType_List{i};
-%                 
-%                 if are_compatible(measurement_class, datatype_code)
-%                     list{i} = datatype_code;
-%                 end
-%             end
-%             list(cellfun('isempty', list)) = [];
-%         end
-%         function n = getCompatibleDataTypeNumber(m)
-%             list = Measurement.getCompatibleDataTypeList(m);
-%             n = numel(list);
-%         end
     end
 end

@@ -11,7 +11,7 @@ classdef MeasurementMRI < Measurement
                 atlases = atlas;
             end
             %         % grousps
-            if isa(atlas, 'Group')
+            if isa(group, 'Group')
                 groups = {group};
             else
                 assert(iscell(group) && length(group)==1, ...
@@ -24,9 +24,34 @@ classdef MeasurementMRI < Measurement
     end
     % data : single datascalar & datastructer use only depending on the
     % measure.
-     methods (Static)
+    methods (Access=protected)
+        function initialize_datadict(m, varargin)
+            
+            atlases = m.getBrainAtlases();
+            atlas = atlases{1};
+            
+            m.data_dict = containers.Map;
+            m.data_dict('type') = DataScalar(atlas);
+            m.data_dict('value') = DataStructural(atlas);
+        end
+        function update_brainatlas(m, atlases)
+            
+            m.atlases = atlases;
+            atlas = atlases{1};
+            
+            d1 = m.data_dict('type');
+            d1.setBrainAtlas(atlas)
+            
+            d2 = m.data_dict('value');
+            d2.setBrainAtlas(atlas);
+        end
+        function update_groups(m, groups)            
+            m.groups = groups;
+        end
+    end
+    methods (Static)
         function measurementClass = getClass(m)
-          measurementClass = 'MeasurementMRI';
+            measurementClass = 'MeasurementMRI';
         end
         function name = getName(m)
             name = 'Measurement MRI';
@@ -35,17 +60,11 @@ classdef MeasurementMRI < Measurement
             % measurement description missing
             description = '';
         end
-        function atlasNumber = getAtlasesNumber(m)
-            atlasNumber = numel(m.atlases);
-        end
-        function groupsNumber = getGroupsNumber(m)
-            groupsNumber = numel(m.groups);
-        end
         function datalist = getDataList(m)
             % list of measurments data keys
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
-            datalist('graphMeasure') = 'DataScalar';
-            datalist('graphValue') = 'DataScalar';  % all globals for now
+            datalist('type') = 'DataScalar';
+            datalist('value') = 'DataScalar';  % all globals for now
         end
         function sub = getMeasurement(measurementClass, varargin)
             sub = eval([measurementClass '(varargin{:})']);
@@ -61,22 +80,7 @@ classdef MeasurementMRI < Measurement
         end
         function data_class = getDataClass(m, data_code)
             data_class = Measuremente.getDataNumber(...
-                        'MeasurementMRI', data_code);
+                'MeasurementMRI', data_code);
         end
-        function bool = is_global(m)
-            bool = true;
-        end
-        function bool = is_nodal(m)
-            bool = false;
-        end
-        function bool = is_binodal(m)
-            bool = false;
-        end
-        function list = getCompatibleDataTypeList(m)  % ???
-            list = Measurement.getCompatibleDataTypeList('MeasurementMRI');
-        end
-        function n = getCompatibleDataTypeNumber(m)           
-            n = Measurement.getCompatibleDataTypeNumber('MeasurementMRI');
-        end
-     end    
+    end
 end

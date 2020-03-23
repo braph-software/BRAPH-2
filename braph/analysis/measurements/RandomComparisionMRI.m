@@ -1,6 +1,6 @@
 %randomcomparisionmri vs random grphs
-classdef RandomComparisionMRI < Measurement   
-   methods
+classdef RandomComparisionMRI < Measurement
+    methods
         function m =  RandomComparisionMRI(atlas, group, varargin)
             if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
@@ -11,7 +11,7 @@ classdef RandomComparisionMRI < Measurement
                 atlases = atlas;
             end
             %         % grousps
-            if isa(atlas, 'Group')
+            if isa(group, 'Group')
                 groups = {group};
             else
                 assert(iscell(group) && length(group)==1, ...
@@ -22,11 +22,35 @@ classdef RandomComparisionMRI < Measurement
             m = m@Measurement(atlases, groups, varargin{:});
         end
     end
-    % data : single datascalar & datastructer use only depending on the
-    % measure.
-     methods (Static)
+    methods (Access=protected)
+        function initialize_datadict(m, varargin)
+            
+            atlases = m.getBrainAtlases();
+            atlas = atlases{1};
+            
+            m.data_dict = containers.Map;
+            m.data_dict('type') = DataScalar(atlas);
+            m.data_dict('value') = DataStructural(atlas);
+        end
+        function update_brainatlas(m, atlases)
+            
+            m.atlases = atlases;
+            atlas = atlases{1};
+            
+            d1 = m.data_dict('type');
+            d1.setBrainAtlas(atlas)
+            
+            d2 = m.data_dict('value');
+            d2.setBrainAtlas(atlas);
+        end
+        function update_groups(m, groups)
+            m.groups = groups;
+        end
+    end
+    
+    methods (Static)
         function measurementClass = getClass(m)
-          measurementClass = 'RandomComparisionMRI';
+            measurementClass = 'RandomComparisionMRI';
         end
         function name = getName(m)
             name = 'Random Comparision MRI';
@@ -35,17 +59,11 @@ classdef RandomComparisionMRI < Measurement
             % measurement description missing
             description = '';
         end
-        function atlasNumber = getAtlasesNumber(m)
-            atlasNumber = numel(m.atlases);
-        end
-        function groupsNumber = getGroupsNumber(m)
-            groupsNumber = numel(m.groups);
-        end
         function datalist = getDataList(m)
             % list of measurments data keys
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
-            datalist('graphMeasure') = 'DataScalar';
-            datalist('graphValue') = 'DataScalar';  % all globals for now
+            datalist('type') = 'DataScalar';
+            datalist('value') = 'DataScalar';  % all globals for now
         end
         function sub = getMeasurement(measurementClass, varargin)
             sub = eval([measurementClass '(varargin{:})']);
@@ -61,22 +79,7 @@ classdef RandomComparisionMRI < Measurement
         end
         function data_class = getDataClass(m, data_code)
             data_class = Measuremente.getDataNumber(...
-                        'RandomComparisionMRI', data_code);
+                'RandomComparisionMRI', data_code);
         end
-        function bool = is_global(m)
-            bool = true;  % all global for now
-        end
-        function bool = is_nodal(m)
-            bool = false;
-        end
-        function bool = is_binodal(m)
-            bool = false;
-        end
-        function list = getCompatibleDataTypeList(m)  % ???
-            list = Measurement.getCompatibleDataTypeList('RandomComparisionMRI');
-        end
-        function n = getCompatibleDataTypeNumber(m)           
-            n = Measurement.getCompatibleDataTypeNumber('RandomComparisionMRI');
-        end
-     end    
+    end
 end
