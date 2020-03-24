@@ -12,7 +12,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             analysis.cohort = cohort;
             
             analysis.measurement_dict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            if ~iscell(measurements)
+            if ~iscell(measurements)  % needs to be a cell, for cycle now can act on it.
                 measurements = {measurements};
             end
             for i = 1:1:length(measurements)
