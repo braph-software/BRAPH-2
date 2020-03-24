@@ -1,13 +1,12 @@
-%comparasionMRI
-classdef ComparisionMRI < Measurement
+%randomcomparisionmri vs random grphs
+classdef RandomComparisonMRI < Measurement
     methods
-        function m =  ComparisionMRI(atlas, group, varargin)
-            
+        function m =  RandomComparisonMRI(atlas, group, varargin)
             if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
             else
                 assert(iscell(atlas) && length(atlas)==1, ...
-                    ['BRAIN:ComparisionMRI:AtlasErr'], ...
+                    ['BRAIN:RandomComparisionMRI:AtlasErr'], ...
                     ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
                 atlases = atlas;
             end
@@ -16,7 +15,7 @@ classdef ComparisionMRI < Measurement
                 groups = {group};
             else
                 assert(iscell(group) && length(group)==1, ...
-                    ['BRAIN:ComparisionMRI:GroupErr'], ...
+                    ['BRAIN:RandomComparisionMRI:GroupErr'], ...
                     ['The input must be a Group or a cell with one Group']) %#ok<NBRAK>
                 groups = group;
             end
@@ -49,22 +48,23 @@ classdef ComparisionMRI < Measurement
             m.groups = groups;
         end
     end
+    
     methods (Static)
         function measurementClass = getClass(m)
-            measurementClass = 'ComparisionMRI';
+            measurementClass = 'RandomComparisonMRI';
         end
         function name = getName(m)
-            name = 'Comparision MRI';
+            name = 'Random Comparison MRI';
         end
         function description = getDescription(m)
             % measurement description missing
             description = '';
         end
-        function atlasNumber = getBrainAtlasesNumber(m)
-            atlasNumber =  1;
+        function atlas_number = getBrainAtlasNumber(m)
+            atlas_number =  1;
         end
-        function groupsNumber = getGroupsNumber(m)
-            groupsNumber = 2;
+        function group_number = getGroupNumber(m)
+            group_number = 1;  % 2 if random group created elsewhere
         end
         function datalist = getDataList(m)
             % list of measurments data keys
@@ -76,17 +76,17 @@ classdef ComparisionMRI < Measurement
             sub = eval([measurementClass '(varargin{:})']);
         end
         function data_codes = getDataCodes(m)
-            data_codes = Measurement.getDataCodes('ComparisionMRI');
+            data_codes = Measurement.getDataCodes('RandomComparisonMRI');
         end
         function data_number = getDataNumber(m)
-            data_number = Measurement.getDataNumber('ComparisionMRI');
+            data_number = Measurement.getDataNumber('RandomComparisonMRI');
         end
         function data_classes = getDataClasses(m)
-            data_classes = Measurement.getDataClasses('ComparisionMRI');
+            data_classes = Measurement.getDataClasses('RandomComparisonMRI');
         end
         function data_class = getDataClass(m, data_code)
             data_class = Measuremente.getDataNumber(...
-                'ComparisionMRI', data_code);
+                'RandomComparisonMRI', data_code);
         end
     end
 end

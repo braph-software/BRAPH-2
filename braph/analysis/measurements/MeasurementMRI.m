@@ -49,17 +49,17 @@ classdef MeasurementMRI < Measurement
         end
     end
     methods (Static)
-        function measurementClass = getClass(m)
-            measurementClass = 'MeasurementMRI';
+        function class = getClass(m)
+            class = 'MeasurementMRI';
         end
         function name = getName(m)
             name = 'Measurement MRI';
         end
-        function atlasNumber = getBrainAtlasesNumber(m)
-            atlasNumber =  1;
+        function atlas_number = getBrainAtlasNumber(m)
+            atlas_number =  1;
         end
-        function groupsNumber = getGroupsNumber(m)
-            groupsNumber = 1;
+        function group_number = getGroupNumber(m)
+            group_number = 1;
         end
         function description = getDescription(m)
             % measurement description missing
