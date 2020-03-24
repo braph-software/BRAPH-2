@@ -15,9 +15,9 @@ classdef ComparisonMRI < Measurement
             if isa(group, 'Group')
                 groups = {group};
             else
-                assert(iscell(group) && length(group)==1, ...
+                assert(iscell(group) && length(group)==2, ...
                     ['BRAIN:ComparisonMRI:GroupErr'], ...
-                    ['The input must be a Group or a cell with one Group']) %#ok<NBRAK>
+                    ['The input must be two Groups or a cell with two Group']) %#ok<NBRAK>
                 groups = group;
             end
             
