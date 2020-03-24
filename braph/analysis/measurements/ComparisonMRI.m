@@ -1,7 +1,7 @@
 %comparasionMRI
 classdef ComparisonMRI < Measurement
     methods
-        function m =  ComparisonMRI(atlas, group, varargin)
+        function m =  ComparisonMRI(atlas, groups, varargin)
             
             if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
@@ -12,14 +12,9 @@ classdef ComparisonMRI < Measurement
                 atlases = atlas;
             end
             
-            if isa(group, 'Group')
-                groups = {group};
-            else
-                assert(iscell(group) && length(group)==1, ...
-                    ['BRAIN:ComparisonMRI:GroupErr'], ...
-                    ['The input must be a Group or a cell with one Group']) %#ok<NBRAK>
-                groups = group;
-            end
+            assert(iscell(groups) && length(groups)==2, ...
+                ['BRAIN:ComparisonMRI:GroupErr'], ...
+                ['The input must be two Groups or a cell with two Group']) %#ok<NBRAK>
             
             m = m@Measurement(atlases, groups, varargin{:});
         end
