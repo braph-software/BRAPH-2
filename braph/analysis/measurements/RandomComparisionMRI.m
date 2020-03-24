@@ -10,7 +10,7 @@ classdef RandomComparisionMRI < Measurement
                     ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
                 atlases = atlas;
             end
-            %         % grousps
+            
             if isa(group, 'Group')
                 groups = {group};
             else
@@ -19,6 +19,7 @@ classdef RandomComparisionMRI < Measurement
                     ['The input must be a Group or a cell with one Group']) %#ok<NBRAK>
                 groups = group;
             end
+            
             m = m@Measurement(atlases, groups, varargin{:});
         end
     end
@@ -58,6 +59,12 @@ classdef RandomComparisionMRI < Measurement
         function description = getDescription(m)
             % measurement description missing
             description = '';
+        end
+        function atlasNumber = getBrainAtlasesNumber(m)
+            atlasNumber =  1;
+        end
+        function groupsNumber = getGroupsNumber(m)
+            groupsNumber = 1;  % 2 if random group created elsewhere
         end
         function datalist = getDataList(m)
             % list of measurments data keys

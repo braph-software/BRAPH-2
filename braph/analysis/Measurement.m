@@ -80,12 +80,6 @@ classdef Measurement < handle & matlab.mixin.Copyable
         function groups = getGroups(m)
             groups = m.groups;
         end
-        function atlasNumber = getAtlasesNumber(m)
-            atlasNumber = numel(m.atlases);
-        end
-        function groupsNumber = getGroupsNumber(m)        
-            groupsNumber = numel(m.groups);
-        end
     end
     methods (Static)
         function measurementList = getList()
@@ -93,6 +87,12 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 'Measurement', ...
                 [fileparts(which('Measurement')) filesep 'measurements'] ...
                 );
+        end
+        function atlasNumber = getBrainAtlasesNumber(m)
+            atlasNumber =  eval([Measurement.getClass(m) '.getBrainAtlasesNumber()']);
+        end
+        function groupsNumber = getGroupsNumber(m)        
+            groupsNumber =  eval([Measurement.getClass(m) '.getGroupsNumber()']);
         end
         function measurementClass = getClass(m)
             if isa(m, 'Measurement')

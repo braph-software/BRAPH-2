@@ -10,7 +10,7 @@ classdef MeasurementMRI < Measurement
                     ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
                 atlases = atlas;
             end
-            %         % grousps
+            
             if isa(group, 'Group')
                 groups = {group};
             else
@@ -19,11 +19,10 @@ classdef MeasurementMRI < Measurement
                     ['The input must be a Group or a cell with one Group']) %#ok<NBRAK>
                 groups = group;
             end
+            
             m = m@Measurement(atlases, groups, varargin{:});
         end
     end
-    % data : single datascalar & datastructer use only depending on the
-    % measure.
     methods (Access=protected)
         function initialize_datadict(m, varargin)
             
@@ -45,7 +44,7 @@ classdef MeasurementMRI < Measurement
             d2 = m.data_dict('value');
             d2.setBrainAtlas(atlas);
         end
-        function update_groups(m, groups)            
+        function update_groups(m, groups)
             m.groups = groups;
         end
     end
@@ -55,6 +54,12 @@ classdef MeasurementMRI < Measurement
         end
         function name = getName(m)
             name = 'Measurement MRI';
+        end
+        function atlasNumber = getBrainAtlasesNumber(m)
+            atlasNumber =  1;
+        end
+        function groupsNumber = getGroupsNumber(m)
+            groupsNumber = 1;
         end
         function description = getDescription(m)
             % measurement description missing

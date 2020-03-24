@@ -60,6 +60,12 @@ classdef ComparisionMRI < Measurement
             % measurement description missing
             description = '';
         end
+        function atlasNumber = getBrainAtlasesNumber(m)
+            atlasNumber =  1;
+        end
+        function groupsNumber = getGroupsNumber(m)
+            groupsNumber = 2;
+        end
         function datalist = getDataList(m)
             % list of measurments data keys
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
