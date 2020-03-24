@@ -88,11 +88,11 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 [fileparts(which('Measurement')) filesep 'measurements'] ...
                 );
         end
-        function atlasNumber = getBrainAtlasesNumber(m)
-            atlasNumber =  eval([Measurement.getClass(m) '.getBrainAtlasesNumber()']);
+        function atlas_number = getBrainAtlasNumber(m)
+            atlas_number =  eval([Measurement.getClass(m) '.getBrainAtlasesNumber()']);
         end
-        function groupsNumber = getGroupsNumber(m)        
-            groupsNumber =  eval([Measurement.getClass(m) '.getGroupsNumber()']);
+        function group_number = getGroupNumber(m)        
+            group_number =  eval([Measurement.getClass(m) '.getGroupsNumber()']);
         end
         function measurementClass = getClass(m)
             if isa(m, 'Measurement')
