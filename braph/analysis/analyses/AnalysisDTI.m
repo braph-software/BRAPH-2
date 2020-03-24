@@ -1,8 +1,8 @@
 classdef AnalysisDTI < Analysis
     methods
-        function analysis = AnalysisDTI(cohort, varargin)
+        function analysis = AnalysisDTI(cohort, measurements, varargin)
             
-            analysis = analysis@Analysis(cohort, varargin{:});
+            analysis = analysis@Analysis(cohort, measurements, varargin{:});
         end
     end
     methods (Static)

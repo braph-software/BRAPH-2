@@ -1,8 +1,8 @@
 classdef AnalysisfMRI < Analysis
     methods
-        function analysis = AnalysisfMRI(cohort, varargin)
+        function analysis = AnalysisfMRI(cohort, measurements, varargin)
             
-            analysis = analysis@Analysis(cohort, varargin{:});
+            analysis = analysis@Analysis(cohort, measurements, varargin{:});
         end
     end
     methods (Static)
