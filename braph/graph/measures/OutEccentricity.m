@@ -1,34 +1,34 @@
 classdef OutEccentricity < Measure
     % OutEccentricity < Measure: OutEccentricity measure
-    % OutEccentricity provides the outeccentricity of a node for binary directed
+    % OutEccentricity provides the out-eccentricity of a node for binary directed
     % (BD) and weighted directed (WD) graphs. It is calculated as the 
     % maximal shortest out path length between a node and any other node.
     % 
     % OutEccentricity methods:
-    %   OutEccentricity                      - constructor with Measure properties.
+    %   OutEccentricity             - constructor with Measure properties.
     %
     % OutEccentricity methods (Access=protected):
-    %   calculate                   - calculates the outeccentricity of a node.
+    %   calculate                   - calculates the out-eccentricity of a node.
     % 
     % OutEccentricity methods (Static)
-    %   getClass                    - returns the outeccentricity class.
-    %   getName                     - returns the name of outeccentricity measure.
-    %   getDescription              - returns the description of outeccentricity measure.
-    %   is_global                   - boolean, checks if outeccentricity measure is global.
-    %   is_nodal                    - boolean, checks if outeccentricity measure is nodal.
-    %   is_binodal                  - boolean, checks if outeccentricity measure if binodal.
-    %   getMeasure                  - returns the outeccentricity class.
+    %   getClass                    - returns the out-eccentricity class.
+    %   getName                     - returns the name of out-eccentricity measure.
+    %   getDescription              - returns the description of out-eccentricity measure.
+    %   is_global                   - boolean, checks if out-eccentricity measure is global.
+    %   is_nodal                    - boolean, checks if out-eccentricity measure is nodal.
+    %   is_binodal                  - boolean, checks if out-eccentricity measure if binodal.
+    %   getMeasure                  - returns the out-eccentricity class.
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
     % See also Measure, Graph, Strength, Distance, Efficency.
     methods
         function m = OutEccentricity(g, varargin)
-            % OUTECCENTRICITY(G) creates outeccentricity with default measure properties.
+            % OUTECCENTRICITY(G) creates out-eccentricity with default measure properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % OUTECCENTRICITY(G, 'Settings', SETTINGS) ceates outeccentricity measure and
+            % OUTECCENTRICITY(G, 'Settings', SETTINGS) creates out-eccentricity measure and
             % initializes the property settings with SETTINGS. 
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
@@ -37,10 +37,10 @@ classdef OutEccentricity < Measure
         end
     end
     methods (Access = protected)
-        function ecc = calculate(m)
-            % CALCULATE calculates the outeccentricity value of a node
+        function out_eccentricity = calculate(m)
+            % CALCULATE calculates the out-eccentricity value of a node
             %
-            % outeccentricity = CALCULATE(M) returns the value of the outeccentricity of a
+            % out-eccentricity = CALCULATE(M) returns the value of the out-eccentricity of a
             % node.
             g = m.getGraph();
 
@@ -53,9 +53,9 @@ classdef OutEccentricity < Measure
             ecc_rule = get_from_varargin('default', 'OutEccentricityRule', m.getSettings());
             switch(ecc_rule)
                 case {'subgraphs'}
-                    ecc = max(D.*(D~=Inf), [], 2); 
+                    out_eccentricity = max(D.*(D~=Inf), [], 2); 
                 otherwise  % {'default'}
-                    ecc = max(D, [], 2);
+                    out_eccentricity = max(D, [], 2);
             end 
         end
     end
@@ -63,7 +63,7 @@ classdef OutEccentricity < Measure
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the outeccentricity measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the out-eccentricity measure.
             %
             % See also getName(), getDescription(). 
             measure_class = 'OutEccentricity';
@@ -71,17 +71,17 @@ classdef OutEccentricity < Measure
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the outeccentricity measure.
+            % NAME = GETNAME() returns the name of the out-eccentricity measure.
             %
             % See also getClass(), getDescription().
             
             name = 'Out Eccentricity';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the outeccentricity description 
+            % GETDESCRIPTION returns the out-eccentricity description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % outeccentricity measure.
+            % out-eccentricity measure.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -92,7 +92,7 @@ classdef OutEccentricity < Measure
                 ];
         end
         function bool = is_global()
-            % IS_GLOBAL checks if outeccentricity measure is global (false)
+            % IS_GLOBAL checks if out-eccentricity measure is global (false)
             %
             % BOOL = IS_GLOBAL() returns false.
             %
@@ -101,7 +101,7 @@ classdef OutEccentricity < Measure
             bool = false;
         end
         function bool = is_nodal()
-            % IS_NODAL checks if outeccentricity measure is nodal (true)
+            % IS_NODAL checks if out-eccentricity measure is nodal (true)
             %
             % BOOL = IS_NODAL() returns true.
             %
@@ -109,7 +109,7 @@ classdef OutEccentricity < Measure
             bool = true;
         end
         function bool = is_binodal()
-            % IS_BINODAL checks if outeccentricity measure is binodal (false)
+            % IS_BINODAL checks if out-eccentricity measure is binodal (false)
             %
             % BOOL = IS_BINODAL() returns false.
             %
@@ -119,10 +119,10 @@ classdef OutEccentricity < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to outeccentricity 
+            % to out-eccentricity 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to outeccentricity. 
+            % of compatible graph classes to out-eccentricity. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -134,10 +134,10 @@ classdef OutEccentricity < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to outeccentricity 
+            % graphs to out-eccentricity 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to outeccentricity.
+            % compatible graphs to out-eccentricity.
             % 
             % See also getCompatibleGraphList().
             

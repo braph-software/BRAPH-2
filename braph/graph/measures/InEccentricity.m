@@ -1,34 +1,34 @@
 classdef InEccentricity < Measure
     % InEccentricity < Measure: InEccentricity measure
-    % InEccentricity provides the ineccentricity of a node for binary directed
+    % InEccentricity provides the in-eccentricity of a node for binary directed
     % (BD) and weighted directed (WD) graphs. It is calculated as the 
     % maximal shortest in path length between a node and any other node.
     % 
     % InEccentricity methods:
-    %   InEccentricity                      - constructor with Measure properties.
+    %   InEccentricity              - constructor with Measure properties.
     %
     % InEccentricity methods (Access=protected):
-    %   calculate                   - calculates the ineccentricity of a node.
+    %   calculate                   - calculates the in-eccentricity of a node.
     % 
     % InEccentricity methods (Static)
-    %   getClass                    - returns the ineccentricity class.
-    %   getName                     - returns the name of ineccentricity measure.
-    %   getDescription              - returns the description of ineccentricity measure.
-    %   is_global                   - boolean, checks if ineccentricity measure is global.
-    %   is_nodal                    - boolean, checks if ineccentricity measure is nodal.
-    %   is_binodal                  - boolean, checks if ineccentricity measure if binodal.
-    %   getMeasure                  - returns the ineccentricity class.
+    %   getClass                    - returns the in-eccentricity class.
+    %   getName                     - returns the name of in-eccentricity measure.
+    %   getDescription              - returns the description of in-eccentricity measure.
+    %   is_global                   - boolean, checks if in-eccentricity measure is global.
+    %   is_nodal                    - boolean, checks if in-eccentricity measure is nodal.
+    %   is_binodal                  - boolean, checks if in-eccentricity measure if binodal.
+    %   getMeasure                  - returns the in-eccentricity class.
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
     % See also Measure, Graph, Strength, Distance, Efficency.
     methods
         function m = InEccentricity(g, varargin)
-            % INECCENTRICITY(G) creates ineccentricity with default measure properties.
+            % INECCENTRICITY(G) creates in-eccentricity with default measure properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % INECCENTRICITY(G, 'Settings', SETTINGS) ceates ineccentricity measure and
+            % INECCENTRICITY(G, 'Settings', SETTINGS) creates in-eccentricity measure and
             % initializes the property settings with SETTINGS. 
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
@@ -37,10 +37,10 @@ classdef InEccentricity < Measure
         end
     end
     methods (Access = protected)
-        function ecc = calculate(m)
-            % CALCULATE calculates the ineccentricity value of a node
+        function in_eccentricity = calculate(m)
+            % CALCULATE calculates the in-eccentricity value of a node
             %
-            % ineccentricity = CALCULATE(M) returns the value of the ineccentricity of a
+            % in-eccentricity = CALCULATE(M) returns the value of the in-eccentricity of a
             % node.
             
             g = m.getGraph();
@@ -54,9 +54,9 @@ classdef InEccentricity < Measure
             ecc_rule = get_from_varargin('default', 'InEccentricityRule', m.getSettings());
             switch(ecc_rule)
                 case {'subgraphs'}
-                    ecc = max(D.*(D~=Inf), [], 1)'; 
+                    in_eccentricity = max(D.*(D~=Inf), [], 1)'; 
                 otherwise  % {'default'}
-                    ecc = max(D, [], 1)';
+                    in_eccentricity = max(D, [], 1)';
             end 
         end
     end
@@ -64,7 +64,7 @@ classdef InEccentricity < Measure
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the ineccentricity measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the in-eccentricity measure.
             %
             % See also getName(), getDescription(). 
             
@@ -73,28 +73,28 @@ classdef InEccentricity < Measure
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the ineccentricity measure.
+            % NAME = GETNAME() returns the name of the in-eccentricity measure.
             %
             % See also getClass(), getDescription().
             
-            name = 'In InEccentricity';
+            name = 'In Eccentricity';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the ineccentricity description 
+            % GETDESCRIPTION returns the in-eccentricity description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % ineccentricity measure.
+            % in-eccentricity measure.
             %
             % See also getList(), getCompatibleGraphList().
             
             description = [ ...
-                'The In InEccentricity of a node is ' ...
+                'The In Eccentricity of a node is ' ...
                 'the maximal shortest in path length between a ' ...
                 'node and any other node.' ...
                 ];
         end
         function bool = is_global()
-            % IS_GLOBAL checks if ineccentricity measure is global (false)
+            % IS_GLOBAL checks if in-eccentricity measure is global (false)
             %
             % BOOL = IS_GLOBAL() returns false.
             %
@@ -103,7 +103,7 @@ classdef InEccentricity < Measure
             bool = false;
         end
         function bool = is_nodal()
-            % IS_NODAL checks if ineccentricity measure is nodal (true)
+            % IS_NODAL checks if in-eccentricity measure is nodal (true)
             %
             % BOOL = IS_NODAL() returns true.
             %
@@ -112,7 +112,7 @@ classdef InEccentricity < Measure
             bool = true;
         end
         function bool = is_binodal()
-            % IS_BINODAL checks if ineccentricity measure is binodal (false)
+            % IS_BINODAL checks if in-eccentricity measure is binodal (false)
             %
             % BOOL = IS_BINODAL() returns false.
             %
@@ -122,10 +122,10 @@ classdef InEccentricity < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to ineccentricity 
+            % to in-eccentricity 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to ineccentricity. 
+            % of compatible graph classes to in-eccentricity. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -137,10 +137,10 @@ classdef InEccentricity < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to ineccentricity 
+            % graphs to in-eccentricity 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to ineccentricity.
+            % compatible graphs to in-eccentricity.
             % 
             % See also getCompatibleGraphList().
             

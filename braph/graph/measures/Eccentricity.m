@@ -28,7 +28,7 @@ classdef Eccentricity < Measure
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % ECCENTRICITY(G, 'Settings', SETTINGS) ceates eccentricity measure and
+            % ECCENTRICITY(G, 'Settings', SETTINGS) creates eccentricity measure and
             % initializes the property settings with SETTINGS. 
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
@@ -38,7 +38,7 @@ classdef Eccentricity < Measure
         end
     end
     methods (Access = protected)
-        function ecc = calculate(m)
+        function eccentricity = calculate(m)
             % CALCULATE calculates the eccentricity value of a node
             %
             % eccentricity = CALCULATE(M) returns the value of the eccentricity of a
@@ -55,9 +55,9 @@ classdef Eccentricity < Measure
             ecc_rule = get_from_varargin('default', 'EccentricityRule', m.getSettings());
             switch(ecc_rule)
                 case {'subgraphs'}
-                    ecc = max(D.*(D~=Inf), [], 2); 
+                    eccentricity = max(D.*(D~=Inf), [], 2); 
                 otherwise  % {'default'}
-                    ecc = max(D, [], 2);
+                    eccentricity = max(D, [], 2);
             end           
         end
     end
