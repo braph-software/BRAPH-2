@@ -1,7 +1,7 @@
 classdef OutStrength < Measure
     % OutStrength < Measure: Strength measure
     % OutStrength provides the sum of all weights of the outward edges
-    % connected to a node. For weighted undirected (WD) graphs the OutStrength
+    % connected to a node. For weighted directed (WD) graphs the OutStrength
     % is the sum over the rows of the adjacency matrix.
     %
     % OutStrength methods:
@@ -28,7 +28,7 @@ classdef OutStrength < Measure
             % OUTSTRENGTH(G) creates out-strength with default measure
             % properties. G is a graph (e.g, an instance of Graph WD).
             %
-            % OUTSTRENGTH(G, 'Settings', SETTINGS) ceates out-strength
+            % OUTSTRENGTH(G, 'Settings', SETTINGS) creates out-strength
             % measure and initializes the property settings with SETTINGS.
             %
             % See also Measure, Graph, Degree, Distance, Efficency.
@@ -40,9 +40,9 @@ classdef OutStrength < Measure
     end
     methods (Access=protected)
         function out_strength = calculate(m)
-            % CALCULATE calculates the out_strength value of a node
+            % CALCULATE calculates the OUT_STRENGTH value of a node
             %
-            % OUTSTRENGTH = CALCULATE(M) returns the value of the out_strength
+            % OUTSTRENGTH = CALCULATE(M) returns the value of the OUT_STRENGTH
             % of a node.
             
             g = m.getGraph();

@@ -29,7 +29,7 @@ classdef Strength < Measure
             % STRENGTH(G) creates strength with default measure properties.
             % G is a graph (e.g, an instance of Graph WU).
             %
-            % STRENGTH(G, 'Settings', SETTINGS) ceates strength measure and
+            % STRENGTH(G, 'Settings', SETTINGS) creates strength measure and
             % initializes the property settings with SETTINGS.
             %
             % See also Measure, Graph, Degree, Distance, Efficency.
@@ -41,7 +41,7 @@ classdef Strength < Measure
     end
     methods (Access=protected)
         function strength = calculate(m)
-            % CALCULATE calculates the strength value of a node
+            % CALCULATE calculates the STRENGTH value of a node
             %
             % STRENGTH = CALCULATE(M) returns the value of the strength of a
             % node.

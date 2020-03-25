@@ -1,7 +1,7 @@
 classdef InStrength < Measure
     % InStrength < Measure: Strength measure
     % InStrength provides the sum of all weights of the inward edges
-    % connected to a node. For weighted undirected (WD) graphs the InStrength
+    % connected to a node. For weighted directed (WD) graphs the InStrength
     % is the sum over the columns of the adjacency matrix.
     %
     % InStrength methods:
@@ -28,7 +28,7 @@ classdef InStrength < Measure
             % INSTRENGTH(G) creates in-strength with default measure
             % properties. G is a graph (e.g, an instance of Graph WD).
             %
-            % INSTRENGTH(G, 'Settings', SETTINGS) ceates in-strength
+            % INSTRENGTH(G, 'Settings', SETTINGS) creates in-strength
             % measure and initializes the property settings with SETTINGS.
             %
             % See also Measure, Graph, Degree, Distance, Efficency.
@@ -40,9 +40,9 @@ classdef InStrength < Measure
     end    
     methods (Access=protected)
         function in_strength = calculate(m)
-            % CALCULATE calculates the in-strength value of a node
+            % CALCULATE calculates the IN_SRENGTH value of a node
             %
-            % INSTRENGTH = CALCULATE(M) returns the value of the in-strength
+            % INSTRENGTH = CALCULATE(M) returns the value of the IN_SRENGTH
             % of a node.
             
             g = m.getGraph();
