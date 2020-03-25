@@ -12,7 +12,7 @@ sub3 = SubjectDTI(atlas, 'SubjectID', '3');
 sub4 = SubjectDTI(atlas, 'SubjectID', '4');
 sub5 = SubjectDTI(atlas, 'SubjectID', '5');
 
-cohort = Cohort('Cohort fMRI', 'SubjectDTI', atlas, {sub1, sub2, sub3, sub4, sub5});
+cohort = Cohort('Cohort DTI', 'SubjectDTI', atlas, {sub1, sub2, sub3, sub4, sub5});
 
 %% Test 1: Instantiation
 analysis = AnalysisDTI(cohort, {});
