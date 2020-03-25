@@ -1,12 +1,15 @@
 classdef Measurement < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
+        id  % unique identifier
         groups  % cell array with groups
         atlases  % cell array with brain atlases
         settings  % settings of the measurement
         data_dict  % dictionary with data for measurements
     end
     methods (Access = protected)
-        function m = Measurement(atlases, groups, varargin)
+        function m = Measurement(id, atlases, groups, varargin)
+            
+            m.id = id;
             
             assert(iscell(atlases), ...
                 ['BRAIN:Measurement:AtlasErr'], ...
@@ -52,11 +55,15 @@ classdef Measurement < handle & matlab.mixin.Copyable
         update_groups(m, groups)  % updates groups
     end
     methods
+        function id = getID(m)
+            id = m.id;
+        end
         function str = tostring(m)
             str = [Measurement.getClass(m)]; %#ok<NBRAK>
         end
         function disp(m)
             disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])
+            disp(['id = ' Measurement.getID()])
             data_codes = m.getDataCodes();
             for i = 1:1:m.getDataNumber()
                 data_code = data_codes{i};
@@ -112,8 +119,8 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % list of measurments data keys
             datalist = eval([Measurement.getClass(m) '.getDataList()']);
         end
-        function sub = getMeasurement(measurementClass, varargin)
-            sub = eval([measurementClass '(varargin{:})']);
+        function sub = getMeasurement(id, measurementClass, varargin)
+            sub = eval([measurementClass '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(m)
             datalist = Measurement.getDataList(m);

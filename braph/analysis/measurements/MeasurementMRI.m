@@ -1,7 +1,7 @@
 classdef MeasurementMRI < Measurement
     % single group of mri subjects
     methods
-        function m =  MeasurementMRI(atlas, group, varargin)
+        function m =  MeasurementMRI(id, atlas, group, varargin)
             if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
             else
@@ -20,7 +20,7 @@ classdef MeasurementMRI < Measurement
                 groups = group;
             end
             
-            m = m@Measurement(atlases, groups, varargin{:});
+            m = m@Measurement(id, atlases, groups, varargin{:});
         end
     end
     methods (Access=protected)
@@ -72,7 +72,7 @@ classdef MeasurementMRI < Measurement
             datalist('value') = 'DataScalar';  % all globals for now
         end
         function sub = getMeasurement(measurementClass, varargin)
-            sub = eval([measurementClass '(varargin{:})']);
+            sub = eval([measurementClass '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(m)
             data_codes = Measurement.getDataCodes('MeasurementMRI');

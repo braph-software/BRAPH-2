@@ -1,7 +1,7 @@
 %comparasionMRI
 classdef ComparisonMRI < Measurement
     methods
-        function m =  ComparisonMRI(atlas, groups, varargin)
+        function m =  ComparisonMRI(id, atlas, groups, varargin)
             
             if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
@@ -16,7 +16,7 @@ classdef ComparisonMRI < Measurement
                 ['BRAIN:ComparisonMRI:GroupErr'], ...
                 ['The input must be two Groups or a cell with two Group']) %#ok<NBRAK>
             
-            m = m@Measurement(atlases, groups, varargin{:});
+            m = m@Measurement(id, atlases, groups, varargin{:});
         end
     end
     methods (Access=protected)
@@ -68,7 +68,7 @@ classdef ComparisonMRI < Measurement
             datalist('value') = 'DataScalar';  % all globals for now
         end
         function sub = getMeasurement(measurementClass, varargin)
-            sub = eval([measurementClass '(varargin{:})']);
+            sub = eval([measurementClass '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(m)
             data_codes = Measurement.getDataCodes('ComparisonMRI');

@@ -22,7 +22,7 @@ for i = 1:1:length(measurement_class_list)
         
         group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
         %act        
-        measurement = Measurement.getMeasurement(measurement_class, repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Measurement.getGroupNumber(measurement_class)));
+        measurement = Measurement.getMeasurement('id1', measurement_class, repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Measurement.getGroupNumber(measurement_class)));
         %assert
         assert(~isempty(measurement), ...
             ['BRAPH:Measurement:Instantiation'], ...
@@ -44,7 +44,7 @@ for i = 1:1:length(measurement_class_list)
         
         group = Group(subject_class, {sub1, sub2, sub3});
         %act
-        measurement = Measurement.getMeasurement(measurement_class, repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Measurement.getGroupNumber(measurement_class)));
+        measurement = Measurement.getMeasurement('id1', measurement_class, repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Measurement.getGroupNumber(measurement_class)));
         %assert
         assert(isequal(measurement.getClass(), measurement_class), ...
             ['BRAPH:Measurement:StaticFunctions'], ...

@@ -21,29 +21,75 @@ classdef Analysis < handle & matlab.mixin.Copyable
         end
         % function copyElement() %TODO
     end
+    methods (Abstract, Access = protected)
+        calculateMeasurementID(analysis, varargin)
+        calculate_measurement(analysis)
+    end
     methods
         function n = measurementnumber(analysis)
             n = length(analysis.measurement_dict);
         end
-        function bool = contains_measurement(analysis, measurement_key)
-            bool = isKey(analysis.measurement_dict, measurement_key);
+        function bool = contains_measurement(analysis, measurement)
+            if isa(measurement, 'Measurement')  % is the object
+                bool = false;
+                for i = 1:1:analysis.measurementnumber()
+                    if analysis.getMeasurement(i).getID() == measurement.getID()
+                        bool = true;
+                        break
+                    end
+                end
+            elseif isa(measurement, 'double') % the measurement is the subject_index
+                measurement_index = measurement;
+                bool = isKey(analysis.measurement_dict, measurement_index);
+            else   % measurement is the measurementID.
+                bool =false;
+                for j = 1:1:analysis.measurementnumber()
+                    if analysis.getMeasurement(j).getID() == measurement
+                        bool = true;
+                        break;
+                    end
+                end
+            end
         end
         function measurement_index = getMeasurementIndex(analysis, measurement)
-            for i = 1:1:analysis.measurementnumber()
-                if analysis.getMeasurement(i) == measurement
-                    measurement_index = i;
-                    break;
+            if isa(measurement, 'Measurement')  % if object
+                for i = 1:1:analysis.measurementnumber()
+                    if analysis.getMeasurement(i).getID() == measurement.getID()
+                        measurement_index = i;
+                        break;
+                    end
+                end
+            else  % is the id
+                for j = 1:1:analysis.measurementnumber()
+                    if analysis.getMeasurement(i).getID() == measurement
+                        measurement_index = i;
+                        break;
+                    end
                 end
             end
         end
         function measurement = getMeasurement(analysis, measurement_index)
             measurement = analysis.measurement_dict(measurement_index);
         end
-        %         function measurement_ids = getMeasurementIDs(analysis)
-        function measurement = getNewMeasurement(analysis, measurement_class, varargin)
-            measurement = Measurement.getMeasurement(measurement_class, ...
-                analysis.cohort.getBrainAtlases(), ....
-                analysis.cohort.getGroups(), varargin{:});
+        function measurement_ids = getMeasurementIDs(analysis)
+            measurement_ids = cell(1, analysis.measurementnumber());
+            for i = 1:1:analysis.measurementnumber()
+                measurement = analysis.getMeasurement(i);
+                measurement_ids{i} = measurement.getID();
+            end
+        end
+        function cohort = getCohort(analysis)
+            cohort = analysis.cohort;
+        end
+        function measurement = getNewMeasurement(analysis, id, measurement_class, varargin)
+            measurement = Measurement.getMeasurement(id, measurement_class, ...
+                analysis.getCohort().getBrainAtlases(), ....
+                analysis.getCohort().getGroups(), varargin{:});
+        end
+        function measurement = createMeasurement(analysis, measurement_class, atlases, groups, varargin)
+            measurement = Measurement.getMeasurement(analysis.calculateMeasurementID( ...
+                measurement_class, atlases, groups) ...
+                ,measurement_class, atlases, groups);
         end
         function addMeasurement(analysis, measurement, i)
             
@@ -104,18 +150,22 @@ classdef Analysis < handle & matlab.mixin.Copyable
             selected = [];
         end
         function [selected, added] = addaboveMeasurements(analysis, measurement_class, selected)
-            for i = length(selected):-1:1
-                measurement = Measurement.getMeasurement(measurement_class, ...
-                    analysis.cohort.getBrainAtlases(), analysis.cohort.getGroups());
+            for i = length(selected):-1:1  
+                brainatlases = analysis.getCohort().getBrainAtlases();
+                groups = analysis.getCohort().getGroups();
+                measurement = Measurement.getMeasurement(analysis.calculateMeasurementID(measurement_class, brainatlases{:}, groups{:}), ...
+                              measurement_class, brainatlases{:}, groups{:});
                 analysis.addMeasurement(measurement, selected(i))
             end
             selected = selected + reshape(1:1:numel(selected), size(selected));
             added = selected - 1;
         end
         function [selected, added] = addbelowMeasurements(analysis, measurement_class, selected)
-            for i = length(selected):-1:1
-                measurement = Measurement.getMeasurement(measurement_class, ...
-                    analysis.cohort.getBrainAtlases(), analysis.cohort.getGroups());
+            for i = length(selected):-1:1  % changed to createMeasurement
+                brainatlases = analysis.getCohort().getBrainAtlases();
+                groups = analysis.getCohort().getGroups();
+                measurement = Measurement.getMeasurement(analysis.calculateMeasurementID(measurement_class, brainatlases{:}, groups{:}),...
+                              measurement_class, brainatlases{:}, groups{:});
                 analysis.addMeasurement(measurement, selected(i) + 1)
             end
             selected = selected + reshape(0:1:numel(selected)-1, size(selected));

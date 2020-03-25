@@ -60,7 +60,7 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+    measurement = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
     %assert
@@ -87,8 +87,8 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'MeasurementMRI', atlas, group);
     measurement = {measurement1, measurement2};
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
@@ -97,11 +97,14 @@ for i = 1:1:length(analysis_class_list)
         'BRAPH:Analysis:Bug', ...
         'Analysis.measurementnumber does not work')
     assert(analysis.contains_measurement(1), ...
-        'BRAPH:Cohort:Bug', ...
-        'Cohort.contains_subject does not work')
+        'BRAPH:Analysis:Bug', ...
+        'Analysis.contains_measurement does not work')
     assert(~analysis.contains_measurement(3), ...
-        'BRAPH:Cohort:Bug', ...
-        'Cohort.contains_subject does not work')
+        'BRAPH:Analysis:Bug', ...
+        'Cohort.contains_measurement does not work')
+    assert(analysis.contains_measurement(measurement1), ...
+        'BRAPH:Analysis:Bug', ...
+        'Cohort.contains_measurement does not work')
 end
 
 %% Test 5: Add 
@@ -122,10 +125,10 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'MeasurementMRI', atlas, group);
     measurement = {measurement1, measurement2};
-    measurement3 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+    measurement3 = Measurement.getMeasurement('id3', 'MeasurementMRI', atlas, group);
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
     analysis.addMeasurement(measurement3);
@@ -153,8 +156,8 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'MeasurementMRI', atlas, group);
     measurement = {measurement1, measurement2};
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
@@ -183,12 +186,12 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+     measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'MeasurementMRI', atlas, group);
     measurement = {measurement1, measurement2};    
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    measurement3 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement3 = Measurement.getMeasurement('id3', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     analysis.replaceMeasurement(2, measurement3);
     %assert
     assert(analysis.measurementnumber()==2, ...
@@ -217,8 +220,8 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     measurement = {measurement1, measurement2};    
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);  
@@ -247,9 +250,9 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
     measurement = {measurement1, measurement2, measurement3};    
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);  
@@ -278,9 +281,9 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
     measurement = {measurement1, measurement2, measurement3};      
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);  
@@ -316,9 +319,9 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
     cohort.addGroup(group);
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
     measurement = {measurement1, measurement2, measurement3};      
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
@@ -351,9 +354,9 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
     cohort.addGroup(group);
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
     measurement = {measurement1, measurement2, measurement3};      
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
@@ -386,9 +389,9 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
     cohort.addGroup(group);
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
     measurement = {measurement1, measurement2, measurement3};      
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
@@ -421,9 +424,9 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
     cohort.addGroup(group);
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
     measurement = {measurement1, measurement2, measurement3};      
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
@@ -456,9 +459,9 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
     cohort.addGroup(group);
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
     measurement = {measurement1, measurement2, measurement3};      
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
@@ -491,9 +494,9 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
     cohort.addGroup(group);
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+   measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
     measurement = {measurement1, measurement2, measurement3};      
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);

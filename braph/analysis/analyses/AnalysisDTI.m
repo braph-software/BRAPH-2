@@ -5,12 +5,33 @@ classdef AnalysisDTI < Analysis
             analysis = analysis@Analysis(cohort, measurements, varargin{:});
         end
     end
+    methods (Access = protected)
+        function id = calculateMeasurementID(analysis, varargin)
+            n = length(varargin);
+            measurementpart = '';
+            grouppart = '';
+            atlaspart = '';
+            for i = 1:1:n
+                if isa(varargin{i}, 'BrainAtlas')
+                    atlaspart = strcat(atlaspart, varargin{i}.getName());
+                elseif isa(varargin{i}, 'Group')
+                    grouppart = strcat(grouppart, varargin{i}.getName());
+                elseif isa(varargin{i}, 'char')
+                    measurementpart = varargin{i};
+                end
+            end
+            id = strcat(measurementpart, atlaspart, grouppart);
+        end
+        function calculate_measurement(analysis)
+            % ?
+        end
+    end
     methods (Static)
         function analysis_class = getClass()
-                analysis_class = 'AnalysisDTI';
+            analysis_class = 'AnalysisDTI';
         end
         function subject_class = getSubjectClass()
-                subject_class = 'SubjectDTI';
+            subject_class = 'SubjectDTI';
         end
         function name = getName()
             name = 'Analysis DTI';
