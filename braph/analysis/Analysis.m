@@ -25,8 +25,22 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function n = measurementnumber(analysis)
             n = length(analysis.measurement_dict);
         end
-        function bool = contains_measurement(analysis, measurement_key)
-            bool = isKey(analysis.measurement_dict, measurement_key);
+        function bool = contains_measurement(analysis, measurement)
+            % this will need to be modified in the future, changed only to
+            % comply with style.
+            
+            if isa(measurement, 'Measurement')
+                bool = false;
+                for i = 1:1:analysis.measurementnumber()
+                    if analysis.getMeasurement(i) == measurement
+                        bool = true;  % only checks for first 
+                        break
+                    end
+                end
+            else % the measurement is the subject_index
+                measurement_index = measurement;
+                bool = isKey(analysis.measurement_dict, measurement_index);
+            end 
         end
         function measurement_index = getMeasurementIndex(analysis, measurement)
             for i = 1:1:analysis.measurementnumber()
