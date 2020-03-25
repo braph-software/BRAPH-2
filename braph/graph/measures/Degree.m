@@ -22,7 +22,7 @@ classdef Degree < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
-    % See also Measure, Graph, Strength, Distance, Efficency.
+    % See also Measure, Graph, Strength, Distance, Efficiency.
     
     methods
         function m = Degree(g, varargin)

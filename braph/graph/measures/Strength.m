@@ -22,7 +22,7 @@ classdef Strength < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
-    % See also Measure, Graph, Degree, Distance, Efficency.
+    % See also Measure, Graph, Degree, Distance, Efficiency.
     
     methods
         function m = Strength(g, varargin)
