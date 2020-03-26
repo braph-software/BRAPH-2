@@ -37,10 +37,10 @@ classdef GlobalEfficiency < Measure
         end
     end
     methods (Access = protected)
-        function global_efficency = calculate(m)
+        function global_efficiency = calculate(m)
             % CALCULATE calculates the globalefficiency value of a node
             %
-            % GLOBALEFFICIENCY = CALCULATE(M) returns the value of the global_efficency of a
+            % GLOBALEFFICIENCY = CALCULATE(M) returns the value of the global_efficiency of a
             % node.
             
             g = m.getGraph(); % graph from measure class           
@@ -54,7 +54,7 @@ classdef GlobalEfficiency < Measure
             
             Di = D.^-1;  % inverse distance
             Di(1:N+1:end) = 0;            
-            global_efficency = (sum(Di, 2) / (N-1));    
+            global_efficiency = (sum(Di, 2) / (N-1));    
         end
     end
     methods (Static)

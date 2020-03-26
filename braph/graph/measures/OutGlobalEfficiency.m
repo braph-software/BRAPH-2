@@ -40,7 +40,7 @@ classdef OutGlobalEfficiency < Measure
             % CALCULATE calculates the out-globalefficiency value of a node
             %
             % OUTGLOBALEFFICIENCY = CALCULATE(M) returns the value of the
-            % out_global_efficency of a node.
+            % out_global_efficiency of a node.
             g = m.getGraph();
             N = g.nodenumber();
             
@@ -70,7 +70,7 @@ classdef OutGlobalEfficiency < Measure
             % NAME = GETNAME() returns the name of the out-globalefficiency measure.
             %
             % See also getClass(), getDescription(). 
-            name = 'Global Out Efficency';
+            name = 'Global Out Efficiency';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the out-globalefficiency description 

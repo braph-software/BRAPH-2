@@ -40,7 +40,7 @@ classdef InGlobalEfficiency < Measure
         function in_global_efficiency = calculate(m)
             % CALCULATE calculates the in-globalefficiency value of a node
             %
-            % INGLOBALEFFICIENCY = CALCULATE(M) returns the value of the in_global_efficency of a
+            % INGLOBALEFFICIENCY = CALCULATE(M) returns the value of the in_global_efficiency of a
             % node.
             
             g = m.getGraph();
