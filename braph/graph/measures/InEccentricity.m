@@ -29,7 +29,10 @@ classdef InEccentricity < Measure
             % GraphWD, Graph WU). 
             %   
             % INECCENTRICITY(G, 'Settings', SETTINGS) creates in-eccentricity measure and
-            % initializes the property settings with SETTINGS. 
+            % initializes the property settings with SETTINGS. INECCENTRICITY
+            % available SETTINGS are: 
+            % subgraphs     -   Calculates INECCENTRICITY of all subgraphs.
+            % default       -   Calculates INECCENTRICITY of global graph.            %   
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
             settings = clean_varargin({'InEccentricityRule'}, varargin{:});
