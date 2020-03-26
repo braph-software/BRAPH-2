@@ -31,8 +31,9 @@ classdef Strength < Measure
             %
             % STRENGTH(G, 'Settings', SETTINGS) creates strength measure and
             % initializes the property settings with SETTINGS.
+            % Currently STRENGTH does not utilizes SETTINGS.
             %
-            % See also Measure, Graph, Degree, Distance, Efficency.
+            % See also Measure, Graph, Degree, Distance, Efficiency.
             
             settings = clean_varargin({}, varargin{:});
             

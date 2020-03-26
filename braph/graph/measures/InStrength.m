@@ -30,8 +30,9 @@ classdef InStrength < Measure
             %
             % INSTRENGTH(G, 'Settings', SETTINGS) creates in-strength
             % measure and initializes the property settings with SETTINGS.
+            % Currently INSTRENGTH does not utilizes SETTINGS.
             %
-            % See also Measure, Graph, Degree, Distance, Efficency.
+            % See also Measure, Graph, Degree, Distance, Efficiency.
 
             settings = clean_varargin({}, varargin{:});
 
@@ -40,7 +41,7 @@ classdef InStrength < Measure
     end    
     methods (Access=protected)
         function in_strength = calculate(m)
-            % CALCULATE calculates the IN_SRENGTH value of a node
+            % CALCULATE calculates the IN_STRENGTH value of a node
             %
             % INSTRENGTH = CALCULATE(M) returns the value of the IN_SRENGTH
             % of a node.
