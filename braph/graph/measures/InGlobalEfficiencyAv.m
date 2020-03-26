@@ -1,33 +1,33 @@
-classdef InGlobalEfficencyAv < InGlobalEfficency
+classdef InGlobalEfficiencyAv < InGlobalEfficiency
     methods
-        function m = InGlobalEfficencyAv(g, varargin)
-            m = m@InGlobalEfficency(g, varargin{:});
+        function m = InGlobalEfficiencyAv(g, varargin)
+            m = m@InGlobalEfficiency(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function in_global_efficency = calculate(m)
+        function in_global_efficiency_av = calculate(m)
             g = m.getGraph();    
             
-            if g.is_measure_calculated('InGlobalEfficency')
-                in_global_efficiency = g.getMeasureValue('InGlobalEfficency');
+            if g.is_measure_calculated('InGlobalEfficiency')
+                in_global_efficiency = g.getMeasureValue('InGlobalEfficiency');
             else
-                in_global_efficiency = calculate@InGlobalEfficency(m);
+                in_global_efficiency = calculate@InGlobalEfficiency(m);
             end
             
-            in_global_efficency = mean(in_global_efficiency);
+            in_global_efficiency_av = mean(in_global_efficiency);
         end
     end
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'InGlobalEfficencyAv';
+            measure_class = 'InGlobalEfficiencyAv';
         end
         function name = getName()
-            name = 'Average In Global Efficency';
+            name = 'Average-In-Global-Efficiency';
         end
         function description = getDescription()
             description = [ ...
                 'The average in global efficiency is the average of the' ...
-                'in global efficency ' ...
+                'in global efficiency ' ...
                 ];
         end
         function bool = is_global()
@@ -46,7 +46,7 @@ classdef InGlobalEfficencyAv < InGlobalEfficency
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('InGlobalEfficencyAv');
+            n = Measure.getCompatibleGraphNumber('InGlobalEfficiencyAv');
         end
     end
 end

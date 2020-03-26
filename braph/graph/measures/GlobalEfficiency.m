@@ -1,11 +1,11 @@
-classdef GlobalEfficency < Measure
+classdef GlobalEfficiency < Measure
     methods
-        function m = GlobalEfficency(g, varargin)
+        function m = GlobalEfficiency(g, varargin)
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function ge = calculate(m)
+        function global_efficiency = calculate(m)
             g = m.getGraph();
             N = g.nodenumber();            
            
@@ -17,15 +17,15 @@ classdef GlobalEfficency < Measure
             
             Di = D.^-1;  % inverse distance
             Di(1:N+1:end) = 0;            
-            ge = (sum(Di, 2) / (N-1));    
+            global_efficiency = (sum(Di, 2) / (N-1));    
         end
     end
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'GlobalEfficency';
+            measure_class = 'GlobalEfficiency';
         end
         function name = getName()
-            name = 'Global Efficency';
+            name = 'Global-Efficiency';
         end
         function description = getDescription()
             description = [ ...
@@ -50,7 +50,7 @@ classdef GlobalEfficency < Measure
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('GlobalEfficency');
+            n = Measure.getCompatibleGraphNumber('GlobalEfficiency');
         end
     end
 end

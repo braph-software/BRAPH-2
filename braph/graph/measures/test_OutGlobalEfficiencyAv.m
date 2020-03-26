@@ -1,4 +1,4 @@
-% test OutGlobalEfficencyAv
+% test OutGlobalEfficiencyAv
 A = rand(randi(10));
 graph_class_list = {'GraphBD', 'GraphWD'};
 
@@ -6,11 +6,11 @@ graph_class_list = {'GraphBD', 'GraphWD'};
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    ge = InGlobalEfficencyAv(g).getValue();
+    ge = OutGlobalEfficiencyAv(g).getValue();
     
     assert(~isempty(ge), ...
-        ['BRAPH:OutGlobalEfficencyAv: ' graph_class], ...
-        ['OutGlobalEfficencyAv  is not calculating for ' graph_class])
+        ['BRAPH:OutGlobalEfficiencyAv: ' graph_class], ...
+        ['OutGlobalEfficiencyAv  is not calculating for ' graph_class])
 end
 
 %% Test 2: Calculation vs Known Values
@@ -25,7 +25,7 @@ for i = 1:1:length(graph_class_list)
         ];
     A = [L;zeros(1,n)];
     g = Graph.getGraph(graph_class, A);
-    ge = InGlobalEfficencyAv(g).getValue(); 
+    ge = OutGlobalEfficiencyAv(g).getValue(); 
     ge = round(ge, 4);
 
     switch (graph_class)       
@@ -36,8 +36,8 @@ for i = 1:1:length(graph_class_list)
     end
     
     assert( isequal(ge, known_solution), ...
-        ['BRAPH:OutGlobalEfficencyAv: ' graph_class], ...
-        ['OutGlobalEfficencyAv is not working for: ' graph_class ])
+        ['BRAPH:OutGlobalEfficiencyAv: ' graph_class], ...
+        ['OutGlobalEfficiencyAv is not working for: ' graph_class ])
 end
 
 %% Test 3: Calculation vs BCT
@@ -50,14 +50,14 @@ A = [
     0    0  0   0   0
     ];
 g = Graph.getGraph(graph_class, A);
-ge = OutGlobalEfficencyAv(g).getValue();
+ge = OutGlobalEfficiencyAv(g).getValue();
 ge = round(ge, 4);
 
 value_bct = efficiency_bin(A);
 
 assert(isequal(ge, value_bct), ...
-    ['BRAPH:GlobalEfficency: ' graph_class ], ...
-    ['GlobalEfficency is not calculated for BCT: ' graph_class ])
+    ['BRAPH:GlobalEfficiency: ' graph_class ], ...
+    ['GlobalEfficiency is not calculated for BCT: ' graph_class ])
 
 function E=efficiency_bin(A,local)
 %EFFICIENCY_BIN     Global efficiency, local efficiency.

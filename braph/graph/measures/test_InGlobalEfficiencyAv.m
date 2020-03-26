@@ -1,4 +1,4 @@
-% test InGlobalEfficencyAv
+% test InGlobalEfficiencyAv
 A = rand(randi(10));
 graph_class_list = {'GraphBD', 'GraphWD'};
 
@@ -6,11 +6,11 @@ graph_class_list = {'GraphBD', 'GraphWD'};
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    ge = InGlobalEfficencyAv(g).getValue();
+    ge = InGlobalEfficiencyAv(g).getValue();
     
     assert(~isempty(ge), ...
-        ['BRAPH:InGlobalEfficencyAv: ' graph_class], ...
-        ['InGlobalEfficencyAv  is not calculating for ' graph_class])
+        ['BRAPH:InGlobalEfficiencyAv: ' graph_class], ...
+        ['InGlobalEfficiencyAv  is not calculating for ' graph_class])
 end
 
 %% Test 2: Calculation vs Known Values
@@ -25,7 +25,7 @@ for i = 1:1:length(graph_class_list)
         ];
     A = [L;zeros(1,n)];
     g = Graph.getGraph(graph_class, A);
-    ge = InGlobalEfficencyAv(g).getValue(); 
+    ge = InGlobalEfficiencyAv(g).getValue(); 
     ge = round(ge, 4);
 
     switch (graph_class)       
@@ -36,8 +36,8 @@ for i = 1:1:length(graph_class_list)
     end
     
     assert( isequal(ge, known_solution), ...
-        ['BRAPH:InGlobalEfficencyAv: ' graph_class], ...
-        ['InGlobalEfficencyAv is not working for: ' graph_class ])
+        ['BRAPH:InGlobalEfficiencyAv: ' graph_class], ...
+        ['InGlobalEfficiencyAv is not working for: ' graph_class ])
 end
 
 %% Test 3: Calculation vs BCT
@@ -50,14 +50,14 @@ A = [
     0    0  0   0   0
     ];
 g = Graph.getGraph(graph_class, A);
-ge = InGlobalEfficencyAv(g).getValue();
+ge = InGlobalEfficiencyAv(g).getValue();
 ge = round(ge, 4);
 
 value_bct = efficiency_bin(A);
 
 assert(isequal(ge, value_bct), ...
-    ['BRAPH:GlobalEfficency: ' graph_class ], ...
-    ['GlobalEfficency is not calculated for BCT.' ])
+    ['BRAPH:GlobalEfficiency: ' graph_class ], ...
+    ['GlobalEfficiency is not calculated for BCT.' ])
 
 function E=efficiency_bin(A,local)
 %EFFICIENCY_BIN     Global efficiency, local efficiency.

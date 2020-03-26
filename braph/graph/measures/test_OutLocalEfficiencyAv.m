@@ -1,16 +1,16 @@
-% test LocalEfficency
+% test OutLocalEfficiencyAv
 A = rand(randi(5));
-graph_class_list = {'GraphBU', 'GraphWU'};
+graph_class_list = {'GraphBD', 'GraphWD'};
 
 %% Test 1: Calculation AllGraphs
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    ecc = LocalEfficency(g).getValue();
+    ecc = OutLocalEfficiencyAv(g).getValue();
     
     assert(~isempty(ecc), ...
-        ['BRAPH:' graph_class ':LocalEfficency'], ...
-        ['LocalEfficency is not calculated for ' graph_class])
+        ['BRAPH:' graph_class ':OutLocalEfficiencyAv'], ...
+        ['OutLocalEfficiencyAv is not calculated for ' graph_class])
 end
 
 %% Test 2: Calculation AllGraphs vs Known Solution
@@ -23,28 +23,18 @@ for i = 1:1:length(graph_class_list)
         .1 0 .3 0;
         ];
     g = Graph.getGraph(graph_class, A);
-    le = LocalEfficency(g).getValue();
+    le = OutLocalEfficiencyAv(g).getValue();
     
     switch (graph_class)
-        case 'GraphWU'
-            known_solution = [
-                .25
-                .2
-                .1222
-                .2
-                ];
-        case 'GraphBU'
-            known_solution = [
-                0.8333
-                1 
-                0.8333
-                1
-                ];
+        case 'GraphWD'
+            known_solution = 0.19306;
+        case 'GraphBD'
+            known_solution = 0.91667;
     end
     
-    assert(isequal(round(le, 4), known_solution), ...
-        ['BRAPH:' graph_class ':LocalEfficency'], ...
-        ['LocalEfficency is not calculated for ' graph_class])
+    assert(isequal(round(le, 5), known_solution), ...
+        ['BRAPH:' graph_class ':OutLocalEfficiencyAv'], ...
+        ['OutLocalEfficiencyAv is not calculated for ' graph_class])
 end
 
 %% Test 3: Calculation WU subgraphs vs BCT
@@ -54,14 +44,14 @@ A = [
     .2 .3 0 .3;
     .1 0 .3 0;
     ];
-g = Graph.getGraph('GraphBU', A);
-le = LocalEfficency(g).getValue();
+g = Graph.getGraph('GraphBD', A);
+le = OutLocalEfficiencyAv(g).getValue();
 
 [~, ~, bct_value]= rout_efficiency(g.getA());
 
-assert(isequal(le, bct_value), ...
-        ['BRAPH:LocalEfficency'], ...
-        ['LocalEfficency is not calculated for BCT.'])
+assert(isequal(le, mean(bct_value)), ...
+        ['BRAPH:OutLocalEfficiencyAv'], ...
+        ['OutLocalEfficiencyAv is not calculated for BCT.'])
 
 %% Functions to calculate local efficency from 2019_03_03_BCT
 function [GErout,Erout,Eloc] = rout_efficiency(D,transform)

@@ -1,37 +1,36 @@
-classdef OutGlobalEfficency < Measure
+classdef OutLocalEfficiency < Measure
     methods
-        function m = OutGlobalEfficency(g, varargin)
+        function m = OutLocalEfficiency(g, varargin)
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function ge = calculate(m)
+        function out_local_efficiency = calculate(m)
             g = m.getGraph();
-            N = g.nodenumber();
+            A = g.getA();
+            n = g.nodenumber();
             
-            if g.is_measure_calculated('Distance')
-                D = g.getMeasure('Distance').getValue();
-            else
-                D = Distance(g, g.getSettings()).getValue();
+            out_local_efficiency = zeros(n,1);
+            for i = 1:1:n
+                nodes = find(A(i, :)  | A(:, i).');  % neighbours of u
+                if numel(nodes) > 1
+                    sub_graph = g.subgraph(nodes);
+                    out_local_efficiency(i) = mean(OutGlobalEfficiency(sub_graph, g.getSettings()).getValue());
+                end
             end
-            
-            Di = D.^-1;  % inverse distance
-            Di(1:N+1:end) = 0;   
-            ge = (sum(Di, 2) / (N-1));
         end
     end
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'OutGlobalEfficency';
+            measure_class = 'OutLocalEfficiency';
         end
         function name = getName()
-            name = 'Global Out Efficency';
+            name = 'Out-Local-Efficiency';
         end
         function description = getDescription()
             description = [ ...
-                'The global out efficiency is the average inverse ' ...
-                'shortest out path length in the graph. ' ...
-                'It is inversely related to the characteristic out path length.';
+                'The out local efficiency is the average inverse ' ...
+                'shortest out path length with local nodes.' ...
                 ];
         end
         function bool = is_global()
@@ -50,7 +49,7 @@ classdef OutGlobalEfficency < Measure
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('OutGlobalEfficency');
+            n = Measure.getCompatibleGraphNumber('OutLocalEfficiency');
         end
     end
 end
