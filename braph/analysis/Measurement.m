@@ -9,7 +9,10 @@ classdef Measurement < handle & matlab.mixin.Copyable
     methods (Access = protected)
         function m = Measurement(id, atlases, groups, varargin)
             
-            m.id = id;
+            assert(isa(id, 'char'), ...
+                ['BRAPH:Measurement:ID'], ...
+                ['The first argument must be a ID.']) %#ok<NBRAK>
+            m.id = tostring(id);
             
             assert(iscell(atlases), ...
                 ['BRAIN:Measurement:AtlasErr'], ...
@@ -119,8 +122,8 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % list of measurments data keys
             datalist = eval([Measurement.getClass(m) '.getDataList()']);
         end
-        function sub = getMeasurement(id, measurementClass, varargin)
-            sub = eval([measurementClass '(id, varargin{:})']);
+        function sub = getMeasurement(id, measurement_class , varargin) %#ok<INUSL>
+            sub = eval([measurement_class  '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(m)
             datalist = Measurement.getDataList(m);

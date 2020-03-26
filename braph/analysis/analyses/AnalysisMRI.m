@@ -6,12 +6,11 @@ classdef AnalysisMRI < Analysis
         end
     end
     methods (Access = protected)
-         function id = calculateMeasurementID(analysis, varargin)
-            n = length(varargin);
+         function id = calculate_measurement_id(analysis, varargin)
             measurementpart = '';
             grouppart = '';
             atlaspart = '';
-            for i = 1:1:n
+            for i = 1:1:length(varargin)
                 if isa(varargin{i}, 'BrainAtlas')
                     atlaspart = strcat(atlaspart, varargin{i}.getName());
                 elseif isa(varargin{i}, 'Group')

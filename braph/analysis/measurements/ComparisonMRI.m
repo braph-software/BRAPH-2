@@ -67,7 +67,7 @@ classdef ComparisonMRI < Measurement
             datalist('type') = 'DataScalar';
             datalist('value') = 'DataScalar';  % all globals for now
         end
-        function sub = getMeasurement(measurementClass, varargin)
+        function sub = getMeasurement(measurementClass, id, varargin)
             sub = eval([measurementClass '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(m)
