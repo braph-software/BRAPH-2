@@ -35,7 +35,9 @@ classdef InEccentricity < Measure
             %                      'subgraphs' - calculates INECCENTRICITY within connected subgraphs.
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
+            
             settings = clean_varargin({'InEccentricityRule'}, varargin{:});
+            
             m = m@Measure(g, settings{:});
         end
     end

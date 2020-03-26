@@ -35,7 +35,9 @@ classdef OutEccentricity < Measure
             %                       'subgraphs' - calculates OUTECCENTRICITY within connected subgraphs.
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
+            
             settings = clean_varargin({'OutEccentricityRule'}, varargin{:});
+            
             m = m@Measure(g, settings{:});
         end
     end

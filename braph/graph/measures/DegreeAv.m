@@ -31,9 +31,6 @@ classdef DegreeAv < Degree
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % DEGREEAV(G, 'Settings', SETTINGS) creates average degree measure 
-            % and initializes the property settings with SETTINGS. 
-            %   
             % See also Degree, Measure, Graph, StrengthAv, PathLengthAv. 
 
             settings = clean_varargin({}, varargin{:});

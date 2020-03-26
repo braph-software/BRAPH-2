@@ -28,10 +28,6 @@ classdef InStrength < Measure
             % INSTRENGTH(G) creates in-strength with default measure
             % properties. G is a graph (e.g, an instance of Graph WD).
             %
-            % INSTRENGTH(G, 'Settings', SETTINGS) creates in-strength
-            % measure and initializes the property settings with SETTINGS.
-            % Currently INSTRENGTH does not utilizes SETTINGS.
-            %
             % See also Measure, Graph, Degree, Distance, Efficiency.
 
             settings = clean_varargin({}, varargin{:});
