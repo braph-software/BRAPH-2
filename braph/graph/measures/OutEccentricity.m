@@ -28,11 +28,11 @@ classdef OutEccentricity < Measure
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % OUTECCENTRICITY(G, 'Settings', SETTINGS) creates out-eccentricity measure and
-            % initializes the property settings with SETTINGS. OUTECCENTRICITY
-            % available SETTINGS are: 
-            % subgraphs     -   Calculates OUTECCENTRICITY of all subgraphs.
-            % default       -   Calculates OUTECCENTRICITY of global graph.
+            % OUTECCENTRICITY(G, 'OutEccentricityRule', OUTECCENTRICITIRULE) creates out-eccentricity 
+            % measure and initializes the property OutEccentricityRule with OUTECCENTRICITYRULE. 
+            % Admissible OUTECCENTRICITYRULE options are:
+            % OUTECCENTRICITYRULE = 'default' (default) - calculates OUTECCENTRICITY of global graph.
+            %                       'subgraphs' - calculates OUTECCENTRICITY within connected subgraphs.
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
             settings = clean_varargin({'OutEccentricityRule'}, varargin{:});
