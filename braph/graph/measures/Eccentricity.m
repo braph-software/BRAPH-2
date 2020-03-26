@@ -28,11 +28,11 @@ classdef Eccentricity < Measure
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % ECCENTRICITY(G, 'Settings', SETTINGS) creates eccentricity measure and
-            % initializes the property settings with SETTINGS. Eccentricity
-            % available SETTINGS are: 
-            % subgraphs     -   Calculates ECCENTRICITY of all subgraphs.
-            % default       -   Calculates ECCENTRICITY of global graph.
+            % ECCENTRICITY(G, 'EccentricityRule', ECCENTRICITYRULE) creates eccentricity 
+            % measure and initializes the property EccentricityRule with ECCENTRICITYRULE. 
+            % Admissible ECCENTRICITYRULE options are:
+            % ECCENTRICITYRULE = 'default' (default) - calculates ECCENTRICITY of global graph.
+            %                    'subgraphs' - calculates ECCENTRICITY within connected subgraphs.
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
             
