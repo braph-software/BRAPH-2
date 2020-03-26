@@ -30,7 +30,7 @@ classdef Degree < Measure
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % DEGREE(G, 'Settings', SETTINGS) ceates degree measure and
+            % DEGREE(G, 'Settings', SETTINGS) creates degree measure and
             % initializes the property settings with SETTINGS. 
             %   
             % See also Measure, Graph, Strength, Distance, Efficency. 
