@@ -1,16 +1,16 @@
-% test OutLocalEfficency
+% test LocalEfficiency
 A = rand(randi(5));
-graph_class_list = {'GraphBD', 'GraphWD'};
+graph_class_list = {'GraphBU', 'GraphWU'};
 
 %% Test 1: Calculation AllGraphs
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    ecc = OutLocalEfficency(g).getValue();
+    ecc = LocalEfficiency(g).getValue();
     
     assert(~isempty(ecc), ...
-        ['BRAPH:' graph_class ':OutLocalEfficency'], ...
-        ['OutLocalEfficency is not calculated for ' graph_class])
+        ['BRAPH:' graph_class ':LocalEfficiency'], ...
+        ['LocalEfficiency is not calculated for ' graph_class])
 end
 
 %% Test 2: Calculation AllGraphs vs Known Solution
@@ -23,17 +23,17 @@ for i = 1:1:length(graph_class_list)
         .1 0 .3 0;
         ];
     g = Graph.getGraph(graph_class, A);
-    le = OutLocalEfficency(g).getValue();
+    le = LocalEfficiency(g).getValue();
     
     switch (graph_class)
-        case 'GraphWD'
+        case 'GraphWU'
             known_solution = [
                 .25
                 .2
                 .1222
                 .2
                 ];
-        case 'GraphBD'
+        case 'GraphBU'
             known_solution = [
                 0.8333
                 1 
@@ -43,8 +43,8 @@ for i = 1:1:length(graph_class_list)
     end
     
     assert(isequal(round(le, 4), known_solution), ...
-        ['BRAPH:' graph_class ':OutLocalEfficency'], ...
-        ['OutLocalEfficency is not calculated for ' graph_class])
+        ['BRAPH:' graph_class ':LocalEfficiency'], ...
+        ['LocalEfficiency is not calculated for ' graph_class])
 end
 
 %% Test 3: Calculation WU subgraphs vs BCT
@@ -54,14 +54,14 @@ A = [
     .2 .3 0 .3;
     .1 0 .3 0;
     ];
-g = Graph.getGraph('GraphBD', A);
-le = OutLocalEfficency(g).getValue();
+g = Graph.getGraph('GraphBU', A);
+le = LocalEfficiency(g).getValue();
 
 [~, ~, bct_value]= rout_efficiency(g.getA());
 
 assert(isequal(le, bct_value), ...
-        ['BRAPH:OutLocalEfficency'], ...
-        ['OutLocalEfficency is not calculated for BCT.'])
+        ['BRAPH:LocalEfficiency'], ...
+        ['LocalEfficiency is not calculated for BCT.'])
 
 %% Functions to calculate local efficency from 2019_03_03_BCT
 function [GErout,Erout,Eloc] = rout_efficiency(D,transform)

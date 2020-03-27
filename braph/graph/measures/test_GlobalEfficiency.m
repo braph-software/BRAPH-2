@@ -1,4 +1,4 @@
-% test GlobalEfficency
+% test GlobalEfficiency
 A = rand(randi(5));
 graph_class_list = {'GraphBU', 'GraphWU'};
 
@@ -6,12 +6,12 @@ graph_class_list = {'GraphBU', 'GraphWU'};
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    ge = GlobalEfficency(g);
+    ge = GlobalEfficiency(g);
     value = ge.getValue();
     
     assert(~isempty(value), ...
-        ['BRAPH:GlobalEfficency: ' graph_class ], ...
-        ['GlobalEfficency is not calculated for ' graph_class])
+        ['BRAPH:GlobalEfficiency: ' graph_class ], ...
+        ['GlobalEfficiency is not calculated for ' graph_class])
     
 end
 
@@ -26,7 +26,7 @@ for i = 1:1:length(graph_class_list)
         0    0  0   0   0
         ];
     g = Graph.getGraph(graph_class, A);
-    ge = GlobalEfficency(g).getValue();
+    ge = GlobalEfficiency(g).getValue();
     ge = round(ge, 4);
     
     switch(graph_class)
@@ -49,7 +49,7 @@ for i = 1:1:length(graph_class_list)
     end
     
     assert(isequal(ge, kv), ...
-        ['BRAPH:GlobalEfficency: ' graph_class ], ...
+        ['BRAPH:GlobalEfficiency: ' graph_class ], ...
         ['GlobalEfficency is not calculated for ' graph_class])
     
 end
@@ -65,7 +65,7 @@ for i = 1:1:length(graph_class_list)
         0    0  0   0   0
         ];
     g = Graph.getGraph(graph_class, A);
-    ge = GlobalEfficency(g).getValue();
+    ge = GlobalEfficiency(g).getValue();
     ge = round(ge, 4);
     
     switch(graph_class)
@@ -88,8 +88,8 @@ for i = 1:1:length(graph_class_list)
     end
     
     assert(isequal(ge, kv), ...
-        ['BRAPH:GlobalEfficency: ' graph_class ], ...
-        ['GlobalEfficency is not calculated for ' graph_class])
+        ['BRAPH:GlobalEfficiency: ' graph_class ], ...
+        ['GlobalEfficiency is not calculated for ' graph_class])
     
 end
 
@@ -103,13 +103,13 @@ A = [
     0    0  0   0   0
     ];
 g = Graph.getGraph(graph_class, A);
-ge = GlobalEfficency(g).getValue();
+ge = GlobalEfficiency(g).getValue();
 ge = round(ge, 4);
 
 value_bct = efficiency_bin(A);
 
 assert(isequal(mean(ge), value_bct), ...
-    ['BRAPH:GlobalEfficency: ' graph_class ], ...
+    ['BRAPH:GlobalEfficiency: ' graph_class ], ...
     ['GlobalEfficency is not calculated for BCT.' ])
 
 function E=efficiency_bin(A,local)

@@ -1,4 +1,4 @@
-% test InLocalEfficency
+% test OutLocalEfficiency
 A = rand(randi(5));
 graph_class_list = {'GraphBD', 'GraphWD'};
 
@@ -6,11 +6,11 @@ graph_class_list = {'GraphBD', 'GraphWD'};
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    ecc = InLocalEfficency(g).getValue();
+    ecc = OutLocalEfficiency(g).getValue();
     
     assert(~isempty(ecc), ...
-        ['BRAPH:' graph_class ':InLocalEfficency'], ...
-        ['InLocalEfficency is not calculated for ' graph_class])
+        ['BRAPH:' graph_class ':OutLocalEfficiency'], ...
+        ['OutLocalEfficiency is not calculated for ' graph_class])
 end
 
 %% Test 2: Calculation AllGraphs vs Known Solution
@@ -23,7 +23,7 @@ for i = 1:1:length(graph_class_list)
         .1 0 .3 0;
         ];
     g = Graph.getGraph(graph_class, A);
-    le = InLocalEfficency(g).getValue();
+    le = OutLocalEfficiency(g).getValue();
     
     switch (graph_class)
         case 'GraphWD'
@@ -43,8 +43,8 @@ for i = 1:1:length(graph_class_list)
     end
     
     assert(isequal(round(le, 4), known_solution), ...
-        ['BRAPH:' graph_class ':InLocalEfficency'], ...
-        ['InLocalEfficency is not calculated for ' graph_class])
+        ['BRAPH:' graph_class ':OutLocalEfficiency'], ...
+        ['OutLocalEfficiency is not calculated for ' graph_class])
 end
 
 %% Test 3: Calculation WU subgraphs vs BCT
@@ -55,13 +55,13 @@ A = [
     .1 0 .3 0;
     ];
 g = Graph.getGraph('GraphBD', A);
-le = InLocalEfficency(g).getValue();
+le = OutLocalEfficiency(g).getValue();
 
 [~, ~, bct_value]= rout_efficiency(g.getA());
 
 assert(isequal(le, bct_value), ...
-        ['BRAPH:InLocalEfficency'], ...
-        ['InLocalEfficency is not calculated for BCT.'])
+        ['BRAPH:OutLocalEfficiency'], ...
+        ['OutLocalEfficiency is not calculated for BCT.'])
 
 %% Functions to calculate local efficency from 2019_03_03_BCT
 function [GErout,Erout,Eloc] = rout_efficiency(D,transform)

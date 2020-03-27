@@ -1,4 +1,4 @@
-% test OutGlobalEfficency
+% test InGlobalEfficiency
 A = rand(randi(5));
 graph_class_list = {'GraphBD', 'GraphWD'};
 
@@ -6,12 +6,12 @@ graph_class_list = {'GraphBD', 'GraphWD'};
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    ge = OutGlobalEfficency(g);
+    ge = InGlobalEfficiency(g);
     value = ge.getValue();
     
     assert(~isempty(value), ...
-        ['BRAPH:OutGlobalEfficency: ' graph_class ], ...
-        ['OutGlobalEfficency is not calculated for ' graph_class])
+        ['BRAPH:InGlobalEfficiency: ' graph_class ], ...
+        ['InGlobalEfficiency is not calculated for ' graph_class])
     
 end
 
@@ -26,7 +26,7 @@ for i = 1:1:length(graph_class_list)
         0    0  0   0   0
         ];
     g = Graph.getGraph(graph_class, A);
-    ge = OutGlobalEfficency(g).getValue();
+    ge = InGlobalEfficiency(g).getValue();
     ge = round(ge, 4);
     
     switch(graph_class)
@@ -40,17 +40,17 @@ for i = 1:1:length(graph_class_list)
                 ];
         case 'GraphWD'
             kv = [
-                0.025;
-                0.05;
                 0.05;
                 0.025;
+                0.025;
+                0.05;
                 0;
                 ];
     end
     
     assert(isequal(ge, kv), ...
-        ['BRAPH:OutGlobalEfficency: ' graph_class ], ...
-        ['OutGlobalEfficency is not calculated for ' graph_class])
+        ['BRAPH:InGlobalEfficiency: ' graph_class ], ...
+        ['InGlobalEfficiency is not calculated for ' graph_class])
     
 end
 
@@ -64,14 +64,14 @@ A = [
     0    0  0   0   0
     ];
 g = Graph.getGraph(graph_class, A);
-ge = OutGlobalEfficency(g).getValue();
+ge = InGlobalEfficiency(g).getValue();
 ge = round(ge, 4);
 
-value_bct = round(efficiency_wei(A), 4);
+value_bct = efficiency_wei(A);
 
 assert(isequal(mean(ge), value_bct), ...
-    ['BRAPH:OutGlobalEfficency: ' graph_class ], ...
-    ['OutGlobalEfficency is not calculated for BCT.'])
+    ['BRAPH:InGlobalEfficiency: ' graph_class ], ...
+    ['InGlobalEfficiency is not calculated for BCT.'])
 
 function E = efficiency_wei(W, local)
 %EFFICIENCY_WEI     Global efficiency, local efficiency.
