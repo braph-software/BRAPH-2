@@ -6,23 +6,39 @@ classdef AnalysisDTI < Analysis
         end
     end
     methods (Access = protected)
-        function id = calculate_measurement_id(analysis, varargin)
-            measurementpart = '';
-            grouppart = '';
-            atlaspart = '';
-            for i = 1:1:length(varargin)
-                if isa(varargin{i}, 'BrainAtlas')
-                    atlaspart = strcat(atlaspart, varargin{i}.getName());
-                elseif isa(varargin{i}, 'Group')
-                    grouppart = strcat(grouppart, varargin{i}.getName());
-                elseif isa(varargin{i}, 'char')
-                    measurementpart = varargin{i};
+        function id = calculate_measurement_id(analysis,  measurement_class, measure_code, groups, varargin) % string 
+            % id is a string of concatenating measurement class,
+            % measure_code, groups, varargin.
+            grouppart = '';  % its needed
+            for i = 1:1:length(groups)              
+                if isa(groups{i}, 'Group')
+                    grouppart = [grouppart '' groups{i}];             
                 end
             end
-            id = strcat(measurementpart, atlaspart, grouppart);
+       
+            id = [measurement_class '' measure_code '' grouppart '' varargin ];  % imo varargin is not neeeded
+            id = id(find(~isspace(id)));  % removes spaces.
         end
-        function calculate_measurement(analysis)
-            % ?
+        function calculate = calculate_measurement(analysis, measurement_class, measure_code, groups, varargin)
+            % conversation notes
+            % ? in dti, the measurement pass mtrix to graph. measure_code
+            % is the type  DTI several subjects, with and A each one. 
+
+            %create graph 
+            arrayOutput = cell(analysis.cohort.getSubjects());
+            for i =1:1:lentgth(analysis.cohort.getSubjects())
+                A = analysis.cohort.getSubjects().getData();  % does not exists. Also Data ~= A... needs more
+                graph = Graph.getGraph(measure_code, A, varargin);  % whats the adjacency matrix? Im guessing is the data in subjects plus some statistic treatment 
+                arrayOutput{i} = graph.getValue();  % a, {a,b}, {a; b;};  nodal, global, binodal
+            end                
+            
+            %store it in measurement, the graph, passes as varargin? 
+            measurement = Measurement.getMeasurement(calculate_measurement_id( ...
+                          measurement_class, measure_code, groups, varargin), ...
+                          measurement_class, arrayOutput, varargin);  % creates a measurement
+                
+           % return measurement with graphs
+           calculate = measurement;
         end
     end
     methods (Static)

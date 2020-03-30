@@ -22,8 +22,8 @@ classdef Analysis < handle & matlab.mixin.Copyable
         % function copyElement() %TODO
     end
     methods (Abstract, Access = protected)
-        calculate_measurement_id(analysis, varargin)
-        calculate_measurement(analysis)
+        calculate_measurement_id(analysis, measurement_class, measure_code, groups, varargin) % (analysis, measure_class, atlases, groups)
+        calculate_measurement(analysis, measurement_class, measure_code, groups, varargin)
     end
     methods
         function n = measurementnumber(analysis)
@@ -77,9 +77,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 measurement = analysis.getMeasurement(i);
                 measurement_ids{i} = measurement.getID();
             end
-        end
-        function cohort = getCohort(analysis)
-            cohort = analysis.cohort;
         end
         function measurement = getNewMeasurement(analysis, id, measurement_class, varargin)
             measurement = Measurement.getMeasurement(id, measurement_class, ...
@@ -149,28 +146,28 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
             selected = [];
         end
-        function [selected, added] = addaboveMeasurements(analysis, measurement_class, selected)
-            for i = length(selected):-1:1  
-                brainatlases = analysis.getCohort().getBrainAtlases();
-                groups = analysis.getCohort().getGroups();
-                measurement = Measurement.getMeasurement(analysis.calculate_measurement_id(measurement_class, brainatlases{:}, groups{:}), ...
-                              measurement_class, brainatlases{:}, groups{:});
-                analysis.addMeasurement(measurement, selected(i))
-            end
-            selected = selected + reshape(1:1:numel(selected), size(selected));
-            added = selected - 1;
-        end
-        function [selected, added] = addbelowMeasurements(analysis, measurement_class, selected)
-            for i = length(selected):-1:1  % changed to createMeasurement
-                brainatlases = analysis.getCohort().getBrainAtlases();
-                groups = analysis.getCohort().getGroups();
-                measurement = Measurement.getMeasurement(analysis.calculate_measurement_id(measurement_class, brainatlases{:}, groups{:}),...
-                              measurement_class, brainatlases{:}, groups{:});
-                analysis.addMeasurement(measurement, selected(i) + 1)
-            end
-            selected = selected + reshape(0:1:numel(selected)-1, size(selected));
-            added = selected + 1;
-        end
+        %         function [selected, added] = addaboveMeasurements(analysis, measurement_class, selected)
+        %             for i = length(selected):-1:1
+        %                 brainatlases = analysis.getCohort().getBrainAtlases();
+        %                 groups = analysis.getCohort().getGroups();
+        %                 measurement = Measurement.getMeasurement(analysis.calculate_measurement_id(measurement_class, brainatlases{:}, groups{:}), ...
+        %                               measurement_class, brainatlases{:}, groups{:});
+        %                 analysis.addMeasurement(measurement, selected(i))
+        %             end
+        %             selected = selected + reshape(1:1:numel(selected), size(selected));
+        %             added = selected - 1;
+        %         end
+        %         function [selected, added] = addbelowMeasurements(analysis, measurement_class, selected)
+        %             for i = length(selected):-1:1  % changed to createMeasurement
+        %                 brainatlases = analysis.getCohort().getBrainAtlases();
+        %                 groups = analysis.getCohort().getGroups();
+        %                 measurement = Measurement.getMeasurement(analysis.calculate_measurement_id(measurement_class, brainatlases{:}, groups{:}),...
+        %                               measurement_class, brainatlases{:}, groups{:});
+        %                 analysis.addMeasurement(measurement, selected(i) + 1)
+        %             end
+        %             selected = selected + reshape(0:1:numel(selected)-1, size(selected));
+        %             added = selected + 1;
+        %         end
         function selected = moveupMeasurements(analysis, selected)
             if ~isempty(selected)
                 first_index_to_process = 1;
@@ -219,6 +216,24 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 end
                 selected = reshape(analysis.measurementnumber() - numel(selected)+1:1:analysis.measurementnumber(), size(selected));
             end
+        end
+        function cohort = getCohort(analysis)
+            cohort = analysis.cohort;
+        end
+        function groups_index = getGroupsIndex(analysis, groups)
+            % there are several ways to do this. Ill choose the second
+            % Return all measurements that have any combination of the
+            % occurrences of the groups. with ismember()
+            % Return the measurement that have exactly the same combination
+            % of groups.
+            
+            for i = 1:1:analysis.measurementnumber()
+                if isequal(analysis.getMeasurement(i).getGroups(), groups)
+                    groups_index = i;
+                    break;
+                end
+            end
+            
         end
     end
     methods (Static)
