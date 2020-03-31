@@ -301,74 +301,74 @@ for i = 1:1:length(analysis_class_list)
 end
 
 %% Test 10: AddAbove
-for i = 1:1:length(analysis_class_list)
-    %arrange
-    analysis_class = analysis_class_list{i};
-    switch(analysis_class)
-        case 'AnalysisDTI'
-            sub_class = 'SubjectDTI';
-        case 'AnalysisfMRI'
-            sub_class = 'SubjectfMRI';
-        otherwise
-            sub_class = 'SubjectMRI';
-    end
-    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-    sub1 = Subject.getSubject(sub_class, atlases);
-    sub2 = Subject.getSubject(sub_class, atlases);
-    sub3 = Subject.getSubject(sub_class, atlases);
-    cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-    group = Group(sub_class, {sub1, sub2, sub3});
-    cohort.addGroup(group);
-    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};      
-    %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    [selected, added] = analysis.addaboveMeasurements('RandomComparisonMRI', [2]); %#ok<NBRAK>
-    %assert 
-    assert(analysis.measurementnumber()==4, ...
-        'BRAPH:Analysis:Bug', ...
-        'Analysis.addaboveMeasurements() does not work')  
-    assert( isequal(analysis.getMeasurement(2).getClass(), 'RandomComparisonMRI'), ...
-        'BRAPH:Analysis:Bug', ...
-        'Analysis.addaboveMeasurements() does not work') 
-end
+% for i = 1:1:length(analysis_class_list)
+%     %arrange
+%     analysis_class = analysis_class_list{i};
+%     switch(analysis_class)
+%         case 'AnalysisDTI'
+%             sub_class = 'SubjectDTI';
+%         case 'AnalysisfMRI'
+%             sub_class = 'SubjectfMRI';
+%         otherwise
+%             sub_class = 'SubjectMRI';
+%     end
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
+%     sub1 = Subject.getSubject(sub_class, atlases);
+%     sub2 = Subject.getSubject(sub_class, atlases);
+%     sub3 = Subject.getSubject(sub_class, atlases);
+%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
+%     group = Group(sub_class, {sub1, sub2, sub3});
+%     cohort.addGroup(group);
+%     measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+%     measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+%     measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
+%     measurement = {measurement1, measurement2, measurement3};      
+%     %act
+%     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
+%     [selected, added] = analysis.addaboveMeasurements('RandomComparisonMRI', [2]); %#ok<NBRAK>
+%     %assert 
+%     assert(analysis.measurementnumber()==4, ...
+%         'BRAPH:Analysis:Bug', ...
+%         'Analysis.addaboveMeasurements() does not work')  
+%     assert( isequal(analysis.getMeasurement(2).getClass(), 'RandomComparisonMRI'), ...
+%         'BRAPH:Analysis:Bug', ...
+%         'Analysis.addaboveMeasurements() does not work') 
+% end
 
 %% Test 11: AddBelow
-for i = 1:1:length(analysis_class_list)
-    %arrange
-    analysis_class = analysis_class_list{i};
-    switch(analysis_class)
-        case 'AnalysisDTI'
-            sub_class = 'SubjectDTI';
-        case 'AnalysisfMRI'
-            sub_class = 'SubjectfMRI';
-        otherwise
-            sub_class = 'SubjectMRI';
-    end
-    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-    sub1 = Subject.getSubject(sub_class, atlases);
-    sub2 = Subject.getSubject(sub_class, atlases);
-    sub3 = Subject.getSubject(sub_class, atlases);
-    cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-    group = Group(sub_class, {sub1, sub2, sub3});
-    cohort.addGroup(group);
-    measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};      
-    %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    [selected, added] = analysis.addbelowMeasurements('MeasurementMRI', [2]); %#ok<NBRAK>
-    %assert 
-    assert(analysis.measurementnumber()==4, ...
-        'BRAPH:Analysis:Bug', ...
-        'Analysis.addbelowMeasurements() does not work')  
-    assert( isequal(analysis.getMeasurement(3).getClass(), 'MeasurementMRI'), ...
-        'BRAPH:Analysis:Bug', ...
-        'Analysis.addbelowMeasurements() does not work') 
-end
+% for i = 1:1:length(analysis_class_list)
+%     %arrange
+%     analysis_class = analysis_class_list{i};
+%     switch(analysis_class)
+%         case 'AnalysisDTI'
+%             sub_class = 'SubjectDTI';
+%         case 'AnalysisfMRI'
+%             sub_class = 'SubjectfMRI';
+%         otherwise
+%             sub_class = 'SubjectMRI';
+%     end
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
+%     sub1 = Subject.getSubject(sub_class, atlases);
+%     sub2 = Subject.getSubject(sub_class, atlases);
+%     sub3 = Subject.getSubject(sub_class, atlases);
+%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
+%     group = Group(sub_class, {sub1, sub2, sub3});
+%     cohort.addGroup(group);
+%     measurement1 = Measurement.getMeasurement('id1', 'MeasurementMRI', atlas, group);
+%     measurement2 = Measurement.getMeasurement('id2', 'ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
+%     measurement3 = Measurement.getMeasurement('id3', 'RandomComparisonMRI', atlas, group);
+%     measurement = {measurement1, measurement2, measurement3};      
+%     %act
+%     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
+%     [selected, added] = analysis.addbelowMeasurements('MeasurementMRI', [2]); %#ok<NBRAK>
+%     %assert 
+%     assert(analysis.measurementnumber()==4, ...
+%         'BRAPH:Analysis:Bug', ...
+%         'Analysis.addbelowMeasurements() does not work')  
+%     assert( isequal(analysis.getMeasurement(3).getClass(), 'MeasurementMRI'), ...
+%         'BRAPH:Analysis:Bug', ...
+%         'Analysis.addbelowMeasurements() does not work') 
+% end
 
 %% Test 12: MoveUp
 for i = 1:1:length(analysis_class_list)

@@ -13,13 +13,37 @@ classdef AnalysisMRI < Analysis
                     grouppart = [grouppart '' groups{i}];             
                 end
             end
-       
-            id = [measurement_class '' measure_code '' grouppart '' varargin ];  % imo varargin is not neeeded
-            id = id(find(~isspace(id)));  % removes spaces.
+            
+            for i = 1:1:length(varargin)                
+                vararginpart = [vararginpart '' varargin{i}];                
+            end
+
+            id = [measurement_class ' ' measure_code ' ' grouppart ' ' vararginpart ];          
         end
-        function calculate_measurement(analysis)
+        function calculate_measurement(analysis,  measurement_class, measure_code, groups, varargin)
             % one graph for the grouup
-            % its directly the timeseries. 
+            % its directly the timeseries.
+            
+%             %create graph
+%             arrayOutput = cell(analysis.cohort.subjectnumber());
+%             for i =1:1:analysis.cohort.subjectnumber()
+%                 data_codes = analysis.cohort.getSubjects().getDataCodes();
+%                 
+%                 A = analysis.cohort.getSubjects().getData(data_codes{2});  % A ~= DATA    corr missing
+%                 
+%                 graph = Graph.getGraph(measure_code, A, varargin);  % whats the adjacency matrix? Im guessing is the data in subjects plus some statistic treatment
+%                 arrayOutput{i} = graph.getValue();  % a, {a,b}, {a; b;};  nodal, global, binodal
+%             end
+%             
+%             A = corr (A);
+%             
+%             %store it in measurement, the graph, passes as varargin?
+%             measurement = Measurement.getMeasurement(calculate_measurement_id( ...
+%                 measurement_class, measure_code, groups, varargin), ...
+%                 measurement_class, arrayOutput, varargin);  % creates a measurement
+%             
+%             % return measurement with graphs
+%             calculate = measurement;
             
         end
     end
