@@ -32,9 +32,9 @@ classdef Degree < Measure
             %   
             % See also Measure, Graph, Strength, Distance, Efficency. 
             
-            settings = clean_varargin({}, varargin{:});
+           % settings = clean_varargin({}, varargin{:});
 
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -49,7 +49,13 @@ classdef Degree < Measure
             A = binarize(A); % binarizes the adjacency matrix
             degree = sum(A, 2); % calculates the degree of a node
         end
-    end        
+    end
+    methods 
+        function initialize_settings(m, varargin)
+            m.settings = containers.Map;           
+            m.settings('setting') = get_from_varargin('Default', 'DegreeRule', varargin{:});
+        end
+    end
     methods (Static)
         function measure_class = getClass()
             % GETCLASS returns the measure class 
@@ -68,6 +74,17 @@ classdef Degree < Measure
             % See also getClass(), getDescription(). 
             
             name = 'Degree';
+        end
+        function n = settingNumber()
+            n = length(Degree.getAllowedSettings());
+        end
+        function settings = getAllowedSettings()
+            settings = containers.Map('KeyType', 'char', 'ValueType', 'char');            
+            settings('setting') = 'Default'; 
+        end
+        function settings_values = getAllowedSettingsValues()
+            allowed_settings = Degree.getAllowedSettings();
+            settings_values = values(allowed_settings);            
         end
         function description = getDescription()
             % GETDESCRIPTION returns the degree description 

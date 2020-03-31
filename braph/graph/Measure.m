@@ -78,13 +78,17 @@ classdef Measure < handle
                 varargin = varargin{:};
             end
             
-            settings = get_from_varargin(varargin, 'Settings', varargin{:});  % returns varargin if no key 'Settings'
+            %settings =  get_from_varargin(varargin, 'Settings', varargin{:});  % returns varargin if no key 'Settings'
             value = get_from_varargin([], 'Value', varargin{:});
             
-            m.g = g;  % initialize the property g
-            m.settings = settings;  % initialize the property settings
+            m.g = g;  % initialize the property g           
             m.value = value;  % initialize the property value
+            m.initialize_settings(varargin{:});  % initialize the property settings
+           
         end
+    end
+    methods (Abstract)
+        initialize_settings(m, varargin);
     end
     methods
         function str = tostring(m)
@@ -111,11 +115,11 @@ classdef Measure < handle
             else
                 disp(' value: not calculated yet')
             end
-            disp(['graph: ' m.getGraph().tostring()]);
-            disp([' settings']); %#ok<NBRAK>
+            disp([' graph: ' m.getGraph().tostring()]);
+            disp([' settings:']); %#ok<NBRAK>
             settings = m.getSettings(); %#ok<PROP>
-            for i = 1:2:length(settings) %#ok<PROP>
-                disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
+            for i = 1:1:length(m.settingNumber()) %#ok<PROP>
+                disp(['   ' settings{i}]); %#ok<PROP>
             end
         end
         function g = getGraph(m)
@@ -138,7 +142,7 @@ classdef Measure < handle
             % See also getGraph().
             
             if nargin<2
-                res = m.settings;
+                res = values(m.settings);
             else
                 res = get_from_varargin([], setting_code, m.settings{:});
             end
@@ -212,6 +216,15 @@ classdef Measure < handle
             % See also getList(), getCompatibleGraphList().
             
             name = eval([Measure.getClass(m) '.getName()']);
+        end
+        function n = settingNumber(m)
+            n = eval([Measure.getClass(m) '.settingNumber()']);
+        end
+        function settings = getAllowedSettings(m)
+            settings = eval([Measure.getClass(m) '.getAllowedSettings()']);
+        end
+        function settings_values = getAllowedSettingsValues(m)
+            settings_values = eval([Measure.getClass(m) '.getAllowedSettingsValues()']);
         end
         function description = getDescription(m)
             % GETDESCRIPTION returns the description of the measure
