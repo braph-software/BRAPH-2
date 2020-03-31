@@ -5,9 +5,7 @@ classdef Distance < Measure
     methods
         function m = Distance(g, varargin)
             
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -80,6 +78,9 @@ classdef Distance < Measure
                 'The distance of a graph is ' ...
                 'the shortest path between all pairs of nodes in the graph. ' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             bool = false;

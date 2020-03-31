@@ -32,9 +32,7 @@ classdef Degree < Measure
             %   
             % See also Measure, Graph, Strength, Distance, Efficency. 
             
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -82,6 +80,10 @@ classdef Degree < Measure
                 'the number of edges connected to the node. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            
+            available_settings = {};
         end
         function bool = is_global()
             % IS_GLOBAL checks if degree measure is global (false)
