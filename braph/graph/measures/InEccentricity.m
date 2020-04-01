@@ -104,6 +104,8 @@ classdef InEccentricity < Measure
             % ECCENTRICITYRULE = 'default' (default) - calculates INECCENTRICITY of global graph.
             %                    'subgraphs' - calculates INECCENTRICITY within connected subgraphs.
             % 
+            % See also getCompatibleGraphList()
+            
             available_settings = {
                 'InEccentricityRule', Constant.STRING, 'default', {'default', 'subgraphs'};
                 };

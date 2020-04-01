@@ -105,6 +105,7 @@ classdef Eccentricity < Measure
             %                    'subgraphs' - calculates ECCENTRICITY within connected subgraphs.
             % 
             % See also getCompatibleGraphList()
+            
             available_settings = {
                 'EccentricityRule', Constant.STRING, 'default', {'default', 'subgraphs'};
                 };

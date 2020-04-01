@@ -89,6 +89,13 @@ classdef DegreeAv < Degree
                 ];
         end
         function available_settings = getAvailableSettings()
+            % GETDESCRIPTION returns the average degree description 
+            %
+            % DESCRIPTION = GETDESCRIPTION() returns the description of the
+            % average degree measure.
+            %
+            % See also getList(), getCompatibleGraphList().
+            
             available_settings = {};
         end
         function bool = is_global()
