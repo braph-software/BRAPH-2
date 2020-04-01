@@ -34,11 +34,9 @@ classdef InEccentricity < Measure
             % INECCENTRICITYRULE = 'default' (default) - calculates INECCENTRICITY of global graph.
             %                      'subgraphs' - calculates INECCENTRICITY within connected subgraphs.
             %   
-            % See also Measure, Graph, Strength, Distance, Efficency.
-            
-            settings = clean_varargin({'InEccentricityRule'}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+            % See also Measure, Graph, Strength, Distance, Efficency.          
+           
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -97,6 +95,18 @@ classdef InEccentricity < Measure
                 'the maximal shortest in path length between a ' ...
                 'node and any other node.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to InEccentricity
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to InEccentricity.
+            % ECCENTRICITYRULE = 'default' (default) - calculates INECCENTRICITY of global graph.
+            %                    'subgraphs' - calculates INECCENTRICITY within connected subgraphs.
+            % 
+            available_settings = {
+                'InEccentricityRule', Constant.STRING, 'default', {'default', 'subgraphs'};
+                };
         end
         function bool = is_global()
             % IS_GLOBAL checks if in-eccentricity measure is global (false)

@@ -1,8 +1,8 @@
 classdef InPathLength < Measure
     methods
         function m = InPathLength(g, varargin)
-            settings = clean_varargin({'InPathLengthAvRule'}, varargin{:});
-            m = m@Measure(g, settings{:});
+            
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -51,6 +51,11 @@ classdef InPathLength < Measure
               'The in path length is the average shortest ' ...
               'in path lengths of one node to all other nodes.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'InPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                };
         end
         function bool = is_global()
             bool = false;

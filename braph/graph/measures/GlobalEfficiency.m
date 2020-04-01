@@ -34,6 +34,9 @@ classdef GlobalEfficiency < Measure
                 'It is inversely related to the characteristic path length.';
                 ];
         end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
+        end
         function bool = is_global()
             bool = false;
         end

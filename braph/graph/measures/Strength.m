@@ -30,10 +30,8 @@ classdef Strength < Measure
             % G is a graph (e.g, an instance of Graph WU).
             %
             % See also Measure, Graph, Degree, Distance, Efficiency.
-            
-            settings = clean_varargin({}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -84,6 +82,15 @@ classdef Strength < Measure
                 'as sums over either rows or colums of ' ...
                 'the weighted connectivity matrix. ' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to Strength
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to Strength. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
+            available_settings = {};
         end
         function bool = is_global()
             % IS_GLOBAL checks if strength measure is global (false)

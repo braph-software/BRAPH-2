@@ -1,8 +1,8 @@
 classdef OutPathLength < Measure
     methods
         function m = OutPathLength(g, varargin) 
-            settings = clean_varargin({'OutPathLengthAvRule'}, varargin{:});
-            m = m@Measure(g, settings{:});
+       
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -51,6 +51,11 @@ classdef OutPathLength < Measure
                 'The out path length is the average shortest ' ...
                 'out path lengths of one node to all other nodes.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()            
+            available_settings = {
+                'OutPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                };
         end
         function bool = is_global()
             bool = false;

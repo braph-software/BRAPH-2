@@ -30,6 +30,11 @@ classdef OutPathLengthAv < OutPathLength
                 'the average of the sum of the out path lengths ' ...                
                 ];
         end
+        function available_settings = getAvailableSettings()            
+            available_settings = {
+                'OutPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                };
+        end
         function bool = is_global()            
             bool = true;
         end

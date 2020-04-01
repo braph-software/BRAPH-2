@@ -2,9 +2,7 @@ classdef InInAssortativity < Measure
     methods
         function m = InInAssortativity(g, varargin)
             
-            settings = clean_varargin({}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -57,6 +55,9 @@ classdef InInAssortativity < Measure
                 'The corresponding coefficient for directed networks '...
                 'is calculated by using the in degrees/strengths.'...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             

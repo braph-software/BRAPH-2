@@ -82,6 +82,12 @@ classdef Degree < Measure
                 ];
         end
         function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to Degree
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to Degree. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
             
             available_settings = {};
         end

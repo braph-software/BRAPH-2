@@ -2,9 +2,7 @@ classdef StrengthAv < Strength
     methods
         function m = StrengthAv(g, varargin)
             
-            settings = clean_varargin({}, varargin{:});
-            
-            m = m@Strength(g, settings{:});
+            m = m@Strength(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -34,6 +32,9 @@ classdef StrengthAv < Strength
                 'the average of the sum of the weights ' ...
                 'of all edges connected to the node. ' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             bool = true;

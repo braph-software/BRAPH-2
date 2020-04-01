@@ -33,9 +33,7 @@ classdef DegreeAv < Degree
             %   
             % See also Degree, Measure, Graph, StrengthAv, PathLengthAv. 
 
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@Degree(g, settings{:});
+            m = m@Degree(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -89,6 +87,9 @@ classdef DegreeAv < Degree
                 'the average of all number of edges connected to the node. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             % IS_GLOBAL checks if degree measure is global (true)
