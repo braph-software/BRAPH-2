@@ -3,6 +3,14 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
         value_class  % class of the value objects
         dict  % dict of (index, {key, value})
     end
+    methods (Access=private)
+        function pairment = getPairment(idict, index)
+            pairment = idict.dict(index);
+        end
+        function pairments = getPairments(idict)
+            pairments = values(idict.dict);
+        end
+    end
     methods
         function idict = IndexedDictionary(value_class, keys, values)
             idict.value_class = value_class;
@@ -13,21 +21,24 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
                 ['Size of arguments is not the same.']) %#ok<NBRAK>
             
             for i = 1:1:length(values)
+                
                 assert(ischar(keys{i}), ...
-                ['BRAPH:IndexDictionary:Constructor'], ...
-                ['Size of arguments is not the same.']) %#ok<NBRAK>
-            % values
-                pairementKeyValue = {keys{i}, values{i}};
-                idict.add(pairementKeyValue, i);
+                    ['BRAPH:IndexDictionary:Constructor'], ...
+                    ['Key is not a string.']) %#ok<NBRAK>
+                assert(isequal(values{i}.getClass(), value_class), ...
+                    ['BRAPH:IndexDictionary:Constructor'], ...
+                    ['Values is not an object of class ' value_class ]) %#ok<NBRAK>
+                
+                idict.add(keys{i}, values{i}, i);
             end
         end
         function str = tostring(idict)
-            str = ['IndexDictionary of class ' idict.getValueClass() ' with ' int2str(idict.dictnumber()) ' entries.'];
+            str = ['IndexDictionary of class ' idict.getValueClass() ' with ' int2str(idict.length()) ' entries.'];
         end
         function disp(idict)
             disp(['<a href="matlab:help ' class(idict) '">' class(idict) '</a>'])
             disp([' class: ' idict.getValueClass()])
-            disp([' size: ' int2str(idict.dictnumber())])
+            disp([' size: ' int2str(idict.length())])
         end
         function n = length(idict)
             n = length(idict.dict);
@@ -35,11 +46,25 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
         function value_class = getValueClass(idict)
             value_class = idict.value_class;
         end
-        %contains val, numer or key;
-        % contains index
-        function bool = constainsValue(idict, value)
+        function bool = contains(idict, argument)
+            bool = false;
+            if isa(argument, 'double')
+                bool = idict.containsIndex(argument);
+            elseif isa(argument, 'char')
+                bool = idict.containsKey(argument);
+            elseif isa(argument, idict.getValueClass())
+                bool = idict.containsValue(argument);
+            end
+        end
+        function bool = containsIndex(idict, index)
+            bool = false;
+            if index <= idict.length()
+                bool = true;
+            end
+        end
+        function bool = containsValue(idict, value)
             bool = false;            
-            for i = 1:1:idict.dictnumber()
+            for i = 1:1:idict.length()
                 pair = idict.getPairment(i);
                 if isequal( pair{2}, value)  % compares exact object
                     bool = true;
@@ -49,23 +74,16 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
         end
         function bool = containsKey(idict, key)
             bool = false;
-            for i = 1:1:idict.dictnumber()
+            for i = 1:1:idict.length()
                 pair = idict.getPairment(i);
                 if isequal( pair{1}, key)  % compares exact object
                     bool = true;
                     break;
                 end
             end
-        end
-        
-%         function pairment = getPairment(idict, index)
-%             pairment = idict.dict(index);
-%         end
-%         function pairments = getPairments(idict)
-%             pairments = values(idict.dict);
-%         end
+        end      
         function index = getValueIndex(idict, value)
-            for i = 1:1:idict.dictnumber()
+            for i = 1:1:idict.length()
                 pair = idict.getPairment(i);
                 if isequal(pair{2}, value) 
                     index = i;
@@ -74,7 +92,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             end
         end
         function index = getKeyIndex(idict, key)
-            for i = 1:1:idict.dictnumber()
+            for i = 1:1:idict.length()
                 pair = idict.getPairment(i);
                 if isequal(pair{1}, key)
                     index = i;
@@ -82,25 +100,14 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
                 end
             end
         end
-        function indexes = getAllKeysIndexes(idict, keys)
-            indexes = zeros(1, idict.dictnumber());
-            for i = 1:1:idict.dictnumber()
-                pair = idict.getPairment(i);
-                 if isequal(pair{1}, keys)
-                    indexes(1, i) = i;                
+        function index = getKeyAndValueIndex(idict, key, value)
+            for i = 1:1:idict.length()
+                if isequal(idict.getPairment(i), {key, value})
+                    index = i;
+                    break;
                 end
             end
-            indexes = indexes(indexes~=0);            
-        end
-%         function index = getPairmentIndex(idict, pair)
-%             for i = 1:1:idict.dictnumber()
-%                 if isequal(idict.getPairment(i), pair)
-%                     index = i;
-%                     break;
-%                 end
-%             end
-%         end
-        % get index  // key from value or value from key
+        end     
         function value = getValue(idict, index)
             pair = idict.getPairment(index);
             value = pair{2};            
@@ -109,47 +116,152 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             pair = idict.getPairment(index);
             key = pair{1}; 
         end
-        function add(idict, pairment, index)
-            if nargin < 3 || index < 0 || index > idict.dictnumber()
-                index = idict.dictnumber() + 1;
+        function value = getValueFromKey(idict, key)
+            index = idict.getKeyIndex(key);
+            value  = idict.getValue(index);
+        end
+        function key = getKeyFromValue(idict, value)
+            index = idict.getValueIndex(value);
+            key = idict.getKey(index);
+        end
+        function add(idict, key, value, index)
+            if nargin < 4 || index < 0 || index > idict.length()
+                index = idict.length() + 1;
             end
             
-            dict(index) = {key, {}};
-            
-            if index <= idict.dictnumber()
-                for j = idict.dictnumber():-1:index
+            assert(ischar(key), ...
+                ['BRAPH:IndexDictionary:Add'], ...
+                ['Key is not a string.']) %#ok<NBRAK>
+            assert(isequal(value.getClass(), idict.getValueClass()), ...
+                ['BRAPH:IndexDictionary:Add'], ...
+                ['Values is not an object of class ' idict.getValueClass() ]) %#ok<NBRAK>
+
+            if index <= idict.length()
+                for j = idict.length():-1:index
                     idict.dict(j+1) = idict.dict(j);
                 end
             end
-            idict.dict(index) = pairment;  % adds at the end
+            idict.dict(index) = {key, value};  % adds at the end
         end
-        % rem
-        function remove(idict, index)
-            if (isa(index, 'object')
-                
-            for j = index:1:idict.dictnumber()-1
+        function remove(idict, argument)
+            if isa(argument, 'char')  % is a key
+                index = idict.getKeyIndex(argument);
+            elseif  isa(argument, 'double')  % is index
+                index = argument;                
+            elseif isa(argument.getClass(), idict.getValueClass())  % is value
+                index = idict.getValueIndex(argument);
+            end
+            
+            for j = index:1:idict.length()-1
                 idict.dict(j) = idict.dict(j+1);
             end
-            remove(idict.dict, idict.dictnumber());
+            remove(idict.dict, idict.length());
         end
-%         function removePairment(idict, pair)
-%             index = idict.getPairmentIndex(pair);
-%             idict.remove(index);
+        function replace(idict, key, value, index)
+            if index < 0 || index <= idict.length()
+                idict.dict(index) = {key, value};
+            end            
+        end
+        function replaceKey(idict, oldKey, key)
+            index = idict.getKeyIndex(oldKey);
+            value = idict.getValue(index);
+            idict.replace(key, value, index);
+        end
+        function replaceValue(idict, oldValue, value)
+            index = idict.getValueIndex(oldValue);
+            key = idict.getKey(index);
+            idict.replace(key, value, index);
+        end
+        function invert(idict, i, j)
+             if i > 0 && i <= idict.length() && j > 0 && j <= idict.length() && i ~= j
+                pair_i = idict.getPairment(i);
+                pair_j = idict.getPairment(j);
+                idict.replace(pair_j{1}, pair_j{2}, i);
+                idict.replace(pair_i{1}, pair_i{2}, j);
+            end
+        end
+        function moveTo(idict, i, j)
+             if i > 0 && i <= idict.length() && j > 0 && j <= idict.length() && i ~= j
+                pair = idict.getPairment(i);
+                if i > j
+                    idict.remove(i)
+                    idict.add(pair{1}, pair{2}, j)
+                else  % j < i
+                    idict.add(pair{1}, pair{2}, j+1)
+                    idict.remove(i)
+                end
+            end
+        end
+        function selected = removeAll(idict, selected)
+            for i = length(selected):-1:1
+                idict.remove(selected(i))
+            end
+            selected = [];
+        end
+%         function [selected, added] = addAbove(idict, selected)
+%             for i = length(selected):-1:1
+%                 
+%                 idict.add({},{}, i);
+%             end
+%             selected = selected + reshape(1:1:numel(selected), size(selected));
+%             added = selected - 1;
 %         end
-%         function removeAllPairWithKey(idict, key)
-%             
+%         function [selected, added] = addBelow(idict, selected)
+%              for i = length(selected):-1:1
+%                 idict.add({},{}, i+1);
+%             end
+%             selected = selected + reshape(1:1:numel(selected), size(selected));
+%             added = selected - 1;
 %         end
-%         function replace(idict, index, varargin)
-% %             
-% %              assert(lenth(varargin)==2, ...
-% %                 ['BRAPH:IndexDictionary:Replace'], ...
-% %                 ['Missing parameters to Replace.']) %#ok<NBRAK>
-% %             
-% %             if nargin < 4 || index < 0 || index > idict.dictnumber()
-% %                 index = idict.dictnumber() + 1;
-% %             end
-% %             
-%         end
+        function selected =  moveUp(idict, selected)
+             if ~isempty(selected)                
+                first_index_to_process = 1;
+                unprocessable_length = 1;
+                while first_index_to_process <= idict.length() ...
+                        && first_index_to_process <= numel(selected) ...
+                        && selected(first_index_to_process) == unprocessable_length
+                    first_index_to_process = first_index_to_process + 1;
+                    unprocessable_length = unprocessable_length + 1;
+                end
+                
+                for i = first_index_to_process:1:numel(selected)
+                    idict.invert(selected(i), selected(i)-1);
+                    selected(i) = selected(i) - 1;
+                end
+            end
+        end
+        function selected = moveDown(idict, selected)
+             if ~isempty(selected)
+                last_index_to_process = numel(selected);
+                unprocessable_length = idict.length();
+                while last_index_to_process > 0 ...
+                        && selected(last_index_to_process) == unprocessable_length
+                    last_index_to_process = last_index_to_process - 1;
+                    unprocessable_length = unprocessable_length - 1;
+                end
+
+                for i = last_index_to_process:-1:1
+                    idict.invert(selected(i), selected(i) + 1);
+                    selected(i) = selected(i) + 1;
+                end
+            end
+        end
+        function selected = move2Top(idict, selected)
+             if ~isempty(selected)
+                for i = 1:1:numel(selected)
+                    idict.moveTo(selected(i), i);
+                end
+                selected = reshape(1:1:numel(selected), size(selected));
+            end
+        end
+        function selected = move2Bottom(idict, selected)
+             if ~isempty(selected)
+                for i = numel(selected):-1:1
+                    idict.moveTo(selected(i), idict.length() - (numel(selected)-i));
+                end
+                selected = reshape(idict.length() - numel(selected)+1:1:idict.length(), size(selected));
+            end
+        end
         % management functions
     end
     % Indexed dictionary with index (positive integer, sequesntial, 1, 2,
