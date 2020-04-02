@@ -3,15 +3,6 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
         value_class  % class of the value objects
         dict  % dict of (index, {key, value})
     end
-    methods (Access=private)
-        % TODO: don't use these private functions
-        function pairment = getPairment(idict, index)
-            pairment = idict.dict(index);
-        end
-        function pairments = getPairments(idict)
-            pairments = values(idict.dict);
-        end
-    end
     methods
         function idict = IndexedDictionary(value_class, keys, values)
             
@@ -45,7 +36,10 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             disp(['<a href="matlab:help ' class(idict) '">' class(idict) '</a>'])
             disp([' class: ' idict.getValueClass()])
             disp([' size: ' int2str(idict.length())])
-% TODO: add a list of all elements - for cycle
+            disp([' With entries:' ]) %#ok<NBRAK>
+            for i = 1:2:length(idict.dict)
+                disp(['  ' idict.dict{i} ' : ' tostring(idict.dict{i})]);
+            end
         end
         function n = length(idict)
             n = length(idict.dict);
@@ -54,7 +48,6 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             value_class = idict.value_class;
         end
         function bool = contains(idict, pointer)
-            
             if isa(pointer, 'double')  % pointer is index
                 bool = idict.containsIndex(pointer);
             elseif isa(pointer, 'char')  % pointer is key
@@ -62,11 +55,10 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             elseif isa(pointer, idict.getValueClass()) % pointer is value - not necessarily unique
                 bool = idict.containsValue(pointer);
             else
-                bool = false
+                bool = false;
             end
         end
         function bool = containsIndex(idict, index)
-            
             bool = false;
             if index > 0 && index <= idict.length()
                 bool = true;
@@ -75,9 +67,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
         function bool = containsValue(idict, value)
             bool = false;
             for i = 1:1:idict.length()
-% if isequal(idict.getValue(i), value)
-pair = idict.getPairment(i);
-if isequal(pair{2}, value)  % compares exact object
+                if isequal(idict.getValue(i), value)
                     bool = true;
                     break;
                 end
@@ -86,52 +76,74 @@ if isequal(pair{2}, value)  % compares exact object
         function bool = containsKey(idict, key)
             bool = false;
             for i = 1:1:idict.length()
-% if isequal(idict.getKey(i), key)
-pair = idict.getPairment(i);
-if isequal( pair{1}, key)  % compares exact object
+                if isequal(idict.getKeyFromIndex(i), key)
                     bool = true;
                     break;
                 end
             end
         end
-% function index = getIndex(idict, pointer)  % pointer = key, value
-    function index = getIndexFromValue(idict, value)
-        for i = 1:1:idict.length()
-            pair = idict.getPairment(i);
-            if isequal(pair{2}, value)
-                index = i;
-                break;
+        function index = getIndex(idict, pointer) % pointer = key, value
+            %index can be an array because values are not unique.
+           if isa(pointer, 'char')  % pointer is key
+                index = idict.getIndexFromKey(pointer);
+            elseif isa(pointer, idict.getValueClass())
+                index = idict.getIndexesFromValue(pointer);
             end
         end
-    end
-    function index = getIndexFromKey(idict, key)
-        for i = 1:1:idict.length()
-            pair = idict.getPairment(i);
-            if isequal(pair{1}, key)
-                index = i;
-                break;
+        function indexes = getIndexesFromValue(idict, value)
+            indexes = zeros(1, idict.length());
+            for i = 1:1:idict.length()                
+                if isequal(idict.getValue(i), value)
+                    indexes(1, i) = i;
+                    break;
+                end
+            end
+            indexes = indexes(indexes ~= 0);
+            indexes = num2cell(indexes);
+        end
+        function index = getIndexFromKey(idict, key)
+            for i = 1:1:idict.length()
+                key_and_value = idict.dict(i);
+                if isequal(key_and_value{1}, key)
+                    index = i;
+                    break;
+                end
             end
         end
-    end
-% function value = getValue(idict, pointer)  % pointer = key, index
-function value = getValue(idict, index)
-        pair = idict.getPairment(index);
-        value = pair{2};
-end
-% getValueFromIndex        
+        function value = getValue(idict, pointer)% pointer = key, index
+            if isa(pointer, 'char')  % key
+                value = idict.getValueFromKey(pointer);
+            else
+                value = idict.getValueFromIndex(pointer);
+            end            
+        end 
+        function value = getValueFromIndex(idict, index)            
+            key_and_value = idict.dict(index);
+            value = key_and_value{2};
+        end
         function value = getValueFromKey(idict, key)
-            index = idict.getKeyIndex(key);
-            value  = idict.getValue(index);
+            index = idict.getIndexFromKey(key);
+            value  = idict.getValueFromIndex(index);
         end
-% function key = getKey(idict, pointer)  % pointer = index, value
-function key = getKey(idict, index)
-    pair = idict.getPairment(index);
-    key = pair{1};
-end
-% getKeyFromIndex
-        function key = getKeyFromValue(idict, value)
-            index = idict.getValueIndex(value);
-            key = idict.getKey(index);
+        function keys = getKeys(idict, pointer)  % pointer = index, value
+            if isa(class(pointer), idict.getValueClass())
+                keys = getKeysFromValues(pointer);  % value, not unique. 
+            else  % is index
+                key_and_value = idict.dict(pointer);
+                keys = key_and_value{1};  % unique key
+            end
+        end
+        function key = getKeyFromIndex(idict, index)
+            key_and_value = idict.dict(index);
+            key = key_and_value{1};
+        end
+        function keys = getKeysFromValue(idict, value)
+            indexes = idict.getIndexesFromValue(value);
+            keys = cell(1, length(indexes));
+            for i = 1:1:length(indexes)
+                key_and_value = idict.dict(indexes{i});
+                keys{1, i} = key_and_value{1};
+            end            
         end
         function add(idict, key, value, index)
             if nargin < 4 || index < 0 || index > idict.length()
@@ -152,9 +164,8 @@ end
             end
             idict.dict(index) = {key, value};  % adds at the end
         end
-        function remove(idict, pointer)
-            
-% reorder index, key, value
+        function remove(idict, pointer)            
+            % reorder index, key, value
             if isa(pointer, 'char')  % pointer is key
                 index = idict.getKeyIndex(pointer);
             elseif  isa(pointer, 'double')  % pointer is index
@@ -174,31 +185,31 @@ end
             end
         end
         function replaceKey(idict, key_old, key_new)
-            index = idict.getKeyIndex(key_old);
-            value = idict.getValue(index);
+            index = idict.getIndexFromKey(key_old);
+            value = idict.getValueFromIndex(index);
             idict.replace(key_new, value, index);
         end
         function replaceValue(idict, value_old, value_new)
-            index = idict.getValueIndex(value_old);
-            key = idict.getKey(index);
-            idict.replace(key, value_new, index);
+            index = idict.getIndexesFromValue(value_old);
+            key = idict.getKeyFromIndex(index{:});
+            idict.replace(key, value_new, index{:});
         end
         function invert(idict, i, j)
             if i > 0 && i <= idict.length() && j > 0 && j <= idict.length() && i ~= j
-                pair_i = idict.getPairment(i);
-                pair_j = idict.getPairment(j);
+                pair_i = idict.dict(i);
+                pair_j = idict.dict(j);
                 idict.replace(pair_j{1}, pair_j{2}, i);
                 idict.replace(pair_i{1}, pair_i{2}, j);
             end
         end
         function move_to(idict, i, j)
             if i > 0 && i <= idict.length() && j > 0 && j <= idict.length() && i ~= j
-                pair = idict.getPairment(i);
+                key_and_value = idict.dict(i);
                 if i > j
                     idict.remove(i)
-                    idict.add(pair{1}, pair{2}, j)
+                    idict.add(key_and_value{1}, key_and_value{2}, j)
                 else  % j < i
-                    idict.add(pair{1}, pair{2}, j+1)
+                    idict.add(key_and_value{1}, key_and_value{2}, j+1)
                     idict.remove(i)
                 end
             end
@@ -245,7 +256,7 @@ end
         function selected = move_to_top(idict, selected)
             if ~isempty(selected)
                 for i = 1:1:numel(selected)
-                    idict.moveTo(selected(i), i);
+                    idict.move_to(selected(i), i);
                 end
                 selected = reshape(1:1:numel(selected), size(selected));
             end
@@ -253,12 +264,10 @@ end
         function selected = move_to_bottom(idict, selected)
             if ~isempty(selected)
                 for i = numel(selected):-1:1
-                    idict.moveTo(selected(i), idict.length() - (numel(selected)-i));
+                    idict.move_to(selected(i), idict.length() - (numel(selected)-i));
                 end
                 selected = reshape(idict.length() - numel(selected)+1:1:idict.length(), size(selected));
             end
         end
     end
-    % Indexed dictionary with index (positive integer, sequesntial, 1, 2,
-    % 3, 4, ...), key (string) and value (object of the class value_class)
 end
