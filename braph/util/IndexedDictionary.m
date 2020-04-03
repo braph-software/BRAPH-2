@@ -59,9 +59,20 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             end
         end
         function bool = containsIndex(idict, index)
-            bool = false;
+            
             if index > 0 && index <= idict.length()
                 bool = true;
+            else
+                bool = false;
+            end
+        end
+        function bool = containsKey(idict, key)
+            bool = false;
+            for i = 1:1:idict.length()
+                if isequal(idict.getKey(i), key)
+                    bool = true;
+                    break;
+                end
             end
         end
         function bool = containsValue(idict, value)
@@ -73,38 +84,29 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
                 end
             end
         end
-        function bool = containsKey(idict, key)
-            bool = false;
-            for i = 1:1:idict.length()
-                if isequal(idict.getKeyFromIndex(i), key)
-                    bool = true;
-                    break;
-                end
-            end
-        end
         function index = getIndex(idict, pointer) % pointer = key, value
             %index can be an array because values are not unique.
            if isa(pointer, 'char')  % pointer is key
                 index = idict.getIndexFromKey(pointer);
             elseif isa(pointer, idict.getValueClass())
-                index = idict.getIndexesFromValue(pointer);
+                index = idict.getIndexFromValue(pointer);
             end
         end
-        function indexes = getIndexesFromValue(idict, value)
-            indexes = zeros(1, idict.length());
+        function index = getIndexFromValue(idict, value)
+% TODO simplify
+            index = zeros(1, idict.length());
             for i = 1:1:idict.length()                
                 if isequal(idict.getValue(i), value)
-                    indexes(1, i) = i;
+                    index(1, i) = i;
                     break;
                 end
             end
-            indexes = indexes(indexes ~= 0);
-            indexes = num2cell(indexes);
+            index = index(index ~= 0);
+            index = num2cell(index);
         end
         function index = getIndexFromKey(idict, key)
             for i = 1:1:idict.length()
-                key_and_value = idict.dict(i);
-                if isequal(key_and_value{1}, key)
+                if isequal(idict.getKey(i), key)
                     index = i;
                     break;
                 end
@@ -125,19 +127,21 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             index = idict.getIndexFromKey(key);
             value  = idict.getValueFromIndex(index);
         end
-        function keys = getKeys(idict, pointer)  % pointer = index, value
+        function key = getKey(idict, pointer)  % pointer = index, value
+% TODO revise
             if isa(class(pointer), idict.getValueClass())
-                keys = getKeysFromValues(pointer);  % value, not unique. 
+                key = getKeysFromValues(pointer);  % value, not unique. 
             else  % is index
                 key_and_value = idict.dict(pointer);
-                keys = key_and_value{1};  % unique key
+                key = key_and_value{1};  % unique key
             end
         end
         function key = getKeyFromIndex(idict, index)
             key_and_value = idict.dict(index);
             key = key_and_value{1};
         end
-        function keys = getKeysFromValue(idict, value)
+        function key = getKeyFromValue(idict, value)
+% TODO revise
             indexes = idict.getIndexesFromValue(value);
             keys = cell(1, length(indexes));
             for i = 1:1:length(indexes)
