@@ -4,7 +4,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %
     % BrainAtlas properties (GetAccess=protected, SetAccess=protected):
     %   name                    - name of the brain atlas.
-    %   brdict                  - dictionary with brain regions
+    %   br_idict                  - dictionary with brain regions
     %                             (key, value) = (int32, brain region)
     %
     % BrainAtlas methods (Access=protected)
@@ -41,7 +41,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     
     properties (GetAccess=protected, SetAccess=protected) 
         name  % BrainAtlas name
-        brdict  % indexed dictionary with BrainRegions
+        br_idict  % indexed dictionary with BrainRegions
     end
     methods (Access=protected)
         function atlas_copy = copyElement(atlas)
@@ -55,8 +55,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % Make a shallow copy
             atlas_copy = copyElement@matlab.mixin.Copyable(atlas);
             
-            % Make a shallow copy of brdict
-            atlas_copy.brdict = copyElement@matlab.mixin.Copyable(atlas.brdict);
+            % Make a shallow copy of br_idict
+            atlas_copy.br_idict = copyElement@matlab.mixin.Copyable(atlas.br_idict);
         end        
     end        
     methods
@@ -74,9 +74,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % initialization of properties
             atlas.name = name;            
-            atlas.brdict = IndexedDictionary('BrainRegion'); % containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            atlas.br_idict = IndexedDictionary('BrainRegion'); % containers.Map('KeyType', 'int32', 'ValueType', 'any');
             for i = 1:1:length(brain_regions)
-                atlas.brdict.add(brain_regions{i}.getName(), brain_regions{i}, i);
+                atlas.br_idict.add(brain_regions{i}.getName(), brain_regions{i}, i);
             end
         end
         function str = tostring(atlas)
@@ -114,51 +114,54 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             name = atlas.name;
         end
-        function n = brainregionnumber(atlas)
-            % BRAINREGIONNUMBER returns the number of the BrainRegions.
-            %
-            % N = BRAINREGIONUMBER(ATLAS) returns the number of the brain
-            % regions in BRDICT.
-            %
-            % See also brainregionnumber().
-            
-            n = atlas.brdict.length();
+        function br_dict = getBrainRegions(atlas)
+            br_dict = atlas.br_idict;
         end
-        function bool = contains_brain_region(atlas, br_index)
-            % CONTAINS_BRAIN_REGION checks BrainAtlas contains a BrainRegion.
-            %
-            % BOOL = CONTAINS_BRAIN_REGION(ATLAS, BR_INDEX) returns true if
-            % a BrainRegion exists in the BrainAtlas dictionary BRDICT.
-            %
-            % See also getBrainRegion().
-            
-            bool = atlas.brdict.containsIndex(br_index);
-        end
-        function br = getBrainRegion(atlas, br_index)
-            % GETBRAINREGION returns the brain region.
-            %
-            % BR = GETBRAINREGION(ATLAS, BRINDEX) returns the
-            % BrainRegion indicated with BRINDEX from the dictionary
-            % BRDICT.
-            %
-            % See also contains_brain_region().
-            
-            br = atlas.brdict.getValueFromIndex(br_index);
-        end
-        function brain_regions = getBrainRegions(atlas)
-            % GETBRAINREGIONS returns all brain regions.
-            %
-            % BRS = GETBRAINREGIONS(ATLAS) returns all the
-            % BrainRegions from the dictionary the BRDICT.
-            %
-            % See also getBrainRegionLabels().
-            
-            % !!!! can modify indexdictionary or like this:
-            brain_regions = cell(1, atlas.brainregionnumber());
-            for i = 1:1:atlas.brainregionnumber()
-                brain_regions{i} = atlas.getBrainRegion(i);
-            end
-        end
+%         function n = brainregionnumber(atlas)
+%             % BRAINREGIONNUMBER returns the number of the BrainRegions.
+%             %
+%             % N = BRAINREGIONUMBER(ATLAS) returns the number of the brain
+%             % regions in BRDICT.
+%             %
+%             % See also brainregionnumber().
+%             
+%             n = atlas.br_idict.length();
+%         end
+%         function bool = contains_brain_region(atlas, br_index)
+%             % CONTAINS_BRAIN_REGION checks BrainAtlas contains a BrainRegion.
+%             %
+%             % BOOL = CONTAINS_BRAIN_REGION(ATLAS, BR_INDEX) returns true if
+%             % a BrainRegion exists in the BrainAtlas dictionary BRDICT.
+%             %
+%             % See also getBrainRegion().
+%             
+%             bool = atlas.br_idict.containsIndex(br_index);
+%         end
+%         function br = getBrainRegion(atlas, br_index)
+%             % GETBRAINREGION returns the brain region.
+%             %
+%             % BR = GETBRAINREGION(ATLAS, BRINDEX) returns the
+%             % BrainRegion indicated with BRINDEX from the dictionary
+%             % BRDICT.
+%             %
+%             % See also contains_brain_region().
+%             
+%             br = atlas.br_idict.getValueFromIndex(br_index);
+%         end
+%         function brain_regions = getBrainRegions(atlas)
+%             % GETBRAINREGIONS returns all brain regions.
+%             %
+%             % BRS = GETBRAINREGIONS(ATLAS) returns all the
+%             % BrainRegions from the dictionary the BRDICT.
+%             %
+%             % See also getBrainRegionLabels().
+%             
+%             % !!!! can modify indexdictionary or like this:
+%             brain_regions = cell(1, atlas.brainregionnumber());
+%             for i = 1:1:atlas.brainregionnumber()
+%                 brain_regions{i} = atlas.getBrainRegion(i);
+%             end
+%         end
         function br_labels = getBrainRegionLabels(atlas)
             % GETBRAINREGIONLABELS returns all BrainRegion labels.
             %
@@ -242,11 +245,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br = atlas.getBrainRegion(i);
                 br_positions{i} = br.getPosition();
             end
-        end
-        function br_dict = getDictionary(atlas)
-            br_dict = atlas.brdict;
-        end
-        
+        end        
 %         function addBrainRegion(atlas, br, i)
 %             % ADDBRAINREGION adds a BrainRegion.
 %             %
@@ -267,10 +266,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
 %             
 %             if i <= atlas.brainregionnumber()
 %                 for j = atlas.brainregionnumber():-1:i
-%                     atlas.brdict(j+1) = atlas.brdict(j);
+%                     atlas.br_idict(j+1) = atlas.br_idict(j);
 %                 end
 %             end
-%             atlas.brdict(i) = br;
+%             atlas.br_idict(i) = br;
 %         end
 %         function removeBrainRegion(atlas, i)
 %             % REMOVEBRAINREGION adds a BrainRegion.
@@ -281,9 +280,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
 %             % See also addBrainRegion(), replaceBrainRegion().
 %             
 %             for j = i:1:atlas.brainregionnumber()-1
-%                 atlas.brdict(j) = atlas.brdict(j+1);
+%                 atlas.br_idict(j) = atlas.br_idict(j+1);
 %             end
-%             remove(atlas.brdict, atlas.brainregionnumber());
+%             remove(atlas.br_idict, atlas.brainregionnumber());
 %         end
 %         function replaceBrainRegion(atlas, i, br)
 %             % REPLACEBRAINREGION replaces a BrainRegion.
@@ -299,7 +298,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
 %                     )
 %             
 %             if i > 0 || i <= atlas.brainregionnumber()
-%                 atlas.brdict(i) = br;
+%                 atlas.br_idict(i) = br;
 %             end
 %             
 %         end
