@@ -29,6 +29,9 @@ classdef OutLocalEfficiencyAv < OutLocalEfficiency
                 'all out local efficiencies.' ...
                 ];
         end
+        function available_settings = getAvailableSettings()           
+            available_settings = {};
+        end
         function bool = is_global()
             bool = true;
         end

@@ -2,9 +2,7 @@ classdef InStrengthAv < InStrength
     methods
         function m = InStrengthAv(g, varargin)
 
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@InStrength(g, settings{:});
+            m = m@InStrength(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -34,6 +32,9 @@ classdef InStrengthAv < InStrength
                 'the average of the sum of the weights ' ...
                 'of all inward edges connected to the node. ' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             

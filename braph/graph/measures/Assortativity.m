@@ -1,10 +1,8 @@
 classdef Assortativity < Measure
     methods
-        function m = Assortativity(g, varargin)
-            
-            settings = clean_varargin({}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+        function m = Assortativity(g, varargin)           
+           
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -59,6 +57,9 @@ classdef Assortativity < Measure
                 'weighted networks is calculated by using the weighted '...
                 'and directed variants of degree/strength.'...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             

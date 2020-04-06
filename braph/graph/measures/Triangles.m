@@ -1,10 +1,7 @@
 classdef Triangles < Measure
     methods
-        function m = Triangles(g, varargin)
-            
-            settings = clean_varargin({'DirectedTrianglesRule'}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+        function m = Triangles(g, varargin)            
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -48,6 +45,11 @@ classdef Triangles < Measure
                 'as geometric mean of the weights of the edges' ...
                 'forming the triangle.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'DirectedTrianglesRule', Constant.STRING, 'cycle', {'cycle', 'all', 'middleman', 'in', 'out'};
+                };
         end
         function bool = is_global()
             bool = false;

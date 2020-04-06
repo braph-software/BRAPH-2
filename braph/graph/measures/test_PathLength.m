@@ -6,8 +6,8 @@ for i = 1:1:length(graph_class_list)
     A = rand(randi(5));
     graph_class = graph_class_list{i};
     g = Graph.getGraph(graph_class, A);
-    pathL = g.getMeasure('PathLength');
-    value = pathL.getValue();
+    path_length = g.getMeasure('PathLength');
+    value = path_length.getValue();
     
     assert(~isempty(value), ...
         ['BRAPH:' graph_class ':PathLength'], ...

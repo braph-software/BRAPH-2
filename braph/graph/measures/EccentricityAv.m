@@ -1,8 +1,8 @@
 classdef EccentricityAv < Eccentricity
     methods
         function m = EccentricityAv(g, varargin)
-            settings = clean_varargin({'EccentricityRule'}, varargin{:}); 
-            m = m@Eccentricity(g, settings{:});
+         
+            m = m@Eccentricity(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -30,6 +30,11 @@ classdef EccentricityAv < Eccentricity
                 'The avearge Eccentricity of a graph is ' ...
                 'sum of the nodal Eccentricities divided by their number.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'EccentricityRule', Constant.STRING, 'default', {'default', 'subgraphs'};
+                };
         end
         function bool = is_global()            
             bool = true;

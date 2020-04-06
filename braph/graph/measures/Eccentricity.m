@@ -35,9 +35,8 @@ classdef Eccentricity < Measure
             %                    'subgraphs' - calculates ECCENTRICITY within connected subgraphs.
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
-            
-            settings = clean_varargin({'EccentricityRule'}, varargin{:}); 
-            m = m@Measure(g, settings{:});
+
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -96,6 +95,20 @@ classdef Eccentricity < Measure
                 'the maximal shortest path length between a ' ...
                 'node and any other node.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to Eccentricity
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to Eccentricity.
+            % ECCENTRICITYRULE = 'default' (default) - calculates ECCENTRICITY of global graph.
+            %                    'subgraphs' - calculates ECCENTRICITY within connected subgraphs.
+            % 
+            % See also getCompatibleGraphList()
+            
+            available_settings = {
+                'EccentricityRule', Constant.STRING, 'default', {'default', 'subgraphs'};
+                };
         end
         function bool = is_global()
             % IS_GLOBAL checks if eccentricity measure is global (false)

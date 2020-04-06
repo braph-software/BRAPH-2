@@ -30,9 +30,7 @@ classdef InStrength < Measure
             %
             % See also Measure, Graph, Degree, Distance, Efficiency.
 
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end    
     methods (Access=protected)
@@ -83,6 +81,9 @@ classdef InStrength < Measure
                 'as sums over columns of ' ...
                 'the weighted connectivity matrix. ' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()   
             % IS_GLOBAL checks if in-strength measure is global (false)

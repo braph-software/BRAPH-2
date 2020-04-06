@@ -1,10 +1,8 @@
 classdef EdgeBetweennessCentrality < Measure
     methods
-        function m = EdgeBetweennessCentrality(g, varargin)
-            
-            settings = clean_varargin({}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+        function m = EdgeBetweennessCentrality(g, varargin)          
+
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -127,6 +125,9 @@ classdef EdgeBetweennessCentrality < Measure
                 'Edges with high values of betweenness centrality ' ...
                 'participate in a large number of shortest paths. ' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             bool = false;

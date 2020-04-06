@@ -1,10 +1,8 @@
 classdef Clustering < Triangles
     methods
         function m = Clustering (g, varargin)
-
-            settings = clean_varargin({'DirectedTrianglesRule'}, varargin{:});
             
-            m = m@Triangles(g, settings{:});
+            m = m@Triangles(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -78,6 +76,11 @@ classdef Clustering < Triangles
                 'the maximum number of triangles that could possibly' ...
                 'be formed around that node.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'DirectedTrianglesRule', Constant.STRING, 'cycle', {'cycle', 'all', 'middleman', 'in', 'out'};
+                };
         end
         function bool = is_global()                
             bool = false;

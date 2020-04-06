@@ -30,6 +30,9 @@ classdef OutGlobalEfficiencyAv < OutGlobalEfficiency
                 'out global efficiency ' ...
                 ];
         end
+        function available_settings = getAvailableSettings()         
+            available_settings = {};
+        end
         function bool = is_global()
             bool = true;
         end

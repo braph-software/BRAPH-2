@@ -33,6 +33,9 @@ classdef OutLocalEfficiency < Measure
                 'shortest out path length with local nodes.' ...
                 ];
         end
+        function available_settings = getAvailableSettings()         
+            available_settings = {};
+        end
         function bool = is_global()
             bool = false;
         end

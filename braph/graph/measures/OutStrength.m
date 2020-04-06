@@ -30,9 +30,7 @@ classdef OutStrength < Measure
             %
             % See also Measure, Graph, Degree, Distance, Efficiency.
             
-            settings = clean_varargin({}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -83,6 +81,16 @@ classdef OutStrength < Measure
                 'as sums over rows of ' ...
                 'the weighted connectivity matrix. ' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to OutStrength
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to OutStrength. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
+            
+            available_settings = {};
         end
         function bool = is_global()
             % IS_GLOBAL checks if out-strength measure is global (false)
