@@ -235,6 +235,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
                 end
             end
         end
+% getIndexFromValueAll(idict, value)
         function value = getValue(idict, pointer)
             % GETVALUE returns the value of a index or key.
             %
@@ -306,6 +307,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             key_and_value = idict.dict(index);
             key = key_and_value{1};
         end
+% getKeyFromValueAll(idict, value)
         function add(idict, key, value, index)
             % ADD adds a key and value to DICT in position index.
             %
@@ -391,6 +393,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             key = idict.getKeyFromIndex(index);
             idict.replace(key, value_new, index);
         end
+% replaceValueAll(idict, value_old, value_new)
         function invert(idict, i, j)
             % INVERT inverts position of two elements.
             %
