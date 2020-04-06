@@ -31,7 +31,7 @@ classdef OutGlobalEfficiency < Measure
             % initializes the property settings with SETTINGS. 
             % Currently OUTGLOBALEFFICIENCY does not utilize SETTINGS.
             %   
-            % See also Measure, Graph, Strength, Distance, InGlobalEfficiency. 
+            % See also Measure, Graph, Strength, Distance. 
             
             m = m@Measure(g, varargin{:});
         end

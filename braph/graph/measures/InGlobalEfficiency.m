@@ -31,7 +31,7 @@ classdef InGlobalEfficiency < Measure
             % initializes the property settings with SETTINGS. 
             % Currently INGLOBALEFFICIENCY does not utilize SETTINGS.
             %   
-            % See also Measure, Graph, Strength, Distance, InGlobalEfficiency.
+            % See also Measure, Graph, Strength, Distance.
             
             m = m@Measure(g, varargin{:});
         end
