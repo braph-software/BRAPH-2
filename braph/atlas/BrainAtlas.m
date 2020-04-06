@@ -79,9 +79,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % initialization of properties
             atlas.name = name;            
-            atlas.brdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            atlas.brdict = IndexedDictionary('BrainRegion'); % containers.Map('KeyType', 'int32', 'ValueType', 'any');
             for i = 1:1:length(brain_regions)
-                atlas.addBrainRegion(brain_regions{i}, i);
+                atlas.brdict.add(brain_regions{i}.getName(), brain_regions{i}, i);
             end
         end
         function str = tostring(atlas)
@@ -127,7 +127,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also brainregionnumber().
             
-            n = length(atlas.brdict);
+            n = atlas.brdict.length();
         end
         function bool = contains_brain_region(atlas, br_index)
             % CONTAINS_BRAIN_REGION checks BrainAtlas contains a BrainRegion.
@@ -137,7 +137,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getBrainRegion().
             
-            bool = isKey(atlas.brdict, br_index);
+            bool = atlas.brdict.containsIndex(br_index);
         end
         function br = getBrainRegion(atlas, br_index)
             % GETBRAINREGION returns the brain region.
@@ -148,7 +148,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also contains_brain_region().
             
-            br = atlas.brdict(br_index);
+            br = atlas.brdict.getValueFromIndex(br_index);
         end
         function brain_regions = getBrainRegions(atlas)
             % GETBRAINREGIONS returns all brain regions.
@@ -158,7 +158,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getBrainRegionLabels().
             
-            brain_regions = values(atlas.brdict);
+            % !!!! can modify indexdictionary or like this:
+            brain_regions = cell(1, atlas.brainregionnumber());
+            for i = 1:1:atlas.brainregionnumber()
+                brain_regions{i} = atlas.getBrainRegion(i);
+            end
         end
         function br_labels = getBrainRegionLabels(atlas)
             % GETBRAINREGIONLABELS returns all BrainRegion labels.
@@ -244,225 +248,229 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_positions{i} = br.getPosition();
             end
         end
-        function addBrainRegion(atlas, br, i)
-            % ADDBRAINREGION adds a BrainRegion.
-            %
-            % ADDBRAINREGION(ATLAS, BrainRegion, INDEX) adds a BrainRegion
-            % to the BrainAtlas dictionary BRDICT specified INDEX. If INDEX 
-            % is empty it adds it to the end of BRDICT by default.
-            %
-            % See also removeBrainRegion(), replaceBrainRegion().
-            
-            if nargin < 3 || i < 0 || i > atlas.brainregionnumber()
-                i = atlas.brainregionnumber() + 1;
-            end
-
-            assert(isa(br, 'BrainRegion'), ...
-                    'BRAPH:BrainAtlas:ObjectNotBR', ...
-                    'Only BrainRegion objects can be added to a BrainAtlas' ...
-                    )
-            
-            if i <= atlas.brainregionnumber()
-                for j = atlas.brainregionnumber():-1:i
-                    atlas.brdict(j+1) = atlas.brdict(j);
-                end
-            end
-            atlas.brdict(i) = br;
+        function br_dict = getDictionary(atlas)
+            br_dict = atlas.brdict;
         end
-        function removeBrainRegion(atlas, i)
-            % REMOVEBRAINREGION adds a BrainRegion.
-            %
-            % REMOVEBRAINREGION(ATLAS, INDEX) removes a BrainRegion
-            % from the BrainAtlas dictionary BRDICT specified INDEX. 
-            %
-            % See also addBrainRegion(), replaceBrainRegion().
-            
-            for j = i:1:atlas.brainregionnumber()-1
-                atlas.brdict(j) = atlas.brdict(j+1);
-            end
-            remove(atlas.brdict, atlas.brainregionnumber());
-        end
-        function replaceBrainRegion(atlas, i, br)
-            % REPLACEBRAINREGION replaces a BrainRegion.
-            %
-            % REPLACEBRAINREGION(ATLAS, INDEX, BrainRegion) replaces the
-            % BrainRegion at the INDEX position.
-            %
-            % See also addBrainRegion(), removeBrainRegion().
-
-            assert(isa(br, 'BrainRegion'), ...
-                    'BRAPH:BrainAtlas:ObjectNotBR', ...
-                    'Only BrainRegion objects can be added to a BrainAtlas' ...
-                    )
-            
-            if i > 0 || i <= atlas.brainregionnumber()
-                atlas.brdict(i) = br;
-            end
-            
-        end
-        function invertBrainRegions(atlas, i, j)
-            % INVERTBRAINREGIONS inverts position of two BrainRegions.
-            %
-            % INVERTBRAINREGIONS(ATLAS, INDEXI, INDEXJ) inverts the
-            % position of a BrainRegion at INDEXI with the position of a
-            % BrainRegion at INDEXJ.  
-            %
-            % See also addBrainRegion(), replaceBrainRegion().
-            
-            if i > 0 && i <= atlas.brainregionnumber() && j > 0 && j <= atlas.brainregionnumber() && i ~= j
-                br_i = atlas.getBrainRegion(i);
-                br_j = atlas.getBrainRegion(j);
-                atlas.replaceBrainRegion(i, br_j)
-                atlas.replaceBrainRegion(j, br_i)
-            end
-        end
-        function movetoBrainRegion(atlas, i, j)
-            % MOVETOBRAINREGION moves a BrainRegion to another position.
-            %
-            % MOVETOBRAINREGION(ATLAS, INDEXI, INDEXJ) moves a BrainRegion
-            % from position INDEXI to position INDEXJ.
-            %
-            % See also addBrainRegion(), replaceBrainRegion().
-            
-            if i > 0 && i <= atlas.brainregionnumber() && j > 0 && j <= atlas.brainregionnumber() && i ~= j
-                br = atlas.getBrainRegion(i);
-                if i > j
-                    atlas.removeBrainRegion(i)
-                    atlas.addBrainRegion(br, j)
-                else  % j < i
-                    atlas.addBrainRegion(br, j+1)
-                    atlas.removeBrainRegion(i)
-                end
-            end            
-        end
-        function selected = removeBrainRegions(atlas, selected)
-            % REMOVEBRAINREGIONS removes selected BrainRegions.
-            %
-            % SELECTED = REMOVEBRAINREGIONS(ATLAS, SELECTED) removes all
-            % BrainRegions whose positions in ATLAS are included in the
-            % array SELECTED. It returns an empty array.
-            %
-            % See also addaboveBrainRegions(), addbelowBrainRegions().
-            
-            for i = length(selected):-1:1
-                atlas.removeBrainRegion(selected(i))
-            end
-            selected = [];
-        end
-        function [selected, added] = addaboveBrainRegions(atlas, selected)
-            % ADDABOVEBRAINREGIONS adds BrainRegions above a selection.
-            %
-            % [SELECTED, ADDED] = ADDABOVEBRAINREGIONS(ATLAS, SELECTED) adds new
-            % BrainRegions with default initialization above the selected
-            % positions in the array SELECTED. It returns a new reshaped 
-            % array of SELECTED and the new BrainRegions ADDED.
-            %
-            % See also removeBrainRegions(), addbelowBrainRegions().
-            
-            for i = length(selected):-1:1
-                atlas.addBrainRegion(BrainRegion(), selected(i))
-            end
-            selected = selected + reshape(1:1:numel(selected), size(selected));
-            added = selected - 1;
-        end
-        function [selected, added] = addbelowBrainRegions(atlas, selected)
-            % ADDBELOWBRAINREGIONS adds BrainRegions below a selection.
-            %
-            % [SELECTED, ADDED] = ADDBELOWBRAINREGIONS(ATLAS, SELECTED) adds
-            % new BrainRegions with default initialization below the selected
-            % positions in the array SELECTED. It returns a new reshaped 
-            % array of SELECTED and the new BrainRegions ADDED.
-            %
-            % See also removeBrainRegions(), addaboveBrainRegions().
-            
-            for i = length(selected):-1:1
-                atlas.addBrainRegion(BrainRegion(), selected(i) + 1)
-            end
-            selected = selected + reshape(0:1:numel(selected)-1, size(selected));
-            added = selected + 1;
-        end
-        function selected = moveupBrainRegions(atlas, selected)
-            % MOVEUPBRAINREGIONS moves up selected BrainRegions.
-            %
-            % SELECTED = MOVEUPBRAINREGIONS(ATLAS, SELECTED) moves up by one
-            % position all BrainRegions whose positions in ATLAS are included
-            % in the SELECTED array and returns their final positions.
-            %
-            % See also movedownBrainRegions().
-            
-            if ~isempty(selected)
-                
-                first_index_to_process = 1;
-                unprocessable_length = 1;
-                while first_index_to_process <= atlas.brainregionnumber() ...
-                        && first_index_to_process <= numel(selected) ...
-                        && selected(first_index_to_process) == unprocessable_length
-                    first_index_to_process = first_index_to_process + 1;
-                    unprocessable_length = unprocessable_length + 1;
-                end
-
-                for i = first_index_to_process:1:numel(selected)
-                    atlas.invertBrainRegions(selected(i), selected(i)-1);
-                    selected(i) = selected(i) - 1;
-                end
-            end
-        end
-        function selected = movedownBrainRegions(atlas, selected)
-            % MOVEDOWNBRAINREGIONS moves down selected BrainRegions.
-            %
-            % SELECTED = MOVEDOWNBRAINREGIONS(ATLAS, SELECTED) moves down by
-            % one position all BrainRegions whose positions in ATLAS are included
-            % in the SELECTED array and returns their final positions.
-            %
-            % See also movedownBrainRegions().
-            
-            if ~isempty(selected)
-
-                last_index_to_process = numel(selected);
-                unprocessable_length = atlas.brainregionnumber();
-                while last_index_to_process > 0 ...
-                        && selected(last_index_to_process) == unprocessable_length
-                    last_index_to_process = last_index_to_process - 1;
-                    unprocessable_length = unprocessable_length - 1;
-                end
-
-                for i = last_index_to_process:-1:1
-                    atlas.invertBrainRegions(selected(i), selected(i) + 1);
-                    selected(i) = selected(i) + 1;
-                end
-            end
-        end
-        function selected = move2topBrainRegions(atlas, selected)
-            % MOVE2TOPBRAINREGIONS moves selected BrainRegions to top
-            %
-            % SELECTED = MOVE2TOPBRAINREGIONS(ATLAS, SELECTED) moves to top
-            % all BrainRegions whose positions in the ATLAS dictionary are 
-            % included in the SELECTED array and returns their final positions.
-            %
-            % See also move2bottomBrainRegions().
-            
-            if ~isempty(selected)
-                for i = 1:1:numel(selected)
-                    atlas.movetoBrainRegion(selected(i), i);
-                end
-                selected = reshape(1:1:numel(selected), size(selected));
-            end
-        end
-        function selected = move2bottomBrainRegions(atlas, selected)
-            % MOVE2BOTTOMBRAINREGIONS moves selected BrainRegions to bottom
-            %
-            % SELECTED = MOVE2BOTTOMBRAINREGIONS(ATLAS, SELECTED) moves to 
-            % bottom all BrainRegions whose positions in the ATLAS dictionary are 
-            % included in the SELECTED array and returns their final positions.
-            %
-            % See also move2bottomBrainRegions().
-            
-            if ~isempty(selected)
-                for i = numel(selected):-1:1
-                    atlas.movetoBrainRegion(selected(i), atlas.brainregionnumber() - (numel(selected)-i));
-                end
-                selected = reshape(atlas.brainregionnumber() - numel(selected)+1:1:atlas.brainregionnumber(), size(selected));
-            end
-        end
+        
+%         function addBrainRegion(atlas, br, i)
+%             % ADDBRAINREGION adds a BrainRegion.
+%             %
+%             % ADDBRAINREGION(ATLAS, BrainRegion, INDEX) adds a BrainRegion
+%             % to the BrainAtlas dictionary BRDICT specified INDEX. If INDEX 
+%             % is empty it adds it to the end of BRDICT by default.
+%             %
+%             % See also removeBrainRegion(), replaceBrainRegion().
+%             
+%             if nargin < 3 || i < 0 || i > atlas.brainregionnumber()
+%                 i = atlas.brainregionnumber() + 1;
+%             end
+% 
+%             assert(isa(br, 'BrainRegion'), ...
+%                     'BRAPH:BrainAtlas:ObjectNotBR', ...
+%                     'Only BrainRegion objects can be added to a BrainAtlas' ...
+%                     )
+%             
+%             if i <= atlas.brainregionnumber()
+%                 for j = atlas.brainregionnumber():-1:i
+%                     atlas.brdict(j+1) = atlas.brdict(j);
+%                 end
+%             end
+%             atlas.brdict(i) = br;
+%         end
+%         function removeBrainRegion(atlas, i)
+%             % REMOVEBRAINREGION adds a BrainRegion.
+%             %
+%             % REMOVEBRAINREGION(ATLAS, INDEX) removes a BrainRegion
+%             % from the BrainAtlas dictionary BRDICT specified INDEX. 
+%             %
+%             % See also addBrainRegion(), replaceBrainRegion().
+%             
+%             for j = i:1:atlas.brainregionnumber()-1
+%                 atlas.brdict(j) = atlas.brdict(j+1);
+%             end
+%             remove(atlas.brdict, atlas.brainregionnumber());
+%         end
+%         function replaceBrainRegion(atlas, i, br)
+%             % REPLACEBRAINREGION replaces a BrainRegion.
+%             %
+%             % REPLACEBRAINREGION(ATLAS, INDEX, BrainRegion) replaces the
+%             % BrainRegion at the INDEX position.
+%             %
+%             % See also addBrainRegion(), removeBrainRegion().
+% 
+%             assert(isa(br, 'BrainRegion'), ...
+%                     'BRAPH:BrainAtlas:ObjectNotBR', ...
+%                     'Only BrainRegion objects can be added to a BrainAtlas' ...
+%                     )
+%             
+%             if i > 0 || i <= atlas.brainregionnumber()
+%                 atlas.brdict(i) = br;
+%             end
+%             
+%         end
+%         function invertBrainRegions(atlas, i, j)
+%             % INVERTBRAINREGIONS inverts position of two BrainRegions.
+%             %
+%             % INVERTBRAINREGIONS(ATLAS, INDEXI, INDEXJ) inverts the
+%             % position of a BrainRegion at INDEXI with the position of a
+%             % BrainRegion at INDEXJ.  
+%             %
+%             % See also addBrainRegion(), replaceBrainRegion().
+%             
+%             if i > 0 && i <= atlas.brainregionnumber() && j > 0 && j <= atlas.brainregionnumber() && i ~= j
+%                 br_i = atlas.getBrainRegion(i);
+%                 br_j = atlas.getBrainRegion(j);
+%                 atlas.replaceBrainRegion(i, br_j)
+%                 atlas.replaceBrainRegion(j, br_i)
+%             end
+%         end
+%         function movetoBrainRegion(atlas, i, j)
+%             % MOVETOBRAINREGION moves a BrainRegion to another position.
+%             %
+%             % MOVETOBRAINREGION(ATLAS, INDEXI, INDEXJ) moves a BrainRegion
+%             % from position INDEXI to position INDEXJ.
+%             %
+%             % See also addBrainRegion(), replaceBrainRegion().
+%             
+%             if i > 0 && i <= atlas.brainregionnumber() && j > 0 && j <= atlas.brainregionnumber() && i ~= j
+%                 br = atlas.getBrainRegion(i);
+%                 if i > j
+%                     atlas.removeBrainRegion(i)
+%                     atlas.addBrainRegion(br, j)
+%                 else  % j < i
+%                     atlas.addBrainRegion(br, j+1)
+%                     atlas.removeBrainRegion(i)
+%                 end
+%             end            
+%         end
+%         function selected = removeBrainRegions(atlas, selected)
+%             % REMOVEBRAINREGIONS removes selected BrainRegions.
+%             %
+%             % SELECTED = REMOVEBRAINREGIONS(ATLAS, SELECTED) removes all
+%             % BrainRegions whose positions in ATLAS are included in the
+%             % array SELECTED. It returns an empty array.
+%             %
+%             % See also addaboveBrainRegions(), addbelowBrainRegions().
+%             
+%             for i = length(selected):-1:1
+%                 atlas.removeBrainRegion(selected(i))
+%             end
+%             selected = [];
+%         end
+%         function [selected, added] = addaboveBrainRegions(atlas, selected)
+%             % ADDABOVEBRAINREGIONS adds BrainRegions above a selection.
+%             %
+%             % [SELECTED, ADDED] = ADDABOVEBRAINREGIONS(ATLAS, SELECTED) adds new
+%             % BrainRegions with default initialization above the selected
+%             % positions in the array SELECTED. It returns a new reshaped 
+%             % array of SELECTED and the new BrainRegions ADDED.
+%             %
+%             % See also removeBrainRegions(), addbelowBrainRegions().
+%             
+%             for i = length(selected):-1:1
+%                 atlas.addBrainRegion(BrainRegion(), selected(i))
+%             end
+%             selected = selected + reshape(1:1:numel(selected), size(selected));
+%             added = selected - 1;
+%         end
+%         function [selected, added] = addbelowBrainRegions(atlas, selected)
+%             % ADDBELOWBRAINREGIONS adds BrainRegions below a selection.
+%             %
+%             % [SELECTED, ADDED] = ADDBELOWBRAINREGIONS(ATLAS, SELECTED) adds
+%             % new BrainRegions with default initialization below the selected
+%             % positions in the array SELECTED. It returns a new reshaped 
+%             % array of SELECTED and the new BrainRegions ADDED.
+%             %
+%             % See also removeBrainRegions(), addaboveBrainRegions().
+%             
+%             for i = length(selected):-1:1
+%                 atlas.addBrainRegion(BrainRegion(), selected(i) + 1)
+%             end
+%             selected = selected + reshape(0:1:numel(selected)-1, size(selected));
+%             added = selected + 1;
+%         end
+%         function selected = moveupBrainRegions(atlas, selected)
+%             % MOVEUPBRAINREGIONS moves up selected BrainRegions.
+%             %
+%             % SELECTED = MOVEUPBRAINREGIONS(ATLAS, SELECTED) moves up by one
+%             % position all BrainRegions whose positions in ATLAS are included
+%             % in the SELECTED array and returns their final positions.
+%             %
+%             % See also movedownBrainRegions().
+%             
+%             if ~isempty(selected)
+%                 
+%                 first_index_to_process = 1;
+%                 unprocessable_length = 1;
+%                 while first_index_to_process <= atlas.brainregionnumber() ...
+%                         && first_index_to_process <= numel(selected) ...
+%                         && selected(first_index_to_process) == unprocessable_length
+%                     first_index_to_process = first_index_to_process + 1;
+%                     unprocessable_length = unprocessable_length + 1;
+%                 end
+% 
+%                 for i = first_index_to_process:1:numel(selected)
+%                     atlas.invertBrainRegions(selected(i), selected(i)-1);
+%                     selected(i) = selected(i) - 1;
+%                 end
+%             end
+%         end
+%         function selected = movedownBrainRegions(atlas, selected)
+%             % MOVEDOWNBRAINREGIONS moves down selected BrainRegions.
+%             %
+%             % SELECTED = MOVEDOWNBRAINREGIONS(ATLAS, SELECTED) moves down by
+%             % one position all BrainRegions whose positions in ATLAS are included
+%             % in the SELECTED array and returns their final positions.
+%             %
+%             % See also movedownBrainRegions().
+%             
+%             if ~isempty(selected)
+% 
+%                 last_index_to_process = numel(selected);
+%                 unprocessable_length = atlas.brainregionnumber();
+%                 while last_index_to_process > 0 ...
+%                         && selected(last_index_to_process) == unprocessable_length
+%                     last_index_to_process = last_index_to_process - 1;
+%                     unprocessable_length = unprocessable_length - 1;
+%                 end
+% 
+%                 for i = last_index_to_process:-1:1
+%                     atlas.invertBrainRegions(selected(i), selected(i) + 1);
+%                     selected(i) = selected(i) + 1;
+%                 end
+%             end
+%         end
+%         function selected = move2topBrainRegions(atlas, selected)
+%             % MOVE2TOPBRAINREGIONS moves selected BrainRegions to top
+%             %
+%             % SELECTED = MOVE2TOPBRAINREGIONS(ATLAS, SELECTED) moves to top
+%             % all BrainRegions whose positions in the ATLAS dictionary are 
+%             % included in the SELECTED array and returns their final positions.
+%             %
+%             % See also move2bottomBrainRegions().
+%             
+%             if ~isempty(selected)
+%                 for i = 1:1:numel(selected)
+%                     atlas.movetoBrainRegion(selected(i), i);
+%                 end
+%                 selected = reshape(1:1:numel(selected), size(selected));
+%             end
+%         end
+%         function selected = move2bottomBrainRegions(atlas, selected)
+%             % MOVE2BOTTOMBRAINREGIONS moves selected BrainRegions to bottom
+%             %
+%             % SELECTED = MOVE2BOTTOMBRAINREGIONS(ATLAS, SELECTED) moves to 
+%             % bottom all BrainRegions whose positions in the ATLAS dictionary are 
+%             % included in the SELECTED array and returns their final positions.
+%             %
+%             % See also move2bottomBrainRegions().
+%             
+%             if ~isempty(selected)
+%                 for i = numel(selected):-1:1
+%                     atlas.movetoBrainRegion(selected(i), atlas.brainregionnumber() - (numel(selected)-i));
+%                 end
+%                 selected = reshape(atlas.brainregionnumber() - numel(selected)+1:1:atlas.brainregionnumber(), size(selected));
+%             end
+%         end
     end
 end
