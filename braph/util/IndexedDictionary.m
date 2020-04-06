@@ -1,5 +1,5 @@
 classdef IndexedDictionary < handle & matlab.mixin.Copyable
-    % IndexedDictionary < handle & matlab.mixin.Copyable A index dictionary
+    % IndexedDictionary < handle & matlab.mixin.Copyable A indexed dictionary
     % IndexedDictionary provides the methods necessary to handle data 
     % in a indexed dictionary.
     %
@@ -47,11 +47,15 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     end
     methods
         function idict = IndexedDictionary(value_class, keys, values)
-            % IndexedDictionary(value_class, keys, values) creates a indexdictionary
-            % with a value_class, and a indexed dictionary with values of
-            % {keys, values}.
+            % IndexedDictionary(VALUE_CLASS) creates an empty indexdictionary
+            % storign objects of class VALUE_CLASS. 
             %
-            % See also Graph, BrainAtlas, Data, Cohort.
+            % IndexedDictionary(VALUE_CLASS, KEYS, VALUES)  creates a
+            % dictionary and inserts KEYS with corresponding valeus VALUES. 
+            % KEYS and VALUES must be cell arrays of strings and objects of
+            % class VALUE_CLASS, respectively.
+            %
+            % See also BrainAtlas, Cohort, GraphAnalysis.
             
             idict.value_class = value_class;
             
