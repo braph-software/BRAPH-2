@@ -67,23 +67,32 @@ classdef Measure < handle
             %   
             % See also Graph, Degree, Strength, Distance, Efficency. 
 
-            if ~are_compatible(g, m)  % checks wheter the graph and the measure are compatible.
+            if ~are_compatible(g, m)  % checks whether the graph and the measure are compatible.
                 error( ...
                     'BRAPH:Measure:IncompatibleGM', ...
                     [class(g) ' is not compatible with ' class(m)] ...
                     )
             end
+            m.g = g;  % initialize the property g
             
             if length(varargin) == 1
                 varargin = varargin{:};
             end
             
-            settings = get_from_varargin(varargin, 'Settings', varargin{:});  % returns varargin if no key 'Settings'
             value = get_from_varargin([], 'Value', varargin{:});
-            
-            m.g = g;  % initialize the property g
-            m.settings = settings;  % initialize the property settings
             m.value = value;  % initialize the property value
+
+            varargin = get_from_varargin(varargin, 'Settings', varargin{:});  % returns varargin if no key 'Settings'
+            available_settings = Measure.getAvailableSettings(class(m));
+            settings = cell(1, size(available_settings, 1));
+            for i = 1:1:size(available_settings, 1)
+                available_setting_code = available_settings{i, 1};
+                available_setting_default = available_settings{i, 3};
+                % TODO check that the value of the settign is amongst the acceptable values
+                settings{2 * i - 1} = available_setting_code;
+                settings{2 * i} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
+            end
+            m.settings = settings;  % initialize the property settings
         end
     end
     methods
@@ -225,6 +234,10 @@ classdef Measure < handle
             % See also getList(), getCompatibleGraphList().
             
             description = eval([Measure.getClass(m) '.getDescription()']);
+        end
+        function available_settings = getAvailableSettings(m)
+            
+            available_settings = eval([Measure.getClass(m) '.getAvailableSettings()']);
         end
         function bool = is_global(m)
             % IS_GLOBAL checks if measure is global

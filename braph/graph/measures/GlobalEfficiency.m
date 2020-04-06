@@ -1,14 +1,14 @@
-classdef OutGlobalEfficency < Measure
+classdef GlobalEfficiency < Measure
     methods
-        function m = OutGlobalEfficency(g, varargin)
+        function m = GlobalEfficiency(g, varargin)
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function ge = calculate(m)
+        function global_efficiency = calculate(m)
             g = m.getGraph();
-            N = g.nodenumber();
-            
+            N = g.nodenumber();            
+           
             if g.is_measure_calculated('Distance')
                 D = g.getMeasure('Distance').getValue();
             else
@@ -16,23 +16,26 @@ classdef OutGlobalEfficency < Measure
             end
             
             Di = D.^-1;  % inverse distance
-            Di(1:N+1:end) = 0;   
-            ge = (sum(Di, 2) / (N-1));
+            Di(1:N+1:end) = 0;            
+            global_efficiency = (sum(Di, 2) / (N-1));    
         end
     end
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'OutGlobalEfficency';
+            measure_class = 'GlobalEfficiency';
         end
         function name = getName()
-            name = 'Global Out Efficency';
+            name = 'Global-Efficiency';
         end
         function description = getDescription()
             description = [ ...
-                'The global out efficiency is the average inverse ' ...
-                'shortest out path length in the graph. ' ...
-                'It is inversely related to the characteristic out path length.';
+                'The global efficiency is the average inverse ' ...
+                'shortest path length in the graph. ' ...
+                'It is inversely related to the characteristic path length.';
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             bool = false;
@@ -45,12 +48,12 @@ classdef OutGlobalEfficency < Measure
         end
         function list = getCompatibleGraphList()
             list = { ...               
-                'GraphBD', ...           
-                'GraphWD' ...
+                'GraphBU', ...           
+                'GraphWU' ...
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('OutGlobalEfficency');
+            n = Measure.getCompatibleGraphNumber('GlobalEfficiency');
         end
     end
 end

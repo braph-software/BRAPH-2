@@ -2,9 +2,7 @@ classdef OutStrengthAv < OutStrength
     methods
         function m = OutStrengthAv(g, varargin)
 
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@OutStrength(g, settings{:});
+            m = m@OutStrength(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -34,6 +32,9 @@ classdef OutStrengthAv < OutStrength
                 'the average of the sum of the weights ' ...
                 'of all outward edges connected to the node. ' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()            
+            available_settings = {};
         end
         function bool = is_global()
             

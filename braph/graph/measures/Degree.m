@@ -22,7 +22,7 @@ classdef Degree < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
-    % See also Measure, Graph, Strength, Distance, Efficency.
+    % See also Measure, Graph, Strength, Distance, Efficiency.
     
     methods
         function m = Degree(g, varargin)
@@ -30,13 +30,9 @@ classdef Degree < Measure
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % DEGREE(G, 'Settings', SETTINGS) ceates degree measure and
-            % initializes the property settings with SETTINGS. 
-            %   
             % See also Measure, Graph, Strength, Distance, Efficency. 
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@Measure(g, settings{:});
+            
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -84,6 +80,16 @@ classdef Degree < Measure
                 'the number of edges connected to the node. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to Degree
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to Degree. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
+            
+            available_settings = {};
         end
         function bool = is_global()
             % IS_GLOBAL checks if degree measure is global (false)

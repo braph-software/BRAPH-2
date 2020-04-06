@@ -36,8 +36,7 @@ classdef PathLength < Measure
             %   
             % See also Measure, Graph, Strength, Distance, GlobalEfficiency. 
             
-            settings = clean_varargin({'PathLengthAvRule'}, varargin{:});
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -70,7 +69,7 @@ classdef PathLength < Measure
                         Du = distance(:, u);
                         path_length(u) = harmmean(Du(Du~=0));
                     end
-                otherwise
+                otherwise  % 'default'
                     for u = 1:1:N
                         Du = distance(:, u);
                         path_length(u) = mean(Du(Du~=0));
@@ -106,6 +105,11 @@ classdef PathLength < Measure
                 'The path length is the average shortest ' ...
                 'path lengths of one node to all other nodes.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'PathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                };
         end
         function bool = is_global()
             % IS_GLOBAL checks if pathlength measure is global (false)

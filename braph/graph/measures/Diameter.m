@@ -2,9 +2,7 @@ classdef Diameter < Measure
     methods
         function m = Diameter(g, varargin)
             
-            settings = clean_varargin({'EccentricityRule'}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -33,6 +31,9 @@ classdef Diameter < Measure
                 'The diameter is the maximum eccentricity ' ...
                 'among the vertice.'
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()                
             bool = true;

@@ -35,8 +35,8 @@ classdef OutPathLength < Measure
             % default       -   Calculates OUTPATHLENGTH with normal average
             %   
             % See also Measure, Graph, Strength, Distance, GlobalEfficiency.
-            settings = clean_varargin({'OutPathLengthAvRule'}, varargin{:});
-            m = m@Measure(g, settings{:});
+       
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -105,6 +105,11 @@ classdef OutPathLength < Measure
                 'The out path length is the average shortest ' ...
                 'out path lengths of one node to all other nodes.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()            
+            available_settings = {
+                'OutPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                };
         end
         function bool = is_global()
             % IS_GLOBAL checks if out-pathlength measure is global (false)

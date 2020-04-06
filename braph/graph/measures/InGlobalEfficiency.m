@@ -1,11 +1,11 @@
-classdef InGlobalEfficency < Measure
+classdef InGlobalEfficiency < Measure
     methods
-        function m = InGlobalEfficency(g, varargin)
+        function m = InGlobalEfficiency(g, varargin)
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function ge = calculate(m)
+        function in_global_efficiency = calculate(m)
             g = m.getGraph();
             N = g.nodenumber();
 
@@ -17,15 +17,15 @@ classdef InGlobalEfficency < Measure
             
             Di = D.^-1;  % inverse distance
             Di(1:N+1:end) = 0;
-            ge = (sum(Di, 1) / (N-1))';
+            in_global_efficiency = (sum(Di, 1) / (N-1))';
         end
     end
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'InGlobalEfficency';
+            measure_class = 'InGlobalEfficiency';
         end
         function name = getName()
-            name = 'Global In Efficency';
+            name = 'Global-In-Efficiency';
         end
         function description = getDescription()
             description = [ ...
@@ -33,6 +33,9 @@ classdef InGlobalEfficency < Measure
                 'shortest in path length in the graph. ' ...
                 'It is inversely related to the characteristic in path length.';
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             bool = false;
@@ -50,7 +53,7 @@ classdef InGlobalEfficency < Measure
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('InGlobalEfficency');
+            n = Measure.getCompatibleGraphNumber('InGlobalEfficiency');
         end
     end
 end

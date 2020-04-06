@@ -1,33 +1,36 @@
-classdef OutLocalEfficencyAv < OutLocalEfficency
+classdef OutLocalEfficiencyAv < OutLocalEfficiency
     methods
-        function m = OutLocalEfficencyAv(g, varargin)
-            m = m@OutLocalEfficency(g, varargin{:});
+        function m = OutLocalEfficiencyAv(g, varargin)
+            m = m@OutLocalEfficiency(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function le_av = calculate(m)
+        function out_local_efficiency_av = calculate(m)
             g = m.getGraph();
-            if g.is_measure_calculated('OutLocalEfficency')
-                le = g.getMeasureValue('OutLocalEfficency');
+            if g.is_measure_calculated('OutLocalEfficiency')
+                out_local_efficiency = g.getMeasureValue('OutLocalEfficiency');
             else
-                le = calculate@OutLocalEfficency(m);
+                out_local_efficiency = calculate@OutLocalEfficiency(m);
             end
             
-            le_av = mean(le);
+            out_local_efficiency_av = mean(out_local_efficiency);
         end
     end
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'OutLocalEfficencyAv';
+            measure_class = 'OutLocalEfficiencyAv';
         end
         function name = getName()
-            name = 'Average Out Local Efficency';
+            name = 'Average-Out-Local-Efficiency';
         end
         function description = getDescription()
             description = [ ...
                 'The average out local efficiency is the average of the ' ...
-                'all out local efficencies.' ...
+                'all out local efficiencies.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()           
+            available_settings = {};
         end
         function bool = is_global()
             bool = true;
@@ -45,7 +48,7 @@ classdef OutLocalEfficencyAv < OutLocalEfficency
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('OutLocalEfficencyAv');
+            n = Measure.getCompatibleGraphNumber('OutLocalEfficiencyAv');
         end
     end
 end

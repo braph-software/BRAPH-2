@@ -2,9 +2,7 @@ classdef InDegree < Measure
     methods
         function m = InDegree(g, varargin)
 
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods(Access=protected)
@@ -27,6 +25,9 @@ classdef InDegree < Measure
                 'the number of inward edges connected to the node. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             bool = false;

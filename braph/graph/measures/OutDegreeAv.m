@@ -2,9 +2,7 @@ classdef OutDegreeAv < OutDegree
     methods
         function m = OutDegreeAv(g, varargin)
 
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@OutDegree(g, settings{:});
+            m = m@OutDegree(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -35,6 +33,9 @@ classdef OutDegreeAv < OutDegree
                 'connected to the node. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             bool = true;

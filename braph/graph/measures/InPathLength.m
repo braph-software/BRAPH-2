@@ -35,8 +35,8 @@ classdef InPathLength < Measure
             % default       -   Calculates INPATHLENGTH with normal average
             %   
             % See also Measure, Graph, Strength, Distance, GlobalEfficiency.
-            settings = clean_varargin({'InPathLengthAvRule'}, varargin{:});
-            m = m@Measure(g, settings{:});
+            
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -106,6 +106,11 @@ classdef InPathLength < Measure
               'The in path length is the average shortest ' ...
               'in path lengths of one node to all other nodes.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'InPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                };
         end
         function bool = is_global()
             % IS_GLOBAL checks if in-pathlength measure is global (false)

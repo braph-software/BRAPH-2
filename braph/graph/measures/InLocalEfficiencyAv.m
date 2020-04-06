@@ -1,33 +1,36 @@
-classdef InLocalEfficencyAv < InLocalEfficency
+classdef InLocalEfficiencyAv < InLocalEfficiency
     methods
-        function m = InLocalEfficencyAv(g, varargin)
-            m = m@InLocalEfficency(g, varargin{:});
+        function m = InLocalEfficiencyAv(g, varargin)
+            m = m@InLocalEfficiency(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function le_av = calculate(m)
+        function in_local_efficiency_av = calculate(m)
             g = m.getGraph();
-            if g.is_measure_calculated('InLocalEfficency')
-                le = g.getMeasureValue('InLocalEfficency');
+            if g.is_measure_calculated('InLocalEfficiency')
+                in_local_efficiency = g.getMeasureValue('InLocalEfficiency');
             else
-                le = calculate@InLocalEfficency(m);
+                in_local_efficiency = calculate@InLocalEfficiency(m);
             end
             
-            le_av = mean(le);
+            in_local_efficiency_av = mean(in_local_efficiency);
         end
     end
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'InLocalEfficencyAv';
+            measure_class = 'InLocalEfficiencyAv';
         end
         function name = getName()
-            name = 'Average In Local Efficency';
+            name = 'Average-In-Local-Efficiency';
         end
         function description = getDescription()
             description = [ ...
                 'The average in local efficiency is the average of the ' ...
-                'all in local efficencies.' ...
+                'all in local efficiencies.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             bool = true;
@@ -45,7 +48,7 @@ classdef InLocalEfficencyAv < InLocalEfficency
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('InLocalEfficencyAv');
+            n = Measure.getCompatibleGraphNumber('InLocalEfficiencyAv');
         end
     end
 end

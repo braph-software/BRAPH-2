@@ -2,9 +2,7 @@ classdef EdgeNumberDistance < Distance
     methods
         function m = EdgeNumberDistance(g, varargin)
 
-            settings = clean_varargin({}, varargin{:});
-
-            m = m@Distance(g, settings{:});
+            m = m@Distance(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -29,6 +27,9 @@ classdef EdgeNumberDistance < Distance
                 'The edge distance number of a graph is ' ...
                 'the number of edges in the shortest weighted path between two nodes. ' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {};
         end
         function bool = is_global()
             bool = false;

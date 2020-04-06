@@ -1,8 +1,8 @@
 classdef OutEccentricityAv < OutEccentricity
     methods
         function m = OutEccentricityAv(g, varargin)
-            settings = clean_varargin({'OutEccentricityRule'}, varargin{:});
-            m = m@OutEccentricity(g, settings{:});
+          
+            m = m@OutEccentricity(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -30,6 +30,11 @@ classdef OutEccentricityAv < OutEccentricity
                 'The avearge out Eccentricity of a node is ' ...
                 'sum of the nodal out Eccentricities divided by their number.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()           
+            available_settings = {
+                'OutEccentricityRule', Constant.STRING, 'default', {'default', 'subgraphs'};
+                };
         end
         function bool = is_global()
             bool = true;
