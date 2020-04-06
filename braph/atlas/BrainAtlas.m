@@ -55,13 +55,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % Make a shallow copy
             atlas_copy = copyElement@matlab.mixin.Copyable(atlas);
             
-            % Make a deep copy of brdict
-            atlas_copy.brdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            brain_regions = values(atlas.brdict);
-            for i = 1:1:length(brain_regions)
-                br = brain_regions{i};
-                atlas_copy.brdict(i) = br.copy();
-            end
+            % Make a shallow copy of brdict
+            atlas_copy.brdict = copyElement@matlab.mixin.Copyable(atlas.brdict);
         end        
     end        
     methods
