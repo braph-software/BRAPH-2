@@ -5,7 +5,7 @@ classdef OutPathLength < Measure
     % in path length from one node to another node.
     % 
     % OutPathLength methods:
-    %   OutPathLength                  - constructor with Measure properties.
+    %   OutPathLength                  - constructor.
     %
     % OutPathLength methods (Access=protected):
     %   calculate                   - calculates the out-path length of a node.
@@ -45,6 +45,7 @@ classdef OutPathLength < Measure
             %
             % PATHLENGTH = CALCULATE(M) returns the value of the out_path_length
             % of a node.
+            
             g = m.getGraph();          
 
             if g.is_measure_calculated('Distance')
@@ -83,7 +84,8 @@ classdef OutPathLength < Measure
             %            
             % MEASURE_CLASS = GETCLASS() returns the class of the out-pathlength measure.
             %
-            % See also getName(), getDescription(). 
+            % See also getName(), getDescription().
+            
             measure_class = 'OutPathLength';
         end
         function name = getName()
@@ -101,12 +103,14 @@ classdef OutPathLength < Measure
             % out-pathlength measure.
             %
             % See also getList(), getCompatibleGraphList().
+            
             description = [ ...
                 'The out path length is the average shortest ' ...
                 'out path lengths of one node to all other nodes.' ...
                 ];
         end
-        function available_settings = getAvailableSettings()            
+        function available_settings = getAvailableSettings() 
+            
             available_settings = {
                 'OutPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
                 };
@@ -117,6 +121,7 @@ classdef OutPathLength < Measure
             % BOOL = IS_GLOBAL() returns false.
             %
             % See also is_nodal, is_binodal.
+            
             bool = false;
         end
         function bool = is_nodal()
@@ -133,6 +138,7 @@ classdef OutPathLength < Measure
             % BOOL = IS_BINODAL() returns false.
             %
             % See also is_global, is_nodal.
+            
             bool = false;
         end
         function list = getCompatibleGraphList()
@@ -144,6 +150,7 @@ classdef OutPathLength < Measure
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber().
+            
             list = { ...
                 'GraphBD', ...
                 'GraphWD' ...
@@ -157,6 +164,7 @@ classdef OutPathLength < Measure
             % compatible graphs to out-pathlength.
             % 
             % See also getCompatibleGraphList().
+            
             n = Measure.getCompatibleGraphNumber('OutPathLength');
         end
     end

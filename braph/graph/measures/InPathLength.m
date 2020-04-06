@@ -5,7 +5,7 @@ classdef InPathLength < Measure
     % in path length from one node to another node.
     % 
     % InPathLength methods:
-    %   InPathLength                  - constructor with Measure properties.
+    %   InPathLength                  - constructor.
     %
     % InPathLength methods (Access=protected):
     %   calculate                   - calculates the in-pathlength of a node.
@@ -45,7 +45,7 @@ classdef InPathLength < Measure
             %
             % PATHLENGTH = CALCULATE(M) returns the value of the in_path_length
             % of a node.
-            g = m.getGraph();
+            
             g = m.getGraph();    
 
             if g.is_measure_calculated('Distance')
@@ -84,7 +84,8 @@ classdef InPathLength < Measure
             %            
             % MEASURE_CLASS = GETCLASS() returns the class of the in-pathlength measure.
             %
-            % See also getName(), getDescription(). 
+            % See also getName(), getDescription().
+            
             measure_class = 'InPathLength';
         end
         function name = getName()
@@ -93,6 +94,7 @@ classdef InPathLength < Measure
             % NAME = GETNAME() returns the name of the in-pathlength measure.
             %
             % See also getClass(), getDescription().
+            
             name = 'In-Path Length';
         end
         function description = getDescription()
@@ -102,12 +104,14 @@ classdef InPathLength < Measure
             % in-pathlength measure.
             %
             % See also getList(), getCompatibleGraphList().
+            
             description = [ ...                
               'The in path length is the average shortest ' ...
               'in path lengths of one node to all other nodes.' ...
                 ];
         end
         function available_settings = getAvailableSettings()
+
             available_settings = {
                 'InPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
                 };
@@ -118,6 +122,7 @@ classdef InPathLength < Measure
             % BOOL = IS_GLOBAL() returns false.
             %
             % See also is_nodal, is_binodal.
+            
             bool = false;
         end
         function bool = is_nodal()
@@ -126,6 +131,7 @@ classdef InPathLength < Measure
             % BOOL = IS_NODAL() returns true.
             %
             % See also is_global, is_binodal.
+            
             bool = true;
         end
         function bool = is_binodal()
@@ -134,6 +140,7 @@ classdef InPathLength < Measure
             % BOOL = IS_BINODAL() returns false.
             %
             % See also is_global, is_nodal.
+            
             bool = false;
         end
         function list = getCompatibleGraphList()
@@ -144,7 +151,8 @@ classdef InPathLength < Measure
             % of compatible graph classes to in-pathlength. 
             % The measure will not work if the graph is not compatible. 
             %
-            % See also getCompatibleGraphNumber(). 
+            % See also getCompatibleGraphNumber().
+            
             list = { ...               
                 'GraphBD', ...                
                 'GraphWD' ...
@@ -158,6 +166,7 @@ classdef InPathLength < Measure
             % compatible graphs to in-pathlength.
             % 
             % See also getCompatibleGraphList().
+            
             n = Measure.getCompatibleGraphNumber('InPathLength');
         end
     end

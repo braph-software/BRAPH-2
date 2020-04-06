@@ -5,7 +5,7 @@ classdef PathLength < Measure
     % path length from one node to another node.
     % 
     % PathLength methods:
-    %   PathLength                  - constructor with Measure properties.
+    %   PathLength                  - constructor.
     %
     % PathLength methods (Access=protected):
     %   calculate                   - calculates the path length of a node.
@@ -45,6 +45,7 @@ classdef PathLength < Measure
             %
             % PATHLENGTH = CALCULATE(M) returns the value of the path_length
             % of a node.
+            
             g = m.getGraph();
 
             if g.is_measure_calculated('Distance')
@@ -83,7 +84,8 @@ classdef PathLength < Measure
             %            
             % MEASURE_CLASS = GETCLASS() returns the class of the pathlength measure.
             %
-            % See also getName(), getDescription(). 
+            % See also getName(), getDescription().
+            
             measure_class = 'PathLength';
         end
         function name = getName()
@@ -92,6 +94,7 @@ classdef PathLength < Measure
             % NAME = GETNAME() returns the name of the pathlength measure.
             %
             % See also getClass(), getDescription().
+            
             name = 'Path Length';
         end
         function description = getDescription()
@@ -101,6 +104,7 @@ classdef PathLength < Measure
             % pathlength measure.
             %
             % See also getList(), getCompatibleGraphList().
+            
             description = [ ...
                 'The path length is the average shortest ' ...
                 'path lengths of one node to all other nodes.' ...
@@ -117,6 +121,7 @@ classdef PathLength < Measure
             % BOOL = IS_GLOBAL() returns false.
             %
             % See also is_nodal, is_binodal.
+            
             bool = false;
         end
         function bool = is_nodal()
@@ -124,7 +129,8 @@ classdef PathLength < Measure
             %
             % BOOL = IS_NODAL() returns true.
             %
-            % See also is_global, is_binodal. 
+            % See also is_global, is_binodal.
+            
             bool = true;
         end
         function bool = is_binodal()
@@ -133,6 +139,7 @@ classdef PathLength < Measure
             % BOOL = IS_BINODAL() returns false.
             %
             % See also is_global, is_nodal.
+            
             bool = false;
         end
         function list = getCompatibleGraphList()
@@ -143,7 +150,8 @@ classdef PathLength < Measure
             % of compatible graph classes to pathlength. 
             % The measure will not work if the graph is not compatible. 
             %
-            % See also getCompatibleGraphNumber(). 
+            % See also getCompatibleGraphNumber().
+            
             list = { ...
                 'GraphBU', ...
                 'GraphWU' ...
@@ -157,6 +165,7 @@ classdef PathLength < Measure
             % compatible graphs to pathlength.
             % 
             % See also getCompatibleGraphList().
+            
             n = Measure.getCompatibleGraphNumber('PathLength');
         end
     end
