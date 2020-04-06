@@ -22,7 +22,7 @@ classdef Degree < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
-    % See also Measure, Graph, Strength, Distance, Efficency.
+    % See also Measure, Graph, Strength, Distance, Efficiency.
     
     methods
         function m = Degree(g, varargin)
@@ -30,10 +30,8 @@ classdef Degree < Measure
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %   
-            % DEGREE(G, 'Settings', SETTINGS) ceates degree measure and
-            % initializes the property settings with SETTINGS. 
-            %   
             % See also Measure, Graph, Strength, Distance, Efficency. 
+            
             settings = clean_varargin({}, varargin{:});
 
             m = m@Measure(g, settings{:});

@@ -1,36 +1,36 @@
-classdef OutLocalEfficency < Measure
+classdef InLocalEfficiency < Measure
     methods
-        function m = OutLocalEfficency(g, varargin)
+        function m = InLocalEfficiency(g, varargin)
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function out_le = calculate(m)
+        function in_local_efficiency = calculate(m)
             g = m.getGraph();
             A = g.getA();
             n = g.nodenumber();
             
-            out_le = zeros(n,1);
+            in_local_efficiency = zeros(n,1);
             for i = 1:1:n
                 nodes = find(A(i, :)  | A(:, i).');  % neighbours of u
                 if numel(nodes) > 1
                     sub_graph = g.subgraph(nodes);
-                    out_le(i) = mean(OutGlobalEfficency(sub_graph, g.getSettings()).getValue());
+                    in_local_efficiency(i) = mean(InGlobalEfficiency(sub_graph, g.getSettings()).getValue());
                 end
             end
         end
     end
     methods (Static)
         function measure_class = getClass()
-            measure_class = 'OutLocalEfficency';
+            measure_class = 'InLocalEfficiency';
         end
         function name = getName()
-            name = 'Out Local Efficency';
+            name = 'In-Local-Efficiency';
         end
         function description = getDescription()
             description = [ ...
-                'The out local efficiency is the average inverse ' ...
-                'shortest out path length with local nodes.' ...
+                'The in local efficiency is the average inverse ' ...
+                'shortest in path length with local nodes.' ...
                 ];
         end
         function bool = is_global()
@@ -49,7 +49,7 @@ classdef OutLocalEfficency < Measure
                 };
         end
         function n = getCompatibleGraphNumber()
-            n = Measure.getCompatibleGraphNumber('OutLocalEfficency');
+            n = Measure.getCompatibleGraphNumber('InLocalEfficiency');
         end
     end
 end
