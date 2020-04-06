@@ -3,7 +3,7 @@ classdef SubjectDTI < Subject
     % SubjectDTI represents a subject of type DTI.
     %
     % SubjectDTI methods (Access=protected)
-    %   SubjectDTI                 - Constructor.
+    %   SubjectDTI              - Constructor.
     %
     % SubjectDTI methods (Access=protected)
     %   initialize_datadict     - initializes the data dictionary DATADICT.
@@ -125,7 +125,7 @@ classdef SubjectDTI < Subject
             %
             % CELL ARRAY = GETDATALIST() returns a cell array of
             % subject data. For Subject DTI, the data list is: 
-            %   Age             -    DataScalar.
+            %   age             -    DataScalar.
             %   DTI             -    DataConnectivity.
             %
             % See also getList()
@@ -149,7 +149,7 @@ classdef SubjectDTI < Subject
             % CELL ARRAY = GETDATACODES(SUB) returns a cell array of
             % subject dti data keys.          
             %
-            % See also getList(), ().
+            % See also getList()
             
             data_codes = Subject.getDataCodes('SubjectDTI');
         end
