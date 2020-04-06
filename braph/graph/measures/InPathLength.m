@@ -1,6 +1,6 @@
 classdef InPathLength < Measure
     % InPathLength < Measure: InPathLength measure
-    % InPathLength provides the in-pathlength of a node for binary directed (BD) and 
+    % InPathLength provides the in-path length of a node for binary directed (BD) and 
     % weighted directed (WD) graphs. It is calculated as average shortest
     % in path length from one node to another node.
     % 
@@ -11,7 +11,7 @@ classdef InPathLength < Measure
     %   calculate                   - calculates the in-pathlength of a node.
     % 
     % InPathLength methods (Static)
-    %   getClass                    - returns the in-pathlength class.
+    %   getClass                    - returns the in-path length class.
     %   getName                     - returns the name of in-pathlength measure.
     %   getDescription              - returns the description of in-pathlength measure.
     %   is_global                   - boolean, checks if in-pathlength measure is global.
@@ -41,7 +41,7 @@ classdef InPathLength < Measure
     end
     methods (Access = protected)
         function in_path_length =  calculate(m)
-            % CALCULATE calculates the in-pathlength value of a node
+            % CALCULATE calculates the in-path length value of a node
             %
             % PATHLENGTH = CALCULATE(M) returns the value of the in_path_length
             % of a node.
@@ -93,7 +93,7 @@ classdef InPathLength < Measure
             % NAME = GETNAME() returns the name of the in-pathlength measure.
             %
             % See also getClass(), getDescription().
-            name = 'In Path Length';
+            name = 'In-Path Length';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the in-pathlength description 

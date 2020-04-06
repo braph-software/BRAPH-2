@@ -1,6 +1,6 @@
 classdef PathLength < Measure
     % PathLength < Measure: PathLength measure
-    % PathLength provides the pathlength of a node for binary undirected (BU) and 
+    % PathLength provides the path length of a node for binary undirected (BU) and 
     % weighted undirected (WU) graphs. It is calculated as average shortest
     % path length from one node to another node.
     % 
@@ -8,7 +8,7 @@ classdef PathLength < Measure
     %   PathLength                  - constructor with Measure properties.
     %
     % PathLength methods (Access=protected):
-    %   calculate                   - calculates the pathlength of a node.
+    %   calculate                   - calculates the path length of a node.
     % 
     % PathLength methods (Static)
     %   getClass                    - returns the pathlength class.
@@ -42,7 +42,7 @@ classdef PathLength < Measure
     end
     methods (Access = protected)
         function path_length =  calculate(m)
-            % CALCULATE calculates the pathlength value of a node
+            % CALCULATE calculates the path length value of a node
             %
             % PATHLENGTH = CALCULATE(M) returns the value of the path_length
             % of a node.

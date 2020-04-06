@@ -1,6 +1,6 @@
 classdef OutPathLength < Measure
     % OutPathLength < Measure: OutPathLength measure
-    % OutPathLength provides the out-pathlength of a node for binary directed (BD) and 
+    % OutPathLength provides the out-path length of a node for binary directed (BD) and 
     % weighted directed (WD) graphs. It is calculated as average shortest
     % in path length from one node to another node.
     % 
@@ -8,7 +8,7 @@ classdef OutPathLength < Measure
     %   OutPathLength                  - constructor with Measure properties.
     %
     % OutPathLength methods (Access=protected):
-    %   calculate                   - calculates the out-pathlength of a node.
+    %   calculate                   - calculates the out-path length of a node.
     % 
     % OutPathLength methods (Static)
     %   getClass                    - returns the out-pathlength class.
@@ -41,7 +41,7 @@ classdef OutPathLength < Measure
     end
     methods (Access = protected)
         function out_path_length =  calculate(m)
-            % CALCULATE calculates the out-pathlength value of a node
+            % CALCULATE calculates the out-path length value of a node
             %
             % PATHLENGTH = CALCULATE(M) returns the value of the out_path_length
             % of a node.
@@ -92,7 +92,7 @@ classdef OutPathLength < Measure
             % NAME = GETNAME() returns the name of the out-pathlength measure.
             %
             % See also getClass(), getDescription().
-            name = 'Out Path Length';
+            name = 'Out-Path Length';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the out-pathlength description 
