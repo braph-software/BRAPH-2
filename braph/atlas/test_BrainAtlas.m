@@ -24,15 +24,14 @@ assert(atlas.getBrainRegions().containsIndex(1), ...
 assert(~atlas.getBrainRegions().containsIndex(6), ...
     'BRAPH:BrainAtlas:Bug', ...
     'BrainAtlas.contains_brain_region does not work')
-assert(isequal(atlas.getBrainRegions.getValueFromIndex(1).getLabel(), 'BR1'), ...
+assert(isequal(atlas.getBrainRegions().getValueFromIndex(1).getLabel(), 'BR1'), ...
     'BRAPH:BrainAtlas:Bug', ...
     'BrainAtlas.getBrainRegion does not work')
 
 %% Test 3: Add
 atlas = BrainAtlas('brain atlas', {br1, br2, br4, br5});
 
-brain_regions = atlas.getBrainRegions();
-brain_regions.add(br3.getName(), br3, 3)
+atlas.getBrainRegions().add(br3.getName(), br3, 3)
 
 assert(atlas.getBrainRegions().length()==5, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -41,8 +40,7 @@ assert(isequal(atlas.getBrainRegions.getValueFromIndex(3).getLabel(), 'BR3'), ..
     'BRAPH:BrainAtlas:Bug', ...
     'BrainAtlas.getBrainRegion does not work')
 
-%atlas.addBrainRegion(br6)
-brain_regions.add(br6.getName(), br6);
+atlas.getBrainRegions().add(br6.getName(), br6);
 
 assert(atlas.getBrainRegions().length()==6, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -53,8 +51,7 @@ assert(isequal(atlas.getBrainRegions().getValueFromIndex(6).getLabel(), 'BR6'), 
 
 %% Test 4: Remove
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-brain_regions = atlas.getBrainRegions();
-brain_regions.remove(3)
+atlas.getBrainRegions().remove(3)
 
 assert(atlas.getBrainRegions().length()==4, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -66,7 +63,7 @@ assert(isequal(atlas.getBrainRegions().getValueFromIndex(3).getLabel(), 'BR4'), 
     'BRAPH:BrainAtlas:Bug', ...
     'BrainAtlas.removeBrainRegion does not work')
 
-brain_regions.remove(1)
+atlas.getBrainRegions().remove(1)
 
 assert(atlas.getBrainRegions().length()==3, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -77,8 +74,7 @@ assert(isequal(atlas.getBrainRegions().getValueFromIndex(1).getLabel(), 'BR2'), 
 
 %% Test 5: Replace
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-brain_regions = atlas.getBrainRegions();
-brain_regions.replace(br9.getName(), br9, 3)
+atlas.getBrainRegions().replace(br9.getName(), br9, 3)
 
 assert(atlas.getBrainRegions().length()==5, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -89,8 +85,7 @@ assert(isequal(atlas.getBrainRegions().getValueFromIndex(3).getLabel(), 'BR9'), 
 
 %% Test 6: Invert
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-brain_regions = atlas.getBrainRegions();
-brain_regions.invert(2, 4)
+atlas.getBrainRegions().invert(2, 4)
 
 assert(atlas.getBrainRegions().length()==5, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -104,8 +99,7 @@ assert(isequal(atlas.getBrainRegions().getValueFromIndex(4).getLabel(), 'BR2'), 
 
 %% Test 7: MoveTo
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-brain_regions = atlas.getBrainRegions();
-brain_regions.move_to(4, 2)
+atlas.getBrainRegions().move_to(4, 2)
 
 assert(atlas.getBrainRegions().length()==5, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -114,7 +108,7 @@ assert(isequal(atlas.getBrainRegions().getValueFromIndex(2).getLabel(), 'BR4'), 
     'BRAPH:BrainAtlas:Bug', ...
     'BrainAtlas.movetoBrainRegion does not work')
 
-brain_regions.move_to(1, 5)
+atlas.getBrainRegions().move_to(1, 5)
 
 assert(atlas.getBrainRegions().length()==5, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -125,8 +119,7 @@ assert(isequal(atlas.getBrainRegions().getValueFromIndex(5).getLabel(), 'BR1'), 
 
 %% Test 8: Remove All
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-brain_regions = atlas.getBrainRegions();
-selected = brain_regions.remove_all([2, 4]);
+selected = atlas.getBrainRegions().remove_all([2, 4]);
 
 assert(atlas.getBrainRegions().length()==3, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -140,8 +133,7 @@ assert(isempty(selected), ...
 
 %% Test 9: Move Up
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-brain_regions = atlas.getBrainRegions();
-selected = brain_regions.move_up([1 3 5]);
+selected = atlas.getBrainRegions().move_up([1 3 5]);
 
 assert(atlas.getBrainRegions().length()==5, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -152,8 +144,7 @@ assert(isequal(selected, [1 2 4]), ...
 
 %% Test 10: Move Down
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-brain_regions = atlas.getBrainRegions();
-selected = brain_regions.move_down([1 3 5]);
+selected = atlas.getBrainRegions().move_down([1 3 5]);
 
 assert(atlas.getBrainRegions().length()==5, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -164,8 +155,7 @@ assert(isequal(selected, [2 4 5]), ...
 
 %% Test 11: Move to Top
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-brain_regions = atlas.getBrainRegions();
-selected = brain_regions.move_to_top([1 3 5]);
+selected = atlas.getBrainRegions().move_to_top([1 3 5]);
 
 assert(atlas.getBrainRegions().length()==5, ...
     'BRAPH:BrainAtlas:Bug', ...
@@ -176,8 +166,7 @@ assert(isequal(selected, [1 2 3]), ...
 
 %% Test 12: Move to Bottom
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
-brain_regions = atlas.getBrainRegions();
-selected = brain_regions.move_to_bottom([1 3 5]);
+selected = atlas.getBrainRegions().move_to_bottom([1 3 5]);
 
 assert(atlas.getBrainRegions().length()==5, ...
     'BRAPH:BrainAtlas:Bug', ...
