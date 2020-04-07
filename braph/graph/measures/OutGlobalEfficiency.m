@@ -90,7 +90,14 @@ classdef OutGlobalEfficiency < Measure
                 'It is inversely related to the characteristic out path length.';
                 ];
         end
-        function available_settings = getAvailableSettings()            
+        function available_settings = getAvailableSettings()  
+            % GETAVAILABLESETTINGS returns the setting available to OutGlobalEfficiency.
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to OutGlobalEfficiency. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
+            
             available_settings = {};
         end
         function bool = is_global()
