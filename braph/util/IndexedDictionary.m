@@ -235,7 +235,23 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
                 end
             end
         end
-% getIndexFromValueAll(idict, value)
+        function indexes =  getIndexFromValueAll(idict, value)
+            % GETINDEXFROMVALUEALL returns all the indexes with the same value
+            %
+            % INDEXES = GETINDEXFROMVALUEALL(IDICT, VALUE) returns a cell
+            % array with the indexes with value VALUE.
+            %
+            % See also getIndexFromValue(), getIndexFromKey().
+            
+            indexes = zeros(1, idict.length());  % create a matrix(1, idict.length)
+            for i = 1:1:idict.length()
+                if isequal(idict.getValue(i), value)
+                    indexes(1, i) = i;  % get index of occurrance
+                end
+            end
+            indexes = indexes(indexes~=0);  % remove non ocurrance cases.
+            indexes = num2cell(indexes);  % transform to cell array.
+        end
         function value = getValue(idict, pointer)
             % GETVALUE returns the value of a index or key.
             %
@@ -307,7 +323,21 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             key_and_value = idict.dict(index);
             key = key_and_value{1};
         end
-% getKeyFromValueAll(idict, value)
+        function keys = getKeyFromValueAll(idict, value)  
+            % GETKEYFROMVALUEALL returns the keys of the value
+            %
+            % KEYS = GETKEYFROMVALUEALL(IDICT, VALUE) returns the keys the
+            % share the value VALUE. 
+            % 
+            % See also getIndexFromValueAll(), getKeyFromIndex().
+            
+            indexes = idict.getIndexFromValueAll(value);
+            keys = cell(1, length(indexes));
+            
+            for i = 1:1:length(indexes)
+                keys{1, i} = idict.getKeyFromIndex(indexes{i});
+            end
+        end
         function add(idict, key, value, index)
             % ADD adds a key and value to DICT in position index.
             %
@@ -393,7 +423,20 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             key = idict.getKeyFromIndex(index);
             idict.replace(key, value_new, index);
         end
-% replaceValueAll(idict, value_old, value_new)
+        function replaceValueAll(idict, value_old, value_new)
+            % REPLACEVALUEALL replaces all equal values from DICT
+            % 
+            % REPLACEVALUEALL(IDICT, VALUE_OLD, VALUE_NEW) replaces all
+            % values VALUE_OLD, with a new value VALUE_NEW.
+            %
+            % See also replaceValue(), getIndexFromValueAll()
+            
+            indexes = idict.getIndexFromValueAll(value_old);
+            for i = 1:1:length(indexes)
+                key = idict.getKeyFromIndex(indexes{i});
+                idict.replace(key, value_new, indexes{i});
+            end            
+        end
         function invert(idict, i, j)
             % INVERT inverts position of two elements.
             %
