@@ -21,7 +21,7 @@ classdef GlobalEfficiency < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
-    % See also Measure, Graph, Strength, Distance, Degree, InGlobalEfficiency, OutGlobalEfficiency, LocalEfficiency,
+    % See also Measure, Graph, Strength, Distance, Degree, InGlobalEfficiency, OutGlobalEfficiency, LocalEfficiency.
     methods
         function m = GlobalEfficiency(g, varargin)
             % GLOBALEFFICIENCY(G) creates globalefficiency with default measure properties.
