@@ -4,8 +4,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %
     % BrainAtlas properties (GetAccess=protected, SetAccess=protected):
     %   name                    - name of the brain atlas.
-    %   br_idict                  - dictionary with brain regions
-    %                             (key, value) = (int32, brain region)
+    %   br_idict                - indexed dictionary with brain regions
     %
     % BrainAtlas methods (Access=protected)
     %   copyElement             - deep copy community structure.
@@ -15,12 +14,20 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   tostring                - returns a string representing the BrainAtlas.
     %   disp                    - displays the BrainAtlas.
     %   getName                 - returns the name of the BrainAtlas.
-    %   getBrainRegions         - returns the br_idict structure.
+    %   getBrainRegions         - returns the indexed dictionary with BrainRegions.
     %   getBrainRegionLabels    - returns the label of all BrainRegions.
     %   getBrainRegionXs        - returns the x coordiante of all BrainRegions.
     %   getBrainRegionYs        - returns the y coordiante of all BrainRegions.
     %   getBrainRegionZs        - returns the z coordiante of all BrainRegions.
     %   getBrainRegionPositions - returns the positions of all BrainRegions.
+    %
+    % Additionally, it is possible to use the following IndexDictionary
+    % methods through getBrainRegions():
+    %   getBrainRegions()           - returns the indexed dictionary with BrainRegions.
+    %   getBrainRegions().xxx       - xxx
+
+% TODO: Add functions through getBrainRegions()
+
     %   
     % See also BrainRegion
     
@@ -42,13 +49,15 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % Make a shallow copy of br_idict
             atlas_copy.br_idict = copyElement@matlab.mixin.Copyable(atlas.br_idict);
+
+% TODO: Deep copy of idict
         end        
     end        
     methods
         function atlas = BrainAtlas(name, brain_regions)
             % BrainAtlas(NAME, BrainRegions) creates a BrainAtlas with
-            % given name NAME and initializes the dictionary BRDICT with
-            % given BrainRegions BRAIN_REGIONS.
+            % given name NAME and initializes the dictionary with
+            % BRAIN_REGIONS (cell array of BrainRegions). 
             %
             % See also BrainRegion.
             
@@ -100,6 +109,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             name = atlas.name;
         end
         function br_dict = getBrainRegions(atlas)
+% TODO: comment
+
             br_dict = atlas.br_idict;
         end
         function br_labels = getBrainRegionLabels(atlas)
