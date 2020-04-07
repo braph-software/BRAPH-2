@@ -83,6 +83,13 @@ classdef InStrength < Measure
                 ];
         end
         function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to InStrength
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to InStrength. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
+            
             available_settings = {};
         end
         function bool = is_global()   

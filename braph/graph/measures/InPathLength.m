@@ -111,6 +111,15 @@ classdef InPathLength < Measure
                 ];
         end
         function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to InPathLength
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to InPathLength. 
+            % INPATHLENGTHAVRULE = 'default' (default) - calculates in-path length of nodal graph.
+            %                    'subgraphs' - calculates in-path length of each subgraph.
+            %                    'harmonic'  - calculates the in-path length using harmonic mean.
+            % 
+            % See also getCompatibleGraphList()
 
             available_settings = {
                 'InPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};

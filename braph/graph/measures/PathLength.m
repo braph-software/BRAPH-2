@@ -111,6 +111,16 @@ classdef PathLength < Measure
                 ];
         end
         function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to PathLength
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to PathLength. 
+            % PATHLENGTHAVRULE = 'default' (default) - calculates path length of nodal graph.
+            %                    'subgraphs' - calculates path length of each subgraph.
+            %                    'harmonic'  - calculates the path length using harmonic mean.
+            % 
+            % See also getCompatibleGraphList()
+            
             available_settings = {
                 'PathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
                 };
