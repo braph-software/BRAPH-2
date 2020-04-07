@@ -24,11 +24,15 @@ classdef SubjectfMRI < Subject
     % See also Group, Cohort, SubjectMRI, SubjectDTI, Subject.
     methods
         function sub = SubjectfMRI(atlas, varargin)
-            % SUBJECTFMRI(ATLASES, VARARGIN) creates a subject of type fmri with the 
-            % properties VARARGIN. ATLASES is the brain atlases that subject fmri will use.
-            % VARARGIN contains information about the subject fmri id and the
-            % data codes utilized in the DATADICT. This method passes
-            % varargin to its super constructor Subject. 
+            % SUBJECTFMRI(ATLAS) creates a subject of type fMRI. 
+            % ATLAS is the brain atlas that subject fMRI will use (it can be
+            % either a BrainAtlas or a cell array with a single BrainAtlas).
+            % 
+            % SUBJECTFMRI(ATLASES, 'SubjectID', ID) creates a subject with
+            % subject id ID.
+            %
+            % SUBJECTFMRI(ATLASES, 'age', AGE, 'fMRI', FMRI) creates a subject
+            % with age AGE and fMRI timeseries FMRI.
             %
             % See also See also Group, Cohort, SubjectMRI, SubjectDTI, Subject.
 
@@ -48,8 +52,8 @@ classdef SubjectfMRI < Subject
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
-            % INITIALIZE_DATADICT(SUB, VARARGIN) initializes the data
-            % ditionary with data type and data code of subject fmri.
+            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'fMRI', FMRI) initializes the data
+            % ditionary with data type and data code of subject fMRI.
             %
             % See also update_brainatlases().
 
@@ -61,12 +65,13 @@ classdef SubjectfMRI < Subject
             sub.datadict('fMRI') = DataFunctional(atlas);
         end
         function update_brainatlases(sub, atlases)
-            % UPDATE_BRAINATLASES updates the atlases of the subject dti
+            % UPDATE_BRAINATLASES updates the atlases of the subject fMRI
             % 
             % UPDATE_BRAINATLASES(SUB, ATLASES) updates the atlases of the
-            % subject fmri using the new values ATLASES.
+            % subject fMRI using the new values ATLASES. ATLASES must be a
+            % cell array with a single BrainAtlas.
             % 
-            % See also initialize_datadict()
+            % See also initialize_datadict().
 
             sub.atlases = atlases;
             atlas = atlases{1};
@@ -82,7 +87,7 @@ classdef SubjectfMRI < Subject
         function subject_class = getClass()
             % GETCLASS returns the class of the subject
             %
-            % SUBJECT_CLASS = GETCLASS() returns the class SubjectfMRI
+            % SUBJECT_CLASS = GETCLASS() returns the class SubjectfMRI.
             %
             % See also getList(), getDescription(), getName()
             
@@ -101,7 +106,7 @@ classdef SubjectfMRI < Subject
             % GETDESCRIPTION returns the description of the subject
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of SubjectfMRI
+            % of SubjectfMRI.
             %
             % See also getList(), getName(), getClass().
             

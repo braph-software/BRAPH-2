@@ -58,6 +58,9 @@ classdef Subject < handle & matlab.mixin.Copyable
             %
             % SUBJECT(ATLASES, 'SubjectID', ID) creates a subject with
             % subject id ID.
+            %
+            % SUBJECT(ATLASES, 'DataCode1', Data1, 'DataCode2', Data2, ...) 
+            % creates a subject and initialize its data.
             % 
             % See also Group, Cohort, SubjectMRI, SubjectfMRI, SubjectDTI
             

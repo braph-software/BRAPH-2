@@ -24,11 +24,15 @@ classdef SubjectMRI < Subject
     % See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
     methods
         function sub = SubjectMRI(atlas, varargin)
-            % SubjectMRI(ATLASES, VARARGIN) creates a subject of type mri with the 
-            % properties VARARGIN. ATLASES is the brain atlases that subject mri will use.
-            % VARARGIN contains information about the subject mri id and the
-            % data codes utilized in the DATADICT. This method passes
-            % varargin to its super constructor Subject. 
+            % SUBJECTMRI(ATLAS) creates a subject of type MRI. 
+            % ATLAS is the brain atlas that subject MRI will use (it can be
+            % either a BrainAtlas or a cell array with a single BrainAtlas).
+            % 
+            % SUBJECTMRI(ATLASES, 'SubjectID', ID) creates a subject with
+            % subject id ID.
+            %
+            % SUBJECTMRI(ATLASES, 'age', AGE, 'MRI', MRI) creates a subject
+            % with age AGE and MRI data MRI.
             %
             % See also See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
 
@@ -48,7 +52,7 @@ classdef SubjectMRI < Subject
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
-            % INITIALIZE_DATADICT(SUB, VARARGIN) initializes the data
+            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'MRI', MRI) initializes the data
             % ditionary with data type and data code of subject mri.
             %
             % See also update_brainatlases().
@@ -61,12 +65,13 @@ classdef SubjectMRI < Subject
             sub.datadict('MRI') = DataStructural(atlas);
         end
         function update_brainatlases(sub, atlases)
-            % UPDATE_BRAINATLASES updates the atlases of the subject dti
+            % UPDATE_BRAINATLASES updates the atlases of the subject MRI
             % 
             % UPDATE_BRAINATLASES(SUB, ATLASES) updates the atlases of the
-            % subject mri using the new values ATLASES.
+            % subject MRI using the new values ATLASES. ATLASES must be a
+            % cell array with a single BrainAtlas.
             % 
-            % See also initialize_datadict()
+            % See also initialize_datadict().
 
             sub.atlases = atlases;
             atlas = atlases{1};
@@ -82,7 +87,7 @@ classdef SubjectMRI < Subject
         function subject_class = getClass()
             % GETCLASS returns the class of the subject
             %
-            % SUBJECT_CLASS = GETCLASS() returns the class SubjectMRI
+            % SUBJECT_CLASS = GETCLASS() returns the class SubjectMRI.
             %
             % See also getList(), getDescription(), getName()
             
@@ -101,7 +106,7 @@ classdef SubjectMRI < Subject
             % GETDESCRIPTION returns the description of the subject
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of SubjectMRI
+            % of SubjectMRI.
             %
             % See also getList(), getName(), getClass().
             

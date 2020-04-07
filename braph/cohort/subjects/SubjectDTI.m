@@ -24,11 +24,15 @@ classdef SubjectDTI < Subject
     % See also Group, Cohort, SubjectMRI, SubjectfMRI, Subject.
     methods
         function sub = SubjectDTI(atlas, varargin)
-            % SUBJECTDTI(ATLASES, VARARGIN) creates a subject of type dti with the 
-            % properties VARARGIN. ATLASES is the brain atlases that subject dti will use.
-            % VARARGIN contains information about the subject dti id and the
-            % data codes utilized in the DATADICT. This method passes
-            % varargin to its super constructor Subject. 
+            % SUBJECTDTI(ATLAS) creates a subject of type DTI. 
+            % ATLAS is the brain atlas that subject DTI will use (it can be
+            % either a BrainAtlas or a cell array with a single BrainAtlas).
+            % 
+            % SUBJECT(ATLASES, 'SubjectID', ID) creates a subject with
+            % subject id ID.
+            %
+            % SUBJECT(ATLASES, 'age', AGE, 'DTI', DTI) creates a subject
+            % with age AGE and DTI matrix DTI.
             %
             % See also See also Group, Cohort, SubjectMRI, SubjectfMRI, Subject.
 
@@ -48,7 +52,7 @@ classdef SubjectDTI < Subject
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
-            % INITIALIZE_DATADICT(SUB, VARARGIN) initializes the data
+            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'DTI', DTI) initializes the data
             % ditionary with data type and data code of subject dti.
             %
             % See also update_brainatlases().
@@ -64,9 +68,10 @@ classdef SubjectDTI < Subject
             % UPDATE_BRAINATLASES updates the atlases of the subject dti
             % 
             % UPDATE_BRAINATLASES(SUB, ATLASES) updates the atlases of the
-            % subject dti using the new values ATLASES.
+            % subject dti using the new values ATLASES. ATLASES must be a
+            % cell array with a single BrainAtlas.
             % 
-            % See also initialize_datadict()
+            % See also initialize_datadict().
 
             sub.atlases = atlases;
             atlas = atlases{1};
