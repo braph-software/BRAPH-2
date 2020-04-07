@@ -30,6 +30,11 @@ classdef InPathLengthAv < InPathLength
                 'the average of the sum of the in path lengths ' ...                
                 ];
         end
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'InPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                };
+        end
         function bool = is_global()            
             bool = true;
         end

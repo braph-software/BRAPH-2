@@ -2,9 +2,7 @@ classdef ClusteringAv < Clustering
     methods
         function m = ClusteringAv(g, varargin)
 
-            settings = clean_varargin({'DirectedTrianglesRule'}, varargin{:});
-
-            m = m@Clustering(g, settings{:});
+            m = m@Clustering(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -34,6 +32,11 @@ classdef ClusteringAv < Clustering
                 'the average of all number of edges connected to the node. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'DirectedTrianglesRule', Constant.STRING, 'cycle', {'cycle', 'all', 'middleman', 'in', 'out'};
+                };
         end
         function bool = is_global()
             

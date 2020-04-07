@@ -1,8 +1,8 @@
 classdef InEccentricityAv < InEccentricity
     methods
         function m = InEccentricityAv(g, varargin)
-            settings = clean_varargin({'InEccentricityRule'}, varargin{:});
-            m = m@InEccentricity(g, settings{:});
+
+            m = m@InEccentricity(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -30,6 +30,11 @@ classdef InEccentricityAv < InEccentricity
                 'The avearge in Eccentricity of a node is ' ...
                 'sum of the nodal in Eccentricities divided by their number.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'InEccentricityRule', Constant.STRING, 'default', {'default', 'subgraphs'};
+                };
         end
         function bool = is_global()
             bool = true;

@@ -41,7 +41,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     
     properties (GetAccess=protected, SetAccess=protected) 
         name  % BrainAtlas name
-        brdict  % dictionary with BrainRegions
+        brdict  % indexed dictionary with BrainRegions
     end
     methods (Access=protected)
         function atlas_copy = copyElement(atlas)

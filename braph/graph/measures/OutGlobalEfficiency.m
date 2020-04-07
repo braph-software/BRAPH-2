@@ -90,6 +90,9 @@ classdef OutGlobalEfficiency < Measure
                 'It is inversely related to the characteristic out path length.';
                 ];
         end
+        function available_settings = getAvailableSettings()            
+            available_settings = {};
+        end
         function bool = is_global()
             % IS_GLOBAL checks if out-globalefficiency measure is global (false)
             %

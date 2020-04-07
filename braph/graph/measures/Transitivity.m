@@ -1,10 +1,8 @@
 classdef Transitivity < Triangles
     methods
-        function m = Transitivity (g, varargin)
+        function m = Transitivity (g, varargin)       
             
-            settings = clean_varargin({'DirectedTrianglesRule'}, varargin{:});            
-            
-            m = m@Triangles(g, settings{:});
+            m = m@Triangles(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -61,6 +59,11 @@ classdef Transitivity < Triangles
                 'the fraction of triangles to the number' ...
                 'of (unordered) triplets in the graph.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+             available_settings = {
+                'DirectedTrianglesRule', Constant.STRING, 'cycle', {'cycle', 'all', 'middleman', 'in', 'out'};
+                };
         end
         function bool = is_global()                
             bool = true;

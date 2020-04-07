@@ -36,9 +36,7 @@ classdef OutEccentricity < Measure
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
             
-            settings = clean_varargin({'OutEccentricityRule'}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
@@ -95,6 +93,19 @@ classdef OutEccentricity < Measure
                 'the maximal shortest out path length between a ' ...
                 'node and any other node.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to OutEccentricity
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to OutEccentricityRule. 
+            % OUTECCENTRICITYRULE = 'default' (default) - calculates OUTECCENTRICITY of global graph.
+            %                       'subgraphs' - calculates OUTECCENTRICITY within connected subgraphs.
+            % 
+            % See also getCompatibleGraphList()
+            available_settings = {
+                'OutEccentricityRule', Constant.STRING, 'default', {'default', 'subgraphs'};
+                };
         end
         function bool = is_global()
             % IS_GLOBAL checks if out-eccentricity measure is global (false)
