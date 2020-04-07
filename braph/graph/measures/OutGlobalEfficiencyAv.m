@@ -1,11 +1,11 @@
 classdef OutGlobalEfficiencyAv < OutGlobalEfficiency
     methods
-        function m = OutGlobalEfficiencyAv(g, varargin)
+        function m = OutGlobalEfficiencyAv(g, varargin)         
             m = m@OutGlobalEfficiency(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function out_global_efficiency_av = calculate(m)
+        function out_global_efficiency_av = calculate(m)           
             g = m.getGraph();   
             
             if g.is_measure_calculated('OutGlobalEfficiency')
@@ -18,13 +18,13 @@ classdef OutGlobalEfficiencyAv < OutGlobalEfficiency
         end
     end
     methods (Static)
-        function measure_class = getClass()
+        function measure_class = getClass()           
             measure_class = 'OutGlobalEfficiencyAv';
         end
-        function name = getName()
+        function name = getName()           
             name = 'Average-Out-Global-Efficiency';
         end
-        function description = getDescription()
+        function description = getDescription()            
             description = [ ...
                 'The average out global efficiency is the average of the' ...
                 'out global efficiency ' ...
@@ -36,19 +36,19 @@ classdef OutGlobalEfficiencyAv < OutGlobalEfficiency
         function bool = is_global()
             bool = true;
         end
-        function bool = is_nodal()
+        function bool = is_nodal()             
             bool = false;
         end
-        function bool = is_binodal()
+        function bool = is_binodal()          
             bool = false;
         end
-        function list = getCompatibleGraphList()
+        function list = getCompatibleGraphList()            
             list = { ...
                 'GraphBD', ...
                 'GraphWD' ...
                 };
         end
-        function n = getCompatibleGraphNumber()
+        function n = getCompatibleGraphNumber()            
             n = Measure.getCompatibleGraphNumber('OutGlobalEfficiencyAv');
         end
     end
