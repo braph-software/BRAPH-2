@@ -50,12 +50,15 @@ classdef Subject < handle & matlab.mixin.Copyable
     end
     methods (Access=protected)
         function sub = Subject(atlases, varargin)
-            % SUBJECT(ATLASES, VARARGIN) creates a subject with the
-            % properties of VARARGIN. ATLASES is the brain atlases that subject will use.
+            % SUBJECT(ATLASES) creates a subject. 
+            % ATLASES is the brain atlases that subject will use.
             % VARARGIN contains information about the subject id and the
             % data codes utilized in the DATADICT.
             % This method is only accessible by the subclasses of Subject.
             %
+            % SUBJECT(ATLASES, 'SubjectID', ID) creates a subject with
+            % subject id ID.
+            % 
             % See also Group, Cohort, SubjectMRI, SubjectfMRI, SubjectDTI
             
             assert(iscell(atlases), ...
