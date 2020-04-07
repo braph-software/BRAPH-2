@@ -91,6 +91,13 @@ classdef InGlobalEfficiency < Measure
                 ];
         end
         function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to InGlobalEfficiency.
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to InGlobalEfficiency. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
+            
             available_settings = {};
         end
         function bool = is_global()

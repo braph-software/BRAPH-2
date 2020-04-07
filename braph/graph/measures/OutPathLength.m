@@ -110,6 +110,15 @@ classdef OutPathLength < Measure
                 ];
         end
         function available_settings = getAvailableSettings() 
+            % GETAVAILABLESETTINGS returns the setting available to OutPathLength
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to InPathLength. 
+            % INPATHLENGTHAVRULE = 'default' (default) - calculates out-path length of nodal graph.
+            %                    'subgraphs' - calculates out-path length of each subgraph.
+            %                    'harmonic'  - calculates the out-path length using harmonic mean.
+            % 
+            % See also getCompatibleGraphList()
             
             available_settings = {
                 'OutPathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
