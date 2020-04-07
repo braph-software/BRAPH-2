@@ -53,6 +53,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function n = subjectnumber(cohort)
             n = length(cohort.subject_dict);
         end
+        
         function bool = contains_subject(cohort, subject)
             
             if isa(subject, cohort.getSubjectClass())
@@ -231,6 +232,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 selected = reshape(cohort.subjectnumber() - numel(selected)+1:1:cohort.subjectnumber(), size(selected));
             end
         end
+        
         function n = groupnumber(cohort)
             n = length(cohort.group_dict);
         end
@@ -394,6 +396,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 selected = reshape(cohort.groupnumber() - numel(selected)+1:1:cohort.groupnumber(), size(selected));
             end
         end
+        
         function [subject_indices, subjects] = getGroupSubjects(cohort, i)
             
             subjects = cohort.getGroup(i).getSubjects();
