@@ -3,7 +3,7 @@ classdef DataStructural < Data
         function d = DataStructural(atlas, value)
             
             if nargin < 2
-                value = zeros(atlas.brainregionnumber(), 1);
+                value = zeros(atlas.getBrainRegions().length(), 1);
             end
             
             d = d@Data(atlas, value);
@@ -12,7 +12,7 @@ classdef DataStructural < Data
     methods
         function setValue(d, value)
                         
-            regionnumber = d.getBrainAtlas().brainregionnumber();
+            regionnumber = d.getBrainAtlas().getBrainRegions().length();
             assert(isnumeric(value) && isequal(size(value), [regionnumber, 1]), ...
                 'BRAPH:DataStructural:WrongValue', ...
                 [ ...
