@@ -287,7 +287,21 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             index = idict.getIndexFromKey(key);
             value  = idict.getValueFromIndex(index);
         end
-        function key = getKey(idict, pointer) 
+        function values = getValueAll(idict)
+            % GETVALUEALL returns all the values in the dictionary
+            %
+            % VALUES = GETVALUEALL(IDICT) returns all the values in the
+            % indexed dictionary.
+            %
+            % See also getValue(), getIndexFromValueAll()
+            
+            values = cell(1, idict.length());
+            for i = 1:1:idict.length()
+                key_and_value = idict.dict(i);
+                values{1, i} = key_and_value{2};
+            end
+        end
+        function key = getKey(idict, pointer)
             % GETKEY returns the key of a index or value.
             %
             % KEY = GETKEY(IDICT, POINTER) returns a key of a index or

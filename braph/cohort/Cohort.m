@@ -56,6 +56,10 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function group_idict = getGroup(cohort)
             group_idict = cohort.group_dict;
         end
+        function subject = getNewSubject(cohort, varargin)
+            
+            subject = Subject.getSubject(cohort.getSubjectClass(), cohort.getBrainAtlases(), varargin{:});
+        end
         function [subject_indices, subjects] = getGroupSubjects(cohort, i)
             
             subjects = cohort.getGroup().getValue(i).getSubjects();
@@ -69,17 +73,18 @@ classdef Cohort < handle & matlab.mixin.Copyable
         end
         function addSubjectToGroup(cohort, subject, group)
             if cohort.getSubjects().contains(subject) && cohort.getGroup().contains(group)
-                if ~isa(subject, cohort.getSubjectClass())                   
+                if ~isa(subject, cohort.getSubjectClass())
                     subject = cohort.getSubjects().getValue(subject);
                 end
-                if ~isa(group, 'Group')                
-                    group = cohort.getGroup().getValue(group);
+                if ~isa(group, 'Group')
+                    cohort.getGroup().getValue(group).addSubject(subject);  % adding subject to the first ocurrance of type group
+                else
+                    index = cohort.getGroup().getIndex(group);
+                    cohort.getGroup().getValue(index).addSubject(subject);
                 end
-                
-                cohort.getGroup().getValue(group).addSubject(subject);  % adding subject to the first ocurrance of type group
             end
         end
-        function addSubjectsToGroup(cohort, subject_indices, group)            
+        function addSubjectsToGroup(cohort, subject_indices, group)
             for i = 1:1:length(subject_indices)
                 cohort.addSubjectToGroup(subject_indices(i), group);
             end
@@ -90,12 +95,15 @@ classdef Cohort < handle & matlab.mixin.Copyable
                     subject = cohort.getSubjects().getValue(subject);
                 end
                 if ~isa(group, 'Group')
-                    group = cohort.getGroup().getValue(group);
+                    cohort.getGroup().getValue(group).removeSubject(subject);
+                else
+                    index = cohort.getGroup().getIndex(group);
+                    cohort.getGroup().getValue(index).removeSubject(subject);
                 end
             end
-            cohort.getGroup().getValue(group).removeSubject(subject);
+            
         end
-        function removeSubjectsFromGroup(cohort, subject_indices, group)            
+        function removeSubjectsFromGroup(cohort, subject_indices, group)
             for i = 1:1:length(subject_indices)
                 cohort.removeSubjectFromGroup(subject_indices(i), group);
             end
@@ -113,11 +121,11 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % Make a deep copy of subject_dict
             cohort_copy.subject_dict = IndexedDictionary(cohort_copy.subject_class);
             for i = 1:1:cohort.getSubjects().length()
-                 cohort_copy.subject_dict.add(cohort.getSubjects().getKey(i), cohort.getSubjects().getValue(i).copy(), i);
+                cohort_copy.subject_dict.add(cohort.getSubjects().getKey(i), cohort.getSubjects().getValue(i).copy(), i);
             end
             
             % Make a deep copy of group_dict
-            cohort_copy.group_dict = IndexedDictionary('Group'); 
+            cohort_copy.group_dict = IndexedDictionary('Group');
             for j = 1:1:cohort.getGroup().length()
                 cohort_copy.group_dict.add(cohort.getGroup().getKey(j), cohort.getGroup().getValue(j).copy(), j);
             end
