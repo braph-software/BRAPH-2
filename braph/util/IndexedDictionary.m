@@ -20,17 +20,20 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     %   getIndex          - returns the index of the key or value.
     %   getIndexFromValue - returns the index of the value.
     %   getIndexFromKey   - returns the index of the key.
+    %   getIndexFromValueAll - returns all the indexes of the same value.
     %   getValue          - returns the value of the index or the key.
     %   getValueFromIndex - returns the value of the index.
     %   getValueFromKey   - returns the value of the key.
     %   getKey            - returns the key of the index or value.
     %   getKeyFromIndex   - returns the key of the index.
     %   getKeyFromValue   - returns the key of the value.
+    %   getKeyFromValueAll   - returns all the keys of the same value.
     %   add               - adds a key and value to the dictionary.
     %   remove            - removes the key and value from the dictionary.
     %   replace           - replaces a key and value in the dictionary.
     %   replaceKey        - replaces a key in the dictionary.
     %   replaceValue      - replaces a value in the dictionary.
+    %   replaceValueAll   - replaces all values of same value in the dictionary
     %   invert            - inverts position of elements in the dictionary.
     %   move_to           - move an element to a position in the ditionary.
     %   remove_all        - removes all selected elements from the dictionary.

@@ -23,11 +23,39 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %
     % Additionally, it is possible to use the following IndexDictionary
     % methods through getBrainRegions():
-    %   getBrainRegions()           - returns the indexed dictionary with BrainRegions.
-    %   getBrainRegions().xxx       - xxx
-
-% TODO: Add functions through getBrainRegions()
-
+    %   getBrainRegions()             - returns the indexed dictionary br_idict with BrainRegions.
+    %   getBrainRegions().tostring    - returns a string representing the indexed dictionary br_idict.
+    %   getBrainRegions().disp        - displays the indexed dictionary br_idict.
+    %   getBrainRegions().length      - returns the length of the indexed dictionary br_idict.
+    %   getBrainRegions().getValueClass     - returns the value_class of the indexed dictionary br_idict.
+    %   getBrainRegions().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
+    %   getBrainRegions().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index.
+    %   getBrainRegions().containsKey       - bool, checks if the indexed dictionary br_idict contains the key.
+    %   getBrainRegions().containsValue     - bool, checks if the indexed dictionary br_idict contains the value.
+    %   getBrainRegions().getIndex          - returns the index of the key or value.
+    %   getBrainRegions().getIndexFromValue - returns the index of the value.
+    %   getBrainRegions().getIndexFromKey   - returns the index of the key.
+    %   getBrainRegions().getIndexFromValueAll - returns all the indexes of the same value.
+    %   getBrainRegions().getValue          - returns the value of the index or the key.
+    %   getBrainRegions().getValueFromIndex - returns the value of the index.
+    %   getBrainRegions().getValueFromKey   - returns the value of the key.
+    %   getBrainRegions().getKey            - returns the key of the index or value.
+    %   getBrainRegions().getKeyFromIndex   - returns the key of the index.
+    %   getBrainRegions().getKeyFromValue   - returns the key of the value.
+    %   getBrainRegions().getKeyFromValueAll   - returns all the keys of the same value.
+    %   getBrainRegions().add               - adds a key and value to the indexed dictionary br_idict.
+    %   getBrainRegions().remove            - removes the key and value from the indexed dictionary br_idict.
+    %   getBrainRegions().replace           - replaces a key and value in the indexed dictionary br_idict.
+    %   getBrainRegions().replaceKey        - replaces a key in the indexed dictionary br_idict.
+    %   getBrainRegions().replaceValue      - replaces a value in the indexed dictionary br_idict.
+    %   getBrainRegions().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict.
+    %   getBrainRegions().invert            - inverts position of elements in the indexed dictionary br_idict.
+    %   getBrainRegions().move_to           - move an element to a position in the indexed dictionary br_idict.
+    %   getBrainRegions().remove_all        - removes all selected elements from the indexed dictionary br_idict.
+    %   getBrainRegions().move_up           - moves an element up in the indexed dictionary br_idict
+    %   getBrainRegions().move_down         - moves an element down in the indexed dictionary br_idict
+    %   getBrainRegions().move_to_top       - moves an element to the top in the indexed dictionary br_idict
+    %   getBrainRegions().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
     %   
     % See also BrainRegion
     
@@ -47,10 +75,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % Make a shallow copy
             atlas_copy = copyElement@matlab.mixin.Copyable(atlas);
             
-            % Make a shallow copy of br_idict
-            atlas_copy.br_idict = copyElement@matlab.mixin.Copyable(atlas.br_idict);
-
-% TODO: Deep copy of idict
+            % Make a deep copy of br_idict
+            atlas_copy.br_idict = IndexedDictionary(atlas.getBrainRegions().getValueClass());
+            for i = 1:1:atlas.getBrainRegions().length()
+                atlas_copy.br_idict.add(atlas.getBrainRegions().getKey(i), atlas.getBrainRegions().getValue(i), i);
+            end
         end        
     end        
     methods
@@ -108,10 +137,16 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             name = atlas.name;
         end
-        function br_dict = getBrainRegions(atlas)
-% TODO: comment
+        function br_idict = getBrainRegions(atlas)
+            % GETBRAINREGIONS returns the indexed dictionary
+            % 
+            % BR_IDICT = GETBRAINREGIONS(ATLAS) returns the indexed
+            % dictionary BR_IDICT. This function exposes to the user the
+            % methods and functions of the INDEXEDDICTIONARY class.
+            %
+            % See also IndexedDictionary, getName().
 
-            br_dict = atlas.br_idict;
+            br_idict = atlas.br_idict;
         end
         function br_labels = getBrainRegionLabels(atlas)
             % GETBRAINREGIONLABELS returns all BrainRegion labels.
