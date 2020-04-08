@@ -3,8 +3,8 @@ classdef Cohort < handle & matlab.mixin.Copyable
         name  % brain atlas name
         subject_class  % class of the subjects
         atlases  % cell array with brain atlases
-        subject_dict  % indexed dictionary with subjects
-        group_dict  % indexed dictionary with groups
+        subject_idict  % indexed dictionary with subjects
+        group_idict  % indexed dictionary with groups
     end
     methods
         function cohort = Cohort(name, subject_class, atlases, subjects)
@@ -26,12 +26,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas']) %#ok<NBRAK>
             cohort.atlases = atlases;
             
-            cohort.subject_dict = IndexedDictionary(subject_class);
+            cohort.subject_idict = IndexedDictionary(subject_class);
             for i = 1:1:length(subjects)
-                cohort.subject_dict.add(num2str(subjects{i}.getID()), subjects{i}, i);
+                cohort.subject_idict.add(tostring(subjects{i}.getID()), subjects{i}, i);
             end
             
-            cohort.group_dict = IndexedDictionary('Group');
+            cohort.group_idict = IndexedDictionary('Group');
         end
         function str = tostring(cohort)
             str = ['Cohort with ' int2str(cohort.getSubjects().length()) ' ' cohort.getSubjectClass() ' in ' int2str(cohort.getGroup().length()) ' group(s)'];
@@ -51,10 +51,10 @@ classdef Cohort < handle & matlab.mixin.Copyable
             atlases = cohort.atlases;
         end
         function subject_idict = getSubjects(cohort)
-            subject_idict = cohort.subject_dict;
+            subject_idict = cohort.subject_idict;
         end
-        function group_idict = getGroup(cohort)
-            group_idict = cohort.group_dict;
+        function group_idict = getGroups(cohort)
+            group_idict = cohort.group_idict;
         end
         function subject = getNewSubject(cohort, varargin)
             
@@ -118,16 +118,16 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % Make a deep copy of atlases
             cohort_copy.atlases = cellfun(@(atlas) {atlas.copy()}, cohort.atlases);
             
-            % Make a deep copy of subject_dict
-            cohort_copy.subject_dict = IndexedDictionary(cohort_copy.subject_class);
+            % Make a deep copy of subject_idict
+            cohort_copy.subject_idict = IndexedDictionary(cohort_copy.subject_class);
             for i = 1:1:cohort.getSubjects().length()
-                cohort_copy.subject_dict.add(cohort.getSubjects().getKey(i), cohort.getSubjects().getValue(i).copy(), i);
+                cohort_copy.subject_idict.add(cohort.getSubjects().getKey(i), cohort.getSubjects().getValue(i).copy(), i);
             end
             
-            % Make a deep copy of group_dict
-            cohort_copy.group_dict = IndexedDictionary('Group');
+            % Make a deep copy of group_idict
+            cohort_copy.group_idict = IndexedDictionary('Group');
             for j = 1:1:cohort.getGroup().length()
-                cohort_copy.group_dict.add(cohort.getGroup().getKey(j), cohort.getGroup().getValue(j).copy(), j);
+                cohort_copy.group_idict.add(cohort.getGroup().getKey(j), cohort.getGroup().getValue(j).copy(), j);
             end
         end
     end
