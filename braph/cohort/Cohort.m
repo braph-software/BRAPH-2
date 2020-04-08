@@ -121,14 +121,15 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % Make a deep copy of subject_idict
             cohort_copy.subject_idict = IndexedDictionary(cohort_copy.subject_class);
             for i = 1:1:cohort.getSubjects().length()
-                cohort_copy.subject_idict.add(cohort.getSubjects().getKey(i), cohort.getSubjects().getValue(i).copy(), i);
+% TODO: New Subject with right reference to copied atlases and then copy
+% data and finally add subject to copied dictionary
             end
             
             % Make a deep copy of group_idict
             cohort_copy.group_idict = IndexedDictionary('Group');
-            for j = 1:1:cohort.getGroup().length()
-                cohort_copy.group_idict.add(cohort.getGroup().getKey(j), cohort.getGroup().getValue(j).copy(), j);
-            end
+% TODO: for over groups; for over subjects and match indices and copy
+% pointers.
+% Add a test of this
         end
     end
 end
