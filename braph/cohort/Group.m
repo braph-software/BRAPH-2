@@ -3,7 +3,7 @@ classdef Group < handle & matlab.mixin.Copyable
         name  % group name
         description  % group description
         subject_class  % class of the subjects
-        subjects  % list of sugjects
+        subjects  % list of subjects
     end
     methods
         function group = Group(subject_class, subjects, varargin)
