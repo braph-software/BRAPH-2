@@ -61,23 +61,25 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             
             idict.dict = containers.Map('KeyType', 'double', 'ValueType', 'any');
             
-            assert(isequal(length(values), length(keys)), ...
-                ['BRAPH:IndexDictionary:Constructor'], ...
-                ['Size of arguments is not the same.']) %#ok<NBRAK>
-            
-            for i = 1:1:length(values)
-                
-                key = keys{i};
-                assert(ischar(key), ...
+            if nargin > 2
+                assert(isequal(length(values), length(keys)), ...
                     ['BRAPH:IndexDictionary:Constructor'], ...
-                    ['Key is not a string.']) %#ok<NBRAK>
+                    ['Size of arguments is not the same.']) %#ok<NBRAK>
                 
-                value = values{i};
-                assert(isequal(class(value), value_class), ...
-                    ['BRAPH:IndexDictionary:Constructor'], ...
-                    ['Values is not an object of class ' value_class]) %#ok<NBRAK>
-                
-                idict.add(key, value, i);
+                for i = 1:1:length(values)
+                    
+                    key = keys{i};
+                    assert(ischar(key), ...
+                        ['BRAPH:IndexDictionary:Constructor'], ...
+                        ['Key is not a string.']) %#ok<NBRAK>
+                    
+                    value = values{i};
+                    assert(isequal(class(value), value_class), ...
+                        ['BRAPH:IndexDictionary:Constructor'], ...
+                        ['Values is not an object of class ' value_class]) %#ok<NBRAK>
+                    
+                    idict.add(key, value, i);
+                end
             end
         end
         function str = tostring(idict)
@@ -354,10 +356,10 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             assert(ischar(key), ...
                 ['BRAPH:IndexDictionary:Add'], ...
                 ['Key is not a string.']) %#ok<NBRAK>
-            assert(isequal(value.getClass(), idict.getValueClass()), ...
+            assert(isequal(class(value), idict.getValueClass()), ...
                 ['BRAPH:IndexDictionary:Add'], ...
                 ['Values is not an object of class ' idict.getValueClass() ]) %#ok<NBRAK>
-            
+           
             if index <= idict.length()
                 for j = idict.length():-1:index
                     idict.dict(j+1) = idict.dict(j);
