@@ -379,6 +379,8 @@ for i = 1:1:length(sub_class_list)
 %                 ['BRAPH:Cohort:Copy'], ...
 %                 ['Cohort.copy() does not work']) %#ok<NBRAK>
         end
+
+% TODO tests that subjects and groups are correctly copies.
     end
 end
 
