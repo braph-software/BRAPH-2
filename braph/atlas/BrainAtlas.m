@@ -23,10 +23,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %
     % Additionally, it is possible to use the following IndexDictionary
     % methods through getBrainRegions():
-    %   getBrainRegions()             - returns the indexed dictionary br_idict with BrainRegions.
-    %   getBrainRegions().tostring    - returns a string representing the indexed dictionary br_idict.
-    %   getBrainRegions().disp        - displays the indexed dictionary br_idict.
-    %   getBrainRegions().length      - returns the length of the indexed dictionary br_idict.
+    %   getBrainRegions()                   - returns the indexed dictionary br_idict with BrainRegions.
+    %   getBrainRegions().tostring          - returns a string representing the indexed dictionary br_idict.
+    %   getBrainRegions().disp              - displays the indexed dictionary br_idict.
+    %   getBrainRegions().length            - returns the length of the indexed dictionary br_idict.
     %   getBrainRegions().getValueClass     - returns the value_class of the indexed dictionary br_idict.
     %   getBrainRegions().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
     %   getBrainRegions().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index.
@@ -42,7 +42,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getBrainRegions().getKey            - returns the key of the index or value.
     %   getBrainRegions().getKeyFromIndex   - returns the key of the index.
     %   getBrainRegions().getKeyFromValue   - returns the key of the value.
-    %   getBrainRegions().getKeyFromValueAll   - returns all the keys of the same value.
+    %   getBrainRegions().getKeyFromValueAll - returns all the keys of the same value.
     %   getBrainRegions().add               - adds a key and value to the indexed dictionary br_idict.
     %   getBrainRegions().remove            - removes the key and value from the indexed dictionary br_idict.
     %   getBrainRegions().replace           - replaces a key and value in the indexed dictionary br_idict.
