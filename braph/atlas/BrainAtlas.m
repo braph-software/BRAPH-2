@@ -78,7 +78,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % Make a deep copy of br_idict
             atlas_copy.br_idict = IndexedDictionary(atlas.getBrainRegions().getValueClass());
             for i = 1:1:atlas.getBrainRegions().length()
-                atlas_copy.br_idict.add(atlas.getBrainRegions().getKey(i), atlas.getBrainRegions().getValue(i), i);
+                atlas_copy.br_idict.add(atlas.getBrainRegions().getKey(i), atlas.getBrainRegions().getValue(i).copy(), i);
             end
         end        
     end        
