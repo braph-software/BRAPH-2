@@ -3,7 +3,7 @@ classdef DataConnectivity < Data
         function d = DataConnectivity(atlas, value)
             
             if nargin < 2
-                value = zeros(atlas.brainregionnumber(), atlas.brainregionnumber());
+                value = zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length());
             end
                         
             d = d@Data(atlas, value);
@@ -12,7 +12,7 @@ classdef DataConnectivity < Data
     methods
         function setValue(d, value)
 
-            regionnumber = d.getBrainAtlas().brainregionnumber();
+            regionnumber = d.getBrainAtlas().getBrainRegions().length();
             assert(isnumeric(value) && isequal(size(value), [regionnumber, regionnumber]), ...
                 'BRAPH:DataConnectivity:WrongValue', ...
                 [ ...

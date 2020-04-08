@@ -4,8 +4,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %
     % BrainAtlas properties (GetAccess=protected, SetAccess=protected):
     %   name                    - name of the brain atlas.
-    %   brdict                  - dictionary with brain regions
-    %                             (key, value) = (int32, brain region)
+    %   br_idict                - indexed dictionary with brain regions
     %
     % BrainAtlas methods (Access=protected)
     %   copyElement             - deep copy community structure.
@@ -15,33 +14,54 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   tostring                - returns a string representing the BrainAtlas.
     %   disp                    - displays the BrainAtlas.
     %   getName                 - returns the name of the BrainAtlas.
-    %   brainregionnumber       - returns the number of regions.
-    %   contains_brain_region   - boolean, checks if atlas contains BrainRegion.
-    %   getBrainRegion          - returns a BrainRegion.
-    %   getBrainRegions         - returns all BrainRegions.
+    %   getBrainRegions         - returns the indexed dictionary with BrainRegions.
     %   getBrainRegionLabels    - returns the label of all BrainRegions.
     %   getBrainRegionXs        - returns the x coordiante of all BrainRegions.
     %   getBrainRegionYs        - returns the y coordiante of all BrainRegions.
     %   getBrainRegionZs        - returns the z coordiante of all BrainRegions.
     %   getBrainRegionPositions - returns the positions of all BrainRegions.
-    %   addBrainRegion          - adds a BrainRegion to the brain atlas.
-    %   removeBrainRegion       - removes a BrainRegion from the BrainAtlas.
-    %   replaceBrainRegion      - replaces a BrainRegion from the BrainAtlas.
-    %   invertBrainRegions      - inverts the position of two BrainRegions.
-    %   movetoBrainRegion       - moves a BrainRegion to a specified position.
-    %   removeBrainRegions      - removes selected BrainRegions.
-    %   addaboveBrainRegions    - adds empty BrainRegions above the selected.
-    %   addbelowBrainRegions    - adds empty BrainRegions below the selected.
-    %   moveupBrainRegions      - moves up selected BrainRegions.
-    %   movedownBrainRegions    - moves down selected BrainRegions.
-    %   move2topBrainRegions    - moves the selected BrainRegions to the top.
-    %   move2bottomBrainRegions - moves the selected BrainRegions to the bottom.
     %
+    % Additionally, it is possible to use the following IndexDictionary
+    % methods through getBrainRegions():
+    %   getBrainRegions()                   - returns the indexed dictionary br_idict with BrainRegions.
+    %   getBrainRegions().tostring          - returns a string representing the indexed dictionary br_idict.
+    %   getBrainRegions().disp              - displays the indexed dictionary br_idict.
+    %   getBrainRegions().length            - returns the length of the indexed dictionary br_idict.
+    %   getBrainRegions().getValueClass     - returns the value_class of the indexed dictionary br_idict.
+    %   getBrainRegions().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
+    %   getBrainRegions().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index.
+    %   getBrainRegions().containsKey       - bool, checks if the indexed dictionary br_idict contains the key.
+    %   getBrainRegions().containsValue     - bool, checks if the indexed dictionary br_idict contains the value.
+    %   getBrainRegions().getIndex          - returns the index of the key or value.
+    %   getBrainRegions().getIndexFromValue - returns the index of the value.
+    %   getBrainRegions().getIndexFromKey   - returns the index of the key.
+    %   getBrainRegions().getIndexFromValueAll - returns all the indexes of the same value.
+    %   getBrainRegions().getValue          - returns the value of the index or the key.
+    %   getBrainRegions().getValueFromIndex - returns the value of the index.
+    %   getBrainRegions().getValueFromKey   - returns the value of the key.
+    %   getBrainRegions().getKey            - returns the key of the index or value.
+    %   getBrainRegions().getKeyFromIndex   - returns the key of the index.
+    %   getBrainRegions().getKeyFromValue   - returns the key of the value.
+    %   getBrainRegions().getKeyFromValueAll - returns all the keys of the same value.
+    %   getBrainRegions().add               - adds a key and value to the indexed dictionary br_idict.
+    %   getBrainRegions().remove            - removes the key and value from the indexed dictionary br_idict.
+    %   getBrainRegions().replace           - replaces a key and value in the indexed dictionary br_idict.
+    %   getBrainRegions().replaceKey        - replaces a key in the indexed dictionary br_idict.
+    %   getBrainRegions().replaceValue      - replaces a value in the indexed dictionary br_idict.
+    %   getBrainRegions().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict.
+    %   getBrainRegions().invert            - inverts position of elements in the indexed dictionary br_idict.
+    %   getBrainRegions().move_to           - move an element to a position in the indexed dictionary br_idict.
+    %   getBrainRegions().remove_all        - removes all selected elements from the indexed dictionary br_idict.
+    %   getBrainRegions().move_up           - moves an element up in the indexed dictionary br_idict
+    %   getBrainRegions().move_down         - moves an element down in the indexed dictionary br_idict
+    %   getBrainRegions().move_to_top       - moves an element to the top in the indexed dictionary br_idict
+    %   getBrainRegions().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
+    %   
     % See also BrainRegion
     
     properties (GetAccess=protected, SetAccess=protected) 
         name  % BrainAtlas name
-        brdict  % indexed dictionary with BrainRegions
+        br_idict  % indexed dictionary with BrainRegions
     end
     methods (Access=protected)
         function atlas_copy = copyElement(atlas)
@@ -55,20 +75,18 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % Make a shallow copy
             atlas_copy = copyElement@matlab.mixin.Copyable(atlas);
             
-            % Make a deep copy of brdict
-            atlas_copy.brdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            brain_regions = values(atlas.brdict);
-            for i = 1:1:length(brain_regions)
-                br = brain_regions{i};
-                atlas_copy.brdict(i) = br.copy();
+            % Make a deep copy of br_idict
+            atlas_copy.br_idict = IndexedDictionary(atlas.getBrainRegions().getValueClass());
+            for i = 1:1:atlas.getBrainRegions().length()
+                atlas_copy.br_idict.add(atlas.getBrainRegions().getKey(i), atlas.getBrainRegions().getValue(i).copy(), i);
             end
         end        
     end        
     methods
         function atlas = BrainAtlas(name, brain_regions)
             % BrainAtlas(NAME, BrainRegions) creates a BrainAtlas with
-            % given name NAME and initializes the dictionary BRDICT with
-            % given BrainRegions BRAIN_REGIONS.
+            % given name NAME and initializes the dictionary with
+            % BRAIN_REGIONS (cell array of BrainRegions). 
             %
             % See also BrainRegion.
             
@@ -79,9 +97,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % initialization of properties
             atlas.name = name;            
-            atlas.brdict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            atlas.br_idict = IndexedDictionary('BrainRegion'); % containers.Map('KeyType', 'int32', 'ValueType', 'any');
             for i = 1:1:length(brain_regions)
-                atlas.addBrainRegion(brain_regions{i}, i);
+                atlas.br_idict.add(brain_regions{i}.getName(), brain_regions{i}, i);
             end
         end
         function str = tostring(atlas)
@@ -119,46 +137,16 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             name = atlas.name;
         end
-        function n = brainregionnumber(atlas)
-            % BRAINREGIONNUMBER returns the number of the BrainRegions.
+        function br_idict = getBrainRegions(atlas)
+            % GETBRAINREGIONS returns the indexed dictionary
+            % 
+            % BR_IDICT = GETBRAINREGIONS(ATLAS) returns the indexed
+            % dictionary BR_IDICT. This function exposes to the user the
+            % methods and functions of the INDEXEDDICTIONARY class.
             %
-            % N = BRAINREGIONUMBER(ATLAS) returns the number of the brain
-            % regions in BRDICT.
-            %
-            % See also brainregionnumber().
-            
-            n = length(atlas.brdict);
-        end
-        function bool = contains_brain_region(atlas, br_index)
-            % CONTAINS_BRAIN_REGION checks BrainAtlas contains a BrainRegion.
-            %
-            % BOOL = CONTAINS_BRAIN_REGION(ATLAS, BR_INDEX) returns true if
-            % a BrainRegion exists in the BrainAtlas dictionary BRDICT.
-            %
-            % See also getBrainRegion().
-            
-            bool = isKey(atlas.brdict, br_index);
-        end
-        function br = getBrainRegion(atlas, br_index)
-            % GETBRAINREGION returns the brain region.
-            %
-            % BR = GETBRAINREGION(ATLAS, BRINDEX) returns the
-            % BrainRegion indicated with BRINDEX from the dictionary
-            % BRDICT.
-            %
-            % See also contains_brain_region().
-            
-            br = atlas.brdict(br_index);
-        end
-        function brain_regions = getBrainRegions(atlas)
-            % GETBRAINREGIONS returns all brain regions.
-            %
-            % BRS = GETBRAINREGIONS(ATLAS) returns all the
-            % BrainRegions from the dictionary the BRDICT.
-            %
-            % See also getBrainRegionLabels().
-            
-            brain_regions = values(atlas.brdict);
+            % See also IndexedDictionary, getName().
+
+            br_idict = atlas.br_idict;
         end
         function br_labels = getBrainRegionLabels(atlas)
             % GETBRAINREGIONLABELS returns all BrainRegion labels.
@@ -168,9 +156,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getBrainRegions(), getBrainNames().
             
-            br_labels = cell(1, atlas.brainregionnumber());
-            for i = 1:1:atlas.brainregionnumber()
-                br = atlas.getBrainRegion(i);
+            br_labels = cell(1, atlas.getBrainRegions().length());
+            for i = 1:1:atlas.getBrainRegions().length()
+                br = atlas.getBrainRegions().getValueFromIndex(i);
                 br_labels{i} = br.getLabel();
             end
         end
@@ -182,9 +170,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getBrainRegions(), getBrainLabels()
             
-            br_names = cell(1, atlas.brainregionnumber());
-            for i = 1:1:atlas.brainregionnumber()
-                br = atlas.getBrainRegion(i);
+            br_names = cell(1, atlas.getBrainRegions().length());
+            for i = 1:1:atlas.getBrainRegions().length()
+                br = atlas.getBrainRegions().getValueFromIndex(i);
                 br_names{i} = br.getName();
             end
         end
@@ -196,9 +184,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getBrainRegions(), getBrainLabels().
             
-            br_xs = cell(1, atlas.brainregionnumber());
-            for i = 1:1:atlas.brainregionnumber()
-                br = atlas.getBrainRegion(i);
+            br_xs = cell(1, atlas.getBrainRegions().length());
+            for i = 1:1:atlas.getBrainRegions().length()
+                br = atlas.getBrainRegions().getValueFromIndex(i);
                 br_xs{i} = br.getX();
             end
         end
@@ -210,9 +198,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getBrainRegions(), getBrainLabels().
             
-            br_ys = cell(1, atlas.brainregionnumber());
-            for i = 1:1:atlas.brainregionnumber()
-                br = atlas.getBrainRegion(i);
+            br_ys = cell(1, atlas.getBrainRegions().length());
+            for i = 1:1:atlas.getBrainRegions().length()
+                br = atlas.getBrainRegions().getValueFromIndex(i);
                 br_ys{i} = br.getY();
             end
         end
@@ -224,9 +212,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getBrainRegions(), getBrainLabels().
             
-            br_zs = cell(1, atlas.brainregionnumber());
-            for i = 1:1:atlas.brainregionnumber()
-                br = atlas.getBrainRegion(i);
+            br_zs = cell(1, atlas.getBrainRegions().length());
+            for i = 1:1:atlas.getBrainRegions().length()
+                br = atlas.getBrainRegions().getValueFromIndex(i);
                 br_zs{i} = br.getZ();
             end
         end
@@ -238,231 +226,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getBrainRegions(), getBrainLabels().
             
-            br_positions = cell(1, atlas.brainregionnumber());
-            for i = 1:1:atlas.brainregionnumber()
-                br = atlas.getBrainRegion(i);
+            br_positions = cell(1, atlas.getBrainRegions().length());
+            for i = 1:1:atlas.getBrainRegions().length()
+                br = atlas.getBrainRegions().getValueFromIndex(i);
                 br_positions{i} = br.getPosition();
             end
-        end
-        function addBrainRegion(atlas, br, i)
-            % ADDBRAINREGION adds a BrainRegion.
-            %
-            % ADDBRAINREGION(ATLAS, BrainRegion, INDEX) adds a BrainRegion
-            % to the BrainAtlas dictionary BRDICT specified INDEX. If INDEX 
-            % is empty it adds it to the end of BRDICT by default.
-            %
-            % See also removeBrainRegion(), replaceBrainRegion().
-            
-            if nargin < 3 || i < 0 || i > atlas.brainregionnumber()
-                i = atlas.brainregionnumber() + 1;
-            end
-
-            assert(isa(br, 'BrainRegion'), ...
-                    'BRAPH:BrainAtlas:ObjectNotBR', ...
-                    'Only BrainRegion objects can be added to a BrainAtlas' ...
-                    )
-            
-            if i <= atlas.brainregionnumber()
-                for j = atlas.brainregionnumber():-1:i
-                    atlas.brdict(j+1) = atlas.brdict(j);
-                end
-            end
-            atlas.brdict(i) = br;
-        end
-        function removeBrainRegion(atlas, i)
-            % REMOVEBRAINREGION adds a BrainRegion.
-            %
-            % REMOVEBRAINREGION(ATLAS, INDEX) removes a BrainRegion
-            % from the BrainAtlas dictionary BRDICT specified INDEX. 
-            %
-            % See also addBrainRegion(), replaceBrainRegion().
-            
-            for j = i:1:atlas.brainregionnumber()-1
-                atlas.brdict(j) = atlas.brdict(j+1);
-            end
-            remove(atlas.brdict, atlas.brainregionnumber());
-        end
-        function replaceBrainRegion(atlas, i, br)
-            % REPLACEBRAINREGION replaces a BrainRegion.
-            %
-            % REPLACEBRAINREGION(ATLAS, INDEX, BrainRegion) replaces the
-            % BrainRegion at the INDEX position.
-            %
-            % See also addBrainRegion(), removeBrainRegion().
-
-            assert(isa(br, 'BrainRegion'), ...
-                    'BRAPH:BrainAtlas:ObjectNotBR', ...
-                    'Only BrainRegion objects can be added to a BrainAtlas' ...
-                    )
-            
-            if i > 0 || i <= atlas.brainregionnumber()
-                atlas.brdict(i) = br;
-            end
-            
-        end
-        function invertBrainRegions(atlas, i, j)
-            % INVERTBRAINREGIONS inverts position of two BrainRegions.
-            %
-            % INVERTBRAINREGIONS(ATLAS, INDEXI, INDEXJ) inverts the
-            % position of a BrainRegion at INDEXI with the position of a
-            % BrainRegion at INDEXJ.  
-            %
-            % See also addBrainRegion(), replaceBrainRegion().
-            
-            if i > 0 && i <= atlas.brainregionnumber() && j > 0 && j <= atlas.brainregionnumber() && i ~= j
-                br_i = atlas.getBrainRegion(i);
-                br_j = atlas.getBrainRegion(j);
-                atlas.replaceBrainRegion(i, br_j)
-                atlas.replaceBrainRegion(j, br_i)
-            end
-        end
-        function movetoBrainRegion(atlas, i, j)
-            % MOVETOBRAINREGION moves a BrainRegion to another position.
-            %
-            % MOVETOBRAINREGION(ATLAS, INDEXI, INDEXJ) moves a BrainRegion
-            % from position INDEXI to position INDEXJ.
-            %
-            % See also addBrainRegion(), replaceBrainRegion().
-            
-            if i > 0 && i <= atlas.brainregionnumber() && j > 0 && j <= atlas.brainregionnumber() && i ~= j
-                br = atlas.getBrainRegion(i);
-                if i > j
-                    atlas.removeBrainRegion(i)
-                    atlas.addBrainRegion(br, j)
-                else  % j < i
-                    atlas.addBrainRegion(br, j+1)
-                    atlas.removeBrainRegion(i)
-                end
-            end            
-        end
-        function selected = removeBrainRegions(atlas, selected)
-            % REMOVEBRAINREGIONS removes selected BrainRegions.
-            %
-            % SELECTED = REMOVEBRAINREGIONS(ATLAS, SELECTED) removes all
-            % BrainRegions whose positions in ATLAS are included in the
-            % array SELECTED. It returns an empty array.
-            %
-            % See also addaboveBrainRegions(), addbelowBrainRegions().
-            
-            for i = length(selected):-1:1
-                atlas.removeBrainRegion(selected(i))
-            end
-            selected = [];
-        end
-        function [selected, added] = addaboveBrainRegions(atlas, selected)
-            % ADDABOVEBRAINREGIONS adds BrainRegions above a selection.
-            %
-            % [SELECTED, ADDED] = ADDABOVEBRAINREGIONS(ATLAS, SELECTED) adds new
-            % BrainRegions with default initialization above the selected
-            % positions in the array SELECTED. It returns a new reshaped 
-            % array of SELECTED and the new BrainRegions ADDED.
-            %
-            % See also removeBrainRegions(), addbelowBrainRegions().
-            
-            for i = length(selected):-1:1
-                atlas.addBrainRegion(BrainRegion(), selected(i))
-            end
-            selected = selected + reshape(1:1:numel(selected), size(selected));
-            added = selected - 1;
-        end
-        function [selected, added] = addbelowBrainRegions(atlas, selected)
-            % ADDBELOWBRAINREGIONS adds BrainRegions below a selection.
-            %
-            % [SELECTED, ADDED] = ADDBELOWBRAINREGIONS(ATLAS, SELECTED) adds
-            % new BrainRegions with default initialization below the selected
-            % positions in the array SELECTED. It returns a new reshaped 
-            % array of SELECTED and the new BrainRegions ADDED.
-            %
-            % See also removeBrainRegions(), addaboveBrainRegions().
-            
-            for i = length(selected):-1:1
-                atlas.addBrainRegion(BrainRegion(), selected(i) + 1)
-            end
-            selected = selected + reshape(0:1:numel(selected)-1, size(selected));
-            added = selected + 1;
-        end
-        function selected = moveupBrainRegions(atlas, selected)
-            % MOVEUPBRAINREGIONS moves up selected BrainRegions.
-            %
-            % SELECTED = MOVEUPBRAINREGIONS(ATLAS, SELECTED) moves up by one
-            % position all BrainRegions whose positions in ATLAS are included
-            % in the SELECTED array and returns their final positions.
-            %
-            % See also movedownBrainRegions().
-            
-            if ~isempty(selected)
-                
-                first_index_to_process = 1;
-                unprocessable_length = 1;
-                while first_index_to_process <= atlas.brainregionnumber() ...
-                        && first_index_to_process <= numel(selected) ...
-                        && selected(first_index_to_process) == unprocessable_length
-                    first_index_to_process = first_index_to_process + 1;
-                    unprocessable_length = unprocessable_length + 1;
-                end
-
-                for i = first_index_to_process:1:numel(selected)
-                    atlas.invertBrainRegions(selected(i), selected(i)-1);
-                    selected(i) = selected(i) - 1;
-                end
-            end
-        end
-        function selected = movedownBrainRegions(atlas, selected)
-            % MOVEDOWNBRAINREGIONS moves down selected BrainRegions.
-            %
-            % SELECTED = MOVEDOWNBRAINREGIONS(ATLAS, SELECTED) moves down by
-            % one position all BrainRegions whose positions in ATLAS are included
-            % in the SELECTED array and returns their final positions.
-            %
-            % See also movedownBrainRegions().
-            
-            if ~isempty(selected)
-
-                last_index_to_process = numel(selected);
-                unprocessable_length = atlas.brainregionnumber();
-                while last_index_to_process > 0 ...
-                        && selected(last_index_to_process) == unprocessable_length
-                    last_index_to_process = last_index_to_process - 1;
-                    unprocessable_length = unprocessable_length - 1;
-                end
-
-                for i = last_index_to_process:-1:1
-                    atlas.invertBrainRegions(selected(i), selected(i) + 1);
-                    selected(i) = selected(i) + 1;
-                end
-            end
-        end
-        function selected = move2topBrainRegions(atlas, selected)
-            % MOVE2TOPBRAINREGIONS moves selected BrainRegions to top
-            %
-            % SELECTED = MOVE2TOPBRAINREGIONS(ATLAS, SELECTED) moves to top
-            % all BrainRegions whose positions in the ATLAS dictionary are 
-            % included in the SELECTED array and returns their final positions.
-            %
-            % See also move2bottomBrainRegions().
-            
-            if ~isempty(selected)
-                for i = 1:1:numel(selected)
-                    atlas.movetoBrainRegion(selected(i), i);
-                end
-                selected = reshape(1:1:numel(selected), size(selected));
-            end
-        end
-        function selected = move2bottomBrainRegions(atlas, selected)
-            % MOVE2BOTTOMBRAINREGIONS moves selected BrainRegions to bottom
-            %
-            % SELECTED = MOVE2BOTTOMBRAINREGIONS(ATLAS, SELECTED) moves to 
-            % bottom all BrainRegions whose positions in the ATLAS dictionary are 
-            % included in the SELECTED array and returns their final positions.
-            %
-            % See also move2bottomBrainRegions().
-            
-            if ~isempty(selected)
-                for i = numel(selected):-1:1
-                    atlas.movetoBrainRegion(selected(i), atlas.brainregionnumber() - (numel(selected)-i));
-                end
-                selected = reshape(atlas.brainregionnumber() - numel(selected)+1:1:atlas.brainregionnumber(), size(selected));
-            end
-        end
+        end        
     end
 end
