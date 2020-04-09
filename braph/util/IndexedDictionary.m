@@ -24,10 +24,12 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     %   getValue          - returns the value of the index or the key.
     %   getValueFromIndex - returns the value of the index.
     %   getValueFromKey   - returns the value of the key.
+    %   getValues         - returns all values.
     %   getKey            - returns the key of the index or value.
     %   getKeyFromIndex   - returns the key of the index.
     %   getKeyFromValue   - returns the key of the value.
     %   getKeyFromValueAll   - returns all the keys of the same value.
+    %   getKeys           - returns all keys.
     %   add               - adds a key and value to the dictionary.
     %   remove            - removes the key and value from the dictionary.
     %   replace           - replaces a key and value in the dictionary.
@@ -290,10 +292,10 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             index = idict.getIndexFromKey(key);
             value  = idict.getValueFromIndex(index);
         end
-        function values = getValueAll(idict)
-            % GETVALUEALL returns all the values in the dictionary
+        function values = getValues(idict)
+            % GETVALUES returns all the values in the dictionary
             %
-            % VALUES = GETVALUEALL(IDICT) returns all the values in the
+            % VALUES = GETVALUES(IDICT) returns all the values in the
             % indexed dictionary.
             %
             % See also getValue(), getIndexFromValueAll()
@@ -355,6 +357,20 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             
             for i = 1:1:length(indexes)
                 keys{1, i} = idict.getKeyFromIndex(indexes{i});
+            end
+        end
+        function keys = getKeys(idict)
+            % GETKEYS returns all the keys
+            %
+            % KEYS = GETKEYS(IDICT) returns all the keys in the indexed
+            % dictionary.
+            %
+            % See also getValues().
+            
+            keys = cell(1, idict.length());
+            for i = 1:1:idict.length()
+                key_and_value = idict.dict(i);
+                keys{1, i} = key_and_value{1};
             end
         end
         function add(idict, key, value, index)
