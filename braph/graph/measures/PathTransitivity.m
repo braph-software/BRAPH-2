@@ -1,7 +1,7 @@
 classdef PathTransitivity < Measure
     % PathTransitivity < Measure: PathTransitivity measure
     % Path Transitivity provides the density of triangles that are
-    % available along the shortest-paths between all pairs of nodes.
+    % available along the shortest-paths between pairs of nodes.
     % 
     % PathTransitivity methods:
     %   PathTransitivity            - constructor with Measure properties.
@@ -29,8 +29,7 @@ classdef PathTransitivity < Measure
             % PATHTRANSITIVITY(G) creates degree with default measure properties.
             % G is a graph (e.g, an instance of GraphBU)
             %   
-            % See also Measure, Graph, EdgeNumberDistance,
-            % EdgeBetweennessCentrality, Distance, Transitivity.
+            % See also Measure, Graph, EdgeNumberDistance, EdgeBetweennessCentrality, Distance, Transitivity.
             
             m = m@Measure(g, varargin{:});
         end
@@ -41,8 +40,7 @@ classdef PathTransitivity < Measure
             % a graph
             %
             % PATH_TRANSITIVITY = CALCULATE(M) returns the path
-            % transitivity pairwise matrix of a graph.
-            % node.
+            % transitivity pairwise matrix of a graph node.
             
             g = m.getGraph(); 
             A = g.getA();
