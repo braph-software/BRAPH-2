@@ -1,7 +1,9 @@
 classdef Analysis < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         cohort  % cohort
-        measurement_dict  % indexed dictionary with measurements
+        measurement_idict  % indexed dictionary with measurements
+        randomparison_idict  % indexed dictionary with random comparison
+        comparison_idict  % indexed dictionary with comparison
     end
     methods (Access=protected)
         function analysis = Analysis(cohort, measurements, varargin)
@@ -39,7 +41,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function measurement = getMeasurement(analysis, measurement_index)
             measurement = analysis.measurement_dict(measurement_index);
         end
-        %         function measurement_ids = getMeasurementIDs(analysis)
+%         function measurement_ids = getMeasurementIDs(analysis)
         function measurement = getNewMeasurement(analysis, measurement_class, varargin)
             measurement = Measurement.getMeasurement(measurement_class, ...
                 analysis.cohort.getBrainAtlases(), ....
