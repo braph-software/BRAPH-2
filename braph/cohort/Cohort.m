@@ -334,19 +334,19 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
             % Make a deep copy of subject_idict
             cohort_copy.subject_idict = IndexedDictionary(cohort_copy.subject_class);
-            for i = 1:1:cohort.getSubjects().length()
-                sub = cohort.getSubjects().getValue(i);
+            for sub_i = 1:1:cohort.getSubjects().length()
+                sub = cohort.getSubjects().getValue(sub_i);
                 sub_copy = sub.copy();
                 sub_copy.setBrainAtlases(cohort_copy.getBrainAtlases());
-                cohort_copy.subject_idict.add(tostring(sub_copy.getID()), sub_copy, i);                
+                cohort_copy.subject_idict.add(tostring(sub_copy.getID()), sub_copy, sub_i);                
             end
             
             % Make a deep copy of group_idict
             cohort_copy.group_idict = IndexedDictionary('Group');
-            for j = 1:1:cohort.getGroups().length()  
+            for group_i = 1:1:cohort.getGroups().length()  
                 group_copy = Group(cohort.getSubjectClass(), []);
-                cohort_copy.group_idict.add(group_copy.getName(), group_copy, j);
-                cohort_copy.addSubjectsToGroup(cohort.getGroupSubjects(j), j);
+                cohort_copy.group_idict.add(group_copy.getName(), group_copy, group_i);
+                cohort_copy.addSubjectsToGroup(cohort.getGroupSubjects(group_i), group_i);
             end           
         end
     end
