@@ -12,7 +12,8 @@ classdef PathTransitivity < Measure
     % PathTransitivity methods (Static)
     %   getClass                    - returns the PathTransitivity class.
     %   getName                     - returns the name of PathTransitivity measure.
-    %   getDescription              - returns the description of PathTransitivity measure.
+    %   getDescription              - returns the description of PathTransitivity measure.    
+    %   getAvailableSettings        - returns the settings available to PathTransitivity measure.
     %   is_global                   - boolean, checks if PathTransitivity measure is global.
     %   is_nodal                    - boolean, checks if PathTransitivity measure is nodal.
     %   is_binodal                  - boolean, checks if PathTransitivity measure if binodal.
@@ -31,9 +32,7 @@ classdef PathTransitivity < Measure
             % See also Measure, Graph, EdgeNumberDistance,
             % EdgeBetweennessCentrality, Distance, Transitivity.
             
-            settings = clean_varargin({}, varargin{:});
-            
-            m = m@Measure(g, settings{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -159,6 +158,18 @@ classdef PathTransitivity < Measure
                 'triangles that are available along the ' ...
                 'shortest-paths between all pairs of nodes.' ...
                 ];
+        end
+        function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the settings available to
+            % PathTransitivity
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to PathTransitivity. Empty Array in this
+            % case.
+            % 
+            % See also getCompatibleGraphList()
+            
+            available_settings = {};
         end
         function bool = is_global() 
             % IS_GLOBAL checks if PathTransitivity measure is global (false)
