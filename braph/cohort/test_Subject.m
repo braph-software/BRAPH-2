@@ -141,7 +141,7 @@ for i = 1:1:length(subject_class_list)
 
     varargin = data_codes;
     sub_emptydata = Subject.getSubject(subject_class, atlas);
-    n = atlas.brainregionnumber();
+    n = atlas.getBrainRegions().length();
     for i = 1:1:numel(data_codes)
         varargin{(2*i)-1} = data_codes{i};
         if isequal(data_list(data_codes{i}), 'DataScalar')

@@ -7,5 +7,5 @@ br5 = BrainRegion('BR5', 'brain region 5', 5, 55, 555);
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 
 %% Test 1: Instantiation
-value = randn(atlas.brainregionnumber(), atlas.brainregionnumber());
+value = randn(atlas.getBrainRegions().length(), atlas.getBrainRegions().length());
 d = DataConnectivity(atlas, value);

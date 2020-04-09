@@ -3,7 +3,7 @@ classdef DataFunctional < Data
         function d = DataFunctional(atlas, value)
             
             if nargin < 2
-                value = zeros(atlas.brainregionnumber(), 10);
+                value = zeros(atlas.getBrainRegions().length(), 10);
             end
             
             d = d@Data(atlas, value);
@@ -12,7 +12,7 @@ classdef DataFunctional < Data
     methods
         function setValue(d, value)
             
-            regionnumber = d.getBrainAtlas().brainregionnumber();
+            regionnumber = d.getBrainAtlas().getBrainRegions().length();
             assert(isnumeric(value) && size(value, 1)==regionnumber, ...
                 'BRAPH:DataFunctional:WrongValue', ...
                 [ ...
