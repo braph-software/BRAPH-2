@@ -106,7 +106,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function [selected, added] = addaboveMeasurements(analysis, measurement_class, selected)
             for i = length(selected):-1:1
                 measurement = Measurement.getMeasurement(measurement_class, ...
-                    analysis.cohort.getBrainAtlases(), analysis.cohort.getGroup().getValueAll());
+                    analysis.cohort.getBrainAtlases(), analysis.cohort.getGroups().getValueAll());
                 analysis.addMeasurement(measurement, selected(i))
             end
             selected = selected + reshape(1:1:numel(selected), size(selected));
@@ -115,7 +115,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function [selected, added] = addbelowMeasurements(analysis, measurement_class, selected)
             for i = length(selected):-1:1
                 measurement = Measurement.getMeasurement(measurement_class, ...
-                    analysis.cohort.getBrainAtlases(), analysis.cohort.getGroup().getValueAll());
+                    analysis.cohort.getBrainAtlases(), analysis.cohort.getGroups().getValueAll());
                 analysis.addMeasurement(measurement, selected(i) + 1)
             end
             selected = selected + reshape(0:1:numel(selected)-1, size(selected));

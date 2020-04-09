@@ -34,12 +34,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
             cohort.group_idict = IndexedDictionary('Group');
         end
         function str = tostring(cohort)
-            str = ['Cohort with ' int2str(cohort.getSubjects().length()) ' ' cohort.getSubjectClass() ' in ' int2str(cohort.getGroup().length()) ' group(s)'];
+            str = ['Cohort with ' int2str(cohort.getSubjects().length()) ' ' cohort.getSubjectClass() ' in ' int2str(cohort.getGroups().length()) ' group(s)'];
         end
         function disp(cohort)
             disp(['<a href="matlab:help ' class(cohort) '">' class(cohort) '</a>'])
             disp([' size: ' int2str(cohort.getSubjects().length()) ' <a href="matlab:help ' cohort.getSubjectClass() '">' cohort.getSubjectClass() '</a>'])
-            disp([' group(s): ' int2str(cohort.getGroup().length())])
+            disp([' group(s): ' int2str(cohort.getGroups().length())])
         end
         function name = getName(cohort)
             name = cohort.name;
@@ -62,7 +62,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         end
         function [subject_indices, subjects] = getGroupSubjects(cohort, i)
             
-            subjects = cohort.getGroup().getValue(i).getSubjects();
+            subjects = cohort.getGroups().getValue(i).getSubjects();
             subject_indices = zeros(1, length(subjects));
             for j = 1:1:length(subjects)
                 subject = subjects{j};
@@ -72,15 +72,15 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
         end
         function addSubjectToGroup(cohort, subject, group)
-            if cohort.getSubjects().contains(subject) && cohort.getGroup().contains(group)
+            if cohort.getSubjects().contains(subject) && cohort.getGroups().contains(group)
                 if ~isa(subject, cohort.getSubjectClass())
                     subject = cohort.getSubjects().getValue(subject);
                 end
                 if ~isa(group, 'Group')
-                    cohort.getGroup().getValue(group).addSubject(subject);  % adding subject to the first ocurrance of type group
+                    cohort.getGroups().getValue(group).addSubject(subject);  % adding subject to the first ocurrance of type group
                 else
-                    index = cohort.getGroup().getIndex(group);
-                    cohort.getGroup().getValue(index).addSubject(subject);
+                    index = cohort.getGroups().getIndex(group);
+                    cohort.getGroups().getValue(index).addSubject(subject);
                 end
             end
         end
@@ -90,15 +90,15 @@ classdef Cohort < handle & matlab.mixin.Copyable
             end
         end
         function removeSubjectFromGroup(cohort, subject, group)
-            if cohort.getSubjects().contains(subject) && cohort.getGroup().contains(group)
+            if cohort.getSubjects().contains(subject) && cohort.getGroups().contains(group)
                 if ~isa(subject, cohort.getSubjectClass())
                     subject = cohort.getSubjects().getValue(subject);
                 end
                 if ~isa(group, 'Group')
-                    cohort.getGroup().getValue(group).removeSubject(subject);
+                    cohort.getGroups().getValue(group).removeSubject(subject);
                 else
-                    index = cohort.getGroup().getIndex(group);
-                    cohort.getGroup().getValue(index).removeSubject(subject);
+                    index = cohort.getGroups().getIndex(group);
+                    cohort.getGroups().getValue(index).removeSubject(subject);
                 end
             end
             
@@ -121,15 +121,19 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % Make a deep copy of subject_idict
             cohort_copy.subject_idict = IndexedDictionary(cohort_copy.subject_class);
             for i = 1:1:cohort.getSubjects().length()
-% TODO: New Subject with right reference to copied atlases and then copy
-% data and finally add subject to copied dictionary
+                sub = cohort.getSubjects().getValue(i);
+                sub_copy = sub.copy();
+                sub_copy.setBrainAtlases(cohort_copy.getBrainAtlases());
+                cohort_copy.subject_idict.add(tostring(sub_copy.getID()), sub_copy, i);                
             end
             
             % Make a deep copy of group_idict
             cohort_copy.group_idict = IndexedDictionary('Group');
-% TODO: for over groups; for over subjects and match indices and copy
-% pointers.
-% Add a test of this
+            for j = 1:1:cohort.getGroups().length()  
+                group_copy = Group(cohort.getSubjectClass(), []);
+                cohort_copy.group_idict.add(group_copy.getName(), group_copy, j);
+                cohort_copy.addSubjectsToGroup(cohort.getGroupSubjects(j), j);
+            end           
         end
     end
 end

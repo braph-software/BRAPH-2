@@ -99,7 +99,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             atlas.name = name;            
             atlas.br_idict = IndexedDictionary('BrainRegion'); % containers.Map('KeyType', 'int32', 'ValueType', 'any');
             for i = 1:1:length(brain_regions)
-                atlas.br_idict.add(brain_regions{i}.getName(), brain_regions{i}, i);
+                atlas.br_idict.add(brain_regions{i}.getLabel(), brain_regions{i}, i);
             end
         end
         function str = tostring(atlas)
