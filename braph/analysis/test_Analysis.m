@@ -93,18 +93,20 @@ for i = 1:1:length(analysis_class_list)
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
     %assert
-    assert(analysis.measurementnumber()==2, ...
-        'BRAPH:Analysis:Bug', ...
-        'Analysis.measurementnumber does not work')
-    assert(analysis.contains_measurement(1), ...
-        'BRAPH:Cohort:Bug', ...
-        'Cohort.contains_subject does not work')
-    assert(~analysis.contains_measurement(3), ...
-        'BRAPH:Cohort:Bug', ...
-        'Cohort.contains_subject does not work')
+    if isequal(analysis_class, 'AnalysisMRI')
+        assert(analysis.getMeasurements().length()==2, ...
+            'BRAPH:Analysis:Bug', ...
+            'Analysis.getMeasurements().length() does not work')
+        assert(analysis.getMeasurements().contains(1), ...
+            'BRAPH:Cohort:Bug', ...
+            'Cohort.contains_subject does not work')
+        assert(~analysis.getMeasurements().contains(3), ...
+            'BRAPH:Cohort:Bug', ...
+            'Cohort.contains_subject does not work')
+    end
 end
 
-%% Test 5: Add 
+%% Test 5: Add
 for i = 1:1:length(analysis_class_list)
     %arrange
     analysis_class = analysis_class_list{i};
@@ -124,18 +126,33 @@ for i = 1:1:length(analysis_class_list)
     group = Group(sub_class, {sub1, sub2, sub3});
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement = {measurement1, measurement2};
+    measurement_cell1 = {measurement1, measurement2};
     measurement3 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+    measurement4 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+    measurement5 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
+    measurement6 =Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    analysis.addMeasurement(measurement3);
-    %assert
-    assert(analysis.measurementnumber()==3, ...
-        'BRAPH:Analysis:Bug', ...
-        'Analysis.addMeasurement() does not work')  
+    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement_cell1);
+    
+    if isequal(analysis_class, 'AnalysisMRI')
+        analysis.getMeasurements().add(measurement3.getName(), measurement3);
+        analysis.getRandomComparisons().add(measurement4.getName(), measurement4);
+        analysis.getRandomComparisons().add(measurement5.getName(), measurement5);
+        analysis.getComparisons().add(measurement6.getName(), measurement6);
+        %assert
+        assert(analysis.getMeasurements().length()==3, ...
+            'BRAPH:Analysis:Bug', ...
+            'getMeasurements().add() does not work')
+        assert(analysis.getRandomComparisons().length()==2, ...
+            'BRAPH:Analysis:Bug', ...
+            'getComparisons().add() does not work')
+        assert(analysis.getComparisons().length()==1, ...
+            'BRAPH:Analysis:Bug', ...
+            'getRandomComparisons().add() does not work')
+    end
 end
 
-%% Test 6: Remove 
+%% Test 6: Remove
 for i = 1:1:length(analysis_class_list)
     %arrange
     analysis_class = analysis_class_list{i};
@@ -153,16 +170,18 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement = {measurement1, measurement2};
-    %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    analysis.removeMeasurement(2);
-    %assert
-    assert(analysis.measurementnumber()==1, ...
-        'BRAPH:Analysis:Bug', ...
-        'Analysis.removeMeasurement() does not work')  
+    if isequal(analysis_class, 'AnalysisMRI')
+        measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+        measurement2 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+        measurement = {measurement1, measurement2};
+        %act
+        analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
+        analysis.getMeasurements().remove(2);
+        %assert
+        assert(analysis.getMeasurements().length()==1, ...
+            'BRAPH:Analysis:Bug', ...
+            'Analysis.removeMeasurement() does not work')
+    end
 end
 
 %% Test 7: Replace
@@ -185,18 +204,20 @@ for i = 1:1:length(analysis_class_list)
     group = Group(sub_class, {sub1, sub2, sub3});
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement = {measurement1, measurement2};    
+    measurement = {measurement1, measurement2};
     %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    measurement3 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    analysis.replaceMeasurement(2, measurement3);
-    %assert
-    assert(analysis.measurementnumber()==2, ...
-        'BRAPH:Analysis:Bug', ...
-        'Analysis.replaceMeasurement() does not work')  
-    assert( isequal(analysis.getMeasurement(2).getClass(), 'ComparisonMRI'), ...
-        'BRAPH:Analysis:Bug', ...
-        'Analysis.replaceMeasurement() does not work') 
+    if isequal(analysis_class, 'AnalysisMRI')
+        analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
+        measurement3 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+        analysis.getMeasurements().replace(measurement3.getName(), measurement3, 2);
+        %assert
+        assert(analysis.getMeasurements().length()==2, ...
+            'BRAPH:Analysis:Bug', ...
+            'Analysis.replaceMeasurement() does not work')
+        assert( isequal(analysis.getMeasurements().getValue(2).getClass(), 'MeasurementMRI'), ...
+            'BRAPH:Analysis:Bug', ...
+            'Analysis.replaceMeasurement() does not work')
+    end
 end
 
 %% Test 8: Invert
@@ -219,14 +240,14 @@ for i = 1:1:length(analysis_class_list)
     group = Group(sub_class, {sub1, sub2, sub3});
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
-    measurement = {measurement1, measurement2};    
+    measurement = {measurement1, measurement2};
     %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);  
-    analysis.invertMeasurements(2, 1);
-    %assert 
+    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
+    analysis.getMeasurements().invert(2, 1);
+    %assert
     assert( isequal(analysis.getMeasurement(2).getClass(), 'MeasurementMRI'), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.invertMeasurements() does not work') 
+        'Analysis.invertMeasurements() does not work')
 end
 
 %% Test 9: MoveTo
@@ -250,14 +271,14 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};    
+    measurement = {measurement1, measurement2, measurement3};
     %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);  
+    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
     analysis.movetoMeasurement(3, 1);
-    %assert 
+    %assert
     assert( isequal(analysis.getMeasurement(1).getClass(), 'RandomComparisonMRI'), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.movetoMeasurement() does not work') 
+        'Analysis.movetoMeasurement() does not work')
 end
 
 %% Test 10: RemoveAll
@@ -281,17 +302,17 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};      
+    measurement = {measurement1, measurement2, measurement3};
     %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);  
+    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
     selected = analysis.removeMeasurements([1, 3]);
-    %assert 
+    %assert
     assert(analysis.measurementnumber()==1, ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.removeMeasurements() does not work')  
+        'Analysis.removeMeasurements() does not work')
     assert( isequal(analysis.getMeasurement(1).getClass(), 'ComparisonMRI'), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.removeMeasurements() does not work') 
+        'Analysis.removeMeasurements() does not work')
     assert(isempty(selected), ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.removeMeasurements() does not work')
@@ -319,17 +340,17 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};      
+    measurement = {measurement1, measurement2, measurement3};
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
     [selected, added] = analysis.addaboveMeasurements('RandomComparisonMRI', [2]); %#ok<NBRAK>
-    %assert 
+    %assert
     assert(analysis.measurementnumber()==4, ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.addaboveMeasurements() does not work')  
+        'Analysis.addaboveMeasurements() does not work')
     assert( isequal(analysis.getMeasurement(2).getClass(), 'RandomComparisonMRI'), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.addaboveMeasurements() does not work') 
+        'Analysis.addaboveMeasurements() does not work')
 end
 
 %% Test 11: AddBelow
@@ -354,17 +375,17 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};      
+    measurement = {measurement1, measurement2, measurement3};
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
     [selected, added] = analysis.addbelowMeasurements('MeasurementMRI', [2]); %#ok<NBRAK>
-    %assert 
+    %assert
     assert(analysis.measurementnumber()==4, ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.addbelowMeasurements() does not work')  
+        'Analysis.addbelowMeasurements() does not work')
     assert( isequal(analysis.getMeasurement(3).getClass(), 'MeasurementMRI'), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.addbelowMeasurements() does not work') 
+        'Analysis.addbelowMeasurements() does not work')
 end
 
 %% Test 12: MoveUp
@@ -389,17 +410,17 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};      
+    measurement = {measurement1, measurement2, measurement3};
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    selected = analysis.moveupMeasurements([2 3]); 
-    %assert 
+    selected = analysis.moveupMeasurements([2 3]);
+    %assert
     assert(analysis.measurementnumber()==3, ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.moveupMeasurements() does not work')  
+        'Analysis.moveupMeasurements() does not work')
     assert( isequal(analysis.getMeasurement(1).getClass(), 'ComparisonMRI'), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.moveupMeasurements() does not work') 
+        'Analysis.moveupMeasurements() does not work')
 end
 
 %% Test 13: MoveDown
@@ -424,17 +445,17 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};      
+    measurement = {measurement1, measurement2, measurement3};
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    selected = analysis.movedownMeasurements([1 2]); 
-    %assert 
+    selected = analysis.movedownMeasurements([1 2]);
+    %assert
     assert(analysis.measurementnumber()==3, ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.movedownMeasurements() does not work')  
+        'Analysis.movedownMeasurements() does not work')
     assert( isequal(analysis.getMeasurement(3).getClass(), 'ComparisonMRI'), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.movedownMeasurements() does not work') 
+        'Analysis.movedownMeasurements() does not work')
 end
 
 %% Test 13: MoveToTop
@@ -459,17 +480,17 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};      
+    measurement = {measurement1, measurement2, measurement3};
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
     selected = analysis.move2topMeasurements([3]);  %#ok<NBRAK>
-    %assert 
+    %assert
     assert(analysis.measurementnumber()==3, ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.move2topMeasurements() does not work')  
+        'Analysis.move2topMeasurements() does not work')
     assert( isequal(analysis.getMeasurement(1).getClass(), 'RandomComparisonMRI'), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.move2topMeasurements() does not work') 
+        'Analysis.move2topMeasurements() does not work')
 end
 
 %% Test 14: MoveToBottom
@@ -494,15 +515,15 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
     measurement2 = Measurement.getMeasurement('ComparisonMRI', atlas, repmat({group}, Measurement.getGroupNumber('ComparisonMRI')));
     measurement3 = Measurement.getMeasurement('RandomComparisonMRI', atlas, group);
-    measurement = {measurement1, measurement2, measurement3};      
+    measurement = {measurement1, measurement2, measurement3};
     %act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
     selected = analysis.move2bottomMeasurements([1]);  %#ok<NBRAK>
-    %assert 
+    %assert
     assert(analysis.measurementnumber()==3, ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.move2topMeasurements() does not work')  
+        'Analysis.move2topMeasurements() does not work')
     assert( isequal(analysis.getMeasurement(3).getClass(), 'MeasurementMRI'), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.move2topMeasurements() does not work') 
+        'Analysis.move2topMeasurements() does not work')
 end

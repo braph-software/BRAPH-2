@@ -430,6 +430,10 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             %
             % See also add(), remove().
             
+            assert(isequal(idict.getValueClass(), class(value_new)), ...
+                'BRAPH:IndexedDictionary:Bug', ...
+                'value is not of the correct class.')
+            
             if idict.contains(index)
                 idict.dict(index) = {key_new, value_new};
             end

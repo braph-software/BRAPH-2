@@ -1,0 +1,2 @@
+classdef ComparisonfMRI < Measurement
+end

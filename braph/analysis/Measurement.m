@@ -95,7 +95,8 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 'Measurement', ...
                 [fileparts(which('Measurement')) filesep 'measurements' filesep 'measurements'] ...
                 );
-            measurementList = cat(1, measurementListComparison, measurementListMeasurement, measurementListRandomComparison);
+            
+            measurementList = [measurementListComparison, measurementListMeasurement, measurementListRandomComparison];
         end
         function atlas_number = getBrainAtlasNumber(m)
             atlas_number =  eval([Measurement.getClass(m) '.getBrainAtlasNumber()']);
