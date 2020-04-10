@@ -1,15 +1,126 @@
 classdef Cohort < handle & matlab.mixin.Copyable
+    % Cohort < handle & matlab.mixin.Copyable: A cohort
+    % Cohort represents a collection of subjects and groups. 
+    %
+    % Cohort properties (GetAccess=protected, SetAccess=protected):
+    %   name                    - name of the brain atlas.
+    %   subject_class           - general class of subjects.
+    %   atlases                 - cell array with brain atlases.
+    %   subject_idict           - indexed dictionary with subjects.
+    %   group_idict             - indexed dictionary with groups.
+    %
+    % Cohort methods (Access=protected)
+    %   copyElement             - deep copy cohort community structure.
+    %
+    % Cohort methods:
+    %   Cohort                  - Constructor.
+    %   tostring                - returns a string representing the Cohort.
+    %   disp                    - displays the Cohort.
+    %   getName                 - returns the name of the Cohort.
+    %   getSubjectClass         - returns the general class of subjects.
+    %   getBrainAtlases         - returns an array with brain atlases.
+    %   getSubjects             - returns the indexed dictionary with Subjects.
+    %   getGroups               - returns the indexed dictionary with Groups.
+    %   getNewSubject           - returns a new Subject.
+    %   getGroupSubjects        - returns the Subjects of specified group.
+    %   addSubjectToGroup       - adds a subject to a specified group.
+    %   addSubjectsToGroup      - adds subjects to a specified group.
+    %   removeSubjectFromGroup  - removes a subject from a specified group.
+    %   removeSubjectsFromGroup - removes subjects from a specified group.
+    %
+    % Additionally, it is possible to use the following IndexDictionary
+    % methods through getSubjects():
+    %   getSubjects()                   - returns the indexed dictionary br_idict with BrainRegions.
+    %   getSubjects().tostring          - returns a string representing the indexed dictionary br_idict.
+    %   getSubjects().disp              - displays the indexed dictionary br_idict.
+    %   getSubjects().length            - returns the length of the indexed dictionary br_idict.
+    %   getSubjects().getValueClass     - returns the value_class of the indexed dictionary br_idict.
+    %   getSubjects().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
+    %   getSubjects().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index.
+    %   getSubjects().containsKey       - bool, checks if the indexed dictionary br_idict contains the key.
+    %   getSubjects().containsValue     - bool, checks if the indexed dictionary br_idict contains the value.
+    %   getSubjects().getIndex          - returns the index of the key or value.
+    %   getSubjects().getIndexFromValue - returns the index of the value.
+    %   getSubjects().getIndexFromKey   - returns the index of the key.
+    %   getSubjects().getIndexFromValueAll - returns all the indexes of the same value.
+    %   getSubjects().getValue          - returns the value of the index or the key.
+    %   getSubjects().getValueFromIndex - returns the value of the index.
+    %   getSubjects().getValueFromKey   - returns the value of the key.
+    %   getSubjects().getValues         - returns all the values.
+    %   getSubjects().getKey            - returns the key of the index or value.
+    %   getSubjects().getKeyFromIndex   - returns the key of the index.
+    %   getSubjects().getKeyFromValue   - returns the key of the value.
+    %   getSubjects().getKeyFromValueAll - returns all the keys of the same value.
+    %   getSubjects().getKeys           - returns all the keys.
+    %   getSubjects().add               - adds a key and value to the indexed dictionary br_idict.
+    %   getSubjects().remove            - removes the key and value from the indexed dictionary br_idict.
+    %   getSubjects().replace           - replaces a key and value in the indexed dictionary br_idict.
+    %   getSubjects().replaceKey        - replaces a key in the indexed dictionary br_idict.
+    %   getSubjects().replaceValue      - replaces a value in the indexed dictionary br_idict.
+    %   getSubjects().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict.
+    %   getSubjects().invert            - inverts position of elements in the indexed dictionary br_idict.
+    %   getSubjects().move_to           - move an element to a position in the indexed dictionary br_idict.
+    %   getSubjects().remove_all        - removes all selected elements from the indexed dictionary br_idict.
+    %   getSubjects().move_up           - moves an element up in the indexed dictionary br_idict
+    %   getSubjects().move_down         - moves an element down in the indexed dictionary br_idict
+    %   getSubjects().move_to_top       - moves an element to the top in the indexed dictionary br_idict
+    %   getSubjects().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
+    %
+    % Additionally, it is possible to use the following IndexDictionary
+    % methods through getGroups():
+    %   getGroups()                   - returns the indexed dictionary br_idict with BrainRegions.
+    %   getGroups().tostring          - returns a string representing the indexed dictionary br_idict.
+    %   getGroups().disp              - displays the indexed dictionary br_idict.
+    %   getGroups().length            - returns the length of the indexed dictionary br_idict.
+    %   getGroups().getValueClass     - returns the value_class of the indexed dictionary br_idict.
+    %   getGroups().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
+    %   getGroups().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index.
+    %   getGroups().containsKey       - bool, checks if the indexed dictionary br_idict contains the key.
+    %   getGroups().containsValue     - bool, checks if the indexed dictionary br_idict contains the value.
+    %   getGroups().getIndex          - returns the index of the key or value.
+    %   getGroups().getIndexFromValue - returns the index of the value.
+    %   getGroups().getIndexFromKey   - returns the index of the key.
+    %   getGroups().getIndexFromValueAll - returns all the indexes of the same value.
+    %   getGroups().getValue          - returns the value of the index or the key.
+    %   getGroups().getValueFromIndex - returns the value of the index.
+    %   getGroups().getValueFromKey   - returns the value of the key.
+    %   getGroups().getValues         - returns all the values.
+    %   getGroups().getKey            - returns the key of the index or value.
+    %   getGroups().getKeyFromIndex   - returns the key of the index.
+    %   getGroups().getKeyFromValue   - returns the key of the value.
+    %   getGroups().getKeyFromValueAll - returns all the keys of the same value.
+    %   getGroups().getKeys           - returns all the keys.
+    %   getGroups().add               - adds a key and value to the indexed dictionary br_idict.
+    %   getGroups().remove            - removes the key and value from the indexed dictionary br_idict.
+    %   getGroups().replace           - replaces a key and value in the indexed dictionary br_idict.
+    %   getGroups().replaceKey        - replaces a key in the indexed dictionary br_idict.
+    %   getGroups().replaceValue      - replaces a value in the indexed dictionary br_idict.
+    %   getGroups().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict.
+    %   getGroups().invert            - inverts position of elements in the indexed dictionary br_idict.
+    %   getGroups().move_to           - moves an element to a position in the indexed dictionary br_idict.
+    %   getGroups().remove_all        - removes all selected elements from the indexed dictionary br_idict.
+    %   getGroups().move_up           - moves an element up in the indexed dictionary br_idict
+    %   getGroups().move_down         - moves an element down in the indexed dictionary br_idict
+    %   getGroups().move_to_top       - moves an element to the top in the indexed dictionary br_idict
+    %   getGroups().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
+    %   
+    % See also Group, Subjects, IndexedDictioanry.
     properties (GetAccess=protected, SetAccess=protected)
         name  % brain atlas name
         subject_class  % class of the subjects
         atlases  % cell array with brain atlases
-        subject_dict  % indexed dictionary with subjects
-        group_dict  % indexed dictionary with groups
+        subject_idict  % indexed dictionary with subjects
+        group_idict  % indexed dictionary with groups
     end
     methods
         function cohort = Cohort(name, subject_class, atlases, subjects)
-            % subjects must be a cell array of Subjects of class
+            % COHORT(NAME, SUBJECT_CLASS, ATLASES, SUBJECTS) creates a cohort. 
+            % The constructor will initialize the properties with the
+            % corresponding arguments, with exception of group dictionary. 
+            % 
+            % See also Group, Subject, BrainAtlases, IndexedDictionary.
             
+            % subjects must be a cell array of Subjects of class            
             cohort.name = name;
             
             assert(any(strcmp(Subject.getList(), subject_class)), ...
@@ -26,436 +137,193 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas']) %#ok<NBRAK>
             cohort.atlases = atlases;
             
-            cohort.subject_dict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            cohort.subject_idict = IndexedDictionary(subject_class);
             for i = 1:1:length(subjects)
-                cohort.addSubject(subjects{i}, i);
+                cohort.subject_idict.add(tostring(subjects{i}.getID()), subjects{i}, i);
             end
             
-            cohort.group_dict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            cohort.group_idict = IndexedDictionary('Group');
         end
         function str = tostring(cohort)
-            str = ['Cohort with ' int2str(cohort.subjectnumber()) ' ' cohort.getSubjectClass() ' in ' int2str(cohort.groupnumber()) ' group(s)'];
+            % TOSTRING string with information about the cohort
+            %
+            % STR = TOSTRING(COHORT) returns string with the cohort subject
+            % class, subjects indexed dictionary length and groups indexed
+            % dictionary length
+            %
+            % See also disp().
+            
+            str = ['Cohort with ' int2str(cohort.getSubjects().length()) ' ' cohort.getSubjectClass() ' in ' int2str(cohort.getGroups().length()) ' group(s)'];
         end
         function disp(cohort)
+            % DISP displays information about the cohort
+            %
+            % DISP(COHORT) displays information about the cohort.
+            % It provides information about cohort class, indexed
+            % dictionaries length and subject class.
+            %
+            % See also tostring().
+            
             disp(['<a href="matlab:help ' class(cohort) '">' class(cohort) '</a>'])
-            disp([' size: ' int2str(cohort.subjectnumber()) ' <a href="matlab:help ' cohort.getSubjectClass() '">' cohort.getSubjectClass() '</a>'])
-            disp([' group(s): ' int2str(cohort.groupnumber())])
+            disp([' size: ' int2str(cohort.getSubjects().length()) ' <a href="matlab:help ' cohort.getSubjectClass() '">' cohort.getSubjectClass() '</a>'])
+            disp([' group(s): ' int2str(cohort.getGroups().length())])
         end
         function name = getName(cohort)
+            % GETNAME returns the name of the cohort.
+            %
+            % NAME = GETNAME(COHORT) returns the name of the cohort.
+            %
+            % See also brainregionnumber().
+            
             name = cohort.name;
         end
         function subject_class = getSubjectClass(cohort)
+            % GETSUBJECTCLASS returns the class of subjects in the cohort.
+            %
+            % NAME = GETSUBJECTCLASS(COHORT) returns the class of subjects
+            % in the cohort.
+            %
+            % See also getName(), getBrainAtlases().
+            
             subject_class = cohort.subject_class;
         end
         function atlases = getBrainAtlases(cohort)
+            % GETBRAINATLASES returns the brain atlases.
+            %
+            % ATLASES = GETBRAINATLASES(COHORT) returns the brain atlases
+            % from the cohort.
+            %
+            % See also getName(), getSubjectClass().
+            
             atlases = cohort.atlases;
         end
-        function n = subjectnumber(cohort)
-            n = length(cohort.subject_dict);
-        end
-        
-        function bool = contains_subject(cohort, subject)
+        function subject_idict = getSubjects(cohort)
+            % GETSUBJECTS returns the indexed dictionary with subjects
+            % 
+            % SUBJECT_IDICT = GETSUBJECTS(COHORT) returns the indexed
+            % dictionary SUBJECT_IDICT. This function exposes to the user 
+            % the methods and functions of the INDEXEDDICTIONARY class.
+            %
+            % See also IndexedDictionary, getName(), getGroups().
             
-            if isa(subject, cohort.getSubjectClass())
-                bool = false;
-                for i = 1:1:cohort.subjectnumber()
-                    if cohort.getSubject(i) == subject
-                        bool = true;
-                        break
-                    end
-                end
-            else  % the subject is the subject_index
-                subject_index = subject;
-                bool = isKey(cohort.subject_dict, subject_index);
-            end
+            subject_idict = cohort.subject_idict;
         end
-        function subject_index = getSubjectIndex(cohort, subject)
+        function group_idict = getGroups(cohort)
+            % GETGROUPS returns the indexed dictionary with groups
+            % 
+            % GROUP_IDICT = GETGROUPS(COHORT) returns the indexed
+            % dictionary GROUP_IDICT. This function exposes to the user 
+            % the methods and functions of the INDEXEDDICTIONARY class.
+            %
+            % See also IndexedDictionary, getName(), getSubjects().
             
-            for i = 1:1:cohort.subjectnumber()
-                if cohort.getSubject(i) == subject
-                    subject_index = i;
-                    break
-                end
-            end
-        end
-        function subject = getSubject(cohort, subject_index)
-            subject = cohort.subject_dict(subject_index);
-        end
-        function subjects = getSubjects(cohort)
-            subjects = values(cohort.subject_dict);
-        end
-        function subject_ids = getSubjectIDs(cohort)
-            subject_ids = cell(1, cohort.subjectnumber());
-            for i = 1:1:cohort.subjectnumber()
-                subject = cohort.getSubject(i);
-                subject_ids{i} = subject.getID();
-            end
+            group_idict = cohort.group_idict;
         end
         function subject = getNewSubject(cohort, varargin)
+            % GETSUBJECT returns a subject 
+            %
+            % SUBJECT = GETNEWSUBJECT(COHORT, VARARGIN) returns an instance
+            % of the class of the subject SUBJECT_CLASS with arguments
+            % ATLASES, VARARGIN. It initializes the new instance of the
+            % subject class.
+            %
+            % See also getSubjects(), Subject.
             
             subject = Subject.getSubject(cohort.getSubjectClass(), cohort.getBrainAtlases(), varargin{:});
         end
-        function addSubject(cohort, subject, i)
+        function [subject_indexes, subjects] = getGroupSubjects(cohort, i)
+            % GETGROUPSUBJECTS returns subjects from a specified group
+            %
+            % [SUBJECT_INDEXES, SUBJECTS] = GETGROUPSUBJECTS(COHORT, INDEX) 
+            % returns subjects from a specificed group INDEX.
+            %
+            % See also addSubjectToGroup(), removeSubjectFromGroup()
             
-            if nargin < 3 || i < 0 || i > cohort.subjectnumber()
-                i = cohort.subjectnumber() + 1;
-            end
-            
-            assert(isa(subject, cohort.getSubjectClass()), ...
-                ['BRAPH:Cohort:SubjectClassErr'], ...
-                ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' subject.getClass()]) %#ok<NBRAK>
-            
-            if i <= cohort.subjectnumber()
-                for j = cohort.subjectnumber():-1:i
-                    cohort.subject_dict(j+1) = cohort.subject_dict(j);
-                end
-            end
-            cohort.subject_dict(i) = subject;
-        end
-        function removeSubject(cohort, i)
-            
-            for j = i:1:cohort.subjectnumber()-1
-                cohort.subject_dict(j) = cohort.subject_dict(j+1);
-            end
-            remove(cohort.subject_dict, cohort.subjectnumber());
-        end
-        function replaceSubject(cohort, i, subject)
-            
-            assert(isa(subject, cohort.getSubjectClass()), ...
-                ['BRAPH:Cohort:SubjectClassErr'], ...
-                ['All Subject classes should be ' cohort.getSubjectClass() ', but one is ' subject.getClass()]) %#ok<NBRAK>
-            
-            if i > 0 || i <= cohort.subjectnumber()
-                cohort.subject_dict(i) = subject;
-            end
-            
-        end
-        function invertSubjects(cohort, i, j)
-            
-            if i > 0 && i <= cohort.subjectnumber() && j > 0 && j <= cohort.subjectnumber() && i ~= j
-                subject_i = cohort.getSubject(i);
-                subject_j = cohort.getSubject(j);
-                cohort.replaceSubject(i, subject_j)
-                cohort.replaceSubject(j, subject_i)
-            end
-        end
-        function movetoSubject(cohort, i, j)
-            
-            if i > 0 && i <= cohort.subjectnumber() && j > 0 && j <= cohort.subjectnumber() && i ~= j
-                subject = cohort.getSubject(i);
-                if i > j
-                    cohort.removeSubject(i)
-                    cohort.addSubject(subject, j)
-                else  % j < i
-                    cohort.addSubject(subject, j+1)
-                    cohort.removeSubject(i)
-                end
-            end
-        end
-        function selected = removeSubjects(cohort, selected)
-            
-            for i = length(selected):-1:1
-                cohort.removeSubject(selected(i))
-            end
-            selected = [];
-        end
-        function [selected, added] = addaboveSubjects(cohort, selected)
-            
-            for i = length(selected):-1:1
-                subject = Subject.getSubject(cohort.getSubjectClass(), cohort.atlases{:});
-                cohort.addSubject(subject, selected(i))
-            end
-            selected = selected + reshape(1:1:numel(selected), size(selected));
-            added = selected - 1;
-        end
-        function [selected, added] = addbelowSubjects(cohort, selected)
-            
-            for i = length(selected):-1:1
-                subject = Subject.getSubject(cohort.getSubjectClass(), cohort.atlases{:});
-                cohort.addSubject(subject, selected(i) + 1)
-            end
-            selected = selected + reshape(0:1:numel(selected)-1, size(selected));
-            added = selected + 1;
-        end
-        function selected = moveupSubjects(cohort, selected)
-            
-            if ~isempty(selected)
-                
-                first_index_to_process = 1;
-                unprocessable_length = 1;
-                while first_index_to_process <= cohort.subjectnumber() ...
-                        && first_index_to_process <= numel(selected) ...
-                        && selected(first_index_to_process) == unprocessable_length
-                    first_index_to_process = first_index_to_process + 1;
-                    unprocessable_length = unprocessable_length + 1;
-                end
-                
-                for i = first_index_to_process:1:numel(selected)
-                    cohort.invertSubjects(selected(i), selected(i)-1);
-                    selected(i) = selected(i) - 1;
-                end
-            end
-        end
-        function selected = movedownSubjects(cohort, selected)
-            
-            if ~isempty(selected)
-                
-                last_index_to_process = numel(selected);
-                unprocessable_length = cohort.subjectnumber();
-                while last_index_to_process > 0 ...
-                        && selected(last_index_to_process) == unprocessable_length
-                    last_index_to_process = last_index_to_process - 1;
-                    unprocessable_length = unprocessable_length - 1;
-                end
-                
-                for i = last_index_to_process:-1:1
-                    cohort.invertSubjects(selected(i), selected(i) + 1);
-                    selected(i) = selected(i) + 1;
-                end
-            end
-        end
-        function selected = move2topSubjects(cohort, selected)
-            
-            if ~isempty(selected)
-                for i = 1:1:numel(selected)
-                    cohort.movetoSubject(selected(i), i);
-                end
-                selected = reshape(1:1:numel(selected), size(selected));
-            end
-        end
-        function selected = move2bottomSubjects(cohort, selected)
-            
-            if ~isempty(selected)
-                for i = numel(selected):-1:1
-                    cohort.movetoSubject(selected(i), cohort.subjectnumber() - (numel(selected)-i));
-                end
-                selected = reshape(cohort.subjectnumber() - numel(selected)+1:1:cohort.subjectnumber(), size(selected));
-            end
-        end
-        
-        function n = groupnumber(cohort)
-            n = length(cohort.group_dict);
-        end
-        function bool = contains_group(cohort, group)
-            
-            if isa(group, 'Group')
-                bool = false;
-                for i = 1:1:cohort.groupnumber()
-                    if cohort.getGroup(i) == group
-                        bool = true;
-                        break
-                    end
-                end
-            else  % the group is the group_index
-                group_index = group;
-                bool = isKey(cohort.group_dict, group_index);
-            end
-        end
-        function group = getGroup(cohort, group_index)
-            group = cohort.group_dict(group_index);
-        end
-        function groups = getGroups(cohort)
-            groups = values(cohort.group_dict);
-        end
-        function group_names = getGroupNames(cohort)
-            
-            group_names = cell(1, cohort.groupnumber());
-            for i = 1:1:cohort.groupnumber()
-                group = cohort.getGroup(i);
-                group_names{i} = group.getName();
-            end
-        end
-        function group_descriptions = getGroupDescriptions(cohort)
-            
-            group_descriptions = cell(1, cohort.groupnumber());
-            for i = 1:1:cohort.groupnumber()
-                group = cohort.getGroup(i);
-                group_descriptions{i} = group.getDescription();
-            end
-        end
-        function addGroup(cohort, group, i)
-            
-            if nargin < 3 || i < 0 || i > cohort.groupnumber()
-                i = cohort.groupnumber() + 1;
-            end
-            
-            if nargin < 2
-                group = Group(cohort.getSubjectClass(), []);
-            end
-            
-            assert(isa(group, 'Group') && isequal(group.getSubjectClass, cohort.getSubjectClass()), ...
-                ['BRAPH:Cohort:GroupClassErr'], ...
-                ['All groups must be objects of the class Group with Subject class ' cohort.getSubjectClass() ', but this is ' class(group)]) %#ok<NBRAK>
-            
-            if i <= cohort.groupnumber()
-                for j = cohort.groupnumber():-1:i
-                    cohort.group_dict(j+1) = cohort.group_dict(j);
-                end
-            end
-            cohort.group_dict(i) = group;
-        end
-        function removeGroup(cohort, i)
-
-            for j = i:1:cohort.groupnumber()-1
-                cohort.group_dict(j) = cohort.group_dict(j+1);
-            end
-            remove(cohort.group_dict, cohort.groupnumber());
-        end
-        function replaceGroup(cohort, i, group)
-
-            assert(isa(group, 'Group') && isequal(group.getSubjectClass, cohort.getSubjectClass()), ...
-                ['BRAPH:Cohort:GroupClassErr'], ...
-                ['All groups must be objects of the class Group with Subject class ' cohort.getSubjectClass() ', but this is ' class(group)]) %#ok<NBRAK>
-
-            if i > 0 || i <= cohort.groupnumber()
-                cohort.group_dict(i) = group;
-            end
-
-        end
-        function invertGroups(cohort, i, j)
-
-            if i > 0 && i <= cohort.groupnumber() && j > 0 && j <= cohort.groupnumber() && i ~= j
-                group_i = cohort.getGroup(i);
-                group_j = cohort.getGroup(j);
-                cohort.replaceGroup(i, group_j)
-                cohort.replaceGroup(j, group_i)
-            end
-        end
-        function movetoGroup(cohort, i, j)
-
-            if i > 0 && i <= cohort.groupnumber() && j > 0 && j <= cohort.groupnumber() && i ~= j
-                group = cohort.getGroup(i);
-                if i > j
-                    cohort.removeGroup(i)
-                    cohort.addGroup(group, j)
-                else  % j < i
-                    cohort.addGroup(group, j+1)
-                    cohort.removeGroup(i)
-                end
-            end
-        end
-        function selected = removeGroups(cohort, selected)
-
-            for i = length(selected):-1:1
-                cohort.removeGroup(selected(i))
-            end
-            selected = [];
-        end
-        function selected = moveupGroups(cohort, selected)
-
-            if ~isempty(selected)
-
-                first_index_to_process = 1;
-                unprocessable_length = 1;
-                while first_index_to_process <= cohort.groupnumber() ...
-                        && first_index_to_process <= numel(selected) ...
-                        && selected(first_index_to_process) == unprocessable_length
-                    first_index_to_process = first_index_to_process + 1;
-                    unprocessable_length = unprocessable_length + 1;
-                end
-
-                for i = first_index_to_process:1:numel(selected)
-                    cohort.invertGroups(selected(i), selected(i)-1);
-                    selected(i) = selected(i) - 1;
-                end
-            end
-        end
-        function selected = movedownGroups(cohort, selected)
-
-            if ~isempty(selected)
-
-                last_index_to_process = numel(selected);
-                unprocessable_length = cohort.groupnumber();
-                while last_index_to_process > 0 ...
-                        && selected(last_index_to_process) == unprocessable_length
-                    last_index_to_process = last_index_to_process - 1;
-                    unprocessable_length = unprocessable_length - 1;
-                end
-
-                for i = last_index_to_process:-1:1
-                    cohort.invertGroups(selected(i), selected(i) + 1);
-                    selected(i) = selected(i) + 1;
-                end
-            end
-        end
-        function selected = move2topGroups(cohort, selected)
-
-            if ~isempty(selected)
-                for i = 1:1:numel(selected)
-                    cohort.movetoGroup(selected(i), i);
-                end
-                selected = reshape(1:1:numel(selected), size(selected));
-            end
-        end
-        function selected = move2bottomGroups(cohort, selected)
-
-            if ~isempty(selected)
-                for i = numel(selected):-1:1
-                    cohort.movetoGroup(selected(i), cohort.groupnumber() - (numel(selected)-i));
-                end
-                selected = reshape(cohort.groupnumber() - numel(selected)+1:1:cohort.groupnumber(), size(selected));
-            end
-        end
-        
-        function [subject_indices, subjects] = getGroupSubjects(cohort, i)
-            
-            subjects = cohort.getGroup(i).getSubjects();
-            
-            subject_indices = zeros(1, length(subjects));
+            subjects = cohort.getGroups().getValue(i).getSubjects();
+            subject_indexes = zeros(1, length(subjects));
             for j = 1:1:length(subjects)
                 subject = subjects{j};
-                subject_index = cohort.getSubjectIndex(subject);
-                subject_indices(j) = subject_index;
+                subject_index = cohort.getSubjects().getIndexFromValue(subject); % returns first ocurrance
+                subject_indexes(j) = subject_index;
             end
+            
         end
         function addSubjectToGroup(cohort, subject, group)
-
-            if cohort.contains_subject(subject) && cohort.contains_group(group)
-                
+            % ADDSUBJECTTOGROUP inserts a subject to a specified group.
+            %
+            % ADDSUBJECTTOGROUP(COHORT, SUBJECT, GROUP) inserts a SUBJECT
+            % to a specified GROUP.
+            %
+            % See also getGroupSubjects(), removeSubjectFromGroup()
+            
+            if cohort.getSubjects().contains(subject) && cohort.getGroups().contains(group)
                 if ~isa(subject, cohort.getSubjectClass())
-                    subject_index = subject;
-                    subject = cohort.getSubject(subject_index);
+                    subject = cohort.getSubjects().getValue(subject);
                 end
-                
                 if ~isa(group, 'Group')
-                    group_index = group;
-                    group = cohort.getGroup(group_index);
+                    cohort.getGroups().getValue(group).addSubject(subject);  % adding subject to the first ocurrance of type group
+                else
+                    index = cohort.getGroups().getIndex(group);
+                    cohort.getGroups().getValue(index).addSubject(subject);
                 end
-                
-                group.addSubject(subject);
             end
         end
-        function addSubjectsToGroup(cohort, subject_indices, group)
+        function addSubjectsToGroup(cohort, subject_indexes, group)
+            % ADDSUBJECTSTOGROUP inserts subjects to a specified group.
+            %
+            % ADDSUBJECTSTOGROUP(COHORT, SUBJECT_INDEXES, GROUP) inserts 
+            % subjects with SUBJECT_INDEX to a specified GROUP.
+            %
+            % See also getGroupSubjects(), addSubjectToGroup()
             
-            for i = 1:1:length(subject_indices)
-                cohort.addSubjectToGroup(subject_indices(i), group);
+            for i = 1:1:length(subject_indexes)
+                cohort.addSubjectToGroup(subject_indexes(i), group);
             end
         end
         function removeSubjectFromGroup(cohort, subject, group)
-            if cohort.contains_subject(subject) && cohort.contains_group(group)
-                
-                if ~isa(subject, cohort.getSubjectClass())
-                    subject_index = subject;
-                    subject = cohort.getSubject(subject_index);
-                end
-                
-                if ~isa(group, 'Group')
-                    group_index = group;
-                    group = cohort.getGroup(group_index);
-                end
-                
-                group.removeSubject(subject);
-            end
-        end
-        function removeSubjectsFromGroup(cohort, subject_indices, group)
+            % REMOVESUBJECTFROMGROUP removes a subject from a specified group.
+            %
+            % REMOVESUBJECTFROMGROUP(COHORT, SUBJECT, GROUP) removes a 
+            % SUBJECT to a specified GROUP.
+            %
+            % See also getGroupSubjects(), addSubjectToGroup()
             
-            for i = 1:1:length(subject_indices)
-                cohort.removeSubjectFromGroup(subject_indices(i), group);
+            if cohort.getSubjects().contains(subject) && cohort.getGroups().contains(group)
+                if ~isa(subject, cohort.getSubjectClass())
+                    subject = cohort.getSubjects().getValue(subject);
+                end
+                if ~isa(group, 'Group')
+                    cohort.getGroups().getValue(group).removeSubject(subject);
+                else
+                    index = cohort.getGroups().getIndex(group);
+                    cohort.getGroups().getValue(index).removeSubject(subject);
+                end
+            end
+            
+        end
+        function removeSubjectsFromGroup(cohort, subject_indexes, group)
+            % REMOVESUBJECTSFROMGROUP removes subjects from a specified group.
+            %
+            % REMOVESUBJECTSFROMGROUP(COHORT, SUBJECT_INDEXES, GROUP) 
+            % removes subjects with SUBJECT_INDEXES from a specified GROUP.
+            %
+            % See also getGroupSubjects(), addSubjectsToGroup()
+            
+            for i = 1:1:length(subject_indexes)
+                cohort.removeSubjectFromGroup(subject_indexes(i), group);
             end
         end
     end
     methods (Access=protected)
         function cohort_copy = copyElement(cohort)
+            % COPYELEMENT(COHORT) copies elements of cohort.
+            %
+            % COHORT_COPY = COPYELEMENT(COHORT) copies elements of the
+            % cohort COHORT. Makes a deep copy of the structure
+            % subject_idict and group_idict. Makes a shallow copy of
+            % atlases.
+            %
+            % See also Group, Graph, Subject, IndexedDictionary.
             
             % Make a shallow copy
             cohort_copy = copyElement@matlab.mixin.Copyable(cohort);
@@ -463,22 +331,22 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % Make a deep copy of atlases
             cohort_copy.atlases = cellfun(@(atlas) {atlas.copy()}, cohort.atlases);
             
-            % Make a deep copy of subject_dict
-            cohort_copy.subject_dict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            subjects = values(cohort.subject_dict);
-            for i = 1:1:length(subjects)
-                subject = subjects{i};
-                subject_copy = subject.copy();
-                subject_copy.setBrainAtlases(cohort_copy.getBrainAtlases());
-                cohort_copy.subject_dict(i) = subject_copy;
+            % Make a deep copy of subject_idict
+            cohort_copy.subject_idict = IndexedDictionary(cohort_copy.subject_class);
+            for sub_i = 1:1:cohort.getSubjects().length()
+                sub = cohort.getSubjects().getValue(sub_i);
+                sub_copy = sub.copy();
+                sub_copy.setBrainAtlases(cohort_copy.getBrainAtlases());
+                cohort_copy.subject_idict.add(tostring(sub_copy.getID()), sub_copy, sub_i);                
             end
             
-            % Make a deep copy of group_dict
-            cohort_copy.group_dict = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            for i = 1:1:cohort.groupnumber()
-                cohort_copy.addGroup()
-                cohort_copy.addSubjectsToGroup(cohort.getGroupSubjects(i), i)
-            end
+            % Make a deep copy of group_idict
+            cohort_copy.group_idict = IndexedDictionary('Group');
+            for group_i = 1:1:cohort.getGroups().length()  
+                group_copy = Group(cohort.getSubjectClass(), []);
+                cohort_copy.group_idict.add(group_copy.getName(), group_copy, group_i);
+                cohort_copy.addSubjectsToGroup(cohort.getGroupSubjects(group_i), group_i);
+            end           
         end
     end
 end
