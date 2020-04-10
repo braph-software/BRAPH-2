@@ -24,10 +24,12 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     %   getValue          - returns the value of the index or the key.
     %   getValueFromIndex - returns the value of the index.
     %   getValueFromKey   - returns the value of the key.
+    %   getValues         - returns all values.
     %   getKey            - returns the key of the index or value.
     %   getKeyFromIndex   - returns the key of the index.
     %   getKeyFromValue   - returns the key of the value.
     %   getKeyFromValueAll   - returns all the keys of the same value.
+    %   getKeys           - returns all keys.
     %   add               - adds a key and value to the dictionary.
     %   remove            - removes the key and value from the dictionary.
     %   replace           - replaces a key and value in the dictionary.
@@ -290,7 +292,21 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             index = idict.getIndexFromKey(key);
             value  = idict.getValueFromIndex(index);
         end
-        function key = getKey(idict, pointer) 
+        function values = getValues(idict)
+            % GETVALUES returns all the values in the dictionary
+            %
+            % VALUES = GETVALUES(IDICT) returns all the values in the
+            % indexed dictionary.
+            %
+            % See also getValue(), getIndexFromValueAll()
+            
+            values = cell(1, idict.length());
+            for i = 1:1:idict.length()
+                key_and_value = idict.dict(i);
+                values{1, i} = key_and_value{2};
+            end
+        end
+        function key = getKey(idict, pointer)
             % GETKEY returns the key of a index or value.
             %
             % KEY = GETKEY(IDICT, POINTER) returns a key of a index or
@@ -343,6 +359,20 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
                 keys{1, i} = idict.getKeyFromIndex(indexes{i});
             end
         end
+        function keys = getKeys(idict)
+            % GETKEYS returns all the keys
+            %
+            % KEYS = GETKEYS(IDICT) returns all the keys in the indexed
+            % dictionary.
+            %
+            % See also getValues().
+            
+            keys = cell(1, idict.length());
+            for i = 1:1:idict.length()
+                key_and_value = idict.dict(i);
+                keys{1, i} = key_and_value{1};
+            end
+        end
         function add(idict, key, value, index)
             % ADD adds a key and value to DICT in position index.
             %
@@ -362,7 +392,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             assert(isequal(class(value), idict.getValueClass()), ...
                 ['BRAPH:IndexDictionary:Add'], ...
                 ['Values is not an object of class ' idict.getValueClass() ]) %#ok<NBRAK>
-            
+           
             if index <= idict.length()
                 for j = idict.length():-1:index
                     idict.dict(j+1) = idict.dict(j);
