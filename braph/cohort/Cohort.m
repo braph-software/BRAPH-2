@@ -5,12 +5,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
     % Cohort properties (GetAccess=protected, SetAccess=protected):
     %   name                    - name of the brain atlas.
     %   subject_class           - general class of subjects.
-    %   atlases                 - cell array with brain atlases
-    %   subject_idict           - indexed dictionary with subjects
+    %   atlases                 - cell array with brain atlases.
+    %   subject_idict           - indexed dictionary with subjects.
     %   group_idict             - indexed dictionary with groups.
     %
     % Cohort methods (Access=protected)
-    %   copyElement             - deep copy cohort  communite structure.
+    %   copyElement             - deep copy cohort community structure.
     %
     % Cohort methods:
     %   Cohort                  - Constructor.
@@ -19,7 +19,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
     %   getName                 - returns the name of the Cohort.
     %   getSubjectClass         - returns the general class of subjects.
     %   getBrainAtlases         - returns an array with brain atlases.
-    %   getSubjects             - returns the idexed dictionary with Subjects.
+    %   getSubjects             - returns the indexed dictionary with Subjects.
     %   getGroups               - returns the indexed dictionary with Groups.
     %   getNewSubject           - returns a new Subject.
     %   getGroupSubjects        - returns the Subjects of specified group.
@@ -97,7 +97,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
     %   getGroups().replaceValue      - replaces a value in the indexed dictionary br_idict.
     %   getGroups().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict.
     %   getGroups().invert            - inverts position of elements in the indexed dictionary br_idict.
-    %   getGroups().move_to           - move an element to a position in the indexed dictionary br_idict.
+    %   getGroups().move_to           - moves an element to a position in the indexed dictionary br_idict.
     %   getGroups().remove_all        - removes all selected elements from the indexed dictionary br_idict.
     %   getGroups().move_up           - moves an element up in the indexed dictionary br_idict
     %   getGroups().move_down         - moves an element down in the indexed dictionary br_idict
@@ -161,7 +161,6 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % DISP(COHORT) displays information about the cohort.
             % It provides information about cohort class, indexed
             % dictionaries length and subject class.
-            % codes.
             %
             % See also tostring().
             
@@ -282,7 +281,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             end
         end
         function removeSubjectFromGroup(cohort, subject, group)
-            % REMOVESUBJECTFROMGROUP remvoes a subject from a specified group.
+            % REMOVESUBJECTFROMGROUP removes a subject from a specified group.
             %
             % REMOVESUBJECTFROMGROUP(COHORT, SUBJECT, GROUP) removes a 
             % SUBJECT to a specified GROUP.
@@ -303,10 +302,10 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
         end
         function removeSubjectsFromGroup(cohort, subject_indexes, group)
-            % REMOVESUBJECTSFROMGROUP remvoes subjects from a specified group.
+            % REMOVESUBJECTSFROMGROUP removes subjects from a specified group.
             %
             % REMOVESUBJECTSFROMGROUP(COHORT, SUBJECT_INDEXES, GROUP) 
-            % removes subejcts with SUBJECT_INDEXES from a specified GROUP.
+            % removes subjects with SUBJECT_INDEXES from a specified GROUP.
             %
             % See also getGroupSubjects(), addSubjectsToGroup()
             
