@@ -15,6 +15,9 @@ addpath([dir filesep 'cohort' filesep 'subjects'])
 addpath([dir filesep 'analysis'])
 addpath([dir filesep 'analysis' filesep 'analyses'])
 addpath([dir filesep 'analysis' filesep 'measurements'])
+addpath([dir filesep 'analysis' filesep 'measurements' filesep 'comparisons'])
+addpath([dir filesep 'analysis' filesep 'measurements' filesep 'measurements'])
+addpath([dir filesep 'analysis' filesep 'measurements' filesep 'randomcomparisons'])
 addpath([dir filesep 'test'])
 
 clear dir
