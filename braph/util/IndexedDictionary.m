@@ -112,7 +112,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             disp([' With entries:' ]) %#ok<NBRAK>
             for i = 1:2:length(idict.dict)
                 key_and_value = idict.dict(i);
-                disp(['  key:' key_and_value{1} ' ,value:' key_and_value{2}]);
+                disp(['  key:' tostring(key_and_value{1}) ' ,value:' tostring(key_and_value{2})]);
             end
         end
         function n = length(idict)
