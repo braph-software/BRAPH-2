@@ -14,6 +14,7 @@ classdef OutEccentricity < Measure
     %   getClass                    - returns the out-eccentricity class.
     %   getName                     - returns the name of out-eccentricity measure.
     %   getDescription              - returns the description of out-eccentricity measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if out-eccentricity measure is global.
     %   is_nodal                    - boolean, checks if out-eccentricity measure is nodal.
     %   is_binodal                  - boolean, checks if out-eccentricity measure if binodal.
@@ -33,6 +34,10 @@ classdef OutEccentricity < Measure
             % Admissible OUTECCENTRICITYRULE options are:
             % OUTECCENTRICITYRULE = 'default' (default) - calculates OUTECCENTRICITY of global graph.
             %                       'subgraphs' - calculates OUTECCENTRICITY within connected subgraphs.
+            %
+            % OUTECCENTRICITY(G, 'VALUE', VALUE) creates out-eccentricity, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU).
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
             

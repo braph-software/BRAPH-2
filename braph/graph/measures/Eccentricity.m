@@ -14,6 +14,7 @@ classdef Eccentricity < Measure
     %   getClass                    - returns the eccentricity class.
     %   getName                     - returns the name of eccentricity measure.
     %   getDescription              - returns the description of eccentricity measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if eccentricity measure is global.
     %   is_nodal                    - boolean, checks if eccentricity measure is nodal.
     %   is_binodal                  - boolean, checks if eccentricity measure if binodal.
@@ -33,6 +34,10 @@ classdef Eccentricity < Measure
             % Admissible ECCENTRICITYRULE options are:
             % ECCENTRICITYRULE = 'default' (default) - calculates ECCENTRICITY of global graph.
             %                    'subgraphs' - calculates ECCENTRICITY within connected subgraphs.
+            %
+            % ECCENTRICITY(G, 'VALUE', VALUE) creates eccentricity , and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU).
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.
 

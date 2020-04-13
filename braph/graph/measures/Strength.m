@@ -15,6 +15,7 @@ classdef Strength < Measure
     %   getClass                    - returns the strength class.
     %   getName                     - returns the name of strength measure.
     %   getDescription              - returns the description of strength measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if strength measure is global.
     %   is_nodal                    - boolean, checks if strength measure is nodal.
     %   is_binodal                  - boolean, checks if strength measure if binodal.
@@ -28,6 +29,9 @@ classdef Strength < Measure
         function m = Strength(g, varargin)
             % STRENGTH(G) creates strength with default measure properties.
             % G is a graph (e.g, an instance of Graph WU).
+            %
+            % STRENGTH(G, 'VALUE', VALUE) creates strength, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of Graph WU).
             %
             % See also Measure, Graph, Degree, Distance, Efficiency.
 

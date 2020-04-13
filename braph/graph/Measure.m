@@ -34,6 +34,7 @@ classdef Measure < handle
     %   getClass    - returns the class type of the measure.
     %   getName     - returns the name of the measure.
     %   getDescription  - returns the description of the measure.
+    %   getAvailableSettings - returns the settings available to the class.
     %   is_global	- boolean, checks if the measure is global.
     %   is_nodal	- boolean, checks if the measure is nodal.
     %   is_binodal	- boolean, checks if the measure if binodal.
