@@ -63,7 +63,7 @@ classdef Measure < handle
             % ceates a measure with properties and values.  It initializes
             % the property settings with the properties and values.
             %   
-            % MEASURE(G, 'Settings', SETTINGS) ceates a measure and
+            % MEASURE(G, 'Settings', SETTINGS) creates a measure and
             % initializes the property settings with SETTINGS. 
             %   
             % See also Graph, Degree, Strength, Distance, Efficency. 
