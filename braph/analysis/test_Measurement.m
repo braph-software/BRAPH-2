@@ -6,7 +6,8 @@ br4 = BrainRegion('BR4', 'brain region 4', 4, 44, 444);
 br5 = BrainRegion('BR5', 'brain region 5', 5, 55, 555);
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 
-measurement_class_list = Measurement.getList();
+%Tests are not ready for all combinations, only MRI
+measurement_class_list = {'ComparisonMRI', 'MeasurementMRI', 'RandomComparisonMRI'};  % Measurement.getList();
 subject_class_list = Subject.getList();
 %% Test 1 Instantiation
 for i = 1:1:length(measurement_class_list)
