@@ -49,17 +49,16 @@ classdef AnalysisMRI < Analysis
                 'such as cortical thickness for each brain region' ...
                 ];
         end
-        function measurement_classes = getMeasurementsClass()
+          function measurement_classes = getMeasurementsClass()
             measurement_list = Measurement.getList();
-            path_struct = dir([fileparts(which('Measurement')) filesep 'measurements']);
-            count_folders = sum([path_struct(~ismember({path_struct.name},{'.','..'})).isdir]);
-            measurement_classes = cell(1, count_folders);
-            for i = 1:1:length(measurement_list)
-                if contains(measurement_list{i}, 'MRI') && ~contains(measurement_list{i}, 'fMRI')
-                    measurement_classes{i} = measurement_list{i};
-                end
-            end
-            measurement_classes = measurement_classes(:,cellfun(@ischar,measurement_classes(1,:)));
+            comparison_list = Comparison.getList();
+            randomparison_list = RandomComparison.getList();  
+            
+            % filter fmri
+            comparison_list = setdiff(comparison_list, {'ComparisonfMRI'});
+            
+            
+            measurement_classes = [ comparison_list, measurement_list, randomparison_list];
         end
     end
 end
