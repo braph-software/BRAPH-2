@@ -11,16 +11,12 @@ classdef MeasurementMRI < Measurement
                 atlases = atlas;
             end
             
-            if isa(group, 'Group')
-                groups = {group};
-            else
-                assert(iscell(group) && length(group)==1, ...
+                assert( isa(group, 'Group'), ...
                     ['BRAIN:MeasurmentMRI:GroupErr'], ...
-                    ['The input must be a Group or a cell with one Group']) %#ok<NBRAK>
-                groups = group;
-            end
+                    ['The input must be a Group object']) %#ok<NBRAK>
+
             
-            m = m@Measurement(atlases, groups, varargin{:});
+            m = m@Measurement(atlases, group, varargin{:});
         end
     end
     methods (Access=protected)

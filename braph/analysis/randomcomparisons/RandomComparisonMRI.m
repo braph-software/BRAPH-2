@@ -1,5 +1,5 @@
 %randomcomparisionmri vs random grphs
-classdef RandomComparisonMRI < Measurement
+classdef RandomComparisonMRI < RandomComparison
     methods
         function m =  RandomComparisonMRI(atlas, group, varargin)
             if isa(atlas, 'BrainAtlas')
@@ -11,16 +11,11 @@ classdef RandomComparisonMRI < Measurement
                 atlases = atlas;
             end
             
-            if isa(group, 'Group')
-                groups = {group};
-            else
-                assert(iscell(group) && length(group)==1, ...
-                    ['BRAIN:RandomComparisionMRI:GroupErr'], ...
-                    ['The input must be a Group or a cell with one Group']) %#ok<NBRAK>
-                groups = group;
-            end
+            assert(isa(group, 'Group'), ...
+                ['BRAIN:RandomComparisionMRI:GroupErr'], ...
+                ['The input must be a Group object']) %#ok<NBRAK>
             
-            m = m@Measurement(atlases, groups, varargin{:});
+            m = m@RandomComparison(atlases, group, varargin{:});
         end
     end
     methods (Access=protected)
@@ -72,20 +67,20 @@ classdef RandomComparisonMRI < Measurement
             datalist('type') = 'DataScalar';
             datalist('value') = 'DataScalar';  % all globals for now
         end
-        function sub = getMeasurement(measurementClass, varargin)
-            sub = eval([measurementClass '(varargin{:})']);
+        function sub = getRandomComparison(randomComparisonClass, varargin)
+            sub = eval([randomComparisonClass '(varargin{:})']);
         end
         function data_codes = getDataCodes(m)
-            data_codes = Measurement.getDataCodes('RandomComparisonMRI');
+            data_codes = RandomComparison.getDataCodes('RandomComparisonMRI');
         end
         function data_number = getDataNumber(m)
-            data_number = Measurement.getDataNumber('RandomComparisonMRI');
+            data_number = RandomComparison.getDataNumber('RandomComparisonMRI');
         end
         function data_classes = getDataClasses(m)
-            data_classes = Measurement.getDataClasses('RandomComparisonMRI');
+            data_classes = RandomComparison.getDataClasses('RandomComparisonMRI');
         end
         function data_class = getDataClass(m, data_code)
-            data_class = Measuremente.getDataNumber(...
+            data_class = RandomComparisone.getDataNumber(...
                 'RandomComparisonMRI', data_code);
         end
     end

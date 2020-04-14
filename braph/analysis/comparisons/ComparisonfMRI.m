@@ -1,2 +1,2 @@
-classdef ComparisonfMRI < Measurement
+classdef ComparisonfMRI < Comparison
 end

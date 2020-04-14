@@ -1,4 +1,4 @@
-% test Measurement
+% test Comparisons
 br1 = BrainRegion('BR1', 'brain region 1', 1, 11, 111);
 br2 = BrainRegion('BR2', 'brain region 2', 2, 22, 222);
 br3 = BrainRegion('BR3', 'brain region 3', 3, 33, 333);
@@ -6,13 +6,13 @@ br4 = BrainRegion('BR4', 'brain region 4', 4, 44, 444);
 br5 = BrainRegion('BR5', 'brain region 5', 5, 55, 555);
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 
-measurement_class_list =  Measurement.getList();
+comparisons_class_list =  {'ComparisonMRI'}; % Comparison.getList();
 subject_class_list = Subject.getList();
 %% Test 1 Instantiation
-for i = 1:1:length(measurement_class_list)
+for i = 1:1:length(comparisons_class_list)
     for j = 1:1:length(subject_class_list)
         %arrange
-        measurement_class = measurement_class_list{i};
+        comparisons_class = comparisons_class_list{i};
         subject_class = subject_class_list{j};
         sub1 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 1);
         sub2 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 2);
@@ -22,19 +22,19 @@ for i = 1:1:length(measurement_class_list)
         
         group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
         %act        
-        measurement = Measurement.getMeasurement(measurement_class, repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), group);
+        comparison = Comparison.getComparison(comparisons_class, repmat({atlas}, Comparison.getBrainAtlasNumber(comparisons_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Comparison.getGroupNumber(comparisons_class)));
         %assert
-        assert(~isempty(measurement), ...
-            ['BRAPH:Measurement:Instantiation'], ...
-            ['Measurement instantiation fail.']) %#ok<NBRAK>
+        assert(~isempty(comparison), ...
+            ['BRAPH:Comparison:Instantiation'], ...
+            ['Comparison instantiation fail.']) %#ok<NBRAK>
     end
 end
 
 %% Test 2: Static Functions
-for i = 1:1:length(measurement_class_list)
+for i = 1:1:length(comparisons_class_list)
     for j = 1:1:length(subject_class_list)
         %arrange
-        measurement_class = measurement_class_list{i};
+        comparisons_class = comparisons_class_list{i};
         subject_class = subject_class_list{j};
         sub1 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 1);
         sub2 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 2);
@@ -44,9 +44,9 @@ for i = 1:1:length(measurement_class_list)
         
         group = Group(subject_class, {sub1, sub2, sub3});
         %act
-        measurement = Measurement.getMeasurement(measurement_class, repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), group);
+        measurement = Comparison.getComparison(comparisons_class, repmat({atlas}, Measurement.getBrainAtlasNumber(comparisons_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Measurement.getGroupNumber(comparisons_class)));
         %assert
-        assert(isequal(measurement.getClass(), measurement_class), ...
+        assert(isequal(measurement.getClass(), comparisons_class), ...
             ['BRAPH:Measurement:StaticFunctions'], ...
             ['Measurement getClass() fail.']) %#ok<NBRAK>
         assert(ischar(measurement.getName()), ...

@@ -1,4 +1,4 @@
-classdef Measurement < handle & matlab.mixin.Copyable
+classdef Comparison < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         groups  % cell array with two groups
         atlases  % cell array with brain atlases
@@ -6,15 +6,15 @@ classdef Measurement < handle & matlab.mixin.Copyable
         data_dict  % dictionary with data for measurements
     end
     methods (Access = protected)
-        function m = Measurement(atlases, groups, varargin)
+        function m = Comparison(atlases, groups, varargin)
             
             assert(iscell(atlases), ...
-                ['BRAIN:Measurement:AtlasErr'], ...
+                ['BRAIN:Comparison:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
             m.atlases = atlases;
             
             assert(iscell(groups), ...
-                ['BRAIN:Measurement:GroupErr'], ...
+                ['BRAIN:Comparison:GroupErr'], ...
                 ['The input must be a cell containing Groups objects']) %#ok<NBRAK>
             m.groups = groups;
             
@@ -53,10 +53,10 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods
         function str = tostring(m)
-            str = [Measurement.getClass(m)]; %#ok<NBRAK>
+            str = [Comparison.getClass(m)]; %#ok<NBRAK>
         end
         function disp(m)
-            disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])
+            disp(['<a href="matlab:help ' Comparison.getClass(m) '">' Comparison.getClass(m) '</a>'])
             data_codes = m.getDataCodes();
             for i = 1:1:m.getDataNumber()
                 data_code = data_codes{i};
@@ -82,63 +82,53 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)
-        function measurementList = getList()
-            measurementListComparison = subclasses( ...
-                'Measurement', ...
-                [fileparts(which('Measurement')) filesep 'measurements' filesep 'comparisons'] ...
-                );
-             measurementListRandomComparison = subclasses( ...
-                'Measurement', ...
-                [fileparts(which('Measurement')) filesep 'measurements' filesep 'randomcomparisons'] ...
-                );
-             measurementListMeasurement = subclasses( ...
-                'Measurement', ...
-                [fileparts(which('Measurement')) filesep 'measurements' filesep 'measurements'] ...
-                );
-            
-            measurementList = [measurementListComparison, measurementListMeasurement, measurementListRandomComparison];
+        function comparisonList = getList()
+            comparisonList = subclasses( ...
+                'Comparison', ...
+                [fileparts(which('Comparison')) filesep 'comparisons'] ...
+                );    
         end
         function atlas_number = getBrainAtlasNumber(m)
-            atlas_number =  eval([Measurement.getClass(m) '.getBrainAtlasNumber()']);
+            atlas_number =  eval([Comparison.getClass(m) '.getBrainAtlasNumber()']);
         end
         function group_number = getGroupNumber(m)        
-            group_number =  eval([Measurement.getClass(m) '.getGroupNumber()']);
+            group_number =  eval([Comparison.getClass(m) '.getGroupNumber()']);
         end
         function measurementClass = getClass(m)
-            if isa(m, 'Measurement')
+            if isa(m, 'Comparison')
                 measurementClass = class(m);
             else % mshould be a string with the measurement class
                 measurementClass = m;
             end
         end
         function name = getName(m)
-            name = eval([Measurement.getClass(m) '.getName()']);
+            name = eval([Comparison.getClass(m) '.getName()']);
         end
         function description = getDescription(m)
             % measurement description
-            description = eval([Measurement.getClass(m) '.getDescription()']);
+            description = eval([Comparison.getClass(m) '.getDescription()']);
         end              
         function datalist = getDataList(m)
             % list of measurments data keys
-            datalist = eval([Measurement.getClass(m) '.getDataList()']);
+            datalist = eval([Comparison.getClass(m) '.getDataList()']);
         end
-        function sub = getMeasurement(measurementClass, varargin)
-            sub = eval([measurementClass '(varargin{:})']);
+        function sub = getComparison(comparisonClass, varargin)
+            sub = eval([comparisonClass '(varargin{:})']);
         end
         function data_codes = getDataCodes(m)
-            datalist = Measurement.getDataList(m);
+            datalist = Comparison.getDataList(m);
             data_codes = keys(datalist);
         end
         function data_number = getDataNumber(m)
-            datalist = Measurement.getDataList(m);
+            datalist = Comparison.getDataList(m);
             data_number = length(datalist);
         end
         function data_classes = getDataClasses(m)
-            datalist = Measurement.getDataList(m);
+            datalist = Comparison.getDataList(m);
             data_classes = values(datalist);
         end
         function data_class = getDataClass(m, data_code)
-            datalist = Measurement.getDataList(m);
+            datalist = Comparison.getDataList(m);
             data_class = datalist(data_code);
         end
     end

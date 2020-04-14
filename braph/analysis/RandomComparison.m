@@ -1,26 +1,26 @@
-classdef Measurement < handle & matlab.mixin.Copyable
+classdef RandomComparison < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         group  % group
         atlases  % cell array with brain atlases
-        settings  % settings of the measurement
-        data_dict  % dictionary with data for measurements
+        settings  % settings of the RandomComparison
+        data_dict  % dictionary with data for RandomComparisons
     end
     methods (Access = protected)
-        function m = Measurement(atlases, groups, varargin)
+        function m = RandomComparison(atlases, group, varargin)
             
             assert(iscell(atlases), ...
-                ['BRAIN:Measurement:AtlasErr'], ...
+                ['BRAIN:RandomComparison:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
             m.atlases = atlases;
             
-            assert(iscell(groups), ...
-                ['BRAIN:Measurement:GroupErr'], ...
-                ['The input must be a cell containing Groups objects']) %#ok<NBRAK>
-            m.groups = groups;
+              assert(isa(group, 'Group'), ...
+                ['BRAIN:RandomComparison:GroupErr'], ...
+                ['The input must be a Group object']) %#ok<NBRAK>
+            m.group = group;
             
-            m.settings = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});
+            m.settings = get_from_varargin(varargin, 'RandomComparisonSettings', varargin{:});
             
-            m.initialize_datadict(atlases, groups, varargin{:});
+            m.initialize_datadict(atlases, group, varargin{:});
             
             data_codes = m.getDataCodes();
             for i = 1:1:numel(data_codes)
@@ -30,19 +30,19 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 m.getData(data_code).setValue(value);
             end
         end
-        function measurement_copy = copyElement(m)
+        function RandomComparison_copy = copyElement(m)
             % It does not make a deep copy of atlases or groups
             
             % Make a shallow copy
-            measurement_copy = copyElement@matlab.mixin.Copyable(m);
+            RandomComparison_copy = copyElement@matlab.mixin.Copyable(m);
             
             % Make a deep copy of datadict
-            measurement_copy.data_dict = containers.Map;
+            RandomComparison_copy.data_dict = containers.Map;
             data_codes = keys(m.data_dict);
             for i = 1:1:length(data_codes)
                 data_code = data_codes{i};
                 d = m.getData(data_code);
-                measurement_copy.datadict(data_code) = d.copy();
+                RandomComparison_copy.datadict(data_code) = d.copy();
             end
         end
     end
@@ -53,10 +53,10 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods
         function str = tostring(m)
-            str = [Measurement.getClass(m)]; %#ok<NBRAK>
+            str = [RandomComparison.getClass(m)]; %#ok<NBRAK>
         end
         function disp(m)
-            disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])
+            disp(['<a href="matlab:help ' RandomComparison.getClass(m) '">' RandomComparison.getClass(m) '</a>'])
             data_codes = m.getDataCodes();
             for i = 1:1:m.getDataNumber()
                 data_code = data_codes{i};
@@ -82,63 +82,53 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)
-        function measurementList = getList()
-            measurementListComparison = subclasses( ...
-                'Measurement', ...
-                [fileparts(which('Measurement')) filesep 'measurements' filesep 'comparisons'] ...
+        function randomComparisonList = getList()
+            randomComparisonList = subclasses( ...
+                'RandomComparison', ...
+                [fileparts(which('RandomComparison'))  filesep 'randomcomparisons'] ...
                 );
-             measurementListRandomComparison = subclasses( ...
-                'Measurement', ...
-                [fileparts(which('Measurement')) filesep 'measurements' filesep 'randomcomparisons'] ...
-                );
-             measurementListMeasurement = subclasses( ...
-                'Measurement', ...
-                [fileparts(which('Measurement')) filesep 'measurements' filesep 'measurements'] ...
-                );
-            
-            measurementList = [measurementListComparison, measurementListMeasurement, measurementListRandomComparison];
         end
         function atlas_number = getBrainAtlasNumber(m)
-            atlas_number =  eval([Measurement.getClass(m) '.getBrainAtlasNumber()']);
+            atlas_number =  eval([RandomComparison.getClass(m) '.getBrainAtlasNumber()']);
         end
         function group_number = getGroupNumber(m)        
-            group_number =  eval([Measurement.getClass(m) '.getGroupNumber()']);
+            group_number =  eval([RandomComparison.getClass(m) '.getGroupNumber()']);
         end
-        function measurementClass = getClass(m)
-            if isa(m, 'Measurement')
-                measurementClass = class(m);
-            else % mshould be a string with the measurement class
-                measurementClass = m;
+        function RandomComparisonClass = getClass(m)
+            if isa(m, 'RandomComparison')
+                RandomComparisonClass = class(m);
+            else % mshould be a string with the RandomComparison class
+                RandomComparisonClass = m;
             end
         end
         function name = getName(m)
-            name = eval([Measurement.getClass(m) '.getName()']);
+            name = eval([RandomComparison.getClass(m) '.getName()']);
         end
         function description = getDescription(m)
-            % measurement description
-            description = eval([Measurement.getClass(m) '.getDescription()']);
+            % RandomComparison description
+            description = eval([RandomComparison.getClass(m) '.getDescription()']);
         end              
         function datalist = getDataList(m)
             % list of measurments data keys
-            datalist = eval([Measurement.getClass(m) '.getDataList()']);
+            datalist = eval([RandomComparison.getClass(m) '.getDataList()']);
         end
-        function sub = getMeasurement(measurementClass, varargin)
-            sub = eval([measurementClass '(varargin{:})']);
+        function sub = getRandomComparison(randomComparisonClass, varargin)
+            sub = eval([randomComparisonClass '(varargin{:})']);
         end
         function data_codes = getDataCodes(m)
-            datalist = Measurement.getDataList(m);
+            datalist = RandomComparison.getDataList(m);
             data_codes = keys(datalist);
         end
         function data_number = getDataNumber(m)
-            datalist = Measurement.getDataList(m);
+            datalist = RandomComparison.getDataList(m);
             data_number = length(datalist);
         end
         function data_classes = getDataClasses(m)
-            datalist = Measurement.getDataList(m);
+            datalist = RandomComparison.getDataList(m);
             data_classes = values(datalist);
         end
         function data_class = getDataClass(m, data_code)
-            datalist = Measurement.getDataList(m);
+            datalist = RandomComparison.getDataList(m);
             data_class = datalist(data_code);
         end
     end
