@@ -6,43 +6,43 @@ classdef Comparison < handle & matlab.mixin.Copyable
         data_dict  % dictionary with data for measurements
     end
     methods (Access = protected)
-        function m = Comparison(atlases, groups, varargin)
+        function c = Comparison(atlases, groups, varargin)
             
             assert(iscell(atlases), ...
-                ['BRAIN:Comparison:AtlasErr'], ...
+                ['BRAPH:Comparison:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
-            m.atlases = atlases;
+            c.atlases = atlases;
             
             assert(iscell(groups), ...
-                ['BRAIN:Comparison:GroupErr'], ...
+                ['BRAPH:Comparison:GroupErr'], ...
                 ['The input must be a cell containing Groups objects']) %#ok<NBRAK>
-            m.groups = groups;
+            c.groups = groups;
             
-            m.settings = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});
+            c.settings = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});
             
-            m.initialize_datadict(atlases, groups, varargin{:});
+            c.initialize_datadict(atlases, groups, varargin{:});
             
-            data_codes = m.getDataCodes();
+            data_codes = c.getDataCodes();
             for i = 1:1:numel(data_codes)
                 data_code = data_codes{i};
-                value = get_from_varargin(m.getData(data_code).getValue, ...
+                value = get_from_varargin(c.getData(data_code).getValue, ...
                     data_code, varargin);
-                m.getData(data_code).setValue(value);
+                c.getData(data_code).setValue(value);
             end
         end
-        function measurement_copy = copyElement(m)
+        function comparison_copy = copyElement(m)
             % It does not make a deep copy of atlases or groups
             
             % Make a shallow copy
-            measurement_copy = copyElement@matlab.mixin.Copyable(m);
+            comparison_copy = copyElement@matlab.mixin.Copyable(m);
             
             % Make a deep copy of datadict
-            measurement_copy.data_dict = containers.Map;
+            comparison_copy.data_dict = containers.Map;
             data_codes = keys(m.data_dict);
             for i = 1:1:length(data_codes)
                 data_code = data_codes{i};
                 d = m.getData(data_code);
-                measurement_copy.datadict(data_code) = d.copy();
+                comparison_copy.datadict(data_code) = d.copy();
             end
         end
     end

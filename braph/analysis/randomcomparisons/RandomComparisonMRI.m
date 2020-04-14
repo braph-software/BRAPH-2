@@ -1,7 +1,7 @@
 %randomcomparisionmri vs random grphs
 classdef RandomComparisonMRI < RandomComparison
     methods
-        function m =  RandomComparisonMRI(atlas, group, varargin)
+        function rc =  RandomComparisonMRI(atlas, group, varargin)
             if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
             else
@@ -15,7 +15,7 @@ classdef RandomComparisonMRI < RandomComparison
                 ['BRAIN:RandomComparisionMRI:GroupErr'], ...
                 ['The input must be a Group object']) %#ok<NBRAK>
             
-            m = m@RandomComparison(atlases, group, varargin{:});
+            rc = rc@RandomComparison(atlases, group, varargin{:});
         end
     end
     methods (Access=protected)

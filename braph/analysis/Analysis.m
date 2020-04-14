@@ -2,30 +2,31 @@ classdef Analysis < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         cohort  % cohort
         measurement_idict  % indexed dictionary with measurements
-        randomparison_idict  % indexed dictionary with random comparison
+        randomcomparison_idict  % indexed dictionary with random comparison
         comparison_idict  % indexed dictionary with comparison
     end
     methods (Access=protected)
-        function analysis = Analysis(cohort, measurements, varargin)
+        function analysis = Analysis(cohort, measurements, randomcomparisons, comparisons, varargin)
             
             assert(isa(cohort, 'Cohort') && isequal(cohort.getSubjectClass(), analysis.getSubjectClass()), ...
                 ['BRAPH:Analysis:SubjectClassErr'], ...
                 ['The first argument must be a Cohort with subjects of class ' analysis.getSubjectClass()]) %#ok<NBRAK>
             analysis.cohort = cohort;
-            
-            analysis.initializeIndexedDictionary(measurements, varargin{:});      
+
+% initialize dictionaries
+%            analysis.initializeIndexedDictionary(measurements, varargin{:});      
         end
         % function copyElement() %TODO
     end
     methods(Abstract, Access = protected)
-        initializeIndexedDictionary(analysis, measurements, varargin)
+        initialize_idicts(analysis, measurements, varargin)
     end
     methods  
-        function measurement = getNewMeasurement(analysis, measurement_class, varargin)
-            measurement = Measurement.getMeasurement(measurement_class, ...
-                analysis.cohort.getBrainAtlases(), ....
-                analysis.cohort.getGroups(), varargin{:});
-        end
+%         function measurement = getNewMeasurement(analysis, measurement_class, varargin)
+%             measurement = Measurement.getMeasurement(measurement_class, ...
+%                 analysis.cohort.getBrainAtlases(), ....
+%                 analysis.cohort.getGroups(), varargin{:});
+%         end
         function measurement_idict = getMeasurements(analysis)
             measurement_idict = analysis.measurement_idict;
         end
@@ -57,9 +58,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
             
             subject_class = eval([Analysis.getClass(analysis) '.getSubjectClass()']);
         end
-        function measurmentList = getMeasurementsClass()
-            measurmentList = eval([Analysis.getClass(analysis) '.getMeasurementsClass()']);
+        function measurmentList = getMeasurementClass()
+            measurmentList = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
         end
+getRandomComparisonClass()
+getComparisonClass()
         function name = getName(analysis)
             % analysis name
             

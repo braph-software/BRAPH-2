@@ -9,12 +9,12 @@ classdef Measurement < handle & matlab.mixin.Copyable
         function m = Measurement(atlases, group, varargin)
             
             assert(iscell(atlases), ...
-                ['BRAIN:Measurement:AtlasErr'], ...
+                ['BRAPH:Measurement:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
             m.atlases = atlases;   
 
             assert(isa(group, 'Group'), ...
-                ['BRAIN:Measurement:GroupErr'], ...
+                ['BRAPH:Measurement:GroupErr'], ...
                 ['The input must be a Group object']) %#ok<NBRAK>
             m.group = group;
             
@@ -71,11 +71,11 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % adds a atlas to the end of the cell array
             m.update_brainatlases(atlases);
         end
-        function setGroups(m, groups)
-            m.update_groups(groups);
-        end
         function atlases = getBrainAtlases(m)
             atlases = m.atlases;
+        end
+        function setGroups(m, groups)
+            m.update_groups(groups);
         end
         function groups = getGroups(m)
             groups = m.groups;

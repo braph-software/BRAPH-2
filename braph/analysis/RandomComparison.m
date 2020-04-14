@@ -6,43 +6,43 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
         data_dict  % dictionary with data for RandomComparisons
     end
     methods (Access = protected)
-        function m = RandomComparison(atlases, group, varargin)
+        function rc = RandomComparison(atlases, group, varargin)
             
             assert(iscell(atlases), ...
-                ['BRAIN:RandomComparison:AtlasErr'], ...
+                ['BRAPH:RandomComparison:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
-            m.atlases = atlases;
+            rc.atlases = atlases;
             
               assert(isa(group, 'Group'), ...
-                ['BRAIN:RandomComparison:GroupErr'], ...
+                ['BRAPH:RandomComparison:GroupErr'], ...
                 ['The input must be a Group object']) %#ok<NBRAK>
-            m.group = group;
+            rc.group = group;
             
-            m.settings = get_from_varargin(varargin, 'RandomComparisonSettings', varargin{:});
+            rc.settings = get_from_varargin(varargin, 'RandomComparisonSettings', varargin{:});
             
-            m.initialize_datadict(atlases, group, varargin{:});
+            rc.initialize_datadict(atlases, group, varargin{:});
             
-            data_codes = m.getDataCodes();
+            data_codes = rc.getDataCodes();
             for i = 1:1:numel(data_codes)
                 data_code = data_codes{i};
-                value = get_from_varargin(m.getData(data_code).getValue, ...
+                value = get_from_varargin(rc.getData(data_code).getValue, ...
                     data_code, varargin);
-                m.getData(data_code).setValue(value);
+                rc.getData(data_code).setValue(value);
             end
         end
-        function RandomComparison_copy = copyElement(m)
+        function randomcomparison_copy = copyElement(m)
             % It does not make a deep copy of atlases or groups
             
             % Make a shallow copy
-            RandomComparison_copy = copyElement@matlab.mixin.Copyable(m);
+            randomcomparison_copy = copyElement@matlab.mixin.Copyable(m);
             
             % Make a deep copy of datadict
-            RandomComparison_copy.data_dict = containers.Map;
+            randomcomparison_copy.data_dict = containers.Map;
             data_codes = keys(m.data_dict);
             for i = 1:1:length(data_codes)
                 data_code = data_codes{i};
                 d = m.getData(data_code);
-                RandomComparison_copy.datadict(data_code) = d.copy();
+                randomcomparison_copy.datadict(data_code) = d.copy();
             end
         end
     end

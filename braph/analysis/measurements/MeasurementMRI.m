@@ -11,10 +11,9 @@ classdef MeasurementMRI < Measurement
                 atlases = atlas;
             end
             
-                assert( isa(group, 'Group'), ...
-                    ['BRAIN:MeasurmentMRI:GroupErr'], ...
-                    ['The input must be a Group object']) %#ok<NBRAK>
-
+            assert(isa(group, 'Group'), ...
+                ['BRAIN:MeasurmentMRI:GroupErr'], ...
+                ['The input must be a Group object']) %#ok<NBRAK>
             
             m = m@Measurement(atlases, group, varargin{:});
         end
