@@ -50,13 +50,9 @@ classdef AnalysisMRI < Analysis
                 ];
         end
           function measurement_classes = getMeasurementsClass()
-            measurement_list = Measurement.getList();
-            comparison_list = Comparison.getList();
-            randomparison_list = RandomComparison.getList();  
-            
-            % filter fmri
-            comparison_list = setdiff(comparison_list, {'ComparisonfMRI'});
-            
+            measurement_list = excludeSuffix('fMRI', 'Measurement', Measurement.getList());
+            comparison_list = excludeSuffix('fMRI', 'Comparison', Comparison.getList());
+            randomparison_list = excludeSuffix('fMRI', 'RandomComparison', RandomComparison.getList());
             
             measurement_classes = [ comparison_list, measurement_list, randomparison_list];
         end
