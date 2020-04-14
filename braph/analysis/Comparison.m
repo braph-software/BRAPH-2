@@ -1,6 +1,6 @@
 classdef Measurement < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
-        groups  % cell array with groups
+        groups  % cell array with two groups
         atlases  % cell array with brain atlases
         settings  % settings of the measurement
         data_dict  % dictionary with data for measurements
