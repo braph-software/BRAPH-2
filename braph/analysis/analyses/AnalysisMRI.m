@@ -1,38 +1,10 @@
 classdef AnalysisMRI < Analysis
     methods
-        function analysis = AnalysisMRI(cohort, measurements, varargin)
+        function analysis = AnalysisMRI(cohort, measurements, randomcomparisons, comparisons, varargin)
             
-            analysis = analysis@Analysis(cohort, measurements, varargin{:});
+            analysis = analysis@Analysis(cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
-%     methods (Access = protected)
-%         function initializeIndexedDictionary(analysis, measurements, varargin)
-%             available_classes =  analysis.getMeasurementsClass();
-%             % hard coded
-%             analysis.comparison_idict = IndexedDictionary(available_classes{1});
-%             analysis.measurement_idict = IndexedDictionary(available_classes{2});
-%             analysis.randomparison_idict = IndexedDictionary(available_classes{3});  
-%             if iscell(measurements)                
-%                 for i = 1:1:length(measurements)
-%                     if isequal(class(measurements{i}), 'ComparisonMRI')
-%                         analysis.comparison_idict.add(measurements{i}.getName(), measurements{i});
-%                     elseif isequal(class(measurements{i}), 'MeasurementMRI')
-%                         analysis.measurement_idict.add(measurements{i}.getName(), measurements{i});
-%                     elseif isequal(class(measurements{i}), 'RandomComparisonMRI')
-%                         analysis.measurement_idict.add(measurements{i}.getName(), measurements{i});
-%                     end
-%                 end                
-%             else
-%                 if isequal(class(measurements), 'ComparisonMRI')
-%                     analysis.comparison_idict.add(measurements.getName(), measurements);
-%                 elseif isequal(class(measurements), 'MeasurementMRI')
-%                     analysis.measurement_idict.add(measurements.getName(), measurements);
-%                 elseif isequal(class(measurements), 'RandomComparisonMRI')
-%                     analysis.measurement_idict.add(measurements.getName(), measurements);
-%                 end
-%             end
-%         end 
-%     end
     methods (Static)
         function analysis_class = getClass()
             analysis_class = 'AnalysisMRI';
@@ -49,12 +21,14 @@ classdef AnalysisMRI < Analysis
                 'such as cortical thickness for each brain region' ...
                 ];
         end
-%           function measurement_classes = getMeasurementsClass()
-%             measurement_list = excludeSuffix('fMRI', 'Measurement', Measurement.getList());
-%             comparison_list = excludeSuffix('fMRI', 'Comparison', Comparison.getList());
-%             randomparison_list = excludeSuffix('fMRI', 'RandomComparison', RandomComparison.getList());
-%             
-%             measurement_classes = [ comparison_list, measurement_list, randomparison_list];
-%         end
+        function measurmentList = getMeasurementClass()
+            measurmentList =  'MeasurementMRI'; % excludeSuffix('fmri', 'Measurement', Measurement.getList());
+        end
+        function randomcomparisonList = getRandomComparisonClass()
+            randomcomparisonList = 'RandomComparisonMRI';  %e xcludeSuffix('fmri', 'RandomComparison', RandomComparison.getList());
+        end
+        function comparisonList = getComparisonClass()           
+            comparisonList = 'ComparisonMRI';  % excludeSuffix('fmri', 'Comparison', Comparison.getList());
+        end
     end
 end

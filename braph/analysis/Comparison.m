@@ -1,12 +1,14 @@
 classdef Comparison < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
+        id  % unique identifier
         groups  % cell array with two groups
         atlases  % cell array with brain atlases
         settings  % settings of the measurement
         data_dict  % dictionary with data for measurements
     end
     methods (Access = protected)
-        function c = Comparison(atlases, groups, varargin)
+        function c = Comparison(id, atlases, groups, varargin)
+            c.id = tostring(id);
             
             assert(iscell(atlases), ...
                 ['BRAPH:Comparison:AtlasErr'], ...
@@ -30,55 +32,58 @@ classdef Comparison < handle & matlab.mixin.Copyable
                 c.getData(data_code).setValue(value);
             end
         end
-        function comparison_copy = copyElement(m)
+        function comparison_copy = copyElement(c)
             % It does not make a deep copy of atlases or groups
             
             % Make a shallow copy
-            comparison_copy = copyElement@matlab.mixin.Copyable(m);
+            comparison_copy = copyElement@matlab.mixin.Copyable(c);
             
             % Make a deep copy of datadict
             comparison_copy.data_dict = containers.Map;
-            data_codes = keys(m.data_dict);
+            data_codes = keys(c.data_dict);
             for i = 1:1:length(data_codes)
                 data_code = data_codes{i};
-                d = m.getData(data_code);
+                d = c.getData(data_code);
                 comparison_copy.datadict(data_code) = d.copy();
             end
         end
     end
     methods (Abstract, Access = protected)
-        initialize_datadict(m, varargin)  % initialize datadict
-        update_brainatlas(m, atlases)  % updates brainatlases
-        update_groups(m, groups)  % updates groups
+        initialize_datadict(c, varargin)  % initialize datadict
+        update_brainatlas(c, atlases)  % updates brainatlases
+        update_groups(c, groups)  % updates groups
     end
     methods
-        function str = tostring(m)
-            str = [Comparison.getClass(m)]; %#ok<NBRAK>
+        function id = getID(m)
+            id = m.id;
         end
-        function disp(m)
-            disp(['<a href="matlab:help ' Comparison.getClass(m) '">' Comparison.getClass(m) '</a>'])
-            data_codes = m.getDataCodes();
-            for i = 1:1:m.getDataNumber()
+        function str = tostring(c)
+            str = [Comparison.getClass(c)]; %#ok<NBRAK>
+        end
+        function disp(c)
+            disp(['<a href="matlab:help ' Comparison.getClass(c) '">' Comparison.getClass(c) '</a>'])
+            data_codes = c.getDataCodes();
+            for i = 1:1:c.getDataNumber()
                 data_code = data_codes{i};
-                d = m.getData(data_code);
+                d = c.getData(data_code);
                 disp([data_code ' = ' d.tostring()])
             end
         end
-        function d = getData(m, data_code)
-            d = m.data_dict(data_code);
+        function d = getData(c, data_code)
+            d = c.data_dict(data_code);
         end
-        function setBrainAtlases(m, atlases)
+        function setBrainAtlases(c, atlases)
             % adds a atlas to the end of the cell array
-            m.update_brainatlases(atlases);
+            c.update_brainatlases(atlases);
         end
-        function setGroups(m, groups)
-            m.update_groups(groups);
+        function setGroups(c, groups)
+            c.update_groups(groups);
         end
-        function atlases = getBrainAtlases(m)
-            atlases = m.atlases;
+        function atlases = getBrainAtlases(c)
+            atlases = c.atlases;
         end
-        function groups = getGroups(m)
-            groups = m.groups;
+        function groups = getGroups(c)
+            groups = c.groups;
         end
     end
     methods (Static)
@@ -86,49 +91,49 @@ classdef Comparison < handle & matlab.mixin.Copyable
             comparisonList = subclasses( ...
                 'Comparison', ...
                 [fileparts(which('Comparison')) filesep 'comparisons'] ...
-                );    
+                );
         end
-        function atlas_number = getBrainAtlasNumber(m)
-            atlas_number =  eval([Comparison.getClass(m) '.getBrainAtlasNumber()']);
+        function atlas_number = getBrainAtlasNumber(c)
+            atlas_number =  eval([Comparison.getClass(c) '.getBrainAtlasNumber()']);
         end
-        function group_number = getGroupNumber(m)        
-            group_number =  eval([Comparison.getClass(m) '.getGroupNumber()']);
+        function group_number = getGroupNumber(c)
+            group_number =  eval([Comparison.getClass(c) '.getGroupNumber()']);
         end
-        function measurementClass = getClass(m)
-            if isa(m, 'Comparison')
-                measurementClass = class(m);
+        function measurementClass = getClass(c)
+            if isa(c, 'Comparison')
+                measurementClass = class(c);
             else % mshould be a string with the measurement class
-                measurementClass = m;
+                measurementClass = c;
             end
         end
-        function name = getName(m)
-            name = eval([Comparison.getClass(m) '.getName()']);
+        function name = getName(c)
+            name = eval([Comparison.getClass(c) '.getName()']);
         end
-        function description = getDescription(m)
+        function description = getDescription(c)
             % measurement description
-            description = eval([Comparison.getClass(m) '.getDescription()']);
-        end              
-        function datalist = getDataList(m)
+            description = eval([Comparison.getClass(c) '.getDescription()']);
+        end
+        function datalist = getDataList(c)
             % list of measurments data keys
-            datalist = eval([Comparison.getClass(m) '.getDataList()']);
+            datalist = eval([Comparison.getClass(c) '.getDataList()']);
         end
-        function sub = getComparison(comparisonClass, varargin)
-            sub = eval([comparisonClass '(varargin{:})']);
+        function sub = getComparison(comparisonClass, id, varargin)
+            sub = eval([comparisonClass '(id, varargin{:})']);
         end
-        function data_codes = getDataCodes(m)
-            datalist = Comparison.getDataList(m);
+        function data_codes = getDataCodes(c)
+            datalist = Comparison.getDataList(c);
             data_codes = keys(datalist);
         end
-        function data_number = getDataNumber(m)
-            datalist = Comparison.getDataList(m);
+        function data_number = getDataNumber(c)
+            datalist = Comparison.getDataList(c);
             data_number = length(datalist);
         end
-        function data_classes = getDataClasses(m)
-            datalist = Comparison.getDataList(m);
+        function data_classes = getDataClasses(c)
+            datalist = Comparison.getDataList(c);
             data_classes = values(datalist);
         end
-        function data_class = getDataClass(m, data_code)
-            datalist = Comparison.getDataList(m);
+        function data_class = getDataClass(c, data_code)
+            datalist = Comparison.getDataList(c);
             data_class = datalist(data_code);
         end
     end

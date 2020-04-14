@@ -14,7 +14,7 @@ for i = 1:1:length(analysis_class_list)
     subject_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
     cohort = Cohort('cohort', subject_class, atlases, {});
-    analysis = Analysis.getAnalysis(analysis_class, cohort, {});
+    analysis = Analysis.getAnalysis(analysis_class, cohort, {}, {}, {});
 end
 
 %% Test 2: Implementation static methods
@@ -23,7 +23,7 @@ for i = 1:1:length(analysis_class_list)
     subject_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
     cohort = Cohort('cohort', subject_class, atlases, {});
-    analysis = Analysis.getAnalysis(analysis_class, cohort, {});
+    analysis = Analysis.getAnalysis(analysis_class, cohort, {}, {}, {});
     
     assert(isequal(analysis.getClass(), analysis_class), ...
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
@@ -60,13 +60,18 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement = Measurement.getMeasurement('MeasurementMRI', atlas, group);
+    
     %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    %assert
-    assert(isa(analysis, analysis_class), ...
-        ['BRAPH:' analysis_class ':Instantiation'], ...
-        [analysis_class 'Instantiation error with measurements.'])
+    if isequal(analysis_class, 'AnalysisMRI')
+        measurement = Measurement.getMeasurement('MeasurementMRI', 'm1', atlas, group);
+        comparison = Comparison.getComparison('ComparisonMRI', 'c1', repmat({atlas}, Comparison.getBrainAtlasNumber('ComparisonMRI'), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Comparison.getGroupNumber('ComparisonMRI')));
+        randomcomparison = RandomComparison.getRandomComparison('RandomComparisonMRI', 'rc1', repmat({atlas}, RandomComparison.getBrainAtlasNumber('RandomComparisonMRI'), Subject.getBrainAtlasNumber(subject_class)), group);
+        analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, randomcomparison, comparison);
+        %assert
+        assert(isa(analysis, analysis_class), ...
+            ['BRAPH:' analysis_class ':Instantiation'], ...
+            [analysis_class 'Instantiation error with measurements.'])
+    end
 end
 
 %% Test 4: Basic Functions
@@ -87,13 +92,16 @@ for i = 1:1:length(analysis_class_list)
     sub3 = Subject.getSubject(sub_class, atlases);
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
-    measurement1 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement2 = Measurement.getMeasurement('MeasurementMRI', atlas, group);
-    measurement = {measurement1, measurement2};
-    %act
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement);
-    %assert
     if isequal(analysis_class, 'AnalysisMRI')
+        measurement1 = Measurement.getMeasurement('MeasurementMRI', 'm1', atlas, group);
+        measurement2 = Measurement.getMeasurement('MeasurementMRI', 'm2', atlas, group);
+        measurement = {measurement1, measurement2};
+        comparison = Comparison.getComparison('ComparisonMRI', 'c1', repmat({atlas}, Comparison.getBrainAtlasNumber('ComparisonMRI'), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Comparison.getGroupNumber('ComparisonMRI')));
+        randomcomparison = RandomComparison.getRandomComparison('RandomComparisonMRI', 'rc1', repmat({atlas}, RandomComparison.getBrainAtlasNumber('RandomComparisonMRI'), Subject.getBrainAtlasNumber(subject_class)), group);
+        %act
+        analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, randomcomparison, comparison);
+        %assert
+        
         assert(analysis.getMeasurements().length()==2, ...
             'BRAPH:Analysis:Bug', ...
             'Analysis.getMeasurements().length() does not work')

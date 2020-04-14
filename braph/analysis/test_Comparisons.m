@@ -22,7 +22,7 @@ for i = 1:1:length(comparisons_class_list)
         
         group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
         %act        
-        comparison = Comparison.getComparison(comparisons_class, repmat({atlas}, Comparison.getBrainAtlasNumber(comparisons_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Comparison.getGroupNumber(comparisons_class)));
+        comparison = Comparison.getComparison(comparisons_class, 'c1', repmat({atlas}, Comparison.getBrainAtlasNumber(comparisons_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Comparison.getGroupNumber(comparisons_class)));
         %assert
         assert(~isempty(comparison), ...
             ['BRAPH:Comparison:Instantiation'], ...
@@ -44,7 +44,7 @@ for i = 1:1:length(comparisons_class_list)
         
         group = Group(subject_class, {sub1, sub2, sub3});
         %act
-        measurement = Comparison.getComparison(comparisons_class, repmat({atlas}, Measurement.getBrainAtlasNumber(comparisons_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Measurement.getGroupNumber(comparisons_class)));
+        measurement = Comparison.getComparison(comparisons_class, 'c1', repmat({atlas}, Measurement.getBrainAtlasNumber(comparisons_class), Subject.getBrainAtlasNumber(subject_class)), repmat({group}, Measurement.getGroupNumber(comparisons_class)));
         %assert
         assert(isequal(measurement.getClass(), comparisons_class), ...
             ['BRAPH:Measurement:StaticFunctions'], ...

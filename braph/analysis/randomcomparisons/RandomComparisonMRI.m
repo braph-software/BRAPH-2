@@ -1,7 +1,7 @@
 %randomcomparisionmri vs random grphs
 classdef RandomComparisonMRI < RandomComparison
     methods
-        function rc =  RandomComparisonMRI(atlas, group, varargin)
+        function rc =  RandomComparisonMRI(id, atlas, group, varargin)
             if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
             else
@@ -15,71 +15,71 @@ classdef RandomComparisonMRI < RandomComparison
                 ['BRAIN:RandomComparisionMRI:GroupErr'], ...
                 ['The input must be a Group object']) %#ok<NBRAK>
             
-            rc = rc@RandomComparison(atlases, group, varargin{:});
+            rc = rc@RandomComparison(id, atlases, group, varargin{:});
         end
     end
     methods (Access=protected)
-        function initialize_datadict(m, varargin)
+        function initialize_datadict(rc, varargin)
             
-            atlases = m.getBrainAtlases();
+            atlases = rc.getBrainAtlases();
             atlas = atlases{1};
             
-            m.data_dict = containers.Map;
-            m.data_dict('type') = DataScalar(atlas);
-            m.data_dict('value') = DataStructural(atlas);
+            rc.data_dict = containers.Map;
+            rc.data_dict('type') = DataScalar(atlas);
+            rc.data_dict('value') = DataStructural(atlas);
         end
-        function update_brainatlas(m, atlases)
+        function update_brainatlas(rc, atlases)
             
-            m.atlases = atlases;
+            rc.atlases = atlases;
             atlas = atlases{1};
             
-            d1 = m.data_dict('type');
+            d1 = rc.data_dict('type');
             d1.setBrainAtlas(atlas)
             
-            d2 = m.data_dict('value');
+            d2 = rc.data_dict('value');
             d2.setBrainAtlas(atlas);
         end
-        function update_groups(m, groups)
-            m.groups = groups;
+        function update_groups(rc, groups)
+            rc.groups = groups;
         end
     end
     
     methods (Static)
-        function measurementClass = getClass(m)
+        function measurementClass = getClass(rc)
             measurementClass = 'RandomComparisonMRI';
         end
-        function name = getName(m)
+        function name = getName(rc)
             name = 'Random Comparison MRI';
         end
-        function description = getDescription(m)
+        function description = getDescription(rc)
             % measurement description missing
             description = '';
         end
-        function atlas_number = getBrainAtlasNumber(m)
+        function atlas_number = getBrainAtlasNumber(rc)
             atlas_number =  1;
         end
-        function group_number = getGroupNumber(m)
+        function group_number = getGroupNumber(rc)
             group_number = 1;  % 2 if random group created elsewhere
         end
-        function datalist = getDataList(m)
+        function datalist = getDataList(rc)
             % list of measurments data keys
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('type') = 'DataScalar';
             datalist('value') = 'DataScalar';  % all globals for now
         end
-        function sub = getRandomComparison(randomComparisonClass, varargin)
-            sub = eval([randomComparisonClass '(varargin{:})']);
+        function sub = getRandomComparison(randomComparisonClass, id, varargin)
+            sub = eval([randomComparisonClass '(id, varargin{:})']);
         end
-        function data_codes = getDataCodes(m)
+        function data_codes = getDataCodes(rc)
             data_codes = RandomComparison.getDataCodes('RandomComparisonMRI');
         end
-        function data_number = getDataNumber(m)
+        function data_number = getDataNumber(rc)
             data_number = RandomComparison.getDataNumber('RandomComparisonMRI');
         end
-        function data_classes = getDataClasses(m)
+        function data_classes = getDataClasses(rc)
             data_classes = RandomComparison.getDataClasses('RandomComparisonMRI');
         end
-        function data_class = getDataClass(m, data_code)
+        function data_class = getDataClass(rc, data_code)
             data_class = RandomComparisone.getDataNumber(...
                 'RandomComparisonMRI', data_code);
         end

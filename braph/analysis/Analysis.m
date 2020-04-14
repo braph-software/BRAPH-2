@@ -12,21 +12,46 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 ['BRAPH:Analysis:SubjectClassErr'], ...
                 ['The first argument must be a Cohort with subjects of class ' analysis.getSubjectClass()]) %#ok<NBRAK>
             analysis.cohort = cohort;
-
-% initialize dictionaries
-%            analysis.initializeIndexedDictionary(measurements, varargin{:});      
+            
+            % instantiation dictionaries
+            analysis.measurement_idict = IndexedDictionary(analysis.getMeasurementClass());
+            analysis.randomcomparison_idict = IndexedDictionary(analysis.getRandomComparisonClass());
+            analysis.comparison_idict = IndexedDictionary(analysis.getComparisonClass());
+            
+            for i=1:1:length(measurements)
+                if ~iscell (measurements)
+                    measurements = {measurements};
+                end
+                measurement = measurements{i};
+                assert(isequal(measurement.getClass(), analysis.getMeasurementClass()), ...
+                    ['BRAPH:Analysis:Constructor'], ...
+                    ['Input is not of class Measurement']) %#ok<NBRAK>
+                analysis.measurement_idict.add(measurement.getID(), measurement);
+            end
+            for i=1:1:length(randomcomparisons)
+                if ~iscell(randomcomparisons)
+                    randomcomparisons = {randomcomparisons};
+                end
+                randomcomparison = randomcomparisons{i};
+                assert(isequal(randomcomparison.getClass(), analysis.getRandomComparisonClass()), ...
+                    ['BRAPH:Analysis:Constructor'], ...
+                    ['Input is not of class Randomcomparison']) %#ok<NBRAK>
+                analysis.randomcomparison_idict.add(randomcomparison.getID(), randomcomparison);
+            end
+            for i=1:1:length(comparisons)
+                if ~iscell (comparisons)
+                    comparisons = {comparisons};
+                end
+                comparison = comparisons{i};
+                assert(isequal(comparison.getClass(), analysis.getComparisonClass()), ...
+                    ['BRAPH:Analysis:Constructor'], ...
+                    ['Input is not of class Comparison']) %#ok<NBRAK>
+                analysis.comparison_idict.add(comparison.getID(), comparison);
+            end
         end
         % function copyElement() %TODO
     end
-    methods(Abstract, Access = protected)
-        initialize_idicts(analysis, measurements, varargin)
-    end
-    methods  
-%         function measurement = getNewMeasurement(analysis, measurement_class, varargin)
-%             measurement = Measurement.getMeasurement(measurement_class, ...
-%                 analysis.cohort.getBrainAtlases(), ....
-%                 analysis.cohort.getGroups(), varargin{:});
-%         end
+    methods
         function measurement_idict = getMeasurements(analysis)
             measurement_idict = analysis.measurement_idict;
         end
@@ -35,7 +60,33 @@ classdef Analysis < handle & matlab.mixin.Copyable
         end
         function randomparison_idict = getRandomComparisons(analysis)
             randomparison_idict = analysis.randomparison_idict;
-        end        
+        end
+        function comparison_id = calculate_comparison_id(analysis,  comparison_class, comparison_code, groups, varargin) % string
+            grouppart = '';  % its needed
+            for i = 1:1:length(groups)
+                if isa(groups{i}, 'Group')
+                    grouppart = [grouppart '' groups{i}];
+                end
+            end
+            
+            for i = 1:1:length(varargin)
+                vararginpart = [vararginpart '' varargin{i}];
+            end
+            
+            comparison_id = [measurement_class ' ' measure_code ' ' grouppart ' ' vararginpart];
+        end
+        function measurement_id = calculate_measurement_id(analysis,  measurement_class, measure_code, group, varargin)
+            for i = 1:1:length(varargin)
+                vararginpart = [vararginpart '' varargin{i}];
+            end
+            measurement_id = [measurement_class ' ' measure_code ' ' group ' ' vararginpart];
+        end
+        function randomcomparison_id = calculate_randomcomparison_id(analysis,  randomcomparison_class, randomcomparison_code, group, varargin)
+            for i = 1:1:length(varargin)
+                vararginpart = [vararginpart '' varargin{i}];
+            end
+            randomcomparison_id = [measurement_class ' ' randomcomparison_code ' ' group ' ' vararginpart];
+        end
     end
     methods (Static)
         function analysis_list = getList()
@@ -61,8 +112,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function measurmentList = getMeasurementClass()
             measurmentList = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
         end
-getRandomComparisonClass()
-getComparisonClass()
+        function randomcomparisonList = getRandomComparisonClass()
+            randomcomparisonList = eval([Analysis.getClass(analysis) '.getRandomComparisonClass()']);
+        end
+        function comparisonList = getComparisonClass()
+            comparisonList = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
+        end
         function name = getName(analysis)
             % analysis name
             

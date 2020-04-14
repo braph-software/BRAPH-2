@@ -22,7 +22,7 @@ for i = 1:1:length(randomComparison_class_list)
         
         group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
         %act        
-        RandomComparison = RandomComparison.getRandomComparison(randomComparison_class, repmat({atlas}, RandomComparison.getBrainAtlasNumber(randomComparison_class), Subject.getBrainAtlasNumber(subject_class)), group);
+        RandomComparison = RandomComparison.getRandomComparison(randomComparison_class, 'rc1', repmat({atlas}, RandomComparison.getBrainAtlasNumber(randomComparison_class), Subject.getBrainAtlasNumber(subject_class)), group);
         %assert
         assert(~isempty(RandomComparison), ...
             ['BRAPH:RandomComparison:Instantiation'], ...
@@ -44,7 +44,7 @@ for i = 1:1:length(randomComparison_class_list)
         
         group = Group(subject_class, {sub1, sub2, sub3});
         %act
-        RandomComparison = RandomComparison.getRandomComparison(randomComparison_class, repmat({atlas}, RandomComparison.getBrainAtlasNumber(randomComparison_class), Subject.getBrainAtlasNumber(subject_class)), group);
+        RandomComparison = RandomComparison.getRandomComparison(randomComparison_class, 'rc1', repmat({atlas}, RandomComparison.getBrainAtlasNumber(randomComparison_class), Subject.getBrainAtlasNumber(subject_class)), group);
         %assert
         assert(isequal(RandomComparison.getClass(), randomComparison_class), ...
             ['BRAPH:RandomComparison:StaticFunctions'], ...
