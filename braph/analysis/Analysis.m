@@ -59,7 +59,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             comparison_idict = analysis.comparison_idict;
         end
         function randomparison_idict = getRandomComparisons(analysis)
-            randomparison_idict = analysis.randomparison_idict;
+            randomparison_idict = analysis.randomcomparison_idict;
         end
         function comparison_id = calculate_comparison_id(analysis,  comparison_class, comparison_code, groups, varargin) % string
             grouppart = '';  % its needed
