@@ -14,6 +14,7 @@ classdef PathLength < Measure
     %   getClass                    - returns the pathlength class.
     %   getName                     - returns the name of pathlength measure.
     %   getDescription              - returns the description of pathlength measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if pathlength measure is global.
     %   is_nodal                    - boolean, checks if pathlength measure is nodal.
     %   is_binodal                  - boolean, checks if pathlength measure if binodal.
@@ -33,6 +34,9 @@ classdef PathLength < Measure
             % subgraphs     -   Calculates PATHLENGTH of all subgraphs
             % harmonic      -   Calculates PATHLENGTH with harmonic average
             % default       -   Calculates PATHLENGTH with normal average
+            %
+            % PATHLENGTH(G, 'VALUE', VALUE) creates pathlength, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBU, Graph WU).
             %   
             % See also Measure, Graph, Strength, Distance, GlobalEfficiency. 
             

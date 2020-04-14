@@ -14,6 +14,7 @@ classdef InPathLength < Measure
     %   getClass                    - returns the in-path length class.
     %   getName                     - returns the name of in-pathlength measure.
     %   getDescription              - returns the description of in-pathlength measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if in-pathlength measure is global.
     %   is_nodal                    - boolean, checks if in-pathlength measure is nodal.
     %   is_binodal                  - boolean, checks if in-pathlength measure if binodal.
@@ -33,6 +34,9 @@ classdef InPathLength < Measure
             % subgraphs     -   Calculates INPATHLENGTH of all subgraphs
             % harmonic      -   Calculates INPATHLENGTH with harmonic average
             % default       -   Calculates INPATHLENGTH with normal average
+            %
+            % INPATHLENGTH(G, 'VALUE', VALUE) creates in-pathlength, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBU, Graph WU).
             %   
             % See also Measure, Graph, Strength, Distance, GlobalEfficiency.
             

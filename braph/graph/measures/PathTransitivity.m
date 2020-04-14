@@ -26,8 +26,11 @@ classdef PathTransitivity < Measure
     
     methods
         function m = PathTransitivity(g, varargin)
-            % PATHTRANSITIVITY(G) creates degree with default measure properties.
+            % PATHTRANSITIVITY(G) creates pathtransitivity with default measure properties.
             % G is a graph (e.g, an instance of GraphBU)
+            %
+            % PATHTRANSITIVITY(G, 'VALUE', VALUE) creates pathtransitivity, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBU).
             %   
             % See also Measure, Graph, EdgeNumberDistance, EdgeBetweennessCentrality, Distance, Transitivity.
             

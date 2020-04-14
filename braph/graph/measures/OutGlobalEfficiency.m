@@ -14,6 +14,7 @@ classdef OutGlobalEfficiency < Measure
     %   getClass                    - returns the out-globalefficiency class.
     %   getName                     - returns the name of out-globalefficiency measure.
     %   getDescription              - returns the description of out-globalefficiency measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if out-globalefficiency measure is global.
     %   is_nodal                    - boolean, checks if out-globalefficiency measure is nodal.
     %   is_binodal                  - boolean, checks if out-globalefficiency measure if binodal.
@@ -24,12 +25,15 @@ classdef OutGlobalEfficiency < Measure
     % See also Measure, Graph, Strength, Distance, Degree, InGlobalEfficiency, LocalEfficiency.
     methods
         function m = OutGlobalEfficiency(g, varargin)
-            % OUTGLOBALEFFICIENCY(G) creates out-globalefficiency with default measure properties.
+            % OUTGLOBALEFFICIENCY(G) creates out-global efficiency with default measure properties.
             % G is a graph (e.g, an instance of GraphBD, GraphWD). 
             %   
-            % OUTGLOBALEFFICIENCY(G, 'Settings', SETTINGS) creates out-globalefficiency measure and
+            % OUTGLOBALEFFICIENCY(G, 'Settings', SETTINGS) creates out-global efficiency measure and
             % initializes the property settings with SETTINGS. 
             % Currently OUTGLOBALEFFICIENCY does not utilize SETTINGS.
+            %
+            % OUTGLOBALEFFICIENCY(G, 'VALUE', VALUE) creates out-global efficiency, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphWD).
             %   
             % See also Measure, Graph, Strength, Distance. 
             
