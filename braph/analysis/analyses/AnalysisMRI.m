@@ -22,13 +22,13 @@ classdef AnalysisMRI < Analysis
                 ];
         end
         function measurmentList = getMeasurementClass()
-            measurmentList =  'MeasurementMRI'; % excludeSuffix('fmri', 'Measurement', Measurement.getList());
+            measurmentList =  'MeasurementMRI';
         end
         function randomcomparisonList = getRandomComparisonClass()
-            randomcomparisonList = 'RandomComparisonMRI';  %e xcludeSuffix('fmri', 'RandomComparison', RandomComparison.getList());
+            randomcomparisonList = 'RandomComparisonMRI';
         end
         function comparisonList = getComparisonClass()           
-            comparisonList = 'ComparisonMRI';  % excludeSuffix('fmri', 'Comparison', Comparison.getList());
+            comparisonList = 'ComparisonMRI';
         end
     end
 end
