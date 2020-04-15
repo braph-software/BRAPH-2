@@ -21,14 +21,14 @@ classdef AnalysisMRI < Analysis
                 'such as cortical thickness for each brain region' ...
                 ];
         end
-        function measurmentList = getMeasurementClass()
-            measurmentList =  'MeasurementMRI'; % excludeSuffix('fmri', 'Measurement', Measurement.getList());
+        function measurement_class = getMeasurementClass()
+            measurement_class =  'MeasurementMRI';
         end
-        function randomcomparisonList = getRandomComparisonClass()
-            randomcomparisonList = 'RandomComparisonMRI';  %e xcludeSuffix('fmri', 'RandomComparison', RandomComparison.getList());
+        function randomcomparison_class = getRandomComparisonClass()
+            randomcomparison_class = 'RandomComparisonMRI';
         end
-        function comparisonList = getComparisonClass()           
-            comparisonList = 'ComparisonMRI';  % excludeSuffix('fmri', 'Comparison', Comparison.getList());
+        function comparison_class = getComparisonClass()           
+            comparison_class = 'ComparisonMRI';
         end
     end
 end
