@@ -1,7 +1,7 @@
 %randomcomparisionmri vs random grphs
-classdef RandomComparisonMRI < RandomComparison
+classdef RandomComparisonfMRI < RandomComparison
     methods
-        function rc =  RandomComparisonMRI(id, atlas, group, varargin)
+        function rc =  RandomComparisonfMRI(id, atlas, group, varargin)
             
             rc = rc@RandomComparison(id, atlas, group, varargin{:});
         end
@@ -14,15 +14,15 @@ classdef RandomComparisonMRI < RandomComparison
             
             rc.data_dict = containers.Map;
             rc.data_dict('type') = DataScalar(atlas);
-            rc.data_dict('value') = DataStructural(atlas);
+            rc.data_dict('value') = DataFunctional(atlas);
         end
     end
     methods (Static)
         function measurementClass = getClass(rc) %#ok<*INUSD>
-            measurementClass = 'RandomComparisonMRI';
+            measurementClass = 'RandomComparisonfMRI';
         end
         function name = getName(rc)
-            name = 'Random Comparison MRI';
+            name = 'Random Comparison fMRI';
         end
         function description = getDescription(rc)
             % measurement description missing
@@ -38,23 +38,23 @@ classdef RandomComparisonMRI < RandomComparison
             % list of measurments data keys
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('type') = 'DataScalar';
-            datalist('value') = 'DataScalar';  % all globals for now
+            datalist('value') = 'DataFunctional';  % all globals for now
         end
         function sub = getRandomComparison(randomComparisonClass, id, varargin)
             sub = eval([randomComparisonClass '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(rc)
-            data_codes = RandomComparison.getDataCodes('RandomComparisonMRI');
+            data_codes = RandomComparison.getDataCodes('RandomComparisonfMRI');
         end
         function data_number = getDataNumber(rc)
-            data_number = RandomComparison.getDataNumber('RandomComparisonMRI');
+            data_number = RandomComparison.getDataNumber('RandomComparisonfMRI');
         end
         function data_classes = getDataClasses(rc)
-            data_classes = RandomComparison.getDataClasses('RandomComparisonMRI');
+            data_classes = RandomComparison.getDataClasses('RandomComparisonfMRI');
         end
         function data_class = getDataClass(rc, data_code) %#ok<INUSL>
             data_class = RandomComparison.getDataNumber(...
-                'RandomComparisonMRI', data_code);
+                'RandomComparisonfMRI', data_code);
         end
     end
 end

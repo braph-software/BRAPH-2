@@ -12,7 +12,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
             
             if ~iscell(atlases)
                 atlases = {atlases};
-            end            
+            end
             assert(iscell(atlases)  && length(atlases)==1, ...
                 ['BRAPH:Comparison:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
@@ -53,8 +53,6 @@ classdef Comparison < handle & matlab.mixin.Copyable
     end
     methods (Abstract, Access = protected)
         initialize_datadict(c, varargin)  % initialize datadict
-        update_brainatlas(c, atlases)  % updates brainatlases
-        update_groups(c, groups)  % updates groups
     end
     methods
         function id = getID(m)
@@ -79,6 +77,17 @@ classdef Comparison < handle & matlab.mixin.Copyable
             % adds a atlas to the end of the cell array
             c.update_brainatlases(atlases);
         end
+        function update_brainatlas(c, atlases)
+            
+            c.atlases = atlases;
+            atlas = atlases{1};
+            
+            d1 = c.data_dict('type');
+            d1.setBrainAtlas(atlas)
+            
+            d2 = c.data_dict('value');
+            d2.setBrainAtlas(atlas);
+        end
         function setGroups(c, groups)
             c.update_groups(groups);
         end
@@ -87,6 +96,9 @@ classdef Comparison < handle & matlab.mixin.Copyable
         end
         function groups = getGroups(c)
             groups = c.groups;
+        end
+        function update_groups(c, groups)
+            c.groups = groups;
         end
     end
     methods (Static)
@@ -120,7 +132,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
             % list of measurments data keys
             datalist = eval([Comparison.getClass(c) '.getDataList()']);
         end
-        function sub = getComparison(comparisonClass, id, varargin)
+        function sub = getComparison(comparisonClass, id, varargin) %#ok<*INUSD>
             sub = eval([comparisonClass '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(c)

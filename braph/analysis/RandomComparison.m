@@ -7,7 +7,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
         data_dict  % dictionary with data for RandomComparisons
     end
     methods (Access = protected)
-        function rc = RandomComparison(id, atlases, group, varargin)            
+        function rc = RandomComparison(id, atlases, group, varargin)
             rc.id = tostring(id);
             
             if ~iscell(atlases)
@@ -53,8 +53,6 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
     end
     methods (Abstract, Access = protected)
         initialize_datadict(rc, varargin)  % initialize datadict
-        update_brainatlas(rc, atlases)  % updates brainatlases
-        update_groups(rc, groups)  % updates groups
     end
     methods
         function id = getID(m)
@@ -79,6 +77,17 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             % adds a atlas to the end of the cell array
             rc.update_brainatlases(atlases);
         end
+        function update_brainatlas(rc, atlases)
+            
+            rc.atlases = atlases;
+            atlas = atlases{1};
+            
+            d1 = rc.data_dict('type');
+            d1.setBrainAtlas(atlas)
+            
+            d2 = rc.data_dict('value');
+            d2.setBrainAtlas(atlas);
+        end
         function setGroups(rc, groups)
             rc.update_groups(groups);
         end
@@ -87,6 +96,9 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
         end
         function groups = getGroups(rc)
             groups = rc.groups;
+        end
+        function update_groups(rc, groups)
+            rc.groups = groups;
         end
     end
     methods (Static)

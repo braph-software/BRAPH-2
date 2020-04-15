@@ -1,7 +1,7 @@
-classdef ComparisonfMRI < Comparison
+classdef ComparisonDTI < Comparison
     methods
-        function c =  ComparisonfMRI(id, atlas, groups, varargin)
-
+        function c =  ComparisonDTI(id, atlas, groups, varargin)
+            
             c = c@Comparison(id, atlas, groups, varargin{:});
         end
     end
@@ -13,15 +13,15 @@ classdef ComparisonfMRI < Comparison
             
             c.data_dict = containers.Map;
             c.data_dict('type') = DataScalar(atlas);
-            c.data_dict('value') = DataFunctional(atlas);
+            c.data_dict('value') = DataConnectivity(atlas);
         end
     end
     methods (Static)
         function measurementClass = getClass(c) %#ok<*INUSD>
-            measurementClass = 'ComparisonfMRI';
+            measurementClass = 'ComparisonDTI';
         end
         function name = getName(c)
-            name = 'Comparison fMRI';
+            name = 'Comparison DTI';
         end
         function description = getDescription(c)
             % measurement description missing
@@ -37,23 +37,23 @@ classdef ComparisonfMRI < Comparison
             % list of measurments data keys
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('type') = 'DataScalar';
-            datalist('value') = 'DataFunctional'; 
+            datalist('value') = 'DataConnectivity';
         end
         function sub = getComparison(comparisonClass, id, varargin)
             sub = eval([comparisonClass '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(c)
-            data_codes = Comparison.getDataCodes('ComparisonfMRI');
+            data_codes = Comparison.getDataCodes('ComparisonDTI');
         end
         function data_number = getDataNumber(c)
-            data_number = Comparison.getDataNumber('ComparisonfMRI');
+            data_number = Comparison.getDataNumber('ComparisonDTI');
         end
         function data_classes = getDataClasses(c)
-            data_classes = Comparison.getDataClasses('ComparisonfMRI');
+            data_classes = Comparison.getDataClasses('ComparisonDTI');
         end
         function data_class = getDataClass(c, data_code) %#ok<INUSL>
             data_class = Comparison.getDataNumber(...
-                'ComparisonfMRI', data_code);
+                'ComparisonDTI', data_code);
         end
     end
 end

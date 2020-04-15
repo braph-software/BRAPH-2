@@ -16,20 +16,6 @@ classdef ComparisonMRI < Comparison
             c.data_dict('type') = DataScalar(atlas);
             c.data_dict('value') = DataStructural(atlas);
         end
-        function update_brainatlas(c, atlases)
-            
-            c.atlases = atlases;
-            atlas = atlases{1};
-            
-            d1 = c.data_dict('type');
-            d1.setBrainAtlas(atlas)
-            
-            d2 = c.data_dict('value');
-            d2.setBrainAtlas(atlas);
-        end
-        function update_groups(c, groups)
-            c.groups = groups;
-        end
     end
     methods (Static)
         function measurementClass = getClass(c) %#ok<*INUSD>

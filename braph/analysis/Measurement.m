@@ -7,7 +7,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
         data_dict  % dictionary with data for measurements
     end
     methods (Access = protected)
-        function m = Measurement(id, atlases, group, varargin)            
+        function m = Measurement(id, atlases, group, varargin)
             m.id = tostring(id);
             
             if ~iscell(atlases)
@@ -53,8 +53,6 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods (Abstract, Access = protected)
         initialize_datadict(m, varargin)  % initialize datadict
-        update_brainatlas(m, atlases)  % updates brainatlases
-        update_groups(m, groups)  % updates groups
     end
     methods
         function id = getID(m)
@@ -83,11 +81,25 @@ classdef Measurement < handle & matlab.mixin.Copyable
         function atlases = getBrainAtlases(m)
             atlases = m.atlases;
         end
+        function update_brainatlas(m, atlases)
+            
+            m.atlases = atlases;
+            atlas = atlases{1};
+            
+            d1 = m.data_dict('type');
+            d1.setBrainAtlas(atlas)
+            
+            d2 = m.data_dict('value');
+            d2.setBrainAtlas(atlas);
+        end
         function setGroups(m, groups)
             m.update_groups(groups);
         end
         function groups = getGroups(m)
             groups = m.groups;
+        end
+        function update_groups(m, groups)
+            m.groups = groups;
         end
     end
     methods (Static)
@@ -121,7 +133,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % list of measurments data keys
             datalist = eval([Measurement.getClass(m) '.getDataList()']);
         end
-         function sub = getMeasurement(measurement_class, id , varargin) %#ok<INUSL>
+        function sub = getMeasurement(measurement_class, id , varargin) %#ok<INUSL>
             sub = eval([measurement_class  '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(m)
