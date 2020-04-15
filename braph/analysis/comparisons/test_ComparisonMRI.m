@@ -16,4 +16,4 @@ sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtla
 group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
 
 %% Test 1: Instantiation
-measurement = ComparisonMRI('c1', atlas, group);
+measurement = ComparisonMRI('c1', atlas, repmat({group}, 1, ComparisonfMRI.getGroupNumber()));

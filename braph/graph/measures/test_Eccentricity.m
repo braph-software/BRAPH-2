@@ -179,6 +179,7 @@ efficiency = mean(1./Dv);
 % Modified by Emiliano Gomez to get nodal eccentricity.
 D(D==Inf) = 0;
 ecc        = nanmax(D(1,:),[],2);
+ecc(isnan(ecc)) = 0;
 
 % Radius of graph
 radius     = min(ecc);
