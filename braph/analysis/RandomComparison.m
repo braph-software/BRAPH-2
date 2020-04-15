@@ -10,6 +10,9 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
         function rc = RandomComparison(id, atlases, group, varargin)            
             rc.id = tostring(id);
             
+            if ~iscell(atlases)
+                atlases = {atlases};
+            end
             assert(iscell(atlases), ...
                 ['BRAPH:RandomComparison:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
@@ -87,8 +90,8 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)
-        function randomComparisonList = getList()
-            randomComparisonList = subclasses( ...
+        function randomcomparisonlist = getList()
+            randomcomparisonlist = subclasses( ...
                 'RandomComparison', ...
                 [fileparts(which('RandomComparison'))  filesep 'randomcomparisons'] ...
                 );
@@ -99,11 +102,11 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
         function group_number = getGroupNumber(rc)
             group_number =  eval([RandomComparison.getClass(rc) '.getGroupNumber()']);
         end
-        function RandomComparisonClass = getClass(rc)
+        function randomcomparisonclass = getClass(rc)
             if isa(rc, 'RandomComparison')
-                RandomComparisonClass = class(rc);
+                randomcomparisonclass = class(rc);
             else % mshould be a string with the RandomComparison class
-                RandomComparisonClass = rc;
+                randomcomparisonclass = rc;
             end
         end
         function name = getName(rc)
@@ -117,7 +120,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             % list of measurments data keys
             datalist = eval([RandomComparison.getClass(rc) '.getDataList()']);
         end
-        function sub = getRandomComparison(randomComparisonClass, id, varargin)
+        function sub = getRandomComparison(randomComparisonClass, id, varargin) %#ok<INUSD>
             sub = eval([randomComparisonClass '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(rc)

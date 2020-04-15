@@ -2,20 +2,8 @@ classdef MeasurementMRI < Measurement
     % single group of mri subjects
     methods
         function m =  MeasurementMRI(id, atlas, group, varargin)
-            if isa(atlas, 'BrainAtlas')
-                atlases = {atlas};
-            else
-                assert(iscell(atlas) && length(atlas)==1, ...
-                    ['BRAIN:MeasurmentMRI:AtlasErr'], ...
-                    ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
-                atlases = atlas;
-            end
             
-            assert(isa(group, 'Group'), ...
-                ['BRAIN:MeasurmentMRI:GroupErr'], ...
-                ['The input must be a Group object']) %#ok<NBRAK>
-            
-            m = m@Measurement(id, atlases, group, varargin{:});
+            m = m@Measurement(id, atlas, group, varargin{:});
         end
     end
     methods (Access=protected)
@@ -44,7 +32,7 @@ classdef MeasurementMRI < Measurement
         end
     end
     methods (Static)
-        function class = getClass(m)
+        function class = getClass(m) %#ok<*INUSD>
             class = 'MeasurementMRI';
         end
         function name = getName(m)
@@ -78,7 +66,7 @@ classdef MeasurementMRI < Measurement
         function data_classes = getDataClasses(m)
             data_classes = Measurement.getDataClasses('MeasurementMRI');
         end
-        function data_class = getDataClass(m, data_code)
+        function data_class = getDataClass(m, data_code) %#ok<INUSL>
             data_class = Measuremente.getDataNumber(...
                 'MeasurementMRI', data_code);
         end

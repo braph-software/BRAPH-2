@@ -10,7 +10,10 @@ classdef Comparison < handle & matlab.mixin.Copyable
         function c = Comparison(id, atlases, groups, varargin)
             c.id = tostring(id);
             
-            assert(iscell(atlases), ...
+            if ~iscell(atlases)
+                atlases = {atlases};
+            end            
+            assert(iscell(atlases)  && length(atlases)==1, ...
                 ['BRAPH:Comparison:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
             c.atlases = atlases;

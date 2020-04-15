@@ -2,20 +2,8 @@
 classdef RandomComparisonMRI < RandomComparison
     methods
         function rc =  RandomComparisonMRI(id, atlas, group, varargin)
-            if isa(atlas, 'BrainAtlas')
-                atlases = {atlas};
-            else
-                assert(iscell(atlas) && length(atlas)==1, ...
-                    ['BRAIN:RandomComparisionMRI:AtlasErr'], ...
-                    ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
-                atlases = atlas;
-            end
             
-            assert(isa(group, 'Group'), ...
-                ['BRAIN:RandomComparisionMRI:GroupErr'], ...
-                ['The input must be a Group object']) %#ok<NBRAK>
-            
-            rc = rc@RandomComparison(id, atlases, group, varargin{:});
+            rc = rc@RandomComparison(id, atlas, group, varargin{:});
         end
     end
     methods (Access=protected)
@@ -45,7 +33,7 @@ classdef RandomComparisonMRI < RandomComparison
     end
     
     methods (Static)
-        function measurementClass = getClass(rc)
+        function measurementClass = getClass(rc) %#ok<*INUSD>
             measurementClass = 'RandomComparisonMRI';
         end
         function name = getName(rc)
@@ -79,7 +67,7 @@ classdef RandomComparisonMRI < RandomComparison
         function data_classes = getDataClasses(rc)
             data_classes = RandomComparison.getDataClasses('RandomComparisonMRI');
         end
-        function data_class = getDataClass(rc, data_code)
+        function data_class = getDataClass(rc, data_code) %#ok<INUSL>
             data_class = RandomComparisone.getDataNumber(...
                 'RandomComparisonMRI', data_code);
         end

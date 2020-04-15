@@ -1,11 +1,11 @@
 classdef Analysis < handle & matlab.mixin.Copyable
-    properties (GetAccess=protected, SetAccess=protected)
+    properties (GetAccess = protected, SetAccess = protected)
         cohort  % cohort
         measurement_idict  % indexed dictionary with measurements
         randomcomparison_idict  % indexed dictionary with random comparison
         comparison_idict  % indexed dictionary with comparison
     end
-    methods (Access=protected)
+    methods (Access = protected)
         function analysis = Analysis(cohort, measurements, randomcomparisons, comparisons, varargin)
             
             assert(isa(cohort, 'Cohort') && isequal(cohort.getSubjectClass(), analysis.getSubjectClass()), ...
@@ -17,7 +17,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             if ~iscell (measurements)
                 measurements = {measurements};
             end
-            for i=1:1:length(measurements)
+            for i = 1:1:length(measurements)
                 measurement = measurements{i};
                 assert(isequal(measurement.getClass(), analysis.getMeasurementClass()), ...
                     ['BRAPH:Analysis:Constructor'], ...
@@ -29,7 +29,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             if ~iscell(randomcomparisons)
                 randomcomparisons = {randomcomparisons};
             end
-            for i=1:1:length(randomcomparisons)
+            for i = 1:1:length(randomcomparisons)
                 randomcomparison = randomcomparisons{i};
                 assert(isequal(randomcomparison.getClass(), analysis.getRandomComparisonClass()), ...
                     ['BRAPH:Analysis:Constructor'], ...
@@ -41,7 +41,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             if ~iscell (comparisons)
                 comparisons = {comparisons};
             end
-            for i=1:1:length(comparisons)
+            for i = 1:1:length(comparisons)
                 comparison = comparisons{i};
                 assert(isequal(comparison.getClass(), analysis.getComparisonClass()), ...
                     ['BRAPH:Analysis:Constructor'], ...
@@ -61,9 +61,9 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function comparison_idict = getComparisons(analysis)
             comparison_idict = analysis.comparison_idict;
         end
-        function measurement_id = calculate_measurement_id(analysis,  measurement_class, measure_code, group, varargin)
+        function measurement_id = calculate_measurement_id(analysis,  measurement_class, measure_code, group, varargin) %#ok<*INUSL>
             for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}];
+                vararginpart = [vararginpart '' varargin{i}]; %#ok<*AGROW>
             end
             measurement_id = [measurement_class ' ' measure_code ' ' group ' ' vararginpart];
         end
@@ -97,8 +97,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
         end
         function subject_class = getSubjectClass(analysis)
-            % cohort class
-            
+            % cohort class            
             subject_class = eval([Analysis.getClass(analysis) '.getSubjectClass()']);
         end
         function measurmentList = getMeasurementClass()
@@ -111,13 +110,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
             comparisonList = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
         end
         function name = getName(analysis)
-            % analysis name
-            
+            % analysis name            
             name = eval([Analysis.getClass(analysis) '.getName()']);
         end
         function description = getDescription(analysis)
-            % analysis description
-            
+            % analysis description            
             description = eval([Analysis.getClass(analysis) '.getDescription()']);
         end
         function analysis = getAnalysis(analysis_class, varargin)

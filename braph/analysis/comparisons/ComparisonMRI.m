@@ -3,20 +3,7 @@ classdef ComparisonMRI < Comparison
     methods
         function c =  ComparisonMRI(id, atlas, groups, varargin)
             
-            if isa(atlas, 'BrainAtlas')
-                atlases = {atlas};
-            else
-                assert(iscell(atlas) && length(atlas)==1, ...
-                    ['BRAIN:ComparisonMRI:AtlasErr'], ...
-                    ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
-                atlases = atlas;
-            end
-            
-            assert(iscell(groups) && length(groups)==2, ...
-                ['BRAIN:ComparisonMRI:GroupErr'], ...
-                ['The input must be two Groups or a cell with two Group']) %#ok<NBRAK>
-            
-            c = c@Comparison(id, atlases, groups, varargin{:});
+            c = c@Comparison(id, atlas, groups, varargin{:});
         end
     end
     methods (Access=protected)
@@ -45,7 +32,7 @@ classdef ComparisonMRI < Comparison
         end
     end
     methods (Static)
-        function measurementClass = getClass(c)
+        function measurementClass = getClass(c) %#ok<*INUSD>
             measurementClass = 'ComparisonMRI';
         end
         function name = getName(c)
@@ -79,7 +66,7 @@ classdef ComparisonMRI < Comparison
         function data_classes = getDataClasses(c)
             data_classes = Comparison.getDataClasses('ComparisonMRI');
         end
-        function data_class = getDataClass(c, data_code)
+        function data_class = getDataClass(c, data_code) %#ok<INUSL>
             data_class = Comparison.getDataNumber(...
                 'ComparisonMRI', data_code);
         end

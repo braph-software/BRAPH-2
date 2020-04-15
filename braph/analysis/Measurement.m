@@ -10,9 +10,12 @@ classdef Measurement < handle & matlab.mixin.Copyable
         function m = Measurement(id, atlases, group, varargin)            
             m.id = tostring(id);
             
-            assert(iscell(atlases), ...
+            if ~iscell(atlases)
+                atlases = {atlases};
+            end
+            assert(iscell(atlases)  && length(atlases)==1, ...
                 ['BRAPH:Measurement:AtlasErr'], ...
-                ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
+                ['The input must be a cell containing  1 BrainAtlas object']) %#ok<NBRAK>
             m.atlases = atlases;
             
             assert(isa(group, 'Group'), ...
