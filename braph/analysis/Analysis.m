@@ -18,7 +18,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             analysis.randomcomparison_idict = IndexedDictionary(analysis.getRandomComparisonClass());
             analysis.comparison_idict = IndexedDictionary(analysis.getComparisonClass());
             
-            for i=1:1:length(measurements)
+            for i = 1:1:length(measurements)
                 if ~iscell (measurements)
                     measurements = {measurements};
                 end
@@ -28,7 +28,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                     ['Input is not of class Measurement']) %#ok<NBRAK>
                 analysis.measurement_idict.add(measurement.getID(), measurement);
             end
-            for i=1:1:length(randomcomparisons)
+            for i = 1:1:length(randomcomparisons)
                 if ~iscell(randomcomparisons)
                     randomcomparisons = {randomcomparisons};
                 end
@@ -38,7 +38,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                     ['Input is not of class Randomcomparison']) %#ok<NBRAK>
                 analysis.randomcomparison_idict.add(randomcomparison.getID(), randomcomparison);
             end
-            for i=1:1:length(comparisons)
+            for i = 1:1:length(comparisons)
                 if ~iscell (comparisons)
                     comparisons = {comparisons};
                 end
