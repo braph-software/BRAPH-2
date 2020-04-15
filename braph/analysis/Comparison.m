@@ -15,9 +15,9 @@ classdef Comparison < handle & matlab.mixin.Copyable
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
             c.atlases = atlases;
             
-            assert(iscell(groups), ...
+            assert(iscell(groups) && length(groups)==2, ...
                 ['BRAPH:Comparison:GroupErr'], ...
-                ['The input must be a cell containing Groups objects']) %#ok<NBRAK>
+                ['The input must be two Groups or a cell with two Group']) %#ok<NBRAK>
             c.groups = groups;
             
             c.settings = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});
