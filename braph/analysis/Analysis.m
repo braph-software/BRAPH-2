@@ -51,10 +51,13 @@ classdef Analysis < handle & matlab.mixin.Copyable
         end
         % function copyElement() %TODO
     end
-    methods (Abstract)
+    methods (Abstract, Access = protected)
         getMeasurementID(analysis, measure_code, varargin)
         getRandomComparisonID(analysis, measure_code, varargin)
-        getComparisonID(analysis, measure_code, varargin)        
+        getComparisonID(analysis, measure_code, varargin) 
+        calculate_measurement(analysis, measure_code, varargin)
+        calculate_random_comparison(analysis, measure_code, varargin)
+        calculate_comparison(analysis, measure_code, varargin)
     end
     methods
         function cohort = getCohort(analysis)
@@ -70,24 +73,27 @@ classdef Analysis < handle & matlab.mixin.Copyable
             comparison_idict = analysis.comparison_idict;
         end
         function measurement = calculateMeasurement(analysis, measure_code, varargin)
-            if analysis.getMeasurements().contains(analysis.getMeasurementID(analysis, measure_code, varargin))
-               measurement = analysis.getMeasurements().getValue();
+            id = analysis.getMeasurementID(analysis, measure_code, varargin{:});
+            if analysis.getMeasurements().contains(id)
+               measurement = analysis.getMeasurements().getValue(id);
             else  % new measurement
-               measurement = calculate_measurement(analysis, measure_code, varargin);
+               measurement = calculate_measurement(analysis, measure_code, varargin{:});
             end            
         end  
         function random_comparison = calculateRandomComparison(analysis, measure_code, varargin)
-            if analysis.getRandomComparison().contains(analysis.getRandomComparisonID(analysis, measure_code, varargin))
-               random_comparison = analysis.getRandomComparisons().getValue();
+            id = analysis.getRandomComparisonID(analysis, measure_code, varargin{:});
+            if analysis.getRandomComparison().contains(id)
+               random_comparison = analysis.getRandomComparisons().getValue(id);
             else  % new randomcomparison
-               random_comparison = calculate_random_comparison(analysis, measure_code, varargin);
+               random_comparison = calculate_random_comparison(analysis, measure_code, varargin{:});
             end            
         end 
         function comparison = calculateComparison(analysis, measure_code, varargin)
-            if analysis.getComparisons().contains(analysis.getComparisonID(analysis, measure_code, varargin))
-               comparison = analysis.getComparison().getValue();
+            id = analysis.getComparisonID(analysis, measure_code, varargin{:});
+            if analysis.getComparisons().contains(id)
+               comparison = analysis.getComparison().getValue(id);
             else  % new comparison
-               comparison = calculate_comparison(analysis, measure_code, varargin);
+               comparison = calculate_comparison(analysis, measure_code, varargin{:});
             end            
         end 
     end

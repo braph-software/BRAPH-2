@@ -5,7 +5,7 @@ classdef AnalysisDTI < Analysis
             analysis = analysis@Analysis(cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
-    methods 
+    methods (Access = protected)
         function measurement_id = getMeasurementID(analysis, measure_code, varargin)
             vararginpart = '';
             for i = 1:1:length(varargin)
@@ -26,6 +26,12 @@ classdef AnalysisDTI < Analysis
                 vararginpart = [vararginpart '' varargin{i}];
             end
             comparison_id = [tostring(analysis.getComparisons().getValueClass()) ' ' tostring(measure_code) ' ' tostring(analysis.getCohort().getGroups().getValue(1).getName()) ' ' tostring(analysis.getCohort().getGroups().getValue(2).getName()) ' ' tostring(vararginpart)];
+        end
+        function calculate_measurement(analysis, measure_code, varargin)
+        end        
+        function calculate_random_comparison(analysis, measure_code, varargin)
+        end
+        function calculate_comparison(analysis, measure_code, varargin)
         end
     end
     methods (Static)
