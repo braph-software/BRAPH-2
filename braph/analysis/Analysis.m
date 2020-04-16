@@ -67,7 +67,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
             measurement_id = [measurement_class ' ' measure_code ' ' group ' ' vararginpart];
         end
-        function randomcomparison_id = getRanomComparisonID(analysis,  randomcomparison_class, randomcomparison_code, group, varargin)
+        function randomcomparison_id = getRandomComparisonID(analysis,  randomcomparison_class, randomcomparison_code, group, varargin)
             for i = 1:1:length(varargin)
                 vararginpart = [vararginpart '' varargin{i}];
             end
@@ -79,6 +79,27 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
             comparison_id = [measurement_class ' ' measure_code ' ' groups(1) ' ' groups(2) ' ' vararginpart];
         end
+        function measurement = calculateMeasurement(analysis, measure_code, varargin)
+            if analysis.getMeasurements().contains(analysis.getMeasurementID(analysis, measure_code, varargin))
+               measurement = analysis.getMeasurements().getValue();
+            else  % new measurement
+               measurement = calculate_measurement(analysis, measure_code, varargin);
+            end            
+        end  
+        function random_comparison = calculateRandomComparison(analysis, measure_code, varargin)
+            if analysis.getRandomComparison().contains(analysis.getRandomComparisonID(analysis, measure_code, varargin))
+               random_comparison = analysis.getRandomComparisons().getValue();
+            else  % new randomcomparison
+               random_comparison = calculate_random_comparison(analysis, measure_code, varargin);
+            end            
+        end 
+        function comparison = calculateComparison(analysis, measure_code, varargin)
+            if analysis.getComparisons().contains(analysis.getComparisonID(analysis, measure_code, varargin))
+               comparison = analysis.getComparison().getValue();
+            else  % new comparison
+               comparison = calculate_comparison(analysis, measure_code, varargin);
+            end            
+        end 
     end
     methods (Static)
         function analysis_list = getList()
