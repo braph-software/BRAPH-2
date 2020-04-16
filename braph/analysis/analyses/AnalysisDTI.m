@@ -9,6 +9,9 @@ classdef AnalysisDTI < Analysis
         function analysis_class = getClass()
             analysis_class = 'AnalysisDTI';
         end
+        function name = getName()
+            name = 'Analysis DTI';
+        end
         function subject_class = getSubjectClass()
             subject_class = 'SubjectDTI';
         end
@@ -26,9 +29,6 @@ classdef AnalysisDTI < Analysis
         end
         function comparison_class = getComparisonClass()
             comparison_class = 'ComparisonDTI';
-        end
-        function name = getName()
-            name = 'Analysis DTI';
         end
     end
 end
