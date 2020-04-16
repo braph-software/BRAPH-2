@@ -51,7 +51,15 @@ classdef Analysis < handle & matlab.mixin.Copyable
         end
         % function copyElement() %TODO
     end
+    methods (Abstract)
+        getMeasurementID(analysis, measure_code, group, varargin)
+        getRandomComparisonID(analysis, measure_code, group, varargin)
+        getComparisonID(analysis, measure_code, groups, varargin)        
+    end
     methods
+        function cohort = getCohort(analysis)
+            cohort = analysis.cohort;
+        end
         function measurement_idict = getMeasurements(analysis)
             measurement_idict = analysis.measurement_idict;
         end
@@ -60,24 +68,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
         end
         function comparison_idict = getComparisons(analysis)
             comparison_idict = analysis.comparison_idict;
-        end
-        function measurement_id = getMeasurementID(analysis,  measurement_class, measure_code, group, varargin) %#ok<*INUSL>
-            for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}]; %#ok<*AGROW>
-            end
-            measurement_id = [measurement_class ' ' measure_code ' ' group ' ' vararginpart];
-        end
-        function randomcomparison_id = getRanomComparisonID(analysis,  randomcomparison_class, randomcomparison_code, group, varargin)
-            for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}];
-            end
-            randomcomparison_id = [measurement_class ' ' randomcomparison_code ' ' group ' ' vararginpart];
-        end
-        function comparison_id = getComparisonID(analysis,  comparison_class, comparison_code, groups, varargin) % string
-            for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}];
-            end
-            comparison_id = [measurement_class ' ' measure_code ' ' groups(1) ' ' groups(2) ' ' vararginpart];
         end
     end
     methods (Static)

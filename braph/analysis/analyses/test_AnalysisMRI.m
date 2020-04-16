@@ -11,8 +11,28 @@ sub2 = SubjectMRI(atlas, 'SubjectID', '2');
 sub3 = SubjectMRI(atlas, 'SubjectID', '3');
 sub4 = SubjectMRI(atlas, 'SubjectID', '4');
 sub5 = SubjectMRI(atlas, 'SubjectID', '5');
+group1 = Group('SubjectMRI', {sub1, sub2, sub3, sub4, sub5}, 'GroupName', 'GroupTestMRI1');
+group2 = Group('SubjectMRI', {sub1, sub2, sub3, sub4, sub5}, 'GroupName', 'GroupTestMRI2');
 
 cohort = Cohort('Cohort MRI', 'SubjectMRI', atlas, {sub1, sub2, sub3, sub4, sub5});
+cohort.getGroups().add(group1.getName(), group1)
+cohort.getGroups().add(group2.getName(), group2)
 
 %% Test 1: Instantiation
+analysis = AnalysisMRI(cohort, {}, {}, {}); %#ok<*NASGU>
+
+%% Test 2: Create correct ID
 analysis = AnalysisMRI(cohort, {}, {}, {});
+measurement_id = analysis.getMeasurementID('Degree', group1);
+comparison_id = analysis.getComparisonID('Distance', {group1, group2});
+randomcomparison_id = analysis.getRandomComparisonID('PathLength', group1);
+
+assert(ischar(measurement_id), ...
+    ['BRAPH:AnalysisDTI:getMeasurementID'], ...
+    ['.getMeasurementID() not creating an ID'])  %#ok<*NBRAK>
+assert(ischar(randomcomparison_id), ...
+    ['BRAPH:AnalysisDTI:getMeasurementID'], ...
+    ['.getMeasurementID() not creating an ID']) 
+assert(ischar(comparison_id), ...
+    ['BRAPH:AnalysisDTI:getMeasurementID'], ...
+    ['.getMeasurementID() not creating an ID']) 

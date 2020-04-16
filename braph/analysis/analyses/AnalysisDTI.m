@@ -5,6 +5,29 @@ classdef AnalysisDTI < Analysis
             analysis = analysis@Analysis(cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
+    methods 
+        function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
+            vararginpart = '';
+            for i = 1:1:length(varargin)
+                vararginpart = [vararginpart '' varargin{i}]; %#ok<*AGROW>
+            end
+            measurement_id = [tostring(analysis.getMeasurementClass()) ' ' tostring(measure_code) ' ' tostring(group.getName()) ' ' tostring(vararginpart)];
+        end
+        function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
+            vararginpart = '';
+            for i = 1:1:length(varargin)
+                vararginpart = [vararginpart '' varargin{i}];
+            end
+            randomcomparison_id = [tostring(analysis.getRandomComparisonClass()) ' ' tostring(measure_code) ' ' tostring(group.getName()) ' ' tostring(vararginpart)];
+        end
+        function comparison_id = getComparisonID(analysis, measure_code, groups, varargin)
+            vararginpart = '';
+            for i = 1:1:length(varargin)
+                vararginpart = [vararginpart '' varargin{i}];
+            end
+            comparison_id = [tostring(analysis.getComparisonClass()) ' ' tostring(measure_code) ' ' tostring(groups{1}.getName()) ' ' tostring(groups{2}.getName()) ' ' tostring(vararginpart)];
+        end
+    end
     methods (Static)
         function analysis_class = getClass()
             analysis_class = 'AnalysisDTI';
@@ -20,9 +43,9 @@ classdef AnalysisDTI < Analysis
                 'Analysis using DTI connectivity matrix,' ...
                 'such as activation timeseries for each brain region' ...
                 ];
-        end        
+        end
         function measuerment_class = getMeasurementClass()
-             measuerment_class = 'MeasurementDTI';
+            measuerment_class = 'MeasurementDTI';
         end
         function randomcomparison_class = getRandomComparisonClass()
             randomcomparison_class = 'RandomComparisonDTI';
