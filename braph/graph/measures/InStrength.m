@@ -14,6 +14,7 @@ classdef InStrength < Measure
     %   getClass                    - returns the in-strength class.
     %   getName                     - returns the name of in-strength measure.
     %   getDescription              - returns the description of in-strength measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if in-strength measure is global.
     %   is_nodal                    - boolean, checks if in-strength measure is nodal.
     %   is_binodal                  - boolean, checks if in-strength measure if binodal.
@@ -27,6 +28,9 @@ classdef InStrength < Measure
         function m = InStrength(g, varargin)
             % INSTRENGTH(G) creates in-strength with default measure
             % properties. G is a graph (e.g, an instance of Graph WD).
+            %
+            % INSTRENGTH(G, 'VALUE', VALUE) creates in-strength, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphWD).
             %
             % See also Measure, Graph, Degree, Distance, Efficiency.
 

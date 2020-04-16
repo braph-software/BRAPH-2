@@ -16,6 +16,7 @@ classdef DegreeAv < Degree
     %   getClass                    - returns the average degree class.
     %   getName                     - returns the name of average degree measure.
     %   getDescription              - returns the description of average degree measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if average degree measure is global.
     %   is_nodal                    - boolean, checks if average degree measure is nodal.
     %   is_binodal                  - boolean, checks if average degree measure if binodal.
@@ -30,6 +31,10 @@ classdef DegreeAv < Degree
             % DEGREEAV(G) creates average degree with default measure properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
+            %
+            % DEGREEAV(G, 'VALUE', VALUE) creates average degree, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU).
             %   
             % See also Degree, Measure, Graph, StrengthAv, PathLengthAv. 
 

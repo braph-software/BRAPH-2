@@ -15,6 +15,7 @@ classdef Degree < Measure
     %   getClass                    - returns the degree class.
     %   getName                     - returns the name of degree measure.
     %   getDescription              - returns the description of degree measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if degree measure is global.
     %   is_nodal                    - boolean, checks if degree measure is nodal.
     %   is_binodal                  - boolean, checks if degree measure if binodal.
@@ -29,6 +30,10 @@ classdef Degree < Measure
             % DEGREE(G) creates degree with default measure properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
+            %
+            % DEGREE(G, 'VALUE', VALUE) creates degree, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU).
             %   
             % See also Measure, Graph, Strength, Distance, Efficency. 
             

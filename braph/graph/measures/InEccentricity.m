@@ -14,6 +14,7 @@ classdef InEccentricity < Measure
     %   getClass                    - returns the in-eccentricity class.
     %   getName                     - returns the name of in-eccentricity measure.
     %   getDescription              - returns the description of in-eccentricity measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if in-eccentricity measure is global.
     %   is_nodal                    - boolean, checks if in-eccentricity measure is nodal.
     %   is_binodal                  - boolean, checks if in-eccentricity measure if binodal.
@@ -33,6 +34,10 @@ classdef InEccentricity < Measure
             % Admissible RULE options are:
             % INECCENTRICITYRULE = 'default' (default) - calculates INECCENTRICITY of global graph.
             %                      'subgraphs' - calculates INECCENTRICITY within connected subgraphs.
+            %
+            % INECCENTRICITY(G, 'VALUE', VALUE) creates in-eccentricity, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU).
             %   
             % See also Measure, Graph, Strength, Distance, Efficency.          
            

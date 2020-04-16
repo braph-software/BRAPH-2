@@ -14,6 +14,7 @@ classdef InGlobalEfficiency < Measure
     %   getClass                    - returns the in-globalefficiency class.
     %   getName                     - returns the name of in-globalefficiency measure.
     %   getDescription              - returns the description of in-globalefficiency measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if in-globalefficiency measure is global.
     %   is_nodal                    - boolean, checks if in-globalefficiency measure is nodal.
     %   is_binodal                  - boolean, checks if in-globalefficiency measure if binodal.
@@ -30,6 +31,9 @@ classdef InGlobalEfficiency < Measure
             % INGLOBALEFFICIENCY(G, 'Settings', SETTINGS) creates in-globalefficiency measure and
             % initializes the property settings with SETTINGS. 
             % Currently INGLOBALEFFICIENCY does not utilize SETTINGS.
+            %
+            % INGLOBALEFFICIENCY(G, 'VALUE', VALUE) creates in-global efficiency, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphWD).
             %   
             % See also Measure, Graph, Strength, Distance.
             

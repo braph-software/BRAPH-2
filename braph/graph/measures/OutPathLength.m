@@ -14,6 +14,7 @@ classdef OutPathLength < Measure
     %   getClass                    - returns the out-pathlength class.
     %   getName                     - returns the name of out-pathlength measure.
     %   getDescription              - returns the description of out-pathlength measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if out-pathlength measure is global.
     %   is_nodal                    - boolean, checks if out-pathlength measure is nodal.
     %   is_binodal                  - boolean, checks if out-pathlength measure if binodal.
@@ -33,6 +34,10 @@ classdef OutPathLength < Measure
             % subgraphs     -   Calculates OUTPATHLENGTH of all subgraphs
             % harmonic      -   Calculates OUTPATHLENGTH with harmonic average
             % default       -   Calculates OUTPATHLENGTH with normal average
+            %
+            % OUTPATHLENGTH(G, 'VALUE', VALUE) creates out-pathlength, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU).
             %   
             % See also Measure, Graph, Strength, Distance, GlobalEfficiency.
        

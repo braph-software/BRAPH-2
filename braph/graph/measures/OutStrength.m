@@ -14,6 +14,7 @@ classdef OutStrength < Measure
     %   getClass                    - returns the out-strength class.
     %   getName                     - returns the name of out-strength measure.
     %   getDescription              - returns the description of out-strength measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if out-strength measure is global.
     %   is_nodal                    - boolean, checks if out-strength measure is nodal.
     %   is_binodal                  - boolean, checks if out-strength measure if binodal.
@@ -27,6 +28,9 @@ classdef OutStrength < Measure
         function m = OutStrength(g, varargin)
             % OUTSTRENGTH(G) creates out-strength with default measure
             % properties. G is a graph (e.g, an instance of Graph WD).
+            %
+            % OUTSTRENGTH(G, 'VALUE', VALUE) creates out-strength, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphWD).
             %
             % See also Measure, Graph, Degree, Distance, Efficiency.
             

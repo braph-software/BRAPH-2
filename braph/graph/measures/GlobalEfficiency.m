@@ -14,6 +14,7 @@ classdef GlobalEfficiency < Measure
     %   getClass                    - returns the globalefficiency class.
     %   getName                     - returns the name of globalefficiency measure.
     %   getDescription              - returns the description of globalefficiency measure.
+    %   getAvailableSettings        - returns the settings available to the class.
     %   is_global                   - boolean, checks if globalefficiency measure is global.
     %   is_nodal                    - boolean, checks if globalefficiency measure is nodal.
     %   is_binodal                  - boolean, checks if globalefficiency measure if binodal.
@@ -24,12 +25,15 @@ classdef GlobalEfficiency < Measure
     % See also Measure, Graph, Strength, Distance, Degree, InGlobalEfficiency, OutGlobalEfficiency, LocalEfficiency.
     methods
         function m = GlobalEfficiency(g, varargin)
-            % GLOBALEFFICIENCY(G) creates globalefficiency with default measure properties.
+            % GLOBALEFFICIENCY(G) creates global efficiency with default measure properties.
             % G is a graph (e.g, an instance of GraphBU, Graph WU). 
             %   
-            % GLOBALEFFICIENCY(G, 'Settings', SETTINGS) creates globalefficiency measure and
+            % GLOBALEFFICIENCY(G, 'Settings', SETTINGS) creates global efficiency measure and
             % initializes the property settings with SETTINGS. 
             % Currently GLOBALEFFICIENCY does not utilize SETTINGS.
+            %
+            % GLOBALEFFICIENCY(G, 'VALUE', VALUE) creates global efficiency, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of  GraphBU, Graph WU).
             %   
             % See also Measure, Graph, Strength, Distance.
             
@@ -40,7 +44,7 @@ classdef GlobalEfficiency < Measure
         function global_efficiency = calculate(m)
             % CALCULATE calculates the global efficiency value of a node
             %
-            % GLOBALEFFICIENCY = CALCULATE(M) returns the value of the global_efficiency of a
+            % GLOBALEFFICIENCY = CALCULATE(M) returns the value of the global efficiency of a
             % node.
             
             g = m.getGraph();
@@ -61,7 +65,7 @@ classdef GlobalEfficiency < Measure
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the globalefficiency measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the global efficiency measure.
             %
             % See also getName(), getDescription().
             
@@ -70,17 +74,17 @@ classdef GlobalEfficiency < Measure
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the globalefficiency measure.
+            % NAME = GETNAME() returns the name of the global efficiency measure.
             %
             % See also getClass(), getDescription(). 
             
             name = 'Global-Efficiency';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the globalefficiency description 
+            % GETDESCRIPTION returns the global efficiency description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % globalefficiency measure.
+            % global efficiency measure.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -101,7 +105,7 @@ classdef GlobalEfficiency < Measure
             available_settings = {};
         end
         function bool = is_global()
-            % IS_GLOBAL checks if globalefficiency measure is global (false)
+            % IS_GLOBAL checks if global efficiency measure is global (false)
             %
             % BOOL = IS_GLOBAL() returns false.
             %
@@ -110,7 +114,7 @@ classdef GlobalEfficiency < Measure
             bool = false;
         end
         function bool = is_nodal()
-            % IS_NODAL checks if globalefficiency measure is nodal (true)
+            % IS_NODAL checks if global efficiency measure is nodal (true)
             %
             % BOOL = IS_NODAL() returns true.
             %
@@ -119,7 +123,7 @@ classdef GlobalEfficiency < Measure
             bool = true;
         end
         function bool = is_binodal()
-            % IS_BINODAL checks if globalefficiency measure is binodal (false)
+            % IS_BINODAL checks if global efficiency measure is binodal (false)
             %
             % BOOL = IS_BINODAL() returns false.
             %
@@ -129,10 +133,10 @@ classdef GlobalEfficiency < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to globalefficiency 
+            % to global efficiency 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to globalefficiency. 
+            % of compatible graph classes to global efficiency. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -144,10 +148,10 @@ classdef GlobalEfficiency < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to globalefficiency 
+            % graphs to global efficiency 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to globalefficiency.
+            % compatible graphs to global efficiency.
             % 
             % See also getCompatibleGraphList().
             
