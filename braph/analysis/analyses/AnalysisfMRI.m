@@ -5,6 +5,29 @@ classdef AnalysisfMRI < Analysis
             analysis = analysis@Analysis(cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
+    methods
+        function measurement_id = getMeasurementID(analysis, measure_code, varargin)
+            vararginpart = '';
+            for i = 1:1:length(varargin)
+                vararginpart = [vararginpart '' varargin{i}]; %#ok<*AGROW>
+            end
+            measurement_id = [tostring(analysis.getMeasurements().getValueClass()) ' ' tostring(measure_code) ' ' tostring(analysis.getCohort().getGroups().getValue(1).getName()) ' ' tostring(vararginpart)];
+        end
+        function randomcomparison_id = getRandomComparisonID(analysis, measure_code, varargin)
+            vararginpart = '';
+            for i = 1:1:length(varargin)
+                vararginpart = [vararginpart '' varargin{i}];
+            end
+            randomcomparison_id = [tostring(analysis.getRandomComparisons().getValueClass()) ' ' tostring(measure_code) ' ' tostring(analysis.getCohort().getGroups().getValue(1).getName()) ' ' tostring(vararginpart)];
+        end
+        function comparison_id = getComparisonID(analysis, measure_code, varargin) 
+            vararginpart = '';
+            for i = 1:1:length(varargin)
+                vararginpart = [vararginpart '' varargin{i}];
+            end
+            comparison_id = [tostring(analysis.getComparisons().getValueClass()) ' ' tostring(measure_code) ' ' tostring(analysis.getCohort().getGroups().getValue(1).getName()) ' ' tostring(analysis.getCohort().getGroups().getValue(2).getName()) ' ' tostring(vararginpart)];
+        end
+    end
     methods (Static)
         function analysis_class = getClass()
             analysis_class = 'AnalysisfMRI';
@@ -29,6 +52,6 @@ classdef AnalysisfMRI < Analysis
         end
         function comparison_class = getComparisonClass()
             comparison_class = 'ComparisonfMRI';
-        end        
+        end
     end
 end
