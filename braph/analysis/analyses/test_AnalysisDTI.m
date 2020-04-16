@@ -11,8 +11,30 @@ sub2 = SubjectDTI(atlas, 'SubjectID', '2');
 sub3 = SubjectDTI(atlas, 'SubjectID', '3');
 sub4 = SubjectDTI(atlas, 'SubjectID', '4');
 sub5 = SubjectDTI(atlas, 'SubjectID', '5');
+group1 = Group('SubjectDTI', {sub1, sub2, sub3, sub4, sub5}, 'GroupName', 'GroupTestDTI1');
+group2 = Group('SubjectDTI', {sub1, sub2, sub3, sub4, sub5}, 'GroupName', 'GroupTestDTI2');
 
 cohort = Cohort('Cohort DTI', 'SubjectDTI', atlas, {sub1, sub2, sub3, sub4, sub5});
+cohort.getGroups().add(group1.getName(), group1)
+cohort.getGroups().add(group2.getName(), group2)
 
 %% Test 1: Instantiation
+analysis = AnalysisDTI(cohort, {}, {}, {}); %#ok<NASGU>
+
+%% Test 2: Create correct ID
 analysis = AnalysisDTI(cohort, {}, {}, {});
+measurement_id = analysis.getMeasurementID('Degree');
+comparison_id = analysis.getComparisonID('Distance');
+randomcomparison_id = analysis.getRandomComparisonID('PathLength');
+
+assert(ischar(measurement_id), ...
+    ['BRAPH:AnalysisDTI:getMeasurementID'], ...
+    ['.getMeasurementID() not creating an ID']) %#ok<*NBRAK>
+assert(ischar(randomcomparison_id), ...
+    ['BRAPH:AnalysisDTI:getMeasurementID'], ...
+    ['.getMeasurementID() not creating an ID']) %#ok<*NBRAK>
+assert(ischar(comparison_id), ...
+    ['BRAPH:AnalysisDTI:getMeasurementID'], ...
+    ['.getMeasurementID() not creating an ID']) %#ok<*NBRAK>
+
+
