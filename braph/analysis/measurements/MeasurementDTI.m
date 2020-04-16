@@ -1,7 +1,7 @@
-classdef MeasurementMRI < Measurement
+classdef MeasurementDTI < Measurement
     % single group of mri subjects
     methods
-        function m =  MeasurementMRI(id, atlas, group, varargin)
+        function m =  MeasurementDTI(id, atlas, group, varargin)
             
             m = m@Measurement(id, atlas, group, varargin{:});
         end
@@ -14,15 +14,15 @@ classdef MeasurementMRI < Measurement
             
             m.data_dict = containers.Map;
             m.data_dict('type') = DataScalar(atlas);
-            m.data_dict('value') = DataStructural(atlas);
+            m.data_dict('value') = DataConnectivity(atlas);
         end
     end
     methods (Static)
         function class = getClass(m) %#ok<*INUSD>
-            class = 'MeasurementMRI';
+            class = 'MeasurementDTI';
         end
         function name = getName(m)
-            name = 'Measurement MRI';
+            name = 'Measurement DTI';
         end
         function atlas_number = getBrainAtlasNumber(m)
             atlas_number =  1;
@@ -38,23 +38,23 @@ classdef MeasurementMRI < Measurement
             % list of measurments data keys
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('type') = 'DataScalar';
-            datalist('value') = 'DataScalar';  % all globals for now
+            datalist('value') = 'DataConnectivity'; 
         end
         function sub = getMeasurement(measurementClass, id, varargin)
             sub = eval([measurementClass '(id, varargin{:})']);
         end
         function data_codes = getDataCodes(m)
-            data_codes = Measurement.getDataCodes('MeasurementMRI');
+            data_codes = Measurement.getDataCodes('MeasurementDTI');
         end
         function data_number = getDataNumber(m)
-            data_number = Measurement.getDataNumber('MeasurementMRI');
+            data_number = Measurement.getDataNumber('MeasurementDTI');
         end
         function data_classes = getDataClasses(m)
-            data_classes = Measurement.getDataClasses('MeasurementMRI');
+            data_classes = Measurement.getDataClasses('MeasurementDTI');
         end
         function data_class = getDataClass(m, data_code) %#ok<INUSL>
             data_class = Measuremente.getDataNumber(...
-                'MeasurementMRI', data_code);
+                'MeasurementDTI', data_code);
         end
     end
 end

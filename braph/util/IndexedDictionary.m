@@ -112,7 +112,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             disp([' With entries:' ]) %#ok<NBRAK>
             for i = 1:2:length(idict.dict)
                 key_and_value = idict.dict(i);
-                disp(['  key:' key_and_value{1} ' ,value:' key_and_value{2}]);
+                disp(['  key:' tostring(key_and_value{1}) ' ,value:' tostring(key_and_value{2})]);
             end
         end
         function n = length(idict)
@@ -429,6 +429,10 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % value from DICT that has index with key_new and value_new.
             %
             % See also add(), remove().
+            
+            assert(isequal(idict.getValueClass(), class(value_new)), ...
+                'BRAPH:IndexedDictionary:Bug', ...
+                'value is not of the correct class.')
             
             if idict.contains(index)
                 idict.dict(index) = {key_new, value_new};

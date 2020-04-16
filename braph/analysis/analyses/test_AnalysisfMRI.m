@@ -15,4 +15,4 @@ sub5 = SubjectfMRI(atlas, 'SubjectID', '5');
 cohort = Cohort('Cohort fMRI', 'SubjectfMRI', atlas, {sub1, sub2, sub3, sub4, sub5});
 
 %% Test 1: Instantiation
-analysis = AnalysisfMRI(cohort, {});
+analysis = AnalysisfMRI(cohort, {}, {}, {});

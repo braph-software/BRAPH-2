@@ -1,4 +1,4 @@
-% test MeasurementMRI
+% test RandomComparisonMRI
 br1 = BrainRegion('BR1', 'brain region 1', 1, 11, 111);
 br2 = BrainRegion('BR2', 'brain region 2', 2, 22, 222);
 br3 = BrainRegion('BR3', 'brain region 3', 3, 33, 333);
@@ -16,4 +16,4 @@ sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtla
 group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
 
 %% Test 1: Instantiation
-measurement = MeasurementMRI('m1', atlas, group);
+randomcomparison = RandomComparisonMRI('rc1', atlas, group);

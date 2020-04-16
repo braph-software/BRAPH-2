@@ -98,9 +98,11 @@ ecc = Eccentricity(g, 'EccentricityRule', 'subgraphs').getValue();
 d = Distance(g).getValue();
 [~, ~, bct_value, ~, ~]= charpath(d);
 
+braph_value = ecc(1,1);
+
 assert(isequal( round(ecc(1,1), 3), round(bct_value, 3)), ...
    ('BRAPH:Eccentricity'), ...
-    ('Eccentricity is not calculated for BCT.'))
+    ['Eccentricity is not calculated for BCT. values :' tostring(braph_value) ' , ' tostring(bct_value) ])
 
 %% Functions to calculate Eccentricity from 2019_03_03_BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
@@ -177,6 +179,7 @@ efficiency = mean(1./Dv);
 % Modified by Emiliano Gomez to get nodal eccentricity.
 D(D==Inf) = 0;
 ecc        = nanmax(D(1,:),[],2);
+ecc(isnan(ecc)) = 0;
 
 % Radius of graph
 radius     = min(ecc);
