@@ -61,19 +61,19 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function comparison_idict = getComparisons(analysis)
             comparison_idict = analysis.comparison_idict;
         end
-        function measurement_id = calculate_measurement_id(analysis,  measurement_class, measure_code, group, varargin) %#ok<*INUSL>
+        function measurement_id = getMeasurementID(analysis,  measurement_class, measure_code, group, varargin) %#ok<*INUSL>
             for i = 1:1:length(varargin)
                 vararginpart = [vararginpart '' varargin{i}]; %#ok<*AGROW>
             end
             measurement_id = [measurement_class ' ' measure_code ' ' group ' ' vararginpart];
         end
-        function randomcomparison_id = calculate_randomcomparison_id(analysis,  randomcomparison_class, randomcomparison_code, group, varargin)
+        function randomcomparison_id = getRanomComparisonID(analysis,  randomcomparison_class, randomcomparison_code, group, varargin)
             for i = 1:1:length(varargin)
                 vararginpart = [vararginpart '' varargin{i}];
             end
             randomcomparison_id = [measurement_class ' ' randomcomparison_code ' ' group ' ' vararginpart];
         end
-        function comparison_id = calculate_comparison_id(analysis,  comparison_class, comparison_code, groups, varargin) % string
+        function comparison_id = getComparisonID(analysis,  comparison_class, comparison_code, groups, varargin) % string
             for i = 1:1:length(varargin)
                 vararginpart = [vararginpart '' varargin{i}];
             end
@@ -96,6 +96,10 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis_class = analysis;
             end
         end
+        function name = getName(analysis)
+            % analysis name            
+            name = eval([Analysis.getClass(analysis) '.getName()']);
+        end
         function subject_class = getSubjectClass(analysis)
             % cohort class            
             subject_class = eval([Analysis.getClass(analysis) '.getSubjectClass()']);
@@ -108,10 +112,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
         end
         function comparisonList = getComparisonClass()
             comparisonList = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
-        end
-        function name = getName(analysis)
-            % analysis name            
-            name = eval([Analysis.getClass(analysis) '.getName()']);
         end
         function description = getDescription(analysis)
             % analysis description            
