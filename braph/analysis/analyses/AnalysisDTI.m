@@ -6,26 +6,26 @@ classdef AnalysisDTI < Analysis
         end
     end
     methods 
-        function measurement_id = getMeasurementID(analysis, measure_code, varargin)
+        function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
             vararginpart = '';
             for i = 1:1:length(varargin)
                 vararginpart = [vararginpart '' varargin{i}]; %#ok<*AGROW>
             end
-            measurement_id = [tostring(analysis.getMeasurements().getValueClass()) ' ' tostring(measure_code) ' ' tostring(analysis.getCohort().getGroups().getValue(1).getName()) ' ' tostring(vararginpart)];
+            measurement_id = [tostring(analysis.getMeasurementClass()) ' ' tostring(measure_code) ' ' tostring(group.getName()) ' ' tostring(vararginpart)];
         end
-        function randomcomparison_id = getRandomComparisonID(analysis, measure_code, varargin)
+        function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             vararginpart = '';
             for i = 1:1:length(varargin)
                 vararginpart = [vararginpart '' varargin{i}];
             end
-            randomcomparison_id = [tostring(analysis.getRandomComparisons().getValueClass()) ' ' tostring(measure_code) ' ' tostring(analysis.getCohort().getGroups().getValue(1).getName()) ' ' tostring(vararginpart)];
+            randomcomparison_id = [tostring(analysis.getRandomComparisonClass()) ' ' tostring(measure_code) ' ' tostring(group.getName()) ' ' tostring(vararginpart)];
         end
-        function comparison_id = getComparisonID(analysis, measure_code, varargin) 
+        function comparison_id = getComparisonID(analysis, measure_code, groups, varargin)
             vararginpart = '';
             for i = 1:1:length(varargin)
                 vararginpart = [vararginpart '' varargin{i}];
             end
-            comparison_id = [tostring(analysis.getComparisons().getValueClass()) ' ' tostring(measure_code) ' ' tostring(analysis.getCohort().getGroups().getValue(1).getName()) ' ' tostring(analysis.getCohort().getGroups().getValue(2).getName()) ' ' tostring(vararginpart)];
+            comparison_id = [tostring(analysis.getComparisonClass()) ' ' tostring(measure_code) ' ' tostring(groups{1}.getName()) ' ' tostring(groups{2}.getName()) ' ' tostring(vararginpart)];
         end
     end
     methods (Static)

@@ -23,9 +23,9 @@ analysis = AnalysisMRI(cohort, {}, {}, {}); %#ok<*NASGU>
 
 %% Test 2: Create correct ID
 analysis = AnalysisMRI(cohort, {}, {}, {});
-measurement_id = analysis.getMeasurementID('Degree');
-comparison_id = analysis.getComparisonID('Distance');
-randomcomparison_id = analysis.getRandomComparisonID('PathLength');
+measurement_id = analysis.getMeasurementID('Degree', group1);
+comparison_id = analysis.getComparisonID('Distance', {group1, group2});
+randomcomparison_id = analysis.getRandomComparisonID('PathLength', group1);
 
 assert(ischar(measurement_id), ...
     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
