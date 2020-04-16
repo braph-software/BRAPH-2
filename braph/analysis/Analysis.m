@@ -52,9 +52,9 @@ classdef Analysis < handle & matlab.mixin.Copyable
         % function copyElement() %TODO
     end
     methods (Abstract)
-        getMeasurementID(analysis, varargin)
-        getRandomComparisonID(analysis, varargin)
-        getComparisonID(analysis, varargin)        
+        getMeasurementID(analysis, measure_code, varargin)
+        getRandomComparisonID(analysis, measure_code, varargin)
+        getComparisonID(analysis, measure_code, varargin)        
     end
     methods
         function cohort = getCohort(analysis)
