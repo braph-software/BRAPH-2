@@ -78,25 +78,25 @@ classdef Analysis < handle & matlab.mixin.Copyable
             id = analysis.getMeasurementID(analysis, measure_code, group, varargin{:});
             if ~analysis.getMeasurements().contains(id)
                 measurement = calculate_measurement(analysis, measure_code, group, varargin{:});
-            else  % new measurement
-               measurement = analysis.getMeasurements().getValue(id);
-            end            
+                analysis.getMeasurements().add(id, measurement)
+            end
+            measurement = analysis.getMeasurements().getValue(id);
         end  
         function random_comparison = calculateRandomComparison(analysis, measure_code, group, varargin)
             id = analysis.getRandomComparisonID(analysis, measure_code, group, varargin{:});
             if ~analysis.getRandomComparison().contains(id)
                random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin{:});
-            else  % new randomcomparison
-               random_comparison = analysis.getRandomComparisons().getValue(id);
-            end            
+               analysis.getRandomComparisons().add(id, random_comparison)
+            end
+            random_comparison = analysis.getRandomComparisons().getValue(id);
         end 
         function comparison = calculateComparison(analysis, measure_code, groups, varargin)
             id = analysis.getComparisonID(analysis, measure_code, groups, varargin{:});
             if ~analysis.getComparisons().contains(id)
                comparison = calculate_comparison(analysis, measure_code, groups, varargin{:});
-            else  % new comparison
-               comparison = analysis.getComparison().getValue(id);
-            end            
+               analysis.getComparison().add(id, comparison)
+            end
+            comparison = analysis.getComparison().getValue(id);
         end 
     end
     methods (Static)
