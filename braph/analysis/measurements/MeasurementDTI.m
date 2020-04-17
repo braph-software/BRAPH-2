@@ -11,10 +11,13 @@ classdef MeasurementDTI < Measurement
             
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
-            
+
+            value_scalar = get_from_varargin(0,'MeasurementDTIAge', varargin{:});
+            value_dti = get_from_varargin(zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length()), 'MeasurementDTIValue', varargin{:});
+
             m.data_dict = containers.Map;
-            m.data_dict('type') = DataScalar(atlas);
-            m.data_dict('value') = DataConnectivity(atlas);
+            m.data_dict('type') = DataScalar(atlas, value_scalar);  % this must be an array 
+            m.data_dict('value') = DataConnectivity(atlas, [value_dti{:}]);
         end
     end
     methods (Static)

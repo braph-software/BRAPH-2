@@ -9,7 +9,7 @@ classdef AnalysisDTI < Analysis
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
             vararginpart = '';
             for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}]; %#ok<*AGROW>
+                vararginpart = [vararginpart ' ' varargin{i}]; %#ok<*AGROW>
             end
             measurement_id = [tostring(analysis.getMeasurementClass()) ' ' tostring(measure_code) ' ' tostring(group.getName()) ' ' tostring(vararginpart)];
         end
@@ -29,8 +29,29 @@ classdef AnalysisDTI < Analysis
         end
     end
     methods (Access = protected)
-        function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)
-            calculated_measurement = '';  % empty string | empty char
+        function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
+            subjects = group.getSubjects();
+            graph_type = get_from_varargin('GraphBD', 'GraphType', varargin{:});                     
+            measure_array = cell(1, group.subjectnumber());
+           
+            for i = 1:1:group.subjectnumber()
+                subject = subjects{i};
+                A = subject.getData('DTI').getValue();  % data codes: age, dti
+                g = Graph.getGraph(graph_type, A, varargin{:});
+                measure = Measure.getMeasure(measure_code, g, varargin{:});
+                measure_array{1, i} = measure.getValue();
+            end            
+            
+            group_average = sum(cellfun(@sum, measure_array)) ./ sum(cellfun(@length, measure_array));
+            
+            %  group);
+            calculated_measurement = Measurement.getMeasurement('MeasurementDTI', ...
+                analysis.getMeasurementID(measure_code, group, varargin{:}), ...
+                analysis.getCohort().getBrainAtlases(), group,  ...
+                'MeasurementDTIValue', measure_array ...
+                ); 
+            
+            
         end
         function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
             calculated_random_comparison = '';

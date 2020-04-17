@@ -75,7 +75,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             comparison_idict = analysis.comparison_idict;
         end
         function measurement = calculateMeasurement(analysis, measure_code, group, varargin)
-            id = analysis.getMeasurementID(analysis, measure_code, group, varargin{:});
+            id = analysis.getMeasurementID(measure_code, group, varargin{:});
             if ~analysis.getMeasurements().contains(id)
                 measurement = calculate_measurement(analysis, measure_code, group, varargin{:});
                 analysis.getMeasurements().add(id, measurement)

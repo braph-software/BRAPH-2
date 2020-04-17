@@ -6,11 +6,11 @@ br4 = BrainRegion('BR4', 'brain region 4', 4, 44, 444);
 br5 = BrainRegion('BR5', 'brain region 5', 5, 55, 555);
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 
-sub1 = SubjectDTI(atlas, 'SubjectID', '1');
-sub2 = SubjectDTI(atlas, 'SubjectID', '2');
-sub3 = SubjectDTI(atlas, 'SubjectID', '3');
-sub4 = SubjectDTI(atlas, 'SubjectID', '4');
-sub5 = SubjectDTI(atlas, 'SubjectID', '5');
+sub1 = SubjectDTI(atlas, 'SubjectID', '1', 'DTIAge', 20, 'DTIValue', rand(atlas.getBrainRegions().length()));
+sub2 = SubjectDTI(atlas, 'SubjectID', '2', 'DTIAge', 20, 'DTIValue', rand(atlas.getBrainRegions().length()));
+sub3 = SubjectDTI(atlas, 'SubjectID', '3', 'DTIAge', 20, 'DTIValue', rand(atlas.getBrainRegions().length()));
+sub4 = SubjectDTI(atlas, 'SubjectID', '4', 'DTIAge', 20, 'DTIValue', rand(atlas.getBrainRegions().length()));
+sub5 = SubjectDTI(atlas, 'SubjectID', '5', 'DTIAge', 20, 'DTIValue', rand(atlas.getBrainRegions().length()));
 group1 = Group('SubjectDTI', {sub1, sub2, sub3, sub4, sub5}, 'GroupName', 'GroupTestDTI1');
 group2 = Group('SubjectDTI', {sub1, sub2, sub3, sub4, sub5}, 'GroupName', 'GroupTestDTI2');
 
@@ -37,4 +37,11 @@ assert(ischar(comparison_id), ...
     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
     ['.getMeasurementID() not creating an ID']) %#ok<*NBRAK>
 
+%% Test 3: Calculate Measurement
+analysis = AnalysisDTI(cohort, {}, {}, {});
+calculated_measurement = analysis.calculateMeasurement('Degree', group1, 'GraphType', 'GraphWU');
+
+assert(~isempty(calculated_measurement), ...
+    ['BRAPH:AnalysisDTI:getMeasurementID'], ...
+    ['.calculateMeasurement() not working']) %#ok<*NBRAK>
 
