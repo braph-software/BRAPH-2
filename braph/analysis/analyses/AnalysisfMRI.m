@@ -28,6 +28,17 @@ classdef AnalysisfMRI < Analysis
             comparison_id = [tostring(analysis.getComparisonClass()) ' ' tostring(measure_code) ' ' tostring(groups{1}.getName()) ' ' tostring(groups{2}.getName()) ' ' tostring(vararginpart)];
         end
     end
+   methods (Access = protected)
+        function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)
+            calculated_measurement = '';  % empty string | empty char
+        end
+        function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
+            calculated_random_comparison = '';
+        end
+        function calculated_comparison = calculate_comparison(analysis, measure_code, groups, varargin)
+            calculated_comparison = '';
+        end
+    end
     methods (Static)
         function analysis_class = getClass()
             analysis_class = 'AnalysisfMRI';
