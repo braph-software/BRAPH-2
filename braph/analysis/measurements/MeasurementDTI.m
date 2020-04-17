@@ -1,5 +1,5 @@
 classdef MeasurementDTI < Measurement
-    % single group of mri subjects
+    % single group of dti subjects
     methods
         function m =  MeasurementDTI(id, atlas, group, varargin)
             
