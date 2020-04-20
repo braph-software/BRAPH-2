@@ -4,7 +4,6 @@ classdef Measurement < handle & matlab.mixin.Copyable
         group  % group
         atlases  % cell array with brain atlases
         settings  % settings of the measurement
-        data_dict  % dictionary with data for measurements
     end
     methods (Access = protected)
         function m = Measurement(id, atlases, group, varargin)
@@ -25,15 +24,8 @@ classdef Measurement < handle & matlab.mixin.Copyable
             
             m.settings = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});
             
-            m.initialize_datadict(atlases, group, varargin{:});
-            
-            data_codes = m.getDataCodes();
-            for i = 1:1:numel(data_codes)
-                data_code = data_codes{i};
-                value = get_from_varargin(m.getData(data_code).getValue, ...
-                    data_code, varargin);
-                m.getData(data_code).setValue(value);
-            end
+            m.initialize_data(atlases, group, varargin{:});
+
         end
         function measurement_copy = copyElement(m)
             % It does not make a deep copy of atlases or groups
@@ -52,7 +44,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
     end
     methods (Abstract, Access = protected)
-        initialize_datadict(m, varargin)  % initialize datadict
+        initialize_data(m, varargin)  % initialize datadict
     end
     methods
         function id = getID(m)
@@ -63,16 +55,8 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
         function disp(m)
             disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])
-            disp(['id = ' Measurement.getID()])
-            data_codes = m.getDataCodes();
-            for i = 1:1:m.getDataNumber()
-                data_code = data_codes{i};
-                d = m.getData(data_code);
-                disp([data_code ' = ' d.tostring()])
-            end
-        end
-        function d = getData(m, data_code)
-            d = m.data_dict(data_code);
+            disp(['id = ' m.getID()])
+            
         end
         function setBrainAtlases(m, atlases)
             % adds a atlas to the end of the cell array
@@ -82,15 +66,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             atlases = m.atlases;
         end
         function update_brainatlas(m, atlases)
-            
             m.atlases = atlases;
-            atlas = atlases{1};
-            
-            d1 = m.data_dict('type');
-            d1.setBrainAtlas(atlas)
-            
-            d2 = m.data_dict('value');
-            d2.setBrainAtlas(atlas);
         end
         function setGroups(m, groups)
             m.update_groups(groups);
@@ -135,22 +111,6 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
         function sub = getMeasurement(measurement_class, id , varargin) %#ok<INUSL>
             sub = eval([measurement_class  '(id, varargin{:})']);
-        end
-        function data_codes = getDataCodes(m)
-            datalist = Measurement.getDataList(m);
-            data_codes = keys(datalist);
-        end
-        function data_number = getDataNumber(m)
-            datalist = Measurement.getDataList(m);
-            data_number = length(datalist);
-        end
-        function data_classes = getDataClasses(m)
-            datalist = Measurement.getDataList(m);
-            data_classes = values(datalist);
-        end
-        function data_class = getDataClass(m, data_code)
-            datalist = Measurement.getDataList(m);
-            data_class = datalist(data_code);
         end
     end
 end

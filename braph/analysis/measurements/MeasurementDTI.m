@@ -1,24 +1,40 @@
 classdef MeasurementDTI < Measurement
     % single group of dti subjects
+    properties
+        value  % array with the values of the measures
+        average_value  % average value of the group
+        measure_code  % class of measure
+    end
     methods
         function m =  MeasurementDTI(id, atlas, group, varargin)
             
             m = m@Measurement(id, atlas, group, varargin{:});
         end
+        function average_value = getGroupAverageValue(m)
+            average_value = m.average_value;
+        end
+        function measure_code = getMeasureCode(m)
+            measure_code = m.measure_code;
+        end
+        function value = getMeasure(m)
+            value = m.value;
+        end
     end
     methods (Access=protected)
-        function initialize_datadict(m, varargin)
+        function initialize_data(m, varargin)
             
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
-
-            value = get_from_varargin(0, 'MeasurementDTI.subject_values', varargin{:});
-            value_dti = get_from_varargin(zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length()), 'MeasurementDTI.average_value', varargin{:});
-
-% 
-%             m.data_dict = containers.Map;
-%             m.data_dict('type') = DataScalar(atlas, value_scalar);  % this must be an array 
-%             m.data_dict('value') = DataConnectivity(atlas, [value_dti{:}]);
+            
+            value = get_from_varargin(zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length()), 'MeasurementDTI.subject_values', varargin{:});
+            if iscell(value)                
+                m.value = [value{:}];
+            else
+                m.value = value;
+            end
+            m.average_value = get_from_varargin(0, 'MeasurementDTI.average_value', varargin{:}); %#ok<*PROPLC>
+            m.measure_code = get_from_varargin('', 'measure_code', varargin{:});
+            
         end
     end
     methods (Static)
@@ -38,27 +54,9 @@ classdef MeasurementDTI < Measurement
             % measurement description missing
             description = '';
         end
-        function datalist = getDataList(m)
-            % list of measurments data keys
-            datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
-            datalist('type') = 'DataScalar';
-            datalist('value') = 'DataConnectivity'; 
-        end
         function sub = getMeasurement(measurementClass, id, varargin)
             sub = eval([measurementClass '(id, varargin{:})']);
         end
-        function data_codes = getDataCodes(m)
-            data_codes = Measurement.getDataCodes('MeasurementDTI');
-        end
-        function data_number = getDataNumber(m)
-            data_number = Measurement.getDataNumber('MeasurementDTI');
-        end
-        function data_classes = getDataClasses(m)
-            data_classes = Measurement.getDataClasses('MeasurementDTI');
-        end
-        function data_class = getDataClass(m, data_code) %#ok<INUSL>
-            data_class = Measuremente.getDataNumber(...
-                'MeasurementDTI', data_code);
-        end
+        
     end
 end
