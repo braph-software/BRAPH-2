@@ -7,53 +7,52 @@ classdef AnalysisDTI < Analysis
     end
     methods
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
-            vararginpart = '';
-            for i = 1:1:length(varargin)
-                vararginpart = [vararginpart ' ' varargin{i}]; %#ok<*AGROW>
-            end
-            measurement_id = [tostring(analysis.getMeasurementClass()) ' ' tostring(measure_code) ' ' tostring(group.getName()) ' ' tostring(vararginpart)];
+            measurement_id = [ ...
+                tostring(analysis.getMeasurementClass()) ' ' ...
+                tostring(measure_code) ' ' ...
+                tostring(cohort.getGroups().getIndex(group)) ...
+                ];
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
-            vararginpart = '';
-            for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}];
-            end
-            randomcomparison_id = [tostring(analysis.getRandomComparisonClass()) ' ' tostring(measure_code) ' ' tostring(group.getName()) ' ' tostring(vararginpart)];
+            randomcomparison_id = [ ...
+                tostring(analysis.getRandomComparisonClass()) ' ' ...
+                tostring(measure_code) ' ' ...
+                tostring(cohort.getGroups().getIndex(group)) ...
+                ];
         end
         function comparison_id = getComparisonID(analysis, measure_code, groups, varargin)
-            vararginpart = '';
-            for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}];
-            end
-            comparison_id = [tostring(analysis.getComparisonClass()) ' ' tostring(measure_code) ' ' tostring(groups{1}.getName()) ' ' tostring(groups{2}.getName()) ' ' tostring(vararginpart)];
+            comparison_id = [ ...
+                tostring(analysis.getComparisonClass()) ' ' ...
+                tostring(measure_code) ' ' ...
+                tostring(cohort.getGroups().getIndex(groups{1})) ' ' ...
+                tostring(cohort.getGroups().getIndex(groups{1})) ...
+                ];
         end
     end
     methods (Access = protected)
         function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
+            graph_type = get_from_varargin('GraphWU', 'GraphType', varargin{:});                     
+            
             subjects = group.getSubjects();
-            graph_type = get_from_varargin('GraphBD', 'GraphType', varargin{:});                     
-            measure_array = cell(1, group.subjectnumber());
-           
+            
+            measures = cell(1, group.subjectnumber());
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
-                A = subject.getData('DTI').getValue();  % data codes: age, dti
+                A = subject.getData('DTI').getValue();  % DTI matrix
                 g = Graph.getGraph(graph_type, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
-                measure_array{1, i} = measure.getValue();
+                measures{1, i} = measure.getValue();
             end            
             
-            group_average = sum(cellfun(@sum, measure_array)) ./ sum(cellfun(@length, measure_array));
+            measure_average = sum(cellfun(@sum, measures)) ./ sum(cellfun(@length, measures));
             
-            %  group);
             calculated_measurement = Measurement.getMeasurement('MeasurementDTI', ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), group,  ...
-                'MeasurementDTI.subject_values', measure_array, ...
-                'MeasurementDTI.average_value', group_average, ...
-                'measure_code', measure_code ...
+                'MeasurementDTI.measure_code', measure_code, ...
+                'MeasurementDTI.subject_values', measures, ...
+                'MeasurementDTI.average_value', measure_average ...
                 ); 
-            
-            
         end
         function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
             calculated_random_comparison = '';

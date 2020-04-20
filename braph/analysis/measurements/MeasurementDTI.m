@@ -1,23 +1,23 @@
 classdef MeasurementDTI < Measurement
     % single group of dti subjects
     properties
-        value  % array with the values of the measures
-        average_value  % average value of the group
         measure_code  % class of measure
+        values  % array with the values of the measure for each subject
+        average_value  % average value of the group
     end
     methods
         function m =  MeasurementDTI(id, atlas, group, varargin)
             
             m = m@Measurement(id, atlas, group, varargin{:});
         end
-        function average_value = getGroupAverageValue(m)
-            average_value = m.average_value;
-        end
         function measure_code = getMeasureCode(m)
             measure_code = m.measure_code;
         end
-        function value = getMeasure(m)
-            value = m.value;
+        function value = getMeasureValues(m)
+            value = m.values;
+        end
+        function average_value = getGroupAverageValue(m)
+            average_value = m.average_value;
         end
     end
     methods (Access=protected)
@@ -26,15 +26,36 @@ classdef MeasurementDTI < Measurement
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
             
-            value = get_from_varargin(zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length()), 'MeasurementDTI.subject_values', varargin{:});
-            if iscell(value)                
-                m.value = [value{:}];
-            else
-                m.value = value;
-            end
-            m.average_value = get_from_varargin(0, 'MeasurementDTI.average_value', varargin{:}); %#ok<*PROPLC>
-            m.measure_code = get_from_varargin('', 'measure_code', varargin{:});
+            m.measure_code = get_from_varargin('', 'MeasurementDTI.measure_code', varargin{:});
             
+            if Measure.is_global(m.getMeasureCode())
+                values = get_from_varargin( ...
+                    repmat( ...
+                        {0}, ...
+                        1, ...
+                        m.getGroup().subjectnumber()), ...
+                    'MeasurementDTI.subject_values', ...
+                    varargin{:});
+            elseif Measure.is_nodal(m.getMeasureCode())
+                values = get_from_varargin( ...
+                    repmat( ...
+                        {zeros(atlas.getBrainRegions().length(), 1)}, ...
+                        1, ...
+                        m.getGroup().subjectnumber()), ...
+                    'MeasurementDTI.subject_values', ...
+                    varargin{:});
+            elseif Measure.is_global(m.getMeasureCode())
+                values = get_from_varargin(...
+                    repmat(...
+                        {zeros(atlas.getBrainRegions().length())}, ...
+                        1, ...
+                        m.getGroup().subjectnumber()), ...
+                    'MeasurementDTI.subject_values', ...
+                    varargin{:});
+            end
+            m.values = values;
+            
+            m.average_value = get_from_varargin(0, 'MeasurementDTI.average_value', varargin{:}); %#ok<*PROPLC>
         end
     end
     methods (Static)
