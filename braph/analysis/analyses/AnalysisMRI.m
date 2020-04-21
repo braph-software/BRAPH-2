@@ -32,8 +32,8 @@ classdef AnalysisMRI < Analysis
     methods (Access = protected)
         function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)
             graph_type = get_from_varargin('GraphWU', 'GraphType', varargin{:});
-            corr_rule = get_from_varargin('default', 'CorrelationRuleMRI', varargin{:});
-            neg_rule = get_from_varargin('default', 'NegativeRuleMRI', varargin{:});
+            correlation_rule = get_from_varargin('default', 'AnalysisMRI.CorrelationRule', varargin{:});
+            negative_weight_rule = get_from_varargin('default', 'AnalysisMRI.NegativeWeightRule', varargin{:});
             subjects = group.getSubjects();
             measures = cell(1, length(group));
             correlation_p_values = cell(1, length(group));
@@ -45,20 +45,17 @@ classdef AnalysisMRI < Analysis
                 data(i, :) = subject.getData('MRI').getValue();  % MRI data
             end
             
-            [A, P] = adjacencyMatrix(data, corr_rule, neg_rule);
+            [A, P] = adjacency_matrix(data, correlation_rule, negative_weight_rule);
             g = Graph.getGraph(graph_type, A, varargin{:});
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measures{1, 1} = measure.getValue();
             correlation_p_values{1, 1} = P;
-            
-            measure_average = sum(cellfun(@sum, measures)) ./ sum(cellfun(@length, measures));
-            
+
             calculated_measurement = Measurement.getMeasurement('MeasurementMRI', ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), group,  ...
                 'MeasurementMRI.measure_code', measure_code, ...
                 'MeasurementMRI.subject_values', measures, ...
-                'MeasurementMRI.average_value', measure_average, ...
                 'MeasurementMRI.correlation_p_value', correlation_p_values ...
                 );             
         end

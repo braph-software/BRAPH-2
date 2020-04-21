@@ -3,7 +3,6 @@ classdef MeasurementMRI < Measurement
     properties
         measure_code  % class of measure
         values  % array with the values of the measure per group
-        average_value  % average value of the group
         p_values  % correlation p values
     end
     methods
@@ -82,8 +81,7 @@ classdef MeasurementMRI < Measurement
             end
             
             m.values = values;
-            m.p_values = p_values;            
-            m.average_value = get_from_varargin(0, 'MeasurementMRI.average_value', varargin{:}); %#ok<*PROPLC>     
+            m.p_values = p_values;   
         end
     end
     methods (Static)

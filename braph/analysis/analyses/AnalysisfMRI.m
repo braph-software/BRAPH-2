@@ -53,7 +53,7 @@ classdef AnalysisfMRI < Analysis
                     ft(f<fmin|f>fmax,:) = 0;
                     data = ifft(ft,NFFT);
                 end
-                [A, P] = adjacencyMatrix(data, corr_rule, neg_rule);
+                [A, P] = adjacency_matrix(data, corr_rule, neg_rule);
                 g = Graph.getGraph(graph_type, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
                 measures{1, i} = measure.getValue();
