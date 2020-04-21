@@ -19,10 +19,11 @@ for i = 1:1:length(measurement_class_list)
         sub3 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 3);
         sub4 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 4);
         sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 5);
+        rule = [measurement_class '.measure_code'];
         
         group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
         %act        
-        measurement = Measurement.getMeasurement(measurement_class, 'm1', repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), group, 'MeasurementDTI.measure_code', 'Degree');
+        measurement = Measurement.getMeasurement(measurement_class, 'm1', repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), group, rule, 'Degree');
         %assert
         assert(~isempty(measurement), ...
             ['BRAPH:Measurement:Instantiation'], ...
@@ -41,10 +42,11 @@ for i = 1:1:length(measurement_class_list)
         sub3 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 3);
         sub4 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 4);
         sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 5);
+        rule = [measurement_class '.measure_code'];
         
         group = Group(subject_class, {sub1, sub2, sub3});
         %act
-        measurement = Measurement.getMeasurement(measurement_class, 'm1', repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), group, 'MeasurementDTI.measure_code', 'Degree');
+        measurement = Measurement.getMeasurement(measurement_class, 'm1', repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), group, rule, 'Degree');
         %assert
         assert(isequal(measurement.getClass(), measurement_class), ...
             ['BRAPH:Measurement:StaticFunctions'], ...
