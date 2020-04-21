@@ -16,4 +16,4 @@ sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtla
 group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
 
 %% Test 1: Instantiation
-measurement = MeasurementDTI('m1', atlas, group);
+measurement = MeasurementDTI('m1', atlas, group, 'MeasurementDTI.measure_code', 'Degree');

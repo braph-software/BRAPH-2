@@ -11,14 +11,14 @@ sub12 = SubjectDTI(atlas, 'SubjectID', '12', 'DTIAge', 20, 'DTIValue', .5 + .5 *
 sub13 = SubjectDTI(atlas, 'SubjectID', '13', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub14 = SubjectDTI(atlas, 'SubjectID', '14', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub15 = SubjectDTI(atlas, 'SubjectID', '15', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-group1 = Group('SubjectDTI 1', {sub11, sub12, sub13, sub14, sub15}, 'GroupName', 'GroupTestDTI1');
+group1 = Group('SubjectDTI', {sub11, sub12, sub13, sub14, sub15}, 'GroupName', 'GroupTestDTI1');
 
 sub21 = SubjectDTI(atlas, 'SubjectID', '21', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub22 = SubjectDTI(atlas, 'SubjectID', '22', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub23 = SubjectDTI(atlas, 'SubjectID', '23', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub24 = SubjectDTI(atlas, 'SubjectID', '24', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub25 = SubjectDTI(atlas, 'SubjectID', '25', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-group2 = Group('SubjectDTI 2', {sub21, sub22, sub23, sub24, sub25}, 'GroupName', 'GroupTestDTI2');
+group2 = Group('SubjectDTI', {sub21, sub22, sub23, sub24, sub25}, 'GroupName', 'GroupTestDTI2');
 
 cohort = Cohort('Cohort DTI', 'SubjectDTI', atlas, {sub11, sub12, sub13, sub14, sub15, sub21, sub22, sub23, sub24, sub25});
 cohort.getGroups().add(group1.getName(), group1)
@@ -49,7 +49,7 @@ assert(ischar(randomcomparison_id), ...
 analysis = AnalysisDTI(cohort, {}, {}, {});
 calculated_measurement = analysis.calculateMeasurement('Degree', group1);
 
-expected_answer = [4 4 4 4 4; 4 4 4 4 4; 4 4 4 4 4; 4 4 4 4 4; 4 4 4 4 4;];
+expected_answer = {[4; 4; 4; 4; 4;] [4; 4; 4; 4; 4;] [4; 4; 4; 4; 4;] [4; 4; 4; 4; 4;] [4; 4; 4; 4; 4;]};
 
 assert(~isempty(calculated_measurement), ...
     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
@@ -57,7 +57,7 @@ assert(~isempty(calculated_measurement), ...
 assert(isequal(calculated_measurement.getMeasureCode(), 'Degree'), ...
     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
     ['AnalysisDTI.calculateMeasurement() not working']) %#ok<*NBRAK>
-assert(isequal(calculated_measurement.getMeasure(), expected_answer), ...
+assert(isequal(calculated_measurement.getMeasureValues(), expected_answer), ...
     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
     ['AnalysisDTI.calculateMeasurement() not working']) %#ok<*NBRAK>
 assert(isequal(calculated_measurement.getGroupAverageValue(), 4), ...

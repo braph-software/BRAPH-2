@@ -27,7 +27,7 @@ classdef MeasurementDTI < Measurement
             atlas = atlases{1};
             
             m.measure_code = get_from_varargin('', 'MeasurementDTI.measure_code', varargin{:});
-            
+                    
             if Measure.is_global(m.getMeasureCode())
                 values = get_from_varargin( ...
                     repmat( ...
