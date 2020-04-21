@@ -31,11 +31,9 @@ classdef AnalysisDTI < Analysis
     end
     methods (Access = protected)
         function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
-            graph_type = get_from_varargin('GraphWU', 'GraphType', varargin{:});                     
-            
+            [graph_type, ~, ~] = retrieve_settings_from_varargin(analysis.getClass(), varargin{:});
             subjects = group.getSubjects();
-            
-            measures = cell(1, group.subjectnumber());
+            measures = cell(1, group.subjectnumber());             
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
                 A = subject.getData('DTI').getValue();  % DTI matrix
@@ -60,6 +58,7 @@ classdef AnalysisDTI < Analysis
         function calculated_comparison = calculate_comparison(analysis, measure_code, groups, varargin)
             calculated_comparison = '';
         end
+       
     end
     methods (Static)
         function analysis_class = getClass()

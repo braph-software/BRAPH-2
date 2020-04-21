@@ -1,4 +1,4 @@
-function [A, P] = adjacencyMatrix(data, corr_rule, neg_rule)
+function [A, P] = adjacency_matrix(data, corr_rule, neg_rule)
     switch (corr_rule)
         case 'spearman'
             [A, P] = corr(data,'Type','Spearman');

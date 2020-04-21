@@ -16,9 +16,6 @@ classdef MeasurementMRI < Measurement
         function value = getMeasureValues(m)
             value = m.values;
         end
-        function average_value = getGroupAverageValue(m)
-            average_value = m.average_value;
-        end
         function p_value = getCorrelationPValue(m)
             p_value = m.p_value;
         end

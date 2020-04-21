@@ -5,7 +5,7 @@ classdef AnalysisMRI < Analysis
             analysis = analysis@Analysis(cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
-    methods 
+    methods
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
             measurement_id = [ ...
                 tostring(analysis.getMeasurementClass()) ' ' ...
@@ -13,7 +13,7 @@ classdef AnalysisMRI < Analysis
                 tostring(analysis.cohort.getGroups().getIndex(group)) ...
                 ];
         end
-         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
+        function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             randomcomparison_id = [ ...
                 tostring(analysis.getRandomComparisonClass()) ' ' ...
                 tostring(measure_code) ' ' ...
@@ -31,9 +31,7 @@ classdef AnalysisMRI < Analysis
     end
     methods (Access = protected)
         function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)
-            graph_type = get_from_varargin('GraphWU', 'GraphType', varargin{:});
-            correlation_rule = get_from_varargin('default', 'AnalysisMRI.CorrelationRule', varargin{:});
-            negative_weight_rule = get_from_varargin('default', 'AnalysisMRI.NegativeWeightRule', varargin{:});
+            [graph_type, correlation_rule, negative_weight_rule] = retrieve_settings_from_varargin(analysis.getClass(), varargin{:});
             subjects = group.getSubjects();
             measures = cell(1, length(group));
             correlation_p_values = cell(1, length(group));
@@ -50,14 +48,14 @@ classdef AnalysisMRI < Analysis
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measures{1, 1} = measure.getValue();
             correlation_p_values{1, 1} = P;
-
+            
             calculated_measurement = Measurement.getMeasurement('MeasurementMRI', ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), group,  ...
                 'MeasurementMRI.measure_code', measure_code, ...
                 'MeasurementMRI.subject_values', measures, ...
                 'MeasurementMRI.correlation_p_value', correlation_p_values ...
-                );             
+                );
         end
         function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
             calculated_random_comparison = '';

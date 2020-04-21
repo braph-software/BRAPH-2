@@ -31,9 +31,7 @@ classdef AnalysisfMRI < Analysis
     end
     methods (Access = protected)
         function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)
-            graph_type = get_from_varargin('GraphWU', 'GraphType', varargin{:});
-            corr_rule = get_from_varargin('default', 'CorrelationRulefMRI', varargin{:});
-            neg_rule = get_from_varargin('default', 'NegativeRulefMRI', varargin{:});
+            [graph_type, correlation_rule, negative_weight_rule] = retrieve_settings_from_varargin(analysis.getClass(), varargin{:});
             subjects = group.getSubjects();
             measures = cell(1, group.subjectnumber());
             correlation_p_values = cell(1, group.subjectnumber());
@@ -53,7 +51,7 @@ classdef AnalysisfMRI < Analysis
                     ft(f<fmin|f>fmax,:) = 0;
                     data = ifft(ft,NFFT);
                 end
-                [A, P] = adjacency_matrix(data, corr_rule, neg_rule);
+                [A, P] = adjacency_matrix(data, correlation_rule, negative_weight_rule);
                 g = Graph.getGraph(graph_type, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
                 measures{1, i} = measure.getValue();
@@ -69,7 +67,7 @@ classdef AnalysisfMRI < Analysis
                 'MeasurementfMRI.subject_values', measures, ...
                 'MeasurementfMRI.average_value', measure_average, ...
                 'MeasurementfMRI.correlation_p_value', correlation_p_values ...
-                ); 
+                );
         end
         function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
             calculated_random_comparison = '';
