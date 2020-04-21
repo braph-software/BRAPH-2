@@ -21,8 +21,7 @@ classdef MeasurementDTI < Measurement
         end
     end
     methods (Access=protected)
-        function initialize_data(m, varargin)
-            
+        function initialize_data(m, varargin)            
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
             
