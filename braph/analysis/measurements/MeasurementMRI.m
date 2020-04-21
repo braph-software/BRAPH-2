@@ -2,7 +2,7 @@ classdef MeasurementMRI < Measurement
     % single group of mri subjects
     properties
         measure_code  % class of measure
-        values  % array with the values of the measure for each subject
+        values  % array with the values of the measure per group
         average_value  % average value of the group
         p_values  % correlation p values
     end

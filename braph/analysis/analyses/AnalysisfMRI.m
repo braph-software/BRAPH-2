@@ -7,30 +7,69 @@ classdef AnalysisfMRI < Analysis
     end
     methods
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
-            vararginpart = '';
-            for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}]; %#ok<*AGROW>
-            end
-            measurement_id = [tostring(analysis.getMeasurementClass()) ' ' tostring(measure_code) ' ' tostring(group.getName()) ' ' tostring(vararginpart)];
+            measurement_id = [ ...
+                tostring(analysis.getMeasurementClass()) ' ' ...
+                tostring(measure_code) ' ' ...
+                tostring(analysis.cohort.getGroups().getIndex(group)) ...
+                ];
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
-            vararginpart = '';
-            for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}];
-            end
-            randomcomparison_id = [tostring(analysis.getRandomComparisonClass()) ' ' tostring(measure_code) ' ' tostring(group.getName()) ' ' tostring(vararginpart)];
+            randomcomparison_id = [ ...
+                tostring(analysis.getRandomComparisonClass()) ' ' ...
+                tostring(measure_code) ' ' ...
+                tostring(analysis.cohort.getGroups().getIndex(group)) ...
+                ];
         end
         function comparison_id = getComparisonID(analysis, measure_code, groups, varargin)
-            vararginpart = '';
-            for i = 1:1:length(varargin)
-                vararginpart = [vararginpart '' varargin{i}];
-            end
-            comparison_id = [tostring(analysis.getComparisonClass()) ' ' tostring(measure_code) ' ' tostring(groups{1}.getName()) ' ' tostring(groups{2}.getName()) ' ' tostring(vararginpart)];
+            comparison_id = [ ...
+                tostring(analysis.getComparisonClass()) ' ' ...
+                tostring(measure_code) ' ' ...
+                tostring(analysis.cohort.getGroups().getIndex(groups{1})) ' ' ...
+                tostring(analysis.cohort.getGroups().getIndex(groups{2})) ...
+                ];
         end
     end
-   methods (Access = protected)
+    methods (Access = protected)
         function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)
-            calculated_measurement = '';  % empty string | empty char
+            graph_type = get_from_varargin('GraphWU', 'GraphType', varargin{:});
+            corr_rule = get_from_varargin('default', 'CorrelationRulefMRI', varargin{:});
+            neg_rule = get_from_varargin('default', 'NegativeRulefMRI', varargin{:});
+            subjects = group.getSubjects();
+            measures = cell(1, group.subjectnumber());
+            correlation_p_values = cell(1, group.subjectnumber());
+            
+            for i = 1:1:group.subjectnumber()
+                subject = subjects{i};
+                data = subject.getData('fMRI').getValue();
+                % treat data
+                fmin = 0;  % values from braph 1
+                fmax = Inf;
+                T = 1;
+                fs = 1/T;
+                if fmax>fmin && T>0
+                    NFFT = 2*ceil(size(data,1)/2);
+                    ft = fft(data,NFFT);  % Fourier transform
+                    f = fftshift( fs*abs(-NFFT/2:NFFT/2-1)/NFFT ); % absolute frequency
+                    ft(f<fmin|f>fmax,:) = 0;
+                    data = ifft(ft,NFFT);
+                end
+                [A, P] = adjacencyMatrix(data, corr_rule, neg_rule);
+                g = Graph.getGraph(graph_type, A, varargin{:});
+                measure = Measure.getMeasure(measure_code, g, varargin{:});
+                measures{1, i} = measure.getValue();
+                correlation_p_values{1, i} = P;
+            end
+            
+            measure_average = sum(cellfun(@sum, measures)) ./ sum(cellfun(@length, measures));
+            
+            calculated_measurement = Measurement.getMeasurement('MeasurementfMRI', ...
+                analysis.getMeasurementID(measure_code, group, varargin{:}), ...
+                analysis.getCohort().getBrainAtlases(), group,  ...
+                'MeasurementfMRI.measure_code', measure_code, ...
+                'MeasurementfMRI.subject_values', measures, ...
+                'MeasurementfMRI.average_value', measure_average, ...
+                'MeasurementfMRI.correlation_p_value', correlation_p_values ...
+                ); 
         end
         function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
             calculated_random_comparison = '';
