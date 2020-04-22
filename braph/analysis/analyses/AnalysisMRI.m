@@ -43,7 +43,8 @@ classdef AnalysisMRI < Analysis
                 data(i, :) = subject.getData('MRI').getValue();  % MRI data
             end
             
-            [A, P] = adjacency_matrix(data, correlation_rule, negative_weight_rule);
+            adjacency_matrix = AdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+            [A, P] = adjacency_matrix.getCorrelation(correlation_rule);
             g = Graph.getGraph(graph_type, A, varargin{:});
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measures{1, 1} = measure.getValue();

@@ -51,7 +51,8 @@ classdef AnalysisfMRI < Analysis
                     ft(f<fmin|f>fmax, :) = 0;
                     data = ifft(ft, NFFT);
                 end
-                [A, P] = adjacency_matrix(data, correlation_rule, negative_weight_rule);
+                adjacency_matrix = AdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+                [A, P] = adjacency_matrix.getCorrelation(correlation_rule);
                 g = Graph.getGraph(graph_type, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
                 measures{1, i} = measure.getValue();
