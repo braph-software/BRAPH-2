@@ -60,12 +60,12 @@ classdef SubjectMRI < Subject
             atlases = sub.getBrainAtlases();
             atlas = atlases{1};
             
-            value_scalar = get_from_varargin(0,'MRIAge', varargin{:});
-            value_mri = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'MRIValue', varargin{:});  % column vector with the same number of elements as the BrainAtlas
+            age = get_from_varargin(0, 'age', varargin{:});
+            mri = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'MRI', varargin{:});  % column vector with the same number of elements as the BrainAtlas
             
             sub.datadict = containers.Map;
-            sub.datadict('age') = DataScalar(atlas, value_scalar);
-            sub.datadict('MRI') = DataStructural(atlas, value_mri);
+            sub.datadict('age') = DataScalar(atlas, age);
+            sub.datadict('MRI') = DataStructural(atlas, mri);
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject MRI

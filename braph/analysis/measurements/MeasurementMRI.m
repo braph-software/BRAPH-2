@@ -91,9 +91,6 @@ classdef MeasurementMRI < Measurement
         function atlas_number = getBrainAtlasNumber(m)
             atlas_number =  1;
         end
-        function group_number = getGroupNumber(m)
-            group_number = 1;
-        end
         function description = getDescription(m)
             % measurement description missing
             description = '';

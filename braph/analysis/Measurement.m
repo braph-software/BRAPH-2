@@ -82,7 +82,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             atlas_number =  eval([Measurement.getClass(m) '.getBrainAtlasNumber()']);
         end
         function group_number = getGroupNumber(m)
-            group_number =  eval([Measurement.getClass(m) '.getGroupNumber()']);
+            group_number = 1;
         end
         function measurementClass = getClass(m)
             if isa(m, 'Measurement')
@@ -99,7 +99,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             description = eval([Measurement.getClass(m) '.getDescription()']);
         end
         function datalist = getDataList(m)
-            % list of measurments data keys
+            % list of measurements data keys
             datalist = eval([Measurement.getClass(m) '.getDataList()']);
         end
         function sub = getMeasurement(measurement_class, id , varargin) %#ok<INUSD>
