@@ -53,13 +53,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
             available_settings = Analysis.getAvailableSettings(class(analysis));%
             settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
             for i = 1:1:length(available_settings)
-%                 for j = 1:1:size(available_settings, i)
                     a_s = available_settings{i};
                     available_setting_code = a_s{1, 1};
                     available_setting_default = a_s{1, 3};
                     settings{i, 1} = available_setting_code;
                     settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
-%                 end
             end
             analysis.settings = settings;
         end

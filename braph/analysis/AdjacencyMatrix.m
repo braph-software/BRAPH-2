@@ -61,7 +61,7 @@ classdef AdjacencyMatrix < handle
             end
         end
     end
-    methods 
+    methods (Access = protected)
         function correlate(adj)
             switch lower(adj.correlation_rule)
                 case 'spearman'
