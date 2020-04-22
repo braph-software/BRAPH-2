@@ -6,18 +6,18 @@ br4 = BrainRegion('BR4', 'brain region 4', 4, 44, 444);
 br5 = BrainRegion('BR5', 'brain region 5', 5, 55, 555);
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 
-sub11 = SubjectDTI(atlas, 'SubjectID', '11', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub12 = SubjectDTI(atlas, 'SubjectID', '12', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub13 = SubjectDTI(atlas, 'SubjectID', '13', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub14 = SubjectDTI(atlas, 'SubjectID', '14', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub15 = SubjectDTI(atlas, 'SubjectID', '15', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub11 = SubjectDTI(atlas, 'SubjectID', '11', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub12 = SubjectDTI(atlas, 'SubjectID', '12', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub13 = SubjectDTI(atlas, 'SubjectID', '13', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub14 = SubjectDTI(atlas, 'SubjectID', '14', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub15 = SubjectDTI(atlas, 'SubjectID', '15', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
 group1 = Group('SubjectDTI', {sub11, sub12, sub13, sub14, sub15}, 'GroupName', 'GroupTestDTI1');
 
-sub21 = SubjectDTI(atlas, 'SubjectID', '21', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub22 = SubjectDTI(atlas, 'SubjectID', '22', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub23 = SubjectDTI(atlas, 'SubjectID', '23', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub24 = SubjectDTI(atlas, 'SubjectID', '24', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub25 = SubjectDTI(atlas, 'SubjectID', '25', 'DTIAge', 20, 'DTIValue', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub21 = SubjectDTI(atlas, 'SubjectID', '21', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub22 = SubjectDTI(atlas, 'SubjectID', '22', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub23 = SubjectDTI(atlas, 'SubjectID', '23', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub24 = SubjectDTI(atlas, 'SubjectID', '24', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
+sub25 = SubjectDTI(atlas, 'SubjectID', '25', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
 group2 = Group('SubjectDTI', {sub21, sub22, sub23, sub24, sub25}, 'GroupName', 'GroupTestDTI2');
 
 cohort = Cohort('Cohort DTI', 'SubjectDTI', atlas, {sub11, sub12, sub13, sub14, sub15, sub21, sub22, sub23, sub24, sub25});

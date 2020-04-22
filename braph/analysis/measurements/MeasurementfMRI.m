@@ -82,7 +82,6 @@ classdef MeasurementfMRI < Measurement
             m.values = values;
             m.p_values = p_values;            
             m.average_value = get_from_varargin(0, 'MeasurementfMRI.average_value', varargin{:}); %#ok<*PROPLC>    
-            
         end
     end
     methods (Static)
@@ -94,9 +93,6 @@ classdef MeasurementfMRI < Measurement
         end
         function atlas_number = getBrainAtlasNumber(m)
             atlas_number =  1;
-        end
-        function group_number = getGroupNumber(m)
-            group_number = 1;
         end
         function description = getDescription(m)
             % measurement description missing

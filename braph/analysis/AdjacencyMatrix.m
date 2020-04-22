@@ -1,4 +1,8 @@
 classdef AdjacencyMatrix < handle
+    properties (Constant)
+        CORRELATION_RULE_LIST = {'pearson', 'spearman', 'kendall', 'partial pearson', 'partial spearman'};
+        NEGATIVE_WEIGHT_RULE_LIST = {'default', 'zero', 'abs'};
+    end
     properties
         pearson_adj  % pearson adjacency matrix
         pearson_p  % pearson correlation p matrix

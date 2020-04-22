@@ -8,10 +8,11 @@ atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 
 measurement_class_list =  Measurement.getList();
 subject_class_list = Subject.getList();
+
 %% Test 1 Instantiation
 for i = 1:1:length(measurement_class_list)
     for j = 1:1:length(subject_class_list)
-        %arrange
+        % setup
         measurement_class = measurement_class_list{i};
         subject_class = subject_class_list{j};
         sub1 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 1);
@@ -19,12 +20,15 @@ for i = 1:1:length(measurement_class_list)
         sub3 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 3);
         sub4 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 4);
         sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 5);
-        rule = [measurement_class '.measure_code'];
         
         group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
-        %act        
-        measurement = Measurement.getMeasurement(measurement_class, 'm1', repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), group, rule, 'Degree');
-        %assert
+        
+        % act
+        measurement = Measurement.getMeasurement(measurement_class, 'm1', ...
+            repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), ...
+            group, [measurement_class '.measure_code'], 'Degree');
+        
+        % assert
         assert(~isempty(measurement), ...
             ['BRAPH:Measurement:Instantiation'], ...
             ['Measurement instantiation fail.']) %#ok<NBRAK>
@@ -34,7 +38,7 @@ end
 %% Test 2: Static Functions
 for i = 1:1:length(measurement_class_list)
     for j = 1:1:length(subject_class_list)
-        %arrange
+        % setup
         measurement_class = measurement_class_list{i};
         subject_class = subject_class_list{j};
         sub1 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 1);
@@ -42,12 +46,15 @@ for i = 1:1:length(measurement_class_list)
         sub3 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 3);
         sub4 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 4);
         sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 5);
-        rule = [measurement_class '.measure_code'];
         
         group = Group(subject_class, {sub1, sub2, sub3});
-        %act
-        measurement = Measurement.getMeasurement(measurement_class, 'm1', repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), group, rule, 'Degree');
-        %assert
+        
+        % act
+        measurement = Measurement.getMeasurement(measurement_class, 'm1', ...
+            repmat({atlas}, Measurement.getBrainAtlasNumber(measurement_class), Subject.getBrainAtlasNumber(subject_class)), ...
+            group, [measurement_class '.measure_code'], 'Degree');
+        
+        % assert
         assert(isequal(measurement.getClass(), measurement_class), ...
             ['BRAPH:Measurement:StaticFunctions'], ...
             ['Measurement getClass() fail.']) %#ok<NBRAK>
@@ -65,4 +72,3 @@ for i = 1:1:length(measurement_class_list)
             ['Measurement getGroupsNumber() fail.']) %#ok<NBRAK>
     end
 end
-
