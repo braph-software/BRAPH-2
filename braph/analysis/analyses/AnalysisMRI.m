@@ -31,7 +31,6 @@ classdef AnalysisMRI < Analysis
     end
     methods (Access = protected)
         function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)
-            [graph_type, correlation_rule, negative_weight_rule] = retrieve_settings_from_varargin(analysis.getClass(), varargin{:});
             subjects = group.getSubjects();
             measures = cell(1, length(group));
             correlation_p_values = cell(1, length(group));
@@ -43,9 +42,9 @@ classdef AnalysisMRI < Analysis
                 data(i, :) = subject.getData('MRI').getValue();  % MRI data
             end
             
-            adjacency_matrix = AdjacencyMatrix(data, correlation_rule, negative_weight_rule);
-            [A, P] = adjacency_matrix.getCorrelation(correlation_rule);
-            g = Graph.getGraph(graph_type, A, varargin{:});
+            adjacency_matrix = AdjacencyMatrix(data, analysis.settings{2, 2}, analysis.settings{3, 2});
+            [A, P] = adjacency_matrix.getCorrelation(analysis.settings{2, 2});
+            g = Graph.getGraph(analysis.settings{1, 2}, A, varargin{:});
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measures{1, 1} = measure.getValue();
             correlation_p_values{1, 1} = P;

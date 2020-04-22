@@ -30,14 +30,13 @@ classdef AnalysisDTI < Analysis
         end
     end
     methods (Access = protected)
-        function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
-            [graph_type, ~, ~] = retrieve_settings_from_varargin(analysis.getClass(), varargin{:});
+        function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>            
             subjects = group.getSubjects();
             measures = cell(1, group.subjectnumber());
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
                 A = subject.getData('DTI').getValue();  % DTI matrix
-                g = Graph.getGraph(graph_type, A, varargin{:});
+                g = Graph.getGraph(analysis.settings{1, 2}, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
                 measures{1, i} = measure.getValue();
             end
