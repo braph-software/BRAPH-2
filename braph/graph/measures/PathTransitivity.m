@@ -122,6 +122,7 @@ classdef PathTransitivity < Measure
                     end
                 end
                 path_transitivity = path_transitivity + path_transitivity';
+                path_transitivity(isnan(path_transitivity)) = 0; % Should return zeros, not NaN
             end
         end
     end  

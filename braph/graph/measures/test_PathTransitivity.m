@@ -156,4 +156,5 @@ for i=1:n-1
 end
 T=T+T';
 stdvalue_BU = T;
+stdvalue_BU(isnan(stdvalue_BU)) = 0; % Should return zeros, not NaN
 end
