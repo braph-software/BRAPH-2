@@ -45,11 +45,11 @@ classdef AnalysisfMRI < Analysis
                 T = 1;
                 fs = 1/T;
                 if fmax>fmin && T>0
-                    NFFT = 2*ceil(size(data,1)/2);
-                    ft = fft(data,NFFT);  % Fourier transform
-                    f = fftshift( fs*abs(-NFFT/2:NFFT/2-1)/NFFT ); % absolute frequency
-                    ft(f<fmin|f>fmax,:) = 0;
-                    data = ifft(ft,NFFT);
+                    NFFT = 2*ceil(size(data, 1)/2);
+                    ft = fft(data, NFFT);  % Fourier transform
+                    f = fftshift(fs*abs(-NFFT/2:NFFT/2-1)/NFFT ); % absolute frequency
+                    ft(f<fmin|f>fmax, :) = 0;
+                    data = ifft(ft, NFFT);
                 end
                 [A, P] = adjacency_matrix(data, correlation_rule, negative_weight_rule);
                 g = Graph.getGraph(graph_type, A, varargin{:});
@@ -100,6 +100,13 @@ classdef AnalysisfMRI < Analysis
         end
         function comparison_class = getComparisonClass()
             comparison_class = 'ComparisonfMRI';
+        end
+        function available_settings = getAvailableSettings(m) %#ok<INUSD>
+            available_settings = {
+                {'AnalysisfMRI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU', 'GraphWD', 'GraphBU', 'GraphBD'}}, ...
+                {'AnalysisfMRI.CorrelationRule', Constant.STRING, 'pearson', {'pearson', 'spearman', 'kendall', 'partial pearson', 'partial spearman'}}, ...
+                {'AnalysisfMRI.NegativeWeightRule', Constant.STRING, 'default', {'default', 'zero', 'abs'}} ...
+                };
         end
     end
 end

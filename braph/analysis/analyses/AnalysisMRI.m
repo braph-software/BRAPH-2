@@ -89,5 +89,12 @@ classdef AnalysisMRI < Analysis
         function comparison_class = getComparisonClass()
             comparison_class = 'ComparisonMRI';
         end
+        function available_settings = getAvailableSettings(m) %#ok<INUSD>
+            available_settings = {
+                {'AnalysisMRI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU', 'GraphWD', 'GraphBU', 'GraphBD'}}, ...
+                {'AnalysisMRI.CorrelationRule', Constant.STRING, 'pearson', {'pearson', 'spearman', 'kendall', 'partial pearson', 'partial spearman'}}, ...
+                {'AnalysisMRI.NegativeWeightRule', Constant.STRING, 'default', {'default', 'zero', 'abs'}} ...
+                };
+        end
     end
 end

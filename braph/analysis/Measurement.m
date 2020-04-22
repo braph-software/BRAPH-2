@@ -102,7 +102,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % list of measurments data keys
             datalist = eval([Measurement.getClass(m) '.getDataList()']);
         end
-        function sub = getMeasurement(measurement_class, id , varargin) %#ok<INUSL>
+        function sub = getMeasurement(measurement_class, id , varargin) %#ok<INUSD>
             sub = eval([measurement_class  '(id, varargin{:})']);
         end
     end

@@ -77,6 +77,5 @@ classdef MeasurementDTI < Measurement
         function sub = getMeasurement(measurementClass, id, varargin)
             sub = eval([measurementClass '(id, varargin{:})']);
         end
-        
     end
 end

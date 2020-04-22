@@ -33,14 +33,14 @@ classdef AnalysisDTI < Analysis
         function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
             [graph_type, ~, ~] = retrieve_settings_from_varargin(analysis.getClass(), varargin{:});
             subjects = group.getSubjects();
-            measures = cell(1, group.subjectnumber());             
+            measures = cell(1, group.subjectnumber());
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
                 A = subject.getData('DTI').getValue();  % DTI matrix
                 g = Graph.getGraph(graph_type, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
                 measures{1, i} = measure.getValue();
-            end            
+            end
             
             measure_average = sum(cellfun(@sum, measures)) ./ sum(cellfun(@length, measures));
             
@@ -50,7 +50,7 @@ classdef AnalysisDTI < Analysis
                 'MeasurementDTI.measure_code', measure_code, ...
                 'MeasurementDTI.subject_values', measures, ...
                 'MeasurementDTI.average_value', measure_average ...
-                ); 
+                );
         end
         function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
             calculated_random_comparison = '';
@@ -58,7 +58,7 @@ classdef AnalysisDTI < Analysis
         function calculated_comparison = calculate_comparison(analysis, measure_code, groups, varargin)
             calculated_comparison = '';
         end
-       
+        
     end
     methods (Static)
         function analysis_class = getClass()
@@ -84,6 +84,11 @@ classdef AnalysisDTI < Analysis
         end
         function comparison_class = getComparisonClass()
             comparison_class = 'ComparisonDTI';
+        end
+        function available_settings = getAvailableSettings(m)
+            available_settings = {
+                {'AnalysisDTI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU'}}
+                };
         end
     end
 end

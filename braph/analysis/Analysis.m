@@ -4,6 +4,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         measurement_idict  % indexed dictionary with measurements
         randomcomparison_idict  % indexed dictionary with random comparison
         comparison_idict  % indexed dictionary with comparison
+        settings  % settings structure for analysis
     end
     methods (Access = protected)
         function analysis = Analysis(cohort, measurements, randomcomparisons, comparisons, varargin)
@@ -24,7 +25,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                     ['Input is not of class Measurement']) %#ok<NBRAK>
                 analysis.measurement_idict.add(measurement.getID(), measurement);
             end
-
+            
             analysis.randomcomparison_idict = IndexedDictionary(analysis.getRandomComparisonClass());
             if ~iscell(randomcomparisons)
                 randomcomparisons = {randomcomparisons};
@@ -48,15 +49,28 @@ classdef Analysis < handle & matlab.mixin.Copyable
                     ['Input is not of class Comparison']) %#ok<NBRAK>
                 analysis.comparison_idict.add(comparison.getID(), comparison);
             end
+            
+            available_settings = Analysis.getAvailableSettings(class(analysis));%
+            settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
+            for i = 1:1:length(available_settings)
+%                 for j = 1:1:size(available_settings, i)
+                    a_s = available_settings{i};
+                    available_setting_code = a_s{1, 1};
+                    available_setting_default = a_s{1, 3};
+                    settings{i, 1} = available_setting_code;
+                    settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
+%                 end
+            end
+            analysis.settings = settings;
         end
         % function copyElement() %TODO
     end
     methods (Abstract)
         getMeasurementID(analysis, measure_code, group, varargin)
         getRandomComparisonID(analysis, measure_code, group, varargin)
-        getComparisonID(analysis, measure_code, groups, varargin) 
+        getComparisonID(analysis, measure_code, groups, varargin)
     end
-    methods (Abstract, Access = protected)       
+    methods (Abstract, Access = protected)
         calculate_measurement(analysis, measure_code, group, varargin)
         calculate_random_comparison(analysis, measure_code, group, varargin)
         calculate_comparison(analysis, measure_code, groups, varargin)
@@ -81,23 +95,26 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis.getMeasurements().add(id, measurement)
             end
             measurement = analysis.getMeasurements().getValue(id);
-        end  
+        end
         function random_comparison = calculateRandomComparison(analysis, measure_code, group, varargin)
             id = analysis.getRandomComparisonID(analysis, measure_code, group, varargin{:});
             if ~analysis.getRandomComparison().contains(id)
-               random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin{:});
-               analysis.getRandomComparisons().add(id, random_comparison)
+                random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin{:});
+                analysis.getRandomComparisons().add(id, random_comparison)
             end
             random_comparison = analysis.getRandomComparisons().getValue(id);
-        end 
+        end
         function comparison = calculateComparison(analysis, measure_code, groups, varargin)
             id = analysis.getComparisonID(analysis, measure_code, groups, varargin{:});
             if ~analysis.getComparisons().contains(id)
-               comparison = calculate_comparison(analysis, measure_code, groups, varargin{:});
-               analysis.getComparison().add(id, comparison)
+                comparison = calculate_comparison(analysis, measure_code, groups, varargin{:});
+                analysis.getComparison().add(id, comparison)
             end
             comparison = analysis.getComparison().getValue(id);
-        end 
+        end
+        function settings = getSettings(analysis)
+            settings = analysis.settings;
+        end
     end
     methods (Static)
         function analysis_list = getList()
@@ -116,11 +133,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
         end
         function name = getName(analysis)
-            % analysis name            
+            % analysis name
             name = eval([Analysis.getClass(analysis) '.getName()']);
         end
         function subject_class = getSubjectClass(analysis)
-            % cohort class            
+            % cohort class
             subject_class = eval([Analysis.getClass(analysis) '.getSubjectClass()']);
         end
         function measurmentList = getMeasurementClass()
@@ -133,11 +150,14 @@ classdef Analysis < handle & matlab.mixin.Copyable
             comparisonList = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
         end
         function description = getDescription(analysis)
-            % analysis description            
+            % analysis description
             description = eval([Analysis.getClass(analysis) '.getDescription()']);
         end
         function analysis = getAnalysis(analysis_class, varargin)
             analysis = eval([analysis_class '(varargin{:})']);
+        end
+        function available_settings = getAvailableSettings(m)
+            available_settings = eval([Analysis.getClass(m) '.getAvailableSettings()']);
         end
     end
 end
