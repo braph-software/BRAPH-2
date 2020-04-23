@@ -151,11 +151,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % analysis description
             description = eval([Analysis.getClass(analysis) '.getDescription()']);
         end
-        function analysis = getAnalysis(analysis_class, varargin)
-            analysis = eval([analysis_class '(varargin{:})']);
-        end
         function available_settings = getAvailableSettings(m)
             available_settings = eval([Analysis.getClass(m) '.getAvailableSettings()']);
+        end
+        function analysis = getAnalysis(analysis_class, varargin)
+            analysis = eval([analysis_class '(varargin{:})']);
         end
     end
 end
