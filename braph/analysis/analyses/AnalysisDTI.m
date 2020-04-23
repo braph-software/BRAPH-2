@@ -30,7 +30,7 @@ classdef AnalysisDTI < Analysis
         end
     end
     methods (Access = protected)
-        function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>            
+        function measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>            
             subjects = group.getSubjects();
             measures = cell(1, group.subjectnumber());
             for i = 1:1:group.subjectnumber()
@@ -43,7 +43,7 @@ classdef AnalysisDTI < Analysis
             
             measure_average = sum(cellfun(@sum, measures)) ./ sum(cellfun(@length, measures));
             
-            calculated_measurement = Measurement.getMeasurement('MeasurementDTI', ...
+            measurement = Measurement.getMeasurement('MeasurementDTI', ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), group,  ...
                 'MeasurementDTI.measure_code', measure_code, ...
@@ -51,11 +51,11 @@ classdef AnalysisDTI < Analysis
                 'MeasurementDTI.average_value', measure_average ...
                 );
         end
-        function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
-            calculated_random_comparison = '';
+        function random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
+            random_comparison = '';
         end
-        function calculated_comparison = calculate_comparison(analysis, measure_code, groups, varargin)
-            calculated_comparison = '';
+        function comparison = calculate_comparison(analysis, measure_code, groups, varargin)
+            comparison = '';
         end
         
     end
