@@ -40,20 +40,15 @@ for i = 1:1:length(analysis_class_list)
     assert(ischar(analysis.getDescription()), ...
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
         [analysis_class '.getDescription() should return a char array'])
+    
+%TODO: add checks for other static methods
 end
 
 %% Test 3: Instantiation with Measurement
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    % setup
     analysis_class = analysis_class_list{i};
-    switch(analysis_class)
-        case 'AnalysisDTI'
-            sub_class = 'SubjectDTI';
-        case 'AnalysisfMRI'
-            sub_class = 'SubjectfMRI';
-        otherwise
-            sub_class = 'SubjectMRI';
-    end
+    sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     sub1 = Subject.getSubject(sub_class, atlases);
     sub2 = Subject.getSubject(sub_class, atlases);
@@ -61,13 +56,16 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
     group = Group(sub_class, {sub1, sub2, sub3});
     
-    %act
+ %TODO: do indepepndet of classes
+    % act & assert
     if isequal(analysis_class, 'AnalysisMRI')
+        % act 
         measurement = Measurement.getMeasurement('MeasurementMRI', 'm1', atlas, group, 'MeasurementMRI.measure_code', 'Degree');
         comparison = Comparison.getComparison('ComparisonMRI', 'c1', repmat({atlas}, Comparison.getBrainAtlasNumber('ComparisonMRI'), Subject.getBrainAtlasNumber(sub_class)), repmat({group}, Comparison.getGroupNumber('ComparisonMRI')));
         randomcomparison = RandomComparison.getRandomComparison('RandomComparisonMRI', 'rc1', repmat({atlas}, RandomComparison.getBrainAtlasNumber('RandomComparisonMRI'), Subject.getBrainAtlasNumber(sub_class)), group);
         analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, randomcomparison, comparison);
-        %assert
+        
+        % assert
         assert(isa(analysis, analysis_class), ...
             ['BRAPH:' analysis_class ':Instantiation'], ...
             [analysis_class 'Instantiation error with measurements.'])
