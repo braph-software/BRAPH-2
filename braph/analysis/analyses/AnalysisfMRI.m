@@ -52,10 +52,12 @@ classdef AnalysisfMRI < Analysis
                     data = ifft(ft, NFFT);
                 end
                 
-                adjacency_matrix = AdjacencyMatrix(data, analysis.settings{2, 2}, analysis.settings{3, 2});
-                [A, P] = Correlation.getCorrelation(analysis.settings{2, 2});
+                correlation_rule = analysis.getSettings('AnalysisfMRI.CorrelationRule');
+                negative_weight_rule = analysis.getSettings('AnalysisfMRI.NegativeWeightRule');
+                [A, ~] = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
                 
-                g = Graph.getGraph(analysis.settings{1, 2}, A, varargin{:});
+                graph_type = analysis.getSettings('AnalysisfMRI.GraphType');
+                g = Graph.getGraph(graph_type, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
                 
                 measures{1, i} = measure.getValue();
@@ -106,8 +108,8 @@ classdef AnalysisfMRI < Analysis
         function available_settings = getAvailableSettings(m) %#ok<INUSD>
             available_settings = {
                 {'AnalysisfMRI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU'}}, ...
-                {'AnalysisfMRI.CorrelationRule', Constant.STRING, 'pearson', AdjacencyMatrix.CORRELATION_RULE_LIST}, ...
-                {'AnalysisfMRI.NegativeWeightRule', Constant.STRING, 'default', AdjacencyMatrix.NEGATIVE_WEIGHT_RULE_LIST} ...
+                {'AnalysisfMRI.CorrelationRule', Constant.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
+                {'AnalysisfMRI.NegativeWeightRule', Constant.STRING, 'default', Correlation.NEGATIVE_WEIGHT_RULE_LIST} ...
                 };
         end
     end

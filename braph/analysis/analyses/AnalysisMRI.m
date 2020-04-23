@@ -32,8 +32,6 @@ classdef AnalysisMRI < Analysis
     methods (Access = protected)
         function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)
             subjects = group.getSubjects();
-            measures = cell(1, length(group));
-            p_values = cell(1, length(group));
             atlases = analysis.cohort.getBrainAtlases();
             atlas = atlases{1};
             data = zeros(group.subjectnumber(), atlas.getBrainRegions().length());
@@ -43,15 +41,15 @@ classdef AnalysisMRI < Analysis
                 data(i, :) = subject.getData('MRI').getValue();  % MRI data
             end
             
-            correlation_rule = analysis.getSettings('correlation_rule');
-            negative_weight_rule = analysis.getSettings('negative_weight_rule');
-            A = Correlation.getCorrelation(data, correlation_rule, negative_weight_rule);
+            correlation_rule = analysis.getSettings('AnalysisMRI.CorrelationRule');
+            negative_weight_rule = analysis.getSettings('AnalysisMRI.NegativeWeightRule');
+            [A, ~] = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
             
-            graph_type = analysis.getSettings('graph_type');
+            graph_type = analysis.getSettings('AnalysisMRI.GraphType');
             g = Graph.getGraph(graph_type, A, varargin{:});
             
             measure = Measure.getMeasure(measure_code, g, varargin{:});
-            measurement_value = measure.getValue();
+            measurement_value = {measure.getValue()};
                         
             calculated_measurement = Measurement.getMeasurement('MeasurementMRI', ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
@@ -95,8 +93,8 @@ classdef AnalysisMRI < Analysis
         function available_settings = getAvailableSettings(m) %#ok<INUSD>
             available_settings = {
                 {'AnalysisMRI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU'}}, ...
-                {'AnalysisMRI.CorrelationRule', Constant.STRING, 'pearson', AdjacencyMatrix.CORRELATION_RULE_LIST}, ...
-                {'AnalysisMRI.NegativeWeightRule', Constant.STRING, 'default', AdjacencyMatrix.NEGATIVE_WEIGHT_RULE_LIST} ...
+                {'AnalysisMRI.CorrelationRule', Constant.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
+                {'AnalysisMRI.NegativeWeightRule', Constant.STRING, 'default', Correlation.NEGATIVE_WEIGHT_RULE_LIST} ...
                 };
         end
     end
