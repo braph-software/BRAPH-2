@@ -114,7 +114,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
             if nargin<2
                 res = analysis.settings;
             else
-                res = get_from_varargin([], setting_code, analysis.settings{1, :}, analysis.settings{2, :}, analysis.settings{3, :});
+                for i = 1:1:length(analysis.settings)
+                    if isequal(analysis.settings{i, 1}, setting_code)
+                        res = get_from_varargin([], setting_code, analysis.settings{i, :});
+                    end
+                end
             end
         end
     end
