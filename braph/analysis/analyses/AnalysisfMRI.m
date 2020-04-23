@@ -30,10 +30,9 @@ classdef AnalysisfMRI < Analysis
         end
     end
     methods (Access = protected)
-        function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)            
+        function measurement = calculate_measurement(analysis, measure_code, group, varargin)            
             subjects = group.getSubjects();
             measures = cell(1, group.subjectnumber());
-            correlation_p_values = cell(1, group.subjectnumber());
             
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
@@ -65,7 +64,7 @@ classdef AnalysisfMRI < Analysis
             
             measure_average = sum(cellfun(@sum, measures)) ./ sum(cellfun(@length, measures));
             
-            calculated_measurement = Measurement.getMeasurement('MeasurementfMRI', ...
+            measurement = Measurement.getMeasurement('MeasurementfMRI', ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), group,  ...
                 'MeasurementfMRI.measure_code', measure_code, ...
