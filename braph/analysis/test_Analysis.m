@@ -45,21 +45,21 @@ for i = 1:1:length(analysis_class_list)
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
         [analysis_class '.getList() should return a cell'])
     
-    assert(~isempty(analysis.getMeasurementClass()), ...
+    assert(ischar(analysis.getMeasurementClass()), ...
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
-        [analysis_class '.getMeasurementClass() should return a cell'])
+        [analysis_class '.getMeasurementClass() should return a string'])
     
-    assert(~isempty(analysis.getRandomComparisonClass()), ...
+    assert(ischar(analysis.getRandomComparisonClass()), ...
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
-        [analysis_class '.getRandomComparisonClass() should return a cell'])
+        [analysis_class '.getRandomComparisonClass() should return a string'])
     
-    assert(~isempty(analysis.getComparisonClass()), ...
+    assert(ischar(analysis.getComparisonClass()), ...
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
-        [analysis_class '.getComparisonClass() should return a cell'])
+        [analysis_class '.getComparisonClass() should return a string'])
     
     assert(iscell(analysis.getAvailableSettings()), ...
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
-        [analysis_class '.getMeasurementClass() should return a cell'])
+        [analysis_class '.getMeasurementClass() should return a cell array'])
     
 end
 
@@ -92,7 +92,7 @@ end
 
 %% Test 4: Basic Functions
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -104,15 +104,16 @@ for i = 1:1:length(analysis_class_list)
     measurement_class = Analysis.getMeasurementClass(analysis_class);
     comparision_class = Analysis.getComparisonClass(analysis_class);
     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
-    %act
+    
+    % act
     measurement1 = Measurement.getMeasurement(measurement_class, 'm1', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2};
     comparison = Comparison.getComparison(comparision_class, 'c1', repmat({atlas}, Comparison.getBrainAtlasNumber(comparision_class), Subject.getBrainAtlasNumber(sub_class)), repmat({group}, Comparison.getGroupNumber(comparision_class)));
     randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', repmat({atlas}, RandomComparison.getBrainAtlasNumber(random_comparison_class), Subject.getBrainAtlasNumber(sub_class)), group);
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, randomcomparison, comparison);
-    %assert
     
+    % assert
     assert(analysis.getMeasurements().length()==2, ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.getMeasurements().length() does not work')
@@ -164,7 +165,8 @@ end
 
 %% Test 6: Remove
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -180,19 +182,21 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement(measurement_class, 'm1', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2};
-    %act
+    
+    % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     analysis.getMeasurements().remove(2);
-    %assert
+    
+    % assert
     assert(analysis.getMeasurements().length()==1, ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.removeMeasurement() does not work')
-    
 end
 
 %% Test 7: Replace
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -207,24 +211,25 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement(measurement_class, 'm1', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2};
-    %act
     
+    % act   
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3', atlas, group, [measurement_class '.measure_code'], 'Degree');
     analysis.getMeasurements().replace(measurement3.getName(), measurement3, 2);
-    %assert
+    
+    % assert
     assert(analysis.getMeasurements().length()==2, ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.replaceMeasurement() does not work')
     assert( isequal(analysis.getMeasurements().getValue(2).getClass(), measurement_class), ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.replaceMeasurement() does not work')
-    
 end
 
 %% Test 8: Invert
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -240,19 +245,19 @@ for i = 1:1:length(analysis_class_list)
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2};
     
-    %act
+    % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     analysis.getMeasurements().invert(2, 1);
-    %assert
+    
+    % assert
     assert( isequal(analysis.getMeasurements().getValue(2).getClass(), measurement_class), ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.invertMeasurements() does not work')
-    
 end
 
 %% Test 9: MoveTo
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -269,19 +274,19 @@ for i = 1:1:length(analysis_class_list)
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2, measurement3};
     
-    %act
+    % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     analysis.getMeasurements().move_to(3, 1);
-    %assert
+    
+    % assert
     assert( isequal(analysis.getMeasurements().getValue(1).getClass(), measurement_class), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.movetoMeasurement() does not work')
-    
+        'Analysis.movetoMeasurement() does not work') 
 end
 
 %% Test 10: RemoveAll
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -298,11 +303,11 @@ for i = 1:1:length(analysis_class_list)
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2, measurement3};
     
-    
-    %act
+    % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     selected = analysis.getMeasurements().remove_all([1, 3]);
-    %assert
+
+    % assert
     assert(analysis.getMeasurements().length()==1, ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.removeMeasurements() does not work')
@@ -312,12 +317,11 @@ for i = 1:1:length(analysis_class_list)
     assert(isempty(selected), ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.removeMeasurements() does not work')
-    
 end
 
 %% Test 11: MoveUp
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -335,22 +339,22 @@ for i = 1:1:length(analysis_class_list)
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2, measurement3};
     
-    %act
+    % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     selected = analysis.getMeasurements().move_up([2 3]);
-    %assert
+    
+    % assert
     assert(analysis.getMeasurements().length()==3, ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.moveupMeasurements() does not work')
     assert( isequal(analysis.getMeasurements().getValue(1).getClass(), measurement_class), ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.moveupMeasurements() does not work')
-    
 end
 
 %% Test 12: MoveDown
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -368,22 +372,21 @@ for i = 1:1:length(analysis_class_list)
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2, measurement3};
     
-    %act
+    % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     selected = analysis.getMeasurements().move_down([1 2]);
-    %assert
+    % assert
     assert(analysis.getMeasurements().length()==3, ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.movedownMeasurements() does not work')
     assert( isequal(analysis.getMeasurements().getValue(3).getClass(), measurement_class), ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.movedownMeasurements() does not work')
-    
 end
 
 %% Test 13: MoveToTop
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -401,22 +404,22 @@ for i = 1:1:length(analysis_class_list)
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2, measurement3};
     
-    %act
+    % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     selected = analysis.getMeasurements().move_to_top([3]);  %#ok<NBRAK>
-    %assert
+    
+    % assert
     assert(analysis.getMeasurements().length()==3, ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.move2topMeasurements() does not work')
     assert( isequal(analysis.getMeasurements().getValue(1).getClass(), measurement_class), ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.move2topMeasurements() does not work')
-    
 end
 
 %% Test 14: MoveToBottom
 for i = 1:1:length(analysis_class_list)
-    %arrange
+    % setup
     analysis_class = analysis_class_list{i};
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
@@ -434,15 +437,15 @@ for i = 1:1:length(analysis_class_list)
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2, measurement3};
     
-    %act
+    % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     selected = analysis.getMeasurements().move_to_bottom([1]);  %#ok<NBRAK>
-    %assert
+    
+    % assert
     assert(analysis.getMeasurements().length()==3, ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.move2topMeasurements() does not work')
     assert( isequal(analysis.getMeasurements().getValue(3).getClass(), measurement_class), ...
         'BRAPH:Analysis:Bug', ...
         'Analysis.move2topMeasurements() does not work')
-    
 end
