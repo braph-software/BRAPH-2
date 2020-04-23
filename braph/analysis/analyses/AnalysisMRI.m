@@ -30,7 +30,7 @@ classdef AnalysisMRI < Analysis
         end
     end
     methods (Access = protected)
-        function calculated_measurement = calculate_measurement(analysis, measure_code, group, varargin)
+        function measurement = calculate_measurement(analysis, measure_code, group, varargin)
             subjects = group.getSubjects();
             atlases = analysis.cohort.getBrainAtlases();
             atlas = atlases{1};
@@ -51,7 +51,7 @@ classdef AnalysisMRI < Analysis
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measurement_value = {measure.getValue()};
                         
-            calculated_measurement = Measurement.getMeasurement('MeasurementMRI', ...
+            measurement = Measurement.getMeasurement('MeasurementMRI', ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), group,  ...
                 'MeasurementMRI.measure_code', measure_code, ...
