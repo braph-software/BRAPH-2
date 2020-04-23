@@ -110,8 +110,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
             comparison = analysis.getComparison().getValue(id);
         end
-        function settings = getSettings(analysis)
-            settings = analysis.settings;
+        function res = getSettings(analysis, setting_code)
+            if nargin<2
+                res = analysis.settings;
+            else
+                res = get_from_varargin([], setting_code, analysis.settings{:});
+            end
         end
     end
     methods (Static)

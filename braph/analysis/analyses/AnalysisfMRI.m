@@ -38,7 +38,8 @@ classdef AnalysisfMRI < Analysis
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
                 data = subject.getData('fMRI').getValue();
-                % treat data
+                
+                % filter data
                 fmin = 0;  % values from braph 1
                 fmax = Inf;
                 T = 1;
@@ -50,12 +51,14 @@ classdef AnalysisfMRI < Analysis
                     ft(f<fmin|f>fmax, :) = 0;
                     data = ifft(ft, NFFT);
                 end
+                
                 adjacency_matrix = AdjacencyMatrix(data, analysis.settings{2, 2}, analysis.settings{3, 2});
-                [A, P] = adjacency_matrix.getCorrelation(analysis.settings{2, 2});
+                [A, P] = Correlation.getCorrelation(analysis.settings{2, 2});
+                
                 g = Graph.getGraph(analysis.settings{1, 2}, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
+                
                 measures{1, i} = measure.getValue();
-                correlation_p_values{1, i} = P;
             end
             
             measure_average = sum(cellfun(@sum, measures)) ./ sum(cellfun(@length, measures));
@@ -65,8 +68,7 @@ classdef AnalysisfMRI < Analysis
                 analysis.getCohort().getBrainAtlases(), group,  ...
                 'MeasurementfMRI.measure_code', measure_code, ...
                 'MeasurementfMRI.subject_values', measures, ...
-                'MeasurementfMRI.average_value', measure_average, ...
-                'MeasurementfMRI.correlation_p_value', correlation_p_values ...
+                'MeasurementfMRI.average_value', measure_average ...
                 );
         end
         function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
