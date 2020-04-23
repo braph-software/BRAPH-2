@@ -142,21 +142,21 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % cohort class
             subject_class = eval([Analysis.getClass(analysis) '.getSubjectClass()']);
         end
-        function measurmentList = getMeasurementClass()
+        function measurmentList = getMeasurementClass(analysis)
             measurmentList = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
         end
-        function randomcomparisonList = getRandomComparisonClass()
+        function randomcomparisonList = getRandomComparisonClass(analysis)
             randomcomparisonList = eval([Analysis.getClass(analysis) '.getRandomComparisonClass()']);
         end
-        function comparisonList = getComparisonClass()
+        function comparisonList = getComparisonClass(analysis)
             comparisonList = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
         end
         function description = getDescription(analysis)
             % analysis description
             description = eval([Analysis.getClass(analysis) '.getDescription()']);
         end
-        function available_settings = getAvailableSettings(m)
-            available_settings = eval([Analysis.getClass(m) '.getAvailableSettings()']);
+        function available_settings = getAvailableSettings(analysis)
+            available_settings = eval([Analysis.getClass(analysis) '.getAvailableSettings()']);
         end
         function analysis = getAnalysis(analysis_class, varargin)
             analysis = eval([analysis_class '(varargin{:})']);
