@@ -60,9 +60,12 @@ classdef SubjectDTI < Subject
             atlases = sub.getBrainAtlases();
             atlas = atlases{1};
             
+            age = get_from_varargin(0, 'age', varargin{:});
+            dti = get_from_varargin(zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length()), 'DTI', varargin{:});
+            
             sub.datadict = containers.Map;
-            sub.datadict('age') = DataScalar(atlas);
-            sub.datadict('DTI') = DataConnectivity(atlas);
+            sub.datadict('age') = DataScalar(atlas, age);
+            sub.datadict('DTI') = DataConnectivity(atlas, dti);
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject dti

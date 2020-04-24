@@ -1,20 +1,55 @@
 classdef MeasurementMRI < Measurement
     % single group of mri subjects
+    properties
+        measure_code  % class of measure
+        value  % value of the measure for the group
+    end
     methods
         function m =  MeasurementMRI(id, atlas, group, varargin)
             
             m = m@Measurement(id, atlas, group, varargin{:});
         end
+        function measure_code = getMeasureCode(m)
+            measure_code = m.measure_code;
+        end
+        function value = getMeasureValues(m)
+            value = m.value;
+        end
     end
     methods (Access=protected)
-        function initialize_datadict(m, varargin)
-            
+        function initialize_data(m, varargin)            
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
             
-            m.data_dict = containers.Map;
-            m.data_dict('type') = DataScalar(atlas);
-            m.data_dict('value') = DataStructural(atlas);
+            m.measure_code = get_from_varargin('', 'MeasurementMRI.measure_code', varargin{:});
+                    
+            if Measure.is_global(m.getMeasureCode())
+                value = get_from_varargin( ...
+                    repmat( ...
+                        {0}, ...
+                        1, ...
+                        m.getGroup().subjectnumber()), ...
+                    'MeasurementMRI.value', ...
+                    varargin{:}); %#ok<*PROPLC>
+            elseif Measure.is_nodal(m.getMeasureCode())
+                value = get_from_varargin( ...
+                    repmat( ...
+                        {zeros(atlas.getBrainRegions().length(), 1)}, ...
+                        1, ...
+                        m.getGroup().subjectnumber()), ...
+                    'MeasurementMRI.value', ...
+                    varargin{:});
+            elseif Measure.is_global(m.getMeasureCode())
+                value = get_from_varargin(...
+                    repmat(...
+                        {zeros(atlas.getBrainRegions().length())}, ...
+                        1, ...
+                        m.getGroup().subjectnumber()), ...
+                    'MeasurementMRI.value', ...
+                    varargin{:});
+            end
+            
+            m.value = value;
         end
     end
     methods (Static)
@@ -27,34 +62,12 @@ classdef MeasurementMRI < Measurement
         function atlas_number = getBrainAtlasNumber(m)
             atlas_number =  1;
         end
-        function group_number = getGroupNumber(m)
-            group_number = 1;
-        end
         function description = getDescription(m)
             % measurement description missing
             description = '';
         end
-        function datalist = getDataList(m)
-            % list of measurments data keys
-            datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
-            datalist('type') = 'DataScalar';
-            datalist('value') = 'DataScalar';  % all globals for now
-        end
         function sub = getMeasurement(measurementClass, id, varargin)
             sub = eval([measurementClass '(id, varargin{:})']);
-        end
-        function data_codes = getDataCodes(m)
-            data_codes = Measurement.getDataCodes('MeasurementMRI');
-        end
-        function data_number = getDataNumber(m)
-            data_number = Measurement.getDataNumber('MeasurementMRI');
-        end
-        function data_classes = getDataClasses(m)
-            data_classes = Measurement.getDataClasses('MeasurementMRI');
-        end
-        function data_class = getDataClass(m, data_code) %#ok<INUSL>
-            data_class = Measuremente.getDataNumber(...
-                'MeasurementMRI', data_code);
         end
     end
 end
