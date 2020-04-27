@@ -10,9 +10,9 @@ classdef MeasurementDTI < Measurement
             
             m = m@Measurement(id, atlas, group, varargin{:});
         end
-        function measure_code = getMeasureCode(m)
+   function measure_code = getMeasureCode(m)
             measure_code = m.measure_code;
-        end
+        end     
         function value = getMeasureValues(m)
             value = m.values;
         end
@@ -43,7 +43,7 @@ classdef MeasurementDTI < Measurement
                         m.getGroup().subjectnumber()), ...
                     'MeasurementDTI.subject_values', ...
                     varargin{:});
-            elseif Measure.is_global(m.getMeasureCode())
+            elseif Measure.is_binodal(m.getMeasureCode())
                 values = get_from_varargin(...
                     repmat(...
                         {zeros(atlas.getBrainRegions().length())}, ...
