@@ -73,8 +73,8 @@ classdef AnalysisDTI < Analysis
             all1 = zeros(M, numel(res1));
             all2 = zeros(M, numel(res2));
             
-            number_sub1 = size(values1, 1);
-            number_sub2 = size(values2, 1);            
+            number_sub1 = size([values1{:}], 1);
+            number_sub2 = size([values2{:}], 1);            
             n_substmp = number_sub1 + number_sub2;
             
             start = tic;
