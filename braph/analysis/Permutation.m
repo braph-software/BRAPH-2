@@ -1,26 +1,26 @@
 classdef Permutation
-    properties (Constant)
-        PERMUTATION_LONGITUDINAL_RULE_LIST = {false, true};
-    end
     methods (Static)
-        function [permutation1, permutation2] = getPermutation(longitudinal, subs1, subs2, n_substmp, number_sub1)
+        function [permutation_1, permutation_2] = permute(longitudinal, values_1, values_2)
             %should be a class.
             if longitudinal
-                max = min(numel(subs1), numel(subs2));
+                
+                assert(isequal(size(values_1), size(values_2)), ...
+                    ['BRAPH:Permutation:'], ...
+                    ['Value_1 is not the same size as Value_2.']) %#ok<*NBRAK>
+                
+                max = min(numel(values_1), numel(values_2));
                 permutation = sign(randn(1, max));
-                permutation1 = subs1;
-                permutation2 = subs2;
-                permutation1(permutation==1) = subs2(permutation==1);
-                permutation2(permutation==1) = subs1(permutation==2);
+                permutation_1 = values_1;
+                permutation_2 = values_2;
+                permutation_1(permutation==1) = values_2(permutation==1);
+                permutation_2(permutation==1) = values_1(permutation==1);
             else
-                if nargin < 5
-                    permutation1 = sort(randperm(n_substmp, numel(subs1)));
-                else
-                    permutation1 = sort(randperm(n_substmp, number_sub1));
-                end
-                permutation2 = [1:1:n_substmp];
-                permutation2(permutation1) = 0;
-                permutation2 = permutation2(permutation2 > 0);
+                n_total = numel(values_1)  + numel(values_2);
+                n_subjects_1 = numel(values_1);
+                permutation_1 = sort(randperm(n_total, n_subjects_1));                
+                permutation_2 = [1:1:n_total];
+                permutation_2(permutation_1) = 0;
+                permutation_2 = permutation_2(permutation_2 > 0);
             end
         end
     end

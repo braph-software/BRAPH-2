@@ -61,21 +61,21 @@ classdef AnalysisDTI < Analysis
             longitudinal = analysis.getSettings('AnalysisDTI.Longitudinal');
             M = get_from_varargin(1e+3, 'NumerOfPermutations', varargin{:});
             
-            m1 = analysis.calculateMeasurement(measure_code, groups{1}, varargin{:});
-            values1 = m1.getMeasureValues();
-            res1 = mean([values1{:}], 1);  
+            measurements_1 = analysis.calculateMeasurement(measure_code, groups{1}, varargin{:});
+            values_1 = measurements_1.getMeasureValues();
+            res_1 = mean([values_1{:}], 1);  
             
-            m2 = analysis.calculateMeasurement(measure_code, groups{2}, varargin{:});
-            values2 = m2.getMeasureValues();
-            res2 = mean([values2{:}], 1);  
+            measurements_2 = analysis.calculateMeasurement(measure_code, groups{2}, varargin{:});
+            values_2 = measurements_2.getMeasureValues();
+            res_2 = mean([values_2{:}], 1);  
             
-            values = [[values1{:}]; [values2{:}];];
-            all1 = zeros(M, numel(res1));
-            all2 = zeros(M, numel(res2));
+            values = [[values_1{:}]; [values_2{:}];];
+            all_permutations_1 = zeros(M, numel(res_1));
+            all_permutation_2 = zeros(M, numel(res_2));
             
-            number_sub1 = size([values1{:}], 1);
-            number_sub2 = size([values2{:}], 1);            
-            n_substmp = number_sub1 + number_sub2;
+            number_subjects_group_1 = size([values_1{:}], 1);
+            number_subjects_group_2 = size([values_2{:}], 1);            
+            number_both_groups = number_subjects_group_1 + number_subjects_group_2;
             
             start = tic;
             for i = 1:1:M
@@ -84,42 +84,42 @@ classdef AnalysisDTI < Analysis
                 end
                 
                 if longitudinal
-                    subs1 = [1:1:number_sub1]; %#ok<*NBRAK>
-                    subs2 = number_sub1 + [1:1:number_sub2];
-                    [permutation1, permutation2] = Permutation.getPermutation(longitudinal, subs1, subs2, n_substmp, number_sub1);
+                    subjects_1 = [1:1:number_subjects_group_1]; %#ok<*NBRAK>
+                    subjects_2 = number_subjects_group_1 + [1:1:number_subjects_group_2];
+                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_1, subjects_2);
                 else
-                    subs1= 0;
-                    subs2 = 0;
-                    [permutation1, permutation2] = Permutation.getPermutation(longitudinal, subs1, subs2, n_substmp, number_sub1);
+                    subjects_1 = [1:1:number_subjects_group_1];
+                    subjects_2 = [1:1:number_subjects_group_2];
+                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_1, subjects_2);
                 end
                 
-                valuesperm1 = values(permutation1, :);
-                mperm1 = mean(valuesperm1, 1);
+                values_permutated_1 = values(permutation_1, :);
+                mean_permutated_1 = mean(values_permutated_1, 1);
                 
-                valuesperm2 = values(permutation2,:);
-                mperm2 = mean(valuesperm2,1);
+                values_permutated_2 = values(permutation_2,:);
+                mean_permutated_2 = mean(values_permutated_2,1);
                 
-                all1(i,:) = reshape(mperm1,1,numel(mperm1));
-                all2(i,:) = reshape(mperm2,1,numel(mperm2));
+                all_permutations_1(i,:) = reshape(mean_permutated_1,1,numel(mean_permutated_1));
+                all_permutation_2(i,:) = reshape(mean_permutated_2,1,numel(mean_permutated_2));
                 
                 if interruptible
                     pause(interruptible)
                 end
             end
             
-            dm = res2 - res1;
-            dall = all2-all1;
+            difference_mean = res_2 - res_1;  % difference of the mean values of the non permutated groups
+            difference_all_permutations = all_permutation_2 - all_permutations_1;  % permutated group 1 - permutated group 2
             
-            p_single = pvalue1(dm, dall);
-            p_double = pvalue2(dm, dall);
-            percentiles = quantiles(dall, 100);
+            p_single = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
+            p_double = pvalue2(difference_mean, difference_all_permutations);  % double tail
+            percentiles = quantiles(difference_all_permutations, 100);
             
             comparison = Comparison.getComparison('ComparisonDTI', ...
                 analysis.getComparisonID(measure_code, groups, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), groups, ...
                 'ComparisonDTI.measure_code', measure_code, ...
-                'ComparisonDTI.difference_mean', dm, ...
-                'ComparisonDTI.difference_all', dall, ...
+                'ComparisonDTI.difference_mean', difference_mean, ...
+                'ComparisonDTI.difference_all', difference_all_permutations, ...
                 'ComparisonDTI.p_single', p_single, ...
                 'ComparisonDTI.p_double', p_double, ...
                 'ComparisonDTI.percentiles', percentiles ...
@@ -156,7 +156,7 @@ classdef AnalysisDTI < Analysis
                 {'AnalysisDTI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU'}}, ...
                 {'AnalysisDTI.ComparisonVerbose', Constant.LOGICAL, false, {false, true}}, ...
                 {'AnalysisDTI.ComparionInterruptible', Constant.LOGICAL, false, {false, true}}, ...
-                {'AnalysisDTI.Longitudinal', Constant.LOGICAL, false, Permutation.PERMUTATION_LONGITUDINAL_RULE_LIST} ...
+                {'AnalysisDTI.Longitudinal', Constant.LOGICAL, false, {false, true}} ...
                 };
         end
     end
