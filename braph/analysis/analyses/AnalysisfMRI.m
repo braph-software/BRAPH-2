@@ -104,7 +104,7 @@ classdef AnalysisfMRI < Analysis
         function comparison_class = getComparisonClass()
             comparison_class = 'ComparisonfMRI';
         end
-        function available_settings = getAvailableSettings(m) %#ok<INUSD>
+        function available_settings = getAvailableSettings(analysis) %#ok<INUSD>
             available_settings = {
                 {'AnalysisfMRI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU'}}, ...
                 {'AnalysisfMRI.CorrelationRule', Constant.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...

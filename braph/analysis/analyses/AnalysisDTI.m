@@ -63,13 +63,13 @@ classdef AnalysisDTI < Analysis
             
             m1 = analysis.calculateMeasurement(measure_code, groups{1}, varargin{:});
             values1 = m1.getMeasureValues();
-            res1 = mean(values1);  
+            res1 = mean([values1{:}], 1);  
             
             m2 = analysis.calculateMeasurement(measure_code, groups{2}, varargin{:});
             values2 = m2.getMeasureValues();
-            res2 = mean(values2);  
+            res2 = mean([values2{:}], 1);  
             
-            values = [values1; values2;];
+            values = [[values1{:}]; [values2{:}];];
             all1 = zeros(M, numel(res1));
             all2 = zeros(M, numel(res2));
             
@@ -86,11 +86,11 @@ classdef AnalysisDTI < Analysis
                 if longitudinal
                     subs1 = [1:1:number_sub1]; %#ok<*NBRAK>
                     subs2 = number_sub1 + [1:1:number_sub2];
-                    [permutation1, permutation2] = Permutation(longitudinal, subs1, subs2, n_substmp, number_sub1);
+                    [permutation1, permutation2] = Permutation.getPermutation(longitudinal, subs1, subs2, n_substmp, number_sub1);
                 else
                     subs1= 0;
                     subs2 = 0;
-                    [permutation1, permutation2] = Permutation(longitudinal, subs1, subs2, n_substmp, number_sub1);
+                    [permutation1, permutation2] = Permutation.getPermutation(longitudinal, subs1, subs2, n_substmp, number_sub1);
                 end
                 
                 valuesperm1 = values(permutation1, :);
@@ -120,8 +120,8 @@ classdef AnalysisDTI < Analysis
                 'ComparisonDTI.measure_code', measure_code, ...
                 'ComparisonDTI.difference_mean', dm, ...
                 'ComparisonDTI.difference_all', dall, ...
-                'ComparisonDTI.psingle', p_single, ...
-                'ComparisonDTI.pdobule', p_double, ...
+                'ComparisonDTI.p_single', p_single, ...
+                'ComparisonDTI.p_double', p_double, ...
                 'ComparisonDTI.percentiles', percentiles ...
                 );
         end        
@@ -151,12 +151,12 @@ classdef AnalysisDTI < Analysis
         function comparison_class = getComparisonClass()
             comparison_class = 'ComparisonDTI';
         end
-        function available_settings = getAvailableSettings(m)
+        function available_settings = getAvailableSettings(analysis) %#ok<*INUSD>
             available_settings = {
                 {'AnalysisDTI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU'}}, ...
                 {'AnalysisDTI.ComparisonVerbose', Constant.LOGICAL, false, {false, true}}, ...
                 {'AnalysisDTI.ComparionInterruptible', Constant.LOGICAL, false, {false, true}}, ...
-                {'AnalysisDTI.Longitudinal', Constant.LOGICAL, false, {false, true}} ...
+                {'AnalysisDTI.Longitudinal', Constant.LOGICAL, false, Permutation.PERMUTATION_LONGITUDINAL_RULE_LIST} ...
                 };
         end
     end

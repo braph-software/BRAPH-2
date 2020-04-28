@@ -59,8 +59,8 @@ classdef ComparisonDTI < Comparison
             end
             c.difference_mean = dm;
             c.difference_all =  get_from_varargin(0,'ComparisonDTI.difference_all', varargin{:});
-            c.p_single = get_from_varargin(0, 'ComparisonDTI.psingle', varargin{:});
-            c.p_double = get_from_varargin(0, 'ComparisonDTI.pdobule', varargin{:});
+            c.p_single = get_from_varargin(0, 'ComparisonDTI.p_single', varargin{:});
+            c.p_double = get_from_varargin(0, 'ComparisonDTI.p_double', varargin{:});
             c.percentiles = get_from_varargin(0, 'ComparisonDTI.percentiles', varargin{:});
         end
     end

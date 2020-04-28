@@ -17,7 +17,9 @@ function q = quantiles(values, P)
 if nargin < 2
     P = 100;
 else
-    Check.isinteger('P must be a positive integer', P, '>0')
+    assert(P > 0 && floor(P)==P, ...
+    ['BRAPH:Quatiles:'], ...
+    ['P must be a positive integer ', P, ' > 0']) %#ok<*NBRAK>
 end
 
 N = size(values, 2);  % number of variables
@@ -28,7 +30,7 @@ for n = 1:1:N
 
     % percentiles
     C = 10*P;
-    [counts,binscenters] = histogram(values(:, n), C);
+    [counts,binscenters] = hist(values(:, n), C);
     scounts = cumsum(counts)/sum(counts)*P;
 
     dbinscenters = (binscenters(2)-binscenters(1))/2;
