@@ -17,7 +17,7 @@ assert(~isempty(index_group_1), ...
 
 assert(~isempty(index_group_2), ...
     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
-    ['Permutation.getPermutation() not working']) 
+    ['Permutation.getPermutation() not working'])
 
 assert(~isequal(index_group_1, index_group_2), ...
     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
@@ -37,15 +37,15 @@ assert(isequal(numel(values), numel(permutated_values)), ...
 
 for i = 1:1:numel(values)
     assert(any(ismember(permutated_values, values(i))), ...
-    ['BRAPH:AnalysisDTI:getMeasurementID'], ...
-    ['Permutation.getPermutation() not all elements are present'])
+        ['BRAPH:AnalysisDTI:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
 end
 
 %% Test 2 Longitudinal
 group_1 = ['a' 'b' 'c' 'd' 'e' 'f'];
-group_2 = ['s' 't' 'u' 'v' 'w' 'x']; 
+group_2 = ['s' 't' 'u' 'v' 'w' 'x'];
 
-[permutation_1, permutation_2] = Permutation.permute(1, group_1, group_2); 
+[permutation_1, permutation_2] = Permutation.permute(1, group_1, group_2);
 
 indexes = zeros(1, numel(group_1));  % get Permutation internal random indexes from group 1
 for i = 1:1:numel(group_1)
@@ -55,7 +55,6 @@ for i = 1:1:numel(group_1)
         indexes(i) = 1;
     end
 end
-
 
 assert(~isempty(permutation_1) && ~isempty(permutation_2), ...
     ['BRAPH:AnalysisDTI:Permutation'], ...
