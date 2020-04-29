@@ -1,5 +1,5 @@
 % test Correlation
-data = rand(6);
+data = rand(4);
 correlation_rule = Correlation.CORRELATION_RULE_LIST;
 negative_weight_rule = Correlation.NEGATIVE_WEIGHT_RULE_LIST;
 
