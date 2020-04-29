@@ -30,7 +30,7 @@ classdef AnalysisfMRI < Analysis
         end
     end
     methods (Access = protected)
-        function measurement = calculate_measurement(analysis, measure_code, group, varargin)            
+        function measurement = calculate_measurement(analysis, measure_code, group, varargin)
             subjects = group.getSubjects();
             measures = cell(1, group.subjectnumber());
             
@@ -53,7 +53,7 @@ classdef AnalysisfMRI < Analysis
                 
                 correlation_rule = analysis.getSettings('AnalysisfMRI.CorrelationRule');
                 negative_weight_rule = analysis.getSettings('AnalysisfMRI.NegativeWeightRule');
-                [A, ~] = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+                A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
                 
                 graph_type = analysis.getSettings('AnalysisfMRI.GraphType');
                 g = Graph.getGraph(graph_type, A, varargin{:});
@@ -75,8 +75,74 @@ classdef AnalysisfMRI < Analysis
         function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
             calculated_random_comparison = '';
         end
-        function calculated_comparison = calculate_comparison(analysis, measure_code, groups, varargin)
-            calculated_comparison = '';
+        function comparison = calculate_comparison(analysis, measure_code, groups, varargin)
+            verbose = analysis.getSettings('AnalysisfMRI.ComparisonVerbose');
+            interruptible = analysis.getSettings('AnalysisfMRI.ComparionInterruptible');
+            longitudinal = analysis.getSettings('AnalysisfMRI.Longitudinal');
+            M = get_from_varargin(1e+3, 'NumerOfPermutations', varargin{:});
+            
+            measurements_1 = analysis.calculateMeasurement(measure_code, groups{1}, varargin{:});
+            values_1 = measurements_1.getMeasureValues();
+            res_1 = mean([values_1{:}], 1);
+            
+            measurements_2 = analysis.calculateMeasurement(measure_code, groups{2}, varargin{:});
+            values_2 = measurements_2.getMeasureValues();
+            res_2 = mean([values_2{:}], 1);
+            
+            values = [[values_1{:}]; [values_2{:}];];
+            all_permutations_1 = zeros(M, numel(res_1));
+            all_permutation_2 = zeros(M, numel(res_2));
+            
+            number_subjects_group_1 = size([values_1{:}], 1);
+            number_subjects_group_2 = size([values_2{:}], 1);
+            
+            start = tic;
+            for i = 1:1:M
+                if verbose
+                    disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
+                end
+                
+                if longitudinal
+                    subjects_1 = [1:1:number_subjects_group_1]; %#ok<*NBRAK>
+                    subjects_2 = number_subjects_group_1 + [1:1:number_subjects_group_2];
+                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_1, subjects_2);
+                else
+                    subjects_1 = [1:1:number_subjects_group_1];
+                    subjects_2 = [1:1:number_subjects_group_2];
+                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_1, subjects_2);
+                end
+                
+                values_permutated_1 = values(permutation_1, :);
+                mean_permutated_1 = mean(values_permutated_1, 1);
+                
+                values_permutated_2 = values(permutation_2,:);
+                mean_permutated_2 = mean(values_permutated_2,1);
+                
+                all_permutations_1(i,:) = reshape(mean_permutated_1,1,numel(mean_permutated_1));
+                all_permutation_2(i,:) = reshape(mean_permutated_2,1,numel(mean_permutated_2));
+                
+                if interruptible
+                    pause(interruptible)
+                end
+            end
+            
+            difference_mean = res_2 - res_1;  % difference of the mean values of the non permutated groups
+            difference_all_permutations = all_permutation_2 - all_permutations_1;  % permutated group 1 - permutated group 2
+            
+            p_single = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
+            p_double = pvalue2(difference_mean, difference_all_permutations);  % double tail
+            percentiles = quantiles(difference_all_permutations, 100);
+            
+            comparison = Comparison.getComparison('ComparisonfMRI', ...
+                analysis.getComparisonID(measure_code, groups, varargin{:}), ...
+                analysis.getCohort().getBrainAtlases(), groups, ...
+                'ComparisonfMRI.measure_code', measure_code, ...
+                'ComparisonfMRI.difference_mean', difference_mean, ...
+                'ComparisonfMRI.difference_all', difference_all_permutations, ...
+                'ComparisonfMRI.p_single', p_single, ...
+                'ComparisonfMRI.p_double', p_double, ...
+                'ComparisonfMRI.percentiles', percentiles ...
+                );
         end
     end
     methods (Static)
@@ -108,7 +174,10 @@ classdef AnalysisfMRI < Analysis
             available_settings = {
                 {'AnalysisfMRI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU'}}, ...
                 {'AnalysisfMRI.CorrelationRule', Constant.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
-                {'AnalysisfMRI.NegativeWeightRule', Constant.STRING, 'default', Correlation.NEGATIVE_WEIGHT_RULE_LIST} ...
+                {'AnalysisfMRI.NegativeWeightRule', Constant.STRING, 'default', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
+                {'AnalysisfMRI.ComparisonVerbose', Constant.LOGICAL, false, {false, true}}, ...
+                {'AnalysisfMRI.ComparionInterruptible', Constant.LOGICAL, false, {false, true}}, ...
+                {'AnalysisfMRI.Longitudinal', Constant.LOGICAL, false, {false, true}} ...
                 };
         end
     end

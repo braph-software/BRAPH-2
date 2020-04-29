@@ -74,9 +74,8 @@ classdef AnalysisDTI < Analysis
             all_permutation_2 = zeros(M, numel(res_2));
             
             number_subjects_group_1 = size([values_1{:}], 1);
-            number_subjects_group_2 = size([values_2{:}], 1);            
-            number_both_groups = number_subjects_group_1 + number_subjects_group_2;
-            
+            number_subjects_group_2 = size([values_2{:}], 1);           
+
             start = tic;
             for i = 1:1:M
                 if verbose

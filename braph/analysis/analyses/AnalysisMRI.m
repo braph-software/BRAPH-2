@@ -43,7 +43,7 @@ classdef AnalysisMRI < Analysis
             
             correlation_rule = analysis.getSettings('AnalysisMRI.CorrelationRule');
             negative_weight_rule = analysis.getSettings('AnalysisMRI.NegativeWeightRule');
-            [A, ~] = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
             
             graph_type = analysis.getSettings('AnalysisMRI.GraphType');
             g = Graph.getGraph(graph_type, A, varargin{:});
