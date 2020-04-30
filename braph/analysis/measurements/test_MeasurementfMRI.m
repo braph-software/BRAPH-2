@@ -17,3 +17,11 @@ group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
 
 %% Test 1: Instantiation
 measurement = MeasurementfMRI('m1', atlas, group, 'MeasurementfMRI.measure_code', 'Degree');
+
+%% Test 2: Import data in varargin
+
+% global
+
+% nodal
+
+% binodal
