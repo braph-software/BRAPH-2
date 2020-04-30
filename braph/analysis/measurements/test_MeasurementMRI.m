@@ -6,7 +6,7 @@ br4 = BrainRegion('BR4', 'brain region 4', 4, 44, 444);
 br5 = BrainRegion('BR5', 'brain region 5', 5, 55, 555);
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 
-subject_class = 'SubjectMRI'; 
+subject_class = 'SubjectMRI';
 
 sub1 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 1);
 sub2 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 2);
@@ -42,5 +42,34 @@ for i=1:1:numel(measures)
         assert(isequal([5 5], size(value{1})), ...
             ['BRAPH:MeasurementMRI'], ...
             ['MeasurementMRI does not initialize correctly with: ' type_of_measure{i} ' measures.']) %#ok<*NBRAK>
+    end
+end
+
+%% Test 3: Initialize with value
+for i=1:1:numel(measures)
+    % setup
+    A = rand(5);
+    g = Graph.getGraph('GraphWU', A);
+    m  = Measure.getMeasure(measures{i}, g);
+    % act
+    measurement = MeasurementfMRI('m1', atlas, group, 'MeasurementfMRI.measure_code', measures{i}, ...
+        'MeasurementfMRI.values', m.getValue(), ...
+        'MeasurementfMRI.average_value', calculate_measurement_average(measures{i}, {m.getValue()}) ...
+        );
+    
+    % assert
+    if Measure.is_global(measures{i})
+        assert(isequal([1 1], size(measurement.getMeasureValues())), ...
+            ['BRAPH:MeasurementfMRI'], ...
+            ['MeasurementfMRI does not initialize data correctly with: ' type_of_measure{i} ' measures.']) %#ok<*NBRAK>
+        
+    elseif Measure.is_nodal(measures{i})
+        assert(isequal([5 1], size(measurement.getMeasureValues())), ...
+            ['BRAPH:MeasurementfMRI'], ...
+            ['MeasurementfMRI does not initialize data correctly with: ' type_of_measure{i} ' measures.']) %#ok<*NBRAK>
+    else
+        assert(isequal([5 5], size(measurement.getMeasureValues())), ...
+            ['BRAPH:MeasurementfMRI'], ...
+            ['MeasurementfMRI does not initialize data correctly with: ' type_of_measure{i} ' measures.']) %#ok<*NBRAK>
     end
 end

@@ -10,9 +10,9 @@ classdef MeasurementDTI < Measurement
             
             m = m@Measurement(id, atlas, group, varargin{:});
         end
-   function measure_code = getMeasureCode(m)
+        function measure_code = getMeasureCode(m)
             measure_code = m.measure_code;
-        end     
+        end
         function value = getMeasureValues(m)
             value = m.values;
         end
@@ -21,19 +21,19 @@ classdef MeasurementDTI < Measurement
         end
     end
     methods (Access=protected)
-        function initialize_data(m, varargin)            
+        function initialize_data(m, varargin)
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
             
             m.measure_code = get_from_varargin('', ...
                 'MeasurementDTI.measure_code', ...
-                varargin{:});            
+                varargin{:});
             m.values = get_data_from_varargin(...
                 'MeasurementDTI.values', ...
                 m.getMeasureCode(), ...
                 m.getGroup().subjectnumber(), ...
                 atlas.getBrainRegions().length(), ...
-                varargin{:});       
+                varargin{:});
             m.average_value = get_data_from_varargin( ...
                 'MeasurementDTI.average_value', ...
                 m.getMeasureCode(), ...

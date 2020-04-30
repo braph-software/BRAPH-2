@@ -23,25 +23,25 @@ classdef MeasurementfMRI < Measurement
         end
     end
     methods (Access=protected)
-        function initialize_data(m, varargin)            
+        function initialize_data(m, varargin)
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
             
             m.measure_code = get_from_varargin('', ...
                 'MeasurementfMRI.measure_code', ...
-                varargin{:});             
+                varargin{:});
             m.values = get_data_from_varargin( ...
                 'MeasurementfMRI.values', ...
                 m.getMeasureCode(), ...
                 m.getGroup().subjectnumber(), ...
                 atlas.getBrainRegions().length(), ...
-                varargin{:});       
+                varargin{:});
             m.average_value = get_data_from_varargin( ...
                 'MeasurementfMRI.average_value', ...
                 m.getMeasureCode(), ...
                 1, ...
                 atlas.getBrainRegions().length(), ...
-                varargin{:}); 
+                varargin{:});
         end
     end
     methods (Static)
@@ -57,9 +57,9 @@ classdef MeasurementfMRI < Measurement
         function description = getDescription(m)
             % measurement description missing
             description = '';
-        end       
+        end
         function sub = getMeasurement(measurementClass, id, varargin)
             sub = eval([measurementClass '(id, varargin{:})']);
-        end      
+        end
     end
 end
