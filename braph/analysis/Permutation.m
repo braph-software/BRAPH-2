@@ -17,10 +17,13 @@ classdef Permutation
             else
                 n_total = numel(values_1)  + numel(values_2);
                 n_subjects_1 = numel(values_1);
-                permutation_1 = sort(randperm(n_total, n_subjects_1));                
-                permutation_2 = [1:1:n_total];
-                permutation_2(permutation_1) = 0;
-                permutation_2 = permutation_2(permutation_2 > 0);
+                values = [values_1 values_2];
+                index_permutation_1 = sort(randperm(n_total, n_subjects_1));                
+                index_permutation_2 = [1:1:n_total];
+                index_permutation_2(index_permutation_1) = 0;
+                index_permutation_2 = index_permutation_2(index_permutation_2 > 0);
+                permutation_1 = values(:, index_permutation_1);
+                permutation_2 = values(:, index_permutation_2);                
             end
         end
     end

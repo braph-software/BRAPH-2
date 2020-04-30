@@ -87,12 +87,8 @@ classdef AnalysisfMRI < Analysis
             values_2 = measurements_2.getMeasureValues();
             res_2 = mean([values_2{:}], 1);
             
-            values = [[values_1{:}]; [values_2{:}];];
             all_permutations_1 = zeros(M, numel(res_1));
             all_permutation_2 = zeros(M, numel(res_2));
-            
-            number_subjects_group_1 = size([values_1{:}], 1);
-            number_subjects_group_2 = size([values_2{:}], 1);
             
             start = tic;
             for i = 1:1:M
@@ -101,21 +97,16 @@ classdef AnalysisfMRI < Analysis
                 end
                 
                 if longitudinal
-                    subjects_1 = [1:1:number_subjects_group_1]; %#ok<*NBRAK>
-                    subjects_2 = number_subjects_group_1 + [1:1:number_subjects_group_2];
-                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_1, subjects_2);
+%                     subjects_1 = [1:1:number_subjects_group_1]; %#ok<*NBRAK>
+%                     subjects_2 = number_subjects_group_1 + [1:1:number_subjects_group_2];
+                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, values_1, values_2);
                 else
-                    subjects_1 = [1:1:number_subjects_group_1];
-                    subjects_2 = [1:1:number_subjects_group_2];
-                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_1, subjects_2);
+                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, values_1, values_2);
                 end
                 
-                values_permutated_1 = values(permutation_1, :);
-                mean_permutated_1 = mean(values_permutated_1, 1);
-                
-                values_permutated_2 = values(permutation_2,:);
-                mean_permutated_2 = mean(values_permutated_2,1);
-                
+                mean_permutated_1 = calculate_measurement_average(measure_code, permutation_1);
+                mean_permutated_2 = calculate_measurement_average(measure_code, permutation_2);
+
                 all_permutations_1(i,:) = reshape(mean_permutated_1,1,numel(mean_permutated_1));
                 all_permutation_2(i,:) = reshape(mean_permutated_2,1,numel(mean_permutated_2));
                 
