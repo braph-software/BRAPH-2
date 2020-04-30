@@ -13,10 +13,6 @@ function list_subclasses = subclasses(class_name, directory, search_subdirectori
 %
 % See also SUPERCLASSES.
 
-% Author: Giovanni Volpe
-% Date: 2020/02/11
-% Update: 2020/04/30 by GV to search subfolders
-
 if nargin < 3  % by default it does not search subdirectories
     search_subdirectories = false;
 end
