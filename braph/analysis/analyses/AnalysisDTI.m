@@ -61,11 +61,11 @@ classdef AnalysisDTI < Analysis
             
             measurements_1 = analysis.calculateMeasurement(measure_code, groups{1}, varargin{:});
             values_1 = measurements_1.getMeasureValues();
-            res_1 = mean([values_1{:}], 1);  
+            res_1 = calculate_measurement_average(measure_code, values_1);  
             
             measurements_2 = analysis.calculateMeasurement(measure_code, groups{2}, varargin{:});
             values_2 = measurements_2.getMeasureValues();
-            res_2 = mean([values_2{:}], 1);  
+            res_2 =  calculate_measurement_average(measure_code, values_2);    
 
             all_permutations_1 = zeros(M, numel(res_1));
             all_permutation_2 = zeros(M, numel(res_2));

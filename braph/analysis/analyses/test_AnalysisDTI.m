@@ -92,7 +92,8 @@ assert(isequal(calculated_measurement.getGroupAverageValue(), [4; 4; 4; 4; 4;]),
 
 %% Test 4: Compare
 analysis = AnalysisDTI(cohort, {}, {}, {});
-comparition = analysis.calculateComparison('Distance', {group1, group2}, 'NumerOfPermutations', 10); 
+% global-Assortativity nodal-Eccentricity binodal-Distance
+comparition = analysis.calculateComparison('Assortativity', {group1, group2}, 'NumerOfPermutations', 10); 
 
 assert(~isempty(comparition), ...
     ['BRAPH:AnalysisDTI:calculateComparison'], ...
