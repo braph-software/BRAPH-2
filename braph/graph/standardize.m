@@ -16,9 +16,6 @@ function B = standardize(A, varargin)
 %
 % See also BINARIZE, DEDIAGONALIZE, SEMIPOSITIVIZE, SYMMETRIZE.
 
-% Author: Anna Canal Garcia
-% Date: 2020/02/12
-
 standardize_rule = get_from_varargin('threshold', 'StandardizeRule', varargin{:});
 
 switch lower(standardize_rule)

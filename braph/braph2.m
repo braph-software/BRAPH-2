@@ -1,3 +1,15 @@
+% BRAPH2 - BRrain Analysis using graPH theory version 2.0
+%
+% This script loads all packages of the BRAPH2.
+%
+% BRAPH2 packages
+%   <a href="matlab:help util ">util</a>    - general utility functions
+%   <a href="matlab:help test">test</a>    - braph2 unit test script
+%   <a href="matlab:help graph">graph</a>   - graph analysis tools
+%   <a href="matlab:help atlas">atlas</a>   - brain atlas
+%
+
+clc
 format long
 
 dir = fileparts(which('braph2'));

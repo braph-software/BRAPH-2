@@ -12,9 +12,6 @@ function B = semipositivize(A, varargin)
 %
 % See also BINARIZE, DEDIAGONALIZE, STANDARDIZE, SYMMETRIZE.
 
-% Author: Emiliano Gomez & Giovanni Volpe
-% Date: 2020/02/07
-
 semipositivize_rule = get_from_varargin('zero', 'SemipositivizeRule', varargin{:});
 
 switch lower(semipositivize_rule)
