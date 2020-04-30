@@ -1,4 +1,5 @@
 % test standardize
+
 A = randn(randi([2 10]));
 
 %% Test 1: Rule Threshold
