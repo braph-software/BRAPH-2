@@ -15,13 +15,32 @@ sub4 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtla
 sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 5);
 group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
 
+measures = {'Assortativity', 'Degree', 'Distance'};
+type_of_measure = {'global', 'nodal', 'binodal'};
 %% Test 1: Instantiation
 measurement = MeasurementMRI('m1', atlas, group, 'MeasurementMRI.measure_code', 'Degree');
 
-%% Test 2: Import data in varargin
-
-% global
-
-% nodal
-
-% binodal
+%% Test 2: Correct size defaults
+for i=1:1:numel(measures)
+    measurement = MeasurementMRI('m1', atlas, group, 'MeasurementMRI.measure_code', measures{i});
+    
+    assert(~isempty(measurement), ...
+        ['BRAPH:MeasurementMRI'], ...
+        ['MeasurementMRI does not initialize correctly with: ' type_of_measure{i} ' measures.']) %#ok<*NBRAK>
+    
+    value = measurement.getMeasureValues();
+    
+    if Measure.is_global(measures{i})
+        assert(isequal([1 1], size(value{1})), ...
+            ['BRAPH:MeasurementMRI'], ...
+            ['MeasurementMRI does not initialize correctly with: ' type_of_measure{i} ' measures.']) %#ok<*NBRAK>
+    elseif Measure.is_nodal(measures{i})
+        assert(isequal([5 1], size(value{1})), ...
+            ['BRAPH:MeasurementMRI'], ...
+            ['MeasurementMRI does not initialize correctly with: ' type_of_measure{i} ' measures.']) %#ok<*NBRAK>
+    else
+        assert(isequal([5 5], size(value{1})), ...
+            ['BRAPH:MeasurementMRI'], ...
+            ['MeasurementMRI does not initialize correctly with: ' type_of_measure{i} ' measures.']) %#ok<*NBRAK>
+    end
+end
