@@ -13,9 +13,6 @@ function B = symmetrize(A, varargin)
 % 
 % See also BINARIZE, DEDIAGONALIZE, SEMIPOSITIVIZE, STANDARDIZE.
 
-% Author: Emiliano Gomez & Giovanni Volpe
-% Date: 2020/02/07
-
 symmetrize_rule = 'max';
 for n = 1:1:length(varargin)-1
     if strcmpi(varargin{n}, 'SymmetrizeRule')
