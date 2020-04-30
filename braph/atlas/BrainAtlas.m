@@ -123,10 +123,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also tostring().
             
             disp(['<a href="matlab:help ' class(atlas) '">' class(atlas) '</a>'])
-            disp([' size: ' int2str(atlas.brainregionnumber()) ' brain regions'])
+            disp([' size: ' int2str(atlas.getBrainRegions().length()) ' brain regions'])
             disp([' brain regions:']); %#ok<NBRAK>
-            for i = 1:1:atlas.brainregionnumber()
-                br = atlas.getBrainRegion(i);
+            for i = 1:1:atlas.getBrainRegions().length()
+                br = atlas.getBrainRegions().getValue(i);
                 disp(['  ' int2str(i) ' - ' br.getLabel() ' ' br.getName() ' ' mat2str(br.getPosition())]);
             end
         end

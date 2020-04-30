@@ -5,7 +5,7 @@ classdef Correlation
     end
     methods (Static)
         function [A, P] = getAdjacencyMatrix(data, correlation_rule, negative_weight_rule)
-
+            
             switch lower(correlation_rule)
                 case 'spearman'
                     [A, P] = corr(data, 'Type', 'Spearman');
@@ -23,10 +23,10 @@ classdef Correlation
                 case 'none'
                     
                 case 'abs'
-                    A = abs(A); 
+                    A = abs(A);
                 otherwise  % 'zero' default
                     A(A < 0) = 0;
-            end            
+            end
         end
     end
 end

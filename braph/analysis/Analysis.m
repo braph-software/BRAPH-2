@@ -103,12 +103,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
             random_comparison = analysis.getRandomComparisons().getValue(id);
         end
         function comparison = calculateComparison(analysis, measure_code, groups, varargin)
-            id = analysis.getComparisonID(analysis, measure_code, groups, varargin{:});
+            id = analysis.getComparisonID(measure_code, groups, varargin{:});
             if ~analysis.getComparisons().contains(id)
                 comparison = calculate_comparison(analysis, measure_code, groups, varargin{:});
-                analysis.getComparison().add(id, comparison)
+                analysis.getComparisons().add(id, comparison)
             end
-            comparison = analysis.getComparison().getValue(id);
+            comparison = analysis.getComparisons().getValue(id);
         end
         function res = getSettings(analysis, setting_code)
             if nargin<2

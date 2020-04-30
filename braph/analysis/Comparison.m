@@ -25,15 +25,8 @@ classdef Comparison < handle & matlab.mixin.Copyable
             
             c.settings = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});
             
-            c.initialize_datadict(atlases, groups, varargin{:});
+            c.initialize_data(atlases, groups, varargin{:});
             
-            data_codes = c.getDataCodes();
-            for i = 1:1:numel(data_codes)
-                data_code = data_codes{i};
-                value = get_from_varargin(c.getData(data_code).getValue, ...
-                    data_code, varargin);
-                c.getData(data_code).setValue(value);
-            end
         end
         function comparison_copy = copyElement(c)
             % It does not make a deep copy of atlases or groups
@@ -52,7 +45,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
         end
     end
     methods (Abstract, Access = protected)
-        initialize_datadict(c, varargin)  % initialize datadict
+        initialize_data(c, varargin)  % initialize datadict
     end
     methods
         function id = getID(m)
@@ -128,28 +121,8 @@ classdef Comparison < handle & matlab.mixin.Copyable
             % measurement description
             description = eval([Comparison.getClass(c) '.getDescription()']);
         end
-        function datalist = getDataList(c)
-            % list of measurments data keys
-            datalist = eval([Comparison.getClass(c) '.getDataList()']);
-        end
         function sub = getComparison(comparisonClass, id, varargin) %#ok<*INUSD>
             sub = eval([comparisonClass '(id, varargin{:})']);
-        end
-        function data_codes = getDataCodes(c)
-            datalist = Comparison.getDataList(c);
-            data_codes = keys(datalist);
-        end
-        function data_number = getDataNumber(c)
-            datalist = Comparison.getDataList(c);
-            data_number = length(datalist);
-        end
-        function data_classes = getDataClasses(c)
-            datalist = Comparison.getDataList(c);
-            data_classes = values(datalist);
-        end
-        function data_class = getDataClass(c, data_code)
-            datalist = Comparison.getDataList(c);
-            data_class = datalist(data_code);
         end
     end
 end

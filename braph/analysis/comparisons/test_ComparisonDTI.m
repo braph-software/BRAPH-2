@@ -16,4 +16,22 @@ sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtla
 group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
 
 %% Test 1: Instantiation
-comparison = ComparisonDTI('c1', atlas,  repmat({group}, 1, ComparisonDTI.getGroupNumber()));
+comparison = ComparisonDTI('c1', atlas,  repmat({group}, 1, ComparisonDTI.getGroupNumber()), 'ComparisonDTI.measure_code', 'Degree');
+
+%% Test 2: Comparison Initialization with values
+
+% % setup
+% dm = ;
+% dall = ;
+% p_single = ;
+% p_double = ;
+% eprcentiles = ;
+% % act
+% comparison = ComparisonDTI('c1', atlas, reptmat({group}, 1, ComparisonDTI.getGroupNumber()), ...
+%     'ComparisonDTI.measure_code', 'Degree', ...
+%     'ComparisonDTI.difference_mean', dm, ...
+%     'ComparisonDTI.difference_all', dall, ...
+%     'ComparisonDTI.p_single', p_single, ...
+%     'ComparisonDTI.p_double', p_double, ...
+%     'ComparisonDTI.percentiles', percentiles ...
+%     );
