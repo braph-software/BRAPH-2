@@ -17,17 +17,17 @@ classdef Constant
         MAT_EXTENSION = '*.mat';
         MAT_MSG_GETFILE = 'Select MAT file';
         MAT_MSG_PUTFILE = 'Select MAT file';
+        
+        XLS_EXTENSION = {'*.xlsx';'*.xls'};
+        XLS_MSG_GETFILE = 'Select Excel file';
+        XLS_MSG_PUTFILE = 'Select Excel file';       
 
-        XML_EXTENSION = '*.xml'
-        XML_MSG_GETFILE = 'Select XML file'
-        XML_MSG_PUTFILE = 'Select XML file'
+        TXT_EXTENSION = '*.txt';
+        TXT_MSG_GETFILE = 'Select TXT file';
+        TXT_MSG_PUTFILE = 'Select TXT file';
         
-        TXT_EXTENSION = '*.txt'
-        TXT_MSG_GETFILE = 'Select TXT file'
-        TXT_MSG_PUTFILE = 'Select TXT file'
-        
-        XLS_EXTENSION = {'*.xlsx';'*.xls'}
-        XLS_MSG_GETFILE = 'Select Excel file'
-        XLS_MSG_PUTFILE = 'Select Excel file'        
+        JSON_EXTENSION = '*.json'
+        JSON_MSG_GETFILE = 'Select JSON file'
+        JSON_MSG_PUTFILE = 'Select JSON file'        
     end
 end
