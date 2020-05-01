@@ -1,10 +1,9 @@
 classdef Comparison < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         id  % unique identifier
-        groups  % cell array with two groups
         atlases  % cell array with brain atlases
+        groups  % cell array with two groups
         settings  % settings of the measurement
-        data_dict  % dictionary with data for measurements
     end
     methods (Access = protected)
         function c = Comparison(id, atlases, groups, varargin)
@@ -63,9 +62,6 @@ classdef Comparison < handle & matlab.mixin.Copyable
                 disp([data_code ' = ' d.tostring()])
             end
         end
-        function d = getData(c, data_code)
-            d = c.data_dict(data_code);
-        end
         function setBrainAtlases(c, atlases)
             % adds a atlas to the end of the cell array
             c.update_brainatlases(atlases);
@@ -107,11 +103,11 @@ classdef Comparison < handle & matlab.mixin.Copyable
         function group_number = getGroupNumber(c)
             group_number =  eval([Comparison.getClass(c) '.getGroupNumber()']);
         end
-        function measurementClass = getClass(c)
+        function measurement_class = getClass(c)
             if isa(c, 'Comparison')
-                measurementClass = class(c);
+                measurement_class = class(c);
             else % mshould be a string with the measurement class
-                measurementClass = c;
+                measurement_class = c;
             end
         end
         function name = getName(c)

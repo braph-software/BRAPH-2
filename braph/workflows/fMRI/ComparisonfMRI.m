@@ -2,14 +2,15 @@ classdef ComparisonfMRI < Comparison
     properties
         measure_code  % class of measure
         values_1  % array with the values of the measure for each subject of group 1
-        average_value_1  % average value of group 1
         values_2  % array with the values of the measure for each subject of group 1
+        average_value_1  % average value of group 1
         average_value_2  % average value of group 1
-        all_differences  % all differences obtained through the permutation test
         difference   % difference
+        all_differences  % all differences obtained through the permutation test
         p_single  % p value single tailed
         p_double  % p value double tailed
-        percentiles   % percentiles
+        confidence_interval_min  % min value of the 95% confidence interval
+        confidence_interval_max  % max value of the 95% confidence interval
     end
     methods
         function c =  ComparisonfMRI(id, atlas, groups, varargin)
