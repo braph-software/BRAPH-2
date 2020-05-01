@@ -292,20 +292,38 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 atlas.getBrainRegions().add(br_label, br);
             end
         end
-        function success = save_to_xls(atlas, varargin)
+        function save_to_xls(atlas, varargin)
             
-            success = false;
-            
-            clc
-            atlas
-
-            for i = 1:1:atlas.getBrainRegions().length()
-                % creates table
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
             end
             
-            % save with writetable
+            % gets brain region data
+            for i = 1:1:atlas.getBrainRegions().length()
+                br_label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
+                br_names{i, 1} = atlas.getBrainRegions().getValue(i).getName(); %#ok<*AGROW>
+                br_x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
+                br_y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
+                br_z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
+            end
             
-        end
+            % creates table
+            tab = [
+                {atlas.getName(), {},{},{},{}};
+                table(br_label, br_names, br_x, br_y, br_z)
+                ];
+            
+            % save
+            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+        end 
 %         load_from_txt
 %         save_to_txt
 %         load_from_json
