@@ -174,3 +174,14 @@ assert(atlas.getBrainRegions().length()==5, ...
 assert(isequal(selected, [3 4 5]), ...
     'BRAPH:BrainAtlas:Bug', ...
     'BrainAtlas.move2bottomBrainRegions does not work')
+
+%% Test 13: Save to XLS
+
+br1 = BrainRegion('ISF', 'superiorfrontal', -12.6, 22.9, 42.4);
+br2 = BrainRegion('lFP', 'frontalpole', -8.6,61.7,-8.7);
+br3 = BrainRegion('lRMF', 'rostralmiddlefrontal', -31.3,41.2,16.5);
+br4 = BrainRegion('lCMF', 'caudalmiddlefrontal', -34.6, 10.2, 42.8);
+br5 = BrainRegion('lPOB', 'parsorbitalis', -41,38.8,-11.1);
+
+atlas  = BrainAtlas('TestToSaveCoolName1', {br1, br2, br3, br4, br5});
+BrainAtlas.save_to_xls(atlas);
