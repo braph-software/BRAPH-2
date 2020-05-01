@@ -293,7 +293,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             end
         end
         function save_to_xls(atlas, varargin)
-            
+% add comments
+
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
