@@ -1,12 +1,13 @@
 function P2 = pvalue2(observed_difference, random_differences)
 % PVALUE2 Calculates the two-tailed p-value
 %
-% P = PVALUE2(RES, VALUES) calculates the two-tailed P-value of RES 
-%   with respect to the distribution given by VALUES.
-%   RES must be a row vector where the columns are the results.
-%   VALUES must be a matrix where the columns correspond to RES and 
-%   the rows are samples.
-%   P is a row vector with the two-sided p-values.
+% P2 = PVALUE2(OBSERVED_DIFFERENCE, RANDOM_DIFFERENCES) calculates the
+% two-tailed P-value of OBSERVED_DIFFERENCE with respect to the
+% distribution given by RANDOM_DIFFERENCES. 
+% OBSERVED_DIFFERENCE a scalar, vector or matrix with the difference.
+% RANDOM_DIFFERENCES must be a cell array of samples, where each cell contains a
+% scalar, vector or matrix with random variables.
+% P2 is a scalar, vector or matrix with the two-sided p-values.
 %
 % See also pvalue1, quantiles, fdr.
 
