@@ -24,7 +24,8 @@ classdef MeasurementfMRI < Measurement
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
             
-            m.measure_code = get_from_varargin('Degree', ...
+            m.measure_code = get_from_varargin( ...
+                'Degree', ...  % needs to have a default measure code
                 'MeasurementfMRI.measure_code', ...
                 varargin{:});
             
