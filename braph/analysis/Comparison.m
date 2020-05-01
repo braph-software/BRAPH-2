@@ -66,28 +66,14 @@ classdef Comparison < handle & matlab.mixin.Copyable
             % adds a atlas to the end of the cell array
             c.update_brainatlases(atlases);
         end
-        function update_brainatlas(c, atlases)
-            
-            c.atlases = atlases;
-            atlas = atlases{1};
-            
-            d1 = c.data_dict('type');
-            d1.setBrainAtlas(atlas)
-            
-            d2 = c.data_dict('value');
-            d2.setBrainAtlas(atlas);
-        end
-        function setGroups(c, groups)
-            c.update_groups(groups);
-        end
         function atlases = getBrainAtlases(c)
             atlases = c.atlases;
         end
+        function setGroups(c, groups)
+            c.groups = groups;
+        end
         function groups = getGroups(c)
             groups = c.groups;
-        end
-        function update_groups(c, groups)
-            c.groups = groups;
         end
     end
     methods (Static)
@@ -97,17 +83,11 @@ classdef Comparison < handle & matlab.mixin.Copyable
                 [fileparts(which('Comparison')) filesep 'comparisons'] ...
                 );
         end
-        function atlas_number = getBrainAtlasNumber(c)
-            atlas_number =  eval([Comparison.getClass(c) '.getBrainAtlasNumber()']);
-        end
-        function group_number = getGroupNumber(c)
-            group_number =  eval([Comparison.getClass(c) '.getGroupNumber()']);
-        end
-        function measurement_class = getClass(c)
+        function comparison_class = getClass(c)
             if isa(c, 'Comparison')
-                measurement_class = class(c);
-            else % mshould be a string with the measurement class
-                measurement_class = c;
+                comparison_class = class(c);
+            else
+                comparison_class = c;
             end
         end
         function name = getName(c)
@@ -117,8 +97,22 @@ classdef Comparison < handle & matlab.mixin.Copyable
             % measurement description
             description = eval([Comparison.getClass(c) '.getDescription()']);
         end
-        function sub = getComparison(comparisonClass, id, varargin) %#ok<*INUSD>
-            sub = eval([comparisonClass '(id, varargin{:})']);
+        function atlas_number = getBrainAtlasNumber(c)
+            atlas_number =  eval([Comparison.getClass(c) '.getBrainAtlasNumber()']);
+        end
+        function group_number = getGroupNumber(c)
+            group_number =  eval([Comparison.getClass(c) '.getGroupNumber()']);
+        end
+        function analysis_class = getAnalysisClass(c)
+            % measurement analysis class
+            analysis_class = eval([Comparison.getClass(c) '.getAnalysisClass()']);
+        end
+        function subject_class = getSubjectClass(c)
+            % measurement subject class
+            subject_class = eval([Comparison.getClass(c) '.getSubjectClass()']);
+        end
+        function sub = getComparison(comparisonClass, id, atlases, groups, varargin) %#ok<*INUSD>
+            sub = eval([comparisonClass '(id, atlases, groups, varargin{:})']);
         end
     end
 end
