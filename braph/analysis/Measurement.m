@@ -74,7 +74,8 @@ classdef Measurement < handle & matlab.mixin.Copyable
     methods (Static)
         function measurementList = getList()
             measurementList = subclasses( ...
-                'Measurement'
+                'Measurement', ...
+                [fileparts(which('Measurement')) filesep 'measurements'] ...
                 );
         end
         function atlas_number = getBrainAtlasNumber(m)
