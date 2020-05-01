@@ -8,6 +8,8 @@ function Q = quantiles(values, P)
 %
 % Q = QUANTILES(VALUES) calculates the percentiles of VALUES. It is
 %   equivalent to QUANTILES(VALUES, 100).
+%
+% See also pvalue1, pvalue2, fdr.
 
 % number of bins [default = 100]
 if nargin < 2
