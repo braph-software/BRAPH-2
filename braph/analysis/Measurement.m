@@ -73,10 +73,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods (Static)
         function measurementList = getList()
-            measurementList = subclasses( ...
-                'Measurement', ...
-                [fileparts(which('Measurement')) filesep 'measurements'] ...
-                );
+            measurementList = subclasses('Measurement');
         end
         function atlas_number = getBrainAtlasNumber(m)
             atlas_number =  eval([Measurement.getClass(m) '.getBrainAtlasNumber()']);
