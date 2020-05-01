@@ -27,7 +27,7 @@ classdef MeasurementfMRI < Measurement
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
             
-            m.measure_code = get_from_varargin('', ...
+            m.measure_code = get_from_varargin('Degree', ...
                 'MeasurementfMRI.measure_code', ...
                 varargin{:});
             m.values = get_data_from_varargin( ...
@@ -51,15 +51,23 @@ classdef MeasurementfMRI < Measurement
         function name = getName(m)
             name = 'Measurement fMRI';
         end
-        function atlas_number = getBrainAtlasNumber(m)
-            atlas_number =  1;
-        end
         function description = getDescription(m)
             % measurement description missing
             description = '';
         end
-        function sub = getMeasurement(measurementClass, id, varargin)
-            sub = eval([measurementClass '(id, varargin{:})']);
+        function atlas_number = getBrainAtlasNumber(m)
+            atlas_number =  1;
+        end
+        function analysis_class = getAnalysisClass(m)
+            % measurement analysis class
+            analysis_class = 'AnalysisfMRI';
+        end
+        function subject_class = getSubjectClass(m)
+            % measurement subject class
+            subject_class = 'SubjectfMRI';
+        end        
+        function m = getMeasurement(measurement_class, id, varargin)
+            m = eval([measurement_class '(id, varargin{:})']);
         end
     end
 end

@@ -1,8 +1,8 @@
 classdef Measurement < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         id  % unique identifier
-        group  % group
         atlases  % cell array with brain atlases
+        group  % group
         settings  % settings of the measurement
     end
     methods (Access = protected)
@@ -72,20 +72,14 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)
-        function measurementList = getList()
-            measurementList = subclasses('Measurement');
+        function measurement_list = getList()
+            measurement_list = subclasses('Measurement');
         end
-        function atlas_number = getBrainAtlasNumber(m)
-            atlas_number =  eval([Measurement.getClass(m) '.getBrainAtlasNumber()']);
-        end
-        function group_number = getGroupNumber(m)
-            group_number = 1;
-        end
-        function measurementClass = getClass(m)
+        function measurement_class = getClass(m)
             if isa(m, 'Measurement')
-                measurementClass = class(m);
-            else % mshould be a string with the measurement class
-                measurementClass = m;
+                measurement_class = class(m);
+            else % m should be a string with the measurement class
+                measurement_class = m;
             end
         end
         function name = getName(m)
@@ -95,12 +89,19 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % measurement description
             description = eval([Measurement.getClass(m) '.getDescription()']);
         end
-        function datalist = getDataList(m)
-            % list of measurements data keys
-            datalist = eval([Measurement.getClass(m) '.getDataList()']);
+        function atlas_number = getBrainAtlasNumber(m)
+            atlas_number =  eval([Measurement.getClass(m) '.getBrainAtlasNumber()']);
         end
-        function sub = getMeasurement(measurement_class, id , varargin) %#ok<INUSD>
-            sub = eval([measurement_class  '(id, varargin{:})']);
+        function analysis_class = getAnalysisClass(m)
+            % measurement analysis class
+            analysis_class = eval([Measurement.getClass(m) '.getAnalysisClass()']);
+        end
+        function subject_class = getSubjectClass(m)
+            % measurement subject class
+            subject_class = eval([Measurement.getClass(m) '.getSubjectClass()']);
+        end        
+        function sub = getMeasurement(measurement_class, id , atlases, group, varargin) %#ok<INUSD>
+            sub = eval([measurement_class  '(id, atlases, group, varargin{:})']);
         end
     end
 end
