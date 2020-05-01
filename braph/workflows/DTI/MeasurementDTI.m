@@ -1,5 +1,4 @@
 classdef MeasurementDTI < Measurement
-    % single group of dti subjects
     properties
         measure_code  % measure class
         values  % array with the values of the measure for each subject

@@ -12,7 +12,7 @@ classdef MeasurementMRI < Measurement
         function measure_code = getMeasureCode(m)
             measure_code = m.measure_code;
         end
-        function value = getMeasureValues(m)
+        function value = getMeasureValue(m)
             value = m.value;
         end
     end
@@ -24,12 +24,13 @@ classdef MeasurementMRI < Measurement
             m.measure_code = get_from_varargin('Degree', ...
                 'MeasurementMRI.measure_code', ...
                 varargin{:});
-            m.value = get_data_from_varargin( ...
-                'MeasurementMRI.value', ...
-                m.getMeasureCode(), ...
-                m.getGroup().subjectnumber(), ...
-                atlas.getBrainRegions().length(), ...
-                varargin{:});
+            
+m.value = get_data_from_varargin( ...
+    'MeasurementMRI.value', ...
+    m.getMeasureCode(), ...
+    m.getGroup().subjectnumber(), ...
+    atlas.getBrainRegions().length(), ...
+    varargin{:});
         end
     end
     methods (Static)
@@ -54,8 +55,8 @@ classdef MeasurementMRI < Measurement
             % measurement subject class
             subject_class = 'SubjectMRI';
         end        
-        function m = getMeasurement(measurement_class, id, varargin)
-            m = eval([measurement_class '(id, varargin{:})']);
+        function m = getMeasurement(measurement_class, id, atlas, group, varargin)
+            m = eval([measurement_class '(id, atlas, group, varargin{:})']);
         end
     end
 end
