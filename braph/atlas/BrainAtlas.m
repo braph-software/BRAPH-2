@@ -292,13 +292,23 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 atlas.getBrainRegions().add(br_label, br);
             end
         end
-        function save_to_xls(atlas)
+        function success = save_to_xls(atlas, varargin)
+            
+            success = false;
             
             clc
             atlas
 
-            for i = 1:1:atlas.getBrainRegions().
+            for i = 1:1:atlas.getBrainRegions().length()
+                % creates table
+            end
+            
+            % save with writetable
             
         end
+%         load_from_txt
+%         save_to_txt
+%         load_from_json
+%         save_to_json
     end
 end
