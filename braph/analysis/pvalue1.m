@@ -1,17 +1,14 @@
 function p_single = pvalue1(res, values)
 % PVALUE1 Calculates the one-tailed p-value
 %
-% P = PVALUE1(RES,VALUES) calculates the one-tailed P-value of RES 
+% P = PVALUE1(RES, VALUES) calculates the one-tailed P-value of RES 
 %   with respect to the distribution given by VALUES.
 %   RES must be a row vector where the columns are the results.
 %   VALUES must be a matrix where the columns correspond to RES and 
 %   the rows are samples.
 %   P is a row vector with the one-sided p-values.
 %
-% See also pvalue2, fdr.
-
-% Author: Giovanni Volpe
-% Date: 2016/01/01
+% See also pvalue2, quantiles, fdr.
 
 N = size(values, 2);  % number of variables
 M = size(values, 1);  % number of samples (per variable)
