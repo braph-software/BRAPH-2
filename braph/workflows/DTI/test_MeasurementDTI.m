@@ -7,7 +7,7 @@ br4 = BrainRegion('BR4', 'brain region 4', 4, 44, 444);
 br5 = BrainRegion('BR5', 'brain region 5', 5, 55, 555);
 atlas = BrainAtlas('brain atlas', {br1, br2, br3, br4, br5});
 
-subject_class = Measurement.getSubjectClass('MeasurementDTI'); % SubjectDTI
+subject_class = Measurement.getSubjectClass('MeasurementDTI');
 
 sub1 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 1);
 sub2 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', 2);
@@ -15,7 +15,6 @@ sub3 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtla
 group = Group(subject_class, {sub1, sub2, sub3});
 
 measures = {'Assortativity', 'Degree', 'Distance'};
-% type_of_measure = {'global', 'nodal', 'binodal'};
 
 %% Test 1: Instantiation
 for i = 1:1:numel(measures)
@@ -81,7 +80,7 @@ for i = 1:1:numel(measures)
         );
     
     % assert
-   if Measure.is_global(measures{i})
+    if Measure.is_global(measures{i})
         assert(iscell(measurement.getMeasureValues()) & ...
             isequal(numel(measurement.getMeasureValues()), group.subjectnumber) & ...
             all(cellfun(@(x) isequal(size(x), [1, 1]), measurement.getMeasureValues()) ...
