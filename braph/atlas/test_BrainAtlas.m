@@ -176,7 +176,6 @@ assert(isequal(selected, [3 4 5]), ...
     'BrainAtlas.move2bottomBrainRegions does not work')
 
 %% Test 13: Save and load to XLS
-
 br1 = BrainRegion('ISF', 'superiorfrontal', -12.6, 22.9, 42.4);
 br2 = BrainRegion('lFP', 'frontalpole', -8.6,61.7,-8.7);
 br3 = BrainRegion('lRMF', 'rostralmiddlefrontal', -31.3,41.2,16.5);
@@ -220,6 +219,7 @@ br5 = BrainRegion('lPOB', 'parsorbitalis', -41,38.8,-11.1);
 atlas  = BrainAtlas('TestToSaveCoolName1', {br1, br2, br3, br4, br5});
 
 file = [fileparts(which('test_braph2')) filesep 'trial_atlas_to_be_erased.txt'];
+
 BrainAtlas.save_to_txt(atlas, 'File', file);
 
 atlas_loaded = BrainAtlas.load_from_txt('File', file);
@@ -242,10 +242,10 @@ for i = 1:1:max(atlas.getBrainRegions().length(), atlas_loaded.getBrainRegions()
         'BRAPH:BrainAtlas:SaveLoadTXT', ...
         'Problems saving or loading a brain atlas.')    
 end
-fclose('all');
+
 delete(file)
 
-%% Test 14: Save and Load to JSON
+%% Test 15: Save and Load to JSON
 br1 = BrainRegion('ISF', 'superiorfrontal', -12.6, 22.9, 42.4);
 br2 = BrainRegion('lFP', 'frontalpole', -8.6,61.7,-8.7);
 br3 = BrainRegion('lRMF', 'rostralmiddlefrontal', -31.3,41.2,16.5);
@@ -254,6 +254,7 @@ br5 = BrainRegion('lPOB', 'parsorbitalis', -41,38.8,-11.1);
 atlas  = BrainAtlas('TestToSaveCoolName1', {br1, br2, br3, br4, br5});
 
 file = [fileparts(which('test_braph2')) filesep 'trial_atlas_to_be_erased.json'];
+
 BrainAtlas.save_to_json(atlas, 'File', file);
 
 atlas_loaded = BrainAtlas.load_from_json('File', file);
@@ -276,5 +277,5 @@ for i = 1:1:max(atlas.getBrainRegions().length(), atlas_loaded.getBrainRegions()
         'BRAPH:BrainAtlas:SaveLoadJSON', ...
         'Problems saving or loading a brain atlas.')    
 end
-fclose('all');
+
 delete(file)
