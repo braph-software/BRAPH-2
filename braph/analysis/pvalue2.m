@@ -28,22 +28,3 @@ for i = 1:1:row_number
             (length(current_random_differences) + 1);
     end
 end
-
-% N = size(values, 2);  % number of variables
-% M = size(values, 1);  % number of samples (per variable)
-% 
-% p_double = ones(1, N);
-% for n = 1:1:N
-%     res_tmp = res(n);
-%     values_tmp = values(:, n);
-% 
-%     res_tmp = res_tmp-mean(values_tmp);
-%     values_tmp = values_tmp-mean(values_tmp);
-% 
-%     p_double(n) = sum(abs(values_tmp)>abs(res_tmp))/length(values_tmp);
-% end
-% 
-% p_double(p_double==0) = 1/M;
-% p_double(isnan(res)) = NaN;
-% %disp('checkp2')
-% end
