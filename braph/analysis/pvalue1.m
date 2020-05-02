@@ -9,7 +9,7 @@ function P1 = pvalue1(observed_difference, random_differences)
 % scalar, vector or matrix with random variables.
 % P2 is a scalar, vector or matrix with the one-sided p-values.
 %
-% See also pvalue2, quantiles, fdr.
+% See also pvalue2, quantiles, fdr, bonferroni.
 
 M = numel(random_differences);  % number of samples (per variable)
 
