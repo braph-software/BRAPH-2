@@ -55,7 +55,6 @@ classdef Comparison < handle & matlab.mixin.Copyable
         function disp(c)
             disp(['<a href="matlab:help ' Comparison.getClass(c) '">' Comparison.getClass(c) '</a>'])
             disp(['id = ' m.getID()])
-% Add other info to disp            
         end
         function setBrainAtlases(c, atlases)
             c.atlases = atlases;

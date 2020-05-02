@@ -56,7 +56,6 @@ classdef Measurement < handle & matlab.mixin.Copyable
         function disp(m)
             disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])
             disp(['id = ' m.getID()])
-% Add other info to disp
         end
         function setBrainAtlases(m, atlases)
             m.atlases = atlases;
