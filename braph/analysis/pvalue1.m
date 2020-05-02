@@ -1,34 +1,37 @@
-function p_single = pvalue1(res, values)
+function P1 = pvalue1(observed_difference, random_differences)
 % PVALUE1 Calculates the one-tailed p-value
 %
-% P = PVALUE1(RES, VALUES) calculates the one-tailed P-value of RES 
-%   with respect to the distribution given by VALUES.
-%   RES must be a row vector where the columns are the results.
-%   VALUES must be a matrix where the columns correspond to RES and 
-%   the rows are samples.
-%   P is a row vector with the one-sided p-values.
+% P1 = PVALUE1(OBSERVED_DIFFERENCE, RANDOM_DIFFERENCES) calculates the
+% two-tailed P-value of OBSERVED_DIFFERENCE with respect to the
+% distribution given by RANDOM_DIFFERENCES. 
+% OBSERVED_DIFFERENCE a scalar, vector or matrix with the difference.
+% RANDOM_DIFFERENCES must be a cell array of samples, where each cell contains a
+% scalar, vector or matrix with random variables.
+% P2 is a scalar, vector or matrix with the one-sided p-values.
 %
 % See also pvalue2, quantiles, fdr.
 
-N = size(values, 2);  % number of variables
-M = size(values, 1);  % number of samples (per variable)
+M = numel(random_differences);  % number of samples (per variable)
 
-p_single = ones(1, N);
-for n = 1:1:N
-    res_tmp = res(n);
-    values_tmp = values(:, n);
+row_number = size(random_differences{1}, 1);
+column_number = size(random_differences{1}, 2);
 
-    res_tmp = res_tmp-mean(values_tmp);
-    values_tmp = values_tmp-mean(values_tmp);
-
-    if res_tmp>0
-        p_single(n) = sum(values_tmp>res_tmp)/length(values_tmp);
-    else
-        p_single(n) = sum(values_tmp<res_tmp)/length(values_tmp);
+Q = cell(row_number, column_number);
+for i = 1:1:row_number
+    for j = 1:1:column_number
+        current_observed_difference = observed_difference(i, j);
+        current_random_differences = cellfun(@(x) x(i, j), random_differences);
+        
+        if current_observed_difference > 0
+            P1(i, j) =  ...
+                (length(find(current_random_differences > current_observed_difference)) + 1) ...
+                / ...
+                (length(current_random_differences) + 1);
+        else  % current_observed_difference <= 0
+            P1(i, j) =  ...
+                (length(find(current_random_differences < current_observed_difference)) + 1) ...
+                / ...
+                (length(current_random_differences) + 1);            
+        end
     end
-end
-
-p_single(p_single==0) = 1/M;
-p_single(isnan(res)) = NaN;
-%disp('checkp1')
 end
