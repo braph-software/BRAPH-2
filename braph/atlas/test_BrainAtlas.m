@@ -210,3 +210,37 @@ for i = 1:1:max(atlas.getBrainRegions().length(), atlas_loaded.getBrainRegions()
 end
 
 delete(file)
+
+%% Test 14: Save and Load to TXT
+br1 = BrainRegion('ISF', 'superiorfrontal', -12.6, 22.9, 42.4);
+br2 = BrainRegion('lFP', 'frontalpole', -8.6,61.7,-8.7);
+br3 = BrainRegion('lRMF', 'rostralmiddlefrontal', -31.3,41.2,16.5);
+br4 = BrainRegion('lCMF', 'caudalmiddlefrontal', -34.6, 10.2, 42.8);
+br5 = BrainRegion('lPOB', 'parsorbitalis', -41,38.8,-11.1);
+atlas  = BrainAtlas('TestToSaveCoolName1', {br1, br2, br3, br4, br5});
+
+file = [fileparts(which('test_braph2')) filesep 'trial_atlas_to_be_erased.txt'];
+BrainAtlas.save_to_txt(atlas, 'File', file);
+
+atlas_loaded = BrainAtlas.load_from_txt('File', file);
+
+assert(isequal(atlas.getName(), atlas_loaded.getName()), ...
+	'BRAPH:BrainAtlas:SaveLoadTXT', ...
+    'Problems saving or loading a brain atlas.')
+assert(isequal(atlas.getBrainRegions().length(), atlas_loaded.getBrainRegions().length()), ...
+	'BRAPH:BrainAtlas:SaveLoadTXT', ...
+    'Problems saving or loading a brain atlas.')
+for i = 1:1:max(atlas.getBrainRegions().length(), atlas_loaded.getBrainRegions().length())
+    br = atlas.getBrainRegions().getValue(i);
+    br_loaded = atlas_loaded.getBrainRegions().getValue(i);    
+    assert( ...
+        isequal(br.getLabel(), br_loaded.getLabel()) & ...
+        isequal(br.getName(), br_loaded.getName()) & ...
+        isequal(br.getX(), br_loaded.getX()) & ...
+        isequal(br.getY(), br_loaded.getY()) & ...
+        isequal(br.getZ(), br_loaded.getZ()), ...
+        'BRAPH:BrainAtlas:SaveLoadTXT', ...
+        'Problems saving or loading a brain atlas.')    
+end
+fclose('all');
+delete(file)
