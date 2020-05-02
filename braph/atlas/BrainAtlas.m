@@ -123,6 +123,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also tostring().
             
             disp(['<a href="matlab:help ' class(atlas) '">' class(atlas) '</a>'])
+            disp([' name: ' atlas.getName()])
             disp([' size: ' int2str(atlas.getBrainRegions().length()) ' brain regions'])
             disp([' brain regions:']); %#ok<NBRAK>
             for i = 1:1:atlas.getBrainRegions().length()
@@ -130,12 +131,21 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 disp(['  ' int2str(i) ' - ' br.getLabel() ' ' br.getName() ' ' mat2str(br.getPosition())]);
             end
         end
+        function setName(atlas, name)
+            % STENAME sets the name of the BrainAtlas.
+            %
+            % SETNAME(ATLAS, NAME) sets the name of ATLAS to NAME.
+            %
+            % See also getName().
+            
+            atlas.name = name;
+        end
         function name = getName(atlas)
             % GETNAME returns the name of the BrainAtlas.
             %
             % NAME = GETNAME(ATLAS) returns the name of the BrainAtlas.
             %
-            % See also brainregionnumber().
+            % See also setName().
             
             name = atlas.name;
         end
@@ -233,6 +243,91 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br = atlas.getBrainRegions().getValueFromIndex(i);
                 br_positions{i} = br.getPosition();
             end
-        end        
+        end
+    end
+    methods (Static)
+        function atlas = load_from_xls(varargin)
+            % LOAD_FROM_XLS loads brain atlas from XLS file
+            %
+            % ATLAS = LOAD_FROM_XLS('File', FILE) creates and initializes the
+            % brain atlas ATLAS by loading an XLS file ('*.xlsx' or '*.xls'). 
+            % It throws an error is the file does not exist 
+            % or is in the wrong format. 
+            %
+            % ATLAS = LOAD_FROM_XLS() it opens a dialog box to select the
+            % file. If no file is selected, it returns an empty BrainAtlas.
+            %
+            % ATLAS = LOAD_FROM_XLS('Msg', MSG) it opens a dialog box to select the
+            % file with message MSG.
+            %
+            % See also BrainAtlas, uigetfile, fopen.
+            
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas('', {});
+            
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(Constant.XLS_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            [~, ~, raw] = xlsread(file);
+
+            atlas_name = raw{1,1};
+            atlas.setName(atlas_name);
+
+            for i = 2:1:size(raw, 1)
+                br_label = raw{i, 1};
+                br_name = raw{i, 2};
+                br_x = raw{i, 3};
+                br_y = raw{i, 4};
+                br_z = raw{i, 5};
+                br = BrainRegion(br_label, br_name, br_x, br_y, br_z);
+                atlas.getBrainRegions().add(br_label, br);
+            end
+        end
+        function save_to_xls(atlas, varargin)
+% add comments
+
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % gets brain region data
+            for i = 1:1:atlas.getBrainRegions().length()
+                br_label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
+                br_names{i, 1} = atlas.getBrainRegions().getValue(i).getName(); %#ok<*AGROW>
+                br_x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
+                br_y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
+                br_z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
+            end
+            
+            % creates table
+            tab = [
+                {atlas.getName(), {},{},{},{}};
+                table(br_label, br_names, br_x, br_y, br_z)
+                ];
+            
+            % save
+            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+        end 
+%         load_from_txt
+%         save_to_txt
+%         load_from_json
+%         save_to_json
     end
 end
