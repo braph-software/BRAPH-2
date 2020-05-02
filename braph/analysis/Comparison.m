@@ -50,7 +50,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
             id = m.id;
         end
         function str = tostring(c)
-            str = [Comparison.getClass(c) ' ' c.getID()]; %#ok<NBRAK>
+            str = [Comparison.getClass(c) ' ' c.getID()];
         end
         function disp(c)
             disp(['<a href="matlab:help ' Comparison.getClass(c) '">' Comparison.getClass(c) '</a>'])
