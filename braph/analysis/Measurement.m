@@ -12,7 +12,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             if ~iscell(atlases)
                 atlases = {atlases};
             end
-            assert(iscell(atlases), ...
+            assert(iscell(atlases) && all(cellfun(@(x) isa(x, 'BrainAtlas'), atlases)), ...
                 ['BRAPH:Measurement:AtlasErr'], ...
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
             m.atlases = atlases;
@@ -51,12 +51,12 @@ classdef Measurement < handle & matlab.mixin.Copyable
             id = m.id;
         end
         function str = tostring(m)
-            str = [Measurement.getClass(m)]; %#ok<NBRAK>
+            str = [Measurement.getClass(m) ' ' m.getID()]; %#ok<NBRAK>
         end
         function disp(m)
             disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])
             disp(['id = ' m.getID()])
-            
+% Add other info to disp
         end
         function setBrainAtlases(m, atlases)
             m.atlases = atlases;
@@ -78,7 +78,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
         function measurement_class = getClass(m)
             if isa(m, 'Measurement')
                 measurement_class = class(m);
-            else % m should be a string with the measurement class
+            else  % m should be a string with the measurement class
                 measurement_class = m;
             end
         end
