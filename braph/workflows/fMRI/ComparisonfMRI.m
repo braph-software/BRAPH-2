@@ -46,8 +46,9 @@ classdef ComparisonfMRI < Comparison
     end
     methods (Access=protected)
         function initialize_data(c, varargin)
-                        atlases = c.getBrainAtlases();
+            atlases = c.getBrainAtlases();
             atlas = atlases{1};
+            
             groups = c.getGroups();
             
             c.measure_code = get_from_varargin('Degree', ...
@@ -297,14 +298,14 @@ classdef ComparisonfMRI < Comparison
         end
     end
     methods (Static)
-        function measurementClass = getClass(c) %#ok<*INUSD>
-            measurementClass = 'ComparisonfMRI';
+        function measurement_class = getClass(c) %#ok<*INUSD>
+            measurement_class = 'ComparisonfMRI';
         end
         function name = getName(c)
             name = 'Comparison fMRI';
         end
         function description = getDescription(c)
-            % measurement description missing
+            % comparison description missing
             description = '';
         end
         function atlas_number = getBrainAtlasNumber(c)

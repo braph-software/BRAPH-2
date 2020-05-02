@@ -1,10 +1,14 @@
-%comparasionMRI
 classdef ComparisonMRI < Comparison
     properties
         measure_code  % class of measure
         value_1  % array with the value_1 of the measure for each subject of group 1
         value_2  % array with the value_1 of the measure for each subject of group 1
+difference  % difference
         all_differences  % all differences obtained through the permutation test
+p1  % p value single tailed
+p2  % p value double tailed
+confidence_interval_min  % min value of the 95% confidence interval
+confidence_interval_max  % max value of the 95% confidence interval
     end
     methods
         function c =  ComparisonMRI(id, atlas, groups, varargin)
@@ -124,14 +128,14 @@ classdef ComparisonMRI < Comparison
         end
     end
     methods (Static)
-        function measurementClass = getClass(c) %#ok<*INUSD>
-            measurementClass = 'ComparisonMRI';
+        function measurement_class = getClass(c) %#ok<*INUSD>
+            measurement_class = 'ComparisonMRI';
         end
         function name = getName(c)
             name = 'Comparison MRI';
         end
         function description = getDescription(c)
-            % measurement description missing
+            % comparison description missing
             description = '';
         end
         function analysis_class = getAnalysisClass(c)

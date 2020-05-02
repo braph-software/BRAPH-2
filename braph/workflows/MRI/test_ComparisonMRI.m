@@ -72,3 +72,5 @@ for i = 1:1:numel(measures)
             ['ComparisonDTI does not initialize correctly with binodal measures.']) %#ok<*NBRAK>
     end
 end
+
+%% Test 3: Initialize with values
