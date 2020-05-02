@@ -120,7 +120,7 @@ for i = 1:1:numel(measures)
     
     difference  = average_values_2 - average_values_1;
     for j = 1:1:number_of_repetitions
-        all_differences{j} =  values_1{1} - values{2};  % similar
+        all_differences{j} =  values_1{1} - values_2{1};  % similar
     end
     p_single = difference;  % all similar
     p_double = difference;
