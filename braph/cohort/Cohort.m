@@ -549,29 +549,39 @@ classdef Cohort < handle & matlab.mixin.Copyable
                     end
                     
                     % get info
-                    group = cohort.getGroups().getValues();
+                    groups = cohort.getGroups().getValues();
+                    group = groups{1};  % must change
                     subjects_list = group.getSubjects();
                     
                     for j = 1:1:group.subjectnumber()
                         % get subject data
                         subject = subjects_list{j};
-                        
-                        name{j, 1} = subject.getID(); %#ok<AGROW>
+%                         name{j, 1}
+                        row_n = subject.getID();
                         data = subject.getData('MRI');
-                        data{j, :} = data.getValue();
+                        row_d = data.getValue()';
+                        row_names{j, 1} = row_n; %#ok<AGROW>
+                        row_datas{j, 1} = row_d; %#ok<AGROW>
                     end
+                    tab = table(row_names, row_datas);
+                    
+                    atlases = cohort.getBrainAtlases();
+                    atlas = atlases{1};  % must change   
                     
                     for i = 1:1:atlas.getBrainRegions().length()
                         brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
                     end
-                    first_row_name = 'Label';
-                    first_row_data = table(cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false));
-                    first_row = [first_row_name first_row_data];
+                    
+                    row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
+                    row_name = 'Label';
+                    first_row_table = table(row_data, 'VariableNames', {'row_datas'});
+                    first_row_table.row_names = row_name;
+                    first_row_table = [first_row_table(:, 2) first_row_table(:, 1)];
                     
                     % creates table
                     tab = [
-                        first_row
-                        table(name, data)
+                        first_row_table
+                        tab                       
                         ];
                     
                     % save
