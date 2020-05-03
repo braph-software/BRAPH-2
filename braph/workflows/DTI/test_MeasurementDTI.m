@@ -62,7 +62,7 @@ for i = 1:1:numel(measures)
     end
 end
 
-%% Test 3: Initialize with value
+%% Test 3: Initialize with values
 for i = 1:1:numel(measures)
     % setup
     for j = 1:1:group.subjectnumber()
