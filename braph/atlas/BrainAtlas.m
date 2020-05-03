@@ -460,17 +460,17 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             raw =  jsondecode(fileread(file));
             
             atlas_name =  fieldnames(raw);
-            name = atlas_name{1};
+            name = atlas_name{3};  % 1: BRAPH, 2:Version, 3:Name
             atlas.setName(name);
             
             intern_structure = eval(['raw.' name]);
             for i = 1:1:numel(intern_structure)
                 intern_fields = intern_structure(i);
-                br_label = char(intern_fields.br_label);
-                br_name = char(intern_fields.br_name);
-                br_x = intern_fields.br_x;
-                br_y = intern_fields.br_y;
-                br_z = intern_fields.br_z;
+                br_label = char(intern_fields.label);
+                br_name = char(intern_fields.name);
+                br_x = intern_fields.x;
+                br_y = intern_fields.y;
+                br_z = intern_fields.z;
                 br = BrainRegion(br_label, br_name, br_x, br_y, br_z);
                 atlas.getBrainRegions().add(br_label, br);
             end
@@ -503,15 +503,17 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % gets brain region data
             for i = 1:1:atlas.getBrainRegions().length()
-                br_label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
-                br_name{i, 1} = atlas.getBrainRegions().getValue(i).getName(); %#ok<*AGROW>
-                br_x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
-                br_y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
-                br_z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
+                label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
+                name{i, 1} = atlas.getBrainRegions().getValue(i).getName(); %#ok<*AGROW>
+                x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
+                y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
+                z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
             end
             
             % creates Structure of table
-            S = struct(atlas.getName(), table(br_label, br_name, br_x, br_y, br_z));
+            S = struct('BraphTitle', Constant.BN_NAME, ...
+                'BraphVersion', Constant.VERSION, ...
+                atlas.getName(), table(label, name, x, y, z));
             
             % save
             Json_structure= jsonencode(S);
