@@ -21,7 +21,7 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases);
     sub2 = Subject.getSubject(sub_class, atlases);
     sub3 = Subject.getSubject(sub_class, atlases);
@@ -34,13 +34,13 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-
+    
     assert(cohort.getSubjects().length()==3, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.subjectnumber does not work')
@@ -60,27 +60,27 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
     sub4 = Subject.getSubject(sub_class, atlases, 'SubjectID', '4');
     sub5 = Subject.getSubject(sub_class, atlases, 'SubjectID', '5');
     sub6 = Subject.getSubject(sub_class, atlases, 'SubjectID', '6');
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub4, sub5});
-   
+    
     cohort.getSubjects().add(num2str(sub3.getID()),sub3, 3);
-
+    
     assert(cohort.getSubjects().length()==5, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.addSubject does not work')
     assert(isequal(cohort.getSubjects().getValue(3).getID(), '3'), ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.addSubject does not work')
-
+    
     cohort.getSubjects().add(num2str(sub6.getID()), sub6);
-
+    
     assert(cohort.getSubjects().length()==6, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.addSubject does not work')
@@ -92,9 +92,9 @@ end
 %% Test 4: Remove
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
-
+    
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
@@ -105,7 +105,7 @@ for i = 1:1:length(sub_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
     cohort.getSubjects().remove(3);
-
+    
     assert(cohort.getSubjects().length()==4, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.removeSubject does not work')
@@ -115,9 +115,9 @@ for i = 1:1:length(sub_class_list)
     assert(isequal(cohort.getSubjects().getValue(3).getID(), '4'), ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.removeSubject does not work')
-
+    
     cohort.getSubjects().remove(1);
-
+    
     assert(cohort.getSubjects().length()==3, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.removeSubject does not work')
@@ -129,9 +129,9 @@ end
 %% Test 5: Replace
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
-
+    
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
@@ -140,9 +140,9 @@ for i = 1:1:length(sub_class_list)
     sub6 = Subject.getSubject(sub_class, atlases, 'SubjectID', '6');
     
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
- 
+    
     cohort.getSubjects().replace(sub6.getID(), sub6, 3);
-
+    
     assert(cohort.getSubjects().length()==5, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.replaceSubject does not work')
@@ -154,9 +154,9 @@ end
 %% Test 6: Invert
 for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
-
+    
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
@@ -165,9 +165,9 @@ for i = 1:1:length(sub_class_list)
     sub6 = Subject.getSubject(sub_class, atlases, 'SubjectID', '6');
     
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
- 
+    
     cohort.getSubjects().invert(2, 4);
-
+    
     assert(cohort.getSubjects().length()==5, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.invertSubjects does not work')
@@ -184,26 +184,26 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
     sub4 = Subject.getSubject(sub_class, atlases, 'SubjectID', '4');
     sub5 = Subject.getSubject(sub_class, atlases, 'SubjectID', '5');
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
- 
+    
     cohort.getSubjects().move_to(4, 2);
-
+    
     assert(cohort.getSubjects().length()==5, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.movetoSubject does not work')
     assert(isequal(cohort.getSubjects().getValue(2).getID(), '4'), ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.movetoSubject does not work')
-
+    
     cohort.getSubjects().move_to(1, 5);
-
+    
     assert(cohort.getSubjects().length()==5, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.movetoSubject does not work')
@@ -217,17 +217,17 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
     sub4 = Subject.getSubject(sub_class, atlases, 'SubjectID', '4');
     sub5 = Subject.getSubject(sub_class, atlases, 'SubjectID', '5');
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
-
+    
     selected = cohort.getSubjects().remove_all([2, 4]);
-
+    
     assert(cohort.getSubjects().length()==3, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.removeSubjects does not work')
@@ -244,17 +244,17 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
     sub4 = Subject.getSubject(sub_class, atlases, 'SubjectID', '4');
     sub5 = Subject.getSubject(sub_class, atlases, 'SubjectID', '5');
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
-
+    
     selected = cohort.getSubjects().move_up([1 3 5]);
-
+    
     assert(cohort.getSubjects().length()==5, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.moveupSubjects does not work')
@@ -268,17 +268,17 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
     sub4 = Subject.getSubject(sub_class, atlases, 'SubjectID', '4');
     sub5 = Subject.getSubject(sub_class, atlases, 'SubjectID', '5');
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
-
+    
     selected = cohort.getSubjects().move_down([1 3 5]);
-
+    
     assert(cohort.getSubjects().length()==5, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.movedownSubjects does not work')
@@ -292,17 +292,17 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
     sub4 = Subject.getSubject(sub_class, atlases, 'SubjectID', '4');
     sub5 = Subject.getSubject(sub_class, atlases, 'SubjectID', '5');
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
-
+    
     selected = cohort.getSubjects().move_to_top([1 3 5]);
-
+    
     assert(cohort.getSubjects().length()==5, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.move2topSubjects does not work')
@@ -316,17 +316,17 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
     sub4 = Subject.getSubject(sub_class, atlases, 'SubjectID', '4');
     sub5 = Subject.getSubject(sub_class, atlases, 'SubjectID', '5');
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
-
+    
     selected = cohort.getSubjects().move_to_bottom([1 3 5]);
-
+    
     assert(cohort.getSubjects().length()==5, ...
         'BRAPH:Cohort:Bug', ...
         'Cohort.move2bottomSubjects does not work')
@@ -340,21 +340,21 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
     sub4 = Subject.getSubject(sub_class, atlases, 'SubjectID', '4');
     sub5 = Subject.getSubject(sub_class, atlases, 'SubjectID', '5');
     group1 = Group(sub_class, {}, 'GroupName', 'Group 1', 'GroupDescription', 'Group 1 Description');
-    group2 = Group(sub_class, {}, 'GroupName', 'Group 2', 'GroupDescription', 'Group 2 Description');    
+    group2 = Group(sub_class, {}, 'GroupName', 'Group 2', 'GroupDescription', 'Group 2 Description');
     group1.addSubject(sub1);
     group2.addSubject(sub4);
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     cohort.getGroups().add(group1.getName(), group1);
     cohort.getGroups().add(group2.getName(), group2);
-
+    
     cohort_copy = cohort.copy();
     
     assert(cohort ~= cohort_copy, ... % different objects
@@ -388,7 +388,7 @@ for i = 1:1:length(sub_class_list)
         end
     end
     
-
+    
     for k = 1:1:cohort.getGroups().length()
         group = cohort.getGroups().getValue(k);
         group_copy = cohort_copy.getGroups().getValue(k);
@@ -400,7 +400,7 @@ for i = 1:1:length(sub_class_list)
         subs_copy = group_copy.getSubjects();
         assert(subs{1} ~= subs_copy{1}, ... % different objects
             ['BRAPH:Cohort:Copy'], ...
-            ['Cohort.copy() does not work']) %#ok<NBRAK>        
+            ['Cohort.copy() does not work']) %#ok<NBRAK>
     end
 end
 
@@ -409,15 +409,15 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1');
     sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2');
     sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3');
     sub4 = Subject.getSubject(sub_class, atlases, 'SubjectID', '4');
     sub5 = Subject.getSubject(sub_class, atlases, 'SubjectID', '5');
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
-
+    
     assert(cohort.getGroups().length() == 0, ...
         ['BRAPH:Cohort:Groups'], ...
         ['The management of groups does not work']) %#ok<NBRAK>
@@ -431,18 +431,18 @@ for i = 1:1:length(sub_class_list)
     group2 = Group(cohort.getSubjectClass(), {}, 'GroupName', 'Group 2', 'GroupDescription', 'Group 2 Description');
     assert(~cohort.getGroups().contains(group2), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(~cohort.getGroups().contains(2), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
-
+        ['The management of groups does not work']) %#ok<NBRAK>
+    
     cohort.getGroups().add(group2.getName(), group2)
     assert(cohort.getGroups().contains(group2), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(cohort.getGroups().contains(2), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(cohort.getGroups().length() == 2, ...
         ['BRAPH:Cohort:Groups'], ...
         ['The management of groups does not work']) %#ok<NBRAK>
@@ -462,10 +462,10 @@ for i = 1:1:length(sub_class_list)
         ['The management of groups does not work']) %#ok<NBRAK>
     assert(cohort.getGroups().contains(group1), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(cohort.getGroups().contains(1), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(isequal(cohort.getGroups().getValue(1).getName(), 'Group 1'), ...
         ['BRAPH:Cohort:Groups'], ...
         ['The management of groups does not work']) %#ok<NBRAK>
@@ -475,25 +475,25 @@ for i = 1:1:length(sub_class_list)
     cohort.addSubjectToGroup(3, 2)
     assert(isequal(cohort.getGroups().getValue(1).getSubjects(), {sub1}), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(isequal(cohort.getGroups().getValue(2).getSubjects(), {sub2 sub3}), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
-
+        ['The management of groups does not work']) %#ok<NBRAK>
+    
     cohort.addSubjectsToGroup([2 3 4 5], 1)
     cohort.addSubjectsToGroup([1 4 5], 2)
     assert(isequal(cohort.getGroupSubjects(1), [1 2 3 4 5]), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(isequal(cohort.getGroupSubjects(2), [2 3 1 4 5]), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
-
+        ['The management of groups does not work']) %#ok<NBRAK>
+    
     cohort.removeSubjectsFromGroup(1, 1)
     cohort.removeSubjectsFromGroup([2 3], 2)
     assert(isequal(cohort.getGroupSubjects(1), [2 3 4 5]), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(isequal(cohort.getGroupSubjects(2), [1 4 5]), ...
         ['BRAPH:Cohort:Groups'], ...
         ['The management of groups does not work']) %#ok<NBRAK>
@@ -504,16 +504,16 @@ for i = 1:1:length(sub_class_list)
     copy_cohort.removeSubjectsFromGroup(copied_subjects{1}, 2)
     assert(isequal(cohort.getGroupSubjects(1), [2 3 4 5]), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(isequal(cohort.getGroupSubjects(2), [1 4 5]), ...
         ['BRAPH:Cohort:Groups'], ...
         ['The management of groups does not work']) %#ok<NBRAK>
     assert(isequal(copy_cohort.getGroupSubjects(1), [2 3 4 5 1]), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
     assert(isequal(copy_cohort.getGroupSubjects(2), [4 5]), ...
         ['BRAPH:Cohort:Groups'], ...
-        ['The management of groups does not work']) %#ok<NBRAK>    
+        ['The management of groups does not work']) %#ok<NBRAK>
 end
 
 %% Test 15: Cohort getNewSubject
@@ -521,11 +521,68 @@ for i = 1:1:length(sub_class_list)
     sub_class = sub_class_list{i};
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-
+    
     cohort = Cohort('cohort', sub_class, atlases, {});
     
-    new_subject = cohort.getNewSubject({}); 
-    assert(isa(new_subject, sub_class), ... 
+    new_subject = cohort.getNewSubject({});
+    assert(isa(new_subject, sub_class), ...
         ['BRAPH:Cohort:getNewSubject'], ...
         ['Cohort.getNewSubject() does not work'])  %#ok<NBRAK>
+end
+
+%% Test 16: Save and Load to XLS
+for i = 1:1:length(sub_class_list)
+    % setup
+    sub_class = sub_class_list{i};
+    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
+    n = atlas.getBrainRegions().length();
+    
+    if isequal(sub_class, 'SubjectDTI')
+        input_rule = 'DTI';
+        input_data = rand(atlas.getBrainRegions().length(), atlas.getBrainRegions().length());
+        save_dir_rule = 'RootDirectory';
+        save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased'];
+    elseif isequal(sub_class, 'SubjectfRMI')
+        input_rule = 'fRMI';
+        input_data = rand(atlas.getBrainRegions().length(), 10);
+        save_dir_rule = 'RootDirectory';
+        save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased'];
+    else
+        input_rule = 'MRI';
+        input_data = rand(atlas.getBrainRegions().length(), 1);
+        save_dir_rule = 'File';
+        save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xls'];
+    end
+    
+    sub1 = Subject.getSubject(sub_class, atlases, 'SubjectID', '1', input_rule, input_data);
+    sub2 = Subject.getSubject(sub_class, atlases, 'SubjectID', '2', input_rule, input_data);
+    sub3 = Subject.getSubject(sub_class, atlases, 'SubjectID', '3', input_rule, input_data);
+    group = Group(sub_class, {sub1, sub2, sub3}, 'GroupName', 'TestGroup1');
+    
+    cohort = Cohort('cohorttest', sub_class, atlases, {sub1, sub2, sub3});
+    cohort.getGroups().add(group.getName(), group);
+    
+    % act
+    Cohort.save_to_xls(cohort, save_dir_rule, save_dir_path);    
+    load_cohort = Cohort.load_from_xls(sub_class, atlases);
+    
+    % assert
+    
+    assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
+        'BRAPH:Cohort:SaveLoadXLS', ...
+        'Problems saving or loading a brain atlas.')
+    assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), ...
+        'BRAPH:COhort:SaveLoadXLS', ...
+        'Problems saving or loading a brain atlas.')
+    for j = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length())
+        sub = cohort.getSubjects().getValue(i);
+        sub_loaded = load_cohort.getSubjects().getValue(i);
+        data = sub.getData(input_rule);
+        data_loaded = sub_loaded.getData(input_rule);
+        assert( ...
+            isequal(sub.getID(), sub_loaded.getID()) & ...
+            isequal(data.getValue(), data_loaded.getValue()), ...
+            'BRAPH:Cohort:SaveLoadXLS', ...
+            'Problems saving or loading a brain atlas.')
+    end  
 end

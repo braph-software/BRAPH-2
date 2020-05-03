@@ -1,6 +1,6 @@
 classdef Cohort < handle & matlab.mixin.Copyable
     % Cohort < handle & matlab.mixin.Copyable: A cohort
-    % Cohort represents a collection of subjects and groups. 
+    % Cohort represents a collection of subjects and groups.
     %
     % Cohort properties (GetAccess=protected, SetAccess=protected):
     %   name                    - name of the brain atlas.
@@ -103,7 +103,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
     %   getGroups().move_down         - moves an element down in the indexed dictionary br_idict
     %   getGroups().move_to_top       - moves an element to the top in the indexed dictionary br_idict
     %   getGroups().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
-    %   
+    %
     % See also Group, Subjects, IndexedDictioanry.
     properties (GetAccess=protected, SetAccess=protected)
         name  % brain atlas name
@@ -114,13 +114,13 @@ classdef Cohort < handle & matlab.mixin.Copyable
     end
     methods
         function cohort = Cohort(name, subject_class, atlases, subjects)
-            % COHORT(NAME, SUBJECT_CLASS, ATLASES, SUBJECTS) creates a cohort. 
+            % COHORT(NAME, SUBJECT_CLASS, ATLASES, SUBJECTS) creates a cohort.
             % The constructor will initialize the properties with the
-            % corresponding arguments, with exception of group dictionary. 
-            % 
+            % corresponding arguments, with exception of group dictionary.
+            %
             % See also Group, Subject, BrainAtlases, IndexedDictionary.
             
-            % subjects must be a cell array of Subjects of class            
+            % subjects must be a cell array of Subjects of class
             cohort.name = name;
             
             assert(any(strcmp(Subject.getList(), subject_class)), ...
@@ -199,9 +199,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
         end
         function subject_idict = getSubjects(cohort)
             % GETSUBJECTS returns the indexed dictionary with subjects
-            % 
+            %
             % SUBJECT_IDICT = GETSUBJECTS(COHORT) returns the indexed
-            % dictionary SUBJECT_IDICT. This function exposes to the user 
+            % dictionary SUBJECT_IDICT. This function exposes to the user
             % the methods and functions of the INDEXEDDICTIONARY class.
             %
             % See also IndexedDictionary, getName(), getGroups().
@@ -210,9 +210,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
         end
         function group_idict = getGroups(cohort)
             % GETGROUPS returns the indexed dictionary with groups
-            % 
+            %
             % GROUP_IDICT = GETGROUPS(COHORT) returns the indexed
-            % dictionary GROUP_IDICT. This function exposes to the user 
+            % dictionary GROUP_IDICT. This function exposes to the user
             % the methods and functions of the INDEXEDDICTIONARY class.
             %
             % See also IndexedDictionary, getName(), getSubjects().
@@ -220,7 +220,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             group_idict = cohort.group_idict;
         end
         function subject = getNewSubject(cohort, varargin)
-            % GETSUBJECT returns a subject 
+            % GETSUBJECT returns a subject
             %
             % SUBJECT = GETNEWSUBJECT(COHORT, VARARGIN) returns an instance
             % of the class of the subject SUBJECT_CLASS with arguments
@@ -234,7 +234,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function [subject_indexes, subjects] = getGroupSubjects(cohort, i)
             % GETGROUPSUBJECTS returns subjects from a specified group
             %
-            % [SUBJECT_INDEXES, SUBJECTS] = GETGROUPSUBJECTS(COHORT, INDEX) 
+            % [SUBJECT_INDEXES, SUBJECTS] = GETGROUPSUBJECTS(COHORT, INDEX)
             % returns subjects from a specificed group INDEX.
             %
             % See also addSubjectToGroup(), removeSubjectFromGroup()
@@ -271,7 +271,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function addSubjectsToGroup(cohort, subject_indexes, group)
             % ADDSUBJECTSTOGROUP inserts subjects to a specified group.
             %
-            % ADDSUBJECTSTOGROUP(COHORT, SUBJECT_INDEXES, GROUP) inserts 
+            % ADDSUBJECTSTOGROUP(COHORT, SUBJECT_INDEXES, GROUP) inserts
             % subjects with SUBJECT_INDEX to a specified GROUP.
             %
             % See also getGroupSubjects(), addSubjectToGroup()
@@ -283,7 +283,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function removeSubjectFromGroup(cohort, subject, group)
             % REMOVESUBJECTFROMGROUP removes a subject from a specified group.
             %
-            % REMOVESUBJECTFROMGROUP(COHORT, SUBJECT, GROUP) removes a 
+            % REMOVESUBJECTFROMGROUP(COHORT, SUBJECT, GROUP) removes a
             % SUBJECT to a specified GROUP.
             %
             % See also getGroupSubjects(), addSubjectToGroup()
@@ -304,7 +304,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function removeSubjectsFromGroup(cohort, subject_indexes, group)
             % REMOVESUBJECTSFROMGROUP removes subjects from a specified group.
             %
-            % REMOVESUBJECTSFROMGROUP(COHORT, SUBJECT_INDEXES, GROUP) 
+            % REMOVESUBJECTSFROMGROUP(COHORT, SUBJECT_INDEXES, GROUP)
             % removes subjects with SUBJECT_INDEXES from a specified GROUP.
             %
             % See also getGroupSubjects(), addSubjectsToGroup()
@@ -337,16 +337,246 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 sub = cohort.getSubjects().getValue(sub_i);
                 sub_copy = sub.copy();
                 sub_copy.setBrainAtlases(cohort_copy.getBrainAtlases());
-                cohort_copy.subject_idict.add(tostring(sub_copy.getID()), sub_copy, sub_i);                
+                cohort_copy.subject_idict.add(tostring(sub_copy.getID()), sub_copy, sub_i);
             end
             
             % Make a deep copy of group_idict
             cohort_copy.group_idict = IndexedDictionary('Group');
-            for group_i = 1:1:cohort.getGroups().length()  
+            for group_i = 1:1:cohort.getGroups().length()
                 group_copy = Group(cohort.getSubjectClass(), []);
                 cohort_copy.group_idict.add(group_copy.getName(), group_copy, group_i);
                 cohort_copy.addSubjectsToGroup(cohort.getGroupSubjects(group_i), group_i);
-            end           
+            end
+        end
+    end
+    methods (Static)
+        function cohort = load_from_xls(subject_class, atlases, varargin)
+            switch(subject_class)
+                case 'SubjectDTI'
+                    % directory
+                    directory = get_from_varargin('', 'Directory', varargin{:});
+                    if isequal(directory, '')  % no path, open gui
+                        msg = get_from_varargin(Constant.MSG_GETDIR, 'MSG', varargin{:});
+                        directory = uigetdir(msg);
+                    end
+                    
+                    % find all xls or xlsx files
+                    files = dir(fullfile(directory, '*.xlsx'));
+                    files2 = dir(fullfile(directory,'*.xls'));
+                    len = length(files);
+                    for i =1:1:length(files2)
+                        files(len+i,1) = files2(i,1);
+                    end
+                    
+                    % creates cohort
+                    cohort = Cohort('', subject_class, atlases, {});
+                    
+                    % load subjects
+                    for i = 1:1:length(files)
+                        % read file
+                        [~, ~, raw] = xlsread(fullfile(directory,files(i).name));
+                        
+                        % get age
+                        
+                        % create subject
+                        sub_name = erase(files(i).name, '.xls');
+                        sub_name = erase(sub_name, '.xlsx');
+                        subject = Subject.getSubject(subject_class, atlases, ...
+                            'SubjectID', sub_name, ...
+                            'DTI', cell2mat(raw));
+                        
+                        cohort.getSubjects().add(subject.getID(), subject, i);
+                    end
+                    
+                    % creates group
+                    if i == length(files)
+                        [~, groupname] = fileparts(directory);
+                        group = Group(subject_class, cohort.getSubjects().getValues());
+                        group.setName(groupname);
+                        cohort.getGroups().add(group.getName(), group);
+                    end
+                    
+                case 'SubjectfMRI'
+                    % directory
+                    directory = get_from_varargin('', 'Directory', varargin{:});
+                    if isequal(directory, '')  % no path, open gui
+                        msg = get_from_varargin(Constant.MSG_GETDIR, 'MSG', varargin{:});
+                        directory = uigetdir(msg);
+                    end
+                    
+                    % find all xls or xlsx files
+                    files = dir(fullfile(directory, '*.xlsx'));
+                    files2 = dir(fullfile(directory,'*.xls'));
+                    len = length(files);
+                    for i =1:1:length(files2)
+                        files(len+i,1) = files2(i,1);
+                    end
+                    
+                    % creates cohort
+                    cohort = Cohort('', subject_class, atlases, {});
+                    
+                    % load subjects
+                    for i = 1:1:length(files)
+                        % read file
+                        [~, ~, raw] = xlsread(fullfile(directory,files(i).name));
+                        
+                        % get age
+                        
+                        % create subject
+                        sub_name = erase(files(i).name, '.xls');
+                        sub_name = erase(sub_name, '.xlsx');
+                        subject = Subject.getSubject(subject_class, atlases, ...
+                            'SubjectID', sub_name, ...
+                            'fMRI', raw);
+                        
+                        cohort.getSubjects().add(subject.getID(), subject, i);
+                    end
+                    
+                    % creates group
+                    if i == length(files)
+                        [~, groupname] = fileparts(directory);
+                        group = Group(subject_class, cohort.getSubjects().getValues());
+                        group.setName(groupname);
+                        cohort.getGroups().add(group.getName(), group);
+                    end
+                    
+                otherwise  % SubjectMRI
+                    % file (fullpath)
+                    file = get_from_varargin('', 'File', varargin{:});
+                    if isequal(file, '')  % select file
+                        msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                        [filename, filepath, filterindex] = uigetfile(Constant.XLS_EXTENSION, msg);
+                        file = [filepath filename];
+                        
+                        if ~filterindex
+                            return
+                        end
+                    end
+                    
+                    % creates cohort
+                    cohort = Cohort('', subject_class, atlases, {});
+                    
+                    [~, ~, raw] = xlsread(file);
+                    
+                    for i = 2:1:size(raw, 1)
+                        subject = Subject.getSubject(subject_class, ...
+                            atlases, ...
+                            'SubjectID', raw{i,1}, ...
+                            'MRI', raw(i, 2:size(raw,2)));
+                        cohort.getSubjects().add(subject.getID(), subject, i);
+                    end
+                    
+                    % creates group
+                    group = Group(subject_class, cohort.getSubjects().getValues());
+                    group.setName(file);
+                    cohort.getGroups().add(group.getName(), group);
+            end
+        end
+        function save_to_xls(cohort, varargin)
+            subject_class = cohort.getSubjectClass();
+            switch(subject_class)
+                case 'SubjectDTI'
+                    % get Root Directory
+                    root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+                    if isequal(root_directory, '')  % no path, open gui
+                        msg = get_from_varargin(Constant.MSG_PUTDIR, 'MSG', varargin{:});
+                        root_directory = uigetdir(msg);
+                        
+                    end
+                    
+                    % creates groups folders
+                    for i=1:1:cohort.getGroups().length()
+                        mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                        
+                        % get info
+                        group = cohort.getGroups().getValue(i);
+                        subjects_list = group.getSubjects();
+                        for j = 1:1:group.subjectnumber()
+                            % get subject data
+                            subject = subjects_list{j};
+                            name = subject.getID();
+                            data = subject.getData('DTI');
+                            
+                            % create table
+                            tab = table(data.getValue());
+                            
+                            % save
+                            file = [root_directory '\' cohort.getGroups().getValue(i).getName() '\' name '.xls'];
+                            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+                        end
+                    end
+                    
+                case 'SubjectfMRI'
+                    % get Root Directory
+                    root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+                    if isequal(root_directory, '')  % no path, open gui
+                        msg = get_from_varargin(Constant.MSG_PUTDIR, 'MSG', varargin{:});
+                        root_directory = uigetdir(msg);
+                    end
+                    
+                    % creates groups folders
+                    for i=1:1:cohort.getGroups().length()
+                        mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                        
+                        % get info
+                        group = cohort.getGroups().getValue(i);
+                        subjects_list = group.getSubjects();
+                        for j = 1:1:group.subjectnumber()
+                            % get subject data
+                            subject = subjects_list{j};
+                            name = subject.getID();
+                            data = subject.getData('fMRI');
+                            
+                            % create table
+                            tab = table(data.getValue());
+                            
+                            % save
+                            file = [root_directory '\' cohort.getGroups().getValue(i).getName() '\' name '.xls'];
+                            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+                        end
+                    end
+                otherwise  % MRI
+                    % file (fullpath)
+                    file = get_from_varargin('', 'File', varargin{:});
+                    if isequal(file, '')  % select file
+                        msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
+                        [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
+                        file = [filepath filename];
+                        
+                        if ~filterindex
+                            return
+                        end
+                    end
+                    
+                    % get info
+                    group = cohort.getGroups().getValues();
+                    subjects_list = group.getSubjects();
+                    
+                    for j = 1:1:group.subjectnumber()
+                        % get subject data
+                        subject = subjects_list{j};
+                        
+                        name{j, 1} = subject.getID(); %#ok<AGROW>
+                        data = subject.getData('MRI');
+                        data{j, :} = data.getValue();
+                    end
+                    
+                    for i = 1:1:atlas.getBrainRegions().length()
+                        brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
+                    end
+                    first_row_name = 'Label';
+                    first_row_data = table(cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false));
+                    first_row = [first_row_name first_row_data];
+                    
+                    % creates table
+                    tab = [
+                        first_row
+                        table(name, data)
+                        ];
+                    
+                    % save
+                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+            end
         end
     end
 end
