@@ -468,12 +468,16 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             raw =  jsondecode(fileread(file));
             
             atlas_name =  fieldnames(raw);
-            name = atlas_name{3};  % 1: BRAPH, 2:Version, 3:Name
-            atlas.setName(name);
+            brain_atlas = atlas_name{3};  % 1: BRAPH, 2:Version, 3:Name           
+            brain_atlas_structure = eval(['raw.' brain_atlas]);
+            atlas.setName(brain_atlas_structure.name);
+            intern_structure = fieldnames(brain_atlas_structure);
+            idict = intern_structure{2};  % 1:name, 2:idict
+            brain_atlas_intern_structure = eval(['brain_atlas_structure.' idict]);
             
-            intern_structure = eval(['raw.' name]);
-            for i = 1:1:numel(intern_structure)
-                intern_fields = intern_structure(i);
+            
+            for i = 1:1:numel(brain_atlas_intern_structure)
+                intern_fields = brain_atlas_intern_structure(i);
                 br_label = char(intern_fields.label);
                 br_name = char(intern_fields.name);
                 br_x = intern_fields.x;
