@@ -1,7 +1,7 @@
 classdef Constant
     properties (Constant)
         % version number
-        BUILT = 2020
+        BUILD = 2020
         VERSION = '2.0.0'
         DATE = ''
         AUTHORS = ''
