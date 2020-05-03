@@ -1,7 +1,14 @@
 classdef Constant
     properties (Constant)
+        % version number
+        BUILD = 2020
+        VERSION = '2.0.0'
+        DATE = ''
+        AUTHORS = ''
+        COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]
+
         % Braph
-        BN_NAME = 'Braph'
+        BN_NAME = 'Braph 2.0'
         COLOR = [.9 .4 .1]
         FONT = 'Helvetica'
 
