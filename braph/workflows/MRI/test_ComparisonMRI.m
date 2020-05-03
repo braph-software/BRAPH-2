@@ -21,7 +21,7 @@ for i = 1:1:numel(measures)
     
     assert(~isempty(comparison), ...
         ['BRAPH:ComparisionDTI:Instantiation'], ...
-        ['ComparisionDTI does not initialize correctly.']) %#ok<*NBRAK>
+        ['ComparisionDTI does not initialize correctly.'])
 end
 
 %% Test 2: Correct Size defaults
