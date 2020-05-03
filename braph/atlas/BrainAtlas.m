@@ -21,6 +21,14 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getBrainRegionZs        - returns the z coordiante of all BrainRegions.
     %   getBrainRegionPositions - returns the positions of all BrainRegions.
     %
+    % BrainAtlas methods (Static) : 
+    %   load_from_xls           - loads a xls file and creates a BrainAtlas
+    %   save_to_xls             - saves a BrainAtlas to a xls file
+    %   load_from_txt           - loads a txt file and creates a BrainAtlas
+    %   save_to_txt             - saves a BrainAtlas to a txt file
+    %   load_from_json          - loads a json file and creates a BrainAtlas
+    %   save_to_json            - saves a BrainAtlas to a json file
+    %
     % Additionally, it is possible to use the following IndexDictionary
     % methods through getBrainRegions():
     %   getBrainRegions()                   - returns the indexed dictionary br_idict with BrainRegions.
