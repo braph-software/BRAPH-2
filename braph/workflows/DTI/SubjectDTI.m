@@ -255,7 +255,7 @@ classdef SubjectDTI < Subject
                     tab = table(data.getValue());
                     
                     % save
-                    file = [root_directory '\' cohort.getGroups().getValue(i).getName() '\' name '.xls'];
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.xls'];
                     writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
                 end
             end
@@ -324,7 +324,7 @@ classdef SubjectDTI < Subject
                     tab = table(data.getValue());
                     
                     % save
-                    file = [root_directory '\' cohort.getGroups().getValue(i).getName() '\' name '.txt'];
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.txt'];
                     writetable(tab, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
                 end
             end
@@ -400,7 +400,7 @@ classdef SubjectDTI < Subject
                            
                     % save
                     json_structure = jsonencode(structure_to_be_saved);
-                    file = [root_directory '\' cohort.getGroups().getValue(i).getName() '\' name '.json'];
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.json'];
                     fid = fopen(file, 'w');
                     if fid == -1, error('Cannot create JSON file'); end
                     fwrite(fid, json_structure, 'char');

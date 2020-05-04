@@ -26,7 +26,7 @@ cohort.getGroups().add(group.getName(), group);
 
 % act
 SubjectfMRI.save_to_xls(cohort, save_dir_rule, save_dir_path);
-load_cohort = SubjectfMRI.load_from_xls(sub_class, atlas, 'Directory', [save_dir_path '\' group.getName()]);
+load_cohort = SubjectfMRI.load_from_xls(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
 % assert
 
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -65,7 +65,7 @@ cohort.getGroups().add(group.getName(), group);
 
 % act
 SubjectfMRI.save_to_txt(cohort, save_dir_rule, save_dir_path);
-load_cohort = SubjectfMRI.load_from_txt(sub_class, atlas, 'Directory', [save_dir_path '\' group.getName()]);
+load_cohort = SubjectfMRI.load_from_txt(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
 % assert
 
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -104,7 +104,7 @@ cohort.getGroups().add(group.getName(), group);
 
 % act
 SubjectfMRI.save_to_json(cohort, save_dir_rule, save_dir_path);
-load_cohort = SubjectfMRI.load_from_json(sub_class, atlas, 'Directory', [save_dir_path '\' group.getName()]);
+load_cohort = SubjectfMRI.load_from_json(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
 % assert
 
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...

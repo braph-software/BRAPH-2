@@ -215,7 +215,7 @@ classdef SubjectMRI < Subject
             group = Group(subject_class, cohort.getSubjects().getValues());
             path = [fileparts(which(file))]; %#ok<NBRAK>
             file_name = erase(file, path);
-            file_name = erase(file_name, '\');
+            file_name = erase(file_name, filesep());
             file_name = erase(file_name, '.xls');
             file_name = erase(file_name, '.xlsx');
             group.setName(file_name);
@@ -304,7 +304,7 @@ classdef SubjectMRI < Subject
             group = Group(subject_class, cohort.getSubjects().getValues());
             path = [fileparts(which(file))]; %#ok<NBRAK>
             file_name = erase(file, path);
-            file_name = erase(file_name, '\');
+            file_name = erase(file_name, filesep());
             file_name = erase(file_name, '.txt');
             group.setName(file_name);
             cohort.getGroups().add(group.getName(), group);
@@ -419,7 +419,7 @@ classdef SubjectMRI < Subject
             group = Group(subject_class, cohort.getSubjects().getValues());
             path = [fileparts(which(file))]; %#ok<NBRAK>
             file_name = erase(file, path);
-            file_name = erase(file_name, '\');
+            file_name = erase(file_name, filesep());
             file_name = erase(file_name, '.json');
             group.setName(file_name);
             cohort.getGroups().add(group.getName(), group);
