@@ -142,12 +142,12 @@ classdef AnalysisfMRI < Analysis
         function analysis_class = getClass()
             analysis_class = 'AnalysisfMRI';
         end
-        function subject_class = getSubjectClass()
-            subject_class = 'SubjectfMRI';
-        end
         function name = getName()
             name = 'Analysis Functional fMRI';
         end
+        function subject_class = getSubjectClass()
+            subject_class = 'SubjectfMRI';
+        end       
         function description = getDescription()
             description = [ ...
                 'Analysis using functional MRI data, ' ...

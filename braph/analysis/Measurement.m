@@ -51,7 +51,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             id = m.id;
         end
         function str = tostring(m)
-            str = [Measurement.getClass(m) ' ' m.getID()]; %#ok<NBRAK>
+            str = [Measurement.getClass(m) ' ' m.getID()];
         end
         function disp(m)
             disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])

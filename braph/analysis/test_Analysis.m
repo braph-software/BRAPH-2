@@ -25,6 +25,10 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort', sub_class, atlases, {});
     analysis = Analysis.getAnalysis(analysis_class, cohort, {}, {}, {});
     
+    assert(iscell(analysis.getList()), ...
+        ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
+        [analysis_class '.getList() should return a cell'])
+    
     assert(isequal(analysis.getClass(), analysis_class), ...
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
         [analysis_class '.getClass() should return ' analysis_class ])
@@ -37,13 +41,13 @@ for i = 1:1:length(analysis_class_list)
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
         [analysis_class '.getName() should return a char array'])
     
+    assert(ischar(analysis.getSubjectClass()), ...
+        ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
+        [analysis_class '.getSubjectClass() should return a char array'])
+    
     assert(ischar(analysis.getDescription()), ...
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
         [analysis_class '.getDescription() should return a char array'])
-    
-    assert(iscell(analysis.getList()), ...
-        ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
-        [analysis_class '.getList() should return a cell'])
     
     assert(ischar(analysis.getMeasurementClass()), ...
         ['BRAPH:' analysis_class ':StaticFuncImplementation'], ...
@@ -80,9 +84,9 @@ for i = 1:1:length(analysis_class_list)
     
     % act
     measurement = Measurement.getMeasurement(measurement_class, 'm1', atlas, group, [measurement_class '.measure_code'], 'Degree');
-    comparison = Comparison.getComparison(comparison_class, 'c1', repmat({atlas}, Comparison.getBrainAtlasNumber(comparison_class), Subject.getBrainAtlasNumber(sub_class)), repmat({group}, Comparison.getGroupNumber(comparison_class)), [comparison_class '.measure_code'], 'Degree');
-    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', repmat({atlas}, RandomComparison.getBrainAtlasNumber(random_comparison_class), Subject.getBrainAtlasNumber(sub_class)), group);
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, randomcomparison, comparison);
+    comparison = Comparison.getComparison(comparison_class, 'c1', atlas, {group group}, [comparison_class '.measure_code'], 'Degree');
+    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group, [random_comparison_class '.measure_code'], 'Degree');
+    analysis = Analysis.getAnalysis(analysis_class, cohort, {measurement}, {randomcomparison}, {comparison});
     
     % assert
     assert(isa(analysis, analysis_class), ...
@@ -109,9 +113,9 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement(measurement_class, 'm1', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2};
-    comparison = Comparison.getComparison(comparison_class, 'c1', repmat({atlas}, Comparison.getBrainAtlasNumber(comparison_class), Subject.getBrainAtlasNumber(sub_class)), repmat({group}, Comparison.getGroupNumber(comparison_class)), [comparison_class '.measure_code'], 'Degree');
-    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', repmat({atlas}, RandomComparison.getBrainAtlasNumber(random_comparison_class), Subject.getBrainAtlasNumber(sub_class)), group);
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, randomcomparison, comparison);
+    comparison = Comparison.getComparison(comparison_class, 'c1', atlas, {group group}, [comparison_class '.measure_code'], 'Degree');
+    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group);
+    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {randomcomparison}, {comparison});
     
     % assert
     assert(analysis.getMeasurements().length()==2, ...
@@ -119,10 +123,16 @@ for i = 1:1:length(analysis_class_list)
         'Analysis.getMeasurements().length() does not work')
     assert(analysis.getMeasurements().contains(1), ...
         'BRAPH:Cohort:Bug', ...
-        'Cohort.contains_subject does not work')
+        'Analysis.contains_subject does not work')
     assert(~analysis.getMeasurements().contains(3), ...
         'BRAPH:Cohort:Bug', ...
-        'Cohort.contains_subject does not work')
+        'Analysis.contains_subject does not work')
+    assert(analysis.getRandomComparisons().length() == 1, ...
+        'BRAPH:Analysis:Bug', ...
+        'Analysis.getRandomComparisons().length() does not work');
+    assert(analysis.getRandomComparisons().length() == 1, ...
+        'BRAPH:Analysis:Bug', ...
+        'Analysis.getRandomComparisons().length() does not work');
     
 end
 
@@ -144,10 +154,10 @@ for i = 1:1:length(analysis_class_list)
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement_cell1 = {measurement1, measurement2};
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3', atlas, group, [measurement_class '.measure_code'], 'Degree');
-    comparison = Comparison.getComparison(comparison_class, 'c1', repmat({atlas}, Comparison.getBrainAtlasNumber(comparison_class), Subject.getBrainAtlasNumber(sub_class)), repmat({group}, Comparison.getGroupNumber(comparison_class)), [comparison_class '.measure_code'], 'Degree');
-    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', repmat({atlas}, RandomComparison.getBrainAtlasNumber(random_comparison_class), Subject.getBrainAtlasNumber(sub_class)), group);
+    comparison = Comparison.getComparison(comparison_class, 'c1', atlas, {group group}, [comparison_class '.measure_code'], 'Degree');
+    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group);  % will not pass rule to get default
     
-    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement_cell1, {}, {});
+    analysis = Analysis.getAnalysis(analysis_class, cohort, measurement_cell1, {randomcomparison}, {comparison});
     analysis.getMeasurements().add(measurement3.getID(), measurement3);
     analysis.getRandomComparisons().add(randomcomparison.getID(), randomcomparison);
     analysis.getComparisons().add(comparison.getID(), comparison);
@@ -155,10 +165,10 @@ for i = 1:1:length(analysis_class_list)
     assert(analysis.getMeasurements().length()==3, ...
         'BRAPH:Analysis:Bug', ...
         'getMeasurements().add() does not work')
-    assert(analysis.getRandomComparisons().length()==1, ...
+    assert(analysis.getRandomComparisons().length()==2, ...
         'BRAPH:Analysis:Bug', ...
         'getComparisons().add() does not work')
-    assert(analysis.getComparisons().length()==1, ...
+    assert(analysis.getComparisons().length()==2, ...
         'BRAPH:Analysis:Bug', ...
         'getRandomComparisons().add() does not work')
 end
@@ -212,7 +222,7 @@ for i = 1:1:length(analysis_class_list)
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2', atlas, group, [measurement_class '.measure_code'], 'Degree');
     measurement = {measurement1, measurement2};
     
-    % act   
+    % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3', atlas, group, [measurement_class '.measure_code'], 'Degree');
     analysis.getMeasurements().replace(measurement3.getName(), measurement3, 2);
@@ -281,7 +291,7 @@ for i = 1:1:length(analysis_class_list)
     % assert
     assert( isequal(analysis.getMeasurements().getValue(1).getClass(), measurement_class), ...
         'BRAPH:Analysis:Bug', ...
-        'Analysis.movetoMeasurement() does not work') 
+        'Analysis.movetoMeasurement() does not work')
 end
 
 %% Test 10: RemoveAll
@@ -306,7 +316,7 @@ for i = 1:1:length(analysis_class_list)
     % act
     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {}, {});
     selected = analysis.getMeasurements().remove_all([1, 3]);
-
+    
     % assert
     assert(analysis.getMeasurements().length()==1, ...
         'BRAPH:Analysis:Bug', ...
