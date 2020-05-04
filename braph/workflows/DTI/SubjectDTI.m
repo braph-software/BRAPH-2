@@ -195,10 +195,10 @@ classdef SubjectDTI < Subject
             
             % find all xls or xlsx files
             files = dir(fullfile(directory, '*.xlsx'));
-            files2 = dir(fullfile(directory,'*.xls'));
+            files2 = dir(fullfile(directory, '*.xls'));
             len = length(files);
             for i =1:1:length(files2)
-                files(len+i,1) = files2(i,1);
+                files(len+i,1) = files2(i, 1);
             end
             
             % creates cohort
@@ -207,7 +207,7 @@ classdef SubjectDTI < Subject
             % load subjects
             for i = 1:1:length(files)
                 % read file
-                [~, ~, raw] = xlsread(fullfile(directory,files(i).name));
+                [~, ~, raw] = xlsread(fullfile(directory, files(i).name));
                 
                 % get age
                 
@@ -258,7 +258,76 @@ classdef SubjectDTI < Subject
                     file = [root_directory '\' cohort.getGroups().getValue(i).getName() '\' name '.xls'];
                     writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
                 end
-            end            
+            end
+        end
+        function cohort = load_from_txt(subject_class, atlases, varargin)
+            % directory
+            directory = get_from_varargin('', 'Directory', varargin{:});
+            if isequal(directory, '')  % no path, open gui
+                msg = get_from_varargin(Constant.MSG_GETDIR, 'MSG', varargin{:});
+                directory = uigetdir(msg);
+            end
+            
+            % find all txt files
+            files = dir(fullfile(directory, '*.txt'));
+            
+            % creates cohort
+            cohort = Cohort('', subject_class, atlases, {});
+            
+            % load subjects
+            for i = 1:1:length(files)
+                % read file
+                raw = readtable(fullfile(directory, files(i).name));
+                
+                % get age
+                
+                % create subject
+                sub_name = erase(files(i).name, '.txt');
+                subject = Subject.getSubject(subject_class, atlases, ...
+                    'SubjectID', sub_name, ...
+                    'DTI', raw{:, :});
+                
+                cohort.getSubjects().add(subject.getID(), subject, i);
+            end
+            
+            % creates group
+            if i == length(files)
+                [~, groupname] = fileparts(directory);
+                group = Group(subject_class, cohort.getSubjects().getValues());
+                group.setName(groupname);
+                cohort.getGroups().add(group.getName(), group);
+            end
+        end
+        function save_to_txt(cohort, varargin)
+            % get Root Directory
+            root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+            if isequal(root_directory, '')  % no path, open gui
+                msg = get_from_varargin(Constant.MSG_PUTDIR, 'MSG', varargin{:});
+                root_directory = uigetdir(msg);
+                
+            end
+            
+            % creates groups folders
+            for i=1:1:cohort.getGroups().length()
+                mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                
+                % get info
+                group = cohort.getGroups().getValue(i);
+                subjects_list = group.getSubjects();
+                for j = 1:1:group.subjectnumber()
+                    % get subject data
+                    subject = subjects_list{j};
+                    name = subject.getID();
+                    data = subject.getData('DTI');
+                    
+                    % create table
+                    tab = table(data.getValue());
+                    
+                    % save
+                    file = [root_directory '\' cohort.getGroups().getValue(i).getName() '\' name '.txt'];
+                    writetable(tab, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
+                end
+            end
         end
     end
 end

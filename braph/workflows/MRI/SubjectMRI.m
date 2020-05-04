@@ -273,5 +273,120 @@ classdef SubjectMRI < Subject
             % save
             writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
         end
+        function cohort = load_from_txt(subject_class, atlases, varargin)
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(Constant.TXT_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % creates cohort
+            cohort = Cohort('', subject_class, atlases, {});
+            
+            % reads file
+            raw = readtable(file, 'Delimiter', '\t');
+            
+            for i = 1:1:size(raw, 1)  % first row is being read as table label
+                subject = Subject.getSubject(subject_class, ...
+                    atlases, ...
+                    'SubjectID', num2str(raw{i,1}), ...
+                    'MRI', raw{i, 2:size(raw, 2)}');
+                cohort.getSubjects().add(subject.getID(), subject, i);
+            end
+            
+            % creates group
+            group = Group(subject_class, cohort.getSubjects().getValues());
+            path = [fileparts(which(file))]; %#ok<NBRAK>
+            file_name = erase(file, path);
+            file_name = erase(file_name, '\');
+            file_name = erase(file_name, '.txt');
+            group.setName(file_name);
+            cohort.getGroups().add(group.getName(), group);
+        end
+        function save_to_txt(cohort, varargin)
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.TXT_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(Constant.TXT_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % get info
+            groups = cohort.getGroups().getValues();
+            group = groups{1};  % must change
+            subjects_list = group.getSubjects();
+            
+            for j = 1:1:group.subjectnumber()
+                % get subject data
+                subject = subjects_list{j};
+                %                         name{j, 1}
+                row_n = subject.getID();
+                data = subject.getData('MRI');
+                row_d = data.getValue()';
+                row_names{j, 1} = row_n; %#ok<AGROW>
+                row_datas{j, 1} = row_d; %#ok<AGROW>
+            end
+            tab = table(row_names, row_datas);
+            
+            atlases = cohort.getBrainAtlases();
+            atlas = atlases{1};  % must change
+            
+            for i = 1:1:atlas.getBrainRegions().length()
+                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
+            end
+            
+            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
+            row_name = 'Label';
+            first_row_table = table(row_data, 'VariableNames', {'row_datas'});
+            first_row_table.row_names = row_name;
+            first_row_table = [first_row_table(:, 2) first_row_table(:, 1)];
+            
+            % creates table
+            tab = [
+                first_row_table
+                tab
+                ];
+            
+            % save
+            f_1 = [file(1:length(file)-4) '_quotation' file(length(file)-3:end)];
+            writetable(tab, f_1, 'Delimiter', '\t', 'WriteVariableNames', 0);
+            
+            % remove quotation marks
+            fid = fopen(f_1);
+            C = textscan(fid, '%s', 'delimiter', '\t');
+            fclose(fid);
+            for k=1:numel(C{1, 1})
+                tmp = regexp(C{1, 1}(k),'"'); % find quotation marks 
+                C{1,1}{k,1}(tmp{1, 1}) = ''; % substitute with empty spaces
+            end
+            % print new file
+            fName = file;
+            fid = fopen(fName, 'w');            % Open the file
+            m = atlas.getBrainRegions().length();
+            count = 0;
+
+            for k = 1:numel(C{1, 1})
+                if count == m
+                    fprintf(fid, '%s\r\n', C{1, 1}{k, 1});
+                    count = -1;
+                else
+                    fprintf(fid, '%s\t', C{1, 1}{k, 1});                    
+                end
+                count = count + 1;
+            end
+            delete(f_1);
+            fclose(fid);
+        end
     end
 end
