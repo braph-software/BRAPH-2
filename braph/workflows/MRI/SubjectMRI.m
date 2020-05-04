@@ -367,7 +367,7 @@ classdef SubjectMRI < Subject
             C = textscan(fid, '%s', 'delimiter', '\t');
             fclose(fid);
             for k=1:numel(C{1, 1})
-                tmp = regexp(C{1, 1}(k),'"'); % find quotation marks 
+                tmp = regexp(C{1, 1}(k),'"'); % find quotation marks
                 C{1,1}{k,1}(tmp{1, 1}) = ''; % substitute with empty spaces
             end
             % print new file
@@ -375,17 +375,108 @@ classdef SubjectMRI < Subject
             fid = fopen(fName, 'w');            % Open the file
             m = atlas.getBrainRegions().length();
             count = 0;
-
+            
             for k = 1:numel(C{1, 1})
                 if count == m
                     fprintf(fid, '%s\r\n', C{1, 1}{k, 1});
                     count = -1;
                 else
-                    fprintf(fid, '%s\t', C{1, 1}{k, 1});                    
+                    fprintf(fid, '%s\t', C{1, 1}{k, 1});
                 end
                 count = count + 1;
             end
             delete(f_1);
+            fclose(fid);
+        end
+        function cohort = load_from_json(subject_class, atlases, varargin)
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(Constant.JSON_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % creates cohort
+            cohort = Cohort('', subject_class, atlases, {});
+            
+            raw = jsondecode(fileread(file));     
+            for i = 1:1:length(raw.SubjectData)
+                name = raw.SubjectData(i).name;
+                data = raw.SubjectData(i).data;
+                subject = Subject.getSubject(subject_class, ...
+                    atlases, ...
+                    'SubjectID', num2str(name), ...
+                    'MRI', data);
+                cohort.getSubjects().add(subject.getID(), subject, i);
+            end
+            
+            % creates group
+            group = Group(subject_class, cohort.getSubjects().getValues());
+            path = [fileparts(which(file))]; %#ok<NBRAK>
+            file_name = erase(file, path);
+            file_name = erase(file_name, '\');
+            file_name = erase(file_name, '.json');
+            group.setName(file_name);
+            cohort.getGroups().add(group.getName(), group);
+        end
+        function save_to_json(cohort, varargin)
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % get info
+            groups = cohort.getGroups().getValues();
+            group = groups{1};  % must change
+            subjects_list = group.getSubjects();
+            
+            for j = 1:1:group.subjectnumber()
+                % get subject data
+                subject = subjects_list{j};
+                row_n = subject.getID();
+                data = subject.getData('MRI');
+                row_d = data.getValue()';
+                row_names{j, 1} = row_n; %#ok<AGROW>
+                row_datas{j, 1} = row_d; %#ok<AGROW>
+            end
+            
+            atlases = cohort.getBrainAtlases();
+            atlas = atlases{1};  % must change
+            
+            % labels
+            for i = 1:1:atlas.getBrainRegions().length()
+                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
+            end            
+            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
+            labels = row_data;
+            
+            % create structure to be save
+            structure_to_be_saved = struct( ...
+                'Braph', Constant.VERSION, ...
+                'Build', Constant.BUILD, ...
+                'BrainRegionsLabels', labels, ...
+                'SubjectData', struct( ...
+                'name', row_names, ...
+                'data', row_datas) ...
+                );
+            
+            % save
+            json_structure = jsonencode(structure_to_be_saved);      
+            fid = fopen(file, 'w');
+            if fid == -1, error('Cannot create JSON file'); end
+            fwrite(fid, json_structure, 'char');
             fclose(fid);
         end
     end
