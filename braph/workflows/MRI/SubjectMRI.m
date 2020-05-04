@@ -24,10 +24,10 @@ classdef SubjectMRI < Subject
     % See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
     methods
         function sub = SubjectMRI(atlas, varargin)
-            % SUBJECTMRI(ATLAS) creates a subject of type MRI. 
+            % SUBJECTMRI(ATLAS) creates a subject of type MRI.
             % ATLAS is the brain atlas that subject MRI will use (it can be
             % either a BrainAtlas or a cell array with a single BrainAtlas).
-            % 
+            %
             % SUBJECTMRI(ATLASES, 'SubjectID', ID) creates a subject with
             % subject id ID.
             %
@@ -35,8 +35,8 @@ classdef SubjectMRI < Subject
             % with age AGE and MRI data MRI.
             %
             % See also See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
-
-            if isa(atlas, 'BrainAtlas') 
+            
+            if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
             else
                 assert(iscell(atlas) && length(atlas)==1, ...
@@ -69,16 +69,16 @@ classdef SubjectMRI < Subject
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject MRI
-            % 
+            %
             % UPDATE_BRAINATLASES(SUB, ATLASES) updates the atlases of the
             % subject MRI using the new values ATLASES. ATLASES must be a
             % cell array with a single BrainAtlas.
-            % 
+            %
             % See also initialize_datadict().
-
+            
             sub.atlases = atlases;
             atlas = atlases{1};
-
+            
             d1 = sub.datadict('age');
             d1.setBrainAtlas(atlas)
             
@@ -123,7 +123,7 @@ classdef SubjectMRI < Subject
             %
             % N = GETBRAINATLASNUMBER() returns the number of
             % brain atlases, in this case 1.
-            %   
+            %
             % See also getList(), getDescription(), getName(), getClass().
             
             atlas_number = 1;
@@ -132,7 +132,7 @@ classdef SubjectMRI < Subject
             % GETDATALIST returns the list of data
             %
             % CELL ARRAY = GETDATALIST() returns a cell array of
-            % subject data. For Subject MRI, the data list is: 
+            % subject data. For Subject MRI, the data list is:
             %   age            -    DataScalar.
             %   MRI            -    DataStructural.
             %
@@ -140,12 +140,12 @@ classdef SubjectMRI < Subject
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
-            datalist('MRI') = 'DataStructural';            
+            datalist('MRI') = 'DataStructural';
         end
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
             %
-            % N = GETDATANUMBER() returns the number of data.        
+            % N = GETDATANUMBER() returns the number of data.
             %
             % See also getDataList(), getBrainAtlasNumber().
             
@@ -155,7 +155,7 @@ classdef SubjectMRI < Subject
             % GETDATACODES returns the list of data keys
             %
             % CELL ARRAY = GETDATACODES(SUB) returns a cell array of
-            % subject MRI data keys.          
+            % subject MRI data keys.
             %
             % See also getList()
             
@@ -167,7 +167,7 @@ classdef SubjectMRI < Subject
             % CELL ARRAY = GETDATACLASSES(SUB) returns a cell array of
             % subject MRI data classes.
             %
-            % CELL ARRAY = GETDATACLASSES(SUBJECT_CLASS) returns a 
+            % CELL ARRAY = GETDATACLASSES(SUBJECT_CLASS) returns a
             % cell array of subject MRI data classes to the subject whose class is
             % SUBJECT_CLASS.
             %
@@ -179,11 +179,99 @@ classdef SubjectMRI < Subject
             % GETDATACLASS returns the class of a data.
             %
             % DATA_CLASS = GETDATACLASS(SUB, DATACODE) returns the class of
-            % data with code DATACODE  
+            % data with code DATACODE
             %
             % See also getList(), getDataClasses().
             
             data_class = Subject.getDataNumber('SubjectMRI', data_code);
+        end
+        function cohort = load_from_xls(subject_class, atlases, varargin)
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(Constant.XLS_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % creates cohort
+            cohort = Cohort('', subject_class, atlases, {});
+            
+            [~, ~, raw] = xlsread(file);
+            
+            for i = 2:1:size(raw, 1)
+                subject = Subject.getSubject(subject_class, ...
+                    atlases, ...
+                    'SubjectID', raw{i,1}, ...
+                    'MRI', cell2mat(raw(i, 2:size(raw,2))'));
+                cohort.getSubjects().add(subject.getID(), subject, i);
+            end
+            
+            % creates group
+            group = Group(subject_class, cohort.getSubjects().getValues());
+            path = [fileparts(which(file))]; %#ok<NBRAK>
+            file_name = erase(file, path);
+            file_name = erase(file_name, '\');
+            file_name = erase(file_name, '.xls');
+            file_name = erase(file_name, '.xlsx');
+            group.setName(file_name);
+            cohort.getGroups().add(group.getName(), group);
+        end
+        function save_to_xls(cohort, varargin)
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % get info
+            groups = cohort.getGroups().getValues();
+            group = groups{1};  % must change
+            subjects_list = group.getSubjects();
+            
+            for j = 1:1:group.subjectnumber()
+                % get subject data
+                subject = subjects_list{j};
+                %                         name{j, 1}
+                row_n = subject.getID();
+                data = subject.getData('MRI');
+                row_d = data.getValue()';
+                row_names{j, 1} = row_n; %#ok<AGROW>
+                row_datas{j, 1} = row_d; %#ok<AGROW>
+            end
+            tab = table(row_names, row_datas);
+            
+            atlases = cohort.getBrainAtlases();
+            atlas = atlases{1};  % must change
+            
+            for i = 1:1:atlas.getBrainRegions().length()
+                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
+            end
+            
+            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
+            row_name = 'Label';
+            first_row_table = table(row_data, 'VariableNames', {'row_datas'});
+            first_row_table.row_names = row_name;
+            first_row_table = [first_row_table(:, 2) first_row_table(:, 1)];
+            
+            % creates table
+            tab = [
+                first_row_table
+                tab
+                ];
+            
+            % save
+            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
         end
     end
 end

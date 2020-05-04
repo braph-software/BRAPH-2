@@ -24,10 +24,10 @@ classdef SubjectDTI < Subject
     % See also Group, Cohort, SubjectMRI, SubjectfMRI, Subject.
     methods
         function sub = SubjectDTI(atlas, varargin)
-            % SUBJECTDTI(ATLAS) creates a subject of type DTI. 
+            % SUBJECTDTI(ATLAS) creates a subject of type DTI.
             % ATLAS is the brain atlas that subject DTI will use (it can be
             % either a BrainAtlas or a cell array with a single BrainAtlas).
-            % 
+            %
             % SUBJECT(ATLASES, 'SubjectID', ID) creates a subject with
             % subject id ID.
             %
@@ -35,8 +35,8 @@ classdef SubjectDTI < Subject
             % with age AGE and DTI matrix DTI.
             %
             % See also See also Group, Cohort, SubjectMRI, SubjectfMRI, Subject.
-
-            if isa(atlas, 'BrainAtlas') 
+            
+            if isa(atlas, 'BrainAtlas')
                 atlases = {atlas};
             else
                 assert(iscell(atlas) && length(atlas)==1, ...
@@ -56,7 +56,7 @@ classdef SubjectDTI < Subject
             % ditionary with data type and data code of subject dti.
             %
             % See also update_brainatlases().
-
+            
             atlases = sub.getBrainAtlases();
             atlas = atlases{1};
             
@@ -69,16 +69,16 @@ classdef SubjectDTI < Subject
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject dti
-            % 
+            %
             % UPDATE_BRAINATLASES(SUB, ATLASES) updates the atlases of the
             % subject dti using the new values ATLASES. ATLASES must be a
             % cell array with a single BrainAtlas.
-            % 
+            %
             % See also initialize_datadict().
-
+            
             sub.atlases = atlases;
             atlas = atlases{1};
-
+            
             d1 = sub.datadict('age');
             d1.setBrainAtlas(atlas)
             
@@ -94,7 +94,7 @@ classdef SubjectDTI < Subject
             %
             % See also getList(), getDescription(), getName().
             
-                subject_class = 'SubjectDTI';
+            subject_class = 'SubjectDTI';
         end
         function name = getName()
             % GETNAME returns the name of the subject
@@ -123,7 +123,7 @@ classdef SubjectDTI < Subject
             %
             % N = GETBRAINATLASNUMBER() returns the number of
             % brain atlases, in this case 1.
-            %   
+            %
             % See also getList(), getDescription(), getName(), getClass().
             
             atlas_number = 1;
@@ -132,7 +132,7 @@ classdef SubjectDTI < Subject
             % GETDATALIST returns the list of data
             %
             % CELL ARRAY = GETDATALIST() returns a cell array of
-            % subject data. For Subject DTI, the data list is: 
+            % subject data. For Subject DTI, the data list is:
             %   age             -    DataScalar.
             %   DTI             -    DataConnectivity.
             %
@@ -140,12 +140,12 @@ classdef SubjectDTI < Subject
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
-            datalist('DTI') = 'DataConnectivity';            
+            datalist('DTI') = 'DataConnectivity';
         end
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
             %
-            % N = GETDATANUMBER() returns the number of data.        
+            % N = GETDATANUMBER() returns the number of data.
             %
             % See also getDataList(), getBrainAtlasNumber().
             
@@ -155,7 +155,7 @@ classdef SubjectDTI < Subject
             % GETDATACODES returns the list of data keys
             %
             % CELL ARRAY = GETDATACODES(SUB) returns a cell array of
-            % subject dti data keys.          
+            % subject dti data keys.
             %
             % See also getList()
             
@@ -167,7 +167,7 @@ classdef SubjectDTI < Subject
             % CELL ARRAY = GETDATACLASSES(SUB) returns a cell array of
             % subject dti data classes.
             %
-            % CELL ARRAY = GETDATACLASSES(SUBJECT_CLASS) returns a 
+            % CELL ARRAY = GETDATACLASSES(SUBJECT_CLASS) returns a
             % cell array of subject dti data classes to the subject whose class is
             % SUBJECT_CLASS.
             %
@@ -179,11 +179,86 @@ classdef SubjectDTI < Subject
             % GETDATACLASS returns the class of a data.
             %
             % DATA_CLASS = GETDATACLASS(SUB, DATACODE) returns the class of
-            % data with code DATACODE  
+            % data with code DATACODE
             %
             % See also getList(), getDataClasses().
             
             data_class = Subject.getDataNumber('SubjectDTI', data_code);
+        end
+        function cohort = load_from_xls(subject_class, atlases, varargin)
+            % directory
+            directory = get_from_varargin('', 'Directory', varargin{:});
+            if isequal(directory, '')  % no path, open gui
+                msg = get_from_varargin(Constant.MSG_GETDIR, 'MSG', varargin{:});
+                directory = uigetdir(msg);
+            end
+            
+            % find all xls or xlsx files
+            files = dir(fullfile(directory, '*.xlsx'));
+            files2 = dir(fullfile(directory,'*.xls'));
+            len = length(files);
+            for i =1:1:length(files2)
+                files(len+i,1) = files2(i,1);
+            end
+            
+            % creates cohort
+            cohort = Cohort('', subject_class, atlases, {});
+            
+            % load subjects
+            for i = 1:1:length(files)
+                % read file
+                [~, ~, raw] = xlsread(fullfile(directory,files(i).name));
+                
+                % get age
+                
+                % create subject
+                sub_name = erase(files(i).name, '.xls');
+                sub_name = erase(sub_name, '.xlsx');
+                subject = Subject.getSubject(subject_class, atlases, ...
+                    'SubjectID', sub_name, ...
+                    'DTI', cell2mat(raw));
+                
+                cohort.getSubjects().add(subject.getID(), subject, i);
+            end
+            
+            % creates group
+            if i == length(files)
+                [~, groupname] = fileparts(directory);
+                group = Group(subject_class, cohort.getSubjects().getValues());
+                group.setName(groupname);
+                cohort.getGroups().add(group.getName(), group);
+            end
+        end
+        function save_to_xls(cohort, varargin)
+            % get Root Directory
+            root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+            if isequal(root_directory, '')  % no path, open gui
+                msg = get_from_varargin(Constant.MSG_PUTDIR, 'MSG', varargin{:});
+                root_directory = uigetdir(msg);
+                
+            end
+            
+            % creates groups folders
+            for i=1:1:cohort.getGroups().length()
+                mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                
+                % get info
+                group = cohort.getGroups().getValue(i);
+                subjects_list = group.getSubjects();
+                for j = 1:1:group.subjectnumber()
+                    % get subject data
+                    subject = subjects_list{j};
+                    name = subject.getID();
+                    data = subject.getData('DTI');
+                    
+                    % create table
+                    tab = table(data.getValue());
+                    
+                    % save
+                    file = [root_directory '\' cohort.getGroups().getValue(i).getName() '\' name '.xls'];
+                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+                end
+            end            
         end
     end
 end
