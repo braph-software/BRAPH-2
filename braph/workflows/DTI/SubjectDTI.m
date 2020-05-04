@@ -255,7 +255,7 @@ classdef SubjectDTI < Subject
                     tab = table(data.getValue());
                     
                     % save
-                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.xls'];
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.xlsx'];
                     writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
                 end
             end
