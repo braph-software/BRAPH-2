@@ -18,7 +18,7 @@ measures = {'Assortativity', 'Degree', 'Distance'};
 
 %% Test 1: Instantiation
 for i = 1:1:numel(measures)
-    randomcomparison = RandomComparisonDTI('c1', atlas, {group group}, 'RandomComparisonDTI.measure_code', measures{i});
+    randomcomparison = RandomComparisonDTI('c1', atlas, {group}, 'RandomComparisonDTI.measure_code', measures{i});
     
     assert(~isempty(randomcomparison), ...
         ['BRAPH:RandomComparisonDTI:Instantiation'], ...
@@ -29,7 +29,7 @@ end
 for i = 1:1:numel(measures)
     number_of_permutations = 10;
     
-    randomcomparison = RandomComparisonDTI('c1', atlas, {group group}, 'RandomComparisonDTI.measure_code', measures{i}, 'RandomComparisonDTI.number_of_permutations', number_of_permutations);
+    randomcomparison = RandomComparisonDTI('c1', atlas, {group}, 'RandomComparisonDTI.measure_code', measures{i}, 'RandomComparisonDTI.number_of_permutations', number_of_permutations);
     
     values_group = randomcomparison.getGroupValue();
     average_values_group = randomcomparison.getAverageValue();
@@ -130,7 +130,7 @@ for i = 1:1:numel(measures)
     confidence_interval_max = difference;
     
     % act
-    randomcomparison = RandomComparisonDTI('c1', atlas, {group group}, ...
+    randomcomparison = RandomComparisonDTI('c1', atlas, {group}, ...
         'RandomComparisonDTI.measure_code', measures{i}, ...
         'RandomComparisonDTI.number_of_permutations', number_of_permutations, ...
         'RandomComparisonDTI.values_group', values_group, ...

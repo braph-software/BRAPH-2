@@ -11,8 +11,8 @@ classdef RandomComparisonMRI < RandomComparison
         confidence_interval_max  % max value of the 95% confidence interval
     end
     methods
-        function c =  RandomComparisonMRI(id, atlas, groups, varargin)
-            c = c@RandomComparison(id, atlas, groups, varargin{:});
+        function c =  RandomComparisonMRI(id, atlas, group, varargin)
+            c = c@RandomComparison(id, atlas, group, varargin{:});
         end
         function measure_code = getMeasureCode(c)
             measure_code = c.measure_code;
@@ -266,8 +266,8 @@ classdef RandomComparisonMRI < RandomComparison
         function atlas_number = getBrainAtlasNumber(c)
             atlas_number =  1;
         end
-        function sub = getComparison(comparisonClass, id, atlas, groups, varargin)
-            sub = eval([comparisonClass '(id, atlas, groups, varargin{:})']);
+        function sub = getComparison(comparisonClass, id, atlas, group, varargin)
+            sub = eval([comparisonClass '(id, atlas, group, varargin{:})']);
         end
     end
 end

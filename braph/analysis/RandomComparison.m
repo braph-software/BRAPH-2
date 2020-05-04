@@ -1,12 +1,12 @@
 classdef RandomComparison < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         id  % unique identifier
-        groups  % group
+        group  %  1 group
         atlases  % cell array with brain atlases
         settings  % settings of the RandomComparison
     end
     methods (Access = protected)
-        function rc = RandomComparison(id, atlases, groups, varargin)
+        function rc = RandomComparison(id, atlases, group, varargin)
             rc.id = tostring(id);
             
             if ~iscell(atlases)
@@ -17,23 +17,24 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
             rc.atlases = atlases;
             
-            assert(iscell(groups) && length(groups)==2 && all(cellfun(@(x) isa(x, 'Group'), groups)), ...
+            if ~iscell(group)
+                group = {group};
+            end
+            assert(iscell(group), ...
                 ['BRAPH:RandomComparison:GroupErr'], ...
-                ['The input must be a Group object']) %#ok<NBRAK>
-            rc.groups = groups;
+                ['The input must be a Group object'])  %#ok<NBRAK>
+            rc.group = group;
             
             rc.settings = get_from_varargin(varargin, 'RandomComparisonSettings', varargin{:});
             
-            rc.initialize_data(atlases, groups, varargin{:});
+            rc.initialize_data(atlases, group, varargin{:});
             
         end
         function randomcomparison_copy = copyElement(rc)
-            % It does not make a deep copy of atlases or groups
+            % It does not make a deep copy of atlases or group
             
             % Make a shallow copy
             randomcomparison_copy = copyElement@matlab.mixin.Copyable(rc);
-            
-            % Make a deep copy of datadict
             
         end
     end
@@ -55,14 +56,14 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             % adds a atlas to the end of the cell array
             rc.atlases = atlases;
         end
-        function setGroups(rc, groups)
-            rc.groups = groups;
+        function setGroup(rc, group)
+            rc.group = group;
         end
         function atlases = getBrainAtlases(rc)
             atlases = rc.atlases;
         end
-        function groups = getGroups(rc)
-            groups = rc.groups;
+        function group = getGroup(rc)
+            group = rc.group;
         end
     end
     methods (Static)
@@ -94,8 +95,8 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             % comparison subject class
             subject_class = eval([RandomComparison.getClass(c) '.getSubjectClass()']);
         end
-        function sub = getRandomComparison(randomComparisonClass, id, atlas, groups, varargin) %#ok<INUSD>
-            sub = eval([randomComparisonClass '(id, atlas, groups, varargin{:})']);
+        function sub = getRandomComparison(randomComparisonClass, id, atlas, group, varargin) %#ok<INUSD>
+            sub = eval([randomComparisonClass '(id, atlas, group, varargin{:})']);
         end
     end
 end
