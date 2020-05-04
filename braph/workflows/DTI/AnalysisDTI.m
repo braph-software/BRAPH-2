@@ -60,14 +60,16 @@ classdef AnalysisDTI < Analysis
             interruptible = analysis.getSettings('AnalysisDTI.ComparionInterruptible');
             longitudinal = analysis.getSettings('AnalysisDTI.Longitudinal');
             M = get_from_varargin(1e+3, 'NumerOfPermutations', varargin{:});
+            group_1 = groups{1};
+            group_2 = groups{2};
             
-            measurements_1 = analysis.calculateMeasurement(measure_code, groups{1}, varargin{:});
+            measurements_1 = analysis.calculateMeasurement(measure_code, group_1, varargin{:});
             values_1 = measurements_1.getMeasureValues();
-            res_1 = mean(reshape(cell2mat(values_1), [size(values_1{1}, 1), size(values_1{1}, 2), group.subjectnumber()]), 3);  
+            res_1 = mean(reshape(cell2mat(values_1), [size(values_1{1}, 1), size(values_1{1}, 2), group_1.subjectnumber()]), 3);  
             
-            measurements_2 = analysis.calculateMeasurement(measure_code, groups{2}, varargin{:});
+            measurements_2 = analysis.calculateMeasurement(measure_code, group_2, varargin{:});
             values_2 = measurements_2.getMeasureValues();
-            res_2 =  mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group.subjectnumber()]), 3);    
+            res_2 =  mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group_2.subjectnumber()]), 3);    
 
             all_permutations_1 = zeros(M, numel(res_1));
             all_permutation_2 = zeros(M, numel(res_2));
@@ -86,8 +88,8 @@ classdef AnalysisDTI < Analysis
                     [permutation_1, permutation_2] = Permutation.permute(longitudinal, values_1, values_2);
                 end
                 
-                mean_permutated_1 = calculate_measurement_average(measure_code, permutation_1);
-                mean_permutated_2 = calculate_measurement_average(measure_code, permutation_2);
+                mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group_1.subjectnumber()]), 3);
+                mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), group_2.subjectnumber()]), 3);
                 
                 all_permutations_1(i,:) = reshape(mean_permutated_1,1,numel(mean_permutated_1));
                 all_permutation_2(i,:) = reshape(mean_permutated_2,1,numel(mean_permutated_2));
@@ -100,17 +102,11 @@ classdef AnalysisDTI < Analysis
             difference_mean = res_2 - res_1;  % difference of the mean values of the non permutated groups
             difference_all_permutations = all_permutation_2 - all_permutations_1;  % permutated group 1 - permutated group 2
             
-            p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
-            p2 = pvalue2(difference_mean, difference_all_permutations);  % double tail
-            %percentiles = quantiles(difference_all_permutations, 100);
-            
-            % confidence interval
-            z =  -0.862 + sqrt(0.743 - 2.404*log(p1));
-            standard_error = Est / z;
-            proportion = 1.96 * standard_error;
-            confidence_min = Est - proportion;
-            confidence_max = Est + proporton;
-            
+            p1 = pvalue1(difference_mean, num2cell(difference_all_permutations));  % singe tail,
+            p2 = pvalue2(difference_mean, num2cell(difference_all_permutations));  % double tail
+            percentiles = quantiles(num2cell(difference_all_permutations, 100));
+            ci = confidence_interval(percentiles, 5);  % 95 percent
+           
             comparison = Comparison.getComparison('ComparisonDTI', ...
                 analysis.getComparisonID(measure_code, groups, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), groups, ...
@@ -119,8 +115,8 @@ classdef AnalysisDTI < Analysis
                 'ComparisonDTI.all_differences', difference_all_permutations, ...
                 'ComparisonDTI.p1', p1, ...
                 'ComparisonDTI.p2', p2, ...
-                'ComparisonDTI.confidence_min', confidence_min, ...
-                'ComparisonDTI.confidence_max', confidence_max, ...
+                'ComparisonDTI.confidence_min', ci(1), ...
+                'ComparisonDTI.confidence_max', ci(2), ...
                 'ComparisonDTI.values_1', values_1, ...
                 'ComparisonDTI.average_values_1', res_1, ...
                 'ComparisonDTI.values_2', values_2, ...
