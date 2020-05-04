@@ -14,6 +14,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 ['The first argument must be a Cohort with subjects of class ' analysis.getSubjectClass()]) %#ok<NBRAK>
             analysis.cohort = cohort;
             
+% checks
             analysis.measurement_idict = IndexedDictionary(analysis.getMeasurementClass());
             if ~iscell (measurements)
                 measurements = {measurements};
@@ -26,6 +27,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis.measurement_idict.add(measurement.getID(), measurement);
             end
             
+% checks
             analysis.randomcomparison_idict = IndexedDictionary(analysis.getRandomComparisonClass());
             if ~iscell(randomcomparisons)
                 randomcomparisons = {randomcomparisons};
@@ -38,6 +40,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis.randomcomparison_idict.add(randomcomparison.getID(), randomcomparison);
             end
             
+% checks
             analysis.comparison_idict = IndexedDictionary(analysis.getComparisonClass());
             if ~iscell (comparisons)
                 comparisons = {comparisons};
@@ -61,7 +64,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
             analysis.settings = settings;
         end
-        % function copyElement() %TODO
+% function copyElement()
     end
     methods (Abstract)
         getMeasurementID(analysis, measure_code, group, varargin)
