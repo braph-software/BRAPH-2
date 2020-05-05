@@ -26,9 +26,10 @@ cohort.getGroups().add(group.getName(), group);
 
 % act
 SubjectMRI.save_to_xls(cohort, save_dir_rule, save_dir_path);
-load_cohort = SubjectMRI.load_from_xls(sub_class, atlas, save_dir_rule, save_dir_path);
-% assert
 
+load_cohort = SubjectMRI.load_from_xls(sub_class, atlas, save_dir_rule, save_dir_path);
+
+% assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
     'BRAPH:SubjectMRI:SaveLoadXLS', ...
     'Problems saving or loading a cohort.')
@@ -66,9 +67,10 @@ cohort.getGroups().add(group.getName(), group);
 
 % act
 SubjectMRI.save_to_txt(cohort, save_dir_rule, save_dir_path);
-load_cohort = SubjectMRI.load_from_txt(sub_class, atlas, save_dir_rule, save_dir_path);
-% assert
 
+load_cohort = SubjectMRI.load_from_txt(sub_class, atlas, save_dir_rule, save_dir_path);
+
+% assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
     'BRAPH:SubjectMRI:SaveLoadTXT', ...
     'Problems saving or loading a cohort.')
@@ -86,6 +88,7 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
         'BRAPH:SubjectMRI:SaveLoadTXT', ...
         'Problems saving or loading a cohort.')
 end
+
 delete(save_dir_path)
 
 %% Test 4: Save and Load cohort from JSON
@@ -105,9 +108,10 @@ cohort.getGroups().add(group.getName(), group);
 
 % act
 SubjectMRI.save_to_json(cohort, save_dir_rule, save_dir_path);
-load_cohort = SubjectMRI.load_from_json(sub_class, atlas, save_dir_rule, save_dir_path);
-% assert
 
+load_cohort = SubjectMRI.load_from_json(sub_class, atlas, save_dir_rule, save_dir_path);
+
+% assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
     'BRAPH:SubjectMRI:SaveLoadTXT', ...
     'Problems saving or loading a cohort.')
@@ -125,4 +129,5 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
         'BRAPH:SubjectMRI:SaveLoadTXT', ...
         'Problems saving or loading a cohort.')
 end
+
 delete(save_dir_path)

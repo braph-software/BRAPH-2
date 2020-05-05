@@ -26,9 +26,10 @@ cohort.getGroups().add(group.getName(), group);
 
 % act
 SubjectDTI.save_to_xls(cohort, save_dir_rule, save_dir_path);
-load_cohort = SubjectDTI.load_from_xls(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
-% assert
 
+load_cohort = SubjectDTI.load_from_xls(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
+
+% assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
     'BRAPH:SubjectDTI:SaveLoadXLS', ...
     'Problems saving or loading a cohort.')
@@ -46,6 +47,7 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
         'BRAPH:SubjectDTI:SaveLoadXLS', ...
         'Problems saving or loading a cohort.')
 end
+
 rmdir(save_dir_path, 's')
 
 %% Test 3: Save and load cohort TXT
@@ -65,9 +67,10 @@ cohort.getGroups().add(group.getName(), group);
 
 % act
 SubjectDTI.save_to_txt(cohort, save_dir_rule, save_dir_path);
-load_cohort = SubjectDTI.load_from_txt(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
-% assert
 
+load_cohort = SubjectDTI.load_from_txt(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
+
+% assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
     'BRAPH:SubjectDTI:SaveLoadTXT', ...
     'Problems saving or loading a cohort.')
@@ -85,6 +88,7 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
         'BRAPH:SubjectDTI:SaveLoadTXT', ...
         'Problems saving or loading a cohort.')
 end
+
 rmdir(save_dir_path, 's')
 
 %% Test 4: Save and load cohort JSON
@@ -104,9 +108,10 @@ cohort.getGroups().add(group.getName(), group);
 
 % act
 SubjectDTI.save_to_json(cohort, save_dir_rule, save_dir_path);
-load_cohort = SubjectDTI.load_from_json(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
-% assert
 
+load_cohort = SubjectDTI.load_from_json(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
+
+% assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
     'BRAPH:SubjectDTI:SaveLoadTXT', ...
     'Problems saving or loading a cohort.')
@@ -124,4 +129,5 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
         'BRAPH:SubjectDTI:SaveLoadTXT', ...
         'Problems saving or loading a cohort.')
 end
+
 rmdir(save_dir_path, 's')
