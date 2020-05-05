@@ -1,6 +1,6 @@
 classdef Cohort < handle & matlab.mixin.Copyable
     % Cohort < handle & matlab.mixin.Copyable: A cohort
-    % Cohort represents a collection of subjects and groups. 
+    % Cohort represents a collection of subjects and groups.
     %
     % Cohort properties (GetAccess=protected, SetAccess=protected):
     %   name                    - name of the brain atlas.
@@ -103,7 +103,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
     %   getGroups().move_down         - moves an element down in the indexed dictionary br_idict
     %   getGroups().move_to_top       - moves an element to the top in the indexed dictionary br_idict
     %   getGroups().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
-    %   
+    %
     % See also Group, Subjects, IndexedDictioanry.
     properties (GetAccess=protected, SetAccess=protected)
         name  % brain atlas name
@@ -114,13 +114,13 @@ classdef Cohort < handle & matlab.mixin.Copyable
     end
     methods
         function cohort = Cohort(name, subject_class, atlases, subjects)
-            % COHORT(NAME, SUBJECT_CLASS, ATLASES, SUBJECTS) creates a cohort. 
+            % COHORT(NAME, SUBJECT_CLASS, ATLASES, SUBJECTS) creates a cohort.
             % The constructor will initialize the properties with the
-            % corresponding arguments, with exception of group dictionary. 
-            % 
+            % corresponding arguments, with exception of group dictionary.
+            %
             % See also Group, Subject, BrainAtlases, IndexedDictionary.
             
-            % subjects must be a cell array of Subjects of class            
+            % subjects must be a cell array of Subjects of class
             cohort.name = name;
             
             assert(any(strcmp(Subject.getList(), subject_class)), ...
@@ -199,9 +199,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
         end
         function subject_idict = getSubjects(cohort)
             % GETSUBJECTS returns the indexed dictionary with subjects
-            % 
+            %
             % SUBJECT_IDICT = GETSUBJECTS(COHORT) returns the indexed
-            % dictionary SUBJECT_IDICT. This function exposes to the user 
+            % dictionary SUBJECT_IDICT. This function exposes to the user
             % the methods and functions of the INDEXEDDICTIONARY class.
             %
             % See also IndexedDictionary, getName(), getGroups().
@@ -210,9 +210,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
         end
         function group_idict = getGroups(cohort)
             % GETGROUPS returns the indexed dictionary with groups
-            % 
+            %
             % GROUP_IDICT = GETGROUPS(COHORT) returns the indexed
-            % dictionary GROUP_IDICT. This function exposes to the user 
+            % dictionary GROUP_IDICT. This function exposes to the user
             % the methods and functions of the INDEXEDDICTIONARY class.
             %
             % See also IndexedDictionary, getName(), getSubjects().
@@ -220,7 +220,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             group_idict = cohort.group_idict;
         end
         function subject = getNewSubject(cohort, varargin)
-            % GETSUBJECT returns a subject 
+            % GETSUBJECT returns a subject
             %
             % SUBJECT = GETNEWSUBJECT(COHORT, VARARGIN) returns an instance
             % of the class of the subject SUBJECT_CLASS with arguments
@@ -234,7 +234,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function [subject_indexes, subjects] = getGroupSubjects(cohort, i)
             % GETGROUPSUBJECTS returns subjects from a specified group
             %
-            % [SUBJECT_INDEXES, SUBJECTS] = GETGROUPSUBJECTS(COHORT, INDEX) 
+            % [SUBJECT_INDEXES, SUBJECTS] = GETGROUPSUBJECTS(COHORT, INDEX)
             % returns subjects from a specificed group INDEX.
             %
             % See also addSubjectToGroup(), removeSubjectFromGroup()
@@ -271,7 +271,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function addSubjectsToGroup(cohort, subject_indexes, group)
             % ADDSUBJECTSTOGROUP inserts subjects to a specified group.
             %
-            % ADDSUBJECTSTOGROUP(COHORT, SUBJECT_INDEXES, GROUP) inserts 
+            % ADDSUBJECTSTOGROUP(COHORT, SUBJECT_INDEXES, GROUP) inserts
             % subjects with SUBJECT_INDEX to a specified GROUP.
             %
             % See also getGroupSubjects(), addSubjectToGroup()
@@ -283,7 +283,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function removeSubjectFromGroup(cohort, subject, group)
             % REMOVESUBJECTFROMGROUP removes a subject from a specified group.
             %
-            % REMOVESUBJECTFROMGROUP(COHORT, SUBJECT, GROUP) removes a 
+            % REMOVESUBJECTFROMGROUP(COHORT, SUBJECT, GROUP) removes a
             % SUBJECT to a specified GROUP.
             %
             % See also getGroupSubjects(), addSubjectToGroup()
@@ -304,7 +304,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
         function removeSubjectsFromGroup(cohort, subject_indexes, group)
             % REMOVESUBJECTSFROMGROUP removes subjects from a specified group.
             %
-            % REMOVESUBJECTSFROMGROUP(COHORT, SUBJECT_INDEXES, GROUP) 
+            % REMOVESUBJECTSFROMGROUP(COHORT, SUBJECT_INDEXES, GROUP)
             % removes subjects with SUBJECT_INDEXES from a specified GROUP.
             %
             % See also getGroupSubjects(), addSubjectsToGroup()
@@ -337,16 +337,16 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 sub = cohort.getSubjects().getValue(sub_i);
                 sub_copy = sub.copy();
                 sub_copy.setBrainAtlases(cohort_copy.getBrainAtlases());
-                cohort_copy.subject_idict.add(tostring(sub_copy.getID()), sub_copy, sub_i);                
+                cohort_copy.subject_idict.add(tostring(sub_copy.getID()), sub_copy, sub_i);
             end
             
             % Make a deep copy of group_idict
             cohort_copy.group_idict = IndexedDictionary('Group');
-            for group_i = 1:1:cohort.getGroups().length()  
+            for group_i = 1:1:cohort.getGroups().length()
                 group_copy = Group(cohort.getSubjectClass(), []);
                 cohort_copy.group_idict.add(group_copy.getName(), group_copy, group_i);
                 cohort_copy.addSubjectsToGroup(cohort.getGroupSubjects(group_i), group_i);
-            end           
+            end
         end
     end
 end
