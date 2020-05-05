@@ -212,8 +212,8 @@ classdef SubjectfMRI < Subject
                 % get age
                 
                 % create subject
-                sub_name = erase(files(i).name, '.xls');
-                sub_name = erase(sub_name, '.xlsx');
+                sub_name = erase(files(i).name, '.xlsx');
+                sub_name = erase(sub_name, '.xls');                
                 subject = Subject.getSubject(subject_class, atlases, ...
                     'SubjectID', sub_name, ...
                     'fMRI', cell2mat(raw));
