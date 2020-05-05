@@ -46,15 +46,15 @@ classdef Comparison < handle & matlab.mixin.Copyable
         initialize_data(c, varargin)  % initialize datadict
     end
     methods
-        function id = getID(m)
-            id = m.id;
+        function id = getID(c)
+            id = c.id;
         end
         function str = tostring(c)
             str = [Comparison.getClass(c) ' ' c.getID()];
         end
         function disp(c)
             disp(['<a href="matlab:help ' Comparison.getClass(c) '">' Comparison.getClass(c) '</a>'])
-            disp(['id = ' m.getID()])
+            disp(['id = ' c.getID()])
         end
         function setBrainAtlases(c, atlases)
             c.atlases = atlases;

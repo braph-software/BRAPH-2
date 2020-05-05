@@ -71,8 +71,8 @@ classdef AnalysisDTI < Analysis
             values_2 = measurements_2.getMeasureValues();
             res_2 =  mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group_2.subjectnumber()]), 3);    
 
-            all_permutations_1 = zeros(M, numel(res_1));
-            all_permutation_2 = zeros(M, numel(res_2));
+            all_permutations_1 = zeros(numel(res_1), M);
+            all_permutation_2 = zeros(numel(res_2), M);
       
             start = tic;
             for i = 1:1:M
@@ -91,8 +91,8 @@ classdef AnalysisDTI < Analysis
                 mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group_1.subjectnumber()]), 3);
                 mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), group_2.subjectnumber()]), 3);
                 
-                all_permutations_1(i,:) = reshape(mean_permutated_1,1,numel(mean_permutated_1));
-                all_permutation_2(i,:) = reshape(mean_permutated_2,1,numel(mean_permutated_2));
+                all_permutations_1(:, i) = reshape(mean_permutated_1,1,numel(mean_permutated_1));
+                all_permutation_2(:, i) = reshape(mean_permutated_2,1,numel(mean_permutated_2));
                 
                 if interruptible
                     pause(interruptible)
@@ -104,7 +104,8 @@ classdef AnalysisDTI < Analysis
             
             p1 = pvalue1(difference_mean, num2cell(difference_all_permutations));  % singe tail,
             p2 = pvalue2(difference_mean, num2cell(difference_all_permutations));  % double tail
-            percentiles = quantiles(num2cell(difference_all_permutations, 100));
+            percentiles = quantiles(num2cell(difference_all_permutations, 1), 100);
+            n = size(percentiles, 1);
             ci = confidence_interval(percentiles, 5);  % 95 percent
            
             comparison = Comparison.getComparison('ComparisonDTI', ...
@@ -120,7 +121,8 @@ classdef AnalysisDTI < Analysis
                 'ComparisonDTI.values_1', values_1, ...
                 'ComparisonDTI.average_values_1', res_1, ...
                 'ComparisonDTI.values_2', values_2, ...
-                'ComparisonDTI.average_values_2', res_2 ...
+                'ComparisonDTI.average_values_2', res_2, ...
+                'ComparisonDTI.number_of_permutations', M ....
                 );
         end        
     end
