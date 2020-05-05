@@ -130,20 +130,19 @@ for i = 1:1:length(measures)
     end
 end
 
-% %% Test 4: Compare
-% for i = 1:1:numel(measures)
-%     measure = measures{i};
-%     analysis = AnalysisDTI(cohort, {}, {}, {});
-%     % global-Assortativity nodal-Eccentricity binodal-Distance
-%     calculate_comparition = analysis.calculateComparison(measure, {group1, group2}, 'NumerOfPermutations', 10);
-%     
-%     assert(~isempty(calculate_comparition), ...
-%         ['BRAPH:AnalysisDTI:calculateComparison'], ...
-%         ['AnalysisDTI.calculateComparison() not working']) %#ok<*NBRAK>
-%     
-%     assert(analysis.getComparisons().length() == 1, ...
-%         ['BRAPH:AnalysisDTI:calculateComparison'], ...
-%         ['AnalysisDTI.calculateComparison() not working'])
-%     
-%     compariton = analysis.getComparisons().getValue(1);
-% end
+%% Test 4: Compare
+for i = 1:1:numel(measures)
+    measure = measures{i};
+    analysis = AnalysisDTI(cohort, {}, {}, {});
+    calculate_comparison = analysis.calculateComparison(measure, {group1, group2}, 'NumerOfPermutations', 10);
+    
+    assert(~isempty(calculate_comparison), ...
+        ['BRAPH:AnalysisDTI:calculateComparison'], ...
+        ['AnalysisDTI.calculateComparison() not working']) %#ok<*NBRAK>
+    
+    assert(analysis.getComparisons().length() == 1, ...
+        ['BRAPH:AnalysisDTI:calculateComparison'], ...
+        ['AnalysisDTI.calculateComparison() not working'])
+    
+    compariton = analysis.getComparisons().getValue(1);
+end
