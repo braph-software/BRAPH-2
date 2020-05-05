@@ -122,7 +122,7 @@ classdef AnalysisfMRI < Analysis
             end
             
             difference_mean = res_2 - res_1;  % difference of the mean values of the non permutated groups
-            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  % permutated group 1 - permutated group 2
+            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 1 - permutated group 2
             
             p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
             p2 = pvalue2(difference_mean, difference_all_permutations);  % double tail
