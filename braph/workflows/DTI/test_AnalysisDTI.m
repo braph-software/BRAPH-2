@@ -10,17 +10,14 @@ sub11 = SubjectDTI(atlas, 'SubjectID', '11', 'age', 20, 'DTI', .5 + .5 * rand(at
 sub12 = SubjectDTI(atlas, 'SubjectID', '12', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub13 = SubjectDTI(atlas, 'SubjectID', '13', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub14 = SubjectDTI(atlas, 'SubjectID', '14', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub15 = SubjectDTI(atlas, 'SubjectID', '15', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
-group1 = Group('SubjectDTI', {sub11, sub12, sub13, sub14, sub15}, 'GroupName', 'GroupTestDTI1');
+group1 = Group('SubjectDTI', {sub11, sub12, sub13, sub14}, 'GroupName', 'GroupTestDTI1');
 
 sub21 = SubjectDTI(atlas, 'SubjectID', '21', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub22 = SubjectDTI(atlas, 'SubjectID', '22', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
 sub23 = SubjectDTI(atlas, 'SubjectID', '23', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub24 = SubjectDTI(atlas, 'SubjectID', '24', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
-sub25 = SubjectDTI(atlas, 'SubjectID', '25', 'age', 20, 'DTI', .5 + .5 * rand(atlas.getBrainRegions().length()));
-group2 = Group('SubjectDTI', {sub21, sub22, sub23, sub24, sub25}, 'GroupName', 'GroupTestDTI2');
+group2 = Group('SubjectDTI', {sub21, sub22, sub23}, 'GroupName', 'GroupTestDTI2');
 
-cohort = Cohort('Cohort DTI', 'SubjectDTI', atlas, {sub11, sub12, sub13, sub14, sub15, sub21, sub22, sub23, sub24, sub25});
+cohort = Cohort('Cohort DTI', 'SubjectDTI', atlas, {sub11, sub12, sub13, sub14, sub21, sub22, sub23});
 cohort.getGroups().add(group1.getName(), group1)
 cohort.getGroups().add(group2.getName(), group2)
 
@@ -114,7 +111,8 @@ for i = 1:1:length(measures)
         assert(isequal(size(calculted_average), [atlas.getBrainRegions().length(), 1]), ...
             ['BRAPH:AnalysisDTI:Instantiation'], ...
             ['AnalysisDTI does not initialize correctly with nodal measures.']) %#ok<*NBRAK>
-    else
+    
+    elseif Measure.is_binodal(measure)
         
         assert(isequal(calculated_measurement.getMeasureCode(), measure), ...
             ['BRAPH:AnalysisDTI:calculateMeasurement'], ...
