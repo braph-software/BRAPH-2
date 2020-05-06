@@ -66,19 +66,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             analysis_copy = copyElement@matlab.mixin.Copyable(analysis);
             
             % deep copy of cohort
-            atlases = analysis.getCohort().getBrainAtlases();
-            for i = 1:1:numel(analysis.getCohort().getBrainAtlases())
-                atlas = atlases{i};
-                atlas_copy = atlas.copy();
-                atlases_copy{i} = atlas_copy; %#ok<AGROW>
-            end
-            analysis_copy.cohort =  Cohort(analysis.getCohort().getName(), analysis.getSubjectClass(), atlases_copy, {});
-            subjects = analysis.getCohort().getSubjects();
-            for i = 1:1:numel(subjects)
-                subject = subjects.getValue(i);
-                subject_copy = subject.copy;
-                analysis_copy.cohort.getSubjects().add(num2str(subject_copy.getID()), subject_copy, i);
-            end
+            analysis_copy.cohort = analysis.getCohort().copy();
             
             % deep copy of measurement
             analysis_copy.measurement_idict = IndexedDictionary(analysis_copy.getMeasurementClass());
