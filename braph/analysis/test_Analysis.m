@@ -459,3 +459,54 @@ for i = 1:1:length(analysis_class_list)
         'BRAPH:Analysis:Bug', ...
         'Analysis.move2topMeasurements() does not work')
 end
+
+%% Test 15: Copy
+for i =1:1:length(analysis_class_list)
+    % setup
+    analysis_class = analysis_class_list{i};
+    sub_class = Analysis.getSubjectClass(analysis_class);
+    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
+    sub1 = Subject.getSubject(sub_class, atlases);
+    sub2 = Subject.getSubject(sub_class, atlases);
+    sub3 = Subject.getSubject(sub_class, atlases);
+    cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
+    group = Group(sub_class, {sub1, sub2, sub3});
+    measurement_class = Analysis.getMeasurementClass(analysis_class);
+    comparison_class = Analysis.getComparisonClass(analysis_class);
+    random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
+    measurement = Measurement.getMeasurement(measurement_class, 'm1', atlas, group, [measurement_class '.measure_code'], 'Degree');
+    comparison = Comparison.getComparison(comparison_class, 'c1', atlas, {group group}, [comparison_class '.measure_code'], 'Degree');
+    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group);
+    analysis = Analysis.getAnalysis(analysis_class, cohort, {measurement}, {randomcomparison}, {comparison});
+    
+    % act
+    analysis_copy = analysis.copy();
+    
+    assert(analysis ~= analysis_copy, ... % different objects
+        ['BRAPH:Analysis:Copy'], ...
+        ['Analysis.copy() does not work']) %#ok<NBRAK>
+    
+    cohort_analysis = analysis.getCohort();
+    measurement_analysis = analysis.getMeasurements();
+    comparison_analysis = analysis.getComparisons();
+    randomcomparison_analysis = analysis.getRandomComparisons();
+    
+    cohort_copy = analysis_copy.getCohort();
+    measurement_copy = analysis_copy.getMeasurements();
+    comparison_copy = analysis_copy.getComparisons();
+    randomcomparison_copy = analysis_copy.getRandomComparisons();
+    
+    assert(cohort_analysis ~= cohort_copy, ... % different objects
+        ['BRAPH:Analysis:Copy'], ...
+        ['Analysis.copy() does not work']) %#ok<NBRAK>
+    assert(measurement_analysis ~= measurement_copy, ... % different objects
+        ['BRAPH:Analysis:Copy'], ...
+        ['Analysis.copy() does not work']) %#ok<NBRAK>
+    assert(comparison_analysis ~= comparison_copy, ... % different objects
+        ['BRAPH:Analysis:Copy'], ...
+        ['Analysis.copy() does not work']) %#ok<NBRAK>
+    assert(randomcomparison_analysis ~= randomcomparison_copy, ... % different objects
+        ['BRAPH:Analysis:Copy'], ...
+        ['Analysis.copy() does not work']) %#ok<NBRAK>
+    
+end
