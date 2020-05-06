@@ -66,6 +66,10 @@ classdef AnalysisMRI < Analysis
             interruptible = analysis.getSettings('AnalysisMRI.ComparionInterruptible');
             longitudinal = analysis.getSettings('AnalysisMRI.Longitudinal');
             M = get_from_varargin(1e+3, 'NumerOfPermutations', varargin{:});
+            correlation_rule = analysis.getSettings('AnalysisMRI.CorrelationRule');
+            negative_weight_rule = analysis.getSettings('AnalysisMRI.NegativeWeightRule');
+            graph_type = analysis.getSettings('AnalysisMRI.GraphType');
+            
             group_1 = groups{1};
             group_2 = groups{2};
             
@@ -78,6 +82,19 @@ classdef AnalysisMRI < Analysis
             all_permutations_1 = cell(1, M);
             all_permutations_2 = cell(1, M);
             
+            subjects_1 = group_1.getSubjects();
+            subjects_2 = group_2.getSubjects();
+            
+            for i = 1:1:group_1.subjectnumber()
+                subject = subjects_1{i};
+                subjects_data_1(i, :) = subject.getData('MRI').getValue();  %#ok<AGROW> % MRI data
+            end
+            
+            for i = 1:1:group_2.subjectnumber()
+                subject = subjects_2{i};
+                subjects_data_2(i, :) = subject.getData('MRI').getValue(); %#ok<AGROW>
+            end
+            
             start = tic;
             for i = 1:1:M
                 if verbose
@@ -87,22 +104,30 @@ classdef AnalysisMRI < Analysis
                 if longitudinal
                     [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_1, subjects_2);
                 else
-                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, value_1, value_2);
+                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_data_1, subjects_data_2);
                 end
                 
-                mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group_1.subjectnumber()]), 3);
-                mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), group_2.subjectnumber()]), 3);
+                A_permutated_1 = Correlation.getAdjacencyMatrix(permutation_1, correlation_rule, negative_weight_rule);
+                graph_permutated_1 = Graph.getGraph(graph_type, A_permutated_1, varargin{:});
+                measure_permutated_1 = Measure.getMeasure(measure_code, graph_permutated_1, varargin{:});
+                measure_permutated_value_1 = measure_permutated_1.getValue();
                 
-                all_permutations_1(1, i) = {mean_permutated_1};
-                all_permutations_2(1, i) = {mean_permutated_2};
+                A_permutated_2 = Correlation.getAdjacencyMatrix(permutation_2, correlation_rule, negative_weight_rule);
+                graph_permutated_2 = Graph.getGraph(graph_type, A_permutated_2, varargin{:});
+                measure_permutated_2 = Measure.getMeasure(measure_code, graph_permutated_2, varargin{:});
+                measure_permutated_value_2 = measure_permutated_2.getValue();
                 
-                difference_all_permutations{1, i} = mean_permutated_1 - mean_permutated_2; %#ok<AGROW>
+
+                all_permutations_1(1, i) = {measure_permutated_value_1};
+                all_permutations_2(1, i) = {measure_permutated_value_2};
+                
+                difference_all_permutations{1, i} = measure_permutated_value_2 - measure_permutated_value_1; %#ok<AGROW>
                 if interruptible
                     pause(interruptible)
                 end
             end
             
-            difference_mean = value_2 - value_1;  % difference of the mean values of the non permutated groups
+            difference_mean = cell2mat(value_2) - cell2mat(value_1);  % difference of the mean values of the non permutated groups
             difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 1 - permutated group 2
             
             p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
@@ -110,7 +135,7 @@ classdef AnalysisMRI < Analysis
             percentiles = quantiles(difference_all_permutations, 100);
             [ci_lower, ci_upper] = confidence_interval(percentiles, 5, size(difference_mean));  % 95 percent
             
-            comparison = Comparison.getComparison('ComparisonDTI', ...
+            comparison = Comparison.getComparison('ComparisonMRI', ...
                 analysis.getComparisonID(measure_code, groups, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), groups, ...
                 'ComparisonMRI.measure_code', measure_code, ...
@@ -120,8 +145,8 @@ classdef AnalysisMRI < Analysis
                 'ComparisonMRI.p2', p2, ...
                 'ComparisonMRI.confidence_min', ci_lower, ...
                 'ComparisonMRI.confidence_max', ci_upper, ...
-                'ComparisonMRI.values_1', value_1, ...
-                'ComparisonMRI.values_2', value_2, ...
+                'ComparisonMRI.value_1', value_1, ...
+                'ComparisonMRI.value_2', value_2, ...
                 'ComparisonMRI.number_of_permutations', M ....
                 );
         end
