@@ -53,7 +53,29 @@ classdef AnalysisDTI < Analysis
                 );
         end
         function random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
-            random_comparison = '';
+            % rules
+            attemptsPerEdge = analysis.getSettings('AnalysisDTI.AttemptsPerEdge');
+            numerOfWeights = analysis.getSettings('AnalysisDTI.NumberOfWeights');
+            graph_type = analysis.getSettings('AnalysisDTI.GraphType');
+   
+            % get randomize graphs of subjects
+            subjects = group.getSubjects();
+            for i = 1:1:numel(subjects)
+                subject = subjects{i};
+                subject_class = subject.getClass();
+                atlas = subject.getBrainAtlases();
+                A = subject.getData('DTI').getValue();
+                g = Graph.getgraph(graph_type, A);
+                [permutated_A, ~] = g.randomize_graph('AttemptsPerEdge', attemptsPerEdge, 'NumberOfWeights', numerOfWeights);
+                permutated_subject = Subject.getSubject(subject_class, atlas, 'DTI', permutated_A);
+                permutated_subjects{i} = permutated_subject; %#ok<NASGU,AGROW>
+            end
+            
+            permutated_group = Group(subject_class, permutate_subjects{i});
+            groups = {};
+            
+            comparision = analysis.calculateComparison(analysis, measure_code, groups, varargin{:});
+            
         end
         function comparison = calculate_comparison(analysis, measure_code, groups, varargin)
             verbose = analysis.getSettings('AnalysisDTI.ComparisonVerbose');
@@ -154,7 +176,9 @@ classdef AnalysisDTI < Analysis
                 {'AnalysisDTI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU'}}, ...
                 {'AnalysisDTI.ComparisonVerbose', Constant.LOGICAL, false, {false, true}}, ...
                 {'AnalysisDTI.ComparionInterruptible', Constant.LOGICAL, false, {false, true}}, ...
-                {'AnalysisDTI.Longitudinal', Constant.LOGICAL, false, {false, true}} ...
+                {'AnalysisDTI.Longitudinal', Constant.LOGICAL, false, {false, true}}, ...
+                {'AnalysisDTI.AttemptsPerEdge', Constant.NUMERIC, 1, {}}, ...
+                {'AnalysisDTI.NumberOfWeights', Constant.NUMERIC, 1, {}} ...
                 };
         end
     end
