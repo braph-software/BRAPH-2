@@ -634,7 +634,7 @@ for i =1:1:length(analysis_class_list)
         
         for k = 1:1:numel(randomcomparison_analysis.getGroup())
             group = randomcomparison_analysis.getGroup();
-            group = group{1};
+            group = group;
             group_copy = randomcomparison_copy.getGroup();
             assert(group ~= group_copy, ... % different objects
                 ['BRAPH:Cohort:Copy'], ...

@@ -87,7 +87,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 randomcomparison_copy = randomcomparison.copy();
                 randomcomparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
                 group = randomcomparison.getGroup();
-                group_copy = analysis_copy.cohort.getGroups().getValue(group{1}.getName());
+                group_copy = analysis_copy.cohort.getGroups().getValue(group.getName());
                 randomcomparison_copy.setGroup(group_copy);
                 analysis_copy.randomcomparison_idict.add(tostring(randomcomparison_copy.getID()), randomcomparison_copy, randomcomparisons_i);
             end
