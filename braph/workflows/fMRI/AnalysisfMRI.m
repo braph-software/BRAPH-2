@@ -43,12 +43,12 @@ classdef AnalysisfMRI < Analysis
                 fmin = 0;  % values from braph 1
                 fmax = Inf;
                 T = 1;
-                fs = 1/T;
-                if fmax>fmin && T>0
-                    NFFT = 2*ceil(size(data, 1)/2);
+                fs = 1 / T;
+                if fmax > fmin && T > 0
+                    NFFT = 2 * ceil(size(data, 1) / 2);
                     ft = fft(data, NFFT);  % Fourier transform
-                    f = fftshift(fs*abs(-NFFT/2:NFFT/2-1)/NFFT ); % absolute frequency
-                    ft(f<fmin|f>fmax, :) = 0;
+                    f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+                    ft(f < fmin | f > fmax, :) = 0;
                     data = ifft(ft, NFFT);
                 end
                 
