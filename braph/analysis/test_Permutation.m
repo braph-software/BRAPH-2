@@ -5,7 +5,7 @@ values_1 = ['a' 'b' 'c'];
 values_2 = ['d' 'e' 'f'];
 values = [values_1 values_2];
 
-[permutation_1, permutation_2] = Permutation.permute(0, values_1, values_2);
+[permutation_1, permutation_2] = Permutation.permute(values_1, values_2, 0);
 permutated_values = [permutation_1  permutation_2];
 
 assert(~isempty(permutation_1), ...
@@ -42,7 +42,7 @@ end
 group_1 = ['a' 'b' 'c' 'd' 'e' 'f'];
 group_2 = ['s' 't' 'u' 'v' 'w' 'x'];
 
-[permutation_1, permutation_2] = Permutation.permute(1, group_1, group_2);
+[permutation_1, permutation_2] = Permutation.permute(group_1, group_2, 1);
 
 indexes = zeros(1, numel(group_1));  % get Permutation internal random indexes from group 1
 for i = 1:1:numel(group_1)

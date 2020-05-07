@@ -64,7 +64,7 @@ classdef AnalysisMRI < Analysis
         function comparison = calculate_comparison(analysis, measure_code, groups, varargin)
             verbose = analysis.getSettings('AnalysisMRI.ComparisonVerbose');
             interruptible = analysis.getSettings('AnalysisMRI.ComparionInterruptible');
-            longitudinal = analysis.getSettings('AnalysisMRI.Longitudinal');
+            is_longitudinal = analysis.getSettings('AnalysisMRI.Longitudinal');
             M = get_from_varargin(1e+3, 'NumerOfPermutations', varargin{:});
             correlation_rule = analysis.getSettings('AnalysisMRI.CorrelationRule');
             negative_weight_rule = analysis.getSettings('AnalysisMRI.NegativeWeightRule');
@@ -87,37 +87,37 @@ classdef AnalysisMRI < Analysis
             
             for i = 1:1:group_1.subjectnumber()
                 subject = subjects_1{i};
-                subjects_data_1(i, :) = subject.getData('MRI').getValue();  %#ok<AGROW> % MRI data
+                subjects_data_1(:, i) = subject.getData('MRI').getValue();  %#ok<AGROW> % MRI data % here we swaps dimensions to be compatible with permutation
             end
             
             for i = 1:1:group_2.subjectnumber()
                 subject = subjects_2{i};
-                subjects_data_2(i, :) = subject.getData('MRI').getValue(); %#ok<AGROW>
+                subjects_data_2(:, i) = subject.getData('MRI').getValue(); %#ok<AGROW>  
             end
-            
+
             start = tic;
             for i = 1:1:M
                 if verbose
                     disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
                 end
                 
-                if longitudinal
-                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_1, subjects_2);
+                if is_longitudinal
+                    [permutation_1, permutation_2] = Permutation.permute(subjects_1, subjects_2, is_longitudinal);
                 else
-                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, subjects_data_1, subjects_data_2);
+                    [permutation_1, permutation_2] = Permutation.permute(subjects_data_1, subjects_data_2, is_longitudinal);
                 end
                 
-                A_permutated_1 = Correlation.getAdjacencyMatrix(permutation_1, correlation_rule, negative_weight_rule);
+                A_permutated_1 = Correlation.getAdjacencyMatrix(permutation_1', correlation_rule, negative_weight_rule);  % swap dimensions again
                 graph_permutated_1 = Graph.getGraph(graph_type, A_permutated_1, varargin{:});
                 measure_permutated_1 = Measure.getMeasure(measure_code, graph_permutated_1, varargin{:});
                 measure_permutated_value_1 = measure_permutated_1.getValue();
                 
-                A_permutated_2 = Correlation.getAdjacencyMatrix(permutation_2, correlation_rule, negative_weight_rule);
+                A_permutated_2 = Correlation.getAdjacencyMatrix(permutation_2', correlation_rule, negative_weight_rule);
                 graph_permutated_2 = Graph.getGraph(graph_type, A_permutated_2, varargin{:});
                 measure_permutated_2 = Measure.getMeasure(measure_code, graph_permutated_2, varargin{:});
                 measure_permutated_value_2 = measure_permutated_2.getValue();
                 
-
+                
                 all_permutations_1(1, i) = {measure_permutated_value_1};
                 all_permutations_2(1, i) = {measure_permutated_value_2};
                 
@@ -133,7 +133,24 @@ classdef AnalysisMRI < Analysis
             p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
             p2 = pvalue2(difference_mean, difference_all_permutations);  % double tail
             percentiles = quantiles(difference_all_permutations, 100);
-            [ci_lower, ci_upper] = confidence_interval(percentiles, 5, size(difference_mean));  % 95 percent
+            if size(percentiles) == [1 1] %#ok<BDSCA>
+                ci_lower = percentiles{1}(2);
+                ci_upper = percentiles{1}(40); % 95 percent
+            elseif size(percentiles) == [size(difference_mean, 1) 1] %#ok<BDSCA>
+                for i = 1:1:length(percentiles)
+                    percentil = percentiles{i};
+                    ci_lower{i, 1} = percentil(2);  %#ok<AGROW>
+                    ci_upper{i, 1} = percentil(40); %#ok<AGROW>
+                end
+            else
+                for i = 1:1:size(percentiles, 1)
+                    for j = 1:1:size(percentiles, 2)
+                        percentil = percentiles{i, j};
+                        ci_lower{i, j} = percentil(2); %#ok<AGROW>
+                        ci_upper{i, j} = percentil(40); %#ok<AGROW>
+                    end
+                end
+            end
             
             comparison = Comparison.getComparison('ComparisonMRI', ...
                 analysis.getComparisonID(measure_code, groups, varargin{:}), ...
