@@ -79,19 +79,21 @@ classdef AnalysisfMRI < Analysis
         function comparison = calculate_comparison(analysis, measure_code, groups, varargin)
             verbose = analysis.getSettings('AnalysisfMRI.ComparisonVerbose');
             interruptible = analysis.getSettings('AnalysisfMRI.ComparionInterruptible');
-            longitudinal = analysis.getSettings('AnalysisfMRI.Longitudinal');
+            is_longitudinal = analysis.getSettings('AnalysisfMRI.Longitudinal');
             M = get_from_varargin(1e+3, 'NumerOfPermutations', varargin{:});
+            group_1 = groups{1};
+            group_2 = groups{2};
             
             measurements_1 = analysis.calculateMeasurement(measure_code, groups{1}, varargin{:});
             values_1 = measurements_1.getMeasureValues();
-            res_1 = mean([values_1{:}], 1);
+            res_1 = mean(reshape(cell2mat(values_1), [size(values_1{1}, 1), size(values_1{1}, 2), group_1.subjectnumber()]), 3);
             
             measurements_2 = analysis.calculateMeasurement(measure_code, groups{2}, varargin{:});
             values_2 = measurements_2.getMeasureValues();
-            res_2 = mean([values_2{:}], 1);
+            res_2 =  mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group_2.subjectnumber()]), 3);
             
-            all_permutations_1 = zeros(M, numel(res_1));
-            all_permutation_2 = zeros(M, numel(res_2));
+            all_permutations_1 = cell(1, M);
+            all_permutations_2 = cell(1, M);
             
             start = tic;
             for i = 1:1:M
@@ -99,19 +101,19 @@ classdef AnalysisfMRI < Analysis
                     disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
                 end
                 
-                if longitudinal
-%                     subjects_1 = [1:1:number_subjects_group_1]; %#ok<*NBRAK>
-%                     subjects_2 = number_subjects_group_1 + [1:1:number_subjects_group_2];
-                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, values_1, values_2);
+                if is_longitudinal
+                    [permutation_1, permutation_2] = Permutation.permute(values_1, values_2, is_longitudinal);
                 else
-                    [permutation_1, permutation_2] = Permutation.permute(longitudinal, values_1, values_2);
+                    [permutation_1, permutation_2] = Permutation.permute(values_1, values_2, is_longitudinal);
                 end
                 
-                mean_permutated_1 = calculate_measurement_average(measure_code, permutation_1);
-                mean_permutated_2 = calculate_measurement_average(measure_code, permutation_2);
-
-                all_permutations_1(i,:) = reshape(mean_permutated_1,1,numel(mean_permutated_1));
-                all_permutation_2(i,:) = reshape(mean_permutated_2,1,numel(mean_permutated_2));
+                mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group_1.subjectnumber()]), 3);
+                mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), group_2.subjectnumber()]), 3);
+                
+                all_permutations_1(1, i) = {mean_permutated_1};
+                all_permutations_2(1, i) = {mean_permutated_2};
+                
+                difference_all_permutations{1, i} = mean_permutated_1 - mean_permutated_2; %#ok<AGROW>
                 
                 if interruptible
                     pause(interruptible)
@@ -119,25 +121,45 @@ classdef AnalysisfMRI < Analysis
             end
             
             difference_mean = res_2 - res_1;  % difference of the mean values of the non permutated groups
-            difference_all_permutations = all_permutation_2 - all_permutations_1;  % permutated group 1 - permutated group 2
+            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 1 - permutated group 2
             
-            p_single = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
-            p_double = pvalue2(difference_mean, difference_all_permutations);  % double tail
-            percentiles = quantiles(difference_all_permutations, 100);
+            p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
+            p2 = pvalue2(difference_mean, difference_all_permutations);  % double tail
+            percentiles = quantiles(difference_all_permutations, 40);
+            if size(percentiles) == [1 1] %#ok<BDSCA>
+                ci_lower = percentiles{1}(2);
+                ci_upper = percentiles{1}(40); % 95 percent
+            elseif size(percentiles) == [size(difference_mean, 1) 1] %#ok<BDSCA>
+                for i = 1:1:length(percentiles)
+                    percentil = percentiles{i};
+                    ci_lower{i, 1} = percentil(2);  %#ok<AGROW>
+                    ci_upper{i, 1} = percentil(40); %#ok<AGROW>
+                end
+            else
+                for i = 1:1:size(percentiles, 1)
+                    for j = 1:1:size(percentiles, 2)
+                        percentil = percentiles{i, j};
+                        ci_lower{i, j} = percentil(2); %#ok<AGROW>
+                        ci_upper{i, j} = percentil(40); %#ok<AGROW>
+                    end
+                end
+            end  
             
             comparison = Comparison.getComparison('ComparisonfMRI', ...
                 analysis.getComparisonID(measure_code, groups, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), groups, ...
                 'ComparisonfMRI.measure_code', measure_code, ...
-                'ComparisonfMRI.difference_mean', difference_mean, ...
-                'ComparisonfMRI.difference_all', difference_all_permutations, ...
-                'ComparisonfMRI.p_single', p_single, ...
-                'ComparisonfMRI.p_double', p_double, ...
-                'ComparisonfMRI.percentiles', percentiles, ...
-                'ComparisonfMRI.value_group_1', values_1, ...
-                'ComparisonfMRI.mean_value_group_1', res_1, ...
-                'ComparisonfMRI.value_group_2', values_2, ...
-                'ComparisonfMRI.mean_value_group_2', res_2 ...
+                'ComparisonfMRI.difference', difference_mean, ...
+                'ComparisonfMRI.all_differences', difference_all_permutations, ...
+                'ComparisonfMRI.p1', p1, ...
+                'ComparisonfMRI.p2', p2, ...
+                'ComparisonfMRI.confidence_min', ci_lower, ...
+                'ComparisonfMRI.confidence_max', ci_upper, ...
+                'ComparisonfMRI.values_1', values_1, ...
+                'ComparisonfMRI.average_values_1', res_1, ...
+                'ComparisonfMRI.values_2', values_2, ...
+                'ComparisonfMRI.average_values_2', res_2, ...
+                'ComparisonfMRI.number_of_permutations', M ...
                 );
         end
     end
