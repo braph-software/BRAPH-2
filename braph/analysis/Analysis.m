@@ -74,8 +74,9 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 measurement = analysis.getMeasurements().getValue(measurement_i);
                 measurement_copy = measurement.copy();
                 measurement_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
-                groups_copy = analysis_copy.cohort.getGroups().getValues();
-                measurement_copy.setGroup(groups_copy{measurement_i});
+                group = measurement.getGroup();
+                group_copy = analysis_copy.cohort.getGroups().getValue(group.getName());
+                measurement_copy.setGroup(group_copy);
                 analysis_copy.measurement_idict.add(tostring(measurement_copy.getID()), measurement_copy, measurement_i);
             end
             
@@ -85,8 +86,9 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 randomcomparison = analysis.getRandomComparisons().getValue(randomcomparisons_i);
                 randomcomparison_copy = randomcomparison.copy();
                 randomcomparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
-                groups_copy = analysis_copy.cohort.getGroups().getValues();
-                randomcomparison_copy.setGroup(groups_copy{randomcomparisons_i});
+                group = randomcomparison.getGroup();
+                group_copy = analysis_copy.cohort.getGroups().getValue(group{1}.getName());
+                randomcomparison_copy.setGroup(group_copy);
                 analysis_copy.randomcomparison_idict.add(tostring(randomcomparison_copy.getID()), randomcomparison_copy, randomcomparisons_i);
             end
             
@@ -96,8 +98,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 comparison = analysis.getComparisons().getValue(comparisons_i);
                 comparison_copy = comparison.copy();
                 comparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
-                groups_copy = analysis_copy.cohort.getGroups().getValues();
-                comparison_copy.setGroups({groups_copy{1} groups_copy{2}});
+                groups = comparison.getGroups();
+                for j = 1:1:numel(groups)
+                    group = groups{j};
+                    groups_copy{j} = analysis_copy.cohort.getGroups().getValue(group.getName()); %#ok<AGROW>
+                end
+                comparison_copy.setGroups(groups_copy);
                 analysis_copy.comparison_idict.add(tostring(comparison_copy.getID()), comparison_copy, comparisons_i);
             end
         end
