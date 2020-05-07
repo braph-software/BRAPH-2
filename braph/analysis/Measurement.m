@@ -33,14 +33,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % Make a shallow copy
             measurement_copy = copyElement@matlab.mixin.Copyable(m);
             
-            % Make a deep copy of datadict
-            measurement_copy.data_dict = containers.Map;
-            data_codes = keys(m.data_dict);
-            for i = 1:1:length(data_codes)
-                data_code = data_codes{i};
-                d = m.getData(data_code);
-                measurement_copy.datadict(data_code) = d.copy();
-            end
+
         end
     end
     methods (Abstract, Access = protected)
@@ -51,7 +44,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             id = m.id;
         end
         function str = tostring(m)
-            str = [Measurement.getClass(m) ' ' m.getID()]; %#ok<NBRAK>
+            str = [Measurement.getClass(m) ' ' m.getID()];
         end
         function disp(m)
             disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])

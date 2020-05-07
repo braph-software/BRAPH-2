@@ -32,29 +32,21 @@ classdef Comparison < handle & matlab.mixin.Copyable
             % Make a shallow copy
             comparison_copy = copyElement@matlab.mixin.Copyable(c);
             
-            % Make a deep copy of datadict
-            comparison_copy.data_dict = containers.Map;
-            data_codes = keys(c.data_dict);
-            for i = 1:1:length(data_codes)
-                data_code = data_codes{i};
-                d = c.getData(data_code);
-                comparison_copy.datadict(data_code) = d.copy();
-            end
         end
     end
     methods (Abstract, Access = protected)
         initialize_data(c, varargin)  % initialize datadict
     end
     methods
-        function id = getID(m)
-            id = m.id;
+        function id = getID(c)
+            id = c.id;
         end
         function str = tostring(c)
             str = [Comparison.getClass(c) ' ' c.getID()];
         end
         function disp(c)
             disp(['<a href="matlab:help ' Comparison.getClass(c) '">' Comparison.getClass(c) '</a>'])
-            disp(['id = ' m.getID()])
+            disp(['id = ' c.getID()])
         end
         function setBrainAtlases(c, atlases)
             c.atlases = atlases;
