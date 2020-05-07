@@ -7,11 +7,19 @@ classdef AnalysisDTI < Analysis
     end
     methods
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
-            measurement_id = [ ...
-                tostring(analysis.getMeasurementClass()) ' ' ...
-                tostring(measure_code) ' ' ...
-                tostring(analysis.cohort.getGroups().getIndex(group)) ...
-                ];
+            is_random = get_from_varargin(0, 'is_randomDTI', varargin{:});
+            if is_random
+                measurement_id = [ ...
+                    tostring(analysis.getMeasurementClass()) ' ' ...
+                    tostring(measure_code) ' RandomGroup' ...
+                    ];
+            else
+                measurement_id = [ ...
+                    tostring(analysis.getMeasurementClass()) ' ' ...
+                    tostring(measure_code) ' ' ...
+                    tostring(analysis.cohort.getGroups().getIndex(group)) ...
+                    ];
+            end         
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             randomcomparison_id = [ ...
@@ -20,13 +28,13 @@ classdef AnalysisDTI < Analysis
                 tostring(analysis.cohort.getGroups().getIndex(group)) ...
                 ];
         end
-        function comparison_id = getComparisonID(analysis, measure_code, groups, varargin)
+        function comparison_id = getComparisonID(analysis, measure_code, groups, varargin)            
             comparison_id = [ ...
                 tostring(analysis.getComparisonClass()) ' ' ...
                 tostring(measure_code) ' ' ...
                 tostring(analysis.cohort.getGroups().getIndex(groups{1})) ' ' ...
                 tostring(analysis.cohort.getGroups().getIndex(groups{2})) ...
-                ];
+                ];            
         end
     end
     methods (Access = protected)
@@ -55,8 +63,110 @@ classdef AnalysisDTI < Analysis
                 'MeasurementDTI.average_value', measure_average ...
                 );
         end
-        function random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
-            random_comparison = '';
+        function randomcomparison = calculate_random_comparison(analysis, measure_code, group, varargin)
+            % rules
+            attemptsPerEdge = analysis.getSettings('AnalysisDTI.AttemptsPerEdge');
+            numerOfWeights = analysis.getSettings('AnalysisDTI.NumberOfWeights');
+            graph_type = analysis.getSettings('AnalysisDTI.GraphType');
+            verbose = analysis.getSettings('AnalysisDTI.ComparisonVerbose');
+            interruptible = analysis.getSettings('AnalysisDTI.ComparionInterruptible');
+            is_longitudinal = analysis.getSettings('AnalysisDTI.Longitudinal');
+            M = get_from_varargin(1e+3, 'NumerOfPermutations', varargin{:});
+   
+            % get randomize graphs of subjects
+            subjects = group.getSubjects();
+            for i = 1:1:numel(subjects)
+                subject = subjects{i};
+                subject_class = subject.getClass();
+                atlas = subject.getBrainAtlases();
+                A = subject.getData('DTI').getValue();
+                g = Graph.getGraph(graph_type, A);
+                [permutated_A, ~] = g.randomize_graph('AttemptsPerEdge', attemptsPerEdge, 'NumberOfWeights', numerOfWeights);
+                permuted_subject = Subject.getSubject(subject_class, atlas, 'DTI', permutated_A);
+                permuted_subjects{i} = permuted_subject; %#ok<AGROW>
+            end
+            
+            permuted_group = Group(subject_class, permuted_subjects, 'GroupName', ['RandomGroup_' group.getName()]);
+            
+            % create Measurements
+            measurement_group = analysis.calculate_measurement(measure_code, group, varargin{:});
+            measurement_random = analysis.calculate_measurement(measure_code, permuted_group, 'is_randomDTI', 1, varargin{:});
+            
+            % get compared values
+            values_group = measurement_group.getMeasureValues();
+            values_random = measurement_random.getMeasureValues();
+            average_values_group =  mean(reshape(cell2mat(values_group), [size(values_group{1}, 1), size(values_group{1}, 2), group.subjectnumber()]), 3);
+            average_values_random = mean(reshape(cell2mat(values_random), [size(values_random{1}, 1), size(values_random{1}, 2), permuted_group.subjectnumber()]), 3);
+            
+            all_permutations_1 = cell(1, M);
+            all_permutations_2 = cell(1, M);
+            
+            start = tic;
+            for i = 1:1:M
+                if verbose
+                    disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
+                end
+                
+                if is_longitudinal
+                    [permutation_1, permutation_2] = Permutation.permute(values_group, values_random, is_longitudinal);
+                else
+                    [permutation_1, permutation_2] = Permutation.permute(values_group, values_random, is_longitudinal);
+                end
+                
+                mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group.subjectnumber()]), 3);
+                mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), permuted_group.subjectnumber()]), 3);
+                
+                all_permutations_1(1, i) = {mean_permutated_1};
+                all_permutations_2(1, i) = {mean_permutated_2};
+                
+                difference_all_permutations{1, i} = mean_permutated_1 - mean_permutated_2; %#ok<AGROW>
+                if interruptible
+                    pause(interruptible)
+                end
+            end
+            
+            difference_mean = average_values_random - average_values_group;  % difference of the mean values of the non permutated groups
+            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated random group - permutated group
+            
+            p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
+            p2 = pvalue2(difference_mean, difference_all_permutations);  % double tail
+            percentiles = quantiles(difference_all_permutations, 40);  % for confidence interval
+            if size(percentiles) == [1 1] %#ok<BDSCA>
+                ci_lower = percentiles{1}(2);
+                ci_upper = percentiles{1}(40); % 95 percent
+            elseif size(percentiles) == [size(difference_mean, 1) 1] %#ok<BDSCA>
+                for i = 1:1:length(percentiles)
+                    percentil = percentiles{i};
+                    ci_lower{i, 1} = percentil(2);  %#ok<AGROW>
+                    ci_upper{i, 1} = percentil(40); %#ok<AGROW>
+                end
+            else
+                for i = 1:1:size(percentiles, 1)
+                    for j = 1:1:size(percentiles, 2)
+                        percentil = percentiles{i, j};
+                        ci_lower{i, j} = percentil(2); %#ok<AGROW>
+                        ci_upper{i, j} = percentil(40); %#ok<AGROW>
+                    end
+                end
+            end            
+            
+            % create randomComparisonClass
+            randomcomparison = RandomComparison.getRandomComparison('RandomComparisonDTI', ...
+                analysis.getRandomComparisonID(measure_code, group, varargin{:}), ...
+                analysis.getCohort().getBrainAtlases(), group, ...
+                'RandomComparisonDTI.measure_code', measure_code, ...
+                'RandomComparisonDTI.values_group', values_group, ...
+                'RandomComparisonDTI.values_random', values_random, ...
+                'RandomComparisonDTI.average_values_group', average_values_group, ...
+                'RandomComparisonDTI.average_values_random', average_values_random, ...
+                'RandomComparisonDTI.difference', difference_mean, ...
+                'RandomComparisonDTI.all_differences', difference_all_permutations, ...
+                'RandomComparisonDTI.p1', p1, ...
+                'RandomComparisonDTI.p2', p2, ....
+                'RandomComparisonDTI.confidence_min', ci_lower, ...
+                'RandomComparisonDTI.confidence_max', ci_upper, ...
+                'RandomComparisonDTI.number_of_permutations', M ...
+                );            
         end
         function comparison = calculate_comparison(analysis, measure_code, groups, varargin)
             verbose = analysis.getSettings('AnalysisDTI.ComparisonVerbose');
@@ -174,7 +284,9 @@ classdef AnalysisDTI < Analysis
                 {'AnalysisDTI.GraphType', Constant.STRING, 'GraphWU', {'GraphWU'}}, ...
                 {'AnalysisDTI.ComparisonVerbose', Constant.LOGICAL, false, {false, true}}, ...
                 {'AnalysisDTI.ComparionInterruptible', Constant.LOGICAL, false, {false, true}}, ...
-                {'AnalysisDTI.Longitudinal', Constant.LOGICAL, false, {false, true}} ...
+                {'AnalysisDTI.Longitudinal', Constant.LOGICAL, false, {false, true}}, ...
+                {'AnalysisDTI.AttemptsPerEdge', Constant.NUMERIC, 1, {}}, ...
+                {'AnalysisDTI.NumberOfWeights', Constant.NUMERIC, 1, {}} ...
                 };
         end
     end

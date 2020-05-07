@@ -267,6 +267,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings()); %#ok<PROPLC>
         end
     end
+    methods (Abstract)
+        randomize_graph(n);
+    end
     methods (Static)
         function graph_class_list = getList()
             % GETLIST returns the list of available graphs

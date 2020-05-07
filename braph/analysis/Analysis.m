@@ -140,8 +140,8 @@ classdef Analysis < handle & matlab.mixin.Copyable
             measurement = analysis.getMeasurements().getValue(id);
         end
         function random_comparison = calculateRandomComparison(analysis, measure_code, group, varargin)
-            id = analysis.getRandomComparisonID(analysis, measure_code, group, varargin{:});
-            if ~analysis.getRandomComparison().contains(id)
+            id = analysis.getRandomComparisonID(measure_code, group, varargin{:});
+            if ~analysis.getRandomComparisons().contains(id)
                 random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin{:});
                 analysis.getRandomComparisons().add(id, random_comparison)
             end
