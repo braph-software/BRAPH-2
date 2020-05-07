@@ -17,12 +17,9 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                 ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
             rc.atlases = atlases;
             
-            if ~iscell(group)
-                group = {group};
-            end
-            assert(iscell(group), ...
+            assert(isa(group, 'Group'), ...
                 ['BRAPH:RandomComparison:GroupErr'], ...
-                ['The input must be a Group object'])  %#ok<NBRAK>
+                ['The input must be a Group object']) %#ok<NBRAK>
             rc.group = group;
             
             rc.settings = get_from_varargin(varargin, 'RandomComparisonSettings', varargin{:});
