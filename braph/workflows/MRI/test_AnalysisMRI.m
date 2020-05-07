@@ -205,7 +205,7 @@ for i = 1:1:numel(measures)
     end
 end
 
-%% Test 5: Compare
+%% Test 5: Random Compare
 for i = 1:1:numel(measures)
     measure = measures{i};
     analysis = AnalysisMRI(cohort, {}, {}, {});
