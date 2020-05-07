@@ -31,9 +31,10 @@ classdef AnalysisfMRI < Analysis
     end
     methods (Access = protected)
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
-            subjects = group.getSubjects();
-            measures = cell(1, group.subjectnumber());
             
+            measures = cell(1, group.subjectnumber());
+
+            subjects = group.getSubjects();
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
                 data = subject.getData('fMRI').getValue();

@@ -31,15 +31,18 @@ classdef AnalysisDTI < Analysis
     end
     methods (Access = protected)
         function measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
-            subjects = group.getSubjects();
-            measures = cell(1, group.subjectnumber());
+            
             graph_type = analysis.getSettings('AnalysisDTI.GraphType');
+
+            subjects = group.getSubjects();
+            
+            measures = cell(1, group.subjectnumber());
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
                 A = subject.getData('DTI').getValue();  % DTI matrix
                 g = Graph.getGraph(graph_type, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
-                measures{1, i} = measure.getValue();
+                measures{i} = measure.getValue();
             end
             
             measure_average = mean(reshape(cell2mat(measures), [size(measures{1}, 1), size(measures{1}, 2), group.subjectnumber()]), 3);
