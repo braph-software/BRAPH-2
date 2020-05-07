@@ -32,14 +32,6 @@ classdef Comparison < handle & matlab.mixin.Copyable
             % Make a shallow copy
             comparison_copy = copyElement@matlab.mixin.Copyable(c);
             
-            % Make a deep copy of datadict
-            comparison_copy.data_dict = containers.Map;
-            data_codes = keys(c.data_dict);
-            for i = 1:1:length(data_codes)
-                data_code = data_codes{i};
-                d = c.getData(data_code);
-                comparison_copy.datadict(data_code) = d.copy();
-            end
         end
     end
     methods (Abstract, Access = protected)
