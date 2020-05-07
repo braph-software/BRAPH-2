@@ -70,14 +70,16 @@ classdef AnalysisDTI < Analysis
                 A = subject.getData('DTI').getValue();
                 g = Graph.getgraph(graph_type, A);
                 [permutated_A, ~] = g.randomize_graph('AttemptsPerEdge', attemptsPerEdge, 'NumberOfWeights', numerOfWeights);
-                permutated_subject = Subject.getSubject(subject_class, atlas, 'DTI', permutated_A);
-                permutated_subjects{i} = permutated_subject; %#ok<NASGU,AGROW>
+                permuted_subject = Subject.getSubject(subject_class, atlas, 'DTI', permutated_A);
+                permuted_subjects{i} = permuted_subject; %#ok<NASGU,AGROW>
             end
             
-            permutated_group = Group(subject_class, permutate_subjects{i});
-            groups = {};
+            permuted_group = Group(subject_class, permuted_subjects{i});
+            groups = {group permuted_group};
             
             comparision = analysis.calculateComparison(analysis, measure_code, groups, varargin{:});
+            
+            random_comparison = RandomComparison.getRandomComparison();
             
         end
         function comparison = calculate_comparison(analysis, measure_code, groups, varargin)
