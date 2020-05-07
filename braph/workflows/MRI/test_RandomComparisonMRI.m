@@ -17,7 +17,7 @@ measures = {'Assortativity', 'Degree', 'Distance'};
 
 %% Test 1: Instantiation
 for i = 1:1:numel(measures)
-    randomcomparison = RandomComparisonMRI('c1', atlas, {group}, 'RandomComparisonMRI.measure_code', measures{i});
+    randomcomparison = RandomComparisonMRI('c1', atlas, group, 'RandomComparisonMRI.measure_code', measures{i});
     
     assert(~isempty(randomcomparison), ...
         ['BRAPH:ComparisionDTI:Instantiation'], ...
@@ -28,7 +28,7 @@ end
 for i = 1:1:numel(measures)
     number_of_permutations = 10;
     
-    randomcomparison = RandomComparisonMRI('c1', atlas, {group}, 'RandomComparisonMRI.measure_code', measures{i}, 'RandomComparisonMRI.number_of_permutations', number_of_permutations);
+    randomcomparison = RandomComparisonMRI('c1', atlas, group, 'RandomComparisonMRI.measure_code', measures{i}, 'RandomComparisonMRI.number_of_permutations', number_of_permutations);
     
     value_group = randomcomparison.getGroupValue();    
     value_random = randomcomparison.getRandomValue();
@@ -118,7 +118,7 @@ for i = 1:1:numel(measures)
     confidence_interval_max = difference;
     
     % act
-    randomcomparison = RandomComparisonMRI('c1', atlas, {group}, ...
+    randomcomparison = RandomComparisonMRI('c1', atlas, group, ...
         'RandomComparisonMRI.measure_code', measures{i}, ...
         'RandomComparisonMRI.number_of_permutations', number_of_permutations, ...
         'RandomComparisonMRI.value_group', value_group, ...
