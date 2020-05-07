@@ -31,9 +31,10 @@ classdef AnalysisfMRI < Analysis
     end
     methods (Access = protected)
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
-            subjects = group.getSubjects();
-            measures = cell(1, group.subjectnumber());
             
+            measures = cell(1, group.subjectnumber());
+
+            subjects = group.getSubjects();
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
                 data = subject.getData('fMRI').getValue();
@@ -62,12 +63,14 @@ classdef AnalysisfMRI < Analysis
                 measures{1, i} = measure.getValue();
             end
             
+            measures_average = mean(reshape(cell2mat(measures), [size(measures{1}, 1), size(measures{1}, 2), group.subjectnumber()]), 3);
+            
             measurement = Measurement.getMeasurement('MeasurementfMRI', ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
                 analysis.getCohort().getBrainAtlases(), group,  ...
                 'MeasurementfMRI.measure_code', measure_code, ...
                 'MeasurementfMRI.values', measures, ...
-                'MeasurementfMRI.average_value', calculate_measurement_average(measure_code, measures) ...
+                'MeasurementfMRI.average_value', measures_average ...
                 );
         end
         function calculated_random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin)
@@ -142,12 +145,12 @@ classdef AnalysisfMRI < Analysis
         function analysis_class = getClass()
             analysis_class = 'AnalysisfMRI';
         end
-        function subject_class = getSubjectClass()
-            subject_class = 'SubjectfMRI';
-        end
         function name = getName()
             name = 'Analysis Functional fMRI';
         end
+        function subject_class = getSubjectClass()
+            subject_class = 'SubjectfMRI';
+        end       
         function description = getDescription()
             description = [ ...
                 'Analysis using functional MRI data, ' ...

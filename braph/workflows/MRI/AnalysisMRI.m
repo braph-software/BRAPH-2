@@ -69,11 +69,11 @@ classdef AnalysisMRI < Analysis
         function analysis_class = getClass()
             analysis_class = 'AnalysisMRI';
         end
-        function subject_class = getSubjectClass()
-            subject_class = 'SubjectMRI';
-        end
         function name = getName()
             name = 'Analysis Structural MRI';
+        end
+        function subject_class = getSubjectClass()
+            subject_class = 'SubjectMRI';
         end
         function description = getDescription()
             description = [ ...

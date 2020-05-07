@@ -14,11 +14,10 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 ['The first argument must be a Cohort with subjects of class ' analysis.getSubjectClass()]) %#ok<NBRAK>
             analysis.cohort = cohort;
             
-% checks
             analysis.measurement_idict = IndexedDictionary(analysis.getMeasurementClass());
-            if ~iscell (measurements)
-                measurements = {measurements};
-            end
+            assert(iscell(measurements), ...
+                ['BRAPH:Analysis:Constructor'], ...
+                ['Input is not a cell of Measurement objects']) %#ok<NBRAK>
             for i = 1:1:length(measurements)
                 measurement = measurements{i};
                 assert(isequal(measurement.getClass(), analysis.getMeasurementClass()), ...
@@ -27,11 +26,10 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis.measurement_idict.add(measurement.getID(), measurement);
             end
             
-% checks
             analysis.randomcomparison_idict = IndexedDictionary(analysis.getRandomComparisonClass());
-            if ~iscell(randomcomparisons)
-                randomcomparisons = {randomcomparisons};
-            end
+            assert(iscell(randomcomparisons), ...
+                ['BRAPH:Analysis:Constructor'], ...
+                ['Input is not a cell of RandomComparisons objects']) %#ok<NBRAK>
             for i = 1:1:length(randomcomparisons)
                 randomcomparison = randomcomparisons{i};
                 assert(isequal(randomcomparison.getClass(), analysis.getRandomComparisonClass()), ...
@@ -40,11 +38,10 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis.randomcomparison_idict.add(randomcomparison.getID(), randomcomparison);
             end
             
-% checks
             analysis.comparison_idict = IndexedDictionary(analysis.getComparisonClass());
-            if ~iscell (comparisons)
-                comparisons = {comparisons};
-            end
+            assert(iscell(comparisons), ...
+                ['BRAPH:Analysis:Constructor'], ...
+                ['Input is not a cell of RandomComparisons objects']) %#ok<NBRAK>
             for i = 1:1:length(comparisons)
                 comparison = comparisons{i};
                 assert(isequal(comparison.getClass(), analysis.getComparisonClass()), ...
@@ -53,18 +50,63 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis.comparison_idict.add(comparison.getID(), comparison);
             end
             
-            available_settings = Analysis.getAvailableSettings(class(analysis));%
+            available_settings = Analysis.getAvailableSettings(class(analysis));
             settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
             for i = 1:1:length(available_settings)
-                    a_s = available_settings{i};
-                    available_setting_code = a_s{1, 1};
-                    available_setting_default = a_s{1, 3};
-                    settings{i, 1} = available_setting_code;
-                    settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
+                a_s = available_settings{i};
+                available_setting_code = a_s{1, 1};
+                available_setting_default = a_s{1, 3};
+                settings{i, 1} = available_setting_code;
+                settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
             end
             analysis.settings = settings;
         end
-% function copyElement()
+        function analysis_copy = copyElement(analysis)
+            % shallow copy of Analysis
+            analysis_copy = copyElement@matlab.mixin.Copyable(analysis);
+            
+            % deep copy of cohort
+            analysis_copy.cohort = analysis.getCohort().copy();
+            
+            % deep copy of measurement
+            analysis_copy.measurement_idict = IndexedDictionary(analysis_copy.getMeasurementClass());
+            for measurement_i = 1:1:analysis.getMeasurements().length()
+                measurement = analysis.getMeasurements().getValue(measurement_i);
+                measurement_copy = measurement.copy();
+                measurement_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
+                group = measurement.getGroup();
+                group_copy = analysis_copy.cohort.getGroups().getValue(group.getName());
+                measurement_copy.setGroup(group_copy);
+                analysis_copy.measurement_idict.add(tostring(measurement_copy.getID()), measurement_copy, measurement_i);
+            end
+            
+            % deep copy of randomcomparison
+            analysis_copy.randomcomparison_idict = IndexedDictionary(analysis_copy.getRandomComparisonClass());
+            for randomcomparisons_i = 1:1:analysis.getRandomComparisons().length()
+                randomcomparison = analysis.getRandomComparisons().getValue(randomcomparisons_i);
+                randomcomparison_copy = randomcomparison.copy();
+                randomcomparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
+                group = randomcomparison.getGroup();
+                group_copy = analysis_copy.cohort.getGroups().getValue(group.getName());
+                randomcomparison_copy.setGroup(group_copy);
+                analysis_copy.randomcomparison_idict.add(tostring(randomcomparison_copy.getID()), randomcomparison_copy, randomcomparisons_i);
+            end
+            
+            % deep copy of comparisons
+            analysis_copy.comparison_idict = IndexedDictionary(analysis_copy.getComparisonClass());
+            for comparisons_i = 1:1:analysis.getComparisons().length()
+                comparison = analysis.getComparisons().getValue(comparisons_i);
+                comparison_copy = comparison.copy();
+                comparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
+                groups = comparison.getGroups();
+                for j = 1:1:numel(groups)
+                    group = groups{j};
+                    groups_copy{j} = analysis_copy.cohort.getGroups().getValue(group.getName()); %#ok<AGROW>
+                end
+                comparison_copy.setGroups(groups_copy);
+                analysis_copy.comparison_idict.add(tostring(comparison_copy.getID()), comparison_copy, comparisons_i);
+            end
+        end
     end
     methods (Abstract)
         getMeasurementID(analysis, measure_code, group, varargin)
@@ -146,6 +188,10 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % cohort class
             subject_class = eval([Analysis.getClass(analysis) '.getSubjectClass()']);
         end
+        function description = getDescription(analysis)
+            % analysis description
+            description = eval([Analysis.getClass(analysis) '.getDescription()']);
+        end
         function measurmentList = getMeasurementClass(analysis)
             measurmentList = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
         end
@@ -155,15 +201,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function comparisonList = getComparisonClass(analysis)
             comparisonList = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
         end
-        function description = getDescription(analysis)
-            % analysis description
-            description = eval([Analysis.getClass(analysis) '.getDescription()']);
-        end
         function available_settings = getAvailableSettings(analysis)
             available_settings = eval([Analysis.getClass(analysis) '.getAvailableSettings()']);
         end
-        function analysis = getAnalysis(analysis_class, varargin)
-            analysis = eval([analysis_class '(varargin{:})']);
+        function analysis = getAnalysis(analysis_class, cohort, varargin) %#ok<INUSD>
+            analysis = eval([analysis_class  '(cohort, varargin{:})']);
         end
     end
 end
