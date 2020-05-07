@@ -1,5 +1,5 @@
 classdef OutEccentricity < Measure
-    % OutEccentricity < Measure: OutEccentricity measure
+    % OutEccentricity < Measure: Out-Eccentricity measure
     % OutEccentricity provides the out-eccentricity of a node for binary directed
     % (BD) and weighted directed (WD) graphs. It is calculated as the 
     % maximal shortest out path length between a node and any other node.
@@ -83,7 +83,7 @@ classdef OutEccentricity < Measure
             %
             % See also getClass(), getDescription().
             
-            name = 'Out Eccentricity';
+            name = 'Out-Eccentricity';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the out-eccentricity description 

@@ -5,7 +5,7 @@ classdef Eccentricity < Measure
     % maximal shortest path length between a node and any other node.
     % 
     % Eccentricity methods:
-    %   Eccentricity                      - constructor with Measure properties.
+    %   Eccentricity                - constructor with Measure properties.
     %
     % Eccentricity methods (Access=protected):
     %   calculate                   - calculates the eccentricity of a node.
@@ -23,6 +23,7 @@ classdef Eccentricity < Measure
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
     % See also Measure, Graph, Strength, Distance, Degree.
+    
     methods
         function m = Eccentricity(g, varargin)
             % ECCENTRICITY(G) creates eccentricity with default measure properties.
@@ -35,7 +36,7 @@ classdef Eccentricity < Measure
             % ECCENTRICITYRULE = 'default' (default) - calculates ECCENTRICITY of global graph.
             %                    'subgraphs' - calculates ECCENTRICITY within connected subgraphs.
             %
-            % ECCENTRICITY(G, 'VALUE', VALUE) creates eccentricity , and sets the value
+            % ECCENTRICITY(G, 'VALUE', VALUE) creates eccentricity, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU).
             %   
@@ -48,10 +49,10 @@ classdef Eccentricity < Measure
         function eccentricity = calculate(m)
             % CALCULATE calculates the eccentricity value of a node
             %
-            % eccentricity = CALCULATE(M) returns the value of the eccentricity of a
+            % ECCENTRICITY = CALCULATE(M) returns the value of the eccentricity of a
             % node.
             
-            g = m.getGraph();
+            g = m.getGraph(); % graph from measure class
             
             if g.is_measure_calculated('Distance')
                 D = g.getMeasure('Distance').getValue();

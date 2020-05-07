@@ -1,5 +1,5 @@
 classdef InPathLength < Measure
-    % InPathLength < Measure: InPathLength measure
+    % InPathLength < Measure: In-Path Length measure
     % InPathLength provides the in-path length of a node for binary directed (BD) and 
     % weighted directed (WD) graphs. It is calculated as average shortest
     % in path length from one node to another node.
@@ -8,34 +8,34 @@ classdef InPathLength < Measure
     %   InPathLength                  - constructor.
     %
     % InPathLength methods (Access=protected):
-    %   calculate                   - calculates the in-pathlength of a node.
+    %   calculate                   - calculates the in-path length of a node.
     % 
     % InPathLength methods (Static)
     %   getClass                    - returns the in-path length class.
-    %   getName                     - returns the name of in-pathlength measure.
-    %   getDescription              - returns the description of in-pathlength measure.
+    %   getName                     - returns the name of in-path length measure.
+    %   getDescription              - returns the description of in-path length measure.
     %   getAvailableSettings        - returns the settings available to the class.
-    %   is_global                   - boolean, checks if in-pathlength measure is global.
-    %   is_nodal                    - boolean, checks if in-pathlength measure is nodal.
-    %   is_binodal                  - boolean, checks if in-pathlength measure if binodal.
-    %   getMeasure                  - returns the in-pathlength class.
+    %   is_global                   - boolean, checks if in-path length measure is global.
+    %   is_nodal                    - boolean, checks if in-path length measure is nodal.
+    %   is_binodal                  - boolean, checks if in-path length measure if binodal.
+    %   getMeasure                  - returns the in-path length class.
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
     % See also Measure, Graph, Strength, Distance, Degree.
     methods
         function m = InPathLength(g, varargin)
-            % INPATHLENGTH(G) creates in-pathlength with default measure properties.
+            % INPATHLENGTH(G) creates in-path length with default measure properties.
             % G is a graph (e.g, an instance of GraphBU, Graph WU). 
             %   
-            % INPATHLENGTH(G, 'Settings', SETTINGS) creates in-pathlength measure and
+            % INPATHLENGTH(G, 'Settings', SETTINGS) creates in-path length measure and
             % initializes the property settings with SETTINGS. INPATHLENGTH
             % available SETTINGS are: 
             % subgraphs     -   Calculates INPATHLENGTH of all subgraphs
             % harmonic      -   Calculates INPATHLENGTH with harmonic average
             % default       -   Calculates INPATHLENGTH with normal average
             %
-            % INPATHLENGTH(G, 'VALUE', VALUE) creates in-pathlength, and sets the value
+            % INPATHLENGTH(G, 'VALUE', VALUE) creates in-path length, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBU, Graph WU).
             %   
             % See also Measure, Graph, Strength, Distance, GlobalEfficiency.
@@ -47,7 +47,7 @@ classdef InPathLength < Measure
         function in_path_length =  calculate(m)
             % CALCULATE calculates the in-path length value of a node
             %
-            % PATHLENGTH = CALCULATE(M) returns the value of the in_path_length
+            % PATHLENGTH = CALCULATE(M) returns the value of the in-path length
             % of a node.
             
             g = m.getGraph();    
@@ -86,7 +86,7 @@ classdef InPathLength < Measure
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the in-pathlength measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the in-path length measure.
             %
             % See also getName(), getDescription().
             
@@ -95,17 +95,17 @@ classdef InPathLength < Measure
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the in-pathlength measure.
+            % NAME = GETNAME() returns the name of the in-path length measure.
             %
             % See also getClass(), getDescription().
             
             name = 'In-Path Length';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the in-pathlength description 
+            % GETDESCRIPTION returns the in-path length description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % in-pathlength measure.
+            % in-path length measure.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -130,7 +130,7 @@ classdef InPathLength < Measure
                 };
         end
         function bool = is_global()
-            % IS_GLOBAL checks if in-pathlength measure is global (false)
+            % IS_GLOBAL checks if in-path length measure is global (false)
             %
             % BOOL = IS_GLOBAL() returns false.
             %
@@ -139,7 +139,7 @@ classdef InPathLength < Measure
             bool = false;
         end
         function bool = is_nodal()
-            % IS_NODAL checks if in-pathlength measure is nodal (true)
+            % IS_NODAL checks if in-path length measure is nodal (true)
             %
             % BOOL = IS_NODAL() returns true.
             %
@@ -148,7 +148,7 @@ classdef InPathLength < Measure
             bool = true;
         end
         function bool = is_binodal()
-            % IS_BINODAL checks if in-pathlength measure is binodal (false)
+            % IS_BINODAL checks if in-path length measure is binodal (false)
             %
             % BOOL = IS_BINODAL() returns false.
             %
@@ -158,10 +158,10 @@ classdef InPathLength < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to in-pathlength 
+            % to InPathLength
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to in-pathlength. 
+            % of compatible graph classes to InPathLength. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber().
@@ -173,10 +173,10 @@ classdef InPathLength < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to in-pathlength 
+            % graphs to InPathLength
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to in-pathlength.
+            % compatible graphs to InPathLength.
             % 
             % See also getCompatibleGraphList().
             

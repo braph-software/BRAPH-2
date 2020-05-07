@@ -1,9 +1,9 @@
 classdef Strength < Measure
     % Strength < Measure: Strength measure
     % Strength provides the sum of all weights of the edges connected to
-    % a node. For weighted undirected (WU) graphs the Stength can either be
+    % a node. For weighted undirected (WU) graphs the Strength can either be
     % calculated as the sum of the rows or the columns of the adjacency
-    % matrix.
+    % matrix. 
     %
     % Strength methods:
     %   Strength                      - constructor with Measure properties.
@@ -40,7 +40,7 @@ classdef Strength < Measure
     end
     methods (Access=protected)
         function strength = calculate(m)
-            % CALCULATE calculates the STRENGTH value of a node
+            % CALCULATE calculates the strength value of a node
             %
             % STRENGTH = CALCULATE(M) returns the value of the strength of a
             % node.

@@ -1,5 +1,5 @@
 classdef InGlobalEfficiency < Measure
-    % InGlobalEfficiency < Measure: InGlobalEfficiency measure
+    % InGlobalEfficiency < Measure: In-Global Efficiency measure
     % InGlobalEfficiency provides the in-global efficiency of a node for binary directed (BD) and 
     % weighted directed (WD) graphs. It is calculated as average inverse
     % shortest in-path length in the graph. 
@@ -8,17 +8,17 @@ classdef InGlobalEfficiency < Measure
     %   InGlobalEfficiency          - constructor with Measure properties.
     %
     % InGlobalEfficiency methods (Access=protected):
-    %   calculate                   - calculates the in-globalefficiency of a node.
+    %   calculate                   - calculates the in-global efficiency of a node.
     % 
     % InGlobalEfficiency methods (Static)
-    %   getClass                    - returns the in-globalefficiency class.
-    %   getName                     - returns the name of in-globalefficiency measure.
-    %   getDescription              - returns the description of in-globalefficiency measure.
+    %   getClass                    - returns the in-global efficiency class.
+    %   getName                     - returns the name of in-global efficiency measure.
+    %   getDescription              - returns the description of in-global efficiency measure.
     %   getAvailableSettings        - returns the settings available to the class.
-    %   is_global                   - boolean, checks if in-globalefficiency measure is global.
-    %   is_nodal                    - boolean, checks if in-globalefficiency measure is nodal.
-    %   is_binodal                  - boolean, checks if in-globalefficiency measure if binodal.
-    %   getMeasure                  - returns the in-globalefficiency class.
+    %   is_global                   - boolean, checks if in-global efficiency measure is global.
+    %   is_nodal                    - boolean, checks if in-global efficiency measure is nodal.
+    %   is_binodal                  - boolean, checks if in-global efficiency measure if binodal.
+    %   getMeasure                  - returns the in-global efficiency class.
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %

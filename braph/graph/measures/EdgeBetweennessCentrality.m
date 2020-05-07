@@ -1,14 +1,57 @@
 classdef EdgeBetweennessCentrality < Measure
+    % EdgeBetweennessCentrality < Measure: Edge Betweenness Centrality measure
+    % EdgeBetweennessCentrality provides the edge betweenness centrality of a graph for 
+    % binary undirected (BU),  binary directed (BD), weighted undirected (WU) 
+    % and weighted directed (WD) graphs. It is calculated as the fraction
+    % of all shortest paths in the graph that pass through a given node.
+    % Edges with high values of betweenness centrality participate in a large
+    % number of shortest paths. 
+    % 
+    % EdgeBetweennessCentrality methods:
+    %   EdgeBetweennessCentrality   - constructor with Measure properties.
+    %
+    % EdgeBetweennessCentrality methods (Access=protected):
+    %   calculate                   - calculates the edge betweenness centrality of a graph.
+    % 
+    % EdgeBetweennessCentrality methods (Static)
+    %   getClass                    - returns the edge betweenness centrality class.
+    %   getName                     - returns the name of edge betweenness centrality measure.
+    %   getDescription              - returns the description of edge betweenness centrality measure.
+    %   getAvailableSettings        - returns the settings available to the class.
+    %   is_global                   - boolean, checks if edge betweenness centrality measure is global.
+    %   is_nodal                    - boolean, checks if edge betweenness centrality measure is nodal.
+    %   is_binodal                  - boolean, checks if edge betweenness centrality measure if binodal.
+    %   getMeasure                  - returns the edge betweenness centrality class.
+    %   getCompatibleGraphList      - returns a list of compatible graphs.
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
+    %
+    % See also Measure, Graph, Degree, Strength, BetweennessCentrality.
+    
     methods
         function m = EdgeBetweennessCentrality(g, varargin)          
-
+            % EDGEBETWEENNESSCENTRALITY(G) creates edge betweenness centrality with default measure properties.
+            % G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU). 
+            %
+            % EDGEBETWEENNESSCENTRALITY(G, 'VALUE', VALUE) creates edge betweenness centrality, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU).
+            %   
+            % See also Measure, Graph, Degree, Strength, BetweennessCentrality. 
+            
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
         function edge_betweenness_centrality = calculate(m)
-            g = m.getGraph();
-            A = g.getA();
+            % CALCULATE calculates the edge betweenness centrality value of a
+            % graph.
+            %
+            % EDGEBETWEENNESSCENTRALITY = CALCULATE(M) returns the value of 
+            % the edge betweenness centrality of a graph.
+            
+            g = m.getGraph(); % graph from measure class
+            A = g.getA(); % adjency matrix of the graph
             n=length(A);
             BC=zeros(n,1);                  %vertex betweenness
             EBC = zeros(n);                   %edge betweenness
@@ -112,12 +155,31 @@ classdef EdgeBetweennessCentrality < Measure
     end
     methods (Static)
         function measure_class = getClass()
+            % GETCLASS returns the measure class 
+            %            
+            % MEASURE_CLASS = GETCLASS() returns the class of the edge betweenness centrality measure.
+            %
+            % See also getName(), getDescription(). 
+            
             measure_class = 'EdgeBetweennessCentrality';
         end
         function name = getName()
+            % GETNAME returns the measure name
+            %
+            % NAME = GETNAME() returns the name of the edge betweenness centrality measure.
+            %
+            % See also getClass(), getDescription(). 
+            
             name = 'Edge Betweenness-Centrality';
         end
         function description = getDescription()
+            % GETDESCRIPTION returns the edge betweenness centrality description 
+            %
+            % DESCRIPTION = GETDESCRIPTION() returns the description of the
+            % edge betweenness centrality measure.
+            %
+            % See also getList(), getCompatibleGraphList().
+            
             description = [ ...
                 'The edge betweenness centrality of a graph is ' ...
                 'the fraction of all shortest paths in the ' ...
@@ -127,18 +189,52 @@ classdef EdgeBetweennessCentrality < Measure
                 ];
         end
         function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to EdgeBetweennessCentrality
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to EdgeBetweennessCentrality. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
+            
             available_settings = {};
         end
         function bool = is_global()
+            % IS_GLOBAL checks if edge betweenness centrality measure is global (false)
+            %
+            % BOOL = IS_GLOBAL() returns false.
+            %
+            % See also is_nodal, is_binodal.
+            
             bool = false;
         end
         function bool = is_nodal()
+            % IS_NODAL checks if edge betweenness centrality measure is nodal (false)
+            %
+            % BOOL = IS_NODAL() returns false.
+            %
+            % See also is_global, is_binodal. 
+            
             bool = false;
         end
         function bool = is_binodal()
+            % IS_BINODAL checks if edge betweenness centrality measure is binodal (true)
+            %
+            % BOOL = IS_BINODAL() returns true.
+            %
+            % See also is_global, is_nodal.
+            
             bool = true;
         end
         function list = getCompatibleGraphList()
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
+            % to EdgeBetweennessCentrality 
+            %
+            % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
+            % of compatible graph classes to EdgeBetweennessCentrality. 
+            % The measure will not work if the graph is not compatible. 
+            %
+            % See also getCompatibleGraphNumber(). 
+            
             list = { ...
                 'GraphBD', ...
                 'GraphBU', ...
@@ -147,6 +243,14 @@ classdef EdgeBetweennessCentrality < Measure
                 };
         end
         function n = getCompatibleGraphNumber()
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
+            % graphs to EdgeBetweennessCentrality 
+            %
+            % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
+            % compatible graphs to EdgeBetweennessCentrality.
+            % 
+            % See also getCompatibleGraphList().
+            
             n = Measure.getCompatibleGraphNumber('EdgeBetweennessCentrality');
         end
     end

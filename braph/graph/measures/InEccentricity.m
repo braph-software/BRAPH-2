@@ -85,7 +85,7 @@ classdef InEccentricity < Measure
             %
             % See also getClass(), getDescription().
             
-            name = 'In Eccentricity';
+            name = 'In-Eccentricity';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the in-eccentricity description 
