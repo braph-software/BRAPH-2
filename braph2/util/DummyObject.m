@@ -1,5 +1,6 @@
 classdef DummyObject
     % DummyObject Dummy object.
+    % Dummy objects used for unit testing and debugging.
     %
     % DummyObject properties:
     %   name
