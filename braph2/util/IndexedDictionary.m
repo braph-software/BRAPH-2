@@ -47,7 +47,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
         value_class  % class of the value objects
         dict  % dict of (index, {key, value})
     end
-    methods
+    methods  % Basic functions
         function idict = IndexedDictionary(value_class, keys, values)
             % IndexedDictionary(VALUE_CLASS) creates an empty indexed
             % dictionary storing objects of class VALUE_CLASS. 
@@ -91,7 +91,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
         function str = tostring(idict)
             % TOSTRING string with information about the indexed dictionary
             %
-            % STR = TOSTRING(IDICT) returns string with the value_class and
+            % STR = TOSTRING(IDICT) returns string with the value class and
             % length of the dictionary.
             %
             % See also disp().
@@ -124,6 +124,8 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             
             value_class = idict.value_class;
         end
+    end
+    methods  % Inspection functions
         function n = length(idict)
             % LENGTH returns the number of elements in the indexed dictionary
             %
@@ -371,6 +373,8 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             index = idict.getIndexFromKey(key);
             value  = idict.getValueFromIndex(index);
         end
+    end
+    methods  % Editing functions
         function add(idict, key, value, index)
             % ADD adds a key and value to an indexed dictionary
             %
@@ -617,6 +621,32 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
                     idict.move_to(selected(i), idict.length() - (numel(selected)-i));
                 end
                 selected = reshape(idict.length() - numel(selected)+1:1:idict.length(), size(selected));
+            end
+        end
+    end
+    methods (Access=protected)  % Deep copy
+        function idict_copy = copyElement(idict)
+            % COPYELEMENT deep copy of indexed dictionary
+            %
+            % IDICT_COPY = COPYELEMENT(IDICT) makes a deep copy of the
+            % indexed dictionary IDICT. If the values have a method copy(),
+            % it calls it to make deep copies of the values. Otherwise, it
+            % makes a copy of the value pointer (i.e., the value object is
+            % not copied).
+            
+            % Make a shallow copy
+            idict_copy = copyElement@matlab.mixin.Copyable(idict);
+            
+            % Make a deep copy of idict.dict
+            idict_copy.dict = containers.Map('KeyType', 'double', 'ValueType', 'any');
+            for i = 1:1:idict.length()
+                key = idict.getKey(i);
+                value = idict.getValue(i);
+                if ismethod(value, 'copy')
+                    idict_copy.add(key, value.copy)
+                else
+                    idict_copy.add(key, value)
+                end
             end
         end
     end
