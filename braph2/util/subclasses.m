@@ -1,5 +1,5 @@
 function subclass_list = subclasses(class_name, directory, search_subdirectories)
-% SUBCLASSES searches for all the subclasses of a class.
+% SUBCLASSES searches for all the subclasses of a class
 %
 % LIST = SUBCLASSES(CLASS_NAME) searches for all the subclasses of class
 % CLASS_NAME within BRAPH2.
