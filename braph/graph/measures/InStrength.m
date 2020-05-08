@@ -1,5 +1,5 @@
 classdef InStrength < Measure
-    % InStrength < Measure: Strength measure
+    % InStrength < Measure: In-Strength measure
     % InStrength provides the sum of all weights of the inward edges
     % connected to a node. For weighted directed (WD) graphs the InStrength
     % is the sum over the columns of the adjacency matrix.
@@ -44,8 +44,8 @@ classdef InStrength < Measure
             % INSTRENGTH = CALCULATE(M) returns the value of the IN_SRENGTH
             % of a node.
             
-            g = m.getGraph();
-            A = g.getA();
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             in_strength = sum(A, 1)';  % column sum of A        
         end
     end  

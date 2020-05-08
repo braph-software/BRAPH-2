@@ -1,5 +1,5 @@
 classdef OutPathLength < Measure
-    % OutPathLength < Measure: OutPathLength measure
+    % OutPathLength < Measure: Out Path Length measure
     % OutPathLength provides the out-path length of a node for binary directed (BD) and 
     % weighted directed (WD) graphs. It is calculated as average shortest
     % in path length from one node to another node.
@@ -11,31 +11,31 @@ classdef OutPathLength < Measure
     %   calculate                   - calculates the out-path length of a node.
     % 
     % OutPathLength methods (Static)
-    %   getClass                    - returns the out-pathlength class.
-    %   getName                     - returns the name of out-pathlength measure.
-    %   getDescription              - returns the description of out-pathlength measure.
+    %   getClass                    - returns the out-path length class.
+    %   getName                     - returns the name of out-path length measure.
+    %   getDescription              - returns the description of out-path length measure.
     %   getAvailableSettings        - returns the settings available to the class.
-    %   is_global                   - boolean, checks if out-pathlength measure is global.
-    %   is_nodal                    - boolean, checks if out-pathlength measure is nodal.
-    %   is_binodal                  - boolean, checks if out-pathlength measure if binodal.
-    %   getMeasure                  - returns the out-pathlength class.
+    %   is_global                   - boolean, checks if out-path length measure is global.
+    %   is_nodal                    - boolean, checks if out-path length measure is nodal.
+    %   is_binodal                  - boolean, checks if out-path length measure if binodal.
+    %   getMeasure                  - returns the out-path length class.
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
     % See also Measure, Graph, Strength, Distance, Degree.
     methods
         function m = OutPathLength(g, varargin) 
-            % OUTPATHLENGTH(G) creates out-pathlength with default measure properties.
+            % OUTPATHLENGTH(G) creates out-path length with default measure properties.
             % G is a graph (e.g, an instance of GraphBU, Graph WU). 
             %   
-            % OUTPATHLENGTH(G, 'Settings', SETTINGS) creates out-pathlength measure and
+            % OUTPATHLENGTH(G, 'Settings', SETTINGS) creates out-path length measure and
             % initializes the property settings with SETTINGS. OUTPATHLENGTH
             % available SETTINGS are: 
             % subgraphs     -   Calculates OUTPATHLENGTH of all subgraphs
             % harmonic      -   Calculates OUTPATHLENGTH with harmonic average
             % default       -   Calculates OUTPATHLENGTH with normal average
             %
-            % OUTPATHLENGTH(G, 'VALUE', VALUE) creates out-pathlength, and sets the value
+            % OUTPATHLENGTH(G, 'VALUE', VALUE) creates out-path length, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU).
             %   
@@ -48,10 +48,10 @@ classdef OutPathLength < Measure
         function out_path_length =  calculate(m)
             % CALCULATE calculates the out-path length value of a node
             %
-            % PATHLENGTH = CALCULATE(M) returns the value of the out_path_length
+            % PATHLENGTH = CALCULATE(M) returns the value of the out-path length
             % of a node.
             
-            g = m.getGraph();          
+            g = m.getGraph();  % graph from measure class          
 
             if g.is_measure_calculated('Distance')
                 distance = g.getMeasureValue('Distance');
@@ -87,7 +87,7 @@ classdef OutPathLength < Measure
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the out-pathlength measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the out-path length measure.
             %
             % See also getName(), getDescription().
             
@@ -96,16 +96,16 @@ classdef OutPathLength < Measure
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the out-pathlength measure.
+            % NAME = GETNAME() returns the name of the out-path length measure.
             %
             % See also getClass(), getDescription().
             name = 'Out-Path Length';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the out-pathlength description 
+            % GETDESCRIPTION returns the out-path length description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % out-pathlength measure.
+            % out-path length measure.
             %
             % See also getList(), getCompatibleGraphList().
             
@@ -118,8 +118,8 @@ classdef OutPathLength < Measure
             % GETAVAILABLESETTINGS returns the setting available to OutPathLength
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to InPathLength. 
-            % INPATHLENGTHAVRULE = 'default' (default) - calculates out-path length of nodal graph.
+            % settings available to OutPathLength. 
+            % OUTPATHLENGTHAVRULE = 'default' (default) - calculates out-path length of nodal graph.
             %                    'subgraphs' - calculates out-path length of each subgraph.
             %                    'harmonic'  - calculates the out-path length using harmonic mean.
             % 
@@ -130,7 +130,7 @@ classdef OutPathLength < Measure
                 };
         end
         function bool = is_global()
-            % IS_GLOBAL checks if out-pathlength measure is global (false)
+            % IS_GLOBAL checks if out-path length measure is global (false)
             %
             % BOOL = IS_GLOBAL() returns false.
             %
@@ -139,7 +139,7 @@ classdef OutPathLength < Measure
             bool = false;
         end
         function bool = is_nodal()
-            % IS_NODAL checks if out-pathlength measure is nodal (true)
+            % IS_NODAL checks if out-path length measure is nodal (true)
             %
             % BOOL = IS_NODAL() returns true.
             %
@@ -147,7 +147,7 @@ classdef OutPathLength < Measure
             bool = true;
         end
         function bool = is_binodal()
-            % IS_BINODAL checks if out-pathlength measure is binodal (false)
+            % IS_BINODAL checks if out-path length measure is binodal (false)
             %
             % BOOL = IS_BINODAL() returns false.
             %
@@ -157,10 +157,10 @@ classdef OutPathLength < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to out-pathlength 
+            % to OutPathLength
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to out-pathlength. 
+            % of compatible graph classes to OutPathLength. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber().
@@ -172,10 +172,10 @@ classdef OutPathLength < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to out-pathlength 
+            % graphs to OutPathLength
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to out-pathlength.
+            % compatible graphs to OutPathLength.
             % 
             % See also getCompatibleGraphList().
             

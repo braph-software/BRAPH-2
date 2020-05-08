@@ -51,7 +51,7 @@ classdef InEccentricity < Measure
             % in-eccentricity = CALCULATE(M) returns the value of the in-eccentricity of a
             % node.
             
-            g = m.getGraph();
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('Distance')
                 D = g.getMeasure('Distance').getValue();
@@ -85,7 +85,7 @@ classdef InEccentricity < Measure
             %
             % See also getClass(), getDescription().
             
-            name = 'In Eccentricity';
+            name = 'In-Eccentricity';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the in-eccentricity description 
