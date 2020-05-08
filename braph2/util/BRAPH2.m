@@ -8,6 +8,7 @@ classdef BRAPH2
         WRONG_INPUT = 'WrongInput'  % wrong input value or format in a function
         WRONG_OUTPUT = 'WrongOutput'  % wrong output value or format in a function
         BUG_FUNC = 'BugFunc'  % bug in a function (wrong behavior)
+        BUG_COPY = 'BugCopy'  % bug while deep-copying an object
 
 %         BUILD = 2020
 %         VERSION = '2.0.0'
