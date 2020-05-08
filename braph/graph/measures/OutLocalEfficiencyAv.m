@@ -45,7 +45,7 @@ classdef OutLocalEfficiencyAv < OutLocalEfficiency
             % OUTLOCALEFFICIENCYAV = CALCULATE(M) returns the value of the 
             % average out-local efficiency of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('OutLocalEfficiency')
                 out_local_efficiency = g.getMeasureValue('OutLocalEfficiency');

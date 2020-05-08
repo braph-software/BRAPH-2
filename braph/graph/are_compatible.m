@@ -1,5 +1,5 @@
 function bool = are_compatible(g, m)
-% ARECOMPATIBLE checks whether graph and measure are compatible
+% ARE_COMPATIBLE checks whether graph and measure are compatible
 %
 % B = ARECOMPATIBLE(G, M) checks whether the graph G and the measure M are compatible
 %

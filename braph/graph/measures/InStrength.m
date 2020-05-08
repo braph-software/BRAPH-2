@@ -44,8 +44,8 @@ classdef InStrength < Measure
             % INSTRENGTH = CALCULATE(M) returns the value of the IN_SRENGTH
             % of a node.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             in_strength = sum(A, 1)';  % column sum of A        
         end
     end  

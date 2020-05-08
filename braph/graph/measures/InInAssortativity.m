@@ -49,12 +49,12 @@ classdef InInAssortativity < Measure
             % ININASSORTATIVITY = CALCULATE(M) returns the value of the in-in-assortativity 
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
-            [i, j] = find(A ~= 0); % nodes [i, j]
-            M = length(i); % Number of edges  
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
+            [i, j] = find(A ~= 0);  % nodes [i, j]
+            M = length(i);  % Number of edges  
             
-            if isa(g, 'GraphBD') % Binary directed
+            if isa(g, 'GraphBD')  % Binary directed
                 
                 if g.is_measure_calculated('InDegree')
                     in_k = g.getMeasureValue('InDegree');
@@ -62,7 +62,7 @@ classdef InInAssortativity < Measure
                     in_k = InDegree(g, g.getSettings()).getValue();
                 end
             
-            elseif isa(g, 'GraphWD') % Weighted weighted
+            elseif isa(g, 'GraphWD')  % Weighted weighted
                 
                 if g.is_measure_calculated('InStrength')
                     in_k = g.getMeasureValue('InStrength');

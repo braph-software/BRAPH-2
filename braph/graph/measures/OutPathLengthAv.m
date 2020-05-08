@@ -51,7 +51,7 @@ classdef OutPathLengthAv < OutPathLength
             % OUTPATHLENGTHAV = CALCULATE(M) returns the value of the average 
             % out-path_length of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('OutPathLength')
                 out_path_length = g.getMeasureValue('OutPathLength');

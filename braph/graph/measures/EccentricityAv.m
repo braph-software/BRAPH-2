@@ -54,7 +54,7 @@ classdef EccentricityAv < Eccentricity
             % ECCENTRICITYAV = CALCULATE(M) returns the value of the average eccentricity 
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('Eccentricity')
                 ecc = g.getMeasureValue('Eccentricity');

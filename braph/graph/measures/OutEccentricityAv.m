@@ -54,7 +54,7 @@ classdef OutEccentricityAv < OutEccentricity
             % ECCENTRICITYAV = CALCULATE(M) returns the value of the average out-eccentricity 
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('OutEccentricity')
                 out_eccentricity = g.getMeasureValue('OutEccentricity');

@@ -46,7 +46,7 @@ classdef OutDegreeAv < OutDegree
             % OUTDEGREEAV = CALCULATE(M) returns the value of the average out-degree 
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('OutDegree')
                 out_degree = g.getMeasureValue('OutDegree');

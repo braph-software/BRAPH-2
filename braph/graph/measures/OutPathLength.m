@@ -51,7 +51,7 @@ classdef OutPathLength < Measure
             % PATHLENGTH = CALCULATE(M) returns the value of the out-path length
             % of a node.
             
-            g = m.getGraph();          
+            g = m.getGraph();  % graph from measure class          
 
             if g.is_measure_calculated('Distance')
                 distance = g.getMeasureValue('Distance');

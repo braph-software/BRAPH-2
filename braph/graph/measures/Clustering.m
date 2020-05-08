@@ -61,8 +61,8 @@ classdef Clustering < Triangles
             % CLUSTERING = CALCULATE(M) returns the coefficient of the clustering 
             % of a node.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             
             if g.is_measure_calculated('Triangles')
                 triangles = g.getMeasureValue('Triangles');

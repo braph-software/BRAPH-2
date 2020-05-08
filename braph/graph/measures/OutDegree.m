@@ -46,8 +46,8 @@ classdef OutDegree < Measure
             % OUTDEGREE = CALCULATE(M) returns the value of the out-degree of a
             % node.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             out_degree = sum(A, 2);  % row sum of A
         end
     end

@@ -45,7 +45,7 @@ classdef OutGlobalEfficiencyAv < OutGlobalEfficiency
             % OUTGLOBALEFFICIENCYAV = CALCULATE(M) returns the value of the 
             % average out-global efficiency of a graph.
             
-            g = m.getGraph(); % graph from measure class 
+            g = m.getGraph();  % graph from measure class 
             
             if g.is_measure_calculated('OutGlobalEfficiency')
                 out_global_efficiency = g.getMeasureValue('OutGlobalEfficiency');

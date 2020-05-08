@@ -62,8 +62,8 @@ classdef Triangles < Measure
             % TRIANGLES = CALCULATE(M) returns the triangles 
             % of a node.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             if isa(g, 'GraphBU') || isa(g, 'GraphWU')
                 triangles = diag((A.^(1/3))^3) / 2;
                 triangles(isnan(triangles)) = 0;  % Should return zeros, not NaN

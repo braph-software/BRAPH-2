@@ -45,8 +45,8 @@ classdef Strength < Measure
             % STRENGTH = CALCULATE(M) returns the value of the strength of a
             % node.
             
-            g = m.getGraph();
-            A = g.getA();
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             strength = sum(A, 1)';
         end
     end

@@ -49,12 +49,12 @@ classdef Assortativity < Measure
             % ASSORTATIVITY = CALCULATE(M) returns the value of the assortativity of a
             % graph.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
-            [i, j] = find(triu(A) ~= 0); % nodes [i, j] 
-            M = length(i); % Number of edges
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
+            [i, j] = find(triu(A) ~= 0);  % nodes [i, j] 
+            M = length(i);  % Number of edges
             
-            if isa(g, 'GraphBU') % Binary undirected
+            if isa(g, 'GraphBU')  % Binary undirected
                 
                 if g.is_measure_calculated('Degree')
                     degree = g.getMeasureValue('Degree');
@@ -62,10 +62,10 @@ classdef Assortativity < Measure
                     degree = Degree(g, g.getSettings()).getValue();
                 end
                 
-                k_i = degree(i); % degree node i
-                k_j = degree(j); % degree node j
+                k_i = degree(i);  % degree node i
+                k_j = degree(j);  % degree node j
                 
-            elseif isa(g, 'GraphWU') % Weighted undirected
+            elseif isa(g, 'GraphWU')  % Weighted undirected
                 
                 if g.is_measure_calculated('Strength')
                     strength = g.getMeasureValue('Strength');
@@ -73,8 +73,8 @@ classdef Assortativity < Measure
                     strength = Strength(g, g.getSettings()).getValue();
                 end
                 
-                k_i = strength(i); % strength node i
-                k_j = strength(j); % strength node j
+                k_i = strength(i);  % strength node i
+                k_j = strength(j);  % strength node j
             end
             
             % compute assortativity

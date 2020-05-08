@@ -47,7 +47,7 @@ classdef InGlobalEfficiency < Measure
             % INGLOBALEFFICIENCY = CALCULATE(M) returns the value of the in_global_efficiency of a
             % node.
             
-            g = m.getGraph();
+            g = m.getGraph();  % graph from measure class
             N = g.nodenumber();
 
             if g.is_measure_calculated('Distance')

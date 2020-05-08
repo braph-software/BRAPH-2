@@ -50,9 +50,9 @@ classdef Distance < Measure
             % DISTANCE = CALCULATE(M) returns the value of the distance of a
             % graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             graph_class = g.getClass();
-            A = g.getA(); % adjency matrix of the graph
+            A = g.getA();  % adjency matrix of the graph
             
             if isequal(graph_class, 'GraphWD') || isequal(graph_class, 'GraphWU')
                 ind = A~=0;

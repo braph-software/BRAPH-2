@@ -54,7 +54,7 @@ classdef InEccentricityAv < InEccentricity
             % ECCENTRICITYAV = CALCULATE(M) returns the value of the average in-eccentricity 
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('InEccentricity')
                 in_eccentricity = g.getMeasureValue('InEccentricity');

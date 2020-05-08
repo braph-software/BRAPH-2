@@ -45,7 +45,7 @@ classdef LocalEfficiencyAv < LocalEfficiency
             % LOCALEFFICIENCYAV = CALCULATE(M) returns the value of the average local 
             % efficiency of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('LocalEfficiency')
                 local_efficiency = g.getMeasureValue('LocalEfficiency');

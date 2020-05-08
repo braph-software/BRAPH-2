@@ -46,7 +46,7 @@ classdef DegreeAv < Degree
             % DEGREEAV = CALCULATE(M) returns the value of the average degree 
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('Degree')
                 degree = g.getMeasureValue('Degree');

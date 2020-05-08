@@ -51,7 +51,7 @@ classdef InPathLengthAv < InPathLength
             % INPATHLENGTHAV = CALCULATE(M) returns the value of the average 
             % in-path_length of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('InPathLength')
                 in_path_length = g.getMeasureValue('InPathLength');

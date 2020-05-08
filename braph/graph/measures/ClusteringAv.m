@@ -60,7 +60,7 @@ classdef ClusteringAv < Clustering
             % CLUSTERINGAV = CALCULATE(M) returns the average of the clustering 
             % of a graph.
                       
-            g = m.getGraph();
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('Clustering')
                 clustering = g.getMeasureValue('Clustering');

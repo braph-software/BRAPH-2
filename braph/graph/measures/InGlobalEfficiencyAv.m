@@ -45,7 +45,7 @@ classdef InGlobalEfficiencyAv < InGlobalEfficiency
             % INGLOBALEFFICIENCYAV = CALCULATE(M) returns the value of the 
             % average in-global efficiency of a graph.
             
-            g = m.getGraph(); % graph from measure class  
+            g = m.getGraph();  % graph from measure class  
             
             if g.is_measure_calculated('InGlobalEfficiency')
                 in_global_efficiency = g.getMeasureValue('InGlobalEfficiency');

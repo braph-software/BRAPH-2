@@ -46,7 +46,7 @@ classdef InDegreeAv < InDegree
             % INDEGREEAV = CALCULATE(M) returns the value of the average in-degree 
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
 
             if g.is_measure_calculated('InDegree')
                 in_degree = g.getMeasureValue('InDegree');

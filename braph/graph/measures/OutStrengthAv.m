@@ -45,7 +45,7 @@ classdef OutStrengthAv < OutStrength
             % OUTSTRENGTHAV = CALCULATE(M) returns the value of the average 
             % out-strength of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
 
             if g.is_measure_calculated('OutStrength')
                 out_strength = g.getMeasureValue('OutStrength');

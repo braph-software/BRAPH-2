@@ -44,8 +44,8 @@ classdef LocalEfficiency < Measure
             % LOCALEFFICIENCY = CALCULATE(M) returns the value of the local efficiency of a
             % node.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             n = g.nodenumber();
             
             local_efficiency = zeros(n,1);

@@ -50,8 +50,8 @@ classdef BetweennessCentrality < Measure
             % BETWEENNESSCENTRALITY = CALCULATE(M) returns the value of the betweenness centrality 
             % of a node.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             
             if isa(g, 'GraphBD') || isa(g, 'GraphBU')
                 N = size(A, 1);  % number of nodes
@@ -96,7 +96,7 @@ classdef BetweennessCentrality < Measure
 
                 % Compute the distances and number of 
                 % shortest paths between all pairs of vertices
-                for u = 1:N  %One search for each source vertex u
+                for u = 1:N  % One search for each source vertex u
                     D = inf(1, N);       
                     D(u) = 0;  % distance from u
                     NP = zeros(1, N);    

@@ -46,7 +46,7 @@ classdef Radius < Measure
             % RADIUS = CALCULATE(M) returns the value of the radius of a
             % graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('Eccentricity')
                 eccentricity = g.getMeasure('Eccentricity').getValue();

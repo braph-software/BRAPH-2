@@ -45,7 +45,7 @@ classdef InStrengthAv < InStrength
             % INSTRENGTHAV = CALCULATE(M) returns the value of the average 
             % in-strength of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('InStrength')
                 in_strength = g.getMeasureValue('InStrength');

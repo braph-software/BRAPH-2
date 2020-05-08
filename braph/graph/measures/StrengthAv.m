@@ -44,7 +44,7 @@ classdef StrengthAv < Strength
             % STRENGTHAV = CALCULATE(M) returns the value of the average strength 
             % of a node.
             
-            g = m.getGraph();
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('Strength')
                 strength = g.getMeasureValue('Strength');

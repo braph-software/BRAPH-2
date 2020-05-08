@@ -44,8 +44,8 @@ classdef OutLocalEfficiency < Measure
             % OUTLOCALEFFICIENCY = CALCULATE(M) returns the value of the out-local efficiency of a
             % node.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             n = g.nodenumber();
             
             out_local_efficiency = zeros(n,1);

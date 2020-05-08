@@ -49,12 +49,12 @@ classdef OutOutAssortativity < Measure
             % OUTOUTASSORTATIVITY = CALCULATE(M) returns the value of the out-out-assortativity 
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
-            [i, j] = find(A ~= 0); % nodes [i, j]
-            M = length(i); % Number of edges  
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
+            [i, j] = find(A ~= 0);  % nodes [i, j]
+            M = length(i);  % Number of edges  
             
-            if isa(g, 'GraphBD') % Binary directed
+            if isa(g, 'GraphBD')  % Binary directed
                 
                 if g.is_measure_calculated('OutDegree')
                     out_k = g.getMeasureValue('OutDegree');
@@ -62,7 +62,7 @@ classdef OutOutAssortativity < Measure
                     out_k = OutDegree(g, g.getSettings()).getValue();
                 end
 
-            elseif isa(g, 'GraphWD') % Weighted directed
+            elseif isa(g, 'GraphWD')  % Weighted directed
 
                 if g.is_measure_calculated('OutStrength')
                     out_k = g.getMeasureValue('OutStrength');

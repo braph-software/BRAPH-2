@@ -60,8 +60,8 @@ classdef Transitivity < Triangles
             % TRANSITIVITY = CALCULATE(M) returns the value of the transitivity 
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
-            A = g.getA(); % adjency matrix of the graph
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             
             if g.is_measure_calculated('Triangles')
                 triangles = g.getMeasureValue('Triangles');

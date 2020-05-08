@@ -51,7 +51,7 @@ classdef PathLengthAv < PathLength
             % PATHLENGTHAV = CALCULATE(M) returns the value of the average path_length
             % of a graph.
             
-            g = m.getGraph(); % graph from measure class
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('PathLength')
                 path_length = g.getMeasureValue('PathLength');
