@@ -45,8 +45,8 @@ classdef PathTransitivity < Measure
             % PATH_TRANSITIVITY = CALCULATE(M) returns the path
             % transitivity pairwise matrix of a graph node.
             
-            g = m.getGraph(); 
-            A = g.getA();
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             
             if isa(g, 'GraphBU')
                 

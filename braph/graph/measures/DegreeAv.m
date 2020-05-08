@@ -3,14 +3,12 @@ classdef DegreeAv < Degree
     % DegreeAv provides the average degree of a graph for binary undirected
     % (BU) and weighted undirected (WU) graphs. It is calculated as the 
     % average of all number of edges connected to the node.
-    % Self-connections are excluded (i.e. the diagonal of the connection
-    % matrix is removed).
     % 
     % DegreeAv methods:
     %   DegreeAv                    - constructor with Degree properties.
     %
     % DegreeAv methods (Access=protected):
-    %   calculate                   - calculates the average degree of a node.
+    %   calculate                   - calculates the average degree of a graph.
     % 
     % DegreeAv methods (Static)
     %   getClass                    - returns the average degree class.
@@ -28,7 +26,7 @@ classdef DegreeAv < Degree
     
     methods
         function m = DegreeAv(g, varargin)
-            % DEGREEAV(G) creates average degree with default measure properties.
+            % DEGREEAV(G) creates average degree with default Degree properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %
@@ -43,12 +41,12 @@ classdef DegreeAv < Degree
     end
     methods (Access=protected)
         function degree_av = calculate(m)
-            % CALCULATE calculates the average degree value of a node
+            % CALCULATE calculates the average degree value of a graph
             %
-            % DEGREE = CALCULATE(M) returns the value of the average degree 
+            % DEGREEAV = CALCULATE(M) returns the value of the average degree 
             % of a graph.
             
-            g = m.getGraph();
+            g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('Degree')
                 degree = g.getMeasureValue('Degree');
@@ -80,7 +78,7 @@ classdef DegreeAv < Degree
             name = 'Average Degree';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the degree description 
+            % GETDESCRIPTION returns the average degree description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % average degree measure.
@@ -94,17 +92,18 @@ classdef DegreeAv < Degree
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETDESCRIPTION returns the average degree description 
+            % GETAVAILABLESETTINGS returns the setting available to
+            % DegreeAv
             %
-            % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % average degree measure.
-            %
-            % See also getList(), getCompatibleGraphList().
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to DegreeAv. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
             
             available_settings = {};
         end
         function bool = is_global()
-            % IS_GLOBAL checks if degree measure is global (true)
+            % IS_GLOBAL checks if average degree measure is global (true)
             %
             % BOOL = IS_GLOBAL() returns true.
             %
@@ -113,7 +112,7 @@ classdef DegreeAv < Degree
             bool = true;
         end
         function bool = is_nodal()
-            % IS_NODAL checks if degree measure is nodal (false)
+            % IS_NODAL checks if average degree measure is nodal (false)
             %
             % BOOL = IS_NODAL() returns false.
             %
@@ -122,7 +121,7 @@ classdef DegreeAv < Degree
             bool = false;
         end
         function bool = is_binodal()
-            % IS_BINODAL checks if degree measure is binodal (false)
+            % IS_BINODAL checks if average degree measure is binodal (false)
             %
             % BOOL = IS_BINODAL() returns false.
             %
@@ -132,10 +131,10 @@ classdef DegreeAv < Degree
         end
         function list = getCompatibleGraphList() 
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to average degree 
+            % to DegreeAv
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to average degree. 
+            % of compatible graph classes to DegreeAv. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -147,10 +146,10 @@ classdef DegreeAv < Degree
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to average degree 
+            % graphs to DegreeAv
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to average degree.
+            % compatible graphs to DegreeAv.
             % 
             % See also getCompatibleGraphList().
                       

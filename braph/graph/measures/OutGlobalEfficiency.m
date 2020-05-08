@@ -1,5 +1,5 @@
 classdef OutGlobalEfficiency < Measure
-    % OutGlobalEfficiency < Measure: OutGlobalEfficiency measure
+    % OutGlobalEfficiency < Measure: Out-Global Efficiency measure
     % OutGlobalEfficiency provides the out-global efficiency of a node for binary directed (BD) and 
     % weighted directed (WD) graphs. It is calculated as average inverse
     % shortest out-path length in the graph. 
@@ -8,17 +8,17 @@ classdef OutGlobalEfficiency < Measure
     %   OutGlobalEfficiency         - constructor with Measure properties.
     %
     % OutGlobalEfficiency methods (Access=protected):
-    %   calculate                   - calculates the out-globalefficiency of a node.
+    %   calculate                   - calculates the out-global efficiency of a node.
     % 
     % OutGlobalEfficiency methods (Static)
-    %   getClass                    - returns the out-globalefficiency class.
-    %   getName                     - returns the name of out-globalefficiency measure.
-    %   getDescription              - returns the description of out-globalefficiency measure.
+    %   getClass                    - returns the out-global efficiency class.
+    %   getName                     - returns the name of out-global efficiency measure.
+    %   getDescription              - returns the description of out-global efficiency measure.
     %   getAvailableSettings        - returns the settings available to the class.
-    %   is_global                   - boolean, checks if out-globalefficiency measure is global.
-    %   is_nodal                    - boolean, checks if out-globalefficiency measure is nodal.
-    %   is_binodal                  - boolean, checks if out-globalefficiency measure if binodal.
-    %   getMeasure                  - returns the out-globalefficiency class.
+    %   is_global                   - boolean, checks if out-global efficiency measure is global.
+    %   is_nodal                    - boolean, checks if out-global efficiency measure is nodal.
+    %   is_binodal                  - boolean, checks if out-global efficiency measure if binodal.
+    %   getMeasure                  - returns the out-global efficiency class.
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
@@ -47,7 +47,7 @@ classdef OutGlobalEfficiency < Measure
             % OUTGLOBALEFFICIENCY = CALCULATE(M) returns the value of the
             % out_global_efficiency of a node.
             
-            g = m.getGraph();
+            g = m.getGraph();  % graph from measure class
             N = g.nodenumber();
             
             if g.is_measure_calculated('Distance')

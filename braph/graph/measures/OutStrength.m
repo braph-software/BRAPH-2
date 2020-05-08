@@ -1,11 +1,11 @@
 classdef OutStrength < Measure
-    % OutStrength < Measure: Strength measure
+    % OutStrength < Measure: Out-Strength measure
     % OutStrength provides the sum of all weights of the outward edges
     % connected to a node. For weighted directed (WD) graphs the OutStrength
     % is the sum over the rows of the adjacency matrix.
     %
     % OutStrength methods:
-    %   OutStrength                      - constructor with Measure properties.
+    %   OutStrength                 - constructor with Measure properties.
     %
     % OutStrength methods (Access=protected):
     %   calculate                   - calculates the out-strength of a node.
@@ -22,7 +22,7 @@ classdef OutStrength < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
-    % See also Measure, Graph, Degree, Distance, Efficiency.
+    % See also Measure, Graph, Strength, Distance, Efficiency.
     
     methods
         function m = OutStrength(g, varargin)
@@ -32,20 +32,20 @@ classdef OutStrength < Measure
             % OUTSTRENGTH(G, 'VALUE', VALUE) creates out-strength, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphWD).
             %
-            % See also Measure, Graph, Degree, Distance, Efficiency.
+            % See also Measure, Graph, Strength, Distance, Efficiency.
             
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
         function out_strength = calculate(m)
-            % CALCULATE calculates the OUT_STRENGTH value of a node
+            % CALCULATE calculates the out-strength value of a node
             %
-            % OUTSTRENGTH = CALCULATE(M) returns the value of the OUT_STRENGTH
+            % OUTSTRENGTH = CALCULATE(M) returns the value of the out-strength
             % of a node.
             
-            g = m.getGraph();
-            A = g.getA();
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix of the graph
             out_strength = sum(A, 2);  % row sum of A
         end
     end
@@ -125,10 +125,10 @@ classdef OutStrength < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to out-strength.
+            % to OutStrength.
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array
-            % of compatible graph classes to out-strength.
+            % of compatible graph classes to OutStrength.
             % The measure will not work if the graph is not compatible.
             %
             % See also getCompatibleGraphNumber().
@@ -139,10 +139,10 @@ classdef OutStrength < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to out-strength.
+            % graphs to OutStrength.
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to out-strength.
+            % compatible graphs to OutStrength.
             %
             % See also getCompatibleGraphList().
             

@@ -1,5 +1,5 @@
 classdef GlobalEfficiency < Measure
-    % GlobalEfficiency < Measure: GlobalEfficiency measure
+    % GlobalEfficiency < Measure: Global Efficiency measure
     % GlobalEfficiency provides the global efficiency of a node for binary undirected (BU) and 
     % weighted undirected (WU) graphs. It is calculated as average inverse
     % shortest path length in the graph. 
@@ -8,34 +8,31 @@ classdef GlobalEfficiency < Measure
     %   GlobalEfficiency            - constructor with Measure properties.
     %
     % GlobalEfficiency methods (Access=protected):
-    %   calculate                   - calculates the globalefficiency of a node.
+    %   calculate                   - calculates the global efficiency of a node.
     % 
     % GlobalEfficiency methods (Static)
-    %   getClass                    - returns the globalefficiency class.
-    %   getName                     - returns the name of globalefficiency measure.
-    %   getDescription              - returns the description of globalefficiency measure.
+    %   getClass                    - returns the global efficiency class.
+    %   getName                     - returns the name of global efficiency measure.
+    %   getDescription              - returns the description of global efficiency measure.
     %   getAvailableSettings        - returns the settings available to the class.
-    %   is_global                   - boolean, checks if globalefficiency measure is global.
-    %   is_nodal                    - boolean, checks if globalefficiency measure is nodal.
-    %   is_binodal                  - boolean, checks if globalefficiency measure if binodal.
-    %   getMeasure                  - returns the globalefficiency class.
+    %   is_global                   - boolean, checks if global efficiency measure is global.
+    %   is_nodal                    - boolean, checks if global efficiency measure is nodal.
+    %   is_binodal                  - boolean, checks if global efficiency measure if binodal.
+    %   getMeasure                  - returns the global efficiency class.
     %   getCompatibleGraphList      - returns a list of compatible graphs.
     %   getCompatibleGraphNumber    - returns the number of compatible graphs.
     %
-    % See also Measure, Graph, Strength, Distance, Degree, InGlobalEfficiency, OutGlobalEfficiency, LocalEfficiency.
+    % See also Measure, Graph, PathLength, InGlobalEfficiency, OutGlobalEfficiency, LocalEfficiency.
+    
     methods
         function m = GlobalEfficiency(g, varargin)
             % GLOBALEFFICIENCY(G) creates global efficiency with default measure properties.
             % G is a graph (e.g, an instance of GraphBU, Graph WU). 
             %   
-            % GLOBALEFFICIENCY(G, 'Settings', SETTINGS) creates global efficiency measure and
-            % initializes the property settings with SETTINGS. 
-            % Currently GLOBALEFFICIENCY does not utilize SETTINGS.
-            %
             % GLOBALEFFICIENCY(G, 'VALUE', VALUE) creates global efficiency, and sets the value
             % to VALUE. G is a graph (e.g, an instance of  GraphBU, Graph WU).
             %   
-            % See also Measure, Graph, Strength, Distance.
+            % See also Measure, Graph, PathLength, InGlobalEfficiency, OutGlobalEfficiency, LocalEfficiency.
             
             m = m@Measure(g, varargin{:});
         end
@@ -47,7 +44,7 @@ classdef GlobalEfficiency < Measure
             % GLOBALEFFICIENCY = CALCULATE(M) returns the value of the global efficiency of a
             % node.
             
-            g = m.getGraph();
+            g = m.getGraph();  % graph from measure class
             N = g.nodenumber();            
            
             if g.is_measure_calculated('Distance')
@@ -133,10 +130,10 @@ classdef GlobalEfficiency < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to global efficiency 
+            % to GlobalEfficiency 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to global efficiency. 
+            % of compatible graph classes to GlobalEfficiency. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -148,10 +145,10 @@ classdef GlobalEfficiency < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to global efficiency 
+            % graphs to GlobalEfficiency 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to global efficiency.
+            % compatible graphs to GlobalEfficiency.
             % 
             % See also getCompatibleGraphList().
             

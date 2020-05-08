@@ -1,18 +1,58 @@
 classdef Distance < Measure
+    % Distance < Measure: Distance measure
+    % Distance provides the distance of a graph for binary undirected (BU),
+    % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
+    % graphs. It is calculated as the shortest path between all pairs of
+    % nodes in the graph. 
+    % 
+    % Distance methods:
+    %   Distance                    - constructor with Measure properties.
+    %
+    % Distance methods (Access=protected):
+    %   calculate                   - calculates the distance of a graph.
+    % 
+    % Distance methods (Static)
+    %   getClass                    - returns the distance class.
+    %   getName                     - returns the name of distance measure.
+    %   getDescription              - returns the description of distance measure.
+    %   getAvailableSettings        - returns the settings available to the class.
+    %   is_global                   - boolean, checks if distance measure is global.
+    %   is_nodal                    - boolean, checks if distance measure is nodal.
+    %   is_binodal                  - boolean, checks if distance measure if binodal.
+    %   getMeasure                  - returns the distance class.
+    %   getCompatibleGraphList      - returns a list of compatible graphs.
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
+    %
+    % See also Measure, Graph, Degree, Strength, PathLength.
+    
     properties (GetAccess=protected, SetAccess=protected)
         B  % number of edges matrix 
     end
     methods
         function m = Distance(g, varargin)
-            
+            % DISTANCE(G) creates distance with default measure properties.
+            % G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU). 
+            %
+            % DISTANCE(G, 'VALUE', VALUE) creates distance, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, Graph WU).
+            %   
+            % See also Measure, Graph, Degree, Strength, PathLength. 
+          
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
         function D = calculate(m)
-            g = m.getGraph();
+            % CALCULATE calculates the distance value of a graph
+            %
+            % DISTANCE = CALCULATE(M) returns the value of the distance of a
+            % graph.
+            
+            g = m.getGraph();  % graph from measure class
             graph_class = g.getClass();
-            A = g.getA();
+            A = g.getA();  % adjency matrix of the graph
             
             if isequal(graph_class, 'GraphWD') || isequal(graph_class, 'GraphWU')
                 ind = A~=0;
@@ -68,30 +108,83 @@ classdef Distance < Measure
     end
     methods (Static)
         function measure_class = getClass()
+            % GETCLASS returns the measure class 
+            %            
+            % MEASURE_CLASS = GETCLASS() returns the class of the distance measure.
+            %
+            % See also getName(), getDescription(). 
+            
             measure_class = 'Distance';
         end
         function name = getName()
+            % GETNAME returns the measure name
+            %
+            % NAME = GETNAME() returns the name of the distance measure.
+            %
+            % See also getClass(), getDescription(). 
+          
             name = 'Distance';
         end
         function description = getDescription()
+            % GETDESCRIPTION returns the distance description 
+            %
+            % DESCRIPTION = GETDESCRIPTION() returns the description of the
+            % distance measure.
+            %
+            % See also getList(), getCompatibleGraphList().
+            
             description = [ ...
                 'The distance of a graph is ' ...
                 'the shortest path between all pairs of nodes in the graph. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to Distance
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to Distance. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList()
+            
             available_settings = {};
         end
         function bool = is_global()
+            % IS_GLOBAL checks if distance measure is global (false)
+            %
+            % BOOL = IS_GLOBAL() returns false.
+            %
+            % See also is_nodal, is_binodal.
+            
             bool = false;
         end
         function bool = is_nodal()
+            % IS_NODAL checks if distance measure is nodal (false)
+            %
+            % BOOL = IS_NODAL() returns false.
+            %
+            % See also is_global, is_binodal. 
+            
             bool = false;
         end
         function bool = is_binodal()
+            % IS_BINODAL checks if distance measure is binodal (true)
+            %
+            % BOOL = IS_BINODAL() returns true.
+            %
+            % See also is_global, is_nodal.
+            
             bool = true;
         end
         function list = getCompatibleGraphList()
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
+            % to Distance 
+            %
+            % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
+            % of compatible graph classes to Distance. 
+            % The measure will not work if the graph is not compatible. 
+            %
+            % See also getCompatibleGraphNumber(). 
+            
             list = { ...
                 'GraphBD', ...
                 'GraphBU', ...
@@ -100,6 +193,14 @@ classdef Distance < Measure
                 };
         end
         function n = getCompatibleGraphNumber()
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
+            % graphs to Distance 
+            %
+            % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
+            % compatible graphs to Distance.
+            % 
+            % See also getCompatibleGraphList().
+            
             n = Measure.getCompatibleGraphNumber('Distance');
         end
     end
