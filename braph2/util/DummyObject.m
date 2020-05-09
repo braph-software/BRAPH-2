@@ -1,6 +1,7 @@
-classdef DummyObject
+classdef DummyObject < handle
     % DummyObject Dummy object.
     % Dummy objects used for unit testing and debugging.
+    % It implements handle.
     %
     % DummyObject properties:
     %   name
@@ -9,7 +10,7 @@ classdef DummyObject
     %   DummyObject     - constructor
     %   tostring        - returns a string describing the object
     %
-    % See also DummyCopiableObject.
+    % See also handle, DummyCopiableObject.
     
     properties
         name
