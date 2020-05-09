@@ -1,39 +1,39 @@
 % test IndexedDictionary
 
 key1 = 'Key 1';
-value1 = DummyObject('Obj 1');
+value1 = DummyCopiableObject('Obj 1');
 
 key2 = 'Key 2';
-value2 = DummyObject('Obj 2');
+value2 = DummyCopiableObject('Obj 2');
 
 key3 = 'Key 3';
-value3 = DummyObject('Obj 3');
+value3 = DummyCopiableObject('Obj 3');
 
 key4 = 'Key 4';
-value4 = DummyObject('Obj 4');
+value4 = DummyCopiableObject('Obj 4');
 
 key5 = 'Key 5';
-value5 = DummyObject('Obj 5');
+value5 = DummyCopiableObject('Obj 5');
 
 key6 = 'Key 6';
-value6 = DummyObject('Obj 6');
+value6 = DummyCopiableObject('Obj 6');
 
 %% Test 1: Basic Functions
 keys = {key1, key2, key3, key4};
 values = {value1, value2, value3, value4};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 assert(ischar(idict.tostring()), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.WRONG_OUTPUT], ...
     'IndexedDictionary.tostring() must return a string.')
-assert(isequal(idict.getValueClass(), 'DummyObject'), ...
+assert(isequal(idict.getValueClass(), 'DummyCopiableObject'), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.WRONG_OUTPUT], ...
     'IndexedDictionary.getValueClass() does not work.')
 
 %% Test 2: Inspection Functions
 keys = {key1, key2, key3, key4};
 values = {value1, value2, value3, value4};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 assert(isequal(idict.length(), 4), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.WRONG_OUTPUT], ...
@@ -112,7 +112,7 @@ assert(isequal(idict.getValue('Key 3'), value3), ...
 %% Test 3: Add
 keys = {key1, key2, key3, key4};
 values = {value1, value2, value3, value4};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 idict.add(key6, value6)
 assert(isequal(idict.length(), 5), ...
@@ -133,7 +133,7 @@ assert(isequal(idict.getValue(5), value5) && isequal(idict.getValue(6), value6),
 %% Test 4: Remove
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 idict.remove(4);
 assert(isequal(idict.length(), 5), ...
@@ -152,7 +152,7 @@ assert(isequal(idict.getValues(), {value2, value3, value5}), ...
 %% Test 5: Replace
 keys = {key1, key2, key3, key4};
 values = {value1, value2, value3, value4};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 idict.replace(key5, value5, 4);
 
@@ -191,7 +191,7 @@ assert(isequal(idict.getKey(4), key4) && isequal(idict.getValue(4), value6), ...
 %% Test 6: Invert
 keys = {key1, key2, key3, key4};
 values = {value1, value2, value3, value4};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 idict.invert(1, 4);
 idict.invert(3, 2);
@@ -205,7 +205,7 @@ assert(isequal(idict.getKeys(), {key4, key3, key2, key1}), ...
 %% Test 7: MoveTo
 keys = {key1, key2, key3, key4};
 values = {value1, value2, value3, value4};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 idict.move_to(1, 4);
 idict.move_to(1, 3);
@@ -220,7 +220,7 @@ assert(isequal(idict.getKeys(), {key4, key3, key2, key1}), ...
 %% Test 8: RemoveAll
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 selected = idict.remove_all([1 3 6]);
 assert(isequal(idict.length(), 3), ...
@@ -236,7 +236,7 @@ assert(isequal(selected, []), ...
 %% Test 9: Moveup
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 selected = idict.move_up([1 2 4 6]);
 assert(isequal(idict.length(), 6), ...
@@ -252,7 +252,7 @@ assert(isequal(selected, [1 2 3 5]), ...
 %% Test 10: MoveDown
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 selected = idict.move_down([1 3 5 6]);
 assert(isequal(idict.length(), 6), ...
@@ -268,7 +268,7 @@ assert(isequal(selected, [2 4 5 6]), ...
 %% Test 11: Move2Top
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 selected = idict.move_to_top([1 3 5 6]);
 assert(isequal(idict.length(), 6), ...
@@ -284,7 +284,7 @@ assert(isequal(selected, [1 2 3 4]), ...
 %% Test 12: Move2Bottom
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
-idict = IndexedDictionary('DummyObject', keys, values);
+idict = IndexedDictionary('DummyCopiableObject', keys, values);
 
 selected = idict.move_to_bottom([1 3 5 6]);
 assert(isequal(idict.length(), 6), ...
@@ -299,17 +299,17 @@ assert(isequal(selected, [3 4 5 6]), ...
 
 %% Test 13: Deep copy
 key100 = 'Key 100';
-value100 = DummyObject(DummyObject('Deep Obj 100'));
+value100 = DummyCopiableObject(DummyObject('Deep Obj 100'));
 
 key200 = 'Key 200';
-value200 = DummyObject(DummyObject('Deep Obj 200'));
+value200 = DummyCopiableObject(DummyObject('Deep Obj 200'));
 
-idict = IndexedDictionary('DummyObject', {key100, key200}, {value100, value200});
+idict = IndexedDictionary('DummyCopiableObject', {key100, key200}, {value100, value200});
 
 idict_copy = idict.copy();
-assert(all(cellfun(@(value_copy) isa(value_copy, 'DummyObject'), idict_copy.getValues())), ...
+assert(all(cellfun(@(value_copy) isa(value_copy, 'DummyCopiableObject'), idict_copy.getValues())), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.BUG_COPY], ...
-    'IndexedDictionary.copy() does not work. Copied values should be all of class DummyObject.')
+    'IndexedDictionary.copy() does not work. Copied values should be all of class DummyCopiableObject.')
 assert(all(cellfun(@(value, value_copy) value ~= value_copy, idict.getValues(), idict_copy.getValues())), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.BUG_COPY], ...
     'IndexedDictionary.copy() does not work. Copied values should point to a copied object.')
