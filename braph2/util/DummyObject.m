@@ -1,7 +1,6 @@
-classdef DummyObject < handle & matlab.mixin.Copyable
+classdef DummyObject
     % DummyObject Dummy object.
     % Dummy objects used for unit testing and debugging.
-    % It implements handle and matlab.mixin.Copyable.
     %
     % DummyObject properties:
     %   name
@@ -10,7 +9,7 @@ classdef DummyObject < handle & matlab.mixin.Copyable
     %   DummyObject     - constructor
     %   tostring        - returns a string describing the object
     %
-    % See also handle, matlab.mixin.Copyable.
+    % See also DummyCopiableObject.
     
     properties
         name
