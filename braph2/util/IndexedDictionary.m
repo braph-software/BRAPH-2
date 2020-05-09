@@ -4,6 +4,10 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     % in an indexed dictionary.
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
+    % IndexedDictionary contains and manages a ordered list of couples
+    % {KEY, VALUE}, where KEY is a unique alphanumeric key (a string) and
+    % VALUE is an object of a class defined in the constructor.
+    %
     % IndexedDictionary methods:
     %   IndexedDictionary - constructor
     %   tostring          - returns a string representing the dictionary
