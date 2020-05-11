@@ -193,40 +193,45 @@ classdef SubjectfMRI < Subject
                 directory = uigetdir(msg);
             end
             
-            % find all xls or xlsx files
-            files = dir(fullfile(directory, '*.xlsx'));
-            files2 = dir(fullfile(directory,'*.xls'));
-            len = length(files);
-            for i =1:1:length(files2)
-                files(len+i,1) = files2(i,1);
-            end
-            
             % creates cohort
             cohort = Cohort('', subject_class, atlases, {});
             
-            % load subjects
-            for i = 1:1:length(files)
-                % read file
-                [~, ~, raw] = xlsread(fullfile(directory,files(i).name));
-                
-                % get age
-                
-                % create subject
-                sub_name = erase(files(i).name, '.xlsx');
-                sub_name = erase(sub_name, '.xls');                
-                subject = Subject.getSubject(subject_class, atlases, ...
-                    'SubjectID', sub_name, ...
-                    'fMRI', cell2mat(raw));
-                
-                cohort.getSubjects().add(subject.getID(), subject, i);
-            end
+            % find all subfolders
+            sub_folders = dir(directory);
+            sub_folders = sub_folders([sub_folders(:).isdir] == 1);
+            sub_folders = sub_folders(~ismember({sub_folders(:).name}, {'.', '..'}));
             
-            % creates group
-            if i == length(files)
-                [~, groupname] = fileparts(directory);
-                group = Group(subject_class, cohort.getSubjects().getValues());
-                group.setName(groupname);
-                cohort.getGroups().add(group.getName(), group);
+            % find all xls or xlsx files per sub folder
+            for j = 1:1: length(sub_folders)
+                path = [directory filesep() sub_folders(j).name];
+                files = dir(fullfile(path, '*.xlsx'));
+                files2 = dir(fullfile(path, '*.xls'));
+                len = length(files);
+                for i = 1:1:length(files2)
+                    files(len + i, 1) = files2(i, 1);
+                end
+                         
+                % load subjects
+                for i = 1:1:length(files)
+                    % read file
+                    [~, ~, raw] = xlsread(fullfile(path, files(i).name));
+                    
+                    % get age
+                    
+                    % create subject
+                    sub_name = erase(files(i).name, '.xlsx');
+                    sub_name = erase(sub_name, '.xls');
+                    subject = Subject.getSubject(subject_class, atlases, ...
+                        'SubjectID', sub_name, ...
+                        'fMRI', cell2mat(raw));
+                    
+                    cohort.getSubjects().add(subject.getID(), subject);
+                    subjects{i} = subject; %#ok<AGROW>
+                end
+                
+                 % creates a group per subfolder
+                group = Group(subject_class, subjects, 'GroupName', sub_folders(j).name);
+                cohort.getGroups().add(group.getName(), group, j);      
             end
         end
         function save_to_xls(cohort, varargin)

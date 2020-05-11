@@ -19,15 +19,19 @@ save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_era
 sub1 = Subject.getSubject(sub_class, atlas, 'SubjectID', '1', input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, atlas, 'SubjectID', '2', input_rule, input_data);
 sub3 = Subject.getSubject(sub_class, atlas, 'SubjectID', '3', input_rule, input_data);
+sub4 = Subject.getSubject(sub_class, atlas, 'SubjectID', '4', input_rule, input_data);
+sub5 = Subject.getSubject(sub_class, atlas, 'SubjectID', '5', input_rule, input_data);
 group = Group(sub_class, {sub1, sub2, sub3}, 'GroupName', 'TestGroup1');
+group2 = Group(sub_class, {sub4, sub5}, 'GroupName', 'TestGroup2');
 
-cohort = Cohort('cohorttest', sub_class, atlas, {sub1, sub2, sub3});
+cohort = Cohort('cohorttest', sub_class, atlas, {sub1, sub2, sub3, sub4, sub5});
 cohort.getGroups().add(group.getName(), group);
+cohort.getGroups().add(group2.getName(), group2);
 
 % act
 SubjectfMRI.save_to_xls(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectfMRI.load_from_xls(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
+load_cohort = SubjectfMRI.load_from_xls(sub_class, atlas, 'Directory', save_dir_path);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
