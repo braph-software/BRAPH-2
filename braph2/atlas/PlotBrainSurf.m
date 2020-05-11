@@ -96,70 +96,71 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     % Date: 2016/01/01
     
     properties (Constant)
-        
-        % initialization constants
-        INIT_LIGHTING = 'gouraud'
-        INIT_MATERIAL = 'dull'
-        INIT_CAMLIGHT = 'Headlight'
-        INIT_BRAIN_EDGE_COLOR = 'none'
-        INIT_BRAIN_EDGE_ALPHA = .5
-        INIT_BRAIN_FACE_COLOR = [.5 .5 .5]
-        INIT_BRAIN_FACE_ALPHA = .5
+
+% to constructor
+%         % initialization constants
+%         INIT_LIGHTING = 'gouraud'
+%         INIT_MATERIAL = 'dull'
+%         INIT_CAMLIGHT = 'Headlight'
+%         INIT_BRAIN_EDGE_COLOR = 'none'
+%         INIT_BRAIN_EDGE_ALPHA = .5
+%         INIT_BRAIN_FACE_COLOR = [.5 .5 .5]
+%         INIT_BRAIN_FACE_ALPHA = .5
         
         % 3D view
-        VIEW_3D	= 1
+%         VIEW_3D	= 1
         VIEW_3D_CMD = '3D'
         VIEW_3D_AZEL = [-37.5 30]
 
         % sagittal left view
-        VIEW_SL	= 2
+%         VIEW_SL	= 2
         VIEW_SL_CMD = 'Sagittal left'
         VIEW_SL_AZEL = [-90 0]
 
         % sagittal right view
-        VIEW_SR	= 3
+%         VIEW_SR	= 3
         VIEW_SR_CMD = 'Sagittal right'
         VIEW_SR_AZEL = [90 0]
 
         % axial dorsal view
-        VIEW_AD = 4
+%         VIEW_AD = 4
         VIEW_AD_CMD = 'Axial dorsal'
         VIEW_AD_AZEL = [0 90]
 
         % axial ventral view
-        VIEW_AV = 5
+%         VIEW_AV = 5
         VIEW_AV_CMD = 'Axial ventral'
         VIEW_AV_AZEL = [0 -90]
         
         % coronal anterior view
-        VIEW_CA = 6
+%         VIEW_CA = 6
         VIEW_CA_CMD = 'Coronal anterior'
         VIEW_CA_AZEL = [180 0]
 
         % coronal posterior view
-        VIEW_CP = 7
+%         VIEW_CP = 7
         VIEW_CP_CMD = 'Coronal posterior'
         VIEW_CP_AZEL = [0 0]
         
-        VIEW_CMD = { ...
-            PlotBrainSurf.VIEW_3D_CMD ...
-            PlotBrainSurf.VIEW_SL_CMD ...
-            PlotBrainSurf.VIEW_SR_CMD ...
-            PlotBrainSurf.VIEW_AD_CMD ...
-            PlotBrainSurf.VIEW_AV_CMD ...
-            PlotBrainSurf.VIEW_CA_CMD ...
-            PlotBrainSurf.VIEW_CP_CMD ...            
-            }
-
-        VIEW_AZEL = { ...
-            PlotBrainSurf.VIEW_3D_AZEL ...
-            PlotBrainSurf.VIEW_SL_AZEL ...
-            PlotBrainSurf.VIEW_SR_AZEL ...
-            PlotBrainSurf.VIEW_AD_AZEL ...
-            PlotBrainSurf.VIEW_AV_AZEL ...
-            PlotBrainSurf.VIEW_CA_AZEL ...
-            PlotBrainSurf.VIEW_CP_AZEL ...
-            }
+%         VIEW_CMD = { ...
+%             PlotBrainSurf.VIEW_3D_CMD ...
+%             PlotBrainSurf.VIEW_SL_CMD ...
+%             PlotBrainSurf.VIEW_SR_CMD ...
+%             PlotBrainSurf.VIEW_AD_CMD ...
+%             PlotBrainSurf.VIEW_AV_CMD ...
+%             PlotBrainSurf.VIEW_CA_CMD ...
+%             PlotBrainSurf.VIEW_CP_CMD ...            
+%             }
+% 
+%         VIEW_AZEL = { ...
+%             PlotBrainSurf.VIEW_3D_AZEL ...
+%             PlotBrainSurf.VIEW_SL_AZEL ...
+%             PlotBrainSurf.VIEW_SR_AZEL ...
+%             PlotBrainSurf.VIEW_AD_AZEL ...
+%             PlotBrainSurf.VIEW_AV_AZEL ...
+%             PlotBrainSurf.VIEW_CA_AZEL ...
+%             PlotBrainSurf.VIEW_CP_AZEL ...
+%             }
     end
     properties (Access = protected)
         h_axes  % handle for the axes
@@ -195,10 +196,12 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also PlotBrainSurf.
 
+% from varargin
             bs.Lighting = PlotBrainSurf.INIT_LIGHTING;
             bs.Material = PlotBrainSurf.INIT_MATERIAL;
             bs.CamLight = PlotBrainSurf.INIT_CAMLIGHT;
 
+% from varargin + option from file (static function)
             fid = fopen('BrainMesh_ICBM152.nv');
             bs.vertex_number = fscanf(fid,'%f',1);
             bs.coord = fscanf(fid,'%f',[3,bs.vertex_number]);
@@ -206,6 +209,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             bs.tri = fscanf(fid,'%d',[3,bs.ntri])';
             fclose(fid);
         end
+% tostring
         function disp(bs)
             % DISP displays brain surface
             %
@@ -213,7 +217,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also PlotBrainSurf.
             
-            disp(['<a href="matlab:help PlotBrainSurf">BrainSurf</a> : ' bs.name()]);
+            disp(['<a href="matlab:help PlotBrainSurf">PlotBrainSurf</a> : ' bs.name()]);
         end
         function txt = name(~)  % (bs)
             % NAME brain surface name
@@ -222,6 +226,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also PlotBrainSurf.
 
+% make it property
             txt = 'BrainMesh_ICBM152.nv';
         end
         function h = set_axes(bs,ht)
