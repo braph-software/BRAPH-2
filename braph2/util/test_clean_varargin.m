@@ -24,7 +24,7 @@ assert(isequal(clean_varargin(handles, varargin), varargin), ...
     [BRAPH2.STR ':clean_varargin:' BRAPH2.BUG_FUNC], ...
     'Not working case already clean.')
 
-%% Test 3: Need some cleaning
+%% Test 3: Some cleaning
 handles = {'h1', 'h2', 'h3'};
 varargin = {'e1', -1, 'h1', 1, 'e2', -2, 'h2', 2, 'e3', -3, 'h3', 3, 'e4', -4};
 
@@ -36,7 +36,7 @@ assert(isequal(clean_varargin(handles, varargin), {'h1', 1, 'h2', 2, 'h3', 3}), 
     [BRAPH2.STR ':clean_varargin:' BRAPH2.BUG_FUNC], ...
     'Not working case needing cleaning.')
 
-%% Test 4: Need complete cleaning
+%% Test 4: Complete cleaning
 handles = {'h1', 'h2', 'h3'};
 varargin = {'e1', -1, 'e2', -2, 'e3', -3, 'e4', -4};
 
