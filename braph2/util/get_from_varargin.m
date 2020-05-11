@@ -1,5 +1,5 @@
 function value = get_from_varargin(value, handle, varargin)
-% GET_FROM_VARARGIN clean varargin
+% GET_FROM_VARARGIN returns a property from varargin
 %
 % VALUE = GET_FROM_VARARGIN(DEFAULT, HANDLE, VARARGIN) returns the property
 % corresponding to HANDLE. If HANDLE does not exist, it returns DEFAULT.
