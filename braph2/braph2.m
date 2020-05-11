@@ -2,10 +2,10 @@
 %
 % This script loads all BRAPH2 packages:
 %   <a href="matlab:help util     ">util</a>        general utility tools
-%   <a href="matlab:help graph    ">graph</a>       graph analysis
+%   <a href="matlab:help graph    ">graph</a>       graphs and measures
 %   <a href="matlab:help atlas    ">atlas</a>       brain atlas
 %   <a href="matlab:help cohort   ">cohort</a>      subjects and cohort
-%   <a href="matlab:help analysis ">analysis</a>	analysis
+%   <a href="matlab:help analysis ">analysis</a>	analysis tools
 %   <a href="matlab:help workflows">workflows</a>	workflows
 %   <a href="matlab:help test     ">test</a>        unit test
 %
