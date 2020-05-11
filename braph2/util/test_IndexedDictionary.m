@@ -202,7 +202,7 @@ assert(isequal(idict.getKeys(), {key4, key3, key2, key1}), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.BUG_FUNC], ...
     'IndexedDictionary.invert() does not work.')
  
-%% Test 7: MoveTo
+%% Test 7: Move to
 keys = {key1, key2, key3, key4};
 values = {value1, value2, value3, value4};
 idict = IndexedDictionary('DummyCopiableObject', keys, values);
@@ -217,7 +217,7 @@ assert(isequal(idict.getKeys(), {key4, key3, key2, key1}), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.BUG_FUNC], ...
     'IndexedDictionary.move_to() does not work.')
 
-%% Test 8: RemoveAll
+%% Test 8: Remove all
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
 idict = IndexedDictionary('DummyCopiableObject', keys, values);
@@ -233,7 +233,7 @@ assert(isequal(selected, []), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.BUG_FUNC], ...
     'IndexedDictionary.remove_all() does not work.')
 
-%% Test 9: Moveup
+%% Test 9: Move up
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
 idict = IndexedDictionary('DummyCopiableObject', keys, values);
@@ -249,7 +249,7 @@ assert(isequal(selected, [1 2 3 5]), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.BUG_FUNC], ...
     'IndexedDictionary.move_up() does not work.')
 
-%% Test 10: MoveDown
+%% Test 10: Move down
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
 idict = IndexedDictionary('DummyCopiableObject', keys, values);
@@ -265,7 +265,7 @@ assert(isequal(selected, [2 4 5 6]), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.BUG_FUNC], ...
     'IndexedDictionary.move_down() does not work.')
 
-%% Test 11: Move2Top
+%% Test 11: Move to top
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
 idict = IndexedDictionary('DummyCopiableObject', keys, values);
@@ -281,7 +281,7 @@ assert(isequal(selected, [1 2 3 4]), ...
 	[BRAPH2.STR ':' class(idict) ':' BRAPH2.BUG_FUNC], ...
     'IndexedDictionary.move_to_top() does not work.')
 
-%% Test 12: Move2Bottom
+%% Test 12: Move to bottom
 keys = {key1, key2, key3, key4, key5, key6};
 values = {value1, value2, value3, value4, value5, value6};
 idict = IndexedDictionary('DummyCopiableObject', keys, values);
