@@ -1,5 +1,5 @@
 function str = tostring(value)
-% TOSTRING returns a string respresnting the input value
+% TOSTRING returns a string representing the input value
 %
 % STRING = TOSTRING(VALUE) returns a string representing VALUE.
 % The string depends on the type of VALUE. In particular, if VALUE is an
