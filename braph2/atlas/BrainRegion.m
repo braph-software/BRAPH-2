@@ -2,13 +2,6 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     % BrainRegion < handle & matlab.mixin.Copyable: A brain region.
     % BrainRegion contains the information of a brain region.
     %
-    % BrainRegion properties (GetAccess=protected, SetAccess=protected):
-    %   label        - unique identifier for the brain region. 
-    %   name         - extended name of the brain region.
-    %   x            - x-coordinate of the brain region.
-    %   y            - y-coordinate of the brain region.
-    %   z            - z-coordinate of the brain region.
-    %
     % BrainRegion methods
     %   Graph        - constructor.
     %   copyElement  - deep copy community structure.
@@ -27,14 +20,15 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     % See also BrainAtlas.
     
     properties (GetAccess=protected, SetAccess=protected)
-        label  % few-letter code (unique for each brain region)
-        name  % extended name
-        x  % x-coordinate
-        y  % y-coordinate
-        z  % z-coordinate
+        id  % few-letter code (unique for each brain region)
+        label  % extended name of the brain region
+        notes  % notes about the brain region
+        x  % x-coordinate of the brain region
+        y  % y-coordinate of the brain region
+        z  % z-coordinate of the brain region
     end
-    methods
-        function br = BrainRegion(label, name, x, y, z)
+    methods  % Basic functions
+        function br = BrainRegion(id, label, notes, x, y, z)
             % BrainRegion() creates a brain region with
             % default properties.
             %
@@ -42,34 +36,13 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % the corresponding arguments: label, name, x, y, z. 
             %
             % See also BrainAtlas.
-            
-            % default arguments check
-            if nargin < 5
-                z = 0;
-            end
-            
-            if nargin < 4
-                y = 0;
-            end
-                
-            if nargin < 3
-                x = 0;
-            end
-            
-            if nargin < 2
-                name = 'br name';
-            end
-            
-            if nargin < 1
-                label = 'BR';
-            end
-            
-            % initialization of brain region properties.
-            br.label = label;  
-            br.name = name;
-            br.x = x;
-            br.y = y;
-            br.z = z;
+
+            br.setID(id)
+            br.setLabel(label)
+            br.setNotes(notes)
+            br.setX(x)
+            br.setY(y)
+            br.setZ(z)
         end
         function str = tostring(br)
             % TOSTRING string with information about the brain region.
@@ -79,7 +52,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             %
             % See also disp().
             
-            str = [class(br) ' '  br.getLabel() ' ' br.getName() ' ' mat2str(br.getPosition())];
+            str = [class(br) ' '  br.getID() ' ' br.getLabel() ' ' tostring(br.getPosition()) ' ' br.getNotes()];
         end
         function disp(br)
             % DISP displays information about the brain region.
@@ -91,20 +64,83 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % See also tostring().
             
             disp(['<a href="matlab:help ' class(br) '">' class(br) '</a>'])
-            disp([' label: ' br.getLabel()])
-            disp([' name: ' br.getName()])
+            disp([' id: ' br.getID()])
+            disp([' name: ' br.getLabel()])
+            disp([' notes: ' br.getNotes()])
             disp([' position: ' mat2str(br.getPosition())])            
         end
-        function label = getLabel(br)
+    end
+    methods  % Set functions
+        function setID(br, id)
+            
+            assert(ischar(id), ...
+                [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
+                'ID must be a string.')
+            
+            br.id = id;
+        end        
+        function setLabel(br, label)
+
+            assert(ischar(label), ...
+                [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
+                'Label must be a string.')
+            
+            br.label = label;
+        end        
+        function setNotes(br, notes)
+
+            assert(ischar(notes), ...
+                [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
+                'Notes must be a string.')
+            
+            br.notes = notes;
+        end        
+        function setX(br, x)
+            
+            assert(isnumeric(x), ...
+                [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
+                'X must be a number.')
+            
+            br.x = x;
+        end        
+        function setY(br, y)
+
+            assert(isnumeric(y), ...
+                [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
+                'Y must be a number.')
+            
+            br.y = y;
+        end        
+        function setZ(br, z)
+            
+            assert(isnumeric(z), ...
+                [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
+                'Z must be a number.')
+            
+            br.z = z;
+        end
+        function setPosition(br, position)
+            
+            assert(isnumeric(position) && isequal(size(position), [1, 3]), ...
+                [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
+                'Position must be a row vector 1x3.')
+
+            br.setX(position(1))
+            br.setY(position(2))
+            br.setZ(position(3))
+        end
+    end
+    methods  % Get functions
+        function id = getID(br)
             % GETLABEL returns the label of the brain region.
             %
             % LABEL = GETLABEL(BR) returns the label of the brain region.
             %
             % See also getName(), getX(), getY(), getZ(), getPosition().
             
-            label = br.label;
+            id = br.id;
         end
-        function name = getName(br)
+        function label = getLabel(br)
             % GETNAME returns the name of the brain region.
             %
             % NAME = GETNAME(BR) returns the extendend name of the brain
@@ -112,7 +148,11 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             %
             % See also getLabel(), getX(), getY(), getZ(), getPosition().
             
-            name = br.name;
+            label = br.label;
+        end
+        function notes = getNotes(br)
+            
+            notes = br.notes;
         end
         function x = getX(br)
             % GETX returns the x coordinate.
