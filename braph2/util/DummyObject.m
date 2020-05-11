@@ -24,7 +24,7 @@ classdef DummyObject < handle
         function str = tostring(obj)
             % TOSTRING string with information about the object
             %
-            % STR = TOSTRING(IDICT) returns string with the object name.
+            % STR = TOSTRING(OBJ) returns string with the object name.
             
             str = [class(obj) ' ' tostring(obj.name)];
         end
