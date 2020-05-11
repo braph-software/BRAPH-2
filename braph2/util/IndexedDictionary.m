@@ -4,7 +4,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     % in an indexed dictionary.
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
-    % IndexedDictionary contains and manages a ordered list of couples
+    % IndexedDictionary contains and manages an ordered list of couples
     % {KEY, VALUE}, where KEY is a unique alphanumeric key (a string) and
     % VALUE is an object of a class defined in the constructor.
     %
@@ -123,7 +123,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
         function value_class = getValueClass(idict)
             % GETVALUECLASS returns the value class of the indexed dictionary
             %
-            % VALUE_CLASS = GEGETVALUECLASSTA(IDICT) returns the value
+            % VALUE_CLASS = GETVALUECLASS(IDICT) returns the value
             % class of the indexed dictionary.
             
             value_class = idict.value_class;
@@ -192,7 +192,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % BOOL = CONTAINSVALUE(IDICT, VALUE) returns true if the VALUE exists
             % in the indexed dictionary DICT.
             %
-            % See also contains(), containsValue(), containsKey().
+            % See also contains(), containsIndex(), containsKey().
             
             bool = false;
             for i = 1:1:idict.length()
@@ -346,7 +346,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
         function value = getValue(idict, pointer)
             % GETVALUE returns the value of an index or key
             %
-            % VALUE = GETVALUE(IDICT, POINTER) returns the value a POINTER
+            % VALUE = GETVALUE(IDICT, POINTER) returns the value of POINTER
             % (an index or key).
             %
             % See also getValueFromIndex(), getValueFromKey().
