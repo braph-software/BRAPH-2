@@ -4,7 +4,7 @@
 % m = Degree(g, 'hm', 2);
 % varargin = {1, 2, 3, 'Four', 'Five', m, g};
 
-%% Test 1: General functionality
+%% Test 1: Basic functionality
 varargin = {1, 2, 3, 'Four', 'Five'};
 varargin_copy = copy_varargin(varargin{:});
 
@@ -14,7 +14,7 @@ for i = 1:1:length(varargin)
         'Element not copied correctly by copy_varargin().')
 end
 
-%% Test 2: Handle shallow-copy objects
+%% Test 2: Shallow copy objects
 obj = DummyObject('shallow copy');
 varargin = {obj, 1, 2, 3, 'Four', 'Five'};
 varargin_copy = copy_varargin(varargin);
@@ -32,7 +32,7 @@ assert(isequal(obj.name, 'changed name') && ...
 	[BRAPH2.STR ':copy_varargin:' BRAPH2.BUG_FUNC], ...
 	'Shallow-copy object not copied correctly by copy_varargin().')
 
-%% Test 3: Copiable deep-copy objects
+%% Test 3: Deep copy objects
 obj = DummyCopiableObject('deep copy');
 varargin = {obj, 1, 2, 3, 'Four', 'Five'};
 varargin_copy = copy_varargin(varargin);
