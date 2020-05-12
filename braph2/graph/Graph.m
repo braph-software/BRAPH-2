@@ -68,7 +68,13 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
 
-            
+            assert((ismatrix(A) && size(A, 1) == size(A, 2)) || ...
+                (iscell(A) && size(A, 1) == size(A, 2)), ...
+                [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                ['A must be an adjacency matrix (square matrix) or' ...
+                ' a superadjacency matrix (square cell array of matrices).'])
+
+            g.A = A;
         end
     end
     
@@ -91,8 +97,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %                 varargin = varargin{:};
 %             end
 % 
-% % assert A 2d square cell array
-%             
 %             settings = get_from_varargin(varargin, 'Settings', varargin{:});
 %             measure_dict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
 %             
