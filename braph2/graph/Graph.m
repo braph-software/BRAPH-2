@@ -68,14 +68,81 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
 
-            assert((ismatrix(A) && size(A, 1) == size(A, 2)) || ...
-                (iscell(A) && size(A, 1) == size(A, 2)), ...
-                [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
-                ['A must be an adjacency matrix (square matrix) or' ...
-                ' a superadjacency matrix (square cell array of matrices).'])
-
+            if g.is_multilayer()
+                assert(iscell(A) && ismatrix(A) && size(A, 1) == size(A, 2), ... 
+                    [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                    'A must be a superadjacency matrix (square cell array of matrices).')
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        assert(size(A{i, j}, 1) == size(A{i, 1}, 1), ...
+                            [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                            ['All submatrices in the same row must have the same number of rows.' ...
+                            ' Error in submatrix (%i, %i).'], ...
+                            i, j)
+                        assert(size(A{i, j}, 2) == size(A{1, j}, 2), ...
+                            [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                            ['All submatrices in the same column must have the same number of columns.' ...
+                            ' Error in submatrix (%i, %i).'], ...
+                            i, j)
+                    end
+                end
+            else
+                assert(isnumeric(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
+                    [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                    'A must be an adjacency matrix.')
+            end
+            
             g.A = A;
         end
+    end
+    methods (Static)  % Descriptive methods
+        function graph_class = getClass(g)
+            % GETCLASS returns the class of graphs
+            %
+            % GRAPH_CLASS = GETCLASS(G) returns the class of the concrete
+            % instance of graph G.
+            %
+            % GRAPH_CLASS = GETCLASS(GRAPH_CLASS) returns the class of the
+            % graph whose class is the string GRAPH_CLASS.
+            %
+            % See also getList(), getCompatibleMeasureList().
+            
+            if isa(g, 'Graph')
+                graph_class = class(g);
+            else % g should be a string with the graph code
+                graph_class = g;
+            end
+        end
+        function name = getName(g)
+            % GETNAME returns the name of the graph
+            %
+            % NAME = GETNAME(G) returns the name (string) of the concrete instance
+            % of graph G.
+            %
+            % NAME = GETNAME(GRAPH_CLASS) returns the name (string) of the
+            % graph whose class is the string GRAPH_CLASS.
+            %
+            % See also getList(), getCompatibleMeasureList().
+            
+            name = eval([Graph.getClass(g) '.getName()']);
+        end
+        function name = getDescription(g)
+            % GETDESCRIPTION returns the description of the graph
+            %
+            % DESCRIPTION = GETDESCRIPTION(G) returns the description
+            % (string) of the concrete instance of graph G.
+            %
+            % DESCRIPTION = GETDESCRIPTION(GRAPH_CLASS) returns the
+            % description (string) of the graph whose class is GRAPH_CLASS.
+            %
+            % See also getList(), getCompatibleMeasureList().
+            
+            name = eval([Graph.getClass(g) '.getDescription()']);
+        end
+        function bool = is_multilayer(g)
+            bool = true;
+            % bool = eval([Graph.getClass(g) '.is_multilayer()']);
+        end        
     end
     
 %     methods (Access=protected)
@@ -312,49 +379,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %                 'Graph', ...
 %                 [fileparts(which('Graph')) filesep 'graphs'] ...
 %                 );
-%         end
-%         function graph_class = getClass(g)
-%             % GETCLASS returns the class of graphs
-%             %
-%             % GRAPH_CLASS = GETCLASS(G) returns the class of the concrete
-%             % instance of graph G.
-%             %
-%             % GRAPH_CLASS = GETCLASS(GRAPH_CLASS) returns the class of the
-%             % graph whose class is the string GRAPH_CLASS.
-%             %
-%             % See also getList(), getCompatibleMeasureList().
-%             
-%             if isa(g, 'Graph')
-%                 graph_class = class(g);
-%             else % g should be a string with the graph code
-%                 graph_class = g;
-%             end
-%         end
-%         function name = getName(g)
-%             % GETNAME returns the name of the graph
-%             %
-%             % NAME = GETNAME(G) returns the name (string) of the concrete instance
-%             % of graph G.
-%             %
-%             % NAME = GETNAME(GRAPH_CLASS) returns the name (string) of the
-%             % graph whose class is the string GRAPH_CLASS.
-%             %
-%             % See also getList(), getCompatibleMeasureList().
-%             
-%             name = eval([Graph.getClass(g) '.getName()']);
-%         end
-%         function name = getDescription(g)
-%             % GETDESCRIPTION returns the description of the graph
-%             %
-%             % DESCRIPTION = GETDESCRIPTION(G) returns the description
-%             % (string) of the concrete instance of graph G.
-%             %
-%             % DESCRIPTION = GETDESCRIPTION(GRAPH_CLASS) returns the
-%             % description (string) of the graph whose class is GRAPH_CLASS.
-%             %
-%             % See also getList(), getCompatibleMeasureList().
-%             
-%             name = eval([Graph.getClass(g) '.getDescription()']);
 %         end
 % % number of layers
 %         function bool = is_selfconnected(g)
