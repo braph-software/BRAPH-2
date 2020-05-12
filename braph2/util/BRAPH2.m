@@ -22,6 +22,11 @@ classdef BRAPH2
         BUG_FUNC = 'BugFunc'  % bug in a function (wrong behavior)
         BUG_COPY = 'BugCopy'  % bug while deep-copying an object
     end
+    properties (Constant)  % BRAPH2 file extensions
+        % Brain Surface
+        BRAINSURFACE_EXTENSION = '*.nv';
+        BRAINSURFACE_MSG = 'Select NV file';
+    end
 %         BUILD = 2020
 %         VERSION = '2.0.0'
 %         DATE = ''
