@@ -1,25 +1,16 @@
-% File to test the use of PlotBrainSurf.
-%
-% See also PlotBrainSurf, ListElement.
+% test PlotBrainSurf
 
-% Author: Mite Mijalkov, Ehsan Kakaei & Giovanni Volpe
-% Date: 2016/01/01
+% Test 1: Basic Functions
 
-close all
-clear all
-clc
+bs = PlotBrainSurf('BrainSurfaceType', 'BrainMesh_Cerebellum.nv');
 
-bs = PlotBrainSurf()
+bs.brain();
+bs.axis_equal();
+bs.view(PlotBrainSurf.VIEW_3D);
+bs.update_light();
 
-bs.brain()
-bs.axis_equal()
-bs.view(PlotBrainSurf.VIEW_3D)
-bs.update_light()
+assert(ischar(bs.tostring()), ...
+	[BRAPH2.STR ':' class(bs) ':' BRAPH2.WRONG_OUTPUT], ...
+    'BrainRegion.copy() does not work.')
 
-h = bs.get_axes()
-
-% bs.brain_settings( ...
-%     'FigPosition',[.1 .1 .2 .2], ...
-%     'FigColor', [.95 .95 .95], ...
-%     'FigTitle', 'PlotBrainSurf' ...
-%     )
+% Test 2: Get
