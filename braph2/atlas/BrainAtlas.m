@@ -222,23 +222,20 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
 % bg = getPlotBrainGraph(atlas, varargin)
     end
     methods (Access=protected)  % Deep copy
-%         function atlas_copy = copyElement(atlas)
-%             % COPYELEMENT(ATLAS) deep copy of BrainAtlas
-%             %
-%             % ATLAS_COPY = COPYELEMENT(ATLAS) Makes a deep copy of the
-%             % structure of the BrainAtlas.
-%             %
-%             % See also Cohort, Graph.
-%             
-%             % Make a shallow copy
-%             atlas_copy = copyElement@matlab.mixin.Copyable(atlas);
-%             
-%             % Make a deep copy of br_idict
-%             atlas_copy.br_idict = IndexedDictionary(atlas.getBrainRegions().getValueClass());
-%             for i = 1:1:atlas.getBrainRegions().length()
-%                 atlas_copy.br_idict.add(atlas.getBrainRegions().getKey(i), atlas.getBrainRegions().getValue(i).copy(), i);
-%             end
-%         end
+        function atlas_copy = copyElement(atlas)
+            % COPYELEMENT(ATLAS) deep copy of BrainAtlas
+            %
+            % ATLAS_COPY = COPYELEMENT(ATLAS) Makes a deep copy of the
+            % structure of the BrainAtlas.
+            %
+            % See also Cohort, Graph.
+            
+            % Make a shallow copy
+            atlas_copy = copyElement@matlab.mixin.Copyable(atlas);
+            
+            % Make a deep copy of br_idict
+            atlas_copy.br_idict = atlas.br_idict.copy();
+        end
     end    
     methods (Static)  % Save and load functions
 %         function atlas = load_from_xls(varargin)
