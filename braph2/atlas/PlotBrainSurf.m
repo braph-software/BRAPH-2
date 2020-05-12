@@ -6,40 +6,49 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     %
     
     properties (Constant)
-        %         VIEW_3D	= 1
+                VIEW_3D	= 1
         VIEW_3D_CMD = '3D'
         VIEW_3D_AZEL = [-37.5 30]
         
         % sagittal left view
-        %         VIEW_SL	= 2
+                VIEW_SL	= 2
         VIEW_SL_CMD = 'Sagittal left'
         VIEW_SL_AZEL = [-90 0]
         
         % sagittal right view
-        %         VIEW_SR	= 3
+                VIEW_SR	= 3
         VIEW_SR_CMD = 'Sagittal right'
         VIEW_SR_AZEL = [90 0]
         
         % axial dorsal view
-        %         VIEW_AD = 4
+                VIEW_AD = 4
         VIEW_AD_CMD = 'Axial dorsal'
         VIEW_AD_AZEL = [0 90]
         
         % axial ventral view
-        %         VIEW_AV = 5
+                VIEW_AV = 5
         VIEW_AV_CMD = 'Axial ventral'
         VIEW_AV_AZEL = [0 -90]
         
         % coronal anterior view
-        %         VIEW_CA = 6
+                VIEW_CA = 6
         VIEW_CA_CMD = 'Coronal anterior'
         VIEW_CA_AZEL = [180 0]
         
         % coronal posterior view
-        %         VIEW_CP = 7
+                VIEW_CP = 7
         VIEW_CP_CMD = 'Coronal posterior'
         VIEW_CP_AZEL = [0 0]
         
+                VIEW_AZEL = { ...
+            PlotBrainSurf.VIEW_3D_AZEL ...
+            PlotBrainSurf.VIEW_SL_AZEL ...
+            PlotBrainSurf.VIEW_SR_AZEL ...
+            PlotBrainSurf.VIEW_AD_AZEL ...
+            PlotBrainSurf.VIEW_AV_AZEL ...
+            PlotBrainSurf.VIEW_CA_AZEL ...
+            PlotBrainSurf.VIEW_CP_AZEL ...
+            }
     end
     properties (Access = protected)
         h_axes  % handle for the axes
@@ -79,7 +88,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also PlotBrainSurf.
             
-            disp(['<a href="matlab:help PlotBrainSurf">PlotBrainSurf</a> : ' bs.name()]);
+            disp(['<a href="matlab:help ' class(bs) '">' bs.getName() '</a>']);
         end
         function name = getName(bs)  % (bs)
             % NAME brain surface name
@@ -93,7 +102,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     end
     methods  % editing functions
         function updateSurface(bs, brain_surface_type)
-            fid = fopen(['BrainSurfaces' filsesep() brain_surface_type]);
+            fid = fopen(['BrainSurfaces' filesep brain_surface_type]);
             bs.vertex_number = fscanf(fid, '%f', 1);
             bs.coord = fscanf(fid, '%f', [3, bs.vertex_number]);
             bs.ntri = fscanf(fid, '%f', 1);
