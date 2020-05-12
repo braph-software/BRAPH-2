@@ -14,7 +14,7 @@ function B = standardize(A, varargin)
 %                               values scaled between 0 and 1 by using a
 %                               linear function.
 %
-% See also BINARIZE, DEDIAGONALIZE, SEMIPOSITIVIZE, SYMMETRIZE.
+% See also BINARIZE, DEDIAGONALIZE, DIAGONALIZE, SEMIPOSITIVIZE, SYMMETRIZE.
 
 standardize_rule = get_from_varargin('threshold', 'StandardizeRule', varargin);
 

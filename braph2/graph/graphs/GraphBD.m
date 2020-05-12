@@ -19,7 +19,80 @@ classdef GraphBD < Graph
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
     % See also Graph, GraphBU, GraphWD, GraphWU.
-    
+    methods
+        function g = GraphBD(A, varargin)
+            % GRAPHBD(A) creates a GRAPHBD class with adjacency matrix A.
+            % This function is the constructor, it initializes the class by
+            % operating the adjacency matrix A with the following
+            % functions: DEDIAGONALIZE, SEMIPOSITIVE, BINARIZE.
+            % It calls the superclass constructor GRAPH.
+            %
+            % GRAPHBD(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
+            % a GRAPHBD class with adjacency matrix A and it passes the
+            % properties and values to the superclass as VARARGIN.
+            % This function is the constructor, it initializes the class by
+            % operating the adjacency matrix A with the following
+            % functions: DEDIAGONALIZE, SEMIPOSITIVE, BINARIZE.
+            % It calls the superclass constructor GRAPH.
+            %
+            % See also Graph, GraphBU, GraphWD, GraphWU.
+            
+            A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
+            A = semipositivize(A, varargin{:});  % removes negative weights
+            A = binarize(A, varargin{:});  % enforces binary adjacency matrix
+            
+            g = g@Graph(A, varargin{:});
+        end
+    end
+    methods (Static)  % Descriptive methods
+        function graph_class = getClass()
+            % GETCLASS returns the class of the graph.
+            %
+            % GRAPH_CLASS = GETCLASS() returns the class, 'GraphBD'.
+            %
+            % See also getName().
+            
+            graph_class = 'GraphBD';
+        end
+        function name = getName()
+            % GETNAME returns the name of the graph.
+            %
+            % NAME = GETCLASS() returns the name, 'Binary Directed Graph'.
+            %
+            % See also getClass().
+            
+            name = 'Binary Directed Graph';
+        end
+        function description = getDescription()
+            % GETDESCRIPTION returns the description of the graph.
+            %
+            % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHBD.
+            %
+            % See also getName().
+            
+            description = [ ...
+                'In a binary directed (BD) graph, ' ...
+                'the edges can be either 0 (absence of connection) ' ...
+                'or 1 (existence of connection), ' ...
+                'and they are directed.' ...
+                ];
+        end
+        function bool = is_graph()
+            bool = true;
+        end
+        function bool = is_multigraph()
+            bool = false;
+        end
+        function bool = is_sequence()
+            bool = true;
+        end
+        function bool = is_multiplex()
+            bool = false;
+        end
+        function bool = is_multilayer()
+            bool = false;
+        end
+    end
 %     methods
 %         function g = GraphBD(A, varargin)
 %             % GRAPHBD(A) creates a GRAPHBD class with adjacency matrix A.

@@ -1,4 +1,4 @@
-classdef GraphWD < Graph
+classdef MultiplexGraphWD < Graph
     % GraphWD < Graph: A weighted directed graph
     % GraphWD represents a weighted directed graph.
     %
@@ -20,7 +20,7 @@ classdef GraphWD < Graph
     %
     % See also Graph, GraphBU, GraphBD, GraphWU.
     methods
-        function g = GraphWD(A, varargin)
+        function g = MultiplexGraphWD(A, varargin)
             % GRAPHWD(A) creates a GRAPHWD class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
@@ -36,10 +36,19 @@ classdef GraphWD < Graph
             % It calls the superclass constructor GRAPH.
             %
             % See also Graph, GraphBU, GraphBD, GraphWU.
+
+            assert(iscell(A), ...
+                [BRAPH2.STR ':' BRAPH2.WRONG_INPUT], ...
+                'A must be a cell array of matrices).')
             
-            A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
-            A = semipositivize(A, varargin{:});  % removes negative weights
-            A = standardize(A, varargin{:});  % ensures all weights are between 0 and 1
+            L = length(A); % number of layers
+            for layer = 1:1:L
+                M = A{layer, layer};
+                M = dediagonalize(M, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
+                M = semipositivize(M, varargin{:});  % removes negative weights
+                M = standardize(M, varargin{:});  % ensures all weights are between 0 and 1
+                A(layer, layer) = {M};
+            end
             
             g = g@Graph(A, varargin{:});
         end
@@ -52,7 +61,7 @@ classdef GraphWD < Graph
             %
             % See also getName().
             
-            graph_class = 'GraphWD';
+            graph_class = 'MultiplexGraphWD';
         end
         function name = getName()
             % GETNAME returns the name of the graph.
@@ -61,7 +70,7 @@ classdef GraphWD < Graph
             %
             % See also getClass().
             
-            name = 'Weighted Directed Graph';
+            name = 'Multiplex Weighted Directed Graph';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
@@ -76,7 +85,7 @@ classdef GraphWD < Graph
                 'indicating the strength of the connection, ' ...
                 'and they are directed.' ...
                 ];
-        end      
+        end
         function bool = is_graph()
             bool = true;
         end
@@ -84,10 +93,10 @@ classdef GraphWD < Graph
             bool = false;
         end
         function bool = is_sequence()
-            bool = true;
+            bool = false;
         end
         function bool = is_multiplex()
-            bool = false;
+            bool = true;
         end
         function bool = is_multilayer()
             bool = false;
