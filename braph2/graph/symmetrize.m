@@ -24,7 +24,6 @@ switch lower(symmetrize_rule)
         B = min(A, transpose(A));
     otherwise  % 'max'  % maximum rule
         B = max(A, transpose(A));
-
 end
 
 end
