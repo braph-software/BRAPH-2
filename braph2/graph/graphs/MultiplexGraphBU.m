@@ -1,5 +1,5 @@
-classdef GraphBU < GraphBD
-    % GraphBU < GraphBD: A binary undirected graph
+classdef MultiplexGraphBU < MultiplexGraphBD
+    % MultiplexGraphBU < MultiplexGraphBD: A binary undirected graph
     % GraphBU represents a binary undirected graph.
     %
     % GraphBU methods:
@@ -20,7 +20,7 @@ classdef GraphBU < GraphBD
     %
     % See also Graph, GraphBD, GraphWD, GraphWU.
     methods
-        function g = GraphBU(A, varargin)
+        function g = MultiplexGraphBU(A, varargin)
             % GRAPHBU(A) creates a GRAPHBU class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
@@ -37,9 +37,18 @@ classdef GraphBU < GraphBD
             %
             % See also Graph, GraphBD, GraphWD, GraphWU.
             
-            A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
+            assert(iscell(A), ...
+                [BRAPH2.STR ':' BRAPH2.WRONG_INPUT], ...
+                'A must be a cell array of matrices).')
             
-            g = g@GraphBD(A, varargin{:});
+            L = length(A); % number of layers
+            for layer = 1:1:L
+                M = A{layer, layer};
+                M = symmetrize(M, varargin{:});  % enforces symmetry of adjacency matrix
+                A(layer, layer) = {M};
+            end
+            
+            g = g@MultiplexGraphBD(A, varargin{:});
         end
     end 
     methods (Static)  % Descriptive methods
@@ -50,7 +59,7 @@ classdef GraphBU < GraphBD
             %
             % See also getName().
             
-            graph_class = 'GraphBU';
+            graph_class = 'MultiplexGraphBU';
         end
         function name = getName()
             % GETNAME returns the name of the graph.
@@ -59,7 +68,7 @@ classdef GraphBU < GraphBD
             %
             % See also getClass().
             
-            name = 'Binary Undirected Graph';
+            name = 'Multiplex Binary Undirected Graph';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
@@ -83,10 +92,10 @@ classdef GraphBU < GraphBD
             bool = false;
         end
         function bool = is_sequence()
-            bool = true;
+            bool = false;
         end
         function bool = is_multiplex()
-            bool = false;
+            bool = true;
         end
         function bool = is_multilayer()
             bool = false;

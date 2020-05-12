@@ -86,7 +86,24 @@ classdef Graph < handle & matlab.mixin.Copyable
                             i, j)
                     end
                 end
-            else
+            elseif g.is_multiplex()
+                assert(iscell(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
+                    [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                    'A must be a superadjacency matrix (square cell array of matrices).')
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        assert(size(A{i, j},1)  == size(A{i, j},2), ...
+                            [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                            ['Submatrices must be square.', ...
+                            ' Error in submatrix (%i, %i).'], ...
+                            i, j)
+                        
+                        if i ~= j
+                            A(i, j) = {diagonalize(A{i, j})};  % set to zero the off-diagonal values
+                        end
+                    end
+                end
+            elseif g.is_sequence()
                 assert(isnumeric(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
                     [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
                     'A must be an adjacency matrix.')
@@ -139,12 +156,86 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             name = eval([Graph.getClass(g) '.getDescription()']);
         end
+        function bool = is_graph(g)
+            bool = eval([Graph.getClass(g) '.is_graph()']);
+        end
+        function bool = is_multigraph(g)
+            bool = eval([Graph.getClass(g) '.is_multigraph()']);
+        end
+        function bool = is_sequence(g)
+            bool = eval([Graph.getClass(g) '.is_sequence()']);
+        end
+        function bool = is_multiplex(g)
+            bool = eval([Graph.getClass(g) '.is_multiplex()']);
+        end
         function bool = is_multilayer(g)
-            bool = true;
-            % bool = eval([Graph.getClass(g) '.is_multilayer()']);
-        end        
+            bool = eval([Graph.getClass(g) '.is_multilayer()']);
+        end   
     end
-    
+        methods  % Basic functions
+        function A = getA(g)
+            % GETA returns the cell array of adjacency matrices.
+            %
+            % A = GETA(G) returns the cell array of adjacency matrices A
+            % associated to the graph G.
+            %
+            % See also getSettings(), nodenumber().
+            
+            A = g.A;
+        end
+        function L = getLayer(g, layer_index)
+            % GETA returns the cell array of adjacency matrices.
+            %
+            % A = GETA(G) returns the cell array of adjacency matrices A
+            % associated to the graph G.
+            %
+            % See also getSettings(), nodenumber().
+            
+            % Check if layer_index is within the total number
+            
+            if g.is_multilayer() || g.is_multiplex()
+                assert(layer_index < g.layernumber() + 1, ...
+                    [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                    'Invalid layer index. Layer index must be lower than %i.', ...
+                    g.layernumber())
+
+                A_cell = g.getA();
+                L = cell2mat(A_cell{layer_index, layer_index});
+                
+            else  % singlelayer
+                L = g.getA();
+            end
+        end
+        function n = nodenumber(g)
+            % NODENUMBER returns the number of nodes in the graph.
+            %
+            % N = NODENUMBER(G) returns the number of nodes in the graph.
+            %
+            % See also getA(), getSettings().
+            
+            if g.is_multilayer() || g.is_multiplex()
+                n = cell(1,g.layernumber());
+                for i=1:1:g.layernumber()
+                    n(i) = length(g.getLayer(i));
+                end    
+            else  % singlelayer
+                n = length(g.getA());
+            end
+        end
+        function L = layernumber(g)
+            % LAYERNUMBER returns the number of layers in the graph.
+            %
+            % N = LAYERNUMBER(G) returns the number of layers in the graph.
+            %
+            % See also getA(), getSettings().
+            
+            if g.is_multilayer() || g.is_multiplex()
+                L = length(g.getA());
+            else  % singlelayer
+                L = 1;
+            end
+        end
+    end
 %     methods (Access=protected)
 %         function g = Graph(A, varargin)
 %             % Graph(A) creates a graph with the default properties.

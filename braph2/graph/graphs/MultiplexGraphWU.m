@@ -1,4 +1,4 @@
-classdef GraphWU < GraphWD
+classdef MultiplexGraphWU < MultiplexGraphWD
     % GraphWU < GraphWD: A weighted undirected graph
     % GraphWU represents a weighted undirected graph.
     %
@@ -20,7 +20,7 @@ classdef GraphWU < GraphWD
     %
     % See also Graph, GraphBD, GraphWU, GraphWD.
     methods
-        function g = GraphWU(A, varargin)
+        function g = MultiplexGraphWU(A, varargin)
             % GRAPHWU(A) creates a GRAPHWU class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
@@ -37,9 +37,18 @@ classdef GraphWU < GraphWD
             %
             % See also Graph, GraphBD, GraphWD, GraphBU.
             
-            A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
+            assert(iscell(A), ...
+                [BRAPH2.STR ':' BRAPH2.WRONG_INPUT], ...
+                'A must be a cell array of matrices).')
             
-            g = g@GraphWD(A, varargin{:});
+            L = length(A); % number of layers
+            for layer = 1:1:L
+                M = A{layer, layer};
+                M = symmetrize(M, varargin{:});  % enforces symmetry of adjacency matrix
+                A(layer, layer) = {M};
+            end
+            
+            g = g@MultiplexGraphWD(A, varargin{:});
         end
     end
     methods (Static)  % Descriptive methods
@@ -50,7 +59,7 @@ classdef GraphWU < GraphWD
             %
             % See also getName().
             
-            graph_class = 'GraphWU';
+            graph_class = 'MultiplexGraphWU';
         end
         function name = getName()
             % GETNAME returns the name of the graph.
@@ -59,7 +68,7 @@ classdef GraphWU < GraphWD
             %
             % See also getClass()
             
-            name = 'Weighted Undirected Graph';
+            name = 'Multiplex Weighted Undirected Graph';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
@@ -83,10 +92,10 @@ classdef GraphWU < GraphWD
             bool = false;
         end
         function bool = is_sequence()
-            bool = true;
+            bool = false;
         end
         function bool = is_multiplex()
-            bool = false;
+            bool = true;
         end
         function bool = is_multilayer()
             bool = false;
