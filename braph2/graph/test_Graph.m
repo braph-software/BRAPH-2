@@ -6,6 +6,7 @@ A = [
     2, 2, 2;
     2, 3, 1
     ];
+
 detected = false;
 
 try
@@ -16,7 +17,7 @@ end
 
 assert(detected, ...
     [BRAPH2.STR ': Graph :' BRAPH2.WRONG_INPUT], ...
-    'A must be a square adjacency matrix and it was not detected.')
+    'A was not a square adjacency matrix and it was not detected.')
 
 %% Test 2: GraphType Graph Assert
 A = rand(randi(10));
