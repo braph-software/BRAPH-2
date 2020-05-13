@@ -132,6 +132,19 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)  % Descriptive methods
+        function graph_class_list = getList()
+            % GETLIST returns the list of available graphs
+            %
+            % GRAPH_CLASS_LIST = GETLIST() returns the list of graphs
+            % (cell array) that are subclasses of Graph.
+            %
+            % See also getClass(), getCompatibleMeasureList()
+            
+            graph_class_list = subclasses( ...
+                'Graph', ...
+                [fileparts(which('Graph')) filesep 'graphs'] ...
+                );
+        end
         function graph_class = getClass(g)
             % GETCLASS returns the class of graphs
             %
@@ -236,6 +249,35 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
     methods  % Basic functions
+%         function str = tostring(g)
+%             % TOSTRING string with information about the graph
+%             %
+%             % STR = TOSTRING(G) returns string with the graph class and size.
+%             %
+%             % See also disp().
+%             
+%             str = [Graph.getClass(g) ' ' int2str(size(g.getA(), 1)) ' rows x ' int2str(size(g.getA(), 2)) ' columns'];
+%         end
+%         function disp(g)
+%             % DISP displays information about the graph
+%             %
+%             % DISP(G) displays information about the graph.
+%             % It provides information about graph class, size,
+%             % value, associated measures, and settings.
+%             %
+%             % See also tostring().
+%             
+%             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
+%             disp([' size: ' int2str(size(g.getA(), 1)) ' rows x ' int2str(size(g.getA(), 2)) ' columns'])
+%             disp([' measures: ' int2str(length(g.measure_dict))]);
+%             disp([' settings']); %#ok<NBRAK>
+%             settings = g.getSettings(); %#ok<PROP>
+%             for i = 1:2:length(settings) %#ok<PROP>
+%                 disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
+%             end
+%         end        
+    end
+    methods  % Inspection functions
         function n = nodenumber(g)
             % NODENUMBER returns the number of nodes in the graph.
             %
@@ -345,53 +387,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         end
 %     end
 %     methods
-%         function str = tostring(g)
-%             % TOSTRING string with information about the graph
-%             %
-%             % STR = TOSTRING(G) returns string with the graph class and size.
-%             %
-%             % See also disp().
-%             
-%             str = [Graph.getClass(g) ' ' int2str(size(g.getA(), 1)) ' rows x ' int2str(size(g.getA(), 2)) ' columns'];
-%         end
-%         function disp(g)
-%             % DISP displays information about the graph
-%             %
-%             % DISP(G) displays information about the graph.
-%             % It provides information about graph class, size,
-%             % value, associated measures, and settings.
-%             %
-%             % See also tostring().
-%             
-%             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
-%             disp([' size: ' int2str(size(g.getA(), 1)) ' rows x ' int2str(size(g.getA(), 2)) ' columns'])
-%             disp([' measures: ' int2str(length(g.measure_dict))]);
-%             disp([' settings']); %#ok<NBRAK>
-%             settings = g.getSettings(); %#ok<PROP>
-%             for i = 1:2:length(settings) %#ok<PROP>
-%                 disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
-%             end
-%         end
-%         function A = getA(g)
-%             % GETA returns the adjacency matrix.
-%             %
-%             % A = GETA(G) returns the adjacency matrix A associated to the
-%             % graph G.
-%             %
-%             % See also getSettings(), nodenumber().
-%             
-%             A = g.A;
-%         end
-%         function n = nodenumber(g)
-%             % NODENUMBER returns the number of nodes in the graph.
-%             %
-%             % N = NODENUMBER(G) returns the number of nodes in the graph.
-%             %
-%             % See also getA(), getSettings().
-%             
-%             n = length(g.getA());
-%         end
-% % layernumber(g)
 %         function res = getSettings(g, setting_code)
 %             % GETSETTINGS returns the settings
 %             %
@@ -504,19 +499,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         randomize_graph(n);
 %     end
 %     methods (Static)
-%         function graph_class_list = getList()
-%             % GETLIST returns the list of available graphs
-%             %
-%             % GRAPH_CLASS_LIST = GETLIST() returns the list of graphs
-%             % (cell array) that are subclasses of Graph.
-%             %
-%             % See also getClass(), getCompatibleMeasureList()
-%             
-%             graph_class_list = subclasses( ...
-%                 'Graph', ...
-%                 [fileparts(which('Graph')) filesep 'graphs'] ...
-%                 );
-%         end
 % % number of layers
 %         function bool = is_selfconnected(g)
 %             % IS_SELFCONNECTED checks if graph is self-connected
