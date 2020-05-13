@@ -77,20 +77,14 @@ classdef GraphBD < Graph
                 'and they are directed.' ...
                 ];
         end
-        function bool = is_graph()
-            bool = true;
+        function graph_type = getGraphType()
+            graph_type = Graph.GRAPH;
         end
-        function bool = is_multigraph()
-            bool = false;
+        function graph_type = getConnectionType()
+            graph_type = Graph.BINARY;
         end
-        function bool = is_sequence()
-            bool = true;
-        end
-        function bool = is_multiplex()
-            bool = false;
-        end
-        function bool = is_multilayer()
-            bool = false;
+        function graph_type = getEdgeType()
+            graph_type = Graph.DIRECTED;
         end
     end
 %     methods
