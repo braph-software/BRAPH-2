@@ -45,7 +45,24 @@ classdef Graph < handle & matlab.mixin.Copyable
     %
     % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD.
 
-    properties % (GetAccess=protected, SetAccess=protected)
+	properties (Constant)
+        % Graph types
+        GRAPH = 101  % single graph
+        MULTIGRAPH = 102  % multiple unconnected graphs
+        SEQUENCE = 103  % multiple graphs with sequential connections between corresponding nodes
+        STACK = 104  % multiple graphs with sequential connections between all nodes
+        MULTIPLEX = 105  % multiple graphs with connections between corresponding nodes
+        MULTILAYER = 106  % multiple graphs with connections between all nodes
+                
+        % Connection types
+        WEIGHTED = 201  % weighted connections
+        BINARY = 202  % binary (0 or 1) connections
+        
+        % Edge types
+        DIRECTED = 301  % directed edges
+        UNDIRECTED = 302  % undirected edges
+    end
+    properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
     end
 %     properties (GetAccess=protected, SetAccess=protected)
@@ -53,7 +70,7 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         settings  % structure with the constructor varagin
 %         measure_dict  % dictionary with calculated measures
 %     end
-    methods % (Access=protected)
+    methods (Access=protected)  % Contructor
         function g = Graph(A, varargin)
             % Graph(A) creates a graph with the default properties.
             % A is the adjacency matrix. This method is only accessible
@@ -68,45 +85,47 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
 
-            if g.is_multilayer()
-                assert(iscell(A) && ismatrix(A) && size(A, 1) == size(A, 2), ... 
+            % Basic checks
+            if g.is_graph() % if graph, adjacency matrix
+                assert(isnumeric(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
                     [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
-                    'A must be a superadjacency matrix (square cell array of matrices).')
-                for i = 1:1:size(A, 1)
-                    for j = 1:1:size(A, 2)
-                        assert(size(A{i, j}, 1) == size(A{i, 1}, 1), ...
-                            [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
-                            ['All submatrices in the same row must have the same number of rows.' ...
-                            ' Error in submatrix (%i, %i).'], ...
-                            i, j)
-                        assert(size(A{i, j}, 2) == size(A{1, j}, 2), ...
-                            [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
-                            ['All submatrices in the same column must have the same number of columns.' ...
-                            ' Error in submatrix (%i, %i).'], ...
-                            i, j)
-                    end
-                end
-            elseif g.is_multiplex()
+                    'A must be a square adjacency matrix.')
+            else  % all other graph types, square cell array of matrices
                 assert(iscell(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
                     [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
                     'A must be a superadjacency matrix (square cell array of matrices).')
-                for i = 1:1:size(A, 1)
-                    for j = 1:1:size(A, 2)
-                        assert(size(A{i, j},1)  == size(A{i, j},2), ...
-                            [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
-                            ['Submatrices must be square.', ...
-                            ' Error in submatrix (%i, %i).'], ...
-                            i, j)
-                        
-                        if i ~= j
-                            A(i, j) = {diagonalize(A{i, j})};  % set to zero the off-diagonal values
-                        end
-                    end
-                end
-            elseif g.is_sequence()
-                assert(isnumeric(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
-                    [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
-                    'A must be an adjacency matrix.')
+                    % all diagonal are square
+            end
+            
+            % Additional checks
+            switch Graph.getGraphType(g)
+                case {Graph.GRAPH, Graph.MULTIGRAPH}
+                    % no additional checks
+
+                case {Graph.SEQUENCE, Graph.STACK}
+                    % all matrixes in diagonal +/- 1 same
+                    
+                case Graph.MULTIPLEX
+                    assert(all(cellfun(@(a) size(a, 1), A) == cellfun(@(a) size(a, 2), A), 'all'), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'In a multiplex, all submatrices must be square.')
+                    % check they are all same
+
+%                     % enforce zero off-diagonal values
+%                     for i = 1:1:size(A, 1)
+%                         for j = i+1:1:size(A, 2)
+%                             A(i, j) = diagonalize(A{i, j}, varargin{:});
+%                             A(j, i) = diagonalize(A{j, i}, varargin{:});
+%                         end
+%                     end
+                    
+                case Graph.MULTILAYER
+                    assert(all(cellfun(@(a) size(a, 1), A) == cellfun(@(a) size(a, 1), A(:, 1), 'all')), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'All submatrices in the same row must have the same number of rows.')
+                    assert(all(cellfun(@(a) size(a, 2), A) == cellfun(@(a) size(a, 2), A(1, :), 'all')), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'All submatrices in the same column must have the same number of columns.')
             end
             
             g.A = A;
@@ -156,83 +175,110 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             name = eval([Graph.getClass(g) '.getDescription()']);
         end
+        function graph_type = getGraphType(g)
+            graph_type = eval([Graph.getClass(g) '.getGraphType()']);
+        end
         function bool = is_graph(g)
-            bool = eval([Graph.getClass(g) '.is_graph()']);
+            % single graph
+            
+            bool = Graph.getGraphType(g) == Graph.GRAPH;
         end
         function bool = is_multigraph(g)
-            bool = eval([Graph.getClass(g) '.is_multigraph()']);
+            % multiple unconnected graphs
+            
+            bool = Graph.getGraphType(g) == Graph.MULTIGRAPH;
         end
         function bool = is_sequence(g)
-            bool = eval([Graph.getClass(g) '.is_sequence()']);
+            % multiple graphs with sequential connections between corresponding nodes
+            
+            bool = Graph.getGraphType(g) == Graph.SEQUENCE;
+        end
+        function bool = is_stack(g)
+            % multiple graphs with sequential connections between all nodes
+            
+            bool = Graph.getGraphType(g) == Graph.STACK;
         end
         function bool = is_multiplex(g)
-            bool = eval([Graph.getClass(g) '.is_multiplex()']);
+            % multiple graphs with connections between corresponding nodes
+            
+            bool = Graph.getGraphType(g) == Graph.MULTIPLEX;
         end
         function bool = is_multilayer(g)
-            bool = eval([Graph.getClass(g) '.is_multilayer()']);
-        end   
+            % multiple graphs with connections between all nodes
+            
+            bool = Graph.getGraphType(g) == Graph.MULTILAYER;
+        end
+        function connection_type = getConnectionType(g)
+            connection_type = eval([Graph.getClass(g) '.getConnectionType()']);
+        end
+        function bool = is_weighted(g)
+            % weighted connections
+            
+            bool = Graph.getConnectionType(g) == Graph.WEIGHTED;
+        end
+        function bool = is_binary(g)
+            % binary (0 or 1) connections
+            
+            bool = Graph.getConnectionType(g) == Graph.BINARY;
+        end
+        function edge_type = getEgdeType(g)
+            edge_type = eval([Graph.getClass(g) '.getEdgeType()']);
+        end
+        function bool = is_directed(g)
+            % directed edges
+            
+            bool = Graph.getEgdeType(g) == Graph.DIRECTED;
+        end
+        function bool = is_undirected(g)
+            % undirected edges
+            
+            bool = Graph.getEgdeType(g) == Graph.UNDIRECTED;
+        end
     end
-        methods  % Basic functions
-        function A = getA(g)
-            % GETA returns the cell array of adjacency matrices.
-            %
-            % A = GETA(G) returns the cell array of adjacency matrices A
-            % associated to the graph G.
-            %
-            % See also getSettings(), nodenumber().
-            
-            A = g.A;
-        end
-        function L = getLayer(g, layer_index)
-            % GETA returns the cell array of adjacency matrices.
-            %
-            % A = GETA(G) returns the cell array of adjacency matrices A
-            % associated to the graph G.
-            %
-            % See also getSettings(), nodenumber().
-            
-            % Check if layer_index is within the total number
-            
-            if g.is_multilayer() || g.is_multiplex()
-                assert(layer_index < g.layernumber() + 1, ...
-                    [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
-                    'Invalid layer index. Layer index must be lower than %i.', ...
-                    g.layernumber())
-
-                A_cell = g.getA();
-                L = cell2mat(A_cell{layer_index, layer_index});
-                
-            else  % singlelayer
-                L = g.getA();
-            end
-        end
+    methods  % Basic functions
         function n = nodenumber(g)
             % NODENUMBER returns the number of nodes in the graph.
             %
             % N = NODENUMBER(G) returns the number of nodes in the graph.
             %
             % See also getA(), getSettings().
-            
-            if g.is_multilayer() || g.is_multiplex()
-                n = cell(1,g.layernumber());
-                for i=1:1:g.layernumber()
-                    n(i) = length(g.getLayer(i));
-                end    
-            else  % singlelayer
-                n = length(g.getA());
+
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    n = length(g.getA());
+                otherwise
+                    A = g.getA; %#ok<PROP>
+                    n = cellfun(@(a) length(a), A(1,length(A)+1:end)); %#ok<PROP>
             end
         end
-        function L = layernumber(g)
+        function n = layernumber(g)
             % LAYERNUMBER returns the number of layers in the graph.
             %
             % N = LAYERNUMBER(G) returns the number of layers in the graph.
             %
             % See also getA(), getSettings().
             
-            if g.is_multilayer() || g.is_multiplex()
-                L = length(g.getA());
-            else  % singlelayer
-                L = 1;
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    n = 1;
+                otherwise
+                    n = length(g.getA());
+            end
+        end
+        function A = getA(g, i, j)
+            % GETA returns the cell array of adjacency matrices.
+            %
+            % A = GETA(G) returns the cell array of adjacency matrices A
+            % associated to the graph G.
+            %
+            % See also getSettings(), nodenumber().
+            
+            if nargin == 1  % return cell array of adjacency matrices
+                A = g.A;
+            elseif nargin == 2  % return A{i, i}
+                A = g.A{i, i};
+            else  % return A{i, j}
+                A = g.A{i, j};
             end
         end
     end
