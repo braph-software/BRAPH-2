@@ -1,14 +1,14 @@
 classdef MultiplexGraphWU < MultiplexGraphWD
-    % GraphWU < GraphWD: A weighted undirected graph
-    % GraphWU represents a weighted undirected graph.
+    % MultiplexGraphWU < MultiplexGraphWD: A multiplex weighted undirected graph
+    % MultiplexGraphWU represents a multiplex weighted undirected graph.
     %
-    % GraphWU methods:
-    %   GraphWU     - constructor.
+    % MultiplexGraphWU methods:
+    %   MultiplexGraphWU     - constructor.
     %
-    % GraphWU methods (static):
-    %   getClass    - return the class type GraphWU.
-    %   getName     - return the complete name of GraphWU.
-    %   getDescription - return the description of GraphWU.
+    % MultiplexGraphWU methods (static):
+    %   getClass    - return the class type MultiplexGraphWU.
+    %   getName     - return the complete name of MultiplexGraphWU.
+    %   getDescription - return the description of MultiplexGraphWU.
     %   is_selfconnected - boolean, checks if the graph is self-connected.
     %   is_nonnegative - boolean, checks if the graph is non-negative.
     %   is_weighted - boolean, checks if the graph is weighted.
@@ -18,30 +18,27 @@ classdef MultiplexGraphWU < MultiplexGraphWD
     %   getCompatibleMeasureList - returns a list with compatible measures.
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
-    % See also Graph, GraphBD, GraphWU, GraphWD.
+    % See also Graph, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
+    
     methods
         function g = MultiplexGraphWU(A, varargin)
-            % GRAPHWU(A) creates a GRAPHWU class with adjacency matrix A.
+            % MULTIPLEXGRAPHWU(A) creates a MULTIPLEXGRAPHWU class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
             % function: SYMMETRIZE.
-            % It calls the superclass constructor GRAPHWD.
+            % It calls the superclass constructor MULTIPLEXGRAPHWD.
             %
-            % GRAPHWU(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-            % a GRAPHWU class with adjacency matrix A and it passes the
+            % MULTIPLEXGRAPHWU(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
+            % a MULTIPLEXGRAPHWU class with adjacency matrix A and it passes the
             % properties and values to the superclass as VARARGIN.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
             % function: SYMMETRIZE.
-            % It calls the superclass constructor GRAPHWD.
+            % It calls the superclass constructor MULTIPLEXGRAPHWD.
             %
-            % See also Graph, GraphBD, GraphWD, GraphBU.
+            % See also Graph, MultiplexGraphBD, MultiplexGraphWD, MultiplexGraphBU.
             
-            assert(iscell(A), ...
-                [BRAPH2.STR ':' BRAPH2.WRONG_INPUT], ...
-                'A must be a cell array of matrices).')
-            
-            L = length(A); % number of layers
+            L = length(A);  % number of layers
             for layer = 1:1:L
                 M = A{layer, layer};
                 M = symmetrize(M, varargin{:});  % enforces symmetry of adjacency matrix
@@ -85,20 +82,14 @@ classdef MultiplexGraphWU < MultiplexGraphWD
                 'The connectivity matrix is symmetric.' ...
                 ];
         end
-        function bool = is_graph()
-            bool = true;
+        function graph_type = getGraphType()
+            graph_type = Graph.MULTIPLEX;
         end
-        function bool = is_multigraph()
-            bool = false;
+        function graph_type = getConnectionType()
+            graph_type = Graph.WEIGHTED;
         end
-        function bool = is_sequence()
-            bool = false;
-        end
-        function bool = is_multiplex()
-            bool = true;
-        end
-        function bool = is_multilayer()
-            bool = false;
+        function graph_type = getEdgeType()
+            graph_type = Graph.UNDIRECTED;
         end
     end
 %     methods

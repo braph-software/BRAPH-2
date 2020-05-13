@@ -1,13 +1,38 @@
 % test Graph
-% graph_class_list = Graph.getList();
-% 
+graph_class_list = Graph.getList();
+
+%% Test 1: GraphType Graph Assert
+A = [
+    2, 2, 2;
+    2, 3, 1
+    ];
+detected = false;
+
+try
+    g = GraphBU(A);  % GraphType Graph
+catch 
+    detected = true;
+end
+
+assert(detected, ...
+    [BRAPH2.STR ': Graph :' BRAPH2.WRONG_INPUT], ...
+    'A must be a square adjacency matrix and it was not detected.')
+
+%% Test 2: GraphType Graph Assert
+A = rand(randi(10));
+g = GraphBU(A);  % GraphType Graph
+
+assert(isequal(g.getClass(), 'GraphBU'), ...
+    'BRAPH: GraphBU :StaticFuncImplementation', ...
+    ['GraphBU.getClass() should return ''' 'GraphBU' ''''])
+
 % %% Test 1: All graphs not abstract
 % for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};
 %     A = rand(randi(10));
 %     g = Graph.getGraph(graph_class, A);
 % end
-% 
+
 % %% Test 2: Implementation static methods
 % for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};

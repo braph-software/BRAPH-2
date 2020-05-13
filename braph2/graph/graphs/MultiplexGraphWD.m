@@ -1,14 +1,14 @@
 classdef MultiplexGraphWD < Graph
-    % GraphWD < Graph: A weighted directed graph
-    % GraphWD represents a weighted directed graph.
+    % MultiplexGraphWD < Graph: A multiplex weighted directed graph
+    % MultiplexGraphWD represents a multiplex weighted directed graph.
     %
-    % GraphWD methods:
-    %   GraphWD     - constructor.
+    % MultiplexGraphWD methods:
+    %   MultiplexGraphWD     - constructor.
     %
-    % GraphWD methods (static):
-    %   getClass    - return the class type GraphWD.
-    %   getName     - return the complete name of GraphWD.
-    %   getDescription - return the description of GraphWD.
+    % MultiplexGraphWD methods (static):
+    %   getClass    - return the class type MultiplexGraphWD.
+    %   getName     - return the complete name of MultiplexGraphWD.
+    %   getDescription - return the description of MultiplexGraphWD.
     %   is_selfconnected - boolean, checks if the graph is self-connected.
     %   is_nonnegative - boolean, checks if the graph is non-negative.
     %   is_weighted - boolean, checks if the graph is weighted.
@@ -18,36 +18,44 @@ classdef MultiplexGraphWD < Graph
     %   getCompatibleMeasureList - returns a list with compatible measures.
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
-    % See also Graph, GraphBU, GraphBD, GraphWU.
+    % See also Graph, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU.
+    
     methods
         function g = MultiplexGraphWD(A, varargin)
-            % GRAPHWD(A) creates a GRAPHWD class with adjacency matrix A.
+            % MULTIPLEXGRAPHWD(A) creates a MULTIPLEXGRAPHWD class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
             % functions: DEDIAGONALIZE, SEMIPOSITIVE, STANDARDIZE.
             % It calls the superclass constructor GRAPH.
             %
-            % GRAPHWD(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-            % a GRAPHWD class with adjacency matrix A and it passes the
+            % MULTIPLEXGRAPHWD(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
+            % a MULTIPLEXGRAPHWD class with adjacency matrix A and it passes the
             % properties and values to the superclass as VARARGIN.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
             % functions: DEDIAGONALIZE, SEMIPOSITIVE, STANDARDIZE.
             % It calls the superclass constructor GRAPH.
             %
-            % See also Graph, GraphBU, GraphBD, GraphWU.
+            % See also Graph, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU.
 
-            assert(iscell(A), ...
-                [BRAPH2.STR ':' BRAPH2.WRONG_INPUT], ...
-                'A must be a cell array of matrices).')
-            
-            L = length(A); % number of layers
+            L = length(A);  % number of layers
             for layer = 1:1:L
                 M = A{layer, layer};
                 M = dediagonalize(M, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
                 M = semipositivize(M, varargin{:});  % removes negative weights
                 M = standardize(M, varargin{:});  % ensures all weights are between 0 and 1
                 A(layer, layer) = {M};
+            end
+            % enforce zero off-diagonal values and binary diagonal values
+            for i = 1:1:size(A, 1)
+                for j = i+1:1:size(A, 2)
+                    A(i, j) = {diagonalize(A{i, j}, varargin{:})};
+                    A(j, i) = {diagonalize(A{j, i}, varargin{:})};
+                    A(i, j) = {semipositivize(A{i, j}, varargin{:})};
+                    A(j, i) = {semipositivize(A{j, i}, varargin{:})};
+                    A(i, j) = {standardize(A{i, j}, varargin{:})};
+                    A(j, i) = {standardize(A{j, i}, varargin{:})};
+                end
             end
             
             g = g@Graph(A, varargin{:});
@@ -86,20 +94,14 @@ classdef MultiplexGraphWD < Graph
                 'and they are directed.' ...
                 ];
         end
-        function bool = is_graph()
-            bool = true;
+        function graph_type = getGraphType()
+            graph_type = Graph.MULTIPLEX;
         end
-        function bool = is_multigraph()
-            bool = false;
+        function graph_type = getConnectionType()
+            graph_type = Graph.WEIGHTED;
         end
-        function bool = is_sequence()
-            bool = false;
-        end
-        function bool = is_multiplex()
-            bool = true;
-        end
-        function bool = is_multilayer()
-            bool = false;
+        function graph_type = getEdgeType()
+            graph_type = Graph.DIRECTED;
         end
     end
 %     methods

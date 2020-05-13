@@ -19,6 +19,7 @@ classdef GraphBU < GraphBD
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
     % See also Graph, GraphBD, GraphWD, GraphWU.
+    
     methods
         function g = GraphBU(A, varargin)
             % GRAPHBU(A) creates a GRAPHBU class with adjacency matrix A.
@@ -79,18 +80,15 @@ classdef GraphBU < GraphBD
         function bool = is_graph()
             bool = true;
         end
-        function bool = is_multigraph()
-            bool = false;
+        function graph_type = getGraphType()
+            graph_type = Graph.GRAPH;
         end
-        function bool = is_sequence()
-            bool = true;
+        function graph_type = getConnectionType()
+            graph_type = Graph.BINARY;
         end
-        function bool = is_multiplex()
-            bool = false;
+        function graph_type = getEdgeType()
+            graph_type = Graph.UNDIRECTED;
         end
-        function bool = is_multilayer()
-            bool = false;
-        end      
     end
 %     methods
 %         function g = GraphBU(A, varargin)

@@ -49,10 +49,10 @@ classdef Graph < handle & matlab.mixin.Copyable
         % Graph types
         GRAPH = 101  % single graph
         MULTIGRAPH = 102  % multiple unconnected graphs
-        SEQUENCE = 103  % multiple graphs with sequential connections between corresponding nodes
-        STACK = 104  % multiple graphs with sequential connections between all nodes
-        MULTIPLEX = 105  % multiple graphs with connections between corresponding nodes
-        MULTILAYER = 106  % multiple graphs with connections between all nodes
+        ORDERED_MULTIPLEX = 103  % SEQUENCEmultiple graphs with sequential connections between corresponding nodes (MULTIPLEX ORDINAL)
+        MULTIPLEX = 104  % multiple graphs with connections between corresponding nodes (MULTIPLEX CATEGORICAL)
+        ORDERED_MULTILAYER = 105  % multiple graphs with sequential connections between all nodes (MULTILAYER ORDINAL)
+        MULTILAYER = 106  % multiple graphs with connections between all nodes (MULTILAYER CATEGORICAL)
                 
         % Connection types
         WEIGHTED = 201  % weighted connections
@@ -62,7 +62,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         DIRECTED = 301  % directed edges
         UNDIRECTED = 302  % undirected edges
     end
-    properties (GetAccess=protected, SetAccess=protected)
+    properties %(GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
     end
 %     properties (GetAccess=protected, SetAccess=protected)
@@ -70,7 +70,7 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         settings  % structure with the constructor varagin
 %         measure_dict  % dictionary with calculated measures
 %     end
-    methods (Access=protected)  % Contructor
+    methods %(Access=protected)  % Contructor
         function g = Graph(A, varargin)
             % Graph(A) creates a graph with the default properties.
             % A is the adjacency matrix. This method is only accessible
@@ -86,7 +86,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
 
             % Basic checks
-            if g.is_graph() % if graph, adjacency matrix
+            if g.is_graph()  % if graph, adjacency matrix
                 assert(isnumeric(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
                     [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
                     'A must be a square adjacency matrix.')
@@ -94,7 +94,10 @@ classdef Graph < handle & matlab.mixin.Copyable
                 assert(iscell(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
                     [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
                     'A must be a superadjacency matrix (square cell array of matrices).')
-                    % all diagonal are square
+                % all submatrices in the diagonal are square
+                assert(all(cellfun(@(a) size(a, 1) == size(a, 2), A(1:length(A)+1:end))), ...
+                    [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                    'All submatrices in the cell diagonal must be square.')
             end
             
             % Additional checks
@@ -102,28 +105,46 @@ classdef Graph < handle & matlab.mixin.Copyable
                 case {Graph.GRAPH, Graph.MULTIGRAPH}
                     % no additional checks
 
-                case {Graph.SEQUENCE, Graph.STACK}
-                    % all matrixes in diagonal +/- 1 same
+                case Graph.ORDERED_MULTIPLEX
+                    % all matrixes in diagonal +/- 1 same dimensions
+                    assert(all(cellfun(@(a) size(a, 1), A(1:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'In a sequence, submatrices in the cell diagonal must have the same dimensions.')
+                    assert(all(cellfun(@(a) size(a, 1), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'In a sequence, submatrices in the cell sub-diagonal must have the same dimensions.')
+                    assert(all(cellfun(@(a) size(a, 1), A(length(A)+1:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'In a sequence, submatrices in the cell super-diagonal must have the same dimensions.')
                     
                 case Graph.MULTIPLEX
-                    assert(all(cellfun(@(a) size(a, 1), A) == cellfun(@(a) size(a, 2), A), 'all'), ...
+                    assert(all(cellfun(@(a) size(a, 1) == size(a, 2), A(:))), ...
                         [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
                         'In a multiplex, all submatrices must be square.')
-                    % check they are all same
-
-%                     % enforce zero off-diagonal values
-%                     for i = 1:1:size(A, 1)
-%                         for j = i+1:1:size(A, 2)
-%                             A(i, j) = diagonalize(A{i, j}, varargin{:});
-%                             A(j, i) = diagonalize(A{j, i}, varargin{:});
-%                         end
-%                     end
+                    % check they are all submatrices have same dimensions.
+                    assert(all(cellfun(@(a) size(a, 1), A(:)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'In a multiplex, all submatrices must have the same dimensions.')
+                    
+                case Graph.ORDERED_MULTILAYER
+                    assert(all(cellfun(@(a) size(a, 1), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(length(A)+2:length(A)+1:end))), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'Sub-diagonal submatrices in the same row must have the same number of rows.')
+                    assert(all(cellfun(@(a) size(a, 2), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 2), A(1:length(A)+1:length(A)*2-1))), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'Sub-diagonal submatrices in the same column must have the same number of columns.')
+                    assert(all(cellfun(@(a) size(a, 1), A(length(A)+1:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1:length(A)+1:length(A)*2-1))), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'Super-diagonal submatrices in the same row must have the same number of rows.')
+                    assert(all(cellfun(@(a) size(a, 2), A(length(A)+1:length(A)+1:end)) == cellfun(@(a) size(a, 2), A(length(A)+2:length(A)+1:end))), ...
+                        [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
+                        'Super-diagonal submatrices in the same column must have the same number of columns.')
                     
                 case Graph.MULTILAYER
-                    assert(all(cellfun(@(a) size(a, 1), A) == cellfun(@(a) size(a, 1), A(:, 1), 'all')), ...
+                    assert(all(all(cellfun(@(a) size(a, 1), A) == cellfun(@(a) size(a, 1), A(:, 1)))), ...
                         [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
                         'All submatrices in the same row must have the same number of rows.')
-                    assert(all(cellfun(@(a) size(a, 2), A) == cellfun(@(a) size(a, 2), A(1, :), 'all')), ...
+                    assert(all(all(cellfun(@(a) size(a, 2), A) == cellfun(@(a) size(a, 2), A(1, :)))), ...
                         [BRAPH2.STR ':' class(g) ':' BRAPH2.WRONG_INPUT], ...
                         'All submatrices in the same column must have the same number of columns.')
             end
@@ -193,28 +214,27 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
         function bool = is_graph(g)
             % single graph
-            
             bool = Graph.getGraphType(g) == Graph.GRAPH;
         end
         function bool = is_multigraph(g)
             % multiple unconnected graphs
             
-            bool = Graph.getGraphType(g) == Graph.MULTIGRAPH;
+            bool = g.getGraphType() == Graph.MULTIGRAPH;
         end
-        function bool = is_sequence(g)
+        function bool = is_ordered_multiplex(g)
             % multiple graphs with sequential connections between corresponding nodes
             
-            bool = Graph.getGraphType(g) == Graph.SEQUENCE;
-        end
-        function bool = is_stack(g)
-            % multiple graphs with sequential connections between all nodes
-            
-            bool = Graph.getGraphType(g) == Graph.STACK;
+            bool = Graph.getGraphType(g) == Graph.ORDERED_MULTIPLEX;
         end
         function bool = is_multiplex(g)
             % multiple graphs with connections between corresponding nodes
             
             bool = Graph.getGraphType(g) == Graph.MULTIPLEX;
+        end
+        function bool = is_ordered_multilayer(g)
+            % multiple graphs with sequential connections between all nodes
+            
+            bool = Graph.getGraphType(g) == Graph.ORDERED_MULTILAYER;
         end
         function bool = is_multilayer(g)
             % multiple graphs with connections between all nodes
@@ -249,33 +269,33 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
     methods  % Basic functions
-%         function str = tostring(g)
-%             % TOSTRING string with information about the graph
-%             %
-%             % STR = TOSTRING(G) returns string with the graph class and size.
-%             %
-%             % See also disp().
-%             
-%             str = [Graph.getClass(g) ' ' int2str(size(g.getA(), 1)) ' rows x ' int2str(size(g.getA(), 2)) ' columns'];
-%         end
-%         function disp(g)
-%             % DISP displays information about the graph
-%             %
-%             % DISP(G) displays information about the graph.
-%             % It provides information about graph class, size,
-%             % value, associated measures, and settings.
-%             %
-%             % See also tostring().
-%             
-%             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
-%             disp([' size: ' int2str(size(g.getA(), 1)) ' rows x ' int2str(size(g.getA(), 2)) ' columns'])
+        function str = tostring(g)
+            % TOSTRING string with information about the graph
+            %
+            % STR = TOSTRING(G) returns string with the graph class and size.
+            %
+            % See also disp().
+            
+            str = [Graph.getClass(g) ' ' int2str(g.layernumber()) ' layers ' int2str(g.nodenumber()) ' columns'];
+        end
+        function disp(g)
+            % DISP displays information about the graph
+            %
+            % DISP(G) displays information about the graph.
+            % It provides information about graph class, size,
+            % value, associated measures, and settings.
+            %
+            % See also tostring().
+            
+            disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
+            disp([' size: ' int2str(g.layernumber()) ' layers ' int2str(g.nodenumber()) ' nodes'])
 %             disp([' measures: ' int2str(length(g.measure_dict))]);
 %             disp([' settings']); %#ok<NBRAK>
 %             settings = g.getSettings(); %#ok<PROP>
 %             for i = 1:2:length(settings) %#ok<PROP>
 %                 disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
 %             end
-%         end        
+        end
     end
     methods  % Inspection functions
         function n = nodenumber(g)
