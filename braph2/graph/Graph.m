@@ -2,43 +2,46 @@ classdef Graph < handle & matlab.mixin.Copyable
     % Graph < handle & matlab.mixin.Copyable (Abstract): A graph
     % Graph provides the methods necessary for all graphs.
     % Instances of this class cannot be created. 
-    % Use one of the subclasses (e.g., GraphBD, GraphBU, GraphWD, GraphWU). 
+    % Use one of the subclasses (e.g., GraphBD, GraphBU, GraphWD, GraphWU, 
+    % MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU). 
     % The subclasses must be created inside the folder ./braph/graph/graphs/.
     %
     % Graph properties (GetAccess=protected, SetAccess=protected):
-    %   A           - adjacency matrix.
+    %   A           - adjacency matrix or 2D-cell array of adjacency matrices.
     %   settings    - structure with the constructor settings.
     %   measure_dict - dictionary with the calculated measure.
     %                  (key, value) = (measure code, measure value)
     %
-    % Graph methods (Access=protected)
-    %   Graph       - constructor.
-    %   copyElement - deep copy community structure.
-    %
     % Graph methods:
-    %   tostring    - returns a string representing the graph.
-    %   disp        - displays the graph.
-    %   getA        - returns the adjacency matrix.
-    %   nodenumber  - returns the number of nodes in a graph.
-    %   getSettings - returns the settings of the graph.
-    %   getMeasure  - returns the measure of the graph.
-    %   is_measure_calculated - checks if the measure is calculated.
-    %   getMeasureValue - returns the value of a measure of the graph.
-    %   subgraph    - returns a subgraph from given nodes.
-    %   nodeattack  - removes given nodes from a graph.
-    %   edgeattack  - removes given edges from a graph.
-    %
-    % Graph methods (Static):
+    %   checkA      - checks if A is correct for the graph type.
     %   getList     - return a list with subclasses of graph.
     %   getClass    - returns the class type of the graph.
     %   getName     - returns the name of the graph.
     %   getDescription - returns the description of the graph.
-    %   is_selfconnected - checks if the graph is self connected.
-    %   is_nonnegative - checks if the graph is non negative.
+    %   getCGraphType    - returns the graph type.
+    %   is_graph    - checks if the graph is a single layer graph.
+    %   is_multigraph    - checks if the graph is a multigraph.
+    %   is_ordered_multiplex   - checks if the graph is an ordered multiplex graph.
+    %   is_multiplex    - checks if the graph is a multiplex graph.
+    %   is_ordered_multilayer   - checks if the graph is an ordered multilayer graph.
+    %   is_multilayer   - checks if the graph is a multilayer graph.
+    %   getConnectionType    - returns if the graph is binary or weighted.
     %   is_weighted - checks if the graph is weighted.
     %   is_binary   - checks if the graph is binary.
+    %   getEgdeType    - returns if graph is directed or undirected.
     %   is_directed - checks if the graph is directed.
     %   is_undirected - checks if the graph is undirected.
+    %   getSelfConnectivityType    - returns if graph is self-connected or not self-connected.
+    %   is_selfconnected - checks if the graph is self connected.
+    %   is_not_selfconnected - checks if the graph is not self connected.
+    %   getNegativityType    - returns if graph is negative or non-negative
+    %   is_nonnegative - checks if the graph is non negative.
+    %   is_negative - checks if the graph is negative.
+    %   tostring    - returns a string representing the graph.
+    %   disp        - displays the graph.
+    %   nodenumber  - returns the number of nodes in a graph.
+    %   layernumber  - returns the number of layers in a graph. 
+    %   getA        - returns the adjacency matrix.
     %   getGraph    - returns a graph with the given inputs.
     %   getCompatibleMeasureList - returns a list with the compatible measures.
     %   getCompatibleMeasureNumber - returns a number of the compatible measures.
@@ -49,30 +52,30 @@ classdef Graph < handle & matlab.mixin.Copyable
         % Graph types
         GRAPH = 1  % single graph
         GRAPH_NAME = 'Graph'
-        GRAPH_DESCRIPTION = 'Graph represents a single layer graph.'
+        GRAPH_DESCRIPTION = 'This graph consists of a single layer graph.'
 
         MULTIGRAPH = 2  % multiple unconnected graphs
         MULTIGRAPH_NAME = 'Multigraph'
-        MULTIGRAPH_DESCRIPTION = 'Multigraph consists of multiple unconnected graphs.'
+        MULTIGRAPH_DESCRIPTION = 'A multigraph consists of multiple unconnected graphs.'
         
         ORDERED_MULTIPLEX = 3  % multiple graphs with sequential connections between corresponding nodes
         ORDERED_MULTIPLEX_NAME = 'Ordered Multipex'
-        ORDERED_MULTIPLEX_DESCRIPTION = ['Ordered Multiplex consists of multiple ' ...
+        ORDERED_MULTIPLEX_DESCRIPTION = ['An ordered multiplex graph consists of multiple ' ...
             'graphs with ordinal connections between corresponding nodes.'];
         
         MULTIPLEX = 4  % multiple graphs with connections between corresponding nodes
         MULTIPLEX_NAME = 'Multiplex'
-        MULTIPLEX_DESCRIPTION = ['Multiplex consists of multiple graphs with ' ...
+        MULTIPLEX_DESCRIPTION = ['A multiplex graph consists of multiple graphs with ' ...
             'categorical connections (unordered) between corresponding nodes.'];
 
         ORDERED_MULTILAYER = 5  % multiple graphs with sequential connections between all nodes
         ORDERED_MULTILAYER_NAME = 'Ordered Multilayer'
-        ORDERED_MULTILAYER_DESCRIPTION = ['Ordered Multilayer consists of multiple ' ...
+        ORDERED_MULTILAYER_DESCRIPTION = ['An ordered multilayer graph consists of multiple ' ...
             'graphs with ordinal connections between all nodes.'];
 
         MULTILAYER = 6  % multiple graphs with connections between all nodes
         MULTILAYER_NAME = 'Multilayer'
-        MULTILAYER_DESCRIPTION = ['Multilayer consists of multiple graphs with ' ...
+        MULTILAYER_DESCRIPTION = ['A multilayer graph consists of multiple graphs with ' ...
             'categorical connections (unordered) between all nodes.'];
         
         TYPE_NUMBER = 6
@@ -175,7 +178,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.NEGATIVE_DESCRIPTION
             }
     end
-    properties (GetAccess=protected, SetAccess=protected)
+     properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
     end
 %     properties (GetAccess=protected, SetAccess=protected)
@@ -186,7 +189,8 @@ classdef Graph < handle & matlab.mixin.Copyable
     methods (Access=protected)  % Contructor
         function g = Graph(A, varargin)
             % Graph(A) creates a graph with the default properties.
-            % A is the adjacency matrix. This method is only accessible
+            % A is the adjacency matrix or the cell array of adjacency
+            % matrices for multiple graphs. This method is only accessible 
             % by the subclasses of Graph.
             %
             % Graph(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
@@ -205,6 +209,10 @@ classdef Graph < handle & matlab.mixin.Copyable
     end
     methods (Static)  % Check A
         function checkA(graph_type, A)
+            % CHECKA checks if adjacency matrix A or cell array of adjacency matrices A is correct for the type of graph
+            %
+            % CHECKA(GRAPH_TYPE, A) checks if adjacency matrix A or cell array of
+            % adjacency matrices A is correct for the GRAPH_TYPE.
             
             % Basic checks
             if graph_type == Graph.GRAPH  % if graph, adjacency matrix
@@ -332,64 +340,191 @@ classdef Graph < handle & matlab.mixin.Copyable
             name = eval([Graph.getClass(g) '.getDescription()']);
         end
         function graph_type = getGraphType(g)
+            % GETGRAPHTYPE returns the graph type
+            %
+            % GRAPH_TYPE = GETGRAPHTYPE(G) returns the graph type of graph
+            % G (e.g., GRAPH, MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX,
+            % ORDERED_MULTILAYER, MULTILAYER)
+            %
+            % GRAPH_TYPE = GETGRAPHTYPE(GRAPH_CLASS) returns the graph type 
+            % of the graph whose class is GRAPH_CLASS (e.g., GRAPH,
+            % MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER, MULTILAYER)
+            %
+            % See also is_graph(), is_multigraph(), is_multilayer(), is_multiplex(), is_ordered_multilayer(), is_ordered_multiplex().     
+                  
             graph_type = eval([Graph.getClass(g) '.getGraphType()']);
         end
         function bool = is_graph(g)
-            % single graph
+            % IS_GRAPH checks if graph is graph (single layer)
+            %
+            % BOOL = IS_GRAPH(G) returns if the instance of the
+            % concrete graph G is graph (single layer).
+            %
+            % BOOL = IS_GRAPH(GRAPH_CLASS) returns true if graph whose
+            % class is GRAPH_CLASS is graph (single layer).
+            %
+            % See also getGraphType(), is_multigraph(), is_multilayer(), is_multiplex(), is_ordered_multilayer(), is_ordered_multiplex().     
+                  
             bool = Graph.getGraphType(g) == Graph.GRAPH;
         end
         function bool = is_multigraph(g)
-            % multiple unconnected graphs
-            
+            % IS_MULTIGRAPH checks if graph is multigraph
+            %
+            % BOOL = IS_MULTIGRAPH(G) returns if the instance of the
+            % concrete graph G is multigraph.
+            %
+            % BOOL = IS_MULTIGRAPH(GRAPH_CLASS) returns true if graph whose
+            % class is GRAPH_CLASS is multigraph.
+            %
+            % See also getGraphType(), is_graph(), is_multilayer(), is_multiplex(), is_ordered_multilayer(), is_ordered_multiplex().     
+                    
             bool = g.getGraphType() == Graph.MULTIGRAPH;
         end
         function bool = is_ordered_multiplex(g)
-            % multiple graphs with sequential connections between corresponding nodes
-            
+            % IS_ORDERED_MULTIPLEX checks if graph is ordered multiplex
+            %
+            % BOOL = IS_ORDERED_MULTIPLEX(G) returns if the instance of the
+            % concrete graph G is ordered multiplex.
+            %
+            % BOOL = IS_ORDERED_MULTIPLEX(GRAPH_CLASS) returns true if graph 
+            % whose class is GRAPH_CLASS is ordered multiplex.
+            %
+            % See also getGraphType(), is_graph(), is_multigraph(), is_multilayer(), is_multiplex(), is_ordered_multilayer().     
+                   
             bool = Graph.getGraphType(g) == Graph.ORDERED_MULTIPLEX;
         end
         function bool = is_multiplex(g)
-            % multiple graphs with connections between corresponding nodes
-            
+            % IS_MULTIPLEX checks if graph is multiplex
+            %
+            % BOOL = IS_MULTIPLEX(G) returns if the instance of the
+            % concrete graph G is multiplex.
+            %
+            % BOOL = IS_MULTIPLEX(GRAPH_CLASS) returns true if graph whose
+            % class is GRAPH_CLASS is multiplex.
+            %
+            % See also getGraphType(), is_graph(), is_multigraph(), is_multilayer(), is_ordered_multilayer(), is_ordered_multiplex().     
+              
             bool = Graph.getGraphType(g) == Graph.MULTIPLEX;
         end
         function bool = is_ordered_multilayer(g)
-            % multiple graphs with sequential connections between all nodes
-            
+            % IS_ORDERED_MULTILAYER checks if graph is ordered multilayer
+            %
+            % BOOL = IS_ORDERED_MULTILAYER(G) returns if the instance of the
+            % concrete graph G is ordered multilayer.
+            %
+            % BOOL = IS_ORDERED_MULTILAYER(GRAPH_CLASS) returns true if graph 
+            % whose class is GRAPH_CLASS is ordered multilayer.
+            %
+            % See also getGraphType(), is_graph(), is_multigraph(), is_multilayer(), is_multiplex(), is_ordered_multiplex().     
+                
             bool = Graph.getGraphType(g) == Graph.ORDERED_MULTILAYER;
         end
         function bool = is_multilayer(g)
-            % multiple graphs with connections between all nodes
-            
+            % IS_MULTILAYER checks if graph is multilayer
+            %
+            % BOOL = IS_MULTILAYER(G) returns if the instance of the
+            % concrete graph G is multilayer.
+            %
+            % BOOL = IS_MULTILAYER(GRAPH_CLASS) returns true if graph whose
+            % class is GRAPH_CLASS is multilayer.
+            %
+            % See also getGraphType(), is_graph(), is_multigraph(), is_multiplex(), is_ordered_multilayer(), is_ordered_multiplex().     
+                   
             bool = Graph.getGraphType(g) == Graph.MULTILAYER;
         end
         function connection_type = getConnectionType(g)
+            % GETCONNECTIONTYPE returns if graph is binary or weighted
+            %
+            % CONNECTION_TYPE = GETCONNECTIONTYPE(G) returns if
+            % the instance of the concrete graph G is binary or weighted.
+            %
+            % CONNECTION_TYPE = GETCONNECTIONTYPE(GRAPH_CLASS) returns 
+            % if graph whose class is GRAPH_CLASS is binary or weighted.
+            %
+            % See also is_binary(), is_weighted().     
+                  
             connection_type = eval([Graph.getClass(g) '.getConnectionType()']);
         end
         function bool = is_weighted(g)
-            % weighted connections
-            
+            % IS_WEIGHTED checks if graph is weighted
+            %
+            % BOOL = IS_WEIGHTED(G) returns if the instance of the
+            % concrete graph G is weighted.
+            %
+            % BOOL = IS_WEIGHTED(GRAPH_CLASS) returns true if graph whose
+            % class is GRAPH_CLASS is weighted.
+            %
+            % See also getConnectionType(), is_binary().     
+                       
             bool = Graph.getConnectionType(g) == Graph.WEIGHTED;
         end
         function bool = is_binary(g)
-            % binary (0 or 1) connections
+            % IS_BINARY checks if graph is binary
+            %
+            % BOOL = IS_BINARY(G) returns if the instance of the
+            % concrete graph G is binary.
+            %
+            % BOOL = IS_BINARY(GRAPH_CLASS) returns true if graph whose
+            % class is GRAPH_CLASS is binary.
+            %
+            % See also getConnectionType(), is_weighted().     
             
             bool = Graph.getConnectionType(g) == Graph.BINARY;
         end
         function edge_type = getEgdeType(g)
+            % GETEDGETYPE returns if graph is directed or undirected
+            %
+            % EDGE_TYPE = GETEDGETYPE(G) returns if
+            % the instance of the concrete graph G is directed or not
+            % undirected.
+            %
+            % EDGE_TYPE = GETEDGETYPE(GRAPH_CLASS)
+            % returns if graph whose class is GRAPH_CLASS is directed or
+            % undirected.
+            %
+            % See also is_directed(), is_undirected().     
+                         
             edge_type = eval([Graph.getClass(g) '.getEdgeType()']);
         end
         function bool = is_directed(g)
-            % directed edges
-            
+            % IS_DIRECTED checks if graph is directed
+            %
+            % BOOL = IS_DIRECTED(G) returns if the instance of the
+            % concrete graph G is directed.
+            %
+            % BOOL = IS_DIRECTED(GRAPH_CLASS) returns true if graph whose
+            % class is GRAPH_CLASS is directed.
+            %
+            % See also getEgdeType(), is_undirected().     
+                     
             bool = Graph.getEgdeType(g) == Graph.DIRECTED;
         end
         function bool = is_undirected(g)
-            % undirected edges
-            
+            % IS_UNDIRECTED checks if graph is undirected
+            %
+            % BOOL = IS_UNDIRECTED(G) returns if the instance of the
+            % concrete graph G is undirected.
+            %
+            % BOOL = IS_UNDIRECTED(GRAPH_CLASS) returns true if graph whose
+            % class is GRAPH_CLASS is undirected.
+            %
+            % See also getEgdeType(), is_directed().     
+                    
             bool = Graph.getEgdeType(g) == Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType(g)
+            % GETSELFCONNECTIVITYTYPE returns if graph is self-connected or not self-connected
+            %
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(G) returns if
+            % the instance of the concrete graph G is self-connected or not
+            % self-connected.
+            %
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(GRAPH_CLASS)
+            % returns if graph whose class is GRAPH_CLASS is self-connected
+            % or not self-connected.
+            %
+            % See also is_selfconnected(), is_not_selfconnected().     
+                        
             selfconnectivity_type = eval([Graph.getClass(g) '.getSelfConnectivityType()']);
         end
         function bool = is_selfconnected(g)
@@ -400,7 +535,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % BOOL = IS_SELFCONNECTED(GRAPH_CLASS) returns true if graph
             % whose class is GRAPH_CLASS is self-connected and false otherwise.
-
+            %
+            % See also getSelfConnectivityType(), is_not_selfconnected().     
+             
             bool = Graph.getSelfConnectivityType(g) == Graph.SELFCONNECTED; 
         end
         function bool = is_not_selfconnected(g)
@@ -411,31 +548,47 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % BOOL = IS_NOT_SELFCONNECTED(GRAPH_CLASS) returns true if graph
             % whose class is GRAPH_CLASS is not self-connected and false otherwise.
-            
+            %
+            % See also getSelfConnectivityType(), is_selfconnected().     
+                  
             bool = Graph.getSelfConnectivityType(g) == Graph.NOT_SELFCONNECTED;
         end
         function negativity_type = getNegativityType(g)
+            % GETNEGATIVITYTYPE returns if graph is negative or non-negative
+            %
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G) returns if the instance of the
+            % concrete graph G is negative or non-negative.
+            %
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(GRAPH_CLASS) returns if graph
+            % whose class is GRAPH_CLASS is negative or non-negative.
+            %
+            % See also is_negative(), is_nonnegative().     
+            
             negativity_type = eval([Graph.getClass(g) '.getNegativityType()']);
         end
         function bool = is_nonnegative(g)
-            % IS_NONNEGATIVE checks if graph is non-negative
+            % IS_NONNEGATIVE checks if graph has non-negative values
             %
             % BOOL = IS_NONNEGATIVE(G) returns true if the concrete instance
-            % of graph G is non-negative and false otherwise.
+            % of graph G has non-negative values and false otherwise.
             %
             % BOOL = IS_NONNEGATIVE(GRAPH_CLASS) returns true if the graph
-            % whose class is GRAPH_CLASS is non-negative and false otherwise.
-
+            % whose class is GRAPH_CLASS has non-negative values and false otherwise.
+            %
+            % See also getNegativityType(), is_negative().
+            
             bool = Graph.getNegativityType(g) == Graph.NONNEGATIVE;
         end
         function bool = is_negative(g)
-            % IS_NEGATIVE checks if graph is negative
+            % IS_NEGATIVE checks if graph is has negative values
             %
             % BOOL = IS_NEGATIVE(G) returns true if the concrete instance
-            % of graph G is negative and false otherwise.
+            % of graph G has negative values and false otherwise.
             %
             % BOOL = IS_NEGATIVE(GRAPH_CLASS) returns true if the graph
-            % whose class is GRAPH_CLASS is negative and false otherwise.
+            % whose class is GRAPH_CLASS has negative values and false otherwise.
+            %
+            % See also getNegativityType(), is_nonnegative().
             
             bool = Graph.getNegativityType(g) == Graph.NEGATIVE;
         end
@@ -444,23 +597,25 @@ classdef Graph < handle & matlab.mixin.Copyable
         function str = tostring(g)
             % TOSTRING string with information about the graph
             %
-            % STR = TOSTRING(G) returns string with the graph class and size.
+            % STR = TOSTRING(G) returns string with the graph class and size (layers and nodes).
             %
             % See also disp().
             
-            str = [Graph.getClass(g) ' ' int2str(g.layernumber()) ' layers ' int2str(g.nodenumber()) ' columns'];
+            str = [Graph.getClass(g) ': ' int2str(g.layernumber(g)) ' layers with ' int2str(g.nodenumber(g)) ' nodes'];
         end
         function disp(g)
             % DISP displays information about the graph
             %
             % DISP(G) displays information about the graph.
-            % It provides information about graph class, size,
-            % value, associated measures, and settings.
+            % It provides information about graph class, graph type, size 
+            % (layers and nodes size), value, associated measures and
+            % settings.
             %
             % See also tostring().
             
             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
-            disp([' size: ' int2str(g.layernumber()) ' layers ' int2str(g.nodenumber()) ' nodes'])
+            disp([g.TYPE_DESCRIPTION{Graph.getGraphType(g)} ])
+            disp([' size: ' int2str(g.layernumber(g)) ' layers with ' int2str(g.nodenumber(g)) ' nodes'])
 %             disp([' measures: ' int2str(length(g.measure_dict))]);
 %             disp([' settings']); %#ok<NBRAK>
 %             settings = g.getSettings(); %#ok<PROP>
@@ -471,41 +626,49 @@ classdef Graph < handle & matlab.mixin.Copyable
     end
     methods (Static) % Inspection functions
         function n = nodenumber(g)
-            % NODENUMBER returns the number of nodes in the graph.
+            % NODENUMBER returns the number of nodes in the graph
             %
-            % N = NODENUMBER(G) returns the number of nodes in the graph.
+            % N = NODENUMBER(G) returns the number of nodes in graph G.
             %
-            % See also getA(), getSettings().
+            % See also getA(), getSettings(), layernumber().
 
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
-                    n = length(g.getA());
+                    n = length(g.getA(g));
                 otherwise
-                    A = g.getA; %#ok<PROP>
-                    n = cellfun(@(a) length(a), A(1,length(A)+1:end)); %#ok<PROP>
+                    A = g.getA(g); % #ok<PROP>
+                    n = cellfun(@(a) length(a), A(1:length(A)+1:end)); % #ok<PROP>
             end
         end
         function n = layernumber(g)
-            % LAYERNUMBER returns the number of layers in the graph.
+            % LAYERNUMBER returns the number of layers in the graph
             %
-            % N = LAYERNUMBER(G) returns the number of layers in the graph.
+            % N = LAYERNUMBER(G) returns the number of layers in graph G.
             %
-            % See also getA(), getSettings().
+            % See also getA(), getSettings(), nodenumber().
             
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
                     n = 1;
                 otherwise
-                    n = length(g.getA());
+                    n = length(g.getA(g));
             end
         end
         function A = getA(g, i, j)
-            % GETA returns the cell array of adjacency matrices.
+            % GETA returns the adjacency matrix or cell array of adjacency matrices
             %
-            % A = GETA(G) returns the cell array of adjacency matrices A
-            % associated to the graph G.
+            % A = GETA(G) returns the adjacency matrix A associated to
+            % graph G (single layer graph).
+            % 
+            % A = GETA(G, I) returns the adjacency matrix at the position
+            % (I, I) of the cell array of adjacency matrices A associated
+            % to graph G (multiple graph) .
+            % 
+            % A = GETA(G, I, J) returns the adjacency matrix at the position
+            % (I, J) of the cell array of adjacency matrices A associated
+            % to graph G (multiple graph) .
             %
-            % See also getSettings(), nodenumber().
+            % See also getSettings(), layernumber(), nodenumber().
             
             if nargin == 1  % return cell array of adjacency matrices
                 A = g.A;
@@ -519,10 +682,12 @@ classdef Graph < handle & matlab.mixin.Copyable
             % GETGRAPH returns a graph
             %
             % G = GETGRAPH(G, A) returns an instance
-            % of the class of the graph G with adjacency matrix A.
+            % of the class of the graph G with adjacency matrix or cell
+            % array of adjacency matrices A.
             %
             % G = GETGRAPH(GRAPH_CLASS, A) returns an instance
-            % of the class whose class is GRAPH_CLASS with adjacency matrix A.
+            % of the class whose class is GRAPH_CLASS with adjacency matrix
+            % or cell array of adjacency matrices A.
             %
             % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
             % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
