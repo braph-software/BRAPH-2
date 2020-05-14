@@ -25,9 +25,8 @@ assert(isequal(B, ...
 %% Test 2: Off-diagonal to value
 value = randn();
 B = diagonalize(A, 'DiagonalizeRule', value);
-value = round(value, 3);
 
-assert(isequal(round(B, 3), ...
+assert(isequal(B, ...
     [
     1 value value; 
     value 2 value; 
