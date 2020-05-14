@@ -86,30 +86,94 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.MULTILAYER_NAME
             }
         
+        TYPE_DESCRIPTION = {
+            Graph.GRAPH_DESCRIPTION
+            Graph.MULTIGRAPH_DESCRIPTION
+            Graph.ORDERED_MULTIPLEX_DESCRIPTION
+            Graph.MULTIPLEX_DESCRIPTION
+            Graph.ORDERED_MULTILAYER_DESCRIPTION
+            Graph.MULTILAYER_DESCRIPTION
+            }
+        
         % Connection types
         WEIGHTED = 1  % weighted connections
+        WEIGHTED_NAME = 'Weighted'
         WEIGHTED_DESCRIPTION = 'Graph with weighted connections.';
         BINARY = 2  % binary (0 or 1) connections
+        BINARY_NAME = 'Weighted'
         BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.';
-
+        
+        CONNECTION_TYPE_NUMBER = 2
+        
+        CONNECTION_TYPE_NAME = {
+            Graph.WEIGHTED_NAME
+            Graph.BINARY_NAME
+            }
+        
+        CONNECTION_TYPE_DESCRIPTION = {
+            Graph.WEIGHTED_DESCRIPTION
+            Graph.BINARY_DESCRIPTION
+            }
+        
         % Edge types
         DIRECTED = 1  % directed edges
+        DIRECTED_NAME = 'Directed'
         DIRECTED_DESCRIPTION = 'Graph with directed edges.';
         UNDIRECTED = 2  % undirected edges
+        UNDIRECTED_NAME = 'Undirected'
         UNDIRECTED_DESCRIPTION = 'Graph with undirected edges.';
+                
+        EDGE_TYPE_NUMBER = 2
+        
+        EDGE_TYPE_NAME = {
+            Graph.DIRECTED_NAME
+            Graph.UNDIRECTED_NAME
+            }
+        
+        EDGE_TYPE_DESCRIPTION = {
+            Graph.DIRECTED_DESCRIPTION
+            Graph.UNDIRECTED_DESCRIPTION
+            }
         
         % Selfconnectedness
         NOT_SELFCONNECTED = 1
+        NOT_SELFCONNECTED_NAME = 'Not self-connected'
         NOT_SELFCONNECTED_DESCRIPTION = 'Graph with self-connections set to zero.';
         SELFCONNECTED = 2
+        SELFCONNECTED_NAME = 'Self-connected'
         SELFCONNECTED_DESCRIPTION = 'Graph with self-connections considered.';
-
+                
+        SELFCONNECTIVITY_TYPE_NUMBER = 2
+        
+        SELFCONNECTIVITY_TYPE_NAME = {
+            Graph.NOT_SELFCONNECTED_NAME
+            Graph.SELFCONNECTED_NAME
+            }
+        
+        SELFCONNECTIVITY_TYPE_DESCRIPTION = {
+            Graph.NOT_SELFCONNECTED_DESCRIPTION
+            Graph.SELFCONNECTED_DESCRIPTION
+            }
+        
         % Negativity
         NONNEGATIVE = 1
+        NONNEGATIVE_NAME = 'Non-negative';
         NONNEGATIVE_DESCRIPTION = 'Graph with non-negative edges.';
         NEGATIVE = 2
+        NEGATIVE_NAME = 'Negative';
         NEGATIVE_DESCRIPTION = 'Graph with negative edges.';
-
+                
+        NEGATIVITY_TYPE_NUMBER = 2
+        
+        NEGATIVITY_TYPE_NAME = {
+            Graph.NONNEGATIVE_NAME
+            Graph.NEGATIVE_NAME
+            }
+        
+        NEGATIVITY_TYPE_DESCRIPTION = {
+            Graph.NONNEGATIVE_DESCRIPTION
+            Graph.NEGATIVE_DESCRIPTION
+            }
     end
     properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices

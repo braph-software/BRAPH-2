@@ -86,13 +86,12 @@ A_wrong{3} = {
     diag(rand(4, 1)) rand(4) diag(rand(4, 1))
     diag(rand(4, 1)) diag(rand(3, 1)) rand(4)
     };
-graph_type = [Graph.ORDERED_MULTIPLEX, Graph.MULTIPLEX]; 
 
 for i = 1:1:length(A_wrong)
-    for graph = 1:1:length(graph_type)
+    for graph_type = [Graph.ORDERED_MULTIPLEX, Graph.MULTIPLEX] 
         try 
             clear e
-            Graph.checkA(graph_type(graph), A_wrong{i})
+            Graph.checkA(graph_type, A_wrong{i})
         catch e
             assert(isequal(e.identifier, error_identifier), ...
                 [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
@@ -115,13 +114,12 @@ A_wrong{2} = {
     diag(rand(4, 1)) rand(4) diag(rand(4, 1))
     rand(3, 1) diag(rand(4, 1)) rand(4)
     };
-graph_type = [Graph.MULTIPLEX]; 
 
 for i = 1:1:length(A_wrong)
-    for graph = 1:1:length(graph_type)
+    for graph_type = [Graph.MULTIPLEX]
         try 
             clear e
-            Graph.checkA(graph_type(graph), A_wrong{i})
+            Graph.checkA(graph_type, A_wrong{i})
         catch e
             assert(isequal(e.identifier, error_identifier), ...
                 [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
@@ -152,15 +150,14 @@ A_wrong{3} = {
 A_wrong{4} = {
     rand(3) rand(3, 2) rand(3, 4)
     rand(2, 3) rand(2) rand(2, 4)
-    rand(4, 4) rand(4, 2) rand(4)
+    rand(4, 3) rand(4, 4) rand(4)
     };
-graph_type = [Graph.ORDERED_MULTILAYER, Graph.MULTILAYER]; 
 
 for i = 1:1:length(A_wrong)
-    for graph = 1:1:length(graph_type)
+    for graph_type = [Graph.ORDERED_MULTILAYER, Graph.MULTILAYER] 
         try 
             clear e
-            Graph.checkA(graph_type(graph), A_wrong{i})
+            Graph.checkA(graph_type, A_wrong{i})
         catch e
             assert(isequal(e.identifier, error_identifier), ...
                 [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
@@ -193,13 +190,12 @@ A_wrong{4} = {
     rand(2, 3) rand(2) rand(2, 4)
     rand(4, 4) rand(4, 2) rand(4)
     };
-graph_type = [Graph.MULTILAYER]; 
 
 for i = 1:1:length(A_wrong)
-    for graph = 1:1:length(graph_type)
+    for graph_type = [Graph.MULTILAYER]
         try 
             clear e
-            Graph.checkA(graph_type(graph), A_wrong{i})
+            Graph.checkA(graph_type, A_wrong{i})
         catch e
             assert(isequal(e.identifier, error_identifier), ...
                 [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
