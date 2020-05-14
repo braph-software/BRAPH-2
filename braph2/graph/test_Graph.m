@@ -1,9 +1,7 @@
 % test Graph
 
-%% Test 1: checkA
-error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+graph_class_list = Graph.getList();
 
-% working case
 clear A
 A{Graph.GRAPH} = rand(5);
 A{Graph.MULTIGRAPH} = {
@@ -32,114 +30,49 @@ A{Graph.MULTILAYER} = {
     rand(4) rand(4) rand(4)
     };
 
+
+%% Test 1: checkA
+error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+
+% working case
 for graph_type = 1:1:Graph.TYPE_NUMBER
 	Graph.checkA(graph_type, A{graph_type})
 end
 
-% non-square matrix -> error
-A_wrong = rand(5, 3);
+% A formats that should never be accepted
+A_wrong{1} = rand(5, 3);
+A_wrong{2} = {rand(4, 3)};
+A_wrong{3} = {rand(3, 4)};
+A_wrong{4} = {
+    rand(4, 3) rand(4) rand(4)
+    rand(4) rand(4) rand(4)
+    rand(4) rand(4) rand(4)
+    };
+A_wrong{5} = {
+    rand(3, 4) rand(4) rand(4)
+    rand(4) rand(4) rand(4)
+    rand(4) rand(4) rand(4)
+    };
 
-for graph_type = 1:1:Graph.TYPE_NUMBER
-    try 
-        clear e
-        Graph.checkA(Graph.GRAPH, A_wrong)
-    catch e
-        assert(isequal(e.identifier, error_identifier), ...
+for i = 1:1:length(A_wrong)
+    for graph_type = 1:1:Graph.TYPE_NUMBER
+        try 
+            clear e
+            Graph.checkA(graph_type, A_wrong{i})
+        catch e
+            assert(isequal(e.identifier, error_identifier), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+                ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+        end
+        assert(exist('e', 'var') == 1, ...
             [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-            ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+            ['Error not thrown. Expected error: ' error_identifier])
     end
-    assert(exist('e', 'var') == 1, ...
-        [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-        ['Error not thrown. Expected error: ' error_identifier])
 end
 
 % TODO: specific cases
 
-%     if % cell -> error
-%         A = {
-%             rand(5, 5) rand(5, 2); 
-%             rand(2, 5) rand(2, 2); 
-%             };
-%         try 
-%             clear e
-%             Graph.checkA(Graph.GRAPH, A)
-%         catch e
-%             assert(isequal(e.identifier, error_identifier), ...
-%                 [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-%                 ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
-%         end
-%         assert(exist('e', 'var') == 1, ...
-%             [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-%             ['Error not thrown. Expected error: ' error_identifier])
-
-
-% % cell -> error
-% A = {rand(5, 5)};
-% try 
-%     clear e
-%     Graph.checkA(Graph.GRAPH, A)
-% catch e
-%     assert(isequal(e.identifier, error_identifier), ...
-%         [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-%         ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
-% end
-% assert(exist('e', 'var') == 1, ...
-%     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-%     ['Error not thrown. Expected error: ' error_identifier])
-% 
-% % cell -> error
-% A = {
-%     rand(5, 5) rand(5, 2); 
-%     rand(2, 5) rand(2, 2); 
-%     };
-% try 
-%     clear e
-%     Graph.checkA(Graph.GRAPH, A)
-% catch e
-%     assert(isequal(e.identifier, error_identifier), ...
-%         [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-%         ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
-% end
-% assert(exist('e', 'var') == 1, ...
-%     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-%     ['Error not thrown. Expected error: ' error_identifier])
-
-
-% A = [
-%     2, 2, 2;
-%     2, 3, 1
-%     ];
-% 
-% detected = false;
-% 
-% try
-%     g = GraphBU(A);  % GraphType Graph
-% catch 
-%     detected = true;
-% end
-% 
-% assert(detected, ...
-%     [BRAPH2.STR ': Graph :' BRAPH2.WRONG_INPUT], ...
-%     'A was not a square adjacency matrix and it was not detected.')
-
-% %% Test 2: GraphType Graph Assert
-% A = rand(randi(10));
-% g = GraphBU(A);  % GraphType Graph
-% 
-% assert(isequal(g.getClass(), 'GraphBU'), ...
-%     'BRAPH: GraphBU :StaticFuncImplementation', ...
-%     ['GraphBU.getClass() should return ''' 'GraphBU' ''''])
-
-% %% Test 1: All graphs not abstract
-% for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     A = rand(randi(10));
-%     g = Graph.getGraph(graph_class, A);
-% end
-
 %% Test 2: Implementation static methods
-graph_class_list = Graph.getList();
-
 for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};
 %     A = rand(randi(10));
@@ -193,23 +126,29 @@ for i = 1:1:length(graph_class_list)
 %         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
 %         [graph_class '.getCompatibleMeasureNumber() should return a number'])
 end
- 
-% %% Test 3: Either weighted or binary
-% for i = 1:1:length(graph_class_list)
+
+%% Test 3: All graphs not abstract
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    g = Graph.getGraph(graph_class, A{Graph.getGraphType(graph_class)});
+end
+
+%% Test 3: Either weighted or binary
+for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};
 %     assert(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class), ...
 %         ['BRAPH:' graph_class ':WeightedOrBinary'], ...
 %         [graph_class '.is_weighted() == ' graph_class '.is_binary()'])
-% end
-% 
-% %% Test 4: Either directed or undirected
-% for i = 1:1:length(graph_class_list)
+end
+ 
+%% Test 4: Either directed or undirected
+for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};
 %     assert(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class), ...
 %         ['BRAPH:Gra' graph_class 'ph:DirectedOrUndirected'], ...
 %         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
-% end
-% 
+end
+
 % %% Test 5: Copy
 % for i = 1:1:length(graph_class_list)
 %     A = rand(randi(10));
