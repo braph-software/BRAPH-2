@@ -87,6 +87,18 @@ classdef GraphWD < Graph
         function graph_type = getEdgeType()
             graph_type = Graph.DIRECTED;
         end
+        function selfconnectivity_type = getSelfConnectivityType()
+            selfconnectivity_type = Graph.NOT_SELFCONNECTED;
+        end
+        function negativity_type = getNegativityType()
+            % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
+            %
+            % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
+            %
+            % See also getConnectionType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            
+            negativity_type = Graph.NONNEGATIVE;
+        end
     end
 %     methods
 %         function g = GraphWD(A, varargin)
@@ -182,92 +194,6 @@ classdef GraphWD < Graph
 %         end
 %     end
 %     methods (Static)
-%         function graph_class = getClass()
-%             % GETCLASS returns the class of the graph.
-%             %
-%             % GRAPH_CLASS = GETCLASS() returns the class, 'GraphWD'.
-%             %
-%             % See also getName().
-%             
-%             graph_class = 'GraphWD';
-%         end
-%         function name = getName()
-%             % GETNAME returns the name of the graph.
-%             %
-%             % NAME = GETCLASS() returns the name, 'Weighted Directed Graph'.
-%             %
-%             % See also getClass().
-%             
-%             name = 'Weighted Directed Graph';
-%         end
-%         function description = getDescription()
-%             % GETDESCRIPTION returns the description of the graph.
-%             %
-%             % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHWD.
-%             %
-%             % See also getName()
-%             
-%             description = [ ...
-%                 'In a weighted directed (WD) graph, ' ...
-%                 'the edges are associated with a real number between 0 and 1' ...
-%                 'indicating the strength of the connection, ' ...
-%                 'and they are directed.' ...
-%                 ];
-%         end
-%         function bool = is_selfconnected()
-%             % IS_SELFCONNECTED checks if the graph is self connected.
-%             %
-%             % BOOL = IS_SELFCONNECTED() returns false for GRAPHWD.
-%             %
-%             % See also is_nonnegative().
-%             
-%             bool = false;
-%         end
-%         function bool = is_nonnegative()
-%             % IS_NONNEGATIVE checks if the graph is nonnegative.
-%             %
-%             % BOOL = IS_NONNEGATIVE() returns true for GRAPHWD.
-%             %
-%             % See also is_selfconnected().
-%             
-%             bool = true;
-%         end
-%         function bool = is_weighted()
-%             % IS_WEIGHTED checks if the graph is weighted.
-%             %
-%             % BOOL = IS_WEIGHTED() returns true for GRAPHWD.
-%             %
-%             % See also is_binary().
-%             
-%             bool = true;
-%         end
-%         function bool = is_binary()
-%             % IS_BINARY checks if the graph is binary.
-%             %
-%             % BOOL = IS_BINARY() returns false for GRAPHWD.
-%             %
-%             % See also is_weigthed().
-%             
-%             bool = false;
-%         end
-%         function bool = is_directed()
-%             % IS_DIRECTED checks if the graph is directed.
-%             %
-%             % BOOL = IS_DIRECTED() returns true for GRAPHWD.
-%             %
-%             % See also is_undirected().
-%             
-%             bool = true;
-%         end
-%         function bool = is_undirected()
-%             % IS_UNDIRECTED checks if the graph is undirected.
-%             %
-%             % BOOL = IS_UNDIRECTED() returns false for GRAPHWD.
-%             %
-%             % See also is_directed().
-%             
-%             bool = false;
-%         end
 %         function list = getCompatibleMeasureList()
 %             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
 %             %

@@ -20,16 +20,15 @@ A{Graph.MULTIPLEX} = {
     diag(rand(4, 1)) diag(rand(4, 1)) rand(4)
     };
 A{Graph.ORDERED_MULTILAYER} = {
-    rand(4) rand(4) []
-    rand(4) rand(4) rand(4)
-    [] rand(4) rand(4)
+    rand(3) rand(3, 2) []
+    rand(2, 3) rand(2) rand(2, 4)
+    [] rand(4, 2) rand(4)
     };
 A{Graph.MULTILAYER} = {
-    rand(4) rand(4) rand(4)
-    rand(4) rand(4) rand(4)
-    rand(4) rand(4) rand(4)
+    rand(3) rand(3, 2) rand(3, 4)
+    rand(2, 3) rand(2) rand(2, 4)
+    rand(4, 3) rand(4, 2) rand(4)
     };
-
 
 %% Test 1: checkA
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
@@ -53,6 +52,7 @@ A_wrong{5} = {
     rand(4) rand(4) rand(4)
     rand(4) rand(4) rand(4)
     };
+A_wrong{6} = {rand(4) rand(4)};
 
 for i = 1:1:length(A_wrong)
     for graph_type = 1:1:Graph.TYPE_NUMBER
@@ -70,54 +70,216 @@ for i = 1:1:length(A_wrong)
     end
 end
 
-% TODO: specific cases
+% Specific cases for ORDERED_MULTIPLEX and MULTIPLEX
+A_wrong{1} = {
+    rand(4) diag(rand(4, 1)) []
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    [] diag(rand(4, 1)) rand(3)
+    };
+A_wrong{2} = {
+    rand(4) diag(rand(4, 1)) diag(rand(4, 1))
+    diag(rand(4, 1)) rand(4) diag(rand(3, 1))
+    diag(rand(4, 1)) diag(rand(4, 1)) rand(4)
+    };
+A_wrong{3} = {
+    rand(4) diag(rand(4, 1)) diag(rand(4, 1))
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    diag(rand(4, 1)) diag(rand(3, 1)) rand(4)
+    };
+graph_type = [Graph.ORDERED_MULTIPLEX, Graph.MULTIPLEX]; 
+
+for i = 1:1:length(A_wrong)
+    for graph = 1:1:length(graph_type)
+        try 
+            clear e
+            Graph.checkA(graph_type(graph), A_wrong{i})
+        catch e
+            assert(isequal(e.identifier, error_identifier), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+                ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+        end
+        assert(exist('e', 'var') == 1, ...
+            [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+            ['Error not thrown. Expected error: ' error_identifier])
+    end
+end
+
+% Specific cases for MULTIPLEX
+A_wrong{1} = {
+    rand(4) diag(rand(4, 1)) diag(rand(3, 1))
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    diag(rand(4, 1)) diag(rand(4, 1)) rand(4)
+    };
+A_wrong{2} = {
+    rand(4) diag(rand(4, 1)) diag(rand(4, 1))
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    rand(3, 1) diag(rand(4, 1)) rand(4)
+    };
+graph_type = [Graph.MULTIPLEX]; 
+
+for i = 1:1:length(A_wrong)
+    for graph = 1:1:length(graph_type)
+        try 
+            clear e
+            Graph.checkA(graph_type(graph), A_wrong{i})
+        catch e
+            assert(isequal(e.identifier, error_identifier), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+                ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+        end
+        assert(exist('e', 'var') == 1, ...
+            [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+            ['Error not thrown. Expected error: ' error_identifier])
+    end
+end
+
+% Specific cases for ORDERED_MULTILAYER and MULTILAYER
+A_wrong{1} = {
+    rand(3) rand(3, 3) rand(3, 4)
+    rand(2, 3) rand(2) rand(2, 4)
+    rand(4, 3) rand(4, 2) rand(4)
+    };
+A_wrong{2} = {
+    rand(3) rand(3, 2) rand(3, 4)
+    rand(2, 3) rand(2) rand(2, 2)
+    rand(4, 3) rand(4, 2) rand(4)
+    };
+A_wrong{3} = {
+    rand(3) rand(3, 2) rand(3, 4)
+    rand(3, 3) rand(2) rand(2, 4)
+    rand(4, 3) rand(4, 2) rand(4)
+    };
+A_wrong{4} = {
+    rand(3) rand(3, 2) rand(3, 4)
+    rand(2, 3) rand(2) rand(2, 4)
+    rand(4, 4) rand(4, 2) rand(4)
+    };
+graph_type = [Graph.ORDERED_MULTILAYER, Graph.MULTILAYER]; 
+
+for i = 1:1:length(A_wrong)
+    for graph = 1:1:length(graph_type)
+        try 
+            clear e
+            Graph.checkA(graph_type(graph), A_wrong{i})
+        catch e
+            assert(isequal(e.identifier, error_identifier), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+                ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+        end
+        assert(exist('e', 'var') == 1, ...
+            [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+            ['Error not thrown. Expected error: ' error_identifier])
+    end
+end
+
+% Specific cases for MULTILAYER
+A_wrong{1} = {
+    rand(3) rand(3, 2) rand(4, 4)
+    rand(2, 3) rand(2) rand(2, 4)
+    rand(4, 3) rand(4, 2) rand(4)
+    };
+A_wrong{2} = {
+    rand(3) rand(3, 2) rand(3, 3)
+    rand(2, 3) rand(2) rand(2, 4)
+    rand(4, 3) rand(4, 2) rand(4)
+    };
+A_wrong{3} = {
+    rand(3) rand(3, 2) rand(3, 4)
+    rand(2, 3) rand(2) rand(2, 4)
+    rand(3, 3) rand(4, 2) rand(4)
+    };
+A_wrong{4} = {
+    rand(3) rand(3, 2) rand(3, 4)
+    rand(2, 3) rand(2) rand(2, 4)
+    rand(4, 4) rand(4, 2) rand(4)
+    };
+graph_type = [Graph.MULTILAYER]; 
+
+for i = 1:1:length(A_wrong)
+    for graph = 1:1:length(graph_type)
+        try 
+            clear e
+            Graph.checkA(graph_type(graph), A_wrong{i})
+        catch e
+            assert(isequal(e.identifier, error_identifier), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+                ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+        end
+        assert(exist('e', 'var') == 1, ...
+            [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+            ['Error not thrown. Expected error: ' error_identifier])
+    end
+end
 
 %% Test 2: Implementation static methods
 for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     A = rand(randi(10));
-%     g = Graph.getGraph(graph_class, A);
-%     
-%     assert(isequal(g.getClass(), graph_class), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.getClass() should return ''' graph_class ''''])
-%     
-%     assert(ischar(g.getClass()), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.getClass() should return a char array'])
-%     
-%     assert(ischar(g.getName()), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.getName() should return a char array'])
-%     
-%     assert(ischar(g.getDescription()), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.getDescription() should return a char array'])
-%     
-%     assert(islogical(g.is_weighted()), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.is_weighted() should return a logical'])
-%     
-%     assert(islogical(g.is_binary()), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.is_binary() should return a logical'])
-%     
-%     assert(islogical(g.is_directed()), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.is_directed() should return a logical'])
-%     
-%     assert(islogical(g.is_undirected()), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.is_undirected() should return a logical'])
-%     
-%     assert(islogical(g.is_selfconnected()), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.is_selfconnected() should return a logical'])
-%     
-%     assert(islogical(g.is_nonnegative()), ...
-%         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-%         [graph_class '.is_nonnegative() should return a logical'])
-%     
+    graph_class = graph_class_list{i};
+    g = Graph.getGraph(graph_class, A{Graph.getGraphType(graph_class)});
+    
+    assert(isequal(g.getClass(), graph_class), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.getClass() should return ''' graph_class ''''])
+    
+    assert(ischar(g.getClass()), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.getClass() should return a char array'])
+    
+    assert(ischar(g.getName()), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.getName() should return a char array'])
+    
+    assert(ischar(g.getDescription()), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.getDescription() should return a char array'])
+    
+    assert(islogical(g.is_weighted(g)), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.is_weighted() should return a logical'])
+    
+    assert(islogical(g.is_binary(g)), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.is_binary() should return a logical'])
+    
+    assert(isnumeric(g.getConnectionType()), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.getConnectionType() should return a number'])
+    
+    assert(islogical(g.is_directed(g)), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.is_directed() should return a logical'])
+    
+    assert(islogical(g.is_undirected(g)), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.is_undirected() should return a logical'])
+        
+    assert(isnumeric(g.getEgdeType(g)), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.getEgdeType() should return a number'])
+    
+    assert(islogical(g.is_selfconnected(g)), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.is_selfconnected() should return a logical'])
+         
+    assert(islogical(g.is_not_selfconnected(g)), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.is_not_selfconnected() should return a logical'])
+    
+    assert(isnumeric(g.getSelfConnectivityType()), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.getSelfConnectivityType() should return a number'])
+       
+    assert(islogical(g.is_negative(g)), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.is_negative() should return a logical'])
+    
+    assert(islogical(g.is_nonnegative(g)), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.is_nonnegative() should return a logical'])
+     
+    assert(isnumeric(g.getNegativityType()), ...
+        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
+        [graph_class '.getNegativityType() should return a number'])
+            
 %     assert(iscell(g.getCompatibleMeasureList()), ...
 %         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
 %         [graph_class '.getCompatibleMeasureList() should return a cell array'])
@@ -133,23 +295,39 @@ for i = 1:1:length(graph_class_list)
     g = Graph.getGraph(graph_class, A{Graph.getGraphType(graph_class)});
 end
 
-%% Test 3: Either weighted or binary
+%% Test 4: Either weighted or binary
 for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     assert(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class), ...
-%         ['BRAPH:' graph_class ':WeightedOrBinary'], ...
-%         [graph_class '.is_weighted() == ' graph_class '.is_binary()'])
+    graph_class = graph_class_list{i};
+    assert(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class), ...
+        ['BRAPH:Graph' graph_class ':WeightedOrBinary'], ...
+        [graph_class '.is_weighted() == ' graph_class '.is_binary()'])
 end
  
-%% Test 4: Either directed or undirected
+%% Test 5: Either directed or undirected
 for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     assert(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class), ...
-%         ['BRAPH:Gra' graph_class 'ph:DirectedOrUndirected'], ...
-%         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
+    graph_class = graph_class_list{i};
+    assert(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class), ...
+        ['BRAPH:Graph' graph_class ':DirectedOrUndirected'], ...
+        [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
 end
 
-% %% Test 5: Copy
+%% Test 6: Either Self-connected or Non self-connected
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    assert(Graph.is_selfconnected(graph_class) ~= Graph.is_not_selfconnected(graph_class), ...
+        ['BRAPH:Graph' graph_class ':SelfconnectedOrNotselfconnected'], ...
+        [graph_class '.is_selfconnected() == ' graph_class '.is_not_selfconnected()'])
+end
+
+%% Test 7: Either Negative or Non negative
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    assert(Graph.is_negative(graph_class) ~= Graph.is_nonnegative(graph_class), ...
+        ['BRAPH:Graph' graph_class ':NegativeOrNotnegative'], ...
+        [graph_class '.is_negative() == ' graph_class '.is_nonnegative()'])
+end
+
+% %% Test 8: Copy
 % for i = 1:1:length(graph_class_list)
 %     A = rand(randi(10));
 %     graph_class = graph_class_list{i};
@@ -181,7 +359,7 @@ end
 %     end
 % end
 % 
-% %% Test 6: Subgraph
+% %% Test 9: Subgraph
 % for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};
 %     n = randi(10);
@@ -201,7 +379,7 @@ end
 %     
 % end
 % 
-% %% Test 7: NodeAttack
+% %% Test 10: NodeAttack
 % for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};
 %     n = randi(10);
@@ -242,7 +420,7 @@ end
 %         [graph_class '.nodeattack() is not working' ])
 % end
 % 
-% %% Test 7: EdgeAttack
+% %% Test 11: EdgeAttack
 % for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};
 %     n = randi(10);
