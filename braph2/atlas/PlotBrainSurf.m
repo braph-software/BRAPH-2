@@ -47,9 +47,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             PlotBrainSurf.VIEW_AD_CMD ...
             PlotBrainSurf.VIEW_AV_CMD ...
             PlotBrainSurf.VIEW_CA_CMD ...
-            PlotBrainSurf.VIEW_CP_CMD ...            
+            PlotBrainSurf.VIEW_CP_CMD ...
             }
-
+        
         VIEW_AZEL = { ...
             PlotBrainSurf.VIEW_3D_AZEL ...
             PlotBrainSurf.VIEW_SL_AZEL ...
@@ -67,7 +67,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         CamLight
         
         h_brain  % handle for brain surface
-        brain_surface_type  % type of the brain surface
+        brain_surface_file  % file of the brain surface
         f_brain_settings  % brain setting figure handle
         
         % brain coordinates
@@ -75,7 +75,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         coord  % coordinates of the vertices of brain surface
         ntri  % number of triangles of brain surface
         tri  % triangles of brain surface
-
+        
         % settings
         settings
     end
@@ -92,12 +92,12 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                 settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
             end
             bs.settings = settings;
-
-            brain_surface_type = get_from_varargin('BrainMesh_ICBM152.nv' , 'BrainSurfaceType', varargin(:));
-            bs.setSurface(brain_surface_type);
+            
+            brain_surface_file = get_from_varargin('BrainMesh_ICBM152.nv' , 'BrainSurfaceType', varargin(:));
+            bs.setSurface(brain_surface_file);
         end
         function str = tostring(bs)
-            str = ['Brain Surface of type: ' bs.brain_surface_type '.'];
+            str = ['Brain Surface of type: ' bs.brain_surface_file '.'];
         end
         function disp(bs)
             % DISP displays brain surface
@@ -107,6 +107,11 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % See also PlotBrainSurf.
             
             disp(['<a href="matlab:help ' class(bs) '">' bs.getName() '</a>']);
+            disp(['Surface file: ' bs.brain_surface_file]);
+            disp(' Surface light options: ');
+            disp(['  Lighting: ' bs.Lighting]);
+            disp(['  Material: ' bs.Material]);
+            disp(['  CamLight: ' bs.CamLight]);
         end
         function name = getName(bs)  % (bs)
             % NAME brain surface name
@@ -115,7 +120,16 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also PlotBrainSurf.
             
-            name = bs.brain_surface_type;
+            name = bs.brain_surface_file;
+        end
+    end
+    methods (Static)
+        function available_settings = getAvailableSettings(bs) %#ok<INUSD>
+            available_settings = {
+                {'PlotBrainSurf.Lighting', BRAPH2.STRING, 'none', {'none', 'flat', 'gouraud'}}, ...
+                {'PlotBrainSurf.Material', BRAPH2.STRING, 'dull', {'dull', 'shiny', 'metal'}}, ...
+                {'PlotBrainSurf.CamLight', BRAPH2.STRING, 'headlight', {'headlight', 'right', 'left'}} ...
+                };
         end
     end
     methods  % Inspection functions
@@ -135,20 +149,20 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         end
     end
     methods  % editing functions
-        function setSurface(bs, brain_surface_type)
+        function setSurface(bs, brain_surface_file)
             
-            bs.brain_surface_type =  brain_surface_type;
+            bs.brain_surface_file =  brain_surface_file;
             bs.Lighting = bs.getSettings('PlotBrainSurf.Lighting');
             bs.Material = bs.getSettings('PlotBrainSurf.Material');
             bs.CamLight = bs.getSettings('PlotBrainSurf.CamLight');
             
-            fid = fopen(['brainsurfs' filesep brain_surface_type]);
+            fid = fopen(['brainsurfs' filesep brain_surface_file]);
             bs.vertex_number = fscanf(fid, '%f', 1);
             bs.coord = fscanf(fid, '%f', [3, bs.vertex_number]);
             bs.ntri = fscanf(fid, '%f', 1);
             bs.tri = fscanf(fid, '%d', [3, bs.ntri])';
-            fclose(fid);            
-        
+            fclose(fid);
+            
         end
         function h = set_axes(bs, ht)
             % SET_AXES sets current axes
@@ -203,7 +217,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % See also PlotBrainSurf, trisurf.
             
             bs.set_axes()
-
+            
             % plot brain surface
             if isempty(bs.h_brain) || ~ishandle(bs.h_brain)
                 
@@ -225,11 +239,11 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                 switch lower(varargin{n})
                     case 'color'
                         set(bs.h_brain,'FaceColor', varargin{n+1});
-                        set(bs.h_brain,'EdgeColor', varargin{n+1});  
+                        set(bs.h_brain,'EdgeColor', varargin{n+1});
                     case 'alpha'
                         set(bs.h_brain,'FaceAlpha', varargin{n+1});
                         set(bs.h_brain,'EdgeAlpha', varargin{n+1});
-
+                        
                     otherwise
                         set(bs.h_brain,varargin{n},varargin{n+1});
                 end
@@ -309,7 +323,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             ui_text = uicontrol(f, 'Style', 'text');
             set(ui_text,'Units','normalized')
             set(ui_text,'BackgroundColor', [.95 .95 .95])
-             
             set(ui_text, 'String', 'transparency')
             set(ui_text, 'Position', [.35 .70 .65 .15])
             set(ui_text, 'HorizontalAlignment', 'center')
@@ -317,7 +330,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             ui_button_color = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_color,'Units','normalized')
-            set(ui_button_color,'BackgroundColor', [.95 .95 .95])            
+            set(ui_button_color,'BackgroundColor', [.95 .95 .95])
             set(ui_button_color, 'Position', [.05 .50 .25 .15])
             set(ui_button_color, 'String', 'brain color')
             set(ui_button_color, 'HorizontalAlignment', 'center')
@@ -368,7 +381,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain, 'EdgeAlpha'))
             set(ui_slider_edgealpha, 'TooltipString', 'Brain surface edge transparency')
             set(ui_slider_edgealpha, 'Callback', {@cb_edgealpha})
-
+            
             set(f,'Visible','on')
             
             function cb_color(~,~)  % (src,event)
@@ -569,7 +582,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             bs.update_light()
             drawnow
         end
-        function brain_lighting(bs, varargin) 
+        function brain_lighting(bs, varargin)
             %get settings
             internal_set = PlotBrainSurf.getAvailableSettings();
             settings_lighting = internal_set{1};
@@ -577,8 +590,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             settings_camlight = internal_set{3};
             
             % sets position of figure
-            FigPosition = [.70 .50 .20 .15];
-            FigColor = [.95 .95 .95]; 
+            FigPosition = [.70 .50 .20 .30];
+            FigColor = [.95 .95 .95];
             FigName = 'Brain Lighting Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -608,55 +621,103 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             ui_text = uicontrol(f, 'Style', 'text');
             set(ui_text,'Units','normalized')
             set(ui_text,'BackgroundColor', [.95 .95 .95])
-
+            
+            % top
+            % backgroundcolor
             ui_button_backgroundcolor = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_backgroundcolor,'Units','normalized')
             set(ui_button_backgroundcolor,'BackgroundColor', [.95 .95 .95])
-            set(ui_button_backgroundcolor, 'Position', [.05 .75 .30 .20])
+            set(ui_button_backgroundcolor, 'Position', [.05 .70 .30 .15])
             set(ui_button_backgroundcolor, 'String', 'background color')
             set(ui_button_backgroundcolor, 'HorizontalAlignment', 'center')
             set(ui_button_backgroundcolor, 'TooltipString', 'Brain surface edge color')
             set(ui_button_backgroundcolor, 'Callback',{@cb_backgroundcolor})
             
+            % lighting
+            label_lighting = uicontrol(f, 'Style', 'text');
+            set(label_lighting,'Units','normalized')
+            set(label_lighting,'BackgroundColor', [.95 .95 .95])
+            set(label_lighting, 'String', 'Lighting')
+            set(label_lighting, 'Position', [.55 .85 .30 .15])
+            set(label_lighting, 'HorizontalAlignment', 'center')
+            set(label_lighting, 'FontWeight', 'bold')
+            
             ui_pop_up_lighting = uicontrol(f, 'Style', 'popupmenu');
             ui_pop_up_lighting.Units = 'normalized';
-            ui_pop_up_lighting.Position = [.05 .15 .30 .20];
+            ui_pop_up_lighting.Position = [.55 .70 .30 .15];
             ui_pop_up_lighting.String = settings_lighting{4};
             ui_pop_up_lighting.HorizontalAlignment = 'center';
             ui_pop_up_lighting.Callback = @cb_popLighting;
             
+            % middle
+            % material 
+            label_material = uicontrol(f, 'Style', 'text');
+            set(label_material,'Units','normalized')
+            set(label_material,'BackgroundColor', [.95 .95 .95])  %
+            set(label_material, 'String', 'Material')
+            set(label_material, 'Position', [.05 .55 .30 .15])
+            set(label_material, 'HorizontalAlignment', 'center')
+            set(label_material, 'FontWeight', 'bold')            
+            
             ui_pop_up_material = uicontrol(f, 'Style', 'popupmenu');
             ui_pop_up_material.Units = 'normalized';
-            ui_pop_up_material.Position = [.55 .75 .30 .20];
+            ui_pop_up_material.Position = [.05 .40 .30 .15];
             ui_pop_up_material.String = settings_material{4};
             ui_pop_up_material.HorizontalAlignment = 'center';
             ui_pop_up_material.Callback = @cb_popMaterial;
             
+            % camlight
+            label_camlight = uicontrol(f, 'Style', 'text');
+            set(label_camlight,'Units','normalized')
+            set(label_camlight,'BackgroundColor', [.95 .95 .95])
+            set(label_camlight, 'String', 'Camlight')
+            set(label_camlight, 'Position', [.55 .55 .30 .15])
+            set(label_camlight, 'HorizontalAlignment', 'center')
+            set(label_camlight, 'FontWeight', 'bold') 
+            
             ui_pop_up_camlight = uicontrol(f, 'Style', 'popupmenu');
             ui_pop_up_camlight.Units = 'normalized';
-            ui_pop_up_camlight.Position = [.55 .15 .30 .20];
+            ui_pop_up_camlight.Position = [.55 .40 .30 .15];
             ui_pop_up_camlight.String = settings_camlight{4};
             ui_pop_up_camlight.HorizontalAlignment = 'center';
             ui_pop_up_camlight.Callback = @cb_popCamLight;
             
+            % bottom
+            % camcolor     
+            label_style = uicontrol(f, 'Style', 'text');
+            set(label_style,'Units','normalized')
+            set(label_style,'BackgroundColor', [.95 .95 .95])
+            set(label_style, 'String', 'Style')
+            set(label_style, 'Position', [.05 .30 .30 .15])
+            set(label_style, 'HorizontalAlignment', 'center')
+            set(label_style, 'FontWeight', 'bold') 
             ui_pop_up_facecolorstyle = uicontrol(f, 'Style', 'popupmenu');
             ui_pop_up_facecolorstyle.Units = 'normalized';
-            ui_pop_up_facecolorstyle.Position = [.05 .45 .30 .20];
-            ui_pop_up_facecolorstyle.String = {'interpolated', 'flat'};
+            ui_pop_up_facecolorstyle.Position = [.05 .05 .30 .15];
+            ui_pop_up_facecolorstyle.String = {'flat', 'interpolated'};
             ui_pop_up_facecolorstyle.HorizontalAlignment = 'center';
             ui_pop_up_facecolorstyle.Callback = @cb_facecolorstyle;
             
+            % camcolors
+            label_camoption = uicontrol(f, 'Style', 'text');
+            set(label_camoption,'Units','normalized')
+            set(label_camoption,'BackgroundColor', [.95 .95 .95])
+            set(label_camoption, 'String', 'Style Options')
+            set(label_camoption, 'Position', [.55 .30 .30 .15])
+            set(label_camoption, 'HorizontalAlignment', 'center')
+            set(label_camoption, 'FontWeight', 'bold') 
+            
             ui_pop_up_colormapoption = uicontrol(f, 'Style', 'popupmenu');
             ui_pop_up_colormapoption.Units = 'normalized';
-            ui_pop_up_colormapoption.Position = [.55 .45 .30 .20];
+            ui_pop_up_colormapoption.Position = [.55 .05 .30 .15];
             ui_pop_up_colormapoption.String = {'parula', 'jet', 'hsv', 'hot', ...
                 'cool', 'spring', 'summer', 'autumn', 'winter', 'gray', 'bone', ...
                 'copper', 'pink', 'lines', 'colorcube', 'prism', 'flag', 'white'};
             ui_pop_up_colormapoption.HorizontalAlignment = 'center';
             ui_pop_up_colormapoption.Callback = @cb_colormapoption;
-
-            set(f,'Visible','on')      
-
+            
+            set(f,'Visible','on')
+            
             function cb_backgroundcolor(~,~)  % (src,event)
                 color = uisetcolor;
                 if length(color) == 3
@@ -666,14 +727,14 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             function cb_popLighting(~,~)
                 val = ui_pop_up_lighting.Value;
-                str = ui_pop_up_lighting.String;                
+                str = ui_pop_up_lighting.String;
                 bs.Lighting = str{val};
                 lighting(bs.get_axes(), bs.Lighting)
             end
             
             function cb_popMaterial(~,~)
                 val = ui_pop_up_material.Value;
-                str = ui_pop_up_material.String;                
+                str = ui_pop_up_material.String;
                 bs.Material = str{val};
                 material(bs.get_axes(), bs.Material)
             end
@@ -691,10 +752,10 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             function cb_facecolorstyle(~,~)  % (src,event)
                 val = ui_pop_up_facecolorstyle.Value;
                 str = ui_pop_up_facecolorstyle.String;
-                if str{val} == 'interpolated' %#ok<BDSCA>
+                if isequal(str{val}, 'interpolated')
                     set(bs.getBrainSurface(), 'FaceColor', 'interp')
                 else
-                     set(bs.getBrainSurface(), 'FaceColor', [.5 .5 .5])
+                    set(bs.getBrainSurface(), 'FaceColor', [.5 .5 .5])
                 end
             end
             
@@ -722,13 +783,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % create a brain surface from the specified file
             
             bs = PlotBrainSurf('BrainSurfaceType', brain_surface_file);
-        end
-        function available_settings = getAvailableSettings(bs)
-            available_settings = {
-                {'PlotBrainSurf.Lighting', BRAPH2.STRING, 'none', {'none', 'flat', 'gouraud'}}, ...
-                {'PlotBrainSurf.Material', BRAPH2.STRING, 'dull', {'dull', 'shiny', 'metal'}}, ...
-                {'PlotBrainSurf.CamLight', BRAPH2.STRING, 'headlight', {'headlight', 'right', 'left'}} ...
-                };
         end
     end
     methods (Access = protected)
