@@ -10,7 +10,7 @@ function B = semipositivize(A, varargin)
 % RULE = 'zero' (default)   convert negative values to zeros.
 %        'absolute'         convert negative values to absolute value.
 %
-% See also BINARIZE, DEDIAGONALIZE, STANDARDIZE, SYMMETRIZE.
+% See also BINARIZE, DEDIAGONALIZE, DIAGONALIZE, STANDARDIZE, SYMMETRIZE.
 
 semipositivize_rule = get_from_varargin('zero', 'SemipositivizeRule', varargin);
 
