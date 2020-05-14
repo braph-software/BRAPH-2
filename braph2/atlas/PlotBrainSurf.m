@@ -1,6 +1,43 @@
 classdef PlotBrainSurf < handle & matlab.mixin.Copyable
-    % PlotBrainSurf < handle & matlab.mixin.Copyable : Plot of a brain surface
-    %   PlotBrainSurf plots and manages a brain surface.
+    % PlotBrainSurf  Plot of a brain surface
+    % PlotBrainSurf plots and manages a brain surface.
+    % It is a subclass of handle and matlab.mixin.Copyable.
+    %
+    % PlotBrainSurf manages the brain surface choosen by the user from a
+    % collection of surfaces. This class provides the common methods needed 
+    % to manage the plot of the surface, via two custom panels where the 
+    % user can change light, material, camlight, facecolor, edgecolor and
+    % background color.
+    % 
+    % PlotBrainSurf methods:
+    %   PlotBrainSurf        - constructor.
+    %   tostring             - returns a string representing the surface
+    %   disp                 - displays the plot brain surface
+    %   getAvailableSettings - returns the available settings
+    %   getName              - returns the name 
+    %   getSettings          - returns the current settings
+    %   getBrainSurface      - returns the handle of the brain surface
+    %   setSurface           - sets the surface
+    %   set_axes             - sets the handle of the axes
+    %   get_axes             - gets the handle of the axes
+    %   brain                - plots the brain surface
+    %   brain_on             - shows the brain surface
+    %   brain_off            - hides the brain surface
+    %   brain_settings       - creates a panel to control brain surface
+    %   hold_on              - retains the brain surface
+    %   hold_off             - clears the bran surface
+    %   grid_on              - turns the grid visible
+    %   grin_off             - turns the grid invisible
+    %   axis_on              - turns the axis visible
+    %   axis_off             - turns the axis invisible
+    %   axis_equal           - turns the axis aspect ratio equal to the data
+    %   axis_tight           - turns the axis limit to the range of data
+    %   view                 - sets the desired angle of view
+    %   update_light         - sets the light configuration
+    %   brain_light          - creates a panel to control the light
+    %   loadBrainSurface     - static function to create a brain surface
+    %
+    % See also handle, matlab.mixin.Copyable, PlotBrainAtlas.
     
     properties (Constant)
         VIEW_3D	= 1
@@ -78,6 +115,10 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     end
     methods  % Basic Functions
         function bs = PlotBrainSurf(varargin)
+            % PLOTBRAINSURF(VARARGIN) construct the brain surface object,
+            % utilizing VARARGIN it sets the settings.
+            %
+            % See also PlotBrainAtlas. 
             
             available_settings = PlotBrainSurf.getAvailableSettings();
             settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
@@ -91,9 +132,15 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             bs.settings = settings;
             
             brain_surface_file = get_from_varargin('BrainMesh_ICBM152.nv' , 'BrainSurfaceType', varargin(:));
-            bs.setSurface(brain_surface_file);
+            bs.set_surface(brain_surface_file);
         end
         function str = tostring(bs)
+            % TOSTRING string with information about the plot brain surf
+            %
+            % STR = TOSTRING(BS) returns string with the brain surface file
+            %
+            % See also disp().
+            
             str = ['Brain Surface of type: ' bs.brain_surface_file '.'];
         end
         function disp(bs)
@@ -110,18 +157,12 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             disp(['  Material: ' bs.Material]);
             disp(['  CamLight: ' bs.CamLight]);
         end
-        function name = getName(bs)  % (bs)
-            % NAME brain surface name
-            %
-            % TXT = NAME() gets the brain surface BS's name.
-            %
-            % See also PlotBrainSurf.
-            
-            name = bs.brain_surface_file;
-        end
     end
     methods (Static)
         function available_settings = getAvailableSettings(bs) %#ok<INUSD>
+            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(BS) returns the 
+            % class avialable settings.
+            
             available_settings = {
                 {'PlotBrainSurf.Lighting', BRAPH2.STRING, 'none', {'none', 'flat', 'gouraud'}}, ...
                 {'PlotBrainSurf.Material', BRAPH2.STRING, 'dull', {'dull', 'shiny', 'metal'}}, ...
@@ -130,23 +171,49 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         end
     end
     methods  % Inspection functions
-        function res = getSettings(bs, setting_code)
+        function name = getName(bs)  % (bs)
+            % NAME brain surface name
+            %
+            % NAME = getName() gets the brain surface BS's name.
+            %
+            % See also getSettings(), getBrainSurface().
+            
+            name = bs.brain_surface_file;
+        end
+        function settings = getSettings(bs, setting_code)
+            % GETSETTINGS returns the current settings
+            %
+            % SETTINGS = GETSETTINGS() returns the current settings
+            %
+            % See also getName(), getSettings().
+            
             if nargin<2
-                res = bs.settings;
+                settings = bs.settings;
             else
                 for i = 1:1:length(bs.settings)
                     if isequal(bs.settings{i, 1}, setting_code)
-                        res = get_from_varargin([], setting_code, bs.settings{i, :});
+                        settings = get_from_varargin([], setting_code, bs.settings{i, :});
                     end
                 end
             end
         end
         function brain_surface = getBrainSurface(bs)
+            % GETBRAINSURFACE returns the brain surface
+            %
+            % BRAIN_SURFACE = GETBRAINSURFACE() returns the brain surface
+            %
+            % See also getSettings(), getName().
+            
             brain_surface = bs.h_brain;
         end
     end
     methods  % editing functions
-        function setSurface(bs, brain_surface_file)
+        function set_surface(bs, brain_surface_file)
+            % SETSURFACE(BS, BRAIN_SURFACE_FILE) reads the brain surface
+            % file and loads the data. Sets the Lighting handles from the
+            % settings.
+            %
+            % See also: update_light(), set_axes().
             
             bs.brain_surface_file =  brain_surface_file;
             bs.Lighting = bs.getSettings('PlotBrainSurf.Lighting');
@@ -580,6 +647,21 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             drawnow
         end
         function brain_lighting(bs, varargin)
+            % BRAIN_LIGHTING sets brain surface's lighting properties
+            %
+            % BRAIN_LIGHTING(BS) allows the user to specify the properties
+            % of the brain surface lighting by opening a graphical user
+            % interface.
+            %
+            % BRAIN_LIGHTING(BS, VARARGIN) sets the property of the user
+            % interface's by taking specifications out of VARARGIN
+            %   Admissible properties are:
+            %       FigPosition   -  position of the user interface on the screen
+            %       FigColor      -  background color of the user interface
+            %       FigName       -  name of the user interface
+            %
+            % See also PlotBrainSurf, brains_settings().
+            
             %get settings
             internal_set = PlotBrainSurf.getAvailableSettings();
             settings_lighting = internal_set{1};
@@ -768,6 +850,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     end
     methods (Static)  % Load function
         function bs = loadBrainSurface(varargin)
+            % BS = LOADBRAINSURFACE(VARARGIN) creates anothe PlotBrainSurf
+            % object using the VARARGIN specifications. 
+            
             brain_surface_file = get_from_varargin('' , 'BrainSurfaceType', varargin(:));
             if isequal(brain_surface_file, '')  % select file
                 msg = get_from_varargin(BRAPH2.BRAINSURFACE_MSG, 'MSG', varargin{:});
