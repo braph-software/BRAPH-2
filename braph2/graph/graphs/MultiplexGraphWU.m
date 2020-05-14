@@ -91,6 +91,18 @@ classdef MultiplexGraphWU < MultiplexGraphWD
         function graph_type = getEdgeType()
             graph_type = Graph.UNDIRECTED;
         end
+        function selfconnectivity_type = getSelfConnectivityType()
+            selfconnectivity_type = Graph.NOT_SELFCONNECTED;  % True in cell diagonal matrices
+        end
+        function negativity_type = getNegativityType()
+            % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
+            %
+            % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
+            %
+            % See also getConnectionType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            
+            negativity_type = Graph.NONNEGATIVE;
+        end
     end
 %     methods
 %         function g = GraphWU(A, varargin)
@@ -180,57 +192,6 @@ classdef MultiplexGraphWU < MultiplexGraphWD
 %         end
 %     end    
 %     methods (Static)
-%         function graph_class = getClass()
-%             % GETCLASS returns the class of the graph.
-%             %
-%             % GRAPH_CLASS = GETCLASS() returns the class, 'GraphWU'.
-%             %
-%             % See also getName().
-%             
-%             graph_class = 'GraphWU';
-%         end
-%         function name = getName()
-%             % GETNAME returns the name of the graph.
-%             %
-%             % NAME = GETCLASS() returns the name, 'Weighted Undirected Graph'.
-%             %
-%             % See also getClass()
-%             
-%             name = 'Weighted Undirected Graph';
-%         end
-%         function description = getDescription()
-%             % GETDESCRIPTION returns the description of the graph.
-%             %
-%             % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHWU.
-%             %
-%             % See also getName().
-%             
-%             description = [ ...
-%                 'In a weighted undirected (WU) graph, ' ...
-%                 'the edges are associated with a real number between 0 and 1 ' ...
-%                 'indicating the strength of the connection, ' ...
-%                 'and they are undirected.' ...
-%                 'The connectivity matrix is symmetric.' ...
-%                 ];
-%         end
-%         function bool = is_directed()
-%             % IS_DIRECTED checks if the graph is directed.
-%             %
-%             % BOOL = IS_DIRECTED() returns false for GRAPHWU.
-%             %
-%             % See also is_undirected().
-%             
-%             bool = false;
-%         end
-%         function bool = is_undirected()
-%             % IS_UNDIRECTED checks if the graph is directed.
-%             %
-%             % BOOL = IS_UNDIRECTED() returns true for GRAPHWU.
-%             %
-%             % See also is_directed().
-%             
-%             bool = true;
-%         end
 %         function list = getCompatibleMeasureList()
 %             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
 %             %

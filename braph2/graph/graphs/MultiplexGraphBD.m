@@ -103,6 +103,18 @@ classdef MultiplexGraphBD < Graph
         function graph_type = getEdgeType()
             graph_type = Graph.DIRECTED;
         end
+        function selfconnectivity_type = getSelfConnectivityType()
+            selfconnectivity_type = Graph.NOT_SELFCONNECTED;  % True in cell diagonal matrices
+        end
+        function negativity_type = getNegativityType()
+            % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
+            %
+            % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
+            %
+            % See also getConnectionType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            
+            negativity_type = Graph.NONNEGATIVE;
+        end
     end
 %     methods
 %         function g = GraphBD(A, varargin)
@@ -189,92 +201,6 @@ classdef MultiplexGraphBD < Graph
 %         end
 %     end
 %     methods (Static)
-%         function graph_class = getClass()
-%             % GETCLASS returns the class of the graph.
-%             %
-%             % GRAPH_CLASS = GETCLASS() returns the class, 'GraphBD'.
-%             %
-%             % See also getName().
-%             
-%             graph_class = 'GraphBD';
-%         end
-%         function name = getName()
-%             % GETNAME returns the name of the graph.
-%             %
-%             % NAME = GETCLASS() returns the name, 'Binary Directed Graph'.
-%             %
-%             % See also getClass().
-%             
-%             name = 'Binary Directed Graph';
-%         end
-%         function description = getDescription()
-%             % GETDESCRIPTION returns the description of the graph.
-%             %
-%             % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHBD.
-%             %
-%             % See also getName().
-%             
-%             description = [ ...
-%                 'In a binary directed (BD) graph, ' ...
-%                 'the edges can be either 0 (absence of connection) ' ...
-%                 'or 1 (existence of connection), ' ...
-%                 'and they are directed.' ...
-%                 ];
-%         end
-%         function bool = is_selfconnected()
-%             % IS_SELFCONNECTED checks if the graph is self connected.
-%             %
-%             % BOOL = IS_SELFCONNECTED() returns false for GRAPHBD.
-%             %
-%             % See also is_nonnegative().
-%             
-%             bool = false;
-%         end
-%         function bool = is_nonnegative()
-%             % IS_NONNEGATIVE checks if the graph is nonnegative.
-%             %
-%             % BOOL = IS_NONNEGATIVE() returns true for GRAPHBD.
-%             %
-%             % See also is_selfconnected().
-%             
-%             bool = true;
-%         end
-%         function bool = is_weighted()
-%             % IS_WEIGHTED checks if the graph is weighted.
-%             %
-%             % BOOL = IS_WEIGHTED() returns false for GRAPHBD.
-%             %
-%             % See also is_binary().
-%             
-%             bool = false;
-%         end
-%         function bool = is_binary()
-%             % IS_BINARY checks if the graph is binary.
-%             %
-%             % BOOL = IS_BINARY() returns true for GRAPHBD.
-%             %
-%             % See also is_weigthed().
-%             
-%             bool = true;
-%         end
-%         function bool = is_directed()
-%             % IS_DIRECTED checks if the graph is directed.
-%             %
-%             % BOOL = IS_DIRECTED() returns true for GRAPHBD.
-%             %
-%             % See also is_undirected().
-%             
-%             bool = true;
-%         end
-%         function bool = is_undirected()
-%             % IS_UNDIRECTED checks if the graph is undirected.
-%             %
-%             % BOOL = IS_UNDIRECTED() returns false for GRAPHBD.
-%             %
-%             % See also is_directed().
-%             
-%             bool = false;
-%         end
 %         function list = getCompatibleMeasureList()
 %             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
 %             %

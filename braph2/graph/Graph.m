@@ -49,29 +49,31 @@ classdef Graph < handle & matlab.mixin.Copyable
         % Graph types
         GRAPH = 1  % single graph
         GRAPH_NAME = 'Graph'
-        GRAPH_DESCRIPTION = ''
-
-% TODO: add descriptions everywhere
+        GRAPH_DESCRIPTION = 'Graph represents a single layer graph.'
 
         MULTIGRAPH = 2  % multiple unconnected graphs
         MULTIGRAPH_NAME = 'Multigraph'
-        MULTIGRAPH_DESCRIPTION = ''
+        MULTIGRAPH_DESCRIPTION = 'Multigraph consists of multiple unconnected graphs.'
         
         ORDERED_MULTIPLEX = 3  % multiple graphs with sequential connections between corresponding nodes
         ORDERED_MULTIPLEX_NAME = 'Ordered Multipex'
-        ORDERED_MULTIPLEX_DESCRIPTION = ''
+        ORDERED_MULTIPLEX_DESCRIPTION = ['Ordered Multiplex consists of multiple ' ...
+            'graphs with ordinal connections between corresponding nodes.'];
         
         MULTIPLEX = 4  % multiple graphs with connections between corresponding nodes
         MULTIPLEX_NAME = 'Multiplex'
-        MULTIPLEX_DESCRIPTION = ''
+        MULTIPLEX_DESCRIPTION = ['Multiplex consists of multiple graphs with ' ...
+            'categorical connections (unordered) between corresponding nodes.'];
 
         ORDERED_MULTILAYER = 5  % multiple graphs with sequential connections between all nodes
         ORDERED_MULTILAYER_NAME = 'Ordered Multilayer'
-        ORDERED_MULTILAYER_DESCRIPTION = ''
+        ORDERED_MULTILAYER_DESCRIPTION = ['Ordered Multilayer consists of multiple ' ...
+            'graphs with ordinal connections between all nodes.'];
 
         MULTILAYER = 6  % multiple graphs with connections between all nodes
         MULTILAYER_NAME = 'Multilayer'
-        MULTILAYER_DESCRIPTION = ''
+        MULTILAYER_DESCRIPTION = ['Multilayer consists of multiple graphs with ' ...
+            'categorical connections (unordered) between all nodes.'];
         
         TYPE_NUMBER = 6
         
@@ -83,32 +85,30 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.ORDERED_MULTILAYER_NAME
             Graph.MULTILAYER_NAME
             }
-
-% TODO: Add sama for description
         
         % Connection types
         WEIGHTED = 1  % weighted connections
+        WEIGHTED_DESCRIPTION = 'Graph with weighted connections.';
         BINARY = 2  % binary (0 or 1) connections
+        BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.';
 
-% TODO: change as above
-        
         % Edge types
         DIRECTED = 1  % directed edges
+        DIRECTED_DESCRIPTION = 'Graph with directed edges.';
         UNDIRECTED = 2  % undirected edges
-
-% TODO: change as above
-
+        UNDIRECTED_DESCRIPTION = 'Graph with undirected edges.';
+        
         % Selfconnectedness
         NOT_SELFCONNECTED = 1
+        NOT_SELFCONNECTED_DESCRIPTION = 'Graph with self-connections set to zero.';
         SELFCONNECTED = 2
-
-% TODO: change as above + complete necessary functions
+        SELFCONNECTED_DESCRIPTION = 'Graph with self-connections considered.';
 
         % Negativity
         NONNEGATIVE = 1
+        NONNEGATIVE_DESCRIPTION = 'Graph with non-negative edges.';
         NEGATIVE = 2
-
-% TODO: change as above + complete necessary functions
+        NEGATIVE_DESCRIPTION = 'Graph with negative edges.';
 
     end
     properties (GetAccess=protected, SetAccess=protected)
@@ -325,6 +325,56 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             bool = Graph.getEgdeType(g) == Graph.UNDIRECTED;
         end
+        function selfconnectivity_type = getSelfConnectivityType(g)
+            selfconnectivity_type = eval([Graph.getClass(g) '.getSelfConnectivityType()']);
+        end
+        function bool = is_selfconnected(g)
+            % IS_SELFCONNECTED checks if graph is self-connected
+            %
+            % BOOL = IS_SELFCONNECTED(G) returns true if the instance of the
+            % concrete graph H is self-connected and false otherwise.
+            %
+            % BOOL = IS_SELFCONNECTED(GRAPH_CLASS) returns true if graph
+            % whose class is GRAPH_CLASS is self-connected and false otherwise.
+
+            bool = Graph.getSelfConnectivityType(g) == Graph.SELFCONNECTED; 
+        end
+        function bool = is_not_selfconnected(g)
+            % IS_NOT_SELFCONNECTED checks if graph is not self-connected
+            %
+            % BOOL = IS_NOT_SELFCONNECTED(G) returns true if the instance of the
+            % concrete graph H is not self-connected and false otherwise.
+            %
+            % BOOL = IS_NOT_SELFCONNECTED(GRAPH_CLASS) returns true if graph
+            % whose class is GRAPH_CLASS is not self-connected and false otherwise.
+            
+            bool = Graph.getSelfConnectivityType(g) == Graph.NOT_SELFCONNECTED;
+        end
+        function negativity_type = getNegativityType(g)
+            negativity_type = eval([Graph.getClass(g) '.getNegativityType()']);
+        end
+        function bool = is_nonnegative(g)
+            % IS_NONNEGATIVE checks if graph is non-negative
+            %
+            % BOOL = IS_NONNEGATIVE(G) returns true if the concrete instance
+            % of graph G is non-negative and false otherwise.
+            %
+            % BOOL = IS_NONNEGATIVE(GRAPH_CLASS) returns true if the graph
+            % whose class is GRAPH_CLASS is non-negative and false otherwise.
+
+            bool = Graph.getNegativityType(g) == Graph.NONNEGATIVE;
+        end
+        function bool = is_negative(g)
+            % IS_NEGATIVE checks if graph is negative
+            %
+            % BOOL = IS_NEGATIVE(G) returns true if the concrete instance
+            % of graph G is negative and false otherwise.
+            %
+            % BOOL = IS_NEGATIVE(GRAPH_CLASS) returns true if the graph
+            % whose class is GRAPH_CLASS is negative and false otherwise.
+            
+            bool = Graph.getNegativityType(g) == Graph.NEGATIVE;
+        end
     end
     methods  % Basic functions
         function str = tostring(g)
@@ -355,7 +405,7 @@ classdef Graph < handle & matlab.mixin.Copyable
 %             end
         end
     end
-    methods  % Inspection functions
+    methods (Static) % Inspection functions
         function n = nodenumber(g)
             % NODENUMBER returns the number of nodes in the graph.
             %
@@ -400,6 +450,27 @@ classdef Graph < handle & matlab.mixin.Copyable
             else  % return A{i, j}
                 A = g.A{i, j};
             end
+        end
+        function g_new = getGraph(g, A, varargin) %#ok<INUSD>
+            % GETGRAPH returns a graph
+            %
+            % G = GETGRAPH(G, A) returns an instance
+            % of the class of the graph G with adjacency matrix A.
+            %
+            % G = GETGRAPH(GRAPH_CLASS, A) returns an instance
+            % of the class whose class is GRAPH_CLASS with adjacency matrix A.
+            %
+            % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % initializes he property settings with the properties and values.
+            %
+            % G = GETGRAPH(G, A, 'Settings', SETTINGS)
+            % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS)
+            % initializes the property settings with SETTINGS.
+            %
+            % See also getList(), getCompatibleMeasureList().
+            
+            g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
         end
     end
 %     methods (Access=protected)
@@ -577,102 +648,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         randomize_graph(n);
 %     end
 %     methods (Static)
-% % number of layers
-%         function bool = is_selfconnected(g)
-%             % IS_SELFCONNECTED checks if graph is self-connected
-%             %
-%             % BOOL = IS_SELFCONNECTED(G) returns true if the instance of the
-%             % concrete graph H is self-connected and false otherwise.
-%             %
-%             % BOOL = IS_SELFCONNECTED(GRAPH_CLASS) returns true if graph
-%             % whose class is GRAPH_CLASS is self-connected and false otherwise.
-%             
-%             bool = eval([Graph.getClass(g) '.is_selfconnected()']);
-%         end
-%         function bool = is_nonnegative(g)
-%             % IS_NONNEGATIVE checks if graph is non-negative
-%             %
-%             % BOOL = IS_NONNEGATIVE(G) returns true if the concrete instance
-%             % of graph G is non-negative and false otherwise.
-%             %
-%             % BOOL = IS_NONNEGATIVE(GRAPH_CLASS) returns true if the graph
-%             % whose class is GRAPH_CLASS is non-negative and false otherwise.
-%             
-%             bool = eval([Graph.getClass(g) '.is_nonnegative()']);
-%         end
-%         function bool = is_weighted(g)
-%             % IS_WEIGHTED checks if graph is weighted
-%             %
-%             % BOOL = IS_WEIGHTED(G) returns true if an instance of the concrete
-%             % graph G is weighted and false otherwise.
-%             %
-%             % BOOL = IS_WEIGHTED(GRAPH_CLASS) returns true if a graph whose
-%             % class is GRAPH_CLASS is weighted and false otherwise.
-%             %
-%             % See also is_binary().
-%             
-%             bool = eval([Graph.getClass(g) '.is_weighted()']);
-%         end
-%         function bool = is_binary(g)
-%             % IS_BINARY checks if graph is binary
-%             %
-%             % BOOL = IS_BINARY(G) returns true if an instance of the graph G
-%             % is binary and false otherwise.
-%             %
-%             % BOOL = IS_BINARY(GRAPH_CLASS) returns true if a graph whose
-%             % class if GRAPH_CLASS is binary and false otherwise.
-%             %
-%             % See also is_weighted().
-%             
-%             bool = eval([Graph.getClass(g) '.is_binary()']);
-%         end
-%         function bool = is_directed(g)
-%             % IS_DIRECTED checks if graph is directed
-%             %
-%             % BOOL = IS_DIRECTED(G) returns true if the instance of concrete
-%             % graph G is directed and false otherwise.
-%             %
-%             % BOOL = IS_DIRECTED(GRAPH_CLASS) returns true if a graph whose
-%             % class is GRAPH_CLASS is directed and false otherwise.
-%             %
-%             % See also is_undirected().
-%             
-%             bool = eval([Graph.getClass(g) '.is_directed()']);
-%         end
-%         function bool = is_undirected(g)
-%             % IS_UNDIRECTED checks if graph is undirected
-%             %
-%             % BOOL = IS_UNDIRECTED(G) returns true if the instance of the
-%             % concrete graph G is undirected and false otherwise.
-%             %
-%             % BOOL = IS_UNDIRECTED(GRAPH_CLASS) returns true if a graph
-%             % whose class is GRAPH_CLASS is undirected and false otherwise.
-%             %
-%             % See also is_directed().
-%             
-%             bool = eval([Graph.getClass(g) '.is_undirected()']);
-%         end
-%         function g_new = getGraph(g, A, varargin) %#ok<INUSD>
-%             % GETGRAPH returns a graph
-%             %
-%             % G = GETGRAPH(G, A) returns an instance
-%             % of the class of the graph G with adjacency matrix A.
-%             %
-%             % G = GETGRAPH(GRAPH_CLASS, A) returns an instance
-%             % of the class whose class is GRAPH_CLASS with adjacency matrix A.
-%             %
-%             % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-%             % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-%             % initializes he property settings with the properties and values.
-%             %
-%             % G = GETGRAPH(G, A, 'Settings', SETTINGS) 
-%             % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS) 
-%             % initializes the property settings with SETTINGS.
-%             %
-%             % See also getList(), getCompatibleMeasureList().
-%             
-%             g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
-%         end
 %         function list = getCompatibleMeasureList(g)
 %             % GETCOMPATIBLEMEASURELIST returns the list of measures
 %             %
