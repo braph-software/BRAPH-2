@@ -1,31 +1,134 @@
 % test Graph
-graph_class_list = Graph.getList();
 
-%% Test 1: GraphType Graph Assert
-A = [
-    2, 2, 2;
-    2, 3, 1
-    ];
+%% Test 1: checkA
+error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
 
-detected = false;
+% working case
+clear A
+A{Graph.GRAPH} = rand(5);
+A{Graph.MULTIGRAPH} = {
+    rand(5) [] []
+    [] rand(2) []
+    [] [] rand(1)
+    };
+A{Graph.ORDERED_MULTIPLEX} = {
+    rand(4) diag(rand(4, 1)) []
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    [] diag(rand(4, 1)) rand(4)
+    };
+A{Graph.MULTIPLEX} = {
+    rand(4) diag(rand(4, 1)) diag(rand(4, 1))
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    diag(rand(4, 1)) diag(rand(4, 1)) rand(4)
+    };
+A{Graph.ORDERED_MULTILAYER} = {
+    rand(4) rand(4) []
+    rand(4) rand(4) rand(4)
+    [] rand(4) rand(4)
+    };
+A{Graph.MULTILAYER} = {
+    rand(4) rand(4) rand(4)
+    rand(4) rand(4) rand(4)
+    rand(4) rand(4) rand(4)
+    };
 
-try
-    g = GraphBU(A);  % GraphType Graph
-catch 
-    detected = true;
+for graph_type = 1:1:Graph.TYPE_NUMBER
+	Graph.checkA(graph_type, A{graph_type})
 end
 
-assert(detected, ...
-    [BRAPH2.STR ': Graph :' BRAPH2.WRONG_INPUT], ...
-    'A was not a square adjacency matrix and it was not detected.')
+% non-square matrix -> error
+A_wrong = rand(5, 3);
 
-%% Test 2: GraphType Graph Assert
-A = rand(randi(10));
-g = GraphBU(A);  % GraphType Graph
+for graph_type = 1:1:Graph.TYPE_NUMBER
+    try 
+        clear e
+        Graph.checkA(Graph.GRAPH, A_wrong)
+    catch e
+        assert(isequal(e.identifier, error_identifier), ...
+            [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+            ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+    end
+    assert(exist('e', 'var') == 1, ...
+        [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+        ['Error not thrown. Expected error: ' error_identifier])
+end
 
-assert(isequal(g.getClass(), 'GraphBU'), ...
-    'BRAPH: GraphBU :StaticFuncImplementation', ...
-    ['GraphBU.getClass() should return ''' 'GraphBU' ''''])
+% TODO: specific cases
+
+%     if % cell -> error
+%         A = {
+%             rand(5, 5) rand(5, 2); 
+%             rand(2, 5) rand(2, 2); 
+%             };
+%         try 
+%             clear e
+%             Graph.checkA(Graph.GRAPH, A)
+%         catch e
+%             assert(isequal(e.identifier, error_identifier), ...
+%                 [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+%                 ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+%         end
+%         assert(exist('e', 'var') == 1, ...
+%             [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+%             ['Error not thrown. Expected error: ' error_identifier])
+
+
+% % cell -> error
+% A = {rand(5, 5)};
+% try 
+%     clear e
+%     Graph.checkA(Graph.GRAPH, A)
+% catch e
+%     assert(isequal(e.identifier, error_identifier), ...
+%         [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+%         ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+% end
+% assert(exist('e', 'var') == 1, ...
+%     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+%     ['Error not thrown. Expected error: ' error_identifier])
+% 
+% % cell -> error
+% A = {
+%     rand(5, 5) rand(5, 2); 
+%     rand(2, 5) rand(2, 2); 
+%     };
+% try 
+%     clear e
+%     Graph.checkA(Graph.GRAPH, A)
+% catch e
+%     assert(isequal(e.identifier, error_identifier), ...
+%         [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+%         ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+% end
+% assert(exist('e', 'var') == 1, ...
+%     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+%     ['Error not thrown. Expected error: ' error_identifier])
+
+
+% A = [
+%     2, 2, 2;
+%     2, 3, 1
+%     ];
+% 
+% detected = false;
+% 
+% try
+%     g = GraphBU(A);  % GraphType Graph
+% catch 
+%     detected = true;
+% end
+% 
+% assert(detected, ...
+%     [BRAPH2.STR ': Graph :' BRAPH2.WRONG_INPUT], ...
+%     'A was not a square adjacency matrix and it was not detected.')
+
+% %% Test 2: GraphType Graph Assert
+% A = rand(randi(10));
+% g = GraphBU(A);  % GraphType Graph
+% 
+% assert(isequal(g.getClass(), 'GraphBU'), ...
+%     'BRAPH: GraphBU :StaticFuncImplementation', ...
+%     ['GraphBU.getClass() should return ''' 'GraphBU' ''''])
 
 % %% Test 1: All graphs not abstract
 % for i = 1:1:length(graph_class_list)
@@ -34,8 +137,10 @@ assert(isequal(g.getClass(), 'GraphBU'), ...
 %     g = Graph.getGraph(graph_class, A);
 % end
 
-% %% Test 2: Implementation static methods
-% for i = 1:1:length(graph_class_list)
+%% Test 2: Implementation static methods
+graph_class_list = Graph.getList();
+
+for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};
 %     A = rand(randi(10));
 %     g = Graph.getGraph(graph_class, A);
@@ -87,8 +192,8 @@ assert(isequal(g.getClass(), 'GraphBU'), ...
 %     assert(isnumeric(g.getCompatibleMeasureNumber()), ...
 %         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
 %         [graph_class '.getCompatibleMeasureNumber() should return a number'])
-% end
-% 
+end
+ 
 % %% Test 3: Either weighted or binary
 % for i = 1:1:length(graph_class_list)
 %     graph_class = graph_class_list{i};
