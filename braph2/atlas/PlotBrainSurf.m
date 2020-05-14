@@ -130,7 +130,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             bs.Material = bs.getSettings('PlotBrainSurf.Material');
             bs.CamLight = bs.getSettings('PlotBrainSurf.CamLight');
             
-            fid = fopen(['BrainSurfaces' filesep brain_surface_type]);
+            fid = fopen(['brainsurfs' filesep brain_surface_type]);
             bs.vertex_number = fscanf(fid, '%f', 1);
             bs.coord = fscanf(fid, '%f', [3, bs.vertex_number]);
             bs.ntri = fscanf(fid, '%f', 1);
