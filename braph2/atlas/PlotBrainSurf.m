@@ -638,13 +638,13 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(label_lighting,'Units','normalized')
             set(label_lighting,'BackgroundColor', [.95 .95 .95])
             set(label_lighting, 'String', 'Lighting')
-            set(label_lighting, 'Position', [.55 .85 .30 .15])
+            set(label_lighting, 'Position', [.55 .75 .30 .15])
             set(label_lighting, 'HorizontalAlignment', 'center')
             set(label_lighting, 'FontWeight', 'bold')
             
             ui_pop_up_lighting = uicontrol(f, 'Style', 'popupmenu');
             ui_pop_up_lighting.Units = 'normalized';
-            ui_pop_up_lighting.Position = [.55 .70 .30 .15];
+            ui_pop_up_lighting.Position = [.55 .65 .30 .15];
             ui_pop_up_lighting.String = settings_lighting{4};
             ui_pop_up_lighting.HorizontalAlignment = 'center';
             ui_pop_up_lighting.Callback = @cb_popLighting;
@@ -655,13 +655,13 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(label_material,'Units','normalized')
             set(label_material,'BackgroundColor', [.95 .95 .95])  %
             set(label_material, 'String', 'Material')
-            set(label_material, 'Position', [.05 .55 .30 .15])
+            set(label_material, 'Position', [.05 .45 .30 .15])
             set(label_material, 'HorizontalAlignment', 'center')
             set(label_material, 'FontWeight', 'bold')            
             
             ui_pop_up_material = uicontrol(f, 'Style', 'popupmenu');
             ui_pop_up_material.Units = 'normalized';
-            ui_pop_up_material.Position = [.05 .40 .30 .15];
+            ui_pop_up_material.Position = [.05 .35 .30 .15];
             ui_pop_up_material.String = settings_material{4};
             ui_pop_up_material.HorizontalAlignment = 'center';
             ui_pop_up_material.Callback = @cb_popMaterial;
@@ -671,13 +671,13 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(label_camlight,'Units','normalized')
             set(label_camlight,'BackgroundColor', [.95 .95 .95])
             set(label_camlight, 'String', 'Camlight')
-            set(label_camlight, 'Position', [.55 .55 .30 .15])
+            set(label_camlight, 'Position', [.55 .45 .30 .15])
             set(label_camlight, 'HorizontalAlignment', 'center')
             set(label_camlight, 'FontWeight', 'bold') 
             
             ui_pop_up_camlight = uicontrol(f, 'Style', 'popupmenu');
             ui_pop_up_camlight.Units = 'normalized';
-            ui_pop_up_camlight.Position = [.55 .40 .30 .15];
+            ui_pop_up_camlight.Position = [.55 .35 .30 .15];
             ui_pop_up_camlight.String = settings_camlight{4};
             ui_pop_up_camlight.HorizontalAlignment = 'center';
             ui_pop_up_camlight.Callback = @cb_popCamLight;
@@ -688,7 +688,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(label_style,'Units','normalized')
             set(label_style,'BackgroundColor', [.95 .95 .95])
             set(label_style, 'String', 'Style')
-            set(label_style, 'Position', [.05 .30 .30 .15])
+            set(label_style, 'Position', [.05 .15 .30 .15])
             set(label_style, 'HorizontalAlignment', 'center')
             set(label_style, 'FontWeight', 'bold') 
             ui_pop_up_facecolorstyle = uicontrol(f, 'Style', 'popupmenu');
@@ -703,7 +703,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(label_camoption,'Units','normalized')
             set(label_camoption,'BackgroundColor', [.95 .95 .95])
             set(label_camoption, 'String', 'Style Options')
-            set(label_camoption, 'Position', [.55 .30 .30 .15])
+            set(label_camoption, 'Position', [.55 .15 .30 .15])
             set(label_camoption, 'HorizontalAlignment', 'center')
             set(label_camoption, 'FontWeight', 'bold') 
             
