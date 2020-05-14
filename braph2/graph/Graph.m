@@ -174,7 +174,6 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.NONNEGATIVE_DESCRIPTION
             Graph.NEGATIVE_DESCRIPTION
             }
-        
     end
     properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
