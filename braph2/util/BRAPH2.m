@@ -22,10 +22,29 @@ classdef BRAPH2
         BUG_FUNC = 'BugFunc'  % bug in a function (wrong behavior)
         BUG_COPY = 'BugCopy'  % bug while deep-copying an object
     end
-    properties (Constant)  % BRAPH2 file extensions
-        % Brain Surface
+    properties (Constant)  % BRAPH2 file extensions and messages
+        % file formats and dialogs
+        MSG_GETDIR = 'Select directory'
+        MSG_PUTDIR = 'Select directory'
+
         BRAINSURFACE_EXTENSION = '*.nv';
-        BRAINSURFACE_MSG = 'Select NV file';
+        BRAINSURFACE_MSG_GETFILE = 'Select NV file';
+        
+        MAT_EXTENSION = '*.mat';
+        MAT_MSG_GETFILE = 'Select MAT file';
+        MAT_MSG_PUTFILE = 'Select MAT file';
+        
+        XLS_EXTENSION = {'*.xlsx';'*.xls'};
+        XLS_MSG_GETFILE = 'Select Excel file';
+        XLS_MSG_PUTFILE = 'Select Excel file';
+        
+        TXT_EXTENSION = '*.txt';
+        TXT_MSG_GETFILE = 'Select TXT file';
+        TXT_MSG_PUTFILE = 'Select TXT file';
+        
+        JSON_EXTENSION = '*.json'
+        JSON_MSG_GETFILE = 'Select JSON file'
+        JSON_MSG_PUTFILE = 'Select JSON file'
     end
     %         BUILD = 2020
     %         VERSION = '2.0.0'
@@ -42,26 +61,4 @@ classdef BRAPH2
         NUMERIC = 2
         LOGICAL = 3
     end
-    
-    
-    
-    %         % file formats and dialogs
-    %         MSG_GETDIR = 'Select directory'
-    %         MSG_PUTDIR = 'Select directory'
-    %
-    %         MAT_EXTENSION = '*.mat';
-    %         MAT_MSG_GETFILE = 'Select MAT file';
-    %         MAT_MSG_PUTFILE = 'Select MAT file';
-    %
-    %         XLS_EXTENSION = {'*.xlsx';'*.xls'};
-    %         XLS_MSG_GETFILE = 'Select Excel file';
-    %         XLS_MSG_PUTFILE = 'Select Excel file';
-    %
-    %         TXT_EXTENSION = '*.txt';
-    %         TXT_MSG_GETFILE = 'Select TXT file';
-    %         TXT_MSG_PUTFILE = 'Select TXT file';
-    %
-    %         JSON_EXTENSION = '*.json'
-    %         JSON_MSG_GETFILE = 'Select JSON file'
-    %         JSON_MSG_PUTFILE = 'Select JSON file'
 end
