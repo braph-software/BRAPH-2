@@ -603,7 +603,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             bs = PlotBrainSurf('BrainSurfaceType', brain_surface_file).brain();
         end
-        function available_settings = getAvailableSettings(bs) %#ok<*INUSD>
+        function available_settings = getAvailableSettings(bs)
             available_settings = {
                 {'PlotBrainSurf.Lighting', BRAPH2.STRING, 'none', {'none', 'flat', 'gouraud'}}, ...
                 {'PlotBrainSurf.Material', BRAPH2.STRING, 'dull', {'dull', 'shiny', 'metal'}}, ...
