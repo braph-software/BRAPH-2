@@ -40,6 +40,16 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         VIEW_CP_CMD = 'Coronal posterior'
         VIEW_CP_AZEL = [0 0]
         
+        VIEW_CMD = { ...
+            PlotBrainSurf.VIEW_3D_CMD ...
+            PlotBrainSurf.VIEW_SL_CMD ...
+            PlotBrainSurf.VIEW_SR_CMD ...
+            PlotBrainSurf.VIEW_AD_CMD ...
+            PlotBrainSurf.VIEW_AV_CMD ...
+            PlotBrainSurf.VIEW_CA_CMD ...
+            PlotBrainSurf.VIEW_CP_CMD ...            
+            }
+
         VIEW_AZEL = { ...
             PlotBrainSurf.VIEW_3D_AZEL ...
             PlotBrainSurf.VIEW_SL_AZEL ...
@@ -57,7 +67,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         CamLight
         
         h_brain  % handle for brain surface
-        brain_surface_type  % tyoe of the brain surface
+        brain_surface_type  % type of the brain surface
         f_brain_settings  % brain setting figure handle
         
         % brain coordinates
@@ -68,7 +78,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
 
         % settings
         settings
-        
     end
     methods  % Basic Functions
         function bs = PlotBrainSurf(varargin)
@@ -109,7 +118,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             name = bs.brain_surface_type;
         end
     end
-    methods  % Inspection functins
+    methods  % Inspection functions
         function res = getSettings(bs, setting_code)
             if nargin<2
                 res = bs.settings;
@@ -133,7 +142,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             bs.Material = bs.getSettings('PlotBrainSurf.Material');
             bs.CamLight = bs.getSettings('PlotBrainSurf.CamLight');
             
-            fid = fopen(['BrainSurfaces' filesep brain_surface_type]);
+            fid = fopen(['brainsurfs' filesep brain_surface_type]);
             bs.vertex_number = fscanf(fid, '%f', 1);
             bs.coord = fscanf(fid, '%f', [3, bs.vertex_number]);
             bs.ntri = fscanf(fid, '%f', 1);
@@ -697,7 +706,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
         end
     end
-    methods (Static)
+    methods (Static)  % Load function
         function bs = loadBrainSurface(varargin)
             brain_surface_file = get_from_varargin('' , 'BrainSurfaceType', varargin(:));
             if isequal(brain_surface_file, '')  % select file
@@ -714,7 +723,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             bs = PlotBrainSurf('BrainSurfaceType', brain_surface_file);
         end
-        function available_settings = getAvailableSettings(bs) %#ok<*INUSD>
+        function available_settings = getAvailableSettings(bs)
             available_settings = {
                 {'PlotBrainSurf.Lighting', BRAPH2.STRING, 'none', {'none', 'flat', 'gouraud'}}, ...
                 {'PlotBrainSurf.Material', BRAPH2.STRING, 'dull', {'dull', 'shiny', 'metal'}}, ...
