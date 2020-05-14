@@ -1,14 +1,14 @@
 classdef MultiplexGraphBU < MultiplexGraphBD
-    % MultiplexGraphBU < MultiplexGraphBD: A binary undirected graph
-    % GraphBU represents a binary undirected graph.
+    % MultiplexGraphBU < MultiplexGraphBD: A multiplex binary undirected graph
+    % MultiplexGraphBU represents a multiplex binary undirected graph.
     %
-    % GraphBU methods:
-    %   GraphBU     - constructor.
+    % MultiplexGraphBU methods:
+    %   MultiplexGraphBU     - constructor.
     %
-    % GraphBU methods (static):
-    %   getClass    - return the class type GraphBU.
-    %   getName     - return the complete name of GraphBU.
-    %   getDescription - return the description of GraphBU.
+    % MultiplexGraphBU methods (static):
+    %   getClass    - return the class type MultiplexGraphBU.
+    %   getName     - return the complete name of MultiplexGraphBU.
+    %   getDescription - return the description of MultiplexGraphBU.
     %   is_selfconnected - boolean, checks if the graph is self-connected.
     %   is_nonnegative - boolean, checks if the graph is non-negative.
     %   is_weighted	- boolean, checks if the graph is weighted.
@@ -18,30 +18,27 @@ classdef MultiplexGraphBU < MultiplexGraphBD
     %   getCompatibleMeasureList - returns a list with compatible measures.
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
-    % See also Graph, GraphBD, GraphWD, GraphWU.
+    % See also Graph, MultiplexGraphBD, MultiplexGraphWD, MultiplexGraphWU.
+    
     methods
         function g = MultiplexGraphBU(A, varargin)
-            % GRAPHBU(A) creates a GRAPHBU class with adjacency matrix A.
+            % MULTIPLEXGRAPHBU(A) creates a MULTIPLEXGRAPHBU class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
             % function: SYMMETRIZE.
-            % It calls the superclass constructor GRAPHBD.
+            % It calls the superclass constructor MULTIPLEXGRAPHBD.
             %
-            % GRAPHBU(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-            % a GRAPHBU class with adjacency matrix A and it passes the
+            % MULTIPLEXGRAPHBU(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
+            % a MULTIPLEXGRAPHBU class with adjacency matrix A and it passes the
             % properties and values to the superclass as VARARGIN.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
             % function: SYMMETRIZE.
-            % It calls the superclass constructor GRAPHBD.
+            % It calls the superclass constructor MULTIPLEXGRAPHBD.
             %
-            % See also Graph, GraphBD, GraphWD, GraphWU.
+            % See also Graph, MultiplexGraphBD, MultiplexGraphWD, MultiplexGraphWU.
             
-            assert(iscell(A), ...
-                [BRAPH2.STR ':' BRAPH2.WRONG_INPUT], ...
-                'A must be a cell array of matrices).')
-            
-            L = length(A); % number of layers
+            L = length(A);  % number of layers
             for layer = 1:1:L
                 M = A{layer, layer};
                 M = symmetrize(M, varargin{:});  % enforces symmetry of adjacency matrix
@@ -78,28 +75,22 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             % See also getName().
             
             description = [ ...
-                'In a binary undirected (BU) graph, ' ...
+                'In a multiplex binary undirected (BU) graph, ' ...
                 'the edges can be either 0 (absence of connection) ' ...
                 'or 1 (existence of connection), ' ...
                 'and they are undirected.' ...
                 'The connectivity matrix is symmetric.' ...
                 ];
         end
-        function bool = is_graph()
-            bool = true;
+        function graph_type = getGraphType()
+            graph_type = Graph.MULTIPLEX;
         end
-        function bool = is_multigraph()
-            bool = false;
+        function graph_type = getConnectionType()
+            graph_type = Graph.BINARY;
         end
-        function bool = is_sequence()
-            bool = false;
+        function graph_type = getEdgeType()
+            graph_type = Graph.UNDIRECTED;
         end
-        function bool = is_multiplex()
-            bool = true;
-        end
-        function bool = is_multilayer()
-            bool = false;
-        end      
     end
 %     methods
 %         function g = GraphBU(A, varargin)

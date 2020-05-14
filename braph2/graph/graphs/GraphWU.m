@@ -19,6 +19,7 @@ classdef GraphWU < GraphWD
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
     % See also Graph, GraphBD, GraphWU, GraphWD.
+    
     methods
         function g = GraphWU(A, varargin)
             % GRAPHWU(A) creates a GRAPHWU class with adjacency matrix A.
@@ -76,20 +77,14 @@ classdef GraphWU < GraphWD
                 'The connectivity matrix is symmetric.' ...
                 ];
         end
-        function bool = is_graph()
-            bool = true;
+        function graph_type = getGraphType()
+            graph_type = Graph.GRAPH;
         end
-        function bool = is_multigraph()
-            bool = false;
+        function graph_type = getConnectionType()
+            graph_type = Graph.WEIGHTED;
         end
-        function bool = is_sequence()
-            bool = true;
-        end
-        function bool = is_multiplex()
-            bool = false;
-        end
-        function bool = is_multilayer()
-            bool = false;
+        function graph_type = getEdgeType()
+            graph_type = Graph.UNDIRECTED;
         end
     end
 %     methods

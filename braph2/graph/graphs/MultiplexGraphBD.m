@@ -1,14 +1,14 @@
 classdef MultiplexGraphBD < Graph
-    % GraphBD < Graph: A bnary directed graph
-    % GraphBD represents a binary directed graph.
+    % MultiplexGraphBD < Graph: A Multiplex binary directed graph
+    % MultiplexGraphBD represents a multiplex binary directed graph.
     %
-    % GraphBD methods:
-    %   GraphBD     - constructor.
+    % MultiplexGraphBD methods:
+    %   MultiplexGraphBD     - constructor.
     %
-    % GraphBD methods (static):
-    %   getClass	- return the class type GraphBD.
-    %   getName     - return the complete name of GraphBD.
-    %   getDescription - return the description of GraphBD.
+    % MultiplexGraphBD methods (static):
+    %   getClass	- return the class type MultiplexGraphBD.
+    %   getName     - return the complete name of MultiplexGraphBD.
+    %   getDescription - return the description of MultiplexGraphBD.
     %   is_selfconnected - boolean, checks if the graph is self-connected.
     %   is_nonnegative - boolean, checks if the graph is non-negative.
     %   is_weighted - boolean, checks if the graph is weighted.
@@ -18,36 +18,44 @@ classdef MultiplexGraphBD < Graph
     %   getCompatibleMeasureList - returns a list with compatible measures.
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
-    % See also Graph, GraphBU, GraphWD, GraphWU.
+    % See also Graph, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
+    
     methods
         function g = MultiplexGraphBD(A, varargin)
-            % GRAPHBD(A) creates a GRAPHBD class with adjacency matrix A.
+            % MULTIPLEXGRAPHBD(A) creates a MULTIPLEXGRAPHBD class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
             % functions: DEDIAGONALIZE, SEMIPOSITIVE, BINARIZE.
             % It calls the superclass constructor GRAPH.
             %
-            % GRAPHBD(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-            % a GRAPHBD class with adjacency matrix A and it passes the
+            % MULTIPLEXGRAPHBD(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
+            % a MULTIPLEXGRAPHBD class with adjacency matrix A and it passes the
             % properties and values to the superclass as VARARGIN.
             % This function is the constructor, it initializes the class by
             % operating the adjacency matrix A with the following
             % functions: DEDIAGONALIZE, SEMIPOSITIVE, BINARIZE.
             % It calls the superclass constructor GRAPH.
             %
-            % See also Graph, GraphBU, GraphWD, GraphWU.
+            % See also Graph, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
             
-            assert(iscell(A), ...
-                [BRAPH2.STR ':' BRAPH2.WRONG_INPUT], ...
-                'A must be a cell array of matrices).')
-            
-            L = length(A); % number of layers
+            L = length(A);  % number of layers
             for layer = 1:1:L
                 M = A{layer, layer};
                 M = dediagonalize(M, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
                 M = semipositivize(M, varargin{:});  % removes negative weights
                 M = binarize(M, varargin{:});  % enforces binary adjacency matrix
                 A(layer, layer) = {M};
+            end
+            % enforce zero off-diagonal values and binary diagonal values
+            for i = 1:1:size(A, 1)
+                for j = i+1:1:size(A, 2)
+                    A(i, j) = {diagonalize(A{i, j}, varargin{:})};
+                    A(j, i) = {diagonalize(A{j, i}, varargin{:})};
+                    A(i, j) = {semipositivize(A{i, j}, varargin{:})};
+                    A(j, i) = {semipositivize(A{j, i}, varargin{:})};
+                    A(i, j) = {binarize(A{i, j}, varargin{:})};
+                    A(j, i) = {binarize(A{j, i}, varargin{:})};
+                end
             end
             
             g = g@Graph(A, varargin{:});
@@ -86,20 +94,14 @@ classdef MultiplexGraphBD < Graph
                 'and they are directed.' ...
                 ];
         end
-        function bool = is_graph()
-            bool = true;
+        function graph_type = getGraphType()
+            graph_type = Graph.MULTIPLEX;
         end
-        function bool = is_multigraph()
-            bool = false;
+        function graph_type = getConnectionType()
+            graph_type = Graph.BINARY;
         end
-        function bool = is_sequence()
-            bool = false;
-        end
-        function bool = is_multiplex()
-            bool = true;
-        end
-        function bool = is_multilayer()
-            bool = false;
+        function graph_type = getEdgeType()
+            graph_type = Graph.DIRECTED;
         end
     end
 %     methods

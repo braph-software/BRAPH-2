@@ -1,5 +1,5 @@
 classdef GraphBD < Graph
-    % GraphBD < Graph: A bnary directed graph
+    % GraphBD < Graph: A binary directed graph
     % GraphBD represents a binary directed graph.
     %
     % GraphBD methods:
@@ -19,6 +19,7 @@ classdef GraphBD < Graph
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
     % See also Graph, GraphBU, GraphWD, GraphWU.
+    
     methods
         function g = GraphBD(A, varargin)
             % GRAPHBD(A) creates a GRAPHBD class with adjacency matrix A.

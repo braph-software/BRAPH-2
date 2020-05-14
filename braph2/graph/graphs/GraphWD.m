@@ -19,6 +19,7 @@ classdef GraphWD < Graph
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
     % See also Graph, GraphBU, GraphBD, GraphWU.
+    
     methods
         function g = GraphWD(A, varargin)
             % GRAPHWD(A) creates a GRAPHWD class with adjacency matrix A.
@@ -77,20 +78,14 @@ classdef GraphWD < Graph
                 'and they are directed.' ...
                 ];
         end      
-        function bool = is_graph()
-            bool = true;
+        function graph_type = getGraphType()
+            graph_type = Graph.GRAPH;
         end
-        function bool = is_multigraph()
-            bool = false;
+        function graph_type = getConnectionType()
+            graph_type = Graph.WEIGHTED;
         end
-        function bool = is_sequence()
-            bool = true;
-        end
-        function bool = is_multiplex()
-            bool = false;
-        end
-        function bool = is_multilayer()
-            bool = false;
+        function graph_type = getEdgeType()
+            graph_type = Graph.DIRECTED;
         end
     end
 %     methods
