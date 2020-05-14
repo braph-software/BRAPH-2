@@ -85,7 +85,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             bs.settings = settings;
 
             brain_surface_type = get_from_varargin('BrainMesh_ICBM152.nv' , 'BrainSurfaceType', varargin(:));
-            bs.updateSurface(brain_surface_type);
+            bs.setSurface(brain_surface_type);
         end
         function str = tostring(bs)
             str = ['Brain Surface of type: ' bs.brain_surface_type '.'];
@@ -121,9 +121,12 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                 end
             end
         end
+        function brain_surface = getBrainSurface(bs)
+            brain_surface = bs.h_brain;
+        end
     end
     methods  % editing functions
-        function updateSurface(bs, brain_surface_type)
+        function setSurface(bs, brain_surface_type)
             
             bs.brain_surface_type =  brain_surface_type;
             bs.Lighting = bs.getSettings('PlotBrainSurf.Lighting');
@@ -212,11 +215,11 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
                     case 'color'
-                        set(bs.h_brain,'FaceColor',varargin{n+1});
-                        set(bs.h_brain,'EdgeColor',varargin{n+1});  
+                        set(bs.h_brain,'FaceColor', varargin{n+1});
+                        set(bs.h_brain,'EdgeColor', varargin{n+1});  
                     case 'alpha'
-                        set(bs.h_brain,'FaceAlpha',varargin{n+1});
-                        set(bs.h_brain,'EdgeAlpha',varargin{n+1});
+                        set(bs.h_brain,'FaceAlpha', varargin{n+1});
+                        set(bs.h_brain,'EdgeAlpha', varargin{n+1});
 
                     otherwise
                         set(bs.h_brain,varargin{n},varargin{n+1});
@@ -265,7 +268,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also PlotBrainSurf, trisurf.
             
-            
             % sets position of figure
             FigPosition = [.70 .50 .25 .25];
             FigColor = [.95 .95 .95];  % GUI.BKGCOLOR;
@@ -303,15 +305,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_text, 'Position', [.35 .70 .65 .15])
             set(ui_text, 'HorizontalAlignment', 'center')
             set(ui_text, 'FontWeight', 'bold')
-            
-            ui_button_backgroundcolor = uicontrol(f, 'Style', 'pushbutton');
-            set(ui_button_backgroundcolor,'Units','normalized')
-            set(ui_button_backgroundcolor,'BackgroundColor', [.95 .95 .95])
-            set(ui_button_backgroundcolor, 'Position', [.05 .70 .25 .15])
-            set(ui_button_backgroundcolor, 'String', 'background color')
-            set(ui_button_backgroundcolor, 'HorizontalAlignment', 'center')
-            set(ui_button_backgroundcolor, 'TooltipString', 'Brain surface edge color')
-            set(ui_button_backgroundcolor, 'Callback',{@cb_backgroundcolor})
             
             ui_button_color = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_color,'Units','normalized')
@@ -366,8 +359,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain, 'EdgeAlpha'))
             set(ui_slider_edgealpha, 'TooltipString', 'Brain surface edge transparency')
             set(ui_slider_edgealpha, 'Callback', {@cb_edgealpha})
-            
-  
 
             set(f,'Visible','on')
             
@@ -404,13 +395,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             function cb_edgealpha(~,~)  % (src,event)
                 bs.brain('EdgeAlpha', get(ui_slider_edgealpha, 'Value'))
-            end
-            
-            function cb_backgroundcolor(~,~)  % (src,event)
-                color = uisetcolor;
-                if length(color) == 3
-                    set(bs.get_axes(), 'Color', color)
-                end
             end
             
         end
@@ -576,6 +560,142 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             bs.update_light()
             drawnow
         end
+        function brain_lighting(bs, varargin) 
+            %get settings
+            internal_set = PlotBrainSurf.getAvailableSettings();
+            settings_lighting = internal_set{1};
+            settings_material = internal_set{2};
+            settings_camlight = internal_set{3};
+            
+            % sets position of figure
+            FigPosition = [.70 .50 .20 .15];
+            FigColor = [.95 .95 .95]; 
+            FigName = 'Brain Lighting Settings';
+            for n = 1:2:length(varargin)
+                switch lower(varargin{n})
+                    case 'figposition'
+                        FigPosition = varargin{n+1};
+                    case 'figcolor'
+                        FigColor = varargin{n+1};
+                    case 'figname'
+                        FigName = varargin{n+1};
+                end
+            end
+            
+            % create a figure
+            if isempty(bs.f_brain_settings) || ~ishandle(bs.f_brain_settings)
+                bs.f_brain_settings = figure('Visible','off');
+            end
+            f = bs.f_brain_settings;
+            set(f, 'units', 'normalized')
+            set(f, 'Position', FigPosition)
+            set(f, 'Color', FigColor)
+            set(f, 'Name', FigName)
+            set(f, 'MenuBar', 'none')
+            set(f, 'Toolbar', 'none')
+            set(f, 'NumberTitle', 'off')
+            set(f, 'DockControls', 'off')
+            
+            ui_text = uicontrol(f, 'Style', 'text');
+            set(ui_text,'Units','normalized')
+            set(ui_text,'BackgroundColor', [.95 .95 .95])
+
+            ui_button_backgroundcolor = uicontrol(f, 'Style', 'pushbutton');
+            set(ui_button_backgroundcolor,'Units','normalized')
+            set(ui_button_backgroundcolor,'BackgroundColor', [.95 .95 .95])
+            set(ui_button_backgroundcolor, 'Position', [.05 .75 .30 .20])
+            set(ui_button_backgroundcolor, 'String', 'background color')
+            set(ui_button_backgroundcolor, 'HorizontalAlignment', 'center')
+            set(ui_button_backgroundcolor, 'TooltipString', 'Brain surface edge color')
+            set(ui_button_backgroundcolor, 'Callback',{@cb_backgroundcolor})
+            
+            ui_pop_up_lighting = uicontrol(f, 'Style', 'popupmenu');
+            ui_pop_up_lighting.Units = 'normalized';
+            ui_pop_up_lighting.Position = [.05 .15 .30 .20];
+            ui_pop_up_lighting.String = settings_lighting{4};
+            ui_pop_up_lighting.HorizontalAlignment = 'center';
+            ui_pop_up_lighting.Callback = @cb_popLighting;
+            
+            ui_pop_up_material = uicontrol(f, 'Style', 'popupmenu');
+            ui_pop_up_material.Units = 'normalized';
+            ui_pop_up_material.Position = [.55 .75 .30 .20];
+            ui_pop_up_material.String = settings_material{4};
+            ui_pop_up_material.HorizontalAlignment = 'center';
+            ui_pop_up_material.Callback = @cb_popMaterial;
+            
+            ui_pop_up_camlight = uicontrol(f, 'Style', 'popupmenu');
+            ui_pop_up_camlight.Units = 'normalized';
+            ui_pop_up_camlight.Position = [.55 .15 .30 .20];
+            ui_pop_up_camlight.String = settings_camlight{4};
+            ui_pop_up_camlight.HorizontalAlignment = 'center';
+            ui_pop_up_camlight.Callback = @cb_popCamLight;
+            
+            ui_pop_up_facecolorstyle = uicontrol(f, 'Style', 'popupmenu');
+            ui_pop_up_facecolorstyle.Units = 'normalized';
+            ui_pop_up_facecolorstyle.Position = [.05 .45 .30 .20];
+            ui_pop_up_facecolorstyle.String = {'interpolated', 'flat'};
+            ui_pop_up_facecolorstyle.HorizontalAlignment = 'center';
+            ui_pop_up_facecolorstyle.Callback = @cb_facecolorstyle;
+            
+            ui_pop_up_colormapoption = uicontrol(f, 'Style', 'popupmenu');
+            ui_pop_up_colormapoption.Units = 'normalized';
+            ui_pop_up_colormapoption.Position = [.55 .45 .30 .20];
+            ui_pop_up_colormapoption.String = {'parula', 'jet', 'hsv', 'hot', ...
+                'cool', 'spring', 'summer', 'autumn', 'winter', 'gray', 'bone', ...
+                'copper', 'pink', 'lines', 'colorcube', 'prism', 'flag', 'white'};
+            ui_pop_up_colormapoption.HorizontalAlignment = 'center';
+            ui_pop_up_colormapoption.Callback = @cb_colormapoption;
+
+            set(f,'Visible','on')      
+
+            function cb_backgroundcolor(~,~)  % (src,event)
+                color = uisetcolor;
+                if length(color) == 3
+                    set(bs.get_axes(), 'Color', color)
+                end
+            end
+            
+            function cb_popLighting(~,~)
+                val = ui_pop_up_lighting.Value;
+                str = ui_pop_up_lighting.String;                
+                bs.Lighting = str{val};
+                lighting(bs.get_axes(), bs.Lighting)
+            end
+            
+            function cb_popMaterial(~,~)
+                val = ui_pop_up_material.Value;
+                str = ui_pop_up_material.String;                
+                bs.Material = str{val};
+                material(bs.get_axes(), bs.Material)
+            end
+            
+            function cb_popCamLight(~,~)
+                val = ui_pop_up_camlight.Value;
+                str = ui_pop_up_camlight.String;
+                cam_light_obj = findobj(bs.get_axes(), 'Type', 'Light');
+                delete(cam_light_obj);
+                delete(findall(bs.h_axes, 'Type', 'light'));  % double check, I feal it does not get all.
+                bs.CamLight = str{val};
+                camlight(bs.get_axes(), bs.CamLight);
+            end
+            
+            function cb_facecolorstyle(~,~)  % (src,event)
+                val = ui_pop_up_facecolorstyle.Value;
+                str = ui_pop_up_facecolorstyle.String;
+                if str{val} == 'interpolated' %#ok<BDSCA>
+                    set(bs.getBrainSurface(), 'FaceColor', 'interp')
+                else
+                     set(bs.getBrainSurface(), 'FaceColor', [.5 .5 .5])
+                end
+            end
+            
+            function cb_colormapoption(~,~)
+                val = ui_pop_up_colormapoption.Value;
+                str = ui_pop_up_colormapoption.String;
+                colormap(bs.get_axes(), str{val});
+            end
+            
+        end
     end
     methods (Static)
         function bs = loadBrainSurface(varargin)
@@ -592,7 +712,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             % create a brain surface from the specified file
             
-            bs = PlotBrainSurf('BrainSurfaceType', brain_surface_file).brain();
+            bs = PlotBrainSurf('BrainSurfaceType', brain_surface_file);
         end
         function available_settings = getAvailableSettings(bs) %#ok<*INUSD>
             available_settings = {
