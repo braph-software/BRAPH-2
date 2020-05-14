@@ -228,55 +228,31 @@ classdef PlotBrainAtlas < PlotBrainSurf
         labs
         f_labs_settings  % labels setting figure handle
     end
-    methods (Access = protected)
-        function cp = copyElement(ba)
-            
-            % Make a shallow copy
-            cp = copyElement@PlotBrainSurf(ba);
-            % Make a deep copy
-            cp.atlas = copy(ba.atlas);            
-            % resets the graphic handles
-            cp.syms.h = NaN(1,ba.atlas.length());
-            cp.f_syms_settings = NaN;
-            cp.sphs.h = NaN(1,ba.atlas.length());
-            cp.f_sphs_settings = NaN;
-            cp.labs.h = NaN(1,ba.atlas.length());
-            cp.f_labs_settings = NaN;
-        end        
-    end
-    methods
+    methods  % basic functions
         function ba = PlotBrainAtlas(atlas)
-            % PlotBrainAtlas() plots and manages the brain regions that make 
-            %   up a brain atlas. 
-            %   The brain regions can be plotted by using symbols, spheres or 
-            %   labels and their various properties can be set.
-            %
-            % See also PlotBrainAtlas.
-             
-            Check.isa('The atlas class must be BrainAtlas',atlas,'BrainAtlas')
             
             ba = ba@PlotBrainSurf();
             
             ba.atlas = atlas;
             
-            ba.syms.h = NaN(1,atlas.length());
+            ba.syms.h = NaN(1, atlas.length());
             ba.syms.X = atlas.getProps(BrainRegion.X);
             ba.syms.Y = atlas.getProps(BrainRegion.Y);
             ba.syms.Z = atlas.getProps(BrainRegion.Z);
                         
-            ba.sphs.h = NaN(1,atlas.length());
+            ba.sphs.h = NaN(1, atlas.length());
             ba.sphs.X = atlas.getProps(BrainRegion.X);
             ba.sphs.Y = atlas.getProps(BrainRegion.Y);
             ba.sphs.Z = atlas.getProps(BrainRegion.Z);
             ba.sphs.R = PlotBrainAtlas.INIT_SPH_R * ones(1,atlas.length());
   
-            ba.labs.h = NaN(1,atlas.length());
+            ba.labs.h = NaN(1, atlas.length());
             ba.labs.X = atlas.getProps(BrainRegion.X);
             ba.labs.Y = atlas.getProps(BrainRegion.Y);
             ba.labs.Z = atlas.getProps(BrainRegion.Z);
             ba.labs.LAB = atlas.getProps(BrainRegion.LABEL);
         end
-        
+
         function h = br_sym(ba,i,varargin)
             % BR_SYM displays brain region as symbol
             %
@@ -1874,5 +1850,21 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 end
             end
         end
+    end
+    methods (Access = protected)
+        function cp = copyElement(ba)
+            
+            % Make a shallow copy
+            cp = copyElement@PlotBrainSurf(ba);
+            % Make a deep copy
+            cp.atlas = copy(ba.atlas);            
+            % resets the graphic handles
+            cp.syms.h = NaN(1,ba.atlas.length());
+            cp.f_syms_settings = NaN;
+            cp.sphs.h = NaN(1,ba.atlas.length());
+            cp.f_sphs_settings = NaN;
+            cp.labs.h = NaN(1,ba.atlas.length());
+            cp.f_labs_settings = NaN;
+        end        
     end
 end

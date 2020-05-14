@@ -1,9 +1,6 @@
 classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     % PlotBrainSurf < handle & matlab.mixin.Copyable : Plot of a brain surface
     %   PlotBrainSurf plots and manages a brain surface.
-    %   The brain surface is based on ICBM152
-    %   and is loaded from the file BrainMesh_ICBM152.nv.
-    %
     
     properties (Constant)
         VIEW_3D	= 1
@@ -590,6 +587,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             settings_camlight = internal_set{3};
             
             % sets position of figure
+            % control size in pixel of the font, and adjust proportions to
+            % it.
             FigPosition = [.70 .50 .20 .30];
             FigColor = [.95 .95 .95];
             FigName = 'Brain Lighting Settings';
