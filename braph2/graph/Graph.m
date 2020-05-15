@@ -232,7 +232,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.NEGATIVE_DESCRIPTION
             }
     end
-     properties (GetAccess=protected, SetAccess=protected)
+    properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
     end
 %     properties (GetAccess=protected, SetAccess=protected)
