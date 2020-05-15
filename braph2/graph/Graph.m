@@ -1,16 +1,22 @@
 classdef Graph < handle & matlab.mixin.Copyable
-    % Graph < handle & matlab.mixin.Copyable (Abstract): A graph
+    % Graph (Abstract): A graph
     % Graph provides the methods necessary for all graphs.
-    % Instances of this class cannot be created. 
-    % Use one of the subclasses (e.g., GraphBD, GraphBU, GraphWD, GraphWU, 
-    % MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU). 
-    % The subclasses must be created inside the folder ./braph/graph/graphs/.
+    % Instances of this class cannot be created. Use one of the subclasses.
+    % The subclasses must be created inside the folder
+    % ./braph/graph/graphs/. 
+    % It is a subclass of handle and matlab.mixin.Copyable.
     %
-    % Graph properties (GetAccess=protected, SetAccess=protected):
-    %   A           - adjacency matrix or 2D-cell array of adjacency matrices.
-    %   settings    - structure with the constructor settings.
-    %   measure_dict - dictionary with the calculated measure.
-    %                  (key, value) = (measure code, measure value)
+    % Properties(Constant):
+    %   
+    %   GRAPH    - single layer graph
+    %   GRAPH_NAME    - name of GRAPH 
+    %   GRAPH_DESCRIPTION   - description of GRAPH
+    %   GRAPH    - single layer graph
+    %   GRAPH_NAME    - name of GRAPH 
+    %   GRAPH_DESCRIPTION   - description of GRAPH
+    %   GRAPH    - single layer graph
+    %   GRAPH_NAME    - name of GRAPH 
+    %   GRAPH_DESCRIPTION   - description of GRAPH
     %
     % Graph methods:
     %   checkA      - checks if A is correct for the graph type.
@@ -18,7 +24,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   getClass    - returns the class type of the graph.
     %   getName     - returns the name of the graph.
     %   getDescription - returns the description of the graph.
-    %   getCGraphType    - returns the graph type.
+    %   getGraphType    - returns the graph type.
     %   is_graph    - checks if the graph is a single layer graph.
     %   is_multigraph    - checks if the graph is a multigraph.
     %   is_ordered_multiplex   - checks if the graph is an ordered multiplex graph.
@@ -35,8 +41,8 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_selfconnected - checks if the graph is self connected.
     %   is_not_selfconnected - checks if the graph is not self connected.
     %   getNegativityType    - returns if graph is negative or non-negative
-    %   is_nonnegative - checks if the graph is non negative.
-    %   is_negative - checks if the graph is negative.
+    %   is_nonnegative - checks whether graph allows non-negative values
+    %   is_negative - checks whether graph allows negative values
     %   tostring    - returns a string representing the graph.
     %   disp        - displays the graph.
     %   nodenumber  - returns the number of nodes in a graph.
@@ -531,7 +537,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % IS_SELFCONNECTED checks if graph is self-connected
             %
             % BOOL = IS_SELFCONNECTED(G) returns true if the instance of the
-            % concrete graph H is self-connected and false otherwise.
+            % concrete graph G is self-connected and false otherwise.
             %
             % BOOL = IS_SELFCONNECTED(GRAPH_CLASS) returns true if graph
             % whose class is GRAPH_CLASS is self-connected and false otherwise.
@@ -544,7 +550,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % IS_NOT_SELFCONNECTED checks if graph is not self-connected
             %
             % BOOL = IS_NOT_SELFCONNECTED(G) returns true if the instance of the
-            % concrete graph H is not self-connected and false otherwise.
+            % concrete graph G is not self-connected and false otherwise.
             %
             % BOOL = IS_NOT_SELFCONNECTED(GRAPH_CLASS) returns true if graph
             % whose class is GRAPH_CLASS is not self-connected and false otherwise.
@@ -567,26 +573,26 @@ classdef Graph < handle & matlab.mixin.Copyable
             negativity_type = eval([Graph.getClass(g) '.getNegativityType()']);
         end
         function bool = is_nonnegative(g)
-            % IS_NONNEGATIVE checks if graph has non-negative values
+            % IS_NONNEGATIVE checks whether graph allows non-negative values
             %
             % BOOL = IS_NONNEGATIVE(G) returns true if the concrete instance
-            % of graph G has non-negative values and false otherwise.
+            % of graph G allows non-negative values and false otherwise.
             %
             % BOOL = IS_NONNEGATIVE(GRAPH_CLASS) returns true if the graph
-            % whose class is GRAPH_CLASS has non-negative values and false otherwise.
+            % whose class is GRAPH_CLASS allows non-negative values and false otherwise.
             %
             % See also getNegativityType(), is_negative().
             
             bool = Graph.getNegativityType(g) == Graph.NONNEGATIVE;
         end
         function bool = is_negative(g)
-            % IS_NEGATIVE checks if graph is has negative values
-            %
+            % IS_NEGATIVE checks whether graph allows negative values
+            % 
             % BOOL = IS_NEGATIVE(G) returns true if the concrete instance
-            % of graph G has negative values and false otherwise.
+            % of graph G allows negative values and false otherwise.
             %
             % BOOL = IS_NEGATIVE(GRAPH_CLASS) returns true if the graph
-            % whose class is GRAPH_CLASS has negative values and false otherwise.
+            % whose class is GRAPH_CLASS allows negative values and false otherwise.
             %
             % See also getNegativityType(), is_nonnegative().
             
@@ -657,16 +663,17 @@ classdef Graph < handle & matlab.mixin.Copyable
         function A = getA(g, i, j)
             % GETA returns the adjacency matrix or cell array of adjacency matrices
             %
-            % A = GETA(G) returns the adjacency matrix A associated to
-            % graph G (single layer graph).
+            % A = GETA(G) returns the adjacency matrix A (single layer
+            % graphs) or the cell array of adjacency matrices A (multiple
+            % graphs) associated to graph G 
             % 
             % A = GETA(G, I) returns the adjacency matrix at the position
             % (I, I) of the cell array of adjacency matrices A associated
-            % to graph G (multiple graph) .
+            % to graph G (multiple graph).
             % 
             % A = GETA(G, I, J) returns the adjacency matrix at the position
             % (I, J) of the cell array of adjacency matrices A associated
-            % to graph G (multiple graph) .
+            % to graph G (multiple graph).
             %
             % See also getSettings(), layernumber(), nodenumber().
             
