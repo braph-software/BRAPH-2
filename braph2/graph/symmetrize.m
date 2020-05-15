@@ -11,7 +11,7 @@ function B = symmetrize(A, varargin)
 %        'average'          average of inconnection and outconnection.
 %        'min'              minimum between inconnection and outconnection.
 % 
-% See also BINARIZE, DEDIAGONALIZE, SEMIPOSITIVIZE, STANDARDIZE.
+% See also BINARIZE, DEDIAGONALIZE, DIAGONALIZE, SEMIPOSITIVIZE, STANDARDIZE.
 
 symmetrize_rule = get_from_varargin('max', 'SymmetrizeRule', varargin);
 

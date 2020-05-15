@@ -529,9 +529,9 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             end
         end
         function selected = remove_all(idict, selected)
-            % REMOVEALL removes selected elements
+            % REMOVE_ALL removes selected elements
             %
-            % SELECTED = REMOVEALL(IDICT, SELECTED) removes all elements
+            % SELECTED = REMOVE_ALL(IDICT, SELECTED) removes all elements
             % whose positions in the indexed dictionary DICT are included
             % in the array SELECTED. It returns an empty array.
             %
@@ -543,9 +543,9 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             selected = [];
         end
         function selected =  move_up(idict, selected)
-            % MOVEUP moves up selected elements
+            % MOVE_UP moves up selected elements
             %
-            % SELECTED = MOVEUP(IDICT, SELECTED) moves up by one
+            % SELECTED = MOVE_UP(IDICT, SELECTED) moves up by one
             % position all elements whose positions in the indexed
             % dictionary DICT are included in the SELECTED array and
             % returns their final positions. 
@@ -569,9 +569,9 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             end
         end
         function selected = move_down(idict, selected)
-            % MOVEDOWN moves down selected elements
+            % MOVE_DOWN moves down selected elements
             %
-            % SELECTED = MOVEDOWN(IDICT, SELECTED) moves down by one
+            % SELECTED = MOVE_DOWN(IDICT, SELECTED) moves down by one
             % position all elements whose positions in the indexed
             % dictionary DICT are included in the SELECTED array and
             % returns their final positions.
@@ -594,9 +594,9 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             end
         end
         function selected = move_to_top(idict, selected)
-            % MOVE2TOP moves selected elements to top
+            % MOVE_TO_TOP moves selected elements to top
             %
-            % SELECTED = MOVE2TOP(IDICT, SELECTED) moves to top all
+            % SELECTED = MOVE_TO_TOP(IDICT, SELECTED) moves to top all
             % elements whose positions in the indexed dictionary DICT are
             % included in the SELECTED array and returns their final
             % positions.
@@ -611,9 +611,9 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             end
         end
         function selected = move_to_bottom(idict, selected)
-            % MOVE2BOTTOM moves selected elements to bottom
+            % MOVE_TO_BOTTOM moves selected elements to bottom
             %
-            % SELECTED = MOVE2BOTTOM(IDICT, SELECTED) moves to bottom all
+            % SELECTED = MOVE_TO_BOTTOM(IDICT, SELECTED) moves to bottom all
             % elements whose positions in the indexed dictionary DICT
             % dictionary are included in the SELECTED array and returns
             % their final positions.
