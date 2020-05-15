@@ -4,13 +4,39 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
     % PlotBrainSurf manages the brain surface choosen by the user from a
-    % collection of surfaces. This class provides the common methods needed 
-    % to manage the plot of the surface, via two custom panels where the 
-    % user can change light, material, camlight, facecolor, edgecolor and
-    % background color.
+    % collection of surfaces. These brain surfaces are in '.nv' format and
+    % whithin the folder ./braph2/atlas/brainsurfs/.
+    % This class provides the common methods needed to manage the plot of 
+    % the surface, via two custom panels where the user can change light, 
+    % material, camlight, facecolor, edgecolor and  background color. 
+    %
+    % PlotBrainSurf properties (Constants):
+    %   VIEW_3D         -   3D view numeric code
+    %   VIEW_3D_CMD     -   3D view name
+    %   VIEW_3D_AZEL    -   3D view azimutal and polar angles
+    %   VIEW_SL         -   sagittal left view numeric code
+    %   VIEW_SL_CMD     -   sagittal left view name
+    %   VIEW_SL_AZEL    -   sagittal left view azimutal and polar angles
+    %   VIEW_SR         -   sagittal right view numeric code
+    %   VIEW_SR_CMD     -   sagittal right view name
+    %   VIEW_SR_AZEL    -   Sagittal right view azimutal and polar angles 
+    %   VIEW_AD         -   axial dorsal view numeric code
+    %   VIEW_AD_CMD     -   axial dorsal view name
+    %   VIEW_AD_AZEL    -   axial dorsal view azimutal and polar angles
+    %   VIEW_AV         -   axial ventral view numeric code
+    %   VIEW_AV_CMD     -   axial ventral view name
+    %   VIEW_AV_AZEL    -   axial ventral view azimutal and polar angles
+    %   VIEW_CA         -   coronal anterior view numeric code
+    %   VIEW_CA_CMD     -   coronal anterior view name
+    %   VIEW_CA_AZEL    -   coronal anterior view azimutal and polar angles
+    %   VIEW_CP         -   coronal posterior view numeric code
+    %   VIEW_CP_CMD     -   coronal posterior view name
+    %   VIEW_CP_AZEL    -   coronal posterior view azimutal and polar angles
+    %   VIEW_CMD        -   vector of view names
+    %   VIEW_AZEL       -   vector of view azimutal and polar angle
     % 
     % PlotBrainSurf methods:
-    %   PlotBrainSurf        - constructor.
+    %   PlotBrainSurf        - constructor
     %   tostring             - returns a string representing the surface
     %   disp                 - displays the plot brain surface
     %   getAvailableSettings - returns the available settings
@@ -141,7 +167,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also disp().
             
-            str = ['Brain Surface of type: ' bs.brain_surface_file '.'];
+            str = ['Brain Surface of type: ' bs.brain_surface_file ' with ' tostring(bs.vertex_number) ' vertices and ' tostring(bs.ntri) ' triangles.'];
         end
         function disp(bs)
             % DISP displays brain surface
@@ -152,6 +178,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             disp(['<a href="matlab:help ' class(bs) '">' bs.getName() '</a>']);
             disp(['Surface file: ' bs.brain_surface_file]);
+            disp(['Number of vertices: ' tostring(bs.vertex_number)]);
+            disp(['Number of triangles: ' tostring(bs.ntri)]);
             disp(' Surface light options: ');
             disp(['  Lighting: ' bs.Lighting]);
             disp(['  Material: ' bs.Material]);
@@ -160,8 +188,12 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     end
     methods (Static)
         function available_settings = getAvailableSettings(bs) %#ok<INUSD>
+            % GETAVILABLESETTINGS returns the available settings
+            %
             % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(BS) returns the 
-            % class avialable settings.
+            % class avialable settings: lighting, material, camlight.
+            %
+            % See also getSettings().
             
             available_settings = {
                 {'PlotBrainSurf.Lighting', BRAPH2.STRING, 'none', {'none', 'flat', 'gouraud'}}, ...
@@ -871,6 +903,10 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     end
     methods (Access = protected)
         function cp = copyElement(bs)
+            % COPYELEMENT deep copy of plot brain surf.
+            %
+            % CP = COPYELEMENT(IDICT) makes a deep copy of the class
+            % PlotBrainSurf CP. It resets the graphic handles.            
             
             % Make a deep copy
             cp = copyElement@matlab.mixin.Copyable(bs);
