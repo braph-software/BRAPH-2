@@ -229,39 +229,48 @@ classdef PlotBrainAtlas < PlotBrainSurf
         f_labs_settings  % labels setting figure handle
     end
     methods  % basic functions
-        function ba = PlotBrainAtlas(atlas)
+        function ba = PlotBrainAtlas(atlas)            
+            % PLOTBRAINATLAS(ATLAS) constructs the brain atlas plot, it
+            % assigns the nodes of atlas to a PlotBrainSurf region. 
+            %
             
             ba = ba@PlotBrainSurf();
             
-            ba.atlas = atlas;
+            ba.atlas = atlas;            
+            for i = 1:1:atlas.getBrainRegions().length()
+                brain_region = atlas.getBrainRegions().getValue(i);
+                x_coordinates{i} = brain_region.getX(); %#ok<AGROW>
+                y_coordinates{i} = brain_region.getY(); %#ok<AGROW>
+                z_coordinates{i} = brain_region.getZ(); %#ok<AGROW>
+                labels{i} = brain_region.getLabels(); %#ok<AGROW>
+            end
             
-            ba.syms.h = NaN(1, atlas.length());
-            ba.syms.X = atlas.getProps(BrainRegion.X);
-            ba.syms.Y = atlas.getProps(BrainRegion.Y);
-            ba.syms.Z = atlas.getProps(BrainRegion.Z);
+            ba.syms.h = NaN(1, atlas.getBrainRegions().length());            
+            ba.syms.X = x_coordinates;
+            ba.syms.Y = y_coordinates;
+            ba.syms.Z = z_coordinates;
                         
             ba.sphs.h = NaN(1, atlas.length());
-            ba.sphs.X = atlas.getProps(BrainRegion.X);
-            ba.sphs.Y = atlas.getProps(BrainRegion.Y);
-            ba.sphs.Z = atlas.getProps(BrainRegion.Z);
-            ba.sphs.R = PlotBrainAtlas.INIT_SPH_R * ones(1,atlas.length());
+            ba.sphs.X = x_coordinates;
+            ba.sphs.Y = y_coordinates;
+            ba.sphs.Z = z_coordinates;
+            ba.sphs.R = PlotBrainAtlas.INIT_SPH_R * ones(1, atlas.getBrainRegions().length());
   
             ba.labs.h = NaN(1, atlas.length());
-            ba.labs.X = atlas.getProps(BrainRegion.X);
-            ba.labs.Y = atlas.getProps(BrainRegion.Y);
-            ba.labs.Z = atlas.getProps(BrainRegion.Z);
-            ba.labs.LAB = atlas.getProps(BrainRegion.LABEL);
+            ba.labs.X = x_coordinates;
+            ba.labs.Y = y_coordinates;
+            ba.labs.Z = z_coordinates;
+            ba.labs.LAB = labels;
         end
-
-        function h = br_sym(ba,i,varargin)
+        function h = br_sym(ba, i, varargin)
             % BR_SYM displays brain region as symbol
             %
-            % BR_SYM(BA,I) denotes the brain regions I as a symbol, if not plotted.
+            % BR_SYM(BA, I) denotes the brain regions I as a symbol, if not plotted.
             %
-            % H = BR_SYM(BA,I) returns the handle to the symbol denoting the brain 
+            % H = BR_SYM(BA, I) returns the handle to the symbol denoting the brain 
             %   region I.
             %
-            % BR_SYM(BA,I,'PropertyName',PropertyValue) sets the property
+            % BR_SYM(BA, I, 'PropertyName', PropertyValue) sets the property
             %   of the symbol's PropertyName to PropertyValue. 
             %   All standard plot properties of plot3 can be used.
             %   The symbol properties can also be changed when hidden.
@@ -271,9 +280,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba.set_axes()
             
             % center coordinates
-            X = ba.atlas.get(i).getProp(BrainRegion.X);
-            Y = ba.atlas.get(i).getProp(BrainRegion.Y);
-            Z = ba.atlas.get(i).getProp(BrainRegion.Z);
+            X = ba.atlas.getBrainRegions().getValue(i).getX();  % get(i).getProp(BrainRegion.X);
+            Y = ba.atlas.getBrainRegions().getValue(i).getY();  % get(i).getProp(BrainRegion.Y);
+            Z = ba.atlas.getBrainRegions().getValue(i).getZ();  % get(i).getProp(BrainRegion.Z);
            
             if ~ishandle(ba.syms.h(i))
                 
@@ -282,10 +291,10 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     X,...
                     Y,...
                     Z,...
-                    'Marker',PlotBrainAtlas.INIT_SYM_MARKER,...
-                    'MarkerSize',PlotBrainAtlas.INIT_SYM_SIZE,...
-                    'MarkerEdgeColor',PlotBrainAtlas.INIT_SYM_EDGE_COLOR,...
-                    'MarkerFaceColor',PlotBrainAtlas.INIT_SYM_FACE_COLOR);
+                    'Marker', PlotBrainAtlas.INIT_SYM_MARKER,...
+                    'MarkerSize', PlotBrainAtlas.INIT_SYM_SIZE,...
+                    'MarkerEdgeColor', PlotBrainAtlas.INIT_SYM_EDGE_COLOR,...
+                    'MarkerFaceColor', PlotBrainAtlas.INIT_SYM_FACE_COLOR);
                 
             else
                 if ba.syms.X(i)~=X || ba.syms.Y(i)~=Y || ba.syms.Z(i)~=Z
@@ -319,7 +328,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 h = ba.syms.h(i);
             end
         end
-        function br_sym_on(ba,i)
+        function br_sym_on(ba, i)
             % BR_SYM_ON shows a symbol
             %
             % BR_SYM_ON(BA,I) shows the symbol denoting the brain region I. 
@@ -327,10 +336,10 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % See also PlotBrainAtlas.
             
             if  ishandle(ba.syms.h(i))
-                set(ba.syms.h(i),'Visible','on')
+                set(ba.syms.h(i), 'Visible', 'on')
             end
         end
-        function br_sym_off(ba,i)
+        function br_sym_off(ba, i)
             % BR_SYM_OFF hides a symbol
             %
             % BR_SYM_OFF(BA,I) hides the symbol denoting the brain region I. 
@@ -338,10 +347,10 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % See also PlotBrainAtlas.
             
             if  ishandle(ba.syms.h(i))
-                set(ba.syms.h(i),'Visible','off')
+                set(ba.syms.h(i), 'Visible', 'off')
             end
         end
-        function bool = br_sym_is_on(ba,i)
+        function bool = br_sym_is_on(ba, i)
             % BR_SYM_IS_ON checks if symbol is visible
             %
             % BOOL = BR_SYM_IS_ON(BA,I) returns true if the symbol denoting 
@@ -349,9 +358,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
             %
             % See also PlotBrainAtlas.
             
-            bool = ishandle(ba.syms.h(i)) && strcmpi(get(ba.syms.h(i),'Visible'),'on');
+            bool = ishandle(ba.syms.h(i)) && strcmpi(get(ba.syms.h(i), 'Visible'), 'on');
         end
-        function br_syms(ba,i_vec,varargin)
+        function br_syms(ba, i_vec, varargin)
             % BR_SYMS displays multiple brain regions as symbols
             %
             % BR_SYMS(BA,I_VEC) plots the symbols denoting the brain regions
@@ -388,11 +397,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
             
             if nargin<2 || isempty(i_vec)
-                i_vec = 1:1:ba.atlas.length();
+                i_vec = 1:1:ba.atlas.getBrainRegions().length();
             end
             
             for m = 1:1:length(i_vec)
-                if exist('Marker','var') && numel(Marker)==length(i_vec)
+                if exist('Marker', 'var') && numel(Marker)==length(i_vec)
                     varargin{nmarker} = Marker(m);
                 end
                 if exist('MarkerEdgeColor','var') && size(MarkerEdgeColor,1)==length(i_vec) && size(MarkerEdgeColor,2)==3
@@ -408,10 +417,10 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     varargin{nsize} = Size(m);
                 end
                 
-                ba.br_sym(i_vec(m),varargin{:})
+                ba.br_sym(i_vec(m), varargin{:})
             end
         end
-        function br_syms_on(ba,i_vec)
+        function br_syms_on(ba, i_vec)
             % BR_SYMS_ON shows multiple symbols
             %
             % BR_SYMS_ON(BA,I_VEC) shows multiple symbols denoting the
@@ -430,7 +439,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.br_sym_on(i_vec(m))
             end
         end
-        function br_syms_off(ba,i_vec)
+        function br_syms_off(ba, i_vec)
             % BR_SYMS_OFF hides multiple symbols
             %
             % BR_SYMS_OFF(BA,I_VEC) hides multiple symbols denoting the
@@ -449,7 +458,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.br_sym_off(i_vec(m))
             end
         end
-        function i = get_sym_i(ba,h)
+        function i = get_sym_i(ba, h)
             % GET_SYM_I order number of brain region corresponding to a symbol
             %
             % I = GET_SYM_I(BA,H) returns the order number of the brain regions 
@@ -459,14 +468,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             i = NaN;
             if ~isempty(h)
-                for j = 1:1:ba.atlas.length()
+                for j = 1:1:ba.atlas.getBrainRegions().length()
                     if h==ba.syms.h(j)
                         i = j;
                     end
                 end
             end
         end
-        function br = get_sym_br(ba,h)
+        function br = get_sym_br(ba, h)
             % GET_SYM_BR properties of brain region corresponding to a symbol
             %
             % BR = GET_SYM_BR(BA,H) returns the properties of the brain region 
@@ -475,9 +484,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % See also PlotBrainAtlas.
             
             i = ba.get_sym_i(h);
-            br = ba.atlas.get(i);
+            br = ba.atlas.getBrainRegions().getValue(i);
         end
-        function br_syms_settings(ba,i_vec,varargin)
+        function br_syms_settings(ba, i_vec, varargin)
             % BR_SYMS_SETTINGS sets symbols' properties
             %
             % BR_SYMS_SETTINGS(BA) allows the user to interractively
@@ -498,7 +507,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .30 .30];
-            FigColor = GUI.BKGCOLOR;
+            FigColor = [.5 .5 .5];
             FigName = 'Brain Region Symbol Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -516,19 +525,19 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.f_syms_settings = figure('Visible','off');
             end
             f = ba.f_syms_settings;
-            set(f,'units','normalized')
-            set(f,'Position',FigPosition)
-            set(f,'Color',FigColor)
-            set(f,'Name',FigName)
-            set(f,'MenuBar','none')
-            set(f,'Toolbar','none')
-            set(f,'NumberTitle','off')
-            set(f,'DockControls','off')
+            set(f, 'units', 'normalized')
+            set(f, 'Position', FigPosition)
+            set(f, 'Color', FigColor)
+            set(f, 'Name', FigName)
+            set(f, 'MenuBar', 'none')
+            set(f, 'Toolbar', 'none')
+            set(f, 'NumberTitle', 'off')
+            set(f, 'DockControls', 'off')
             
             % Initialization
             ui_list = uicontrol(f,'Style', 'listbox');
-            GUI.setUnits(ui_list)
-            GUI.setBackgroundColor(ui_list)
+            set(ui_list,'Units','normalized')
+            set(ui_list,'BackgroundColor', [.95 .95 .95])
             set(ui_list,'Value',i_vec)
             set(ui_list,'Max',2,'Min',0)
             set(ui_list,'BackgroundColor',[1 1 1])
@@ -537,8 +546,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_list,'Callback',{@cb_list});
             
             ui_checkbox_label = uicontrol(f,'Style', 'checkbox');
-            GUI.setUnits(ui_checkbox_label)
-            GUI.setBackgroundColor(ui_checkbox_label)
+            set(ui_checkbox_label,'Units','normalized')
+            set(ui_checkbox_label,'BackgroundColor', [.95 .95 .95])
             set(ui_checkbox_label,'Position',[.10 .15 .15 .10])
             set(ui_checkbox_label,'String','label')
             set(ui_checkbox_label,'Value',true)
@@ -547,8 +556,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_label,'Callback',{@cb_label})
             
             ui_checkbox_name = uicontrol(f,'Style', 'checkbox');
-            GUI.setUnits(ui_checkbox_name)
-            GUI.setBackgroundColor(ui_checkbox_name)
+            set(ui_checkbox_name,'Units','normalized')
+            set(ui_checkbox_name,'BackgroundColor', [.95 .95 .95])
             set(ui_checkbox_name,'Position',[.30 .15 .20 .10])
             set(ui_checkbox_name,'String','name')
             set(ui_checkbox_name,'Value',false)
@@ -556,8 +565,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_name,'Callback',{@cb_name})
             
             ui_checkbox_xyz = uicontrol(f,'Style', 'checkbox');
-            GUI.setUnits(ui_checkbox_xyz)
-            GUI.setBackgroundColor(ui_checkbox_xyz)
+            set(ui_checkbox_xyz,'Units','normalized')
+            set(ui_checkbox_xyz,'BackgroundColor', [.95 .95 .95])
             set(ui_checkbox_xyz,'Position',[.10 .05 .15 .10])
             set(ui_checkbox_xyz,'String','xyz')
             set(ui_checkbox_xyz,'Value',false)
@@ -565,8 +574,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_xyz,'Callback',{@cb_xyz})
             
             ui_checkbox_hs = uicontrol(f,'Style', 'checkbox');
-            GUI.setUnits(ui_checkbox_hs)
-            GUI.setBackgroundColor(ui_checkbox_hs)
+            set(ui_checkbox_hs,'Units','normalized')
+            set(ui_checkbox_hs,'BackgroundColor', [.95 .95 .95])
             set(ui_checkbox_hs,'Position',[.30 .05 .20 .10])
             set(ui_checkbox_hs,'String','hemisphere')
             set(ui_checkbox_hs,'Value',false)
@@ -574,24 +583,24 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_hs,'Callback',{@cb_hs})
             
             ui_button_show = uicontrol(f,'Style', 'pushbutton');
-            GUI.setUnits(ui_button_show)
-            GUI.setBackgroundColor(ui_button_show)
+            set(ui_button_show,'Units','normalized')
+            set(ui_button_show,'BackgroundColor', [.95 .95 .95])
             set(ui_button_show,'Position',[.55 .85 .15 .10])
             set(ui_button_show,'String','Show Regions')
             set(ui_button_show,'TooltipString','Show selected brain regions')
             set(ui_button_show,'Callback',{@cb_show})
             
             ui_button_hide = uicontrol(f,'Style', 'pushbutton');
-            GUI.setUnits(ui_button_hide)
-            GUI.setBackgroundColor(ui_button_hide)
+            set(ui_button_hide,'Units','normalized')
+            set(ui_button_hide,'BackgroundColor', [.95 .95 .95])
             set(ui_button_hide,'Position',[.75 .85 .15 .10])
             set(ui_button_hide,'String','Hide Regions')
             set(ui_button_hide,'TooltipString','Hide selected brain regions')
             set(ui_button_hide,'Callback',{@cb_hide})
             
             ui_popup_marker = uicontrol(f,'Style','popup','String',{''});
-            GUI.setUnits(ui_popup_marker)
-            GUI.setBackgroundColor(ui_popup_marker)
+            set(ui_popup_marker,'Units','normalized')
+            set(ui_popup_marker,'BackgroundColor', [.95 .95 .95])
             set(ui_popup_marker,'Position',[.55 .65 .35 .10])
             set(ui_popup_marker,'String',GUI.PLOT_SYMBOL_NAME)
             set(ui_popup_marker,'Value',2)
