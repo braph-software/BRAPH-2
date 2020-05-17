@@ -316,7 +316,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     'MarkerFaceColor', PlotBrainAtlas.INIT_SYM_FACE_COLOR);
                 
             else
-                if ba.syms.X(i)~=X || ba.syms.Y(i)~=Y || ba.syms.Z(i)~=Z
+                if ~isequal(ba.syms.X(i), X) || ~isequal(ba.syms.Y(i), Y) || ~isequal(ba.syms.Z(i), Z)
                     
                     set(ba.syms.h(i), 'XData', X);
                     set(ba.syms.h(i), 'YData', Y);
@@ -667,9 +667,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 for j = 1:1:ba.atlas.getBrainRegions().length()
                     labels{j} =  ba.atlas.getBrainRegions().getValue(j).getLabel(); %#ok<AGROW>
                     ids{j} = ba.atlas.getBrainRegions().getValue(j).getID(); %#ok<AGROW>
-                    xs =  ba.atlas.getBrainRegions().getValue(j).getX();
-                    ys =  ba.atlas.getBrainRegions().getValue(j).getY();
-                    zs =  ba.atlas.getBrainRegions().getValue(j).getZ();
+                    xs{j} =  ba.atlas.getBrainRegions().getValue(j).getX(); %#ok<AGROW>
+                    ys{j} =  ba.atlas.getBrainRegions().getValue(j).getY(); %#ok<AGROW>
+                    zs{j} =  ba.atlas.getBrainRegions().getValue(j).getZ(); %#ok<AGROW>
                 end
                 
                 % Set list names
@@ -680,9 +680,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 elseif get(ui_checkbox_xyz,'Value')
                     xyz = cell(1, ba.atlas.getBrainRegions().length());
                     for j = 1:1:ba.atlas.getBrainRegions().length()
-                        xyz{j} = [xs{j} '   ' ...
-                            ys{j} '   ' ...
-                            zs{j}];
+                        xyz{j} = [num2str(xs{j}) '   ' ...
+                            num2str(ys{j}) '   ' ...
+                            num2str(zs{j})];
                     end
                     set(ui_list,'String', xyz)
                 elseif get(ui_checkbox_hs, 'Value')
@@ -789,7 +789,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 end
             end
             function bri = get_br_list()
-                if ba.atlas.length>0
+                if ba.atlas.getBrainRegions().length()>0
                     bri = get(ui_list,'Value');
                 else
                     bri = [];
@@ -851,7 +851,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     'FaceAlpha', alpha ...
                     );
             else
-                if ba.sphs.X(i) ~=  num2cell(X) || ba.sphs.Y(i)~= num2cell(Y) || ba.sphs.Z(i)~= num2cell(Z) || ba.sphs.R(i)~= num2cell(R)
+                if ~isequal(ba.sphs.X(i), num2cell(X)) || ~isequal(ba.sphs.Y(i), num2cell(Y)) || ~isequal(ba.sphs.Z(i), num2cell(Z)) || ba.sphs.R(i)~= (R)
                     
                     [sx,sy,sz] = sphere();
                     set(ba.sphs.h(i), 'XData',X + R * sx);
@@ -1265,9 +1265,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 for j = 1:1:ba.atlas.getBrainRegions().length()
                     labels{j} =  ba.atlas.getBrainRegions().getValue(j).getLabel(); %#ok<AGROW>
                     ids{j} = ba.atlas.getBrainRegions().getValue(j).getID(); %#ok<AGROW>
-                    xs =  ba.atlas.getBrainRegions().getValue(j).getX();
-                    ys =  ba.atlas.getBrainRegions().getValue(j).getY();
-                    zs =  ba.atlas.getBrainRegions().getValue(j).getZ();
+                    xs{j} =  ba.atlas.getBrainRegions().getValue(j).getX(); %#ok<AGROW>
+                    ys{j} =  ba.atlas.getBrainRegions().getValue(j).getY(); %#ok<AGROW>
+                    zs{j} =  ba.atlas.getBrainRegions().getValue(j).getZ(); %#ok<AGROW>
                 end
                 
                 % Set list names
@@ -1278,9 +1278,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 elseif get(ui_checkbox_xyz,'Value')
                     xyz = cell(1,ba.atlas.getBrainRegions().length());
                     for j = 1:1:ba.atlas.getBrainRegions().length()
-                        xyz{j} = [xs{j} '   ' ...
-                            ys{j} '   ' ...
-                            zs{j}];
+                        xyz{j} = [num2str(xs{j}) '   ' ...
+                            num2str(ys{j}) '   ' ...
+                            num2str(zs{j})];
                     end
                     set(ui_list, 'String', xyz)
                 elseif get(ui_checkbox_hs, 'Value')
@@ -1399,7 +1399,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.br_sphs(get_br_list(),'r',R)
             end
             function bri = get_br_list()
-                if ba.atlas.length>0
+                if ba.atlas.getBrainRegions().length()>0
                     bri = get(ui_list,'Value');
                 else
                     bri = [];
@@ -1445,7 +1445,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     'FontName', PlotBrainAtlas.INIT_LAB_FONT_NAME,...
                     'Interpreter', PlotBrainAtlas.INIT_LAB_FONT_INTERPRETER);
             else
-                if ba.labs.X(i)~=X || ba.labs.Y(i)~=Y || ba.labs.Z(i)~=Z || ~strcmp(ba.labs.LAB(i),LAB)
+                if ~isequal(ba.labs.X(i), {X}) || ~isequal(ba.labs.Y(i), {Y}) || ~isequal(ba.labs.Z(i), {Z}) || ~strcmp(ba.labs.LAB(i), LAB) %#ok<BDSCA>
                     
                     set(ba.labs.h(i), 'Position', [X Y Z]);
                     set(ba.labs.h(i), 'String', LAB);
@@ -1783,9 +1783,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 for j = 1:1:ba.atlas.getBrainRegions().length()
                     labels{j} =  ba.atlas.getBrainRegions().getValue(j).getLabel(); %#ok<AGROW>
                     ids{j} = ba.atlas.getBrainRegions().getValue(j).getID(); %#ok<AGROW>
-                    xs =  ba.atlas.getBrainRegions().getValue(j).getX();
-                    ys =  ba.atlas.getBrainRegions().getValue(j).getY();
-                    zs =  ba.atlas.getBrainRegions().getValue(j).getZ();
+                    xs{j} =  ba.atlas.getBrainRegions().getValue(j).getX(); %#ok<AGROW>
+                    ys{j} =  ba.atlas.getBrainRegions().getValue(j).getY(); %#ok<AGROW>
+                    zs{j} =  ba.atlas.getBrainRegions().getValue(j).getZ(); %#ok<AGROW>
                 end
                 
                 % Set list names
@@ -1796,9 +1796,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 elseif get(ui_checkbox_xyz,'Value')
                     xyz = cell(1,ba.atlas.getBrainRegions().length());
                     for j = 1:1:ba.atlas.getBrainRegions().length()
-                        xyz{j} = [xs{j} '   ' ...
-                            ys{j} '   ' ...
-                            zs{j}];
+                        xyz{j} = [num2str(xs{j}) '   ' ...
+                            num2str(ys{j}) '   ' ...
+                            num2str(zs{j})];
                     end
                     set(ui_list,'String',xyz)
                 elseif get(ui_checkbox_hs,'Value')
@@ -1899,7 +1899,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.br_labs(get_br_list(),'interpreter',interpreter)
             end
             function bri = get_br_list()
-                if ba.atlas.length>0
+                if ba.atlas.getBrainRegions().length()>0
                     bri = get(ui_list,'Value');
                 else
                     bri = [];
