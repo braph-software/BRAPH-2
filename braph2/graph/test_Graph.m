@@ -324,294 +324,170 @@ for i = 1:1:length(graph_class_list)
 end
 
 %% Test 8: NodeAttack
-for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-    n = randi(4);
-    nodes = [randi(n), randi(n)];
-    B = A{Graph.getGraphType(graph_class)};
-    g = Graph.getGraph(graph_class, B);
-    
-    switch(graph_class)
-        case 'GraphBD'
-            ng = g.nodeattack(g, nodes);
-            B = dediagonalize(B); 
-            B = semipositivize(B); 
-            B = binarize(B);
-            for j = 1:1:numel(nodes)
-                B(nodes(j), :) = 0; 
-                B(:, nodes(j)) = 0;
-            end
-        case 'GraphBU'
-            ng = g.nodeattack(g, nodes);
-            B = dediagonalize(B); 
-            B = semipositivize(B); 
-            B = binarize(B);
-            B = symmetrize(B);
-            for j = 1:1:numel(nodes)
-                B(nodes(j), :) = 0; 
-                B(:, nodes(j)) = 0; 
-            end
-        case 'GraphWD'
-            ng = g.nodeattack(g, nodes);
-            B = dediagonalize(B); 
-            B = semipositivize(B); 
-            B = standardize(B);
-            for j = 1:1:numel(nodes)
-                B(nodes(j), :) = 0;  
-                B(:, nodes(j)) = 0;  
-            end
-        case 'GraphWU'
-            ng = g.nodeattack(g, nodes);
-            B = dediagonalize(B); 
-            B = semipositivize(B); 
-            B = symmetrize(B);   
-            B = standardize(B);
-            for j = 1:1:numel(nodes)
-                B(nodes(j), :) = 0;  
-                B(:, nodes(j)) = 0; 
-            end
-        case 'MultiplexGraphBD'
-            ng = g.nodeattack(g, nodes);  % attack all layers
-            L = length(B);  
-            for layer = 1:1:L
-                M = B{layer, layer};
-                M = dediagonalize(M); 
-                M = semipositivize(M); 
-                M = binarize(M);        
-                for j = 1:1:numel(nodes)
-                    M(nodes(j), :) = 0;
-                    M(:, nodes(j)) = 0;
-                end
-                B(layer, layer) = {M};
-            end
-            for x = 1:1:size(B, 1)
-                for j = x+1:1:size(B, 2)
-                    B(x, j) = {semipositivize(B{x, j})};
-                    B(j, x) = {semipositivize(B{j, x})};
-                    B(x, j) = {binarize(B{x, j})};
-                    B(j, x) = {binarize(B{j, x})};
-                end
-            end
-        case 'MultiplexGraphBU'
-           ng = g.nodeattack(g, nodes, 1);  % attack layer 1
-           L = length(B);  
-            for layer = 1:1:L
-                M = B{layer, layer};
-                M = dediagonalize(M); 
-                M = semipositivize(M); 
-                M = binarize(M); 
-                M = symmetrize(M);
-                if layer == 1
-                    for j = 1:1:numel(nodes)
-                        M(nodes(j), :) = 0;
-                        M(:, nodes(j)) = 0;
-                    end
-                end    
-                B(layer, layer) = {M};
-            end
-            for x = 1:1:size(B, 1)
-                for j = x+1:1:size(B, 2)
-                    B(x, j) = {semipositivize(B{x, j})};
-                    B(j, x) = {semipositivize(B{j, x})};
-                    B(x, j) = {binarize(B{x, j})};
-                    B(j, x) = {binarize(B{j, x})};
-                end
-            end
-        case 'MultiplexGraphWD'
-            ng = g.nodeattack(g, nodes, [1, 2]);  % attack layers 1 and 2
-            L = length(B);  
-            for layer = 1:1:L
-                M = B{layer, layer};
-                M = dediagonalize(M); 
-                M = semipositivize(M); 
-                M = standardize(M); 
-                if layer == 1 || layer == 2
-                    for j = 1:1:numel(nodes)
-                        M(nodes(j), :) = 0;
-                        M(:, nodes(j)) = 0;
-                    end
-                end
-                B(layer, layer) = {M};
-            end
-            for x = 1:1:size(B, 1)
-                for j = x+1:1:size(B, 2)
-                    B(x, j) = {semipositivize(B{x, j})};
-                    B(j, x) = {semipositivize(B{j, x})};
-                    B(x, j) = {standardize(B{x, j})};
-                    B(j, x) = {standardize(B{j, x})};
-                end
-            end
-        case 'MultiplexGraphWU'
-            ng = g.nodeattack(g, nodes, 3);  % attack layer 3
-            L = length(B);  
-            for layer = 1:1:L
-                M = B{layer, layer};
-                M = dediagonalize(M); 
-                M = semipositivize(M); 
-                M = standardize(M); 
-                M = symmetrize(M);
-                if layer == 3
-                    for j = 1:1:numel(nodes)
-                        M(nodes(j), :) = 0;
-                        M(:, nodes(j)) = 0;
-                    end
-                end
-                B(layer, layer) = {M};
-            end
-            for x = 1:1:size(B, 1)
-                for j = x+1:1:size(B, 2)
-                    B(x, j) = {semipositivize(B{x, j})};
-                    B(j, x) = {semipositivize(B{j, x})};
-                    B(x, j) = {standardize(B{x, j})};
-                    B(j, x) = {standardize(B{j, x})};
-                end
-            end
-    end
-    
-    assert( isequal(ng.getA(ng), B), ...
-        ['BRAPH:' graph_class ':NodeAttack'], ...
-        [graph_class '.nodeattack() is not working' ])
+n = randi(4);
+nodes = [randi(n), randi(n)];
+
+% Specific Case for single layer
+B = A{Graph.GRAPH};
+g = Graph.getGraph('GraphBU', B);
+B = dediagonalize(B);
+B = semipositivize(B);
+B = binarize(B);
+B = symmetrize(B);
+for j = 1:1:numel(nodes)
+    B(nodes(j), :) = 0;
+    B(:, nodes(j)) = 0;
 end
+
+ng = g.nodeattack(g, nodes);
+
+assert( isequal(ng.getA(ng), B), ...
+    'BRAPH: GRAPH: NodeAttack', ...
+    [g.getClass() '.nodeattack() is not working' ])
+
+% Specific cases for all multilayer types
+B = A{Graph.MULTIPLEX};
+g = Graph.getGraph('MultiplexGraphWU', B);
+L = length(B);
+for layer = 1:1:L
+    M = B{layer, layer};
+    M = dediagonalize(M);
+    M = semipositivize(M);
+    M = standardize(M);
+    M = symmetrize(M);
+    B(layer, layer) = {M};
+end
+for x = 1:1:size(B, 1)
+    for j = x+1:1:size(B, 2)
+        B(x, j) = {semipositivize(B{x, j})};
+        B(j, x) = {semipositivize(B{j, x})};
+        B(x, j) = {standardize(B{x, j})};
+        B(j, x) = {standardize(B{j, x})};
+    end
+end
+C = B;
+
+% ATTACK ALL LAYERS
+for layer = 1:1:L
+    M = B{layer, layer};
+    for j = 1:1:numel(nodes)
+        M(nodes(j), :) = 0;
+        M(:, nodes(j)) = 0;
+    end
+    B(layer, layer) = {M};
+end    
+
+ng = g.nodeattack(g, nodes);
+
+assert( isequal(ng.getA(ng), B), ...
+    'BRAPH: MULTIPLEX: NodeAttack', ...
+    [g.getClass() '.nodeattack() is not working' ])
+
+% ATTACK SPECIFIED LAYERS
+i = [1, 2];
+for j = 1:1:length(i)
+    M = C{i(j), i(j)};
+    for x = 1:1:numel(nodes)
+        M(nodes(x), :) = 0;  % #ok<PROPLC>
+        M(:, nodes(x)) = 0;  % #ok<PROPLC>
+    end
+    C(i(j), i(j)) = {M};
+end
+
+ng = g.nodeattack(g, nodes, i);
+
+assert(isequal(ng.getA(ng), C), ...
+    'BRAPH: MULTIPLEX: NodeAttack', ...
+    [g.getClass() '.nodeattack() is not working' ])
 
 %% Test 9: EdgeAttack
-for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-    n = randi(4);
-    nodes1 = [randi(n), randi(n)];
-    nodes2 = [randi(n), randi(n)];
-    B = A{Graph.getGraphType(graph_class)};
-    g = Graph.getGraph(graph_class, B);
+n = randi(4);
+nodes1 = [randi(n), randi(n)];
+nodes2 = [randi(n), randi(n)];
 
-    switch(graph_class)
-        case 'GraphBD'
-            eg = g.edgeattack(g, nodes1, nodes2);
-            B = dediagonalize(B); 
-            B = semipositivize(B); 
-            B = binarize(B);
-            B(sub2ind(size(B), nodes1, nodes2)) = 0;
-        case 'GraphBU'
-            eg = g.edgeattack(g, nodes1, nodes2);
-            B = dediagonalize(B); 
-            B = semipositivize(B); 
-            B = binarize(B);
-            B = symmetrize(B);
-            B(sub2ind(size(B), nodes1, nodes2)) = 0;
-        case 'GraphWD'
-            eg = g.edgeattack(g, nodes1, nodes2);
-            B = dediagonalize(B); 
-            B = semipositivize(B); 
-            B = standardize(B);
-            B(sub2ind(size(B), nodes1, nodes2)) = 0;
-        case 'GraphWU'
-            eg = g.edgeattack(g, nodes1, nodes2);
-            B = dediagonalize(B); 
-            B = semipositivize(B); 
-            B = symmetrize(B);   
-            B = standardize(B);
-            B(sub2ind(size(B), nodes1, nodes2)) = 0;
-        case 'MultiplexGraphBD'
-            a = [1,1];
-            b = [1,2];
-            eg = g.edgeattack(g, nodes1, nodes2, a, b);  % attack matrices between a and b
-            L = length(B);  
-            for layer = 1:1:L
-                M = B{layer, layer};
-                M = dediagonalize(M); 
-                M = semipositivize(M); 
-                M = binarize(M);
-                B(layer, layer) = {M};
-            end
-            for x = 1:1:size(B, 1)
-                for j = x+1:1:size(B, 2)
-                    B(x, j) = {semipositivize(B{x, j})};
-                    B(j, x) = {semipositivize(B{j, x})};
-                    B(x, j) = {binarize(B{x, j})};
-                    B(j, x) = {binarize(B{j, x})};
-                end
-            end
-            for x = 1:1:length(a)
-                M = B{a(x), b(x)};
-                M(sub2ind(size(M), nodes1, nodes2)) = 0;
-                B(a(x), b(x)) = {M};
-            end
-        case 'MultiplexGraphBU'
-           a = [1, 2];
-           eg = g.edgeattack(g, nodes1, nodes2, a);  % attack layers 1 and 2 (just a)
-           L = length(B);  
-            for layer = 1:1:L
-                M = B{layer, layer};
-                M = dediagonalize(M); 
-                M = semipositivize(M); 
-                M = binarize(M); 
-                M = symmetrize(M);
-                if layer == 1 || layer == 2
-                    M(sub2ind(size(M), nodes1, nodes2)) = 0;
-                end    
-                B(layer, layer) = {M};
-            end
-            for x = 1:1:size(B, 1)
-                for j = x+1:1:size(B, 2)
-                    B(x, j) = {semipositivize(B{x, j})};
-                    B(j, x) = {semipositivize(B{j, x})};
-                    B(x, j) = {binarize(B{x, j})};
-                    B(j, x) = {binarize(B{j, x})};
-                end
-            end
-        case 'MultiplexGraphWD'
-            a = [2, 3];
-            eg = g.edgeattack(g, nodes1, nodes2, a);  % attack layers 3 and 2 (just a)
-            L = length(B);  
-            for layer = 1:1:L
-                M = B{layer, layer};
-                M = dediagonalize(M); 
-                M = semipositivize(M); 
-                M = standardize(M); 
-                if layer == 2 || layer == 3
-                    M(sub2ind(size(M), nodes1, nodes2)) = 0;
-                end
-                B(layer, layer) = {M};
-            end
-            for x = 1:1:size(B, 1)
-                for j = x+1:1:size(B, 2)
-                    B(x, j) = {semipositivize(B{x, j})};
-                    B(j, x) = {semipositivize(B{j, x})};
-                    B(x, j) = {standardize(B{x, j})};
-                    B(j, x) = {standardize(B{j, x})};
-                end
-            end
-        case 'MultiplexGraphWU'
-            eg = g.edgeattack(g, nodes1, nodes2);  % attack every combination 
-            L = length(B);  
-            for layer = 1:1:L
-                M = B{layer, layer};
-                M = dediagonalize(M); 
-                M = semipositivize(M); 
-                M = standardize(M); 
-                M = symmetrize(M);
-                M(sub2ind(size(M), nodes1, nodes2)) = 0;
-                B(layer, layer) = {M};
-            end
-            for x = 1:1:size(B, 1)
-                for j = x+1:1:size(B, 2)
-                    B(x, j) = {semipositivize(B{x, j})};
-                    B(j, x) = {semipositivize(B{j, x})};
-                    B(x, j) = {standardize(B{x, j})};
-                    B(j, x) = {standardize(B{j, x})};
-                    M = B{x, j};
-                    M(sub2ind(size(M), nodes1, nodes2)) = 0; 
-                    B(x, j) = {M};
-                    M = B{j, x};
-                    M(sub2ind(size(M), nodes1, nodes2)) = 0; 
-                    B(j, x) = {M};
-                end
-            end
-    end
-    
-    result = eg.getA(eg);
-    assert( isequal(eg.getA(eg), B), ...
-        ['BRAPH:' graph_class ':EdgeAttack'], ...
-        [graph_class '.edgeattack() is not working' ])
+% Specific Case for single layer
+B = A{Graph.GRAPH};
+g = Graph.getGraph('GraphBU', B);
+B = dediagonalize(B);
+B = semipositivize(B);
+B = binarize(B);
+B = symmetrize(B);
+B(sub2ind(size(B), nodes1, nodes2)) = 0;
+B(sub2ind(size(B), nodes2, nodes1)) = 0;
+
+eg = g.edgeattack(g, nodes1, nodes2);
+
+assert(isequal(eg.getA(eg), B), ...
+    'BRAPH: GRAPH: EdgeAttack', ...
+    [g.getClass() '.edgeattack() is not working' ])
+
+% Specific cases for all multilayer types
+B = A{Graph.MULTIPLEX};
+g = Graph.getGraph('MultiplexGraphWU', B);
+L = length(B);
+for layer = 1:1:L
+    M = B{layer, layer};
+    M = dediagonalize(M);
+    M = semipositivize(M);
+    M = standardize(M);
+    M = symmetrize(M);
+    B(layer, layer) = {M};
 end
+for x = 1:1:size(B, 1)
+    for j = x+1:1:size(B, 2)
+        B(x, j) = {semipositivize(B{x, j})};
+        B(j, x) = {semipositivize(B{j, x})};
+        B(x, j) = {standardize(B{x, j})};
+        B(j, x) = {standardize(B{j, x})};
+    end
+end
+C = B;
+D = B;
+
+% ATTACK ALL LAYERS
+for layer = 1:1:L
+    M = B{layer, layer};
+    M(sub2ind(size(M), nodes1, nodes2)) = 0;
+    M(sub2ind(size(M), nodes2, nodes1)) = 0;
+    B(layer, layer) = {M};
+end    
+
+eg = g.edgeattack(g, nodes1, nodes2);
+
+assert(isequal(eg.getA(eg), B), ...
+    'BRAPH: GRAPH: EdgeAttack', ...
+    [g.getClass() '.edgeattack() is not working' ])
+
+% ATTACK SPECIFIED LAYERS: i
+i = [1, 2];
+for j = 1:1:length(i)
+    M = C{i(j), i(j)};
+    M(sub2ind(size(M), nodes1, nodes2)) = 0;
+    M(sub2ind(size(M), nodes2, nodes1)) = 0;
+    C(i(j), i(j)) = {M};
+end
+
+eg = g.edgeattack(g, nodes1, nodes2, i);
+
+assert(isequal(eg.getA(eg), C), ...
+    'BRAPH: GRAPH: EdgeAttack', ...
+    [g.getClass() '.edgeattack() is not working' ])
+
+% ATTACK SPECIFIED LAYERS AND BETWEEN SPECIFIED 
+i = [1, 2];
+j = [2, 2];
+for x = 1:1:length(i)
+    M = D{i(x), j(x)};
+    M(sub2ind(size(M), nodes1, nodes2)) = 0;
+    M(sub2ind(size(M), nodes2, nodes1)) = 0;
+    D(i(x), j(x)) = {M};
+end
+
+eg = g.edgeattack(g, nodes1, nodes2, i, j);
+
+assert(isequal(eg.getA(eg), D), ...
+    'BRAPH: GRAPH: EdgeAttack', ...
+    [g.getClass() '.edgeattack() is not working' ])
 
 % %% Test 10: Copy
 % for i = 1:1:length(graph_class_list)

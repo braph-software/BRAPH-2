@@ -234,6 +234,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     end
     properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
+        settings  % structure with the constructor varagin
     end
 %     properties (GetAccess=protected, SetAccess=protected)
 %         A  % adjacency matrix or 2D-cell array of adjacency matrices
@@ -255,10 +256,17 @@ classdef Graph < handle & matlab.mixin.Copyable
             % initializes the property settings with SETTINGS.
             %
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
-
+           
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
+            
+            settings = get_from_varargin(varargin, 'Settings', varargin{:});
+            
             Graph.checkA(Graph.getGraphType(g), A)  % performs all necessary checks on A
             
             g.A = A;
+            g.settings = settings;  % initialize the property settings
         end
     end
     methods (Static)  % Check A
@@ -671,11 +679,27 @@ classdef Graph < handle & matlab.mixin.Copyable
             disp([g.TYPE_DESCRIPTION{Graph.getGraphType(g)} ])
             disp([' size: ' int2str(g.layernumber(g)) ' layers with ' int2str(g.nodenumber(g)) ' nodes'])
 %             disp([' measures: ' int2str(length(g.measure_dict))]);
-%             disp([' settings']); %#ok<NBRAK>
-%             settings = g.getSettings(); %#ok<PROP>
-%             for i = 1:2:length(settings) %#ok<PROP>
-%                 disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
-%             end
+            disp([' settings']); %#ok<NBRAK>
+            settings = g.getSettings(); %#ok<PROP>
+            for i = 1:2:length(settings) %#ok<PROP>
+                disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
+            end
+        end
+        function res = getSettings(g, setting_code)
+            % GETSETTINGS returns the settings
+            %
+            % SETTINGS = GETSETTINGS(G) returns the settings of the graph
+            %
+            % SETTINGS = GETSETTINGS(G, SETTING_CODE) returns the settings
+            % of the graph SETTING_CODE.
+            %
+            % See also getA(), nodenumber().
+            
+            if nargin<2
+                res = g.settings;
+            else
+                res = get_from_varargin([], setting_code, g.settings{:});
+            end
         end
     end
     methods (Static)  % Inspection functions
@@ -769,41 +793,29 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also edgeattack().
             
-            ga = g;
-            switch Graph.getGraphType(ga)
+            A = g.getA(g);
+            if nargin < 3
+                i = 1:g.layernumber(g);
+            end   
+            
+            switch Graph.getGraphType(g)
                 case Graph.GRAPH
-                    A = ga.getA(ga);
                     for x = 1:1:numel(nodes)
                         A(nodes(x), :) = 0;  % #ok<PROPLC>
                         A(:, nodes(x)) = 0;  % #ok<PROPLC>
                     end
-                    ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
                     
-                otherwise
-                    if nargin == 2  % no i, every layer
-                        for j = 1:1:g.layernumber(g)
-                            A = ga.getA(ga);
-                            B = A{j,j};
-                            for x = 1:1:numel(nodes)
-                                B(nodes(x), :) = 0;  % #ok<PROPLC>
-                                B(:, nodes(x)) = 0;  % #ok<PROPLC>
-                            end  
-                            A(j, j) = {B};
-                            ga = Graph.getGraph(Graph.getClass(ga), A);  
-                        end                 
-                    else  % i vector of layers
-                        for j = 1:1:length(i)
-                            A = ga.getA(ga);
-                            B = A{i(j), i(j)};
-                            for x = 1:1:numel(nodes)
-                                B(nodes(x), :) = 0;  % #ok<PROPLC>
-                                B(:, nodes(x)) = 0;  % #ok<PROPLC>
-                            end
-                            A(i(j), i(j)) = {B};
-                            ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
+                otherwise              
+                    for j = 1:1:length(i)
+                        B = A{i(j), i(j)};
+                        for x = 1:1:numel(nodes)
+                            B(nodes(x), :) = 0;  % #ok<PROPLC>
+                            B(:, nodes(x)) = 0;  % #ok<PROPLC>
                         end
-                    end          
+                        A(i(j), i(j)) = {B};
+                    end
             end
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());  % #ok<PROPLC>
         end
         function ga = edgeattack(g, nodes1, nodes2, i, j)
             % EDGEATTACK removes given edges from a graph
@@ -818,41 +830,33 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also nodeattack().
             
-            ga = g;
+            A = g.getA(g);  % #ok<PROPLC>
+            
+            if nargin < 5 
+                if nargin < 4
+                    i = 1:g.layernumber(g);
+                end
+                j = i;
+            end 
+            
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
-                    A = ga.getA(ga);  % #ok<PROPLC>
                     A(sub2ind(size(A), nodes1, nodes2)) = 0;  % #ok<PROPLC>
-                    ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
+                    if g.is_undirected(g)
+                        A(sub2ind(size(A), nodes2, nodes1)) = 0;  % #ok<PROPLC>
+                    end
+                    
                 otherwise
-                    if nargin == 5  % i, j vectors
-                        for x = 1:1:length(i)
-                            A = ga.getA(ga);
-                            B = A{i(x), j(x)};
-                            B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
-                            A(i(x), j(x)) = {B};
-                            ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
+                    for x = 1:1:length(i)
+                        B = A{i(x), j(x)};
+                        B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                        if g.is_undirected(g)
+                            B(sub2ind(size(B), nodes2, nodes1)) = 0;  % #ok<PROPLC>
                         end
-                    elseif nargin == 4  % i vector
-                        for x = 1:1:length(i)
-                            A = ga.getA(ga);
-                            B = A{i(x), i(x)};
-                            B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
-                            A(i(x), i(x)) = {B};
-                            ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
-                        end
-                    else  % nargin 3; no i no j, every combination
-                        for x = 1:1:g.layernumber(g)
-                            for t = 1:1:g.layernumber(g)
-                                A = ga.getA(ga);
-                                B = A{x, t};
-                                B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
-                                A(x, t) = {B};
-                                ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
-                            end    
-                        end    
-                    end    
-            end        
+                        A(i(x), j(x)) = {B};
+                    end
+            end 
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());  % #ok<PROPLC>
         end
     end
 %     methods (Access=protected)
@@ -918,22 +922,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         end
 %     end
 %     methods
-%         function res = getSettings(g, setting_code)
-%             % GETSETTINGS returns the settings
-%             %
-%             % SETTINGS = GETSETTINGS(G) returns the settings of the graph
-%             %
-%             % SETTINGS = GETSETTINGS(G, SETTING_CODE) returns the settings
-%             % of the graph SETTING_CODE. 
-%             %
-%             % See also getA(), nodenumber().
-%             
-%             if nargin<2
-%                 res = g.settings;
-%             else
-%                 res = get_from_varargin([], setting_code, g.settings{:});
-%             end
-%         end
 %         function m = getMeasure(g, measure_class)
 %             % GETMEASURE returns measure
 %             %
