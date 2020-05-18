@@ -678,7 +678,7 @@ classdef Graph < handle & matlab.mixin.Copyable
 %             end
         end
     end
-    methods (Static) % Inspection functions
+    methods (Static)  % Inspection functions
         function n = nodenumber(g)
             % NODENUMBER returns the number of nodes in the graph
             %
@@ -755,6 +755,104 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also getList(), getCompatibleMeasureList().
             
             g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
+        end
+    end
+    methods (Static)  
+        function ga = nodeattack(g, nodes, i)
+            % NODEATTACK removes given nodes from a graph
+            %
+            % GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
+            % the nodes specified by NODES from G.
+            %
+            % NODES are removed by setting all the connections from and to
+            % the nodes in the connection matrix to 0.
+            %
+            % See also edgeattack().
+            
+            ga = g;
+            switch Graph.getGraphType(ga)
+                case Graph.GRAPH
+                    A = ga.getA(ga);
+                    for x = 1:1:numel(nodes)
+                        A(nodes(x), :) = 0;  % #ok<PROPLC>
+                        A(:, nodes(x)) = 0;  % #ok<PROPLC>
+                    end
+                    ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
+                    
+                otherwise
+                    if nargin == 2  % no i, every layer
+                        for j = 1:1:g.layernumber(g)
+                            A = ga.getA(ga);
+                            B = A{j,j};
+                            for x = 1:1:numel(nodes)
+                                B(nodes(x), :) = 0;  % #ok<PROPLC>
+                                B(:, nodes(x)) = 0;  % #ok<PROPLC>
+                            end  
+                            A(j, j) = {B};
+                            ga = Graph.getGraph(Graph.getClass(ga), A);  
+                        end                 
+                    else  % i vector of layers
+                        for j = 1:1:length(i)
+                            A = ga.getA(ga);
+                            B = A{i(j), i(j)};
+                            for x = 1:1:numel(nodes)
+                                B(nodes(x), :) = 0;  % #ok<PROPLC>
+                                B(:, nodes(x)) = 0;  % #ok<PROPLC>
+                            end
+                            A(i(j), i(j)) = {B};
+                            ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
+                        end
+                    end          
+            end
+        end
+        function ga = edgeattack(g, nodes1, nodes2, i, j)
+            % EDGEATTACK removes given edges from a graph
+            %
+            % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
+            % by removing the edges going from NODES1 to NODES2 from G.
+            %
+            % EDGES are removed by setting all the connections from NODES1 to
+            % NODES2 in the connection matrix to 0.
+            %
+            % NODES1 and NODES2 must have the same dimensions.
+            %
+            % See also nodeattack().
+            
+            ga = g;
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    A = ga.getA(ga);  % #ok<PROPLC>
+                    A(sub2ind(size(A), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                    ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
+                otherwise
+                    if nargin == 5  % i, j vectors
+                        for x = 1:1:length(i)
+                            A = ga.getA(ga);
+                            B = A{i(x), j(x)};
+                            B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                            A(i(x), j(x)) = {B};
+                            ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
+                        end
+                    elseif nargin == 4  % i vector
+                        for x = 1:1:length(i)
+                            A = ga.getA(ga);
+                            B = A{i(x), i(x)};
+                            B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                            A(i(x), i(x)) = {B};
+                            ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
+                        end
+                    else  % nargin 3; no i no j, every combination
+                        for x = 1:1:g.layernumber(g)
+                            for t = 1:1:g.layernumber(g)
+                                A = ga.getA(ga);
+                                B = A{x, t};
+                                B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                                A(x, t) = {B};
+                                ga = Graph.getGraph(Graph.getClass(ga), A);  % #ok<PROPLC>
+                            end    
+                        end    
+                    end    
+            end        
         end
     end
 %     methods (Access=protected)
@@ -890,44 +988,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %             A = g.getA(); %#ok<PROPLC>
 %             sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings()); %#ok<PROPLC>
 %         end
-%         function ga = nodeattack(g, nodes)
-%             % NODEATTACK removes given nodes from a graph
-%             %
-%             % GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
-%             % the nodes specified by NODES from G.
-%             %
-%             % NODES are removed by setting all the connections from and to
-%             % the nodes in the connection matrix to 0.
-%             %
-%             % See also edgeattack().
-%             
-%             A = g.getA(); %#ok<PROPLC>
-%             
-%             for i = 1:1:numel(nodes)
-%                 A(nodes(i), :) = 0; %#ok<PROPLC>
-%                 A(:, nodes(i)) = 0; %#ok<PROPLC>
-%             end
-%             
-%             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings()); %#ok<PROPLC>
-%         end
-%         function ga = edgeattack(g, nodes1, nodes2)
-%             % EDGEATTACK removes given edges from a graph
-%             %
-%             % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
-%             % by removing the edges going from NODES1 to NODES2 from G.
-%             %
-%             % EDGES are removed by setting all the connections from NODES1 to
-%             % NODES2 in the connection matrix to 0.
-%             %
-%             % NODES1 and NODES2 must have the same dimensions.
-%             %
-%             % See also nodeattack().
-%             
-%             A = g.getA(); %#ok<PROPLC>
-%             A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<PROPLC>
-%             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings()); %#ok<PROPLC>
-%         end
-%     end
 %     methods (Abstract)
 %         randomize_graph(n);
 %     end
