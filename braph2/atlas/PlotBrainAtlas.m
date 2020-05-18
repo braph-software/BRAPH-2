@@ -5,51 +5,51 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   The brain regions can be plotted by using symbols, spheres or labels.
     %
     % PlotBrainAtlas properties (Constants):
-    %   INIT_LIGHTING             -   effect of light on objects < PlotBrainSurf 
+    %   INIT_LIGHTING             -   effect of light on objects < PlotBrainSurf
     %                                 (default = 'gouraud')
-    %   INIT_MATERIAL             -   lighting characteristics of objects < PlotBrainSurf 
+    %   INIT_MATERIAL             -   lighting characteristics of objects < PlotBrainSurf
     %                                 (default = 'dull')
-    %   INIT_CAMLIGHT             -   creates a light at given position < PlotBrainSurf 
+    %   INIT_CAMLIGHT             -   creates a light at given position < PlotBrainSurf
     %                                 (default = 'Headlight')
-    %   
-    %   INIT_BRAIN_EDGE_COLOR     -   edge color of brain surface < PlotBrainSurf 
+    %
+    %   INIT_BRAIN_EDGE_COLOR     -   edge color of brain surface < PlotBrainSurf
     %                                 (default = 'none')
-    %   INIT_BRAIN_EDGE_ALPHA     -   edge transparency of brain surface < PlotBrainSurf 
+    %   INIT_BRAIN_EDGE_ALPHA     -   edge transparency of brain surface < PlotBrainSurf
     %                                 (default = 0.5)
     %   INIT_BRAIN_FACE_COLOR     -   face color of brain surface < PlotBrainSurf
     %                               (default = [0.5 0.5 0.5])
-    %   INIT_BRAIN_FACE_ALPHA     -   face transparency of brain surface < PlotBrainSurf 
+    %   INIT_BRAIN_FACE_ALPHA     -   face transparency of brain surface < PlotBrainSurf
     %                                 (default = 0.5)
     %
-    %   VIEW_3D                   -   3D view numeric code < PlotBrainSurf 
-    %   VIEW_3D_CMD               -   3D view name < PlotBrainSurf 
-    %   VIEW_3D_AZEL              -   3D view azimutal and polar angles < PlotBrainSurf 
-    %   
-    %   VIEW_SL                   -   sagittal left view numeric code < PlotBrainSurf 
-    %   VIEW_SL_CMD               -   sagittal left view name < PlotBrainSurf 
-    %   VIEW_SL_AZEL              -   sagittal left view azimutal and polar angles < PlotBrainSurf 
+    %   VIEW_3D                   -   3D view numeric code < PlotBrainSurf
+    %   VIEW_3D_CMD               -   3D view name < PlotBrainSurf
+    %   VIEW_3D_AZEL              -   3D view azimutal and polar angles < PlotBrainSurf
     %
-    %   VIEW_SR                   -   sagittal right view numeric code < PlotBrainSurf 
-    %   VIEW_SR_CMD               -   sagittal right view name < PlotBrainSurf 
-    %   VIEW_SR_AZEL              -   Sagittal right view azimutal and polar angles < PlotBrainSurf 
-    %   
-    %   VIEW_AD                   -   axial dorsal view numeric code < PlotBrainSurf 
-    %   VIEW_AD_CMD               -   axial dorsal view name < PlotBrainSurf 
-    %   VIEW_AD_AZEL              -   axial dorsal view azimutal and polar angles < PlotBrainSurf 
-    %   
-    %   VIEW_AV                   -   axial ventral view numeric code < PlotBrainSurf 
-    %   VIEW_AV_CMD               -   axial ventral view name < PlotBrainSurf 
-    %   VIEW_AV_AZEL              -   axial ventral view azimutal and polar angles < PlotBrainSurf 
-    %   
-    %   VIEW_CA                   -   coronal anterior view numeric code < PlotBrainSurf 
-    %   VIEW_CA_CMD               -   coronal anterior view name < PlotBrainSurf 
-    %   VIEW_CA_AZEL              -   coronal anterior view azimutal and polar angles < PlotBrainSurf   
+    %   VIEW_SL                   -   sagittal left view numeric code < PlotBrainSurf
+    %   VIEW_SL_CMD               -   sagittal left view name < PlotBrainSurf
+    %   VIEW_SL_AZEL              -   sagittal left view azimutal and polar angles < PlotBrainSurf
     %
-    %   VIEW_CP                   -   coronal posterior view numeric code < PlotBrainSurf 
-    %   VIEW_CP_CMD               -   coronal posterior view name < PlotBrainSurf 
-    %   VIEW_CP_AZEL              -   coronal posterior view azimutal and polar angles < PlotBrainSurf 
+    %   VIEW_SR                   -   sagittal right view numeric code < PlotBrainSurf
+    %   VIEW_SR_CMD               -   sagittal right view name < PlotBrainSurf
+    %   VIEW_SR_AZEL              -   Sagittal right view azimutal and polar angles < PlotBrainSurf
     %
-    %   VIEW_CMD                  -   vector of view names < PlotBrainSurf 
+    %   VIEW_AD                   -   axial dorsal view numeric code < PlotBrainSurf
+    %   VIEW_AD_CMD               -   axial dorsal view name < PlotBrainSurf
+    %   VIEW_AD_AZEL              -   axial dorsal view azimutal and polar angles < PlotBrainSurf
+    %
+    %   VIEW_AV                   -   axial ventral view numeric code < PlotBrainSurf
+    %   VIEW_AV_CMD               -   axial ventral view name < PlotBrainSurf
+    %   VIEW_AV_AZEL              -   axial ventral view azimutal and polar angles < PlotBrainSurf
+    %
+    %   VIEW_CA                   -   coronal anterior view numeric code < PlotBrainSurf
+    %   VIEW_CA_CMD               -   coronal anterior view name < PlotBrainSurf
+    %   VIEW_CA_AZEL              -   coronal anterior view azimutal and polar angles < PlotBrainSurf
+    %
+    %   VIEW_CP                   -   coronal posterior view numeric code < PlotBrainSurf
+    %   VIEW_CP_CMD               -   coronal posterior view name < PlotBrainSurf
+    %   VIEW_CP_AZEL              -   coronal posterior view azimutal and polar angles < PlotBrainSurf
+    %
+    %   VIEW_CMD                  -   vector of view names < PlotBrainSurf
     %   VIEW_AZEL                 -   vector of view azimutal and polar angle < PlotBrainSurf
     %
     %   INIT_SYM_MARKER           -   symbol type
@@ -178,7 +178,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   br_labs_settings  -   sets labels' properties
     %
     % See also PlotBrainAtlas, PlotBrainSurf, BrainAtlas.
- 
+    
     properties (Constant)
         % Symbols
         INIT_SYM_MARKER = 'o'
@@ -213,6 +213,23 @@ classdef PlotBrainAtlas < PlotBrainSurf
             'triangle (right)' ...
             'pentagram' ...
             'hexagram' ...
+            'none' ...
+            }
+        
+        PLOT_SYMBOL_TAG = { ...
+            '.' ...
+            'o' ...
+            'x' ...
+            '+' ...
+            '*' ...
+            's' ...
+            'd' ...
+            'v' ...
+            '^' ...
+            '>' ...
+            '<' ...
+            'p' ...
+            'h' ...
             'none' ...
             }
     end
@@ -286,11 +303,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
             %
             % BR_SYM(BA, I) denotes the brain regions I as a symbol, if not plotted.
             %
-            % H = BR_SYM(BA, I) returns the handle to the symbol denoting the brain 
+            % H = BR_SYM(BA, I) returns the handle to the symbol denoting the brain
             %   region I.
             %
             % BR_SYM(BA, I, 'PropertyName', PropertyValue) sets the property
-            %   of the symbol's PropertyName to PropertyValue. 
+            %   of the symbol's PropertyName to PropertyValue.
             %   All standard plot properties of plot3 can be used.
             %   The symbol properties can also be changed when hidden.
             %
@@ -302,7 +319,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             X = ba.atlas.getBrainRegions().getValue(i).getX();  % get(i).getProp(BrainRegion.X);
             Y = ba.atlas.getBrainRegions().getValue(i).getY();  % get(i).getProp(BrainRegion.Y);
             Z = ba.atlas.getBrainRegions().getValue(i).getZ();  % get(i).getProp(BrainRegion.Z);
-           
+            
             if ~ishandle(ba.syms.h(i))
                 
                 ba.syms.h(i) = plot3(...
@@ -328,7 +345,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba.syms.X(i) = num2cell(X);
             ba.syms.Y(i) = num2cell(Y);
             ba.syms.Z(i) = num2cell(Z);
-           
+            
             % sets properties
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -350,7 +367,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sym_on(ba, i)
             % BR_SYM_ON shows a symbol
             %
-            % BR_SYM_ON(BA,I) shows the symbol denoting the brain region I. 
+            % BR_SYM_ON(BA,I) shows the symbol denoting the brain region I.
             %
             % See also PlotBrainAtlas.
             
@@ -361,7 +378,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sym_off(ba, i)
             % BR_SYM_OFF hides a symbol
             %
-            % BR_SYM_OFF(BA,I) hides the symbol denoting the brain region I. 
+            % BR_SYM_OFF(BA,I) hides the symbol denoting the brain region I.
             %
             % See also PlotBrainAtlas.
             
@@ -372,7 +389,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function bool = br_sym_is_on(ba, i)
             % BR_SYM_IS_ON checks if symbol is visible
             %
-            % BOOL = BR_SYM_IS_ON(BA,I) returns true if the symbol denoting 
+            % BOOL = BR_SYM_IS_ON(BA,I) returns true if the symbol denoting
             %   the brain region I is visible and false otherwise.
             %
             % See also PlotBrainAtlas.
@@ -383,12 +400,12 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % BR_SYMS displays multiple brain regions as symbols
             %
             % BR_SYMS(BA,I_VEC) plots the symbols denoting the brain regions
-            %   specified in I_VEC, if not plotted. 
+            %   specified in I_VEC, if not plotted.
             %
             % BR_SYMS(BA,[]) plots the symbols for all possible brain regions.
             %
             % BR_SYMS(BA,I_VEC,'PropertyName',PropertyValue) sets the property
-            %   of the multiple symbols' PropertyName to PropertyValue. 
+            %   of the multiple symbols' PropertyName to PropertyValue.
             %   All standard plot properties of plot3 can be used.
             %   The symbols properties can also be changed when hidden.
             %
@@ -480,8 +497,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function i = get_sym_i(ba, h)
             % GET_SYM_I order number of brain region corresponding to a symbol
             %
-            % I = GET_SYM_I(BA,H) returns the order number of the brain regions 
-            %   corresponding to the symbol with handle H. 
+            % I = GET_SYM_I(BA,H) returns the order number of the brain regions
+            %   corresponding to the symbol with handle H.
             %
             % See also PlotBrainAtlas.
             
@@ -497,8 +514,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br = get_sym_br(ba, h)
             % GET_SYM_BR properties of brain region corresponding to a symbol
             %
-            % BR = GET_SYM_BR(BA,H) returns the properties of the brain region 
-            %   BR corresponding to the symbol with handle H. 
+            % BR = GET_SYM_BR(BA,H) returns the properties of the brain region
+            %   BR corresponding to the symbol with handle H.
             %
             % See also PlotBrainAtlas.
             
@@ -512,7 +529,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             %   change the symbols settings via a graphical user interface.
             %
             % BR_SYMS_SETTINGS(BA,'PropertyName',PropertyValue) sets the property
-            %   of the GUI's PropertyName to PropertyValue. 
+            %   of the GUI's PropertyName to PropertyValue.
             %   Admissible properties are:
             %       FigPosition  -   position of the GUI on the screen
             %       FigColor     -   background color of the GUI
@@ -592,14 +609,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by name')
             set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
             
-            ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
-            set(ui_checkbox_hs, 'Units', 'normalized')
-            set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
-            set(ui_checkbox_hs, 'Position', [.30 .05 .20 .10])
-            set(ui_checkbox_hs, 'String', 'hemisphere')
-            set(ui_checkbox_hs, 'Value', false)
-            set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by name')
-            set(ui_checkbox_hs, 'Callback', {@cb_hs})
+            %             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
+            %             set(ui_checkbox_hs, 'Units', 'normalized')
+            %             set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
+            %             set(ui_checkbox_hs, 'Position', [.30 .05 .20 .10])
+            %             set(ui_checkbox_hs, 'String', 'hemisphere')
+            %             set(ui_checkbox_hs, 'Value', false)
+            %             set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by name')
+            %             set(ui_checkbox_hs, 'Callback', {@cb_hs})
             
             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_show, 'Units','normalized')
@@ -686,9 +703,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     end
                     set(ui_list,'String', xyz)
                 elseif get(ui_checkbox_hs, 'Value')
-                  %  set(ui_list, 'String',
-                  %  ba.atlas.getProps(BrainRegion.HS))   % we dont have hs
-                  %  now
+                    %  set(ui_list, 'String',
+                    %  ba.atlas.getProps(BrainRegion.HS))   % we dont have hs
+                    %  now
                 end
             end
             function cb_list(~,~)  % (src,event)
@@ -701,8 +718,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-                set(ui_checkbox_hs,'Value',false)
-                set(ui_checkbox_hs,'FontWeight','normal')
+%                 set(ui_checkbox_hs,'Value',false)
+%                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
@@ -716,29 +733,29 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',true)
                 set(ui_checkbox_name,'FontWeight','bold')
                 
-                set(ui_checkbox_hs,'Value',false)
-                set(ui_checkbox_hs,'FontWeight','normal')
+%                 set(ui_checkbox_hs,'Value',false)
+%                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
                 
                 update_list()
             end
-            function cb_hs(~,~)  % (src,event)
-                set(ui_checkbox_label,'Value',false)
-                set(ui_checkbox_label,'FontWeight','normal')
-                
-                set(ui_checkbox_name,'Value',false)
-                set(ui_checkbox_name,'FontWeight','normal')
-                
-                set(ui_checkbox_hs,'Value',true)
-                set(ui_checkbox_hs,'FontWeight','bold')
-                
-                set(ui_checkbox_xyz,'Value',false)
-                set(ui_checkbox_xyz,'FontWeight','normal')
-                
-                update_list()
-            end
+            %             function cb_hs(~,~)  % (src,event)
+            %                 set(ui_checkbox_label,'Value',false)
+            %                 set(ui_checkbox_label,'FontWeight','normal')
+            %
+            %                 set(ui_checkbox_name,'Value',false)
+            %                 set(ui_checkbox_name,'FontWeight','normal')
+            %
+            %                 set(ui_checkbox_hs,'Value',true)
+            %                 set(ui_checkbox_hs,'FontWeight','bold')
+            %
+            %                 set(ui_checkbox_xyz,'Value',false)
+            %                 set(ui_checkbox_xyz,'FontWeight','normal')
+            %
+            %                 update_list()
+            %             end
             function cb_xyz(~,~)  % (src,event)
                 set(ui_checkbox_label,'Value',false)
                 set(ui_checkbox_label,'FontWeight','normal')
@@ -746,8 +763,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-                set(ui_checkbox_hs,'Value',false)
-                set(ui_checkbox_hs,'FontWeight','normal')
+%                 set(ui_checkbox_hs,'Value',false)
+%                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',true)
                 set(ui_checkbox_xyz,'FontWeight','bold')
@@ -762,14 +779,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.br_syms_off(get_br_list())
             end
             function cb_marker(~,~)  % (src,event)
-                symbol = GUI.PLOT_SYMBOL_TAG{get(ui_popup_marker,'Value')};
+                symbol = PlotBrainAtlas.PLOT_SYMBOL_TAG{get(ui_popup_marker, 'Value')};
                 ba.br_syms(get_br_list(),'Marker',symbol)
             end
             function cb_size(~,~)  % (src,event)
-                size = real(str2num(get(ui_edit_size,'String')));
+                size = real(str2num(get(ui_edit_size, 'String')));
                 
                 if isempty(size) || size<=1
-                    set(ui_edit_size,'String','1')
+                    set(ui_edit_size, 'String', '1')
                     size = 5;
                 end
                 ba.br_syms(get_br_list(),'MarkerSize',size)
@@ -819,13 +836,13 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % See also PlotBrainAtlas, surf.
             
             ba.set_axes()
-                        
+            
             % radius
             R = ba.sphs.R(i);
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
                     case 'r'
-                        R = varargin{n + s1};
+                        R = varargin{n + 1};
                 end
             end
             
@@ -838,7 +855,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             if ~ishandle(ba.sphs.h(i))
                 color = PlotBrainAtlas.INIT_SPH_FACE_COLOR;
                 alpha = PlotBrainAtlas.INIT_SPH_FACE_ALPHA;
-            
+                
                 [sx, sy, sz] = sphere();
                 ba.sphs.h(i) = surf( ...
                     ba.get_axes(), ...
@@ -1151,14 +1168,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by position')
             set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
             
-            ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
-            set(ui_checkbox_hs, 'Units','normalized')
-            set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
-            set(ui_checkbox_hs, 'Position', [.23 .05 .15 .10])
-            set(ui_checkbox_hs, 'String', 'hemisphere')
-            set(ui_checkbox_hs, 'Value', false)
-            set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by hemisphere')
-            set(ui_checkbox_hs, 'Callback', {@cb_hs})
+%             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
+%             set(ui_checkbox_hs, 'Units','normalized')
+%             set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
+%             set(ui_checkbox_hs, 'Position', [.23 .05 .15 .10])
+%             set(ui_checkbox_hs, 'String', 'hemisphere')
+%             set(ui_checkbox_hs, 'Value', false)
+%             set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by hemisphere')
+%             set(ui_checkbox_hs, 'Callback', {@cb_hs})
             
             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_show, 'Units','normalized')
@@ -1284,7 +1301,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     end
                     set(ui_list, 'String', xyz)
                 elseif get(ui_checkbox_hs, 'Value')
-                   % set(ui_list, 'String', ba.atlas.getProps(BrainRegion.HS))
+                    % set(ui_list, 'String', ba.atlas.getProps(BrainRegion.HS))
                 end
             end
             function cb_list(~,~)  % (src,event)
@@ -1297,8 +1314,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-                set(ui_checkbox_hs,'Value',false)
-                set(ui_checkbox_hs,'FontWeight','normal')
+%                 set(ui_checkbox_hs,'Value',false)
+%                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
@@ -1312,29 +1329,29 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',true)
                 set(ui_checkbox_name,'FontWeight','bold')
                 
-                set(ui_checkbox_hs,'Value',false)
-                set(ui_checkbox_hs,'FontWeight','normal')
+%                 set(ui_checkbox_hs,'Value',false)
+%                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
                 
                 update_list()
             end
-            function cb_hs(~,~)  % (src,event)
-                set(ui_checkbox_label,'Value',false)
-                set(ui_checkbox_label,'FontWeight','normal')
-                
-                set(ui_checkbox_name,'Value',false)
-                set(ui_checkbox_name,'FontWeight','normal')
-                
-                set(ui_checkbox_hs,'Value',true)
-                set(ui_checkbox_hs,'FontWeight','bold')
-                
-                set(ui_checkbox_xyz,'Value',false)
-                set(ui_checkbox_xyz,'FontWeight','normal')
-                
-                update_list()
-            end
+%             function cb_hs(~,~)  % (src,event)
+%                 set(ui_checkbox_label,'Value',false)
+%                 set(ui_checkbox_label,'FontWeight','normal')
+%                 
+%                 set(ui_checkbox_name,'Value',false)
+%                 set(ui_checkbox_name,'FontWeight','normal')
+%                 
+%                 set(ui_checkbox_hs,'Value',true)
+%                 set(ui_checkbox_hs,'FontWeight','bold')
+%                 
+%                 set(ui_checkbox_xyz,'Value',false)
+%                 set(ui_checkbox_xyz,'FontWeight','normal')
+%                 
+%                 update_list()
+%             end
             function cb_xyz(~,~)  % (src,event)
                 set(ui_checkbox_label,'Value',false)
                 set(ui_checkbox_label,'FontWeight','normal')
@@ -1342,8 +1359,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-                set(ui_checkbox_hs,'Value',false)
-                set(ui_checkbox_hs,'FontWeight','normal')
+%                 set(ui_checkbox_hs,'Value',false)
+%                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',true)
                 set(ui_checkbox_xyz,'FontWeight','bold')
@@ -1390,17 +1407,17 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.br_sphs(get_br_list(),'EdgeAlpha',get(ui_slider_edgealpha,'Value'))
             end
             function cb_radius(~,~)
-                R = real(str2num(get(ui_edit_radius,'String')));
+                R = real(str2num(get(ui_edit_radius, 'String')));
                 
                 if isempty(R) || R<=0
-                    set(ui_edit_radius,'String','1')
+                    set(ui_edit_radius, 'String', '1')
                     R = 1;
                 end
-                ba.br_sphs(get_br_list(),'r',R)
+                ba.br_sphs(get_br_list(), 'r', R)
             end
             function bri = get_br_list()
                 if ba.atlas.getBrainRegions().length()>0
-                    bri = get(ui_list,'Value');
+                    bri = get(ui_list, 'Value');
                 else
                     bri = [];
                 end
@@ -1429,7 +1446,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             Y = ba.atlas.getBrainRegions().getValue(i).getY();  % get(i).getProp(BrainRegion.Y);
             Z = ba.atlas.getBrainRegions().getValue(i).getZ();  % get(i).getProp(BrainRegion.Z);
             LAB = ba.atlas.getBrainRegions().getValue(i).getLabel();
-%             LAB = LABELS(i);
+            %             LAB = LABELS(i);
             
             % display the text
             if ~ishandle(ba.labs.h(i))
@@ -1655,11 +1672,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
                     case 'figposition'
-                        FigPosition = varargin{n+1};
+                        FigPosition = varargin{n + 1};
                     case 'figcolor'
-                        FigColor = varargin{n+1};
+                        FigColor = varargin{n + 1};
                     case 'figname'
-                        FigName = varargin{n+1};
+                        FigName = varargin{n + 1};
                 end
             end
             
@@ -1668,14 +1685,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.f_labs_settings = figure('Visible', 'off');
             end
             f = ba.f_labs_settings;
-            set(f,'units','normalized')
-            set(f,'Position',FigPosition)
-            set(f,'Color',FigColor)
-            set(f,'Name',FigName)
-            set(f,'MenuBar','none')
-            set(f,'Toolbar','none')
-            set(f,'NumberTitle','off')
-            set(f,'DockControls','off')
+            set(f,'units', 'normalized')
+            set(f,'Position', FigPosition)
+            set(f,'Color', FigColor)
+            set(f,'Name', FigName)
+            set(f,'MenuBar', 'none')
+            set(f,'Toolbar', 'none')
+            set(f,'NumberTitle', 'off')
+            set(f,'DockControls', 'off')
             
             % Initialization
             ui_list = uicontrol(f, 'Style', 'listbox');
@@ -1716,14 +1733,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by position')
             set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
             
-            ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
-            set(ui_checkbox_hs, 'Units', 'normalized')
-            set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
-            set(ui_checkbox_hs, 'Position', [.25 .025 .20 .10])
-            set(ui_checkbox_hs, 'String', 'hemisphere')
-            set(ui_checkbox_hs, 'Value', false)
-            set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by hemisphere')
-            set(ui_checkbox_hs, 'Callback', {@cb_hs})
+%             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
+%             set(ui_checkbox_hs, 'Units', 'normalized')
+%             set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
+%             set(ui_checkbox_hs, 'Position', [.25 .025 .20 .10])
+%             set(ui_checkbox_hs, 'String', 'hemisphere')
+%             set(ui_checkbox_hs, 'Value', false)
+%             set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by hemisphere')
+%             set(ui_checkbox_hs, 'Callback', {@cb_hs})
             
             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_show, 'Units', 'normalized')
@@ -1815,8 +1832,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-                set(ui_checkbox_hs,'Value',false)
-                set(ui_checkbox_hs,'FontWeight','normal')
+%                 set(ui_checkbox_hs,'Value',false)
+%                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
@@ -1830,41 +1847,41 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',true)
                 set(ui_checkbox_name,'FontWeight','bold')
                 
-                set(ui_checkbox_hs,'Value',false)
-                set(ui_checkbox_hs,'FontWeight','normal')
-                
+%                 set(ui_checkbox_hs,'Value',false)
+%                 set(ui_checkbox_hs,'FontWeight','normal')
+%                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
                 
                 update_list()
             end
-            function cb_hs(~,~)  % (src,event)
-                set(ui_checkbox_label,'Value',false)
-                set(ui_checkbox_label,'FontWeight','normal')
-                
-                set(ui_checkbox_name,'Value',false)
-                set(ui_checkbox_name,'FontWeight','normal')
-                
-                set(ui_checkbox_hs,'Value',true)
-                set(ui_checkbox_hs,'FontWeight','bold')
-                
-                set(ui_checkbox_xyz,'Value',false)
-                set(ui_checkbox_xyz,'FontWeight','normal')
-                
-                update_list()
-            end
+%             function cb_hs(~,~)  % (src,event)
+%                 set(ui_checkbox_label,'Value',false)
+%                 set(ui_checkbox_label,'FontWeight','normal')
+%                 
+%                 set(ui_checkbox_name,'Value',false)
+%                 set(ui_checkbox_name,'FontWeight','normal')
+%                 
+%                 set(ui_checkbox_hs,'Value',true)
+%                 set(ui_checkbox_hs,'FontWeight','bold')
+%                 
+%                 set(ui_checkbox_xyz,'Value',false)
+%                 set(ui_checkbox_xyz,'FontWeight','normal')
+%                 
+%                 update_list()
+%             end
             function cb_xyz(~,~)  % (src,event)
-                set(ui_checkbox_label,'Value',false)
-                set(ui_checkbox_label,'FontWeight','normal')
+                set(ui_checkbox_label, 'Value', false)
+                set(ui_checkbox_label, 'FontWeight', 'normal')
                 
-                set(ui_checkbox_name,'Value',false)
-                set(ui_checkbox_name,'FontWeight','normal')
+                set(ui_checkbox_name, 'Value', false)
+                set(ui_checkbox_name, 'FontWeight', 'normal')
                 
-                set(ui_checkbox_hs,'Value',false)
-                set(ui_checkbox_hs,'FontWeight','normal')
+%                 set(ui_checkbox_hs,'Value',false)
+%                 set(ui_checkbox_hs,'FontWeight','normal')
                 
-                set(ui_checkbox_xyz,'Value',true)
-                set(ui_checkbox_xyz,'FontWeight','bold')
+                set(ui_checkbox_xyz, 'Value', true)
+                set(ui_checkbox_xyz, 'FontWeight', 'bold')
                 
                 update_list()
             end
@@ -1879,28 +1896,28 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 color = uisetcolor();
                 
                 if length(color)==3
-                    ba.br_labs(get_br_list(),'color',color)
+                    ba.br_labs(get_br_list(), 'color', color)
                 end
             end
             function cb_font(~,~)  %  (src,event)
                 font = uisetfont;
                 
                 if isstruct(font)
-                    ba.br_labs(get_br_list(),'FontSize',font.FontSize,...
-                        'FontName',font.FontName,...
-                        'FontWeight',font.FontWeight,...
-                        'FontAngle',font.FontAngle,...
-                        'FontUnits',font.FontUnits)
+                    ba.br_labs(get_br_list(), 'FontSize', font.FontSize,...
+                        'FontName', font.FontName,...
+                        'FontWeight', font.FontWeight,...
+                        'FontAngle', font.FontAngle,...
+                        'FontUnits', font.FontUnits)
                 end
             end
             function cb_interpreter(~,~)  %  (src,event)
-                string = get(ui_popup_interpreter,'String');
-                interpreter = string{get(ui_popup_interpreter,'Value')};
-                ba.br_labs(get_br_list(),'interpreter',interpreter)
+                string = get(ui_popup_interpreter, 'String');
+                interpreter = string{get(ui_popup_interpreter, 'Value')};
+                ba.br_labs(get_br_list(), 'interpreter', interpreter)
             end
             function bri = get_br_list()
                 if ba.atlas.getBrainRegions().length()>0
-                    bri = get(ui_list,'Value');
+                    bri = get(ui_list, 'Value');
                 else
                     bri = [];
                 end
@@ -1913,7 +1930,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % Make a shallow copy
             cp = copyElement@PlotBrainSurf(ba);
             % Make a deep copy
-            cp.atlas = copy(ba.atlas);            
+            cp.atlas = copy(ba.atlas);
             % resets the graphic handles
             cp.syms.h = NaN(1, ba.atlas.getBrainRegions().length());
             cp.f_syms_settings = NaN;
@@ -1921,6 +1938,6 @@ classdef PlotBrainAtlas < PlotBrainSurf
             cp.f_sphs_settings = NaN;
             cp.labs.h = NaN(1, ba.atlas.getBrainRegions().length());
             cp.f_labs_settings = NaN;
-        end        
+        end
     end
 end
