@@ -2,13 +2,6 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     % BrainAtlas < handle & matlab.mixin.Copyable: A brain atlas
     % BrainAtlas represents a collection of brain regions.
     %
-    % BrainAtlas properties (GetAccess=protected, SetAccess=protected):
-    %   name                    - name of the brain atlas.
-    %   br_idict                - indexed dictionary with brain regions
-    %
-    % BrainAtlas methods (Access=protected)
-    %   copyElement             - deep copy community structure.
-    %
     % BrainAtlas methods:
     %   BrainAtlas              - Constructor.
     %   tostring                - returns a string representing the BrainAtlas.
@@ -73,7 +66,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         id  % few-letter code (unique for each brain atlas)
         label  % extended name of the brain atlas
         notes  % notes about the brain atlas
-% Add property for brain surface
+        plot_brain_surf  % handle for brain surface plot
+%         plot_brain_atlas  % handle for brain atlas plot
         br_idict  % indexed dictionary with BrainRegions
     end
     methods  % Basic functions
@@ -167,6 +161,16 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             atlas.notes = notes;
         end
+        function setBrainSurface(atlas, brain_surface)
+            % SETBRAINSURFACE sets the brain surface object to the atlas
+            %
+            % SETBRAINSURFACE(ATLAS, BRAIN_SURFACE) sets the brain surface
+            % plot object BRAIN_SURFACE to the brain atlas class ATLAS.
+            %
+            % See also getBrainSurface.
+            
+            atlas.plot_brain_surf = brain_surface;
+        end
     end
     methods  % Get functions
         function id = getID(atlas)
@@ -217,7 +221,21 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         % cellfun(@(br) br.getPosition(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
     end
     methods  % Plot functions
-% bs = getPlotBrainSurf(atlas, varargin)
+        function bs = getPlotBrainSurf(atlas, varargin)
+            % GETPLOTBRAINSURF returns the brain surface plot.
+            %
+            % GETPLOTBRAINSURF(ATLAS, VARARGIN) returns the handle of the
+            % brain surface plot, if it does no exist it creates it. 
+            %
+            % See also setPlotBrainSurf().
+            
+            if ~isempty(atlas.plot_brain_surf)
+                bs = atlas.plot_brain_surf;
+            else
+                bs = PlotBrainSurf(varargin{:});
+                atlas.plot_brain_surf = bs;
+            end                
+        end
 % ba = getPlotBrainAtlas(atlas, varargin)
 % bg = getPlotBrainGraph(atlas, varargin)
     end
@@ -238,290 +256,296 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         end
     end    
     methods (Static)  % Save and load functions
-%         function atlas = load_from_xls(varargin)
-%             % LOAD_FROM_XLS loads brain atlas from XLS file
-%             %
-%             % ATLAS = LOAD_FROM_XLS('File', FILE) creates and initializes the
-%             % brain atlas ATLAS by loading an XLS file ('*.xlsx' or '*.xls').
-%             % It throws an error is the file does not exist
-%             % or is in the wrong format.
-%             %
-%             % ATLAS = LOAD_FROM_XLS() it opens a dialog box to select the
-%             % file. If no file is selected, it returns an empty BrainAtlas.
-%             %
-%             % ATLAS = LOAD_FROM_XLS('Msg', MSG) it opens a dialog box to select the
-%             % file with message MSG.
-%             %
-%             % See also BrainAtlas, uigetfile, fopen.
-%             
-%             % Creates empty BrainAtlas
-%             atlas = BrainAtlas('', {});
-%             
-%             % file (fullpath)
-%             file = get_from_varargin('', 'File', varargin{:});
-%             if isequal(file, '')  % select file
-%                 msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
-%                 [filename, filepath, filterindex] = uigetfile(Constant.XLS_EXTENSION, msg);
-%                 file = [filepath filename];
-%                 
-%                 if ~filterindex
-%                     return
-%                 end
-%             end
-%             
-%             [~, ~, raw] = xlsread(file);
-%             
-%             atlas_name = raw{1,1};
-%             atlas.setName(atlas_name);
-%             
-%             for i = 2:1:size(raw, 1)
-%                 br_label = raw{i, 1};
-%                 br_name = raw{i, 2};
-%                 br_x = raw{i, 3};
-%                 br_y = raw{i, 4};
-%                 br_z = raw{i, 5};
-%                 br = BrainRegion(br_label, br_name, br_x, br_y, br_z);
-%                 atlas.getBrainRegions().add(br_label, br);
-%             end
-%         end
-%         function save_to_xls(atlas, varargin)
-%             % SAVE_TO_XLS saves brain atlas to XLS file
-%             %
-%             % SAVE_TO_XLS('File', FILE) saves the brain atlas ATLAS into
-%             % the FILE in XLS format.
-%             %
-%             % SAVE_TO_XLS() it opens a dialog box to select the
-%             % FILE into which the brain atlas ATLAS will be saved.
-%             %
-%             % SAVE_TO_XLS('Msg', MSG) it opens a dialog box to select the
-%             % FILE with message MSG.
-%             %
-%             % See also BrainAtlas, uigetfile, writetable.
-%                     
-%             % file (fullpath)
-%             file = get_from_varargin('', 'File', varargin{:});
-%             if isequal(file, '')  % select file
-%                 msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
-%                 [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
-%                 file = [filepath filename];
-%                 
-%                 if ~filterindex
-%                     return
-%                 end
-%             end
-%             
-%             % gets brain region data
-%             for i = 1:1:atlas.getBrainRegions().length()
-%                 br_label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
-%                 br_names{i, 1} = atlas.getBrainRegions().getValue(i).getName(); %#ok<*AGROW>
-%                 br_x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
-%                 br_y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
-%                 br_z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
-%             end
-%             
-%             % creates table
-%             tab = [
-%                 {atlas.getName(), {},{},{},{}};
-%                 table(br_label, br_names, br_x, br_y, br_z)
-%                 ];
-%             
-%             % save
-%             writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
-%         end
-%         function atlas = load_from_txt(varargin)
-%             % LOAD_FROM_TXT loads brain atlas from XLS file
-%             %
-%             % ATLAS = LOAD_FROM_TXT('File', FILE) creates and initializes the
-%             % brain atlas ATLAS by loading an TXT file ('*.txt').
-%             % It throws an error is the file does not exist
-%             % or is in the wrong format.
-%             %
-%             % ATLAS = LOAD_FROM_TXT() it opens a dialog box to select the
-%             % file. If no file is selected, it returns an empty BrainAtlas.
-%             %
-%             % ATLAS = LOAD_FROM_TXT('Msg', MSG) it opens a dialog box to select the
-%             % file with message MSG.
-%             %
-%             % See also BrainAtlas, uigetfile, readtable
-%             
-%             % Creates empty BrainAtlas
-%             atlas = BrainAtlas('', {});
-%             
-%             % file (fullpath)
-%             file = get_from_varargin('', 'File', varargin{:});
-%             if isequal(file, '')  % select file
-%                 msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
-%                 [filename, filepath, filterindex] = uigetfile(Constant.TXT_EXTENSION, msg);
-%                 file = [filepath filename];
-%                 
-%                 if ~filterindex
-%                     return
-%                 end
-%             end
-%             
-%             raw = readtable(file);
-%             
-%             atlas_name =  raw.Properties.VariableNames{1};
-%             atlas.setName(atlas_name);
-%             
-%             for i = 1:1:size(raw, 1)
-%                 br_label = char(raw{i, 1});
-%                 br_name = char(raw{i, 2});
-%                 br_x = raw{i, 3};
-%                 br_y = raw{i, 4};
-%                 br_z = raw{i, 5};
-%                 br = BrainRegion(br_label, br_name, br_x, br_y, br_z);
-%                 atlas.getBrainRegions().add(br_label, br);
-%             end
-%         end
-%         function save_to_txt(atlas, varargin)
-%             % SAVE_TO_TXT saves brain atlas to XLS file
-%             %
-%             % SAVE_TO_TXT('File', FILE) saves the brain atlas ATLAS into
-%             % the FILE in TXT format.
-%             %
-%             % SAVE_TO_TXT() it opens a dialog box to select the
-%             % FILE into which the brain atlas ATLAS will be saved.
-%             %
-%             % SAVE_TO_TXT('Msg', MSG) it opens a dialog box to select the
-%             % FILE with message MSG.
-%             %
-%             % See also BrainAtlas, uigetfile, writetable.
-%             
-%             % file (fullpath)            
-%             file = get_from_varargin('', 'File', varargin{:});
-%             if isequal(file, '')  % select file
-%                 msg = get_from_varargin(Constant.TXT_MSG_PUTFILE, 'MSG', varargin{:});
-%                 [filename, filepath, filterindex] = uiputfile(Constant.TXT_EXTENSION, msg);
-%                 file = [filepath filename];
-%                 
-%                 if ~filterindex
-%                     return
-%                 end
-%             end
-%             
-%             % gets brain region data
-%             for i = 1:1:atlas.getBrainRegions().length()
-%                 br_label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
-%                 br_names{i, 1} = atlas.getBrainRegions().getValue(i).getName(); %#ok<*AGROW>
-%                 br_x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
-%                 br_y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
-%                 br_z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
-%             end
-%             
-%             % creates table
-%             tab = [
-%                 {atlas.getName(), {},{},{},{}};
-%                 table(br_label, br_names, br_x, br_y, br_z)
-%                 ];
-%             
-%             % save
-%             writetable(tab, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
-%         end
-%         function atlas = load_from_json(varargin)
-%             % LOAD_FROM_JSON loads brain atlas from XLS file
-%             %
-%             % ATLAS = LOAD_FROM_JSON('File', FILE) creates and initializes the
-%             % brain atlas ATLAS by loading an JSON file ('*.json').
-%             % It throws an error is the file does not exist
-%             % or is in the wrong format.
-%             %
-%             % ATLAS = LOAD_FROM_JSON() it opens a dialog box to select the
-%             % file. If no file is selected, it returns an empty BrainAtlas.
-%             %
-%             % ATLAS = LOAD_FROM_JSON('Msg', MSG) it opens a dialog box to select the
-%             % file with message MSG.
-%             %
-%             % See also BrainAtlas, uigetfile, jsondecode
-%             
-%             % Creates empty BrainAtlas
-%             atlas = BrainAtlas('', {});
-%             
-%             % file (fullpath)
-%             file = get_from_varargin('', 'File', varargin{:});
-%             if isequal(file, '')  % select file
-%                 msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
-%                 [filename, filepath, filterindex] = uigetfile(Constant.JSON_EXTENSION, msg);
-%                 file = [filepath filename];
-%                 
-%                 if ~filterindex
-%                     return
-%                 end
-%             end
-%             
-%             raw =  jsondecode(fileread(file));
-%             
-%             atlas_name =  fieldnames(raw);
-%             brain_atlas = atlas_name{3};  % 1: BRAPH, 2:Version, 3:Name           
-%             brain_atlas_structure = eval(['raw.' brain_atlas]);
-%             atlas.setName(brain_atlas_structure.name);
-%             intern_structure = fieldnames(brain_atlas_structure);
-%             idict = intern_structure{2};  % 1:name, 2:idict
-%             brain_atlas_intern_structure = eval(['brain_atlas_structure.' idict]);
-%             
-%             
-%             for i = 1:1:numel(brain_atlas_intern_structure)
-%                 intern_fields = brain_atlas_intern_structure(i);
-%                 br_label = char(intern_fields.label);
-%                 br_name = char(intern_fields.name);
-%                 br_x = intern_fields.x;
-%                 br_y = intern_fields.y;
-%                 br_z = intern_fields.z;
-%                 br = BrainRegion(br_label, br_name, br_x, br_y, br_z);
-%                 atlas.getBrainRegions().add(br_label, br);
-%             end
-%         end
-%         function save_to_json(atlas, varargin)
-%             % SAVE_TO_JSON saves brain atlas to XLS file
-%             %
-%             % SAVE_TO_JSON('File', FILE) saves the brain atlas ATLAS into
-%             % the FILE in JSON format.
-%             %
-%             % SAVE_TO_JSON() it opens a dialog box to select the
-%             % FILE into which the brain atlas ATLAS will be saved.
-%             %
-%             % SAVE_TO_JSON('Msg', MSG) it opens a dialog box to select the
-%             % FILE with message MSG.
-%             %
-%             % See also BrainAtlas, uigetfile, jsonencode, table.
-%             
-%             % file (fullpath)
-%             file = get_from_varargin('', 'File', varargin{:});
-%             if isequal(file, '')  % select file
-%                 msg = get_from_varargin(Constant.JSON_MSG_PUTFILE, 'MSG', varargin{:});
-%                 [filename, filepath, filterindex] = uiputfile(Constant.JSON_EXTENSION, msg);
-%                 file = [filepath filename];
-%                 
-%                 if ~filterindex
-%                     return
-%                 end
-%             end
-%             
-%             % gets brain region data
-%             for i = 1:1:atlas.getBrainRegions().length()
-%                 label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
-%                 name{i, 1} = atlas.getBrainRegions().getValue(i).getName(); %#ok<*AGROW>
-%                 x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
-%                 y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
-%                 z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
-%             end
-%             
-%             % creates structure to be saved
-%             structure_to_be_saved = struct( ...
-%                 'Braph', Constant.VERSION, ...
-%                 'Build', Constant.BUILD, ...
-%                 'BrainAtlas', struct( ...
-%                     'name', atlas.getName(), ...
-%                     'br_idict', table(label, name, x, y, z) ...
-%                     ) ...
-%                 );
-%             
-%             % save
-%             Json_structure= jsonencode(structure_to_be_saved);
-%             fid = fopen(file, 'w');
-%             if fid == -1, error('Cannot create JSON file'); end
-%             fwrite(fid, Json_structure, 'char');
-%             fclose(fid);
-%         end
+        function atlas = load_from_xls(varargin)
+            % LOAD_FROM_XLS loads brain atlas from XLS file
+            %
+            % ATLAS = LOAD_FROM_XLS('File', FILE) creates and initializes the
+            % brain atlas ATLAS by loading an XLS file ('*.xlsx' or '*.xls').
+            % It throws an error is the file does not exist
+            % or is in the wrong format.
+            %
+            % ATLAS = LOAD_FROM_XLS() it opens a dialog box to select the
+            % file. If no file is selected, it returns an empty BrainAtlas.
+            %
+            % ATLAS = LOAD_FROM_XLS('Msg', MSG) it opens a dialog box to select the
+            % file with message MSG.
+            %
+            % See also BrainAtlas, uigetfile, fopen.
+            
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas('', '', '', {}); 
+            
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(Constant.XLS_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            [~, ~, raw] = xlsread(file);
+            
+            atlas_id = raw{1,1};
+            atlas.setID(atlas_id);
+            
+            for i = 2:1:size(raw, 1)
+                br_id = raw{i, 1};
+                br_label = raw{i, 2};
+                br_notes = raw{i, 3};
+                br_x = raw{i, 4};
+                br_y = raw{i, 5};
+                br_z = raw{i, 6};
+                br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
+                atlas.getBrainRegions().add(br_label, br);
+            end
+        end
+        function save_to_xls(atlas, varargin)
+            % SAVE_TO_XLS saves brain atlas to XLS file
+            %
+            % SAVE_TO_XLS('File', FILE) saves the brain atlas ATLAS into
+            % the FILE in XLS format.
+            %
+            % SAVE_TO_XLS() it opens a dialog box to select the
+            % FILE into which the brain atlas ATLAS will be saved.
+            %
+            % SAVE_TO_XLS('Msg', MSG) it opens a dialog box to select the
+            % FILE with message MSG.
+            %
+            % See also BrainAtlas, uigetfile, writetable.
+                    
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % gets brain region data
+            for i = 1:1:atlas.getBrainRegions().length()
+                br_label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
+                br_ids{i, 1} = atlas.getBrainRegions().getValue(i).getID(); %#ok<*AGROW>
+                br_notes{i, 1} = atlas.getBrainRegions().getValue(i).getNotes(); 
+                br_x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
+                br_y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
+                br_z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
+            end
+            
+            % creates table
+            tab = [
+                {atlas.getID(), {}, {}, {}, {}, {}};
+                table(br_ids, br_label, br_notes, br_x, br_y, br_z)
+                ];
+            
+            % save
+            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+        end
+        function atlas = load_from_txt(varargin)
+            % LOAD_FROM_TXT loads brain atlas from XLS file
+            %
+            % ATLAS = LOAD_FROM_TXT('File', FILE) creates and initializes the
+            % brain atlas ATLAS by loading an TXT file ('*.txt').
+            % It throws an error is the file does not exist
+            % or is in the wrong format.
+            %
+            % ATLAS = LOAD_FROM_TXT() it opens a dialog box to select the
+            % file. If no file is selected, it returns an empty BrainAtlas.
+            %
+            % ATLAS = LOAD_FROM_TXT('Msg', MSG) it opens a dialog box to select the
+            % file with message MSG.
+            %
+            % See also BrainAtlas, uigetfile, readtable
+            
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas('', '', '', {});
+            
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(Constant.TXT_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            raw = readtable(file);
+            
+            atlas_ID =  raw.Properties.VariableNames{1};
+            atlas.setID(atlas_ID);
+            
+            for i = 1:1:size(raw, 1)
+                br_id = char(raw{i, 1});
+                br_label = char(raw{i, 2});
+                br_notes = char(raw{i, 3});
+                br_x = raw{i, 4};
+                br_y = raw{i, 5};
+                br_z = raw{i, 6};
+                br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
+                atlas.getBrainRegions().add(br_label, br);
+            end
+        end
+        function save_to_txt(atlas, varargin)
+            % SAVE_TO_TXT saves brain atlas to XLS file
+            %
+            % SAVE_TO_TXT('File', FILE) saves the brain atlas ATLAS into
+            % the FILE in TXT format.
+            %
+            % SAVE_TO_TXT() it opens a dialog box to select the
+            % FILE into which the brain atlas ATLAS will be saved.
+            %
+            % SAVE_TO_TXT('Msg', MSG) it opens a dialog box to select the
+            % FILE with message MSG.
+            %
+            % See also BrainAtlas, uigetfile, writetable.
+            
+            % file (fullpath)            
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.TXT_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(Constant.TXT_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % gets brain region data
+            for i = 1:1:atlas.getBrainRegions().length()
+                br_label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
+                br_ids{i, 1} = atlas.getBrainRegions().getValue(i).getID(); %#ok<*AGROW>
+                br_notes{i, 1} = atlas.getBrainRegions().getValue(i).getNotes();
+                br_x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
+                br_y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
+                br_z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
+            end
+            
+            % creates table
+            tab = [
+                {atlas.getID(), {}, {}, {}, {}, {}};
+                table(br_ids, br_label, br_notes, br_x, br_y, br_z)
+                ];
+            
+            % save
+            writetable(tab, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
+        end
+        function atlas = load_from_json(varargin)
+            % LOAD_FROM_JSON loads brain atlas from XLS file
+            %
+            % ATLAS = LOAD_FROM_JSON('File', FILE) creates and initializes the
+            % brain atlas ATLAS by loading an JSON file ('*.json').
+            % It throws an error is the file does not exist
+            % or is in the wrong format.
+            %
+            % ATLAS = LOAD_FROM_JSON() it opens a dialog box to select the
+            % file. If no file is selected, it returns an empty BrainAtlas.
+            %
+            % ATLAS = LOAD_FROM_JSON('Msg', MSG) it opens a dialog box to select the
+            % file with message MSG.
+            %
+            % See also BrainAtlas, uigetfile, jsondecode
+            
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas('', '', '', {});
+            
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(Constant.JSON_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            raw =  jsondecode(fileread(file));
+            
+            atlas_id =  fieldnames(raw);
+            brain_atlas = atlas_id{3};  % 1: BRAPH, 2:Version, 3:Name           
+            brain_atlas_structure = eval(['raw.' brain_atlas]);
+            atlas.setID(brain_atlas_structure.id);
+            intern_structure = fieldnames(brain_atlas_structure);
+            idict = intern_structure{2};  % 1:name, 2:idict
+            brain_atlas_intern_structure = eval(['brain_atlas_structure.' idict]);
+            
+            
+            for i = 1:1:numel(brain_atlas_intern_structure)
+                intern_fields = brain_atlas_intern_structure(i);
+                br_label = char(intern_fields.label);
+                br_id = char(intern_fields.id);
+                br_notes = char(intern_fields.notes);
+                br_x = intern_fields.x;
+                br_y = intern_fields.y;
+                br_z = intern_fields.z;
+                br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
+                atlas.getBrainRegions().add(br_label, br);
+            end
+        end
+        function save_to_json(atlas, varargin)
+            % SAVE_TO_JSON saves brain atlas to XLS file
+            %
+            % SAVE_TO_JSON('File', FILE) saves the brain atlas ATLAS into
+            % the FILE in JSON format.
+            %
+            % SAVE_TO_JSON() it opens a dialog box to select the
+            % FILE into which the brain atlas ATLAS will be saved.
+            %
+            % SAVE_TO_JSON('Msg', MSG) it opens a dialog box to select the
+            % FILE with message MSG.
+            %
+            % See also BrainAtlas, uigetfile, jsonencode, table.
+            
+            % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(Constant.JSON_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(Constant.JSON_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            % gets brain region data
+            for i = 1:1:atlas.getBrainRegions().length()
+                label{i, 1} = atlas.getBrainRegions().getValue(i).getLabel();
+                id{i, 1} = atlas.getBrainRegions().getValue(i).getID(); %#ok<*AGROW>
+                notes{i, 1} = atlas.getBrainRegions().getValue(i).getNotes();
+                x{i, 1} = atlas.getBrainRegions().getValue(i).getX();
+                y{i, 1} = atlas.getBrainRegions().getValue(i).getY();
+                z{i, 1} = atlas.getBrainRegions().getValue(i).getZ();
+            end
+            
+            % creates structure to be saved
+            structure_to_be_saved = struct( ...
+                'Braph', BRAPH2.NAME, ...
+                'Build', BRAPH2.BUILD, ...
+                'BrainAtlas', struct( ...
+                    'id', atlas.getID(), ...
+                    'br_idict', table(id, label, notes, x, y, z) ...
+                    ) ...
+                );
+            
+            % save
+            Json_structure= jsonencode(structure_to_be_saved);
+            fid = fopen(file, 'w');
+            if fid == -1, error('Cannot create JSON file'); end
+            fwrite(fid, Json_structure, 'char');
+            fclose(fid);
+        end
     end
 end
