@@ -189,7 +189,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         % Spheres
         INIT_SPH_EDGE_COLOR = 'none'
         INIT_SPH_EDGE_ALPHA = .5
-        INIT_SPH_FACE_COLOR = BNC.COLOR
+        INIT_SPH_FACE_COLOR = [.5 .5 .5]
         INIT_SPH_FACE_ALPHA = .5
         INIT_SPH_R = 1
         
