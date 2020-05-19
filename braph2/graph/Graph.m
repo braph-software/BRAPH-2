@@ -257,7 +257,12 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
 
             Graph.checkA(Graph.getGraphType(g), A)  % performs all necessary checks on A
-            % Graph.checkConnectivity(Graph.getConnectivityType(g), A)
+            
+%            if isnumeric(A)  % adjacency matrix
+                Graph.checkConnectivity(Graph.getConnectivityType(g), A)
+%             else  % cell array of adjacency matrices
+%                 Graph.checkConnectivity(Graph.getConnectivityType(g, length(A)), A)
+%             end
 
             g.A = A;
         end
