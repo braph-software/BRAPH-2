@@ -278,8 +278,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(Constant.XLS_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -320,8 +320,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.XLS_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(BRAPH2.XLS_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -370,8 +370,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(Constant.TXT_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(BRAPH2.TXT_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -412,8 +412,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % file (fullpath)            
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.TXT_MSG_PUTFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uiputfile(Constant.TXT_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.TXT_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(BRAPH2.TXT_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -462,8 +462,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(Constant.JSON_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -511,8 +511,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.JSON_MSG_PUTFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uiputfile(Constant.JSON_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.JSON_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(BRAPH2.JSON_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
