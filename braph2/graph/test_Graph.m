@@ -30,7 +30,7 @@ A{Graph.MULTILAYER} = {
     rand(4, 3) rand(4, 2) rand(4)
     };
 
-%% Test 1: checkA
+%% Test 1.1: checkA
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
 
 % working case
@@ -39,6 +39,7 @@ for graph_type = 1:1:Graph.TYPE_NUMBER
 end
 
 % A formats that should never be accepted
+clear A_wrong
 A_wrong{1} = rand(5, 3);
 A_wrong{2} = {rand(4, 3)};
 A_wrong{3} = {rand(3, 4)};
@@ -71,6 +72,7 @@ for i = 1:1:length(A_wrong)
 end
 
 % Specific cases for ORDERED_MULTIPLEX and MULTIPLEX
+clear A_wrong
 A_wrong{1} = {
     rand(4) diag(rand(4, 1)) []
     diag(rand(4, 1)) rand(4) diag(rand(4, 1))
@@ -104,6 +106,7 @@ for i = 1:1:length(A_wrong)
 end
 
 % Specific cases for MULTIPLEX
+clear A_wrong
 A_wrong{1} = {
     rand(4) diag(rand(4, 1)) diag(rand(3, 1))
     diag(rand(4, 1)) rand(4) diag(rand(4, 1))
@@ -132,6 +135,7 @@ for i = 1:1:length(A_wrong)
 end
 
 % Specific cases for ORDERED_MULTILAYER and MULTILAYER
+clear A_wrong
 A_wrong{1} = {
     rand(3) rand(3, 3) rand(3, 4)
     rand(2, 3) rand(2) rand(2, 4)
@@ -170,6 +174,7 @@ for i = 1:1:length(A_wrong)
 end
 
 % Specific cases for MULTILAYER
+clear A_wrong
 A_wrong{1} = {
     rand(3) rand(3, 2) rand(4, 4)
     rand(2, 3) rand(2) rand(2, 4)
@@ -196,6 +201,115 @@ for i = 1:1:length(A_wrong)
         try 
             clear e
             Graph.checkA(graph_type, A_wrong{i})
+        catch e
+            assert(isequal(e.identifier, error_identifier), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+                ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+        end
+        assert(exist('e', 'var') == 1, ...
+            [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+            ['Error not thrown. Expected error: ' error_identifier])
+    end
+end
+
+%% Test 1.2: checkConnectivity
+error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+
+connectivity_type{1} = Graph.BINARY;
+B{1} = 0;
+works{1} = true; 
+
+connectivity_type{2} = Graph.BINARY;
+B{2} = 1;
+works{2} = true; 
+
+connectivity_type{3} = Graph.BINARY;
+B{3} = zeros(3);
+works{3} = true; 
+
+connectivity_type{4} = Graph.BINARY;
+B{4} = ones(3);
+works{4} = true; 
+
+connectivity_type{5} = Graph.BINARY;
+B{5} = round(rand(5));
+works{5} = true; 
+
+connectivity_type{6} = Graph.WEIGHTED;
+B{6} = .5;
+works{6} = true; 
+
+connectivity_type{7} = Graph.WEIGHTED;
+B{7} = -1;
+works{7} = true; 
+
+connectivity_type{8} = Graph.WEIGHTED;
+B{8} = rand(5);
+works{8} = true; 
+
+connectivity_type{9} = Graph.BINARY;
+B{9} = .5;
+works{9} = false; 
+
+connectivity_type{10} = Graph.BINARY;
+B{10} = -1;
+works{10} = false; 
+
+connectivity_type{11} = Graph.BINARY;
+B{11} = rand(5);
+works{11} = false; 
+
+connectivity_type{11} = Graph.BINARY;
+B{11} = {
+    ones(2) zeros(2, 3)
+    zeros(3, 2) ones(3)
+    };
+works{11} = true; 
+
+connectivity_type{12} = [
+    Graph.BINARY Graph.BINARY
+    Graph.BINARY Graph.BINARY
+    ];
+B{12} = {
+    ones(2) zeros(2, 3)
+    zeros(3, 2) ones(3)
+    };
+works{12} = true;
+
+connectivity_type{13} = [
+    Graph.BINARY Graph.BINARY
+    Graph.BINARY Graph.BINARY
+    ];
+B{13} = {
+    ones(2) rand(2, 3)
+    rand(3, 2) ones(3)
+    };
+works{13} = false; 
+
+connectivity_type{14} = [
+    Graph.BINARY Graph.WEIGHTED
+    Graph.WEIGHTED Graph.BINARY
+    ];
+B{14} = {
+    ones(2) rand(2, 3)
+    rand(3, 2) ones(3)
+    };
+works{14} = true; 
+
+connectivity_type{15} = Graph.WEIGHTED;
+B{15} = {
+    ones(2) rand(2, 3)
+    rand(3, 2) ones(3)
+    };
+works{15} = true; 
+
+for i = 1:1:length(connectivity_type)
+    if works{i}
+        Graph.checkConnectivity(connectivity_type{i}, B{i})
+    else
+        try 
+            clear e
+            Graph.checkConnectivity(connectivity_type{i}, B{i})
         catch e
             assert(isequal(e.identifier, error_identifier), ...
                 [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
