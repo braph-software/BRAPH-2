@@ -335,12 +335,12 @@ classdef Graph < handle & matlab.mixin.Copyable
                         'All submatrices in the same column must have the same number of columns.')
             end
         end
-        function checkConnectivity(connection_type, A)
+        function checkConnectivity(connectivity_type, A)
 
             % This check assumes that checkA has already been passed
             
             if isnumeric(A)  % A is a matrix
-                switch connection_type 
+                switch connectivity_type 
                     case Graph.BINARY
                         assert(all(A == 0 | A == 1, 'all'), ...
                             [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
@@ -353,22 +353,21 @@ classdef Graph < handle & matlab.mixin.Copyable
                     otherwise
                         error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
                             ['Connection type must be Graph.BINARY (%i) or Graph.WEIGHTED (%i),' ...
-                            ' while it is ' tostring(connection_type)], ...
+                            ' while it is ' tostring(connectivity_type)], ...
                             Graph.BINARY, Graph.WEIGHTED)
                 end
             else  % A is 2D cell array
                 
-                % for-cycles and recursive call
+                if numel(connectivity_type) == 1
+                    connectivity_type = connectivity_type * ones(size(A));
+                end
                 
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        Graph.checkConnectivity(connectivity_type(i, j), A{i, j});
+                    end
+                end
             end
-            
-% if A is matrix, A = {A}
-
-% connection type to matrix
-
-% for all connection_type, A, check that the connection type is correct
-
-
         end
     end
     methods (Static)  % Descriptive methods
