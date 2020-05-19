@@ -35,9 +35,9 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   BINARY - binary graph
     %   BINARY_NAME    - name of BINARY
     %   BINARY_DESCRIPTION  - description of BINARY
-    %   CONNECTION_TYPE_NUMBER    - number of graph connection types
-    %   CONNECTION_TYPE_NAME    - name of graph connection types
-    %   CONNECTION_TYPE_DESCRIPTION    - description of graph connection types
+    %   CONNECTIVITY_TYPE_NUMBER    - number of graph connectivity types
+    %   CONNECTIVITY_TYPE_NAME    - name of graph connectivity types
+    %   CONNECTIVITY_TYPE_DESCRIPTION    - description of graph connectivity types
     %   DIRECTED    - directed graph
     %   DIRECTED_NAME   - name of DIRECTED
     %   DIRECTED_DESCRIPTION    - description of DIRECTED
@@ -79,7 +79,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_multiplex    - checks if the graph is a multiplex graph.
     %   is_ordered_multilayer   - checks if the graph is an ordered multilayer graph.
     %   is_multilayer   - checks if the graph is a multilayer graph.
-    %   getConnectionType    - returns if the graph is binary or weighted.
+    %   getConnectivityType    - returns if the graph is binary or weighted.
     %   is_weighted - checks if the graph is weighted.
     %   is_binary   - checks if the graph is binary.
     %   getEgdeType    - returns if graph is directed or undirected.
@@ -152,7 +152,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.MULTILAYER_DESCRIPTION
             }
         
-        % Connection types
+        % Connectivity types
         WEIGHTED = 1  % weighted connections
         WEIGHTED_NAME = 'Weighted'
         WEIGHTED_DESCRIPTION = 'Graph with weighted connections.';
@@ -160,14 +160,14 @@ classdef Graph < handle & matlab.mixin.Copyable
         BINARY_NAME = 'Weighted'
         BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.';
         
-        CONNECTION_TYPE_NUMBER = 2
+        CONNECTIVITY_TYPE_NUMBER = 2
         
-        CONNECTION_TYPE_NAME = {
+        CONNECTIVITY_TYPE_NAME = {
             Graph.WEIGHTED_NAME
             Graph.BINARY_NAME
             }
         
-        CONNECTION_TYPE_DESCRIPTION = {
+        CONNECTIVITY_TYPE_DESCRIPTION = {
             Graph.WEIGHTED_DESCRIPTION
             Graph.BINARY_DESCRIPTION
             }
@@ -257,7 +257,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
 
             Graph.checkA(Graph.getGraphType(g), A)  % performs all necessary checks on A
-            Graph.checkConnectivity(Graph.getConnectionType(g), A) 
+            % Graph.checkConnectivity(Graph.getConnectivityType(g), A)
 
             g.A = A;
         end
@@ -345,7 +345,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                     case Graph.BINARY
                         assert(all(A == 0 | A == 1, 'all'), ...
                             [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                            ['For connection type Graph.BINARY, A must be binary (0s and 1s),' ...
+                            ['For connectivity type Graph.BINARY, A must be binary (0s and 1s),' ...
                             ' while it is ' tostring(A)])
                         
                     case Graph.WEIGHTED
@@ -353,7 +353,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                         
                     otherwise
                         error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                            ['Connection type must be Graph.BINARY (%i) or Graph.WEIGHTED (%i),' ...
+                            ['Connectivity type must be Graph.BINARY (%i) or Graph.WEIGHTED (%i),' ...
                             ' while it is ' tostring(connectivity_type)], ...
                             Graph.BINARY, Graph.WEIGHTED)
                 end
@@ -521,18 +521,18 @@ classdef Graph < handle & matlab.mixin.Copyable
                    
             bool = Graph.getGraphType(g) == Graph.MULTILAYER;
         end
-        function connection_type = getConnectionType(g, varargin)
-            % GETCONNECTIONTYPE returns if graph is binary or weighted
+        function connectivity_type = getConnectivityType(g, varargin)
+            % GETCONNECTIVITYTYPE returns if graph is binary or weighted
             %
-            % CONNECTION_TYPE = GETCONNECTIONTYPE(G) returns if
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G) returns if
             % the instance of the concrete graph G is binary or weighted.
             %
-            % CONNECTION_TYPE = GETCONNECTIONTYPE(GRAPH_CLASS) returns 
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(GRAPH_CLASS) returns 
             % if graph whose class is GRAPH_CLASS is binary or weighted.
             %
             % See also is_binary(), is_weighted().     
             
-            connection_type = eval([Graph.getClass(g) '.getConnectionType(varargin{:})']);
+            connectivity_type = eval([Graph.getClass(g) '.getConnectivityType(varargin{:})']);
         end
         function bool = is_weighted(g, varargin)
             % IS_WEIGHTED checks if graph is weighted
@@ -543,9 +543,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_WEIGHTED(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is weighted.
             %
-            % See also getConnectionType(), is_binary().     
+            % See also getConnectivityType(), is_binary().     
             
-            bool = Graph.getConnectionType(g, varargin{:}) == Graph.WEIGHTED;
+            bool = Graph.getConnectivityType(g, varargin{:}) == Graph.WEIGHTED;
         end
         function bool = is_binary(g, varargin)
             % IS_BINARY checks if graph is binary
@@ -556,9 +556,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_BINARY(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is binary.
             %
-            % See also getConnectionType(), is_weighted().     
+            % See also getConnectivityType(), is_weighted().     
             
-            bool = Graph.getConnectionType(g, varargin{:}) == Graph.BINARY;
+            bool = Graph.getConnectivityType(g, varargin{:}) == Graph.BINARY;
         end
         function edge_type = getEgdeType(g)
             % GETEDGETYPE returns if graph is directed or undirected

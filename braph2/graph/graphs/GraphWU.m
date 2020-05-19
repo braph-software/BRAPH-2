@@ -80,7 +80,7 @@ classdef GraphWU < GraphWD
         function graph_type = getGraphType()
             graph_type = Graph.GRAPH;
         end
-        function graph_type = getConnectionType()
+        function graph_type = getConnectivityType()
             graph_type = Graph.WEIGHTED;
         end
         function graph_type = getEdgeType()
@@ -94,7 +94,7 @@ classdef GraphWU < GraphWD
             %
             % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
             %
-            % See also getConnectionType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
             
             negativity_type = Graph.NONNEGATIVE;
         end

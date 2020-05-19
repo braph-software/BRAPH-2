@@ -97,7 +97,7 @@ classdef MultiplexGraphBD < Graph
         function graph_type = getGraphType()
             graph_type = Graph.MULTIPLEX;
         end
-        function graph_type = getConnectionType()
+        function graph_type = getConnectivityType()
             graph_type = Graph.BINARY;
         end
         function graph_type = getEdgeType()
@@ -111,7 +111,7 @@ classdef MultiplexGraphBD < Graph
             %
             % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
             %
-            % See also getConnectionType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
             
             negativity_type = Graph.NONNEGATIVE;
         end

@@ -46,7 +46,7 @@ classdef DummyMultilayerGraph < Graph
         function graph_type = getGraphType()
             graph_type = Graph.MULTILAYER;
         end
-        function graph_type = getConnectionType(varargin)
+        function graph_type = getConnectivityType(varargin)
             
             graph_type = [ 
                 Graph.BINARY    Graph.BINARY    Graph.WEIGHTED
@@ -65,7 +65,7 @@ classdef DummyMultilayerGraph < Graph
             %
             % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
             %
-            % See also getConnectionType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
             
             negativity_type = Graph.NONNEGATIVE;
         end
