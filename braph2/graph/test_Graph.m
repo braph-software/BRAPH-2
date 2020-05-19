@@ -294,9 +294,9 @@ end
 %% Test 4: Either weighted or binary
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
-    assert(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class), ...
+    assert(all(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class), 'all'), ...
         ['BRAPH:Graph' graph_class ':WeightedOrBinary'], ...
-        [graph_class '.is_weighted() == ' graph_class '.is_binary()'])
+        [graph_class '.is_weighted() must be the opposite of ' graph_class '.is_binary()'])
 end
  
 %% Test 5: Either directed or undirected
