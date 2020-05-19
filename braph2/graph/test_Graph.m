@@ -213,68 +213,68 @@ for i = 1:1:length(graph_class_list)
     g = Graph.getGraph(graph_class, A{Graph.getGraphType(graph_class)});
     
     assert(isequal(g.getClass(), graph_class), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getClass() should return ''' graph_class ''''])
-    
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        ['Graph.getClass() should return ''' graph_class ''''])
+   
     assert(ischar(g.getClass()), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getClass() should return a char array'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.getClass() should return a char array')
     
     assert(ischar(g.getName()), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getName() should return a char array'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.getName() should return a char array')
     
     assert(ischar(g.getDescription()), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getDescription() should return a char array'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.getDescription() should return a char array')
     
     assert(islogical(g.is_weighted(g)), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.is_weighted() should return a logical'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.is_weighted() should return a logical')
     
     assert(islogical(g.is_binary(g)), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.is_binary() should return a logical'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.is_binary() should return a logical')
     
     assert(isnumeric(g.getConnectionType()), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getConnectionType() should return a number'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.getConnectionType() should return a number')
     
     assert(islogical(g.is_directed(g)), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.is_directed() should return a logical'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.is_directed() should return a logical')
     
     assert(islogical(g.is_undirected(g)), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.is_undirected() should return a logical'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.is_undirected() should return a logical')
         
     assert(isnumeric(g.getEgdeType(g)), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getEgdeType() should return a number'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.getEgdeType() should return a number')
     
     assert(islogical(g.is_selfconnected(g)), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.is_selfconnected() should return a logical'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.is_selfconnected() should return a logical')
          
     assert(islogical(g.is_not_selfconnected(g)), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.is_not_selfconnected() should return a logical'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.is_not_selfconnected() should return a logical')
     
     assert(isnumeric(g.getSelfConnectivityType()), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getSelfConnectivityType() should return a number'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.getSelfConnectivityType() should return a number')
        
     assert(islogical(g.is_negative(g)), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.is_negative() should return a logical'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.is_negative() should return a logical')
     
     assert(islogical(g.is_nonnegative(g)), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.is_nonnegative() should return a logical'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.is_nonnegative() should return a logical')
      
     assert(isnumeric(g.getNegativityType()), ...
-        ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getNegativityType() should return a number'])
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        'Graph.getNegativityType() should return a number')
             
 %     assert(iscell(g.getCompatibleMeasureList()), ...
 %         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
@@ -295,7 +295,7 @@ end
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     assert(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class), ...
-        ['BRAPH:Graph' graph_class ':WeightedOrBinary'], ...
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
         [graph_class '.is_weighted() == ' graph_class '.is_binary()'])
 end
  
@@ -303,7 +303,7 @@ end
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     assert(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class), ...
-        ['BRAPH:Graph' graph_class ':DirectedOrUndirected'], ...
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
 end
 
@@ -311,7 +311,7 @@ end
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     assert(Graph.is_selfconnected(graph_class) ~= Graph.is_not_selfconnected(graph_class), ...
-        ['BRAPH:Graph' graph_class ':SelfconnectedOrNotselfconnected'], ...
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
         [graph_class '.is_selfconnected() == ' graph_class '.is_not_selfconnected()'])
 end
 
@@ -319,7 +319,7 @@ end
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
     assert(Graph.is_negative(graph_class) ~= Graph.is_nonnegative(graph_class), ...
-        ['BRAPH:Graph' graph_class ':NegativeOrNotnegative'], ...
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
         [graph_class '.is_negative() == ' graph_class '.is_nonnegative()'])
 end
 
@@ -327,23 +327,21 @@ end
 n = randi(4);
 nodes = [randi(n), randi(n)];
 
-% Specific Case for single layer
+% Specific case for single layer GRAPH
 B = A{Graph.GRAPH};
 g = Graph.getGraph('GraphBU', B);
 B = dediagonalize(B);
 B = semipositivize(B);
 B = binarize(B);
 B = symmetrize(B);
-for j = 1:1:numel(nodes)
-    B(nodes(j), :) = 0;
-    B(:, nodes(j)) = 0;
-end
+B(nodes(:), :) = 0;
+B(:, nodes(:)) = 0;
 
 ng = g.nodeattack(g, nodes);
 
 assert( isequal(ng.getA(ng), B), ...
-    'BRAPH: GRAPH: NodeAttack', ...
-    [g.getClass() '.nodeattack() is not working' ])
+    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+    'Graph.nodeattack() is not working for single layer graphs')
 
 % Specific cases for all multilayer types
 B = A{Graph.MULTIPLEX};
@@ -367,38 +365,34 @@ for x = 1:1:size(B, 1)
 end
 C = B;
 
-% ATTACK ALL LAYERS
+% Attack all layers
 for layer = 1:1:L
     M = B{layer, layer};
-    for j = 1:1:numel(nodes)
-        M(nodes(j), :) = 0;
-        M(:, nodes(j)) = 0;
-    end
+    M(nodes(:), :) = 0;
+    M(:, nodes(:)) = 0;
     B(layer, layer) = {M};
 end    
 
 ng = g.nodeattack(g, nodes);
 
 assert( isequal(ng.getA(ng), B), ...
-    'BRAPH: MULTIPLEX: NodeAttack', ...
-    [g.getClass() '.nodeattack() is not working' ])
+    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+    'Graph.nodeattack() is not working for non single layer graphs')
 
-% ATTACK SPECIFIED LAYERS
-i = [1, 2];
-for j = 1:1:length(i)
-    M = C{i(j), i(j)};
-    for x = 1:1:numel(nodes)
-        M(nodes(x), :) = 0;  % #ok<PROPLC>
-        M(:, nodes(x)) = 0;  % #ok<PROPLC>
-    end
-    C(i(j), i(j)) = {M};
+% Attack specified layers
+layernumbers = [1, 2];
+for i = layernumbers
+    M = C{i, i};
+    M(nodes(:), :) = 0;
+    M(:, nodes(:)) = 0;
+    C(i, i) = {M};
 end
 
-ng = g.nodeattack(g, nodes, i);
+ng = g.nodeattack(g, nodes, layernumbers);
 
 assert(isequal(ng.getA(ng), C), ...
-    'BRAPH: MULTIPLEX: NodeAttack', ...
-    [g.getClass() '.nodeattack() is not working' ])
+    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+    'Graph.nodeattack() is not working for non single layer graphs')
 
 %% Test 9: EdgeAttack
 n = randi(4);
@@ -418,8 +412,8 @@ B(sub2ind(size(B), nodes2, nodes1)) = 0;
 eg = g.edgeattack(g, nodes1, nodes2);
 
 assert(isequal(eg.getA(eg), B), ...
-    'BRAPH: GRAPH: EdgeAttack', ...
-    [g.getClass() '.edgeattack() is not working' ])
+    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+    'Graph.edgeattack() is not working for single layer graphs')
 
 % Specific cases for all multilayer types
 B = A{Graph.MULTIPLEX};
@@ -444,7 +438,7 @@ end
 C = B;
 D = B;
 
-% ATTACK ALL LAYERS
+% Attack all layers
 for layer = 1:1:L
     M = B{layer, layer};
     M(sub2ind(size(M), nodes1, nodes2)) = 0;
@@ -456,38 +450,38 @@ eg = g.edgeattack(g, nodes1, nodes2);
 
 assert(isequal(eg.getA(eg), B), ...
     'BRAPH: GRAPH: EdgeAttack', ...
-    [g.getClass() '.edgeattack() is not working' ])
+    'Graph.edgeattack() is not working for non single layer graphs')
 
-% ATTACK SPECIFIED LAYERS: i
-i = [1, 2];
-for j = 1:1:length(i)
-    M = C{i(j), i(j)};
+% Attack specified layers: i
+layernumbers_i = [1, 2];
+for i = layernumbers_i
+    M = C{i, i};
     M(sub2ind(size(M), nodes1, nodes2)) = 0;
     M(sub2ind(size(M), nodes2, nodes1)) = 0;
-    C(i(j), i(j)) = {M};
+    C(i, i) = {M};
 end
 
-eg = g.edgeattack(g, nodes1, nodes2, i);
+eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i);
 
 assert(isequal(eg.getA(eg), C), ...
-    'BRAPH: GRAPH: EdgeAttack', ...
-    [g.getClass() '.edgeattack() is not working' ])
+    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+    'Graph.edgeattack() is not working for non single layer graphs')
 
-% ATTACK SPECIFIED LAYERS AND BETWEEN SPECIFIED 
-i = [1, 2];
-j = [2, 2];
-for x = 1:1:length(i)
-    M = D{i(x), j(x)};
+% Attack specified layers and between specified layers: i, j 
+layernumbers_i = [1, 2];
+layernumbers_j = [2, 2];
+for i = 1:1:length(layernumbers_i)
+    M = D{layernumbers_i(i), layernumbers_j(i)};
     M(sub2ind(size(M), nodes1, nodes2)) = 0;
     M(sub2ind(size(M), nodes2, nodes1)) = 0;
-    D(i(x), j(x)) = {M};
+    D(layernumbers_i(i), layernumbers_j(i)) = {M};
 end
 
-eg = g.edgeattack(g, nodes1, nodes2, i, j);
+eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j);
 
 assert(isequal(eg.getA(eg), D), ...
-    'BRAPH: GRAPH: EdgeAttack', ...
-    [g.getClass() '.edgeattack() is not working' ])
+    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+    'Graph.edgeattack() is not working for non single layer graphs')
 
 % %% Test 10: Copy
 % for i = 1:1:length(graph_class_list)

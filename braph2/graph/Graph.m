@@ -782,46 +782,62 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)  
-        function ga = nodeattack(g, nodes, i)
+        function ga = nodeattack(g, nodes, layernumbers)
             % NODEATTACK removes given nodes from a graph
             %
             % GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
-            % the nodes specified by NODES from G.
+            % the nodes specified by NODES from G. For non single layer
+            % graphs, it removes NODES in every layer.
+            %
+            % GA = NODEATTACK(G, NODES, LAYERNUMBERS) creates the graph GA 
+            % resulting by removing the nodes specified by NODES from G. 
+            % For non single layer graphs, it removes NODES in the layers
+            % specified by LAYERNUMBERS.
             %
             % NODES are removed by setting all the connections from and to
             % the nodes in the connection matrix to 0.
             %
             % See also edgeattack().
+                        
+            if nargin < 3
+                layernumbers = 1:1:g.layernumber(g);
+            end   
             
             A = g.getA(g);
-            if nargin < 3
-                i = 1:g.layernumber(g);
-            end   
             
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
-                    for x = 1:1:numel(nodes)
-                        A(nodes(x), :) = 0;  % #ok<PROPLC>
-                        A(:, nodes(x)) = 0;  % #ok<PROPLC>
-                    end
+                    A(nodes(:), :) = 0;
+                    A(:, nodes(:)) = 0;
                     
                 otherwise              
-                    for j = 1:1:length(i)
-                        B = A{i(j), i(j)};
-                        for x = 1:1:numel(nodes)
-                            B(nodes(x), :) = 0;  % #ok<PROPLC>
-                            B(:, nodes(x)) = 0;  % #ok<PROPLC>
-                        end
-                        A(i(j), i(j)) = {B};
+                    for i = layernumbers
+                        B = A{i, i};
+                        B(nodes(:), :) = 0; 
+                        B(:, nodes(:)) = 0; 
+                        A(i, i) = {B};
                     end
             end
             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());  % #ok<PROPLC>
         end
-        function ga = edgeattack(g, nodes1, nodes2, i, j)
+        function ga = edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j)
             % EDGEATTACK removes given edges from a graph
             %
             % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
-            % by removing the edges going from NODES1 to NODES2 from G.
+            % by removing the edges going from NODES1 to NODES2 from G. For
+            % non single layer graphs, it removes the edges from NODES1 to
+            % NODES2 in every layer.
+            %
+            % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I) creates the graph GA 
+            % resulting by removing the edges going from NODES1 to NODES2 from G. 
+            % For non single layer graphs, it removes the edges from NODES1 to
+            % NODES2 in the layers specified by LAYERNUMBERS.
+            %
+            % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I, LAYERNUMBERS_J) 
+            % creates the graph GA resulting by removing the edges going
+            % from NODES1 to NODES2 from G. For non single layer graphs, it
+            % removes the edges from NODES1 to NODES2 in the layers
+            % specified by LAYERNUMBERS.
             %
             % EDGES are removed by setting all the connections from NODES1 to
             % NODES2 in the connection matrix to 0.
@@ -829,15 +845,16 @@ classdef Graph < handle & matlab.mixin.Copyable
             % NODES1 and NODES2 must have the same dimensions.
             %
             % See also nodeattack().
-            
-            A = g.getA(g);  % #ok<PROPLC>
+                
+            if nargin < 4
+                layernumbers_i = 1:1:g.layernumber(g);
+            end
             
             if nargin < 5 
-                if nargin < 4
-                    i = 1:g.layernumber(g);
-                end
-                j = i;
+                layernumbers_j = layernumbers_i;
             end 
+            
+            A = g.getA(g);  % #ok<PROPLC>
             
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
@@ -845,15 +862,15 @@ classdef Graph < handle & matlab.mixin.Copyable
                     if g.is_undirected(g)
                         A(sub2ind(size(A), nodes2, nodes1)) = 0;  % #ok<PROPLC>
                     end
-                    
+
                 otherwise
-                    for x = 1:1:length(i)
-                        B = A{i(x), j(x)};
+                    for i = 1:1:length(layernumbers_i)
+                        B = A{layernumbers_i(i), layernumbers_j(i)};
                         B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
-                        if g.is_undirected(g)
+                        if g.is_undirected(g) && size(B,1) == size(B,2)
                             B(sub2ind(size(B), nodes2, nodes1)) = 0;  % #ok<PROPLC>
                         end
-                        A(i(x), j(x)) = {B};
+                        A(layernumbers_i(i), layernumbers_j(i)) = {B};
                     end
             end 
             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());  % #ok<PROPLC>
