@@ -1,7 +1,14 @@
 classdef DummyMultilayerGraph < Graph
 
     methods  % Constructor
-        function g = DummyMultilayerGraph(A, varargin)
+        function g = DummyMultilayerGraph(~, varargin)
+            
+            A = {
+                round(rand(4))      round(rand(4, 3))   randn(4, 2)
+                round(rand(3, 4))   round(rand(3))      round(rand(3, 2))
+                randn(2, 4)         round(rand(2, 3)) 	randn(2)
+                };
+            
             g = g@Graph(A, varargin{:});
         end
     end
