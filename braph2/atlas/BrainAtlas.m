@@ -3,16 +3,17 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     % BrainAtlas represents a collection of brain regions.
     %
     % BrainAtlas methods:
-    %   BrainAtlas              - Constructor.
-    %   tostring                - returns a string representing the BrainAtlas.
-    %   disp                    - displays the BrainAtlas.
-    %   getName                 - returns the name of the BrainAtlas.
-    %   getBrainRegions         - returns the indexed dictionary with BrainRegions.
-    %   getBrainRegionLabels    - returns the label of all BrainRegions.
-    %   getBrainRegionXs        - returns the x coordiante of all BrainRegions.
-    %   getBrainRegionYs        - returns the y coordiante of all BrainRegions.
-    %   getBrainRegionZs        - returns the z coordiante of all BrainRegions.
-    %   getBrainRegionPositions - returns the positions of all BrainRegions.
+    %   BrainAtlas              - Constructor
+    %   tostring                - returns a string representing the BrainAtlas
+    %   disp                    - displays the BrainAtlas
+    %   setID                   - sets the id of the BrainAtlas
+    %   setLabel                - sets the label of the BrainAtlas
+    %   setNotes                - sets the notes of the BrainAtlas
+    %   getID                   - returns the id of the BrainAtlas
+    %   getLabel                - returns the label of the BrainAtlas
+    %   getNotes                - returns the notes of the BrainAtlas
+    %   getBrainRegions         - returns the indexed dictionary with BrainRegions
+    %   getPlotBrainSurf        - returns the PlotBrainSurf 
     %
     % BrainAtlas methods (Static) : 
     %   load_from_xls           - loads a xls file and creates a BrainAtlas
@@ -123,11 +124,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     end
     methods  % Set functions
         function setID(atlas, id)
-            % STENAME sets the name of the BrainAtlas.
+            % SETID sets the id of the BrainAtlas.
             %
-            % SETNAME(ATLAS, NAME) sets the name of ATLAS to NAME.
+            % SETID(ATLAS, ID) sets the id of ATLAS to ID.
             %
-            % See also getName().
+            % See also getID().
             
             assert(ischar(id), ...
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
@@ -136,11 +137,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             atlas.id = id;
         end
         function setLabel(atlas, label)
-            % STENAME sets the name of the BrainAtlas.
+            % SETLABEL sets the label of the BrainAtlas.
             %
-            % SETNAME(ATLAS, NAME) sets the name of ATLAS to NAME.
+            % SETLABEL(ATLAS, LABEL) sets the label of ATLAS to LABEL.
             %
-            % See also getName().
+            % See also getLabel().
             
             assert(ischar(label), ...
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
@@ -149,11 +150,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             atlas.label = label;
         end
         function setNotes(atlas, notes)
-            % STENAME sets the name of the BrainAtlas.
+            % SETNOTES sets the notes of the BrainAtlas.
             %
-            % SETNAME(ATLAS, NAME) sets the name of ATLAS to NAME.
+            % SETNOTES(ATLAS, NOTES) sets the notes of ATLAS to NAME.
             %
-            % See also getName().
+            % See also getNotes().
             
             assert(ischar(notes), ...
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
@@ -161,42 +162,32 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             atlas.notes = notes;
         end
-        function setBrainSurface(atlas, brain_surface)
-            % SETBRAINSURFACE sets the brain surface object to the atlas
-            %
-            % SETBRAINSURFACE(ATLAS, BRAIN_SURFACE) sets the brain surface
-            % plot object BRAIN_SURFACE to the brain atlas class ATLAS.
-            %
-            % See also getBrainSurface.
-            
-            atlas.plot_brain_surf = brain_surface;
-        end
     end
     methods  % Get functions
         function id = getID(atlas)
-            % GETNAME returns the name of the BrainAtlas.
+            % GETID returns the id of the BrainAtlas.
             %
-            % NAME = GETNAME(ATLAS) returns the name of the BrainAtlas.
+            % ID = GETID(ATLAS) returns the id of the BrainAtlas.
             %
-            % See also setName().
+            % See also setID().
             
             id = atlas.id;
         end
         function label = getLabel(atlas)
-            % GETNAME returns the name of the BrainAtlas.
+            % GETLABEL returns the label of the BrainAtlas.
             %
-            % NAME = GETNAME(ATLAS) returns the name of the BrainAtlas.
+            % LABEL = GETLABEL(ATLAS) returns the label of the BrainAtlas.
             %
-            % See also setName().
+            % See also setLabel().
             
             label = atlas.label;
         end
         function notes = getNotes(atlas)
-            % GETNAME returns the name of the BrainAtlas.
+            % GETNOTES returns the notes of the BrainAtlas.
             %
-            % NAME = GETNAME(ATLAS) returns the name of the BrainAtlas.
+            % NOTES = GETNOTES(ATLAS) returns the notes of the BrainAtlas.
             %
-            % See also setName().
+            % See also setNotes().
             
             notes = atlas.notes;
         end
@@ -207,7 +198,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % dictionary BR_IDICT. This function exposes to the user the
             % methods and functions of the INDEXEDDICTIONARY class.
             %
-            % See also IndexedDictionary, getName().
+            % See also IndexedDictionary, getID().
             
             br_idict = atlas.br_idict;
         end
@@ -261,7 +252,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % ATLAS = LOAD_FROM_XLS('File', FILE) creates and initializes the
             % brain atlas ATLAS by loading an XLS file ('*.xlsx' or '*.xls').
-            % It throws an error is the file does not exist
+            % It throws an error if the file does not exist
             % or is in the wrong format.
             %
             % ATLAS = LOAD_FROM_XLS() it opens a dialog box to select the
@@ -349,7 +340,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
         end
         function atlas = load_from_txt(varargin)
-            % LOAD_FROM_TXT loads brain atlas from XLS file
+            % LOAD_FROM_TXT loads brain atlas from TXT file
             %
             % ATLAS = LOAD_FROM_TXT('File', FILE) creates and initializes the
             % brain atlas ATLAS by loading an TXT file ('*.txt').
@@ -396,7 +387,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             end
         end
         function save_to_txt(atlas, varargin)
-            % SAVE_TO_TXT saves brain atlas to XLS file
+            % SAVE_TO_TXT saves brain atlas to TXT file
             %
             % SAVE_TO_TXT('File', FILE) saves the brain atlas ATLAS into
             % the FILE in TXT format.
@@ -441,7 +432,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             writetable(tab, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
         end
         function atlas = load_from_json(varargin)
-            % LOAD_FROM_JSON loads brain atlas from XLS file
+            % LOAD_FROM_JSON loads brain atlas from JSON file
             %
             % ATLAS = LOAD_FROM_JSON('File', FILE) creates and initializes the
             % brain atlas ATLAS by loading an JSON file ('*.json').
@@ -495,7 +486,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             end
         end
         function save_to_json(atlas, varargin)
-            % SAVE_TO_JSON saves brain atlas to XLS file
+            % SAVE_TO_JSON saves brain atlas to JSON file
             %
             % SAVE_TO_JSON('File', FILE) saves the brain atlas ATLAS into
             % the FILE in JSON format.
