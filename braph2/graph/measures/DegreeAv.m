@@ -102,25 +102,25 @@ classdef DegreeAv < Degree
             
             available_settings = {};
         end
-        function measure_type = getMeasureType()
-            % GETMEASURETYPE returns the measure type of average degree
+        function measure_format = getMeasureFormat()
+            % GETMEASUREFORMAT returns the measure format of average degree
             %
-            % MEASURE_TYPE = GETMEASURETYPE() returns the measure type
+            % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of average degree measure (NODAL).
             %
-            % See also getMultiMeasureType().
+            % See also getMeasureScope().
             
-            measure_type = Measure.GLOBAL;
+            measure_format = Measure.GLOBAL;
         end
-        function multimeasure_type = getMultiMeasureType()
-            % GETMULTIMEASURETYPE returns the multi-measure type of average degree
+        function measure_scope = getMeasureScope()
+            % GETMEASURESCOPE returns the measure scope of average degree
             %
-            % MULTIMEASURE_TYPE = GETMULTIMEASURETYPE() returns the
-            % multi-measure type of average degree measure (UNILAYER).
+            % MEASURE_SCOPE = GETMEASURESCOPE() returns the
+            % measure scope of average degree measure (UNILAYER).
             %
-            % See also getMeasureType().
+            % See also getMeasureFormat().
             
-            multimeasure_type = Measure.UNILAYER;
+            measure_scope = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList() 
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs

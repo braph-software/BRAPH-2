@@ -96,25 +96,25 @@ classdef Degree < Measure
             
             available_settings = {};
         end
-        function measure_type = getMeasureType()
-            % GETMEASURETYPE returns the measure type of degree
+        function measure_format = getMeasureFormat()
+            % GETMEASUREFORMAT returns the measure format of degree
             %
-            % MEASURE_TYPE = GETMEASURETYPE() returns the measure type
+            % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of degree measure (NODAL).
             %
-            % See also getMultiMeasureType().
+            % See also getMeasureScope().
             
-            measure_type = Measure.NODAL;
+            measure_format = Measure.NODAL;
         end
-        function multimeasure_type = getMultiMeasureType()
-            % GETMULTIMEASURETYPE returns the multi-measure type of degree
+        function measure_scope = getMeasureScope()
+            % GETMEASURESCOPE returns the measure scope of degree
             %
-            % MULTIMEASURE_TYPE = GETMULTIMEASURETYPE() returns the
-            % multi-measure type of degree measure (UNILAYER).
+            % MEASURE_SCOPE = GETMEASURESCOPE() returns the
+            % measure scope of degree measure (UNILAYER).
             %
-            % See also getMeasureType().
+            % See also getMeasureFormat().
             
-            multimeasure_type = Measure.UNILAYER;
+            measure_scope = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs

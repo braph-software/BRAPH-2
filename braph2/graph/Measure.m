@@ -45,45 +45,66 @@ classdef Measure < handle
     % See also Graph, handle, Degree, Strength, Distance, Efficency.
  
     properties (Constant)
-        % Measure types
+        % Measure format
         GLOBAL = 1  
         GLOBAL_NAME = 'Global'
-        GLOBAL_DESCRIPTION = 'This measure returns a number.'
+        GLOBAL_DESCRIPTION = ['Global measure refers to global properties of ' ... 
+        'a single layer graph and, therefore, consists of a single number for each graph.']
         
         NODAL = 2
         NODAL_NAME = 'Nodal'
-        NODAL_DESCRIPTION = 'This graph returns a vector.'
-        
+        NODAL_DESCRIPTION = ['Nodal measure refers to properties of the nodes of' ... 
+        'a single layer graph and, therefore, consists of a vector of numbers, ' ...
+        'one for each node of the graph.']
+           
         BINODAL = 3
         BINODAL_NAME = 'Binodal'
-        BINODAL_DESCRIPTION = 'This measure returns a matrix.'
+        BINODAL_DESCRIPTION = ['Binodal measure refers to properties between nodes of' ... 
+        'a single layer graph and, therefore, consists of a matrix of numbers, ' ...
+        'one for each node of the graph.']
         
-        TYPE_NUMBER = 3
+        FORMAT_NUMBER = 3
         
-        TYPE_NAME = {
-            Measure.GLOBAL
-            Measure.NODAL
-            Measure.BINODAL
+        FORMAT_NAME = {
+            Measure.GLOBAL_NAME
+            Measure.NODAL_NAME
+            Measure.BINODAL_NAME
             }
-       
+        
+        FORMAT_DESCRIPTION = {
+            Measure.GLOBAL_DESCRIPTION
+            Measure.NODAL_DESCRIPTION
+            Measure.BINODAL_DESCRIPTION
+            }
+        
+        % Measure scope
         SUPERGLOBAL = 1
         SUPERGLOBAL_NAME = 'Superglobal'
-        SUPERGLOBAL_DESCRIPTION = 'This measure returns a number.'
+        SUPERGLOBAL_DESCRIPTION = ['Superglobal measure consists of a single ' ...
+            'number for each non single layer graphs.']
         
         UNILAYER = 2
         UNILAYER_NAME = 'Unilayer'
-        UNILAYER_DESCRIPTION = 'This measure returns a vector with nodal/binodal/global measures for every layer.'
+        UNILAYER_DESCRIPTION = ['Unilayer measure consists of a vector with ' ... 
+        'nodal/binodal/global measures for every layer.']
         
         BILAYER = 3
         BILAYER_NAME = 'Bilayer'
-        BILAYER_DESCRIPTION = 'This measure returns a vector with nodal/binodal/global measures between layers.'
+        BILAYER_DESCRIPTION = ['Bilayer measure consists of a vector with '... 
+            'nodal/binodal/global measures between layers.']
         
-        MULTIMEASURE_NUMBER = 3
+        SCOPE_NUMBER = 3
         
-        MULTIMEASURE_NAME = {
-            Measure.SUPERGLOBAL
-            Measure.UNILAYER
-            Measure.BILAYER
+        SCOPE_NAME = {
+            Measure.SUPERGLOBAL_NAME
+            Measure.UNILAYER_NAME
+            Measure.BILAYER_NAME
+            }
+
+        SCOPE_DESCRIPTION = {
+            Measure.SUPERGLOBAL_DESCRIPTION
+            Measure.UNILAYER_DESCRIPTION
+            Measure.BILAYER_DESCRIPTION
             }
         
     end    
@@ -225,19 +246,19 @@ classdef Measure < handle
         calculate(m)  % calculates the value of the measure
     end
     methods (Static)  % Descriptive methods
-        function measure_type = getMeasureType(m)
-            % GETMEASURETYPE returns the measure type
+        function measure_format = getMeasureFormat(m)
+            % GETMEASUREFORMAT returns the measure format
             %
-            % MEASURE_TYPE = GETMEASURETYPE(M) returns the measure type
+            % MEASURE_TYPE = GETMEASUREFORMAT(M) returns the measure format
             % of measure M (e.g., GLOBAL, NODAL, BINODAL).
             %
-            % MEASURE_TYPE = GETMEASURETYPE(MEASURE_CLASS) returns the measure 
-            % type of the measure whose class is MEASURE_CLASS (e.g., GLOBAL,
+            % MEASURE_TYPE = GETMEASUREFORMAT(MEASURE_CLASS) returns the measure 
+            % format of the measure whose class is MEASURE_CLASS (e.g., GLOBAL,
             % NODAL, BINODAL).
             %
             % See also is_binodal(), is_global(), is_nodal().
             
-            measure_type = eval([Measure.getClass(m) '.getMeasureType()']);
+            measure_format = eval([Measure.getClass(m) '.getMeasureFormat()']);
         end
         function bool = is_global(m)
             % IS_GLOBAL checks if measure is global
@@ -278,20 +299,20 @@ classdef Measure < handle
             
             bool = Measure.getMeasureType(m) == Measure.BINODAL;
         end
-        function multimeasure_type = getMultiMeasureType(m)
-            % GETMULTIMEASURETYPE returns the multi-measure type
+        function measure_scope = getMeasureScope(m)
+            % GETMEASURESCOPE returns the measure scope
             %
-            % MULTIMEASURE_TYPE = GETMULTIMEASURETYPE(M) returns the
-            % multi-measure type of measure M (e.g., SUPERGLOBAL, UNILAYER,
+            % MEASURE_SCOPE = GETMEASURESCOPE(M) returns the
+            % measure scope of measure M (e.g., SUPERGLOBAL, UNILAYER,
             % BILAYER).
             %
-            % MULTIMEASURE_TYPE = GETMULTIMEASURETYPE(MEASURE_CLASS)
-            % returns the multi-measure type of the measure whose class is
+            % MEASURE_SCOPE = GETMEASURESCOPE(MEASURE_CLASS)
+            % returns the measure scope of the measure whose class is
             % MEASURE_CLASS (e.g., SUPERGLOBAL, UNILAYER, BILAYER).
             %
             % See also is_bilayer(), is_superglobal(), is_unilayer().
             
-            multimeasure_type = eval([Measure.getClass(m) '.getMeasureType()']);
+            measure_scope = eval([Measure.getClass(m) '.getMeasureScope()']);
         end
         function bool = is_superglobal(m)
             % IS_SUPERGLOBAL checks if measure is superglobal
