@@ -43,7 +43,50 @@ classdef Measure < handle
     %   getCompatibleGraphNumber - returns the number of compatible graphs.
     %
     % See also Graph, handle, Degree, Strength, Distance, Efficency.
+ 
+    properties (Constant)
+        % Measure types
+        GLOBAL = 1  
+        GLOBAL_NAME = 'Global'
+        GLOBAL_DESCRIPTION = 'This measure returns a number.'
         
+        NODAL = 2
+        NODAL_NAME = 'Nodal'
+        NODAL_DESCRIPTION = 'This graph returns a vector.'
+        
+        BINODAL = 3
+        BINODAL_NAME = 'Binodal'
+        BINODAL_DESCRIPTION = 'This measure returns a matrix.'
+        
+        TYPE_NUMBER = 3
+        
+        TYPE_NAME = {
+            Measure.GLOBAL
+            Measure.NODAL
+            Measure.BINODAL
+            }
+       
+        SUPERGLOBAL = 1
+        SUPERGLOBAL_NAME = 'Superglobal'
+        SUPERGLOBAL_DESCRIPTION = 'This measure returns a number.'
+        
+        UNILAYER = 2
+        UNILAYER_NAME = 'Unilayer'
+        UNILAYER_DESCRIPTION = 'This measure returns a vector with nodal/binodal/global measures for every layer.'
+        
+        BILAYER = 3
+        BILAYER_NAME = 'Bilayer'
+        BILAYER_DESCRIPTION = 'This measure returns a vector with nodal/binodal/global measures between layers.'
+        
+        MULTIMEASURE_NUMBER = 3
+        
+        MULTIMEASURE_NAME = {
+            Measure.SUPERGLOBAL
+            Measure.UNILAYER
+            Measure.BILAYER
+            }
+        
+    end    
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
         settings  % structure with the constructor settings
@@ -181,6 +224,115 @@ classdef Measure < handle
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure
     end
+    methods (Static)  % Descriptive methods
+        function measure_type = getMeasureType(m)
+            % GETMEASURETYPE returns the measure type
+            %
+            % MEASURE_TYPE = GETMEASURETYPE(M) returns the measure type
+            % of measure M (e.g., GLOBAL, NODAL, BINODAL).
+            %
+            % MEASURE_TYPE = GETMEASURETYPE(MEASURE_CLASS) returns the measure 
+            % type of the measure whose class is MEASURE_CLASS (e.g., GLOBAL,
+            % NODAL, BINODAL).
+            %
+            % See also is_binodal(), is_global(), is_nodal().
+            
+            measure_type = eval([Measure.getClass(m) '.getMeasureType()']);
+        end
+        function bool = is_global(m)
+            % IS_GLOBAL checks if measure is global
+            %
+            % BOOL = IS_GLOBAL(M) returns true if the concrete measure M
+            % is global and false otherwise.
+            %
+            % BOOL = IS_GLOBAL(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is global and false otherwise.
+            %
+            % See also is_binodal(), is_nodal().
+            
+            bool = Measure.getMeasureType(m) == Measure.GLOBAL;
+        end
+        function bool = is_nodal(m)
+            % IS_NODAL checks if measure is nodal
+            %
+            % BOOL = IS_NODAL(M) returns true if the concrete measure M is nodal
+            % and false otherwise.
+            %
+            % BOOL = IS_NODAL(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is nodal and false otherwise.
+            %
+            % See also is_binodal(), is_global().
+            
+            bool = Measure.getMeasureType(m) == Measure.NODAL;
+        end
+        function bool = is_binodal(m)
+            % IS_BINODAL checks if measure is bi-nodal
+            %
+            % BOOL = IS_BINODAL(M) returns true if concrete measure M is binodal
+            % and false otherwise.
+            %
+            % BOOL = IS_BINODAL(MEASURE_CLASS) returns true if a  measure
+            % whose class is MEASURE_CALSS is binodal and false otherwise.
+            %
+            % See also is_global(), is_nodal().
+            
+            bool = Measure.getMeasureType(m) == Measure.BINODAL;
+        end
+        function multimeasure_type = getMultiMeasureType(m)
+            % GETMULTIMEASURETYPE returns the multi-measure type
+            %
+            % MULTIMEASURE_TYPE = GETMULTIMEASURETYPE(M) returns the
+            % multi-measure type of measure M (e.g., SUPERGLOBAL, UNILAYER,
+            % BILAYER).
+            %
+            % MULTIMEASURE_TYPE = GETMULTIMEASURETYPE(MEASURE_CLASS)
+            % returns the multi-measure type of the measure whose class is
+            % MEASURE_CLASS (e.g., SUPERGLOBAL, UNILAYER, BILAYER).
+            %
+            % See also is_bilayer(), is_superglobal(), is_unilayer().
+            
+            multimeasure_type = eval([Measure.getClass(m) '.getMeasureType()']);
+        end
+        function bool = is_superglobal(m)
+            % IS_SUPERGLOBAL checks if measure is superglobal
+            %
+            % BOOL = IS_SUPERGLOBAL(M) returns true if the concrete measure M
+            % is superglobal and false otherwise.
+            %
+            % BOOL = IS_SUPERGLOBAL(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is superglobal and false otherwise.
+            %
+            % See also is_bilayer(), is_unilayer().
+            
+            bool = Measure.getMeasureType(m) == Measure.SUPERGLOBAL;
+        end
+        function bool = is_unilayer(m)
+            % IS_UNILAYER checks if measure is unilayer
+            %
+            % BOOL = IS_UNILAYER(M) returns true if the concrete measure M is unilayer
+            % and false otherwise.
+            %
+            % BOOL = IS_UNILAYER(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is unilayer and false otherwise.
+            %
+            % See also is_bilayer(), is_superglobal().
+            
+            bool = Measure.getMeasureType(m) == Measure.UNILAYER;
+        end
+        function bool = is_bilayer(m)
+            % IS_BILYER checks if measure is bi-layer
+            %
+            % BOOL = IS_BILYER(M) returns true if concrete measure M is
+            % bi-layer and false otherwise.
+            %
+            % BOOL = IS_BILYER(MEASURE_CLASS) returns true if a measure
+            % whose class is MEASURE_CALSS is bi-layer and false otherwise.
+            %
+            % See also is_superglobal(), is_unilayer().
+            
+            bool = Measure.getMeasureType(m) == Measure.BILAYER;
+        end
+    end    
     methods (Static)
         function measure_list = getList()
             % GETLIST returns the list of measures
@@ -239,46 +391,7 @@ classdef Measure < handle
         function available_settings = getAvailableSettings(m)
             
             available_settings = eval([Measure.getClass(m) '.getAvailableSettings()']);
-        end
-        function bool = is_global(m)
-            % IS_GLOBAL checks if measure is global
-            %
-            % BOOL = IS_GLOBAL(M) returns true if the concrete measure M
-            % is global and false otherwise.
-            %
-            % BOOL = IS_GLOBAL(MEASURE_CLASS) returns true if the measure
-            % whose class is MEASURE_CLASS is global and false otherwise.
-            %
-            % See also is_nodal, is_binodal.
-            
-            bool = eval([Measure.getClass(m) '.is_global()']);
-        end        
-        function bool = is_nodal(m)
-            % IS_NODAL checks if measure is nodal
-            %
-            % BOOL = IS_NODAL(M) returns true if the concrete measure M is nodal
-            % and false otherwise.
-            %
-            % BOOL = IS_NODAL(MEASURE_CLASS) returns true if the measure
-            % whose class is MEASURE_CLASS is nodal and false otherwise.
-            %
-            % See also is_global, is_binodal.
-            
-            bool = eval([Measure.getClass(m) '.is_nodal()']);
-        end
-        function bool = is_binodal(m)
-            % IS_BINODAL checks if measure is bi-nodal
-            %
-            % BOOL = IS_BINODAL(M) returns true if concrete measure M is binodal
-            % and false otherwise.
-            %
-            % BOOL = IS_BINODAL(MEASURE_CLASS) returns true if a  measure
-            % whose class is MEASURE_CALSS is binodal and false otherwise.
-            %
-            % See also is_global, is_nodal.
-            
-            bool = eval([Measure.getClass(m) '.is_binodal()']);
-        end
+        end       
         function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
             % GETMEASURE returns a measure
             %

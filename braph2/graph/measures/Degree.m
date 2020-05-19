@@ -52,8 +52,8 @@ classdef Degree < Measure
             A = binarize(A);  % binarizes the adjacency matrix
             degree = sum(A, 2);  % calculates the degree of a node
         end
-    end        
-    methods (Static)
+    end  
+    methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
@@ -96,32 +96,25 @@ classdef Degree < Measure
             
             available_settings = {};
         end
-        function bool = is_global()
-            % IS_GLOBAL checks if degree measure is global (false)
+        function measure_type = getMeasureType()
+            % GETMEASURETYPE returns the measure type of degree
             %
-            % BOOL = IS_GLOBAL() returns false.
+            % MEASURE_TYPE = GETMEASURETYPE() returns the measure type
+            % of degree measure (NODAL).
             %
-            % See also is_nodal, is_binodal.
-                                   
-            bool = false;
-        end
-        function bool = is_nodal()
-            % IS_NODAL checks if degree measure is nodal (true)
-            %
-            % BOOL = IS_NODAL() returns true.
-            %
-            % See also is_global, is_binodal. 
+            % See also getMultiMeasureType().
             
-            bool = true;
+            measure_type = Measure.NODAL;
         end
-        function bool = is_binodal()
-            % IS_BINODAL checks if degree measure is binodal (false)
+        function multimeasure_type = getMultiMeasureType()
+            % GETMULTIMEASURETYPE returns the multi-measure type of degree
             %
-            % BOOL = IS_BINODAL() returns false.
+            % MULTIMEASURE_TYPE = GETMULTIMEASURETYPE() returns the
+            % multi-measure type of degree measure (UNILAYER).
             %
-            % See also is_global, is_nodal.
+            % See also getMeasureType().
             
-            bool = false;
+            multimeasure_type = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs

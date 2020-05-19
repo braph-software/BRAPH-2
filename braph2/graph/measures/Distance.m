@@ -106,7 +106,7 @@ classdef Distance < Measure
             end
         end
     end
-    methods (Static)
+    methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
@@ -148,32 +148,25 @@ classdef Distance < Measure
             
             available_settings = {};
         end
-        function bool = is_global()
-            % IS_GLOBAL checks if distance measure is global (false)
+        function measure_type = getMeasureType()
+            % GETMEASURETYPE returns the measure type of distance
             %
-            % BOOL = IS_GLOBAL() returns false.
+            % MEASURE_TYPE = GETMEASURETYPE() returns the measure type
+            % of distance measure (NODAL).
             %
-            % See also is_nodal, is_binodal.
+            % See also getMultiMeasureType().
             
-            bool = false;
+            measure_type = Measure.BINODAL;
         end
-        function bool = is_nodal()
-            % IS_NODAL checks if distance measure is nodal (false)
+        function multimeasure_type = getMultiMeasureType()
+            % GETMULTIMEASURETYPE returns the multi-measure type of distance
             %
-            % BOOL = IS_NODAL() returns false.
+            % MULTIMEASURE_TYPE = GETMULTIMEASURETYPE() returns the
+            % multi-measure type of distance measure (UNILAYER).
             %
-            % See also is_global, is_binodal. 
+            % See also getMeasureType().
             
-            bool = false;
-        end
-        function bool = is_binodal()
-            % IS_BINODAL checks if distance measure is binodal (true)
-            %
-            % BOOL = IS_BINODAL() returns true.
-            %
-            % See also is_global, is_nodal.
-            
-            bool = true;
+            multimeasure_type = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
