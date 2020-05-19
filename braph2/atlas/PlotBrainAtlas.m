@@ -50,7 +50,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   VIEW_CP_AZEL              -   coronal posterior view azimutal and polar angles < PlotBrainSurf
     %
     %   VIEW_CMD                  -   vector of view names < PlotBrainSurf
-    %   VIEW_AZEL                 -   vector of view azimutal and polar angle < PlotBrainSurf
+    %   VIEW_AZEL                 -   vector of view azimutal and polar angles < PlotBrainSurf
     %
     %   INIT_SYM_MARKER           -   symbol type
     %                                 (default = 'o')
@@ -177,7 +177,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   get_lab_br        -   properties of brain region corresponding to a label
     %   br_labs_settings  -   sets labels' properties
     %
-    % See also PlotBrainAtlas, PlotBrainSurf, BrainAtlas.
+    % See also PlotBrainSurf, BrainAtlas, BrainRegion.
     
     properties (Constant)
         % Symbols
@@ -267,6 +267,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % PLOTBRAINATLAS(ATLAS) constructs the brain atlas plot, it
             % assigns the nodes of atlas to a PlotBrainSurf region.
             %
+            % See also PlotBrainSurf, BrainAtlas.
             
             ba = ba@PlotBrainSurf();
             
@@ -311,7 +312,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             %   All standard plot properties of plot3 can be used.
             %   The symbol properties can also be changed when hidden.
             %
-            % See also PlotBrainAtlas, plot3.
+            % See also plot3.
             
             ba.set_axes()
             
@@ -392,7 +393,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % BOOL = BR_SYM_IS_ON(BA,I) returns true if the symbol denoting
             %   the brain region I is visible and false otherwise.
             %
-            % See also PlotBrainAtlas.
+            % See also br_syms.
             
             bool = ishandle(ba.syms.h(i)) && strcmpi(get(ba.syms.h(i), 'Visible'), 'on');
         end
@@ -409,7 +410,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             %   All standard plot properties of plot3 can be used.
             %   The symbols properties can also be changed when hidden.
             %
-            % See also PlotBrainAtlas, plot3.
+            % See also br_sym,  plot3.
             
             % Marker - MarkerEdgeColor - MarkerFaceColor - Color - Size
             for n = 1:2:length(varargin)
