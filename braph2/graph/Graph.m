@@ -257,7 +257,8 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
 
             Graph.checkA(Graph.getGraphType(g), A)  % performs all necessary checks on A
-            
+            Graph.checkConnectivity(Graph.getConnectionType(g), A) 
+
             g.A = A;
         end
     end
