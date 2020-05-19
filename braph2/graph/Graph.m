@@ -261,7 +261,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             g.A = A;
         end
     end
-    methods (Static)  % Check A
+    methods (Static)  % Checks
         function checkA(graph_type, A)
             % CHECKA checks if adjacency matrix A or cell array of adjacency matrices A is correct for the type of graph
             %
@@ -334,6 +334,41 @@ classdef Graph < handle & matlab.mixin.Copyable
                         [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
                         'All submatrices in the same column must have the same number of columns.')
             end
+        end
+        function checkConnectivity(connection_type, A)
+
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch connection_type 
+                    case Graph.BINARY
+                        assert(all(A == 0 | A == 1, 'all'), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For connection type Graph.BINARY, A must be binary (0s and 1s),' ...
+                            ' while it is ' tostring(A)])
+                        
+                    case Graph.WEIGHTED
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Connection type must be Graph.BINARY (%i) or Graph.WEIGHTED (%i),' ...
+                            ' while it is ' tostring(connection_type)], ...
+                            Graph.BINARY, Graph.WEIGHTED)
+                end
+            else  % A is 2D cell array
+                
+                % for-cycles and recursive call
+                
+            end
+            
+% if A is matrix, A = {A}
+
+% connection type to matrix
+
+% for all connection_type, A, check that the connection type is correct
+
+
         end
     end
     methods (Static)  % Descriptive methods
@@ -486,7 +521,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                    
             bool = Graph.getGraphType(g) == Graph.MULTILAYER;
         end
-        function connection_type = getConnectionType(g)
+        function connection_type = getConnectionType(g, varargin)
             % GETCONNECTIONTYPE returns if graph is binary or weighted
             %
             % CONNECTION_TYPE = GETCONNECTIONTYPE(G) returns if
@@ -496,10 +531,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             % if graph whose class is GRAPH_CLASS is binary or weighted.
             %
             % See also is_binary(), is_weighted().     
-                  
-            connection_type = eval([Graph.getClass(g) '.getConnectionType()']);
+            
+            connection_type = eval([Graph.getClass(g) '.getConnectionType(varargin{:})']);
         end
-        function bool = is_weighted(g)
+        function bool = is_weighted(g, varargin)
             % IS_WEIGHTED checks if graph is weighted
             %
             % BOOL = IS_WEIGHTED(G) returns if the instance of the
@@ -509,10 +544,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             % class is GRAPH_CLASS is weighted.
             %
             % See also getConnectionType(), is_binary().     
-                       
-            bool = Graph.getConnectionType(g) == Graph.WEIGHTED;
+            
+            bool = Graph.getConnectionType(g, varargin{:}) == Graph.WEIGHTED;
         end
-        function bool = is_binary(g)
+        function bool = is_binary(g, varargin)
             % IS_BINARY checks if graph is binary
             %
             % BOOL = IS_BINARY(G) returns if the instance of the
@@ -523,7 +558,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getConnectionType(), is_weighted().     
             
-            bool = Graph.getConnectionType(g) == Graph.BINARY;
+            bool = Graph.getConnectionType(g, varargin{:}) == Graph.BINARY;
         end
         function edge_type = getEgdeType(g)
             % GETEDGETYPE returns if graph is directed or undirected
