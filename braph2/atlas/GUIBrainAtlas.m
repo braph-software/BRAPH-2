@@ -124,8 +124,8 @@ selected = [];
         % load file
         if filterindex
             filename = fullfile(path,file);
-            tmp = load(filename,'-mat','atlas','selected','BUILT');
-            if isa(tmp.atlas,'BrainAtlas')
+            tmp = load(filename, '-mat', 'atlas', 'selected', 'BUILT');
+            if isa(tmp.atlas, 'BrainAtlas')
                 atlas = tmp.atlas;
                 selected = tmp.selected;
                 setup()
@@ -152,7 +152,7 @@ selected = [];
         end
     end
     function cb_import_xml(~,~)  % (scr,event)
-        atlastmp = BrainAtlas();
+        atlastmp = BrainAtlas('', '', '', {});
         success = atlastmp.loadfromfile(BNC.XML_MSG_GETFILE);
         if success
             atlas = atlastmp;
@@ -162,8 +162,8 @@ selected = [];
         end
     end
     function cb_import_txt(~,~)  % (scr,event)
-        atlastmp = BrainAtlas();
-        success = atlastmp.loadfromtxt(BNC.TXT_MSG_GETFILE);
+        atlastmp = BrainAtlas('', '', '', {});
+        success = atlastmp.load_from_txt();
         if success
             atlas = atlastmp;
             selected = [];
@@ -172,8 +172,8 @@ selected = [];
         end
     end
     function cb_import_xls(~,~)  % (scr,event)
-        atlastmp = BrainAtlas();
-        success = atlastmp.loadfromxls(BNC.XLS_MSG_GETFILE);
+        atlastmp = BrainAtlas('', '', '', {});
+        success = atlastmp.load_from_xls();
         if success
             atlas = atlastmp;
             selected = [];
@@ -216,11 +216,11 @@ init_datacursormode()
             txt = 'brain surface';
         else
             i = userdata{2};
-            txt = {[atlas.get(i).getProp(BrainRegion.LABEL) ' #' int2str(i)], ...
+            txt = {[atlas.getBrainRegions().getValue(i).getLabel() ' #' int2str(i)], ...
                 atlas.get(i).getProp(BrainRegion.NAME), ...
-                [FIG_XLABEL ' = ' num2str(atlas.get(i).getProp(BrainRegion.X)) ' ' FIG_UNITS], ...
-                [FIG_YLABEL ' = ' num2str(atlas.get(i).getProp(BrainRegion.Y)) ' ' FIG_UNITS], ...
-                [FIG_ZLABEL ' = ' num2str(atlas.get(i).getProp(BrainRegion.Z)) ' ' FIG_UNITS], ...
+                [FIG_XLABEL ' = ' num2str(atlas.getBrainRegions().getValue(i).getX()) ' ' FIG_UNITS], ...
+                [FIG_YLABEL ' = ' num2str(atlas.getBrainRegions().getValue(i).getY()) ' ' FIG_UNITS], ...
+                [FIG_ZLABEL ' = ' num2str(atlas.getBrainRegions().getValue(i).getZ()) ' ' FIG_UNITS], ...
                 [lower(atlas.get(i).getProp(BrainRegion.HS)) ' hemisphere']};
         end
     end
@@ -350,7 +350,7 @@ init_table()
         set(ui_edit_table_atlasname, 'String', atlasname)
     end
     function update_table_table()
-        data = cell(atlas.getBrainRegions().length(),8);
+        data = cell(atlas.getBrainRegions().length(), 8);
         for i = 1:1:atlas.getBrainRegions().length()
             if any(selected == i)
                 data{i, TAB_BR_SELECTED_COL} = true;
@@ -393,14 +393,14 @@ init_table()
             case TAB_BR_Z_COL
                 atlas.get(i).setProp(BrainRegion.Z,newdata)
             case TAB_BR_HS_COL
-                atlas.get(i).setProp(BrainRegion.HS,newdata)
+               % atlas.get(i).setProp(BrainRegion.HS,newdata)
             case TAB_BR_NOTES_COL
                 atlas.get(i).setProp(BrainRegion.NOTES,newdata)
         end
         update_figure_brainview()
     end
     function cb_table_selectall(~,~)  % (src,event)
-        selected = (1:1:atlas.length())';
+        selected = (1:1:atlas.getBrainRegions().length())';
         update_table_table()
         update_figure_brainview()
     end
@@ -764,25 +764,25 @@ init_contextmenu()
         % brain regions and labels
         if h_br_visible || h_labels_visible
             
-            if length(h_br)<atlas.length()  % create new markers as needed
-                for i = length(h_br)+1:1:atlas.length()
+            if length(h_br)<atlas.getBrainRegions().length()  % create new markers as needed
+                for i = length(h_br)+1:1:atlas.getBrainRegions().length()
                     create_figure_brainregionplot(i);
                 end
             else % eliminate unnecessary markers as needed
-                delete(h_br(atlas.length()+1:1:end))
-                h_br = h_br(1:1:atlas.length());
+                delete(h_br(atlas.getBrainRegions().length()+1:1:end))
+                h_br = h_br(1:1:atlas.getBrainRegions().length());
                 
-                delete(h_labels(atlas.length()+1:1:end))
-                h_labels = h_labels(1:1:atlas.length());
+                delete(h_labels(atlas.getBrainRegions().length()+1:1:end))
+                h_labels = h_labels(1:1:atlas.getBrainRegions().length());
             end
             
-            for i = 1:1:atlas.length()
+            for i = 1:1:atlas.getBrainRegions().length()
                 userdata = get(h_br(i),'UserData');
                 if xor(userdata{1},any(selected==i)) || ...
-                        userdata{3}~=atlas.get(i).getProp(BrainRegion.X) || ...
-                        userdata{4}~=atlas.get(i).getProp(BrainRegion.Y) || ...
-                        userdata{5}~=atlas.get(i).getProp(BrainRegion.Z) || ...
-                        ~strcmp(userdata{6},atlas.get(i).getProp(BrainRegion.LABEL))
+                        userdata{3}~=atlas.getBrainRegions().getValue(i).getX() || ...
+                        userdata{4}~=atlas.getBrainRegions().getValue(i).getY() || ...
+                        userdata{5}~=atlas.getBrainRegions().getValue(i).getZ() || ...
+                        ~strcmp(userdata{6},atlas.getBrainRegions().getValue(i).getLabel())
                     update_figure_brainregionplot(i);
                 end
             end
@@ -795,10 +795,10 @@ init_contextmenu()
         camlight('Headlight')
     end
     function create_figure_brainregionplot(i)
-        X = atlas.get(i).getProp(BrainRegion.X);
-        Y = atlas.get(i).getProp(BrainRegion.Y);
-        Z = atlas.get(i).getProp(BrainRegion.Z);
-        label = atlas.get(i).getProp(BrainRegion.LABEL);
+        X = atlas.getBrainRegions().getValue(i).getX();
+        Y = atlas.getBrainRegions().getValue(i).getY();
+        Z = atlas.getBrainRegions().getValue(i).getZ();
+        label = atlas.getBrainRegions().getValue(i).getLabel();
         if any(selected==i)
             h_br(i) = plot3(X,Y,Z, ...
                 'Marker',FIG_BRSELECTED_MARKER, ...
@@ -820,10 +820,10 @@ init_contextmenu()
         end
     end
     function update_figure_brainregionplot(i)
-        X = atlas.get(i).getProp(BrainRegion.X);
-        Y = atlas.get(i).getProp(BrainRegion.Y);
-        Z = atlas.get(i).getProp(BrainRegion.Z);
-        label = atlas.get(i).getProp(BrainRegion.LABEL);
+        X = atlas.getBrainRegions().getValue(i).getX();
+        Y = atlas.getBrainRegions().getValue(i).getY();
+        Z = atlas.getBrainRegions().getValue(i).getZ();
+        label = atlas.getBrainRegions().getValue(i).getLabel();
         if any(selected==i)
             set(h_br(i), ...
                 'XData',X, ...
@@ -1191,7 +1191,7 @@ init_toolbar()
         set(gca,'OuterPosition',[0 0 1 1])
     end
     function cb_menu_mricohort(~,~)  % (src,event)
-        if atlas.length()>0
+        if atlas.getBrainRegions().length()>0
             GUIMRICohort(atlas.copy())
         else
             msgbox('In order to create an MRI cohort the brain atlas must have at least one brain region.', ...
@@ -1200,7 +1200,7 @@ init_toolbar()
         end
     end
     function cb_menu_fmricohort(~,~) % (src,event)
-        if atlas.length()>0
+        if atlas.getBrainRegions().length()>0
             GUIfMRICohort(atlas.copy())
         else
             msgbox('In order to create an fMRI cohort the brain atlas must have at least one brain region.', ...
@@ -1209,7 +1209,7 @@ init_toolbar()
         end
     end
     function cb_menu_eegcohort(~,~) % (src,event)
-        if atlas.length()>0
+        if atlas.getBrainRegions().length()>0
             GUIEEGCohort(atlas.copy())
         else
             msgbox('In order to create an EEG cohort the brain atlas must have at least one brain region.', ...
@@ -1218,7 +1218,7 @@ init_toolbar()
         end
     end
     function cb_menu_petcohort(~,~) % (src,event)
-        if atlas.length()>0
+        if atlas.getBrainRegions().length()>0
             GUIPETCohort(atlas.copy())
         else
             msgbox('In order to create an PET cohort the brain atlas must have at least one brain region.', ...
