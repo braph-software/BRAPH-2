@@ -836,8 +836,8 @@ classdef Graph < handle & matlab.mixin.Copyable
             % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I, LAYERNUMBERS_J) 
             % creates the graph GA resulting by removing the edges going
             % from NODES1 to NODES2 from G. For non single layer graphs, it
-            % removes the edges from NODES1 to NODES2 in the layers
-            % specified by LAYERNUMBERS.
+            % removes the edges from NODES1 to NODES2 in and between the layers
+            % specified by LAYERNUMBERS_I and LAYERNUMBERS_J.
             %
             % EDGES are removed by setting all the connections from NODES1 to
             % NODES2 in the connection matrix to 0.
