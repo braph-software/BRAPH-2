@@ -256,14 +256,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
 
-            Graph.checkA(Graph.getGraphType(g), A)  % performs all necessary checks on A
+            Graph.checkA(Graph.getGraphType(g), A);  % performs all necessary checks on A
+            Graph.checkConnectivity(Graph.getConnectivityType(g), A);
+            Graph.checkNegativity(Graph.getNegativityType(g), A);
             
-%            if isnumeric(A)  % adjacency matrix
-                Graph.checkConnectivity(Graph.getConnectivityType(g), A)
-%             else  % cell array of adjacency matrices
-%                 Graph.checkConnectivity(Graph.getConnectivityType(g, length(A)), A)
-%             end
-
             g.A = A;
         end
     end
@@ -375,7 +371,113 @@ classdef Graph < handle & matlab.mixin.Copyable
                 end
             end
         end
+        function checkEdge(edge_type, A)
+
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch edge_type 
+                    case Graph.UNDIRECTED
+                        assert(all(all(A == symmetrize(A))), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For edge type Graph.UNDIRECTED, A must be symmetric,' ...
+                            ' while it is ' tostring(A)])
+                        
+                    case Graph.DIRECTED
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Edge type must be Graph.DIRECTED (%i) or Graph.UNDIRECTED (%i),' ...
+                            ' while it is ' tostring(edge_type)], ...
+                            Graph.DIRECTED, Graph.UNDIRECTED)
+                end
+            else  % A is 2D cell array
+                
+                if numel(edge_type) == 1
+                    edge_type = edge_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        Graph.checkEdge(edge_type(i, j), A{i, j});
+                    end
+                end
+            end
+        end
+        function checkSelfConnectivity(selfconnectivity_type, A)
+
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch selfconnectivity_type 
+                    case Graph.NOT_SELFCONNECTED
+                        assert(all(all(A == dediagonalize(A))), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For self-connectivity type Graph.NOT_SELFCONNECTED, A must have,' ...
+                            ' 0 values in the diagonal while it is ' tostring(A)])
+                        
+                    case Graph.SELFCONNECTED
+                        assert(all(diag(A)*1), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For self-connectivity type Graph.SELFCONNECTED, A must have,' ...
+                            ' values different than 0 in the diagonal while it is ' tostring(A)])
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Self-connectivity type must be Graph.SELFCONNECTED (%i) or' ...
+                            ' Graph.NOT_SELFCONNECTED (%i), while it is ' tostring(selfconnectivity_type)], ...
+                            Graph.SELFCONNECTED, Graph.NOT_SELFCONNECTED)
+                end
+            else  % A is 2D cell array
+                
+                if numel(selfconnectivity_type) == 1
+                    selfconnectivity_type = selfconnectivity_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        Graph.checkSelfConnectivity(selfconnectivity_type(i, j), A{i, j});
+                    end
+                end
+            end
+        end      
+        function checkNegativity(negativity_type, A)
+            
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch negativity_type
+                    case Graph.NONNEGATIVE
+                        assert(all(all(A == semipositivize(A))), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For negativity type Graph.NONNEGATIVE, A must have,' ...
+                            ' non-negative values while it is ' tostring(A)])
+                        
+                    case Graph.NEGATIVE
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Negativity type must be Graph.NEGATIVE (%i) or' ...
+                            ' Graph.NONNEGATIVE (%i), while it is ' tostring(negativity_type)], ...
+                            Graph.NEGATIVE, Graph.NONNEGATIVE)
+                end
+            else  % A is 2D cell array
+                
+                if numel(negativity_type) == 1
+                    negativity_type = negativity_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        Graph.checkNegativity(negativity_type(i, j), A{i, j});
+                    end
+                end
+            end
+        end
     end
+
     methods (Static)  % Descriptive methods
         function graph_class_list = getList()
             % GETLIST returns the list of available graphs
