@@ -183,13 +183,13 @@ selected = [];
         end
     end
     function cb_export_txt(~,~)  % (scr,event)
-        atlas.save_to_txt();
+        BrainAtlas.save_to_txt(atlas);
     end
     function cb_export_xls(~,~)  % (src,event)
-        atlas.save_to_xls();
+        BrainAtlas.save_to_xls(atlas);
     end
     function cb_export_json(~,~)
-        atlas.save_to_json();
+        BrainAtlas.save_to_json(atlas);
     end
 
 % GUI application data
@@ -249,7 +249,7 @@ init_filename()
 %% Panel Table
 TAB_BR_SELECTED_COL = 1;
 TAB_BR_LABEL_COL = 2;
-TAB_BR_NAME_COL = 3;
+TAB_BR_ID_COL = 3;
 TAB_BR_X_COL = 4;
 TAB_BR_Y_COL = 5;
 TAB_BR_Z_COL = 6;
@@ -261,14 +261,16 @@ TABLE_X0 = MARGIN_X;
 TABLE_Y0 = FILENAME_HEIGHT+2*MARGIN_Y;
 TABLE_POSITION = [TABLE_X0 TABLE_Y0 TABLE_WIDTH TABLE_HEIGHT];
 
+counter_add = 0;
+
 ui_panel_table = uipanel();
 ui_edit_table_atlasname = uicontrol(ui_panel_table,'Style','edit');
 ui_table_table = uitable(ui_panel_table);
 ui_button_table_selectall = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_clearselection = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_add = uicontrol(ui_panel_table,'Style', 'pushbutton');
-ui_button_table_addabove = uicontrol(ui_panel_table,'Style', 'pushbutton');
-ui_button_table_addbelow = uicontrol(ui_panel_table,'Style', 'pushbutton');
+% ui_button_table_addabove = uicontrol(ui_panel_table,'Style', 'pushbutton');
+% ui_button_table_addbelow = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_remove = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_moveup = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_movedown = uicontrol(ui_panel_table,'Style', 'pushbutton');
@@ -288,7 +290,7 @@ init_table()
         set(ui_edit_table_atlasname, 'Callback',{@cb_table_atlasname})
         
         set(ui_table_table, 'Position', [.02 .16 .96 .77])
-        set(ui_table_table, 'ColumnName', {'', 'Label', 'Name', 'x', 'y', 'z', 'Notes'})
+        set(ui_table_table, 'ColumnName', {'', 'Label', 'ID', 'x', 'y', 'z', 'Notes'})
         set(ui_table_table, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'numeric', 'numeric', 'char'})
         set(ui_table_table, 'ColumnEditable', true)
         set(ui_table_table, 'CellEditCallback', {@cb_table_edit});
@@ -308,15 +310,15 @@ init_table()
         set(ui_button_table_add,'TooltipString',ADD_TP);
         set(ui_button_table_add,'Callback',{@cb_table_add})
         
-        set(ui_button_table_addabove,'Position',[.27 .08 .21 .03])
-        set(ui_button_table_addabove,'String',ADDABOVE_CMD)
-        set(ui_button_table_addabove,'TooltipString',ADDABOVE_TP)
-        set(ui_button_table_addabove,'Callback',{@cb_table_addabove})
-        
-        set(ui_button_table_addbelow,'Position',[.27 .05 .21 .03])
-        set(ui_button_table_addbelow,'String',ADDBELOW_CMD)
-        set(ui_button_table_addbelow,'TooltipString',ADDBELOW_TP)
-        set(ui_button_table_addbelow,'Callback',{@cb_table_addbelow})
+%         set(ui_button_table_addabove,'Position',[.27 .08 .21 .03])
+%         set(ui_button_table_addabove,'String',ADDABOVE_CMD)
+%         set(ui_button_table_addabove,'TooltipString',ADDABOVE_TP)
+%         set(ui_button_table_addabove,'Callback',{@cb_table_addabove})
+%         
+%         set(ui_button_table_addbelow,'Position',[.27 .05 .21 .03])
+%         set(ui_button_table_addbelow,'String',ADDBELOW_CMD)
+%         set(ui_button_table_addbelow,'TooltipString',ADDBELOW_TP)
+%         set(ui_button_table_addbelow,'Callback',{@cb_table_addbelow})
         
         set(ui_button_table_remove,'Position',[.52 .11 .21 .03])
         set(ui_button_table_remove,'String',REMOVE_CMD)
@@ -361,7 +363,7 @@ init_table()
                 data{i, TAB_BR_SELECTED_COL} = false;
             end
             data{i, TAB_BR_LABEL_COL} = atlas.getBrainRegions().getValue(i).getLabel();
-            data{i, TAB_BR_NAME_COL} = atlas.getBrainRegions().getValue(i).getID();
+            data{i, TAB_BR_ID_COL} = atlas.getBrainRegions().getValue(i).getID();
             data{i, TAB_BR_X_COL} = atlas.getBrainRegions().getValue(i).getX();
             data{i, TAB_BR_Y_COL} = atlas.getBrainRegions().getValue(i).getY();
             data{i, TAB_BR_Z_COL} = atlas.getBrainRegions().getValue(i).getZ();
@@ -385,17 +387,19 @@ init_table()
                     selected = selected(selected~=i);
                 end
             case TAB_BR_LABEL_COL
-                atlas.get(i).setProp(BrainRegion.LABEL,newdata)
-            case TAB_BR_NAME_COL
-                atlas.get(i).setProp(BrainRegion.NAME,newdata)
+                atlas.getBrainRegions().getValue(i).setLabel(newdata)
+            case TAB_BR_ID_COL
+                atlas.getBrainRegions().getValue(i).setID(newdata)
+                oldkey = atlas.getBrainRegions().getKey(i);
+                atlas.getBrainRegions().replaceKey(oldkey, newdata);
             case TAB_BR_X_COL
-                atlas.get(i).setProp(BrainRegion.X,newdata)
+                atlas.getBrainRegions().getValue(i).setX(newdata)
             case TAB_BR_Y_COL
-                atlas.get(i).setProp(BrainRegion.Y,newdata)
+                atlas.getBrainRegions().getValue(i).setY(newdata)
             case TAB_BR_Z_COL
-                atlas.get(i).setProp(BrainRegion.Z,newdata)
+                atlas.getBrainRegions().getValue(i).setZ(newdata)
             case TAB_BR_NOTES_COL
-                atlas.get(i).setProp(BrainRegion.NOTES,newdata)
+                atlas.getBrainRegions().getValue(i).setNotes(newdata)
         end
         update_figure_brainview()
     end
@@ -410,42 +414,44 @@ init_table()
         update_figure_brainview()
     end
     function cb_table_add(~,~)  % (src,event)
-        atlas.add();
+        counter_add = counter_add + 1;
+        dummyBrainRegion = BrainRegion(['ID' num2str(counter_add)],'Label','Notes',0,0,0);  % maybe have a counter to change ID
+        atlas.getBrainRegions().add(dummyBrainRegion.getID(), dummyBrainRegion);
         update_table_table()
         update_figure_brainview()
     end
-    function cb_table_addabove(~,~)  % (src,event)
-        selected = atlas.addabove(selected);
-        update_table_table()
-        update_figure_brainview()
-    end
-    function cb_table_addbelow(~,~)  % (src,event)
-        selected = atlas.addbelow(selected);
-        update_table_table()
-        update_figure_brainview()
-    end
+%     function cb_table_addabove(~,~)  % (src,event)
+%         selected = atlas.getBrainRegions().addabove(selected);
+%         update_table_table()
+%         update_figure_brainview()
+%     end
+%     function cb_table_addbelow(~,~)  % (src,event)
+%         selected = atlas.addbelow(selected);
+%         update_table_table()
+%         update_figure_brainview()
+%     end
     function cb_table_remove(~,~)  % (src,event)
-        selected = atlas.removeall(selected);
+        selected = atlas.getBrainRegions().remove_all(selected);
         update_table_table()
         update_figure_brainview()
     end
     function cb_table_moveup(~,~)  % (src,event)
-        selected = atlas.moveup(selected);
+        selected = atlas.getBrainRegions().move_up(selected);
         update_table_table()
         update_figure_brainview()
     end
     function cb_table_movedown(~,~)  % (src,event)
-        selected = atlas.movedown(selected);
+        selected = atlas.getBrainRegions().move_down(selected);
         update_table_table()
         update_figure_brainview()
     end
     function cb_table_move2top(~,~)  % (src,event)
-        selected = atlas.move2top(selected);
+        selected = atlas.getBrainRegions().move_to_top(selected);
         update_table_table()
         update_figure_brainview()
     end
     function cb_table_move2bottom(~,~)  % (src,event)
-        selected = atlas.move2bottom(selected);
+        selected = atlas.getBrainRegions().move_to_bottom(selected);
         update_table_table()
         update_figure_brainview()
     end
@@ -960,11 +966,11 @@ init_menu()
         set(ui_menu_edit_add,'Accelerator',ADD_SC)
         set(ui_menu_edit_add,'Callback',{@cb_table_add})
         
-        set(ui_menu_edit_addabove,'Label',ADDABOVE_CMD)
-        set(ui_menu_edit_addabove,'Callback',{@cb_table_addabove})
-        
-        set(ui_menu_edit_addbelow,'Label',ADDBELOW_CMD)
-        set(ui_menu_edit_addbelow,'Callback',{@cb_table_addbelow});
+%         set(ui_menu_edit_addabove,'Label',ADDABOVE_CMD)
+%         set(ui_menu_edit_addabove,'Callback',{@cb_table_addabove})
+%         
+%         set(ui_menu_edit_addbelow,'Label',ADDBELOW_CMD)
+%         set(ui_menu_edit_addbelow,'Callback',{@cb_table_addbelow});
         
         set(ui_menu_edit_remove,'Separator','on')
         set(ui_menu_edit_remove,'Label',REMOVE_CMD)
