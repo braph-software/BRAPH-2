@@ -9,8 +9,6 @@ function GUIBrainAtlas(atlas,restricted)
 %
 % See also BrainAtlas, BNC, GUI.
 
-% Author: Mite Mijalkov, Ehsan Kakaei & Giovanni Volpe
-% Date: 2016/01/01
 
 %% General Constants
 APPNAME = BRAPH2.NAME; % GUI.BAE_NAME;  % application name
@@ -269,8 +267,6 @@ ui_table_table = uitable(ui_panel_table);
 ui_button_table_selectall = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_clearselection = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_add = uicontrol(ui_panel_table,'Style', 'pushbutton');
-% ui_button_table_addabove = uicontrol(ui_panel_table,'Style', 'pushbutton');
-% ui_button_table_addbelow = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_remove = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_moveup = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_movedown = uicontrol(ui_panel_table,'Style', 'pushbutton');
@@ -308,17 +304,7 @@ init_table()
         set(ui_button_table_add,'Position',[.27 .11 .21 .03])
         set(ui_button_table_add,'String',ADD_CMD)
         set(ui_button_table_add,'TooltipString',ADD_TP);
-        set(ui_button_table_add,'Callback',{@cb_table_add})
-        
-%         set(ui_button_table_addabove,'Position',[.27 .08 .21 .03])
-%         set(ui_button_table_addabove,'String',ADDABOVE_CMD)
-%         set(ui_button_table_addabove,'TooltipString',ADDABOVE_TP)
-%         set(ui_button_table_addabove,'Callback',{@cb_table_addabove})
-%         
-%         set(ui_button_table_addbelow,'Position',[.27 .05 .21 .03])
-%         set(ui_button_table_addbelow,'String',ADDBELOW_CMD)
-%         set(ui_button_table_addbelow,'TooltipString',ADDBELOW_TP)
-%         set(ui_button_table_addbelow,'Callback',{@cb_table_addbelow})
+        set(ui_button_table_add,'Callback',{@cb_table_add})   
         
         set(ui_button_table_remove,'Position',[.52 .11 .21 .03])
         set(ui_button_table_remove,'String',REMOVE_CMD)
@@ -348,9 +334,9 @@ init_table()
     function update_table_atlasname()
         atlasname = atlas.getID();
         if isempty(atlasname)
-            set(f, 'Name', [APPNAME ' - ' BRAPH2.NAME])
+            set(f, 'Name', [APPNAME ' - ' BRAPH2.BUILD])
         else
-            set(f, 'Name', [APPNAME ' - ' BRAPH2.NAME ' - ' atlasname])
+            set(f, 'Name', [APPNAME ' - ' BRAPH2.BUILD ' - ' atlasname])
         end
         set(ui_edit_table_atlasname, 'String', atlasname)
     end
@@ -420,16 +406,6 @@ init_table()
         update_table_table()
         update_figure_brainview()
     end
-%     function cb_table_addabove(~,~)  % (src,event)
-%         selected = atlas.getBrainRegions().addabove(selected);
-%         update_table_table()
-%         update_figure_brainview()
-%     end
-%     function cb_table_addbelow(~,~)  % (src,event)
-%         selected = atlas.addbelow(selected);
-%         update_table_table()
-%         update_figure_brainview()
-%     end
     function cb_table_remove(~,~)  % (src,event)
         selected = atlas.getBrainRegions().remove_all(selected);
         update_table_table()
@@ -543,7 +519,7 @@ ui_button_figure_coronalposterior = uicontrol(ui_panel_figure,'Style','pushbutto
 init_figure()
     function init_figure()
         GUI.setUnits(ui_panel_figure)
-        GUI.setBackgroundColor(ui_panel_figure)
+         GUI.setBackgroundColor(ui_panel_figure)
         
         set(ui_panel_figure,'Position',FIGURE_POSITION)
         
@@ -620,6 +596,11 @@ ui_contextmenu_figure_select_info = uimenu(ui_contextmenu_figure_select);
 ui_contextmenu_figure_deselect = uicontextmenu();
 ui_contextmenu_figure_deselect_deselect = uimenu(ui_contextmenu_figure_deselect);
 ui_contextmenu_figure_deselect_info = uimenu(ui_contextmenu_figure_deselect);
+
+% new uicontextmenu
+ui_contextmenu_brain = uicontextmenu();
+ui_contextmenu_brain_settings = uimenu(ui_contextmenu_brain);
+
 init_contextmenu()
     function init_contextmenu()
         set(ui_contextmenu_figure_select_select,'Label',FIG_SELECTBR_CMD)
@@ -633,6 +614,9 @@ init_contextmenu()
         
         set(ui_contextmenu_figure_deselect_info,'Label',FIG_INFOBR_CMD)
         set(ui_contextmenu_figure_deselect_info,'Callback',{@cb_figure_infobr})
+        
+        set(ui_contextmenu_brain_settings, 'Label', 'Brain Settings')
+        set(ui_contextmenu_brain_settings, 'Callback', {@cb_brain_settings})
     end
     function create_figure()
         h_axis = FIG_INIT_AXISON;
@@ -662,15 +646,39 @@ init_contextmenu()
         ylabel([FIG_YLABEL ' ' GUI.BRA_UNITS FIG_UNITS GUI.KET_UNITS])
         zlabel([FIG_ZLABEL ' ' GUI.BRA_UNITS FIG_UNITS GUI.KET_UNITS])
         
-        h_brain = atlas.getPlotBrainSurf().brain();
+        ui_contextmenu_brain = uicontextmenu();
+        ui_contextmenu_brain_settings = uimenu(ui_contextmenu_brain);
+        set(ui_contextmenu_brain_settings,'Label','Brain Settings')
+        set(ui_contextmenu_brain_settings,'Callback',{@cb_brainview_brain_settings})
+        
+        ui_contextmenu_brain_light = uimenu(ui_contextmenu_brain);
+        set(ui_contextmenu_brain_light,'Label','Brain Light')
+        set(ui_contextmenu_brain_light,'Callback',{@cb_brainview_brain_light})
+        
+        h_brain_obj = atlas.getPlotBrainSurf();
+        h_brain = h_brain_obj.brain();
         set(h_brain,'EdgeColor',FIG_EDGECOLOR);
         set(h_brain,'FaceColor',FIG_FACECOLOR);
-        set(h_brain,'FaceAlpha',h_brainalpha);
+        set(h_brain,'FaceAlpha',h_brainalpha, 'UiContextMenu', ui_contextmenu_brain);
+      
+        
+        function cb_brainview_brain_settings(~, ~)
+            h_brain_obj.brain_settings();
+        end      
+        function cb_brainview_brain_light(~, ~)
+            h_brain_obj.brain_lighting();
+        end      
+        
         update_figure_light()
         
         update_figure_brainview()
     end
     function update_figure_brainview()
+        
+        ui_contextmenu_brain = uicontextmenu();
+        ui_contextmenu_brain_settings = uimenu(ui_contextmenu_brain);
+        set(ui_contextmenu_brain_settings,'Label','Settings')
+        set(ui_contextmenu_brain_settings,'Callback',{@cb_brainview_brain_settings})
         
         if get(ui_checkbox_figure_axis,'Value')~=h_axis
             h_axis = get(ui_checkbox_figure_axis,'Value');
@@ -887,22 +895,17 @@ ui_menu_file = uimenu(f,'Label',MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
 ui_menu_file_save = uimenu(ui_menu_file);
 ui_menu_file_saveas = uimenu(ui_menu_file);
-% ui_menu_file_import_xml = uimenu(ui_menu_file);
 ui_menu_file_import_txt = uimenu(ui_menu_file);
 ui_menu_file_import_xls = uimenu(ui_menu_file);
 ui_menu_file_import_json = uimenu(ui_menu_file);
-% ui_menu_file_export_xml = uimenu(ui_menu_file);
 ui_menu_file_export_txt = uimenu(ui_menu_file);
 ui_menu_file_export_xls = uimenu(ui_menu_file);
 ui_menu_file_export_json = uimenu(ui_menu_file);
-
 ui_menu_file_close = uimenu(ui_menu_file);
 ui_menu_edit = uimenu(f,'Label',MENU_EDIT);
 ui_menu_edit_selectall = uimenu(ui_menu_edit);
 ui_menu_edit_clearselection = uimenu(ui_menu_edit);
 ui_menu_edit_add = uimenu(ui_menu_edit);
-ui_menu_edit_addabove = uimenu(ui_menu_edit);
-ui_menu_edit_addbelow = uimenu(ui_menu_edit);
 ui_menu_edit_remove = uimenu(ui_menu_edit);
 ui_menu_edit_moveup = uimenu(ui_menu_edit);
 ui_menu_edit_movedown = uimenu(ui_menu_edit);
@@ -966,13 +969,6 @@ init_menu()
         set(ui_menu_edit_add,'Accelerator',ADD_SC)
         set(ui_menu_edit_add,'Callback',{@cb_table_add})
         
-%         set(ui_menu_edit_addabove,'Label',ADDABOVE_CMD)
-%         set(ui_menu_edit_addabove,'Callback',{@cb_table_addabove})
-%         
-%         set(ui_menu_edit_addbelow,'Label',ADDBELOW_CMD)
-%         set(ui_menu_edit_addbelow,'Callback',{@cb_table_addbelow});
-        
-        set(ui_menu_edit_remove,'Separator','on')
         set(ui_menu_edit_remove,'Label',REMOVE_CMD)
         set(ui_menu_edit_remove,'Accelerator',REMOVE_SC)
         set(ui_menu_edit_remove,'Callback',{@cb_table_remove})
@@ -1250,8 +1246,6 @@ setup_restrictions()
     function setup_restrictions()
         if exist('restricted','var') && restricted
             set(ui_button_table_add,'enable','off')
-            set(ui_button_table_addabove,'enable','off')
-            set(ui_button_table_addbelow,'enable','off')
             set(ui_button_table_remove,'enable','off')
             set(ui_button_table_moveup,'enable','off')
             set(ui_button_table_movedown,'enable','off')
@@ -1259,12 +1253,10 @@ setup_restrictions()
             set(ui_button_table_move2bottom,'enable','off')
             
             set(ui_menu_file_open,'enable','off')
-            set(ui_menu_file_import_xml,'enable','off')
+
             set(ui_menu_file_import_txt,'enable','off')
             set(ui_menu_file_import_xls,'enable','off')
             set(ui_menu_edit_add,'enable','off')
-            set(ui_menu_edit_addabove,'enable','off')
-            set(ui_menu_edit_addbelow,'enable','off')
             set(ui_menu_edit_remove,'enable','off')
             set(ui_menu_edit_moveup,'enable','off')
             set(ui_menu_edit_movedown,'enable','off')
