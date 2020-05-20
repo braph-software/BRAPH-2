@@ -158,7 +158,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         WEIGHTED_DESCRIPTION = 'Graph with weighted connections.';
         
         BINARY = 2  % binary (0 or 1) connections
-        BINARY_NAME = 'Weighted'
+        BINARY_NAME = 'Binary'
         BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.';
         
         CONNECTION_TYPE_NUMBER = 2
