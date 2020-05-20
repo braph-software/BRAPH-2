@@ -40,20 +40,23 @@ SAVE_TP = ['Save current brain atlas. Shortcut: ' GUI.ACCELERATOR '+' SAVE_SC];
 SAVEAS_CMD = GUI.SAVEAS_CMD;
 SAVEAS_TP = 'Open dialog box to save current brain atlas';
 
-IMPORT_XML_CMD = GUI.IMPORT_XML_CMD;
-IMPORT_XML_TP = 'Import brain atlas from an xml file (*.xml)';
-
 IMPORT_TXT_CMD = GUI.IMPORT_TXT_CMD;
 IMPORT_TXT_TP = 'Import brain atlas from a txt file (tab-delimited text file)';
 
 IMPORT_XLS_CMD = GUI.IMPORT_XLS_CMD;
 IMPORT_XLS_TP = 'Import brain atlas from an Excel file';
 
-EXPORT_XML_CMD = GUI.EXPORT_XML_CMD;
-EXPORT_XML_TP = 'Export brain atlas as an xml file (*.xml)';
+IMPORT_JSON_CMD = GUI.IMPORT_JSON_CMD;
+IMPORT_JSON_TP = 'Import brain atlas from a json file.';
 
 EXPORT_TXT_CMD = GUI.EXPORT_TXT_CMD;
 EXPORT_TXT_TP = 'Export brain atlas as a txt file (tab-delimited text file)';
+
+EXPORT_XLS_CMD = GUI.EXPORT_XLS_CMD;
+EXPORT_XLS_TP = 'Export brain atlas as a xls file.';
+
+EXPORT_JSON_CMD = GUI.EXPORT_JSON_CMD;
+EXPRT_JSON_TP = 'Export brain atlas as a json file.';
 
 CLOSE_CMD = GUI.CLOSE_CMD;
 CLOSE_SC = GUI.CLOSE_SC;
@@ -151,20 +154,10 @@ selected = [];
             update_filename(filename)
         end
     end
-    function cb_import_xml(~,~)  % (scr,event)
-        atlastmp = BrainAtlas('', '', '', {});
-        success = atlastmp.loadfromfile(BNC.XML_MSG_GETFILE);
-        if success
-            atlas = atlastmp;
-            selected = [];
-            setup()
-            update_filename('')
-        end
-    end
     function cb_import_txt(~,~)  % (scr,event)
-        atlastmp = BrainAtlas('', '', '', {});
-        success = atlastmp.load_from_txt();
-        if success
+       %  = ('', '', '', {});
+        atlastmp = BrainAtlas.load_from_txt();
+        if ~isempty(atlastmp)
             atlas = atlastmp;
             selected = [];
             setup()
@@ -172,20 +165,31 @@ selected = [];
         end
     end
     function cb_import_xls(~,~)  % (scr,event)
-        atlastmp = BrainAtlas('', '', '', {});
-        success = atlastmp.load_from_xls();
-        if success
+        atlastmp = BrainAtlas.load_from_xls();
+        if  ~isempty(atlastmp)
             atlas = atlastmp;
             selected = [];
             setup()
             update_filename('')
         end
     end
-    function cb_export_xml(~,~)  % (scr,event)
-        atlas.savetofile(BNC.XML_MSG_PUTFILE);
+    function cb_import_json(~,~)  % (src, event)
+        atlastmp = BrainAtlas.load_from_json();
+        if ~isempty(atlastmp)
+            atlas = atlastmp;
+            selected = [];
+            setup()
+            update_filename('')
+        end
     end
     function cb_export_txt(~,~)  % (scr,event)
-        atlas.savetotxt(BNC.TXT_MSG_PUTFILE);
+        atlas.save_to_txt();
+    end
+    function cb_export_xls(~,~)  % (src,event)
+        atlas.save_to_xls();
+    end
+    function cb_export_json(~,~)
+        atlas.save_to_json();
     end
 
 % GUI application data
@@ -249,8 +253,7 @@ TAB_BR_NAME_COL = 3;
 TAB_BR_X_COL = 4;
 TAB_BR_Y_COL = 5;
 TAB_BR_Z_COL = 6;
-TAB_BR_HS_COL = 7;
-TAB_BR_NOTES_COL = 8;
+TAB_BR_NOTES_COL = 7;
 
 TABLE_WIDTH = LEFTCOLUMN_WIDTH;
 TABLE_HEIGHT = MAINPANEL_HEIGHT;
@@ -276,29 +279,29 @@ init_table()
         GUI.setUnits(ui_panel_table)
         GUI.setBackgroundColor(ui_panel_table)
         
-        set(ui_panel_table,'Position',TABLE_POSITION)
-        set(ui_panel_table,'BorderType','none')
+        set(ui_panel_table, 'Position', TABLE_POSITION)
+        set(ui_panel_table, 'BorderType', 'none')
         
-        set(ui_edit_table_atlasname,'Position',[.02 .95 .96 .04])
-        set(ui_edit_table_atlasname,'HorizontalAlignment','left')
-        set(ui_edit_table_atlasname,'FontWeight','bold')
-        set(ui_edit_table_atlasname,'Callback',{@cb_table_atlasname})
+        set(ui_edit_table_atlasname, 'Position',[.02 .95 .96 .04])
+        set(ui_edit_table_atlasname, 'HorizontalAlignment','left')
+        set(ui_edit_table_atlasname, 'FontWeight','bold')
+        set(ui_edit_table_atlasname, 'Callback',{@cb_table_atlasname})
         
-        set(ui_table_table,'Position',[.02 .16 .96 .77])
-        set(ui_table_table,'ColumnName',{'','Label','Name','x','y','z','left/right','Notes'})
-        set(ui_table_table,'ColumnFormat',{'logical','char','char','numeric','numeric','numeric','char'})
-        set(ui_table_table,'ColumnEditable',true)
-        set(ui_table_table,'CellEditCallback',{@cb_table_edit});
+        set(ui_table_table, 'Position', [.02 .16 .96 .77])
+        set(ui_table_table, 'ColumnName', {'', 'Label', 'Name', 'x', 'y', 'z', 'Notes'})
+        set(ui_table_table, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'numeric', 'numeric', 'char'})
+        set(ui_table_table, 'ColumnEditable', true)
+        set(ui_table_table, 'CellEditCallback', {@cb_table_edit});
         
-        set(ui_button_table_selectall,'Position',[.02 .11 .21 .03])
-        set(ui_button_table_selectall,'String',SELECTALL_CMD)
-        set(ui_button_table_selectall,'TooltipString',SELECTALL_TP)
-        set(ui_button_table_selectall,'Callback',{@cb_table_selectall})
+        set(ui_button_table_selectall, 'Position', [.02 .11 .21 .03])
+        set(ui_button_table_selectall, 'String', SELECTALL_CMD)
+        set(ui_button_table_selectall, 'TooltipString', SELECTALL_TP)
+        set(ui_button_table_selectall, 'Callback', {@cb_table_selectall})
         
-        set(ui_button_table_clearselection,'Position',[.02 .08 .21 .03])
-        set(ui_button_table_clearselection,'String',CLEARSELECTION_CMD)
-        set(ui_button_table_clearselection,'TooltipString',CLEARSELECTION_TP)
-        set(ui_button_table_clearselection,'Callback',{@cb_table_clearselection})
+        set(ui_button_table_clearselection, 'Position', [.02 .08 .21 .03])
+        set(ui_button_table_clearselection, 'String', CLEARSELECTION_CMD)
+        set(ui_button_table_clearselection, 'TooltipString', CLEARSELECTION_TP)
+        set(ui_button_table_clearselection, 'Callback', {@cb_table_clearselection})
         
         set(ui_button_table_add,'Position',[.27 .11 .21 .03])
         set(ui_button_table_add,'String',ADD_CMD)
@@ -362,7 +365,6 @@ init_table()
             data{i, TAB_BR_X_COL} = atlas.getBrainRegions().getValue(i).getX();
             data{i, TAB_BR_Y_COL} = atlas.getBrainRegions().getValue(i).getY();
             data{i, TAB_BR_Z_COL} = atlas.getBrainRegions().getValue(i).getZ();
-           % data{i,TAB_BR_HS_COL} = atlas.get(i).getPropValue(BrainRegion.HS);
             data{i, TAB_BR_NOTES_COL} = atlas.getBrainRegions().getValue(i).getNotes();
         end
         set(ui_table_table, 'Data', data)
@@ -392,8 +394,6 @@ init_table()
                 atlas.get(i).setProp(BrainRegion.Y,newdata)
             case TAB_BR_Z_COL
                 atlas.get(i).setProp(BrainRegion.Z,newdata)
-            case TAB_BR_HS_COL
-               % atlas.get(i).setProp(BrainRegion.HS,newdata)
             case TAB_BR_NOTES_COL
                 atlas.get(i).setProp(BrainRegion.NOTES,newdata)
         end
@@ -881,11 +881,15 @@ ui_menu_file = uimenu(f,'Label',MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
 ui_menu_file_save = uimenu(ui_menu_file);
 ui_menu_file_saveas = uimenu(ui_menu_file);
-ui_menu_file_import_xml = uimenu(ui_menu_file);
+% ui_menu_file_import_xml = uimenu(ui_menu_file);
 ui_menu_file_import_txt = uimenu(ui_menu_file);
 ui_menu_file_import_xls = uimenu(ui_menu_file);
-ui_menu_file_export_xml = uimenu(ui_menu_file);
+ui_menu_file_import_json = uimenu(ui_menu_file);
+% ui_menu_file_export_xml = uimenu(ui_menu_file);
 ui_menu_file_export_txt = uimenu(ui_menu_file);
+ui_menu_file_export_xls = uimenu(ui_menu_file);
+ui_menu_file_export_json = uimenu(ui_menu_file);
+
 ui_menu_file_close = uimenu(ui_menu_file);
 ui_menu_edit = uimenu(f,'Label',MENU_EDIT);
 ui_menu_edit_selectall = uimenu(ui_menu_edit);
@@ -919,21 +923,26 @@ init_menu()
         set(ui_menu_file_saveas,'Label',SAVEAS_CMD)
         set(ui_menu_file_saveas,'Callback',{@cb_saveas});
         
-        set(ui_menu_file_import_xml,'Separator','on')
-        set(ui_menu_file_import_xml,'Label',IMPORT_XML_CMD)
-        set(ui_menu_file_import_xml,'Callback',{@cb_import_xml})
-        
-        set(ui_menu_file_import_txt,'Label',IMPORT_TXT_CMD)
+        % menu import
+        set(ui_menu_file_import_txt,'Separator','on')
+        set(ui_menu_file_import_txt,'Label', IMPORT_TXT_CMD)
         set(ui_menu_file_import_txt,'Callback',{@cb_import_txt})
         
-        set(ui_menu_file_import_xls,'Label',IMPORT_XLS_CMD)
+        set(ui_menu_file_import_xls,'Label', IMPORT_XLS_CMD)
         set(ui_menu_file_import_xls,'Callback',{@cb_import_xls})
         
-        set(ui_menu_file_export_xml,'Label',EXPORT_XML_CMD)
-        set(ui_menu_file_export_xml,'Callback',{@cb_export_xml})
+        set(ui_menu_file_import_json,'Label', IMPORT_JSON_CMD)
+        set(ui_menu_file_import_json,'Callback',{@cb_import_json})
         
+        % menu export
         set(ui_menu_file_export_txt,'Label',EXPORT_TXT_CMD)
         set(ui_menu_file_export_txt,'Callback',{@cb_export_txt})
+        
+        set(ui_menu_file_export_xls,'Label',EXPORT_XLS_CMD)
+        set(ui_menu_file_export_xls,'Callback',{@cb_export_xls})
+        
+        set(ui_menu_file_export_json,'Label',EXPORT_JSON_CMD)
+        set(ui_menu_file_export_json,'Callback',{@cb_export_json})
         
         set(ui_menu_file_close,'Separator','on')
         set(ui_menu_file_close,'Label',CLOSE_CMD)
@@ -1184,7 +1193,7 @@ init_toolbar()
         end
     end
     function cb_menu_figure(~,~)  % (src,event)
-        h = figure('Name', ['Brain Atlas - ' atlas.getProp(BrainAtlas.NAME)]);
+        h = figure('ID', ['Brain Atlas - ' atlas.getID()]);
         set(gcf,'color','w')
         copyobj(ui_axes_figure,h)
         set(gca,'Units','normalized')

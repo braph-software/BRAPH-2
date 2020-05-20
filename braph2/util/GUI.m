@@ -162,12 +162,14 @@ classdef GUI
         
         SAVEAS_CMD = 'Save as ...';
         
-        IMPORT_XML_CMD = 'Import (xml) ...';
+     
         IMPORT_TXT_CMD = 'Import (txt) ...';
         IMPORT_XLS_CMD = 'Import (xls) ...';
+        IMPORT_JSON_CMD =  'Import (json) ...';        
         
-        EXPORT_XML_CMD = 'Export (xml) ...';
         EXPORT_TXT_CMD = 'Export (txt) ...';
+        EXPORT_XLS_CMD = 'Export (xls)  ...';
+        EXPORT_JSON_CMD = 'Export (json) ...';
         
         CLOSE_CMD = 'Close';
         CLOSE_SC = 'C';
