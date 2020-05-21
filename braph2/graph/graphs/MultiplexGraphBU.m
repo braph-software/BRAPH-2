@@ -99,7 +99,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             %
             % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
             %
-            % See also getConnectionType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
             
             negativity_type = Graph.NONNEGATIVE;
         end

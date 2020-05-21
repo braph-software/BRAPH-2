@@ -35,9 +35,9 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   BINARY - binary graph
     %   BINARY_NAME    - name of BINARY
     %   BINARY_DESCRIPTION  - description of BINARY
-    %   CONNECTION_TYPE_NUMBER    - number of graph connection types
-    %   CONNECTION_TYPE_NAME    - name of graph connection types
-    %   CONNECTION_TYPE_DESCRIPTION    - description of graph connection types
+    %   CONNECTIVITY_TYPE_NUMBER    - number of graph connectivity types
+    %   CONNECTIVITY_TYPE_NAME    - name of graph connectivity types
+    %   CONNECTIVITY_TYPE_DESCRIPTION    - description of graph connectivity types
     %   DIRECTED    - directed graph
     %   DIRECTED_NAME   - name of DIRECTED
     %   DIRECTED_DESCRIPTION    - description of DIRECTED
@@ -79,7 +79,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_multiplex    - checks if the graph is a multiplex graph.
     %   is_ordered_multilayer   - checks if the graph is an ordered multilayer graph.
     %   is_multilayer   - checks if the graph is a multilayer graph.
-    %   getConnectionType    - returns if the graph is binary or weighted.
+    %   getConnectivityType    - returns if the graph is binary or weighted.
     %   is_weighted - checks if the graph is weighted.
     %   is_binary   - checks if the graph is binary.
     %   getEgdeType    - returns if graph is directed or undirected.
@@ -152,7 +152,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.MULTILAYER_DESCRIPTION
             }
         
-        % Connection types
+        % Connectivity types
         WEIGHTED = 1  % weighted connections
         WEIGHTED_NAME = 'Weighted'
         WEIGHTED_DESCRIPTION = 'Graph with weighted connections.';
@@ -160,14 +160,14 @@ classdef Graph < handle & matlab.mixin.Copyable
         BINARY_NAME = 'Weighted'
         BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.';
         
-        CONNECTION_TYPE_NUMBER = 2
+        CONNECTIVITY_TYPE_NUMBER = 2
         
-        CONNECTION_TYPE_NAME = {
+        CONNECTIVITY_TYPE_NAME = {
             Graph.WEIGHTED_NAME
             Graph.BINARY_NAME
             }
         
-        CONNECTION_TYPE_DESCRIPTION = {
+        CONNECTIVITY_TYPE_DESCRIPTION = {
             Graph.WEIGHTED_DESCRIPTION
             Graph.BINARY_DESCRIPTION
             }
@@ -263,13 +263,17 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             settings = get_from_varargin(varargin, 'Settings', varargin{:});
             
-            Graph.checkA(Graph.getGraphType(g), A)  % performs all necessary checks on A
+            Graph.checkA(Graph.getGraphType(g), A);  % performs all necessary checks on A
+            Graph.checkConnectivity(Graph.getConnectivityType(g), A);
+            Graph.checkEdge(Graph.getEdgeType(g), A);
+            Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g), A);
+            Graph.checkNegativity(Graph.getNegativityType(g), A);
             
             g.A = A;
             g.settings = settings;  % initialize the property settings
         end
     end
-    methods (Static)  % Check A
+    methods (Static)  % Checks
         function checkA(graph_type, A)
             % CHECKA checks if adjacency matrix A or cell array of adjacency matrices A is correct for the type of graph
             %
@@ -343,7 +347,160 @@ classdef Graph < handle & matlab.mixin.Copyable
                         'All submatrices in the same column must have the same number of columns.')
             end
         end
+        function checkConnectivity(connectivity_type, A)
+
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch connectivity_type 
+                    case Graph.BINARY
+                        assert(all(all(A == 0 | A == 1)), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For connectivity type Graph.BINARY, A must be binary (0s and 1s),' ...
+                            ' while it is ' tostring(A)])
+                        
+                    case Graph.WEIGHTED
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Connectivity type must be Graph.BINARY (%i) or Graph.WEIGHTED (%i),' ...
+                            ' while it is ' tostring(connectivity_type)], ...
+                            Graph.BINARY, Graph.WEIGHTED)
+                end
+            else  % A is 2D cell array
+                
+                if numel(connectivity_type) == 1
+                    connectivity_type = connectivity_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        Graph.checkConnectivity(connectivity_type(i, j), A{i, j});
+                    end
+                end
+            end
+        end
+        function checkEdge(edge_type, A, offdiag_A)
+
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch edge_type 
+                    case Graph.UNDIRECTED
+                        if nargin > 2
+                            if size(A, 1) == size(A, 2)
+                                assert(all(all(A == offdiag_A)), ...
+                                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                                    ['For edge type Graph.UNDIRECTED, A(i,j) in the off-diagonal in non-single' ...
+                                    ' layer graphs must be the same that A(j,i) while it is ' tostring(A)])
+                            else
+                                assert(all(all(A == offdiag_A')), ...
+                                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                                    ['For edge type Graph.UNDIRECTED, non-square A(i,j) in the off-diagonal' ...
+                                    ' in non-single layer graphs must be the same that the'...
+                                    ' transpose of A(j,i) while it is ' tostring(A)])
+                            end
+                        else    
+                            assert(all(all(A == A')), ...
+                                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                                ['For edge type Graph.UNDIRECTED, A must be symmetric,' ...
+                                ' while it is ' tostring(A)])
+                        end
+                    case Graph.DIRECTED
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Edge type must be Graph.DIRECTED (%i) or Graph.UNDIRECTED (%i),' ...
+                            ' while it is ' tostring(edge_type)], ...
+                            Graph.DIRECTED, Graph.UNDIRECTED)
+                end
+            else  % A is 2D cell array
+                
+                if numel(edge_type) == 1
+                    edge_type = edge_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)    
+                        if i ~= j
+                            Graph.checkEdge(edge_type(i, j), A{i, j}, A{j, i});
+                        else
+                            Graph.checkEdge(edge_type(i, j), A{i, j});
+                        end    
+                    end
+                end
+            end
+        end
+        function checkSelfConnectivity(selfconnectivity_type, A)
+
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch selfconnectivity_type 
+                    case Graph.NOT_SELFCONNECTED
+                        assert(all(all(A(1:length(A)+1:end) == 0)), ...    
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For self-connectivity type Graph.NOT_SELFCONNECTED, A must have,' ...
+                            ' 0 values in the diagonal while it is ' tostring(A)])
+                        
+                    case Graph.SELFCONNECTED
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Self-connectivity type must be Graph.SELFCONNECTED (%i) or' ...
+                            ' Graph.NOT_SELFCONNECTED (%i), while it is ' tostring(selfconnectivity_type)], ...
+                            Graph.SELFCONNECTED, Graph.NOT_SELFCONNECTED)
+                end
+            else  % A is 2D cell array
+                
+                if numel(selfconnectivity_type) == 1
+                    selfconnectivity_type = selfconnectivity_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    Graph.checkSelfConnectivity(selfconnectivity_type(i, i), A{i, i});
+                end
+            end
+        end      
+        function checkNegativity(negativity_type, A)
+            
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch negativity_type
+                    case Graph.NONNEGATIVE
+                        assert(all(all(A >= 0)), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For negativity type Graph.NONNEGATIVE, A must have,' ...
+                            ' non-negative values while it is ' tostring(A)])
+                        
+                    case Graph.NEGATIVE
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Negativity type must be Graph.NEGATIVE (%i) or' ...
+                            ' Graph.NONNEGATIVE (%i), while it is ' tostring(negativity_type)], ...
+                            Graph.NEGATIVE, Graph.NONNEGATIVE)
+                end
+            else  % A is 2D cell array
+                
+                if numel(negativity_type) == 1
+                    negativity_type = negativity_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        Graph.checkNegativity(negativity_type(i, j), A{i, j});
+                    end
+                end
+            end
+        end
     end
+
     methods (Static)  % Descriptive methods
         function graph_class_list = getList()
             % GETLIST returns the list of available graphs
@@ -494,20 +651,20 @@ classdef Graph < handle & matlab.mixin.Copyable
                    
             bool = Graph.getGraphType(g) == Graph.MULTILAYER;
         end
-        function connection_type = getConnectionType(g)
-            % GETCONNECTIONTYPE returns if graph is binary or weighted
+        function connectivity_type = getConnectivityType(g, varargin)
+            % GETCONNECTIVITYTYPE returns if graph is binary or weighted
             %
-            % CONNECTION_TYPE = GETCONNECTIONTYPE(G) returns if
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G) returns if
             % the instance of the concrete graph G is binary or weighted.
             %
-            % CONNECTION_TYPE = GETCONNECTIONTYPE(GRAPH_CLASS) returns 
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(GRAPH_CLASS) returns 
             % if graph whose class is GRAPH_CLASS is binary or weighted.
             %
             % See also is_binary(), is_weighted().     
-                  
-            connection_type = eval([Graph.getClass(g) '.getConnectionType()']);
+            
+            connectivity_type = eval([Graph.getClass(g) '.getConnectivityType(varargin{:})']);
         end
-        function bool = is_weighted(g)
+        function bool = is_weighted(g, varargin)
             % IS_WEIGHTED checks if graph is weighted
             %
             % BOOL = IS_WEIGHTED(G) returns if the instance of the
@@ -516,11 +673,11 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_WEIGHTED(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is weighted.
             %
-            % See also getConnectionType(), is_binary().     
-                       
-            bool = Graph.getConnectionType(g) == Graph.WEIGHTED;
+            % See also getConnectivityType(), is_binary().     
+            
+            bool = Graph.getConnectivityType(g, varargin{:}) == Graph.WEIGHTED;
         end
-        function bool = is_binary(g)
+        function bool = is_binary(g, varargin)
             % IS_BINARY checks if graph is binary
             %
             % BOOL = IS_BINARY(G) returns if the instance of the
@@ -529,11 +686,11 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_BINARY(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is binary.
             %
-            % See also getConnectionType(), is_weighted().     
+            % See also getConnectivityType(), is_weighted().     
             
-            bool = Graph.getConnectionType(g) == Graph.BINARY;
+            bool = Graph.getConnectivityType(g, varargin{:}) == Graph.BINARY;
         end
-        function edge_type = getEgdeType(g)
+        function edge_type = getEdgeType(g, varargin)
             % GETEDGETYPE returns if graph is directed or undirected
             %
             % EDGE_TYPE = GETEDGETYPE(G) returns if
@@ -546,9 +703,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also is_directed(), is_undirected().     
                          
-            edge_type = eval([Graph.getClass(g) '.getEdgeType()']);
+            edge_type = eval([Graph.getClass(g) '.getEdgeType(varargin{:})']);
         end
-        function bool = is_directed(g)
+        function bool = is_directed(g, varargin)
             % IS_DIRECTED checks if graph is directed
             %
             % BOOL = IS_DIRECTED(G) returns if the instance of the
@@ -559,9 +716,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getEgdeType(), is_undirected().     
                      
-            bool = Graph.getEgdeType(g) == Graph.DIRECTED;
+            bool = Graph.getEdgeType(g, varargin{:}) == Graph.DIRECTED;
         end
-        function bool = is_undirected(g)
+        function bool = is_undirected(g, varargin)
             % IS_UNDIRECTED checks if graph is undirected
             %
             % BOOL = IS_UNDIRECTED(G) returns if the instance of the
@@ -572,7 +729,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getEgdeType(), is_directed().     
                     
-            bool = Graph.getEgdeType(g) == Graph.UNDIRECTED;
+            bool = Graph.getEdgeType(g, varargin{:}) == Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType(g)
             % GETSELFCONNECTIVITYTYPE returns if graph is self-connected or not self-connected
