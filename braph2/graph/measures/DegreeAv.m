@@ -57,7 +57,7 @@ classdef DegreeAv < Degree
             degree_av = mean(degree);
         end
     end
-    methods(Static)
+    methods(Static)  % Descriptive methods
          function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
@@ -102,32 +102,25 @@ classdef DegreeAv < Degree
             
             available_settings = {};
         end
-        function bool = is_global()
-            % IS_GLOBAL checks if average degree measure is global (true)
+        function measure_format = getMeasureFormat()
+            % GETMEASUREFORMAT returns the measure format of average degree
             %
-            % BOOL = IS_GLOBAL() returns true.
+            % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
+            % of average degree measure (NODAL).
             %
-            % See also is_nodal, is_binodal.
-                                            
-            bool = true;
+            % See also getMeasureScope().
+            
+            measure_format = Measure.GLOBAL;
         end
-        function bool = is_nodal()
-            % IS_NODAL checks if average degree measure is nodal (false)
+        function measure_scope = getMeasureScope()
+            % GETMEASURESCOPE returns the measure scope of average degree
             %
-            % BOOL = IS_NODAL() returns false.
+            % MEASURE_SCOPE = GETMEASURESCOPE() returns the
+            % measure scope of average degree measure (UNILAYER).
             %
-            % See also is_global, is_binodal. 
-                       
-            bool = false;
-        end
-        function bool = is_binodal()
-            % IS_BINODAL checks if average degree measure is binodal (false)
-            %
-            % BOOL = IS_BINODAL() returns false.
-            %
-            % See also is_global, is_nodal.
-                       
-            bool = false;
+            % See also getMeasureFormat().
+            
+            measure_scope = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList() 
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs

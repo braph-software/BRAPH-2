@@ -106,7 +106,7 @@ classdef Distance < Measure
             end
         end
     end
-    methods (Static)
+    methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
@@ -148,32 +148,26 @@ classdef Distance < Measure
             
             available_settings = {};
         end
-        function bool = is_global()
-            % IS_GLOBAL checks if distance measure is global (false)
+
+        function measure_format = getMeasureFormat()
+            % GETMEASUREFORMAT returns the measure format of distance
             %
-            % BOOL = IS_GLOBAL() returns false.
+            % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
+            % of distance measure (NODAL).
             %
-            % See also is_nodal, is_binodal.
+            % See also getMeasureScope().
             
-            bool = false;
+            measure_format = Measure.BINODAL;
         end
-        function bool = is_nodal()
-            % IS_NODAL checks if distance measure is nodal (false)
+        function measure_scope = getMeasureScope()
+            % GETMEASURESCOPE returns the measure scope of distance
             %
-            % BOOL = IS_NODAL() returns false.
+            % MEASURE_SCOPE = GETMEASURESCOPE() returns the
+            % measure scope of distance measure (UNILAYER).
             %
-            % See also is_global, is_binodal. 
+            % See also getMeasureFormat().
             
-            bool = false;
-        end
-        function bool = is_binodal()
-            % IS_BINODAL checks if distance measure is binodal (true)
-            %
-            % BOOL = IS_BINODAL() returns true.
-            %
-            % See also is_global, is_nodal.
-            
-            bool = true;
+            measure_scope = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs

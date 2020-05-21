@@ -81,11 +81,11 @@ classdef GraphBD < Graph
         function graph_type = getGraphType()
             graph_type = Graph.GRAPH;
         end
-        function graph_type = getConnectionType()
-            graph_type = Graph.BINARY;
+        function connection_type = getConnectionType()
+            connection_type = Graph.BINARY;
         end
-        function graph_type = getEdgeType()
-            graph_type = Graph.DIRECTED;
+        function edge_type = getEdgeType()
+            edge_type = Graph.DIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType()
             selfconnectivity_type = Graph.NOT_SELFCONNECTED; 
@@ -95,7 +95,7 @@ classdef GraphBD < Graph
             %
             % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
             %
-            % See also getConnectionType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
             
             negativity_type = Graph.NONNEGATIVE;
         end
