@@ -85,8 +85,8 @@ classdef MultiplexGraphBU < MultiplexGraphBD
         function graph_type = getGraphType()
             graph_type = Graph.MULTIPLEX;
         end
-        function connection_type = getConnectionType()
-            connection_type = Graph.BINARY;
+        function connectivity_type = getConnectivityType()
+            connectivity_type = Graph.BINARY;
         end
         function edge_type = getEdgeType()
             edge_type = Graph.UNDIRECTED;
