@@ -234,6 +234,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     end
     properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
+        settings  % structure with the constructor varagin
     end
 %     properties (GetAccess=protected, SetAccess=protected)
 %         A  % adjacency matrix or 2D-cell array of adjacency matrices
@@ -255,10 +256,17 @@ classdef Graph < handle & matlab.mixin.Copyable
             % initializes the property settings with SETTINGS.
             %
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
-
+           
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
+            
+            settings = get_from_varargin(varargin, 'Settings', varargin{:});
+            
             Graph.checkA(Graph.getGraphType(g), A)  % performs all necessary checks on A
             
             g.A = A;
+            g.settings = settings;  % initialize the property settings
         end
     end
     methods (Static)  % Check A
@@ -671,14 +679,30 @@ classdef Graph < handle & matlab.mixin.Copyable
             disp([g.TYPE_DESCRIPTION{Graph.getGraphType(g)} ])
             disp([' size: ' int2str(g.layernumber(g)) ' layers with ' int2str(g.nodenumber(g)) ' nodes'])
 %             disp([' measures: ' int2str(length(g.measure_dict))]);
-%             disp([' settings']); %#ok<NBRAK>
-%             settings = g.getSettings(); %#ok<PROP>
-%             for i = 1:2:length(settings) %#ok<PROP>
-%                 disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
-%             end
+            disp([' settings']); %#ok<NBRAK>
+            settings = g.getSettings(); %#ok<PROP>
+            for i = 1:2:length(settings) %#ok<PROP>
+                disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
+            end
+        end
+        function res = getSettings(g, setting_code)
+            % GETSETTINGS returns the settings
+            %
+            % SETTINGS = GETSETTINGS(G) returns the settings of the graph
+            %
+            % SETTINGS = GETSETTINGS(G, SETTING_CODE) returns the settings
+            % of the graph SETTING_CODE.
+            %
+            % See also getA(), nodenumber().
+            
+            if nargin<2
+                res = g.settings;
+            else
+                res = get_from_varargin([], setting_code, g.settings{:});
+            end
         end
     end
-    methods (Static) % Inspection functions
+    methods (Static)  % Inspection functions
         function n = nodenumber(g)
             % NODENUMBER returns the number of nodes in the graph
             %
@@ -757,6 +781,111 @@ classdef Graph < handle & matlab.mixin.Copyable
             g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
         end
     end
+    methods (Static)  
+        function ga = nodeattack(g, nodes, layernumbers)
+            % NODEATTACK removes given nodes from a graph
+            %
+            % GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
+            % the nodes specified by NODES from G. For non single layer
+            % graphs, it removes NODES in every layer.
+            %
+            % GA = NODEATTACK(G, NODES, LAYERNUMBERS) creates the graph GA 
+            % resulting by removing the nodes specified by NODES from G. 
+            % For non single layer graphs, it removes NODES in the layers
+            % specified by LAYERNUMBERS.
+            %
+            % NODES are removed by setting all the connections from and to
+            % the nodes in the connection matrix to 0.
+            %
+            % See also edgeattack().
+                        
+            if nargin < 3
+                layernumbers = 1:1:g.layernumber(g);
+            end   
+            
+            A = g.getA(g);
+            
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    A(nodes(:), :) = 0;
+                    A(:, nodes(:)) = 0;
+                    
+                otherwise              
+                    for i = layernumbers
+                        B = A{i, i};
+                        B(nodes(:), :) = 0; 
+                        B(:, nodes(:)) = 0; 
+                        A(i, i) = {B};
+                    end
+            end
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());  % #ok<PROPLC>
+        end
+        function ga = edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j)
+            % EDGEATTACK removes given edges from a graph
+            %
+            % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
+            % by removing the edges going from NODES1 to NODES2 from G. For
+            % non single layer graphs, it removes the edges from NODES1 to
+            % NODES2 in every layer.
+            %
+            % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I) creates the graph GA 
+            % resulting by removing the edges going from NODES1 to NODES2 from G. 
+            % For non single layer graphs, it removes the edges from NODES1 to
+            % NODES2 in the layers specified by LAYERNUMBERS.
+            %
+            % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I, LAYERNUMBERS_J) 
+            % creates the graph GA resulting by removing the edges going
+            % from NODES1 to NODES2 from G. For non single layer graphs, it
+            % removes the edges from NODES1 to NODES2 in and between the layers
+            % specified by LAYERNUMBERS_I and LAYERNUMBERS_J.
+            %
+            % EDGES are removed by setting all the connections from NODES1 to
+            % NODES2 in the connection matrix to 0.
+            %
+            % NODES1 and NODES2 must have the same dimensions.
+            %
+            % See also nodeattack().
+                
+            if nargin < 4
+                layernumbers_i = 1:1:g.layernumber(g);
+            end
+            
+            if nargin < 5 
+                layernumbers_j = layernumbers_i;
+            end 
+            
+            A = g.getA(g);  % #ok<PROPLC>
+            
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    A(sub2ind(size(A), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                    if g.is_undirected(g)
+                        A(sub2ind(size(A), nodes2, nodes1)) = 0;  % #ok<PROPLC>
+                    end
+
+                otherwise
+                    for i = 1:1:length(layernumbers_i)
+                        B = A{layernumbers_i(i), layernumbers_j(i)};
+                        B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                        if g.is_undirected(g) && layernumbers_i(i) == layernumbers_j(i)
+                            B(sub2ind(size(B), nodes2, nodes1)) = 0;  % #ok<PROPLC>
+                        elseif g.is_undirected(g) && layernumbers_i(i) ~= layernumbers_j(i)
+                            C = A{layernumbers_j(i), layernumbers_i(i)};
+                            if size(C, 1) == size(C, 2)
+                                C(sub2ind(size(C), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                            else
+                                C = C';
+                                C(sub2ind(size(C), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                                C = C';
+                            end    
+                            A(layernumbers_j(i), layernumbers_i(i)) = {C};
+                        end
+                        A(layernumbers_i(i), layernumbers_j(i)) = {B};
+                    end
+            end 
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());  % #ok<PROPLC>
+        end
+    end
 %     methods (Access=protected)
 %         function g = Graph(A, varargin)
 %             % Graph(A) creates a graph with the default properties.
@@ -820,22 +949,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         end
 %     end
 %     methods
-%         function res = getSettings(g, setting_code)
-%             % GETSETTINGS returns the settings
-%             %
-%             % SETTINGS = GETSETTINGS(G) returns the settings of the graph
-%             %
-%             % SETTINGS = GETSETTINGS(G, SETTING_CODE) returns the settings
-%             % of the graph SETTING_CODE. 
-%             %
-%             % See also getA(), nodenumber().
-%             
-%             if nargin<2
-%                 res = g.settings;
-%             else
-%                 res = get_from_varargin([], setting_code, g.settings{:});
-%             end
-%         end
 %         function m = getMeasure(g, measure_class)
 %             % GETMEASURE returns measure
 %             %
@@ -890,44 +1003,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %             A = g.getA(); %#ok<PROPLC>
 %             sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings()); %#ok<PROPLC>
 %         end
-%         function ga = nodeattack(g, nodes)
-%             % NODEATTACK removes given nodes from a graph
-%             %
-%             % GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
-%             % the nodes specified by NODES from G.
-%             %
-%             % NODES are removed by setting all the connections from and to
-%             % the nodes in the connection matrix to 0.
-%             %
-%             % See also edgeattack().
-%             
-%             A = g.getA(); %#ok<PROPLC>
-%             
-%             for i = 1:1:numel(nodes)
-%                 A(nodes(i), :) = 0; %#ok<PROPLC>
-%                 A(:, nodes(i)) = 0; %#ok<PROPLC>
-%             end
-%             
-%             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings()); %#ok<PROPLC>
-%         end
-%         function ga = edgeattack(g, nodes1, nodes2)
-%             % EDGEATTACK removes given edges from a graph
-%             %
-%             % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
-%             % by removing the edges going from NODES1 to NODES2 from G.
-%             %
-%             % EDGES are removed by setting all the connections from NODES1 to
-%             % NODES2 in the connection matrix to 0.
-%             %
-%             % NODES1 and NODES2 must have the same dimensions.
-%             %
-%             % See also nodeattack().
-%             
-%             A = g.getA(); %#ok<PROPLC>
-%             A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<PROPLC>
-%             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings()); %#ok<PROPLC>
-%         end
-%     end
 %     methods (Abstract)
 %         randomize_graph(n);
 %     end
