@@ -85,15 +85,11 @@ classdef MultiplexGraphWU < MultiplexGraphWD
         function graph_type = getGraphType()
             graph_type = Graph.MULTIPLEX;
         end
-        function graph_type = getConnectivityType()
-            graph_type = Graph.WEIGHTED;
+        function connection_type = getConnectionType()
+            connection_type = Graph.WEIGHTED;
         end
-        function graph_type = getEdgeType(varargin)
-            graph_type = [ 
-                Graph.UNDIRECTED    Graph.DIRECTED    Graph.DIRECTED
-                Graph.DIRECTED    Graph.UNDIRECTED    Graph.DIRECTED 
-                Graph.DIRECTED  Graph.DIRECTED    Graph.UNDIRECTED
-                ];
+        function edge_type = getEdgeType()
+            edge_type = Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType()
             selfconnectivity_type = Graph.NOT_SELFCONNECTED;  % True in cell diagonal matrices
