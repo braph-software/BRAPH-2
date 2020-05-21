@@ -156,8 +156,9 @@ classdef Graph < handle & matlab.mixin.Copyable
         WEIGHTED = 1  % weighted connections
         WEIGHTED_NAME = 'Weighted'
         WEIGHTED_DESCRIPTION = 'Graph with weighted connections.';
+        
         BINARY = 2  % binary (0 or 1) connections
-        BINARY_NAME = 'Weighted'
+        BINARY_NAME = 'Binary'
         BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.';
         
         CONNECTIVITY_TYPE_NUMBER = 2
@@ -176,6 +177,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         DIRECTED = 1  % directed edges
         DIRECTED_NAME = 'Directed'
         DIRECTED_DESCRIPTION = 'Graph with directed edges.';
+        
         UNDIRECTED = 2  % undirected edges
         UNDIRECTED_NAME = 'Undirected'
         UNDIRECTED_DESCRIPTION = 'Graph with undirected edges.';
@@ -196,6 +198,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         NOT_SELFCONNECTED = 1
         NOT_SELFCONNECTED_NAME = 'Not self-connected'
         NOT_SELFCONNECTED_DESCRIPTION = 'Graph with self-connections set to zero.';
+        
         SELFCONNECTED = 2
         SELFCONNECTED_NAME = 'Self-connected'
         SELFCONNECTED_DESCRIPTION = 'Graph with self-connections considered.';
@@ -216,6 +219,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         NONNEGATIVE = 1
         NONNEGATIVE_NAME = 'Non-negative';
         NONNEGATIVE_DESCRIPTION = 'Graph with non-negative edges.';
+        
         NEGATIVE = 2
         NEGATIVE_NAME = 'Negative';
         NEGATIVE_DESCRIPTION = 'Graph with negative edges.';
