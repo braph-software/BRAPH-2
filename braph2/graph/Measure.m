@@ -107,7 +107,7 @@ classdef Measure < handle
             Measure.BILAYER_DESCRIPTION
             }
         
-    end    
+    end
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
         settings  % structure with the constructor settings
@@ -353,7 +353,7 @@ classdef Measure < handle
             
             bool = Measure.getMeasureType(m) == Measure.BILAYER;
         end
-    end    
+    end
     methods (Static)
         function measure_list = getList()
             % GETLIST returns the list of measures
@@ -412,7 +412,7 @@ classdef Measure < handle
         function available_settings = getAvailableSettings(m)
             
             available_settings = eval([Measure.getClass(m) '.getAvailableSettings()']);
-        end       
+        end
         function m = getMeasure(measure_code, g, varargin) %#ok<INUSD>
             % GETMEASURE returns a measure
             %

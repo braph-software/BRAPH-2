@@ -148,6 +148,7 @@ classdef Distance < Measure
             
             available_settings = {};
         end
+
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of distance
             %
