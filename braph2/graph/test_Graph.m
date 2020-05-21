@@ -321,6 +321,260 @@ for i = 1:1:length(connectivity_type)
     end
 end
 
+%% Test 1.3: checkEdge
+error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+
+edge_type{1} = Graph.UNDIRECTED;
+B{1} = 0.8;
+works{1} = true; 
+
+edge_type{2} = Graph.UNDIRECTED;
+B{2} = ones(3);
+works{2} = true; 
+
+edge_type{3} = Graph.DIRECTED;
+B{3} = round(rand(5));
+works{3} = true; 
+
+edge_type{4} = Graph.DIRECTED;
+B{4} = rand(5);
+works{4} = true; 
+
+edge_type{5} = Graph.UNDIRECTED;
+B{5} = [
+    1, 2;
+    1, 4];
+works{5} = false; 
+
+edge_type{6} = Graph.UNDIRECTED;
+B{6} = {
+    ones(2) zeros(2)
+    zeros(2) ones(2)
+    };
+works{6} = true; 
+
+edge_type{7} = [
+    Graph.UNDIRECTED Graph.UNDIRECTED
+    Graph.UNDIRECTED Graph.UNDIRECTED
+    ];
+B{7} = {
+    ones(2) zeros(2)
+    zeros(2) ones(2)
+    };
+works{7} = true;
+
+edge_type{8} = [
+    Graph.UNDIRECTED Graph.UNDIRECTED
+    Graph.UNDIRECTED Graph.UNDIRECTED
+    ];
+B{8} = {
+    ones(2) rand(2)
+    rand(2) ones(2)
+    };
+works{8} = false; 
+
+edge_type{9} = [
+    Graph.UNDIRECTED Graph.DIRECTED
+    Graph.DIRECTED Graph.UNDIRECTED
+    ];
+B{9} = {
+    ones(2) rand(2)
+    rand(2) ones(2)
+    };
+works{9} = true; 
+
+edge_type{10} = Graph.DIRECTED;
+B{10} = {
+    ones(3) rand(3)
+    rand(3) ones(3)
+    };
+works{10} = true; 
+
+for i = 1:1:length(edge_type)
+    if works{i}
+        Graph.checkEdge(edge_type{i}, B{i})
+    else
+        try 
+            clear e
+            Graph.checkEdge(edge_type{i}, B{i})
+        catch e
+            assert(isequal(e.identifier, error_identifier), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+                ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+        end
+        assert(exist('e', 'var') == 1, ...
+            [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+            ['Error not thrown. Expected error: ' error_identifier])
+    end
+end
+
+%% Test 1.4: checkSelfConnectivity
+error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+
+selfconnectivity_type{1} = Graph.NOT_SELFCONNECTED;
+B{1} = 0;
+works{1} = true; 
+
+selfconnectivity_type{2} = Graph.SELFCONNECTED;
+B{2} = 1;
+works{2} = true; 
+
+selfconnectivity_type{3} = Graph.NOT_SELFCONNECTED;
+B{3} = zeros(3);
+works{3} = true; 
+
+selfconnectivity_type{4} = Graph.SELFCONNECTED;
+B{4} = ones(3);
+works{4} = true; 
+
+selfconnectivity_type{5} = Graph.NOT_SELFCONNECTED;
+B{5} = ones(3);
+works{5} = false; 
+
+selfconnectivity_type{6} = Graph.NOT_SELFCONNECTED;
+B{6} = {
+    zeros(2) zeros(2)
+    zeros(2) zeros(2)
+    };
+works{6} = true; 
+
+selfconnectivity_type{7} = Graph.SELFCONNECTED;
+B{7} = {
+    ones(2) ones(2)
+    ones(2) ones(2)
+    };
+works{7} = true; 
+
+selfconnectivity_type{8} = Graph.NOT_SELFCONNECTED;
+B{8} = {
+    ones(2) ones(2)
+    ones(2) ones(2)
+    };
+works{8} = false; 
+
+selfconnectivity_type{9} = [
+    Graph.NOT_SELFCONNECTED Graph.SELFCONNECTED
+    Graph.SELFCONNECTED Graph.NOT_SELFCONNECTED
+    ];
+B{9} = {
+    zeros(2) ones(2)
+    ones(2) zeros(2)
+    };
+works{9} = true;
+
+selfconnectivity_type{10} = [
+    Graph.NOT_SELFCONNECTED Graph.SELFCONNECTED
+    Graph.SELFCONNECTED Graph.NOT_SELFCONNECTED
+    ];
+B{10} = {
+    ones(2) zeros(2)
+    zeros(2) ones(2)
+    };
+works{10} = false;
+
+for i = 1:1:length(selfconnectivity_type)
+    if works{i}
+        Graph.checkSelfConnectivity(selfconnectivity_type{i}, B{i})
+    else
+        try 
+            clear e
+            Graph.checkSelfConnectivity(selfconnectivity_type{i}, B{i})
+        catch e
+            assert(isequal(e.identifier, error_identifier), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+                ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+        end
+        assert(exist('e', 'var') == 1, ...
+            [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+            ['Error not thrown. Expected error: ' error_identifier])
+    end
+end
+
+%% Test 1.: checkNegativity
+error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+
+negativity_type{1} = Graph.NONNEGATIVE;
+B{1} = 0.8;
+works{1} = true; 
+
+negativity_type{2} = Graph.NEGATIVE;
+B{2} = -0.8;
+works{2} = true; 
+
+negativity_type{3} = Graph.NONNEGATIVE;
+B{3} = ones(5);
+works{3} = true; 
+
+negativity_type{4} = Graph.NEGATIVE;
+B{4} = randn(5);
+works{4} = true; 
+
+negativity_type{5} = Graph.NONNEGATIVE;
+B{5} = randn(5);
+works{5} = false; 
+
+negativity_type{6} = Graph.NONNEGATIVE;
+B{6} = {
+    ones(2) zeros(2)
+    zeros(2) ones(2)
+    };
+works{6} = true; 
+
+negativity_type{7} = Graph.NONNEGATIVE;
+B{7} = {
+    ones(2) zeros(2)
+    randn(2) [-1, -1; 3, -1]
+    };
+works{7} = false; 
+
+negativity_type{8} = [
+    Graph.NONNEGATIVE Graph.NONNEGATIVE
+    Graph.NONNEGATIVE Graph.NONNEGATIVE
+    ];
+B{8} = {
+    ones(2) zeros(2)
+    zeros(2) ones(2)
+    };
+works{8} = true;
+
+negativity_type{9} = [
+    Graph.NONNEGATIVE Graph.NEGATIVE
+    Graph.NEGATIVE Graph.NONNEGATIVE
+    ];
+B{9} = {
+    ones(2) randn(2)
+    randn(2) ones(2)
+    };
+works{9} = true; 
+
+negativity_type{10} = [
+    Graph.NONNEGATIVE Graph.NEGATIVE
+    Graph.NEGATIVE Graph.NONNEGATIVE
+    ];
+B{10} = {
+    [-1, -1; 3, -1] randn(2)
+    randn(2) ones(2)
+    };
+works{10} = false; 
+
+for i = 1:1:length(negativity_type)
+    if works{i}
+        Graph.checkNegativity(negativity_type{i}, B{i})
+    else
+        try 
+            clear e
+            Graph.checkNegativity(negativity_type{i}, B{i})
+        catch e
+            assert(isequal(e.identifier, error_identifier), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+                ['Expected error: ' error_identifier '. Instead, thrown error ' e.identifier])    
+        end
+        assert(exist('e', 'var') == 1, ...
+            [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+            ['Error not thrown. Expected error: ' error_identifier])
+    end
+end
+
 %% Test 2: Implementation static methods
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
@@ -362,9 +616,9 @@ for i = 1:1:length(graph_class_list)
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.is_undirected() should return a logical'])
         
-    assert(isnumeric(g.getEgdeType(g)), ...
+    assert(isnumeric(g.getEdgeType()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getEgdeType() should return a number'])
+        [graph_class '.getEdgeType() should return a number'])
     
     assert(islogical(g.is_selfconnected(g)), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
@@ -416,7 +670,7 @@ end
 %% Test 5: Either directed or undirected
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
-    assert(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class), ...
+    assert(all(all(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class))), ...
         ['BRAPH:Graph' graph_class ':DirectedOrUndirected'], ...
         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
 end
