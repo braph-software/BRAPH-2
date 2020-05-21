@@ -431,57 +431,46 @@ selfconnectivity_type{5} = Graph.NOT_SELFCONNECTED;
 B{5} = ones(3);
 works{5} = false; 
 
-selfconnectivity_type{6} = Graph.SELFCONNECTED;
-B{6} = zeros(3);
-works{6} = false; 
-
-selfconnectivity_type{7} = Graph.NOT_SELFCONNECTED;
-B{7} = {
+selfconnectivity_type{6} = Graph.NOT_SELFCONNECTED;
+B{6} = {
     zeros(2) zeros(2)
     zeros(2) zeros(2)
     };
+works{6} = true; 
+
+selfconnectivity_type{7} = Graph.SELFCONNECTED;
+B{7} = {
+    ones(2) ones(2)
+    ones(2) ones(2)
+    };
 works{7} = true; 
 
-selfconnectivity_type{8} = Graph.SELFCONNECTED;
+selfconnectivity_type{8} = Graph.NOT_SELFCONNECTED;
 B{8} = {
     ones(2) ones(2)
     ones(2) ones(2)
     };
-works{8} = true; 
+works{8} = false; 
 
-selfconnectivity_type{9} = Graph.NOT_SELFCONNECTED;
+selfconnectivity_type{9} = [
+    Graph.NOT_SELFCONNECTED Graph.SELFCONNECTED
+    Graph.SELFCONNECTED Graph.NOT_SELFCONNECTED
+    ];
 B{9} = {
-    ones(2) ones(2)
-    ones(2) ones(2)
+    zeros(2) ones(2)
+    ones(2) zeros(2)
     };
-works{9} = false; 
+works{9} = true;
 
-selfconnectivity_type{10} = Graph.SELFCONNECTED;
+selfconnectivity_type{10} = [
+    Graph.NOT_SELFCONNECTED Graph.SELFCONNECTED
+    Graph.SELFCONNECTED Graph.NOT_SELFCONNECTED
+    ];
 B{10} = {
-    zeros(2) zeros(2)
-    zeros(2) zeros(2)
-    };
-works{10} = false; 
-
-selfconnectivity_type{11} = [
-    Graph.NOT_SELFCONNECTED Graph.SELFCONNECTED
-    Graph.SELFCONNECTED Graph.NOT_SELFCONNECTED
-    ];
-B{11} = {
-    zeros(2) ones(2)
-    ones(2) zeros(2)
-    };
-works{11} = true;
-
-selfconnectivity_type{12} = [
-    Graph.NOT_SELFCONNECTED Graph.SELFCONNECTED
-    Graph.SELFCONNECTED Graph.NOT_SELFCONNECTED
-    ];
-B{12} = {
     ones(2) zeros(2)
     zeros(2) ones(2)
     };
-works{12} = false;
+works{10} = false;
 
 for i = 1:1:length(selfconnectivity_type)
     if works{i}
@@ -534,7 +523,7 @@ works{6} = true;
 negativity_type{7} = Graph.NONNEGATIVE;
 B{7} = {
     ones(2) zeros(2)
-    randn(2) randn(2)
+    randn(2) [-1, -1; 3, -1]
     };
 works{7} = false; 
 
@@ -549,34 +538,24 @@ B{8} = {
 works{8} = true;
 
 negativity_type{9} = [
-    Graph.NONNEGATIVE Graph.NONNEGATIVE
-    Graph.NONNEGATIVE Graph.NONNEGATIVE
+    Graph.NONNEGATIVE Graph.NEGATIVE
+    Graph.NEGATIVE Graph.NONNEGATIVE
     ];
 B{9} = {
-    randn(2) zeros(2)
+    ones(2) randn(2)
     randn(2) ones(2)
     };
-works{9} = false;
+works{9} = true; 
 
 negativity_type{10} = [
     Graph.NONNEGATIVE Graph.NEGATIVE
     Graph.NEGATIVE Graph.NONNEGATIVE
     ];
 B{10} = {
-    ones(2) randn(2)
+    [-1, -1; 3, -1] randn(2)
     randn(2) ones(2)
     };
-works{10} = true; 
-
-negativity_type{11} = [
-    Graph.NONNEGATIVE Graph.NEGATIVE
-    Graph.NEGATIVE Graph.NONNEGATIVE
-    ];
-B{11} = {
-    randn(2) randn(2)
-    randn(2) ones(2)
-    };
-works{11} = false; 
+works{10} = false; 
 
 for i = 1:1:length(negativity_type)
     if works{i}
@@ -637,9 +616,9 @@ for i = 1:1:length(graph_class_list)
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
         [graph_class '.is_undirected() should return a logical'])
         
-    assert(isnumeric(g.getEgdeType(g)), ...
+    assert(isnumeric(g.getEdgeType()), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
-        [graph_class '.getEgdeType() should return a number'])
+        [graph_class '.getEdgeType() should return a number'])
     
     assert(islogical(g.is_selfconnected(g)), ...
         ['BRAPH:' graph_class ':StaticFuncImplementation'], ...
@@ -691,7 +670,7 @@ end
 %% Test 5: Either directed or undirected
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
-    assert(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class), ...
+    assert(all(all(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class))), ...
         ['BRAPH:Graph' graph_class ':DirectedOrUndirected'], ...
         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
 end
