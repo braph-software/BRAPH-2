@@ -473,7 +473,13 @@ layernumbers_j = [2, 2];
 for i = 1:1:length(layernumbers_i)
     M = D{layernumbers_i(i), layernumbers_j(i)};
     M(sub2ind(size(M), nodes1, nodes2)) = 0;
-    M(sub2ind(size(M), nodes2, nodes1)) = 0;
+    if layernumbers_i(i) ~= layernumbers_j(i)
+        M2 = D{layernumbers_j(i), layernumbers_i(i)};
+        M2(sub2ind(size(M2), nodes1, nodes2)) = 0;
+        D(layernumbers_j(i), layernumbers_i(i)) = {M2};
+    else    
+        M(sub2ind(size(M), nodes2, nodes1)) = 0;
+    end
     D(layernumbers_i(i), layernumbers_j(i)) = {M};
 end
 

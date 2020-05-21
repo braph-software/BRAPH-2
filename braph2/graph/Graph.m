@@ -867,8 +867,18 @@ classdef Graph < handle & matlab.mixin.Copyable
                     for i = 1:1:length(layernumbers_i)
                         B = A{layernumbers_i(i), layernumbers_j(i)};
                         B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
-                        if g.is_undirected(g) && size(B,1) == size(B,2)
+                        if g.is_undirected(g) && layernumbers_i(i) == layernumbers_j(i)
                             B(sub2ind(size(B), nodes2, nodes1)) = 0;  % #ok<PROPLC>
+                        elseif g.is_undirected(g) && layernumbers_i(i) ~= layernumbers_j(i)
+                            C = A{layernumbers_j(i), layernumbers_i(i)};
+                            if size(C, 1) == size(C, 2)
+                                C(sub2ind(size(C), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                            else
+                                C = C';
+                                C(sub2ind(size(C), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                                C = C';
+                            end    
+                            A(layernumbers_j(i), layernumbers_i(i)) = {C};
                         end
                         A(layernumbers_i(i), layernumbers_j(i)) = {B};
                     end
