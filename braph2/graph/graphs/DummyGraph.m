@@ -1,14 +1,14 @@
-classdef DummyMultilayerGraph < Graph
+classdef DummyGraph < Graph
 
     methods  % Constructor
-        function g = DummyMultilayerGraph(~, varargin)
+        function g = DummyGraph(~, varargin)
             
             A = get_from_varargin( ...
-                {
-                round(rand(4))      round(rand(4, 3))   randn(4, 2)
-                round(rand(3, 4))   round(rand(3))      round(rand(3, 2))
-                randn(2, 4)         round(rand(2, 3)) 	randn(2)
-                }, ...
+                [
+                0   1   1
+                1   0   0
+                1   0   0
+                ], ...
                 'A', ...
                 varargin);
             
@@ -23,7 +23,7 @@ classdef DummyMultilayerGraph < Graph
             %
             % See also getName().
             
-            graph_class = 'DummyMultilayerGraph';
+            graph_class = 'DummyGraph';
         end
         function name = getName()
             % GETNAME returns the name of the graph.
@@ -42,26 +42,24 @@ classdef DummyMultilayerGraph < Graph
             % See also getName().
             
             description = [ ...
-                'Dummy Multilayer Graph used mainly' ...
+                'Dummy Graph used mainly' ...
                 'for unit testing and debugging. ' ...
                 ];
         end
         function graph_type = getGraphType()
-            graph_type = Graph.MULTILAYER;
+            graph_type = Graph.GRAPH;
         end
         function connectivity_type = getConnectivityType(varargin)
             
-            connectivity_type = [ 
-                Graph.BINARY    Graph.BINARY    Graph.WEIGHTED
-                Graph.BINARY    Graph.BINARY    Graph.BINARY 
-                Graph.WEIGHTED  Graph.BINARY    Graph.WEIGHTED
-                ];
+            connectivity_type = Graph.BINARY;
         end
-        function directionality_type = getDirectionalityType()
-            directionality_type = Graph.DIRECTED;
+        function edge_type = getEdgeType(varargin)
+            
+            edge_type = Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType()
-            selfconnectivity_type = Graph.SELFCONNECTED;
+            
+            selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
         function negativity_type = getNegativityType()
             % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
@@ -70,11 +68,7 @@ classdef DummyMultilayerGraph < Graph
             %
             % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
             
-            negativity_type = [ 
-                Graph.NONNEGATIVE	Graph.NONNEGATIVE   Graph.NEGATIVE
-                Graph.NONNEGATIVE   Graph.NONNEGATIVE   Graph.NONNEGATIVE 
-                Graph.NEGATIVE      Graph.NONNEGATIVE   Graph.NEGATIVE
-                ];
+            negativity_type =  Graph.NONNEGATIVE;
         end
     end
 end
