@@ -600,7 +600,7 @@ end
 %% Test 2: Implementation static methods
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
-    g = Graph.getGraph(graph_class, A{Graph.getGraphType(graph_class)});
+    g = Graph.getGraph(graph_class, []);
     
     assert(ischar(g.getClass()) && isequal(g.getClass(), graph_class), ...
         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
@@ -674,7 +674,7 @@ end
 %% Test 3: All graphs not abstract
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
-    g = Graph.getGraph(graph_class, A{Graph.getGraphType(graph_class)});
+    g = Graph.getGraph(graph_class, []);
 end
 
 %% Test 4: Either weighted or binary

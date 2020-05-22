@@ -1,16 +1,15 @@
 classdef DummyMultigraph < Graph
 
     methods  % Constructor
-        function g = DummyMultigraph(~, varargin)
+        function g = DummyMultigraph(A, varargin)
             
-            A = get_from_varargin( ...
-                {
+            if isempty(A)
+                A = {
                 rand(3)	{}      {}
                 {}      rand(3) {}
                 {}      {}      rand(3)
-                }, ...
-                'A', ...
-                varargin);
+                };
+            end
             
             g = g@Graph(A, varargin{:});
         end

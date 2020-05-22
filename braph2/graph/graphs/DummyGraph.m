@@ -1,16 +1,15 @@
 classdef DummyGraph < Graph
 
     methods  % Constructor
-        function g = DummyGraph(~, varargin)
-            
-            A = get_from_varargin( ...
-                [
+        function g = DummyGraph(A, varargin)
+
+            if isempty(A)
+                A = [
                 0   1   1
                 1   0   0
                 1   0   0
-                ], ...
-                'A', ...
-                varargin);
+                ];
+            end
             
             g = g@Graph(A, varargin{:});
         end

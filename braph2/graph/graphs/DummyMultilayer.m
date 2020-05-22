@@ -1,16 +1,15 @@
 classdef DummyMultilayer < Graph
 
     methods  % Constructor
-        function g = DummyMultilayer(~, varargin)
+        function g = DummyMultilayer(A, varargin)
             
-            A = get_from_varargin( ...
-                {
+            if isempty(A)
+                A = {
                 round(rand(4))      round(rand(4, 3))   randn(4, 2)
                 round(rand(3, 4))   round(rand(3))      round(rand(3, 2))
                 randn(2, 4)         round(rand(2, 3)) 	randn(2)
-                }, ...
-                'A', ...
-                varargin);
+                };
+            end
             
             g = g@Graph(A, varargin{:});
         end
