@@ -52,7 +52,7 @@ classdef DummyMultigraph < Graph
         function connectivity_type = getConnectivityType(varargin)
             
             if isempty(varargin)
-                layernumber = 3;
+                layernumber = 1;
             else
                 layernumber = varargin{1};
             end
@@ -62,7 +62,7 @@ classdef DummyMultigraph < Graph
         function directionality_type = getDirectionalityType(varargin)
             
             if isempty(varargin)
-                layernumber = 3;
+                layernumber = 1;
             else
                 layernumber = varargin{1};
             end
@@ -71,7 +71,13 @@ classdef DummyMultigraph < Graph
         end
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             
-            selfconnectivity_type = Graph.SELFCONNECTED;
+            if isempty(varargin)
+                layernumber = 1;
+            else
+                layernumber = varargin{1};
+            end
+            
+            selfconnectivity_type = diag(Graph.SELFCONNECTED * ones(1, layernumber));
         end
         function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
@@ -80,7 +86,13 @@ classdef DummyMultigraph < Graph
             %
             % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
             
-            negativity_type =  Graph.NONNEGATIVE;
+            if isempty(varargin)
+                layernumber = 1;
+            else
+                layernumber = varargin{1};
+            end
+            
+            negativity_type =  diag(Graph.NONNEGATIVE * ones(1, layernumber));
         end
     end
 end
