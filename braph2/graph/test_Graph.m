@@ -214,6 +214,7 @@ end
 
 %% Test 1.2: checkConnectivity
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+clear B
 
 connectivity_type{1} = Graph.BINARY;
 B{1} = 0;
@@ -321,39 +322,40 @@ for i = 1:1:length(connectivity_type)
     end
 end
 
-%% Test 1.3: checkEdge
+%% Test 1.3: checkDirectionality
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+clear B
 
-edge_type{1} = Graph.UNDIRECTED;
+directionality_type{1} = Graph.UNDIRECTED;
 B{1} = 0.8;
 works{1} = true; 
 
-edge_type{2} = Graph.UNDIRECTED;
+directionality_type{2} = Graph.UNDIRECTED;
 B{2} = ones(3);
 works{2} = true; 
 
-edge_type{3} = Graph.DIRECTED;
+directionality_type{3} = Graph.DIRECTED;
 B{3} = round(rand(5));
 works{3} = true; 
 
-edge_type{4} = Graph.DIRECTED;
+directionality_type{4} = Graph.DIRECTED;
 B{4} = rand(5);
 works{4} = true; 
 
-edge_type{5} = Graph.UNDIRECTED;
+directionality_type{5} = Graph.UNDIRECTED;
 B{5} = [
     1, 2;
     1, 4];
 works{5} = false; 
 
-edge_type{6} = Graph.UNDIRECTED;
+directionality_type{6} = Graph.UNDIRECTED;
 B{6} = {
     ones(2) zeros(2)
     zeros(2) ones(2)
     };
 works{6} = true; 
 
-edge_type{7} = [
+directionality_type{7} = [
     Graph.UNDIRECTED Graph.UNDIRECTED
     Graph.UNDIRECTED Graph.UNDIRECTED
     ];
@@ -363,7 +365,7 @@ B{7} = {
     };
 works{7} = true;
 
-edge_type{8} = [
+directionality_type{8} = [
     Graph.UNDIRECTED Graph.UNDIRECTED
     Graph.UNDIRECTED Graph.UNDIRECTED
     ];
@@ -373,7 +375,7 @@ B{8} = {
     };
 works{8} = false; 
 
-edge_type{9} = [
+directionality_type{9} = [
     Graph.UNDIRECTED Graph.DIRECTED
     Graph.DIRECTED Graph.UNDIRECTED
     ];
@@ -383,20 +385,20 @@ B{9} = {
     };
 works{9} = true; 
 
-edge_type{10} = Graph.DIRECTED;
+directionality_type{10} = Graph.DIRECTED;
 B{10} = {
     ones(3) rand(3)
     rand(3) ones(3)
     };
 works{10} = true; 
 
-for i = 1:1:length(edge_type)
+for i = 1:1:length(directionality_type)
     if works{i}
-        Graph.checkEdge(edge_type{i}, B{i})
+        Graph.checkDirectionality(directionality_type{i}, B{i})
     else
         try 
             clear e
-            Graph.checkEdge(edge_type{i}, B{i})
+            Graph.checkDirectionality(directionality_type{i}, B{i})
         catch e
             assert(isequal(e.identifier, error_identifier), ...
                 [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
@@ -410,6 +412,7 @@ end
 
 %% Test 1.4: checkSelfConnectivity
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+clear B
 
 selfconnectivity_type{1} = Graph.NOT_SELFCONNECTED;
 B{1} = 0;
@@ -492,6 +495,7 @@ end
 
 %% Test 1.: checkNegativity
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+clear B
 
 negativity_type{1} = Graph.NONNEGATIVE;
 B{1} = 0.8;
@@ -612,9 +616,9 @@ for i = 1:1:length(graph_class_list)
         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
         'Graph.is_undirected() should return a logical')
         
-    assert(isnumeric(Graph.getEdgeType(g)), ...
+    assert(isnumeric(Graph.getDirectionalityType(g)), ...
         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-        'Graph.getEgdeType() should return a number')
+        'Graph.getDirectionalityType() should return a number')
     
     assert(islogical(Graph.is_selfconnected(g)), ...
         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
@@ -658,7 +662,7 @@ end
 %% Test 4: Either weighted or binary
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
-    assert(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class), ...
+    assert(all(all(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class))), ...
         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
         [graph_class '.is_weighted() == ' graph_class '.is_binary()'])
 end
@@ -666,7 +670,7 @@ end
 %% Test 5: Either directed or undirected
 for i = 1:1:length(graph_class_list)
     graph_class = graph_class_list{i};
-    assert(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class), ...
+    assert(all(all(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class))), ...
         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
 end
@@ -781,13 +785,13 @@ assert(isequal(eg.getA(eg), B), ...
 
 % Specific cases for all multilayer types
 B = A{Graph.MULTIPLEX};
-g = Graph.getGraph('MultiplexGraphWU', B);
+g = Graph.getGraph('MultiplexGraphBU', B);
 L = length(B);
 for layer = 1:1:L
     M = B{layer, layer};
     M = dediagonalize(M);
     M = semipositivize(M);
-    M = standardize(M);
+    M = binarize(M);
     M = symmetrize(M);
     B(layer, layer) = {M};
 end
@@ -795,8 +799,8 @@ for x = 1:1:size(B, 1)
     for j = x+1:1:size(B, 2)
         B(x, j) = {semipositivize(B{x, j})};
         B(j, x) = {semipositivize(B{j, x})};
-        B(x, j) = {standardize(B{x, j})};
-        B(j, x) = {standardize(B{j, x})};
+        B(x, j) = {binarize(B{x, j})};
+        B(j, x) = {binarize(B{j, x})};
     end
 end
 C = B;
