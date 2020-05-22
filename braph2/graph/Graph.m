@@ -977,9 +977,10 @@ classdef Graph < handle & matlab.mixin.Copyable
                         A(i, i) = {B};
                     end
             end
-            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());  % #ok<PROPLC>
+            
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
-        function ga = edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j)
+        function ga = edgeattack(g, nodes1, nodes2, layernumbers1, layernumbers2)
             % EDGEATTACK removes given edges from a graph
             %
             % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
@@ -1006,43 +1007,46 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also nodeattack().
                 
             if nargin < 4
-                layernumbers_i = 1:1:g.layernumber(g);
+                layernumbers1 = 1:1:g.layernumber(g);
             end
             
             if nargin < 5 
-                layernumbers_j = layernumbers_i;
+                layernumbers2 = layernumbers1;
             end 
             
-            A = g.getA(g);  % #ok<PROPLC>
+            A = g.getA(g);
             
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
-                    A(sub2ind(size(A), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                    A(sub2ind(size(A), nodes1, nodes2)) = 0;
+                    
                     if g.is_undirected(g)
-                        A(sub2ind(size(A), nodes2, nodes1)) = 0;  % #ok<PROPLC>
+                        A(sub2ind(size(A), nodes2, nodes1)) = 0;
                     end
 
                 otherwise
-                    for i = 1:1:length(layernumbers_i)
-                        B = A{layernumbers_i(i), layernumbers_j(i)};
-                        B(sub2ind(size(B), nodes1, nodes2)) = 0;  % #ok<PROPLC>
-                        if g.is_undirected(g) & (layernumbers_i(i) == layernumbers_j(i))
-                            B(sub2ind(size(B), nodes2, nodes1)) = 0;  % #ok<PROPLC>
-                        elseif g.is_undirected(g) & (layernumbers_i(i) ~= layernumbers_j(i))
-                            C = A{layernumbers_j(i), layernumbers_i(i)};
+                    for i = 1:1:length(layernumbers1)
+                        B = A{layernumbers1(i), layernumbers2(i)};
+                        B(sub2ind(size(B), nodes1, nodes2)) = 0;
+                        
+                        if g.is_undirected(g) && (layernumbers1(i) == layernumbers2(i))
+                            B(sub2ind(size(B), nodes2, nodes1)) = 0;
+                        elseif g.is_undirected(g) && (layernumbers1(i) ~= layernumbers2(i))
+                            C = A{layernumbers2(i), layernumbers1(i)};
                             if size(C, 1) == size(C, 2)
-                                C(sub2ind(size(C), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                                C(sub2ind(size(C), nodes1, nodes2)) = 0;
                             else
                                 C = C';
-                                C(sub2ind(size(C), nodes1, nodes2)) = 0;  % #ok<PROPLC>
+                                C(sub2ind(size(C), nodes1, nodes2)) = 0;
                                 C = C';
                             end    
-                            A(layernumbers_j(i), layernumbers_i(i)) = {C};
+                            A(layernumbers2(i), layernumbers1(i)) = {C};
                         end
-                        A(layernumbers_i(i), layernumbers_j(i)) = {B};
+                        A(layernumbers1(i), layernumbers2(i)) = {B};
                     end
             end 
-            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());  % #ok<PROPLC>
+            
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
 %     methods (Access=protected)
