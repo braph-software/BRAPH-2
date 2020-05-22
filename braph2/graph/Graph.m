@@ -44,9 +44,9 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   UNDIRECTED  - undirected graph
     %   UNDIRECTED_NAME     - name of UNDIRECTED
     %   UNDIRECTED_DESCRIPTION  -  description of UNDIRECTED
-    %   EDGE_TYPE_NUMBER     - number of graph edges types
-    %   EDGE_TYPE_NAME  - name of graph edges types
-    %   EDGE_TYPE_DESCRIPTION   - description of graph edges types
+    %   DIRECTIONALITY_TYPE_NUMBER     - number of graph directionality types
+    %   DIRECTIONALITY_TYPE_NAME  - name of graph directionality types
+    %   DIRECTIONALITY_TYPE_DESCRIPTION   - description of graph directionality types
     %   NOT_SELFCONNECTED   - not self-connected graph
     %   NOT_SELFCONNECTED_NAME  - name of NOT_SELFCONNECTED
     %   NOT_SELFCONNECTED_DESCRIPTION   - description of NOT_SELFCONNECTED
@@ -173,7 +173,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.BINARY_DESCRIPTION
             }
         
-        % Edge types
+        % Directionality types
         DIRECTED = 1  % directed edges
         DIRECTED_NAME = 'Directed'
         DIRECTED_DESCRIPTION = 'Graph with directed edges.';
@@ -182,14 +182,14 @@ classdef Graph < handle & matlab.mixin.Copyable
         UNDIRECTED_NAME = 'Undirected'
         UNDIRECTED_DESCRIPTION = 'Graph with undirected edges.';
                 
-        EDGE_TYPE_NUMBER = 2
+        DIRECTIONALITY_TYPE_NUMBER = 2
         
-        EDGE_TYPE_NAME = {
+        DIRECTIONALITY_TYPE_NAME = {
             Graph.DIRECTED_NAME
             Graph.UNDIRECTED_NAME
             }
         
-        EDGE_TYPE_DESCRIPTION = {
+        DIRECTIONALITY_TYPE_DESCRIPTION = {
             Graph.DIRECTED_DESCRIPTION
             Graph.UNDIRECTED_DESCRIPTION
             }
@@ -396,19 +396,19 @@ classdef Graph < handle & matlab.mixin.Copyable
                             if size(A, 1) == size(A, 2)
                                 assert(all(all(A == offdiag_A)), ...
                                     [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                                    ['For edge type Graph.UNDIRECTED, A(i,j) in the off-diagonal in non-single' ...
+                                    ['For directionality type Graph.UNDIRECTED, A(i,j) in the off-diagonal in non-single' ...
                                     ' layer graphs must be the same that A(j,i) while it is ' tostring(A)])
                             else
                                 assert(all(all(A == offdiag_A')), ...
                                     [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                                    ['For edge type Graph.UNDIRECTED, non-square A(i,j) in the off-diagonal' ...
+                                    ['For directionality type Graph.UNDIRECTED, non-square A(i,j) in the off-diagonal' ...
                                     ' in non-single layer graphs must be the same that the'...
                                     ' transpose of A(j,i) while it is ' tostring(A)])
                             end
                         else    
                             assert(all(all(A == A')), ...
                                 [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                                ['For edge type Graph.UNDIRECTED, A must be symmetric,' ...
+                                ['For directionality type Graph.UNDIRECTED, A must be symmetric,' ...
                                 ' while it is ' tostring(A)])
                         end
                     case Graph.DIRECTED
@@ -416,7 +416,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                         
                     otherwise
                         error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                            ['Edge type must be Graph.DIRECTED (%i) or Graph.UNDIRECTED (%i),' ...
+                            ['Directionality type must be Graph.DIRECTED (%i) or Graph.UNDIRECTED (%i),' ...
                             ' while it is ' tostring(directionality_type)], ...
                             Graph.DIRECTED, Graph.UNDIRECTED)
                 end
@@ -694,20 +694,20 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             bool = Graph.getConnectivityType(g, varargin{:}) == Graph.BINARY;
         end
-        function edge_type = getDirectionalityType(g, varargin)
-            % GETEDGETYPE returns if graph is directed or undirected
+        function directionality_type = getDirectionalityType(g, varargin)
+            % GETDIRECTIONALITYTYPE returns if graph is directed or undirected
             %
-            % EDGE_TYPE = GETEDGETYPE(G) returns if
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(G) returns if
             % the instance of the concrete graph G is directed or not
             % undirected.
             %
-            % EDGE_TYPE = GETEDGETYPE(GRAPH_CLASS)
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(GRAPH_CLASS)
             % returns if graph whose class is GRAPH_CLASS is directed or
             % undirected.
             %
             % See also is_directed(), is_undirected().     
                          
-            edge_type = eval([Graph.getClass(g) '.getDirectionalityType(varargin{:})']);
+            directionality_type = eval([Graph.getClass(g) '.getDirectionalityType(varargin{:})']);
         end
         function bool = is_directed(g, varargin)
             % IS_DIRECTED checks if graph is directed
