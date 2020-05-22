@@ -266,10 +266,17 @@ classdef Graph < handle & matlab.mixin.Copyable
             settings = get_from_varargin(varargin, 'Settings', varargin{:});
             
             Graph.checkA(Graph.getGraphType(g), A);  % performs all necessary checks on A
-            Graph.checkConnectivity(Graph.getConnectivityType(g), A);
-            Graph.checkDirectionality(Graph.getDirectionalityType(g), A);
-            Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g), A);
-            Graph.checkNegativity(Graph.getNegativityType(g), A);
+            if isnumeric(A)
+                Graph.checkConnectivity(Graph.getConnectivityType(g), A);
+                Graph.checkDirectionality(Graph.getDirectionalityType(g), A);
+                Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g), A);
+                Graph.checkNegativity(Graph.getNegativityType(g), A);
+            else
+                Graph.checkConnectivity(Graph.getConnectivityType(g, length(A)), A);
+                Graph.checkDirectionality(Graph.getDirectionalityType(g, length(A)), A);
+                Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g, length(A)), A);
+                Graph.checkNegativity(Graph.getNegativityType(g, length(A)), A);
+            end
             
             g.A = A;
             g.settings = settings;  % initialize the property settings
@@ -491,6 +498,31 @@ classdef Graph < handle & matlab.mixin.Copyable
                     end
                 end
             end
+        end
+    end
+    methods (Static)  % getGraph
+        function g_new = getGraph(g, A, varargin) %#ok<INUSD>
+            % GETGRAPH returns a graph
+            %
+            % G = GETGRAPH(G, A) returns an instance
+            % of the class of the graph G with adjacency matrix or cell
+            % array of adjacency matrices A.
+            %
+            % G = GETGRAPH(GRAPH_CLASS, A) returns an instance
+            % of the class whose class is GRAPH_CLASS with adjacency matrix
+            % or cell array of adjacency matrices A.
+            %
+            % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % initializes he property settings with the properties and values.
+            %
+            % G = GETGRAPH(G, A, 'Settings', SETTINGS)
+            % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS)
+            % initializes the property settings with SETTINGS.
+            %
+            % See also getList(), getCompatibleMeasureList().
+            
+            g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
         end
     end
     methods (Static)  % Descriptive methods
@@ -775,7 +807,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also is_negative(), is_nonnegative().     
             
-            negativity_type = eval([Graph.getClass(g, varargin{:}) '.getNegativityType()']);
+            negativity_type = eval([Graph.getClass(g) '.getNegativityType(varargin{:})']);
         end
         function bool = is_nonnegative(g, varargin)
             % IS_NONNEGATIVE checks whether graph allows non-negative values
@@ -850,29 +882,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                 res = get_from_varargin([], setting_code, g.settings{:});
             end
         end
-        function g_new = getGraph(g, A, varargin) %#ok<INUSD>
-            % GETGRAPH returns a graph
-            %
-            % G = GETGRAPH(G, A) returns an instance
-            % of the class of the graph G with adjacency matrix or cell
-            % array of adjacency matrices A.
-            %
-            % G = GETGRAPH(GRAPH_CLASS, A) returns an instance
-            % of the class whose class is GRAPH_CLASS with adjacency matrix
-            % or cell array of adjacency matrices A.
-            %
-            % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % initializes he property settings with the properties and values.
-            %
-            % G = GETGRAPH(G, A, 'Settings', SETTINGS)
-            % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS)
-            % initializes the property settings with SETTINGS.
-            %
-            % See also getList(), getCompatibleMeasureList().
-            
-            g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
-        end
+
     end
     methods (Static)  % Inspection functions
         function n = nodenumber(g)
