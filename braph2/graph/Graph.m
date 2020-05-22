@@ -884,7 +884,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
 
     end
-    methods (Static)  % Inspection functions
+    methods  % Inspection functions
         function n = nodenumber(g)
             % NODENUMBER returns the number of nodes in the graph
             %
@@ -896,8 +896,8 @@ classdef Graph < handle & matlab.mixin.Copyable
                 case Graph.GRAPH
                     n = length(g.getA(g));
                 otherwise
-                    A = g.getA(g); % #ok<PROP>
-                    n = cellfun(@(a) length(a), A(1:length(A)+1:end)); % #ok<PROP>
+                    A = g.getA(g); %#ok<PROP>
+                    n = cellfun(@(a) length(a), A(1:length(A)+1:end)); %#ok<PROP>
             end
         end
         function n = layernumber(g)
@@ -940,7 +940,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
         end
     end
-    methods (Static)  
+    methods (Static)  % Attacks
         function ga = nodeattack(g, nodes, layernumbers)
             % NODEATTACK removes given nodes from a graph
             %
@@ -970,11 +970,11 @@ classdef Graph < handle & matlab.mixin.Copyable
                     A(:, nodes(:)) = 0;
                     
                 otherwise              
-                    for i = layernumbers
-                        B = A{i, i};
-                        B(nodes(:), :) = 0; 
-                        B(:, nodes(:)) = 0; 
-                        A(i, i) = {B};
+                    for li = layernumbers
+                        Aii = A{li, li};
+                        Aii(nodes(:), :) = 0; 
+                        Aii(:, nodes(:)) = 0; 
+                        A(li, li) = {Aii};
                     end
             end
             
@@ -1025,24 +1025,19 @@ classdef Graph < handle & matlab.mixin.Copyable
                     end
 
                 otherwise
-                    for i = 1:1:length(layernumbers1)
-                        B = A{layernumbers1(i), layernumbers2(i)};
-                        B(sub2ind(size(B), nodes1, nodes2)) = 0;
+                    for n = 1:1:length(layernumbers1)
+                        li = layernumbers1(n);
+                        lj = layernumbers2(n);
                         
-                        if g.is_undirected(g) && (layernumbers1(i) == layernumbers2(i))
-                            B(sub2ind(size(B), nodes2, nodes1)) = 0;
-                        elseif g.is_undirected(g) && (layernumbers1(i) ~= layernumbers2(i))
-                            C = A{layernumbers2(i), layernumbers1(i)};
-                            if size(C, 1) == size(C, 2)
-                                C(sub2ind(size(C), nodes1, nodes2)) = 0;
-                            else
-                                C = C';
-                                C(sub2ind(size(C), nodes1, nodes2)) = 0;
-                                C = C';
-                            end    
-                            A(layernumbers2(i), layernumbers1(i)) = {C};
+                        Aij = A{li, lj};
+                        Aij(sub2ind(size(Aij), nodes1, nodes2)) = 0;
+                        A(li, lj) = {Aij};
+                        
+                        if g.is_undirected(g) 
+                            Aji = A{lj, li};
+                            Aji(sub2ind(size(Aji), nodes2, nodes1)) = 0;
+                            A(lj, li) = {Aji};
                         end
-                        A(layernumbers1(i), layernumbers2(i)) = {B};
                     end
             end 
             
