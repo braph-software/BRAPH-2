@@ -1,7 +1,7 @@
-classdef DummyMultilayerGraph < Graph
+classdef DummyMultilayer < Graph
 
     methods  % Constructor
-        function g = DummyMultilayerGraph(~, varargin)
+        function g = DummyMultilayer(~, varargin)
             
             A = get_from_varargin( ...
                 {
@@ -23,7 +23,7 @@ classdef DummyMultilayerGraph < Graph
             %
             % See also getName().
             
-            graph_class = 'DummyMultilayerGraph';
+            graph_class = 'DummyMultilayer';
         end
         function name = getName()
             % GETNAME returns the name of the graph.
@@ -32,7 +32,7 @@ classdef DummyMultilayerGraph < Graph
             %
             % See also getClass().
             
-            name = 'Dummy Multilayer Graph';
+            name = 'Dummy Multilayer';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
@@ -42,7 +42,7 @@ classdef DummyMultilayerGraph < Graph
             % See also getName().
             
             description = [ ...
-                'Dummy Multilayer Graph used mainly' ...
+                'Dummy Multilayer used mainly' ...
                 'for unit testing and debugging. ' ...
                 ];
         end
@@ -57,13 +57,13 @@ classdef DummyMultilayerGraph < Graph
                 Graph.WEIGHTED  Graph.BINARY    Graph.WEIGHTED
                 ];
         end
-        function directionality_type = getDirectionalityType()
+        function directionality_type = getDirectionalityType(varargin)
             directionality_type = Graph.DIRECTED;
         end
-        function selfconnectivity_type = getSelfConnectivityType()
+        function selfconnectivity_type = getSelfConnectivityType(varargin)
             selfconnectivity_type = Graph.SELFCONNECTED;
         end
-        function negativity_type = getNegativityType()
+        function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
             %
             % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.

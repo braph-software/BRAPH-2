@@ -214,6 +214,7 @@ end
 
 %% Test 1.2: checkConnectivity
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+
 clear B
 
 connectivity_type{1} = Graph.BINARY;
@@ -324,6 +325,7 @@ end
 
 %% Test 1.3: checkDirectionality
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+
 clear B
 
 directionality_type{1} = Graph.UNDIRECTED;
@@ -344,8 +346,9 @@ works{4} = true;
 
 directionality_type{5} = Graph.UNDIRECTED;
 B{5} = [
-    1, 2;
-    1, 4];
+    1   2
+    1   4
+    ];
 works{5} = false; 
 
 directionality_type{6} = Graph.UNDIRECTED;
@@ -390,7 +393,21 @@ B{10} = {
     ones(3) rand(3)
     rand(3) ones(3)
     };
-works{10} = true; 
+works{10} = true;
+
+directionality_type{11} = Graph.UNDIRECTED;
+B{11} = {
+    ones(3) [1 2; 3 4; 5 6]
+    [1 2; 3 4; 5 6]' ones(2)
+    };
+works{11} = true;
+
+directionality_type{12} = Graph.UNDIRECTED;
+B{12} = {
+    ones(3) [1 2; 3 4; 5 6]
+    [1 2; 3 4; 6 5]' ones(2)
+    };
+works{12} = false;
 
 for i = 1:1:length(directionality_type)
     if works{i}
@@ -412,6 +429,7 @@ end
 
 %% Test 1.4: checkSelfConnectivity
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
+
 clear B
 
 selfconnectivity_type{1} = Graph.NONSELFCONNECTED;
@@ -493,7 +511,7 @@ for i = 1:1:length(selfconnectivity_type)
     end
 end
 
-%% Test 1.: checkNegativity
+%% Test 1.5: checkNegativity
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
 clear B
 
@@ -659,200 +677,38 @@ for i = 1:1:length(graph_class_list)
     g = Graph.getGraph(graph_class, A{Graph.getGraphType(graph_class)});
 end
 
-%% Test 4: Either weighted or binary
-for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-    assert(all(all(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class))), ...
-        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-        [graph_class '.is_weighted() == ' graph_class '.is_binary()'])
-end
- 
-%% Test 5: Either directed or undirected
-for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-    assert(all(all(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class))), ...
-        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-        [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
-end
-
-%% Test 6: Either Self-connected or Non self-connected
-for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-    assert(Graph.is_selfconnected(graph_class) ~= Graph.is_not_selfconnected(graph_class), ...
-        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-        [graph_class '.is_selfconnected() == ' graph_class '.is_not_selfconnected()'])
-end
-
-%% Test 7: Either Negative or Non negative
-for i = 1:1:length(graph_class_list)
-    graph_class = graph_class_list{i};
-    assert(Graph.is_negative(graph_class) ~= Graph.is_nonnegative(graph_class), ...
-        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-        [graph_class '.is_negative() == ' graph_class '.is_nonnegative()'])
-end
-
-%% Test 8: NodeAttack
-n = randi(4);
-nodes = [randi(n), randi(n)];
-
-% Specific case for single layer GRAPH
-B = A{Graph.GRAPH};
-g = Graph.getGraph('GraphBU', B);
-B = dediagonalize(B);
-B = semipositivize(B);
-B = binarize(B);
-B = symmetrize(B);
-B(nodes(:), :) = 0;
-B(:, nodes(:)) = 0;
-
-ng = g.nodeattack(g, nodes);
-
-assert( isequal(ng.getA(ng), B), ...
-    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-    'Graph.nodeattack() is not working for single layer graphs')
-
-% Specific cases for all multilayer types
-B = A{Graph.MULTIPLEX};
-g = Graph.getGraph('MultiplexGraphWU', B);
-L = length(B);
-for layer = 1:1:L
-    M = B{layer, layer};
-    M = dediagonalize(M);
-    M = semipositivize(M);
-    M = standardize(M);
-    M = symmetrize(M);
-    B(layer, layer) = {M};
-end
-for x = 1:1:size(B, 1)
-    for j = x+1:1:size(B, 2)
-        B(x, j) = {semipositivize(B{x, j})};
-        B(j, x) = {semipositivize(B{j, x})};
-        B(x, j) = {standardize(B{x, j})};
-        B(j, x) = {standardize(B{j, x})};
-    end
-end
-C = B;
-
-% Attack all layers
-for layer = 1:1:L
-    M = B{layer, layer};
-    M(nodes(:), :) = 0;
-    M(:, nodes(:)) = 0;
-    B(layer, layer) = {M};
-end    
-
-ng = g.nodeattack(g, nodes);
-
-assert( isequal(ng.getA(ng), B), ...
-    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-    'Graph.nodeattack() is not working for non single layer graphs')
-
-% Attack specified layers
-layernumbers = [1, 2];
-for i = layernumbers
-    M = C{i, i};
-    M(nodes(:), :) = 0;
-    M(:, nodes(:)) = 0;
-    C(i, i) = {M};
-end
-
-ng = g.nodeattack(g, nodes, layernumbers);
-
-assert(isequal(ng.getA(ng), C), ...
-    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-    'Graph.nodeattack() is not working for non single layer graphs')
-
-%% Test 9: EdgeAttack
-n = randi(4);
-nodes1 = [randi(n), randi(n)];
-nodes2 = [randi(n), randi(n)];
-
-% Specific Case for single layer
-B = A{Graph.GRAPH};
-g = Graph.getGraph('GraphBU', B);
-B = dediagonalize(B);
-B = semipositivize(B);
-B = binarize(B);
-B = symmetrize(B);
-B(sub2ind(size(B), nodes1, nodes2)) = 0;
-B(sub2ind(size(B), nodes2, nodes1)) = 0;
-
-eg = g.edgeattack(g, nodes1, nodes2);
-
-assert(isequal(eg.getA(eg), B), ...
-    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-    'Graph.edgeattack() is not working for single layer graphs')
-
-% Specific cases for all multilayer types
-B = A{Graph.MULTIPLEX};
-g = Graph.getGraph('MultiplexGraphBU', B);
-L = length(B);
-for layer = 1:1:L
-    M = B{layer, layer};
-    M = dediagonalize(M);
-    M = semipositivize(M);
-    M = binarize(M);
-    M = symmetrize(M);
-    B(layer, layer) = {M};
-end
-for x = 1:1:size(B, 1)
-    for j = x+1:1:size(B, 2)
-        B(x, j) = {semipositivize(B{x, j})};
-        B(j, x) = {semipositivize(B{j, x})};
-        B(x, j) = {binarize(B{x, j})};
-        B(j, x) = {binarize(B{j, x})};
-    end
-end
-C = B;
-D = B;
-
-% Attack all layers
-for layer = 1:1:L
-    M = B{layer, layer};
-    M(sub2ind(size(M), nodes1, nodes2)) = 0;
-    M(sub2ind(size(M), nodes2, nodes1)) = 0;
-    B(layer, layer) = {M};
-end    
-
-eg = g.edgeattack(g, nodes1, nodes2);
-
-assert(isequal(eg.getA(eg), B), ...
-    'BRAPH: GRAPH: EdgeAttack', ...
-    'Graph.edgeattack() is not working for non single layer graphs')
-
-% Attack specified layers: i
-layernumbers_i = [1, 2];
-for i = layernumbers_i
-    M = C{i, i};
-    M(sub2ind(size(M), nodes1, nodes2)) = 0;
-    M(sub2ind(size(M), nodes2, nodes1)) = 0;
-    C(i, i) = {M};
-end
-
-eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i);
-
-assert(isequal(eg.getA(eg), C), ...
-    [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-    'Graph.edgeattack() is not working for non single layer graphs')
-
-% Attack specified layers and between specified layers: i, j 
-layernumbers_i = [1, 2];
-layernumbers_j = [2, 2];
-for i = 1:1:length(layernumbers_i)
-    M = D{layernumbers_i(i), layernumbers_j(i)};
-    M(sub2ind(size(M), nodes1, nodes2)) = 0;
-    if layernumbers_i(i) ~= layernumbers_j(i)
-        M2 = D{layernumbers_j(i), layernumbers_i(i)};
-        M2(sub2ind(size(M2), nodes1, nodes2)) = 0;
-        D(layernumbers_j(i), layernumbers_i(i)) = {M2};
-    else    
-        M(sub2ind(size(M), nodes2, nodes1)) = 0;
-    end
-    D(layernumbers_i(i), layernumbers_j(i)) = {M};
-end
-
-eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j);
-
+% %% Test 4: Either weighted or binary
+% for i = 1:1:length(graph_class_list)
+%     graph_class = graph_class_list{i};
+%     assert(all(all(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class))), ...
+%         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+%         [graph_class '.is_weighted() == ' graph_class '.is_binary()'])
+% end
+%  
+% %% Test 5: Either directed or undirected
+% for i = 1:1:length(graph_class_list)
+%     graph_class = graph_class_list{i};
+%     assert(all(all(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class))), ...
+%         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+%         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
+% end
+% 
+% %% Test 6: Either Self-connected or Non self-connected
+% for i = 1:1:length(graph_class_list)
+%     graph_class = graph_class_list{i};
+%     assert(Graph.is_selfconnected(graph_class) ~= Graph.is_not_selfconnected(graph_class), ...
+%         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+%         [graph_class '.is_selfconnected() == ' graph_class '.is_not_selfconnected()'])
+% end
+% 
+% %% Test 7: Either Negative or Non negative
+% for i = 1:1:length(graph_class_list)
+%     graph_class = graph_class_list{i};
+%     assert(Graph.is_negative(graph_class) ~= Graph.is_nonnegative(graph_class), ...
+%         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+%         [graph_class '.is_negative() == ' graph_class '.is_nonnegative()'])
+% end
+% 
 % %% Test 8: NodeAttack
 % n = randi(4);
 % nodes = [randi(n), randi(n)];
@@ -923,7 +779,7 @@ eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j);
 % assert(isequal(ng.getA(ng), C), ...
 %     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
 %     'Graph.nodeattack() is not working for non single layer graphs')
-
+% 
 % %% Test 9: EdgeAttack
 % n = randi(4);
 % nodes1 = [randi(n), randi(n)];
@@ -947,13 +803,13 @@ eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j);
 % 
 % % Specific cases for all multilayer types
 % B = A{Graph.MULTIPLEX};
-% g = Graph.getGraph('MultiplexGraphWU', B);
+% g = Graph.getGraph('MultiplexGraphBU', B);
 % L = length(B);
 % for layer = 1:1:L
 %     M = B{layer, layer};
 %     M = dediagonalize(M);
 %     M = semipositivize(M);
-%     M = standardize(M);
+%     M = binarize(M);
 %     M = symmetrize(M);
 %     B(layer, layer) = {M};
 % end
@@ -961,8 +817,8 @@ eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j);
 %     for j = x+1:1:size(B, 2)
 %         B(x, j) = {semipositivize(B{x, j})};
 %         B(j, x) = {semipositivize(B{j, x})};
-%         B(x, j) = {standardize(B{x, j})};
-%         B(j, x) = {standardize(B{j, x})};
+%         B(x, j) = {binarize(B{x, j})};
+%         B(j, x) = {binarize(B{j, x})};
 %     end
 % end
 % C = B;
@@ -1015,58 +871,220 @@ eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j);
 % 
 % eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j);
 % 
-% assert(isequal(eg.getA(eg), D), ...
-%     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
-%     'Graph.edgeattack() is not working for non single layer graphs')
-
-% %% Test 10: Copy
-% for i = 1:1:length(graph_class_list)
-%     A = rand(randi(10));
-%     graph_class = graph_class_list{i};
-%     g = Graph.getGraph(graph_class, A);
-%     
-%     g_copy = copy(g);
-%     
-%     measure_class_list = g.getCompatibleMeasureList();
-%     for j = 1:1:length(measure_class_list)
-%         measure_class = measure_class_list{j};
-%         g.getMeasure(measure_class).getValue();
-%     end
-%     for j = 1:1:length(measure_class_list)
-%         assert(g.is_measure_calculated(measure_class) ~= g_copy.is_measure_calculated(measure_class), ...
-%             ['BRAPH:' graph_class ':Copy'], ...
-%             [graph_class '.copy() not working properly'])
-%         assert(isequal(g.getMeasure(measure_class).getGraph(), g), ...
-%             ['BRAPH:' graph_class ':Copy'], ...
-%             [graph_class '.copy() not working properly'])
-%         assert(isequal(g_copy.getMeasure(measure_class).getGraph(), g_copy), ...
-%             ['BRAPH:' graph_class ':Copy'], ...
-%             [graph_class '.copy() not working properly'])
-%         assert(~isequal(g.getMeasure(measure_class).getGraph(), g_copy), ...
-%             ['BR~APH:' graph_class ':Copy'], ...
-%             [graph_class '.copy() not working properly'])
-%         assert(~isequal(g_copy.getMeasure(measure_class).getGraph(), g), ...
-%             ['BRAPH:' graph_class ':Copy'], ...
-%             [graph_class '.copy() not working properly'])
-%     end
-% end
+% % %% Test 8: NodeAttack
+% % n = randi(4);
+% % nodes = [randi(n), randi(n)];
+% % 
+% % % Specific case for single layer GRAPH
+% % B = A{Graph.GRAPH};
+% % g = Graph.getGraph('GraphBU', B);
+% % B = dediagonalize(B);
+% % B = semipositivize(B);
+% % B = binarize(B);
+% % B = symmetrize(B);
+% % B(nodes(:), :) = 0;
+% % B(:, nodes(:)) = 0;
+% % 
+% % ng = g.nodeattack(g, nodes);
+% % 
+% % assert( isequal(ng.getA(ng), B), ...
+% %     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+% %     'Graph.nodeattack() is not working for single layer graphs')
+% % 
+% % % Specific cases for all multilayer types
+% % B = A{Graph.MULTIPLEX};
+% % g = Graph.getGraph('MultiplexGraphWU', B);
+% % L = length(B);
+% % for layer = 1:1:L
+% %     M = B{layer, layer};
+% %     M = dediagonalize(M);
+% %     M = semipositivize(M);
+% %     M = standardize(M);
+% %     M = symmetrize(M);
+% %     B(layer, layer) = {M};
+% % end
+% % for x = 1:1:size(B, 1)
+% %     for j = x+1:1:size(B, 2)
+% %         B(x, j) = {semipositivize(B{x, j})};
+% %         B(j, x) = {semipositivize(B{j, x})};
+% %         B(x, j) = {standardize(B{x, j})};
+% %         B(j, x) = {standardize(B{j, x})};
+% %     end
+% % end
+% % C = B;
+% % 
+% % % Attack all layers
+% % for layer = 1:1:L
+% %     M = B{layer, layer};
+% %     M(nodes(:), :) = 0;
+% %     M(:, nodes(:)) = 0;
+% %     B(layer, layer) = {M};
+% % end    
+% % 
+% % ng = g.nodeattack(g, nodes);
+% % 
+% % assert( isequal(ng.getA(ng), B), ...
+% %     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+% %     'Graph.nodeattack() is not working for non single layer graphs')
+% % 
+% % % Attack specified layers
+% % layernumbers = [1, 2];
+% % for i = layernumbers
+% %     M = C{i, i};
+% %     M(nodes(:), :) = 0;
+% %     M(:, nodes(:)) = 0;
+% %     C(i, i) = {M};
+% % end
+% % 
+% % ng = g.nodeattack(g, nodes, layernumbers);
+% % 
+% % assert(isequal(ng.getA(ng), C), ...
+% %     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+% %     'Graph.nodeattack() is not working for non single layer graphs')
 % 
-% %% Test 11: Subgraph
-% for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     n = randi(10);
-%     A =  randn(n);
-%     g = Graph.getGraph(graph_class, A);
-%     
-%     nodes = [randi(n), randi(n)];
-%     
-%     sg = g.subgraph(nodes);
-%     
-%     A_test = g.getA();
-%     sg_test = Graph.getGraph(graph_class, A_test(nodes, nodes));
-%     
-%     assert( isequal(sg.getA(), sg_test.getA()), ...
-%         ['BRAPH:' graph_class ':Subgraph'], ...
-%         [graph_class '.subgraph() is not working' ])
-%     
-% end
+% % %% Test 9: EdgeAttack
+% % n = randi(4);
+% % nodes1 = [randi(n), randi(n)];
+% % nodes2 = [randi(n), randi(n)];
+% % 
+% % % Specific Case for single layer
+% % B = A{Graph.GRAPH};
+% % g = Graph.getGraph('GraphBU', B);
+% % B = dediagonalize(B);
+% % B = semipositivize(B);
+% % B = binarize(B);
+% % B = symmetrize(B);
+% % B(sub2ind(size(B), nodes1, nodes2)) = 0;
+% % B(sub2ind(size(B), nodes2, nodes1)) = 0;
+% % 
+% % eg = g.edgeattack(g, nodes1, nodes2);
+% % 
+% % assert(isequal(eg.getA(eg), B), ...
+% %     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+% %     'Graph.edgeattack() is not working for single layer graphs')
+% % 
+% % % Specific cases for all multilayer types
+% % B = A{Graph.MULTIPLEX};
+% % g = Graph.getGraph('MultiplexGraphWU', B);
+% % L = length(B);
+% % for layer = 1:1:L
+% %     M = B{layer, layer};
+% %     M = dediagonalize(M);
+% %     M = semipositivize(M);
+% %     M = standardize(M);
+% %     M = symmetrize(M);
+% %     B(layer, layer) = {M};
+% % end
+% % for x = 1:1:size(B, 1)
+% %     for j = x+1:1:size(B, 2)
+% %         B(x, j) = {semipositivize(B{x, j})};
+% %         B(j, x) = {semipositivize(B{j, x})};
+% %         B(x, j) = {standardize(B{x, j})};
+% %         B(j, x) = {standardize(B{j, x})};
+% %     end
+% % end
+% % C = B;
+% % D = B;
+% % 
+% % % Attack all layers
+% % for layer = 1:1:L
+% %     M = B{layer, layer};
+% %     M(sub2ind(size(M), nodes1, nodes2)) = 0;
+% %     M(sub2ind(size(M), nodes2, nodes1)) = 0;
+% %     B(layer, layer) = {M};
+% % end    
+% % 
+% % eg = g.edgeattack(g, nodes1, nodes2);
+% % 
+% % assert(isequal(eg.getA(eg), B), ...
+% %     'BRAPH: GRAPH: EdgeAttack', ...
+% %     'Graph.edgeattack() is not working for non single layer graphs')
+% % 
+% % % Attack specified layers: i
+% % layernumbers_i = [1, 2];
+% % for i = layernumbers_i
+% %     M = C{i, i};
+% %     M(sub2ind(size(M), nodes1, nodes2)) = 0;
+% %     M(sub2ind(size(M), nodes2, nodes1)) = 0;
+% %     C(i, i) = {M};
+% % end
+% % 
+% % eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i);
+% % 
+% % assert(isequal(eg.getA(eg), C), ...
+% %     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+% %     'Graph.edgeattack() is not working for non single layer graphs')
+% % 
+% % % Attack specified layers and between specified layers: i, j 
+% % layernumbers_i = [1, 2];
+% % layernumbers_j = [2, 2];
+% % for i = 1:1:length(layernumbers_i)
+% %     M = D{layernumbers_i(i), layernumbers_j(i)};
+% %     M(sub2ind(size(M), nodes1, nodes2)) = 0;
+% %     if layernumbers_i(i) ~= layernumbers_j(i)
+% %         M2 = D{layernumbers_j(i), layernumbers_i(i)};
+% %         M2(sub2ind(size(M2), nodes1, nodes2)) = 0;
+% %         D(layernumbers_j(i), layernumbers_i(i)) = {M2};
+% %     else    
+% %         M(sub2ind(size(M), nodes2, nodes1)) = 0;
+% %     end
+% %     D(layernumbers_i(i), layernumbers_j(i)) = {M};
+% % end
+% % 
+% % eg = g.edgeattack(g, nodes1, nodes2, layernumbers_i, layernumbers_j);
+% % 
+% % assert(isequal(eg.getA(eg), D), ...
+% %     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
+% %     'Graph.edgeattack() is not working for non single layer graphs')
+% 
+% % %% Test 10: Copy
+% % for i = 1:1:length(graph_class_list)
+% %     A = rand(randi(10));
+% %     graph_class = graph_class_list{i};
+% %     g = Graph.getGraph(graph_class, A);
+% %     
+% %     g_copy = copy(g);
+% %     
+% %     measure_class_list = g.getCompatibleMeasureList();
+% %     for j = 1:1:length(measure_class_list)
+% %         measure_class = measure_class_list{j};
+% %         g.getMeasure(measure_class).getValue();
+% %     end
+% %     for j = 1:1:length(measure_class_list)
+% %         assert(g.is_measure_calculated(measure_class) ~= g_copy.is_measure_calculated(measure_class), ...
+% %             ['BRAPH:' graph_class ':Copy'], ...
+% %             [graph_class '.copy() not working properly'])
+% %         assert(isequal(g.getMeasure(measure_class).getGraph(), g), ...
+% %             ['BRAPH:' graph_class ':Copy'], ...
+% %             [graph_class '.copy() not working properly'])
+% %         assert(isequal(g_copy.getMeasure(measure_class).getGraph(), g_copy), ...
+% %             ['BRAPH:' graph_class ':Copy'], ...
+% %             [graph_class '.copy() not working properly'])
+% %         assert(~isequal(g.getMeasure(measure_class).getGraph(), g_copy), ...
+% %             ['BR~APH:' graph_class ':Copy'], ...
+% %             [graph_class '.copy() not working properly'])
+% %         assert(~isequal(g_copy.getMeasure(measure_class).getGraph(), g), ...
+% %             ['BRAPH:' graph_class ':Copy'], ...
+% %             [graph_class '.copy() not working properly'])
+% %     end
+% % end
+% % 
+% % %% Test 11: Subgraph
+% % for i = 1:1:length(graph_class_list)
+% %     graph_class = graph_class_list{i};
+% %     n = randi(10);
+% %     A =  randn(n);
+% %     g = Graph.getGraph(graph_class, A);
+% %     
+% %     nodes = [randi(n), randi(n)];
+% %     
+% %     sg = g.subgraph(nodes);
+% %     
+% %     A_test = g.getA();
+% %     sg_test = Graph.getGraph(graph_class, A_test(nodes, nodes));
+% %     
+% %     assert( isequal(sg.getA(), sg_test.getA()), ...
+% %         ['BRAPH:' graph_class ':Subgraph'], ...
+% %         [graph_class '.subgraph() is not working' ])
+% %     
+% % end

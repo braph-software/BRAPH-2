@@ -104,33 +104,35 @@ classdef Graph < handle & matlab.mixin.Copyable
 
 	properties (Constant)
         % Graph types
-        GRAPH = 1  % single graph
+        GRAPH = 1
         GRAPH_NAME = 'Graph'
-        GRAPH_DESCRIPTION = 'This graph consists of a single layer graph.'
+        GRAPH_DESCRIPTION = 'A graph consists of a single layer.'
 
-        MULTIGRAPH = 2  % multiple unconnected graphs
+        MULTIGRAPH = 2
         MULTIGRAPH_NAME = 'Multigraph'
-        MULTIGRAPH_DESCRIPTION = 'A multigraph consists of multiple unconnected graphs.'
+        MULTIGRAPH_DESCRIPTION = 'A multigraph consists of multiple unconnected layers.'
         
-        ORDERED_MULTIPLEX = 3  % multiple graphs with sequential connections between corresponding nodes
+        ORDERED_MULTIPLEX = 3
         ORDERED_MULTIPLEX_NAME = 'Ordered Multipex'
-        ORDERED_MULTIPLEX_DESCRIPTION = ['An ordered multiplex graph consists of multiple ' ...
-            'graphs with ordinal connections between corresponding nodes.'];
+        ORDERED_MULTIPLEX_DESCRIPTION = ['An ordered multiplex consists of ' ...
+            'a sequence of layers with ordinal connections' ...
+            'between corresponding nodes in subsequent layers.']
         
-        MULTIPLEX = 4  % multiple graphs with connections between corresponding nodes
+        MULTIPLEX = 4
         MULTIPLEX_NAME = 'Multiplex'
-        MULTIPLEX_DESCRIPTION = ['A multiplex graph consists of multiple graphs with ' ...
-            'categorical connections (unordered) between corresponding nodes.'];
+        MULTIPLEX_DESCRIPTION = ['A multiplex consists of ' ...
+            'multiple layers with categorical connections ' ...
+            'between corresponding nodes in different layers.']
 
-        ORDERED_MULTILAYER = 5  % multiple graphs with sequential connections between all nodes
+        ORDERED_MULTILAYER = 5
         ORDERED_MULTILAYER_NAME = 'Ordered Multilayer'
-        ORDERED_MULTILAYER_DESCRIPTION = ['An ordered multilayer graph consists of multiple ' ...
-            'graphs with ordinal connections between all nodes.'];
+        ORDERED_MULTILAYER_DESCRIPTION = ['An ordered multilayer consists of ' ...
+            'multiple layers with ordinal connections between any nodes.']
 
-        MULTILAYER = 6  % multiple graphs with connections between all nodes
+        MULTILAYER = 6
         MULTILAYER_NAME = 'Multilayer'
-        MULTILAYER_DESCRIPTION = ['A multilayer graph consists of multiple graphs with ' ...
-            'categorical connections (unordered) between all nodes.'];
+        MULTILAYER_DESCRIPTION = ['A multilayer consists of ' ...
+            'multiple layers with categorical between any nodes.']
         
         TYPE_NUMBER = 6
         
@@ -153,13 +155,13 @@ classdef Graph < handle & matlab.mixin.Copyable
             }
         
         % Connectivity types
-        WEIGHTED = 1  % weighted connections
+        WEIGHTED = 1
         WEIGHTED_NAME = 'Weighted'
-        WEIGHTED_DESCRIPTION = 'Graph with weighted connections.';
+        WEIGHTED_DESCRIPTION = 'Graph with weighted connections.'
         
-        BINARY = 2  % binary (0 or 1) connections
+        BINARY = 2 
         BINARY_NAME = 'Binary'
-        BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.';
+        BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.'
         
         CONNECTIVITY_TYPE_NUMBER = 2
         
@@ -174,13 +176,13 @@ classdef Graph < handle & matlab.mixin.Copyable
             }
         
         % Directionality types
-        DIRECTED = 1  % directed edges
+        DIRECTED = 1
         DIRECTED_NAME = 'Directed'
-        DIRECTED_DESCRIPTION = 'Graph with directed edges.';
+        DIRECTED_DESCRIPTION = 'Graph with directed edges.'
         
-        UNDIRECTED = 2  % undirected edges
+        UNDIRECTED = 2
         UNDIRECTED_NAME = 'Undirected'
-        UNDIRECTED_DESCRIPTION = 'Graph with undirected edges.';
+        UNDIRECTED_DESCRIPTION = 'Graph with undirected edges.'
                 
         DIRECTIONALITY_TYPE_NUMBER = 2
         
@@ -194,14 +196,14 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.UNDIRECTED_DESCRIPTION
             }
         
-        % Selfconnectedness
+        % Selfconnectedness types
         NONSELFCONNECTED = 1
-        NONSELFCONNECTED_NAME = 'Not self-connected'
-        NONSELFCONNECTED_DESCRIPTION = 'Graph with self-connections set to zero.';
+        NONSELFCONNECTED_NAME = 'Non-self-connected'
+        NONSELFCONNECTED_DESCRIPTION = 'Graph without self-connections.';
         
         SELFCONNECTED = 2
         SELFCONNECTED_NAME = 'Self-connected'
-        SELFCONNECTED_DESCRIPTION = 'Graph with self-connections considered.';
+        SELFCONNECTED_DESCRIPTION = 'Graph with self-connections.';
                 
         SELFCONNECTIVITY_TYPE_NUMBER = 2
         
@@ -218,11 +220,11 @@ classdef Graph < handle & matlab.mixin.Copyable
         % Negativity
         NONNEGATIVE = 1
         NONNEGATIVE_NAME = 'Non-negative';
-        NONNEGATIVE_DESCRIPTION = 'Graph with non-negative edges.';
+        NONNEGATIVE_DESCRIPTION = 'Graph without negative edges.';
         
         NEGATIVE = 2
         NEGATIVE_NAME = 'Negative';
-        NEGATIVE_DESCRIPTION = 'Graph with negative edges.';
+        NEGATIVE_DESCRIPTION = 'Graph allowing negative edges.';
                 
         NEGATIVITY_TYPE_NUMBER = 2
         
@@ -239,12 +241,8 @@ classdef Graph < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
         settings  % structure with the constructor varagin
-    end
-%     properties (GetAccess=protected, SetAccess=protected)
-%         A  % adjacency matrix or 2D-cell array of adjacency matrices
-%         settings  % structure with the constructor varagin
 %         measure_dict  % dictionary with calculated measures
-%     end
+    end
     methods (Access=protected)  % Contructor
         function g = Graph(A, varargin)
             % Graph(A) creates a graph with the default properties.
@@ -385,32 +383,23 @@ classdef Graph < handle & matlab.mixin.Copyable
                 end
             end
         end
-        function checkDirectionality(directionality_type, A, offdiag_A)
+        function checkDirectionality(directionality_type, A, At)
 
             % This check assumes that checkA has already been passed
+            
+            if nargin < 3
+                At = A';
+            end
             
             if isnumeric(A)  % A is a matrix
                 switch directionality_type 
                     case Graph.UNDIRECTED
-                        if nargin > 2
-                            if size(A, 1) == size(A, 2)
-                                assert(all(all(A == offdiag_A)), ...
-                                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                                    ['For directionality type Graph.UNDIRECTED, A(i,j) in the off-diagonal in non-single' ...
-                                    ' layer graphs must be the same that A(j,i) while it is ' tostring(A)])
-                            else
-                                assert(all(all(A == offdiag_A')), ...
-                                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                                    ['For directionality type Graph.UNDIRECTED, non-square A(i,j) in the off-diagonal' ...
-                                    ' in non-single layer graphs must be the same that the'...
-                                    ' transpose of A(j,i) while it is ' tostring(A)])
-                            end
-                        else    
-                            assert(all(all(A == A')), ...
-                                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                                ['For directionality type Graph.UNDIRECTED, A must be symmetric,' ...
-                                ' while it is ' tostring(A)])
-                        end
+                        assert(all(all(A == At)), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For directionality type Graph.UNDIRECTED, A must equal to At,' ...
+                            ' while it is A = ' tostring(A) ...
+                            ' and At = ' tostring(At)])
+                        
                     case Graph.DIRECTED
                         % no further check needed
                         
@@ -425,14 +414,14 @@ classdef Graph < handle & matlab.mixin.Copyable
                 if numel(directionality_type) == 1
                     directionality_type = directionality_type * ones(size(A));
                 end
+                assert(all(all(directionality_type == directionality_type')), ...
+                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['The directionality type must be symmetric,' ...
+                    ' while it is ' tostring(directionality_type)])
                 
                 for i = 1:1:size(A, 1)
                     for j = 1:1:size(A, 2)    
-                        if i ~= j
-                            Graph.checkDirectionality(directionality_type(i, j), A{i, j}, A{j, i});
-                        else
-                            Graph.checkDirectionality(directionality_type(i, j), A{i, j});
-                        end    
+                        Graph.checkDirectionality(directionality_type(i, j), A{i, j}, A{j, i}');
                     end
                 end
             end
@@ -446,8 +435,8 @@ classdef Graph < handle & matlab.mixin.Copyable
                     case Graph.NONSELFCONNECTED
                         assert(all(all(A(1:length(A)+1:end) == 0)), ...    
                             [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                            ['For self-connectivity type Graph.NONSELFCONNECTED, A must have,' ...
-                            ' 0 values in the diagonal while it is ' tostring(A)])
+                            ['For self-connectivity type Graph.NONSELFCONNECTED, A must have' ...
+                            ' 0 values along the diagonal while it is ' tostring(A)])
                         
                     case Graph.SELFCONNECTED
                         % no further check needed
@@ -478,8 +467,8 @@ classdef Graph < handle & matlab.mixin.Copyable
                     case Graph.NONNEGATIVE
                         assert(all(all(A >= 0)), ...
                             [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                            ['For negativity type Graph.NONNEGATIVE, A must have,' ...
-                            ' non-negative values while it is ' tostring(A)])
+                            ['For negativity type Graph.NONNEGATIVE, A must have' ...
+                            ' non-negative values, while it is ' tostring(A)])
                         
                     case Graph.NEGATIVE
                         % no further check needed
@@ -504,7 +493,6 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
         end
     end
-
     methods (Static)  % Descriptive methods
         function graph_class_list = getList()
             % GETLIST returns the list of available graphs
@@ -735,7 +723,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                     
             bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.UNDIRECTED;
         end
-        function selfconnectivity_type = getSelfConnectivityType(g)
+        function selfconnectivity_type = getSelfConnectivityType(g, varargin)
             % GETSELFCONNECTIVITYTYPE returns if graph is self-connected or not self-connected
             %
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(G) returns if
@@ -748,9 +736,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also is_selfconnected(), is_not_selfconnected().     
                         
-            selfconnectivity_type = eval([Graph.getClass(g) '.getSelfConnectivityType()']);
+            selfconnectivity_type = eval([Graph.getClass(g) '.getSelfConnectivityType(varargin{:})']);
         end
-        function bool = is_selfconnected(g)
+        function bool = is_selfconnected(g, varargin)
             % IS_SELFCONNECTED checks if graph is self-connected
             %
             % BOOL = IS_SELFCONNECTED(G) returns true if the instance of the
@@ -761,9 +749,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getSelfConnectivityType(), is_not_selfconnected().     
              
-            bool = Graph.getSelfConnectivityType(g) == Graph.SELFCONNECTED; 
+            bool = Graph.getSelfConnectivityType(g, varargin{:}) == Graph.SELFCONNECTED; 
         end
-        function bool = is_not_selfconnected(g)
+        function bool = is_not_selfconnected(g, varargin)
             % IS_NONSELFCONNECTED checks if graph is not self-connected
             %
             % BOOL = IS_NONSELFCONNECTED(G) returns true if the instance of the
@@ -774,9 +762,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getSelfConnectivityType(), is_selfconnected().     
                   
-            bool = Graph.getSelfConnectivityType(g) == Graph.NONSELFCONNECTED;
+            bool = Graph.getSelfConnectivityType(g, varargin{:}) == Graph.NONSELFCONNECTED;
         end
-        function negativity_type = getNegativityType(g)
+        function negativity_type = getNegativityType(g, varargin)
             % GETNEGATIVITYTYPE returns if graph is negative or non-negative
             %
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G) returns if the instance of the
@@ -787,9 +775,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also is_negative(), is_nonnegative().     
             
-            negativity_type = eval([Graph.getClass(g) '.getNegativityType()']);
+            negativity_type = eval([Graph.getClass(g, varargin{:}) '.getNegativityType()']);
         end
-        function bool = is_nonnegative(g)
+        function bool = is_nonnegative(g, varargin)
             % IS_NONNEGATIVE checks whether graph allows non-negative values
             %
             % BOOL = IS_NONNEGATIVE(G) returns true if the concrete instance
@@ -800,9 +788,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getNegativityType(), is_negative().
             
-            bool = Graph.getNegativityType(g) == Graph.NONNEGATIVE;
+            bool = Graph.getNegativityType(g, varargin{:}) == Graph.NONNEGATIVE;
         end
-        function bool = is_negative(g)
+        function bool = is_negative(g, varargin)
             % IS_NEGATIVE checks whether graph allows negative values
             % 
             % BOOL = IS_NEGATIVE(G) returns true if the concrete instance
@@ -813,7 +801,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getNegativityType(), is_nonnegative().
             
-            bool = Graph.getNegativityType(g) == Graph.NEGATIVE;
+            bool = Graph.getNegativityType(g, varargin{:}) == Graph.NEGATIVE;
         end
     end
     methods  % Basic functions
