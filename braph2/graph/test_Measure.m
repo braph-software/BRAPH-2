@@ -12,17 +12,17 @@ for i = 1:1:length(measure_class_list)
         g = Graph.getGraph(graph_class, A);
         m = Measure.getMeasure(measure_class, g);
         value = m.getValue();
-        if m.is_global()
+        if m.is_global(m)
             assert(isnumeric(value) && numel(value) == 1, ...
                 ['BRAPH:' measure_class ':getValueBroken'], ...
                 [measure_class '.getValue()  used with ' graph_class ' should return a scalar'])
         end
-        if m.is_nodal()
+        if m.is_nodal(m)
             assert(isnumeric(value) && isequal(size(value), [g.nodenumber() 1]), ...
                 ['BRAPH:' measure_class ':getValueBroken'], ...
                 [measure_class '.getValue() used with ' graph_class ' should return a column vector with length equal to the number of nodes'])
         end
-        if m.is_binodal()
+        if m.is_binodal(m)
             assert(isnumeric(value) && isequal(size(value), [g.nodenumber() g.nodenumber()]), ...
                 ['BRAPH:' measure_class ':getValueBroken'], ...
                 [measure_class '.getValue() used with ' graph_class ' should return a matrix with dimensions equal to the numebr of nodes'])
