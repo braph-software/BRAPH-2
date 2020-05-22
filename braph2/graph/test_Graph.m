@@ -411,7 +411,7 @@ end
 %% Test 1.4: checkSelfConnectivity
 error_identifier = [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT];
 
-selfconnectivity_type{1} = Graph.NOT_SELFCONNECTED;
+selfconnectivity_type{1} = Graph.NONSELFCONNECTED;
 B{1} = 0;
 works{1} = true; 
 
@@ -419,7 +419,7 @@ selfconnectivity_type{2} = Graph.SELFCONNECTED;
 B{2} = 1;
 works{2} = true; 
 
-selfconnectivity_type{3} = Graph.NOT_SELFCONNECTED;
+selfconnectivity_type{3} = Graph.NONSELFCONNECTED;
 B{3} = zeros(3);
 works{3} = true; 
 
@@ -427,11 +427,11 @@ selfconnectivity_type{4} = Graph.SELFCONNECTED;
 B{4} = ones(3);
 works{4} = true; 
 
-selfconnectivity_type{5} = Graph.NOT_SELFCONNECTED;
+selfconnectivity_type{5} = Graph.NONSELFCONNECTED;
 B{5} = ones(3);
 works{5} = false; 
 
-selfconnectivity_type{6} = Graph.NOT_SELFCONNECTED;
+selfconnectivity_type{6} = Graph.NONSELFCONNECTED;
 B{6} = {
     zeros(2) zeros(2)
     zeros(2) zeros(2)
@@ -445,7 +445,7 @@ B{7} = {
     };
 works{7} = true; 
 
-selfconnectivity_type{8} = Graph.NOT_SELFCONNECTED;
+selfconnectivity_type{8} = Graph.NONSELFCONNECTED;
 B{8} = {
     ones(2) ones(2)
     ones(2) ones(2)
@@ -453,8 +453,8 @@ B{8} = {
 works{8} = false; 
 
 selfconnectivity_type{9} = [
-    Graph.NOT_SELFCONNECTED Graph.SELFCONNECTED
-    Graph.SELFCONNECTED Graph.NOT_SELFCONNECTED
+    Graph.NONSELFCONNECTED Graph.SELFCONNECTED
+    Graph.SELFCONNECTED Graph.NONSELFCONNECTED
     ];
 B{9} = {
     zeros(2) ones(2)
@@ -463,8 +463,8 @@ B{9} = {
 works{9} = true;
 
 selfconnectivity_type{10} = [
-    Graph.NOT_SELFCONNECTED Graph.SELFCONNECTED
-    Graph.SELFCONNECTED Graph.NOT_SELFCONNECTED
+    Graph.NONSELFCONNECTED Graph.SELFCONNECTED
+    Graph.SELFCONNECTED Graph.NONSELFCONNECTED
     ];
 B{10} = {
     ones(2) zeros(2)
