@@ -677,38 +677,38 @@ for i = 1:1:length(graph_class_list)
     g = Graph.getGraph(graph_class, A{Graph.getGraphType(graph_class)});
 end
 
-% %% Test 4: Either weighted or binary
-% for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     assert(all(all(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class))), ...
-%         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-%         [graph_class '.is_weighted() == ' graph_class '.is_binary()'])
-% end
-%  
-% %% Test 5: Either directed or undirected
-% for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     assert(all(all(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class))), ...
-%         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-%         [graph_class '.is_directed() == ' graph_class '.is_undirected()'])
-% end
-% 
-% %% Test 6: Either Self-connected or Non self-connected
-% for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     assert(Graph.is_selfconnected(graph_class) ~= Graph.is_not_selfconnected(graph_class), ...
-%         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-%         [graph_class '.is_selfconnected() == ' graph_class '.is_not_selfconnected()'])
-% end
-% 
-% %% Test 7: Either Negative or Non negative
-% for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     assert(Graph.is_negative(graph_class) ~= Graph.is_nonnegative(graph_class), ...
-%         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-%         [graph_class '.is_negative() == ' graph_class '.is_nonnegative()'])
-% end
-% 
+%% Test 4: Either weighted or binary
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    assert(all(all(Graph.is_weighted(graph_class) ~= Graph.is_binary(graph_class))), ...
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        [graph_class '.is_weighted() must be the opposite of ' graph_class '.is_binary()'])
+end
+ 
+%% Test 5: Either directed or undirected
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    assert(all(all(Graph.is_directed(graph_class) ~= Graph.is_undirected(graph_class))), ...
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        [graph_class '.is_directed() must be the opposite of ' graph_class '.is_undirected()'])
+end
+
+%% Test 6: Either self-connected or non-self-connected
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    assert(all(all(Graph.is_selfconnected(graph_class) ~= Graph.is_not_selfconnected(graph_class))), ...
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        [graph_class '.is_selfconnected() must be the opposite of ' graph_class '.is_not_selfconnected()'])
+end
+
+%% Test 7: Either negative or non-negative
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    assert(all(all(Graph.is_negative(graph_class) ~= Graph.is_nonnegative(graph_class))), ...
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        [graph_class '.is_negative() must be the opposite of ' graph_class '.is_nonnegative()'])
+end
+
 % %% Test 8: NodeAttack
 % n = randi(4);
 % nodes = [randi(n), randi(n)];
