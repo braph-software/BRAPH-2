@@ -47,9 +47,9 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   EDGE_TYPE_NUMBER     - number of graph edges types
     %   EDGE_TYPE_NAME  - name of graph edges types
     %   EDGE_TYPE_DESCRIPTION   - description of graph edges types
-    %   NOT_SELFCONNECTED   - not self-connected graph
-    %   NOT_SELFCONNECTED_NAME  - name of NOT_SELFCONNECTED
-    %   NOT_SELFCONNECTED_DESCRIPTION   - description of NOT_SELFCONNECTED
+    %   NONSELFCONNECTED   - not self-connected graph
+    %   NONSELFCONNECTED_NAME  - name of NONSELFCONNECTED
+    %   NONSELFCONNECTED_DESCRIPTION   - description of NONSELFCONNECTED
     %   SELFCONNECTED   - self-connected graph
     %   SELFCONNECTED_NAME  - name of SELFCONNECTED
     %   SELFCONNECTED_DESCRIPTION   - description of SELFCONNECTED
@@ -195,9 +195,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             }
         
         % Selfconnectedness
-        NOT_SELFCONNECTED = 1
-        NOT_SELFCONNECTED_NAME = 'Not self-connected'
-        NOT_SELFCONNECTED_DESCRIPTION = 'Graph with self-connections set to zero.';
+        NONSELFCONNECTED = 1
+        NONSELFCONNECTED_NAME = 'Not self-connected'
+        NONSELFCONNECTED_DESCRIPTION = 'Graph with self-connections set to zero.';
         
         SELFCONNECTED = 2
         SELFCONNECTED_NAME = 'Self-connected'
@@ -206,12 +206,12 @@ classdef Graph < handle & matlab.mixin.Copyable
         SELFCONNECTIVITY_TYPE_NUMBER = 2
         
         SELFCONNECTIVITY_TYPE_NAME = {
-            Graph.NOT_SELFCONNECTED_NAME
+            Graph.NONSELFCONNECTED_NAME
             Graph.SELFCONNECTED_NAME
             }
         
         SELFCONNECTIVITY_TYPE_DESCRIPTION = {
-            Graph.NOT_SELFCONNECTED_DESCRIPTION
+            Graph.NONSELFCONNECTED_DESCRIPTION
             Graph.SELFCONNECTED_DESCRIPTION
             }
         
@@ -443,10 +443,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             if isnumeric(A)  % A is a matrix
                 switch selfconnectivity_type 
-                    case Graph.NOT_SELFCONNECTED
+                    case Graph.NONSELFCONNECTED
                         assert(all(all(A(1:length(A)+1:end) == 0)), ...    
                             [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                            ['For self-connectivity type Graph.NOT_SELFCONNECTED, A must have,' ...
+                            ['For self-connectivity type Graph.NONSELFCONNECTED, A must have,' ...
                             ' 0 values in the diagonal while it is ' tostring(A)])
                         
                     case Graph.SELFCONNECTED
@@ -455,8 +455,8 @@ classdef Graph < handle & matlab.mixin.Copyable
                     otherwise
                         error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
                             ['Self-connectivity type must be Graph.SELFCONNECTED (%i) or' ...
-                            ' Graph.NOT_SELFCONNECTED (%i), while it is ' tostring(selfconnectivity_type)], ...
-                            Graph.SELFCONNECTED, Graph.NOT_SELFCONNECTED)
+                            ' Graph.NONSELFCONNECTED (%i), while it is ' tostring(selfconnectivity_type)], ...
+                            Graph.SELFCONNECTED, Graph.NONSELFCONNECTED)
                 end
             else  % A is 2D cell array
                 
@@ -764,17 +764,17 @@ classdef Graph < handle & matlab.mixin.Copyable
             bool = Graph.getSelfConnectivityType(g) == Graph.SELFCONNECTED; 
         end
         function bool = is_not_selfconnected(g)
-            % IS_NOT_SELFCONNECTED checks if graph is not self-connected
+            % IS_NONSELFCONNECTED checks if graph is not self-connected
             %
-            % BOOL = IS_NOT_SELFCONNECTED(G) returns true if the instance of the
+            % BOOL = IS_NONSELFCONNECTED(G) returns true if the instance of the
             % concrete graph G is not self-connected and false otherwise.
             %
-            % BOOL = IS_NOT_SELFCONNECTED(GRAPH_CLASS) returns true if graph
+            % BOOL = IS_NONSELFCONNECTED(GRAPH_CLASS) returns true if graph
             % whose class is GRAPH_CLASS is not self-connected and false otherwise.
             %
             % See also getSelfConnectivityType(), is_selfconnected().     
                   
-            bool = Graph.getSelfConnectivityType(g) == Graph.NOT_SELFCONNECTED;
+            bool = Graph.getSelfConnectivityType(g) == Graph.NONSELFCONNECTED;
         end
         function negativity_type = getNegativityType(g)
             % GETNEGATIVITYTYPE returns if graph is negative or non-negative
