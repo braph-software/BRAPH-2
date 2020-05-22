@@ -83,8 +83,8 @@ classdef GraphWU < GraphWD
         function connectivity_type = getConnectivityType()
             connectivity_type = Graph.WEIGHTED;
         end
-        function edge_type = getEdgeType()
-            edge_type = Graph.UNDIRECTED;
+        function directionality_type = getDirectionalityType()
+            directionality_type = Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType()
             selfconnectivity_type = Graph.NOT_SELFCONNECTED;

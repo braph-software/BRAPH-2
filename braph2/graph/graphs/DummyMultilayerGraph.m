@@ -57,8 +57,8 @@ classdef DummyMultilayerGraph < Graph
                 Graph.WEIGHTED  Graph.BINARY    Graph.WEIGHTED
                 ];
         end
-        function edge_type = getEdgeType()
-            edge_type = Graph.DIRECTED;
+        function directionality_type = getDirectionalityType()
+            directionality_type = Graph.DIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType()
             selfconnectivity_type = Graph.SELFCONNECTED;
