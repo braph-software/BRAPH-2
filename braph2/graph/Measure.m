@@ -271,7 +271,7 @@ classdef Measure < handle
             %
             % See also is_binodal(), is_nodal().
             
-            bool = Measure.getMeasureType(m) == Measure.GLOBAL;
+            bool = Measure.getMeasureFormat(m) == Measure.GLOBAL;
         end
         function bool = is_nodal(m)
             % IS_NODAL checks if measure is nodal
@@ -284,7 +284,7 @@ classdef Measure < handle
             %
             % See also is_binodal(), is_global().
             
-            bool = Measure.getMeasureType(m) == Measure.NODAL;
+            bool = Measure.getMeasureFormat(m) == Measure.NODAL;
         end
         function bool = is_binodal(m)
             % IS_BINODAL checks if measure is bi-nodal
@@ -297,7 +297,7 @@ classdef Measure < handle
             %
             % See also is_global(), is_nodal().
             
-            bool = Measure.getMeasureType(m) == Measure.BINODAL;
+            bool = Measure.getMeasureFormat(m) == Measure.BINODAL;
         end
         function measure_scope = getMeasureScope(m)
             % GETMEASURESCOPE returns the measure scope
@@ -325,7 +325,7 @@ classdef Measure < handle
             %
             % See also is_bilayer(), is_unilayer().
             
-            bool = Measure.getMeasureType(m) == Measure.SUPERGLOBAL;
+            bool = Measure.getMeasureScope(m) == Measure.SUPERGLOBAL;
         end
         function bool = is_unilayer(m)
             % IS_UNILAYER checks if measure is unilayer
@@ -338,7 +338,7 @@ classdef Measure < handle
             %
             % See also is_bilayer(), is_superglobal().
             
-            bool = Measure.getMeasureType(m) == Measure.UNILAYER;
+            bool = Measure.getMeasureScope(m) == Measure.UNILAYER;
         end
         function bool = is_bilayer(m)
             % IS_BILYER checks if measure is bi-layer
@@ -351,7 +351,7 @@ classdef Measure < handle
             %
             % See also is_superglobal(), is_unilayer().
             
-            bool = Measure.getMeasureType(m) == Measure.BILAYER;
+            bool = Measure.getMeasureScope(m) == Measure.BILAYER;
         end
     end
     methods (Static)
