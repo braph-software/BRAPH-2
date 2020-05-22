@@ -67,7 +67,11 @@ classdef DummyMultilayerGraph < Graph
             %
             % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
             
-            negativity_type = Graph.NEGATIVE;
+            negativity_type = [ 
+                Graph.NONNEGATIVE	Graph.NONNEGATIVE   Graph.NEGATIVE
+                Graph.NONNEGATIVE   Graph.NONNEGATIVE   Graph.NONNEGATIVE 
+                Graph.NEGATIVE      Graph.NONNEGATIVE   Graph.NEGATIVE
+                ];
         end
     end
 end
