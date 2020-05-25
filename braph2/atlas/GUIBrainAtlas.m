@@ -648,8 +648,8 @@ init_contextmenu()
         
         ui_contextmenu_brain = uicontextmenu();
         ui_contextmenu_brain_settings = uimenu(ui_contextmenu_brain);
-        set(ui_contextmenu_brain_settings,'Label','Brain Settings')
-        set(ui_contextmenu_brain_settings,'Callback',{@cb_brainview_brain_settings})
+        set(ui_contextmenu_brain_settings, 'Label', 'Brain Settings')
+        set(ui_contextmenu_brain_settings, 'Callback', {@cb_brainview_brain_settings})
         
         ui_contextmenu_brain_light = uimenu(ui_contextmenu_brain);
         set(ui_contextmenu_brain_light,'Label','Brain Light')
