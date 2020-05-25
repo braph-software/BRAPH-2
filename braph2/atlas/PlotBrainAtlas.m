@@ -1,7 +1,7 @@
 classdef PlotBrainAtlas < PlotBrainSurf
     % PlotBrainAtlas < PlotBrainSurf : Plot of a brain atlas
     % PlotBrainAtlas plots and manages the brain regions that make up a
-    % a brain atlas. The brain regions can be plotted by using symbols, 
+    % a brain atlas. The brain regions can be plotted by using symbols,
     % spheres or labels.
     % It is a subclass of PlotBrainSurf.
     %
@@ -167,12 +167,12 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba = ba@PlotBrainSurf(varargin{:});
             
             ba.atlas = atlas;
-            ba.setRegions(atlas);          
+            ba.setRegions(atlas);
         end
     end
     methods  % editing funtions
         function setRegions(ba, atlas)
-              for i = 1:1:atlas.getBrainRegions().length()
+            for i = 1:1:atlas.getBrainRegions().length()
                 brain_region = atlas.getBrainRegions().getValue(i);
                 x_coordinates{i} = brain_region.getX(); %#ok<AGROW>
                 y_coordinates{i} = brain_region.getY(); %#ok<AGROW>
@@ -445,7 +445,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .30 .30];
-            FigColor = [.5 .5 .5];
+            FigColor = [.95 .95 .95];
             FigName = 'Brain Region Symbol Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -620,8 +620,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-%                 set(ui_checkbox_hs,'Value',false)
-%                 set(ui_checkbox_hs,'FontWeight','normal')
+                %                 set(ui_checkbox_hs,'Value',false)
+                %                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
@@ -635,8 +635,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',true)
                 set(ui_checkbox_name,'FontWeight','bold')
                 
-%                 set(ui_checkbox_hs,'Value',false)
-%                 set(ui_checkbox_hs,'FontWeight','normal')
+                %                 set(ui_checkbox_hs,'Value',false)
+                %                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
@@ -665,8 +665,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-%                 set(ui_checkbox_hs,'Value',false)
-%                 set(ui_checkbox_hs,'FontWeight','normal')
+                %                 set(ui_checkbox_hs,'Value',false)
+                %                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',true)
                 set(ui_checkbox_xyz,'FontWeight','bold')
@@ -740,13 +740,13 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba.set_axes()
             
             % radius
-            R = ba.sphs.R(i);
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
-                    case 'r'
-                        R = varargin{n + 1};
+                    case 'radius'
+                        ba.sphs.R(i) = varargin{n + 1};
                 end
             end
+            R = ba.sphs.R(i);
             
             % center coordinates
             X = ba.atlas.getBrainRegions().getValue(i).getX();  % get(i).getProp(BrainRegion.X);
@@ -788,7 +788,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % sets properties
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
-                    case 'r'
+                    case 'radius'
                         % do nothing
                     case 'color'
                         color = varargin{n+1};
@@ -863,7 +863,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % R - EdgeColor - EdgeAlpha - FaceColor - FaceAlpha - Color - Alpha
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
-                    case 'r'
+                    case 'radius'
                         R = varargin{n + 1};
                         nr = n + 1;
                     case 'edgecolor'
@@ -890,31 +890,58 @@ classdef PlotBrainAtlas < PlotBrainSurf
             if nargin<2 || isempty(i_vec)
                 i_vec = 1:1:ba.atlas.getBrainRegions().length();
             end
-            
-            for m = 1:1:length(i_vec)
-                if exist('R','var') && numel(R)==length(i_vec)
-                    varargin{nr} = R(m);
+            if isa(i_vec, 'IndexedDictionary')
+                for m = 1:1:i_vec.length()
+                    if exist('R','var') && numel(R)==length(i_vec)
+                        varargin{nr} = R(m);
+                    end
+                    if exist('EdgeColor','var') && size(EdgeColor,1)==length(i_vec) && size(EdgeColor,2)==3
+                        varargin{nedgecolor} = EdgeColor(m,:);
+                    end
+                    if exist('EdgeAlpha','var') && numel(EdgeAlpha)==length(i_vec)
+                        varargin{nedgealpha} = EdgeAlpha(m);
+                    end
+                    if exist('FaceColor','var') && size(FaceColor,1)==length(i_vec) && size(FaceColor,2)==3
+                        varargin{nfacecolor} = FaceColor(m,:);
+                    end
+                    if exist('FaceAlpha','var') && numel(FaceAlpha)==length(i_vec)
+                        varargin{nfacealpha} = FaceAlpha(m);
+                    end
+                    if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
+                        varargin{ncolor} = Color(m,:);
+                    end
+                    if exist('Alpha','var') && numel(Alpha)==length(i_vec)
+                        varargin{nalpha} = Alpha(m);
+                    end
+                    
+                    ba.br_sph(m, varargin{:})
                 end
-                if exist('EdgeColor','var') && size(EdgeColor,1)==length(i_vec) && size(EdgeColor,2)==3
-                    varargin{nedgecolor} = EdgeColor(m,:);
+            else
+                for m = 1:1:length(i_vec)
+                    if exist('R','var') && numel(R)==length(i_vec)
+                        varargin{nr} = R(m);
+                    end
+                    if exist('EdgeColor','var') && size(EdgeColor,1)==length(i_vec) && size(EdgeColor,2)==3
+                        varargin{nedgecolor} = EdgeColor(m,:);
+                    end
+                    if exist('EdgeAlpha','var') && numel(EdgeAlpha)==length(i_vec)
+                        varargin{nedgealpha} = EdgeAlpha(m);
+                    end
+                    if exist('FaceColor','var') && size(FaceColor,1)==length(i_vec) && size(FaceColor,2)==3
+                        varargin{nfacecolor} = FaceColor(m,:);
+                    end
+                    if exist('FaceAlpha','var') && numel(FaceAlpha)==length(i_vec)
+                        varargin{nfacealpha} = FaceAlpha(m);
+                    end
+                    if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
+                        varargin{ncolor} = Color(m,:);
+                    end
+                    if exist('Alpha','var') && numel(Alpha)==length(i_vec)
+                        varargin{nalpha} = Alpha(m);
+                    end
+                    
+                    ba.br_sph(i_vec, varargin{:})
                 end
-                if exist('EdgeAlpha','var') && numel(EdgeAlpha)==length(i_vec)
-                    varargin{nedgealpha} = EdgeAlpha(m);
-                end
-                if exist('FaceColor','var') && size(FaceColor,1)==length(i_vec) && size(FaceColor,2)==3
-                    varargin{nfacecolor} = FaceColor(m,:);
-                end
-                if exist('FaceAlpha','var') && numel(FaceAlpha)==length(i_vec)
-                    varargin{nfacealpha} = FaceAlpha(m);
-                end
-                if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
-                    varargin{ncolor} = Color(m,:);
-                end
-                if exist('Alpha','var') && numel(Alpha)==length(i_vec)
-                    varargin{nalpha} = Alpha(m);
-                end
-                
-                ba.br_sph(i_vec(m), varargin{:})
             end
         end
         function br_sphs_on(ba, i_vec)
@@ -1004,7 +1031,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .30 .30];
-            FigColor = [.5 .5 .5];
+            FigColor = [.95 .95 .95];
             FigName = 'Brain Region Sphere Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -1070,14 +1097,6 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by position')
             set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
             
-%             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
-%             set(ui_checkbox_hs, 'Units','normalized')
-%             set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
-%             set(ui_checkbox_hs, 'Position', [.23 .05 .15 .10])
-%             set(ui_checkbox_hs, 'String', 'hemisphere')
-%             set(ui_checkbox_hs, 'Value', false)
-%             set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by hemisphere')
-%             set(ui_checkbox_hs, 'Callback', {@cb_hs})
             
             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_show, 'Units','normalized')
@@ -1216,8 +1235,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-%                 set(ui_checkbox_hs,'Value',false)
-%                 set(ui_checkbox_hs,'FontWeight','normal')
+                %                 set(ui_checkbox_hs,'Value',false)
+                %                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
@@ -1231,29 +1250,29 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',true)
                 set(ui_checkbox_name,'FontWeight','bold')
                 
-%                 set(ui_checkbox_hs,'Value',false)
-%                 set(ui_checkbox_hs,'FontWeight','normal')
+                %                 set(ui_checkbox_hs,'Value',false)
+                %                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
                 
                 update_list()
             end
-%             function cb_hs(~,~)  % (src,event)
-%                 set(ui_checkbox_label,'Value',false)
-%                 set(ui_checkbox_label,'FontWeight','normal')
-%                 
-%                 set(ui_checkbox_name,'Value',false)
-%                 set(ui_checkbox_name,'FontWeight','normal')
-%                 
-%                 set(ui_checkbox_hs,'Value',true)
-%                 set(ui_checkbox_hs,'FontWeight','bold')
-%                 
-%                 set(ui_checkbox_xyz,'Value',false)
-%                 set(ui_checkbox_xyz,'FontWeight','normal')
-%                 
-%                 update_list()
-%             end
+            %             function cb_hs(~,~)  % (src,event)
+            %                 set(ui_checkbox_label,'Value',false)
+            %                 set(ui_checkbox_label,'FontWeight','normal')
+            %
+            %                 set(ui_checkbox_name,'Value',false)
+            %                 set(ui_checkbox_name,'FontWeight','normal')
+            %
+            %                 set(ui_checkbox_hs,'Value',true)
+            %                 set(ui_checkbox_hs,'FontWeight','bold')
+            %
+            %                 set(ui_checkbox_xyz,'Value',false)
+            %                 set(ui_checkbox_xyz,'FontWeight','normal')
+            %
+            %                 update_list()
+            %             end
             function cb_xyz(~,~)  % (src,event)
                 set(ui_checkbox_label,'Value',false)
                 set(ui_checkbox_label,'FontWeight','normal')
@@ -1261,8 +1280,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-%                 set(ui_checkbox_hs,'Value',false)
-%                 set(ui_checkbox_hs,'FontWeight','normal')
+                %                 set(ui_checkbox_hs,'Value',false)
+                %                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',true)
                 set(ui_checkbox_xyz,'FontWeight','bold')
@@ -1280,7 +1299,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 color = uisetcolor();
                 
                 if length(color)==3
-                    ba.br_sphs(get_br_list(),'color',color)
+                    ba.br_sphs(get_br_list(), 'color',color)
                 end
             end
             function cb_facecolor(~,~)  % (src,event)
@@ -1465,21 +1484,42 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 i_vec = 1:1:ba.atlas.getBrainRegions().length();
             end
             
-            for m = 1:1:length(i_vec)
-                if exist('FontSize','var') && numel(FontSize)==length(i_vec)
-                    varargin{nfontsize} = FontSize(m);
-                end
-                if exist('FontName','var') && numel(FontName)==length(i_vec)
-                    varargin{nfontname} = FontName(m);
-                end
-                if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
-                    varargin{ncolor} = Color(m,:);
-                end
-                if exist('INTERP','var') && numel(INTERP,1)==length(i_vec)
-                    varargin{ninterp} = INTERP(m);
+            if isa(i_vec, 'IndexedDictionary')
+                for m = 1:1:i_vec.length()
+                    
+                    if exist('FontSize','var') && numel(FontSize)==length(i_vec)
+                        varargin{nfontsize} = FontSize(m);
+                    end
+                    if exist('FontName','var') && numel(FontName)==length(i_vec)
+                        varargin{nfontname} = FontName(m);
+                    end
+                    if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
+                        varargin{ncolor} = Color(m,:);
+                    end
+                    if exist('INTERP','var') && numel(INTERP,1)==length(i_vec)
+                        varargin{ninterp} = INTERP(m);
+                    end
+                    
+                    ba.br_lab(m, varargin{:})
                 end
                 
-                ba.br_lab(i_vec(m),varargin{:})
+            else
+                for m = 1:1:length(i_vec)
+                    if exist('FontSize','var') && numel(FontSize)==length(i_vec)
+                        varargin{nfontsize} = FontSize(m);
+                    end
+                    if exist('FontName','var') && numel(FontName)==length(i_vec)
+                        varargin{nfontname} = FontName(m);
+                    end
+                    if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
+                        varargin{ncolor} = Color(m,:);
+                    end
+                    if exist('INTERP','var') && numel(INTERP,1)==length(i_vec)
+                        varargin{ninterp} = INTERP(m);
+                    end
+                    
+                    ba.br_lab(m, varargin{:})
+                end
             end
         end
         function br_labs_on(ba, i_vec)
@@ -1569,7 +1609,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .25 .30];
-            FigColor = [.5 .5 .5];
+            FigColor = [.95 .95 .95];
             FigName = 'Brain Region Label Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -1635,14 +1675,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by position')
             set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
             
-%             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
-%             set(ui_checkbox_hs, 'Units', 'normalized')
-%             set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
-%             set(ui_checkbox_hs, 'Position', [.25 .025 .20 .10])
-%             set(ui_checkbox_hs, 'String', 'hemisphere')
-%             set(ui_checkbox_hs, 'Value', false)
-%             set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by hemisphere')
-%             set(ui_checkbox_hs, 'Callback', {@cb_hs})
+            %             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
+            %             set(ui_checkbox_hs, 'Units', 'normalized')
+            %             set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
+            %             set(ui_checkbox_hs, 'Position', [.25 .025 .20 .10])
+            %             set(ui_checkbox_hs, 'String', 'hemisphere')
+            %             set(ui_checkbox_hs, 'Value', false)
+            %             set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by hemisphere')
+            %             set(ui_checkbox_hs, 'Callback', {@cb_hs})
             
             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_show, 'Units', 'normalized')
@@ -1734,8 +1774,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-%                 set(ui_checkbox_hs,'Value',false)
-%                 set(ui_checkbox_hs,'FontWeight','normal')
+                %                 set(ui_checkbox_hs,'Value',false)
+                %                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
@@ -1749,29 +1789,29 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',true)
                 set(ui_checkbox_name,'FontWeight','bold')
                 
-%                 set(ui_checkbox_hs,'Value',false)
-%                 set(ui_checkbox_hs,'FontWeight','normal')
-%                 
+                %                 set(ui_checkbox_hs,'Value',false)
+                %                 set(ui_checkbox_hs,'FontWeight','normal')
+                %
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
                 
                 update_list()
             end
-%             function cb_hs(~,~)  % (src,event)
-%                 set(ui_checkbox_label,'Value',false)
-%                 set(ui_checkbox_label,'FontWeight','normal')
-%                 
-%                 set(ui_checkbox_name,'Value',false)
-%                 set(ui_checkbox_name,'FontWeight','normal')
-%                 
-%                 set(ui_checkbox_hs,'Value',true)
-%                 set(ui_checkbox_hs,'FontWeight','bold')
-%                 
-%                 set(ui_checkbox_xyz,'Value',false)
-%                 set(ui_checkbox_xyz,'FontWeight','normal')
-%                 
-%                 update_list()
-%             end
+            %             function cb_hs(~,~)  % (src,event)
+            %                 set(ui_checkbox_label,'Value',false)
+            %                 set(ui_checkbox_label,'FontWeight','normal')
+            %
+            %                 set(ui_checkbox_name,'Value',false)
+            %                 set(ui_checkbox_name,'FontWeight','normal')
+            %
+            %                 set(ui_checkbox_hs,'Value',true)
+            %                 set(ui_checkbox_hs,'FontWeight','bold')
+            %
+            %                 set(ui_checkbox_xyz,'Value',false)
+            %                 set(ui_checkbox_xyz,'FontWeight','normal')
+            %
+            %                 update_list()
+            %             end
             function cb_xyz(~,~)  % (src,event)
                 set(ui_checkbox_label, 'Value', false)
                 set(ui_checkbox_label, 'FontWeight', 'normal')
@@ -1779,8 +1819,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name, 'Value', false)
                 set(ui_checkbox_name, 'FontWeight', 'normal')
                 
-%                 set(ui_checkbox_hs,'Value',false)
-%                 set(ui_checkbox_hs,'FontWeight','normal')
+                %                 set(ui_checkbox_hs,'Value',false)
+                %                 set(ui_checkbox_hs,'FontWeight','normal')
                 
                 set(ui_checkbox_xyz, 'Value', true)
                 set(ui_checkbox_xyz, 'FontWeight', 'bold')

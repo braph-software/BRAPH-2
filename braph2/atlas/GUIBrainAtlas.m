@@ -155,7 +155,7 @@ selected = [];
         end
     end
     function cb_import_txt(~,~)  % (scr,event)
-       %  = ('', '', '', {});
+        %  = ('', '', '', {});
         atlastmp = BrainAtlas.load_from_txt();
         if ~isempty(atlastmp)
             atlas = atlastmp;
@@ -197,6 +197,7 @@ h_axis = [];
 h_grid = [];
 
 h_brain = [];
+h_brain_outer_obj = [];
 h_brain_visible = [];
 h_brainalpha = [];
 
@@ -306,7 +307,7 @@ init_table()
         set(ui_button_table_add,'Position',[.27 .11 .21 .03])
         set(ui_button_table_add,'String',ADD_CMD)
         set(ui_button_table_add,'TooltipString',ADD_TP);
-        set(ui_button_table_add,'Callback',{@cb_table_add})   
+        set(ui_button_table_add,'Callback',{@cb_table_add})
         
         set(ui_button_table_remove,'Position',[.52 .11 .21 .03])
         set(ui_button_table_remove,'String',REMOVE_CMD)
@@ -357,10 +358,11 @@ init_table()
             data{i, TAB_BR_Z_COL} = atlas.getBrainRegions().getValue(i).getZ();
             data{i, TAB_BR_NOTES_COL} = atlas.getBrainRegions().getValue(i).getNotes();
         end
+        h_br = data;
         set(ui_table_table, 'Data', data)
     end
     function cb_table_atlasname(~,~)  % (src,event)
-        atlas.setID(get(ui_edit_table_atlasname, 'String')); 
+        atlas.setID(get(ui_edit_table_atlasname, 'String'));
         update_table_atlasname()
     end
     function cb_table_edit(~,event)  % (src,event)
@@ -371,8 +373,10 @@ init_table()
             case TAB_BR_SELECTED_COL
                 if newdata==1
                     selected = sort(unique([selected(:); i]));
+                    h_br(i, 1) = {newdata};
                 else
                     selected = selected(selected~=i);
+                    h_br(i, 1) = {newdata};
                 end
             case TAB_BR_LABEL_COL
                 atlas.getBrainRegions().getValue(i).setLabel(newdata)
@@ -567,31 +571,31 @@ init_figure()
         
         set(ui_button_figure_3d,'Position',[.10 .05 .14 .03])
         set(ui_button_figure_3d,'String',FIG_VIEW_3D_CMD)
-        set(ui_button_figure_3d,'Callback',{@cb_figure_plotsettings})
+        set(ui_button_figure_3d,'Callback',{@cb_figure_angle})
         
         set(ui_button_figure_sagittalleft,'Position',[.25 .05 .14 .03])
         set(ui_button_figure_sagittalleft,'String',FIG_VIEW_SL_CMD)
-        set(ui_button_figure_sagittalleft,'Callback',{@cb_figure_plotsettings})
+        set(ui_button_figure_sagittalleft,'Callback',{@cb_figure_angle})
         
         set(ui_button_figure_sagittalright,'Position',[.25 .02 .14 .03])
         set(ui_button_figure_sagittalright,'String',FIG_VIEW_SR_CMD)
-        set(ui_button_figure_sagittalright,'Callback',{@cb_figure_plotsettings})
+        set(ui_button_figure_sagittalright,'Callback',{@cb_figure_angle})
         
         set(ui_button_figure_axialdorsal,'Position',[.40 .05 .14 .03])
         set(ui_button_figure_axialdorsal,'String',FIG_VIEW_AD_CMD)
-        set(ui_button_figure_axialdorsal,'Callback',{@cb_figure_plotsettings})
+        set(ui_button_figure_axialdorsal,'Callback',{@cb_figure_angle})
         
         set(ui_button_figure_axialventral,'Position',[.40 .02 .14 .03])
         set(ui_button_figure_axialventral,'String',FIG_VIEW_AV_CMD)
-        set(ui_button_figure_axialventral,'Callback',{@cb_figure_plotsettings})
+        set(ui_button_figure_axialventral,'Callback',{@cb_figure_angle})
         
         set(ui_button_figure_coronalanterior,'Position',[.55 .05 .14 .03])
         set(ui_button_figure_coronalanterior,'String',FIG_VIEW_CA_CMD)
-        set(ui_button_figure_coronalanterior,'Callback',{@cb_figure_plotsettings})
+        set(ui_button_figure_coronalanterior,'Callback',{@cb_figure_angle})
         
         set(ui_button_figure_coronalposterior,'Position',[.55 .02 .14 .03])
         set(ui_button_figure_coronalposterior,'String',FIG_VIEW_CP_CMD)
-        set(ui_button_figure_coronalposterior,'Callback',{@cb_figure_plotsettings})
+        set(ui_button_figure_coronalposterior,'Callback',{@cb_figure_angle})
         
         set(ui_menu_figure_brainfiles, 'Position', [.1 .01 .14 .03])
         set(ui_menu_figure_brainfiles, 'String', {'BrainMesh_ICBM152', 'BrainMesh_Cerebellum', 'BrainMesh_Ch2', ...
@@ -640,9 +644,6 @@ init_contextmenu()
         h_brain = [];
         h_brain_visible = FIG_INIT_BRAIN_VISIBLE;
         h_brainalpha = FIG_INIT_BRAIN_ALPHA;
-        
-        delete(h_br)
-        h_br = [];
         h_br_visible = FIG_INIT_BR_VISIBLE;
         
         delete(h_labels)
@@ -665,24 +666,47 @@ init_contextmenu()
         ui_contextmenu_brain_light = uimenu(ui_contextmenu_brain);
         set(ui_contextmenu_brain_light,'Label','Brain Light')
         set(ui_contextmenu_brain_light,'Callback',{@cb_brainview_brain_light})
-       
-        h_brain_obj = atlas.getPlotBrainSurf('BrainSurfaceType', [brain_file '.nv']);
+        
+        ui_contextmenu_atlas_symbols = uimenu(ui_contextmenu_brain);
+        set(ui_contextmenu_atlas_symbols, 'Label', 'Symbols')
+        set(ui_contextmenu_atlas_symbols, 'Callback', {@cb_brainview_atlas_symbols})
+        
+        ui_contextmenu_atlas_spheres = uimenu(ui_contextmenu_brain);
+        set(ui_contextmenu_atlas_spheres, 'Label', 'Spheres')
+        set(ui_contextmenu_atlas_spheres, 'Callback', {@cb_brainview_atlas_spheres})
+        
+        ui_contextmenu_atlas_labels = uimenu(ui_contextmenu_brain);
+        set(ui_contextmenu_atlas_labels, 'Label', 'Labels')
+        set(ui_contextmenu_atlas_labels, 'Callback', {@cb_brainview_atlas_labels})
+        
+        
+        h_brain_obj = atlas.getPlotBrainAtlas('BrainSurfaceType', [brain_file '.nv']);
+        h_brain_outer_obj = h_brain_obj;
         h_brain = h_brain_obj.brain();
         set(h_brain, 'EdgeColor', FIG_EDGECOLOR);
         set(h_brain, 'FaceColor', FIG_FACECOLOR);
         set(h_brain, 'FaceAlpha', h_brainalpha);
         
         set(h_brain, 'UiContextMenu', ui_contextmenu_brain)
-      
+        
         
         function cb_brainview_brain_settings(~, ~)
             h_brain_obj.brain_settings();
-        end      
+        end
         function cb_brainview_brain_light(~, ~)
             h_brain_obj.brain_lighting();
-        end      
+        end
+        function cb_brainview_atlas_symbols(~, ~)
+            h_brain_obj.br_syms_settings();
+        end
+        function cb_brainview_atlas_spheres(~, ~)
+            h_brain_obj.br_sphs_settings();
+        end
+        function cb_brainview_atlas_labels(~, ~)
+            h_brain_obj.br_labs_settings();
+        end
         
-        update_figure_light()        
+        update_figure_light()
         update_figure_brainview()
     end
     function update_figure_brainview()
@@ -789,26 +813,12 @@ init_contextmenu()
         
         % brain regions and labels
         if h_br_visible || h_labels_visible
-            
-            if length(h_br)<atlas.getBrainRegions().length()  % create new markers as needed
-                for i = length(h_br)+1:1:atlas.getBrainRegions().length()
-                    create_figure_brainregionplot(i);
-                end
-            else % eliminate unnecessary markers as needed
-                delete(h_br(atlas.getBrainRegions().length()+1:1:end))
-                h_br = h_br(1:1:atlas.getBrainRegions().length());
-                
-                delete(h_labels(atlas.getBrainRegions().length()+1:1:end))
-                h_labels = h_labels(1:1:atlas.getBrainRegions().length());
-            end
-            
+
+            create_figure_brainregionplot();  
+         
             for i = 1:1:atlas.getBrainRegions().length()
-                userdata = get(h_br(i),'UserData');
-                if xor(userdata{1},any(selected==i)) || ...
-                        userdata{3}~=atlas.getBrainRegions().getValue(i).getX() || ...
-                        userdata{4}~=atlas.getBrainRegions().getValue(i).getY() || ...
-                        userdata{5}~=atlas.getBrainRegions().getValue(i).getZ() || ...
-                        ~strcmp(userdata{6},atlas.getBrainRegions().getValue(i).getLabel())
+                userdata = h_br(i, 1:7);
+                if userdata{1} ==1
                     update_figure_brainregionplot(i);
                 end
             end
@@ -820,64 +830,64 @@ init_contextmenu()
         lighting gouraud
         camlight('Headlight')
     end
-    function create_figure_brainregionplot(i)
-        X = atlas.getBrainRegions().getValue(i).getX();
-        Y = atlas.getBrainRegions().getValue(i).getY();
-        Z = atlas.getBrainRegions().getValue(i).getZ();
-        label = atlas.getBrainRegions().getValue(i).getLabel();
-        if any(selected==i)
-            h_br(i) = plot3(X,Y,Z, ...
-                'Marker',FIG_BRSELECTED_MARKER, ...
-                'MarkerFaceColor',FIG_BRSELECTED_COLOR, ...
-                'MarkerEdgeColor',FIG_BRSELECTED_COLOR, ...
-                'MarkerSize',FIG_BRSELECTED_SIZE, ...
-                'UIContextMenu',ui_contextmenu_figure_deselect, ...
-                'UserData',{1 i X Y Z label});
-            h_labels(i) = text(X,Y,Z,label);
-        else
-            h_br(i) = plot3(X,Y,Z, ...
-                'Marker',FIG_BR_MARKER, ...
-                'MarkerFaceColor',FIG_BR_COLOR, ...
-                'MarkerEdgeColor',FIG_BR_COLOR, ...
-                'MarkerSize',FIG_BR_SIZE, ...
-                'UIContextMenu',ui_contextmenu_figure_select, ...
-                'UserData',{0 i X Y Z label});
-            h_labels(i) = text(X,Y,Z,label);
-        end
+    function create_figure_brainregionplot()
+        h_brain_outer_obj.br_sphs(atlas.getBrainRegions(), 'color', FIG_BR_COLOR, 'radius', 3)
+        h_brain_outer_obj.br_sphs_on()
+        
+        h_brain_outer_obj.br_labs(atlas.getBrainRegions(), 'color', 'b', 'FontSize', 8)
+        h_brain_outer_obj.br_labs_on()
     end
     function update_figure_brainregionplot(i)
-        X = atlas.getBrainRegions().getValue(i).getX();
-        Y = atlas.getBrainRegions().getValue(i).getY();
-        Z = atlas.getBrainRegions().getValue(i).getZ();
-        label = atlas.getBrainRegions().getValue(i).getLabel();
+
         if any(selected==i)
-            set(h_br(i), ...
-                'XData',X, ...
-                'YData',Y, ...
-                'ZData',Z, ...
-                'MarkerFaceColor',FIG_BRSELECTED_COLOR, ...
-                'MarkerEdgeColor',FIG_BRSELECTED_COLOR, ...
-                'UIContextMenu',ui_contextmenu_figure_deselect, ...
-                'UserData',{1 i X Y Z label});
-            set(h_labels(i), ...
-                'Position',[X Y Z], ...
-                'String',label);
+            
+            h_brain_outer_obj.br_sphs(i, 'color', FIG_BRSELECTED_COLOR, 'radius', 5)
+            h_brain_outer_obj.br_sphs_on()
+            
+            h_brain_outer_obj.br_labs(i, 'color', 'b', 'FontSize', 8)
+            h_brain_outer_obj.br_labs_on()
+         
         else
-            set(h_br(i), ...
-                'XData',X, ...
-                'YData',Y, ...
-                'ZData',Z, ...
-                'MarkerFaceColor',FIG_BR_COLOR, ...
-                'MarkerEdgeColor',FIG_BR_COLOR, ...
-                'UIContextMenu',ui_contextmenu_figure_select, ...
-                'UserData',{0 i X Y Z label});
-            set(h_labels(i), ...
-                'Position',[X Y Z], ...
-                'String',label);
+            h_brain_outer_obj.br_sphs(i, 'color', FIG_BR_COLOR, 'radius', 5)
+            h_brain_outer_obj.br_sphs_on()
+            
+            h_brain_outer_obj.br_labs(i, 'color', 'b', 'FontSize', 8)
+            h_brain_outer_obj.br_labs_on()
         end
     end
     function cb_figure_plotsettings(~,~)  % (src,event)
         update_figure_brainview()
+    end
+    function cb_figure_angle(~,~)
+        if get(ui_button_figure_3d,'Value')
+            view(3)
+            update_figure_light()
+            set(ui_button_figure_3d,'Value',0);
+        elseif get(ui_button_figure_sagittalleft,'Value')
+            view(-90,0)
+            update_figure_light()
+            set(ui_button_figure_sagittalleft,'Value',0);
+        elseif get(ui_button_figure_sagittalright,'Value')
+            view(+90,0)
+            update_figure_light()
+            set(ui_button_figure_sagittalright,'Value',0);
+        elseif get(ui_button_figure_axialdorsal,'Value')
+            view(0,+90)
+            update_figure_light()
+            set(ui_button_figure_axialdorsal,'Value',0);
+        elseif get(ui_button_figure_axialventral,'Value')
+            view(0,-90)
+            update_figure_light()
+            set(ui_button_figure_axialventral,'Value',0);
+        elseif get(ui_button_figure_coronalanterior,'Value')
+            view(180,0)
+            update_figure_light()
+            set(ui_button_figure_coronalanterior,'Value',0);
+        elseif get(ui_button_figure_coronalposterior,'Value')
+            view(0,0)
+            update_figure_light()
+            set(ui_button_figure_coronalposterior,'Value',0);
+        end
     end
     function cb_figure_selectbr(~,~)  % (src,event)
         userdata = get(gco,'UserData');
@@ -1270,7 +1280,7 @@ setup_restrictions()
             set(ui_button_table_move2bottom,'enable','off')
             
             set(ui_menu_file_open,'enable','off')
-
+            
             set(ui_menu_file_import_txt,'enable','off')
             set(ui_menu_file_import_xls,'enable','off')
             set(ui_menu_edit_add,'enable','off')
