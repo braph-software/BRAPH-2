@@ -1,57 +1,11 @@
 classdef PlotBrainAtlas < PlotBrainSurf
     % PlotBrainAtlas < PlotBrainSurf : Plot of a brain atlas
-    %   PlotBrainAtlas plots and manages the brain regions that make up a
-    %   a brain atlas.
-    %   The brain regions can be plotted by using symbols, spheres or labels.
+    % PlotBrainAtlas plots and manages the brain regions that make up a
+    % a brain atlas. The brain regions can be plotted by using symbols, 
+    % spheres or labels.
+    % It is a subclass of PlotBrainSurf.
     %
     % PlotBrainAtlas properties (Constants):
-    %   INIT_LIGHTING             -   effect of light on objects < PlotBrainSurf
-    %                                 (default = 'gouraud')
-    %   INIT_MATERIAL             -   lighting characteristics of objects < PlotBrainSurf
-    %                                 (default = 'dull')
-    %   INIT_CAMLIGHT             -   creates a light at given position < PlotBrainSurf
-    %                                 (default = 'Headlight')
-    %
-    %   INIT_BRAIN_EDGE_COLOR     -   edge color of brain surface < PlotBrainSurf
-    %                                 (default = 'none')
-    %   INIT_BRAIN_EDGE_ALPHA     -   edge transparency of brain surface < PlotBrainSurf
-    %                                 (default = 0.5)
-    %   INIT_BRAIN_FACE_COLOR     -   face color of brain surface < PlotBrainSurf
-    %                               (default = [0.5 0.5 0.5])
-    %   INIT_BRAIN_FACE_ALPHA     -   face transparency of brain surface < PlotBrainSurf
-    %                                 (default = 0.5)
-    %
-    %   VIEW_3D                   -   3D view numeric code < PlotBrainSurf
-    %   VIEW_3D_CMD               -   3D view name < PlotBrainSurf
-    %   VIEW_3D_AZEL              -   3D view azimutal and polar angles < PlotBrainSurf
-    %
-    %   VIEW_SL                   -   sagittal left view numeric code < PlotBrainSurf
-    %   VIEW_SL_CMD               -   sagittal left view name < PlotBrainSurf
-    %   VIEW_SL_AZEL              -   sagittal left view azimutal and polar angles < PlotBrainSurf
-    %
-    %   VIEW_SR                   -   sagittal right view numeric code < PlotBrainSurf
-    %   VIEW_SR_CMD               -   sagittal right view name < PlotBrainSurf
-    %   VIEW_SR_AZEL              -   Sagittal right view azimutal and polar angles < PlotBrainSurf
-    %
-    %   VIEW_AD                   -   axial dorsal view numeric code < PlotBrainSurf
-    %   VIEW_AD_CMD               -   axial dorsal view name < PlotBrainSurf
-    %   VIEW_AD_AZEL              -   axial dorsal view azimutal and polar angles < PlotBrainSurf
-    %
-    %   VIEW_AV                   -   axial ventral view numeric code < PlotBrainSurf
-    %   VIEW_AV_CMD               -   axial ventral view name < PlotBrainSurf
-    %   VIEW_AV_AZEL              -   axial ventral view azimutal and polar angles < PlotBrainSurf
-    %
-    %   VIEW_CA                   -   coronal anterior view numeric code < PlotBrainSurf
-    %   VIEW_CA_CMD               -   coronal anterior view name < PlotBrainSurf
-    %   VIEW_CA_AZEL              -   coronal anterior view azimutal and polar angles < PlotBrainSurf
-    %
-    %   VIEW_CP                   -   coronal posterior view numeric code < PlotBrainSurf
-    %   VIEW_CP_CMD               -   coronal posterior view name < PlotBrainSurf
-    %   VIEW_CP_AZEL              -   coronal posterior view azimutal and polar angles < PlotBrainSurf
-    %
-    %   VIEW_CMD                  -   vector of view names < PlotBrainSurf
-    %   VIEW_AZEL                 -   vector of view azimutal and polar angles < PlotBrainSurf
-    %
     %   INIT_SYM_MARKER           -   symbol type
     %                                 (default = 'o')
     %   INIT_SYM_SIZE             -   symbol size
@@ -80,70 +34,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %                                 (default = [0 0 0])
     %   INIT_LAB_FONT_INTERPRETER -   label font interpreter
     %                                 (default = 'none')
-    %
-    % PlotBrainAtlas properties (protected):
-    %   h_axes            -   handle for axes < PlotBrainSurf
-    %   Lighting          -   current lighting setting < PlotBrainSurf
-    %   Material          -   current material setting < PlotBrainSurf
-    %   CamLight          -   current camera light < PlotBrainSurf
-    %
-    %   h_brain           -   handle for brain surface < PlotBrainSurf
-    %   f_brain_settings  -   brain setting figure handle < PlotBrainSurf
-    %
-    %   vertex_number     -   number of vertices of brain surface < PlotBrainSurf
-    %   coord             -   coordinates of the vertices of brain surface < PlotBrainSurf
-    %   ntri              -   number of triangles of brain surface < PlotBrainSurf
-    %   tri               -   triangles of brain surface < PlotBrainSurf
-    %
-    %   atlas             -   brain atlas
-    %
-    %   syms              -   cell array containing the symbols' properties
-    %                         syms{n}.h     -   graphic handle
-    %                         syms{n}.X     -   x-coordinate
-    %                         syms{n}.Y     -   y-coordinate
-    %                         syms{n}.Z     -   z-coordinate
-    %   f_syms_settings   -   symbols settings figure handle
-    %
-    %   sphs              -   cell array containing the spheres' properties
-    %                         sphs{n}.h     -   graphic handle
-    %                         sphs{n}.X     -   x-coordinate
-    %                         sphs{n}.Y     -   y-coordinate
-    %                         sphs{n}.Z     -   z-coordinate
-    %                         sphs{n}.R     -   sphere radius
-    %   f_sphs_settings   -   spheres settings figure handle
-    %
-    %   labs              -   cell array containing the labels' properties
-    %                         labs{n}.h     -   graphic handle
-    %                         labs{n}.X     -   x-coordinate
-    %                         labs{n}.Y     -   y-coordinate
-    %                         labs{n}.Z     -   z-coordinate
-    %                         labs{n}.LAB   -   label string
-    %   f_labs_settings   -   labels settings figure handle
+    %   PLOT_SYMBOL_NAME          -   list with symbols options name
+    %   PLOT_SYMBOL_TAG           -   list with symbols options
     %
     % PlotBrainAtlas methods:
     %   PlotBrainAtlas    -   constructor
-    %   disp              -   displays brain surface < PlotBrainSurf
-    %   name              -   brain surface name < PlotBrainSurf
-    %   set_axes          -   sets current axes < PlotBrainSurf
-    %   get_axes          -   gets current axes < PlotBrainSurf
-    %
-    %   brain             -   plots brain surface < PlotBrainSurf
-    %   brain_on          -   shows brain surface < PlotBrainSurf
-    %   brain_off         -   hides brain surface < PlotBrainSurf
-    %   brain_settings    -   sets brain surface's properties < PlotBrainSurf
-    %
-    %   hold_on           -   hold on < PlotBrainSurf
-    %   hold_off          -   hold off < PlotBrainSurf
-    %   grid_on           -   grid on < PlotBrainSurf
-    %   grid_off          -   grid off < PlotBrainSurf
-    %   axis_on           -   axis on < PlotBrainSurf
-    %   axis_off          -   axis off < PlotBrainSurf
-    %   axis_equal        -   axis equal < PlotBrainSurf
-    %   axis_tight        -   axis tight < PlotBrainSurf
-    %   view              -   sets desired view < PlotBrainSurf
-    %   update_light      -   sets lighting properties < PlotBrainSurf
-    %   rotate            -   rotates viewpoint < PlotBrainSurf
-    %
     %   br_sym            -   displays brain region as symbol
     %   br_sym_on         -   shows a symbol
     %   br_sym_off        -   hides a symbol
