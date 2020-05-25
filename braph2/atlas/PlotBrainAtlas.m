@@ -158,13 +158,13 @@ classdef PlotBrainAtlas < PlotBrainSurf
         f_labs_settings  % labels setting figure handle
     end
     methods  % basic functions
-        function ba = PlotBrainAtlas(atlas)
+        function ba = PlotBrainAtlas(atlas, varargin)
             % PLOTBRAINATLAS(ATLAS) constructs the brain atlas plot, it
             % assigns the nodes of atlas to a PlotBrainSurf region.
             %
             % See also PlotBrainSurf, BrainAtlas.
             
-            ba = ba@PlotBrainSurf();
+            ba = ba@PlotBrainSurf(varargin{:});
             
             ba.atlas = atlas;
             for i = 1:1:atlas.getBrainRegions().length()
@@ -175,22 +175,25 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 labels{i} = brain_region.getLabel(); %#ok<AGROW>
             end
             
-            ba.syms.h = NaN(1, atlas.getBrainRegions().length());
-            ba.syms.X = x_coordinates;
-            ba.syms.Y = y_coordinates;
-            ba.syms.Z = z_coordinates;
-            
-            ba.sphs.h = NaN(1,  atlas.getBrainRegions().length());
-            ba.sphs.X = x_coordinates;
-            ba.sphs.Y = y_coordinates;
-            ba.sphs.Z = z_coordinates;
-            ba.sphs.R = PlotBrainAtlas.INIT_SPH_R * ones(1, atlas.getBrainRegions().length());
-            
-            ba.labs.h = NaN(1,  atlas.getBrainRegions().length());
-            ba.labs.X = x_coordinates;
-            ba.labs.Y = y_coordinates;
-            ba.labs.Z = z_coordinates;
-            ba.labs.LAB = labels;
+            if atlas.getBrainRegions().length() > 0
+                
+                ba.syms.h = NaN(1, atlas.getBrainRegions().length());
+                ba.syms.X = x_coordinates;
+                ba.syms.Y = y_coordinates;
+                ba.syms.Z = z_coordinates;
+                
+                ba.sphs.h = NaN(1,  atlas.getBrainRegions().length());
+                ba.sphs.X = x_coordinates;
+                ba.sphs.Y = y_coordinates;
+                ba.sphs.Z = z_coordinates;
+                ba.sphs.R = PlotBrainAtlas.INIT_SPH_R * ones(1, atlas.getBrainRegions().length());
+                
+                ba.labs.h = NaN(1,  atlas.getBrainRegions().length());
+                ba.labs.X = x_coordinates;
+                ba.labs.Y = y_coordinates;
+                ba.labs.Z = z_coordinates;
+                ba.labs.LAB = labels;
+            end
         end
     end
     methods  % editing funtions
