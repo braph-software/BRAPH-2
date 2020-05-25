@@ -113,7 +113,7 @@ PETCOHORT_CMD = 'New PET Cohort ...';
 PETCOHORT_TP = ['Generate new PET cohort and opens it with ' GUI.PCE_NAME];
 
 %% Application data
-if ~exist('atlas','var')
+if ~exist('atlas', 'var')
     atlas = BrainAtlas('', '', '', {});
 end
 selected = [];
@@ -128,9 +128,6 @@ selected = [];
         if filterindex
             filename = fullfile(path,file);
             tmp = load(filename, '-mat', 'atlas', 'selected', 'BUILD');
-%              assert(isequal(tmp.BUILD, BUILD), ...
-%                 [BRAPH2.STR ':GUIBrainAtlas:' BRAPH2.WRONG_INPUT], ...
-%                 ['The input Atlas must be of version: ' BUILD '.']); 
             if isa(tmp.atlas, 'BrainAtlas')
                 atlas = tmp.atlas;
                 selected = tmp.selected;
@@ -1260,7 +1257,7 @@ init_toolbar()
 
 %% Make the GUI visible.
 setup()
-set(f,'Visible','on');
+set(f, 'Visible', 'on');
 
 setup_restrictions()
     function setup_restrictions()
