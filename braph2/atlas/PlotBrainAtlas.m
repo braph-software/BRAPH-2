@@ -167,7 +167,12 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba = ba@PlotBrainSurf(varargin{:});
             
             ba.atlas = atlas;
-            for i = 1:1:atlas.getBrainRegions().length()
+            setRegions(atlas);          
+        end
+    end
+    methods  % editing funtions
+        function setRegions(ba, atlas)
+              for i = 1:1:atlas.getBrainRegions().length()
                 brain_region = atlas.getBrainRegions().getValue(i);
                 x_coordinates{i} = brain_region.getX(); %#ok<AGROW>
                 y_coordinates{i} = brain_region.getY(); %#ok<AGROW>
@@ -195,8 +200,6 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.labs.LAB = labels;
             end
         end
-    end
-    methods  % editing funtions
         function h = br_sym(ba, i, varargin)
             % BR_SYM displays brain region as symbol
             %
