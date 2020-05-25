@@ -167,7 +167,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba = ba@PlotBrainSurf(varargin{:});
             
             ba.atlas = atlas;
-            setRegions(atlas);          
+            ba.setRegions(atlas);          
         end
     end
     methods  % editing funtions
