@@ -68,7 +68,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         label  % extended name of the brain atlas
         notes  % notes about the brain atlas
         plot_brain_surf  % handle for brain surface plot
-%         plot_brain_atlas  % handle for brain atlas plot
+        plot_brain_atlas  % handle for brain atlas plot
         br_idict  % indexed dictionary with BrainRegions
     end
     methods  % Basic functions
@@ -218,7 +218,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % GETPLOTBRAINSURF(ATLAS, VARARGIN) returns the handle of the
             % brain surface plot, if it does no exist it creates it. 
             %
-            % See also setPlotBrainSurf().
+            % See also getPlotBrainAtlas().
             
             if ~isempty(atlas.plot_brain_surf)
                 bs = atlas.plot_brain_surf;
@@ -227,7 +227,22 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 atlas.plot_brain_surf = bs;
             end                
         end
-% ba = getPlotBrainAtlas(atlas, varargin)
+        function ba = getPlotBrainAtlas(atlas, varargin)
+            % GETPLOTBRAINATLAS returns the brain atlas surface and regions plot
+            %
+            % GETBRAINPLOTATLAS(ATLAS, VARARGIN) returns the handle of the
+            % the brain atlas plot, which contains the surface and the
+            % brain regions nodes, if it does not exist it creates it.
+            %
+            % See also getPlotBrainSurf().
+            
+             if ~isempty(atlas.plot_brain_atlas)
+                ba = atlas.plot_brain_atlas;
+            else
+                ba = PlotBrainAtlas(varargin{:});
+                atlas.plot_brain_atlas = ba;
+            end    
+        end
 % bg = getPlotBrainGraph(atlas, varargin)
     end
     methods (Access=protected)  % Deep copy
