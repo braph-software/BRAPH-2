@@ -229,9 +229,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
         f_labs_settings  % labels setting figure handle
     end
     methods  % basic functions
-        function ba = PlotBrainAtlas(atlas)
+        function ba = PlotBrainAtlas(atlas, varargin)
             
-            ba = ba@PlotBrainSurf();
+            ba = ba@PlotBrainSurf(varargin{:});
             
             ba.atlas = atlas;
             
