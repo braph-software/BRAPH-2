@@ -139,7 +139,7 @@ selected = [];
         if isempty(filename)  % (src,event)
             cb_saveas();
         else
-            save(filename,'atlas','selected','BUILT');
+            save(filename, 'atlas', 'selected', 'BUILT');
         end
     end
     function cb_saveas(~,~)  % (src,event)
@@ -148,7 +148,7 @@ selected = [];
         % save file
         if filterindex
             filename = fullfile(path,file);
-            save(filename,'atlas','selected','BUILT');
+            save(filename,'atlas', 'selected', 'BUILT');
             update_filename(filename)
         end
     end
@@ -516,6 +516,7 @@ ui_button_figure_axialdorsal = uicontrol(ui_panel_figure,'Style','pushbutton');
 ui_button_figure_axialventral = uicontrol(ui_panel_figure,'Style','pushbutton');
 ui_button_figure_coronalanterior = uicontrol(ui_panel_figure,'Style','pushbutton');
 ui_button_figure_coronalposterior = uicontrol(ui_panel_figure,'Style','pushbutton');
+ui_menu_figure_brainfiles = uicontrol(ui_panel_figure, 'Style', 'popupmenu');
 init_figure()
     function init_figure()
         GUI.setUnits(ui_panel_figure)
@@ -589,6 +590,11 @@ init_figure()
         set(ui_button_figure_coronalposterior,'Position',[.55 .02 .14 .03])
         set(ui_button_figure_coronalposterior,'String',FIG_VIEW_CP_CMD)
         set(ui_button_figure_coronalposterior,'Callback',{@cb_figure_plotsettings})
+        
+        set(ui_menu_figure_brainfiles, 'Position', [.1 .01 .14 .03])
+        set(ui_menu_figure_brainfiles, 'String', {'BrainMesh_ICBM152', 'BrainMesh_Cerebellum', 'BrainMesh_Ch2', ...
+            'BrainMesh_ICBM152Left', 'BrainMesh_ICBM152RIght'})
+        set(ui_menu_figure_brainfiles, 'Callback', {@cb_figure_brainfile})
     end
 ui_contextmenu_figure_select = uicontextmenu();
 ui_contextmenu_figure_select_select = uimenu(ui_contextmenu_figure_select);
@@ -618,7 +624,10 @@ init_contextmenu()
         set(ui_contextmenu_brain_settings, 'Label', 'Brain Settings')
         set(ui_contextmenu_brain_settings, 'Callback', {@cb_brain_settings})
     end
-    function create_figure()
+    function create_figure(brain_file)
+        if nargin < 1
+            brain_file = 'BrainMesh_ICBM152';
+        end
         h_axis = FIG_INIT_AXISON;
         axis on
         
@@ -654,8 +663,8 @@ init_contextmenu()
         ui_contextmenu_brain_light = uimenu(ui_contextmenu_brain);
         set(ui_contextmenu_brain_light,'Label','Brain Light')
         set(ui_contextmenu_brain_light,'Callback',{@cb_brainview_brain_light})
-        
-        h_brain_obj = atlas.getPlotBrainSurf();
+       
+        h_brain_obj = atlas.getPlotBrainSurf('BrainSurfaceType', [brain_file '.nv']);
         h_brain = h_brain_obj.brain();
         set(h_brain, 'EdgeColor', FIG_EDGECOLOR);
         set(h_brain, 'FaceColor', FIG_FACECOLOR);
@@ -884,6 +893,11 @@ init_contextmenu()
     end
     function cb_figure_infobr(~,~)  % (src,event)
         set(dcm,'enable','on')
+    end
+    function cb_figure_brainfile(~, ~)
+        val = ui_menu_figure_brainfiles.Value;
+        str = ui_menu_figure_brainfiles.String;
+        create_figure(str{val})
     end
 
 %% Menus

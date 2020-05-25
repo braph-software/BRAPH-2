@@ -68,6 +68,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         label  % extended name of the brain atlas
         notes  % notes about the brain atlas
         plot_brain_surf  % handle for brain surface plot
+        brain_surf_file
         plot_brain_atlas  % handle for brain atlas plot
         br_idict  % indexed dictionary with BrainRegions
     end
@@ -220,11 +221,13 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getPlotBrainAtlas().
             
-            if ~isempty(atlas.plot_brain_surf)
+            brain_file = get_from_varargin('', 'BrainSurfaceType', varargin{:});
+            if ~isempty(atlas.plot_brain_surf) && isequal(brain_file, atlas.brain_surf_file)
                 bs = atlas.plot_brain_surf;
             else
                 bs = PlotBrainSurf(varargin{:});
                 atlas.plot_brain_surf = bs;
+                atlas.brain_surf_file = brain_file;
             end                
         end
         function ba = getPlotBrainAtlas(atlas, varargin)
@@ -239,7 +242,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
              if ~isempty(atlas.plot_brain_atlas)
                 ba = atlas.plot_brain_atlas;
             else
-                ba = PlotBrainAtlas(varargin{:});
+                ba = PlotBrainAtlas(atlas, varargin{:});
                 atlas.plot_brain_atlas = ba;
             end    
         end
