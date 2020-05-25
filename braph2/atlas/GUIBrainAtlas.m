@@ -12,7 +12,7 @@ function GUIBrainAtlas(atlas,restricted)
 
 %% General Constants
 APPNAME = BRAPH2.NAME; % GUI.BAE_NAME;  % application name
-BUILT = BRAPH2.BUILD;
+BUILD = BRAPH2.BUILD;
 
 % Dimensions
 MARGIN_X = .01;
@@ -120,12 +120,17 @@ selected = [];
 
 % Callbacks to manage application data
     function cb_open(~,~)  % (src,event)
+        % check build if less than 2020 send error, this is not a correct
+        % atlas.
         % select file
         [file,path,filterindex] = uigetfile(GUI.BAE_EXTENSION, GUI.BAE_MSG_GETFILE);
         % load file
         if filterindex
             filename = fullfile(path,file);
-            tmp = load(filename, '-mat', 'atlas', 'selected', 'BUILT');
+            tmp = load(filename, '-mat', 'atlas', 'selected', 'BUILD');
+%              assert(isequal(tmp.BUILD, BUILD), ...
+%                 [BRAPH2.STR ':GUIBrainAtlas:' BRAPH2.WRONG_INPUT], ...
+%                 ['The input Atlas must be of version: ' BUILD '.']); 
             if isa(tmp.atlas, 'BrainAtlas')
                 atlas = tmp.atlas;
                 selected = tmp.selected;
@@ -139,7 +144,7 @@ selected = [];
         if isempty(filename)  % (src,event)
             cb_saveas();
         else
-            save(filename, 'atlas', 'selected', 'BUILT');
+            save(filename, 'atlas', 'selected', 'BUILD');
         end
     end
     function cb_saveas(~,~)  % (src,event)
@@ -148,7 +153,7 @@ selected = [];
         % save file
         if filterindex
             filename = fullfile(path,file);
-            save(filename,'atlas', 'selected', 'BUILT');
+            save(filename,'atlas', 'selected', 'BUILD');
             update_filename(filename)
         end
     end
