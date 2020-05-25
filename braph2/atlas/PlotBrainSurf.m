@@ -157,7 +157,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             end
             bs.settings = settings;
             
-            brain_surface_file = get_from_varargin('BrainMesh_ICBM152.nv' , 'BrainSurfaceType', varargin{:});
+            brain_surface_file = get_from_varargin('BrainMesh_ICBM152.nv' , 'BrainSurface', varargin{:});
             bs.set_surface(brain_surface_file);
         end
         function str = tostring(bs)
