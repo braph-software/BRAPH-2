@@ -5,9 +5,9 @@ function GUIBrainAtlas(atlas,restricted)
 %
 % GUIBRAINATLAS(atlas) opens atlas.
 %
-% GUIBRAINATLAS(atlas,true) opens atlas with only reading and basic writing permissions.
+% GUIBRAINATLAS(atlas, true) opens atlas with only reading and basic writing permissions.
 %
-% See also BrainAtlas, BNC, GUI.
+% See also BrainAtlas, GUI.
 
 
 %% General Constants
@@ -519,7 +519,7 @@ ui_button_figure_coronalposterior = uicontrol(ui_panel_figure,'Style','pushbutto
 init_figure()
     function init_figure()
         GUI.setUnits(ui_panel_figure)
-         GUI.setBackgroundColor(ui_panel_figure)
+        GUI.setBackgroundColor(ui_panel_figure)
         
         set(ui_panel_figure,'Position',FIGURE_POSITION)
         
@@ -657,9 +657,11 @@ init_contextmenu()
         
         h_brain_obj = atlas.getPlotBrainSurf();
         h_brain = h_brain_obj.brain();
-        set(h_brain,'EdgeColor',FIG_EDGECOLOR);
-        set(h_brain,'FaceColor',FIG_FACECOLOR);
-        set(h_brain,'FaceAlpha',h_brainalpha, 'UiContextMenu', ui_contextmenu_brain);
+        set(h_brain, 'EdgeColor', FIG_EDGECOLOR);
+        set(h_brain, 'FaceColor', FIG_FACECOLOR);
+        set(h_brain, 'FaceAlpha', h_brainalpha);
+        
+        set(h_brain, 'UiContextMenu', ui_contextmenu_brain)
       
         
         function cb_brainview_brain_settings(~, ~)
@@ -669,8 +671,7 @@ init_contextmenu()
             h_brain_obj.brain_lighting();
         end      
         
-        update_figure_light()
-        
+        update_figure_light()        
         update_figure_brainview()
     end
     function update_figure_brainview()
