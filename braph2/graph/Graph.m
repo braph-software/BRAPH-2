@@ -35,21 +35,21 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   BINARY - binary graph
     %   BINARY_NAME    - name of BINARY
     %   BINARY_DESCRIPTION  - description of BINARY
-    %   CONNECTION_TYPE_NUMBER    - number of graph connection types
-    %   CONNECTION_TYPE_NAME    - name of graph connection types
-    %   CONNECTION_TYPE_DESCRIPTION    - description of graph connection types
+    %   CONNECTIVITY_TYPE_NUMBER    - number of graph connectivity types
+    %   CONNECTIVITY_TYPE_NAME    - name of graph connectivity types
+    %   CONNECTIVITY_TYPE_DESCRIPTION    - description of graph connectivity types
     %   DIRECTED    - directed graph
     %   DIRECTED_NAME   - name of DIRECTED
     %   DIRECTED_DESCRIPTION    - description of DIRECTED
     %   UNDIRECTED  - undirected graph
     %   UNDIRECTED_NAME     - name of UNDIRECTED
     %   UNDIRECTED_DESCRIPTION  -  description of UNDIRECTED
-    %   EDGE_TYPE_NUMBER     - number of graph edges types
-    %   EDGE_TYPE_NAME  - name of graph edges types
-    %   EDGE_TYPE_DESCRIPTION   - description of graph edges types
-    %   NOT_SELFCONNECTED   - not self-connected graph
-    %   NOT_SELFCONNECTED_NAME  - name of NOT_SELFCONNECTED
-    %   NOT_SELFCONNECTED_DESCRIPTION   - description of NOT_SELFCONNECTED
+    %   DIRECTIONALITY_TYPE_NUMBER     - number of graph directionality types
+    %   DIRECTIONALITY_TYPE_NAME  - name of graph directionality types
+    %   DIRECTIONALITY_TYPE_DESCRIPTION   - description of graph directionality types
+    %   NONSELFCONNECTED   - not self-connected graph
+    %   NONSELFCONNECTED_NAME  - name of NONSELFCONNECTED
+    %   NONSELFCONNECTED_DESCRIPTION   - description of NONSELFCONNECTED
     %   SELFCONNECTED   - self-connected graph
     %   SELFCONNECTED_NAME  - name of SELFCONNECTED
     %   SELFCONNECTED_DESCRIPTION   - description of SELFCONNECTED
@@ -79,7 +79,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_multiplex    - checks if the graph is a multiplex graph.
     %   is_ordered_multilayer   - checks if the graph is an ordered multilayer graph.
     %   is_multilayer   - checks if the graph is a multilayer graph.
-    %   getConnectionType    - returns if the graph is binary or weighted.
+    %   getConnectivityType    - returns if the graph is binary or weighted.
     %   is_weighted - checks if the graph is weighted.
     %   is_binary   - checks if the graph is binary.
     %   getEgdeType    - returns if graph is directed or undirected.
@@ -104,33 +104,35 @@ classdef Graph < handle & matlab.mixin.Copyable
 
 	properties (Constant)
         % Graph types
-        GRAPH = 1  % single graph
+        GRAPH = 1
         GRAPH_NAME = 'Graph'
-        GRAPH_DESCRIPTION = 'This graph consists of a single layer graph.'
+        GRAPH_DESCRIPTION = 'A graph consists of a single layer.'
 
-        MULTIGRAPH = 2  % multiple unconnected graphs
+        MULTIGRAPH = 2
         MULTIGRAPH_NAME = 'Multigraph'
-        MULTIGRAPH_DESCRIPTION = 'A multigraph consists of multiple unconnected graphs.'
+        MULTIGRAPH_DESCRIPTION = 'A multigraph consists of multiple unconnected layers.'
         
-        ORDERED_MULTIPLEX = 3  % multiple graphs with sequential connections between corresponding nodes
+        ORDERED_MULTIPLEX = 3
         ORDERED_MULTIPLEX_NAME = 'Ordered Multipex'
-        ORDERED_MULTIPLEX_DESCRIPTION = ['An ordered multiplex graph consists of multiple ' ...
-            'graphs with ordinal connections between corresponding nodes.'];
+        ORDERED_MULTIPLEX_DESCRIPTION = ['An ordered multiplex consists of ' ...
+            'a sequence of layers with ordinal connections' ...
+            'between corresponding nodes in subsequent layers.']
         
-        MULTIPLEX = 4  % multiple graphs with connections between corresponding nodes
+        MULTIPLEX = 4
         MULTIPLEX_NAME = 'Multiplex'
-        MULTIPLEX_DESCRIPTION = ['A multiplex graph consists of multiple graphs with ' ...
-            'categorical connections (unordered) between corresponding nodes.'];
+        MULTIPLEX_DESCRIPTION = ['A multiplex consists of ' ...
+            'multiple layers with categorical connections ' ...
+            'between corresponding nodes in different layers.']
 
-        ORDERED_MULTILAYER = 5  % multiple graphs with sequential connections between all nodes
+        ORDERED_MULTILAYER = 5
         ORDERED_MULTILAYER_NAME = 'Ordered Multilayer'
-        ORDERED_MULTILAYER_DESCRIPTION = ['An ordered multilayer graph consists of multiple ' ...
-            'graphs with ordinal connections between all nodes.'];
+        ORDERED_MULTILAYER_DESCRIPTION = ['An ordered multilayer consists of ' ...
+            'multiple layers with ordinal connections between any nodes.']
 
-        MULTILAYER = 6  % multiple graphs with connections between all nodes
+        MULTILAYER = 6
         MULTILAYER_NAME = 'Multilayer'
-        MULTILAYER_DESCRIPTION = ['A multilayer graph consists of multiple graphs with ' ...
-            'categorical connections (unordered) between all nodes.'];
+        MULTILAYER_DESCRIPTION = ['A multilayer consists of ' ...
+            'multiple layers with categorical between any nodes.']
         
         TYPE_NUMBER = 6
         
@@ -152,73 +154,77 @@ classdef Graph < handle & matlab.mixin.Copyable
             Graph.MULTILAYER_DESCRIPTION
             }
         
-        % Connection types
-        WEIGHTED = 1  % weighted connections
+        % Connectivity types
+        WEIGHTED = 1
         WEIGHTED_NAME = 'Weighted'
-        WEIGHTED_DESCRIPTION = 'Graph with weighted connections.';
-        BINARY = 2  % binary (0 or 1) connections
-        BINARY_NAME = 'Weighted'
-        BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.';
+        WEIGHTED_DESCRIPTION = 'Graph with weighted connections.'
         
-        CONNECTION_TYPE_NUMBER = 2
+        BINARY = 2 
+        BINARY_NAME = 'Binary'
+        BINARY_DESCRIPTION = 'Graph with binary (0 or 1) connections.'
         
-        CONNECTION_TYPE_NAME = {
+        CONNECTIVITY_TYPE_NUMBER = 2
+        
+        CONNECTIVITY_TYPE_NAME = {
             Graph.WEIGHTED_NAME
             Graph.BINARY_NAME
             }
         
-        CONNECTION_TYPE_DESCRIPTION = {
+        CONNECTIVITY_TYPE_DESCRIPTION = {
             Graph.WEIGHTED_DESCRIPTION
             Graph.BINARY_DESCRIPTION
             }
         
-        % Edge types
-        DIRECTED = 1  % directed edges
+        % Directionality types
+        DIRECTED = 1
         DIRECTED_NAME = 'Directed'
-        DIRECTED_DESCRIPTION = 'Graph with directed edges.';
-        UNDIRECTED = 2  % undirected edges
-        UNDIRECTED_NAME = 'Undirected'
-        UNDIRECTED_DESCRIPTION = 'Graph with undirected edges.';
-                
-        EDGE_TYPE_NUMBER = 2
+        DIRECTED_DESCRIPTION = 'Graph with directed edges.'
         
-        EDGE_TYPE_NAME = {
+        UNDIRECTED = 2
+        UNDIRECTED_NAME = 'Undirected'
+        UNDIRECTED_DESCRIPTION = 'Graph with undirected edges.'
+                
+        DIRECTIONALITY_TYPE_NUMBER = 2
+        
+        DIRECTIONALITY_TYPE_NAME = {
             Graph.DIRECTED_NAME
             Graph.UNDIRECTED_NAME
             }
         
-        EDGE_TYPE_DESCRIPTION = {
+        DIRECTIONALITY_TYPE_DESCRIPTION = {
             Graph.DIRECTED_DESCRIPTION
             Graph.UNDIRECTED_DESCRIPTION
             }
         
-        % Selfconnectedness
-        NOT_SELFCONNECTED = 1
-        NOT_SELFCONNECTED_NAME = 'Not self-connected'
-        NOT_SELFCONNECTED_DESCRIPTION = 'Graph with self-connections set to zero.';
+        % Selfconnectedness types
+        NONSELFCONNECTED = 1
+        NONSELFCONNECTED_NAME = 'Non-self-connected'
+        NONSELFCONNECTED_DESCRIPTION = 'Graph without self-connections.';
+        
         SELFCONNECTED = 2
         SELFCONNECTED_NAME = 'Self-connected'
-        SELFCONNECTED_DESCRIPTION = 'Graph with self-connections considered.';
+        SELFCONNECTED_DESCRIPTION = 'Graph with self-connections.';
                 
         SELFCONNECTIVITY_TYPE_NUMBER = 2
         
         SELFCONNECTIVITY_TYPE_NAME = {
-            Graph.NOT_SELFCONNECTED_NAME
+            Graph.NONSELFCONNECTED_NAME
             Graph.SELFCONNECTED_NAME
             }
         
         SELFCONNECTIVITY_TYPE_DESCRIPTION = {
-            Graph.NOT_SELFCONNECTED_DESCRIPTION
+            Graph.NONSELFCONNECTED_DESCRIPTION
             Graph.SELFCONNECTED_DESCRIPTION
             }
         
         % Negativity
         NONNEGATIVE = 1
         NONNEGATIVE_NAME = 'Non-negative';
-        NONNEGATIVE_DESCRIPTION = 'Graph with non-negative edges.';
+        NONNEGATIVE_DESCRIPTION = 'Graph without negative edges.';
+        
         NEGATIVE = 2
         NEGATIVE_NAME = 'Negative';
-        NEGATIVE_DESCRIPTION = 'Graph with negative edges.';
+        NEGATIVE_DESCRIPTION = 'Graph allowing negative edges.';
                 
         NEGATIVITY_TYPE_NUMBER = 2
         
@@ -234,12 +240,9 @@ classdef Graph < handle & matlab.mixin.Copyable
     end
     properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
+        settings  % structure with the constructor varagin
+        measure_dict  % dictionary with calculated measures
     end
-%     properties (GetAccess=protected, SetAccess=protected)
-%         A  % adjacency matrix or 2D-cell array of adjacency matrices
-%         settings  % structure with the constructor varagin
-%         measure_dict  % dictionary with calculated measures
-%     end
     methods (Access=protected)  % Contructor
         function g = Graph(A, varargin)
             % Graph(A) creates a graph with the default properties.
@@ -255,13 +258,33 @@ classdef Graph < handle & matlab.mixin.Copyable
             % initializes the property settings with SETTINGS.
             %
             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
-
-            Graph.checkA(Graph.getGraphType(g), A)  % performs all necessary checks on A
+           
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
+            
+            settings = get_from_varargin(varargin, 'Settings', varargin{:});
+            measure_dict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
+            
+            Graph.checkA(Graph.getGraphType(g), A);  % performs all necessary checks on A
+            if isnumeric(A)
+                Graph.checkConnectivity(Graph.getConnectivityType(g), A);
+                Graph.checkDirectionality(Graph.getDirectionalityType(g), A);
+                Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g), A);
+                Graph.checkNegativity(Graph.getNegativityType(g), A);
+            else
+                Graph.checkConnectivity(Graph.getConnectivityType(g, length(A)), A);
+                Graph.checkDirectionality(Graph.getDirectionalityType(g, length(A)), A);
+                Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g, length(A)), A);
+                Graph.checkNegativity(Graph.getNegativityType(g, length(A)), A);
+            end
             
             g.A = A;
+            g.settings = settings;  % initialize the property settings
+            g.measure_dict = measure_dict;  % initialize the property measure_dict
         end
     end
-    methods (Static)  % Check A
+    methods (Static)  % Checks
         function checkA(graph_type, A)
             % CHECKA checks if adjacency matrix A or cell array of adjacency matrices A is correct for the type of graph
             %
@@ -334,6 +357,174 @@ classdef Graph < handle & matlab.mixin.Copyable
                         [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
                         'All submatrices in the same column must have the same number of columns.')
             end
+        end
+        function checkConnectivity(connectivity_type, A)
+
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch connectivity_type 
+                    case Graph.BINARY
+                        assert(all(all(A == 0 | A == 1)), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For connectivity type Graph.BINARY, A must be binary (0s and 1s),' ...
+                            ' while it is ' tostring(A)])
+                        
+                    case Graph.WEIGHTED
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Connectivity type must be Graph.BINARY (%i) or Graph.WEIGHTED (%i),' ...
+                            ' while it is ' tostring(connectivity_type)], ...
+                            Graph.BINARY, Graph.WEIGHTED)
+                end
+            else  % A is 2D cell array
+                
+                if numel(connectivity_type) == 1
+                    connectivity_type = connectivity_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        Graph.checkConnectivity(connectivity_type(i, j), A{i, j});
+                    end
+                end
+            end
+        end
+        function checkDirectionality(directionality_type, A, At)
+
+            % This check assumes that checkA has already been passed
+            
+            if nargin < 3
+                At = A';
+            end
+            
+            if isnumeric(A)  % A is a matrix
+                switch directionality_type 
+                    case Graph.UNDIRECTED
+                        assert(all(all(A == At)), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For directionality type Graph.UNDIRECTED, A must equal to At,' ...
+                            ' while it is A = ' tostring(A) ...
+                            ' and At = ' tostring(At)])
+                        
+                    case Graph.DIRECTED
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Directionality type must be Graph.DIRECTED (%i) or Graph.UNDIRECTED (%i),' ...
+                            ' while it is ' tostring(directionality_type)], ...
+                            Graph.DIRECTED, Graph.UNDIRECTED)
+                end
+            else  % A is 2D cell array
+                
+                if numel(directionality_type) == 1
+                    directionality_type = directionality_type * ones(size(A));
+                end
+                assert(all(all(directionality_type == directionality_type')), ...
+                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['The directionality type must be symmetric,' ...
+                    ' while it is ' tostring(directionality_type)])
+                
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)    
+                        Graph.checkDirectionality(directionality_type(i, j), A{i, j}, A{j, i}');
+                    end
+                end
+            end
+        end
+        function checkSelfConnectivity(selfconnectivity_type, A)
+
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch selfconnectivity_type 
+                    case Graph.NONSELFCONNECTED
+                        assert(all(all(A(1:length(A)+1:end) == 0)), ...    
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For self-connectivity type Graph.NONSELFCONNECTED, A must have' ...
+                            ' 0 values along the diagonal while it is ' tostring(A)])
+                        
+                    case Graph.SELFCONNECTED
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Self-connectivity type must be Graph.SELFCONNECTED (%i) or' ...
+                            ' Graph.NONSELFCONNECTED (%i), while it is ' tostring(selfconnectivity_type)], ...
+                            Graph.SELFCONNECTED, Graph.NONSELFCONNECTED)
+                end
+            else  % A is 2D cell array
+                
+                if numel(selfconnectivity_type) == 1
+                    selfconnectivity_type = selfconnectivity_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    Graph.checkSelfConnectivity(selfconnectivity_type(i, i), A{i, i});
+                end
+            end
+        end      
+        function checkNegativity(negativity_type, A)
+            
+            % This check assumes that checkA has already been passed
+            
+            if isnumeric(A)  % A is a matrix
+                switch negativity_type
+                    case Graph.NONNEGATIVE
+                        assert(all(all(A >= 0)), ...
+                            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['For negativity type Graph.NONNEGATIVE, A must have' ...
+                            ' non-negative values, while it is ' tostring(A)])
+                        
+                    case Graph.NEGATIVE
+                        % no further check needed
+                        
+                    otherwise
+                        error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                            ['Negativity type must be Graph.NEGATIVE (%i) or' ...
+                            ' Graph.NONNEGATIVE (%i), while it is ' tostring(negativity_type)], ...
+                            Graph.NEGATIVE, Graph.NONNEGATIVE)
+                end
+            else  % A is 2D cell array
+                
+                if numel(negativity_type) == 1
+                    negativity_type = negativity_type * ones(size(A));
+                end
+                
+                for i = 1:1:size(A, 1)
+                    for j = 1:1:size(A, 2)
+                        Graph.checkNegativity(negativity_type(i, j), A{i, j});
+                    end
+                end
+            end
+        end
+    end
+    methods (Static)  % getGraph
+        function g_new = getGraph(g, A, varargin) %#ok<INUSD>
+            % GETGRAPH returns a graph
+            %
+            % G = GETGRAPH(G, A) returns an instance
+            % of the class of the graph G with adjacency matrix or cell
+            % array of adjacency matrices A.
+            %
+            % G = GETGRAPH(GRAPH_CLASS, A) returns an instance
+            % of the class whose class is GRAPH_CLASS with adjacency matrix
+            % or cell array of adjacency matrices A.
+            %
+            % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % initializes he property settings with the properties and values.
+            %
+            % G = GETGRAPH(G, A, 'Settings', SETTINGS)
+            % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS)
+            % initializes the property settings with SETTINGS.
+            %
+            % See also getList(), getCompatibleMeasureList().
+            
+            g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
         end
     end
     methods (Static)  % Descriptive methods
@@ -486,20 +677,20 @@ classdef Graph < handle & matlab.mixin.Copyable
                    
             bool = Graph.getGraphType(g) == Graph.MULTILAYER;
         end
-        function connection_type = getConnectionType(g)
-            % GETCONNECTIONTYPE returns if graph is binary or weighted
+        function connectivity_type = getConnectivityType(g, varargin)
+            % GETCONNECTIVITYTYPE returns if graph is binary or weighted
             %
-            % CONNECTION_TYPE = GETCONNECTIONTYPE(G) returns if
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G) returns if
             % the instance of the concrete graph G is binary or weighted.
             %
-            % CONNECTION_TYPE = GETCONNECTIONTYPE(GRAPH_CLASS) returns 
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(GRAPH_CLASS) returns 
             % if graph whose class is GRAPH_CLASS is binary or weighted.
             %
             % See also is_binary(), is_weighted().     
-                  
-            connection_type = eval([Graph.getClass(g) '.getConnectionType()']);
+            
+            connectivity_type = eval([Graph.getClass(g) '.getConnectivityType(varargin{:})']);
         end
-        function bool = is_weighted(g)
+        function bool = is_weighted(g, varargin)
             % IS_WEIGHTED checks if graph is weighted
             %
             % BOOL = IS_WEIGHTED(G) returns if the instance of the
@@ -508,11 +699,11 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_WEIGHTED(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is weighted.
             %
-            % See also getConnectionType(), is_binary().     
-                       
-            bool = Graph.getConnectionType(g) == Graph.WEIGHTED;
+            % See also getConnectivityType(), is_binary().     
+            
+            bool = Graph.getConnectivityType(g, varargin{:}) == Graph.WEIGHTED;
         end
-        function bool = is_binary(g)
+        function bool = is_binary(g, varargin)
             % IS_BINARY checks if graph is binary
             %
             % BOOL = IS_BINARY(G) returns if the instance of the
@@ -521,26 +712,26 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_BINARY(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is binary.
             %
-            % See also getConnectionType(), is_weighted().     
+            % See also getConnectivityType(), is_weighted().     
             
-            bool = Graph.getConnectionType(g) == Graph.BINARY;
+            bool = Graph.getConnectivityType(g, varargin{:}) == Graph.BINARY;
         end
-        function edge_type = getEgdeType(g)
-            % GETEDGETYPE returns if graph is directed or undirected
+        function directionality_type = getDirectionalityType(g, varargin)
+            % GETDIRECTIONALITYTYPE returns if graph is directed or undirected
             %
-            % EDGE_TYPE = GETEDGETYPE(G) returns if
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(G) returns if
             % the instance of the concrete graph G is directed or not
             % undirected.
             %
-            % EDGE_TYPE = GETEDGETYPE(GRAPH_CLASS)
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(GRAPH_CLASS)
             % returns if graph whose class is GRAPH_CLASS is directed or
             % undirected.
             %
             % See also is_directed(), is_undirected().     
                          
-            edge_type = eval([Graph.getClass(g) '.getEdgeType()']);
+            directionality_type = eval([Graph.getClass(g) '.getDirectionalityType(varargin{:})']);
         end
-        function bool = is_directed(g)
+        function bool = is_directed(g, varargin)
             % IS_DIRECTED checks if graph is directed
             %
             % BOOL = IS_DIRECTED(G) returns if the instance of the
@@ -551,9 +742,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getEgdeType(), is_undirected().     
                      
-            bool = Graph.getEgdeType(g) == Graph.DIRECTED;
+            bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.DIRECTED;
         end
-        function bool = is_undirected(g)
+        function bool = is_undirected(g, varargin)
             % IS_UNDIRECTED checks if graph is undirected
             %
             % BOOL = IS_UNDIRECTED(G) returns if the instance of the
@@ -564,9 +755,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getEgdeType(), is_directed().     
                     
-            bool = Graph.getEgdeType(g) == Graph.UNDIRECTED;
+            bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.UNDIRECTED;
         end
-        function selfconnectivity_type = getSelfConnectivityType(g)
+        function selfconnectivity_type = getSelfConnectivityType(g, varargin)
             % GETSELFCONNECTIVITYTYPE returns if graph is self-connected or not self-connected
             %
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(G) returns if
@@ -579,9 +770,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also is_selfconnected(), is_not_selfconnected().     
                         
-            selfconnectivity_type = eval([Graph.getClass(g) '.getSelfConnectivityType()']);
+            selfconnectivity_type = eval([Graph.getClass(g) '.getSelfConnectivityType(varargin{:})']);
         end
-        function bool = is_selfconnected(g)
+        function bool = is_selfconnected(g, varargin)
             % IS_SELFCONNECTED checks if graph is self-connected
             %
             % BOOL = IS_SELFCONNECTED(G) returns true if the instance of the
@@ -592,22 +783,22 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getSelfConnectivityType(), is_not_selfconnected().     
              
-            bool = Graph.getSelfConnectivityType(g) == Graph.SELFCONNECTED; 
+            bool = Graph.getSelfConnectivityType(g, varargin{:}) == Graph.SELFCONNECTED; 
         end
-        function bool = is_not_selfconnected(g)
-            % IS_NOT_SELFCONNECTED checks if graph is not self-connected
+        function bool = is_not_selfconnected(g, varargin)
+            % IS_NONSELFCONNECTED checks if graph is not self-connected
             %
-            % BOOL = IS_NOT_SELFCONNECTED(G) returns true if the instance of the
+            % BOOL = IS_NONSELFCONNECTED(G) returns true if the instance of the
             % concrete graph G is not self-connected and false otherwise.
             %
-            % BOOL = IS_NOT_SELFCONNECTED(GRAPH_CLASS) returns true if graph
+            % BOOL = IS_NONSELFCONNECTED(GRAPH_CLASS) returns true if graph
             % whose class is GRAPH_CLASS is not self-connected and false otherwise.
             %
             % See also getSelfConnectivityType(), is_selfconnected().     
                   
-            bool = Graph.getSelfConnectivityType(g) == Graph.NOT_SELFCONNECTED;
+            bool = Graph.getSelfConnectivityType(g, varargin{:}) == Graph.NONSELFCONNECTED;
         end
-        function negativity_type = getNegativityType(g)
+        function negativity_type = getNegativityType(g, varargin)
             % GETNEGATIVITYTYPE returns if graph is negative or non-negative
             %
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G) returns if the instance of the
@@ -618,9 +809,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also is_negative(), is_nonnegative().     
             
-            negativity_type = eval([Graph.getClass(g) '.getNegativityType()']);
+            negativity_type = eval([Graph.getClass(g) '.getNegativityType(varargin{:})']);
         end
-        function bool = is_nonnegative(g)
+        function bool = is_nonnegative(g, varargin)
             % IS_NONNEGATIVE checks whether graph allows non-negative values
             %
             % BOOL = IS_NONNEGATIVE(G) returns true if the concrete instance
@@ -631,9 +822,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getNegativityType(), is_negative().
             
-            bool = Graph.getNegativityType(g) == Graph.NONNEGATIVE;
+            bool = Graph.getNegativityType(g, varargin{:}) == Graph.NONNEGATIVE;
         end
-        function bool = is_negative(g)
+        function bool = is_negative(g, varargin)
             % IS_NEGATIVE checks whether graph allows negative values
             % 
             % BOOL = IS_NEGATIVE(G) returns true if the concrete instance
@@ -644,7 +835,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also getNegativityType(), is_nonnegative().
             
-            bool = Graph.getNegativityType(g) == Graph.NEGATIVE;
+            bool = Graph.getNegativityType(g, varargin{:}) == Graph.NEGATIVE;
         end
     end
     methods  % Basic functions
@@ -671,14 +862,31 @@ classdef Graph < handle & matlab.mixin.Copyable
             disp([g.TYPE_DESCRIPTION{Graph.getGraphType(g)} ])
             disp([' size: ' int2str(g.layernumber(g)) ' layers with ' int2str(g.nodenumber(g)) ' nodes'])
 %             disp([' measures: ' int2str(length(g.measure_dict))]);
-%             disp([' settings']); %#ok<NBRAK>
-%             settings = g.getSettings(); %#ok<PROP>
-%             for i = 1:2:length(settings) %#ok<PROP>
-%                 disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
-%             end
+            disp([' settings']); %#ok<NBRAK>
+            settings = g.getSettings(); %#ok<PROP>
+            for i = 1:2:length(settings) %#ok<PROP>
+                disp(['  ' settings{i} ' = ' tostring(settings{i+1})]); %#ok<PROP>
+            end
         end
+        function res = getSettings(g, setting_code)
+            % GETSETTINGS returns the settings
+            %
+            % SETTINGS = GETSETTINGS(G) returns the settings of the graph
+            %
+            % SETTINGS = GETSETTINGS(G, SETTING_CODE) returns the settings
+            % of the graph SETTING_CODE.
+            %
+            % See also getA(), nodenumber().
+            
+            if nargin<2
+                res = g.settings;
+            else
+                res = get_from_varargin([], setting_code, g.settings{:});
+            end
+        end
+
     end
-    methods (Static) % Inspection functions
+    methods  % Inspection functions
         function n = nodenumber(g)
             % NODENUMBER returns the number of nodes in the graph
             %
@@ -690,8 +898,8 @@ classdef Graph < handle & matlab.mixin.Copyable
                 case Graph.GRAPH
                     n = length(g.getA(g));
                 otherwise
-                    A = g.getA(g); % #ok<PROP>
-                    n = cellfun(@(a) length(a), A(1:length(A)+1:end)); % #ok<PROP>
+                    A = g.getA(g); %#ok<PROP>
+                    n = cellfun(@(a) length(a), A(1:length(A)+1:end)); %#ok<PROP>
             end
         end
         function n = layernumber(g)
@@ -755,6 +963,155 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also getList(), getCompatibleMeasureList().
             
             g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
+        end
+        function m = getMeasure(g, measure_class)
+            % GETMEASURE returns measure
+            %
+            % M = GETMEASURE(G, MEASURE_CLASS) checks if the measure
+            % exists in the property MDICT. If not it creates a new measure
+            % M of class MEASURE_CLASS with properties defined by the graph
+            % settings. The user must call getValue() for the new measure M
+            % to retrieve the value of measure M.
+            %
+            % See also getMeasureValue(), is_measure_calculated().
+            
+            if isKey(g.measure_dict, measure_class)
+                m = g.measure_dict(measure_class);
+            else
+                m = Measure.getMeasure(measure_class, g, g.settings{:});
+                g.measure_dict(measure_class) = m;
+            end
+        end
+        function bool = is_measure_calculated(g, measure_class)
+            % IS_MEASURE_CALCULATED checks if a measure is calculated
+            %
+            % BOOL = IS_MEASURE_CALCULATED(G) returns true if a value of a
+            % measure has been already calculated. If a measure M is
+            % created by using the function getMeasure(), the user needs to
+            % call the function getMeasureValue() to calculate the measure and
+            % obtain a value.
+            %
+            % See also getMeasure(), getMeasureValue().
+            
+            if isKey(g.measure_dict, measure_class)
+                bool = g.measure_dict(measure_class).is_value_calculated();
+            else
+                bool = false;
+            end
+        end
+        function value = getMeasureValue(g, measure_class)
+            % GETMEASUREVALUE returns the value of a measure
+            %
+            % VALUE = GETMEASUREVALUE(G, MEASURE_CLASS) returns the value of
+            % a measure of type MEASURE_CLASS.
+            %
+            % See also getMeasure(), is_measure_calculated().
+            
+            value = g.getMeasure(measure_class).getValue();
+        end
+    end
+    methods (Static)  % Attacks
+        function ga = nodeattack(g, nodes, layernumbers)
+            % NODEATTACK removes given nodes from a graph
+            %
+            % GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
+            % the nodes specified by NODES from G. For non single layer
+            % graphs, it removes NODES in every layer.
+            %
+            % GA = NODEATTACK(G, NODES, LAYERNUMBERS) creates the graph GA 
+            % resulting by removing the nodes specified by NODES from G. 
+            % For non single layer graphs, it removes NODES in the layers
+            % specified by LAYERNUMBERS.
+            %
+            % NODES are removed by setting all the connections from and to
+            % the nodes in the connection matrix to 0.
+            %
+            % See also edgeattack().
+                        
+            if nargin < 3
+                layernumbers = 1:1:g.layernumber(g);
+            end   
+            
+            A = g.getA(g);
+            
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    A(nodes(:), :) = 0;
+                    A(:, nodes(:)) = 0;
+                    
+                otherwise              
+                    for li = layernumbers
+                        Aii = A{li, li};
+                        Aii(nodes(:), :) = 0; 
+                        Aii(:, nodes(:)) = 0; 
+                        A(li, li) = {Aii};
+                    end
+            end
+            
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
+        end
+        function ga = edgeattack(g, nodes1, nodes2, layernumbers1, layernumbers2)
+            % EDGEATTACK removes given edges from a graph
+            %
+            % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
+            % by removing the edges going from NODES1 to NODES2 from G. For
+            % non single layer graphs, it removes the edges from NODES1 to
+            % NODES2 in every layer.
+            %
+            % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I) creates the graph GA 
+            % resulting by removing the edges going from NODES1 to NODES2 from G. 
+            % For non single layer graphs, it removes the edges from NODES1 to
+            % NODES2 in the layers specified by LAYERNUMBERS.
+            %
+            % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I, LAYERNUMBERS_J) 
+            % creates the graph GA resulting by removing the edges going
+            % from NODES1 to NODES2 from G. For non single layer graphs, it
+            % removes the edges from NODES1 to NODES2 in and between the layers
+            % specified by LAYERNUMBERS_I and LAYERNUMBERS_J.
+            %
+            % EDGES are removed by setting all the connections from NODES1 to
+            % NODES2 in the connection matrix to 0.
+            %
+            % NODES1 and NODES2 must have the same dimensions.
+            %
+            % See also nodeattack().
+                
+            if nargin < 4
+                layernumbers1 = 1:1:g.layernumber(g);
+            end
+            
+            if nargin < 5 
+                layernumbers2 = layernumbers1;
+            end 
+            
+            A = g.getA(g);
+            
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    A(sub2ind(size(A), nodes1, nodes2)) = 0;
+                    
+                    if g.is_undirected(g)
+                        A(sub2ind(size(A), nodes2, nodes1)) = 0;
+                    end
+
+                otherwise
+                    for n = 1:1:length(layernumbers1)
+                        li = layernumbers1(n);
+                        lj = layernumbers2(n);
+                        
+                        Aij = A{li, lj};
+                        Aij(sub2ind(size(Aij), nodes1, nodes2)) = 0;
+                        A(li, lj) = {Aij};
+                        
+                        if g.is_undirected(g) 
+                            Aji = A{lj, li};
+                            Aji(sub2ind(size(Aji), nodes2, nodes1)) = 0;
+                            A(lj, li) = {Aji};
+                        end
+                    end
+            end 
+            
+            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
 %     methods (Access=protected)
@@ -820,22 +1177,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         end
 %     end
 %     methods
-%         function res = getSettings(g, setting_code)
-%             % GETSETTINGS returns the settings
-%             %
-%             % SETTINGS = GETSETTINGS(G) returns the settings of the graph
-%             %
-%             % SETTINGS = GETSETTINGS(G, SETTING_CODE) returns the settings
-%             % of the graph SETTING_CODE. 
-%             %
-%             % See also getA(), nodenumber().
-%             
-%             if nargin<2
-%                 res = g.settings;
-%             else
-%                 res = get_from_varargin([], setting_code, g.settings{:});
-%             end
-%         end
 %         function m = getMeasure(g, measure_class)
 %             % GETMEASURE returns measure
 %             %
@@ -890,44 +1231,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %             A = g.getA(); %#ok<PROPLC>
 %             sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings()); %#ok<PROPLC>
 %         end
-%         function ga = nodeattack(g, nodes)
-%             % NODEATTACK removes given nodes from a graph
-%             %
-%             % GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
-%             % the nodes specified by NODES from G.
-%             %
-%             % NODES are removed by setting all the connections from and to
-%             % the nodes in the connection matrix to 0.
-%             %
-%             % See also edgeattack().
-%             
-%             A = g.getA(); %#ok<PROPLC>
-%             
-%             for i = 1:1:numel(nodes)
-%                 A(nodes(i), :) = 0; %#ok<PROPLC>
-%                 A(:, nodes(i)) = 0; %#ok<PROPLC>
-%             end
-%             
-%             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings()); %#ok<PROPLC>
-%         end
-%         function ga = edgeattack(g, nodes1, nodes2)
-%             % EDGEATTACK removes given edges from a graph
-%             %
-%             % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
-%             % by removing the edges going from NODES1 to NODES2 from G.
-%             %
-%             % EDGES are removed by setting all the connections from NODES1 to
-%             % NODES2 in the connection matrix to 0.
-%             %
-%             % NODES1 and NODES2 must have the same dimensions.
-%             %
-%             % See also nodeattack().
-%             
-%             A = g.getA(); %#ok<PROPLC>
-%             A(sub2ind(size(A), nodes1, nodes2)) = 0; %#ok<PROPLC>
-%             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings()); %#ok<PROPLC>
-%         end
-%     end
 %     methods (Abstract)
 %         randomize_graph(n);
 %     end

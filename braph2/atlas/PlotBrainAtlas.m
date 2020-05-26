@@ -740,13 +740,13 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba.set_axes()
             
             % radius
-            R = ba.sphs.R(i);
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
                     case 'r'
                         R = varargin{n + 1};
                 end
             end
+            R = ba.sphs.R(i);
             
             % center coordinates
             X = ba.atlas.getBrainRegions().getValue(i).getX();  % get(i).getProp(BrainRegion.X);
@@ -788,8 +788,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % sets properties
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
-                    case 'r'
-                        % do nothing
+                    case 'radius'
+                        [sx, sy, sz] = sphere();
+                        set(ba.sphs.h(i), 'XData', X + R * sx);
+                        set(ba.sphs.h(i), 'YData', Y + R * sy);
+                        set(ba.sphs.h(i), 'ZData', Z + R * sz);
                     case 'color'
                         color = varargin{n+1};
                         set(ba.sphs.h(i), 'FaceColor', color);
@@ -890,28 +893,57 @@ classdef PlotBrainAtlas < PlotBrainSurf
             if nargin<2 || isempty(i_vec)
                 i_vec = 1:1:ba.atlas.getBrainRegions().length();
             end
-            
-            for m = 1:1:length(i_vec)
-                if exist('R','var') && numel(R)==length(i_vec)
-                    varargin{nr} = R(m);
+            if isa(i_vec, 'IndexedDictionary')
+                for m = 1:1:i_vec.length()
+                    if exist('R','var') && numel(R)==length(i_vec)
+                        varargin{nr} = R(m);
+                    end
+                    if exist('EdgeColor','var') && size(EdgeColor,1)==length(i_vec) && size(EdgeColor,2)==3
+                        varargin{nedgecolor} = EdgeColor(m,:);
+                    end
+                    if exist('EdgeAlpha','var') && numel(EdgeAlpha)==length(i_vec)
+                        varargin{nedgealpha} = EdgeAlpha(m);
+                    end
+                    if exist('FaceColor','var') && size(FaceColor,1)==length(i_vec) && size(FaceColor,2)==3
+                        varargin{nfacecolor} = FaceColor(m,:);
+                    end
+                    if exist('FaceAlpha','var') && numel(FaceAlpha)==length(i_vec)
+                        varargin{nfacealpha} = FaceAlpha(m);
+                    end
+                    if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
+                        varargin{ncolor} = Color(m,:);
+                    end
+                    if exist('Alpha','var') && numel(Alpha)==length(i_vec)
+                        varargin{nalpha} = Alpha(m);
+                    end
+                    
+                    ba.br_sph(m, varargin{:})
                 end
-                if exist('EdgeColor','var') && size(EdgeColor,1)==length(i_vec) && size(EdgeColor,2)==3
-                    varargin{nedgecolor} = EdgeColor(m,:);
-                end
-                if exist('EdgeAlpha','var') && numel(EdgeAlpha)==length(i_vec)
-                    varargin{nedgealpha} = EdgeAlpha(m);
-                end
-                if exist('FaceColor','var') && size(FaceColor,1)==length(i_vec) && size(FaceColor,2)==3
-                    varargin{nfacecolor} = FaceColor(m,:);
-                end
-                if exist('FaceAlpha','var') && numel(FaceAlpha)==length(i_vec)
-                    varargin{nfacealpha} = FaceAlpha(m);
-                end
-                if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
-                    varargin{ncolor} = Color(m,:);
-                end
-                if exist('Alpha','var') && numel(Alpha)==length(i_vec)
-                    varargin{nalpha} = Alpha(m);
+            else
+                for m = 1:1:length(i_vec)
+                    if exist('R','var') && numel(R)==length(i_vec)
+                        varargin{nr} = R(m);
+                    end
+                    if exist('EdgeColor','var') && size(EdgeColor,1)==length(i_vec) && size(EdgeColor,2)==3
+                        varargin{nedgecolor} = EdgeColor(m,:);
+                    end
+                    if exist('EdgeAlpha','var') && numel(EdgeAlpha)==length(i_vec)
+                        varargin{nedgealpha} = EdgeAlpha(m);
+                    end
+                    if exist('FaceColor','var') && size(FaceColor,1)==length(i_vec) && size(FaceColor,2)==3
+                        varargin{nfacecolor} = FaceColor(m,:);
+                    end
+                    if exist('FaceAlpha','var') && numel(FaceAlpha)==length(i_vec)
+                        varargin{nfacealpha} = FaceAlpha(m);
+                    end
+                    if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
+                        varargin{ncolor} = Color(m,:);
+                    end
+                    if exist('Alpha','var') && numel(Alpha)==length(i_vec)
+                        varargin{nalpha} = Alpha(m);
+                    end
+                    
+                    ba.br_sph(m, varargin{:})
                 end
                 
                 ba.br_sph(i_vec(m), varargin{:})
@@ -1263,14 +1295,13 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 
 %                 set(ui_checkbox_hs,'Value',false)
 %                 set(ui_checkbox_hs,'FontWeight','normal')
-                
+
                 set(ui_checkbox_xyz,'Value',true)
                 set(ui_checkbox_xyz,'FontWeight','bold')
                 
                 update_list()
             end
             function cb_show(~,~)  % (src,event)
-                ba.br_sphs(get_br_list())
                 ba.br_sphs_on(get_br_list())
             end
             function cb_hide(~,~)  % (src,event)
@@ -1280,7 +1311,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 color = uisetcolor();
                 
                 if length(color)==3
-                    ba.br_sphs(get_br_list(),'color',color)
+                    ba.br_sphs(get_br_list(), 'color',color)
                 end
             end
             function cb_facecolor(~,~)  % (src,event)
@@ -1465,21 +1496,42 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 i_vec = 1:1:ba.atlas.getBrainRegions().length();
             end
             
-            for m = 1:1:length(i_vec)
-                if exist('FontSize','var') && numel(FontSize)==length(i_vec)
-                    varargin{nfontsize} = FontSize(m);
-                end
-                if exist('FontName','var') && numel(FontName)==length(i_vec)
-                    varargin{nfontname} = FontName(m);
-                end
-                if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
-                    varargin{ncolor} = Color(m,:);
-                end
-                if exist('INTERP','var') && numel(INTERP,1)==length(i_vec)
-                    varargin{ninterp} = INTERP(m);
+            if isa(i_vec, 'IndexedDictionary')
+                for m = 1:1:i_vec.length()
+                    
+                    if exist('FontSize','var') && numel(FontSize)==length(i_vec)
+                        varargin{nfontsize} = FontSize(m);
+                    end
+                    if exist('FontName','var') && numel(FontName)==length(i_vec)
+                        varargin{nfontname} = FontName(m);
+                    end
+                    if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
+                        varargin{ncolor} = Color(m,:);
+                    end
+                    if exist('INTERP','var') && numel(INTERP,1)==length(i_vec)
+                        varargin{ninterp} = INTERP(m);
+                    end
+                    
+                    ba.br_lab(m, varargin{:})
                 end
                 
-                ba.br_lab(i_vec(m),varargin{:})
+            else
+                for m = 1:1:length(i_vec)
+                    if exist('FontSize','var') && numel(FontSize)==length(i_vec)
+                        varargin{nfontsize} = FontSize(m);
+                    end
+                    if exist('FontName','var') && numel(FontName)==length(i_vec)
+                        varargin{nfontname} = FontName(m);
+                    end
+                    if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
+                        varargin{ncolor} = Color(m,:);
+                    end
+                    if exist('INTERP','var') && numel(INTERP,1)==length(i_vec)
+                        varargin{ninterp} = INTERP(m);
+                    end
+                    
+                    ba.br_lab(m, varargin{:})
+                end
             end
         end
         function br_labs_on(ba, i_vec)
@@ -1751,7 +1803,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 
 %                 set(ui_checkbox_hs,'Value',false)
 %                 set(ui_checkbox_hs,'FontWeight','normal')
-%                 
+
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
                 

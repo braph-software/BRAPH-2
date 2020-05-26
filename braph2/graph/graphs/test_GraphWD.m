@@ -6,6 +6,7 @@ g = GraphWD(A);
 
 A = dediagonalize(A);
 A = semipositivize(A);
+A = standardize(A);
 
 assert(isequal(g.getA(g), A), ...
        'BRAPH:GraphWD:Bug', ...
