@@ -9,9 +9,8 @@ function GUIBrainAtlas(atlas,restricted)
 %
 % See also BrainAtlas, GUI.
 
-
 %% General Constants
-APPNAME = BRAPH2.NAME; % GUI.BAE_NAME;  % application name
+APPNAME = GUI.BAE_NAME;  % application name
 BUILD = BRAPH2.BUILD;
 
 % Dimensions
@@ -70,12 +69,6 @@ ADD_CMD = GUI.ADD_CMD;
 ADD_SC = GUI.ADD_SC;
 ADD_TP = ['Add brain region at the end of table. Shortcut: ' GUI.ACCELERATOR '+' ADD_SC];
 
-ADDABOVE_CMD = GUI.ADDABOVE_CMD;
-ADDABOVE_TP = 'Add brain regions above selected ones';
-
-ADDBELOW_CMD = GUI.ADDBELOW_CMD;
-ADDBELOW_TP = 'Add brain regions below selected ones';
-
 REMOVE_CMD = GUI.REMOVE_CMD;
 REMOVE_SC = GUI.REMOVE_SC;
 REMOVE_TP = ['Remove selected brain regions. Shortcut: ' GUI.ACCELERATOR '+' REMOVE_SC];
@@ -127,7 +120,11 @@ selected = [];
         % load file
         if filterindex
             filename = fullfile(path,file);
+            % dont create any new figures
+            set(0, 'DefaultFigureCreateFcn', @(s,e)delete(s))
             tmp = load(filename, '-mat', 'atlas', 'selected', 'BUILD');
+            % allow figures to be created
+            set(0, 'DefaultFigureCreateFcn', '')
             if isa(tmp.atlas, 'BrainAtlas')
                 atlas = tmp.atlas;
                 selected = tmp.selected;
@@ -137,7 +134,7 @@ selected = [];
         end
     end
     function cb_save(~,~)
-        filename = get(ui_text_filename,'String');
+        filename = get(ui_text_filename, 'String');
         if isempty(filename)  % (src,event)
             cb_saveas();
         else
@@ -146,11 +143,11 @@ selected = [];
     end
     function cb_saveas(~,~)  % (src,event)
         % select file
-        [file,path,filterindex] = uiputfile(GUI.BAE_EXTENSION,GUI.BAE_MSG_PUTFILE);
+        [file, path, filterindex] = uiputfile(GUI.BAE_EXTENSION, GUI.BAE_MSG_PUTFILE);
         % save file
         if filterindex
-            filename = fullfile(path,file);
-            save(filename,'atlas', 'selected', 'BUILD');
+            filename = fullfile(path, file);
+            save(filename, 'atlas', 'selected', 'BUILD');
             update_filename(filename)
         end
     end
@@ -244,7 +241,7 @@ init_filename()
         set(ui_text_filename,'HorizontalAlignment','left')
     end
     function update_filename(filename)
-        set(ui_text_filename,'String',filename)
+        set(ui_text_filename, 'String', filename)
     end
 
 %% Panel Table
@@ -597,7 +594,7 @@ init_figure()
         set(ui_button_figure_coronalposterior,'String',FIG_VIEW_CP_CMD)
         set(ui_button_figure_coronalposterior,'Callback',{@cb_figure_angle})
         
-        set(ui_menu_figure_brainfiles, 'Position', [.1 .01 .14 .03])
+        set(ui_menu_figure_brainfiles, 'Position', [.101 .02 .138 .029])
         set(ui_menu_figure_brainfiles, 'String', {'BrainMesh_ICBM152', 'BrainMesh_Cerebellum', 'BrainMesh_Ch2', ...
             'BrainMesh_ICBM152Left', 'BrainMesh_ICBM152RIght'})
         set(ui_menu_figure_brainfiles, 'Callback', {@cb_figure_brainfile})
@@ -1068,7 +1065,7 @@ init_menu()
         set(ui_menu_cohorts_petcohort,'Label',PETCOHORT_CMD)
         set(ui_menu_cohorts_petcohort,'Callback',{@cb_menu_petcohort})
     end
-[ui_menu_about,ui_menu_about_about] = GUI.setMenuAbout(f,APPNAME);
+[ui_menu_about,ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME);
 
 %% Toolbar
 set(f,'Toolbar','figure')
