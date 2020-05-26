@@ -787,14 +787,29 @@ init_contextmenu()
             end
         end
         
+        % brain regions and labels
+        if (h_br_visible || h_labels_visible) & ...
+                get(ui_checkbox_figure_labels,'Value')== h_labels_visible & ...
+                get(ui_checkbox_figure_br,'Value')== h_br_visible
+            
+            create_figure_brainregionplot();
+            
+            for i = 1:1:atlas.getBrainRegions().length()
+                userdata = h_br(i, 1:7);
+                if userdata{1} ==1
+                    update_figure_brainregionplot(i);
+                end
+            end
+        end
+        
         % brain regions
         if get(ui_checkbox_figure_br,'Value')~=h_br_visible
             h_br_visible = get(ui_checkbox_figure_br,'Value');
             if h_br_visible  % brain regions on
-                set(h_br,'Visible','on')
+                h_brain_outer_obj.br_sphs_on()
                 set(ui_toolbar_br,'State','on');
             else
-                set(h_br,'Visible','off')
+                h_brain_outer_obj.br_sphs_off()
                 set(ui_toolbar_br,'State','off');
             end
         end
@@ -803,26 +818,13 @@ init_contextmenu()
         if get(ui_checkbox_figure_labels,'Value')~=h_labels_visible
             h_labels_visible = get(ui_checkbox_figure_labels,'Value');
             if h_labels_visible  % labels on
-                set(h_labels,'Visible','on')
+                h_brain_outer_obj.br_labs_on()
                 set(ui_toolbar_label,'State','on')
             else
-                set(h_labels,'Visible','off')
+                h_brain_outer_obj.br_labs_off()
                 set(ui_toolbar_label,'State','off')
             end
-        end
-        
-        % brain regions and labels
-        if h_br_visible || h_labels_visible
-
-            create_figure_brainregionplot();  
-         
-            for i = 1:1:atlas.getBrainRegions().length()
-                userdata = h_br(i, 1:7);
-                if userdata{1} ==1
-                    update_figure_brainregionplot(i);
-                end
-            end
-        end
+        end  
     end
     function update_figure_light()
         delete(findall(f,'Type','light'));
@@ -918,6 +920,31 @@ init_contextmenu()
                 set(h_brain,'FaceAlpha',h_brainalpha);
             end
         end
+    end
+    function update_figure_br_labels()
+        % brain regions
+        if get(ui_checkbox_figure_br,'Value')~=h_br_visible
+            h_br_visible = get(ui_checkbox_figure_br,'Value');
+            if h_br_visible  % brain regions on
+                h_brain_outer_obj.br_sphs_on()
+                set(ui_toolbar_br,'State','on');
+            else
+                h_brain_outer_obj.br_sphs_off()
+                set(ui_toolbar_br,'State','off');
+            end
+        end
+        
+        % labels
+        if get(ui_checkbox_figure_labels,'Value')~=h_labels_visible
+            h_labels_visible = get(ui_checkbox_figure_labels,'Value');
+            if h_labels_visible  % labels on
+                h_brain_outer_obj.br_labs_on()
+                set(ui_toolbar_label,'State','on')
+            else
+                h_brain_outer_obj.br_labs_off()
+                set(ui_toolbar_label,'State','off')
+            end
+        end        
     end
 
 %% Menus
@@ -1208,11 +1235,11 @@ init_toolbar()
         set(ui_toolbar_br,'OffCallback',{@cb_toolbar_br_off})
         function cb_toolbar_br_on(~,~)  % (src,event)
             set(ui_checkbox_figure_br,'Value',true)
-            update_figure_brainview()
+            update_figure_br_labels()
         end
         function cb_toolbar_br_off(~,~)  % (src,event)
             set(ui_checkbox_figure_br,'Value',false)
-            update_figure_brainview()
+            update_figure_br_labels()
         end
         
         set(ui_toolbar_label,'TooltipString',FIG_LABELS_CMD);
@@ -1222,11 +1249,11 @@ init_toolbar()
         set(ui_toolbar_label,'OffCallback',{@cb_toolbar_label_off})
         function cb_toolbar_label_on(~,~)  % (src,event)
             set(ui_checkbox_figure_labels,'Value',true)
-            update_figure_brainview()
+            update_figure_br_labels()
         end
         function cb_toolbar_label_off(~,~)  % (src,event)
             set(ui_checkbox_figure_labels,'Value',false)
-            update_figure_brainview()
+            update_figure_br_labels()
         end
     end
     function cb_menu_figure(~,~)  % (src,event)
