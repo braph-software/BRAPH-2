@@ -104,7 +104,7 @@ classdef MultiplexGraphBD < Graph
             directionality_type = Graph.DIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType()
-            selfconnectivity_type = Graph.NOT_SELFCONNECTED;  % True in cell diagonal matrices
+            selfconnectivity_type = Graph.NONSELFCONNECTED;  % True in cell diagonal matrices
         end
         function negativity_type = getNegativityType()
             % GETNEGATIVITYTYPE checks if the graph is non-negative or negative

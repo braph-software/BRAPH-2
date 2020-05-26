@@ -87,7 +87,7 @@ classdef GraphWU < GraphWD
             directionality_type = Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType()
-            selfconnectivity_type = Graph.NOT_SELFCONNECTED;
+            selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
         function negativity_type = getNegativityType()
             % GETNEGATIVITYTYPE checks if the graph is non-negative or negative

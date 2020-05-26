@@ -5,9 +5,10 @@ classdef DummyMultiplex < Graph
             
             if isempty(A)
                 A = {
-                round(rand(4))      round(rand(4, 3))   randn(4, 2)
-                round(rand(3, 4))   round(rand(3))      round(rand(3, 2))
-                randn(2, 4)         round(rand(2, 3)) 	randn(2)
+                    symmetrize(rand(4)) round(diag(rand(4, 1))) round(diag(rand(4, 1))) round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1))) symmetrize(rand(4)) round(diag(rand(4, 1))) round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1))) round(diag(rand(4, 1))) round(rand(4)) round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1))) round(diag(rand(4, 1))) round(diag(rand(4, 1))) round(rand(4))
                 };
             end
             
@@ -18,7 +19,7 @@ classdef DummyMultiplex < Graph
         function graph_class = getClass()
             % GETCLASS returns the class of the graph.
             %
-            % GRAPH_CLASS = GETCLASS() returns the class, 'GraphBD'.
+            % GRAPH_CLASS = GETCLASS() returns the class, 'DummyMultiplex'.
             %
             % See also getName().
             
@@ -27,7 +28,7 @@ classdef DummyMultiplex < Graph
         function name = getName()
             % GETNAME returns the name of the graph.
             %
-            % NAME = GETCLASS() returns the name, 'Binary Directed Graph'.
+            % NAME = GETCLASS() returns the name, 'Dummy Multiplex'.
             %
             % See also getClass().
             
@@ -36,7 +37,7 @@ classdef DummyMultiplex < Graph
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
             %
-            % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHBD.
+            % DESCRIPTION = GETDESCRIPTION() returns the description of DUMMYMULTIPLEX.
             %
             % See also getName().
             
@@ -49,31 +50,74 @@ classdef DummyMultiplex < Graph
             graph_type = Graph.MULTIPLEX;
         end
         function connectivity_type = getConnectivityType(varargin)
+            % GETCONNECTIVITYTYPE checks if the graph is binary or weighted
+            %
+            % BOOL = GETCONNECTIVITYTYPE() returns NONNEGATIVE for DUMMYMULTIPLEX.
+            %
+            % See also getDirectionalityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+                  
+            if isempty(varargin)
+                layernumber = 1;
+            else
+                layernumber = varargin{1};
+                assert(mod(layernumber, 2) == 0, ...
+                    [BRAPH2.STR ':DummyMultiplex:' BRAPH2.WRONG_INPUT], ...
+                    ['The number of layers for DummyMultiplex must be even,' ... 
+                    ' while it is ' tostring(layernumber)])
+            end
             
-            connectivity_type = [ 
-                Graph.BINARY    Graph.BINARY    Graph.WEIGHTED
-                Graph.BINARY    Graph.BINARY    Graph.BINARY 
-                Graph.WEIGHTED  Graph.BINARY    Graph.WEIGHTED
-                ];
+            connectivity_type = Graph.BINARY * ones(layernumber);
+            connectivity_type(1: length(connectivity_type)+1: layernumber/2*(length(connectivity_type)+1)) = Graph.WEIGHTED;       
         end
         function directionality_type = getDirectionalityType(varargin)
-            directionality_type = Graph.DIRECTED;
+            % GETDIRECTIONALITYTYPE checks if the graph is directed or undirected
+            %
+            % BOOL = GETDIRECTIONALITYTYPE() returns NONNEGATIVE for DUMMYMULTIPLEX.
+            %
+            % See also getConnectivityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+                       
+            if isempty(varargin)
+                layernumber = 1;
+            else
+                layernumber = varargin{1};
+                assert(mod(layernumber, 2) == 0, ...
+                    [BRAPH2.STR ':DummyMultiplex:' BRAPH2.WRONG_INPUT], ...
+                    ['The number of layers for DummyMultiplex must be even,' ... 
+                    ' while it is ' tostring(layernumber)])
+            end
+            
+            directionality_type = Graph.DIRECTED * ones(layernumber);
+            directionality_type(1: length(directionality_type)+1: layernumber/2*(length(directionality_type)+1)) = Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType(varargin)
-            selfconnectivity_type = Graph.SELFCONNECTED;
+            % GETSELFCONNECTIVITYTYPE checks if the graph is self-connected or not
+            %
+            % BOOL = GETSELFCONNECTIVITYTYPE() returns NONNEGATIVE for DUMMYMULTIPLEX.
+            %
+            % See also getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
+                      
+            if isempty(varargin)
+                layernumber = 1;
+            else
+                layernumber = varargin{1};
+            end
+            
+            selfconnectivity_type = Graph.SELFCONNECTED * ones(layernumber);
         end
         function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
             %
-            % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
+            % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for DUMMYMULTIPLEX.
             %
-            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getDirectionalityType(), getGraphType() and getSelfConnectivityType().
             
-            negativity_type = [ 
-                Graph.NONNEGATIVE	Graph.NONNEGATIVE   Graph.NEGATIVE
-                Graph.NONNEGATIVE   Graph.NONNEGATIVE   Graph.NONNEGATIVE 
-                Graph.NEGATIVE      Graph.NONNEGATIVE   Graph.NEGATIVE
-                ];
+            if isempty(varargin)
+                layernumber = 1;
+            else
+                layernumber = varargin{1};
+            end
+            
+            negativity_type =  Graph.NONNEGATIVE * ones(layernumber);
         end
     end
 end
