@@ -241,7 +241,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         A  % adjacency matrix or 2D-cell array of adjacency matrices
         settings  % structure with the constructor varagin
-%         measure_dict  % dictionary with calculated measures
+        measure_dict  % dictionary with calculated measures
     end
     methods (Access=protected)  % Contructor
         function g = Graph(A, varargin)
@@ -264,6 +264,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
             
             settings = get_from_varargin(varargin, 'Settings', varargin{:});
+            measure_dict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
             
             Graph.checkA(Graph.getGraphType(g), A);  % performs all necessary checks on A
             if isnumeric(A)
@@ -280,6 +281,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             g.A = A;
             g.settings = settings;  % initialize the property settings
+            g.measure_dict = measure_dict;  % initialize the property measure_dict
         end
     end
     methods (Static)  % Checks
@@ -938,6 +940,74 @@ classdef Graph < handle & matlab.mixin.Copyable
             else  % return A{i, j}
                 A = g.A{i, j};
             end
+        end
+        function g_new = getGraph(g, A, varargin) %#ok<INUSD>
+            % GETGRAPH returns a graph
+            %
+            % G = GETGRAPH(G, A) returns an instance
+            % of the class of the graph G with adjacency matrix or cell
+            % array of adjacency matrices A.
+            %
+            % G = GETGRAPH(GRAPH_CLASS, A) returns an instance
+            % of the class whose class is GRAPH_CLASS with adjacency matrix
+            % or cell array of adjacency matrices A.
+            %
+            % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % initializes he property settings with the properties and values.
+            %
+            % G = GETGRAPH(G, A, 'Settings', SETTINGS)
+            % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS)
+            % initializes the property settings with SETTINGS.
+            %
+            % See also getList(), getCompatibleMeasureList().
+            
+            g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
+        end
+        function m = getMeasure(g, measure_class)
+            % GETMEASURE returns measure
+            %
+            % M = GETMEASURE(G, MEASURE_CLASS) checks if the measure
+            % exists in the property MDICT. If not it creates a new measure
+            % M of class MEASURE_CLASS with properties defined by the graph
+            % settings. The user must call getValue() for the new measure M
+            % to retrieve the value of measure M.
+            %
+            % See also getMeasureValue(), is_measure_calculated().
+            
+            if isKey(g.measure_dict, measure_class)
+                m = g.measure_dict(measure_class);
+            else
+                m = Measure.getMeasure(measure_class, g, g.settings{:});
+                g.measure_dict(measure_class) = m;
+            end
+        end
+        function bool = is_measure_calculated(g, measure_class)
+            % IS_MEASURE_CALCULATED checks if a measure is calculated
+            %
+            % BOOL = IS_MEASURE_CALCULATED(G) returns true if a value of a
+            % measure has been already calculated. If a measure M is
+            % created by using the function getMeasure(), the user needs to
+            % call the function getMeasureValue() to calculate the measure and
+            % obtain a value.
+            %
+            % See also getMeasure(), getMeasureValue().
+            
+            if isKey(g.measure_dict, measure_class)
+                bool = g.measure_dict(measure_class).is_value_calculated();
+            else
+                bool = false;
+            end
+        end
+        function value = getMeasureValue(g, measure_class)
+            % GETMEASUREVALUE returns the value of a measure
+            %
+            % VALUE = GETMEASUREVALUE(G, MEASURE_CLASS) returns the value of
+            % a measure of type MEASURE_CLASS.
+            %
+            % See also getMeasure(), is_measure_calculated().
+            
+            value = g.getMeasure(measure_class).getValue();
         end
     end
     methods (Static)  % Attacks
