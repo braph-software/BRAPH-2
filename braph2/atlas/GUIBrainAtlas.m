@@ -543,7 +543,7 @@ init_figure()
         set(ui_slider_figure_brainalpha,'String',FIG_BRAINALPHA_CMD)
         set(ui_slider_figure_brainalpha,'Min',0,'Max',1,'Value',FIG_INIT_BRAIN_ALPHA)
         set(ui_slider_figure_brainalpha,'TooltipString',FIG_BRAINALPHA_TP)
-        set(ui_slider_figure_brainalpha,'Callback',{@cb_figure_plotsettings})
+        set(ui_slider_figure_brainalpha,'Callback',{@cb_figure_slider})
         
         set(ui_checkbox_figure_axis,'Position',[.80 .11 .18 .03])
         set(ui_checkbox_figure_axis,'String',FIG_AXIS_CMD)
@@ -834,14 +834,14 @@ init_contextmenu()
         h_brain_outer_obj.br_sphs(atlas.getBrainRegions(), 'color', FIG_BR_COLOR, 'radius', 3)
         h_brain_outer_obj.br_sphs_on()
         
-        h_brain_outer_obj.br_labs(atlas.getBrainRegions(), 'color', 'b', 'FontSize', 8)
+        h_brain_outer_obj.br_labs(atlas.getBrainRegions(), 'color', 'k', 'FontSize', 8)
         h_brain_outer_obj.br_labs_on()
     end
     function update_figure_brainregionplot(i)
 
         if any(selected==i)
             
-            h_brain_outer_obj.br_sphs(i, 'color', FIG_BRSELECTED_COLOR, 'radius', 5)
+            h_brain_outer_obj.br_sphs(i, 'color', FIG_BRSELECTED_COLOR, 'radius', 4)
             h_brain_outer_obj.br_sphs_on()
             
             h_brain_outer_obj.br_labs(i, 'color', 'b', 'FontSize', 8)
@@ -910,6 +910,14 @@ init_contextmenu()
         val = ui_menu_figure_brainfiles.Value;
         str = ui_menu_figure_brainfiles.String;
         create_figure(str{val})
+    end
+    function cb_figure_slider(~,~)
+        if h_brain_visible
+            if get(ui_slider_figure_brainalpha,'Value')~=h_brainalpha
+                h_brainalpha = get(ui_slider_figure_brainalpha,'Value');
+                set(h_brain,'FaceAlpha',h_brainalpha);
+            end
+        end
     end
 
 %% Menus
