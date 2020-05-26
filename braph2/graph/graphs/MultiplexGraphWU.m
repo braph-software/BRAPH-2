@@ -85,11 +85,17 @@ classdef MultiplexGraphWU < MultiplexGraphWD
         function graph_type = getGraphType()
             graph_type = Graph.MULTIPLEX;
         end
-        function graph_type = getConnectionType()
-            graph_type = Graph.WEIGHTED;
+        function connectivity_type = getConnectivityType()
+            connectivity_type = Graph.WEIGHTED;
         end
-        function graph_type = getEdgeType()
-            graph_type = Graph.UNDIRECTED;
+        function directionality_type = getDirectionalityType(varargin)
+            directionality_type = [
+                Graph.UNDIRECTED    Graph.DIRECTED    Graph.DIRECTED
+                Graph.DIRECTED    Graph.UNDIRECTED    Graph.DIRECTED
+                Graph.DIRECTED  Graph.DIRECTED    Graph.UNDIRECTED
+                ];
+%             edge_type = Graph.UNDIRECTED;
+                
         end
         function selfconnectivity_type = getSelfConnectivityType()
             selfconnectivity_type = Graph.NOT_SELFCONNECTED;  % True in cell diagonal matrices
@@ -99,7 +105,7 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             %
             % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
             %
-            % See also getConnectionType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
             
             negativity_type = Graph.NONNEGATIVE;
         end
