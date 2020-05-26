@@ -68,7 +68,6 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         label  % extended name of the brain atlas
         notes  % notes about the brain atlas
         plot_brain_surf  % handle for brain surface plot
-        brain_surf_file
         plot_brain_atlas  % handle for brain atlas plot
         br_idict  % indexed dictionary with BrainRegions
     end
@@ -221,13 +220,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getPlotBrainAtlas().
             
-            brain_file = get_from_varargin('', 'BrainSurfaceType', varargin{:});
-            if ~isempty(atlas.plot_brain_surf) && isequal(brain_file, atlas.brain_surf_file)
+            if ~isempty(atlas.plot_brain_surf)
                 bs = atlas.plot_brain_surf;
             else
                 bs = PlotBrainSurf(varargin{:});
                 atlas.plot_brain_surf = bs;
-                atlas.brain_surf_file = brain_file;
             end                
         end
         function ba = getPlotBrainAtlas(atlas, varargin)
@@ -242,7 +239,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
              if ~isempty(atlas.plot_brain_atlas)
                 ba = atlas.plot_brain_atlas;
             else
-                ba = PlotBrainAtlas(atlas, varargin{:});
+                ba = PlotBrainAtlas(varargin{:});
                 atlas.plot_brain_atlas = ba;
             end    
         end
@@ -309,7 +306,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = raw{i, 5};
                 br_z = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_id, br);
+                atlas.getBrainRegions().add(br_label, br);
             end
         end
         function save_to_xls(atlas, varargin)
@@ -401,7 +398,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = raw{i, 5};
                 br_z = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_id, br);
+                atlas.getBrainRegions().add(br_label, br);
             end
         end
         function save_to_txt(atlas, varargin)
@@ -500,7 +497,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = intern_fields.y;
                 br_z = intern_fields.z;
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_id, br);
+                atlas.getBrainRegions().add(br_label, br);
             end
         end
         function save_to_json(atlas, varargin)
