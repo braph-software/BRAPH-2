@@ -172,7 +172,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
     end
     methods  % editing funtions
         function setRegions(ba, atlas)
-            for i = 1:1:atlas.getBrainRegions().length()
+              for i = 1:1:atlas.getBrainRegions().length()
                 brain_region = atlas.getBrainRegions().getValue(i);
                 x_coordinates{i} = brain_region.getX(); %#ok<AGROW>
                 y_coordinates{i} = brain_region.getY(); %#ok<AGROW>
@@ -1803,7 +1803,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 
 %                 set(ui_checkbox_hs,'Value',false)
 %                 set(ui_checkbox_hs,'FontWeight','normal')
-                 
+
                 set(ui_checkbox_xyz,'Value',false)
                 set(ui_checkbox_xyz,'FontWeight','normal')
                 
