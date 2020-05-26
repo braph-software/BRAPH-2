@@ -773,9 +773,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 if ~isequal(ba.sphs.X(i), num2cell(X)) || ~isequal(ba.sphs.Y(i), num2cell(Y)) || ~isequal(ba.sphs.Z(i), num2cell(Z)) || ba.sphs.R(i)~= (R)
                     
                     [sx,sy,sz] = sphere();
-                    set(ba.sphs.h(i), 'XData',X + R * sx);
-                    set(ba.sphs.h(i), 'YData',Y + R * sy);
-                    set(ba.sphs.h(i), 'ZData',Z + R * sz);
+                    set(ba.sphs.h(i), 'XData', X + R * sx);
+                    set(ba.sphs.h(i), 'YData', Y + R * sy);
+                    set(ba.sphs.h(i), 'ZData', Z + R * sz);
                 end
             end
             
@@ -789,7 +789,10 @@ classdef PlotBrainAtlas < PlotBrainSurf
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
                     case 'radius'
-                        % do nothing
+                        [sx, sy, sz] = sphere();
+                        set(ba.sphs.h(i), 'XData', X + R * sx);
+                        set(ba.sphs.h(i), 'YData', Y + R * sy);
+                        set(ba.sphs.h(i), 'ZData', Z + R * sz);
                     case 'color'
                         color = varargin{n+1};
                         set(ba.sphs.h(i), 'FaceColor', color);
@@ -940,7 +943,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                         varargin{nalpha} = Alpha(m);
                     end
                     
-                    ba.br_sph(i_vec, varargin{:})
+                    ba.br_sph(m, varargin{:})
                 end
             end
         end
@@ -1258,21 +1261,6 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 
                 update_list()
             end
-            %             function cb_hs(~,~)  % (src,event)
-            %                 set(ui_checkbox_label,'Value',false)
-            %                 set(ui_checkbox_label,'FontWeight','normal')
-            %
-            %                 set(ui_checkbox_name,'Value',false)
-            %                 set(ui_checkbox_name,'FontWeight','normal')
-            %
-            %                 set(ui_checkbox_hs,'Value',true)
-            %                 set(ui_checkbox_hs,'FontWeight','bold')
-            %
-            %                 set(ui_checkbox_xyz,'Value',false)
-            %                 set(ui_checkbox_xyz,'FontWeight','normal')
-            %
-            %                 update_list()
-            %             end
             function cb_xyz(~,~)  % (src,event)
                 set(ui_checkbox_label,'Value',false)
                 set(ui_checkbox_label,'FontWeight','normal')
@@ -1280,16 +1268,12 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 set(ui_checkbox_name,'Value',false)
                 set(ui_checkbox_name,'FontWeight','normal')
                 
-                %                 set(ui_checkbox_hs,'Value',false)
-                %                 set(ui_checkbox_hs,'FontWeight','normal')
-                
                 set(ui_checkbox_xyz,'Value',true)
                 set(ui_checkbox_xyz,'FontWeight','bold')
                 
                 update_list()
             end
             function cb_show(~,~)  % (src,event)
-                ba.br_sphs(get_br_list())
                 ba.br_sphs_on(get_br_list())
             end
             function cb_hide(~,~)  % (src,event)
@@ -1334,7 +1318,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     set(ui_edit_radius, 'String', '1')
                     R = 1;
                 end
-                ba.br_sphs(get_br_list(), 'r', R)
+                ba.br_sphs(get_br_list(), 'radius', R)
             end
             function bri = get_br_list()
                 if ba.atlas.getBrainRegions().length()>0
