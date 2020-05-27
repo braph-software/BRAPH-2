@@ -17,7 +17,6 @@ directory = fileparts(which('braph2'));
 
 addpath(directory)
 addpath([directory filesep 'util'])
-addpath([directory filesep 'util' filesep 'icons'])
 addpath([directory filesep 'graph'])
 addpath([directory filesep 'graph' filesep 'graphs'])
 addpath([directory filesep 'graph' filesep 'measures'])
