@@ -941,29 +941,6 @@ classdef Graph < handle & matlab.mixin.Copyable
                 A = g.A{i, j};
             end
         end
-        function g_new = getGraph(g, A, varargin) %#ok<INUSD>
-            % GETGRAPH returns a graph
-            %
-            % G = GETGRAPH(G, A) returns an instance
-            % of the class of the graph G with adjacency matrix or cell
-            % array of adjacency matrices A.
-            %
-            % G = GETGRAPH(GRAPH_CLASS, A) returns an instance
-            % of the class whose class is GRAPH_CLASS with adjacency matrix
-            % or cell array of adjacency matrices A.
-            %
-            % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % initializes he property settings with the properties and values.
-            %
-            % G = GETGRAPH(G, A, 'Settings', SETTINGS)
-            % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS)
-            % initializes the property settings with SETTINGS.
-            %
-            % See also getList(), getCompatibleMeasureList().
-            
-            g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
-        end
         function m = getMeasure(g, measure_class)
             % GETMEASURE returns measure
             %
