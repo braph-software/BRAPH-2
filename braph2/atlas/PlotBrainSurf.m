@@ -885,9 +885,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % BS = LOADBRAINSURFACE(VARARGIN) creates anothe PlotBrainSurf
             % object using the VARARGIN specifications. 
             
-            brain_surface_file = get_from_varargin('' , 'BrainSurfaceType', varargin(:));
+            brain_surface_file = get_from_varargin('' , 'BrainSurface', varargin(:));
             if isequal(brain_surface_file, '')  % select file
-                msg = get_from_varargin(BRAPH2.BRAINSURFACE_MSG, 'MSG', varargin{:});
+                msg = get_from_varargin(BRAPH2.BRAINSURFACE_MSG_GETFILE, 'MSG', varargin{:});
                 [filename, ~, filterindex] = uigetfile(BRAPH2.BRAINSURFACE_EXTENSION, msg);
                 brain_surface_file = filename;
                 

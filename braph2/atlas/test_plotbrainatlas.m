@@ -14,8 +14,17 @@ h = ba.set_axes();
 ba.hold_on();
 ba.view(PlotBrainAtlas.VIEW_3D);
 
-%% Symbols
+assert(~isempty(ba), ...
+    [BRAPH2.STR ':' class(ba) ':' BRAPH2.WRONG_OUTPUT], ...
+    'PlotBrainAtlas does not work.')
 
+close
+
+%% Symbols, Spheres, Labels
+ba = PlotBrainAtlas(atlas);
+h = ba.set_axes();
+ba.hold_on();
+ba.view(PlotBrainAtlas.VIEW_3D);
 ba.br_syms()
 ba.br_syms_on()
 
@@ -25,7 +34,7 @@ ba.br_syms_settings([], ...
     'FigTitle','PlotBrainSurf - Symbols' ...
     )
 
-%% Spheres
+close
 
 ba.br_sphs()
 ba.br_sphs_on()
@@ -36,7 +45,7 @@ ba.br_sphs_settings([], ...
     'FigTitle','PlotBrainSurf - Spheres' ...
     )
 
-%% Labels
+close
 
 ba.br_labs()
 ba.br_labs_on()
@@ -46,3 +55,6 @@ ba.br_labs_settings([], ...
     'FigColor', [.95 .95 .95], ...
     'FigTitle','PlotBrainSurf - Labels' ...
     )
+
+close
+close  % close the axis figure.
