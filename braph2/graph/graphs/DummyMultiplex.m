@@ -5,10 +5,10 @@ classdef DummyMultiplex < Graph
             
             if isempty(A)
                 A = {
-                    symmetrize(rand(4)) round(diag(rand(4, 1))) round(diag(rand(4, 1))) round(diag(rand(4, 1)))
-                    round(diag(rand(4, 1))) symmetrize(rand(4)) round(diag(rand(4, 1))) round(diag(rand(4, 1)))
-                    round(diag(rand(4, 1))) round(diag(rand(4, 1))) round(rand(4)) round(diag(rand(4, 1)))
-                    round(diag(rand(4, 1))) round(diag(rand(4, 1))) round(diag(rand(4, 1))) round(rand(4))
+                    symmetrize(rand(4))     round(diag(rand(4, 1)))     round(diag(rand(4, 1)))     round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1))) symmetrize(rand(4))         round(diag(rand(4, 1)))     round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1))) round(diag(rand(4, 1)))     round(rand(4))              round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1))) round(diag(rand(4, 1)))     round(diag(rand(4, 1)))     round(rand(4))
                 };
             end
             
@@ -57,17 +57,18 @@ classdef DummyMultiplex < Graph
             % See also getDirectionalityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
                   
             if isempty(varargin)
-                layernumber = 1;
+                layernumber = 2;
             else
                 layernumber = varargin{1};
-                assert(mod(layernumber, 2) == 0, ...
-                    [BRAPH2.STR ':DummyMultiplex:' BRAPH2.WRONG_INPUT], ...
-                    ['The number of layers for DummyMultiplex must be even,' ... 
-                    ' while it is ' tostring(layernumber)])
             end
             
+            assert(mod(layernumber, 2) == 0, ...
+                [BRAPH2.STR ':DummyMultiplex:' BRAPH2.WRONG_INPUT], ...
+                ['The number of layers for DummyMultiplex must be even,' ... 
+                ' while it is ' int2str(layernumber)])
+            
             connectivity_type = Graph.BINARY * ones(layernumber);
-            connectivity_type(1: length(connectivity_type)+1: layernumber/2*(length(connectivity_type)+1)) = Graph.WEIGHTED;       
+            connectivity_type(1:length(connectivity_type)+1:layernumber.^2 / 2) = Graph.WEIGHTED;       
         end
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE checks if the graph is directed or undirected
