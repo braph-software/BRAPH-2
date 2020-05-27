@@ -15,7 +15,22 @@
 %
 % Graphical Interface tools:
 %   <a href="matlab:help GUI                    ">GUI</a>                  (static class) graphical user interface constants and auxiliary functions
-%
+%   <a href="matlab:help #                      ">icon_axis</a>            png file
+%   <a href="matlab:help #                      ">icon_br</a>              png file
+%	<a href="matlab:help #                      ">icon_brain</a>           png file
+%   <a href="matlab:help #                      ">icon_grid</a>            png file
+%   <a href="matlab:help #                      ">icon_label</a>           png file
+%   <a href="matlab:help #                      ">icon_settings</a>        png file
+%   <a href="matlab:help #                      ">icon_sphere</a>          png file
+%   <a href="matlab:help #                      ">icon_symbol</a>          png file
+%   <a href="matlab:help #                      ">icon_view_3d</a>         png file
+%   <a href="matlab:help #                      ">icon_view_ad</a>         png file
+%   <a href="matlab:help #                      ">icon_view_av</a>         png file
+%   <a href="matlab:help #                      ">icon_view_ca</a>         png file
+%   <a href="matlab:help #                      ">icon_view_cp</a>         png file
+%   <a href="matlab:help #                      ">icon_view_sl</a>         png file
+%   <a href="matlab:help #                      ">icon_view_sr</a>         png file
+%  
 % Unit tests:
 %   <a href="matlab:help DummyObject            ">DummyObject</a>           (class) dummy object 
 %   <a href="matlab:help DummyCopiableObject    ">DummyCopiableObject</a>   (class) dummy copiable object 
@@ -24,8 +39,6 @@
 %   <a href="matlab:help test_clean_varargin	">test_clean_varargin</a>
 %   <a href="matlab:help test_get_from_varargin	">test_get_from_varargin</a>
 %
-% Subfolders:
-%   <a href="matlab:help icons                  ">icons</a>                (folder) graphic icons
 
 clc
 help util
