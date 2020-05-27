@@ -932,7 +932,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % to graph G (multiple graph).
             %
             % See also getSettings(), layernumber(), nodenumber().
-            
+           
             if nargin == 1  % return cell array of adjacency matrices
                 A = g.A;
             elseif nargin == 2  % return A{i, i}
