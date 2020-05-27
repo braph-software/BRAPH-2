@@ -57,18 +57,18 @@ classdef DummyMultiplex < Graph
             % See also getDirectionalityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
                   
             if isempty(varargin)
-                layernumber = 2;
+                connectivity_type = Graph.WEIGHTED;
             else
                 layernumber = varargin{1};
+
+                assert(mod(layernumber, 2) == 0, ...
+                    [BRAPH2.STR ':DummyMultiplex:' BRAPH2.WRONG_INPUT], ...
+                    ['The number of layers for DummyMultiplex must be even,' ... 
+                    ' while it is ' int2str(layernumber)])
+
+                connectivity_type = Graph.BINARY * ones(layernumber);
+                connectivity_type(1:length(connectivity_type)+1:layernumber.^2 / 2) = Graph.WEIGHTED;
             end
-            
-            assert(mod(layernumber, 2) == 0, ...
-                [BRAPH2.STR ':DummyMultiplex:' BRAPH2.WRONG_INPUT], ...
-                ['The number of layers for DummyMultiplex must be even,' ... 
-                ' while it is ' int2str(layernumber)])
-            
-            connectivity_type = Graph.BINARY * ones(layernumber);
-            connectivity_type(1:length(connectivity_type)+1:layernumber.^2 / 2) = Graph.WEIGHTED;       
         end
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE checks if the graph is directed or undirected
