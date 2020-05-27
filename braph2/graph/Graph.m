@@ -860,7 +860,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
             disp([g.TYPE_DESCRIPTION{Graph.getGraphType(g)} ])
-            disp([' size: ' int2str(g.layernumber(g)) ' layers with ' int2str(g.nodenumber(g)) ' nodes'])
+            disp([' size: ' int2str(g.layernumber()) ' layers with ' int2str(g.nodenumber()) ' nodes'])
 %             disp([' measures: ' int2str(length(g.measure_dict))]);
             disp([' settings']); %#ok<NBRAK>
             settings = g.getSettings(); %#ok<PROP>
@@ -896,9 +896,9 @@ classdef Graph < handle & matlab.mixin.Copyable
 
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
-                    n = length(g.getA(g));
+                    n = length(g.getA());
                 otherwise
-                    A = g.getA(g); %#ok<PROP>
+                    A = g.getA(); %#ok<PROP>
                     n = cellfun(@(a) length(a), A(1:length(A)+1:end)); %#ok<PROP>
             end
         end
@@ -913,7 +913,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                 case Graph.GRAPH
                     n = 1;
                 otherwise
-                    n = length(g.getA(g));
+                    n = length(g.getA());
             end
         end
         function A = getA(g, i, j)
@@ -1006,10 +1006,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also edgeattack().
                         
             if nargin < 3
-                layernumbers = 1:1:g.layernumber(g);
+                layernumbers = 1:1:g.layernumber();
             end   
             
-            A = g.getA(g);
+            A = g.getA();
             
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
@@ -1054,14 +1054,14 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also nodeattack().
                 
             if nargin < 4
-                layernumbers1 = 1:1:g.layernumber(g);
+                layernumbers1 = 1:1:g.layernumber();
             end
             
             if nargin < 5 
                 layernumbers2 = layernumbers1;
             end 
             
-            A = g.getA(g);
+            A = g.getA();
             
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
