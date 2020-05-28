@@ -1072,6 +1072,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                     end
 
                 otherwise
+                    directionality = g.getDirectionality(g.layernumber());
                     for n = 1:1:length(layernumbers1)
                         li = layernumbers1(n);
                         lj = layernumbers2(n);
@@ -1080,7 +1081,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                         Aij(sub2ind(size(Aij), nodes1, nodes2)) = 0;
                         A(li, lj) = {Aij};
                         
-                        if g.is_undirected(g) 
+                        if directionality(li, lj) == Graph.UNDIRECTED 
                             Aji = A{lj, li};
                             Aji(sub2ind(size(Aji), nodes2, nodes1)) = 0;
                             A(lj, li) = {Aji};
