@@ -13,7 +13,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getLabel                - returns the label of the BrainAtlas
     %   getNotes                - returns the notes of the BrainAtlas
     %   getBrainRegions         - returns the indexed dictionary with BrainRegions
-    %   getPlotBrainSurf        - returns the PlotBrainSurf 
+    %   getPlotBrainAtlas       - returns the PlotBrainAtlas
+    %   getBrainSurfaceFile     - returns the Brain Surface file name
     %
     % BrainAtlas methods (Static) : 
     %   load_from_xls           - loads a xls file and creates a BrainAtlas
@@ -67,9 +68,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         id  % few-letter code (unique for each brain atlas)
         label  % extended name of the brain atlas
         notes  % notes about the brain atlas
-        plot_brain_surf  % handle for brain surface plot
-        plot_brain_atlas  % handle for brain atlas plot
         br_idict  % indexed dictionary with BrainRegions
+        brain_surface_file  % file of the brain surface
     end
     methods  % Basic functions
         function atlas = BrainAtlas(id, label, notes, brain_regions)
@@ -202,6 +202,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             br_idict = atlas.br_idict;
         end
+        function brain_surface_file = getBrainSurfaceFile(atlas)
+            brain_surface_file = atlas.brain_surface_file;
+        end
         % Useful cellfun expressions:
         % cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
         % cellfun(@(br) br.getLabel(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
@@ -220,28 +223,20 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getPlotBrainAtlas().
             
-            if ~isempty(atlas.plot_brain_surf)
-                bs = atlas.plot_brain_surf;
-            else
-                bs = PlotBrainSurf(varargin{:});
-                atlas.plot_brain_surf = bs;
-            end                
+            bs = PlotBrainSurf(varargin);
+            atlas.brain_surface_file = bs.getPlotBrainSurfFile();
         end
         function ba = getPlotBrainAtlas(atlas, varargin)
             % GETPLOTBRAINATLAS returns the brain atlas surface and regions plot
             %
             % GETBRAINPLOTATLAS(ATLAS, VARARGIN) returns the handle of the
             % the brain atlas plot, which contains the surface and the
-            % brain regions nodes, if it does not exist it creates it.
+            % brain regions nodes.
             %
-            % See also getPlotBrainSurf().
-            
-             if ~isempty(atlas.plot_brain_atlas)
-                ba = atlas.plot_brain_atlas;
-            else
-                ba = PlotBrainAtlas(varargin{:});
-                atlas.plot_brain_atlas = ba;
-            end    
+            % See also getPlotBrainSurf().           
+           
+            ba = PlotBrainAtlas(atlas, varargin{:});   
+            atlas.brain_surface_file = ba.getPlotBrainSurfFile();
         end
 % bg = getPlotBrainGraph(atlas, varargin)
     end
@@ -306,7 +301,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = raw{i, 5};
                 br_z = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_label, br);
+                atlas.getBrainRegions().add(br.getID(), br);
             end
         end
         function save_to_xls(atlas, varargin)
@@ -398,7 +393,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = raw{i, 5};
                 br_z = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_label, br);
+                atlas.getBrainRegions().add(br.getID(), br);
             end
         end
         function save_to_txt(atlas, varargin)
@@ -497,7 +492,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = intern_fields.y;
                 br_z = intern_fields.z;
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_label, br);
+                atlas.getBrainRegions().add(br.getID(), br);
             end
         end
         function save_to_json(atlas, varargin)
