@@ -1,10 +1,11 @@
 classdef DummyMultiplex < Graph
     % DummyMultiplex < Graph: A Multiplex graph
     % DummyMultiplex represents a multiplex graph formed by pairs of
-    % GraphWU and GraphBD graphs.
-    % It accepts even number of layers. The first half of layers are
-    % weighted undirected graphs and the second half binary directed. If
-    % the number of layers is not given, all layers will be weighted directed. 
+    % weighted undirected and binary directed graphs.
+    % It only accepts even number of layers. The first half of layers are
+    % weighted undirected graphs and the second half binary directed. The
+    % connections between layers are binary directed. If the number of 
+    % layers is not given, all layers will be weighted directed. 
     %
     % DummyMultiplex methods:
     %   DummyMultiplex     - constructor.
@@ -21,7 +22,7 @@ classdef DummyMultiplex < Graph
     %   getCompatibleMeasureList - returns a list with compatible measures.
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
-    % See also Graph, DummyMultigraph, DummyMultilayer, DummyOrderedMultigraph, DummyOrderedMultilayer.
+    % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyOrderedMultigraph, DummyOrderedMultilayer.
     
     methods  % Constructor
         function g = DummyMultiplex(A, varargin)
@@ -37,7 +38,7 @@ classdef DummyMultiplex < Graph
             % with the 2D-cell array of adjacency matrices A.
             % It calls the superclass constructor GRAPH.
             %
-            % See also Graph, DummyMultigraph, DummyMultilayer, DummyOrderedMultigraph, DummyOrderedMultilayer.
+            % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyOrderedMultigraph, DummyOrderedMultilayer.
                      
             if isempty(A)
                 A = {
@@ -134,10 +135,12 @@ classdef DummyMultiplex < Graph
                 directionality_type = Graph.DIRECTED;
             else
                 layernumber = varargin{1};
+                
                 assert(mod(layernumber, 2) == 0, ...
                     [BRAPH2.STR ':DummyMultiplex:' BRAPH2.WRONG_INPUT], ...
                     ['The number of layers for DummyMultiplex must be even,' ... 
                     ' while it is ' tostring(layernumber)])
+                
                 directionality_type = Graph.DIRECTED * ones(layernumber);
                 directionality_type(1:layernumber+1:layernumber.^2 / 2) = Graph.UNDIRECTED;
             end
@@ -153,6 +156,12 @@ classdef DummyMultiplex < Graph
                 selfconnectivity_type = Graph.SELFCONNECTED;
             else
                 layernumber = varargin{1};
+                                
+                assert(mod(layernumber, 2) == 0, ...
+                    [BRAPH2.STR ':DummyMultiplex:' BRAPH2.WRONG_INPUT], ...
+                    ['The number of layers for DummyMultiplex must be even,' ... 
+                    ' while it is ' tostring(layernumber)])
+                
                 selfconnectivity_type = Graph.SELFCONNECTED * ones(layernumber);
             end
         end
@@ -167,6 +176,12 @@ classdef DummyMultiplex < Graph
                 negativity_type = Graph.NONNEGATIVE;
             else
                 layernumber = varargin{1};
+                                
+                assert(mod(layernumber, 2) == 0, ...
+                    [BRAPH2.STR ':DummyMultiplex:' BRAPH2.WRONG_INPUT], ...
+                    ['The number of layers for DummyMultiplex must be even,' ... 
+                    ' while it is ' tostring(layernumber)])
+                
                 negativity_type =  Graph.NONNEGATIVE * ones(layernumber);
             end       
         end
