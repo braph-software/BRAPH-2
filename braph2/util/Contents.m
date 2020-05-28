@@ -17,7 +17,7 @@
 %   <a href="matlab:help GUI                    ">GUI</a>                  (static class) graphical user interface constants and auxiliary functions
 %   <a href="matlab:help #                      ">icon_axis</a>            (PNG) icon to switch on/off the axis
 %   <a href="matlab:help #                      ">icon_br</a>              (PNG) icon to switch on/off the brain regions
-%	<a href="matlab:help #                      ">icon_brain</a>           (PNG) icon to switch on/off the brain
+%   <a href="matlab:help #                      ">icon_brain</a>           (PNG) icon to switch on/off the brain
 %   <a href="matlab:help #                      ">icon_grid</a>            (PNG) icon to switch on/off the grid
 %   <a href="matlab:help #                      ">icon_label</a>           (PNG) icon to switch on/off the labels
 %   <a href="matlab:help #                      ">icon_settings</a>        (PNG) icon to access settings
