@@ -1072,7 +1072,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                     end
 
                 otherwise
-                    directionality = g.getDirectionality(g.layernumber());
+                    directionality = g.getDirectionalityType(g.layernumber());
                     for n = 1:1:length(layernumbers1)
                         li = layernumbers1(n);
                         lj = layernumbers2(n);
