@@ -1,6 +1,12 @@
 classdef BrainAtlas < handle & matlab.mixin.Copyable
-    % BrainAtlas < handle & matlab.mixin.Copyable: A brain atlas
+    % BrainAtlas  A brain atlas
     % BrainAtlas represents a collection of brain regions.
+    % It is a subclass of handle and matlab.mixin.Copyable
+    %
+    % BrainAtlas contains and manages brain regions inside an
+    % IndexedDictionary. It has access to all IndexedDictionary methods. 
+    % BrainAtlas can be imported/exported to txt, xls and json.
+    % BrainAtlas can plot the brain regions into the specified surface.
     %
     % BrainAtlas methods:
     %   BrainAtlas              - Constructor
@@ -13,8 +19,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getLabel                - returns the label of the BrainAtlas
     %   getNotes                - returns the notes of the BrainAtlas
     %   getBrainRegions         - returns the indexed dictionary with BrainRegions
-    %   getPlotBrainAtlas       - returns the PlotBrainAtlas
     %   getBrainSurfaceFile     - returns the Brain Surface file name
+    %   getPlotBrainSurf        - returns a PlotBrainSurf 
+    %   getPlotBrainAtlas       - returns a PlotBrainAtlas
     %
     % BrainAtlas methods (Static) : 
     %   load_from_xls           - loads a xls file and creates a BrainAtlas
@@ -62,7 +69,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getBrainRegions().move_to_top       - moves an element to the top in the indexed dictionary br_idict
     %   getBrainRegions().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
     %
-    % See also BrainRegion
+    % See also BrainRegion, PlotBrainSurf, PlotBrainAtlas, IndexedDictionary.
     
     properties (GetAccess=protected, SetAccess=protected)
         id  % few-letter code (unique for each brain atlas)
@@ -219,7 +226,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % GETPLOTBRAINSURF returns the brain surface plot.
             %
             % GETPLOTBRAINSURF(ATLAS, VARARGIN) returns the handle of the
-            % brain surface plot, if it does no exist it creates it. 
+            % brain surface plot
             %
             % See also getPlotBrainAtlas().
             
