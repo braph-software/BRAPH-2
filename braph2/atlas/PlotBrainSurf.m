@@ -238,6 +238,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             brain_surface = bs.h_brain;
         end
+        function brain_surface_file = getPlotBrainSurfFile(bs)
+            brain_surface_file = bs.brain_surface_file;
+        end
     end
     methods  % editing functions
         function set_surface(bs, brain_surface_file)

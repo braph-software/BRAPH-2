@@ -215,6 +215,17 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         % cellfun(@(br) br.getPosition(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
     end
     methods  % Plot functions
+        function bs = getPlotBrainSurf(atlas, varargin)
+            % GETPLOTBRAINSURF returns the brain surface plot.
+            %
+            % GETPLOTBRAINSURF(ATLAS, VARARGIN) returns the handle of the
+            % brain surface plot, if it does no exist it creates it. 
+            %
+            % See also getPlotBrainAtlas().
+            
+            bs = PlotBrainSurf(varargin);
+            atlas.brain_surface_file = bs.getPlotBrainSurfFile();
+        end
         function ba = getPlotBrainAtlas(atlas, varargin)
             % GETPLOTBRAINATLAS returns the brain atlas surface and regions plot
             %
@@ -222,9 +233,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % the brain atlas plot, which contains the surface and the
             % brain regions nodes.
             %
-            % See also getPlotBrainSurf().            
-            atlas.brain_surface_file = get_from_varargin('BrainMesh_ICBM152.nv', 'BrainSurface', varargin{:});
-            ba = PlotBrainAtlas(atlas, varargin{:});            
+            % See also getPlotBrainSurf().           
+           
+            ba = PlotBrainAtlas(atlas, varargin{:});   
+%             atlas.brain_surface_file = bs.getPlotBrainSurfFile();
         end
 % bg = getPlotBrainGraph(atlas, varargin)
     end
