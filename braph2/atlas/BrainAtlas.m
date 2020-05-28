@@ -236,7 +236,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also getPlotBrainSurf().           
            
             ba = PlotBrainAtlas(atlas, varargin{:});   
-%             atlas.brain_surface_file = bs.getPlotBrainSurfFile();
+            atlas.brain_surface_file = ba.getPlotBrainSurfFile();
         end
 % bg = getPlotBrainGraph(atlas, varargin)
     end
@@ -301,7 +301,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = raw{i, 5};
                 br_z = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_id, br);
+                atlas.getBrainRegions().add(br.getID(), br);
             end
         end
         function save_to_xls(atlas, varargin)
@@ -393,7 +393,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = raw{i, 5};
                 br_z = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_id, br);
+                atlas.getBrainRegions().add(br.getID(), br);
             end
         end
         function save_to_txt(atlas, varargin)
