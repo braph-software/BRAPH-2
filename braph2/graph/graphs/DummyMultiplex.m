@@ -146,7 +146,7 @@ classdef DummyMultiplex < Graph
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns 
             % a matrix with DIRECTED for the off-diagonal elements and the second 
             % half of the diagonal; and UNDIRECTED for the first half.
-            % For example, for the default matrix returns:
+            % For example, for the default matrix it returns:
             % DIRECTIONALITY_TYPE = UNDIRECTED  DIRECTED      DIRECTED  DIRECTED
             %                       DIRECTED    UNDIRECTED    DIRECTED  DIRECTED
             %                       DIRECTED    DIRECTED      DIRECTED  DIRECTED
@@ -178,12 +178,12 @@ classdef DummyMultiplex < Graph
             %
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns 
             % a matrix with Graph.SELFCONNECTED for all the elements.
-            % For example, for the default matrix returns:
+            % For example, for the default matrix it returns:
             % SELFCONNECTIVITY_TYPE = SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
             %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
             %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
             %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
-            % where DIRECTED = Graph.DIRECTED.
+            % where SELFCONNECTED = Graph.SELFCONNECTED.
             % If LAYERNUMBER is odd, it throws an error.
             %
             % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
@@ -208,7 +208,7 @@ classdef DummyMultiplex < Graph
             %
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(LAYERNUMBER) returns 
             % a matrix with Graph.NONNEGATIVE for all the elements.
-            % For example, for the default matrix returns:
+            % For example, for the default matrix it returns:
             % NEGATIVITY_TYPE = NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
