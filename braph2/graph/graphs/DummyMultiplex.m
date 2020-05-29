@@ -27,17 +27,24 @@ classdef DummyMultiplex < Graph
     
     methods  % Constructor
         function g = DummyMultiplex(A, varargin)
-            % DUMMYMULTIPLEX(A) creates a DUMMYMULTIPLEX class with supra-adjacency matrix A.
-            % This function is the constructor, it initializes the class
-            % with the 2D-cell array of adjacency matrices A.
-            % It calls the superclass constructor GRAPH.
+            % DUMMYMULTIPLEX() creates a DUMMYMULTIPLEX class with a
+            % default supra-adjacency matrix A:
+            % A =   wu(4)   diag(4) diag(4) diag(4)
+            %       diag(4) wu(4)   diag(4) diag(4) 
+            %       diag(4) diag(4) bd(4)   diag(4) 
+            %       diag(4) diag(4) diag(4) bd(4)
+            % where all weights are initialized randomly and
+            %       wu(4) = weighted undirected 4 x 4 with weights in [0, 1]
+            %       bd(4) = binary directed 4 x 4 with weights in 0 or 1
+            %       diag(4) = diagonal 4 x 4 with weights in [0, 1]
             %
-            % DUMMYMULTIPLEX(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-            % a DUMMYMULTIPLEX class with supra-adjacency matrix A and it passes the
-            % properties and values to the superclass as VARARGIN.
-            % This function is the constructor, it initializes the class 
-            % with the 2D-cell array of adjacency matrices A.
-            % It calls the superclass constructor GRAPH.
+            % DUMMYMULTIPLEX(A) creates a DUMMYMULTIPLEX class with supra-adjacency matrix A.
+            % It throws an error, if the number oflayers of A is not even.
+            % It call the constructor of Graph.
+            %
+            % DUMMYMULTIPLEX(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % inizialized DUMMYMULIPLEX with the properties and values
+            % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... 
             %
             % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyOrderedMultigraph, DummyOrderedMultilayer.
                      
@@ -64,7 +71,7 @@ classdef DummyMultiplex < Graph
             %
             % GRAPH_CLASS = GETCLASS() returns the class, 'DummyMultiplex'.
             %
-            % See also getName().
+            % See also getName(), getDescription().
             
             graph_class = 'DummyMultiplex';
         end
@@ -73,7 +80,7 @@ classdef DummyMultiplex < Graph
             %
             % NAME = GETCLASS() returns the name, 'Dummy Multiplex'.
             %
-            % See also getClass().
+            % See also getClass(), getDescription().
             
             name = 'Dummy Multiplex';
         end
@@ -82,7 +89,7 @@ classdef DummyMultiplex < Graph
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of DUMMYMULTIPLEX.
             %
-            % See also getName().
+            % See also getClass(), getName().
             
             description = [ ...
                 'Dummy multiplex used mainly' ...
@@ -101,14 +108,20 @@ classdef DummyMultiplex < Graph
         function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns a single
-            % number with WEIGHTED for DUMMYMULTIPLEX.
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.WEIGHTED.
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns a 
             % matrix with BINARY for the off-diagonal elements and the first 
-            % half of the diagonal; and WEIGHTED for the second half of the diagonal for DUMMYMULTIPLEX.
+            % half of the diagonal; and WEIGHTED for the second half.
+            % For example, for the default matrix it returns:
+            % CONNECTIVITY_TYPE = BINARY BINARY BINARY   BINARY
+            %                     BINARY BINARY BINARY   BINARY
+            %                     BINARY BINARY WEIGHTED BINARY
+            %                     BINARY BINARY BINARY   WEIGHTED
+            % where BINARY = Graph.BINARY and WEIGHTED = Graph.WEIGHTED.
+            % If LAYERNUMBER is odd, it throws an error.
             %           
-            % See also getDirectionalityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
                   
             if isempty(varargin)
                 connectivity_type = Graph.WEIGHTED;
