@@ -7,10 +7,12 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     % BrainRegion contains and manages the id, label, x coordinate, y 
     % coordinate, z coordinate and the position array of a brain region, 
     %
-    % BrainRegion methods:
+    % BrainRegion basic functions:    
     %   BrainRegion  - Constructor
     %   tostring     - returns a string representing the brain region
     %   disp         - displays the brain region
+    %
+    % BrainRegion set functions:
     %   setID        - sets the id
     %   setLabel     - sets the label
     %   setNotes     - sets the notes
@@ -18,6 +20,8 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     %   setY         - sets the y coordinate
     %   setZ         - sets the z coordinate
     %   setPosition  - sets an array with the x, y, z coordinates
+    %
+    % BrainRegion get functions:    
     %   getID        - returns the id
     %   getLabel     - returns the label
     %   getNotes     - returns the notes
@@ -26,7 +30,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     %   getZ         - returns the z coordinate
     %   getPosition  - returns an array with the x, y, z coordinates
     %
-    % See also BrainAtlas, handle, matlab.mixin.Copyable
+    % See also BrainAtlas, handle, matlab.mixin.Copyable.
     
     properties (GetAccess=protected, SetAccess=protected)
         id  % few-letter code (unique for each brain region)
@@ -39,10 +43,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     methods  % Basic functions
         function br = BrainRegion(id, label, notes, x, y, z)
             % BRAINREGION(ID, LABEL, NOTES, X, Y, Z) creates a brain region with
-            % the corresponding arguments: id, label, notes, x, y, z. 
-            % Returns the adjacency matrix at the position (I, I) of the 
-            % cell array of adjacency matrices A associated to graph 
-            % G (multiple graph).
+            % the corresponding arguments: ID, LABEL, NOTES, X, Y, Z. 
             %
             % See also BrainAtlas.
 
@@ -167,8 +168,8 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
         function setPosition(br, position)
             % SETPOSITION sets an array containing x, y, z coordinates
             %
-            % SETPOSITION(BR, POSITION) sets an array containing the x, y,
-            % z coordinates of the brain region. X, Y, Z must be numbers.
+            % SETPOSITION(BR, POSITION) sets an array [X Y Z] where X, Y, Z
+            % are coordinates (numbers) of the brain region. 
             %
             % See also setID(), setLabel(), setX(), setY(), setZ(), getPosition().
             
