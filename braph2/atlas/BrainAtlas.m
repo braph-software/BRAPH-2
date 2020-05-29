@@ -1,21 +1,35 @@
 classdef BrainAtlas < handle & matlab.mixin.Copyable
-    % BrainAtlas < handle & matlab.mixin.Copyable: A brain atlas
+    % BrainAtlas  A brain atlas
     % BrainAtlas represents a collection of brain regions.
+    % It is a subclass of handle and matlab.mixin.Copyable
     %
-    % BrainAtlas methods:
+    % BrainAtlas contains and manages brain regions inside an
+    % IndexedDictionary. It has access to all IndexedDictionary methods. 
+    % BrainAtlas can be imported/exported to txt, xls and json.
+    % BrainAtlas can plot the brain regions into the specified surface.
+    %
+    % BrainAtlas basic methods:
     %   BrainAtlas              - Constructor
     %   tostring                - returns a string representing the BrainAtlas
     %   disp                    - displays the BrainAtlas
+    %
+    % BrainAtlas set methods:
     %   setID                   - sets the id of the BrainAtlas
     %   setLabel                - sets the label of the BrainAtlas
     %   setNotes                - sets the notes of the BrainAtlas
+    %
+    % BrainAtlas get methods:
     %   getID                   - returns the id of the BrainAtlas
     %   getLabel                - returns the label of the BrainAtlas
     %   getNotes                - returns the notes of the BrainAtlas
     %   getBrainRegions         - returns the indexed dictionary with BrainRegions
-    %   getPlotBrainSurf        - returns the PlotBrainSurf 
     %
-    % BrainAtlas methods (Static) : 
+    % BrainAtlas plot methods:
+    %   getBrainSurfFile        - returns the brain surface file name
+    %   getPlotBrainSurf        - returns a PlotBrainSurf 
+    %   getPlotBrainAtlas       - returns a PlotBrainAtlas
+    %
+    % BrainAtlas save and load methods (Static) : 
     %   load_from_xls           - loads a xls file and creates a BrainAtlas
     %   save_to_xls             - saves a BrainAtlas to a xls file
     %   load_from_txt           - loads a txt file and creates a BrainAtlas
@@ -25,51 +39,50 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %
     % Additionally, it is possible to use the following IndexDictionary
     % methods through getBrainRegions():
-    %   getBrainRegions()                   - returns the indexed dictionary br_idict with BrainRegions.
-    %   getBrainRegions().tostring          - returns a string representing the indexed dictionary br_idict.
-    %   getBrainRegions().disp              - displays the indexed dictionary br_idict.
-    %   getBrainRegions().length            - returns the length of the indexed dictionary br_idict.
-    %   getBrainRegions().getValueClass     - returns the value_class of the indexed dictionary br_idict.
-    %   getBrainRegions().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
-    %   getBrainRegions().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index.
-    %   getBrainRegions().containsKey       - bool, checks if the indexed dictionary br_idict contains the key.
-    %   getBrainRegions().containsValue     - bool, checks if the indexed dictionary br_idict contains the value.
-    %   getBrainRegions().getIndex          - returns the index of the key or value.
-    %   getBrainRegions().getIndexFromValue - returns the index of the value.
-    %   getBrainRegions().getIndexFromKey   - returns the index of the key.
-    %   getBrainRegions().getIndexFromValueAll - returns all the indexes of the same value.
-    %   getBrainRegions().getValue          - returns the value of the index or the key.
-    %   getBrainRegions().getValueFromIndex - returns the value of the index.
-    %   getBrainRegions().getValueFromKey   - returns the value of the key.
-    %   getBrainRegions().getValues         - returns all the values.
-    %   getBrainRegions().getKey            - returns the key of the index or value.
-    %   getBrainRegions().getKeyFromIndex   - returns the key of the index.
-    %   getBrainRegions().getKeyFromValue   - returns the key of the value.
-    %   getBrainRegions().getKeyFromValueAll - returns all the keys of the same value.
-    %   getBrainRegions().getKeys           - returns all the keys.
-    %   getBrainRegions().add               - adds a key and value to the indexed dictionary br_idict.
-    %   getBrainRegions().remove            - removes the key and value from the indexed dictionary br_idict.
-    %   getBrainRegions().replace           - replaces a key and value in the indexed dictionary br_idict.
-    %   getBrainRegions().replaceKey        - replaces a key in the indexed dictionary br_idict.
-    %   getBrainRegions().replaceValue      - replaces a value in the indexed dictionary br_idict.
-    %   getBrainRegions().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict.
-    %   getBrainRegions().invert            - inverts position of elements in the indexed dictionary br_idict.
-    %   getBrainRegions().move_to           - move an element to a position in the indexed dictionary br_idict.
-    %   getBrainRegions().remove_all        - removes all selected elements from the indexed dictionary br_idict.
+    %   getBrainRegions()                   - returns the indexed dictionary br_idict with BrainRegions
+    %   getBrainRegions().tostring          - returns a string representing the indexed dictionary br_idict
+    %   getBrainRegions().disp              - displays the indexed dictionary br_idict
+    %   getBrainRegions().length            - returns the length of the indexed dictionary br_idict
+    %   getBrainRegions().getValueClass     - returns the value_class of the indexed dictionary br_idict
+    %   getBrainRegions().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or objec
+    %   getBrainRegions().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index
+    %   getBrainRegions().containsKey       - bool, checks if the indexed dictionary br_idict contains the key
+    %   getBrainRegions().containsValue     - bool, checks if the indexed dictionary br_idict contains the value
+    %   getBrainRegions().getIndex          - returns the index of the key or value
+    %   getBrainRegions().getIndexFromValue - returns the index of the value
+    %   getBrainRegions().getIndexFromKey   - returns the index of the key
+    %   getBrainRegions().getIndexFromValueAll - returns all the indexes of the same value
+    %   getBrainRegions().getValue          - returns the value of the index or the key
+    %   getBrainRegions().getValueFromIndex - returns the value of the index
+    %   getBrainRegions().getValueFromKey   - returns the value of the key
+    %   getBrainRegions().getValues         - returns all the values
+    %   getBrainRegions().getKey            - returns the key of the index or value
+    %   getBrainRegions().getKeyFromIndex   - returns the key of the index
+    %   getBrainRegions().getKeyFromValue   - returns the key of the value
+    %   getBrainRegions().getKeyFromValueAll - returns all the keys of the same value
+    %   getBrainRegions().getKeys           - returns all the keys
+    %   getBrainRegions().add               - adds a key and value to the indexed dictionary br_idict
+    %   getBrainRegions().remove            - removes the key and value from the indexed dictionary br_idict
+    %   getBrainRegions().replace           - replaces a key and value in the indexed dictionary br_idict
+    %   getBrainRegions().replaceKey        - replaces a key in the indexed dictionary br_idict
+    %   getBrainRegions().replaceValue      - replaces a value in the indexed dictionary br_idict
+    %   getBrainRegions().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict
+    %   getBrainRegions().invert            - inverts position of elements in the indexed dictionary br_idict
+    %   getBrainRegions().move_to           - move an element to a position in the indexed dictionary br_idict
+    %   getBrainRegions().remove_all        - removes all selected elements from the indexed dictionary br_idict
     %   getBrainRegions().move_up           - moves an element up in the indexed dictionary br_idict
     %   getBrainRegions().move_down         - moves an element down in the indexed dictionary br_idict
     %   getBrainRegions().move_to_top       - moves an element to the top in the indexed dictionary br_idict
     %   getBrainRegions().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
     %
-    % See also BrainRegion
+    % See also BrainRegion, PlotBrainSurf, PlotBrainAtlas, IndexedDictionary.
     
     properties (GetAccess=protected, SetAccess=protected)
         id  % few-letter code (unique for each brain atlas)
         label  % extended name of the brain atlas
         notes  % notes about the brain atlas
-        plot_brain_surf  % handle for brain surface plot
-        plot_brain_atlas  % handle for brain atlas plot
         br_idict  % indexed dictionary with BrainRegions
+        brain_surface_file  % file of the brain surface
     end
     methods  % Basic functions
         function atlas = BrainAtlas(id, label, notes, brain_regions)
@@ -202,6 +215,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             br_idict = atlas.br_idict;
         end
+        function brain_surface_file = getBrainSurfFile(atlas)
+            brain_surface_file = atlas.brain_surface_file;
+        end
         % Useful cellfun expressions:
         % cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
         % cellfun(@(br) br.getLabel(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
@@ -216,32 +232,24 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % GETPLOTBRAINSURF returns the brain surface plot.
             %
             % GETPLOTBRAINSURF(ATLAS, VARARGIN) returns the handle of the
-            % brain surface plot, if it does no exist it creates it. 
+            % brain surface plot
             %
             % See also getPlotBrainAtlas().
             
-            if ~isempty(atlas.plot_brain_surf)
-                bs = atlas.plot_brain_surf;
-            else
-                bs = PlotBrainSurf(varargin{:});
-                atlas.plot_brain_surf = bs;
-            end                
+            bs = PlotBrainSurf(varargin);
+            atlas.brain_surface_file = bs.getPlotBrainSurfFile();
         end
         function ba = getPlotBrainAtlas(atlas, varargin)
             % GETPLOTBRAINATLAS returns the brain atlas surface and regions plot
             %
             % GETBRAINPLOTATLAS(ATLAS, VARARGIN) returns the handle of the
             % the brain atlas plot, which contains the surface and the
-            % brain regions nodes, if it does not exist it creates it.
+            % brain regions nodes.
             %
-            % See also getPlotBrainSurf().
-            
-             if ~isempty(atlas.plot_brain_atlas)
-                ba = atlas.plot_brain_atlas;
-            else
-                ba = PlotBrainAtlas(varargin{:});
-                atlas.plot_brain_atlas = ba;
-            end    
+            % See also getPlotBrainSurf().           
+           
+            ba = PlotBrainAtlas(atlas, varargin{:});   
+            atlas.brain_surface_file = ba.getPlotBrainSurfFile();
         end
 % bg = getPlotBrainGraph(atlas, varargin)
     end
@@ -306,7 +314,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = raw{i, 5};
                 br_z = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_label, br);
+                atlas.getBrainRegions().add(br.getID(), br);
             end
         end
         function save_to_xls(atlas, varargin)
@@ -398,7 +406,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = raw{i, 5};
                 br_z = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_label, br);
+                atlas.getBrainRegions().add(br.getID(), br);
             end
         end
         function save_to_txt(atlas, varargin)
@@ -497,7 +505,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 br_y = intern_fields.y;
                 br_z = intern_fields.z;
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
-                atlas.getBrainRegions().add(br_label, br);
+                atlas.getBrainRegions().add(br.getID(), br);
             end
         end
         function save_to_json(atlas, varargin)

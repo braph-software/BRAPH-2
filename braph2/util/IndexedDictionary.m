@@ -8,10 +8,12 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     % {KEY, VALUE}, where KEY is a unique alphanumeric key (a string) and
     % VALUE is an object of a class defined in the constructor.
     %
-    % IndexedDictionary methods:
+    % IndexedDictionary basic methods:
     %   IndexedDictionary - constructor
     %   tostring          - returns a string representing the dictionary
     %   disp              - displays the dictionary
+    %
+    % IndexedDictionary inspection methods:
     %   getValueClass     - returns the value class
     %   length            - returns the length of the dictionary
     %   contains          - bool, checks if the dictionary contains the index, key or value
@@ -26,11 +28,13 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     %   getKey            - returns the key of the index or value
     %   getKeyFromIndex   - returns the key of the index
     %   getKeyFromValue   - returns the key of the value
-    %   getKeyFromValueAll - returns all the keys of the same value.
+    %   getKeyFromValueAll - returns all the keys of the same value
     %   getValues         - returns all values
     %   getValue          - returns the value of the index or the key
     %   getValueFromIndex - returns the value of the index
     %   getValueFromKey   - returns the value of the key
+    %
+    % IndexedDictionary editing methods:
     %   add               - adds a key and value to the dictionary
     %   remove            - removes the key and value from the dictionary
     %   replace           - replaces a key and value in the dictionary

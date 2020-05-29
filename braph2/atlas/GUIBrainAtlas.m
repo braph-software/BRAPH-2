@@ -120,11 +120,7 @@ selected = [];
         % load file
         if filterindex
             filename = fullfile(path,file);
-            % dont create any new figures
-            set(0, 'DefaultFigureCreateFcn', @(s,e)delete(s))
             tmp = load(filename, '-mat', 'atlas', 'selected', 'BUILD');
-            % allow figures to be created
-            set(0, 'DefaultFigureCreateFcn', '')
             if isa(tmp.atlas, 'BrainAtlas')
                 atlas = tmp.atlas;
                 selected = tmp.selected;
