@@ -19,7 +19,7 @@ A = {
     };
 
 %% Test 1: Constructor
-g = DummyMultiplex([]);
+g = DummyMultiplex([]); %#ok<NASGU>
 
 %% Test 2: Node attack
 nodes = 2;
