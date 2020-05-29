@@ -1,8 +1,8 @@
 classdef DummyGraph < Graph
-    % DummyGraph < Graph: A single layer graph
-    % DummyGraph represents a single layer graph.
+    % DummyGraph < Graph: A binary undirected graph
+    % DummyGraph represents a binary undirected graph.
     %
-    % DummyGraph is consists of a single layer graph.
+    % DummyGraph is consists of a binary undirected graph.
     %  
     % DummyGraph methods:
     %   DummyGraph     - constructor.
