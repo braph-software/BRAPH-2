@@ -62,7 +62,7 @@ classdef DummyGraph < Graph
         function name = getName()
             % GETNAME returns the name of the graph.
             %
-            % NAME = GETCLASS() returns the name, 'Binary Directed Graph'.
+            % NAME = GETCLASS() returns the name, 'Dummy Graph'.
             %
             % See also getClass(), getDescription().
             
