@@ -1,8 +1,8 @@
 % test DummyMultigraph
 A_WD = [
-    1 2 1;
-    0 1 3;
-    1 0 1;
+    1 0.2 1;
+    0 1   0.3;
+    1 0   1;
     ];
 
 A = {
@@ -29,7 +29,7 @@ g = DummyMultigraph(A);
 A_attack = {
     A_WD_attack     {}              {}
     {}              A_WD_attack     {}
-    {}              {}              A_WU_attack
+    {}              {}              A_WD_attack
     };
 
 ng = g.nodeattack(g, nodes);
@@ -61,7 +61,7 @@ nodes2 = [2, 1];
 
 A_WD_attack = [
     0 0 1;
-    0 1 3;
+    0 1 0.3;
     1 0 1;
     ]; 
 
