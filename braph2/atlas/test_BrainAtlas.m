@@ -212,10 +212,13 @@ delete(file)
 %% Test 8: Plot testing
 brain_surf = 'BrainMesh_Cerebellum.nv';
 atlas = BrainAtlas('', '', '', {});
+ba = atlas.getPlotBrainAtlas();
 bs = atlas.getPlotBrainSurf('BrainSurfaceType',  brain_surf);
+
+assert(~isempty(ba), ...
+	'BRAPH:BrainAtlas:Plot', ...
+    'Problems ploting brain atlas surface.')
 
 assert(~isempty(bs), ...
 	'BRAPH:BrainAtlas:Plot', ...
     'Problems ploting brain atlas surface.')
-
-
