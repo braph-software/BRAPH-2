@@ -7,12 +7,12 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     % BrainRegion contains and manages the id, label, x coordinate, y 
     % coordinate, z coordinate and the position array of a brain region, 
     %
-    % BrainRegion basic functions:    
+    % BrainRegion basic methods:    
     %   BrainRegion  - Constructor
     %   tostring     - returns a string representing the brain region
     %   disp         - displays the brain region
     %
-    % BrainRegion set functions:
+    % BrainRegion set methods:
     %   setID        - sets the id
     %   setLabel     - sets the label
     %   setNotes     - sets the notes
@@ -21,7 +21,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     %   setZ         - sets the z coordinate
     %   setPosition  - sets an array with the x, y, z coordinates
     %
-    % BrainRegion get functions:    
+    % BrainRegion get methods:    
     %   getID        - returns the id
     %   getLabel     - returns the label
     %   getNotes     - returns the notes
