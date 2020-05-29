@@ -28,7 +28,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     %   getKey            - returns the key of the index or value
     %   getKeyFromIndex   - returns the key of the index
     %   getKeyFromValue   - returns the key of the value
-    %   getKeyFromValueAll   - returns all the keys of the same value
+    %   getKeyFromValueAll - returns all the keys of the same value
     %   getValues         - returns all values
     %   getValue          - returns the value of the index or the key
     %   getValueFromIndex - returns the value of the index
