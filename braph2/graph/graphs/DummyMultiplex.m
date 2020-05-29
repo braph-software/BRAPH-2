@@ -39,11 +39,11 @@ classdef DummyMultiplex < Graph
             %       diag(4) = diagonal 4 x 4 with weights in [0, 1]
             %
             % DUMMYMULTIPLEX(A) creates a DUMMYMULTIPLEX class with supra-adjacency matrix A.
-            % It throws an error, if the number oflayers of A is not even.
-            % It call the constructor of Graph.
+            % It throws an error if the number of layers of A is not even.
+            % It calls the constructor of Graph.
             %
             % DUMMYMULTIPLEX(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % inizialized DUMMYMULIPLEX with the properties and values
+            % inizializes DUMMYMULIPLEX with the properties and values
             % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... 
             %
             % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyOrderedMultigraph, DummyOrderedMultilayer.
@@ -111,13 +111,13 @@ classdef DummyMultiplex < Graph
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.WEIGHTED.
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns a 
-            % matrix with BINARY for the off-diagonal elements and the first 
-            % half of the diagonal; and WEIGHTED for the second half.
+            % matrix with BINARY for the off-diagonal elements and the second 
+            % half of the diagonal; and WEIGHTED for the first half.
             % For example, for the default matrix it returns:
-            % CONNECTIVITY_TYPE = BINARY BINARY BINARY   BINARY
-            %                     BINARY BINARY BINARY   BINARY
-            %                     BINARY BINARY WEIGHTED BINARY
-            %                     BINARY BINARY BINARY   WEIGHTED
+            % CONNECTIVITY_TYPE = WEIGHTED  BINARY      BINARY  BINARY
+            %                     BINARY    WEIGHTED    BINARY  BINARY
+            %                     BINARY    BINARY      BINARY  BINARY
+            %                     BINARY    BINARY      BINARY  BINARY
             % where BINARY = Graph.BINARY and WEIGHTED = Graph.WEIGHTED.
             % If LAYERNUMBER is odd, it throws an error.
             %           
@@ -140,13 +140,19 @@ classdef DummyMultiplex < Graph
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
             %
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns a
-            % single number with DIRECTED for DUMMYMULTIPLEX.
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns
+            % Graph.DIRECTED.
             %
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns  
-            % a matrix with UNDIRECTED for the off-diagonal elements and
-            % the first half of the diagonal; and DIRECTED for the second 
-            % half of the diagonal for DUMMYMULTIPLEX.
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns 
+            % a matrix with DIRECTED for the off-diagonal elements and the second 
+            % half of the diagonal; and UNDIRECTED for the first half.
+            % For example, for the default matrix returns:
+            % DIRECTIONALITY_TYPE = UNDIRECTED  DIRECTED      DIRECTED  DIRECTED
+            %                       DIRECTED    UNDIRECTED    DIRECTED  DIRECTED
+            %                       DIRECTED    DIRECTED      DIRECTED  DIRECTED
+            %                       DIRECTED    DIRECTED      DIRECTED  DIRECTED
+            % where DIRECTED = Graph.DIRECTED and UNDIRECTED = Graph.UNDIRECTED.
+            % If LAYERNUMBER is odd, it throws an error.
             %
             % See also getConnectivityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
                        
@@ -167,11 +173,17 @@ classdef DummyMultiplex < Graph
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
             %
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns a
-            % single number with SELFCONNECTED for DUMMYMULTIPLEX.
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns
+            % Graph.SELFCONNECTED.
             %
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER)
-            % returns a matrix with SELFCONNECTED for DUMMYMULTIPLEX.
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns 
+            % a matrix with Graph.SELFCONNECTED for all the elements.
+            % For example, for the default matrix returns:
+            % SELFCONNECTIVITY_TYPE = SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
+            %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
+            %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
+            %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
+            % If LAYERNUMBER is odd, it throws an error.
             %
             % See also getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
                       
@@ -191,11 +203,16 @@ classdef DummyMultiplex < Graph
         function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
-            % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE() returns a single 
-            % number with NONNEGATIVE for DUMMYMULTIPLEX.
+            % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
-            % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE(LAYERNUMBER) returns a
-            % matrix with NONNEGATIVE for DUMMYMULTIPLEX.
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(LAYERNUMBER) returns 
+            % a matrix with Graph.NONNEGATIVE for all the elements.
+            % For example, for the default matrix returns:
+            % NEGATIVITY_TYPE = NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
+            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
+            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
+            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
+            % If LAYERNUMBER is odd, it throws an error.
             %
             % See also getConnectivityType(), getDirectionalityType(), getGraphType() and getSelfConnectivityType().
             
