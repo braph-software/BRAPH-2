@@ -72,7 +72,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         brain_surface_file  % file of the brain surface
     end
     methods  % Basic functions
-        function atlas = BrainAtlas(id, label, notes, brain_regions)
+        function atlas = BrainAtlas(id, label, notes, brain_surf_file, brain_regions)
             % BrainAtlas(NAME, BrainRegions) creates a BrainAtlas with
             % given name NAME and initializes the dictionary with
             % BRAIN_REGIONS (cell array of BrainRegions).
@@ -86,6 +86,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             atlas.setID(id)
             atlas.setLabel(label)
             atlas.setNotes(notes)
+            atlas.setBrainSurfFile(brain_surf_file)
             
             atlas.br_idict = IndexedDictionary('BrainRegion');
             for i = 1:1:length(brain_regions)
