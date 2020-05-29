@@ -100,10 +100,12 @@ classdef DummyMultiplex < Graph
         function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns WEIGHTED for DUMMYMULTIPLEX.
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns a single
+            % number with WEIGHTED for DUMMYMULTIPLEX.
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns BINARY 
-            % for the first half of graphs and WEIGHTED for the second half for DUMMYMULTIPLEX.
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns a 
+            % matrix with BINARY for the off-diagonal elements and the first 
+            % half of the diagonal; and WEIGHTED for the second half of the diagonal for DUMMYMULTIPLEX.
             %           
             % See also getDirectionalityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
                   
@@ -124,10 +126,13 @@ classdef DummyMultiplex < Graph
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
             %
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns DIRECTED for DUMMYMULTIPLEX.
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns a
+            % single number with DIRECTED for DUMMYMULTIPLEX.
             %
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns UNDIRECTED 
-            % for the first half of graphs and DIRECTED for the second half for DUMMYMULTIPLEX.
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns  
+            % a matrix with UNDIRECTED for the off-diagonal elements and
+            % the first half of the diagonal; and DIRECTED for the second 
+            % half of the diagonal for DUMMYMULTIPLEX.
             %
             % See also getConnectivityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
                        
@@ -148,7 +153,11 @@ classdef DummyMultiplex < Graph
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
             %
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns SELFCONNECTED for DUMMYMULTIPLEX.
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns a
+            % single number with SELFCONNECTED for DUMMYMULTIPLEX.
+            %
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER)
+            % returns a matrix with SELFCONNECTED for DUMMYMULTIPLEX.
             %
             % See also getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
                       
@@ -168,7 +177,11 @@ classdef DummyMultiplex < Graph
         function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
-            % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE() returns NONNEGATIVE for DUMMYMULTIPLEX.
+            % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE() returns a single 
+            % number with NONNEGATIVE for DUMMYMULTIPLEX.
+            %
+            % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE(LAYERNUMBER) returns a
+            % matrix with NONNEGATIVE for DUMMYMULTIPLEX.
             %
             % See also getConnectivityType(), getDirectionalityType(), getGraphType() and getSelfConnectivityType().
             
