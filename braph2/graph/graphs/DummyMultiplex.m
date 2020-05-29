@@ -1,24 +1,25 @@
 classdef DummyMultiplex < Graph
     % DummyMultiplex < Graph: A Multiplex graph
-    % DummyMultiplex represents a multiplex graph formed by pairs of
-    % weighted undirected and binary directed graphs.
-    % It only accepts even number of layers. The first half of layers are
-    % weighted undirected graphs and the second half binary directed. The
-    % connections between layers are binary directed. If the number of 
-    % layers is not given, all layers will be weighted directed. 
+    % DummyMultiplex represents a multiplex graph.
+    %
+    % DummyMultiplex is constituted by pairs of weighted undirected and
+    % binary directed graphs. Thus, it only accepts even number of layers:
+    % The first half of layers are weighted undirected graphs; 
+    % and the second half binary directed. 
+    % The connections between layers are binary directed.
     %
     % DummyMultiplex methods:
     %   DummyMultiplex     - constructor.
     %
     % DummyMultiplex methods (static):
-    %   getClass	- return the class type DummyMultiplex.
-    %   getName     - return the complete name of DummyMultiplex.
-    %   getDescription  - return the description of DummyMultiplex.
-    %   getGraphType    - returns the graph type.
+    %   getClass                - return the class type DummyMultiplex.
+    %   getName                 - return the complete name of DummyMultiplex.
+    %   getDescription          - return the description of DummyMultiplex.
+    %   getGraphType            - returns the graph type.
     %   getConnectivityType     - returns if the graph is binary or weighted.
     %   getDirectionalityType   - returns if graph is directed or undirected.
-    %   getSelfConnectivityType     - returns if graph is self-connected or not self-connected.
-    %   getNegativityType   - returns if graph is negative or non-negative
+    %   getSelfConnectivityType - returns if graph is self-connected or not self-connected.
+    %   getNegativityType       - returns if graph is negative or non-negative
     %   getCompatibleMeasureList - returns a list with compatible measures.
     %   getCompatibleMeasureNumber - returns the number of compatible measures.
     %
@@ -84,7 +85,7 @@ classdef DummyMultiplex < Graph
             % See also getName().
             
             description = [ ...
-                'Dummy Multiplex used mainly' ...
+                'Dummy multiplex used mainly' ...
                 'for unit testing and debugging. ' ...
                 ];
         end
