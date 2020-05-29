@@ -2,7 +2,7 @@ classdef DummyGraph < Graph
     % DummyGraph < Graph: A binary undirected graph
     % DummyGraph represents a binary undirected graph.
     %
-    % DummyGraph is consists of a binary undirected graph.
+    % DummyGraph consists of a binary undirected graph.
     %  
     % DummyGraph methods:
     %   DummyGraph     - constructor.
@@ -53,7 +53,7 @@ classdef DummyGraph < Graph
         function graph_class = getClass()
             % GETCLASS returns the class of the graph.
             %
-            % GRAPH_CLASS = GETCLASS() returns the class, 'GraphBD'.
+            % GRAPH_CLASS = GETCLASS() returns the class, 'DummyGraph'.
             %
             % See also getName(), getDescription().
             
@@ -71,7 +71,7 @@ classdef DummyGraph < Graph
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
             %
-            % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHBD.
+            % DESCRIPTION = GETDESCRIPTION() returns the description of DUMMYGRAPH.
             %
             % See also getClass(), getName().
             
