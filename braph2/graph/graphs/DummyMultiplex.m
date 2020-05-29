@@ -23,7 +23,7 @@ classdef DummyMultiplex < Graph
     %   getCompatibleMeasureList - returns a list with compatible measures
     %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
-    % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyOrderedMultigraph, DummyOrderedMultilayer.
+    % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyOrderedMultilayer, DummyOrderedMultiplex.
     
     methods  % Constructor
         function g = DummyMultiplex(A, varargin)
