@@ -11,17 +11,17 @@ classdef DummyMultiplex < Graph
     % DummyMultiplex methods:
     %   DummyMultiplex     - constructor.
     %
-    % DummyMultiplex methods (static):
-    %   getClass                - return the class type DummyMultiplex.
-    %   getName                 - return the complete name of DummyMultiplex.
-    %   getDescription          - return the description of DummyMultiplex.
-    %   getGraphType            - returns the graph type.
-    %   getConnectivityType     - returns if the graph is binary or weighted.
-    %   getDirectionalityType   - returns if graph is directed or undirected.
-    %   getSelfConnectivityType - returns if graph is self-connected or not self-connected.
+    % DummyMultiplex descriptive methods (static):
+    %   getClass                - return the class name
+    %   getName                 - return the complete name
+    %   getDescription          - return the description
+    %   getGraphType            - returns the graph type
+    %   getConnectivityType     - returns if the graph is binary or weighted
+    %   getDirectionalityType   - returns if graph is directed or undirected
+    %   getSelfConnectivityType - returns if graph is self-connected or not self-connected
     %   getNegativityType       - returns if graph is negative or non-negative
-    %   getCompatibleMeasureList - returns a list with compatible measures.
-    %   getCompatibleMeasureNumber - returns the number of compatible measures.
+    %   getCompatibleMeasureList - returns a list with compatible measures
+    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
     % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyOrderedMultigraph, DummyOrderedMultilayer.
     
@@ -29,14 +29,14 @@ classdef DummyMultiplex < Graph
         function g = DummyMultiplex(A, varargin)
             % DUMMYMULTIPLEX() creates a DUMMYMULTIPLEX class with a
             % default supra-adjacency matrix A:
-            % A =   wu(4)   diag(4) diag(4) diag(4)
-            %       diag(4) wu(4)   diag(4) diag(4) 
-            %       diag(4) diag(4) bd(4)   diag(4) 
-            %       diag(4) diag(4) diag(4) bd(4)
+            % A =   WU(4) D(4)  D(4)  D(4)
+            %       D(4)  WU(4) D(4)  D(4) 
+            %       D(4)  D(4)  BD(4) D(4) 
+            %       D(4)  D(4)  D(4)  BD(4)
             % where all weights are initialized randomly and
-            %       wu(4) = weighted undirected 4 x 4 with weights in [0, 1]
-            %       bd(4) = binary directed 4 x 4 with weights in 0 or 1
-            %       diag(4) = diagonal 4 x 4 with weights in [0, 1]
+            %       WU(4) = weighted undirected 4 x 4 with weights in [0, 1]
+            %       BD(4) = binary directed 4 x 4 with weights in 0 or 1
+            %       D(4) = diagonal 4 x 4 with weights in [0, 1]
             %
             % DUMMYMULTIPLEX(A) creates a DUMMYMULTIPLEX class with supra-adjacency matrix A.
             % It throws an error if the number of layers of A is not even.
@@ -154,7 +154,7 @@ classdef DummyMultiplex < Graph
             % where DIRECTED = Graph.DIRECTED and UNDIRECTED = Graph.UNDIRECTED.
             % If LAYERNUMBER is odd, it throws an error.
             %
-            % See also getConnectivityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
                        
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
@@ -183,9 +183,10 @@ classdef DummyMultiplex < Graph
             %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
             %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
             %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
+            % where DIRECTED = Graph.DIRECTED.
             % If LAYERNUMBER is odd, it throws an error.
             %
-            % See also getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
                       
             if isempty(varargin)
                 selfconnectivity_type = Graph.SELFCONNECTED;
@@ -212,9 +213,10 @@ classdef DummyMultiplex < Graph
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
+            % where NONNEGATIVE = Graph.NONNEGATIVE.
             % If LAYERNUMBER is odd, it throws an error.
             %
-            % See also getConnectivityType(), getDirectionalityType(), getGraphType() and getSelfConnectivityType().
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType() and getSelfConnectivityType().
             
             if isempty(varargin)
                 negativity_type = Graph.NONNEGATIVE;
