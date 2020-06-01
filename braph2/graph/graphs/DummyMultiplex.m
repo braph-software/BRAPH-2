@@ -1,5 +1,5 @@
 classdef DummyMultiplex < Graph
-    % DummyMultiplex < Graph: A Multiplex graph
+    % DummyMultiplex A Multiplex graph
     % DummyMultiplex represents a multiplex graph.
     %
     % DummyMultiplex is constituted by pairs of weighted undirected and
