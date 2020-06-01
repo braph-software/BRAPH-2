@@ -164,7 +164,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
             %
             % See also PlotBrainSurf, BrainAtlas.
             
-            ba = ba@PlotBrainSurf(atlas, varargin{:});
+            assert(isa(atlas, 'BrainAtlas'), ...
+                [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
+                'Argument is not a BrainAtlas')
+            
+            ba = ba@PlotBrainSurf(atlas.getBrainSurfFile(), varargin{:});
             
             ba.atlas = atlas;
             ba.setRegions(atlas);          

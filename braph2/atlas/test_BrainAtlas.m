@@ -11,7 +11,7 @@ br8 = BrainRegion('BR8', 'brain region 8', 'brain region notes 8', 8, 88, 888);
 br9 = BrainRegion('BR9', 'brain region 9', 'brain region notes 9', 9, 99, 999);
 
 %% Test 1: Basic functions
-atlas = BrainAtlas('TRIAL', 'Brain Atlas', 'Brain atlas notes', '', {br1, br2, br3, br4, br5});
+atlas = BrainAtlas('TRIAL', 'Brain Atlas', 'Brain atlas notes', 'BrainMesh_ICBM152.nv', {br1, br2, br3, br4, br5});
 
 assert(ischar(atlas.tostring()), ...
 	[BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_OUTPUT], ...
@@ -22,7 +22,7 @@ id = 'TRIAL';
 label = 'Brain Atlas';
 notes = 'Brain atlas notes';
 brain_regions = {br1, br2, br3, br4, br5};
-atlas = BrainAtlas(id, label, notes, '', brain_regions);
+atlas = BrainAtlas(id, label, notes, 'BrainMesh_ICBM152.nv', brain_regions);
 
 assert(isequal(atlas.getID(), id), ...
 	[BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_OUTPUT], ...
@@ -38,7 +38,7 @@ assert(isequal(atlas.getBrainRegions().getValues(), brain_regions), ...
     'BrainAtlas.getBrainregions() does not work.')
 
 %% Test 3: Set methods
-atlas = BrainAtlas('TRIAL', 'Brain Atlas', 'Brain atlas notes', '', {br1, br2, br3, br4, br5});
+atlas = BrainAtlas('TRIAL', 'Brain Atlas', 'Brain atlas notes', 'BrainMesh_ICBM152.nv', {br1, br2, br3, br4, br5});
 
 id = 'TRIAL UPDATED';
 atlas.setID(id)
@@ -63,7 +63,7 @@ id = 'TRIAL';
 label = 'Brain Atlas';
 notes = 'Brain atlas notes';
 brain_regions = {br1, br2, br3, br4, br5};
-atlas = BrainAtlas(id, label, notes, '', brain_regions);
+atlas = BrainAtlas(id, label, notes, 'BrainMesh_ICBM152.nv', brain_regions);
 
 atlas_copy = atlas.copy();
 assert(isequal(atlas.getID(), atlas_copy.getID()) && ...
@@ -108,7 +108,7 @@ br2 = BrainRegion('lFP', 'frontalpole', 'notes2', -8.6,61.7,-8.7);
 br3 = BrainRegion('lRMF', 'rostralmiddlefrontal', 'notes3', -31.3,41.2,16.5);
 br4 = BrainRegion('lCMF', 'caudalmiddlefrontal', 'notes4', -34.6, 10.2, 42.8);
 br5 = BrainRegion('lPOB', 'parsorbitalis', 'notes5', -41,38.8,-11.1);
-atlas  = BrainAtlas('TestToSaveCoolName1', 'Brain Atlas', 'Brain atlas notes', '', {br1, br2, br3, br4, br5});
+atlas  = BrainAtlas('TestToSaveCoolName1', 'Brain Atlas', 'Brain atlas notes', 'BrainMesh_ICBM152.nv', {br1, br2, br3, br4, br5});
 
 file = [fileparts(which('test_braph2')) filesep 'trial_atlas_to_be_erased.xlsx'];
 
@@ -144,7 +144,7 @@ br2 = BrainRegion('lFP', 'frontalpole', 'notes2', -8.6,61.7,-8.7);
 br3 = BrainRegion('lRMF', 'rostralmiddlefrontal', 'notes3', -31.3,41.2,16.5);
 br4 = BrainRegion('lCMF', 'caudalmiddlefrontal', 'notes4', -34.6, 10.2, 42.8);
 br5 = BrainRegion('lPOB', 'parsorbitalis', 'notes5', -41,38.8,-11.1);
-atlas  = BrainAtlas('TestToSaveCoolName1', 'Brain Atlas', 'Brain atlas notes', '', {br1, br2, br3, br4, br5});
+atlas  = BrainAtlas('TestToSaveCoolName1', 'Brain Atlas', 'Brain atlas notes', 'BrainMesh_ICBM152.nv', {br1, br2, br3, br4, br5});
 
 file = [fileparts(which('test_braph2')) filesep 'trial_atlas_to_be_erased.txt'];
 
@@ -180,7 +180,7 @@ br2 = BrainRegion('lFP', 'frontalpole', 'notes2', -8.6,61.7,-8.7);
 br3 = BrainRegion('lRMF', 'rostralmiddlefrontal', 'notes3', -31.3,41.2,16.5);
 br4 = BrainRegion('lCMF', 'caudalmiddlefrontal', 'notes4', -34.6, 10.2, 42.8);
 br5 = BrainRegion('lPOB', 'parsorbitalis', 'notes5', -41,38.8,-11.1);
-atlas  = BrainAtlas('TestToSaveCoolName1', 'Brain Atlas', 'Brain atlas notes', '', {br1, br2, br3, br4, br5});
+atlas  = BrainAtlas('TestToSaveCoolName1', 'Brain Atlas', 'Brain atlas notes', 'BrainMesh_ICBM152.nv', {br1, br2, br3, br4, br5});
 
 file = [fileparts(which('test_braph2')) filesep 'trial_atlas_to_be_erased.json'];
 

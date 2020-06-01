@@ -1,7 +1,7 @@
 % test PlotBrainSurf
-atlas = BrainAtlas('', '', '', 'BrainMesh_Cerebellum.nv', {});
+
 %% Test 1: Basic Functions
-bs = PlotBrainSurf(atlas);
+bs = PlotBrainSurf('BrainMesh_Cerebellum.nv');
 
 assert(ischar(bs.tostring()), ...
 	[BRAPH2.STR ':' class(bs) ':' BRAPH2.WRONG_OUTPUT], ...
@@ -12,8 +12,8 @@ assert(ischar(bs.getName()), ...
 
 
 %% Test 2: Change default properties
-atlas = BrainAtlas('','','','BrainMesh_ICBM152.nv', {});
-bs2 = PlotBrainSurf(atlas, 'PlotBrainSurf.Lighting', 'gouraud', 'PlotBrainSurf.Material', 'metal', 'PlotBrainSurf.CamLight', 'right');
+
+bs2 = PlotBrainSurf('BrainMesh_ICBM152.nv', 'PlotBrainSurf.Lighting', 'gouraud', 'PlotBrainSurf.Material', 'metal', 'PlotBrainSurf.CamLight', 'right');
 handle = bs2.brain();
 bs2.axis_equal();
 bs2.view(PlotBrainSurf.VIEW_3D);

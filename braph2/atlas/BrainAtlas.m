@@ -9,12 +9,13 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   setID                   - sets the id of the BrainAtlas
     %   setLabel                - sets the label of the BrainAtlas
     %   setNotes                - sets the notes of the BrainAtlas
+    %   setBrainSurfFile        - sets the surf file of the BrainAtlas
     %   getID                   - returns the id of the BrainAtlas
     %   getLabel                - returns the label of the BrainAtlas
     %   getNotes                - returns the notes of the BrainAtlas
     %   getBrainRegions         - returns the indexed dictionary with BrainRegions
     %   getPlotBrainAtlas       - returns the PlotBrainAtlas
-    %   getBrainSurfaceFile     - returns the Brain Surface file name
+    %   getBrainSurfFile        - returns the Brain Surface file name
     %
     % BrainAtlas methods (Static) : 
     %   load_from_xls           - loads a xls file and creates a BrainAtlas
@@ -86,7 +87,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             atlas.setID(id)
             atlas.setLabel(label)
             atlas.setNotes(notes)
-            atlas.brain_surf_file = brain_surf_file;
+            atlas.setBrainSurfFile(brain_surf_file)
             
             atlas.br_idict = IndexedDictionary('BrainRegion');
             for i = 1:1:length(brain_regions)
@@ -163,6 +164,20 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             atlas.notes = notes;
         end
+        function setBrainSurfFile(atlas, brain_surf_file)
+            % SETBRAINSURFFILE sets the surf file to the BrainAtlas.
+            %
+            % SETBRAINSURFFILE(ATLAS, BRAINSURFFILE) sets the surf file
+            % BRAINSURFFILE to the BrainAtlas ATLAS.
+            %
+            % See also getBrainSurfFile().
+            
+            assert(ischar(brain_surf_file), ...
+                [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT ], ...
+                'Brain Surf File must be a string')
+            
+            atlas.brain_surf_file = brain_surf_file;
+        end
     end
     methods  % Get functions
         function id = getID(atlas)
@@ -224,7 +239,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getPlotBrainAtlas().
             
-            bs = PlotBrainSurf(atlas, varargin{:});
+            bs = PlotBrainSurf(atlas.getBrainSurfFile, varargin{:});
         end
         function ba = getPlotBrainAtlas(atlas, varargin)
             % GETPLOTBRAINATLAS returns the brain atlas surface and regions plot
@@ -273,7 +288,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also BrainAtlas, uigetfile, fopen.
             
             % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', '', {}); 
+            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {}); 
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
@@ -365,7 +380,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also BrainAtlas, uigetfile, readtable
             
             % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', '', {});
+            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
@@ -457,7 +472,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also BrainAtlas, uigetfile, jsondecode
             
             % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', '', {});
+            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
