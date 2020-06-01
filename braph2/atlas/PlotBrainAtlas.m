@@ -164,7 +164,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             %
             % See also PlotBrainSurf, BrainAtlas.
             
-            ba = ba@PlotBrainSurf(varargin{:});
+            ba = ba@PlotBrainSurf(atlas, varargin{:});
             
             ba.atlas = atlas;
             ba.setRegions(atlas);          

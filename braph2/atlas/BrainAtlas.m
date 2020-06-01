@@ -23,6 +23,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getLabel                - returns the label of the BrainAtlas
     %   getNotes                - returns the notes of the BrainAtlas
     %   getBrainRegions         - returns the indexed dictionary with BrainRegions
+    %   getPlotBrainAtlas       - returns the PlotBrainAtlas
+    %   getBrainSurfaceFile     - returns the Brain Surface file name
     %
     % BrainAtlas plot methods:
     %   getBrainSurfFile        - returns the brain surface file name
@@ -82,10 +84,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         label  % extended name of the brain atlas
         notes  % notes about the brain atlas
         br_idict  % indexed dictionary with BrainRegions
-        brain_surface_file  % file of the brain surface
+        brain_surf_file  % file of the brain surface
     end
     methods  % Basic functions
-        function atlas = BrainAtlas(id, label, notes, brain_regions)
+        function atlas = BrainAtlas(id, label, notes, brain_surf_file, brain_regions)
             % BrainAtlas(NAME, BrainRegions) creates a BrainAtlas with
             % given name NAME and initializes the dictionary with
             % BRAIN_REGIONS (cell array of BrainRegions).
@@ -99,6 +101,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             atlas.setID(id)
             atlas.setLabel(label)
             atlas.setNotes(notes)
+            atlas.brain_surf_file = brain_surf_file;
             
             atlas.br_idict = IndexedDictionary('BrainRegion');
             for i = 1:1:length(brain_regions)
@@ -215,8 +218,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             br_idict = atlas.br_idict;
         end
-        function brain_surface_file = getBrainSurfFile(atlas)
-            brain_surface_file = atlas.brain_surface_file;
+        function brain_surf_file = getBrainSurfFile(atlas)
+            brain_surf_file = atlas.brain_surf_file;
         end
         % Useful cellfun expressions:
         % cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
@@ -236,8 +239,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also getPlotBrainAtlas().
             
-            bs = PlotBrainSurf(varargin);
-            atlas.brain_surface_file = bs.getPlotBrainSurfFile();
+            bs = PlotBrainSurf(atlas, varargin{:});
         end
         function ba = getPlotBrainAtlas(atlas, varargin)
             % GETPLOTBRAINATLAS returns the brain atlas surface and regions plot
@@ -249,7 +251,6 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also getPlotBrainSurf().           
            
             ba = PlotBrainAtlas(atlas, varargin{:});   
-            atlas.brain_surface_file = ba.getPlotBrainSurfFile();
         end
 % bg = getPlotBrainGraph(atlas, varargin)
     end
@@ -287,7 +288,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also BrainAtlas, uigetfile, fopen.
             
             % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', {}); 
+            atlas = BrainAtlas('', '', '', '', {}); 
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
@@ -379,7 +380,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also BrainAtlas, uigetfile, readtable
             
             % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', {});
+            atlas = BrainAtlas('', '', '', '', {});
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
@@ -471,7 +472,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also BrainAtlas, uigetfile, jsondecode
             
             % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', {});
+            atlas = BrainAtlas('', '', '', '', {});
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
