@@ -1,5 +1,5 @@
 classdef DummyMultigraph < Graph
-    % DummyMultigraph < Graph: A Multigraph
+    % DummyMultigraph: A Multigraph
     % DummyMultigraph represents a multigraph.
     %
     % DummyMultigraph is constituted by a collection of weighted directed
@@ -88,9 +88,9 @@ classdef DummyMultigraph < Graph
         function graph_type = getGraphType()
             % GETGRAPHTYPE returns the graph type
             %
-            % GRAPH_TYPE = GETGRAPHTYPE() returns MULTIGRAPH for DUMMYMULTIGRAPH.
+            % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTIGRAPH.
             %
-            % See also getConnectivityType(), getDirectionalityType(), getNegativityType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
         
             graph_type = Graph.MULTIGRAPH;
         end
@@ -108,10 +108,10 @@ classdef DummyMultigraph < Graph
             %                     WEIGHTED  WEIGHTED  WEIGHTED  
             % where WEIGHTED = Graph.WEIGHTED.
             %
-            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
                       
             if isempty(varargin)
-                connectivity_type = 1;
+                connectivity_type = Graph.WEIGHTED;
                 
             else
                 layernumber = varargin{1};
@@ -133,10 +133,10 @@ classdef DummyMultigraph < Graph
             %                       DIRECTED  DIRECTED  DIRECTED  
             % where DIRECTED = Graph.DIRECTED.
             %
-            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
                         
             if isempty(varargin)
-                directionality_type = 1;
+                directionality_type = Graph.DIRECTED;
             else
                 layernumber = varargin{1};
                 directionality_type = diag(Graph.DIRECTED * ones(1, layernumber));
@@ -157,10 +157,10 @@ classdef DummyMultigraph < Graph
             %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED 
             % where SELFCONNECTED = Graph.SELFCONNECTED.
             %
-            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
                       
             if isempty(varargin)
-                selfconnectivity_type = 1;
+                selfconnectivity_type = Graph.SELFCONNECTED;
             else
                 layernumber = varargin{1};
                 selfconnectivity_type = diag(Graph.SELFCONNECTED * ones(1, layernumber));
@@ -180,10 +180,10 @@ classdef DummyMultigraph < Graph
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE 
             % where NONNEGATIVE = Graph.NONNEGATIVE.
             %
-            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
                 
             if isempty(varargin)
-                negativity_type = 1;
+                negativity_type = Graph.NONNEGATIVE;
             else
                 layernumber = varargin{1};
                 negativity_type =  diag(Graph.NONNEGATIVE * ones(1, layernumber));
