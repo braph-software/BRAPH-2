@@ -44,7 +44,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getBrainRegions().disp              - displays the indexed dictionary br_idict
     %   getBrainRegions().length            - returns the length of the indexed dictionary br_idict
     %   getBrainRegions().getValueClass     - returns the value_class of the indexed dictionary br_idict
-    %   getBrainRegions().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or objec
+    %   getBrainRegions().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
     %   getBrainRegions().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index
     %   getBrainRegions().containsKey       - bool, checks if the indexed dictionary br_idict contains the key
     %   getBrainRegions().containsValue     - bool, checks if the indexed dictionary br_idict contains the value
