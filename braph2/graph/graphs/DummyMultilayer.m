@@ -1,5 +1,5 @@
 classdef DummyMultilayer < Graph
-    % DummyMultilayer < Graph: A Multilayer graph
+    % DummyMultilayer: A Multilayer graph
     % DummyMultilayer represents a multilayer graph.
     %
     % DummyMultilayer is constituted by two directed inary graphs and a
@@ -34,9 +34,9 @@ classdef DummyMultilayer < Graph
             %       BD(3, 4)    BD(3)       BD(3, 2)  
             %       WD(2, 4)    BD(2, 3)    WD(2) 
             % where all weights are initialized randomly and
-            %       WU(4) = weighted undirected 4 x 4 with weights in [0, 1]
+            %       WD(2) = weighted undirected 2 x 2 with weights in [0, 1]
             %       BD(4) = binary directed 4 x 4 with weights in 0 or 1
-            %       D(4) = diagonal 4 x 4 with weights in [0, 1]
+            %       BD(3) = binary directed 3 x 3 with weights in 0 or 1
             %
             % DUMMYMULTILAYER(A) creates a DUMMYMULTILAYER class with supra-adjacency matrix A.
             % It throws an error if the number of layers of A is not equal to three.
@@ -98,10 +98,9 @@ classdef DummyMultilayer < Graph
         function graph_type = getGraphType()
             % GETGRAPHTYPE returns the graph type
             %
-            % GRAPH_TYPE = GETGRAPHTYPE() returns MULTILAYER for
-            % DUMMYMULTILAYER
+            % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTILAYER 
             %
-            % See also getConnectivityType(), getDirectionalityType(), getNegativityType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
 
             graph_type = Graph.MULTILAYER;
         end
@@ -117,7 +116,7 @@ classdef DummyMultilayer < Graph
             %                     WEIGHTED  BINARY  WEIGHTED 
             % where BINARY = Graph.BINARY and WEIGHTED = Graph.WEIGHTED.
             %           
-            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
                         
             connectivity_type = [ 
                 Graph.BINARY    Graph.BINARY    Graph.WEIGHTED
@@ -140,7 +139,7 @@ classdef DummyMultilayer < Graph
             % where DIRECTED = Graph.DIRECTED.
             % If LAYERNUMBER is not three, it throws an error.
             %            
-            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
              
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
@@ -170,7 +169,7 @@ classdef DummyMultilayer < Graph
             % where SELFCONNECTED = Graph.SELFCONNECTED.
             % If LAYERNUMBER is not three, it throws an error.
             %
-            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
             
             if isempty(varargin)
                 selfconnectivity_type = Graph.SELFCONNECTED;
@@ -197,7 +196,7 @@ classdef DummyMultilayer < Graph
             %                   NEGATIVE     NONNEGATIVE  NEGATIVE  
             % where NONNEGATIVE = Graph.NONNEGATIVE and NEGATIVE = Graph.NEGATIVE.
             %
-            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType() and getSelfConnectivityType().
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
           
             negativity_type = [ 
                 Graph.NONNEGATIVE	Graph.NONNEGATIVE   Graph.NEGATIVE
