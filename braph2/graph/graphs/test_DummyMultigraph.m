@@ -1,35 +1,49 @@
 % test DummyMultigraph
-A_WD = [
+A_WD_1 = [
     1 0.2 1;
     0 1   0.3;
     1 0   1;
     ];
 
+A_WD_2 = [
+    1 0.2 1   0;
+    0 1   0.3 0;
+    1 0   1   1;
+    0 0.1 1   1;
+    ];
+
 A = {
-    A_WD	{}      {}
-    {}      A_WD    {}
-    {}      {}      A_WD
+    A_WD_1	{}      {}
+    {}      A_WD_1  {}
+    {}      {}      A_WD_2
     };
 
 %% Test 1: Constructor
-g = DummyMultigraph([]);
+g = DummyMultigraph([]); %#ok<NASGU>
 
 %% Test 2: Node attack
 nodes = 2;
 
-A_WD_attack = [
+A_WD_1_attack = [
     1 0 1;
     0 0 0;
     1 0 1;
     ]; 
 
+A_WD_2_attack = [
+    1 0 1 0;
+    0 0 0 0;
+    1 0 1 1;
+    0 0 1 1;
+    ];
+
 % Attack all layers
 g = DummyMultigraph(A);
 
 A_attack = {
-    A_WD_attack     {}              {}
-    {}              A_WD_attack     {}
-    {}              {}              A_WD_attack
+    A_WD_1_attack     {}              {}
+    {}              A_WD_1_attack     {}
+    {}              {}              A_WD_2_attack
     };
 
 ng = g.nodeattack(g, nodes);
@@ -43,9 +57,9 @@ g = DummyMultigraph(A);
 layernumbers = [1, 3];
 
 A_attack = {
-    A_WD_attack     {}              {}
-    {}              A_WD            {}
-    {}              {}              A_WD_attack
+    A_WD_1_attack     {}              {}
+    {}              A_WD_1            {}
+    {}              {}              A_WD_2_attack
     };
 
 ng = g.nodeattack(g, nodes, layernumbers);
@@ -55,23 +69,29 @@ assert(isequal(ng.getA(), A_attack), ...
     'Graph.nodeattack() is not working for non single layer graphs')
 
 %% Test 3: Edge attack
-nodes = 2;
 nodes1 = [1, 1];
 nodes2 = [2, 1];
 
-A_WD_attack = [
+A_WD_1_attack = [
     0 0 1;
     0 1 0.3;
     1 0 1;
     ]; 
 
+A_WD_2_attack = [
+    0 0   1   0;
+    0 1   0.3 0;
+    1 0   1   1;
+    0 0.1 1   1;
+    ];
+
 % Attack all layers
 g = DummyMultigraph(A);
 
 A_attack = {
-    A_WD_attack     {}              {}
-    {}              A_WD_attack     {}
-    {}              {}              A_WD_attack
+    A_WD_1_attack     {}              {}
+    {}              A_WD_1_attack     {}
+    {}              {}              A_WD_2_attack
     };
 
 eg = g.edgeattack(g, nodes1, nodes2);
@@ -81,13 +101,22 @@ assert(isequal(eg.getA(), A_attack), ...
     'Graph.edgeattack() is not working for non single layer graphs')
 
 % Attack specified layers: layernumbers1
-layernumbers1 = [1, 3];
+nodes1 = [1, 4, 2];
+nodes2 = [2, 2, 3];
+layernumbers1 = 3;
 g = DummyMultigraph(A);
 
+A_WD_2_attack = [
+    1 0 1 0;
+    0 1 0 0;
+    1 0 1 1;
+    0 0 1 1;
+    ];
+
 A_attack = {
-    A_WD_attack     {}              {}
-    {}              A_WD            {}
-    {}              {}              A_WD_attack
+    A_WD_1          {}              {}
+    {}              A_WD_1          {}
+    {}              {}              A_WD_2_attack
     };
 
 eg = g.edgeattack(g, nodes1, nodes2, layernumbers1);

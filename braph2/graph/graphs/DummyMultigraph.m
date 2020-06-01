@@ -3,7 +3,8 @@ classdef DummyMultigraph < Graph
     % DummyMultigraph represents a multigraph.
     %
     % DummyMultigraph is constituted by a collection of weighted directed
-    % graphs that are not connected between each other.
+    % graphs that are not connected between each other. The graphs can be
+    % of different size.
     % The connections between layers are empty matrices.
     %
     % DummyMultigraph methods:
@@ -29,9 +30,10 @@ classdef DummyMultigraph < Graph
             % default supra-adjacency matrix A:
             % A =   WD(3) []  [] 
             %       []  WD(3) [] 
-            %       []  []  WD(3) 
+            %       []  []  WD(4) 
             % where all weights are initialized randomly and
             %       WD(3) = weighted directed 3 x 3 with weights in [0, 1]
+            %       WD(4) = weighted directed 4 x 4 with weights in [0, 1]
             %
             % DUMMYMULTIGRAPH(A) creates a DUMMYMULTIGRAPH class with
             % supra-adjacency matrix A.
@@ -47,7 +49,7 @@ classdef DummyMultigraph < Graph
                 A = {
                 rand(3)	{}      {}
                 {}      rand(3) {}
-                {}      {}      rand(3)
+                {}      {}      rand(4)
                 };
             end
             
