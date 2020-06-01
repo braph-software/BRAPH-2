@@ -176,6 +176,13 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT ], ...
                 'Brain Surf File must be a string')
             
+            
+            % assert is part of the brainsurf folder
+            assert(ismember(brain_surf_file, atlas.getBrainSurfList()), ...
+                [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT ], ...
+                'Brain Surf File is not part of the available BrainSurf')
+            
+            
             atlas.brain_surf_file = brain_surf_file;
         end
     end
@@ -271,6 +278,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         end
     end    
     methods (Static)  % Save and load functions
+        function brainsurfList = getBrainSurfList()
+            
+        end
         function atlas = load_from_xls(varargin)
             % LOAD_FROM_XLS loads brain atlas from XLS file
             %
