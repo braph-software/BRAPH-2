@@ -23,11 +23,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getLabel                - returns the label of the BrainAtlas
     %   getNotes                - returns the notes of the BrainAtlas
     %   getBrainRegions         - returns the indexed dictionary with BrainRegions
-    %   getPlotBrainAtlas       - returns the PlotBrainAtlas
-    %   getBrainSurfaceFile     - returns the Brain Surface file name
+    %   getBrainSurfFile     - returns the Brain Surface file name
     %
     % BrainAtlas plot methods:
-    %   getBrainSurfFile        - returns the brain surface file name
     %   getPlotBrainSurf        - returns a PlotBrainSurf 
     %   getPlotBrainAtlas       - returns a PlotBrainAtlas
     %
@@ -88,8 +86,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     end
     methods  % Basic functions
         function atlas = BrainAtlas(id, label, notes, brain_surf_file, brain_regions)
-            % BrainAtlas(NAME, BrainRegions) creates a BrainAtlas with
-            % given name NAME and initializes the dictionary with
+            % BrainAtlas(ID, LABEL, NOTES, BRAIN_SURF_FFILE, BRAIN_REGIONS) creates a BrainAtlas with
+            % given name ID, LABEL, NOTES, AND BRAIN_SURF_FILE and initializes the dictionary with
             % BRAIN_REGIONS (cell array of BrainRegions).
             %
             % See also BrainRegion.
