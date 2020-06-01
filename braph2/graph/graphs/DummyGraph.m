@@ -1,5 +1,5 @@
 classdef DummyGraph < Graph
-    % DummyGraph < Graph: A binary undirected graph
+    % DummyGraph: A binary undirected graph
     % DummyGraph represents a binary undirected graph.
     %
     % DummyGraph consists of a binary undirected graph.
@@ -83,9 +83,9 @@ classdef DummyGraph < Graph
         function graph_type = getGraphType()
             % GETGRAPHTYPE returns the graph type
             %
-            % GRAPH_TYPE = GETGRAPHTYPE() returns GRAPH for DUMMYGRAPH.
+            % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.GRAPH.
             %
-            % See also getConnectivityType(), getDirectionalityType(), getNegativityType() and getSelfConnectivityType().
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
            
             graph_type = Graph.GRAPH;
         end
@@ -94,7 +94,7 @@ classdef DummyGraph < Graph
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns BINARY for DUMMYGRAPH.
             %    
-            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
             
             connectivity_type = Graph.BINARY;
         end
@@ -103,7 +103,7 @@ classdef DummyGraph < Graph
             %   
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns UNDIRECTED for DUMMYGRAPH.
             %
-            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType() and getSelfConnectivityType().
+            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
             
             directionality_type = Graph.UNDIRECTED;
         end
@@ -112,7 +112,7 @@ classdef DummyGraph < Graph
             %    
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns UNDIRECTED for DUMMYGRAPH.
             %
-            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType() and getNegativityType().
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
             
             selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
@@ -121,7 +121,7 @@ classdef DummyGraph < Graph
             %
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns NONNEGATIVE for DUMMYGRAPH.
             %
-            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType() and getSelfConnectivityType().
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
             
             negativity_type =  Graph.NONNEGATIVE;
         end
