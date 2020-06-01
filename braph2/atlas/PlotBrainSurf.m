@@ -140,7 +140,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         settings
     end
     methods  % Basic Functions
-        function bs = PlotBrainSurf(varargin)
+        function bs = PlotBrainSurf(atlas, varargin)
             % PLOTBRAINSURF(VARARGIN) construct the brain surface object,
             % utilizing VARARGIN it sets the settings.
             %
@@ -157,7 +157,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             end
             bs.settings = settings;
             
-            brain_surface_file = get_from_varargin('BrainMesh_ICBM152.nv' , 'BrainSurface', varargin{:});
+            brain_surface_file = atlas.getBrainSurfFile();
             bs.set_surface(brain_surface_file);
         end
         function str = tostring(bs)
@@ -167,7 +167,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also disp().
             
-            str = ['Brain Surface of type: ' bs.brain_surface_file ' with ' tostring(bs.vertex_number) ' vertices and ' tostring(bs.ntri) ' triangles.'];
+            str = ['Brain Surface of type: ' bs.brain_surface_file ' with ' tostring(bs.vertex_number) ' vertices and ' tostring(bs.vertex_number) ' triangles.'];
         end
         function disp(bs)
             % DISP displays brain surface
@@ -900,8 +900,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             end
             
             % create a brain surface from the specified file
-            
-            bs = PlotBrainSurf('BrainSurfaceType', brain_surface_file);
+            atlas = BrainAtlas('', '', '', brain_surface_file, {});
+            bs = PlotBrainSurf(atlas);
         end
     end
     methods (Access = protected)
