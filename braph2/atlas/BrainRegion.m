@@ -19,7 +19,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     %   setX         - sets the x coordinate
     %   setY         - sets the y coordinate
     %   setZ         - sets the z coordinate
-    %   setPosition  - sets an array with the x, y, z coordinates
+    %   setPosition  - sets an array [X, Y, Z] where X, Y, Z are coordinates
     %
     % BrainRegion get methods:    
     %   getID        - returns the id
@@ -28,7 +28,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     %   getX         - returns the x coordinate
     %   getY         - returns the y coordinate
     %   getZ         - returns the z coordinate
-    %   getPosition  - returns an array with the x, y, z coordinates
+    %   getPosition  - returns an array [X, Y, Z] where X, Y, Z are coordinates
     %
     % See also BrainAtlas, handle, matlab.mixin.Copyable.
     
