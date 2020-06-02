@@ -31,9 +31,9 @@ classdef DummyOrderedMultiplex < Graph
             %       D(4)  BD(4) D(4)  
             %       []    D(4)  WD(4) 
             % where all weights are initialized randomly and
-            %       WU(4) = weighted undirected 4 x 4 with weights in [0, 1]
+            %       WD(4) = weighted directed 4 x 4 with weights in [0, 1]
             %       BD(4) = binary directed 4 x 4 with weights in 0 or 1
-            %       D(4) = diagonal 4 x 4 with weights in [0, 1]
+            %       D(4) = diagonal 4 x 4 with weights in [0, 1] 
             %
             % DUMMYMULTIPLEX(A) creates a DUMMYMULTIPLEX class with supra-adjacency matrix A.
             % It throws an error if the number of layers of A is not even.
@@ -47,9 +47,9 @@ classdef DummyOrderedMultiplex < Graph
                      
             if isempty(A)
                 A = {
-                    round(rand(4))          round(diag(rand(4, 1)))     [] 
+                    round(rand(4))          round(diag(rand(4, 1)))     {} 
                     round(diag(rand(4, 1))) round(rand(4))              round(diag(rand(4, 1)))    
-                    []                      round(diag(rand(4, 1)))     rand(4)             
+                    {}                      round(diag(rand(4, 1)))     rand(4)             
                 };
             end
             
