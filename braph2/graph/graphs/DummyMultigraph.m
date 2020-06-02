@@ -1,5 +1,5 @@
 classdef DummyMultigraph < Graph
-    % DummyMultigraph: A Multigraph
+    % DummyMultigraph A Multigraph
     % DummyMultigraph represents a multigraph.
     %
     % DummyMultigraph is constituted by a collection of weighted directed
