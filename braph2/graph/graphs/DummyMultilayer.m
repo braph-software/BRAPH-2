@@ -7,7 +7,7 @@ classdef DummyMultilayer < Graph
     % Thus, it only accepts a number of layers equal to three.
     %
     % DummyMultilayer methods:
-    %   DummyMultilayer     - constructor.
+    %   DummyMultilayer         - constructor
     %
     % DummyMultilayer descriptive methods (static):
     %   getClass                - returns the class name
