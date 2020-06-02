@@ -37,7 +37,7 @@ classdef DummyOrderedMultiplex < Graph
             %
             % DUMMYORDEREDMULTIPLEX(A) creates a DUMMYORDEREDMULTIPLEX 
             % class with supra-adjacency matrix A.
-            % It throws an error if the number of layers of A is not even.
+            % It throws an error if the number of layers of A is not three.
             % It calls the constructor of Graph.
             %
             % DUMMYORDEREDMULTIPLEX(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
