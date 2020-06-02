@@ -5,7 +5,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
     % BrainRegion contains and manages the id, label, x coordinate, y 
-    % coordinate, z coordinate and the position array of a brain region, 
+    % coordinate, z coordinate and the position array of a brain region. 
     %
     % BrainRegion basic methods:    
     %   BrainRegion  - Constructor
@@ -113,7 +113,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % SETNOTES sets the notes of the brain region
             %
             % SETNOTES(BR, NOTES) sets the notes of the brain region BR.
-            % NOTES must be of string.
+            % NOTES must be a string.
             %
             % See also setID(), setX(), setY(), setZ(), setPosition(), getNotes().
 
@@ -152,7 +152,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             br.y = y;
         end        
         function setZ(br, z)
-            % SETZ sets the zcoordinate of the brain region
+            % SETZ sets the z coordinate of the brain region
             %
             % SETZ(BR, Z) sets the z coordinate of the brain region BR.
             % Z must be a number.
@@ -244,7 +244,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             z = br.z;
         end
         function r = getPosition(br)
-            % GETPOSITION returns the x,y,z coordinates
+            % GETPOSITION returns the x, y, z coordinates
             %
             % POSITION = GETZ(BR) returns the x, y, z coordinates of the brain
             % region BR in an array.
