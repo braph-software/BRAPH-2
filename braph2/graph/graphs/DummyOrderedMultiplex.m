@@ -35,15 +35,16 @@ classdef DummyOrderedMultiplex < Graph
             %       BD(4) = binary directed 4 x 4 with weights in 0 or 1
             %       D(4) = diagonal 4 x 4 with weights in [0, 1] 
             %
-            % DUMMYMULTIPLEX(A) creates a DUMMYMULTIPLEX class with supra-adjacency matrix A.
+            % DUMMYORDEREDMULTIPLEX(A) creates a DUMMYORDEREDMULTIPLEX 
+            % class with supra-adjacency matrix A.
             % It throws an error if the number of layers of A is not even.
             % It calls the constructor of Graph.
             %
-            % DUMMYMULTIPLEX(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % inizializes DUMMYMULIPLEX with the properties and values
+            % DUMMYORDEREDMULTIPLEX(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
+            % initializes DUMMYMULIPLEX with the properties and values
             % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... 
             %
-            % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyOrderedMultigraph, DummyOrderedMultilayer.
+            % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer.
                      
             if isempty(A)
                 A = {
