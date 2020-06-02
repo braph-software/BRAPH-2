@@ -2,20 +2,17 @@ classdef DummyMultilayer < Graph
     % DummyMultilayer: A Multilayer graph
     % DummyMultilayer represents a multilayer graph.
     %
-    % DummyMultilayer is constituted by two directed inary graphs and a
+    % DummyMultilayer is constituted by two directed binary graphs and a
     % third weighted directed graph.
-    % binary directed graphs. Thus, it only accepts even number of layers:
-    % The first half of layers are weighted undirected graphs; 
-    % and the second half binary directed. 
-    % The connections between layers are binary directed.
+    % Thus, it only accepts a number of layers equal to three.
     %
     % DummyMultilayer methods:
     %   DummyMultilayer     - constructor.
     %
     % DummyMultilayer descriptive methods (static):
-    %   getClass                - return the class name
-    %   getName                 - return the complete name
-    %   getDescription          - return the description
+    %   getClass                - returns the class name
+    %   getName                 - returns the complete name
+    %   getDescription          - returns the description
     %   getGraphType            - returns the graph type
     %   getConnectivityType     - returns if the graph is binary or weighted
     %   getDirectionalityType   - returns if graph is directed or undirected
@@ -43,7 +40,7 @@ classdef DummyMultilayer < Graph
             % It calls the constructor of Graph.
             %
             % DUMMYMULTILAYER(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % inizializes DUMMYMULTILAYER with the properties and values
+            % initializes DUMMYMULTILAYER with the properties and values
             % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... 
             %
             % See also Graph, DummyGraph, DummyMultigraph, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
