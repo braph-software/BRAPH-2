@@ -22,7 +22,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getLabel                - returns the label of the BrainAtlas
     %   getNotes                - returns the notes of the BrainAtlas
     %   getBrainRegions         - returns the indexed dictionary with BrainRegions
-    %   getBrainSurfFile     - returns the Brain Surface file name
+    %   getBrainSurfFile        - returns the Brain Surface file name
     %
     % BrainAtlas plot methods:
     %   getPlotBrainSurf        - returns a PlotBrainSurf 
@@ -290,7 +290,15 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         end
     end    
     methods (Static)  % Save and load functions
-        function brain_surf_list = getBrainSurfList()            
+        function brain_surf_list = getBrainSurfList()  
+            % GETBRAINSURFLIST returns the available brain surfs names
+            %
+            % BRAIN_SURF_LIST = GETBRAINSURFLIST() returns an array
+            % BRAIN_SURF_LIST containing the names of all brain surfs
+            % inside brainsurfs folder.
+            %
+            % See also setBrainSurfFile().
+            
             folder_struct = dir(['atlas' filesep 'brainsurfs']);
             folder_struct = folder_struct(~ismember({folder_struct(:).name}, {'.', '..'}));  % remove '.' and '..'
             for i = 1:1:length(folder_struct)
