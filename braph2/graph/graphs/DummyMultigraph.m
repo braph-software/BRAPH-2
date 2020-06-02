@@ -8,7 +8,7 @@ classdef DummyMultigraph < Graph
     % The connections between layers are empty matrices.
     %
     % DummyMultigraph methods:
-    %   DummyMultigraph     - constructor.
+    %   DummyMultigraph         - constructor
     %
     % DummyMultigraph descriptive methods (static):
     %   getClass                - returns the class name
