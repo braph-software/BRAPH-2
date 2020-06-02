@@ -5,12 +5,12 @@ classdef DummyGraph < Graph
     % DummyGraph consists of a binary undirected graph.
     %  
     % DummyGraph methods:
-    %   DummyGraph     - constructor.
+    %   DummyGraph              - constructor
     %
     % DummyGraph descriptive methods (static):
-    %   getClass                - return the class name
-    %   getName                 - return the complete name
-    %   getDescription          - return the description
+    %   getClass                - returns the class name
+    %   getName                 - returns the complete name
+    %   getDescription          - returns the description
     %   getGraphType            - returns the graph type
     %   getConnectivityType     - returns if the graph is binary or weighted
     %   getDirectionalityType   - returns if graph is directed or undirected
@@ -33,7 +33,7 @@ classdef DummyGraph < Graph
             % It calls the constructor of Graph.
             %
             % DUMMYGRAPH(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % inizializes DUMMYGRAPH with the properties and values
+            % initializes DUMMYGRAPH with the properties and values
             % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... 
             %
             % See also Graph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
