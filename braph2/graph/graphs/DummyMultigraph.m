@@ -11,9 +11,9 @@ classdef DummyMultigraph < Graph
     %   DummyMultigraph     - constructor.
     %
     % DummyMultigraph descriptive methods (static):
-    %   getClass                - return the class name
-    %   getName                 - return the complete name
-    %   getDescription          - return the description
+    %   getClass                - returns the class name
+    %   getName                 - returns the complete name
+    %   getDescription          - returns the description
     %   getGraphType            - returns the graph type
     %   getConnectivityType     - returns if the graph is binary or weighted
     %   getDirectionalityType   - returns if graph is directed or undirected
@@ -40,7 +40,7 @@ classdef DummyMultigraph < Graph
             % It calls the constructor of Graph.
             %
             % DUMMYMULTIGRAPH(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % inizializes DUMMYMULTIGRAPH with the properties and values
+            % initializes DUMMYMULTIGRAPH with the properties and values
             % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... 
             %
             % See also Graph, DummyGraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
