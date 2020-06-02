@@ -1,5 +1,5 @@
 classdef DummyGraph < Graph
-    % DummyGraph: A binary undirected graph
+    % DummyGraph A binary undirected graph
     % DummyGraph represents a binary undirected graph.
     %
     % DummyGraph consists of a binary undirected graph.
