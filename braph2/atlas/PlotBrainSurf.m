@@ -127,7 +127,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         CamLight
         
         h_brain  % handle for brain surface
-        brain_surface_file  % file of the brain surface
+        brain_surf_file  % file of the brain surface
         f_brain_settings  % brain setting figure handle
         
         % brain coordinates
@@ -140,7 +140,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         settings
     end
     methods  % Basic Functions
-        function bs = PlotBrainSurf(atlas, varargin)
+        function bs = PlotBrainSurf(brain_surf_file, varargin)
             % PLOTBRAINSURF(VARARGIN) construct the brain surface object,
             % utilizing VARARGIN it sets the settings.
             %
@@ -156,9 +156,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                 settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
             end
             bs.settings = settings;
-            
-            brain_surface_file = atlas.getBrainSurfFile();
-            bs.set_surface(brain_surface_file);
+
+            bs.set_surface(brain_surf_file);
         end
         function str = tostring(bs)
             % TOSTRING string with information about the plot brain surf
@@ -167,7 +166,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also disp().
             
-            str = ['Brain Surface of type: ' bs.brain_surface_file ' with ' tostring(bs.vertex_number) ' vertices and ' tostring(bs.vertex_number) ' triangles.'];
+            str = ['Brain Surface of type: ' bs.brain_surf_file ' with ' tostring(bs.vertex_number) ' vertices and ' tostring(bs.vertex_number) ' triangles.'];
         end
         function disp(bs)
             % DISP displays brain surface
@@ -177,7 +176,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % See also PlotBrainSurf.
             
             disp(['<a href="matlab:help ' class(bs) '">' bs.getName() '</a>']);
-            disp(['Surface file: ' bs.brain_surface_file]);
+            disp(['Surface file: ' bs.brain_surf_file]);
             disp(['Number of vertices: ' tostring(bs.vertex_number)]);
             disp(['Number of triangles: ' tostring(bs.ntri)]);
             disp(' Surface light options: ');
@@ -210,7 +209,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also getSettings(), getBrainSurface().
             
-            name = bs.brain_surface_file;
+            name = bs.brain_surf_file;
         end
         function settings = getSettings(bs, setting_code)
             % GETSETTINGS returns the current settings
@@ -238,24 +237,24 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             brain_surface = bs.h_brain;
         end
-        function brain_surface_file = getPlotBrainSurfFile(bs)
-            brain_surface_file = bs.brain_surface_file;
+        function brain_surf_file = getPlotBrainSurfFile(bs)
+            brain_surf_file = bs.brain_surf_file;
         end
     end
     methods  % editing functions
-        function set_surface(bs, brain_surface_file)
+        function set_surface(bs, brain_surf_file)
             % SETSURFACE(BS, BRAIN_SURFACE_FILE) reads the brain surface
             % file and loads the data. Sets the Lighting handles from the
             % settings.
             %
             % See also: update_light(), set_axes().
             
-            bs.brain_surface_file =  brain_surface_file;
+            bs.brain_surf_file =  brain_surf_file;
             bs.Lighting = bs.getSettings('PlotBrainSurf.Lighting');
             bs.Material = bs.getSettings('PlotBrainSurf.Material');
             bs.CamLight = bs.getSettings('PlotBrainSurf.CamLight');
             
-            fid = fopen(['brainsurfs' filesep brain_surface_file]);
+            fid = fopen(['brainsurfs' filesep brain_surf_file]);
             bs.vertex_number = fscanf(fid, '%f', 1);
             bs.coord = fscanf(fid, '%f', [3, bs.vertex_number]);
             bs.ntri = fscanf(fid, '%f', 1);
@@ -888,20 +887,19 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % BS = LOADBRAINSURFACE(VARARGIN) creates anothe PlotBrainSurf
             % object using the VARARGIN specifications. 
             
-            brain_surface_file = get_from_varargin('' , 'BrainSurface', varargin(:));
-            if isequal(brain_surface_file, '')  % select file
+            brain_surf_file = get_from_varargin('' , 'BrainSurface', varargin(:));
+            if isequal(brain_surf_file, '')  % select file
                 msg = get_from_varargin(BRAPH2.BRAINSURFACE_MSG_GETFILE, 'MSG', varargin{:});
                 [filename, ~, filterindex] = uigetfile(BRAPH2.BRAINSURFACE_EXTENSION, msg);
-                brain_surface_file = filename;
+                brain_surf_file = filename;
                 
                 if ~filterindex
                     return
                 end
             end
             
-            % create a brain surface from the specified file
-            atlas = BrainAtlas('', '', '', brain_surface_file, {});
-            bs = PlotBrainSurf(atlas);
+            % create a brain surface from the specified file            
+            bs = PlotBrainSurf(brain_surf_file);
         end
     end
     methods (Access = protected)
