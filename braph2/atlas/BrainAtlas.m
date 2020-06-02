@@ -167,8 +167,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function setBrainSurfFile(atlas, brain_surf_file)
             % SETBRAINSURFFILE sets the surf file to the BrainAtlas.
             %
-            % SETBRAINSURFFILE(ATLAS, BRAINSURFFILE) sets the surf file
-            % BRAINSURFFILE to the BrainAtlas ATLAS.
+            % SETBRAINSURFFILE(ATLAS, BRAINSURFFILE) checks if the surf is a 
+            % correct brain surfaces, then sets the surf file BRAINSURFFILE 
+            % to the BrainAtlas ATLAS.
             %
             % See also getBrainSurfFile().
             
@@ -278,8 +279,12 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         end
     end    
     methods (Static)  % Save and load functions
-        function brainsurfList = getBrainSurfList()
-            
+        function brain_surf_list = getBrainSurfList()            
+            folder_struct = dir(['atlas' filesep 'brainsurfs']);
+            folder_struct = folder_struct(~ismember({folder_struct(:).name}, {'.', '..'}));  % remove '.' and '..'
+            for i = 1:1:length(folder_struct)
+                brain_surf_list{i} = folder_struct(i).name;
+            end            
         end
         function atlas = load_from_xls(varargin)
             % LOAD_FROM_XLS loads brain atlas from XLS file
