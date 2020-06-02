@@ -5,7 +5,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
     % BrainRegion contains and manages the id, label, x coordinate, y 
-    % coordinate, z coordinate and the position array of a brain region, 
+    % coordinate, z coordinate and the position array of a brain region. 
     %
     % BrainRegion basic methods:    
     %   BrainRegion  - Constructor
