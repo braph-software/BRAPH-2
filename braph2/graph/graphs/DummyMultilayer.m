@@ -1,5 +1,5 @@
 classdef DummyMultilayer < Graph
-    % DummyMultilayer: A Multilayer graph
+    % DummyMultilayer A Multilayer graph
     % DummyMultilayer represents a multilayer graph.
     %
     % DummyMultilayer is constituted by two directed binary graphs and a
