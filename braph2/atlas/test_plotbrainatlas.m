@@ -60,7 +60,8 @@ close
 close  % close the axis figure.
 
 %% Distance
-atlas = BrainAtlas.load_from_txt();
+file = [fileparts(which('test_braph2')) filesep 'desikan_atlas2.txt'];
+atlas = BrainAtlas.load_from_txt('File', file);
 ba = PlotBrainAtlas(atlas);
 axes = ba.set_axes();
 ba.hold_on();
@@ -75,3 +76,5 @@ set(bs, 'CData', distance)
 minimu = min(distance(:));
 maxi = max(distance(:));
 caxis([minimu maxi])
+
+close

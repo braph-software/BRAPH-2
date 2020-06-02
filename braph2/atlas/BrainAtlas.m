@@ -305,8 +305,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % inside brainsurfs folder.
             %
             % See also setBrainSurfFile().
-            
-            folder_struct = dir(['atlas' filesep 'brainsurfs']);
+            directory = fileparts(which('braph2'));
+            folder_struct = dir([directory filesep 'atlas' filesep 'brainsurfs']);
             folder_struct = folder_struct(~ismember({folder_struct(:).name}, {'.', '..'}));  % remove '.' and '..'
             for i = 1:1:length(folder_struct)
                 brain_surf_list{i} = folder_struct(i).name;
