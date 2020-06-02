@@ -107,7 +107,7 @@ PETCOHORT_TP = ['Generate new PET cohort and opens it with ' GUI.PCE_NAME];
 
 %% Application data
 if ~exist('atlas', 'var')
-    atlas = BrainAtlas('', '', '', '', {});
+    atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
 end
 selected = [];
 
@@ -672,8 +672,8 @@ init_contextmenu()
         set(ui_contextmenu_atlas_labels, 'Label', 'Labels')
         set(ui_contextmenu_atlas_labels, 'Callback', {@cb_brainview_atlas_labels})
         
-        
-        h_brain_obj = atlas.getPlotBrainAtlas('BrainSurfaceType', [brain_file '.nv']);
+        atlas.setBrainSurfFile([brain_file '.nv'])
+        h_brain_obj = atlas.getPlotBrainAtlas();
         h_brain_outer_obj = h_brain_obj;
         h_brain = h_brain_obj.brain();
         set(h_brain, 'EdgeColor', FIG_EDGECOLOR);
