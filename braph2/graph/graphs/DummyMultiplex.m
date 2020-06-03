@@ -50,10 +50,10 @@ classdef DummyMultiplex < Graph
                      
             if isempty(A)
                 A = {
-                    symmetrize(rand(4))     round(diag(rand(4, 1)))     round(diag(rand(4, 1)))     round(diag(rand(4, 1)))
-                    round(diag(rand(4, 1))) symmetrize(rand(4))         round(diag(rand(4, 1)))     round(diag(rand(4, 1)))
-                    round(diag(rand(4, 1))) round(diag(rand(4, 1)))     round(rand(4))              round(diag(rand(4, 1)))
-                    round(diag(rand(4, 1))) round(diag(rand(4, 1)))     round(diag(rand(4, 1)))     round(rand(4))
+                    symmetrize(rand(4))     round(diag(rand(4, 1))) round(diag(rand(4, 1)))	round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1))) symmetrize(rand(4)) 	round(diag(rand(4, 1)))	round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1))) round(diag(rand(4, 1)))	round(rand(4))          round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1))) round(diag(rand(4, 1)))	round(diag(rand(4, 1)))	round(rand(4))
                 };
             end
             
