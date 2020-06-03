@@ -92,7 +92,7 @@ classdef DummyGraph < Graph
         function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns BINARY for DUMMYGRAPH.
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.BINARY.
             %    
             % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
             
@@ -101,7 +101,7 @@ classdef DummyGraph < Graph
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
             %   
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns UNDIRECTED for DUMMYGRAPH.
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.UNDIRECTED.
             %
             % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
             
@@ -110,7 +110,7 @@ classdef DummyGraph < Graph
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
             %    
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns UNDIRECTED for DUMMYGRAPH.
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.UNDIRECTED.
             %
             % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
             
@@ -119,7 +119,7 @@ classdef DummyGraph < Graph
         function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
-            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns NONNEGATIVE for DUMMYGRAPH.
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
             % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
             
