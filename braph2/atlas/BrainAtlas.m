@@ -3,10 +3,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     % BrainAtlas represents a collection of brain regions.
     % It is a subclass of handle and matlab.mixin.Copyable
     %
-    % BrainAtlas contains and manages brain regions inside an
-    % IndexedDictionary. It has access to all IndexedDictionary methods. 
-    % BrainAtlas can be imported/exported to txt, xls and json.
-    % BrainAtlas can plot the brain regions into the specified surf.
+    % BrainAtlas contains and manages brain regions inside an IndexedDictionary; 
+    % thus, it has access to all IndexedDictionary methods. 
+    % BrainAtlas can be imported/exported to .txt, .xls and .json files.
     %
     % BrainAtlas basic methods:
     %   BrainAtlas              - Constructor
@@ -305,6 +304,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % inside brainsurfs folder.
             %
             % See also setBrainSurfFile().
+
             directory = fileparts(which('braph2'));
             folder_struct = dir([directory filesep 'atlas' filesep 'brainsurfs']);
             folder_struct = folder_struct(~ismember({folder_struct(:).name}, {'.', '..'}));  % remove '.' and '..'
