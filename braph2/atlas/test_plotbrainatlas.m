@@ -10,7 +10,7 @@ atlas = BrainAtlas('TRIAL', 'Brain Atlas', 'Brain atlas notes', 'BrainMesh_Cereb
 
 %% Test 1: Basic Functions.
 ba = PlotBrainAtlas(atlas);
-h = ba.set_axes();
+ba.set_axes();
 ba.hold_on();
 ba.view(PlotBrainAtlas.VIEW_3D);
 
@@ -66,15 +66,10 @@ ba = PlotBrainAtlas(atlas);
 axes = ba.set_axes();
 ba.hold_on();
 ba.view(PlotBrainAtlas.VIEW_3D);
-bs = ba.brain();
+ba.brain();
 ba.br_sphs()
 ba.br_sphs_on()
 
-distance = ba.calculatePointsDistance([1 10 29]);  % select the first
-set(bs, 'Facecolor', 'interp')
-set(bs, 'CData', distance)
-minimu = min(distance(:));
-maxi = max(distance(:));
-caxis([minimu maxi])
+ba.distanceMapOn([1 10 29]);  % select the first
 
 close

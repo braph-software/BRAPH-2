@@ -1916,6 +1916,27 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 end              
             end            
         end
+        function distanceMapOn(ba, selected)
+            distance_vector = ba.calculatePointsDistance(selected);
+            brain_surface = ba.getBrainSurface();
+            set(brain_surface, 'Facecolor', 'interp')
+            set(brain_surface, 'CData', distance_vector)
+            minimu = min(distance_vector(:));
+            p99 = prctile(distance_vector(:), 99);  
+            caxis([minimu p99])            
+        end
+        function distanceMapOff(ba, style)
+            coords = ba.getPlotBrainSurfCoords();
+            z_vector = coords(3, :);
+            brain_surface = ba.getBrainSurface();
+            if ~isequal(style, 'interp')
+                set(brain_surface, 'Facecolor', style)
+            end
+            set(brain_surface, 'CData', z_vector)
+            minimu = min(z_vector(:));
+            maxi = max(z_vector(:));
+            caxis([minimu maxi])
+        end
     end
     methods (Access = protected)
         function cp = copyElement(ba)
