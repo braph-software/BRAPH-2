@@ -131,8 +131,8 @@ classdef DummyMultilayer < Graph
             % a matrix with Graph.DIRECTED for all the elements.
             % For example, for the default matrix it returns:
             % DIRECTIONALITY_TYPE = DIRECTED  DIRECTED  DIRECTED  
-            %                   DIRECTED  DIRECTED  DIRECTED  
-            %                   DIRECTED  DIRECTED  DIRECTED  
+            %                       DIRECTED  DIRECTED  DIRECTED  
+            %                       DIRECTED  DIRECTED  DIRECTED  
             % where DIRECTED = Graph.DIRECTED.
             % If LAYERNUMBER is not three, it throws an error.
             %            
