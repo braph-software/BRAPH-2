@@ -15,7 +15,22 @@
 %
 % Graphical Interface tools:
 %   <a href="matlab:help GUI                    ">GUI</a>                  (static class) graphical user interface constants and auxiliary functions
-%
+%   <a href="matlab:help #                      ">icon_axis</a>            (PNG) icon to switch on/off the axis
+%   <a href="matlab:help #                      ">icon_br</a>              (PNG) icon to switch on/off the brain regions
+%   <a href="matlab:help #                      ">icon_brain</a>           (PNG) icon to switch on/off the brain
+%   <a href="matlab:help #                      ">icon_grid</a>            (PNG) icon to switch on/off the grid
+%   <a href="matlab:help #                      ">icon_label</a>           (PNG) icon to switch on/off the labels
+%   <a href="matlab:help #                      ">icon_settings</a>        (PNG) icon to access settings
+%   <a href="matlab:help #                      ">icon_sphere</a>          (PNG) icon to switch on/off spheres
+%   <a href="matlab:help #                      ">icon_symbol</a>          (PNG) icon to switch on/off the brain symbols
+%   <a href="matlab:help #                      ">icon_view_3d</a>         (PNG) icon to change view to 3d
+%   <a href="matlab:help #                      ">icon_view_ad</a>         (PNG) icon to change view to axial dorsal
+%   <a href="matlab:help #                      ">icon_view_av</a>         (PNG) icon to change view to axial ventral
+%   <a href="matlab:help #                      ">icon_view_ca</a>         (PNG) icon to change view to coronal anterior
+%   <a href="matlab:help #                      ">icon_view_cp</a>         (PNG) icon to change view to coronal posterior
+%   <a href="matlab:help #                      ">icon_view_sl</a>         (PNG) icon to change view to sagital left
+%   <a href="matlab:help #                      ">icon_view_sr</a>         (PNG) icon to change view to sagital right
+%  
 % Unit tests:
 %   <a href="matlab:help DummyObject            ">DummyObject</a>           (class) dummy object 
 %   <a href="matlab:help DummyCopiableObject    ">DummyCopiableObject</a>   (class) dummy copiable object 
@@ -24,8 +39,6 @@
 %   <a href="matlab:help test_clean_varargin	">test_clean_varargin</a>
 %   <a href="matlab:help test_get_from_varargin	">test_get_from_varargin</a>
 %
-% Subfolders:
-%   <a href="matlab:help icons                  ">icons</a>                (folder) graphic icons
 
 clc
 help util

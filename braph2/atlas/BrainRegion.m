@@ -5,28 +5,32 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
     % BrainRegion contains and manages the id, label, x coordinate, y 
-    % coordinate, z coordinate and the position array of a brain region, 
+    % coordinate, z coordinate and the position array of a brain region. 
     %
-    % BrainRegion methods:
+    % BrainRegion basic methods:    
     %   BrainRegion  - Constructor
     %   tostring     - returns a string representing the brain region
     %   disp         - displays the brain region
+    %
+    % BrainRegion set methods:
     %   setID        - sets the id
     %   setLabel     - sets the label
     %   setNotes     - sets the notes
     %   setX         - sets the x coordinate
     %   setY         - sets the y coordinate
     %   setZ         - sets the z coordinate
-    %   setPosition  - sets an array with the x, y, z coordinates
+    %   setPosition  - sets the x, y, z coordinates
+    %
+    % BrainRegion get methods:    
     %   getID        - returns the id
     %   getLabel     - returns the label
     %   getNotes     - returns the notes
     %   getX         - returns the x coordinate
     %   getY         - returns the y coordinate
     %   getZ         - returns the z coordinate
-    %   getPosition  - returns an array with the x, y, z coordinates
+    %   getPosition  - returns the coordinates [x y z]
     %
-    % See also BrainAtlas, handle, matlab.mixin.Copyable
+    % See also BrainAtlas, handle, matlab.mixin.Copyable.
     
     properties (GetAccess=protected, SetAccess=protected)
         id  % few-letter code (unique for each brain region)
@@ -39,10 +43,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     methods  % Basic functions
         function br = BrainRegion(id, label, notes, x, y, z)
             % BRAINREGION(ID, LABEL, NOTES, X, Y, Z) creates a brain region with
-            % the corresponding arguments: id, label, notes, x, y, z. 
-            % Returns the adjacency matrix at the position (I, I) of the 
-            % cell array of adjacency matrices A associated to graph 
-            % G (multiple graph).
+            % the corresponding arguments: ID, LABEL, NOTES, X, Y, Z. 
             %
             % See also BrainAtlas.
 
@@ -112,7 +113,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % SETNOTES sets the notes of the brain region
             %
             % SETNOTES(BR, NOTES) sets the notes of the brain region BR.
-            % NOTES must be of string.
+            % NOTES must be a string.
             %
             % See also setID(), setX(), setY(), setZ(), setPosition(), getNotes().
 
@@ -151,7 +152,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             br.y = y;
         end        
         function setZ(br, z)
-            % SETZ sets the zcoordinate of the brain region
+            % SETZ sets the z coordinate of the brain region
             %
             % SETZ(BR, Z) sets the z coordinate of the brain region BR.
             % Z must be a number.
@@ -167,8 +168,8 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
         function setPosition(br, position)
             % SETPOSITION sets an array containing x, y, z coordinates
             %
-            % SETPOSITION(BR, POSITION) sets an array containing the x, y,
-            % z coordinates of the brain region. X, Y, Z must be numbers.
+            % SETPOSITION(BR, POSITION) sets an array [X Y Z] where X, Y, Z
+            % are coordinates (numbers) of the brain region. 
             %
             % See also setID(), setLabel(), setX(), setY(), setZ(), getPosition().
             
@@ -243,7 +244,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             z = br.z;
         end
         function r = getPosition(br)
-            % GETPOSITION returns the x,y,z coordinates
+            % GETPOSITION returns the x, y, z coordinates
             %
             % POSITION = GETZ(BR) returns the x, y, z coordinates of the brain
             % region BR in an array.

@@ -1,5 +1,5 @@
 classdef Graph < handle & matlab.mixin.Copyable
-    % Graph (Abstract): A graph
+    % Graph (Abstract) A graph
     % Graph provides the methods necessary for all graphs.
     % Instances of this class cannot be created. Use one of the subclasses.
     % The subclasses must be created inside the folder
@@ -860,7 +860,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
             disp([g.TYPE_DESCRIPTION{Graph.getGraphType(g)} ])
-            disp([' size: ' int2str(g.layernumber(g)) ' layers with ' int2str(g.nodenumber(g)) ' nodes'])
+            disp([' size: ' int2str(g.layernumber()) ' layers with ' int2str(g.nodenumber()) ' nodes'])
 %             disp([' measures: ' int2str(length(g.measure_dict))]);
             disp([' settings']); %#ok<NBRAK>
             settings = g.getSettings(); %#ok<PROP>
@@ -896,9 +896,9 @@ classdef Graph < handle & matlab.mixin.Copyable
 
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
-                    n = length(g.getA(g));
+                    n = length(g.getA());
                 otherwise
-                    A = g.getA(g); %#ok<PROP>
+                    A = g.getA(); %#ok<PROP>
                     n = cellfun(@(a) length(a), A(1:length(A)+1:end)); %#ok<PROP>
             end
         end
@@ -913,7 +913,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                 case Graph.GRAPH
                     n = 1;
                 otherwise
-                    n = length(g.getA(g));
+                    n = length(g.getA());
             end
         end
         function A = getA(g, i, j)
@@ -1006,10 +1006,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also edgeattack().
                         
             if nargin < 3
-                layernumbers = 1:1:g.layernumber(g);
+                layernumbers = 1:1:g.layernumber();
             end   
             
-            A = g.getA(g);
+            A = g.getA();
             
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
@@ -1054,14 +1054,14 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also nodeattack().
                 
             if nargin < 4
-                layernumbers1 = 1:1:g.layernumber(g);
+                layernumbers1 = 1:1:g.layernumber();
             end
             
             if nargin < 5 
                 layernumbers2 = layernumbers1;
             end 
             
-            A = g.getA(g);
+            A = g.getA();
             
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
@@ -1072,6 +1072,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                     end
 
                 otherwise
+                    directionality = g.getDirectionalityType(g.layernumber());
                     for n = 1:1:length(layernumbers1)
                         li = layernumbers1(n);
                         lj = layernumbers2(n);
@@ -1080,7 +1081,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                         Aij(sub2ind(size(Aij), nodes1, nodes2)) = 0;
                         A(li, lj) = {Aij};
                         
-                        if g.is_undirected(g) 
+                        if directionality(li, lj) == Graph.UNDIRECTED 
                             Aji = A{lj, li};
                             Aji(sub2ind(size(Aji), nodes2, nodes1)) = 0;
                             A(lj, li) = {Aji};
