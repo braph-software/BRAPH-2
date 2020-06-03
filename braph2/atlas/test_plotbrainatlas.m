@@ -10,7 +10,7 @@ atlas = BrainAtlas('TRIAL', 'Brain Atlas', 'Brain atlas notes', 'BrainMesh_Cereb
 
 %% Test 1: Basic Functions.
 ba = PlotBrainAtlas(atlas);
-h = ba.set_axes();
+ba.set_axes();
 ba.hold_on();
 ba.view(PlotBrainAtlas.VIEW_3D);
 
@@ -58,3 +58,18 @@ ba.br_labs_settings([], ...
 
 close
 close  % close the axis figure.
+
+%% Distance
+file = [fileparts(which('test_braph2')) filesep 'desikan_atlas2.txt'];
+atlas = BrainAtlas.load_from_txt('File', file);
+ba = PlotBrainAtlas(atlas);
+axes = ba.set_axes();
+ba.hold_on();
+ba.view(PlotBrainAtlas.VIEW_3D);
+ba.brain();
+ba.br_sphs()
+ba.br_sphs_on()
+
+ba.distanceMapOn([1 10 29]);  % select the first
+
+close

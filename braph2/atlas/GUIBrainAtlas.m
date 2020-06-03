@@ -107,7 +107,7 @@ PETCOHORT_TP = ['Generate new PET cohort and opens it with ' GUI.PCE_NAME];
 
 %% Application data
 if ~exist('atlas', 'var')
-    atlas = BrainAtlas('', '', '', '', {});
+    atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
 end
 selected = [];
 
@@ -196,6 +196,8 @@ h_brainalpha = [];
 
 h_br = [];
 h_br_visible = [];
+h_br_distance = [];
+previous_style = [];
 
 h_labels = [];
 h_labels_visible = [];
@@ -502,19 +504,20 @@ FIGURE_POSITION = MAINPANEL_POSITION;
 
 ui_panel_figure = uipanel();
 ui_axes_figure = axes();
-ui_checkbox_figure_brain = uicontrol(ui_panel_figure,'Style','checkbox');
-ui_slider_figure_brainalpha = uicontrol(ui_panel_figure,'Style','slider');
-ui_checkbox_figure_axis = uicontrol(ui_panel_figure,'Style','checkbox');
-ui_checkbox_figure_grid = uicontrol(ui_panel_figure,'Style','checkbox');
-ui_checkbox_figure_br = uicontrol(ui_panel_figure,'Style','checkbox');
-ui_checkbox_figure_labels = uicontrol(ui_panel_figure,'Style','checkbox');
-ui_button_figure_3d = uicontrol(ui_panel_figure,'Style','pushbutton');
-ui_button_figure_sagittalright = uicontrol(ui_panel_figure,'Style','pushbutton');
-ui_button_figure_sagittalleft = uicontrol(ui_panel_figure,'Style','pushbutton');
-ui_button_figure_axialdorsal = uicontrol(ui_panel_figure,'Style','pushbutton');
-ui_button_figure_axialventral = uicontrol(ui_panel_figure,'Style','pushbutton');
-ui_button_figure_coronalanterior = uicontrol(ui_panel_figure,'Style','pushbutton');
-ui_button_figure_coronalposterior = uicontrol(ui_panel_figure,'Style','pushbutton');
+ui_checkbox_figure_brain = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+ui_checkbox_figure_distance = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+ui_slider_figure_brainalpha = uicontrol(ui_panel_figure, 'Style', 'slider');
+ui_checkbox_figure_axis = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+ui_checkbox_figure_grid = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+ui_checkbox_figure_br = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+ui_checkbox_figure_labels = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+ui_button_figure_3d = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+ui_button_figure_sagittalright = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+ui_button_figure_sagittalleft = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+ui_button_figure_axialdorsal = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+ui_button_figure_axialventral = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+ui_button_figure_coronalanterior = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+ui_button_figure_coronalposterior = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
 ui_menu_figure_brainfiles = uicontrol(ui_panel_figure, 'Style', 'popupmenu');
 init_figure()
     function init_figure()
@@ -531,6 +534,12 @@ init_figure()
         set(ui_checkbox_figure_brain,'Value',true)
         set(ui_checkbox_figure_brain,'TooltipString',FIG_BRAIN_TP)
         set(ui_checkbox_figure_brain,'Callback',{@cb_figure_plotsettings})
+        
+        set(ui_checkbox_figure_distance, 'Position', [.10 .085 .10 .03])
+        set(ui_checkbox_figure_distance, 'String', 'Distance')
+        set(ui_checkbox_figure_distance, 'Value', false)
+        set(ui_checkbox_figure_distance, 'TooltipString', 'Distance from BR to surf')
+        set(ui_checkbox_figure_distance, 'Callback', {@cb_figure_distance})
         
         set(ui_slider_figure_brainalpha,'Position',[.30 .105 .40 .03])
         set(ui_slider_figure_brainalpha,'String',FIG_BRAINALPHA_CMD)
@@ -638,6 +647,7 @@ init_contextmenu()
         h_brain_visible = FIG_INIT_BRAIN_VISIBLE;
         h_brainalpha = FIG_INIT_BRAIN_ALPHA;
         h_br_visible = FIG_INIT_BR_VISIBLE;
+        h_br_distance = 0;
         
         delete(h_labels)
         h_labels = [];
@@ -672,8 +682,8 @@ init_contextmenu()
         set(ui_contextmenu_atlas_labels, 'Label', 'Labels')
         set(ui_contextmenu_atlas_labels, 'Callback', {@cb_brainview_atlas_labels})
         
-        
-        h_brain_obj = atlas.getPlotBrainAtlas('BrainSurfaceType', [brain_file '.nv']);
+        atlas.setBrainSurfFile([brain_file '.nv'])
+        h_brain_obj = atlas.getPlotBrainAtlas();
         h_brain_outer_obj = h_brain_obj;
         h_brain = h_brain_obj.brain();
         set(h_brain, 'EdgeColor', FIG_EDGECOLOR);
@@ -939,6 +949,19 @@ init_contextmenu()
             end
         end        
     end
+    function cb_figure_distance(~,~) 
+        if get(ui_checkbox_figure_distance, 'Value') ~= h_br_distance
+            h_br_distance = get(ui_checkbox_figure_distance, 'Value');
+            b_s = h_brain_outer_obj.getBrainSurface();           
+            if h_br_distance
+                previous_style = get(b_s, 'Facecolor');
+                h_brain_outer_obj.distanceMapOn(selected);
+            else                
+                h_brain_outer_obj.distanceMapOff(previous_style);
+            end            
+        end
+    end
+
 
 %% Menus
 MENU_FILE = GUI.MENU_FILE;

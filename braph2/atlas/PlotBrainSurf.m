@@ -240,6 +240,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function brain_surf_file = getPlotBrainSurfFile(bs)
             brain_surf_file = bs.brain_surf_file;
         end
+        function brain_surf_coords = getPlotBrainSurfCoords(bs)
+            brain_surf_coords = bs.coord;
+        end
     end
     methods  % editing functions
         function set_surface(bs, brain_surf_file)
