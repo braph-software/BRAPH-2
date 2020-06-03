@@ -107,7 +107,7 @@ PETCOHORT_TP = ['Generate new PET cohort and opens it with ' GUI.PCE_NAME];
 
 %% Application data
 if ~exist('atlas', 'var')
-    atlas = BrainAtlas('', '', '', {});
+    atlas = BrainAtlas('', '', '', '', {});
 end
 selected = [];
 

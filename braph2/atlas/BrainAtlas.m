@@ -3,10 +3,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     % BrainAtlas represents a collection of brain regions.
     % It is a subclass of handle and matlab.mixin.Copyable
     %
-    % BrainAtlas contains and manages brain regions inside an
-    % IndexedDictionary. It has access to all IndexedDictionary methods. 
-    % BrainAtlas can be imported/exported to txt, xls and json.
-    % BrainAtlas can plot the brain regions into the specified surface.
+    % BrainAtlas contains and manages brain regions inside an IndexedDictionary; 
+    % thus, it has access to all IndexedDictionary methods. 
+    % BrainAtlas can be imported/exported to .txt, .xls and .json files.
     %
     % BrainAtlas basic methods:
     %   BrainAtlas              - Constructor
@@ -17,15 +16,14 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   setID                   - sets the id of the BrainAtlas
     %   setLabel                - sets the label of the BrainAtlas
     %   setNotes                - sets the notes of the BrainAtlas
-    %
-    % BrainAtlas get methods:
+    %   setBrainSurfFile        - sets the brain surf file of the BrainAtlas
     %   getID                   - returns the id of the BrainAtlas
     %   getLabel                - returns the label of the BrainAtlas
     %   getNotes                - returns the notes of the BrainAtlas
     %   getBrainRegions         - returns the indexed dictionary with BrainRegions
+    %   getBrainSurfFile        - returns the brain surf file name
     %
     % BrainAtlas plot methods:
-    %   getBrainSurfFile        - returns the brain surface file name
     %   getPlotBrainSurf        - returns a PlotBrainSurf 
     %   getPlotBrainAtlas       - returns a PlotBrainAtlas
     %
@@ -44,7 +42,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getBrainRegions().disp              - displays the indexed dictionary br_idict
     %   getBrainRegions().length            - returns the length of the indexed dictionary br_idict
     %   getBrainRegions().getValueClass     - returns the value_class of the indexed dictionary br_idict
-    %   getBrainRegions().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or objec
+    %   getBrainRegions().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
     %   getBrainRegions().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index
     %   getBrainRegions().containsKey       - bool, checks if the indexed dictionary br_idict contains the key
     %   getBrainRegions().containsValue     - bool, checks if the indexed dictionary br_idict contains the value
@@ -68,7 +66,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getBrainRegions().replaceValue      - replaces a value in the indexed dictionary br_idict
     %   getBrainRegions().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict
     %   getBrainRegions().invert            - inverts position of elements in the indexed dictionary br_idict
-    %   getBrainRegions().move_to           - move an element to a position in the indexed dictionary br_idict
+    %   getBrainRegions().move_to           - moves an element to a position in the indexed dictionary br_idict
     %   getBrainRegions().remove_all        - removes all selected elements from the indexed dictionary br_idict
     %   getBrainRegions().move_up           - moves an element up in the indexed dictionary br_idict
     %   getBrainRegions().move_down         - moves an element down in the indexed dictionary br_idict
@@ -82,15 +80,15 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         label  % extended name of the brain atlas
         notes  % notes about the brain atlas
         br_idict  % indexed dictionary with BrainRegions
-        brain_surface_file  % file of the brain surface
+        brain_surf_file  % file of the brain surf
     end
     methods  % Basic functions
-        function atlas = BrainAtlas(id, label, notes, brain_regions)
-            % BrainAtlas(NAME, BrainRegions) creates a BrainAtlas with
-            % given name NAME and initializes the dictionary with
+        function atlas = BrainAtlas(id, label, notes, brain_surf_file, brain_regions)
+            % BrainAtlas(ID, LABEL, NOTES, BRAIN_SURF_FFILE, BRAIN_REGIONS) creates a BrainAtlas with
+            % given ID, LABEL, NOTES, AND BRAIN_SURF_FILE and initializes the dictionary with
             % BRAIN_REGIONS (cell array of BrainRegions).
             %
-            % See also BrainRegion.
+            % See also BrainRegion, IndexedDictionary.
             
             assert(iscell(brain_regions) && all(cellfun(@(br) isa(br, 'BrainRegion'), brain_regions)), ...
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
@@ -99,6 +97,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             atlas.setID(id)
             atlas.setLabel(label)
             atlas.setNotes(notes)
+            atlas.setBrainSurfFile(brain_surf_file)
             
             atlas.br_idict = IndexedDictionary('BrainRegion');
             for i = 1:1:length(brain_regions)
@@ -106,10 +105,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             end
         end        
         function str = tostring(atlas)
-            % TOSTRING string with information about the BrainAtlas
+            % TOSTRING string with information about the brain atlas
             %
-            % STRING = TOSTRING(ATLAS) returns string with the BrainAtlas name
-            % and brain atlas size.
+            % STRING = TOSTRING(ATLAS) returns string with the BrainAtlas
+            % class, ID, label and size.
             %
             % See also disp().
             
@@ -118,8 +117,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         function disp(atlas)
             % TOSTRING displays information about the brain atlas
             %
-            % DISP(ATLAS) displays information about the brainaltas name,
-            % class, size. BrainRegions key, label, name and position.
+            % DISP(ATLAS) displays information about the atlas class, id,
+            % label, notes, and size. BrainRegions key, id, label and position.
             %
             % See also tostring().
             
@@ -175,10 +174,32 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             atlas.notes = notes;
         end
+        function setBrainSurfFile(atlas, brain_surf_file)
+            % SETBRAINSURFFILE sets the surf file to the BrainAtlas.
+            %
+            % SETBRAINSURFFILE(ATLAS, BRAINSURFFILE) checks if the surf is a 
+            % correct brain surf, then sets the surf file BRAINSURFFILE 
+            % to the BrainAtlas ATLAS.
+            %
+            % See also getBrainSurfFile().
+            
+            assert(ischar(brain_surf_file), ...
+                [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT ], ...
+                'Brain Surf File must be a string')
+            
+            
+            % assert is part of the brainsurf folder
+            assert(ismember(brain_surf_file, atlas.getBrainSurfList()), ...
+                [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT ], ...
+                'Brain Surf File is not part of the available BrainSurf')
+            
+            
+            atlas.brain_surf_file = brain_surf_file;
+        end
     end
     methods  % Get functions
         function id = getID(atlas)
-            % GETID returns the id of the BrainAtlas.
+            % GETID returns the id of the atlas.
             %
             % ID = GETID(ATLAS) returns the id of the BrainAtlas.
             %
@@ -187,7 +208,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             id = atlas.id;
         end
         function label = getLabel(atlas)
-            % GETLABEL returns the label of the BrainAtlas.
+            % GETLABEL returns the label of the atlas.
             %
             % LABEL = GETLABEL(ATLAS) returns the label of the BrainAtlas.
             %
@@ -196,7 +217,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             label = atlas.label;
         end
         function notes = getNotes(atlas)
-            % GETNOTES returns the notes of the BrainAtlas.
+            % GETNOTES returns the notes of the atlas.
             %
             % NOTES = GETNOTES(ATLAS) returns the notes of the BrainAtlas.
             %
@@ -215,8 +236,15 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             br_idict = atlas.br_idict;
         end
-        function brain_surface_file = getBrainSurfFile(atlas)
-            brain_surface_file = atlas.brain_surface_file;
+        function brain_surf_file = getBrainSurfFile(atlas)
+            % GETBRAINSURFFILE returns the brain surf file 
+            %
+            % BRAIN_SRUF_FILE = GETBRAINSURFFILE(ATLAS) returns the brain
+            % surf file of the atlas.
+            %
+            % See also setBrainSurfFile().
+            
+            brain_surf_file = atlas.brain_surf_file;
         end
         % Useful cellfun expressions:
         % cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
@@ -229,27 +257,25 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     end
     methods  % Plot functions
         function bs = getPlotBrainSurf(atlas, varargin)
-            % GETPLOTBRAINSURF returns the brain surface plot.
+            % GETPLOTBRAINSURF returns the brain surf plot.
             %
             % GETPLOTBRAINSURF(ATLAS, VARARGIN) returns the handle of the
-            % brain surface plot
+            % brain surf plot
             %
             % See also getPlotBrainAtlas().
             
-            bs = PlotBrainSurf(varargin);
-            atlas.brain_surface_file = bs.getPlotBrainSurfFile();
+            bs = PlotBrainSurf(atlas.getBrainSurfFile, varargin{:});
         end
         function ba = getPlotBrainAtlas(atlas, varargin)
-            % GETPLOTBRAINATLAS returns the brain atlas surface and regions plot
+            % GETPLOTBRAINATLAS returns the brain atlas surf and regions plot
             %
             % GETBRAINPLOTATLAS(ATLAS, VARARGIN) returns the handle of the
-            % the brain atlas plot, which contains the surface and the
+            % the brain atlas plot, which contains the surf and the
             % brain regions nodes.
             %
             % See also getPlotBrainSurf().           
            
             ba = PlotBrainAtlas(atlas, varargin{:});   
-            atlas.brain_surface_file = ba.getPlotBrainSurfFile();
         end
 % bg = getPlotBrainGraph(atlas, varargin)
     end
@@ -270,6 +296,21 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
         end
     end    
     methods (Static)  % Save and load functions
+        function brain_surf_list = getBrainSurfList()  
+            % GETBRAINSURFLIST returns the available brain surfs names
+            %
+            % BRAIN_SURF_LIST = GETBRAINSURFLIST() returns an array
+            % BRAIN_SURF_LIST containing the names of all brain surfs
+            % inside brainsurfs folder.
+            %
+            % See also setBrainSurfFile().
+            
+            folder_struct = dir(['atlas' filesep 'brainsurfs']);
+            folder_struct = folder_struct(~ismember({folder_struct(:).name}, {'.', '..'}));  % remove '.' and '..'
+            for i = 1:1:length(folder_struct)
+                brain_surf_list{i} = folder_struct(i).name;
+            end            
+        end
         function atlas = load_from_xls(varargin)
             % LOAD_FROM_XLS loads brain atlas from XLS file
             %
@@ -287,7 +328,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also BrainAtlas, uigetfile, fopen.
             
             % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', {}); 
+            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {}); 
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
@@ -379,7 +420,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also BrainAtlas, uigetfile, readtable
             
             % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', {});
+            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
@@ -471,7 +512,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % See also BrainAtlas, uigetfile, jsondecode
             
             % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', {});
+            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});

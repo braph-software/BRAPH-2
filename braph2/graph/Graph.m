@@ -1,5 +1,5 @@
 classdef Graph < handle & matlab.mixin.Copyable
-    % Graph (Abstract): A graph
+    % Graph (Abstract) A graph
     % Graph provides the methods necessary for all graphs.
     % Instances of this class cannot be created. Use one of the subclasses.
     % The subclasses must be created inside the folder
