@@ -1,106 +1,128 @@
 classdef Graph < handle & matlab.mixin.Copyable
-    % Graph (Abstract) A graph
+    % Graph A graph
+    % Graph provides the methods necessary for all graphs.
+    % It is a subclass of handle and matlab.mixin.Copyable.
+    %
     % Graph provides the methods necessary for all graphs.
     % Instances of this class cannot be created. Use one of the subclasses.
     % The subclasses must be created inside the folder
     % ./braph/graph/graphs/. 
-    % It is a subclass of handle and matlab.mixin.Copyable.
     %
     % Properties(Constant):
     %   
-    %   GRAPH    - single layer graph
-    %   GRAPH_NAME    - name of GRAPH 
-    %   GRAPH_DESCRIPTION   - description of GRAPH
-    %   MULTIGRAPH    - multiple unconnected graphs
-    %   MULTIGRAPH_NAME    - name of MULTIGRAPH 
-    %   MULTIGRAPH_DESCRIPTION   - description of MULTIGRAPH
-    %   ORDERED_MULTIPLEX    - ordered multiplex graph
-    %   ORDERED_MULTIPLEX_NAME    - name of ORDERED_MULTIPLEX 
-    %   ORDERED_MULTIPLEX_DESCRIPTION   - description of ORDERED_MULTIPLEX
-    %   MULTIPLEX    - multiplex graph
-    %   MULTIPLEX_NAME    - name of MULTIPLEX 
-    %   MULTIPLEX_DESCRIPTION   - description of MULTIPLEX   
-    %   ORDERED_MULTILAYER    - ordered multilayer graph
-    %   ORDERED_MULTILAYER_NAME    - name of ORDERED_MULTILAYER 
-    %   ORDERED_MULTILAYER_DESCRIPTION   - description of ORDERED_MULTILAYER
-    %   MULTILAYER    - multilayer graph
-    %   MULTILAYER_NAME    - name of MULTILAYER 
-    %   MULTILAYER_DESCRIPTION   - description of MULTILAYER    
-    %   TYPE_NUMBER    - number of graph types
-    %   TYPE_NAME    - name of all graph types
-    %   TYPE_DESCRIPTION    - description of all graph types
-    %   WEIGHTED - weighted graph
-    %   WEIGHTED_NAME    - name of WEIGHTED
-    %   WEIGHTED_DESCRIPTION    - description of WEIGHTED
-    %   BINARY - binary graph
-    %   BINARY_NAME    - name of BINARY
-    %   BINARY_DESCRIPTION  - description of BINARY
+    %   GRAPH                       - single layer graph
+    %   GRAPH_NAME                  - name of GRAPH 
+    %   GRAPH_DESCRIPTION           - description of GRAPH
+    %   MULTIGRAPH                  - multiple unconnected graphs
+    %   MULTIGRAPH_NAME             - name of MULTIGRAPH 
+    %   MULTIGRAPH_DESCRIPTION      - description of MULTIGRAPH
+    %   ORDERED_MULTIPLEX           - ordered multiplex graph
+    %   ORDERED_MULTIPLEX_NAME      - name of ORDERED_MULTIPLEX 
+    %   ORDERED_MULTIPLEX_DESCRIPTION - description of ORDERED_MULTIPLEX
+    %   MULTIPLEX                   - multiplex graph
+    %   MULTIPLEX_NAME              - name of MULTIPLEX 
+    %   MULTIPLEX_DESCRIPTION       - description of MULTIPLEX   
+    %   ORDERED_MULTILAYER          - ordered multilayer graph
+    %   ORDERED_MULTILAYER_NAME     - name of ORDERED_MULTILAYER 
+    %   ORDERED_MULTILAYER_DESCRIPTION - description of ORDERED_MULTILAYER
+    %   MULTILAYER                  - multilayer graph
+    %   MULTILAYER_NAME             - name of MULTILAYER 
+    %   MULTILAYER_DESCRIPTION      - description of MULTILAYER    
+    %   TYPE_NUMBER                 - number of graph types
+    %   TYPE_NAME                   - name of all graph types
+    %   TYPE_DESCRIPTION            - description of all graph types
+    %   WEIGHTED                    - weighted graph
+    %   WEIGHTED_NAME               - name of WEIGHTED
+    %   WEIGHTED_DESCRIPTION        - description of WEIGHTED
+    %   BINARY                      - binary graph
+    %   BINARY_NAME                 - name of BINARY
+    %   BINARY_DESCRIPTION          - description of BINARY
     %   CONNECTIVITY_TYPE_NUMBER    - number of graph connectivity types
-    %   CONNECTIVITY_TYPE_NAME    - name of graph connectivity types
-    %   CONNECTIVITY_TYPE_DESCRIPTION    - description of graph connectivity types
-    %   DIRECTED    - directed graph
-    %   DIRECTED_NAME   - name of DIRECTED
-    %   DIRECTED_DESCRIPTION    - description of DIRECTED
-    %   UNDIRECTED  - undirected graph
-    %   UNDIRECTED_NAME     - name of UNDIRECTED
-    %   UNDIRECTED_DESCRIPTION  -  description of UNDIRECTED
-    %   DIRECTIONALITY_TYPE_NUMBER     - number of graph directionality types
-    %   DIRECTIONALITY_TYPE_NAME  - name of graph directionality types
-    %   DIRECTIONALITY_TYPE_DESCRIPTION   - description of graph directionality types
-    %   NONSELFCONNECTED   - not self-connected graph
-    %   NONSELFCONNECTED_NAME  - name of NONSELFCONNECTED
-    %   NONSELFCONNECTED_DESCRIPTION   - description of NONSELFCONNECTED
-    %   SELFCONNECTED   - self-connected graph
-    %   SELFCONNECTED_NAME  - name of SELFCONNECTED
+    %   CONNECTIVITY_TYPE_NAME      - name of graph connectivity types
+    %   CONNECTIVITY_TYPE_DESCRIPTION - description of graph connectivity types
+    %   DIRECTED                    - directed graph
+    %   DIRECTED_NAME               - name of DIRECTED
+    %   DIRECTED_DESCRIPTION        - description of DIRECTED
+    %   UNDIRECTED                  - undirected graph
+    %   UNDIRECTED_NAME             - name of UNDIRECTED
+    %   UNDIRECTED_DESCRIPTION      -  description of UNDIRECTED
+    %   DIRECTIONALITY_TYPE_NUMBER  - number of graph directionality types
+    %   DIRECTIONALITY_TYPE_NAME    - name of graph directionality types
+    %   DIRECTIONALITY_TYPE_DESCRIPTION - description of graph directionality types
+    %   NONSELFCONNECTED            - not self-connected graph
+    %   NONSELFCONNECTED_NAME       - name of NONSELFCONNECTED
+    %   NONSELFCONNECTED_DESCRIPTION - description of NONSELFCONNECTED
+    %   SELFCONNECTED               - self-connected graph
+    %   SELFCONNECTED_NAME          - name of SELFCONNECTED
     %   SELFCONNECTED_DESCRIPTION   - description of SELFCONNECTED
-    %   SELFCONNECTIVITY_TYPE_NUMBER     - number of graph self-connectivity types
+    %   SELFCONNECTIVITY_TYPE_NUMBER - number of graph self-connectivity types
     %   SELFCONNECTIVITY_TYPE_NAME  - name of graph self-connectivity types
-    %   SELFCONNECTIVITY_TYPE_DESCRIPTION   - description of graph self-connectivity types
-    %   NONNEGATIVE     - non-negative graph
-    %   NONNEGATIVE_NAME    - name of NONNEGATIVE
+    %   SELFCONNECTIVITY_TYPE_DESCRIPTION - description of graph self-connectivity types
+    %   NONNEGATIVE                 - non-negative graph
+    %   NONNEGATIVE_NAME            - name of NONNEGATIVE
     %   NONNEGATIVE_DESCRIPTION     - description of NONNEGATIVE
-    %   NEGATIVE    - negative graph
-    %   NEGATIVE_NAME   - name of NEGATIVE
-    %   NEGATIVE_DESCRIPTION    - description of NEGATIVE
-    %   NEGATIVITY_TYPE_NUMBER   - number of graph negativity types
-    %   NEGATIVITY_TYPE_NAME    - name of graph negativity types
-    %   NEGATIVITY_TYPE_DESCRIPTION     - description of graph negativity types
+    %   NEGATIVE                    - negative graph
+    %   NEGATIVE_NAME               - name of NEGATIVE
+    %   NEGATIVE_DESCRIPTION        - description of NEGATIVE
+    %   NEGATIVITY_TYPE_NUMBER      - number of graph negativity types
+    %   NEGATIVITY_TYPE_NAME        - name of graph negativity types
+    %   NEGATIVITY_TYPE_DESCRIPTION - description of graph negativity types
     %
-    % Graph methods:
-    %   checkA      - checks if A is correct for the graph type.
-    %   getList     - return a list with subclasses of graph.
-    %   getClass    - returns the class type of the graph.
-    %   getName     - returns the name of the graph.
-    %   getDescription - returns the description of the graph.
-    %   getGraphType    - returns the graph type.
-    %   is_graph    - checks if the graph is a single layer graph.
-    %   is_multigraph    - checks if the graph is a multigraph.
-    %   is_ordered_multiplex   - checks if the graph is an ordered multiplex graph.
-    %   is_multiplex    - checks if the graph is a multiplex graph.
-    %   is_ordered_multilayer   - checks if the graph is an ordered multilayer graph.
-    %   is_multilayer   - checks if the graph is a multilayer graph.
-    %   getConnectivityType    - returns if the graph is binary or weighted.
-    %   is_weighted - checks if the graph is weighted.
-    %   is_binary   - checks if the graph is binary.
-    %   getEgdeType    - returns if graph is directed or undirected.
-    %   is_directed - checks if the graph is directed.
-    %   is_undirected - checks if the graph is undirected.
-    %   getSelfConnectivityType    - returns if graph is self-connected or not self-connected.
-    %   is_selfconnected - checks if the graph is self connected.
-    %   is_not_selfconnected - checks if the graph is not self connected.
-    %   getNegativityType    - returns if graph is negative or non-negative
-    %   is_nonnegative - checks whether graph allows non-negative values
-    %   is_negative - checks whether graph allows negative values
-    %   tostring    - returns a string representing the graph.
-    %   disp        - displays the graph.
-    %   nodenumber  - returns the number of nodes in a graph.
-    %   layernumber  - returns the number of layers in a graph. 
-    %   getA        - returns the adjacency matrix.
-    %   getGraph    - returns a graph with the given inputs.
-    %   getCompatibleMeasureList - returns a list with the compatible measures.
-    %   getCompatibleMeasureNumber - returns a number of the compatible measures.
+    % Graph check methods (static):
+    %   checkA                      - checks if A is correct for the graph type
+    %   checkConnectivity           - checks if A is correct for the connectivity type
+    %   checkDirectionality         - checks if A is correct for the directionality type
+    %   checkSelfConnectivity       - checks if A is correct for the self-connectivity type
+    %   checkNegativity             - checks if A is correct for the negativity type
     %
-    % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD.
+    % Graph getGraph method (static):
+    %   getGraph                    - returns a graph with the given inputs
+    %
+    % Graph descriptive methods (static):
+    %   getList                     - returns a list with subclasses of graph
+    %   getClass                    - returns the class type of the graph
+    %   getName                     - returns the name of the graph
+    %   getDescription              - returns the description of the graph
+    %   getGraphType                - returns the graph type
+    %   is_graph                    - checks if the graph is a single layer graph
+    %   is_multigraph               - checks if the graph is a multigraph
+    %   is_ordered_multiplex        - checks if the graph is an ordered multiplex graph
+    %   is_multiplex                - checks if the graph is a multiplex graph
+    %   is_ordered_multilayer       - checks if the graph is an ordered multilayer graph
+    %   is_multilayer               - checks if the graph is a multilayer graph
+    %   getConnectivityType         - returns the connectivity type
+    %   is_weighted                 - checks if the graph is weighted
+    %   is_binary                   - checks if the graph is binary
+    %   getDirectionalityType       - returns the directionality type of the graph
+    %   is_directed                 - checks if the graph is directed
+    %   is_undirected               - checks if the graph is undirected
+    %   getSelfConnectivityType     - returns the self-connectivity type of the graph
+    %   is_selfconnected            - checks if the graph is self-connected
+    %   is_not_selfconnected        - checks if the graph is not self-connected
+    %   getNegativityType           - returns the negativity type of the graph
+    %   is_nonnegative              - checks whether graph allows non-negative values
+    %   is_negative                 - checks whether graph allows negative values
+    %
+    % Graph basic methods:
+    %   tostring                    - returns a string representing the graph
+    %   disp                        - displays the graph
+    %   getSettings                 - returns the settings of the graph
+    %
+    % Graph inspection methods:  
+    %   nodenumber                  - returns the number of nodes in a graph
+    %   layernumber                 - returns the number of layers in a graph
+    %   getA                        - returns the adjacency matrix or 2D-cell array of adjacency matrices
+    %   getMeasure                  - returns measure
+    %   is_measure_calculated       - checks if a measure is calculated
+    %   getMeasureValue             - returns the value of a measure
+    %   getCompatibleMeasureList    - returns a list with the compatible measures
+    %   getCompatibleMeasureNumber  - returns a number of the compatible measures
+    %
+    % Graph attacks methods (static):
+    %   nodeattack                  - removes given nodes from a graph
+    %   edgeattack                  - removes given edges from a graph
+    %
+    % See also Measure, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
 
 	properties (Constant)
         % Graph types
@@ -246,7 +268,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     methods (Access=protected)  % Contructor
         function g = Graph(A, varargin)
             % Graph(A) creates a graph with the default properties.
-            % A is the adjacency matrix or the cell array of adjacency
+            % A is the adjacency matrix or the 2-D cell array of adjacency
             % matrices for multiple graphs. This method is only accessible 
             % by the subclasses of Graph.
             %
@@ -257,7 +279,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % GRAPH(A, 'Settings', SETTINGS) ceates a graph and
             % initializes the property settings with SETTINGS.
             %
-            % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
+            % See also Measure, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
            
             if length(varargin) == 1
                 varargin = varargin{:};
@@ -290,6 +312,8 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % CHECKA(GRAPH_TYPE, A) checks if adjacency matrix A or cell array of
             % adjacency matrices A is correct for the GRAPH_TYPE.
+            %
+            % See also checkConnectivity(), checkDirectionality(), checkNegativity(), checkSelfConnectivity().
             
             % Basic checks
             if graph_type == Graph.GRAPH  % if graph, adjacency matrix
@@ -359,8 +383,15 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
         end
         function checkConnectivity(connectivity_type, A)
+            % CHECKCONNECTIVITY checks if adjacency matrix A or cell array of adjacency matrices A is correct for the connectivity type
+            %
+            % CHECKCONNECTIVITY(CONNECTIVITY_TYPE, A) checks if adjacency 
+            % matrix A or cell array of adjacency matrices A is correct for
+            % the CONNECTIVITY_TYPE of the graph.
+            % This check assumes that checkA has already been passed.
+            %
+            % See also checkA(), checkDirectionality(), checkNegativity(), checkSelfConnectivity().
 
-            % This check assumes that checkA has already been passed
             
             if isnumeric(A)  % A is a matrix
                 switch connectivity_type 
@@ -393,8 +424,14 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
         end
         function checkDirectionality(directionality_type, A, At)
-
-            % This check assumes that checkA has already been passed
+            % CHECKDIRECTIONALITY checks if adjacency matrix A or cell array of adjacency matrices A is correct for the directionality type
+            %
+            % CHECKDIRECTIONALITY(DIRECTIONALITY_TYPE, A) checks if adjacency 
+            % matrix A or cell array of adjacency matrices A is correct for
+            % the DIRECTIONALITY_TYPE of the graph.
+            % This check assumes that checkA has already been passed.
+            %
+            % See also checkA(), checkConnectivity(), checkNegativity(), checkSelfConnectivity().    
             
             if nargin < 3
                 At = A';
@@ -436,8 +473,14 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
         end
         function checkSelfConnectivity(selfconnectivity_type, A)
-
-            % This check assumes that checkA has already been passed
+            % CHECKSELFCONNECTIVITY checks if adjacency matrix A or cell array of adjacency matrices A is correct for the self-connectivity type
+            %
+            % CHECKSELFCONNECTIVITY(SELFCONNECTIVITY_TYPE, A) checks if adjacency 
+            % matrix A or cell array of adjacency matrices A is correct for
+            % the SELFCONNECTIVITY_TYPE of the graph.
+            % This check assumes that checkA has already been passed.
+            %
+            % See also checkA(), checkConnectivity(), checkDirectionality(), checkNegativity().    
             
             if isnumeric(A)  % A is a matrix
                 switch selfconnectivity_type 
@@ -468,8 +511,14 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
         end      
         function checkNegativity(negativity_type, A)
-            
-            % This check assumes that checkA has already been passed
+            % CHECKNEGATIVITY checks if adjacency matrix A or cell array of adjacency matrices A is correct for the negativity type
+            %
+            % CHECKNEGATIVITY(NEGATIVITY_TYPE, A) checks if adjacency 
+            % matrix A or cell array of adjacency matrices A is correct for
+            % the NEGATIVITY_TYPE of the graph.
+            % This check assumes that checkA has already been passed.
+            %
+            % See also checkA(), checkConnectivity(), checkDirectionality(), checkSelfConnectivity().    
             
             if isnumeric(A)  % A is a matrix
                 switch negativity_type
@@ -516,7 +565,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % G = GETGRAPH(G, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
             % G = GETGRAPH(GRAPH_CLASS, A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-            % initializes he property settings with the properties and values.
+            % initializes the property settings with the properties and values.
             %
             % G = GETGRAPH(G, A, 'Settings', SETTINGS)
             % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS)
@@ -678,13 +727,18 @@ classdef Graph < handle & matlab.mixin.Copyable
             bool = Graph.getGraphType(g) == Graph.MULTILAYER;
         end
         function connectivity_type = getConnectivityType(g, varargin)
-            % GETCONNECTIVITYTYPE returns if graph is binary or weighted
+            % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G) returns if
-            % the instance of the concrete graph G is binary or weighted.
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G) returns the
+            % connectivity type of the instance of the concrete graph G.
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(GRAPH_CLASS) returns 
-            % if graph whose class is GRAPH_CLASS is binary or weighted.
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(GRAPH_CLASS)
+            % returns the connectivity type of the graph whose class is GRAPH_CLASS.
+            %
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G, LAYERNUMBER)
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(GRAPH_CLASS, LAYERNUMBER)
+            % returns a matrix with the connectivity type of each layer in
+            % a multiple layer graph.
             %
             % See also is_binary(), is_weighted().     
             
@@ -717,15 +771,18 @@ classdef Graph < handle & matlab.mixin.Copyable
             bool = Graph.getConnectivityType(g, varargin{:}) == Graph.BINARY;
         end
         function directionality_type = getDirectionalityType(g, varargin)
-            % GETDIRECTIONALITYTYPE returns if graph is directed or undirected
+            % GETDIRECTIONALITYTYPE returns the directionality type of the graph
             %
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(G) returns if
-            % the instance of the concrete graph G is directed or not
-            % undirected.
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(G) returns the
+            % directionality type of the instance of the concrete graph G.
             %
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(GRAPH_CLASS)
-            % returns if graph whose class is GRAPH_CLASS is directed or
-            % undirected.
+            % returns the directionality type of the graph whose class is GRAPH_CLASS.
+            %
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(G, LAYERNUMBER)
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(GRAPH_CLASS, LAYERNUMBER)
+            % returns a matrix with the directionality type of each layer 
+            % in a multiple layer graph.
             %
             % See also is_directed(), is_undirected().     
                          
@@ -758,15 +815,18 @@ classdef Graph < handle & matlab.mixin.Copyable
             bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType(g, varargin)
-            % GETSELFCONNECTIVITYTYPE returns if graph is self-connected or not self-connected
+            % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
             %
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(G) returns if
-            % the instance of the concrete graph G is self-connected or not
-            % self-connected.
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(G) returns the
+            % self-connectivity type of the instance of the concrete graph G.
             %
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(GRAPH_CLASS)
-            % returns if graph whose class is GRAPH_CLASS is self-connected
-            % or not self-connected.
+            % returns the self-connectivity type of the graph whose class is GRAPH_CLASS.
+            %
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(G, LAYERNUMBER)
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(GRAPH_CLASS, LAYERNUMBER)
+            % returns a matrix with the self-connectivity  type of each layer 
+            % in a multiple layer graph.
             %
             % See also is_selfconnected(), is_not_selfconnected().     
                         
@@ -799,13 +859,18 @@ classdef Graph < handle & matlab.mixin.Copyable
             bool = Graph.getSelfConnectivityType(g, varargin{:}) == Graph.NONSELFCONNECTED;
         end
         function negativity_type = getNegativityType(g, varargin)
-            % GETNEGATIVITYTYPE returns if graph is negative or non-negative
+            % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
-            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G) returns if the instance of the
-            % concrete graph G is negative or non-negative.
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G) returns the
+            % negativity type of the instance of the concrete graph G.
             %
-            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(GRAPH_CLASS) returns if graph
-            % whose class is GRAPH_CLASS is negative or non-negative.
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(GRAPH_CLASS) returns 
+            % the negativity type of the graph whose class is GRAPH_CLASS.
+            %
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G, LAYERNUMBER)
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(GRAPH_CLASS, LAYERNUMBER)
+            % returns a matrix with the negativity  type of each layer in
+            % a multiple layer graph.
             %
             % See also is_negative(), is_nonnegative().     
             
@@ -838,7 +903,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             bool = Graph.getNegativityType(g, varargin{:}) == Graph.NEGATIVE;
         end
     end
-    methods  % Basic functions
+    methods  % Basic methods
         function str = tostring(g)
             % TOSTRING string with information about the graph
             %
@@ -886,11 +951,13 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
 
     end
-    methods  % Inspection functions
+    methods  % Inspection methods
         function n = nodenumber(g)
             % NODENUMBER returns the number of nodes in the graph
             %
-            % N = NODENUMBER(G) returns the number of nodes in graph G.
+            % N = NODENUMBER(G) returns the number of nodes in graph G. For
+            % non single layer graphs it returns an array with the number
+            % of nodes in each layer.
             %
             % See also getA(), getSettings(), layernumber().
 
