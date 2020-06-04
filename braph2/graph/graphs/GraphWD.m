@@ -1,24 +1,25 @@
 classdef GraphWD < Graph
-    % GraphWD < Graph: A weighted directed graph
+    % GraphWD A weighted directed graph
     % GraphWD represents a weighted directed graph.
     %
+    % GraphWD consists of a weighted directed graph.
+    %
     % GraphWD methods:
-    %   GraphWD     - constructor.
+    %   GraphWD                 - constructor
     %
-    % GraphWD methods (static):
-    %   getClass    - return the class type GraphWD.
-    %   getName     - return the complete name of GraphWD.
-    %   getDescription - return the description of GraphWD.
-    %   is_selfconnected - boolean, checks if the graph is self-connected.
-    %   is_nonnegative - boolean, checks if the graph is non-negative.
-    %   is_weighted - boolean, checks if the graph is weighted.
-    %   is_binary   - boolean, checks if the graph is binary.
-    %   is_directed - boolean, checks if the graph is directed.
-    %   is_undirected - boolean, checks if the graph is undirected.
-    %   getCompatibleMeasureList - returns a list with compatible measures.
-    %   getCompatibleMeasureNumber - returns the number of compatible measures.
+    % GraphWD descriptive methods (static):
+    %   getClass                - returns the class name
+    %   getName                 - returns the complete name
+    %   getDescription          - returns the description
+    %   getGraphType            - returns the graph type
+    %   getConnectivityType     - returns the connectivity type of the graph
+    %   getDirectionalityType   - returns the directionality type of the graph
+    %   getSelfConnectivityType - returns the self-connectivity type of the graph
+    %   getNegativityType       - returns the negativity type of the graph
+    %   getCompatibleMeasureList - returns a list with compatible measures
+    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
-    % See also Graph, GraphBU, GraphBD, GraphWU.
+    % See also Graph, DummyGraph, GraphBU, GraphBD, GraphWU.
     
     methods
         function g = GraphWD(A, varargin)
@@ -36,7 +37,7 @@ classdef GraphWD < Graph
             % functions: DEDIAGONALIZE, SEMIPOSITIVE, STANDARDIZE.
             % It calls the superclass constructor GRAPH.
             %
-            % See also Graph, GraphBU, GraphBD, GraphWU.
+            % See also Graph, DummyGraph, GraphBU, GraphBD, GraphWU.
             
             A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
             A = semipositivize(A, varargin{:});  % removes negative weights
@@ -51,7 +52,7 @@ classdef GraphWD < Graph
             %
             % GRAPH_CLASS = GETCLASS() returns the class, 'GraphWD'.
             %
-            % See also getName().
+            % See also getName(), getDescription().
             
             graph_class = 'GraphWD';
         end
@@ -60,7 +61,7 @@ classdef GraphWD < Graph
             %
             % NAME = GETCLASS() returns the name, 'Weighted Directed Graph'.
             %
-            % See also getClass().
+            % See also getClass(), getDescription().
             
             name = 'Weighted Directed Graph';
         end
@@ -69,7 +70,7 @@ classdef GraphWD < Graph
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHWD.
             %
-            % See also getName()
+            % See also getClass(), getName().
             
             description = [ ...
                 'In a weighted directed (WD) graph, ' ...
@@ -79,24 +80,48 @@ classdef GraphWD < Graph
                 ];
         end      
         function graph_type = getGraphType()
+            % GETGRAPHTYPE returns the graph type
+            %
+            % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.GRAPH.
+            %
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
+          
             graph_type = Graph.GRAPH;
         end
         function connectivity_type = getConnectivityType()
+            % GETCONNECTIVITYTYPE returns the connectivity type of the graph
+            %
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.WEIGHTED.
+            %    
+            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
+           
             connectivity_type = Graph.WEIGHTED;
         end
         function directionality_type = getDirectionalityType()
+            % GETDIRECTIONALITYTYPE returns the directionality type of the graph
+            %   
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.DIRECTED.
+            %
+            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
+                   
             directionality_type = Graph.DIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType()
-            selfconnectivity_type = Graph.NOT_SELFCONNECTED;
+            % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
+            %    
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
+            %
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
+       
+            selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
         function negativity_type = getNegativityType()
-            % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
+            % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
-            % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
-            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
-            
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
+    
             negativity_type = Graph.NONNEGATIVE;
         end
     end
