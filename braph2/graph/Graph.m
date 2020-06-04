@@ -9,61 +9,78 @@ classdef Graph < handle & matlab.mixin.Copyable
     % ./braph/graph/graphs/. 
     %
     % Properties(Constant):
-    %   
     %   GRAPH                       - single layer graph
     %   GRAPH_NAME                  - name of GRAPH 
     %   GRAPH_DESCRIPTION           - description of GRAPH
+    %
     %   MULTIGRAPH                  - multiple unconnected graphs
     %   MULTIGRAPH_NAME             - name of MULTIGRAPH 
     %   MULTIGRAPH_DESCRIPTION      - description of MULTIGRAPH
+    %
     %   ORDERED_MULTIPLEX           - ordered multiplex graph
     %   ORDERED_MULTIPLEX_NAME      - name of ORDERED_MULTIPLEX 
     %   ORDERED_MULTIPLEX_DESCRIPTION - description of ORDERED_MULTIPLEX
+    %
     %   MULTIPLEX                   - multiplex graph
     %   MULTIPLEX_NAME              - name of MULTIPLEX 
-    %   MULTIPLEX_DESCRIPTION       - description of MULTIPLEX   
+    %   MULTIPLEX_DESCRIPTION       - description of MULTIPLEX
+    %
     %   ORDERED_MULTILAYER          - ordered multilayer graph
     %   ORDERED_MULTILAYER_NAME     - name of ORDERED_MULTILAYER 
     %   ORDERED_MULTILAYER_DESCRIPTION - description of ORDERED_MULTILAYER
+    %
     %   MULTILAYER                  - multilayer graph
     %   MULTILAYER_NAME             - name of MULTILAYER 
-    %   MULTILAYER_DESCRIPTION      - description of MULTILAYER    
+    %   MULTILAYER_DESCRIPTION      - description of MULTILAYER
+    %
     %   TYPE_NUMBER                 - number of graph types
     %   TYPE_NAME                   - name of all graph types
     %   TYPE_DESCRIPTION            - description of all graph types
+    %
     %   WEIGHTED                    - weighted graph
     %   WEIGHTED_NAME               - name of WEIGHTED
     %   WEIGHTED_DESCRIPTION        - description of WEIGHTED
+    %
     %   BINARY                      - binary graph
     %   BINARY_NAME                 - name of BINARY
     %   BINARY_DESCRIPTION          - description of BINARY
+    %
     %   CONNECTIVITY_TYPE_NUMBER    - number of graph connectivity types
     %   CONNECTIVITY_TYPE_NAME      - name of graph connectivity types
     %   CONNECTIVITY_TYPE_DESCRIPTION - description of graph connectivity types
+    %
     %   DIRECTED                    - directed graph
     %   DIRECTED_NAME               - name of DIRECTED
     %   DIRECTED_DESCRIPTION        - description of DIRECTED
+    %
     %   UNDIRECTED                  - undirected graph
     %   UNDIRECTED_NAME             - name of UNDIRECTED
     %   UNDIRECTED_DESCRIPTION      -  description of UNDIRECTED
+    %
     %   DIRECTIONALITY_TYPE_NUMBER  - number of graph directionality types
     %   DIRECTIONALITY_TYPE_NAME    - name of graph directionality types
     %   DIRECTIONALITY_TYPE_DESCRIPTION - description of graph directionality types
+    %
     %   NONSELFCONNECTED            - not self-connected graph
     %   NONSELFCONNECTED_NAME       - name of NONSELFCONNECTED
     %   NONSELFCONNECTED_DESCRIPTION - description of NONSELFCONNECTED
+    %
     %   SELFCONNECTED               - self-connected graph
     %   SELFCONNECTED_NAME          - name of SELFCONNECTED
     %   SELFCONNECTED_DESCRIPTION   - description of SELFCONNECTED
+    %
     %   SELFCONNECTIVITY_TYPE_NUMBER - number of graph self-connectivity types
     %   SELFCONNECTIVITY_TYPE_NAME  - name of graph self-connectivity types
     %   SELFCONNECTIVITY_TYPE_DESCRIPTION - description of graph self-connectivity types
+    %
     %   NONNEGATIVE                 - non-negative graph
     %   NONNEGATIVE_NAME            - name of NONNEGATIVE
     %   NONNEGATIVE_DESCRIPTION     - description of NONNEGATIVE
+    %
     %   NEGATIVE                    - negative graph
     %   NEGATIVE_NAME               - name of NEGATIVE
     %   NEGATIVE_DESCRIPTION        - description of NEGATIVE
+    %
     %   NEGATIVITY_TYPE_NUMBER      - number of graph negativity types
     %   NEGATIVITY_TYPE_NAME        - name of graph negativity types
     %   NEGATIVITY_TYPE_DESCRIPTION - description of graph negativity types
