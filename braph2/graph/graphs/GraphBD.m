@@ -109,7 +109,7 @@ classdef GraphBD < Graph
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
             %    
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.UNDIRECTED.
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
             %
             % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
            
