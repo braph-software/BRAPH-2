@@ -39,6 +39,14 @@ classdef MultiplexGraphBD < Graph
             %
             % See also Graph, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
             
+            if isempty(A)
+                A = {
+                    round(rand(4))            round(diag(rand(4, 1)))   round(diag(rand(4, 1)))	
+                    round(diag(rand(4, 1)))   round(rand(4))            round(diag(rand(4, 1)))	
+                    round(diag(rand(4, 1)))   round(diag(rand(4, 1)))   round(rand(4))      
+                    };
+            end 
+            
             L = length(A);  % number of layers
             for layer = 1:1:L
                 M = A{layer, layer};
