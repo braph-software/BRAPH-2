@@ -1,22 +1,23 @@
 classdef GraphBU < GraphBD
-    % GraphBU < GraphBD: A binary undirected graph
+    % GraphBU A binary undirected graph
     % GraphBU represents a binary undirected graph.
     %
-    % GraphBU methods:
-    %   GraphBU     - constructor.
+    % GraphBD consists of a binary undirected graph.
     %
-    % GraphBU methods (static):
-    %   getClass    - return the class type GraphBU.
-    %   getName     - return the complete name of GraphBU.
-    %   getDescription - return the description of GraphBU.
-    %   is_selfconnected - boolean, checks if the graph is self-connected.
-    %   is_nonnegative - boolean, checks if the graph is non-negative.
-    %   is_weighted	- boolean, checks if the graph is weighted.
-    %   is_binary   - boolean, checks if the graph is binary.
-    %   is_directed - boolean, checks if the graph is directed.
-    %   is_undirected - boolean, checks if the graph is undirected.
-    %   getCompatibleMeasureList - returns a list with compatible measures.
-    %   getCompatibleMeasureNumber - returns the number of compatible measures.
+    % GraphBU methods:
+    %   GraphBU                 - constructor
+    %
+    % GraphBU descriptive methods (static):
+    %   getClass                - returns the class name
+    %   getName                 - returns the complete name
+    %   getDescription          - returns the description
+    %   getGraphType            - returns the graph type
+    %   getConnectivityType     - returns the connectivity type of the graph
+    %   getDirectionalityType   - returns the directionality type of the graph
+    %   getSelfConnectivityType - returns the self-connectivity type of the graph
+    %   getNegativityType       - returns the negativity type of the graph
+    %   getCompatibleMeasureList - returns a list with compatible measures
+    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
     % See also Graph, GraphBD, GraphWD, GraphWU.
     
@@ -36,7 +37,7 @@ classdef GraphBU < GraphBD
             % function: SYMMETRIZE.
             % It calls the superclass constructor GRAPHBD.
             %
-            % See also Graph, GraphBD, GraphWD, GraphWU.
+            % See also Graph, DummyGraph, GraphBD, GraphWD, GraphWU.
             
             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
             
@@ -49,7 +50,7 @@ classdef GraphBU < GraphBD
             %
             % GRAPH_CLASS = GETCLASS() returns the class, 'GraphBU'.
             %
-            % See also getName().
+            % See also getName(), getDescription().
             
             graph_class = 'GraphBU';
         end
@@ -58,7 +59,7 @@ classdef GraphBU < GraphBD
             %
             % NAME = GETCLASS() returns the name, 'Binary Undirected Graph'.
             %
-            % See also getClass().
+            % See also getClass(), getDescription().
             
             name = 'Binary Undirected Graph';
         end
@@ -67,7 +68,7 @@ classdef GraphBU < GraphBD
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHBU.
             %
-            % See also getName().
+            % See also getClass(), getName().
             
             description = [ ...
                 'In a binary undirected (BU) graph, ' ...
@@ -77,27 +78,48 @@ classdef GraphBU < GraphBD
                 'The connectivity matrix is symmetric.' ...
                 ];
         end
-        function bool = is_graph()
-            bool = true;
-        end
         function graph_type = getGraphType()
+            % GETGRAPHTYPE returns the graph type
+            %
+            % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.GRAPH.
+            %
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
+            
             graph_type = Graph.GRAPH;
         end
-        function connectivity_type = getConnectivityType()
+        function connectivity_type = getConnectivityType(varargin)
+            % GETCONNECTIVITYTYPE returns the connectivity type of the graph
+            %
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.BINARY.
+            %    
+            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
+           
             connectivity_type = Graph.BINARY;
         end
-        function directionality_type = getDirectionalityType()
+        function directionality_type = getDirectionalityType(varargin)
+            % GETDIRECTIONALITYTYPE returns the directionality type of the graph
+            %   
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.UNDIRECTED.
+            %
+            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
+        
             directionality_type = Graph.UNDIRECTED;
         end
-        function selfconnectivity_type = getSelfConnectivityType()
-            selfconnectivity_type = Graph.NOT_SELFCONNECTED;
+        function selfconnectivity_type = getSelfConnectivityType(varargin)
+            % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
+            %    
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
+            %
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
+           
+            selfconnectivity_type = Graph.NONSELFCONNECTED; 
         end
-        function negativity_type = getNegativityType()
-            % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
+        function negativity_type = getNegativityType(varargin)
+            % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
-            % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
-            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
             
             negativity_type = Graph.NONNEGATIVE;
         end
