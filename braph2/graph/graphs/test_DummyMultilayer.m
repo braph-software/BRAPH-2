@@ -42,14 +42,33 @@ A_BD_attack = [
     1 0 1;
     ];
 
+A_D_attack = [
+    1 0 0;
+    0 0 0;
+    0 0 1;
+    ]; 
+
+A_13_attack = A_13;
+A_13_attack(nodes, :) = 0;
+A_13_attack(:, nodes) = 0;
+A_23_attack = A_23;
+A_23_attack(nodes, :) = 0;
+A_23_attack(:, nodes) = 0;
+A_31_attack = A_31;
+A_31_attack(nodes, :) = 0;
+A_31_attack(:, nodes) = 0;
+A_32_attack = A_32;
+A_32_attack(nodes, :) = 0;
+A_32_attack(:, nodes) = 0;
+
 g = DummyMultilayer(A); 
 
 % Attack all layers
 
 A_attack = {
-    A_BD_attack         diag(ones(3, 1))    A_13
-    diag(ones(3, 1))    A_BD_attack         A_23 
-    A_31                A_32                A_WD_attack
+    A_BD_attack   A_D_attack      A_13_attack
+    A_D_attack    A_BD_attack     A_23_attack 
+    A_31_attack   A_32_attack     A_WD_attack
     };
 
 ng = g.nodeattack(g, nodes);
@@ -63,9 +82,9 @@ g = DummyMultilayer(A);
 layernumbers = [1, 3];
 
 A_attack = {
-    A_BD_attack         diag(ones(3, 1))    A_13
-    diag(ones(3, 1))    A_BD                A_23 
-    A_31                A_32                A_WD_attack
+    A_BD_attack   A_D_attack      A_13_attack
+    A_D_attack    A_BD            A_23_attack 
+    A_31_attack   A_32_attack     A_WD_attack
     };
 
 ng = g.nodeattack(g, nodes, layernumbers);

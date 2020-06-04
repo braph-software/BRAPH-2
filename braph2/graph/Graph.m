@@ -1022,6 +1022,22 @@ classdef Graph < handle & matlab.mixin.Copyable
                         Aii(nodes(:), :) = 0; 
                         Aii(:, nodes(:)) = 0; 
                         A(li, li) = {Aii};
+                        if Graph.getGraphType(g) ~= Graph.MULTIGRAPH
+                            for lj = 1:1:g.layernumber()
+                                Aij = A{li, lj};  % li cell row
+                                Aji = A{lj, li};  % li cell column
+                                if isempty(Aij) == 0
+                                    Aij(nodes(:), :) = 0;
+                                    Aij(:, nodes(:)) = 0;
+                                end    
+                                if isempty(Aji) == 0
+                                    Aji(nodes(:), :) = 0;
+                                    Aji(:, nodes(:)) = 0;
+                                end
+                                A(li, lj) = {Aij};
+                                A(lj, li) = {Aji};
+                            end
+                        end
                     end
             end
             
