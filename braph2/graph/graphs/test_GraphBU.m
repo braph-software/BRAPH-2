@@ -1,7 +1,7 @@
 % test GraphBU
-A = rand(randi(10));
 
 %% Test 1: Constructor
+A = rand(randi(10));
 g = GraphBU(A);
 
 A = dediagonalize(A); 
