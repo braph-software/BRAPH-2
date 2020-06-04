@@ -1,22 +1,23 @@
 classdef MultiplexGraphBD < Graph
-    % MultiplexGraphBD < Graph: A Multiplex binary directed graph
+    % MultiplexGraphBD A Multiplex binary directed graph
     % MultiplexGraphBD represents a multiplex binary directed graph.
-    %
+    %    
+    % MultiplexGraphBD consists of a multiplex with binary directed graphs.   
+    %       
     % MultiplexGraphBD methods:
-    %   MultiplexGraphBD     - constructor.
+    %   MultiplexGraphBD        - constructor
     %
-    % MultiplexGraphBD methods (static):
-    %   getClass	- return the class type MultiplexGraphBD.
-    %   getName     - return the complete name of MultiplexGraphBD.
-    %   getDescription - return the description of MultiplexGraphBD.
-    %   is_selfconnected - boolean, checks if the graph is self-connected.
-    %   is_nonnegative - boolean, checks if the graph is non-negative.
-    %   is_weighted - boolean, checks if the graph is weighted.
-    %   is_binary   - boolean, checks if the graph is binary.
-    %   is_directed - boolean, checks if the graph is directed.
-    %   is_undirected - boolean, checks if the graph is undirected.
-    %   getCompatibleMeasureList - returns a list with compatible measures.
-    %   getCompatibleMeasureNumber - returns the number of compatible measures.
+    % MultiplexGraphBD descriptive methods (static):
+    %   getClass                - returns the class name
+    %   getName                 - returns the complete name
+    %   getDescription          - returns the description
+    %   getGraphType            - returns the graph type
+    %   getConnectivityType     - returns the connectivity type of the graph
+    %   getDirectionalityType   - returns the directionality type of the graph
+    %   getSelfConnectivityType - returns the self-connectivity type of the graph
+    %   getNegativityType       - returns the negativity type of the graph
+    %   getCompatibleMeasureList - returns a list with compatible measures
+    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
     % See also Graph, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
     
@@ -65,55 +66,135 @@ classdef MultiplexGraphBD < Graph
         function graph_class = getClass()
             % GETCLASS returns the class of the graph.
             %
-            % GRAPH_CLASS = GETCLASS() returns the class, 'GraphBD'.
+            % GRAPH_CLASS = GETCLASS() returns the class, 'MultiplexGraphBD'.
             %
-            % See also getName().
+            % See also getName(), getDescription().
             
             graph_class = 'MultiplexGraphBD';
         end
         function name = getName()
             % GETNAME returns the name of the graph.
             %
-            % NAME = GETCLASS() returns the name, 'Binary Directed Graph'.
+            % NAME = GETCLASS() returns the name, 'Multiplex Binary Directed Graph'.
             %
-            % See also getClass().
+            % See also getClass(), getDescription().
             
             name = 'Multiplex Binary Directed Graph';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
             %
-            % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHBD.
+            % DESCRIPTION = GETDESCRIPTION() returns the description of MULTIPLEXGRAPHBD.
             %
-            % See also getName().
+            % See also getClass(), getName().
             
             description = [ ...
-                'In a binary directed (BD) graph, ' ...
-                'the edges can be either 0 (absence of connection) ' ...
-                'or 1 (existence of connection), ' ...
-                'and they are directed.' ...
+                'In a multiplex binary directed graph, ' ...
+                'all the layers and connections between layers consist' ...
+                'of binary directed (BD) graphs.' ...
                 ];
         end
         function graph_type = getGraphType()
+            % GETGRAPHTYPE returns the graph type
+            %
+            % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTIPLEX.
+            %
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
+
             graph_type = Graph.MULTIPLEX;
         end
-        function connectivity_type = getConnectivityType()
-            connectivity_type = Graph.BINARY;
-        end
-        function directionality_type = getDirectionalityType()
-            directionality_type = Graph.DIRECTED;
-        end
-        function selfconnectivity_type = getSelfConnectivityType()
-            selfconnectivity_type = Graph.NOT_SELFCONNECTED;  % True in cell diagonal matrices
-        end
-        function negativity_type = getNegativityType()
-            % GETNEGATIVITYTYPE checks if the graph is non-negative or negative
+        function connectivity_type = getConnectivityType(varargin)
+            % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
-            % BOOL = GETNEGATIVITYTYPE() returns NONNEGATIVE for GRAPHBD.
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns
+            % Graph.BINARY.
             %
-            % See also getConnectivityType(), getEdgeType(), getGraphType() and getSelfConnectivityType().
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns 
+            % a matrix with Graph.BINARY for all the elements.
+            % For example, for a 3x3 matrix it returns:
+            % CONNECTIVITY_TYPE = BINARY  BINARY  BINARY
+            %                     BINARY  BINARY  BINARY  
+            %                     BINARY  BINARY  BINARY  
+            % where BINARY = Graph.BINARY.
+            %
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
+         
+            if isempty(varargin)
+                connectivity_type = Graph.BINARY;
+            else
+                layernumber = varargin{1};             
+                connectivity_type = Graph.BINARY * ones(layernumber);
+            end
+        end
+        function directionality_type = getDirectionalityType(varargin)
+            % GETDIRECTIONALITYTYPE returns the directionality type of the graph
+            %
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns
+            % Graph.DIRECTED.
+            %
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns 
+            % a matrix with Graph.DIRECTED for all the elements.
+            % For example, for a 3x3 matrix it returns:
+            % DIRECTIONALITY_TYPE = DIRECTED  DIRECTED  DIRECTED
+            %                       DIRECTED  DIRECTED  DIRECTED  
+            %                       DIRECTED  DIRECTED  DIRECTED  
+            % where DIRECTED = Graph.DIRECTED.
+            %
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
+         
+            if isempty(varargin)
+                directionality_type = Graph.DIRECTED;
+            else
+                layernumber = varargin{1};             
+                directionality_type = Graph.DIRECTED * ones(layernumber);
+            end            
+        end
+        function selfconnectivity_type = getSelfConnectivityType(varargin)
+            % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
+            %
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns
+            % Graph.SELFCONNECTED.
+            %
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns 
+            % a matrix with Graph.NONSELFCONNECTED for the diagonal elements and
+            % Graph.SELFCONNECTED for the off-diagonal elements.
+            % For example, for a 3x3 matrix it returns:
+            % SELFCONNECTIVITY_TYPE = NONSELFCONNECTED  SELFCONNECTED     SELFCONNECTED
+            %                         SELFCONNECTED     NONSELFCONNECTED  SELFCONNECTED  
+            %                         SELFCONNECTED     SELFCONNECTED     NONSELFCONNECTED  
+            % where SELFCONNECTED = Graph.SELFCONNECTED and NONSELFCONNECTED = Graph.NONSELFCONNECTED.
+            %
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
+         
+            if isempty(varargin)
+                selfconnectivity_type = Graph.SELFCONNECTED;
+            else
+                layernumber = varargin{1};             
+                selfconnectivity_type = Graph.SELFCONNECTED * ones(layernumber);
+                selfconnectivity_type(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
+            end
+        end
+        function negativity_type = getNegativityType(varargin)
+            % GETNEGATIVITYTYPE returns the negativity type of the graph
+            %
+            % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
+            %
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(LAYERNUMBER) returns 
+            % a matrix with Graph.NONNEGATIVE for all the elements.
+            % For example, for a 3x3 matrix it returns:
+            % NEGATIVITY_TYPE = NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
+            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
+            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  
+            % where NONNEGATIVE = Graph.NONNEGATIVE.
+            %
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
             
-            negativity_type = Graph.NONNEGATIVE;
+            if isempty(varargin)
+                negativity_type = Graph.NONNEGATIVE;
+            else
+                layernumber = varargin{1};
+                negativity_type =  Graph.NONNEGATIVE * ones(layernumber);
+            end
         end
     end
 %     methods
