@@ -224,6 +224,52 @@ init_datacursormode()
                 [lower(atlas.get(i).getProp(BrainRegion.HS)) ' hemisphere']};
         end
     end
+    function init_disable()
+        set(ui_button_table_add,'enable','off')
+            set(ui_button_table_remove,'enable','off')
+            set(ui_button_table_moveup,'enable','off')
+            set(ui_button_table_movedown,'enable','off')
+            set(ui_button_table_move2top,'enable','off'),
+            set(ui_button_table_move2bottom,'enable','off')          
+            
+            
+            set(ui_menu_edit_add,'enable','off')
+            set(ui_menu_edit_remove,'enable','off')
+            set(ui_menu_edit_moveup,'enable','off')
+            set(ui_menu_edit_movedown,'enable','off')
+            set(ui_menu_edit_move2top,'enable','off')
+            set(ui_menu_edit_move2bottom,'enable','off') 
+            
+            set(ui_checkbox_figure_distance, 'enable', 'off')
+            set(ui_checkbox_figure_br, 'enable', 'off')
+            set(ui_checkbox_figure_labels, 'enable', 'off')
+            
+            set(ui_toolbar_br, 'enable', 'off')
+            set(ui_toolbar_label, 'enable', 'off')
+    end
+    function init_enable()
+          set(ui_button_table_add,'enable','on')
+            set(ui_button_table_remove,'enable','on')
+            set(ui_button_table_moveup,'enable','on')
+            set(ui_button_table_movedown,'enable','on')
+            set(ui_button_table_move2top,'enable','on'),
+            set(ui_button_table_move2bottom,'enable','on')          
+            
+            
+            set(ui_menu_edit_add,'enable','on')
+            set(ui_menu_edit_remove,'enable','on')
+            set(ui_menu_edit_moveup,'enable','on')
+            set(ui_menu_edit_movedown,'enable','on')
+            set(ui_menu_edit_move2top,'enable','on')
+            set(ui_menu_edit_move2bottom,'enable','on') 
+            
+            set(ui_checkbox_figure_distance, 'enable', 'on')
+            set(ui_checkbox_figure_br, 'enable', 'on')
+            set(ui_checkbox_figure_labels, 'enable', 'on')
+            
+            set(ui_toolbar_br, 'enable', 'on')
+            set(ui_toolbar_label, 'enable', 'on')
+    end
 
 %% Text File Name
 FILENAME_WIDTH = 1-2*MARGIN_X;
@@ -240,6 +286,11 @@ init_filename()
     end
     function update_filename(filename)
         set(ui_text_filename, 'String', filename)
+        if atlas.getBrainRegions().length() > 0
+            init_enable()
+        else
+            init_disable()
+        end
     end
 
 %% Panel Table
@@ -369,9 +420,11 @@ init_table()
                 if newdata==1
                     selected = sort(unique([selected(:); i]));
                     h_br(i, 1) = {newdata};
+                    figure_brain_region_proximity(1)
                 else
                     selected = selected(selected~=i);
                     h_br(i, 1) = {newdata};
+                    figure_brain_region_proximity(1)
                 end
             case TAB_BR_LABEL_COL
                 atlas.getBrainRegions().getValue(i).setLabel(newdata)
@@ -600,8 +653,7 @@ init_figure()
         set(ui_button_figure_coronalposterior,'Callback',{@cb_figure_angle})
         
         set(ui_menu_figure_brainfiles, 'Position', [.101 .02 .138 .029])
-        set(ui_menu_figure_brainfiles, 'String', {'BrainMesh_ICBM152', 'BrainMesh_Cerebellum', 'BrainMesh_Ch2', ...
-            'BrainMesh_ICBM152Left', 'BrainMesh_ICBM152RIght'})
+        set(ui_menu_figure_brainfiles, 'String', cellfun(@(x) eraseBetween(x, strfind(x, '.'), length(x)), atlas.getBrainSurfList(), 'UniformOutput', false))
         set(ui_menu_figure_brainfiles, 'Callback', {@cb_figure_brainfile})
     end
 ui_contextmenu_figure_select = uicontextmenu();
@@ -950,14 +1002,19 @@ init_contextmenu()
         end        
     end
     function cb_figure_distance(~,~) 
-        if get(ui_checkbox_figure_distance, 'Value') ~= h_br_distance
+        figure_brain_region_proximity(0)
+    end
+    function figure_brain_region_proximity(action)
+        if get(ui_checkbox_figure_distance, 'Value') ~= h_br_distance || action == 1
             h_br_distance = get(ui_checkbox_figure_distance, 'Value');
             b_s = h_brain_outer_obj.getBrainSurface();           
             if h_br_distance
                 previous_style = get(b_s, 'Facecolor');
                 h_brain_outer_obj.distanceMapOn(selected);
-            else                
-                h_brain_outer_obj.distanceMapOff(previous_style);
+            else 
+                if action ~= 1
+                    h_brain_outer_obj.distanceMapOff(previous_style);
+                end
             end            
         end
     end
@@ -1110,17 +1167,9 @@ ui_toolbar_br = uitoggletool(ui_toolbar);
 ui_toolbar_label = uitoggletool(ui_toolbar);
 init_toolbar()
     function init_toolbar()
-        % get(findall(ui_toolbar),'Tag')
         delete(findall(ui_toolbar,'Tag','Standard.NewFigure'))
-        % delete(findall(ui_toolbar,'Tag','Standard.FileOpen'))
-        % delete(findall(ui_toolbar,'Tag','Standard.SaveFigure'))
         delete(findall(ui_toolbar,'Tag','Standard.PrintFigure'))
         delete(findall(ui_toolbar,'Tag','Standard.EditPlot'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.ZoomIn'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.ZoomOut'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.Pan'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.Rotate'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.DataCursor'))
         delete(findall(ui_toolbar,'Tag','Exploration.Brushing'))
         delete(findall(ui_toolbar,'Tag','DataManager.Linking'))
         delete(findall(ui_toolbar,'Tag','Annotation.InsertColorbar'))
@@ -1322,26 +1371,8 @@ set(f, 'Visible', 'on');
 
 setup_restrictions()
     function setup_restrictions()
-        if exist('restricted','var') && restricted
-            set(ui_button_table_add,'enable','off')
-            set(ui_button_table_remove,'enable','off')
-            set(ui_button_table_moveup,'enable','off')
-            set(ui_button_table_movedown,'enable','off')
-            set(ui_button_table_move2top,'enable','off')
-            set(ui_button_table_move2bottom,'enable','off')
-            
-            set(ui_menu_file_open,'enable','off')
-            
-            set(ui_menu_file_import_txt,'enable','off')
-            set(ui_menu_file_import_xls,'enable','off')
-            set(ui_menu_edit_add,'enable','off')
-            set(ui_menu_edit_remove,'enable','off')
-            set(ui_menu_edit_moveup,'enable','off')
-            set(ui_menu_edit_movedown,'enable','off')
-            set(ui_menu_edit_move2top,'enable','off')
-            set(ui_menu_edit_move2bottom,'enable','off')
-            
-            set(ui_toolbar_open,'enable','off')
+        if atlas.getBrainRegions().length() < 1
+            init_disable()
         end
     end
 
