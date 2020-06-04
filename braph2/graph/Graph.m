@@ -90,7 +90,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_multiplex                - checks if the graph is a multiplex graph
     %   is_ordered_multilayer       - checks if the graph is an ordered multilayer graph
     %   is_multilayer               - checks if the graph is a multilayer graph
-    %   getConnectivityType         - returns the connectivity type
+    %   getConnectivityType         - returns the connectivity type of the graph
     %   is_weighted                 - checks if the graph is weighted
     %   is_binary                   - checks if the graph is binary
     %   getDirectionalityType       - returns the directionality type of the graph
