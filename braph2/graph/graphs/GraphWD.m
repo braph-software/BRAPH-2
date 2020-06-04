@@ -88,7 +88,7 @@ classdef GraphWD < Graph
           
             graph_type = Graph.GRAPH;
         end
-        function connectivity_type = getConnectivityType()
+        function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.WEIGHTED.
@@ -97,7 +97,7 @@ classdef GraphWD < Graph
            
             connectivity_type = Graph.WEIGHTED;
         end
-        function directionality_type = getDirectionalityType()
+        function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
             %   
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.DIRECTED.
@@ -106,7 +106,7 @@ classdef GraphWD < Graph
                    
             directionality_type = Graph.DIRECTED;
         end
-        function selfconnectivity_type = getSelfConnectivityType()
+        function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
             %    
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
@@ -115,7 +115,7 @@ classdef GraphWD < Graph
        
             selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
-        function negativity_type = getNegativityType()
+        function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.

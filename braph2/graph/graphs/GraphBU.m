@@ -87,7 +87,7 @@ classdef GraphBU < GraphBD
             
             graph_type = Graph.GRAPH;
         end
-        function connectivity_type = getConnectivityType()
+        function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.BINARY.
@@ -96,7 +96,7 @@ classdef GraphBU < GraphBD
            
             connectivity_type = Graph.BINARY;
         end
-        function directionality_type = getDirectionalityType()
+        function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
             %   
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.UNDIRECTED.
@@ -105,7 +105,7 @@ classdef GraphBU < GraphBD
         
             directionality_type = Graph.UNDIRECTED;
         end
-        function selfconnectivity_type = getSelfConnectivityType()
+        function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
             %    
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
@@ -114,7 +114,7 @@ classdef GraphBU < GraphBD
            
             selfconnectivity_type = Graph.NONSELFCONNECTED; 
         end
-        function negativity_type = getNegativityType()
+        function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
