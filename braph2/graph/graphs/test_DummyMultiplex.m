@@ -30,14 +30,20 @@ A_WU_BD_attack = [
     1 0 1;
     ]; 
 
+A_D_attack = [
+    1 0 0;
+    0 0 0;
+    0 0 1;
+    ]; 
+
 g = DummyMultiplex(A);
 
 % Attack all layers
 A_attack = {
-    A_WU_BD_attack      diag(ones(3, 1))    diag(ones(3, 1))    diag(ones(3, 1)) 
-    diag(ones(3, 1))    A_WU_BD_attack      diag(ones(3, 1))    diag(ones(3, 1))
-    diag(ones(3, 1))    diag(ones(3, 1))    A_WU_BD_attack      diag(ones(3, 1))
-    diag(ones(3, 1))    diag(ones(3, 1))    diag(ones(3, 1))    A_WU_BD_attack
+    A_WU_BD_attack  A_D_attack      A_D_attack      A_D_attack 
+    A_D_attack      A_WU_BD_attack  A_D_attack      A_D_attack
+    A_D_attack      A_D_attack      A_WU_BD_attack  A_D_attack
+    A_D_attack      A_D_attack      A_D_attack      A_WU_BD_attack
     };
 
 ng = g.nodeattack(g, nodes);
@@ -51,10 +57,10 @@ g = DummyMultiplex(A);
 layernumbers = [1, 3];
 
 A_attack = {
-    A_WU_BD_attack      diag(ones(3, 1))    diag(ones(3, 1))    diag(ones(3, 1)) 
-    diag(ones(3, 1))    A_WU                diag(ones(3, 1))    diag(ones(3, 1))
-    diag(ones(3, 1))    diag(ones(3, 1))    A_WU_BD_attack      diag(ones(3, 1))
-    diag(ones(3, 1))    diag(ones(3, 1))    diag(ones(3, 1))    A_BD
+    A_WU_BD_attack  A_D_attack          A_D_attack      A_D_attack
+    A_D_attack      A_WU                A_D_attack      diag(ones(3, 1))
+    A_D_attack      A_D_attack          A_WU_BD_attack  A_D_attack
+    A_D_attack      diag(ones(3, 1))    A_D_attack      A_BD
     };
 
 ng = g.nodeattack(g, nodes, layernumbers);

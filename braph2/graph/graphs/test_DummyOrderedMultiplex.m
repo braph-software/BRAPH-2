@@ -30,13 +30,19 @@ A_WD_BD_attack = [
     1 0 1;
     ]; 
 
+A_D_attack = [
+    1 0 0;
+    0 0 0;
+    0 0 1;
+    ]; 
+
 g = DummyOrderedMultiplex(A);
 
 % Attack all layers
 A_attack = {
-    A_WD_BD_attack      diag(ones(3, 1))    {}  
-    diag(ones(3, 1))    A_WD_BD_attack      diag(ones(3, 1))   
-    {}                  diag(ones(3, 1))    A_WD_BD_attack                
+    A_WD_BD_attack  A_D_attack      {}  
+    A_D_attack      A_WD_BD_attack  A_D_attack 
+    {}              A_D_attack      A_WD_BD_attack                
     };
 
 ng = g.nodeattack(g, nodes);
@@ -49,9 +55,9 @@ assert(isequal(ng.getA(), A_attack), ...
 layernumbers = [1, 3];
 
 A_attack = {
-    A_WD_BD_attack      diag(ones(3, 1))    {}  
-    diag(ones(3, 1))    A_BD                diag(ones(3, 1))   
-    {}                  diag(ones(3, 1))    A_WD_BD_attack                
+    A_WD_BD_attack  A_D_attack    {}  
+    A_D_attack      A_BD          A_D_attack 
+    {}              A_D_attack    A_WD_BD_attack                
     };
 
 ng = g.nodeattack(g, nodes, layernumbers);
