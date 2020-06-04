@@ -653,8 +653,7 @@ init_figure()
         set(ui_button_figure_coronalposterior,'Callback',{@cb_figure_angle})
         
         set(ui_menu_figure_brainfiles, 'Position', [.101 .02 .138 .029])
-        set(ui_menu_figure_brainfiles, 'String', {'BrainMesh_ICBM152', 'BrainMesh_Cerebellum', 'BrainMesh_Ch2', ...
-            'BrainMesh_ICBM152Left', 'BrainMesh_ICBM152RIght'})
+        set(ui_menu_figure_brainfiles, 'String', cellfun(@(x) erase(x, '.nv'), atlas.getBrainSurfList(), 'UniformOutput', false))
         set(ui_menu_figure_brainfiles, 'Callback', {@cb_figure_brainfile})
     end
 ui_contextmenu_figure_select = uicontextmenu();
