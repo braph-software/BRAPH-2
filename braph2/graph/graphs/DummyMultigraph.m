@@ -60,7 +60,7 @@ classdef DummyMultigraph < Graph
         function graph_class = getClass()
             % GETCLASS returns the class of the graph.
             %
-            % GRAPH_CLASS = GETCLASS() returns the class, 'GraphBD'.
+            % GRAPH_CLASS = GETCLASS() returns the class, 'DummyMultigraph'.
             %
             % See also getName(), getDescription().
             
@@ -69,7 +69,7 @@ classdef DummyMultigraph < Graph
         function name = getName()
             % GETNAME returns the name of the graph.
             %
-            % NAME = GETCLASS() returns the name, 'Binary Directed Graph'.
+            % NAME = GETCLASS() returns the name, 'Dummy Multigraph'.
             %
             % See also getClass(), getDescription().
             
@@ -78,7 +78,7 @@ classdef DummyMultigraph < Graph
         function description = getDescription()
             % GETDESCRIPTION returns the description of the graph.
             %
-            % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHBD.
+            % DESCRIPTION = GETDESCRIPTION() returns the description of DUMMYMULTIGRAPH.
             %
             % See also getClass(), getName().
             
