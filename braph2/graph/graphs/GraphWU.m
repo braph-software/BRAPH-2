@@ -19,7 +19,7 @@ classdef GraphWU < GraphWD
     %   getCompatibleMeasureList - returns a list with compatible measures
     %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
-    % See also Graph, DummyGraph, GraphBD, GraphWU, GraphWD.
+    % See also Graph, GraphBD, GraphWU, GraphWD.
     
     methods
         function g = GraphWU(A, varargin)
