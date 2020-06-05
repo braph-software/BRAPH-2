@@ -8,8 +8,7 @@ for i = 1:1:length(measure_class_list)
     graph_class_list = Measure.getCompatibleGraphList(measure_class);
     for j = 1:1:length(graph_class_list)
         graph_class = graph_class_list{j};
-        A = rand(randi(10));
-        g = Graph.getGraph(graph_class, A);
+        g = Graph.getGraph(graph_class, []);
         m = Measure.getMeasure(measure_class, g);
         value = m.getValue();
         if m.is_global(m)

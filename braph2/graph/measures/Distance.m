@@ -6,22 +6,21 @@ classdef Distance < Measure
     % nodes in the graph. 
     % 
     % Distance methods:
-    %   Distance                    - constructor with Measure properties.
+    %   Distance                    - constructor
     %
     % Distance methods (Access=protected):
-    %   calculate                   - calculates the distance of a graph.
+    %   calculate                   - calculates the distance of a graph
     % 
     % Distance methods (Static)
-    %   getClass                    - returns the distance class.
-    %   getName                     - returns the name of distance measure.
-    %   getDescription              - returns the description of distance measure.
-    %   getAvailableSettings        - returns the settings available to the class.
-    %   is_global                   - boolean, checks if distance measure is global.
-    %   is_nodal                    - boolean, checks if distance measure is nodal.
-    %   is_binodal                  - boolean, checks if distance measure if binodal.
-    %   getMeasure                  - returns the distance class.
-    %   getCompatibleGraphList      - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
+    %   getClass                    - returns the distance class
+    %   getName                     - returns the name of distance measure
+    %   getDescription              - returns the description of distance measure
+    %   getAvailableSettings        - returns the settings available to the class
+    %   getMeasureFormat            - returns de measure format
+    %   getMeasureScope             - returns de measure scope   
+    %   getMeasure                  - returns the distance class
+    %   getCompatibleGraphList      - returns a list of compatible graphs
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, Graph, Degree, Strength, PathLength.
     
@@ -112,7 +111,7 @@ classdef Distance < Measure
             %            
             % MEASURE_CLASS = GETCLASS() returns the class of the distance measure.
             %
-            % See also getName(), getDescription(). 
+            % See also getName, getDescription. 
             
             measure_class = 'Distance';
         end
@@ -121,7 +120,7 @@ classdef Distance < Measure
             %
             % NAME = GETNAME() returns the name of the distance measure.
             %
-            % See also getClass(), getDescription(). 
+            % See also getClass, getDescription. 
           
             name = 'Distance';
         end
@@ -131,7 +130,7 @@ classdef Distance < Measure
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % distance measure.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getList, getCompatibleGraphList.
             
             description = [ ...
                 'The distance of a graph is ' ...
@@ -144,18 +143,17 @@ classdef Distance < Measure
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Distance. Empty Array in this case.
             % 
-            % See also getCompatibleGraphList()
+            % See also getCompatibleGraphList.
             
             available_settings = {};
         end
-
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of distance
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of distance measure (NODAL).
             %
-            % See also getMeasureScope().
+            % See also getMeasureScope.
             
             measure_format = Measure.BINODAL;
         end
@@ -165,7 +163,7 @@ classdef Distance < Measure
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
             % measure scope of distance measure (UNILAYER).
             %
-            % See also getMeasureFormat().
+            % See also getMeasureFormat.
             
             measure_scope = Measure.UNILAYER;
         end
@@ -177,13 +175,17 @@ classdef Distance < Measure
             % of compatible graph classes to Distance. 
             % The measure will not work if the graph is not compatible. 
             %
-            % See also getCompatibleGraphNumber(). 
+            % See also getCompatibleGraphNumber. 
             
             list = { ...
                 'GraphBD', ...
                 'GraphBU', ...
                 'GraphWD', ...
                 'GraphWU' ...
+%                 'MultiplexGraphBD', ...
+%                 'MultiplexGraphBU', ...
+%                 'MultiplexGraphWD' ...
+%                 'MultiplexGraphWU' ...
                 };
         end
         function n = getCompatibleGraphNumber()
@@ -193,7 +195,7 @@ classdef Distance < Measure
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to Distance.
             % 
-            % See also getCompatibleGraphList().
+            % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Distance');
         end

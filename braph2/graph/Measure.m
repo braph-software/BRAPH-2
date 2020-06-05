@@ -19,36 +19,36 @@ classdef Measure < handle
     %   Measure         - constructor
     %
     % Measure basic methods:
-    %   tostring        - returns a string representing the measure.
-    %   disp            - displays the measure.
-    %   getGraph        - returns the graph associated with the measure.
-    %   getSettings     - returns the settings of the measure.
-    %   is_value_calculated - boolean, checks if the measure has been calculated.
-    %   getValue        - returns the value of the measure.
+    %   tostring        - returns a string representing the measure
+    %   disp            - displays the measure
+    %   getGraph        - returns the graph associated with the measure
+    %   getSettings     - returns the settings of the measure
+    %   is_value_calculated - boolean, checks if the measure has been calculated
+    %   getValue        - returns the value of the measure
     %   
     % Measure methods (Abstract, Access=protected):
     %   calculate       - abstract function
-    %                   inheriting classes must implement this method.
+    %                   inheriting classes must implement this method
     %
     % Measure descriptive methods:
     %   getMeasureFormat - returns de measure format
-    %   is_global       - boolean, checks if the measure format is global.
-    %   is_nodal        - boolean, checks if the measure format is nodal.
-    %   is_binodal      - boolean, checks if the measure format if binodal.
+    %   is_global       - boolean, checks if the measure format is global
+    %   is_nodal        - boolean, checks if the measure format is nodal
+    %   is_binodal      - boolean, checks if the measure format if binodal
     %   getMeasureScope - returns de measure scope
-    %   is_superglobal  - boolean, checks if the measure scope is superglobal.
-    %   is_unilayer     - boolean, checks if the measure scope is unilayer.
-    %   is_bilayer      - boolean, checks if the measure scope is bilayer.
+    %   is_superglobal  - boolean, checks if the measure scope is superglobal
+    %   is_unilayer     - boolean, checks if the measure scope is unilayer
+    %   is_bilayer      - boolean, checks if the measure scope is bilayer
     %
     % Measure inspection methods (Static)
-    %   getList         - returns a list with subclasses of measure.
-    %   getClass        - returns the class type of the measure.
-    %   getName         - returns the name of the measure.
-    %   getDescription  - returns the description of the measure.
-    %   getAvailableSettings - returns the settings available to the class.
-    %   getMeasure      - returns the measure class.
-    %   getCompatibleGraphList - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber - returns the number of compatible graphs.
+    %   getList         - returns a list with subclasses of measure
+    %   getClass        - returns the class type of the measure
+    %   getName         - returns the name of the measure
+    %   getDescription  - returns the description of the measure
+    %   getAvailableSettings - returns the settings available to the class
+    %   getMeasure      - returns the measure class
+    %   getCompatibleGraphList - returns a list of compatible graphs
+    %   getCompatibleGraphNumber - returns the number of compatible graphs
     %
     % See also Graph, handle, Degree, Strength, Distance, Efficency.
  
