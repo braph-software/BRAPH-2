@@ -62,7 +62,7 @@ classdef DummyMultigraph < Graph
             %
             % GRAPH_CLASS = GETCLASS() returns the class, 'DummyMultigraph'.
             %
-            % See also getName(), getDescription().
+            % See also getName, getDescription.
             
             graph_class = 'DummyMultigraph';
         end
@@ -71,7 +71,7 @@ classdef DummyMultigraph < Graph
             %
             % NAME = GETCLASS() returns the name, 'Dummy Multigraph'.
             %
-            % See also getClass(), getDescription().
+            % See also getClass, getDescription.
             
             name = 'Dummy Multigraph';
         end
@@ -80,7 +80,7 @@ classdef DummyMultigraph < Graph
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of DUMMYMULTIGRAPH.
             %
-            % See also getClass(), getName().
+            % See also getClass, getName.
             
             description = [ ...
                 'Dummy Multipgraph used mainly' ...
@@ -92,7 +92,7 @@ classdef DummyMultigraph < Graph
             %
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTIGRAPH.
             %
-            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
+            % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
         
             graph_type = Graph.MULTIGRAPH;
         end
@@ -110,7 +110,7 @@ classdef DummyMultigraph < Graph
             %                     WEIGHTED  WEIGHTED  WEIGHTED  
             % where WEIGHTED = Graph.WEIGHTED.
             %
-            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
+            % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
                       
             if isempty(varargin)
                 connectivity_type = Graph.WEIGHTED;
@@ -135,7 +135,7 @@ classdef DummyMultigraph < Graph
             %                       DIRECTED  DIRECTED  DIRECTED  
             % where DIRECTED = Graph.DIRECTED.
             %
-            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
+            % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
                         
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
@@ -159,7 +159,7 @@ classdef DummyMultigraph < Graph
             %                         SELFCONNECTED  SELFCONNECTED  SELFCONNECTED 
             % where SELFCONNECTED = Graph.SELFCONNECTED.
             %
-            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
+            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
                       
             if isempty(varargin)
                 selfconnectivity_type = Graph.SELFCONNECTED;
@@ -182,7 +182,7 @@ classdef DummyMultigraph < Graph
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE 
             % where NONNEGATIVE = Graph.NONNEGATIVE.
             %
-            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
+            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
                 
             if isempty(varargin)
                 negativity_type = Graph.NONNEGATIVE;
