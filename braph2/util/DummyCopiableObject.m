@@ -17,14 +17,16 @@ classdef DummyCopiableObject < handle & matlab.mixin.Copyable
     end
     methods 
         function obj = DummyCopiableObject(name)
-            % DummyObject(NAME) creates a dummy object with the property NAME.
+            % DummyCopiableObject(NAME) creates a dummy copiable object with the property NAME.
+            %
+            % OBJ = DummyCopiableObject(NAME) creates a dummy copiable object with the property NAME.
 
             obj.name = name;
         end
         function str = tostring(obj)
             % TOSTRING string with information about the object
             %
-            % STR = TOSTRING(OBJ) returns string with the object name.
+            % STR = TOSTRING(OBJ) returns a string with the object name.
             
             str = [class(obj) ' ' tostring(obj.name)];
         end
