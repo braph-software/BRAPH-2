@@ -1,13 +1,15 @@
 classdef Measure < handle
-    % Measure < handle (Abstract): A measure
+    % Measure (Abstract) A measure
     % Measure provides the methods necessary for all graph measures. 
     % Instances of this class cannot be created. Use one of the
     % subclasses (e.g., Degree, Strength, Distance, Efficency).
     % The subclasses must be created inside the folder ./braph/graph/measures/.
     % 
+% TODO: describe measure outputs as function of measur types
+    % 
     % Measure properties (GetAccess=protected, SetAccess=protected):
-    %   g           - graph.
-    %   settings    - structure with the constructor settings.
+    %   g           - graph
+    %   settings    - structure with the constructor settings
     %   value       - graph measure value
     %                 the value can be:
     %                 a SCALAR for GLOBAL measures
@@ -15,7 +17,7 @@ classdef Measure < handle
     %                 a SQUARE MATRIX for BINODAL measures
     % 
     % Measure methods (Access=protected):
-    %   Measure     - constructor.
+    %   Measure     - constructor
     %
     % Measure methods:
     %   tostring    - returns a string representing the measure.
