@@ -449,7 +449,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .30 .30];
-            FigColor = [.5 .5 .5];
+            FigColor = [.95 .95 .95];
             FigName = 'Brain Region Symbol Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -1040,7 +1040,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .30 .30];
-            FigColor = [.5 .5 .5];
+            FigColor = [.95 .95 .95];
             FigName = 'Brain Region Sphere Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -1625,7 +1625,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .25 .30];
-            FigColor = [.5 .5 .5];
+            FigColor = [.95 .95 .95];
             FigName = 'Brain Region Label Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
