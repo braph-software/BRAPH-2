@@ -814,7 +814,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_DIRECTED(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is directed.
             %
-            % See also getEgdeType, is_undirected.     
+            % See also getDirectionalityType, is_undirected.     
                      
             bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.DIRECTED;
         end
@@ -827,7 +827,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_UNDIRECTED(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is undirected.
             %
-            % See also getEgdeType, is_directed.     
+            % See also getDirectionalityType, is_directed.     
                     
             bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.UNDIRECTED;
         end
