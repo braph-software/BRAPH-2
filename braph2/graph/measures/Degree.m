@@ -47,9 +47,21 @@ classdef Degree < Measure
             % node.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix of the graph
-            A = binarize(A);  % binarizes the adjacency matrix
-            degree = sum(A, 2);  % calculates the degree of a node
+            A = g.getA();  % adjency matrix or 2D-cell array 
+            
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    A = binarize(A);  % binarizes the adjacency matrix
+                    degree = {sum(A, 2)};  % calculates the degree of a node
+                otherwise
+                    degree = cell(g.layernumber());
+                    for li = 1:1:g.layernumber()
+                        Aii = A{li, li};
+                        Aii = binarize(Aii);  % binarizes the adjacency matrix
+                        degree(li) = {sum(Aii, 2)};  % calculates the degree of a node for layer li                  
+                        A(li, li) = {Aii};
+                    end    
+            end
         end
     end  
     methods (Static)  % Descriptive methods

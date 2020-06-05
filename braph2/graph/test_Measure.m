@@ -37,7 +37,7 @@ for i = 1:1:length(measure_class_list)
     for j = 1:1:length(graph_class_list)
         graph_class = graph_class_list{j};
         A = rand(randi(10));
-        g = Graph.getGraph(graph_class, A);
+        g = Graph.getGraph(graph_class, []);
         m = Measure.getMeasure(measure_class, g);
         
         assert(isequal(m.getClass(), measure_class), ...
