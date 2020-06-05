@@ -164,7 +164,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % STR = TOSTRING(BS) returns string with the brain surface file
             %
-            % See also disp().
+            % See also disp.
             
             str = ['Brain Surface of type: ' bs.brain_surf_file ' with ' tostring(bs.vertex_number) ' vertices and ' tostring(bs.vertex_number) ' triangles.'];
         end
@@ -192,7 +192,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(BS) returns the 
             % class avialable settings: lighting, material, camlight.
             %
-            % See also getSettings().
+            % See also getSettings.
             
             available_settings = {
                 {'PlotBrainSurf.Lighting', BRAPH2.STRING, 'none', {'none', 'flat', 'gouraud'}}, ...
@@ -207,7 +207,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % NAME = getName() gets the brain surface BS's name.
             %
-            % See also getSettings(), getBrainSurface().
+            % See also getSettings, getBrainSurface.
             
             name = bs.brain_surf_file;
         end
@@ -216,7 +216,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % SETTINGS = GETSETTINGS() returns the current settings
             %
-            % See also getName(), getSettings().
+            % See also getName, getSettings.
             
             if nargin<2
                 settings = bs.settings;
@@ -233,7 +233,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % BRAIN_SURFACE = GETBRAINSURFACE() returns the brain surface
             %
-            % See also getSettings(), getName().
+            % See also getSettings, getName.
             
             brain_surface = bs.h_brain;
         end
@@ -250,7 +250,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % file and loads the data. Sets the Lighting handles from the
             % settings.
             %
-            % See also: update_light(), set_axes().
+            % See also update_light, set_axes.
             
             bs.brain_surf_file =  brain_surf_file;
             bs.Lighting = bs.getSettings('PlotBrainSurf.Lighting');
@@ -697,7 +697,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %       FigColor      -  background color of the user interface
             %       FigName       -  name of the user interface
             %
-            % See also PlotBrainSurf, brains_settings().
+            % See also PlotBrainSurf, brains_settings.
             
             %get settings
             internal_set = PlotBrainSurf.getAvailableSettings();
