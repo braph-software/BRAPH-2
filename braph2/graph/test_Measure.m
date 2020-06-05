@@ -2,33 +2,33 @@
 measure_class_list = Measure.getList();
 
 %% Test 1: All measures not abstract
-% for i = 1:1:length(measure_class_list)
-%     measure_class = measure_class_list{i};
-% 
-%     graph_class_list = Measure.getCompatibleGraphList(measure_class);
-%     for j = 1:1:length(graph_class_list)
-%         graph_class = graph_class_list{j};
-%         A = rand(randi(10));
-%         g = Graph.getGraph(graph_class, A);
-%         m = Measure.getMeasure(measure_class, g);
-%         value = m.getValue();
-%         if m.is_global(m)
-%             assert(isnumeric(value) && numel(value) == 1, ...
-%                 ['BRAPH:' measure_class ':getValueBroken'], ...
-%                 [measure_class '.getValue()  used with ' graph_class ' should return a scalar'])
-%         end
-%         if m.is_nodal(m)
-%             assert(isnumeric(value) && isequal(size(value), [g.nodenumber(g) 1]), ...
-%                 ['BRAPH:' measure_class ':getValueBroken'], ...
-%                 [measure_class '.getValue() used with ' graph_class ' should return a column vector with length equal to the number of nodes'])
-%         end
-%         if m.is_binodal(m)
-%             assert(isnumeric(value) && isequal(size(value), [g.nodenumber() g.nodenumber()]), ...
-%                 ['BRAPH:' measure_class ':getValueBroken'], ...
-%                 [measure_class '.getValue() used with ' graph_class ' should return a matrix with dimensions equal to the numebr of nodes'])
-%         end
-%     end
-% end
+for i = 1:1:length(measure_class_list)
+    measure_class = measure_class_list{i};
+
+    graph_class_list = Measure.getCompatibleGraphList(measure_class);
+    for j = 1:1:length(graph_class_list)
+        graph_class = graph_class_list{j};
+        A = rand(randi(10));
+        g = Graph.getGraph(graph_class, A);
+        m = Measure.getMeasure(measure_class, g);
+        value = m.getValue();
+        if m.is_global(m)
+            assert(isnumeric(value) && numel(value) == 1, ...
+                ['BRAPH:' measure_class ':getValueBroken'], ...
+                [measure_class '.getValue()  used with ' graph_class ' should return a scalar'])
+        end
+        if m.is_nodal(m)
+            assert(isnumeric(value) && isequal(size(value), [g.nodenumber() 1]), ...
+                ['BRAPH:' measure_class ':getValueBroken'], ...
+                [measure_class '.getValue() used with ' graph_class ' should return a column vector with length equal to the number of nodes'])
+        end
+        if m.is_binodal(m)
+            assert(isnumeric(value) && isequal(size(value), [g.nodenumber() g.nodenumber()]), ...
+                ['BRAPH:' measure_class ':getValueBroken'], ...
+                [measure_class '.getValue() used with ' graph_class ' should return a matrix with dimensions equal to the numebr of nodes'])
+        end
+    end
+end
 
 %% Test 2: Implementation static methods
 for i = 1:1:length(measure_class_list)
