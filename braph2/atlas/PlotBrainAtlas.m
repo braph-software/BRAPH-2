@@ -720,6 +720,17 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
             
         end
+        function br_syms_delete(ba)
+            for i = 1:ba.atlas.getBrainRegions().length()
+                delete(ba.syms.h(i))
+            end
+        end
+        function syms_handles = getSymsHandles(ba)
+            syms_handles = ba.syms;
+        end
+        function answer = checkIfSymsNotEmpty(ba)
+            answer = any(ba.syms.h, 'all');
+        end
         
         function h = br_sph(ba, i, varargin)
             % BR_SPH displays brain region as sphere
@@ -1360,6 +1371,17 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 end
             end
         end
+        function br_sphs_delete(ba)
+            for i = 1:ba.atlas.getBrainRegions().length()
+                delete(ba.sphs.h(i))
+            end
+        end
+        function sphs_handles = getSphsHandles(ba)
+            sphs_handles = ba.sphs;
+        end
+        function answer = checkIfSphsNotEmpty(ba)
+            answer = any(ba.sphs.h, 'all');
+        end
         
         function h = br_lab(ba, i, varargin)
             % BR_LAB displays brain region as label
@@ -1880,6 +1902,17 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     bri = [];
                 end
             end
+        end
+        function br_labs_delete(ba)
+            for i = 1:ba.atlas.getBrainRegions().length()
+                delete(ba.labs.h(i))
+            end
+        end
+        function labs_handles = getLabsHandles(ba)
+            labs_handles = ba.labs;
+        end
+        function answer = checkIfLabsNotEmpty(ba)
+            answer = any(ba.labs.h, 'all');
         end
     end
     methods  % distance               
