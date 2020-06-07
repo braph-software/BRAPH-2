@@ -18,13 +18,13 @@ classdef DummyObject < handle
     methods 
         function obj = DummyObject(name)
             % DummyObject(NAME) creates a dummy object with the property NAME.
-
+            
             obj.name = name;
         end
         function str = tostring(obj)
             % TOSTRING string with information about the object
             %
-            % STR = TOSTRING(OBJ) returns string with the object name.
+            % STR = TOSTRING(OBJ) returns a string with the object name.
             
             str = [class(obj) ' ' tostring(obj.name)];
         end
