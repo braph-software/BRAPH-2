@@ -18,8 +18,6 @@ classdef DummyCopiableObject < handle & matlab.mixin.Copyable
     methods 
         function obj = DummyCopiableObject(name)
             % DummyCopiableObject(NAME) creates a dummy copiable object with the property NAME.
-            %
-            % OBJ = DummyCopiableObject(NAME) creates a dummy copiable object with the property NAME.
 
             obj.name = name;
         end
