@@ -18,8 +18,6 @@ classdef DummyObject < handle
     methods 
         function obj = DummyObject(name)
             % DummyObject(NAME) creates a dummy object with the property NAME.
-            %
-            % OBJ = DummyObject(NAME) creates a dummy object with the property NAME.
             
             obj.name = name;
         end
