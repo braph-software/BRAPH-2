@@ -54,8 +54,8 @@ classdef DegreeAv < Degree
             end
             
             degree_av = cell(g.layernumber(), 1);
-            for i = 1:1:length(degree_av)
-                degree_av(i) = {mean(degree{i})};
+            for li = 1:1:length(degree_av)
+                degree_av(li) = {mean(degree{li})};
             end
         end
     end
