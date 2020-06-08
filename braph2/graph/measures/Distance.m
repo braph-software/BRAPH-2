@@ -53,7 +53,9 @@ classdef Distance < Measure
             A = g.getA();  % adjency matrix of the graph
             distance = cell(g.layernumber(), 1);
             connectivity_type =  g.getConnectivityType(g.layernumber());
+            
             for li = 1:1:g.layernumber()
+                
                 if g.is_graph(g)
                     Aii = A;
                     connectivity_layer = connectivity_type;
@@ -61,34 +63,13 @@ classdef Distance < Measure
                     Aii = A{li, li};
                     connectivity_layer = connectivity_type(li, li);
                 end
+                
                 if connectivity_layer == Graph.WEIGHTED  % weighted graphs
                     distance(li) = {Distance.getWeightedCalculation(m, Aii)};
-                    
                 else  % binary graphs
                     distance(li) = {Distance.getBinaryCalculation(Aii)};
                 end
-            end
-            
-%             switch Graph.getGraphType(g)
-%                 case Graph.GRAPH
-%                     if g.is_weighted(g)  % weighted single-layer graphs
-%                         distance = {Distance.getWeightedCalculation(m, A)};
-%                     else  % binary single-layer graphs
-%                         distance = {Distance.getBinaryCalculation(A)};  
-%                     end
-%                     
-%                 otherwise  % non single-layer graphs
-%                     distance = cell(g.layernumber(), 1);
-%                     connectivity_type =  g.getConnectivityType(g.layernumber());
-%                     for li = 1:1:g.layernumber()
-%                         if connectivity_type(li, li) == Graph.WEIGHTED  % weighted non single-layer graphs
-%                             distance(li) = {Distance.getWeightedCalculation(m, A{li, li})};
-%                             
-%                         else  % binary non single-layer graphs
-%                             distance(li) = {Distance.getBinaryCalculation(A{li, li})};
-%                         end
-%                     end
-%             end
+            end       
         end
     end
     
