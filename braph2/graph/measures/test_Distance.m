@@ -1,6 +1,9 @@
 % test Distance
 A = rand(randi(5));
-B = {A, A; A, A};
+B = {
+    A   A
+    A   A
+    };
 graph_class_distance_list = Distance.getCompatibleGraphList();
 
 %% Test 1: Calculation AllGraphs

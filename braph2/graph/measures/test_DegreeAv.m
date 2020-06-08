@@ -1,6 +1,9 @@
 % test DegreeAv
 A = rand(randi(10));
-B = {A, A; A, A};
+B = {
+    A   A
+    A   A
+    };
 
 %% Test 1: Calculation GraphBU
 g = GraphBU(A);
