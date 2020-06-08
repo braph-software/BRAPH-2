@@ -65,15 +65,12 @@ classdef Distance < Measure
                 end
                 
                 if connectivity_layer == Graph.WEIGHTED  % weighted graphs
-                    distance(li) = {Distance.getWeightedCalculation(m, Aii)};
+                    distance(li) = {m.getWeightedCalculation(Aii)};
                 else  % binary graphs
-                    distance(li) = {Distance.getBinaryCalculation(Aii)};
+                    distance(li) = {m.getBinaryCalculation(Aii)};
                 end
             end       
         end
-    end
-    
-    methods (Static)
         function weighted_distance = getWeightedCalculation(m, A)
             % GETWEIGHTEDCALCULATION calculates the distance value of a weighted adjacency matrix
             %
@@ -115,7 +112,7 @@ classdef Distance < Measure
             m.B = B;  %#ok<PROPLC>
             weighted_distance = D;
         end
-        function binary_distance = getBinaryCalculation(A)
+        function binary_distance = getBinaryCalculation(m, A)
             % GETBINARYCALCULATION calculates the distance value of a binary adjacency matrix
             %
             % BINARY_DISTANCE = GETBINARYCALCULATION(A) returns the
