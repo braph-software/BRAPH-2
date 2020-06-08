@@ -335,14 +335,13 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
                     case 'color'
-                        set(bs.h_brain,'FaceColor', varargin{n+1});
-                        set(bs.h_brain,'EdgeColor', varargin{n+1});
+                        set(bs.h_brain, 'FaceColor', varargin{n+1});
+                        set(bs.h_brain, 'EdgeColor', varargin{n+1});
                     case 'alpha'
-                        set(bs.h_brain,'FaceAlpha', varargin{n+1});
-                        set(bs.h_brain,'EdgeAlpha', varargin{n+1});
-                        
+                        set(bs.h_brain, 'FaceAlpha', varargin{n+1});
+                        set(bs.h_brain, 'EdgeAlpha', varargin{n+1});
                     otherwise
-                        set(bs.h_brain,varargin{n},varargin{n+1});
+                        set(bs.h_brain, varargin{n}, varargin{n+1});
                 end
             end
             
@@ -390,7 +389,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             % sets position of figure
             FigPosition = [.70 .50 .25 .25];
-            FigColor = [.95 .95 .95];  % GUI.BKGCOLOR;
+            FigColor = GUI.BKGCOLOR;
             FigName = 'Brain Surface Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -487,35 +486,29 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                     bs.brain('Color', color)
                 end
             end
-            
             function cb_alpha(~,~)  % (src,event)
                 bs.brain('Alpha', get(ui_slider_alpha, 'Value'))
                 set(ui_slider_facealpha, 'Value', get(ui_slider_alpha, 'Value'))
                 set(ui_slider_edgealpha, 'Value', get(ui_slider_alpha, 'Value'))
             end
-            
             function cb_facecolor(~,~)  % (src,event)
                 color = uisetcolor;
                 if length(color) == 3
                     bs.brain('FaceColor', color)
                 end
             end
-            
             function cb_facealpha(~,~)  % (src,event)
                 bs.brain('FaceAlpha', get(ui_slider_facealpha, 'Value'))
             end
-            
             function cb_edgecolor(~,~)  % (src,event)
                 color = uisetcolor;
                 if length(color) == 3
                     bs.brain('EdgeColor', color)
                 end
             end
-            
             function cb_edgealpha(~,~)  % (src,event)
                 bs.brain('EdgeAlpha', get(ui_slider_edgealpha, 'Value'))
             end
-            
         end
         function hold_on(bs)
             % HOLD_ON hold on
@@ -838,21 +831,18 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                     set(bs.get_axes(), 'Color', color)
                 end
             end
-            
             function cb_popLighting(~,~)
                 val = ui_pop_up_lighting.Value;
                 str = ui_pop_up_lighting.String;
                 bs.Lighting = str{val};
                 lighting(bs.get_axes(), bs.Lighting)
             end
-            
             function cb_popMaterial(~,~)
                 val = ui_pop_up_material.Value;
                 str = ui_pop_up_material.String;
                 bs.Material = str{val};
                 material(bs.get_axes(), bs.Material)
             end
-            
             function cb_popCamLight(~,~)
                 val = ui_pop_up_camlight.Value;
                 str = ui_pop_up_camlight.String;
@@ -862,7 +852,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                 bs.CamLight = str{val};
                 camlight(bs.get_axes(), bs.CamLight);
             end
-            
             function cb_facecolorstyle(~,~)  % (src,event)
                 val = ui_pop_up_facecolorstyle.Value;
                 str = ui_pop_up_facecolorstyle.String;
@@ -872,13 +861,11 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                     set(bs.getBrainSurface(), 'FaceColor', [.5 .5 .5])
                 end
             end
-            
             function cb_colormapoption(~,~)
                 val = ui_pop_up_colormapoption.Value;
                 str = ui_pop_up_colormapoption.String;
                 colormap(bs.get_axes(), str{val});
             end
-            
         end
     end
     methods (Static)  % Load function
