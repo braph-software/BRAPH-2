@@ -11,9 +11,12 @@ classdef Measure < handle
     %   value           - graph measure value 
     %                   the value can be:
     %                   a CELL for SUPERGLOBAL measures containing GLOBAL, NODAL or BINODAL values
-    %                   a CELL VECTOR for UNILAYER measures containing GLOBAL, NODAL or BINODAL values
+    %                   a CELL COLUMN VECTOR for UNILAYER measures containing GLOBAL, NODAL or BINODAL values
     %                   a CELL MATRIX for BILAYER measures containing GLOBAL, NODAL or BINODAL values
-    %                   where GLOBAL values are SCALAR, NODAL values COLUMN VECTOR and BINODAL values SQUARE MATRIX
+    %                   where   
+    %                   GLOBAL values are SCALAR
+    %                   NODAL values a COLUMN VECTOR whose length is equal to the number of nodes
+    %                   BINODAL values are a SQUARE MATRIX whose dimensions are equal to the number of nodes
     % 
     % Measure methods (Access=protected):
     %   Measure         - constructor
