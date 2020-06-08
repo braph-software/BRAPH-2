@@ -135,9 +135,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         coord  % coordinates of the vertices of brain surface
         ntri  % number of triangles of brain surface
         tri  % triangles of brain surface
-        
-        % settings
-        settings
     end
     methods  % Basic Functions
         function bs = PlotBrainSurf(brain_surf_file, varargin)
@@ -146,18 +143,10 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also PlotBrainAtlas. 
             
-            available_settings = PlotBrainSurf.getAvailableSettings();
-            settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
-            for i = 1:1:length(available_settings)
-                a_s = available_settings{i};
-                available_setting_code = a_s{1, 1};
-                available_setting_default = a_s{1, 3};
-                settings{i, 1} = available_setting_code;
-                settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
-            end
-            bs.settings = settings;
-
             bs.set_surface(brain_surf_file);
+            bs.Lighting = get_from_varargin('none', 'PlotBrainSurf.Lighting', varargin);  % 'none', 'flat', 'gouraud'
+            bs.Material = get_from_varargin('dull', 'PlotBrainSurf.Material', varargin);  % 'dull', 'shiny', 'metal'
+            bs.CamLight = get_from_varargin('headlight', 'PlotBrainSurf.CamLight', varargin);  % 'headlight', 'right', 'left'
         end
         function str = tostring(bs)
             % TOSTRING string with information about the plot brain surf
@@ -185,22 +174,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             disp(['  CamLight: ' bs.CamLight]);
         end
     end
-    methods (Static)
-        function available_settings = getAvailableSettings(bs) %#ok<INUSD>
-            % GETAVILABLESETTINGS returns the available settings
-            %
-            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(BS) returns the 
-            % class avialable settings: lighting, material, camlight.
-            %
-            % See also getSettings.
-            
-            available_settings = {
-                {'PlotBrainSurf.Lighting', BRAPH2.STRING, 'none', {'none', 'flat', 'gouraud'}}, ...
-                {'PlotBrainSurf.Material', BRAPH2.STRING, 'dull', {'dull', 'shiny', 'metal'}}, ...
-                {'PlotBrainSurf.CamLight', BRAPH2.STRING, 'headlight', {'headlight', 'right', 'left'}} ...
-                };
-        end
-    end
     methods  % Inspection functions
         function name = getName(bs)  % (bs)
             % NAME brain surface name
@@ -210,23 +183,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % See also getSettings, getBrainSurface.
             
             name = bs.brain_surf_file;
-        end
-        function settings = getSettings(bs, setting_code)
-            % GETSETTINGS returns the current settings
-            %
-            % SETTINGS = GETSETTINGS() returns the current settings
-            %
-            % See also getName, getSettings.
-            
-            if nargin<2
-                settings = bs.settings;
-            else
-                for i = 1:1:length(bs.settings)
-                    if isequal(bs.settings{i, 1}, setting_code)
-                        settings = get_from_varargin([], setting_code, bs.settings{i, :});
-                    end
-                end
-            end
         end
         function brain_surface = getBrainSurface(bs)
             % GETBRAINSURFACE returns the brain surface
@@ -253,9 +209,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % See also update_light, set_axes.
             
             bs.brain_surf_file =  brain_surf_file;
-            bs.Lighting = bs.getSettings('PlotBrainSurf.Lighting');
-            bs.Material = bs.getSettings('PlotBrainSurf.Material');
-            bs.CamLight = bs.getSettings('PlotBrainSurf.CamLight');
             
             fid = fopen(['brainsurfs' filesep brain_surf_file]);
             bs.vertex_number = fscanf(fid, '%f', 1);
@@ -263,7 +216,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             bs.ntri = fscanf(fid, '%f', 1);
             bs.tri = fscanf(fid, '%d', [3, bs.ntri])';
             fclose(fid);
-            
         end
         function h = set_axes(bs, ht)
             % SET_AXES sets current axes
@@ -339,14 +291,13 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
                     case 'color'
-                        set(bs.h_brain,'FaceColor', varargin{n+1});
-                        set(bs.h_brain,'EdgeColor', varargin{n+1});
+                        set(bs.h_brain, 'FaceColor', varargin{n+1});
+                        set(bs.h_brain, 'EdgeColor', varargin{n+1});
                     case 'alpha'
-                        set(bs.h_brain,'FaceAlpha', varargin{n+1});
-                        set(bs.h_brain,'EdgeAlpha', varargin{n+1});
-                        
+                        set(bs.h_brain, 'FaceAlpha', varargin{n+1});
+                        set(bs.h_brain, 'EdgeAlpha', varargin{n+1});
                     otherwise
-                        set(bs.h_brain,varargin{n},varargin{n+1});
+                        set(bs.h_brain, varargin{n}, varargin{n+1});
                 end
             end
             
@@ -394,7 +345,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             % sets position of figure
             FigPosition = [.70 .50 .25 .25];
-            FigColor = [.95 .95 .95];  % GUI.BKGCOLOR;
+            FigColor = GUI.BKGCOLOR;
             FigName = 'Brain Surface Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -491,35 +442,29 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                     bs.brain('Color', color)
                 end
             end
-            
             function cb_alpha(~,~)  % (src,event)
                 bs.brain('Alpha', get(ui_slider_alpha, 'Value'))
                 set(ui_slider_facealpha, 'Value', get(ui_slider_alpha, 'Value'))
                 set(ui_slider_edgealpha, 'Value', get(ui_slider_alpha, 'Value'))
             end
-            
             function cb_facecolor(~,~)  % (src,event)
                 color = uisetcolor;
                 if length(color) == 3
                     bs.brain('FaceColor', color)
                 end
             end
-            
             function cb_facealpha(~,~)  % (src,event)
                 bs.brain('FaceAlpha', get(ui_slider_facealpha, 'Value'))
             end
-            
             function cb_edgecolor(~,~)  % (src,event)
                 color = uisetcolor;
                 if length(color) == 3
                     bs.brain('EdgeColor', color)
                 end
             end
-            
             function cb_edgealpha(~,~)  % (src,event)
                 bs.brain('EdgeAlpha', get(ui_slider_edgealpha, 'Value'))
             end
-            
         end
         function hold_on(bs)
             % HOLD_ON hold on
@@ -654,11 +599,11 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % sets properties
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
-                    case 'lighting'
+                    case 'plotbrainsurf.lighting'
                         bs.Lighting = varargin{n+1};
-                    case 'material'
+                    case 'plotbrainsurf.material'
                         bs.Material = varargin{n+1};
-                    case 'camlight'
+                    case 'plotbrainsurf.camlight'
                         bs.CamLight = varargin{n+1};
                 end
             end
@@ -842,21 +787,18 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                     set(bs.get_axes(), 'Color', color)
                 end
             end
-            
             function cb_popLighting(~,~)
                 val = ui_pop_up_lighting.Value;
                 str = ui_pop_up_lighting.String;
                 bs.Lighting = str{val};
                 lighting(bs.get_axes(), bs.Lighting)
             end
-            
             function cb_popMaterial(~,~)
                 val = ui_pop_up_material.Value;
                 str = ui_pop_up_material.String;
                 bs.Material = str{val};
                 material(bs.get_axes(), bs.Material)
             end
-            
             function cb_popCamLight(~,~)
                 val = ui_pop_up_camlight.Value;
                 str = ui_pop_up_camlight.String;
@@ -866,7 +808,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                 bs.CamLight = str{val};
                 camlight(bs.get_axes(), bs.CamLight);
             end
-            
             function cb_facecolorstyle(~,~)  % (src,event)
                 val = ui_pop_up_facecolorstyle.Value;
                 str = ui_pop_up_facecolorstyle.String;
@@ -876,13 +817,11 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                     set(bs.getBrainSurface(), 'FaceColor', [.5 .5 .5])
                 end
             end
-            
             function cb_colormapoption(~,~)
                 val = ui_pop_up_colormapoption.Value;
                 str = ui_pop_up_colormapoption.String;
                 colormap(bs.get_axes(), str{val});
             end
-            
         end
     end
     methods (Static)  % Load function
