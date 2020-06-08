@@ -53,15 +53,9 @@ classdef DegreeAv < Degree
                 degree = calculate@Degree(m);
             end
             
-            switch Graph.getGraphType(g)
-                case Graph.GRAPH
-                    degree_av = {mean(degree{1})};
-                otherwise
-                    degree_av = cell(g.layernumber(), 1);
-                    for li = 1:1:g.layernumber()
-                        degree_av(li) = {mean(degree{li})};
-                    end
-                    
+            degree_av = cell(g.layernumber(), 1);
+            for i = 1:1:length(degree_av)
+                degree_av(i) = {mean(degree{i})};
             end
         end
     end
