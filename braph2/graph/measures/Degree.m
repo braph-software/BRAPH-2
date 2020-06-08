@@ -54,12 +54,12 @@ classdef Degree < Measure
                     A = binarize(A);  % binarizes the adjacency matrix
                     degree = {sum(A, 2)};  % calculates the degree of a node
                 otherwise
-                    degree = cell(g.layernumber());
+                    degree = cell(g.layernumber(), 1);
                     for li = 1:1:g.layernumber()
                         Aii = A{li, li};
                         Aii = binarize(Aii);  % binarizes the adjacency matrix
                         degree(li) = {sum(Aii, 2)};  % calculates the degree of a node for layer li                  
-                        A(li, li) = {Aii};
+                        %A(li, li) = {Aii};
                     end    
             end
         end
@@ -140,8 +140,8 @@ classdef Degree < Measure
             list = { ...
                 'GraphBU', ...
                 'GraphWU' ...
-%                 'MultiplexGraphBU', ...
-%                 'MultiplexGraphWU' ...
+                'MultiplexGraphBU', ...
+                'MultiplexGraphWU' ...
                 };
         end
         function n = getCompatibleGraphNumber()

@@ -53,11 +53,20 @@ classdef DegreeAv < Degree
                 degree = calculate@Degree(m);
             end
             
-            degree_av = mean(degree);
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    degree_av = {mean(degree{1})};
+                otherwise
+                    degree_av = cell(g.layernumber(), 1);
+                    for li = 1:1:g.layernumber()
+                        degree_av(li) = {mean(degree{li})};
+                    end
+                    
+            end
         end
     end
     methods(Static)  % Descriptive methods
-         function measure_class = getClass()
+        function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
             % MEASURE_CLASS = GETCLASS() returns the class of the average
@@ -105,7 +114,7 @@ classdef DegreeAv < Degree
             % GETMEASUREFORMAT returns the measure format of average degree
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of average degree measure (NODAL).
+            % of average degree measure (GLOBAL).
             %
             % See also getMeasureScope.
             
@@ -134,8 +143,8 @@ classdef DegreeAv < Degree
             list = { ...
                 'GraphBU', ...
                 'GraphWU' ...
-%                 'MultiplexGraphBU', ...
-%                 'MultiplexGraphWU' ...               
+                'MultiplexGraphBU', ...
+                'MultiplexGraphWU' ...               
                 };
         end
         function n = getCompatibleGraphNumber()

@@ -43,65 +43,128 @@ classdef Distance < Measure
         end
     end
     methods (Access=protected)
-        function D = calculate(m)
+        function distance = calculate(m)
             % CALCULATE calculates the distance value of a graph
             %
             % DISTANCE = CALCULATE(M) returns the value of the distance of a
             % graph.
             
             g = m.getGraph();  % graph from measure class
-            graph_class = g.getClass();
             A = g.getA();  % adjency matrix of the graph
-            
-            if isequal(graph_class, 'GraphWD') || isequal(graph_class, 'GraphWU')
-                ind = A~=0;
-                A(ind) = A(ind).^-1;
-                n = length(A);
-                D = inf(n);
-                D(1:n+1:end) = 0;  % distance matrix
-                B = zeros(n);  % number of edges matrix
-                
-                for u = 1:n
-                    S = true(1, n);  % distance permanence (true is temporary)
-                    L1 = A;
-                    V = u;
-                    
-                    while 1
-                        S(V) = 0;  % distance u->V is now permanent
-                        L1(:, V) = 0;  % no in-edges as already shortest
+   
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    if g.is_weighted(g)  % weighted single-layer graphs
+                        ind = A~=0;
+                        A(ind) = A(ind).^-1;
+                        n = length(A);
+                        D = inf(n);
+                        D(1:n+1:end) = 0;  % distance matrix
+                        B = zeros(n);  %#ok<PROP> % number of edges matrix
                         
-                        for v = V
-                            T = find(L1(v, :));  % neighbours of shortest nodes
-                            [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
-                            D(u, T) = d;  % smallest of old/new path lengths
-                            ind = T(wi==2);  % indices of lengthened paths
-                            B(u, ind) = B(u, v) + 1;  % increment no. of edges in lengthened paths
+                        for u = 1:n
+                            S = true(1, n);  % distance permanence (true is temporary)
+                            L1 = A;
+                            V = u;
+                            
+                            while 1
+                                S(V) = 0;  % distance u->V is now permanent
+                                L1(:, V) = 0;  % no in-edges as already shortest
+                                
+                                for v = V
+                                    T = find(L1(v, :));  % neighbours of shortest nodes
+                                    [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
+                                    D(u, T) = d;  % smallest of old/new path lengths
+                                    ind = T(wi==2);  % indices of lengthened paths
+                                    B(u, ind) = B(u, v) + 1;  %#ok<PROP> % increment no. of edges in lengthened paths
+                                end
+                                
+                                minD = min(D(u, S));
+                                if isempty(minD) || isinf(minD)  % isempty: all nodes reached;
+                                    break  % isinf: some nodes cannot be reached
+                                end
+                                
+                                V = find(D(u,:)==minD);
+                            end
+                        end
+                        m.B = B; %#ok<PROP>
+                        distance = {D};
+                    else  % binary single-layer graphs
+                        l = 1;  % path length
+                        D = A;  % distance matrix
+                        
+                        Lpath = A;
+                        Idx = true;
+                        while any(Idx(:))
+                            l = l+1;
+                            Lpath = Lpath * A;
+                            Idx = (Lpath ~= 0) & (D == 0);
+                            D(Idx) = l;
                         end
                         
-                        minD = min(D(u, S));
-                        if isempty(minD) || isinf(minD)  % isempty: all nodes reached;
-                            break  % isinf: some nodes cannot be reached
-                        end
-                        
-                        V = find(D(u,:)==minD);
+                        D(~D) = inf;  % assign inf to disconnected nodes
+                        distance = {dediagonalize(D)};  % assign 0 to the diagonal
                     end
-                end
-                m.B = B;
-            else
-                l = 1;  % path length
-                D = A;  % distance matrix
-                
-                Lpath = A;
-                Idx = true;
-                while any(Idx(:))
-                    l = l+1;
-                    Lpath = Lpath * A;
-                    Idx = (Lpath ~= 0) & (D == 0);
-                    D(Idx) = l;
-                end
-                
-                D(~D) = inf;  % assign inf to disconnected nodes
-                D = dediagonalize(D);  % assign 0 to the diagonal
+                    
+                otherwise  % non single-layer graphs
+                    distance = cell(g.layernumber(), 1);
+                    connectivity_type =  g.getConnectivityType(g.layernumber());
+                    for li = 1:1:g.layernumber()
+                        if connectivity_type(li, li) == Graph.WEIGHTED  % weighted non single-layer graphs
+                            Aii = A{li, li};
+                            ind = Aii~=0;
+                            Aii(ind) = Aii(ind).^-1;
+                            n = length(Aii);
+                            D = inf(n);
+                            D(1:n+1:end) = 0;  % distance matrix
+                            B = zeros(n);  %#ok<PROP> % number of edges matrix
+                            
+                            for u = 1:n
+                                S = true(1, n);  % distance permanence (true is temporary)
+                                L1 = Aii;
+                                V = u;
+                                
+                                while 1
+                                    S(V) = 0;  % distance u->V is now permanent
+                                    L1(:, V) = 0;  % no in-edges as already shortest
+                                    
+                                    for v = V
+                                        T = find(L1(v, :));  % neighbours of shortest nodes
+                                        [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
+                                        D(u, T) = d;  % smallest of old/new path lengths
+                                        ind = T(wi==2);  % indices of lengthened paths
+                                        B(u, ind) = B(u, v) + 1;  %#ok<PROP> % increment no. of edges in lengthened paths
+                                    end
+                                    
+                                    minD = min(D(u, S));
+                                    if isempty(minD) || isinf(minD)  % isempty: all nodes reached;
+                                        break  % isinf: some nodes cannot be reached
+                                    end
+                                    
+                                    V = find(D(u,:)==minD);
+                                end
+                            end
+                            m.B = B; %#ok<PROP>
+                            distance(li) = {D};
+                            
+                        else  % binary non single-layer graphs
+                                                        Aii = A{li, li};
+                            l = 1;  % path length
+                            D = Aii;  % distance matrix
+                            
+                            Lpath = Aii;
+                            Idx = true;
+                            while any(Idx(:))
+                                l = l+1;
+                                Lpath = Lpath * Aii;
+                                Idx = (Lpath ~= 0) & (D == 0);
+                                D(Idx) = l;
+                            end
+                            
+                            D(~D) = inf;  % assign inf to disconnected nodes
+                            distance(li) = {dediagonalize(D)};  % assign 0 to the diagonal
+                        end
+                    end
             end
         end
     end
@@ -151,7 +214,7 @@ classdef Distance < Measure
             % GETMEASUREFORMAT returns the measure format of distance
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of distance measure (NODAL).
+            % of distance measure (BINODAL).
             %
             % See also getMeasureScope.
             
@@ -182,10 +245,10 @@ classdef Distance < Measure
                 'GraphBU', ...
                 'GraphWD', ...
                 'GraphWU' ...
-%                 'MultiplexGraphBD', ...
-%                 'MultiplexGraphBU', ...
-%                 'MultiplexGraphWD' ...
-%                 'MultiplexGraphWU' ...
+                'MultiplexGraphBD', ...
+                'MultiplexGraphBU', ...
+                'MultiplexGraphWD' ...
+                'MultiplexGraphWU' ...
                 };
         end
         function n = getCompatibleGraphNumber()
