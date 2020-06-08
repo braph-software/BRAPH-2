@@ -120,7 +120,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             PlotBrainSurf.VIEW_CP_AZEL ...
             }
     end
-    properties  (Access = protected)
+    properties (Access = protected)
         h_axes  % handle for the axes
         Lighting
         Material
