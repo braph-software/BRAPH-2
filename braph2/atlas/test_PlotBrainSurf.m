@@ -2,6 +2,7 @@
 
 %% Test 1: Basic Functions
 bs = PlotBrainSurf('BrainMesh_Cerebellum.nv');
+bs.brain();
 
 assert(ischar(bs.tostring()), ...
 	[BRAPH2.STR ':' class(bs) ':' BRAPH2.WRONG_OUTPUT], ...
@@ -9,6 +10,8 @@ assert(ischar(bs.tostring()), ...
 assert(ischar(bs.getName()), ...
 	[BRAPH2.STR ':' class(bs) ':' BRAPH2.WRONG_OUTPUT], ...
     'PlotBrainSurf.getName() does not work.')
+
+close(gcf)
 
 %% Test 2: Change default properties
 bs = PlotBrainSurf('BrainMesh_ICBM152.nv', 'PlotBrainSurf.Lighting', 'gouraud', 'PlotBrainSurf.Material', 'metal', 'PlotBrainSurf.CamLight', 'right');
