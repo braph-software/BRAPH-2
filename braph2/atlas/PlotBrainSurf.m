@@ -146,6 +146,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also PlotBrainAtlas. 
             
+            bs.set_surface(brain_surf_file);
+
             available_settings = PlotBrainSurf.getAvailableSettings();
             settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
             for i = 1:1:length(available_settings)
@@ -156,8 +158,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                 settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
             end
             bs.settings = settings;
-
-            bs.set_surface(brain_surf_file);
         end
         function str = tostring(bs)
             % TOSTRING string with information about the plot brain surf
@@ -211,7 +211,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             name = bs.brain_surf_file;
         end
-        function settings = getSettings(bs, setting_code)
+        function res = getSettings(bs, setting_code)
             % GETSETTINGS returns the current settings
             %
             % SETTINGS = GETSETTINGS() returns the current settings
@@ -219,13 +219,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % See also getName, getSettings.
             
             if nargin<2
-                settings = bs.settings;
+                res = bs.settings;
             else
-                for i = 1:1:length(bs.settings)
-                    if isequal(bs.settings{i, 1}, setting_code)
-                        settings = get_from_varargin([], setting_code, bs.settings{i, :});
-                    end
-                end
+                res = get_from_varargin([], setting_code, bs.settings{:});
             end
         end
         function brain_surface = getBrainSurface(bs)
