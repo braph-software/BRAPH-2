@@ -225,16 +225,11 @@ init_datacursormode()
         end
     end
     function init_disable()
-        set(ui_button_table_add,'enable','off')
-            set(ui_button_table_remove,'enable','off')
             set(ui_button_table_moveup,'enable','off')
             set(ui_button_table_movedown,'enable','off')
             set(ui_button_table_move2top,'enable','off'),
             set(ui_button_table_move2bottom,'enable','off')          
             
-            
-            set(ui_menu_edit_add,'enable','off')
-            set(ui_menu_edit_remove,'enable','off')
             set(ui_menu_edit_moveup,'enable','off')
             set(ui_menu_edit_movedown,'enable','off')
             set(ui_menu_edit_move2top,'enable','off')
@@ -248,16 +243,12 @@ init_datacursormode()
             set(ui_toolbar_label, 'enable', 'off')
     end
     function init_enable()
-          set(ui_button_table_add,'enable','on')
-            set(ui_button_table_remove,'enable','on')
+
             set(ui_button_table_moveup,'enable','on')
             set(ui_button_table_movedown,'enable','on')
             set(ui_button_table_move2top,'enable','on'),
             set(ui_button_table_move2bottom,'enable','on')          
             
-            
-            set(ui_menu_edit_add,'enable','on')
-            set(ui_menu_edit_remove,'enable','on')
             set(ui_menu_edit_moveup,'enable','on')
             set(ui_menu_edit_movedown,'enable','on')
             set(ui_menu_edit_move2top,'enable','on')
