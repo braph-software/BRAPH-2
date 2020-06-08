@@ -1,20 +1,20 @@
 classdef EdgeOverlap < Measure
     % EdgeOverlap Edge Overlap measure
-    % EdgeOverlap provides the edge overlap of a graph for binary undirected (BU) and 
-    % weighted undirected (WU) graphs. It is calculated as the number of
-    % edges connected to the node. Self-connections are excluded (i.e. the
+    % EdgeOverlap provides the edge overlap of a graph for binary undirected (BU)  
+    % graphs. It is calculated as the fraction of layers in which each pair
+    % of node exists. Self-connections are excluded (i.e. the
     % diagonal of the connection matrix is removed).
     % 
     % EdgeOverlap methods:
-    %   EdgeOverlap                      - constructor
+    %   EdgeOverlap                 - constructor
     %
     % EdgeOverlap methods (Access=protected):
     %   calculate                   - calculates the edge overlap of a graph
     % 
     % EdgeOverlap methods (Static)
-    %   getClass                    - returns the degree class
+    %   getClass                    - returns the edge overlap class
     %   getName                     - returns the name of edge overlap measure
-    %   getDescription              - returns the description of degree measure
+    %   getDescription              - returns the description of edge overlap measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns de measure format
     %   getMeasureScope             - returns de measure scope    
@@ -26,11 +26,11 @@ classdef EdgeOverlap < Measure
     
     methods
         function m = EdgeOverlap(g, varargin)
-            % DEGREE(G) creates degree with default measure properties.
+            % EDGEOVERLAP(G) creates edge overlap with default measure properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
             %
-            % DEGREE(G, 'VALUE', VALUE) creates degree, and sets the value
+            % EDGEOVERLAP(G, 'VALUE', VALUE) creates edge overlap, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU).
             %   
@@ -41,10 +41,10 @@ classdef EdgeOverlap < Measure
     end
     methods (Access=protected)
         function edge_overlap = calculate(m)
-            % CALCULATE calculates the degree value of a node
+            % CALCULATE calculates the edge overlap value of a graph
             %
-            % DEGREE = CALCULATE(M) returns the value of the degree of a
-            % node.
+            % DEGREE = CALCULATE(M) returns the value of the edge overlap of a
+            % graph.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix or 2D-cell array 
