@@ -435,7 +435,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 end
             end
             
-            raw = readtable(file, 'PreserveVariableNames', true);
+            raw = readtable(file);
             
             atlas_ID =  raw.Properties.VariableNames{1};
             atlas.setID(atlas_ID);

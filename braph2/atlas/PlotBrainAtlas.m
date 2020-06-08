@@ -449,7 +449,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .30 .30];
-            FigColor = [.95 .95 .95];
+            FigColor = GUI.BKGCOLOR;
             FigName = 'Brain Region Symbol Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -479,7 +479,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % Initialization
             ui_list = uicontrol(f, 'Style', 'listbox');
             set(ui_list, 'Units', 'normalized')
-            set(ui_list, 'BackgroundColor', [.95 .95 .95])
+            set(ui_list, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_list, 'Value', i_vec)
             set(ui_list, 'Max', 2, 'Min',0)
             set(ui_list, 'BackgroundColor', [1 1 1])
@@ -489,7 +489,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
             set(ui_checkbox_label, 'Units', 'normalized')
-            set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+            set(ui_checkbox_label, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_checkbox_label, 'Position', [.10 .15 .15 .10])
             set(ui_checkbox_label, 'String', 'label')
             set(ui_checkbox_label, 'Value', true)
@@ -499,7 +499,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_checkbox_name = uicontrol(f, 'Style', 'checkbox');
             set(ui_checkbox_name, 'Units', 'normalized')
-            set(ui_checkbox_name, 'BackgroundColor', [.95 .95 .95])
+            set(ui_checkbox_name, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_checkbox_name, 'Position', [.30 .15 .20 .10])
             set(ui_checkbox_name, 'String', 'name')
             set(ui_checkbox_name, 'Value', false)
@@ -508,7 +508,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
             set(ui_checkbox_xyz, 'Units', 'normalized')
-            set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+            set(ui_checkbox_xyz, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_checkbox_xyz, 'Position', [.10 .05 .15 .10])
             set(ui_checkbox_xyz, 'String', 'xyz')
             set(ui_checkbox_xyz, 'Value', false)
@@ -517,7 +517,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             %             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
             %             set(ui_checkbox_hs, 'Units', 'normalized')
-            %             set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
+            %             set(ui_checkbox_hs, 'BackgroundColor', GUI.BKGCOLOR)
             %             set(ui_checkbox_hs, 'Position', [.30 .05 .20 .10])
             %             set(ui_checkbox_hs, 'String', 'hemisphere')
             %             set(ui_checkbox_hs, 'Value', false)
@@ -526,7 +526,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_show, 'Units','normalized')
-            set(ui_button_show, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_show, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_show, 'Position', [.55 .85 .15 .10])
             set(ui_button_show, 'String', 'Show Regions')
             set(ui_button_show, 'TooltipString', 'Show selected brain regions')
@@ -534,7 +534,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_hide = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_hide, 'Units', 'normalized')
-            set(ui_button_hide, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_hide, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_hide, 'Position', [.75 .85 .15 .10])
             set(ui_button_hide, 'String', 'Hide Regions')
             set(ui_button_hide, 'TooltipString', 'Hide selected brain regions')
@@ -542,7 +542,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_popup_marker = uicontrol(f, 'Style', 'popup', 'String',{''});
             set(ui_popup_marker, 'Units','normalized')
-            set(ui_popup_marker, 'BackgroundColor', [.95 .95 .95])
+            set(ui_popup_marker, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_popup_marker, 'Position', [.55 .65 .35 .10])
             set(ui_popup_marker, 'String', ba.PLOT_SYMBOL_NAME)
             set(ui_popup_marker, 'Value', 2)
@@ -551,7 +551,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_text_size = uicontrol(f, 'Style', 'text');
             set(ui_text_size, 'Units', 'normalized')
-            set(ui_text_size, 'BackgroundColor', [.95 .95 .95])
+            set(ui_text_size, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_text_size, 'Position', [.55 .425 .10 .10])
             set(ui_text_size, 'String', 'size ')
             set(ui_text_size, 'HorizontalAlignment', 'left')
@@ -559,7 +559,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_edit_size = uicontrol(f, 'Style', 'edit');
             set(ui_edit_size, 'Units','normalized')
-            set(ui_edit_size, 'BackgroundColor', [.95 .95 .95])
+            set(ui_edit_size, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_edit_size, 'Position', [.65 .45 .25 .10])
             set(ui_edit_size, 'HorizontalAlignment', 'center')
             set(ui_edit_size, 'FontWeight', 'bold')
@@ -568,7 +568,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_facecolor = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_facecolor, 'Units', 'normalized')
-            set(ui_button_facecolor, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_facecolor, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_facecolor, 'Position', [.55 .25 .15 .10])
             set(ui_button_facecolor, 'String', 'Symbol Color')
             set(ui_button_facecolor, 'TooltipString', 'Select symbol color')
@@ -576,7 +576,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_edgecolor = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_edgecolor, 'Units', 'normalized')
-            set(ui_button_edgecolor, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_edgecolor, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_edgecolor, 'Position', [.75 .25 .15 .10])
             set(ui_button_edgecolor, 'String', 'Edge Color')
             set(ui_button_edgecolor, 'TooltipString', 'Select symbol edge color')
@@ -1040,7 +1040,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .30 .30];
-            FigColor = [.95 .95 .95];
+            FigColor = GUI.BKGCOLOR;
             FigName = 'Brain Region Sphere Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -1070,7 +1070,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % Initialization
             ui_list = uicontrol(f, 'Style', 'listbox');
             set(ui_list, 'Units','normalized')
-            set(ui_list, 'BackgroundColor', [.95 .95 .95])
+            set(ui_list, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_list, 'Value', i_vec)
             set(ui_list, 'Max', 2, 'Min', 0)
             set(ui_list, 'BackgroundColor', [1 1 1])
@@ -1080,7 +1080,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
             set(ui_checkbox_label, 'Units','normalized')
-            set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+            set(ui_checkbox_label, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_checkbox_label, 'Position', [.08 .15 .15 .10])
             set(ui_checkbox_label, 'String', 'label')
             set(ui_checkbox_label, 'Value', true)
@@ -1090,7 +1090,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_checkbox_name = uicontrol(f, 'Style', 'checkbox');
             set(ui_checkbox_name, 'Units','normalized')
-            set(ui_checkbox_name, 'BackgroundColor', [.95 .95 .95])
+            set(ui_checkbox_name, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_checkbox_name, 'Position', [.23 .15 .15 .10])
             set(ui_checkbox_name, 'String', 'name')
             set(ui_checkbox_name, 'Value', false)
@@ -1099,7 +1099,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
             set(ui_checkbox_xyz, 'Units','normalized')
-            set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+            set(ui_checkbox_xyz, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_checkbox_xyz, 'Position', [.08 .05 .15 .10])
             set(ui_checkbox_xyz, 'String', 'xyz')
             set(ui_checkbox_xyz, 'Value', false)
@@ -1108,7 +1108,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             %             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
             %             set(ui_checkbox_hs, 'Units','normalized')
-            %             set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
+            %             set(ui_checkbox_hs, 'BackgroundColor', GUI.BKGCOLOR)
             %             set(ui_checkbox_hs, 'Position', [.23 .05 .15 .10])
             %             set(ui_checkbox_hs, 'String', 'hemisphere')
             %             set(ui_checkbox_hs, 'Value', false)
@@ -1117,7 +1117,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_show, 'Units','normalized')
-            set(ui_button_show, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_show, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_show, 'Position', [.43 .85 .20 .10])
             set(ui_button_show, 'String', 'Show Regions')
             set(ui_button_show, 'TooltipString', 'Show selected brain regions')
@@ -1125,7 +1125,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_hide = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_hide, 'Units','normalized')
-            set(ui_button_hide, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_hide, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_hide, 'Position', [.73 .85 .20 .10])
             set(ui_button_hide, 'String', 'Hide Regions')
             set(ui_button_hide, 'TooltipString', 'Hide selected brain regions')
@@ -1133,7 +1133,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_text = uicontrol(f, 'Style', 'text');
             set(ui_text, 'Units','normalized')
-            set(ui_text, 'BackgroundColor', [.95 .95 .95])
+            set(ui_text, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_text, 'String', 'transparency')
             set(ui_text, 'Position', [.63 .70 .30 .10])
             set(ui_text, 'HorizontalAlignment', 'center')
@@ -1141,7 +1141,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_color = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_color, 'Units','normalized')
-            set(ui_button_color, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_color, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_color, 'Position', [.43 .60 .15 .10])
             set(ui_button_color, 'String', 'sphere color')
             set(ui_button_color, 'HorizontalAlignment', 'center')
@@ -1150,7 +1150,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_slider_alpha = uicontrol(f, 'Style', 'slider');
             set(ui_slider_alpha, 'Units','normalized')
-            set(ui_slider_alpha, 'BackgroundColor', [.95 .95 .95])
+            set(ui_slider_alpha, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_slider_alpha, 'Position', [.63 .60 .30 .10])
             set(ui_slider_alpha, 'String', 'Brain region transparency')
             set(ui_slider_alpha, 'Min', 0, 'Max',1, 'Value',.5);
@@ -1159,7 +1159,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_facecolor = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_facecolor, 'Units','normalized')
-            set(ui_button_facecolor, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_facecolor, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_facecolor, 'Position', [.43 .425 .15 .10])
             set(ui_button_facecolor, 'String', 'face color')
             set(ui_button_facecolor, 'HorizontalAlignment', 'center')
@@ -1168,7 +1168,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_slider_facealpha = uicontrol(f, 'Style', 'slider');
             set(ui_slider_facealpha, 'Units', 'normalized')
-            set(ui_slider_facealpha, 'BackgroundColor', [.95 .95 .95])
+            set(ui_slider_facealpha, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_slider_facealpha, 'Position', [.63 .425 .30 .10])
             set(ui_slider_facealpha, 'String', 'Brain region transparency')
             set(ui_slider_facealpha, 'Min', 0, 'Max', 1, 'Value', .5)
@@ -1177,7 +1177,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_edgecolor = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_edgecolor, 'Units', 'normalized')
-            set(ui_button_edgecolor, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_edgecolor, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_edgecolor, 'Position', [.43 .25 .15 .10])
             set(ui_button_edgecolor, 'String', 'edge color')
             set(ui_button_edgecolor, 'HorizontalAlignment', 'center')
@@ -1186,7 +1186,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_slider_edgealpha = uicontrol(f, 'Style', 'slider');
             set(ui_slider_edgealpha, 'Units', 'normalized')
-            set(ui_slider_edgealpha, 'BackgroundColor', [.95 .95 .95])
+            set(ui_slider_edgealpha, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_slider_edgealpha, 'Position', [.63 .25 .30 .10])
             set(ui_slider_edgealpha, 'String', 'Brain transparency')
             set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', .5)
@@ -1195,7 +1195,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_text_radius = uicontrol(f, 'Style', 'text');
             set(ui_text_radius, 'Units', 'normalized')
-            set(ui_text_radius, 'BackgroundColor', [.95 .95 .95])
+            set(ui_text_radius, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_text_radius, 'Position', [.43 .075 .10 .10])
             set(ui_text_radius, 'String', 'radius ')
             set(ui_text_radius, 'HorizontalAlignment', 'left')
@@ -1203,7 +1203,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_edit_radius = uicontrol(f, 'Style', 'edit');
             set(ui_edit_radius, 'Units', 'normalized')
-            set(ui_edit_radius, 'BackgroundColor', [.95 .95 .95])
+            set(ui_edit_radius, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_edit_radius, 'Position', [.63 .085 .30 .10])
             set(ui_edit_radius, 'HorizontalAlignment', 'center')
             set(ui_edit_radius, 'FontWeight', 'bold')
@@ -1625,7 +1625,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             % sets position of figure
             FigPosition = [.50 .30 .25 .30];
-            FigColor = [.95 .95 .95];
+            FigColor = GUI.BKGCOLOR;
             FigName = 'Brain Region Label Settings';
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
@@ -1655,7 +1655,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % Initialization
             ui_list = uicontrol(f, 'Style', 'listbox');
             set(ui_list, 'Units', 'normalized')
-            set(ui_list, 'BackgroundColor', [.95 .95 .95])
+            set(ui_list, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_list, 'Value', i_vec)
             set(ui_list, 'Max', 2, 'Min', 0)
             set(ui_list, 'BackgroundColor', [1 1 1])
@@ -1665,7 +1665,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
             set(ui_checkbox_label, 'Units', 'normalized')
-            set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+            set(ui_checkbox_label, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_checkbox_label, 'Position', [.05 .125 .20 .10])
             set(ui_checkbox_label, 'String', 'label')
             set(ui_checkbox_label, 'Value', true)
@@ -1675,7 +1675,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_checkbox_name = uicontrol(f, 'Style', 'checkbox');
             set(ui_checkbox_name, 'Units', 'normalized')
-            set(ui_checkbox_name, 'BackgroundColor', [.95 .95 .95])
+            set(ui_checkbox_name, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_checkbox_name, 'Position', [.25 .125 .20 .10])
             set(ui_checkbox_name, 'String', 'name')
             set(ui_checkbox_name, 'Value', false)
@@ -1684,7 +1684,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
             set(ui_checkbox_xyz, 'Units', 'normalized')
-            set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+            set(ui_checkbox_xyz, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_checkbox_xyz, 'Position', [.05 .025 .20 .10])
             set(ui_checkbox_xyz, 'String', 'xyz')
             set(ui_checkbox_xyz, 'Value', false)
@@ -1693,7 +1693,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             %             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
             %             set(ui_checkbox_hs, 'Units', 'normalized')
-            %             set(ui_checkbox_hs, 'BackgroundColor', [.95 .95 .95])
+            %             set(ui_checkbox_hs, 'BackgroundColor', GUI.BKGCOLOR)
             %             set(ui_checkbox_hs, 'Position', [.25 .025 .20 .10])
             %             set(ui_checkbox_hs, 'String', 'hemisphere')
             %             set(ui_checkbox_hs, 'Value', false)
@@ -1702,7 +1702,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_show, 'Units', 'normalized')
-            set(ui_button_show, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_show, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_show, 'Position', [.50 .85 .20 .10])
             set(ui_button_show, 'String', 'Show Regions')
             set(ui_button_show, 'TooltipString', 'Show selected brain regions')
@@ -1710,7 +1710,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_hide = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_hide, 'Units', 'normalized')
-            set(ui_button_hide, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_hide, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_hide, 'Position', [.75 .85 .20 .10])
             set(ui_button_hide, 'String', 'Hide Regions')
             set(ui_button_hide, 'TooltipString', 'Hide selected brain regions')
@@ -1718,7 +1718,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_font = uicontrol(f,'Style', 'pushbutton');
             set(ui_button_font, 'Units', 'normalized')
-            set(ui_button_font, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_font, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_font,'Position',[.50 .55 .20 .10])
             set(ui_button_font,'String','Font')
             set(ui_button_font,'TooltipString','Brain regions labels font')
@@ -1726,7 +1726,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_button_color = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_color, 'Units', 'normalized')
-            set(ui_button_color, 'BackgroundColor', [.95 .95 .95])
+            set(ui_button_color, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_button_color, 'Position' ,[.75 .55 .20 .10])
             set(ui_button_color, 'String', 'Font Color')
             set(ui_button_color, 'TooltipString', 'Brain regions labels color')
@@ -1734,7 +1734,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_text_interpreter = uicontrol(f, 'Style', 'text');
             set(ui_text_interpreter, 'Units', 'normalized')
-            set(ui_text_interpreter, 'BackgroundColor', [.95 .95 .95])
+            set(ui_text_interpreter, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_text_interpreter, 'Position', [.50 .225 .20 .10])
             set(ui_text_interpreter, 'String', 'interpreter')
             set(ui_text_interpreter, 'HorizontalAlignment', 'left')
@@ -1742,7 +1742,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             ui_popup_interpreter = uicontrol(f, 'Style', 'popup', 'String', {''});
             set(ui_popup_interpreter, 'Units', 'normalized')
-            set(ui_popup_interpreter, 'BackgroundColor', [.95 .95 .95])
+            set(ui_popup_interpreter, 'BackgroundColor', GUI.BKGCOLOR)
             set(ui_popup_interpreter, 'Position', [.75 .25 .20 .10])
             set(ui_popup_interpreter, 'String', {'none', 'tex', 'latex'})
             set(ui_popup_interpreter, 'Value', 2)
