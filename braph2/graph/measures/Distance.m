@@ -42,7 +42,7 @@ classdef Distance < Measure
             m = m@Measure(g, varargin{:});
         end
     end
-    methods (Access=protected)
+    methods (Access=protected)   
         function distance = calculate(m)
             % CALCULATE calculates the distance value of a graph
             %
@@ -51,122 +51,110 @@ classdef Distance < Measure
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix of the graph
-   
-            switch Graph.getGraphType(g)
-                case Graph.GRAPH
-                    if g.is_weighted(g)  % weighted single-layer graphs
-                        ind = A~=0;
-                        A(ind) = A(ind).^-1;
-                        n = length(A);
-                        D = inf(n);
-                        D(1:n+1:end) = 0;  % distance matrix
-                        B = zeros(n);  %#ok<PROP> % number of edges matrix
-                        
-                        for u = 1:n
-                            S = true(1, n);  % distance permanence (true is temporary)
-                            L1 = A;
-                            V = u;
-                            
-                            while 1
-                                S(V) = 0;  % distance u->V is now permanent
-                                L1(:, V) = 0;  % no in-edges as already shortest
-                                
-                                for v = V
-                                    T = find(L1(v, :));  % neighbours of shortest nodes
-                                    [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
-                                    D(u, T) = d;  % smallest of old/new path lengths
-                                    ind = T(wi==2);  % indices of lengthened paths
-                                    B(u, ind) = B(u, v) + 1;  %#ok<PROP> % increment no. of edges in lengthened paths
-                                end
-                                
-                                minD = min(D(u, S));
-                                if isempty(minD) || isinf(minD)  % isempty: all nodes reached;
-                                    break  % isinf: some nodes cannot be reached
-                                end
-                                
-                                V = find(D(u,:)==minD);
-                            end
-                        end
-                        m.B = B; %#ok<PROP>
-                        distance = {D};
-                    else  % binary single-layer graphs
-                        l = 1;  % path length
-                        D = A;  % distance matrix
-                        
-                        Lpath = A;
-                        Idx = true;
-                        while any(Idx(:))
-                            l = l+1;
-                            Lpath = Lpath * A;
-                            Idx = (Lpath ~= 0) & (D == 0);
-                            D(Idx) = l;
-                        end
-                        
-                        D(~D) = inf;  % assign inf to disconnected nodes
-                        distance = {dediagonalize(D)};  % assign 0 to the diagonal
+            distance = cell(g.layernumber(), 1);
+            connectivity_type =  g.getConnectivityType(g.layernumber());
+            for li = 1:1:g.layernumber()
+                if g.is_graph(g)
+                    Aii = A;
+                    connectivity_layer = connectivity_type;
+                else
+                    Aii = A{li, li};
+                    connectivity_layer = connectivity_type(li, li);
+                end
+                if connectivity_layer == Graph.WEIGHTED  % weighted graphs
+                    distance(li) = {Distance.getWeightedCalculation(m, Aii)};
+                    
+                else  % binary graphs
+                    distance(li) = {Distance.getBinaryCalculation(Aii)};
+                end
+            end
+            
+%             switch Graph.getGraphType(g)
+%                 case Graph.GRAPH
+%                     if g.is_weighted(g)  % weighted single-layer graphs
+%                         distance = {Distance.getWeightedCalculation(m, A)};
+%                     else  % binary single-layer graphs
+%                         distance = {Distance.getBinaryCalculation(A)};  
+%                     end
+%                     
+%                 otherwise  % non single-layer graphs
+%                     distance = cell(g.layernumber(), 1);
+%                     connectivity_type =  g.getConnectivityType(g.layernumber());
+%                     for li = 1:1:g.layernumber()
+%                         if connectivity_type(li, li) == Graph.WEIGHTED  % weighted non single-layer graphs
+%                             distance(li) = {Distance.getWeightedCalculation(m, A{li, li})};
+%                             
+%                         else  % binary non single-layer graphs
+%                             distance(li) = {Distance.getBinaryCalculation(A{li, li})};
+%                         end
+%                     end
+%             end
+        end
+    end
+    
+    methods (Static)
+        function weighted_distance = getWeightedCalculation(m, A)
+            % GETWEIGHTEDCALCULATION calculates the distance value of a weighted adjacency matrix
+            %
+            % WEIGHTED_DISTANCE = GETWEIGHTEDCALCULATION(M, A) returns the value of the distance of a
+            % weighted adjacency matrix A.
+            
+            ind = A~=0;
+            A(ind) = A(ind).^-1;
+            n = length(A);
+            D = inf(n);
+            D(1:n+1:end) = 0;  % distance matrix
+            B = zeros(n);  %#ok<PROPLC> % number of edges matrix
+            
+            for u = 1:n
+                S = true(1, n);  % distance permanence (true is temporary)
+                L1 = A;
+                V = u;
+                
+                while 1
+                    S(V) = 0;  % distance u->V is now permanent
+                    L1(:, V) = 0;  % no in-edges as already shortest
+                    
+                    for v = V
+                        T = find(L1(v, :));  % neighbours of shortest nodes
+                        [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
+                        D(u, T) = d;  % smallest of old/new path lengths
+                        ind = T(wi==2);  % indices of lengthened paths
+                        B(u, ind) = B(u, v) + 1;  %#ok<PROPLC> % increment no. of edges in lengthened paths
                     end
                     
-                otherwise  % non single-layer graphs
-                    distance = cell(g.layernumber(), 1);
-                    connectivity_type =  g.getConnectivityType(g.layernumber());
-                    for li = 1:1:g.layernumber()
-                        if connectivity_type(li, li) == Graph.WEIGHTED  % weighted non single-layer graphs
-                            Aii = A{li, li};
-                            ind = Aii~=0;
-                            Aii(ind) = Aii(ind).^-1;
-                            n = length(Aii);
-                            D = inf(n);
-                            D(1:n+1:end) = 0;  % distance matrix
-                            B = zeros(n);  %#ok<PROP> % number of edges matrix
-                            
-                            for u = 1:n
-                                S = true(1, n);  % distance permanence (true is temporary)
-                                L1 = Aii;
-                                V = u;
-                                
-                                while 1
-                                    S(V) = 0;  % distance u->V is now permanent
-                                    L1(:, V) = 0;  % no in-edges as already shortest
-                                    
-                                    for v = V
-                                        T = find(L1(v, :));  % neighbours of shortest nodes
-                                        [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
-                                        D(u, T) = d;  % smallest of old/new path lengths
-                                        ind = T(wi==2);  % indices of lengthened paths
-                                        B(u, ind) = B(u, v) + 1;  %#ok<PROP> % increment no. of edges in lengthened paths
-                                    end
-                                    
-                                    minD = min(D(u, S));
-                                    if isempty(minD) || isinf(minD)  % isempty: all nodes reached;
-                                        break  % isinf: some nodes cannot be reached
-                                    end
-                                    
-                                    V = find(D(u,:)==minD);
-                                end
-                            end
-                            m.B = B; %#ok<PROP>
-                            distance(li) = {D};
-                            
-                        else  % binary non single-layer graphs
-                                                        Aii = A{li, li};
-                            l = 1;  % path length
-                            D = Aii;  % distance matrix
-                            
-                            Lpath = Aii;
-                            Idx = true;
-                            while any(Idx(:))
-                                l = l+1;
-                                Lpath = Lpath * Aii;
-                                Idx = (Lpath ~= 0) & (D == 0);
-                                D(Idx) = l;
-                            end
-                            
-                            D(~D) = inf;  % assign inf to disconnected nodes
-                            distance(li) = {dediagonalize(D)};  % assign 0 to the diagonal
-                        end
+                    minD = min(D(u, S));
+                    if isempty(minD) || isinf(minD)  % isempty: all nodes reached;
+                        break  % isinf: some nodes cannot be reached
                     end
+                    
+                    V = find(D(u,:)==minD);
+                end
             end
+            m.B = B;  %#ok<PROPLC>
+            weighted_distance = D;
         end
+        function binary_distance = getBinaryCalculation(A)
+            % GETBINARYCALCULATION calculates the distance value of a binary adjacency matrix
+            %
+            % BINARY_DISTANCE = GETBINARYCALCULATION(A) returns the
+            % value of the distance of a binary adjacency matrix A.
+
+            l = 1;  % path length
+            D = A;  % distance matrix
+            
+            Lpath = A;
+            Idx = true;
+            while any(Idx(:))
+                l = l+1;
+                Lpath = Lpath * A;
+                Idx = (Lpath ~= 0) & (D == 0);
+                D(Idx) = l;
+            end
+            
+            D(~D) = inf;  % assign inf to disconnected nodes
+            binary_distance = dediagonalize(D);  % assign 0 to the diagonal
+        end     
     end
     methods (Static)  % Descriptive methods
         function measure_class = getClass()
