@@ -59,7 +59,6 @@ classdef Degree < Measure
                         Aii = A{li, li};
                         Aii = binarize(Aii);  % binarizes the adjacency matrix
                         degree(li) = {sum(Aii, 2)};  % calculates the degree of a node for layer li                  
-                        %A(li, li) = {Aii};
                     end    
             end
         end
