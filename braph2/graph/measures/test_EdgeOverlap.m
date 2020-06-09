@@ -33,12 +33,12 @@ A_weighted = {
 g = MultiplexGraphBU(A);
 edge_overlap = EdgeOverlap(g);
 
-edge_overlap_known = [
+known_edge_overlap = [
                      0   1   0.5
                      1   0   0.5
                      0.5 0.5 0];
                  
-edge_overlap_test = {edge_overlap_known};  
+edge_overlap_test = {known_edge_overlap};  
 
 assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
@@ -58,18 +58,18 @@ assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
 g = MultiplexGraphWU(A_weighted);
 edge_overlap = EdgeOverlap(g);
 
-edge_overlap_known = [
+known_edge_overlap = [
                      0   1   0.5
                      1   0   0.5
                      0.5 0.5 0];
                  
-edge_overlap_test = {edge_overlap_known};  
+edge_overlap_test = {known_edge_overlap};  
 
 assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for MultiplexGraphBU')
+    'EdgeOverlap is not being calculated correctly for MultiplexGraphWU')
 
-%% Test 2: Calculation GraphWU
+%% Test 4: Calculation GraphWU
 g = GraphWU(L1_weighted);
 edge_overlap = EdgeOverlap(g);
 
@@ -77,4 +77,4 @@ edge_overlap_test = {L1};
 
 assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for GraphBU')
+    'EdgeOverlap is not being calculated correctly for GraphWU')
