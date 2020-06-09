@@ -919,6 +919,47 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             bool = Graph.getNegativityType(g, varargin{:}) == Graph.NEGATIVE;
         end
+        function list = getCompatibleMeasureList(g)
+            % GETCOMPATIBLEMEASURELIST returns the list of measures
+            %
+            % CELL ARRAY = GETCOMPATIBLEMEASURELIST(G) returns a cell array of
+            % compatible measures to the concrete graph G.
+            %
+            % CELL ARRAY = GETCOMPATIBLEMEASURELIST(GRAPH_CLASS) returns a
+            % cell array of compatible measures to a graph whose class is
+            % GRAPH_CLASS.
+            %
+            % See also getList, getCompatibleMeasureNumber.
+            
+            graph_class = Graph.getClass(g);
+            
+            measure_code_list = Measure.getList();
+            
+            list = cell(1, length(measure_code_list));
+            for i = 1:1:length(measure_code_list)
+                measure_code = measure_code_list{i};
+                
+                if are_compatible(graph_class, measure_code)
+                    list{i} = measure_code;
+                end
+            end
+            list(cellfun('isempty', list)) = [];
+        end
+        function n = getCompatibleMeasureNumber(g)
+            % GETCOMPATIBLEMEASURENUMBER returns the number of compatible
+            % measures
+            %
+            % N = GETCOMPATIBLEMEASURENUMBER(G) returns the number of
+            % compatible measures to the concrete graph G.
+            %
+            % N = GETCOMPATIBLEMEASURENUMBER(GRAHP_CLASS) returns the number
+            % of compatible measures to graph whose class is GRAPH_CLASS.
+            %
+            % See also getList, getCompatibleMeasureList.
+            
+            list = Graph.getCompatibleMeasureList(g);
+            n = numel(list);
+        end
     end
     methods  % Basic methods
         function str = tostring(g)
@@ -1069,7 +1110,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % See also getMeasure(), is_measure_calculated().
             
             value = g.getMeasure(measure_class).getValue();
-        end
+        end       
     end
     methods (Static)  % Attacks
         function ga = nodeattack(g, nodes, layernumbers)
@@ -1193,31 +1234,6 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
 %     methods (Access=protected)
-%         function g = Graph(A, varargin)
-%             % Graph(A) creates a graph with the default properties.
-%             % A is the adjacency matrix. This method is only accessible
-%             % by the subclasses of Graph.
-%             %
-%             % Graph(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
-%             % creates a graph with properties and values. It initializes
-%             % the property settings with the properties and values.
-%             %
-%             % GRAPH(A, 'Settings', SETTINGS) ceates a graph and
-%             % initializes the property settings with SETTINGS.
-%             %
-%             % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
-%             
-%             if length(varargin) == 1
-%                 varargin = varargin{:};
-%             end
-% 
-%             settings = get_from_varargin(varargin, 'Settings', varargin{:});
-%             measure_dict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
-%             
-%             g.A = A;  % initialize the property A
-%             g.settings = settings;  % initialize the property settings
-%             g.measure_dict = measure_dict;  % initialize the property measure_dict
-%         end
 %         function g_copy = copyElement(g)
 %             % COPYELEMENT(G) copies elements of graph
 %             %
@@ -1255,51 +1271,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         end
 %     end
 %     methods
-%         function m = getMeasure(g, measure_class)
-%             % GETMEASURE returns measure
-%             %
-%             % M = GETMEASURE(G, MEASURE_CLASS) checks if the measure
-%             % exists in the property MDICT. If not it creates a new measure
-%             % M of class MEASURE_CLASS with properties defined by the graph
-%             % settings. The user must call getValue() for the new measure M
-%             % to retrieve the value of measure M.
-%             %
-%             % See also getMeasureValue(), is_measure_calculated().
-%             
-%             if isKey(g.measure_dict, measure_class)
-%                 m = g.measure_dict(measure_class);
-%             else
-%                 m = Measure.getMeasure(measure_class, g, g.settings{:});
-%                 g.measure_dict(measure_class) = m;
-%             end
-%         end
-%         function bool = is_measure_calculated(g, measure_class)
-%             % IS_MEASURE_CALCULATED checks if a measure is calculated
-%             %
-%             % BOOL = IS_MEASURE_CALCULATED(G) returns true if a value of a
-%             % measure has been already calculated. If a measure M is
-%             % created by using the function getMeasure(), the user needs to
-%             % call the function getMeasureValue() to calculate the measure and
-%             % obtain a value.
-%             %
-%             % See also getMeasure(), getMeasureValue().
-%             
-%             if isKey(g.measure_dict, measure_class)
-%                 bool = g.measure_dict(measure_class).is_value_calculated();
-%             else
-%                 bool = false;
-%             end
-%         end
-%         function value = getMeasureValue(g, measure_class)
-%             % GETMEASUREVALUE returns the value of a measure
-%             %
-%             % VALUE = GETMEASUREVALUE(G, MEASURE_CLASS) returns the value of
-%             % a measure of type MEASURE_CLASS.
-%             %
-%             % See also getMeasure(), is_measure_calculated().
-%             
-%             value = g.getMeasure(measure_class).getValue();
-%         end
 %         function sg = subgraph(g, nodes)
 %             % SUBGRAPH creates subgraph from given nodes
 %             %
@@ -1311,48 +1282,5 @@ classdef Graph < handle & matlab.mixin.Copyable
 %         end
 %     methods (Abstract)
 %         randomize_graph(n);
-%     end
-%     methods (Static)
-%         function list = getCompatibleMeasureList(g)
-%             % GETCOMPATIBLEMEASURELIST returns the list of measures
-%             %
-%             % CELL ARRAY = GETCOMPATIBLEMEASURELIST(G) returns a cell array of
-%             % compatible measures to the concrete graph G.
-%             %
-%             % CELL ARRAY = GETCOMPATIBLEMEASURELIST(GRAPH_CLASS) returns a 
-%             % cell array of compatible measures to a graph whose class is
-%             % GRAPH_CLASS.
-%             %
-%             % See also getList(), getCompatibleMeasureNumber().
-%             
-%             graph_class = Graph.getClass(g);
-%             
-%             measure_code_list = Measure.getList();
-%             
-%             list = cell(1, length(measure_code_list));
-%             for i = 1:1:length(measure_code_list)
-%                 measure_code = measure_code_list{i};
-%                 
-%                 if are_compatible(graph_class, measure_code)
-%                     list{i} = measure_code;
-%                 end
-%             end
-%             list(cellfun('isempty', list)) = [];
-%         end
-%         function n = getCompatibleMeasureNumber(g)
-%             % GETCOMPATIBLEMEASURENUMBER returns the number of compatible
-%             % measures
-%             %
-%             % N = GETCOMPATIBLEMEASURENUMBER(G) returns the number of
-%             % compatible measures to the concrete graph G.
-%             %
-%             % N = GETCOMPATIBLEMEASURENUMBER(GRAHP_CLASS) returns the number
-%             % of compatible measures to graph whose class is GRAPH_CLASS.
-%             %
-%             % See also getList(), getCompatibleMeasureList().
-%             
-%             list = Graph.getCompatibleMeasureList(g);
-%             n = numel(list);
-%         end
 %     end
 end
