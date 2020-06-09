@@ -13,7 +13,7 @@ assert(ischar(bs.getName()), ...
 
 %% Test 2: Change default properties
 
-bs2 = PlotBrainSurf('BrainMesh_ICBM152.nv', 'PlotBrainSurf.Lighting', 'gouraud', 'PlotBrainSurf.Material', 'metal', 'PlotBrainSurf.CamLight', 'right');
+bs2 = PlotBrainSurf('ferret.nv', 'PlotBrainSurf.Lighting', 'gouraud', 'PlotBrainSurf.Material', 'metal', 'PlotBrainSurf.CamLight', 'right');
 handle = bs2.brain();
 bs2.axis_equal();
 bs2.view(PlotBrainSurf.VIEW_3D);

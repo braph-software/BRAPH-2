@@ -27,19 +27,26 @@ coordinate_element = coordinate_elements.item(0);
 coordinates = coordinate_element.getAttribute('point');
 
 % manage strings remove leading space, remove unwanted chars, split string,
-% trimming and removing empty cells
+% trimming and removing empty cells, triangles need to increase the number
+% by 1, because matlab patch needs to be >= 1
 
 triangles = erase(char(triangles), '             ');
 triangles = strrep(triangles, '-1', newline);
 triangles = split(triangles, newline);
 triangles = strtrim(triangles);
 triangles = setdiff(triangles, {''});
+number_triangles = length(triangles);
+for i = 1:number_triangles
+    tmp = triangles{i, 1};
+    tmp_array = split(tmp, ' ');
+    tmp_array = cellfun(@(x) str2num(x) + 1, tmp_array); %#ok<ST2NM>
+    triangles{i, 1} = [num2str(tmp_array(1)) ' ' num2str(tmp_array(2)) ' ' num2str(tmp_array(3))];
+end
 coordinates = erase(char(coordinates), '             ');
 coordinates = strrep(coordinates, ',' , newline);
 coordinates = split(coordinates, newline);
 coordinates = strtrim(coordinates);
 coordinates = setdiff(coordinates, {''});
-number_triangles = length(triangles);
 number_coordinates = length(coordinates);
 
 % output
