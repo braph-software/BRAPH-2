@@ -43,7 +43,7 @@ classdef EdgeOverlap < Measure
         function edge_overlap = calculate(m)
             % CALCULATE calculates the edge overlap value of a graph
             %
-            % DEGREE = CALCULATE(M) returns the value of the edge overlap of a
+            % EDGEOVERLAP = CALCULATE(M) returns the value of the edge overlap of a
             % graph.
             
             g = m.getGraph();  % graph from measure class
