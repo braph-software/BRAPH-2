@@ -51,7 +51,7 @@ classdef EdgeOverlap < Measure
             
             N = g.nodenumber();
             L = g.layernumber();
-            overlap = zeros(N);
+            overlap = zeros(N(1));
             
             for li = 1:1:L
                 if g.is_graph(g)
