@@ -749,13 +749,13 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba.set_axes()
             
             % radius
+            R = ba.sphs.R(i);
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
                     case 'r'
                         R = varargin{n + 1};
                 end
-            end
-            R = ba.sphs.R(i);
+            end            
             
             % center coordinates
             X = ba.atlas.getBrainRegions().getValue(i).getX();
@@ -797,7 +797,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % sets properties
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
-                    case 'radius'
+                    case 'r'
                         [sx, sy, sz] = sphere();
                         set(ba.sphs.h(i), 'XData', X + R * sx);
                         set(ba.sphs.h(i), 'YData', Y + R * sy);
@@ -904,7 +904,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
             if isa(i_vec, 'IndexedDictionary')
                 for m = 1:1:i_vec.length()
-                    if exist('R','var') && numel(R)==length(i_vec)
+                    if exist('r','var') && numel(R)==length(i_vec)
                         varargin{nr} = R(m);
                     end
                     if exist('EdgeColor','var') && size(EdgeColor,1)==length(i_vec) && size(EdgeColor,2)==3
@@ -930,7 +930,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 end
             else
                 for m = 1:1:length(i_vec)
-                    if exist('R','var') && numel(R)==length(i_vec)
+                    if exist('r','var') && numel(R)==length(i_vec)
                         varargin{nr} = R(m);
                     end
                     if exist('EdgeColor','var') && size(EdgeColor,1)==length(i_vec) && size(EdgeColor,2)==3
@@ -955,7 +955,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                     ba.br_sph(m, varargin{:})
                 end
                 
-                ba.br_sph(i_vec(m), varargin{:})
+%                 ba.br_sph(i_vec(m), varargin{:})
             end
         end
         function br_sphs_on(ba, i_vec)

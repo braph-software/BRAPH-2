@@ -863,7 +863,7 @@ init_contextmenu()
         camlight('Headlight')
     end
     function create_figure_brainregionplot()
-        h_brain_outer_obj.br_sphs(atlas.getBrainRegions(), 'color', FIG_BR_COLOR, 'radius', 3)
+        h_brain_outer_obj.br_sphs(atlas.getBrainRegions(), 'color', FIG_BR_COLOR, 'r', 3)
         h_brain_outer_obj.br_sphs_on()
         
         h_brain_outer_obj.br_labs(atlas.getBrainRegions(), 'color', 'k', 'FontSize', 8)
@@ -882,14 +882,14 @@ init_contextmenu()
 
         if any(selected==i)
             
-            h_brain_outer_obj.br_sphs(i, 'color', FIG_BRSELECTED_COLOR, 'radius', 4)
+            h_brain_outer_obj.br_sphs(i, 'color', FIG_BRSELECTED_COLOR, 'r', 4)
             h_brain_outer_obj.br_sphs_on()
             
             h_brain_outer_obj.br_labs(i, 'color', 'b', 'FontSize', 8)
             h_brain_outer_obj.br_labs_on()
          
         else
-            h_brain_outer_obj.br_sphs(i, 'color', FIG_BR_COLOR, 'radius', 5)
+            h_brain_outer_obj.br_sphs(i, 'color', FIG_BR_COLOR, 'r', 5)
             h_brain_outer_obj.br_sphs_on()
             
             h_brain_outer_obj.br_labs(i, 'color', 'b', 'FontSize', 8)
