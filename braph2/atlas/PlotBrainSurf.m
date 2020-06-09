@@ -824,26 +824,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             end
         end
     end
-    methods (Static)  % Load function
-        function bs = loadBrainSurface(varargin)
-            % BS = LOADBRAINSURFACE(VARARGIN) creates anothe PlotBrainSurf
-            % object using the VARARGIN specifications. 
-            
-            brain_surf_file = get_from_varargin('' , 'BrainSurface', varargin(:));
-            if isequal(brain_surf_file, '')  % select file
-                msg = get_from_varargin(BRAPH2.BRAINSURFACE_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, ~, filterindex] = uigetfile(BRAPH2.BRAINSURFACE_EXTENSION, msg);
-                brain_surf_file = filename;
-                
-                if ~filterindex
-                    return
-                end
-            end
-            
-            % create a brain surface from the specified file            
-            bs = PlotBrainSurf(brain_surf_file);
-        end
-    end
     methods (Access = protected)
         function cp = copyElement(bs)
             % COPYELEMENT deep copy of plot brain surf.
