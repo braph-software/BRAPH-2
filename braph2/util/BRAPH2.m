@@ -47,6 +47,10 @@ classdef BRAPH2
         JSON_EXTENSION = '*.json'
         JSON_MSG_GETFILE = 'Select JSON file'
         JSON_MSG_PUTFILE = 'Select JSON file'
+        
+        X3D_EXTENSION = '*.x3d'
+        X3D__MSG_GETFILE = 'Select X3D file'
+        
     end
     %         BUILD = 2020
     %         VERSION = '2.0.0'
