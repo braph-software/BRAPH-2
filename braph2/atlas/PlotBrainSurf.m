@@ -390,7 +390,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_button_color, 'Callback', {@cb_color})
             
             ui_slider_alpha = uicontrol(f, 'Style', 'slider');
-            set(ui_slider_alpha,'Units','normalized')
+            set(ui_slider_alpha, 'Units', 'normalized')
             set(ui_slider_alpha,'BackgroundColor', [.95 .95 .95])
             set(ui_slider_alpha, 'Position', [.40 .50 .55 .15])
             set(ui_slider_alpha,'String', 'Brain transparency')
@@ -399,8 +399,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_slider_alpha, 'Callback', {@cb_alpha})
             
             ui_button_facecolor = uicontrol(f, 'Style', 'pushbutton');
-            set(ui_button_facecolor,'Units','normalized')
-            set(ui_button_facecolor,'BackgroundColor', [.95 .95 .95])
+            set(ui_button_facecolor, 'Units', 'normalized')
+            set(ui_button_facecolor, 'BackgroundColor', [.95 .95 .95])
             set(ui_button_facecolor, 'Position', [.05 .30 .25 .15])
             set(ui_button_facecolor, 'String', 'face color')
             set(ui_button_facecolor, 'HorizontalAlignment', 'center')
@@ -408,8 +408,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_button_facecolor, 'Callback', {@cb_facecolor})
             
             ui_slider_facealpha = uicontrol(f, 'Style', 'slider');
-            set(ui_slider_facealpha,'Units','normalized')
-            set(ui_slider_facealpha,'BackgroundColor', [.95 .95 .95])
+            set(ui_slider_facealpha, 'Units', 'normalized')
+            set(ui_slider_facealpha, 'BackgroundColor', [.95 .95 .95])
             set(ui_slider_facealpha, 'Position', [.40 .30 .55 .15])
             set(ui_slider_facealpha, 'String', 'Brain transparency')
             set(ui_slider_facealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain,'FaceAlpha'))
@@ -417,17 +417,17 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_slider_facealpha, 'Callback', {@cb_facealpha})
             
             ui_button_edgecolor = uicontrol(f, 'Style', 'pushbutton');
-            set(ui_button_edgecolor,'Units','normalized')
-            set(ui_button_edgecolor,'BackgroundColor', [.95 .95 .95])
+            set(ui_button_edgecolor, 'Units', 'normalized')
+            set(ui_button_edgecolor, 'BackgroundColor', [.95 .95 .95])
             set(ui_button_edgecolor, 'Position', [.05 .10 .25 .15])
             set(ui_button_edgecolor, 'String', 'edge color')
             set(ui_button_edgecolor, 'HorizontalAlignment', 'center')
             set(ui_button_edgecolor, 'TooltipString', 'Brain surface edge color')
-            set(ui_button_edgecolor, 'Callback',{@cb_edgecolor})
+            set(ui_button_edgecolor, 'Callback', {@cb_edgecolor})
             
             ui_slider_edgealpha = uicontrol(f, 'Style', 'slider');
-            set(ui_slider_edgealpha,'Units','normalized')
-            set(ui_slider_edgealpha,'BackgroundColor', [.95 .95 .95])
+            set(ui_slider_edgealpha, 'Units', 'normalized')
+            set(ui_slider_edgealpha, 'BackgroundColor', [.95 .95 .95])
             set(ui_slider_edgealpha, 'Position', [.40 .10 .55 .15])
             set(ui_slider_edgealpha, 'String', 'Brain transparency')
             set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain, 'EdgeAlpha'))
