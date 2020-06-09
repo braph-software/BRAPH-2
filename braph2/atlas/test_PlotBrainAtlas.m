@@ -8,7 +8,7 @@ br5 = BrainRegion('BR5', 'brain region 5', 'brain region notes 5', 5, 55, 555);
 
 atlas = BrainAtlas('TRIAL', 'Brain Atlas', 'Brain atlas notes', 'BrainMesh_Cerebellum.nv', {br1, br2, br3, br4, br5});
 
-%% Test 1: Basic Functions.
+%% Test 1: Basic Functions
 ba = PlotBrainAtlas(atlas);
 ba.set_axes();
 ba.hold_on();
@@ -18,9 +18,9 @@ assert(~isempty(ba), ...
     [BRAPH2.STR ':' class(ba) ':' BRAPH2.WRONG_OUTPUT], ...
     'PlotBrainAtlas does not work.')
 
-close
+close(gcf)
 
-%% Symbols, Spheres, Labels
+%% Test 2: Symbols
 ba = PlotBrainAtlas(atlas);
 h = ba.set_axes();
 ba.hold_on();
@@ -34,8 +34,13 @@ ba.br_syms_settings([], ...
     'FigTitle','PlotBrainSurf - Symbols' ...
     )
 
-close
+close(gcf)
 
+%% Test 3: Spheres
+ba = PlotBrainAtlas(atlas);
+h = ba.set_axes();
+ba.hold_on();
+ba.view(PlotBrainAtlas.VIEW_3D);
 ba.br_sphs()
 ba.br_sphs_on()
 
@@ -45,8 +50,13 @@ ba.br_sphs_settings([], ...
     'FigTitle','PlotBrainSurf - Spheres' ...
     )
 
-close
+close(gcf)
 
+%% Test 4: Labels
+ba = PlotBrainAtlas(atlas);
+h = ba.set_axes();
+ba.hold_on();
+ba.view(PlotBrainAtlas.VIEW_3D);
 ba.br_labs()
 ba.br_labs_on()
 
@@ -56,12 +66,12 @@ ba.br_labs_settings([], ...
     'FigTitle','PlotBrainSurf - Labels' ...
     )
 
-close
-close  % close the axis figure.
+close(gcf)
 
-%% Distance
+%% Test 5: Distance
 file = [fileparts(which('test_braph2')) filesep 'desikan_atlas2.txt'];
 atlas = BrainAtlas.load_from_txt('File', file);
+
 ba = PlotBrainAtlas(atlas);
 axes = ba.set_axes();
 ba.hold_on();
@@ -72,4 +82,4 @@ ba.br_sphs_on()
 
 ba.distanceMapOn([1 10 29]);  % select the first
 
-close
+close(gcf)
