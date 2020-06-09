@@ -26,7 +26,7 @@ coordinate_elements = index_facet.getElementsByTagName('Coordinate');
 coordinate_element = coordinate_elements.item(0);
 coordinates = coordinate_element.getAttribute('point');
 
-% manage strings remove leadin space, remove unwanted chars, split string,
+% manage strings remove leading space, remove unwanted chars, split string,
 % trimming and removing empty cells
 
 triangles = erase(char(triangles), '             ');
