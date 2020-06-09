@@ -84,14 +84,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
         % Spheres
         INIT_SPH_EDGE_COLOR = 'none'
         INIT_SPH_EDGE_ALPHA = .5
-        INIT_SPH_FACE_COLOR = [.9 .4 .1] ;  % BNC.FONT
+        INIT_SPH_FACE_COLOR = [.9 .4 .1]
         INIT_SPH_FACE_ALPHA = .5
         INIT_SPH_R = 1
         
         % Labels
         INIT_LAB_FONT_SIZE = 13
-        INIT_LAB_FONT_NAME = 'Helvetica';  % GUI.FONT
-        INIT_LAB_FONT_COLOR = [0 0 0];
+        INIT_LAB_FONT_NAME = GUI.FONT
+        INIT_LAB_FONT_COLOR = [0 0 0]
         INIT_LAB_FONT_INTERPRETER = 'none'
         
         PLOT_SYMBOL_NAME = { ...
@@ -166,7 +166,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             
             assert(isa(atlas, 'BrainAtlas'), ...
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
-                'Argument is not a BrainAtlas')
+                'Argument is not a BrainAtlas.')
             
             ba = ba@PlotBrainSurf(atlas.getBrainSurfFile(), varargin{:});
             
@@ -174,7 +174,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba.setRegions(atlas);
         end
     end
-    methods  % editing funtions
+    methods  % setRegions
         function setRegions(ba, atlas)
             for i = 1:1:atlas.getBrainRegions().length()
                 brain_region = atlas.getBrainRegions().getValue(i);
@@ -204,6 +204,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.labs.LAB = labels;
             end
         end
+    end
+    methods  % editign functions sym
         function h = br_sym(ba, i, varargin)
             % BR_SYM displays brain region as symbol
             %
@@ -222,9 +224,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba.set_axes()
             
             % center coordinates
-            X = ba.atlas.getBrainRegions().getValue(i).getX();  % get(i).getProp(BrainRegion.X);
-            Y = ba.atlas.getBrainRegions().getValue(i).getY();  % get(i).getProp(BrainRegion.Y);
-            Z = ba.atlas.getBrainRegions().getValue(i).getZ();  % get(i).getProp(BrainRegion.Z);
+            X = ba.atlas.getBrainRegions().getValue(i).getX();
+            Y = ba.atlas.getBrainRegions().getValue(i).getY();
+            Z = ba.atlas.getBrainRegions().getValue(i).getZ();
             
             if ~ishandle(ba.syms.h(i))
                 
@@ -515,15 +517,6 @@ classdef PlotBrainAtlas < PlotBrainSurf
             set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by name')
             set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
             
-            %             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
-            %             set(ui_checkbox_hs, 'Units', 'normalized')
-            %             set(ui_checkbox_hs, 'BackgroundColor', GUI.BKGCOLOR)
-            %             set(ui_checkbox_hs, 'Position', [.30 .05 .20 .10])
-            %             set(ui_checkbox_hs, 'String', 'hemisphere')
-            %             set(ui_checkbox_hs, 'Value', false)
-            %             set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by name')
-            %             set(ui_checkbox_hs, 'Callback', {@cb_hs})
-            
             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
             set(ui_button_show, 'Units','normalized')
             set(ui_button_show, 'BackgroundColor', GUI.BKGCOLOR)
@@ -731,7 +724,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function answer = checkIfSymsNotEmpty(ba)
             answer = any(ba.syms.h, 'all');
         end
-        
+    end
+    methods  % editing functions sph
         function h = br_sph(ba, i, varargin)
             % BR_SPH displays brain region as sphere
             %
@@ -764,9 +758,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
             R = ba.sphs.R(i);
             
             % center coordinates
-            X = ba.atlas.getBrainRegions().getValue(i).getX();  % get(i).getProp(BrainRegion.X);
-            Y = ba.atlas.getBrainRegions().getValue(i).getY();  % get(i).getProp(BrainRegion.Y);
-            Z = ba.atlas.getBrainRegions().getValue(i).getZ();  % get(i).getProp(BrainRegion.Z);
+            X = ba.atlas.getBrainRegions().getValue(i).getX();
+            Y = ba.atlas.getBrainRegions().getValue(i).getY();
+            Z = ba.atlas.getBrainRegions().getValue(i).getZ();
             
             % plot sphere
             if ~ishandle(ba.sphs.h(i))
@@ -1382,7 +1376,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function answer = checkIfSphsNotEmpty(ba)
             answer = any(ba.sphs.h, 'all');
         end
-        
+    end
+    methods  % editing functions lab
         function h = br_lab(ba, i, varargin)
             % BR_LAB displays brain region as label
             %
@@ -1401,11 +1396,10 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba.set_axes();
             
             % center coordinates and label
-            X = ba.atlas.getBrainRegions().getValue(i).getX();  % get(i).getProp(BrainRegion.X);
-            Y = ba.atlas.getBrainRegions().getValue(i).getY();  % get(i).getProp(BrainRegion.Y);
-            Z = ba.atlas.getBrainRegions().getValue(i).getZ();  % get(i).getProp(BrainRegion.Z);
+            X = ba.atlas.getBrainRegions().getValue(i).getX();
+            Y = ba.atlas.getBrainRegions().getValue(i).getY();
+            Z = ba.atlas.getBrainRegions().getValue(i).getZ();
             LAB = ba.atlas.getBrainRegions().getValue(i).getLabel();
-            %             LAB = LABELS(i);
             
             % display the text
             if ~ishandle(ba.labs.h(i))
@@ -1928,7 +1922,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % calculate distance
             distance = zeros(1, size(brain_surf_coords, 2));
             for i = 1:1:length(brain_surf_coords(1,:))
-                distance(1, i) = 1 / sqrt((x - brain_surf_coords(1, i))^2 +(y - brain_surf_coords(2, i))^2 + (z - brain_surf_coords(3, i))^2);
+                distance(1, i) = 1 / sqrt( ...
+                    (x - brain_surf_coords(1, i))^2 + ...
+                    (y - brain_surf_coords(2, i))^2 + ...
+                    (z - brain_surf_coords(3, i))^2 ...
+                    );
             end
         end
         function distance = calculatePointsDistance(ba, selected)
@@ -1971,7 +1969,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             caxis([minimu maxi])
         end
     end
-    methods (Access = protected)
+    methods (Access = protected)  % deep copy
         function cp = copyElement(ba)
             
             % Make a shallow copy
