@@ -5,7 +5,7 @@
 % 
 % Graphical Interface tools:
 % <a href="matlab:help GUIBrainAtlas            ">GUIBrainAtlas</a>        (function) BrainAtlas GUI editor
-% <a href="matlab:help PlotBrainAtlas           ">PlotBrainAtlas</a>       (class) plot of  brain atlas
+% <a href="matlab:help PlotBrainAtlas           ">PlotBrainAtlas</a>       (class) plot of brain atlas
 % <a href="matlab:help PlotBrainSurf            ">PlotBrainSurf</a>        (class) plot of brain surfaces
 % 
 % Unit tests:
