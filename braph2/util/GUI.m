@@ -10,45 +10,45 @@ classdef GUI
         BAE_MSG_PUTFILE = 'Save brain atlas'
         BAE_MSG_GETFILE = ['Select brain atlas file (' GUI.BAE_EXTENSION ')']
         
-        MCE_NAME = 'MRI Cohort Editor'
-        MCE_EXTENSION = '*.mc'
-        MCE_MSG_PUTFILE = 'Save MRI cohort'
-        MCE_MSG_GETFILE = ['Select MRI cohort file (' GUI.MCE_EXTENSION ')']
-        
-        MGA_NAME = 'MRI Graph Analysis'
-        MGA_EXTENSION = '*.mga'
-        MGA_MSG_PUTFILE = 'Save MRI graph analysis'
-        MGA_MSG_GETFILE = ['Select MRI graph analysis file (' GUI.MGA_EXTENSION ')']
-        
-        fMCE_NAME = 'fMRI Cohort Editor'
-        fMCE_EXTENSION = '*.fc'
-        fMCE_MSG_PUTFILE = 'Save fMRI cohort'
-        fMCE_MSG_GETFILE = ['Select fMRI cohort file (' GUI.fMCE_EXTENSION ')']
-        
-        fMGA_NAME = 'fMRI Graph Analysis'
-        fMGA_EXTENSION = '*.fga'
-        fMGA_MSG_PUTFILE = 'Save fMRI graph analysis'
-        fMGA_MSG_GETFILE = ['Select fMRI graph analysis file (' GUI.fMGA_EXTENSION ')']
-        
-        ECE_NAME = 'EEG Cohort Editor'
-        ECE_EXTENSION = '*.ec'
-        ECE_MSG_PUTFILE = 'Save EEg cohort'
-        ECE_MSG_GETFILE = ['Select EEG cohort file (' GUI.ECE_EXTENSION ')']
-        
-        EGA_NAME = 'EEG Graph Analysis'
-        EGA_EXTENSION = '*.ega'
-        EGA_MSG_PUTFILE = 'Save EEG graph analysis'
-        EGA_MSG_GETFILE = ['Select EEG graph analysis file (' GUI.EGA_EXTENSION ')']
-        
-        PCE_NAME = 'PET Cohort Editor'
-        PCE_EXTENSION = '*.pc'
-        PCE_MSG_PUTFILE = 'Save PET cohort'
-        PCE_MSG_GETFILE = ['Select PET cohort file (' GUI.PCE_EXTENSION ')']
-        
-        PGA_NAME = 'PET Graph Analysis'
-        PGA_EXTENSION = '*.pga'
-        PGA_MSG_PUTFILE = 'Save PET graph analysis'
-        PGA_MSG_GETFILE = ['Select PET graph analysis file (' GUI.PGA_EXTENSION ')']
+%         MCE_NAME = 'MRI Cohort Editor'
+%         MCE_EXTENSION = '*.mc'
+%         MCE_MSG_PUTFILE = 'Save MRI cohort'
+%         MCE_MSG_GETFILE = ['Select MRI cohort file (' GUI.MCE_EXTENSION ')']
+%         
+%         MGA_NAME = 'MRI Graph Analysis'
+%         MGA_EXTENSION = '*.mga'
+%         MGA_MSG_PUTFILE = 'Save MRI graph analysis'
+%         MGA_MSG_GETFILE = ['Select MRI graph analysis file (' GUI.MGA_EXTENSION ')']
+%         
+%         fMCE_NAME = 'fMRI Cohort Editor'
+%         fMCE_EXTENSION = '*.fc'
+%         fMCE_MSG_PUTFILE = 'Save fMRI cohort'
+%         fMCE_MSG_GETFILE = ['Select fMRI cohort file (' GUI.fMCE_EXTENSION ')']
+%         
+%         fMGA_NAME = 'fMRI Graph Analysis'
+%         fMGA_EXTENSION = '*.fga'
+%         fMGA_MSG_PUTFILE = 'Save fMRI graph analysis'
+%         fMGA_MSG_GETFILE = ['Select fMRI graph analysis file (' GUI.fMGA_EXTENSION ')']
+%         
+%         ECE_NAME = 'EEG Cohort Editor'
+%         ECE_EXTENSION = '*.ec'
+%         ECE_MSG_PUTFILE = 'Save EEg cohort'
+%         ECE_MSG_GETFILE = ['Select EEG cohort file (' GUI.ECE_EXTENSION ')']
+%         
+%         EGA_NAME = 'EEG Graph Analysis'
+%         EGA_EXTENSION = '*.ega'
+%         EGA_MSG_PUTFILE = 'Save EEG graph analysis'
+%         EGA_MSG_GETFILE = ['Select EEG graph analysis file (' GUI.EGA_EXTENSION ')']
+%         
+%         PCE_NAME = 'PET Cohort Editor'
+%         PCE_EXTENSION = '*.pc'
+%         PCE_MSG_PUTFILE = 'Save PET cohort'
+%         PCE_MSG_GETFILE = ['Select PET cohort file (' GUI.PCE_EXTENSION ')']
+%         
+%         PGA_NAME = 'PET Graph Analysis'
+%         PGA_EXTENSION = '*.pga'
+%         PGA_MSG_PUTFILE = 'Save PET graph analysis'
+%         PGA_MSG_GETFILE = ['Select PET graph analysis file (' GUI.PGA_EXTENSION ')']
         
         % GUI general
         MSG_YES = 'Yes'
@@ -240,7 +240,7 @@ classdef GUI
         end
     end
     methods (Static)  % functions
-        function f = init_figure(AppName,width,height,position)
+        function f = init_figure(AppName, width, height, position)
             % INIT_FIGURE creates and intializes GUI figure
             %
             % F = INIT_FIGURE(APPNAME,WIDTH,HEIGHT,POSITION) creates a GUI figure
@@ -260,7 +260,7 @@ classdef GUI
             
             f = figure();
             set(f, 'Visible', 'off')
-            set(f, 'Position', [1 1 GUI.SCREEN_WIDTH*width GUI.SCREEN_HEIGHT*height])
+            set(f, 'Position', [1 1 GUI.SCREEN_WIDTH * width GUI.SCREEN_HEIGHT * height])
             movegui(f, position)
             set(f, 'Color', GUI.BKGCOLOR)
             set(f, 'Name', [AppName ' - ' BRAPH2.BUILD])
@@ -269,7 +269,7 @@ classdef GUI
             set(f, 'DockControls', 'off')
             set(f, 'CloseRequestFcn', ['GUI.close(''' AppName ''', gcf)'])
         end
-        function close(AppName,f)
+        function close(AppName, f)
             % CLOSE closes GUI figure
             %
             % CLOSE(APPNAME,F) promts the user to choose whether to close the
@@ -281,7 +281,7 @@ classdef GUI
             
             selection = questdlg(['Do you want to close ' AppName '?'], ...
                 ['Close ' AppName], ...
-                GUI.MSG_YES,GUI.MSG_NO,GUI.MSG_YES);
+                GUI.MSG_YES, GUI.MSG_NO, GUI.MSG_YES);
             switch selection
                 case GUI.MSG_YES
                     delete(f)
@@ -289,7 +289,7 @@ classdef GUI
                     return
             end
         end
-        function [ui_menu_about,ui_menu_about_about] = setMenuAbout(f,AppName)
+        function [ui_menu_about, ui_menu_about_about] = setMenuAbout(f, AppName)
             % SETMENUABOUT initializes about menu
             %
             % [UI_MENU_ABOUT,UI_MENU_ABOUT_ABOUT] = SETMENUABOUT(APPNAME,F)
@@ -301,11 +301,11 @@ classdef GUI
             %
             % See also GUI.
             
-            ui_menu_about = uimenu(f,'Label','About');
+            ui_menu_about = uimenu(f, 'Label', 'About');
             
             ui_menu_about_about = uimenu(ui_menu_about);
-            set(ui_menu_about_about,'Label','About ...')
-            set(ui_menu_about_about,'Callback',['GUI.about(''' AppName ''')'])
+            set(ui_menu_about_about, 'Label', 'About ...')
+            set(ui_menu_about_about, 'Callback', ['GUI.about(''' AppName ''')'])
         end
         function about(AppName)
             % ABOUT message in about menu
@@ -318,7 +318,7 @@ classdef GUI
             msgbox({'' [AppName ' ' BNC.VERSION] '' BNC.AUTHORS '' BNC.COPYRIGHT ''}, ...
                 ['About ' AppName])
         end
-        function setUnits(h,alsochildren)
+        function setUnits(h, alsochildren)
             % SETUNITS sets GUI figure units
             %
             % SETUNITS(H,ALSOCHILDREN) sets the units of the object with
@@ -333,12 +333,12 @@ classdef GUI
                 alsochildren = true;
             end
             
-            set(h,'Units','normalized')
+            set(h, 'Units', 'normalized')
             if alsochildren
-                set(allchild(h),'Units','normalized')
+                set(allchild(h), 'Units', 'normalized')
             end
         end
-        function setBackgroundColor(h,alsochildren)
+        function setBackgroundColor(h, alsochildren)
             % SETBACKGROUNDCOLOR sets GUI figure background color
             %
             % SETBACKGROUNDCOLOR(H,ALSOCHILDREN) sets the background color
@@ -360,18 +360,18 @@ classdef GUI
                 alsochildren = true;
             end
             
-            if isa(h,'matlab.ui.control.Table')
-                set(h,'BackgroundColor',GUI.TABBKGCOLOR)
-            elseif isa(h,'matlab.ui.control.UIControl') && strcmpi(get(h,'Style'),'pushbutton')
+            if isa(h, 'matlab.ui.control.Table')
+                set(h, 'BackgroundColor', GUI.TABBKGCOLOR)
+            elseif isa(h, 'matlab.ui.control.UIControl') && strcmpi(get(h, 'Style'), 'pushbutton')
                 % no action
             else
-                set(h,'BackgroundColor',GUI.BKGCOLOR)
+                set(h, 'BackgroundColor', GUI.BKGCOLOR)
             end
             
             if alsochildren
                 h_vec = allchild(h);
                 for i = 1:1:length(h_vec)
-                    GUI.setBackgroundColor(h_vec(i),false);
+                    GUI.setBackgroundColor(h_vec(i), false);
                 end
             end
         end
