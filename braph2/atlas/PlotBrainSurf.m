@@ -373,15 +373,15 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(f, 'DockControls', 'off')
             
             ui_text = uicontrol(f, 'Style', 'text');
-            set(ui_text,'Units','normalized')
-            set(ui_text,'BackgroundColor', [.95 .95 .95])
+            set(ui_text, 'Units', 'normalized')
+            set(ui_text, 'BackgroundColor', [.95 .95 .95])
             set(ui_text, 'String', 'transparency')
             set(ui_text, 'Position', [.35 .70 .65 .15])
             set(ui_text, 'HorizontalAlignment', 'center')
             set(ui_text, 'FontWeight', 'bold')
             
             ui_button_color = uicontrol(f, 'Style', 'pushbutton');
-            set(ui_button_color,'Units','normalized')
+            set(ui_button_color,'Units', 'normalized')
             set(ui_button_color,'BackgroundColor', [.95 .95 .95])
             set(ui_button_color, 'Position', [.05 .50 .25 .15])
             set(ui_button_color, 'String', 'brain color')
@@ -390,8 +390,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_button_color, 'Callback', {@cb_color})
             
             ui_slider_alpha = uicontrol(f, 'Style', 'slider');
-            set(ui_slider_alpha,'Units','normalized')
-            set(ui_slider_alpha,'BackgroundColor', [.95 .95 .95])
+            set(ui_slider_alpha, 'Units', 'normalized')
+            set(ui_slider_alpha, 'BackgroundColor', [.95 .95 .95])
             set(ui_slider_alpha, 'Position', [.40 .50 .55 .15])
             set(ui_slider_alpha,'String', 'Brain transparency')
             set(ui_slider_alpha, 'Min', 0, 'Max', 1, 'Value', max(get(bs.brain, 'FaceAlpha'), get(bs.brain, 'EdgeAlpha')))
@@ -399,8 +399,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_slider_alpha, 'Callback', {@cb_alpha})
             
             ui_button_facecolor = uicontrol(f, 'Style', 'pushbutton');
-            set(ui_button_facecolor,'Units','normalized')
-            set(ui_button_facecolor,'BackgroundColor', [.95 .95 .95])
+            set(ui_button_facecolor, 'Units', 'normalized')
+            set(ui_button_facecolor, 'BackgroundColor', [.95 .95 .95])
             set(ui_button_facecolor, 'Position', [.05 .30 .25 .15])
             set(ui_button_facecolor, 'String', 'face color')
             set(ui_button_facecolor, 'HorizontalAlignment', 'center')
@@ -408,8 +408,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_button_facecolor, 'Callback', {@cb_facecolor})
             
             ui_slider_facealpha = uicontrol(f, 'Style', 'slider');
-            set(ui_slider_facealpha,'Units','normalized')
-            set(ui_slider_facealpha,'BackgroundColor', [.95 .95 .95])
+            set(ui_slider_facealpha, 'Units', 'normalized')
+            set(ui_slider_facealpha, 'BackgroundColor', [.95 .95 .95])
             set(ui_slider_facealpha, 'Position', [.40 .30 .55 .15])
             set(ui_slider_facealpha, 'String', 'Brain transparency')
             set(ui_slider_facealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain,'FaceAlpha'))
@@ -417,17 +417,17 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_slider_facealpha, 'Callback', {@cb_facealpha})
             
             ui_button_edgecolor = uicontrol(f, 'Style', 'pushbutton');
-            set(ui_button_edgecolor,'Units','normalized')
-            set(ui_button_edgecolor,'BackgroundColor', [.95 .95 .95])
+            set(ui_button_edgecolor, 'Units', 'normalized')
+            set(ui_button_edgecolor, 'BackgroundColor', [.95 .95 .95])
             set(ui_button_edgecolor, 'Position', [.05 .10 .25 .15])
             set(ui_button_edgecolor, 'String', 'edge color')
             set(ui_button_edgecolor, 'HorizontalAlignment', 'center')
             set(ui_button_edgecolor, 'TooltipString', 'Brain surface edge color')
-            set(ui_button_edgecolor, 'Callback',{@cb_edgecolor})
+            set(ui_button_edgecolor, 'Callback', {@cb_edgecolor})
             
             ui_slider_edgealpha = uicontrol(f, 'Style', 'slider');
-            set(ui_slider_edgealpha,'Units','normalized')
-            set(ui_slider_edgealpha,'BackgroundColor', [.95 .95 .95])
+            set(ui_slider_edgealpha, 'Units', 'normalized')
+            set(ui_slider_edgealpha, 'BackgroundColor', [.95 .95 .95])
             set(ui_slider_edgealpha, 'Position', [.40 .10 .55 .15])
             set(ui_slider_edgealpha, 'String', 'Brain transparency')
             set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain, 'EdgeAlpha'))
@@ -822,26 +822,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                 str = ui_pop_up_colormapoption.String;
                 colormap(bs.get_axes(), str{val});
             end
-        end
-    end
-    methods (Static)  % Load function
-        function bs = loadBrainSurface(varargin)
-            % BS = LOADBRAINSURFACE(VARARGIN) creates anothe PlotBrainSurf
-            % object using the VARARGIN specifications. 
-            
-            brain_surf_file = get_from_varargin('' , 'BrainSurface', varargin(:));
-            if isequal(brain_surf_file, '')  % select file
-                msg = get_from_varargin(BRAPH2.BRAINSURFACE_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, ~, filterindex] = uigetfile(BRAPH2.BRAINSURFACE_EXTENSION, msg);
-                brain_surf_file = filename;
-                
-                if ~filterindex
-                    return
-                end
-            end
-            
-            % create a brain surface from the specified file            
-            bs = PlotBrainSurf(brain_surf_file);
         end
     end
     methods (Access = protected)

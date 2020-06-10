@@ -128,6 +128,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             disp([' id: ' atlas.getID()])
             disp([' label: ' atlas.getLabel()])
             disp([' notes: ' atlas.getNotes()])
+            disp([' brain surf file: ' atlas.getBrainSurfFile()])
             disp([' size: ' int2str(atlas.getBrainRegions().length()) ' brain regions'])
             disp([' brain regions:']); %#ok<NBRAK>
             for i = 1:1:atlas.getBrainRegions().length()

@@ -3,6 +3,7 @@
 %% Test 1: Basic Functions
 bs = PlotBrainSurf('BrainMesh_Cerebellum.nv');
 bs.brain();
+bs.brain_settings()
 
 assert(ischar(bs.tostring()), ...
 	[BRAPH2.STR ':' class(bs) ':' BRAPH2.WRONG_OUTPUT], ...
@@ -34,9 +35,3 @@ assert(~isempty(handle), ...
     'PlotBrainSurf.brain() does not work')    
 
 close(gcf)
-
-%% Test 3: Static Functions
-bs = PlotBrainSurf.loadBrainSurface('BrainSurface',  'BrainMesh_ICBM152.nv');
-assert(~isempty(bs), ...
-	[BRAPH2.STR ':' class(bs) ':' BRAPH2.WRONG_OUTPUT], ...
-    'PlotBrainSurf.loadBrainSurface() does not work.')
