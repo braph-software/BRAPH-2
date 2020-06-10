@@ -59,27 +59,7 @@ assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
     'EdgeOverlap is not being calculated correctly for MultiplexGraphBD')
 
-%% Test 3: Calculation GraphBU
-g = GraphBU(L1);
-edge_overlap = EdgeOverlap(g);
-
-edge_overlap_test = {L1}; 
-
-assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
-    [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for GraphBU')
-
-%% Test 4: Calculation GraphBD
-g = GraphBD(L1);
-edge_overlap = EdgeOverlap(g);
-
-edge_overlap_test = {L1}; 
-
-assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
-    [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for GraphBD')
-
-%% Test 5: Calculation MultiplexGraphWU
+%% Test 3: Calculation MultiplexGraphWU
 g = MultiplexGraphWU(A_weighted);
 edge_overlap = EdgeOverlap(g);
 
@@ -94,7 +74,7 @@ assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
     'EdgeOverlap is not being calculated correctly for MultiplexGraphWU')
 
-%% Test 6: Calculation MultiplexGraphWD
+%% Test 4: Calculation MultiplexGraphWD
 g = MultiplexGraphWD(A_weighted);
 edge_overlap = EdgeOverlap(g);
 
@@ -108,23 +88,3 @@ edge_overlap_test = {known_edge_overlap};
 assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
     'EdgeOverlap is not being calculated correctly for MultiplexGraphWD')
-
-%% Test 7: Calculation GraphWU
-g = GraphWU(L1_weighted);
-edge_overlap = EdgeOverlap(g);
-
-edge_overlap_test = {L1}; 
-
-assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
-    [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for GraphWU')
-
-%% Test 8: Calculation GraphWD
-g = GraphWD(L1_weighted);
-edge_overlap = EdgeOverlap(g);
-
-edge_overlap_test = {L1}; 
-
-assert(isequal(edge_overlap.getValue(), edge_overlap_test), ...
-    [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for GraphWD')
