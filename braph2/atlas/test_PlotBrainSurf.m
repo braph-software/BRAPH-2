@@ -1,37 +1,37 @@
 % test PlotBrainSurf
 
-%% Test 1: Basic Functions
-bs = PlotBrainSurf('BrainMesh_Cerebellum.nv');
-bs.brain();
-bs.brain_settings()
+%% Test 1: Basic use
+bs = PlotBrainSurf('BrainMesh_ICBM152.nv');
 
-assert(ischar(bs.tostring()), ...
-	[BRAPH2.STR ':' class(bs) ':' BRAPH2.WRONG_OUTPUT], ...
-    'PlotBrainSurf.tostring() does not work.')
-assert(ischar(bs.getName()), ...
-	[BRAPH2.STR ':' class(bs) ':' BRAPH2.WRONG_OUTPUT], ...
-    'PlotBrainSurf.getName() does not work.')
+bs.set_axes()
+h = bs.get_axes();
 
-close(gcf)
+bs.brain()
+bs.brain_off()
+bs.brain_on()
 
-%% Test 2: Change default properties
-bs = PlotBrainSurf('BrainMesh_ICBM152.nv', 'PlotBrainSurf.Lighting', 'gouraud', 'PlotBrainSurf.Material', 'metal', 'PlotBrainSurf.CamLight', 'right');
-handle = bs.brain();
-bs.axis_equal();
-bs.view(PlotBrainSurf.VIEW_3D);
-bs.update_light();
+bs.brain_settings();
 
-bs2 = PlotBrainSurf('ferret.nv', 'PlotBrainSurf.Lighting', 'gouraud', 'PlotBrainSurf.Material', 'metal', 'PlotBrainSurf.CamLight', 'right');
-handle = bs2.brain();
-bs2.axis_equal();
-bs2.view(PlotBrainSurf.VIEW_3D);
-bs2.update_light();
+bs.hold_on()
+bs.hold_off()
 
-assert(~isempty(bs2), ...
-  [BRAPH2.STR ':' class(bs2) ':' BRAPH2.WRONG_OUTPUT], ...
-  'PlotBrainSurf.getName() does not work.')
-assert(~isempty(handle), ...
-    [BRAPH2.STR ':' class(bs) ':' BRAPH2.WRONG_OUTPUT], ...
-    'PlotBrainSurf.brain() does not work')    
+bs.grid_off()
+bs.grid_on()
 
-close(gcf)
+bs.axis_off()
+bs.axis_on()
+
+bs.axis_equal()
+
+bs.axis_tight()
+
+bs.view([45 45])
+
+bs.lighting('phong')
+bs.material('shiny')
+bs.camlight('left')
+bs.shading('interp')
+bs.colormap('jet')
+
+% close(gcf)
+% close(gcf)
