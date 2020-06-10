@@ -28,18 +28,3 @@ overlapping_strength_test = {known_overlapping_strength};
 assert(isequal(overlapping_strength.getValue(), overlapping_strength_test), ...
     [BRAPH2.STR ':OverlappingStrength:' BRAPH2.BUG_ERR], ...
     'OverlappingStrength is not being calculated correctly for MultiplexGraphWU')
-
-%% Test 2: Calculation GraphWU
-g = GraphWU(L1);
-overlapping_strength = OverlappingStrength(g);
-
-known_overlapping_strength = [
-                     1.2
-                     0.2
-                     1];
-                 
-overlapping_strength_test = {known_overlapping_strength};  
-
-assert(isequal(overlapping_strength.getValue(), overlapping_strength_test), ...
-    [BRAPH2.STR ':OverlappingStrength:' BRAPH2.BUG_ERR], ...
-    'OverlappingStrength is not being calculated correctly for GraphWU')
