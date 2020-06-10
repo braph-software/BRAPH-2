@@ -59,7 +59,7 @@ assert(isequal(overlapping_degree.getValue(), overlapping_degree_test), ...
     [BRAPH2.STR ':OverlappingDegree:' BRAPH2.BUG_ERR], ...
     'OverlappingDegree is not being calculated correctly for GraphBU')
 
-%% Test 1: Calculation MultiplexGraphWU
+%% Test 3: Calculation MultiplexGraphWU
 g = MultiplexGraphWU(A_weighted);
 overlapping_degree = OverlappingDegree(g);
 
@@ -74,7 +74,7 @@ assert(isequal(overlapping_degree.getValue(), overlapping_degree_test), ...
     [BRAPH2.STR ':OverlappingDegree:' BRAPH2.BUG_ERR], ...
     'OverlappingDegree is not being calculated correctly for MultiplexGraphWU')
 
-%% Test 2: Calculation GraphWU
+%% Test 4: Calculation GraphWU
 g = GraphWU(L1_weighted);
 overlapping_degree = OverlappingDegree(g);
 
