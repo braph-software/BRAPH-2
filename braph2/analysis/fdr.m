@@ -1,8 +1,11 @@
 function r = fdr(pvalues, q)
 % FDR False discovery rate
 %
+% R = FDR(PVALUES) calculates the false discovery rate for PVALUES with
+% defult q parameter set to 0.05.
+%
 % R = FDR(PVALUES, Q) calculates the false discovery rate (FDR) for PVALUES.
-% Q is parameter whose default value is set to 0.05.
+% Q is a threshold parameter.
 %
 % See also bonferroni, pvalue1, pvalue2, quantiles.
 
