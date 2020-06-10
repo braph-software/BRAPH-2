@@ -1,4 +1,4 @@
-function GUIBrainAtlas(atlas,restricted)
+function GUIBrainAtlas(atlas, restricted)
 % GUIBRAINATLAS  Brain Atlas Editor
 %
 % GUIBRAINATLAS() opens empty atlas.
