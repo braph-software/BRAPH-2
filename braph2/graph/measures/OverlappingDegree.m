@@ -2,8 +2,7 @@ classdef OverlappingDegree < Degree
     % OverlappingDegree Degree measure
     % OverlappingDegree provides the overlapping degree of a node for binary 
     % undirected (BU) and weighted undirected (WU) graphs. It is calculated 
-    % as the number of edges connected to the node. Self-connections are 
-    % excluded (i.e. the diagonal of the connection matrix is removed).
+    % as the number of edges connected to the node. 
     % 
     % OverlappingDegree methods:
     %   OverlappingDegree           - constructor
