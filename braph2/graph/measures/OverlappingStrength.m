@@ -50,7 +50,7 @@ classdef OverlappingStrength < Strength
             if g.is_measure_calculated('Strength')
                 strength = g.getMeasureValue('Strength');
             else
-                strength = calculate@Degree(m);
+                strength = calculate@Strength(m);
             end
             
             N = g.nodenumber();
