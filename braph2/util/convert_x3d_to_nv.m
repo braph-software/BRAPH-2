@@ -1,6 +1,6 @@
 function convert_x3d_to_nv(file, varargin)
 
-if nargin < 1
+if nargin< 1 || isempty(file)
     msg = get_from_varargin(BRAPH2.X3D__MSG_GETFILE, 'msg', varargin{:});
     [filename, filepath, filterindex] = uigetfile(BRAPH2.X3D_EXTENSION, msg);
     file = [filepath filename];
