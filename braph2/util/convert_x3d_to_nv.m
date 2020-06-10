@@ -1,5 +1,19 @@
 function convert_x3d_to_nv(file, varargin)
+% CONVERT_X3D_TO_NV converts a x3d file to  nv file
+%
+% CONVERT_X3D_TO_NV() opens a gui dialog box to select a x3d file, which
+% will be converted into a nv file. It places the output file in the
+% same folder as the input file.
+%
+% CONVERT_X3D_TO_NV(FILE) converts the FILE with extension x3d to
+% an nv file. It places the output file in the same folder as the input FILE.
+%
+% CONVERT_X3D_TO_NV([], 'MSG', MESSAGE) opens a GUI dialog box to select a
+% x3d file with a personlized message MESSAGE. It places the output file in
+% the sme folder as the input file.
 
+
+% If no file argument is present it opens a gui dialog box.
 if nargin< 1 || isempty(file)
     msg = get_from_varargin(BRAPH2.X3D__MSG_GETFILE, 'msg', varargin{:});
     [filename, filepath, filterindex] = uigetfile(BRAPH2.X3D_EXTENSION, msg);
@@ -10,6 +24,9 @@ if nargin< 1 || isempty(file)
     end
 end
 
+% x3d files are xml files. we open it using xmlread. The following
+% commands work with x3d files that have the same pattern as the ones in
+% https://scalablebrainatlas.incf.org/
 xml_file  = xmlread(file);
 x3d_inner_file = xml_file.getFirstChild();
 scene_elements = x3d_inner_file.getElementsByTagName('Scene');
@@ -27,16 +44,13 @@ coordinate_elements = index_facet.getElementsByTagName('Coordinate');
 coordinate_element = coordinate_elements.item(0);
 coordinates = coordinate_element.getAttribute('point');
 
-% manage strings remove leading space, remove unwanted chars, split string,
-% trimming and removing empty cells, triangles need to increase the number
-% by 1, because matlab patch needs to be >= 1
-
-triangles = erase(char(triangles), '             ');
-triangles = strrep(triangles, '-1', newline);
-triangles = split(triangles, newline);
-triangles = strtrim(triangles);
-triangles = setdiff(triangles, {''});
-number_triangles = length(triangles);
+% manage the triangles and coordinates extracted from the x3d
+triangles = erase(char(triangles), '             ');  % manage strings to remove leading space
+triangles = strrep(triangles, '-1', newline);  % remove unwanted chars
+triangles = split(triangles, newline);  % split the string in the newlines.
+triangles = strtrim(triangles);  % trim white space
+triangles = setdiff(triangles, {''});  % remove empty cells
+number_triangles = length(triangles);  % triangles need to increase the number by 1, because matlab patch needs to be >= 1
 for i = 1:number_triangles
     tmp = triangles{i, 1};
     tmp_array = split(tmp, ' ');
@@ -50,20 +64,21 @@ coordinates = strtrim(coordinates);
 coordinates = setdiff(coordinates, {''});
 number_coordinates = length(coordinates);
 
-% output
-file = strrep(file, '.x3d', '.nv');
-nv_file = fopen(file, 'w');
-fprintf(nv_file, num2str(number_coordinates));
+% write output file
+file = strrep(file, '.x3d', '.nv');  % remove file extension to the file name
+nv_file = fopen(file, 'w');  % create new file and give writing permission
+fprintf(nv_file, num2str(number_coordinates));  % number of coordinates
 fprintf(nv_file, newline);
-for i = 1:number_coordinates
+for i = 1:number_coordinates  % coordintes
     fprintf(nv_file, coordinates{i,1});
     fprintf(nv_file, newline);
 end
-fprintf(nv_file, num2str(number_triangles));
+fprintf(nv_file, num2str(number_triangles));  % number of triangles
 fprintf(nv_file, newline);
 for i = 1:number_triangles
-    fprintf(nv_file, triangles{i, 1});
+    fprintf(nv_file, triangles{i, 1});  % triangles
     fprintf(nv_file, newline);
 end
 fclose(nv_file);
+
 end
