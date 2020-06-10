@@ -225,16 +225,11 @@ init_datacursormode()
         end
     end
     function init_disable()
-        set(ui_button_table_add,'enable','off')
-            set(ui_button_table_remove,'enable','off')
             set(ui_button_table_moveup,'enable','off')
             set(ui_button_table_movedown,'enable','off')
             set(ui_button_table_move2top,'enable','off'),
             set(ui_button_table_move2bottom,'enable','off')          
             
-            
-            set(ui_menu_edit_add,'enable','off')
-            set(ui_menu_edit_remove,'enable','off')
             set(ui_menu_edit_moveup,'enable','off')
             set(ui_menu_edit_movedown,'enable','off')
             set(ui_menu_edit_move2top,'enable','off')
@@ -248,16 +243,12 @@ init_datacursormode()
             set(ui_toolbar_label, 'enable', 'off')
     end
     function init_enable()
-          set(ui_button_table_add,'enable','on')
-            set(ui_button_table_remove,'enable','on')
+
             set(ui_button_table_moveup,'enable','on')
             set(ui_button_table_movedown,'enable','on')
             set(ui_button_table_move2top,'enable','on'),
             set(ui_button_table_move2bottom,'enable','on')          
             
-            
-            set(ui_menu_edit_add,'enable','on')
-            set(ui_menu_edit_remove,'enable','on')
             set(ui_menu_edit_moveup,'enable','on')
             set(ui_menu_edit_movedown,'enable','on')
             set(ui_menu_edit_move2top,'enable','on')
@@ -616,13 +607,13 @@ init_figure()
         set(ui_checkbox_figure_br,'String',FIG_BR_CMD)
         set(ui_checkbox_figure_br,'Value',true)
         set(ui_checkbox_figure_br,'TooltipString',FIG_BR_TP);
-        set(ui_checkbox_figure_br,'Callback',{@cb_figure_plotsettings})
+        set(ui_checkbox_figure_br,'Callback',{@figure_br_la})
         
         set(ui_checkbox_figure_labels,'Position',[.80 .02 .18 .03])
         set(ui_checkbox_figure_labels,'String',FIG_LABELS_CMD)
         set(ui_checkbox_figure_labels,'Value',true)
         set(ui_checkbox_figure_labels,'TooltipString',FIG_LABELS_TP);
-        set(ui_checkbox_figure_labels,'Callback',{@cb_figure_plotsettings})
+        set(ui_checkbox_figure_labels,'Callback',{@figure_br_la})
         
         set(ui_button_figure_3d,'Position',[.10 .05 .14 .03])
         set(ui_button_figure_3d,'String',FIG_VIEW_3D_CMD)
@@ -695,7 +686,9 @@ init_contextmenu()
         grid on
         
         delete(h_brain)
+        delete(h_brain_outer_obj)
         h_brain = [];
+        h_brain_outer_obj = [];
         h_brain_visible = FIG_INIT_BRAIN_VISIBLE;
         h_brainalpha = FIG_INIT_BRAIN_ALPHA;
         h_br_visible = FIG_INIT_BR_VISIBLE;
@@ -843,10 +836,15 @@ init_contextmenu()
         end
         
         % brain regions and labels
-        if (h_br_visible || h_labels_visible) & ...
-                get(ui_checkbox_figure_labels,'Value')== h_labels_visible & ...
+        if (h_br_visible || h_labels_visible) && ...
+                get(ui_checkbox_figure_labels,'Value')== h_labels_visible && ...
                 get(ui_checkbox_figure_br,'Value')== h_br_visible
             
+            if ~isempty(h_brain_outer_obj.getSphsHandles())
+                if h_brain_outer_obj.checkIfSphsNotEmpty() || h_brain_outer_obj.checkIfLabsNotEmpty()
+                    destroy_figure_brainregionplot()
+                end
+            end
             create_figure_brainregionplot();
             
             for i = 1:1:atlas.getBrainRegions().length()
@@ -856,30 +854,7 @@ init_contextmenu()
                 end
             end
         end
-        
-        % brain regions
-        if get(ui_checkbox_figure_br,'Value')~=h_br_visible
-            h_br_visible = get(ui_checkbox_figure_br,'Value');
-            if h_br_visible  % brain regions on
-                h_brain_outer_obj.br_sphs_on()
-                set(ui_toolbar_br,'State','on');
-            else
-                h_brain_outer_obj.br_sphs_off()
-                set(ui_toolbar_br,'State','off');
-            end
-        end
-        
-        % labels
-        if get(ui_checkbox_figure_labels,'Value')~=h_labels_visible
-            h_labels_visible = get(ui_checkbox_figure_labels,'Value');
-            if h_labels_visible  % labels on
-                h_brain_outer_obj.br_labs_on()
-                set(ui_toolbar_label,'State','on')
-            else
-                h_brain_outer_obj.br_labs_off()
-                set(ui_toolbar_label,'State','off')
-            end
-        end  
+         
     end
     function update_figure_light()
         delete(findall(f,'Type','light'));
@@ -893,6 +868,15 @@ init_contextmenu()
         
         h_brain_outer_obj.br_labs(atlas.getBrainRegions(), 'color', 'k', 'FontSize', 8)
         h_brain_outer_obj.br_labs_on()
+        
+%         h_brain_outer_obj.br_syms();  
+    end
+    function destroy_figure_brainregionplot()
+        h_brain_outer_obj.br_sphs_delete()
+        h_brain_outer_obj.br_labs_delete()
+        if h_brain_outer_obj.checkIfSymsNotEmpty()
+            h_brain_outer_obj.br_syms_delete()
+        end
     end
     function update_figure_brainregionplot(i)
 
@@ -964,6 +948,7 @@ init_contextmenu()
         set(dcm,'enable','on')
     end
     function cb_figure_brainfile(~, ~)
+        destroy_figure_brainregionplot()
         val = ui_menu_figure_brainfiles.Value;
         str = ui_menu_figure_brainfiles.String;
         create_figure(str{val})
@@ -1017,6 +1002,9 @@ init_contextmenu()
                 end
             end            
         end
+    end
+    function figure_br_la(~,~)
+        update_figure_br_labels()
     end
 
 
