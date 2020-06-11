@@ -1,5 +1,5 @@
 classdef OverlappingDegree < Degree
-    % OverlappingDegree Degree measure
+    % OverlappingDegree Overlapping Degree measure
     % OverlappingDegree provides the overlapping degree of a node for binary 
     % undirected (BU) and weighted undirected (WU) graphs. It is calculated 
     % as the number of edges connected to the node. 
@@ -40,10 +40,10 @@ classdef OverlappingDegree < Degree
     end
     methods (Access=protected)
         function overlapping_degree = calculate(m)
-            % CALCULATE calculates the degree value of a node
+            % CALCULATE calculates the overlapping degree value of a node
             %
-            % OVERLAPPINGDEGREE = CALCULATE(M) returns the value of the degree of a
-            % node.
+            % OVERLAPPINGDEGREE = CALCULATE(M) returns the value of the overlapping
+            % degree of a node.
             
             g = m.getGraph();  % graph from measure class
             
