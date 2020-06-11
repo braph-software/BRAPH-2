@@ -51,8 +51,9 @@ classdef EdgeOverlap < Measure
             for li = 1:1:L
                 Aii = A{li, li};
                 Aii = binarize(Aii);  % binarizes the adjacency matrix
-                edge_overlap = edge_overlap + Aii / L;
+                edge_overlap = edge_overlap + Aii;
             end
+            edge_overlap = {edge_overlap / L};
         end
     end  
     methods (Static)  % Descriptive methods
