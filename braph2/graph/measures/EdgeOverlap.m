@@ -137,7 +137,7 @@ classdef EdgeOverlap < Measure
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with EdgeOverlap
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to edge overlap.
+            % compatible graphs with edge overlap.
             % 
             % See also getCompatibleGraphList.
             
