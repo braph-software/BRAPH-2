@@ -1,16 +1,16 @@
-classdef OverlappingDegree < Degree
-    % OverlappingDegree Overlapping Degree measure
-    % OverlappingDegree provides the overlapping degree of a node for binary 
+classdef DegreeOverlap < EdgeOverlap
+    % DegreeOverlap Overlapping Degree measure
+    % DegreeOverlap provides the overlapping degree of a node for binary 
     % undirected (BU) and weighted undirected (WU) graphs. It is calculated 
     % as the number of edges connected to the node. 
     % 
-    % OverlappingDegree methods:
-    %   OverlappingDegree           - constructor
+    % DegreeOverlap methods:
+    %   DegreeOverlap           - constructor
     %
-    % OverlappingDegree methods (Access=protected):
+    % DegreeOverlap methods (Access=protected):
     %   calculate                   - calculates the overlapping degree of a node
     % 
-    % OverlappingDegree methods (Static)
+    % DegreeOverlap methods (Static)
     %   getClass                    - returns the overlapping degree class
     %   getName                     - returns the name of overlapping degree measure
     %   getDescription              - returns the description of overlapping degree measure
@@ -24,7 +24,7 @@ classdef OverlappingDegree < Degree
     % See also Measure, Graph, Strength, Distance, Efficiency.
     
     methods
-        function m = OverlappingDegree(g, varargin)
+        function m = DegreeOverlap(g, varargin)
             % OVERLAPPINGDEGREE(G) creates overlapping degree with default Degree properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, Graph WU). 
@@ -35,11 +35,11 @@ classdef OverlappingDegree < Degree
             %   
             % See also Measure, Graph, Strength, Distance, Efficency. 
             
-            m = m@Degree(g, varargin{:});
+            m = m@EdgeOverlap(g, varargin{:});
         end
     end
     methods (Access=protected)
-        function overlapping_degree = calculate(m)
+        function degree_overlap = calculate(m)
             % CALCULATE calculates the overlapping degree value of a node
             %
             % OVERLAPPINGDEGREE = CALCULATE(M) returns the value of the overlapping
@@ -47,20 +47,13 @@ classdef OverlappingDegree < Degree
             
             g = m.getGraph();  % graph from measure class
             
-            if g.is_measure_calculated('Degree')
-                degree = g.getMeasureValue('Degree');
+            if g.is_measure_calculated('EdgeOverlap')
+                edge_overlap = g.getMeasureValue('EdgeOverlap');
             else
-                degree = calculate@Degree(m);
+                edge_overlap = calculate@EdgeOverlap(m);
             end
             
-            N = g.nodenumber();
-            L = g.layernumber();
-            overlapping = zeros(N(1), 1);
-            
-            for li = 1:1:L
-                overlapping = overlapping + degree{li};
-            end
-            overlapping_degree = {overlapping};
+            degree_overlap = {sum(edge_overlap{1} == 1, 2)};
         end
     end  
     methods (Static)  % Descriptive methods
@@ -71,7 +64,7 @@ classdef OverlappingDegree < Degree
             %
             % See also getName, getDescription. 
             
-            measure_class = 'OverlappingDegree';
+            measure_class = 'DegreeOverlap';
         end
         function name = getName()
             % GETNAME returns the measure name
@@ -80,7 +73,7 @@ classdef OverlappingDegree < Degree
             %
             % See also getClass, getDescription. 
             
-            name = 'Overlapping-Degree';
+            name = 'Degree overlap';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the overlapping degree description 
@@ -91,16 +84,16 @@ classdef OverlappingDegree < Degree
             % See also getList, getCompatibleGraphList.
             
             description = [ ...
-                'The overlapping degree of a node is ' ...
+                'The degree overlap of a node is ' ...
                 'the total number of edges connected to the node within all layers. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to OverlappingDegree
+            % GETAVAILABLESETTINGS returns the setting available to DegreeOverlap
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to OverlappingDegree. Empty Array in this case.
+            % settings available to DegreeOverlap. Empty Array in this case.
             % 
             % See also getCompatibleGraphList.
             
@@ -150,7 +143,7 @@ classdef OverlappingDegree < Degree
             % 
             % See also getCompatibleGraphList.
             
-            n = Measure.getCompatibleGraphNumber('OverlappingDegree');
+            n = Measure.getCompatibleGraphNumber('DegreeOverlap');
         end
     end
 end
