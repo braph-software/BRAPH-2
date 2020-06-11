@@ -1,17 +1,16 @@
 function convert_x3d_to_nv(file, varargin)
 % CONVERT_X3D_TO_NV converts a x3d file to  nv file
 %
-% CONVERT_X3D_TO_NV() opens a gui dialog box to select a x3d file, which
-% will be converted into a nv file. It places the output file in the
-% same folder as the input file.
+% CONVERT_X3D_TO_NV() opens a dialog box to select a x3d file to be
+% converted into a nv file. It places the output file in the same folder as
+% the input file. 
 %
 % CONVERT_X3D_TO_NV(FILE) converts the FILE with extension x3d to
 % an nv file. It places the output file in the same folder as the input FILE.
 %
-% CONVERT_X3D_TO_NV([], 'MSG', MESSAGE) opens a GUI dialog box to select a
-% x3d file with a personlized message MESSAGE. It places the output file in
-% the sme folder as the input file.
-
+% CONVERT_X3D_TO_NV([], 'MSG', MESSAGE) opens a dialog box to select a x3d
+% file with a personlized message MESSAGE. It places the output file in the
+% same folder as the input file.
 
 % If no file argument is present it opens a gui dialog box.
 if nargin< 1 || isempty(file)
