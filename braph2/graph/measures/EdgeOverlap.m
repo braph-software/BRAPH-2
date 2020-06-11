@@ -1,15 +1,13 @@
 classdef EdgeOverlap < Measure
     % EdgeOverlap Edge overlap
     % EdgeOverlap provides the edge overlap of a multiplex. 
+    %
     % It is calculated as the fraction of layers in which edge between a
     % pair of nodes exists. Connection weights are ignored in calculations.
     % 
     % EdgeOverlap methods:
     %   EdgeOverlap                 - constructor
     %
-    % EdgeOverlap methods (Access=protected):
-    %   calculate                   - calculates the edge overlap of a graph
-    % 
     % EdgeOverlap methods (Static)
     %   getClass                    - returns the edge overlap class
     %   getName                     - returns the name of edge overlap measure
@@ -21,29 +19,27 @@ classdef EdgeOverlap < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Graph, Strength, Distance, Efficiency.
+    % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
     
     methods
         function m = EdgeOverlap(g, varargin)
             % EDGEOVERLAP(G) creates edge overlap with default measure properties.
-            % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU). 
+            % G is a multiplex (i.e., an instance of MultiplexGraphBD,
+            % MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU). 
             %
-            % EDGEOVERLAP(G, 'VALUE', VALUE) creates edge overlap, and sets the value
-            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU).
-            %   
-            % See also Measure, Graph, Strength, Distance, Efficency. 
+            % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
             
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
         function edge_overlap = calculate(m)
-            % CALCULATE calculates the edge overlap value of a graph
+            % CALCULATE calculates the edge overlap value of a multiplex
             %
             % EDGEOVERLAP = CALCULATE(M) returns the value of the edge overlap of a
-            % graph.
+            % multiplex.
+            %
+            % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % 2D-cell array 
@@ -84,7 +80,7 @@ classdef EdgeOverlap < Measure
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % edge overlap measure.
             %
-            % See also getList, getCompatibleGraphList.
+            % See also getClass, getName. 
             
             description = [ ...
                 'For each edge, the edge overlap of a multiplex graph is ' ...
@@ -97,13 +93,11 @@ classdef EdgeOverlap < Measure
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to EdgeOverlap. Empty Array in this case.
-            % 
-            % See also getCompatibleGraphList.
             
             available_settings = {};
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of edge overlap
+            % GETMEASUREFORMAT returns the measure format of EdgeOverlap
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of edge overlap measure (BINODAL).
@@ -113,7 +107,7 @@ classdef EdgeOverlap < Measure
             measure_format = Measure.BINODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of edge overlap
+            % GETMEASURESCOPE returns the measure scope of EdgeOverlap
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
             % measure scope of edge overlap measure (SUPERGLOBAL).
@@ -123,7 +117,7 @@ classdef EdgeOverlap < Measure
             measure_scope = Measure.SUPERGLOBAL;
         end
         function list = getCompatibleGraphList()  
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs to edge overlap 
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with EdgeOverlap
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
             % of compatible graph classes to edge overlap. 
@@ -139,7 +133,7 @@ classdef EdgeOverlap < Measure
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs to edge overlap 
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with EdgeOverlap
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to edge overlap.
