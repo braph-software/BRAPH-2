@@ -1,19 +1,18 @@
 classdef DegreeOverlap < EdgeOverlap
-    % DegreeOverlap Overlapping Degree measure
-    % DegreeOverlap provides the overlapping degree of a node for binary 
-    % undirected (BU) and weighted undirected (WU) graphs. It is calculated 
-    % as the number of edges connected to the node. 
+    % DegreeOverlap Edge overlap measure
+    % DegreeOverlap provides the degree overlap of a node for binary 
+    % undirected (BU) and weighted undirected (WU) multiplex. 
+    % 
+    % It is calculated as the number of edges connected to the node in all
+    % layers.
     % 
     % DegreeOverlap methods:
     %   DegreeOverlap           - constructor
     %
-    % DegreeOverlap methods (Access=protected):
-    %   calculate                   - calculates the overlapping degree of a node
-    % 
     % DegreeOverlap methods (Static)
-    %   getClass                    - returns the overlapping degree class
-    %   getName                     - returns the name of overlapping degree measure
-    %   getDescription              - returns the description of overlapping degree measure
+    %   getClass                    - returns the degree overlap class
+    %   getName                     - returns the name of degree overlap measure
+    %   getDescription              - returns the description of degree overlap measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns de measure format
     %   getMeasureScope             - returns de measure scope    
@@ -21,29 +20,27 @@ classdef DegreeOverlap < EdgeOverlap
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Graph, Strength, Distance, Efficiency.
+    % See also Measure, EdgeOverlap, MultiplexGraphBU, MultiplexGraphWU.
     
     methods
         function m = DegreeOverlap(g, varargin)
-            % OVERLAPPINGDEGREE(G) creates overlapping degree with default Degree properties.
-            % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU). 
+            % DEGREEOVERLAP(G) creates degree overlap with default properties.
+            % G is a undirected multiplex (i.e., an instance of
+            % MultiplexGraphBU or MultiplexGraphWU).
             %
-            % OVERLAPPINGDEGREE(G, 'VALUE', VALUE) creates overlapping degree, 
-            % and sets the value to VALUE. G is a graph (e.g, an instance of 
-            % GraphBD, GraphBU, GraphWD, Graph WU).
-            %   
-            % See also Measure, Graph, Strength, Distance, Efficency. 
+            % See also Measure, EdgeOverlap, MultiplexGraphBU, MultiplexGraphWU.
             
             m = m@EdgeOverlap(g, varargin{:});
         end
     end
     methods (Access=protected)
         function degree_overlap = calculate(m)
-            % CALCULATE calculates the overlapping degree value of a node
+            % CALCULATE calculates the degree overlap value of a multiplex
             %
-            % OVERLAPPINGDEGREE = CALCULATE(M) returns the value of the overlapping
-            % degree of a node.
+            % DEGREEOVERLAP = CALCULATE(M) returns the value of the degree
+            % ovelap of a multiplex.
+            %
+            % See also Measure, EdgeOverlap, MultiplexGraphBU, MultiplexGraphWU.            
             
             g = m.getGraph();  % graph from measure class
             
@@ -60,7 +57,7 @@ classdef DegreeOverlap < EdgeOverlap
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the overlapping degree measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the degree overlap measure.
             %
             % See also getName, getDescription. 
             
@@ -69,23 +66,23 @@ classdef DegreeOverlap < EdgeOverlap
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the overlapping degree measure.
+            % NAME = GETNAME() returns the name of the degree overlap measure.
             %
             % See also getClass, getDescription. 
             
             name = 'Degree overlap';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the overlapping degree description 
+            % GETDESCRIPTION returns the degree overlap description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % overlapping degree measure.
+            % degree overlap measure.
             %
-            % See also getList, getCompatibleGraphList.
+            % See also getClass, getName.
             
             description = [ ...
                 'The degree overlap of a node is ' ...
-                'the total number of edges connected to the node within all layers. ' ...
+                'the number of edges connected to the node in all layers. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
         end
@@ -94,37 +91,34 @@ classdef DegreeOverlap < EdgeOverlap
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to DegreeOverlap. Empty Array in this case.
-            % 
-            % See also getCompatibleGraphList.
             
             available_settings = {};
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of overlapping degree
+            % GETMEASUREFORMAT returns the measure format of DegreeOverlap
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of overlapping degree measure (NODAL).
+            % of degree overlap measure (NODAL).
             %
             % See also getMeasureScope.
             
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of overlapping degree
+            % GETMEASURESCOPE returns the measure scope of DegreeOverlap
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of overlapping degree measure (SUPERGLOBAL).
+            % measure scope of degree overlap measure (SUPERGLOBAL).
             %
             % See also getMeasureFormat.
             
             measure_scope = Measure.SUPERGLOBAL;
         end
         function list = getCompatibleGraphList()  
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to overlapping degree 
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with DegreeOverlap 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to overlapping degree. 
+            % of compatible graph classes to degree overlap.
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber. 
@@ -135,11 +129,10 @@ classdef DegreeOverlap < EdgeOverlap
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to overlapping degree 
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with DegreeOverlap 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to overlapping degree.
+            % compatible graphs to degree overlap.
             % 
             % See also getCompatibleGraphList.
             
