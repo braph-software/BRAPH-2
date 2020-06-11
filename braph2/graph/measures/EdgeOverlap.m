@@ -1,8 +1,8 @@
 classdef EdgeOverlap < Measure
-    % EdgeOverlap Edge Overlap measure
-    % EdgeOverlap provides the edge overlap of a graph for binary undirected (BU)  
-    % graphs. It is calculated as the fraction of layers in which each pair
-    % of node exists. Connection weights are ignored in calculations.
+    % EdgeOverlap Edge overlap
+    % EdgeOverlap provides the edge overlap of a multiplex. 
+    % It is calculated as the fraction of layers in which edge between a
+    % pair of nodes exists. Connection weights are ignored in calculations.
     % 
     % EdgeOverlap methods:
     %   EdgeOverlap                 - constructor
@@ -50,14 +50,13 @@ classdef EdgeOverlap < Measure
             
             N = g.nodenumber();
             L = g.layernumber();
-            overlap = zeros(N(1));
             
+            edge_overlap = zeros(N(1));
             for li = 1:1:L
                 Aii = A{li, li};
                 Aii = binarize(Aii);  % binarizes the adjacency matrix
-                overlap = overlap + Aii;
+                edge_overlap = edge_overlap + Aii / L;
             end
-            edge_overlap = {overlap/L};
         end
     end  
     methods (Static)  % Descriptive methods
@@ -77,7 +76,7 @@ classdef EdgeOverlap < Measure
             %
             % See also getClass, getDescription. 
             
-            name = 'Edge-Overlap';
+            name = 'Edge overlap';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the edge overlap description 
@@ -88,8 +87,8 @@ classdef EdgeOverlap < Measure
             % See also getList, getCompatibleGraphList.
             
             description = [ ...
-                'The edge overlap of a graph is ' ...
-                'the fraction of layers in which each pair of nodes exists. ' ...
+                'For each edge, the edge overlap of a multiplex graph is ' ...
+                'the fraction of layers where that edge exists. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
         end
