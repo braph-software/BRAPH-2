@@ -49,7 +49,7 @@ triangles = erase(char(triangles), '             ');  % manage strings to remove
 triangles = strrep(triangles, '-1', newline);  % remove unwanted chars
 triangles = split(triangles, newline);  % split the string in the newlines.
 triangles = strtrim(triangles);  % trim white space
-triangles = setdiff(triangles, {''});  % remove empty cells
+triangles = triangles(~cellfun('isempty', triangles));  % remove empty cells
 number_triangles = length(triangles);  % triangles need to increase the number by 1, because matlab patch needs to be >= 1
 for i = 1:number_triangles
     tmp = triangles{i, 1};
@@ -61,7 +61,7 @@ coordinates = erase(char(coordinates), '             ');
 coordinates = strrep(coordinates, ',' , newline);
 coordinates = split(coordinates, newline);
 coordinates = strtrim(coordinates);
-coordinates = setdiff(coordinates, {''});
+coordinates = coordinates(~cellfun('isempty', coordinates));
 number_coordinates = length(coordinates);
 
 % write output file
