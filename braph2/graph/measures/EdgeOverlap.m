@@ -1,5 +1,5 @@
 classdef EdgeOverlap < Measure
-    % EdgeOverlap Edge overlap
+    % EdgeOverlap Edge overlap measure
     % EdgeOverlap provides the edge overlap of a multiplex. 
     %
     % It is calculated as the fraction of layers in which edge between a
