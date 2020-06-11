@@ -722,7 +722,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
             syms_handles = ba.syms;
         end
         function answer = checkIfSymsNotEmpty(ba)
+            if isempty(ba.syms)
+                answer = 0;
+            else
             answer = any(ba.syms.h, 'all');
+            end
         end
     end
     methods  % editing functions sph
@@ -1374,7 +1378,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
             sphs_handles = ba.sphs;
         end
         function answer = checkIfSphsNotEmpty(ba)
-            answer = any(ba.sphs.h, 'all');
+            if isempty(ba.sphs)
+                answer = 0;
+            else
+                answer = any(ba.sphs.h, 'all');
+            end            
         end
     end
     methods  % editing functions lab
@@ -1906,7 +1914,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
             labs_handles = ba.labs;
         end
         function answer = checkIfLabsNotEmpty(ba)
-            answer = any(ba.labs.h, 'all');
+            if isempty(ba.labs)
+                answer = 0;
+            else
+                answer = any(ba.labs.h, 'all');
+            end
         end
     end
     methods  % distance               
