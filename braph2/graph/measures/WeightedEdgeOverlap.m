@@ -8,10 +8,7 @@ classdef WeightedEdgeOverlap < Measure
     % WeightedEdgeOverlap methods:
     %   WeightedEdgeOverlap         - constructor
     %
-    % WeightedEdgeOverlap methods (Access=protected):
-    %   calculate                   - calculates the weighted edge overlap of a graph
-    % 
-    % WeightedEdgeOverlap methods (Static)
+    % WeightedEdgeOverlap descriptive methods (Static)
     %   getClass                    - returns the weighted edge overlap class
     %   getName                     - returns the name of weighted edge overlap measure
     %   getDescription              - returns the description of weighted edge overlap measure
@@ -47,18 +44,14 @@ classdef WeightedEdgeOverlap < Measure
             % weighted edge overlap of a graph.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix or 2D-cell array 
+            A = g.getA();  % 2D-cell array 
             
             N = g.nodenumber();
             L = g.layernumber();
             overlap = zeros(N(1));
             
             for li = 1:1:L
-                if g.is_graph(g)
-                    Aii = A;
-                else
-                    Aii = A{li, li};
-                end
+                Aii = A{li, li};
                 overlap = overlap + Aii;
             end
             weighted_edge_overlap = {overlap/L};

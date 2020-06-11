@@ -6,12 +6,9 @@ classdef Strength < Measure
     % matrix. 
     %
     % Strength methods:
-    %   Strength                    - constructor with Measure properties
+    %   Strength                    - constructor
     %
-    % Strength methods (Access=protected):
-    %   calculate                   - calculates the strength of a node
-    %
-    % Strength methods (Static)
+    % Strength descriptive methods (Static)
     %   getClass                    - returns the strength class
     %   getName                     - returns the name of strength measure
     %   getDescription              - returns the description of strength measure
@@ -59,7 +56,7 @@ classdef Strength < Measure
             end
         end
     end
-    methods (Static)
+    methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            

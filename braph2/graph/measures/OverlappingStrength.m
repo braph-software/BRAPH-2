@@ -1,16 +1,13 @@
 classdef OverlappingStrength < Strength
     % OverlappingStrength Overlapping strength measure
     % OverlappingStrength provides the overlapping strength of a node for  
-    % weighted directed (WD) and weighted undirected (WU) graphs. 
-    % It is calculated as the number of edges connected to the node. 
+    % weighted undirected (WU) graphs. It is calculated as the number of 
+    % edges connected to the node. 
     % 
     % OverlappingStrength methods:
     %   OverlappingStrength         - constructor
     %
-    % OverlappingStrength methods (Access=protected):
-    %   calculate                   - calculates the overlapping strength of a node
-    % 
-    % OverlappingStrength methods (Static)
+    % OverlappingStrength descriptive methods (Static)
     %   getClass                    - returns the overlapping strength class
     %   getName                     - returns the name of overlapping strength measure
     %   getDescription              - returns the description of overlapping strength measure
@@ -91,8 +88,8 @@ classdef OverlappingStrength < Strength
             % See also getList, getCompatibleGraphList.
             
             description = [ ...
-                'The overlapping strength of a node is ' ...
-                'the total number of edges connected to the node within all layers. ' ...
+                'The overlapping strength of a node is the total sum of the ' ...
+                'weights of all the edges connected to a node within all layers. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
