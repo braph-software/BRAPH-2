@@ -1,7 +1,7 @@
 classdef DegreeOverlap < EdgeOverlap
     % DegreeOverlap Edge overlap measure
     % DegreeOverlap provides the degree overlap of a node for binary 
-    % undirected (BU) and weighted undirected (WU) multiplex. 
+    % undirected (BU) and weighted undirected (WU) multiplexes. 
     % 
     % It is calculated as the number of edges connected to the node in all
     % layers.
@@ -40,7 +40,7 @@ classdef DegreeOverlap < EdgeOverlap
             % DEGREEOVERLAP = CALCULATE(M) returns the value of the degree
             % ovelap of a multiplex.
             %
-            % See also Measure, EdgeOverlap, MultiplexGraphBU, MultiplexGraphWU.            
+            % See also Measure, EdgeOverlap, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             
@@ -132,7 +132,7 @@ classdef DegreeOverlap < EdgeOverlap
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with DegreeOverlap 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to degree overlap.
+            % compatible graphs with degree overlap.
             % 
             % See also getCompatibleGraphList.
             
