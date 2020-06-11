@@ -1,17 +1,16 @@
 function convert_x3d_to_nv(file, varargin)
 % CONVERT_X3D_TO_NV converts a x3d file to  nv file
 %
-% CONVERT_X3D_TO_NV() opens a gui dialog box to select a x3d file, which
-% will be converted into a nv file. It places the output file in the
-% same folder as the input file.
+% CONVERT_X3D_TO_NV() opens a dialog box to select a x3d file to be
+% converted into a nv file. It places the output file in the same folder as
+% the input file. 
 %
 % CONVERT_X3D_TO_NV(FILE) converts the FILE with extension x3d to
 % an nv file. It places the output file in the same folder as the input FILE.
 %
-% CONVERT_X3D_TO_NV([], 'MSG', MESSAGE) opens a GUI dialog box to select a
-% x3d file with a personlized message MESSAGE. It places the output file in
-% the sme folder as the input file.
-
+% CONVERT_X3D_TO_NV([], 'MSG', MESSAGE) opens a dialog box to select a x3d
+% file with a personlized message MESSAGE. It places the output file in the
+% same folder as the input file.
 
 % If no file argument is present it opens a gui dialog box.
 if nargin< 1 || isempty(file)
@@ -49,7 +48,7 @@ triangles = erase(char(triangles), '             ');  % manage strings to remove
 triangles = strrep(triangles, '-1', newline);  % remove unwanted chars
 triangles = split(triangles, newline);  % split the string in the newlines.
 triangles = strtrim(triangles);  % trim white space
-triangles = setdiff(triangles, {''});  % remove empty cells
+triangles = triangles(~cellfun('isempty', triangles));  % remove empty cells
 number_triangles = length(triangles);  % triangles need to increase the number by 1, because matlab patch needs to be >= 1
 for i = 1:number_triangles
     tmp = triangles{i, 1};
@@ -61,7 +60,7 @@ coordinates = erase(char(coordinates), '             ');
 coordinates = strrep(coordinates, ',' , newline);
 coordinates = split(coordinates, newline);
 coordinates = strtrim(coordinates);
-coordinates = setdiff(coordinates, {''});
+coordinates = coordinates(~cellfun('isempty', coordinates));
 number_coordinates = length(coordinates);
 
 % write output file
