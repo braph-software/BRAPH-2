@@ -7,8 +7,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     % collection of surfaces. These brain surfaces are in '.nv' format and
     % whithin the folder ./braph2/atlas/brainsurfs/.
     % This class provides the common methods needed to manage the plot of 
-    % the surface, via two custom panels where the user can change light, 
-    % material, camlight, facecolor, edgecolor and  background color. 
+    % the surface, via a custom panel called Brain Surface Settings where
+    % the user can change lighting, material, camlight, shadning, colormap,
+    % facecolor, brain color, face color, edgecolor and  background color. 
     %
     % PlotBrainSurf properties (Constants):
     %   VIEW_3D         -   3D view numeric code
@@ -35,15 +36,13 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     %   VIEW_CMD        -   vector of view names
     %   VIEW_AZEL       -   vector of view azimutal and polar angle
     % 
-    % PlotBrainSurf methods:
+    % PlotBrainSurf basic methods:
     %   PlotBrainSurf        - constructor
     %   tostring             - returns a string representing the surface
     %   disp                 - displays the plot brain surface
-    %   getAvailableSettings - returns the available settings
-    %   getName              - returns the name 
-    %   getSettings          - returns the current settings
-    %   getBrainSurface      - returns the handle of the brain surface
-    %   setSurface           - sets the surface
+    %   getBrainSurfFile     - returns the handle of the brain surf
+    % 
+    % PlotBrainSurf graphic methods: 
     %   set_axes             - sets the handle of the axes
     %   get_axes             - gets the handle of the axes
     %   brain                - plots the brain surface
@@ -53,19 +52,22 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     %   hold_on              - retains the brain surface
     %   hold_off             - clears the bran surface
     %   grid_on              - turns the grid visible
-    %   grin_off             - turns the grid invisible
+    %   grid_off             - turns the grid invisible
     %   axis_on              - turns the axis visible
     %   axis_off             - turns the axis invisible
     %   axis_equal           - turns the axis aspect ratio equal to the data
     %   axis_tight           - turns the axis limit to the range of data
     %   view                 - sets the desired angle of view
-    %   update_light         - sets the light configuration
-    %   brain_light          - creates a panel to control the light
-    %   loadBrainSurface     - static function to create a brain surface
+    %   lighting             - sets the light configuration
+    %   material             - sets the material configuration
+    %   camlight             - sets the camlight configuration
+    %   shading              - sets the shading configuration 
+    %   colormap             - sets the colormap configuration
     %
     % See also handle, matlab.mixin.Copyable, PlotBrainAtlas.
     
     properties (Constant)
+        % fixed 3d view
         VIEW_3D	= 1
         VIEW_3D_CMD = '3D'
         VIEW_3D_AZEL = [-37.5 30]
@@ -133,16 +135,21 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         h_brain  % handle for brain surface
         f_brain_settings  % brain setting figure handle
         
-        Lighting
-        Material
-        CamLight
-        Shading
-        Colormap
+        Lighting  % handle for lighting value
+        Material  % handle for material value
+        CamLight  % handle for camlight value
+        Shading  % handle for shading value
+        Colormap  % handle for colormap value
     end
     methods  % Basic Functions
         function bs = PlotBrainSurf(brain_surf_file, varargin)
-            % PLOTBRAINSURF(VARARGIN) construct the brain surface object,
-            % utilizing VARARGIN it sets the settings.
+            % PLOTBRAINSURF constructor 
+            %
+            % PLOTBRAINSURF(BRAIN_SURF_FILE) construct the brain surface
+            % object, with default settings.
+            %            
+            % PLOTBRAINSURF(BRAIN_SURF_FILE, VARARGIN) construct the brain surface object,
+            % utilizing VARARGIN to sets the settings.
             %
             % See also PlotBrainAtlas. 
             
@@ -157,6 +164,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % TOSTRING string with information about the plot brain surf
             %
             % STR = TOSTRING(BS) returns string with the brain surface file
+            % and the number of vertices and triangles.
             %
             % See also disp.
             
@@ -165,7 +173,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function disp(bs)
             % DISP displays brain surface
             %
-            % DISP(BS) displays the brain surface BP on the command line.
+            % DISP(BS) displays the brain surface class, brain surf file,
+            % and the number of vertices and triangles.
             %
             % See also PlotBrainSurf.
             
@@ -174,23 +183,25 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             disp(['Number of vertices: ' tostring(bs.vertex_number)]);
             disp(['Number of triangles: ' tostring(bs.tri_number)]);
         end
-        function brain_surf_file = getBrainSurfFile(bs)  % (bs)
-            % NAME brain surface name
+        function brain_surf_file = getBrainSurfFile(bs)
+            % GETBRAINSURFFILE returns the brain surf file
             %
-            % NAME = getName() gets the brain surface BS's name.
+            % BRAIN_SURF_FILE = GETBRAINSURFFILE(BS) gets the brain surf
+            % file handle value.
             %
-            % See also getSettings, getBrainSurface.
+            % See also PlotBrainSurf.
             
             brain_surf_file = bs.brain_surf_file;
         end
     end
     methods (Access = protected) % Set Brain Surf File
         function setBrainSurfFile(bs, brain_surf_file)
-            % SETSURFACE(BS, BRAIN_SURFACE_FILE) reads the brain surface
-            % file and loads the data. Sets the Lighting handles from the
-            % settings.
+            % SETBRAINSURFFILE read the brain surf file and sets the data
             %
-            % See also update_light, set_axes.
+            % SETBRAINSURFFILE(BS, BRAIN_SURF_FILE) reads the brain surf
+            % file and loads the data.
+            %
+            % See getBrainSurfFile.
             
             bs.brain_surf_file =  brain_surf_file;
             
@@ -206,17 +217,17 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function h = set_axes(bs, ht)
             % SET_AXES sets current axes
             %
-            % SET_AXES(BS,HT) set the axes to plot the brain surface BS.
-            %   If an axes is not entered as an input argument HT, the
-            %   current axes is used for plotting.
+            % SET_AXES(BS, HT) set the axes to plot brain surf.
+            % If an axes is not entered as an input argument HT, the
+            % current axes is used for plotting.
             %
             % H = SET_AXES(BS) returns a handle to the axes used to plot
-            %   the brain surface BS.
+            % brain surf.
             %
             % See also PlotBrainSurf, gca.
             
             if isempty(bs.h_axes) || ~ishandle(bs.h_axes)
-                if nargin<2
+                if nargin < 2
                     ht = gca;
                 end
                 bs.h_axes = ht;
@@ -230,16 +241,16 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % GET_AXES gets current axes
             %
             % H = GET_AXES(BS) returns a handle to the axes used to plot
-            %   the brain surface BS.
+            % the brain surf.
             %
             % See also PlotBrainSurf, axes.
             
             h = bs.h_axes;
         end
         function h = brain(bs, varargin)
-            % BRAIN plots brain surface
+            % BRAIN plots brain surf
             %
-            % BRAIN(BS) plots the brain surface if not plotted.
+            % BRAIN(BS) plots the brain surf if not plotted.
             %
             % H = BRAIN(BS) returns the handle to the brain surface BS.
             %
@@ -301,7 +312,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             end
             
             % output if needed
-            if nargout>0
+            if nargout > 0
                 h = bs.h_brain;
             end
         end
@@ -367,7 +378,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             set(ui_button_backgroundcolor, 'String', 'background color')
             set(ui_button_backgroundcolor, 'HorizontalAlignment', 'center')
             set(ui_button_backgroundcolor, 'TooltipString', 'Image background color')
-            set(ui_button_backgroundcolor, 'Callback',{@cb_backgroundcolor})
+            set(ui_button_backgroundcolor, 'Callback', {@cb_backgroundcolor})
             
             function cb_backgroundcolor(~, ~)  % (src, event)
                 color = uisetcolor;
