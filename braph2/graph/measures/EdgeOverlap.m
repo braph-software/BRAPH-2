@@ -46,18 +46,14 @@ classdef EdgeOverlap < Measure
             % graph.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix or 2D-cell array 
+            A = g.getA();  % 2D-cell array 
             
             N = g.nodenumber();
             L = g.layernumber();
             overlap = zeros(N(1));
             
             for li = 1:1:L
-                if g.is_graph(g)
-                    Aii = A;
-                else
-                    Aii = A{li, li};
-                end
+                Aii = A{li, li};
                 Aii = binarize(Aii);  % binarizes the adjacency matrix
                 overlap = overlap + Aii;
             end
