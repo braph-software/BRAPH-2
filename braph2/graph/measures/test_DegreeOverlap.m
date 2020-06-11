@@ -1,31 +1,55 @@
-% test OverlappingDegree
+% test DegreeOverlap
 
+%% Test 1: MultiplexGraphBU
+A11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
 A = {
-    [0, 1, 1; 1, 0, 0; 1, 0, 0]         eye(3)
-    eye(3)                              [0, 1, 0; 1, 0, 1; 0, 1, 0]
-};
-
-A_weighted = {
-    [0, 0.2, 1; 0.2, 0, 0; 1, 0, 0]     eye(3)
-    eye(3)                              [0, 1, 0; 1, 0, 0.3; 0, 0.3, 0]
+    A11     A12
+    A21     A22
     };
 
-%% Test 1: Calculation MultiplexGraphBU
-known_overlapping_degree = {[3, 3, 2]'};
+known_degree_overlap = {[1 1 0]'};
 
 g = MultiplexGraphBU(A);
-overlapping_degree = OverlappingDegree(g);
+degree_overlap = DegreeOverlap(g);
                  
-assert(isequal(overlapping_degree.getValue(), known_overlapping_degree), ...
-    [BRAPH2.STR ':OverlappingDegree:' BRAPH2.BUG_ERR], ...
-    'OverlappingDegree is not being calculated correctly for MultiplexGraphBU')
+assert(isequal(degree_overlap.getValue(), known_degree_overlap), ...
+    [BRAPH2.STR ':DegreeOverlap:' BRAPH2.BUG_ERR], ...
+    'DegreeOverlap is not being calculated correctly for MultiplexGraphBU')
 
-%% Test 2: Calculation MultiplexGraphWU
-known_overlapping_degree = {[3, 3, 2]'};
+%% Test 2: MultiplexGraphWU
+A11 = [
+    0   .2  1
+    .2  0   0
+    1   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   .3
+    0   .3  0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
 
-g = MultiplexGraphWU(A_weighted);           
-overlapping_degree = OverlappingDegree(g);
+known_degree_overlap = {[1 1 0]'};
 
-assert(isequal(overlapping_degree.getValue(), known_overlapping_degree), ...
-    [BRAPH2.STR ':OverlappingDegree:' BRAPH2.BUG_ERR], ...
-    'OverlappingDegree is not being calculated correctly for MultiplexGraphWU')
+g = MultiplexGraphWU(A);
+degree_overlap = DegreeOverlap(g);
+
+assert(isequal(degree_overlap.getValue(), known_degree_overlap), ...
+    [BRAPH2.STR ':DegreeOverlap:' BRAPH2.BUG_ERR], ...
+    'DegreeOverlap is not being calculated correctly for MultiplexGraphWU')
