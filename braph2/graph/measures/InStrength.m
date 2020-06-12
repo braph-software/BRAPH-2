@@ -53,7 +53,7 @@ classdef InStrength < Measure
                 else
                     Aii = A{li, li};
                 end
-                strength(li) = {sum(Aii, 2)};  % calculates the in-strength of a node for layer li
+                strength(li) = {sum(Aii, 1)'};  % calculates the in-strength of a node for layer li
             end
         end
     end
