@@ -252,15 +252,13 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % BRAIN(BS) plots the brain surf if not plotted.
             %
-            % H = BRAIN(BS) returns the handle to the brain surface BS.
+            % H = BRAIN(BS) sets the handle of the trisurf plot of the
+            % brain surf BS class.
             %
-            % BRAIN(BS,'PropertyName',PropertyValue) sets the property
-            %   of the brain surface PropertyName to PropertyValue.
+            % BRAIN(BS, VARARGIN) sets the property
+            %   of the brain surf utilizing VARARGIN.
             %   All standard plot properties of trisurf can be used.
             %   The brain surface properties can also be changed when hidden.
-            %
-            % BRAIN(BS,'Color',COLOR) sets the color of the faces and
-            %   edges of the brain surface to COLOR.
             %
             % See also PlotBrainSurf, trisurf.
             
@@ -271,9 +269,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
                 
                 bs.h_brain = trisurf( ...
                     bs.tri, ...
-                    bs.coord(1,:), ...
-                    bs.coord(2,:), ...
-                    bs.coord(3,:), ...
+                    bs.coord(1, :), ...
+                    bs.coord(2, :), ...
+                    bs.coord(3, :), ...
                     'Parent', bs.get_axes(), ...
                     'EdgeColor', 'none', ...
                     'EdgeAlpha', .5, ...
@@ -291,23 +289,23 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             for n = 1:2:length(varargin)
                 switch lower(varargin{n})
                     case 'color'
-                        set(bs.h_brain, 'FaceColor', varargin{n+1});
-                        set(bs.h_brain, 'EdgeColor', varargin{n+1});
+                        set(bs.h_brain, 'FaceColor', varargin{n + 1});
+                        set(bs.h_brain, 'EdgeColor', varargin{n + 1});
                     case 'alpha'
-                        set(bs.h_brain, 'FaceAlpha', varargin{n+1});
-                        set(bs.h_brain, 'EdgeAlpha', varargin{n+1});
+                        set(bs.h_brain, 'FaceAlpha', varargin{n + 1});
+                        set(bs.h_brain, 'EdgeAlpha', varargin{n + 1});
                     case 'lighting'
-                        bs.lighting(varargin{n+1});
+                        bs.lighting(varargin{n + 1});
                     case 'material'
-                        bs.material(varargin{n+1});
+                        bs.material(varargin{n + 1});
                     case 'camlight'
-                        bs.camlight(varargin{n+1});
+                        bs.camlight(varargin{n + 1});
                     case 'shading'
-                        bs.shading(varargin{n+1});
+                        bs.shading(varargin{n + 1});
                     case 'colormap'
-                        bs.colormap(varargin{n+1});
+                        bs.colormap(varargin{n + 1});
                     otherwise
-                        set(bs.h_brain, varargin{n}, varargin{n+1});
+                        set(bs.h_brain, varargin{n}, varargin{n + 1});
                 end
             end
             
@@ -317,9 +315,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             end
         end
         function brain_on(bs)
-            % BRAIN_ON shows brain surface
+            % BRAIN_ON shows brain surf
             %
-            % BRAIN_ON(BS) shows the brain surface BS.
+            % BRAIN_ON(BS) shows the brain surf BS.
             %
             % See also PlotBrainSurf.
             
@@ -328,9 +326,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             end
         end
         function brain_off(bs)
-            % BRAIN_OFF hides brain surface
+            % BRAIN_OFF hides brain surf
             %
-            % BRAIN_OFF(BS) hides the brain surface BS.
+            % BRAIN_OFF(BS) hides the brain surf BS.
             %
             % See also PlotBrainSurf.
             
@@ -339,14 +337,15 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             end
         end
         function brain_settings(bs, varargin)
-            % BRAIN_SETTINGS sets brain surface's properties
+            % BRAIN_SETTINGS opens the GUI property editor
             %
             % BRAIN_SETTINGS(BS) allows the user to specify the properties
-            %   of the brain surface by opening a graphical user interface.
+            % of the brain surf by opening a GUI property editor.
             %
-            % BRAIN_SETTINGS(BS,'PropertyName',PropertyValue) sets the property
-            %   of the user interface's PropertyName to PropertyValue.
-            %   Admissible properties are:
+            % BRAIN_SETTINGS(BS, VARARGIN) allows the user to specify the 
+            % properties of the brain surf by opening a GUI property editor.
+            % sets the property of the user interface's PropertyName to PropertyValue.
+            % Admissible properties are:
             %       FigPosition   -  position of the user interface on the screen
             %       FigColor      -  background color of the user interface
             %       FigName       -  name of the user interface
@@ -599,8 +598,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function hold_on(bs)
             % HOLD_ON hold on
             %
-            % HOLD_ON(BS) retains the brain surface BS if another graph is
-            %   plotted in the current axes.
+            % HOLD_ON(BS) retains the brain surf BS if another graph is
+            % plotted in the current axes.
             %
             % See also PlotBrainSurf, hold.
             
@@ -611,8 +610,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function hold_off(bs)
             % HOLD_OFF hold off
             %
-            % HOLD_OFF(BS) clears the brain surface BS if another graph is
-            %   plotted in the current axes.
+            % HOLD_OFF(BS) clears the brain surf BS if another graph is
+            % plotted in the current axes.
             %
             % See also PlotBrainSurf, hold.
             
@@ -668,7 +667,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % AXIS_EQUAL axis equal
             %
             % AXIS_EQUAL(BS) sets the aspect ratio so that the data units
-            %   are the same in every direction.
+            % are the same in every direction.
             %
             % See also PlotBrainSurf, axis.
             
@@ -690,9 +689,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function view(bs, v)
             % VIEW sets desired view
             %
-            % VIEW(BS,V) sets the desired view of the brain surface BS by
-            %   specifying the numeric code V of the predefined views.
-            %   Acceptable values for V are:
+            % VIEW(BS, V) sets the desired view of the brain surf BS by
+            % specifying the numeric code V of the predefined views.
+            % Acceptable values for V are:
             %       PlotBrainSurf.VIEW_3D   -   3D
             %       PlotBrainSurf.VIEW_SL   -   sagittal left
             %       PlotBrainSurf.VIEW_SR   -   sagittal right
@@ -712,23 +711,53 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             end
         end
         function lighting(bs, Lighting)
+            % LIGHTING sets the lighting value
+            %
+            % LIGHTING(BS, LIGHTING) sets the value LIGHTING in class BS.
+            %
+            % See also material, camlight, shading, colormap.
+            
             bs.Lighting = Lighting;
             lighting(bs.get_axes(), bs.Lighting)
         end
         function material(bs, Material)
+            % MATERIAL sets the material value
+            %
+            % MATERIAL(BS, MATERIAL) sets the value MATERIAL in class BS.
+            %
+            % See also lighting, camlight, shading, colormap.
+            
             bs.Material = Material;
             material(bs.get_axes(), bs.Material)
         end
         function camlight(bs, CamLight)
+            % CAMLIGHT sets the camlight value
+            %
+            % CAMLIGHT(BS, CAMLIGHT) sets the value CAMLIGHT in class BS.
+            %
+            % See also lighting, material, shading, colormap.
+            
             bs.CamLight = CamLight;
             delete(findall(bs.h_axes, 'Type', 'light'));
             camlight(bs.get_axes(), bs.CamLight)
         end
         function shading(bs, Shading)
+            % SHADING sets the shading value
+            %
+            % SHADING(BS, SHADING) sets the value SHADING in class BS.
+            %
+            % See also lighting, material, camlight, colormap.
+            
             bs.Shading = Shading;
             shading(bs.get_axes(), bs.Shading)
         end
         function colormap(bs, Colormap)
+            % COLORMAP sets the colormap value
+            %
+            % COLORMAP(BS, COLORMAP) sets the value COLORMAP in class BS.
+            %
+            % See also lighting, material, camlight, shading.
+            
             bs.Colormap= Colormap;
             colormap(bs.get_axes(), bs.Colormap);
         end
