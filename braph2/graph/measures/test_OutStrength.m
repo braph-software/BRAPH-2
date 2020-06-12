@@ -1,5 +1,21 @@
 % test OutStrength
 
+%% Test 1: Calculation GraphWD
+A = [
+    0   .2  1
+    0   0   .8
+    1   0   0];
+
+known_out_strength = {[1.2, 0.8, 1]'};
+
+g = GraphWD(A);
+out_strength = OutStrength(g);
+
+assert(isequal(out_strength.getValue(), known_out_strength), ...
+    [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
+    'Strength is not being calculated correctly for GraphWD')
+
+%% Test 2: Calculation MultiplexGraphWD
 A11 = [
     0   .2  1
     0   0   .8
@@ -15,17 +31,6 @@ A = {
     A21     A22
     };
 
-%% Test 1: Calculation GraphWD
-known_out_strength = {[1.2, 0.8, 1]'};
-
-g = GraphWD(A11);
-out_strength = OutStrength(g);
-
-assert(isequal(out_strength.getValue(), known_out_strength), ...
-    [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
-    'Strength is not being calculated correctly for GraphWD')
-
-%% Test 2: Calculation MultiplexGraphWD
 known_out_strength = {
                               [1.2, 0.8, 1]'
                               [1.6, 1.4, 0.4]'};
