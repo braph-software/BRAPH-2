@@ -1,5 +1,5 @@
 classdef OutStrength < Measure
-    % OutStrength < Measure: Out-strength measure
+    % OutStrength Out-strength measure
     % OutStrength provides the out-strength of a node for weighted 
     % directed (WD) graphs.
     %
