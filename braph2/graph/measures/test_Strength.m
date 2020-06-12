@@ -1,24 +1,24 @@
 % test Strength
 
-L1 = [
+A11 = [
     0   0.2 1
     0.2 0   0
     1   0   0];
-
-L2 = [
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
     0 1   0
     1 0   0.4
     0 0.4 0];
-
 A = {
-    L1      eye(3)
-    eye(3)  L2
+    A11     A12  
+    A21     A22
     };
 
 %% Test 1: Calculation GraphWU
 known_overlapping_strength = {[1.2, 0.2, 1]'};
 
-g = GraphWU(L1);
+g = GraphWU(A11);
 strength = Strength(g);
 
 assert(isequal(strength.getValue(), known_overlapping_strength), ...
