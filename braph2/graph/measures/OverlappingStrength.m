@@ -78,7 +78,7 @@ classdef OverlappingStrength < Strength
             %
             % See also getClass, getDescription. 
             
-            name = 'Overlapping_Strength';
+            name = 'Overlapping Strength';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the overlapping strength description 

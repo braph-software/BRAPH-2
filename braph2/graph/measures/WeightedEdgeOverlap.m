@@ -71,7 +71,7 @@ classdef WeightedEdgeOverlap < Measure
             %
             % See also getClass, getDescription. 
             
-            name = 'Weighted_Edge_Overlap';
+            name = 'Weighted Edge Overlap';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the weighted edge overlap description 
