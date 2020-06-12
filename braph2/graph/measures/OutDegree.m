@@ -25,7 +25,7 @@ classdef OutDegree < Measure
     
     methods
         function m = OutDegree(g, varargin)
-            % DEGREE(G) creates out-degree with default properties.
+            % OUTDEGREE(G) creates out-degree with default properties.
             % G is a directed graph (e.g, an instance of GraphBD, GraphWD,
             % MultiplexGraphBD, MultiplexGraphWD). 
             %
