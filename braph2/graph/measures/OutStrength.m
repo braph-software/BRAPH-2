@@ -21,15 +21,15 @@ classdef OutStrength < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, InStrength, GraphWU, MultiplexGraphWU.
+    % See also Measure, InStrength, GraphWD, MultiplexGraphWD.
     
     methods
         function m = OutStrength(g, varargin)
             % OUTSTRENGTH(G) creates out-strength with default properties.
-            % G is a weighted directed graph (e.g, an instance of GraphWU 
-            % or MultiplexGraphWU).
+            % G is a weighted directed (WD) graph (e.g, an instance of GraphWD 
+            % or MultiplexGraphWD).
             %
-            % See also Measure, InStrength, GraphWU, MultiplexGraphWU.
+            % See also Measure, InStrength, GraphWD, MultiplexGraphWD.
 
             m = m@Measure(g, varargin{:});
         end
@@ -41,7 +41,7 @@ classdef OutStrength < Measure
             % STRENGTH = CALCULATE(M) returns the value of the out-strength 
             % of a node.
             %
-            % See also Measure, InStrength, GraphWU, MultiplexGraphWU.
+            % See also Measure, InStrength, GraphWD, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix or 2D-cell array 
@@ -88,8 +88,9 @@ classdef OutStrength < Measure
             description = [ ...
                 'The out-strength of a node is ' ...
                 'the sum of the weights of all ' ...
-                'the outward edges connected to a node. ' ...
-                'For WD graphs, out-strengths are calculated as sums ' ...
+                'the outward edges connected to a node ' ...
+                'for weighted directed (WD) graphs. ' ...
+                'Out-strengths are calculated as sums ' ...
                 'over colums of the weighted connectivity matrix.' ...
                 ];
         end
