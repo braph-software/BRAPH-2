@@ -35,10 +35,10 @@ classdef OutDegree < Measure
         end
     end
     methods (Access=protected)
-        function degree = calculate(m)
+        function out_degree = calculate(m)
             % CALCULATE calculates the out-degree value of a node
             %
-            % DEGREE = CALCULATE(M) returns the value of the out-degree of a
+            % OUTDEGREE = CALCULATE(M) returns the value of the out-degree of a
             % node.
             %
             % See also Measure, InDegree, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
@@ -47,8 +47,7 @@ classdef OutDegree < Measure
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix or 2D-cell array 
             
-            degree = cell(g.layernumber(), 1);
-            
+            out_degree = cell(g.layernumber(), 1);
             for li = 1:1:g.layernumber()
                 if g.is_graph(g)
                     Aii = A;
@@ -56,7 +55,7 @@ classdef OutDegree < Measure
                     Aii = A{li, li};
                 end
                 Aii = binarize(Aii);  % binarizes the adjacency matrix
-                degree(li) = {sum(Aii, 2)};  % calculates the out-degree of a node for layer li
+                out_degree(li) = {sum(Aii, 2)};  % calculates the out-degree of a node for layer li
             end
         end
     end  
