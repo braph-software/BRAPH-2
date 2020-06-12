@@ -1,8 +1,18 @@
 % test OverlappingStrength
 
+A11 = [
+    0   .2  1
+    .2  0   0
+    1   0   0];
+A12= eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   .3
+    0   .3  0];
 A = {
-    [0, 0.2, 1; 0.2, 0, 0; 1, 0, 0]     eye(3)
-    eye(3)                              [0, 1, 0; 1, 0, 0.3; 0, 0.3, 0]
+    A11     A12  
+    A21     A22
     };
 
 %% Test 1: Calculation MultiplexGraphWU
