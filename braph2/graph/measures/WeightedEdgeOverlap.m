@@ -1,9 +1,9 @@
 classdef WeightedEdgeOverlap < Measure
-    % WeightedEdgeOverlap Weighted Edge Overlap measure
-    % WeightedEdgeOverlap provides the weighted edge overlap of a graph for 
-    % weighted undirected (WU) and weighted directed (WD) graphs.  
-    % It is calculated as the fraction of layers in which each pair
-    % of node exists. 
+    % WeightedEdgeOverlap Weighted edge overlap measure
+    % WeightedEdgeOverlap provides the weighted edge overlap of a weighted multiplex. 
+    % 
+    % It is calculated as the weighted fraction of layers in which edge
+    % between a pair of nodes exists. 
     % 
     % WeightedEdgeOverlap methods:
     %   WeightedEdgeOverlap         - constructor
@@ -19,42 +19,39 @@ classdef WeightedEdgeOverlap < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Graph, Strength, EdgeOverlap, OverlappingStrength.
+    % See also Measure, MultiplexGraphWD, MultiplexGraphWU.
     
     methods
         function m = WeightedEdgeOverlap(g, varargin)
-            % WEIGHTEDEDGEOVERLAP(G) creates weighted edge overlap with default measure properties.
-            % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU). 
+            % WEIGHTEDEDGEOVERLAP(G) creates weighted edge overlap with default properties.
+            % G is a multiplex (i.e., an instance of MultiplexGraphWD, MultiplexGraphWU). 
             %
-            % WEIGHTEDEDGEOVERLAP(G, 'VALUE', VALUE) creates weighted edge overlap, 
-            % and sets the value to VALUE. G is a graph (e.g, an instance of 
-            % GraphBD, GraphBU, GraphWD, Graph WU).
-            %   
-            % See also Measure, Graph, Strength, EdgeOverlap, OverlappingStrength. 
+            % See also Measure, MultiplexGraphWD, MultiplexGraphWU.
             
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
         function weighted_edge_overlap = calculate(m)
-            % CALCULATE calculates the weighted edge overlap value of a graph
+            % CALCULATE calculates the weighted edge overlap value of a multiplex
             %
             % WEIGHTEDEDGEOVERLAP = CALCULATE(M) returns the value of the 
-            % weighted edge overlap of a graph.
+            % weighted edge overlap of a multiplex.
+            %
+            % See also Measure, MultiplexGraphWD, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % 2D-cell array 
             
             N = g.nodenumber();
             L = g.layernumber();
-            overlap = zeros(N(1));
             
+            weighted_edge_overlap = zeros(N(1));
             for li = 1:1:L
                 Aii = A{li, li};
-                overlap = overlap + Aii;
+                weighted_edge_overlap = weighted_edge_overlap + Aii;
             end
-            weighted_edge_overlap = {overlap/L};
+            weighted_edge_overlap = {weighted_edge_overlap/L};
         end
     end  
     methods (Static)  % Descriptive methods
@@ -74,7 +71,7 @@ classdef WeightedEdgeOverlap < Measure
             %
             % See also getClass, getDescription. 
             
-            name = 'Weighted-Edge-Overlap';
+            name = 'Weighted_Edge_Overlap';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the weighted edge overlap description 
@@ -85,8 +82,8 @@ classdef WeightedEdgeOverlap < Measure
             % See also getList, getCompatibleGraphList.
             
             description = [ ...
-                'The weighted edge overlap of a graph is ' ...
-                'the fraction of layers in which each pair of nodes exists. ' ...
+                'For each edge, the weighted edge overlap of a multiplex graph ' ...
+                'is the weighted fraction of layers where that edge exists. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -100,7 +97,7 @@ classdef WeightedEdgeOverlap < Measure
             available_settings = {};
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of weighted edge overlap
+            % GETMEASUREFORMAT returns the measure format of WeightedEdgeOverlap
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of weighted edge overlap measure (BINODAL).
@@ -110,7 +107,7 @@ classdef WeightedEdgeOverlap < Measure
             measure_format = Measure.BINODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of weighted edge overlap
+            % GETMEASURESCOPE returns the measure scope of WeightedEdgeOverlap
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
             % measure scope of weighted edge overlap measure (SUPERGLOBAL).
@@ -120,7 +117,7 @@ classdef WeightedEdgeOverlap < Measure
             measure_scope = Measure.SUPERGLOBAL;
         end
         function list = getCompatibleGraphList()  
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs to weighted edge overlap 
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs to WeightedEdgeOverlap
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
             % of compatible graph classes to weighted edge overlap. 
@@ -134,7 +131,7 @@ classdef WeightedEdgeOverlap < Measure
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs to weighted edge overlap 
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs to WeightedEdgeOverlap 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to weighted edge overlap.
