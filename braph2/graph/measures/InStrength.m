@@ -25,7 +25,7 @@ classdef InStrength < Measure
     
     methods
         function m = InStrength(g, varargin)
-            % OUTSTRENGTH(G) creates in-strength with default properties.
+            % INSTRENGTH(G) creates in-strength with default properties.
             % G is a weighted directed graph (e.g, an instance of GraphWU 
             % or MultiplexGraphWU).
             %
@@ -35,10 +35,10 @@ classdef InStrength < Measure
         end
     end
     methods (Access=protected)
-        function strength = calculate(m)
+        function in_strength = calculate(m)
             % CALCULATE calculates the in-strength value of a node
             %
-            % STRENGTH = CALCULATE(M) returns the value of the in-strength 
+            % INSTRENGTH = CALCULATE(M) returns the value of the in-strength 
             % of a node.
             %
             % See also Measure, OutStrength, GraphWU, MultiplexGraphWU.
@@ -46,14 +46,14 @@ classdef InStrength < Measure
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix or 2D-cell array 
             
-            strength = cell(g.layernumber(), 1);      
+            in_strength = cell(g.layernumber(), 1);      
             for li = 1:1:g.layernumber()
                 if g.is_graph(g)
                     Aii = A;
                 else
                     Aii = A{li, li};
                 end
-                strength(li) = {sum(Aii, 1)'};  % calculates the in-strength of a node for layer li
+                in_strength(li) = {sum(Aii, 1)'};  % calculates the in-strength of a node for layer li
             end
         end
     end
