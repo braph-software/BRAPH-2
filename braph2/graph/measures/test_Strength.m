@@ -1,5 +1,21 @@
 % test Strength
 
+%% Test 1: Calculation GraphWU
+A = [
+    0   0.2 1
+    0.2 0   0
+    1   0   0];
+
+known_strength = {[1.2, 0.2, 1]'};
+
+g = GraphWU(A);
+strength = Strength(g);
+
+assert(isequal(strength.getValue(), known_strength), ...
+    [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
+    'Strength is not being calculated correctly for GraphWU')
+
+%% Test 2: Calculation MultiplexGraphWU
 A11 = [
     0   0.2 1
     0.2 0   0
@@ -15,25 +31,13 @@ A = {
     A21     A22
     };
 
-%% Test 1: Calculation GraphWU
-known_overlapping_strength = {[1.2, 0.2, 1]'};
-
-g = GraphWU(A11);
-strength = Strength(g);
-
-assert(isequal(strength.getValue(), known_overlapping_strength), ...
-    [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
-    'Strength is not being calculated correctly for GraphWU')
-
-%% Test 2: Calculation MultiplexGraphWU
-
-known_overlapping_strength = {
-                              [1.2, 0.2, 1]'
-                              [1, 1.4, 0.4]'};
+known_strength = {
+                 [1.2, 0.2, 1]'
+                 [1, 1.4, 0.4]'};
                                 
 g = MultiplexGraphWU(A);
 strength = Strength(g);
 
-assert(isequal(strength.getValue(), known_overlapping_strength), ...
+assert(isequal(strength.getValue(), known_strength), ...
     [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
     'Strength is not being calculated correctly for MultiplexGraphWU')
