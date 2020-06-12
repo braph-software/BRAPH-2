@@ -32,8 +32,8 @@ A = {
     };
 
 known_out_strength = {
-                              [1.2, 0.8, 1]'
-                              [1.6, 1.4, 0.4]'};
+                     [1.2, 0.8, 1]'
+                     [1.6, 1.4, 0.4]'};
                                 
 g = MultiplexGraphWD(A);
 out_strength = OutStrength(g);
