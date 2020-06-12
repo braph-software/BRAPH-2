@@ -10,7 +10,7 @@ classdef OutDegree < Measure
     % OutDegree methods:
     %   OutDegree                   - constructor
     %
-    % OutDegree methods (Static)
+    % OutDegree descriptive methods (Static)
     %   getClass                    - returns the out-degree class
     %   getName                     - returns the name of out-degree measure
     %   getDescription              - returns the description of out-degree measure
