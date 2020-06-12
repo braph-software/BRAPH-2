@@ -1,9 +1,11 @@
 classdef Strength < Measure
-    % Strength < Measure: Strength measure
-    % Strength provides the sum of all weights of the edges connected to
-    % a node. For weighted undirected (WU) graphs the Strength can either be
-    % calculated as the sum of the rows or the columns of the adjacency
-    % matrix. 
+    % Strength Strength measure
+    % Strength provides the strength of a node for weighted 
+    % undirected (WU) graphs.
+    %
+    % It is calculated as the sum of all weights of the edges connected to
+    % a node, i.e., it is the sum of the rows or the columns of the 
+    % adjacency matrix. 
     %
     % Strength methods:
     %   Strength                    - constructor
@@ -19,17 +21,15 @@ classdef Strength < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Graph, Degree, Distance, Efficiency.
+    % See also Measure, Degree, GraphWU, MultiplexGraphWU.
     
     methods
         function m = Strength(g, varargin)
-            % STRENGTH(G) creates strength with default measure properties.
-            % G is a graph (e.g, an instance of Graph WU).
+            % STRENGTH(G) creates strength with default properties.
+            % G is a weighted undirected (WU) graph (e.g, an instance of 
+            % GraphWU or MultiplexGraphWU).
             %
-            % STRENGTH(G, 'VALUE', VALUE) creates strength, and sets the value
-            % to VALUE. G is a graph (e.g, an instance of Graph WU).
-            %
-            % See also Measure, Graph, Degree, Distance, Efficiency.
+            % See also Measure, Degree, GraphWU, MultiplexGraphWU.
 
             m = m@Measure(g, varargin{:});
         end
@@ -40,19 +40,20 @@ classdef Strength < Measure
             %
             % STRENGTH = CALCULATE(M) returns the value of the strength of a
             % node.
+            %
+            % See also Measure, Degree, GraphWU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix or 2D-cell array 
             
             strength = cell(g.layernumber(), 1);
-            
             for li = 1:1:g.layernumber()
                 if g.is_graph(g)
                     Aii = A;
                 else
                     Aii = A{li, li};
                 end
-                strength(li) = {sum(Aii, 2)};  % calculates the degree of a node for layer li
+                strength(li) = {sum(Aii, 2)};  % calculates the strength of a node for layer li
             end
         end
     end
@@ -82,13 +83,14 @@ classdef Strength < Measure
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % strength measure.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getClass(), getName().
             
             description = [ ...
                 'The strength of a node is ' ...
                 'the sum of the weights of ' ...
-                'all the edges connected to a node. ' ...
-                'For WU graphs, strengths are calculated ' ...
+                'all the edges connected to a node ' ...
+                'for weighted undirected graphs. ' ...
+                'Strengths are calculated ' ...
                 'as sums over either rows or colums of ' ...
                 'the weighted connectivity matrix. ' ...
                 ];
@@ -103,7 +105,7 @@ classdef Strength < Measure
             available_settings = {};
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of strength
+            % GETMEASUREFORMAT returns the measure format of Strength
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of strength measure (NODAL).
@@ -113,7 +115,7 @@ classdef Strength < Measure
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of strength
+            % GETMEASURESCOPE returns the measure scope of Strength
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
             % measure scope of strength measure (UNILAYER).
@@ -123,8 +125,7 @@ classdef Strength < Measure
             measure_scope = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList()
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to strength.
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Strength.
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
             % of compatible graph classes to strength. 
@@ -138,8 +139,7 @@ classdef Strength < Measure
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to strength 
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with Strength 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to strength.
