@@ -35,10 +35,10 @@ classdef OutStrength < Measure
         end
     end
     methods (Access=protected)
-        function strength = calculate(m)
+        function out_strength = calculate(m)
             % CALCULATE calculates the out-strength value of a node
             %
-            % STRENGTH = CALCULATE(M) returns the value of the out-strength 
+            % OUTSTRENGTH = CALCULATE(M) returns the value of the out-strength 
             % of a node.
             %
             % See also Measure, InStrength, GraphWD, MultiplexGraphWD.
@@ -46,14 +46,14 @@ classdef OutStrength < Measure
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix or 2D-cell array 
             
-            strength = cell(g.layernumber(), 1);      
+            out_strength = cell(g.layernumber(), 1);      
             for li = 1:1:g.layernumber()
                 if g.is_graph(g)
                     Aii = A;
                 else
                     Aii = A{li, li};
                 end
-                strength(li) = {sum(Aii, 2)};  % calculates the out-strength of a node for layer li
+                out_strength(li) = {sum(Aii, 2)};  % calculates the out-strength of a node for layer li
             end
         end
     end
