@@ -10,9 +10,6 @@ classdef OutDegree < Measure
     % OutDegree methods:
     %   OutDegree                   - constructor
     %
-    % OutDegree methods (Access=protected):
-    %   calculate                   - calculates the out-degree of a node
-    % 
     % OutDegree methods (Static)
     %   getClass                    - returns the out-degree class
     %   getName                     - returns the name of out-degree measure
