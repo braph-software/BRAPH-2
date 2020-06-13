@@ -648,7 +648,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % GRID_ON(BS) adds major grid lines to the current axes.
             %
-            % See also PlotBrainSurf, grid.
+            % See also grid_off.
             
             bs.set_axes()
             
@@ -659,7 +659,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % GRID_OFF(BS) removes grid lines from the current axes.
             %
-            % See also PlotBrainSurf, grid.
+            % See also grid_on.
             
             bs.set_axes()
             
@@ -670,7 +670,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % AXIS_ON(BS) turns on all axis lines, tick marks, and labels.
             %
-            % See also PlotBrainSurf, axis.
+            % See also axis_off.
             
             bs.set_axes()
             
@@ -681,7 +681,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % AXIS_OFF(BS) turns off all axis lines, tick marks, and labels.
             %
-            % See also PlotBrainSurf, axis.
+            % See also axis_on.
             
             bs.set_axes()
             
@@ -693,7 +693,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % AXIS_EQUAL(BS) sets the aspect ratio so that the data units
             % are the same in every direction.
             %
-            % See also PlotBrainSurf, axis.
+            % See also axis_on, axis_off, axis_tight.
             
             bs.set_axes()
             
@@ -704,7 +704,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % AXIS_TIGHT(BS) sets the axis limits to the range of the data.
             %
-            % See also PlotBrainSurf, axis.
+            % See also axis_on, axis_off, axis_equal.
             
             bs.set_axes()
             
@@ -723,8 +723,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %       PlotBrainSurf.VIEW_AV   -   axial ventral
             %       PlotBrainSurf.VIEW_CA   -   coronal anterior
             %       PlotBrainSurf.VIEW_CP   -   coronal posterior
-            %
-            % See also PlotBrainSurf, view.
             
             bs.set_axes()
             
@@ -737,7 +735,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function lighting(bs, Lighting)
             % LIGHTING sets the lighting value
             %
-            % LIGHTING(BS, LIGHTING) sets the value LIGHTING in class BS.
+            % LIGHTING(BS, LIGHTING) sets the value of lighting to Lighting.
+            % Lighting  = 'phong' 'none' 'flat' 'gouraud'
             %
             % See also material, camlight, shading, colormap.
             
@@ -747,7 +746,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function material(bs, Material)
             % MATERIAL sets the material value
             %
-            % MATERIAL(BS, MATERIAL) sets the value MATERIAL in class BS.
+            % MATERIAL(BS, Material) sets the value material to Material.
+            % Material  = 'shiny' 'dull' 'metal'
             %
             % See also lighting, camlight, shading, colormap.
             
@@ -757,7 +757,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function camlight(bs, CamLight)
             % CAMLIGHT sets the camlight value
             %
-            % CAMLIGHT(BS, CAMLIGHT) sets the value CAMLIGHT in class BS.
+            % CAMLIGHT(BS, CamLight) sets the value of the camera light to CamLight.
+            % CamLight  = 'headlight' 'right' 'left'
             %
             % See also lighting, material, shading, colormap.
             
@@ -768,7 +769,8 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function shading(bs, Shading)
             % SHADING sets the shading value
             %
-            % SHADING(BS, SHADING) sets the value SHADING in class BS.
+            % SHADING(BS, Shading) sets the value of shading to Shading.
+            % Shading   = 'interp' 'none' 'flat' 'faceted'
             %
             % See also lighting, material, camlight, colormap.
             
@@ -778,7 +780,11 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function colormap(bs, Colormap)
             % COLORMAP sets the colormap value
             %
-            % COLORMAP(BS, COLORMAP) sets the value COLORMAP in class BS.
+            % COLORMAP(BS, Colormap) sets the value of colormap to Colormap.
+            % Colormap  = 'jet' 'parula' 'jet' 'hsv' 'hot' 'cool'
+            %             'spring' 'summer' 'autumn' 'winter' 'gray' 'bone'
+            %             'copper' 'pink' 'lines' 'colorcube' 'prism'
+            %             'flag' 'white'
             %
             % See also lighting, material, camlight, shading.
             
