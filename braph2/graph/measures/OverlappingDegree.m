@@ -26,7 +26,7 @@ classdef OverlappingDegree < Degree
     methods
         function m = OverlappingDegree(g, varargin)
             % OVERLAPPINGDEGREE(G) creates overlapping degree with default properties.
-            % G is a undirected multiplex (i.e., an instance of
+            % G is an undirected multiplex (i.e., an instance of
             % MultiplexGraphBU or MultiplexGraphWU).
             %
             % See also Measure, Degree, MultiplexGraphBU, MultiplexGraphWU.

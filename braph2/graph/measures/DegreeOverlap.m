@@ -1,5 +1,5 @@
 classdef DegreeOverlap < EdgeOverlap
-    % DegreeOverlap Edge overlap measure
+    % DegreeOverlap Degree overlap measure
     % DegreeOverlap provides the degree overlap of a node for binary 
     % undirected (BU) and weighted undirected (WU) multiplexes. 
     % 
@@ -7,7 +7,7 @@ classdef DegreeOverlap < EdgeOverlap
     % layers.
     % 
     % DegreeOverlap methods:
-    %   DegreeOverlap           - constructor
+    %   DegreeOverlap               - constructor
     %
     % DegreeOverlap methods (Static)
     %   getClass                    - returns the degree overlap class
@@ -25,7 +25,7 @@ classdef DegreeOverlap < EdgeOverlap
     methods
         function m = DegreeOverlap(g, varargin)
             % DEGREEOVERLAP(G) creates degree overlap with default properties.
-            % G is a undirected multiplex (i.e., an instance of
+            % G is an undirected multiplex (i.e., an instance of
             % MultiplexGraphBU or MultiplexGraphWU).
             %
             % See also Measure, EdgeOverlap, MultiplexGraphBU, MultiplexGraphWU.
