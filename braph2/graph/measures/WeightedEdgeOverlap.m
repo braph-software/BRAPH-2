@@ -2,8 +2,7 @@ classdef WeightedEdgeOverlap < Measure
     % WeightedEdgeOverlap Weighted edge overlap measure
     % WeightedEdgeOverlap provides the weighted edge overlap of a weighted multiplex. 
     % 
-    % It is calculated as the weighted fraction of layers in which edge
-    % between a pair of nodes exists. 
+    % It is calculated as the average weight of an edge across all layers.
     % 
     % WeightedEdgeOverlap methods:
     %   WeightedEdgeOverlap         - constructor
@@ -24,7 +23,7 @@ classdef WeightedEdgeOverlap < Measure
     methods
         function m = WeightedEdgeOverlap(g, varargin)
             % WEIGHTEDEDGEOVERLAP(G) creates weighted edge overlap with default properties.
-            % G is a multiplex (i.e., an instance of MultiplexGraphWD, MultiplexGraphWU). 
+            % G is a weighted multiplex (i.e., an instance of MultiplexGraphWD, MultiplexGraphWU). 
             %
             % See also Measure, MultiplexGraphWD, MultiplexGraphWU.
             
@@ -83,7 +82,7 @@ classdef WeightedEdgeOverlap < Measure
             
             description = [ ...
                 'For each edge, the weighted edge overlap of a multiplex graph ' ...
-                'is the weighted fraction of layers where that edge exists. ' ...
+                'is the average of the weights of the edge in all layers. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
