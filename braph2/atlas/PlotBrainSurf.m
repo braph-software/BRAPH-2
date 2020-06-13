@@ -1,13 +1,13 @@
 classdef PlotBrainSurf < handle & matlab.mixin.Copyable
-    % PlotBrainSurf  Plot of a brain surface
+    % PlotBrainSurf Plotand and manage a brain surface
     % PlotBrainSurf plots and manages a brain surface.
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
     % PlotBrainSurf manages the brain surface choosen by the user from a
-    % collection of surfaces. These brain surfaces are in '.nv' format and
-    % whithin the folder ./braph2/atlas/brainsurfs/.
+    % collection of surfaces. These brain surfaces are in nv format and
+    % in the folder ./braph2/atlas/brainsurfs/.
     % This class provides the common methods needed to manage the plot of 
-    % the surface, via a custom panel called Brain Surface Settings where
+    % the surface, via a custom panel called 'Brain Surface Settings' where
     % the user can change lighting, material, camlight, shadning, colormap,
     % facecolor, brain color, face color, edgecolor and  background color. 
     %
