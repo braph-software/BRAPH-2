@@ -9,38 +9,46 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     % This class provides the common methods needed to manage the plot of 
     % the surface, via a custom panel called 'Brain Surface Settings' where
     % the user can change lighting, material, camlight, shadning, colormap,
-    % facecolor, brain color, face color, edgecolor and  background color. 
+    % facecolor, brain color, face color, edgecolor and background color. 
     %
     % PlotBrainSurf properties (Constants):
     %   VIEW_3D         -   3D view numeric code
     %   VIEW_3D_CMD     -   3D view name
     %   VIEW_3D_AZEL    -   3D view azimutal and polar angles
+    %
     %   VIEW_SL         -   sagittal left view numeric code
     %   VIEW_SL_CMD     -   sagittal left view name
     %   VIEW_SL_AZEL    -   sagittal left view azimutal and polar angles
+    %
     %   VIEW_SR         -   sagittal right view numeric code
     %   VIEW_SR_CMD     -   sagittal right view name
     %   VIEW_SR_AZEL    -   Sagittal right view azimutal and polar angles 
+    %
     %   VIEW_AD         -   axial dorsal view numeric code
     %   VIEW_AD_CMD     -   axial dorsal view name
     %   VIEW_AD_AZEL    -   axial dorsal view azimutal and polar angles
+    %
     %   VIEW_AV         -   axial ventral view numeric code
     %   VIEW_AV_CMD     -   axial ventral view name
     %   VIEW_AV_AZEL    -   axial ventral view azimutal and polar angles
+    %
     %   VIEW_CA         -   coronal anterior view numeric code
     %   VIEW_CA_CMD     -   coronal anterior view name
     %   VIEW_CA_AZEL    -   coronal anterior view azimutal and polar angles
+    %
     %   VIEW_CP         -   coronal posterior view numeric code
     %   VIEW_CP_CMD     -   coronal posterior view name
     %   VIEW_CP_AZEL    -   coronal posterior view azimutal and polar angles
+    %
     %   VIEW_CMD        -   vector of view names
+    %
     %   VIEW_AZEL       -   vector of view azimutal and polar angle
     % 
     % PlotBrainSurf basic methods:
     %   PlotBrainSurf        - constructor
     %   tostring             - returns a string representing the surface
     %   disp                 - displays the plot brain surface
-    %   getBrainSurfFile     - returns the handle of the brain surf
+    %   getBrainSurfFile     - returns the brain surf file
     % 
     % PlotBrainSurf graphic methods: 
     %   set_axes             - sets the handle of the axes
@@ -64,7 +72,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     %   shading              - sets the shading configuration 
     %   colormap             - sets the colormap configuration
     %
-    % See also handle, matlab.mixin.Copyable, PlotBrainAtlas.
+    % See also handle, matlab.mixin.Copyable, BrainAtlas, PlotBrainAtlas, PlotBrainGraph.
     
     properties (Constant)
         % fixed 3d view
@@ -122,7 +130,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             PlotBrainSurf.VIEW_CP_AZEL ...
             }
     end
-    properties % (Access = protected)
+    properties (Access = protected)
         brain_surf_file  % file of the brain surface
 
         % brain coordinates
@@ -135,11 +143,11 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         h_brain  % handle for brain surface
         f_brain_settings  % brain setting figure handle
         
-        Lighting  % handle for lighting value
-        Material  % handle for material value
-        CamLight  % handle for camlight value
-        Shading  % handle for shading value
-        Colormap  % handle for colormap value
+        Lighting  % lighting value
+        Material  % material value
+        CamLight  % camlight value
+        Shading  % shading value
+        Colormap  % colormap value
     end
     methods  % Basic Functions
         function bs = PlotBrainSurf(brain_surf_file, varargin)
@@ -196,7 +204,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     end
     methods (Access = protected) % Set Brain Surf File
         function setBrainSurfFile(bs, brain_surf_file)
-            % SETBRAINSURFFILE read the brain surf file and sets the data
+            % SETBRAINSURFFILE reads the brain surf file and sets the data
             %
             % SETBRAINSURFFILE(BS, BRAIN_SURF_FILE) reads the brain surf
             % file and loads the data.
