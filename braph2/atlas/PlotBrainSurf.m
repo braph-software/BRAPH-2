@@ -156,10 +156,19 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % PLOTBRAINSURF(BRAIN_SURF_FILE) construct the brain surface
             % object, with default settings.
             %            
-            % PLOTBRAINSURF(BRAIN_SURF_FILE, VARARGIN) construct the brain surface object,
-            % utilizing VARARGIN to sets the settings.
+            % PLOTBRAINSURF(BRAIN_SURF_FILE, 'Property', VALUE, ...) construct
+            % the brain surface object with custom property-value couples.
+            % Admissible properties and values are:
+            % Lighting  = 'phong' (default) 'none' 'flat' 'gouraud'
+            % Material  = 'shiny' (default) 'dull' 'metal'
+            % CamLight  = 'headlight' (default) 'right' 'left'
+            % Shading   = 'interp' (default) 'none' 'flat' 'faceted'
+            % Colormap  = 'jet' (default) 'parula' 'jet' 'hsv' 'hot' 'cool'
+            %             'spring' 'summer' 'autumn' 'winter' 'gray' 'bone'
+            %             'copper' 'pink' 'lines' 'colorcube' 'prism'
+            %             'flag' 'white'
             %
-            % See also PlotBrainAtlas. 
+            % See also BrainAtlas, PlotBrainAtlas, PlotBrainGraph. 
             
             bs.setBrainSurfFile(brain_surf_file);
             bs.Lighting = get_from_varargin('Phong', 'Lighting', varargin);  % 'none', 'flat', 'phong', 'gouraud'
@@ -169,7 +178,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             bs.Colormap = get_from_varargin('Jet', 'Colormap', varargin);
         end
         function str = tostring(bs)
-            % TOSTRING string with information about the plot brain surf
+            % TOSTRING string with information about brain surface properties
             %
             % STR = TOSTRING(BS) returns string with the brain surface file
             % and the number of vertices and triangles.
@@ -179,12 +188,12 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             str = ['Brain Surface: ' bs.getBrainSurfFile() ' with ' tostring(bs.vertex_number) ' vertices and ' tostring(bs.vertex_number) ' triangles.'];
         end
         function disp(bs)
-            % DISP displays brain surface
+            % DISP displays brain surface properties
             %
             % DISP(BS) displays the brain surface class, brain surf file,
             % and the number of vertices and triangles.
             %
-            % See also PlotBrainSurf.
+            % See also tostring.
             
             disp(['<a href="matlab:help ' class(bs) '">' bs.getBrainSurfFile() '</a>']);
             disp(['Surface file: ' bs.getBrainSurfFile()]);
@@ -192,12 +201,10 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             disp(['Number of triangles: ' tostring(bs.tri_number)]);
         end
         function brain_surf_file = getBrainSurfFile(bs)
-            % GETBRAINSURFFILE returns the brain surf file
+            % GETBRAINSURFFILE returns the brain surface file
             %
-            % BRAIN_SURF_FILE = GETBRAINSURFFILE(BS) gets the brain surf
-            % file handle value.
-            %
-            % See also PlotBrainSurf.
+            % BRAIN_SURF_FILE = GETBRAINSURFFILE(BS) gets the name of the
+            % brain surface file.
             
             brain_surf_file = bs.brain_surf_file;
         end
@@ -225,14 +232,14 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function h = set_axes(bs, ht)
             % SET_AXES sets current axes
             %
-            % SET_AXES(BS, HT) set the axes to plot brain surf.
+            % SET_AXES(BS, HT) sets the axes to plot brain surf to HT.
             % If an axes is not entered as an input argument HT, the
             % current axes is used for plotting.
             %
             % H = SET_AXES(BS) returns a handle to the axes used to plot
             % brain surf.
             %
-            % See also PlotBrainSurf, gca.
+            % See also get_axes, gca.
             
             if isempty(bs.h_axes) || ~ishandle(bs.h_axes)
                 if nargin < 2
@@ -251,24 +258,33 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % H = GET_AXES(BS) returns a handle to the axes used to plot
             % the brain surf.
             %
-            % See also PlotBrainSurf, axes.
+            % See also set_axes.
             
             h = bs.h_axes;
         end
         function h = brain(bs, varargin)
             % BRAIN plots brain surf
             %
-            % BRAIN(BS) plots the brain surf if not plotted.
+            % BRAIN(BS) plots the brain surf, if not already plotted.
             %
             % H = BRAIN(BS) sets the handle of the trisurf plot of the
             % brain surf BS class.
             %
-            % BRAIN(BS, VARARGIN) sets the property
-            %   of the brain surf utilizing VARARGIN.
-            %   All standard plot properties of trisurf can be used.
-            %   The brain surface properties can also be changed when hidden.
+            % BRAIN(BS, 'Property', VALUE, ...) sets the properties of the
+            % surface object with custom property-value couples.
+            % All standard plot properties of trisurf can be used, and
+            % additional admissible properties and values are:
+            % Lighting  = 'phong' (default) 'none' 'flat' 'gouraud'
+            % Material  = 'shiny' (default) 'dull' 'metal'
+            % CamLight  = 'headlight' (default) 'right' 'left'
+            % Shading   = 'interp' (default) 'none' 'flat' 'faceted'
+            % Colormap  = 'jet' (default) 'parula' 'jet' 'hsv' 'hot' 'cool'
+            %             'spring' 'summer' 'autumn' 'winter' 'gray' 'bone'
+            %             'copper' 'pink' 'lines' 'colorcube' 'prism'
+            %             'flag' 'white'
+            % The brain surface properties can also be changed when hidden.
             %
-            % See also PlotBrainSurf, trisurf.
+            % See also brain_on, brain_off, brain_settings, trisurf.
             
             bs.set_axes()
             
@@ -327,7 +343,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % BRAIN_ON(BS) shows the brain surf BS.
             %
-            % See also PlotBrainSurf.
+            % See also brain, brain_off.
             
             if ~isempty(bs.h_brain)
                 set(bs.h_brain, 'Visible', 'on')
@@ -338,7 +354,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % BRAIN_OFF(BS) hides the brain surf BS.
             %
-            % See also PlotBrainSurf.
+            % See also brain, brain_on.
             
             if ~isempty(bs.h_brain)
                 set(bs.h_brain,'Visible','off')
@@ -350,15 +366,15 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % BRAIN_SETTINGS(BS) allows the user to specify the properties
             % of the brain surf by opening a GUI property editor.
             %
-            % BRAIN_SETTINGS(BS, VARARGIN) allows the user to specify the 
+            % BRAIN_SETTINGS(BS, 'Property', VALUE, ...) allows the user to specify the 
             % properties of the brain surf by opening a GUI property editor.
-            % sets the property of the user interface's PropertyName to PropertyValue.
+            % sets the property of the user interface's Property to VALUE.
             % Admissible properties are:
-            %       FigPosition   -  position of the user interface on the screen
-            %       FigColor      -  background color of the user interface
-            %       FigName       -  name of the user interface
+            % FigPosition   -  position of the user interface on the screen
+            % FigColor      -  background color of the user interface
+            % FigName       -  name of the user interface
             %
-            % See also PlotBrainSurf, trisurf.
+            % See also brain, trisurf.
             
             FigPosition = get_from_varargin([.70 .50 .40 .20], 'figposition', varargin);
             FigColor = get_from_varargin(GUI.BKGCOLOR, 'figcolor', varargin);
@@ -609,7 +625,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % HOLD_ON(BS) retains the brain surf BS if another graph is
             % plotted in the current axes.
             %
-            % See also PlotBrainSurf, hold.
+            % See also hold_off.
             
             bs.set_axes()
             
@@ -621,7 +637,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % HOLD_OFF(BS) clears the brain surf BS if another graph is
             % plotted in the current axes.
             %
-            % See also PlotBrainSurf, hold.
+            % See also hold_on.
             
             bs.set_axes()
             
