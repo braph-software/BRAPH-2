@@ -1,15 +1,15 @@
 classdef OverlappingDegree < Degree
-    % OverlappingDegree Overlapping Degree measure
+    % OverlappingDegree Overlapping degree measure
     % OverlappingDegree provides the overlapping degree of a node for binary 
-    % undirected (BU) and weighted undirected (WU) graphs. It is calculated 
-    % as the number of edges connected to the node. 
+    % undirected (BU) and weighted undirected (WU) multiplexes. 
+    %
+    % It is calculated as the sum of the number of edges connected to the
+    % node in all layers, i.e., it is the sum of the degrees of a node in
+    % all layers.
     % 
     % OverlappingDegree methods:
     %   OverlappingDegree           - constructor
     %
-    % OverlappingDegree methods (Access=protected):
-    %   calculate                   - calculates the overlapping degree of a node
-    % 
     % OverlappingDegree methods (Static)
     %   getClass                    - returns the overlapping degree class
     %   getName                     - returns the name of overlapping degree measure
@@ -21,29 +21,27 @@ classdef OverlappingDegree < Degree
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Graph, Strength, Distance, Efficiency.
+    % See also Measure, Degree, MultiplexGraphBU, MultiplexGraphWU.
     
     methods
         function m = OverlappingDegree(g, varargin)
-            % OVERLAPPINGDEGREE(G) creates overlapping degree with default Degree properties.
-            % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU). 
+            % OVERLAPPINGDEGREE(G) creates overlapping degree with default properties.
+            % G is an undirected multiplex (i.e., an instance of
+            % MultiplexGraphBU or MultiplexGraphWU).
             %
-            % OVERLAPPINGDEGREE(G, 'VALUE', VALUE) creates overlapping degree, 
-            % and sets the value to VALUE. G is a graph (e.g, an instance of 
-            % GraphBD, GraphBU, GraphWD, Graph WU).
-            %   
-            % See also Measure, Graph, Strength, Distance, Efficency. 
+            % See also Measure, Degree, MultiplexGraphBU, MultiplexGraphWU.
             
             m = m@Degree(g, varargin{:});
         end
     end
     methods (Access=protected)
         function overlapping_degree = calculate(m)
-            % CALCULATE calculates the overlapping degree value of a node
+            % CALCULATE calculates the overlapping degree value of a multiplex
             %
             % OVERLAPPINGDEGREE = CALCULATE(M) returns the value of the overlapping
-            % degree of a node.
+            % degree of a multiplex.
+            %
+            % See also Measure, Degree, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             
@@ -55,12 +53,12 @@ classdef OverlappingDegree < Degree
             
             N = g.nodenumber();
             L = g.layernumber();
-            overlapping = zeros(N(1), 1);
             
+            overlapping_degree = zeros(N(1), 1);
             for li = 1:1:L
-                overlapping = overlapping + degree{li};
+                overlapping_degree = overlapping_degree + degree{li};
             end
-            overlapping_degree = {overlapping};
+            overlapping_degree = {overlapping_degree};
         end
     end  
     methods (Static)  % Descriptive methods
@@ -80,7 +78,7 @@ classdef OverlappingDegree < Degree
             %
             % See also getClass, getDescription. 
             
-            name = 'Overlapping-Degree';
+            name = 'Overlapping degree';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the overlapping degree description 
@@ -88,11 +86,11 @@ classdef OverlappingDegree < Degree
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % overlapping degree measure.
             %
-            % See also getList, getCompatibleGraphList.
+            % See also getClass, getName.
             
             description = [ ...
-                'The overlapping degree of a node is ' ...
-                'the total number of edges connected to the node within all layers. ' ...
+                'The overlapping degree of a node is the sum of ' ...
+                'the edges connected to the node in all layers. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
         end
@@ -101,13 +99,11 @@ classdef OverlappingDegree < Degree
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to OverlappingDegree. Empty Array in this case.
-            % 
-            % See also getCompatibleGraphList.
             
             available_settings = {};
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of overlapping degree
+            % GETMEASUREFORMAT returns the measure format of OverlappingDegree
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of overlapping degree measure (NODAL).
@@ -117,7 +113,7 @@ classdef OverlappingDegree < Degree
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of overlapping degree
+            % GETMEASURESCOPE returns the measure scope of OverlappingDegree
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
             % measure scope of overlapping degree measure (SUPERGLOBAL).
@@ -127,8 +123,7 @@ classdef OverlappingDegree < Degree
             measure_scope = Measure.SUPERGLOBAL;
         end
         function list = getCompatibleGraphList()  
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to overlapping degree 
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with OverlappingDegree 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
             % of compatible graph classes to overlapping degree. 
@@ -142,11 +137,10 @@ classdef OverlappingDegree < Degree
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to overlapping degree 
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with OverlappingDegree
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to overlapping degree.
+            % compatible graphs with overlapping degree.
             % 
             % See also getCompatibleGraphList.
             
