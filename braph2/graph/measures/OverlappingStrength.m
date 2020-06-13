@@ -3,8 +3,7 @@ classdef OverlappingStrength < Strength
     % OverlappingStrength provides the overlapping strength of a node for  
     % weighted undirected (WU) multiplexes. 
     %
-    % It is calculated as the sum of the number of weighted edges connected to the
-    % node in all layers, i.e., it is the sum of the strengths of a node in
+    % It is calculated as the sum the sum of the strengths of a node in
     % all layers.    
     % 
     % OverlappingStrength methods:
@@ -98,7 +97,7 @@ classdef OverlappingStrength < Strength
             % GETAVAILABLESETTINGS returns the setting available to OverlappingStrength
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to OverlappingStrength. Empty Array in this case.
+            % settings available to OverlappingStrength. Empty array in this case.
             % 
             % See also getCompatibleGraphList.
             
