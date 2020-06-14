@@ -3,8 +3,7 @@ classdef OverlappingStrength < Strength
     % OverlappingStrength provides the overlapping strength of a node for  
     % weighted undirected (WU) multiplexes. 
     %
-    % It is calculated as the sum of the strengths of a node in
-    % all layers.    
+    % It is calculated as the sum of the strengths of a node in all layers.    
     % 
     % OverlappingStrength methods:
     %   OverlappingStrength         - constructor
