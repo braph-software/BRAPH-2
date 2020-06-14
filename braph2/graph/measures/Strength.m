@@ -4,8 +4,8 @@ classdef Strength < Measure
     % undirected (WU) graphs.
     %
     % It is calculated as the sum of all weights of the edges connected to
-    % a node, i.e., it is the sum of the rows or the columns of the 
-    % adjacency matrix. 
+    % a node within a layer, i.e., it is the sum of the rows or the columns
+    % of the adjacency matrix.
     %
     % Strength methods:
     %   Strength                    - constructor
@@ -21,7 +21,7 @@ classdef Strength < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Degree, GraphWU, MultiplexGraphWU.
+    % See also Measure, GraphWU, MultiplexGraphWU.
     
     methods
         function m = Strength(g, varargin)
@@ -29,22 +29,22 @@ classdef Strength < Measure
             % G is a weighted undirected (WU) graph (e.g, an instance of 
             % GraphWU or MultiplexGraphWU).
             %
-            % See also Measure, Degree, GraphWU, MultiplexGraphWU.
+            % See also Measure, GraphWU, MultiplexGraphWU.
 
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
         function strength = calculate(m)
-            % CALCULATE calculates the strength value of a node
+            % CALCULATE calculates the strength value of a graph
             %
             % STRENGTH = CALCULATE(M) returns the value of the strength of a
-            % node.
+            % weighted undirected (WU) graph or multiplex.
             %
-            % See also Measure, Degree, GraphWU, MultiplexGraphWU.
+            % See also Measure, GraphWU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix or 2D-cell array 
+            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
             
             strength = cell(g.layernumber(), 1);
             for li = 1:1:g.layernumber()
@@ -88,7 +88,7 @@ classdef Strength < Measure
             description = [ ...
                 'The strength of a node is ' ...
                 'the sum of the weights of ' ...
-                'all the edges connected to a node ' ...
+                'all the edges connected to a node within a layer ' ...
                 'for weighted undirected (WU) graphs. ' ...
                 'Strengths are calculated ' ...
                 'as sums over either rows or colums of ' ...
@@ -99,9 +99,10 @@ classdef Strength < Measure
             % GETAVAILABLESETTINGS returns the setting available to Strength
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to Strength. Empty Array in this case.
+            % settings available to Strength. Empty array in this case.
             % 
             % See also getCompatibleGraphList()
+            
             available_settings = {};
         end
         function measure_format = getMeasureFormat()

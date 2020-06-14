@@ -1,6 +1,6 @@
 % test WeightedEdgeOverlap
 
-%% Test 1: Calculation MultiplexGraphWD
+%% Test 1: MultiplexGraphWD
 A11 = [
     0   .2  0
     .2  0   0
@@ -19,18 +19,19 @@ A = {
     };
 
 known_weighted_edge_overlap = {[
-                     0   .6  0
-                     .6  0   .2
-                     .5  .2  0]};
+    0   .6  0
+    .6  0   .2
+    .5  .2  0
+    ]};
                  
 g = MultiplexGraphWD(A);
 weighted_edge_overlap = WeightedEdgeOverlap(g);
 
 assert(isequal(weighted_edge_overlap.getValue(), known_weighted_edge_overlap), ...
     [BRAPH2.STR ':WeightedEdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'WeightedEdgeOverlap is not being calculated correctly for MultiplexGraphWD')
+    'WeightedEdgeOverlap is not being calculated correctly for MultiplexGraphWD.')
 
-%% Test 2: Calculation MultiplexGraphWU
+%% Test 2: MultiplexGraphWU
 A11 = [
     0   .2  1
     .2  0   0
@@ -49,13 +50,14 @@ A = {
     };
 
 known_weighted_edge_overlap = {[
-                     0   .6  .5
-                     .6  0   .2
-                     .5  .2  0]};
+    0   .6  .5
+    .6  0   .2
+    .5  .2  0
+    ]};
                  
 g = MultiplexGraphWU(A);
 weighted_edge_overlap = WeightedEdgeOverlap(g);
 
 assert(isequal(weighted_edge_overlap.getValue(), known_weighted_edge_overlap), ...
     [BRAPH2.STR ':WeightedEdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'WeightedEdgeOverlap is not being calculated correctly for MultiplexGraphWU')
+    'WeightedEdgeOverlap is not being calculated correctly for MultiplexGraphWU.')
