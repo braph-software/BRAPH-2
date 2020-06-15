@@ -2113,66 +2113,29 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
         end
     end
-    methods  % distance               
-        function distance = calculatePointDistance(ba, i)   
+    methods  % distance
+        function distance_map_on(ba, i_vec)
             
-            % brain region position
-            X = ba.atlas.getBrainRegions().getValue(i).getX();
-            Y = ba.atlas.getBrainRegions().getValue(i).getY();
-            Z = ba.atlas.getBrainRegions().getValue(i).getZ();
-            
-            % surf coords
             brain_surf_coords = ba.coord;
-            
-            % calculate distance
-            distance = zeros(1, size(brain_surf_coords, 2));
-            for i = 1:1:length(brain_surf_coords(1,:))
-                distance(1, i) = 1 / sqrt( ...
-                    (X - brain_surf_coords(1, i))^2 + ...
-                    (Y - brain_surf_coords(2, i))^2 + ...
-                    (Z - brain_surf_coords(3, i))^2 ...
-                    );
+            inverse_distance = zeros(length(i_vec), size(brain_surf_coords, 2));
+            for m = 1:1:length(i_vec)
+                i = i_vec(m);
+                inverse_distance(m, :) = sum((ba.coord - ba.getBrainAtlas().getBrainRegions().getValue(i).getPosition()').^2).^-.5;
             end
+            inverse_distance = max(inverse_distance, [], 1);
+            
+            ba.brain('FaceColor', 'interp', 'CData', inverse_distance)
+            caxis([prctile(inverse_distance, 1) prctile(inverse_distance, 99)])
         end
-        function distance = calculatePointsDistance(ba, selected)
+        function distance_map_off(ba, facecolor_style)
+            
             if nargin < 2
-                selected = [1:1:ba.atlas.getBrainregions().length()]; %#ok<NBRAK>
+                facecolor_style = [0 0 0];
             end
             
-            % surf coords
-            brain_surf_coords = ba.coord;
-            
-            distance = zeros(1, size(brain_surf_coords, 2));
-            for i = 1:1:length(selected)
-                point_distance = ba.calculatePointDistance(selected(i));
-                
-                for j = 1:1:length(distance)
-                    if point_distance(1, j) > distance(1, j) 
-                        distance(1, j) = point_distance(1, j);
-                    end
-                end              
-            end            
-        end
-        function distanceMapOn(ba, selected)
-            distance_vector = ba.calculatePointsDistance(selected);
-            brain_surface = ba.brain();
-            set(brain_surface, 'Facecolor', 'interp')
-            set(brain_surface, 'CData', distance_vector)
-            minimu = min(distance_vector(:));
-            p99 = prctile(distance_vector(:), 99);  
-            caxis([minimu p99])            
-        end
-        function distanceMapOff(ba, style)
-            coords = ba.getPlotBrainSurfCoords();
-            z_vector = coords(3, :);
-            brain_surface = ba.getBrainSurface();
-            if ~isequal(style, 'interp')
-                set(brain_surface, 'Facecolor', style)
-            end
-            set(brain_surface, 'CData', z_vector)
-            minimu = min(z_vector(:));
-            maxi = max(z_vector(:));
-            caxis([minimu maxi])
+            z_vector = ba.coord(3, :);
+            ba.brain('FaceColor', facecolor_style, 'CData', z_vector)
+            caxis([min(z_vector) max(z_vector)])
         end
     end
 end
