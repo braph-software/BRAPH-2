@@ -353,7 +353,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 if exist('MarkerFaceColor', 'var') && size(MarkerFaceColor, 1) == length(i_vec) && size(MarkerFaceColor, 2) == 3
                     varargin{nmarkerfacecolor} = MarkerFaceColor(m, :);
                 end
-                if exist('Color', 'var') && size(Color, 1)==length(i_vec) && size(Color, 2) == 3
+                if exist('Color', 'var') && size(Color, 1) == length(i_vec) && size(Color, 2) == 3
                     varargin{ncolor} = Color(m, :);
                 end
                 if exist('Size', 'var') && numel(Size) == length(i_vec)
@@ -636,7 +636,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.br_syms(get_br_list(), 'Marker', symbol)
             end
             function cb_size(~, ~)  % (src, event)
-                size = real(str2num(get(ui_edit_size, 'String')));
+                size = real(str2double(get(ui_edit_size, 'String')));
                 
                 if isempty(size) || size <= 1
                     set(ui_edit_size, 'String', '1')
@@ -1202,7 +1202,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 ba.br_sphs(get_br_list(), 'EdgeAlpha', get(ui_slider_edgealpha, 'Value'))
             end
             function cb_radius(~, ~)  % (src, event)
-                R = real(str2num(get(ui_edit_radius, 'String')));
+                R = real(str2double(get(ui_edit_radius, 'String')));
                 
                 if isempty(R) || R <= 0
                     set(ui_edit_radius, 'String', '1')
@@ -1220,8 +1220,6 @@ classdef PlotBrainAtlas < PlotBrainSurf
         end
     end
     methods  % Functions ids
-    end
-    methods  % Functions labels
 %         function h = br_lab(ba, i, varargin)
 %             % BR_LAB displays brain region as label
 %             %
@@ -1240,10 +1238,10 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             ba.set_axes();
 %             
 %             % center coordinates and label
-%             X = ba.atlas.getBrainRegions().getValue(i).getX();
-%             Y = ba.atlas.getBrainRegions().getValue(i).getY();
-%             Z = ba.atlas.getBrainRegions().getValue(i).getZ();
-%             LAB = ba.atlas.getBrainRegions().getValue(i).getLabel();
+%             X = ba.getBrainAtlas().getBrainRegions().getValue(i).getX();
+%             Y = ba.getBrainAtlas().getBrainRegions().getValue(i).getY();
+%             Z = ba.getBrainAtlas().getBrainRegions().getValue(i).getZ();
+%             LAB = ba.getBrainAtlas().getBrainRegions().getValue(i).getLabel();
 %             
 %             % display the text
 %             if ~ishandle(ba.labs.h(i))
@@ -1259,7 +1257,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %                     'FontName', PlotBrainAtlas.INIT_LAB_FONT_NAME,...
 %                     'Interpreter', PlotBrainAtlas.INIT_LAB_FONT_INTERPRETER);
 %             else
-%                 if ~isequal(ba.labs.X(i), {X}) || ~isequal(ba.labs.Y(i), {Y}) || ~isequal(ba.labs.Z(i), {Z}) || ~strcmp(ba.labs.LAB(i), LAB) %#ok<BDSCA>
+%                 if ~isequal(ba.labs.X(i), {X}) || ~isequal(ba.labs.Y(i), {Y}) || ~isequal(ba.labs.Z(i), {Z}) || ~strcmp(ba.labs.LAB(i), LAB)
 %                     
 %                     set(ba.labs.h(i), 'Position', [X Y Z]);
 %                     set(ba.labs.h(i), 'String', LAB);
@@ -1357,45 +1355,24 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             end
 %             
 %             if nargin<2 || isempty(i_vec)
-%                 i_vec = 1:1:ba.atlas.getBrainRegions().length();
+%                 i_vec = 1:1:ba.getBrainAtlas().getBrainRegions().length();
 %             end
 %             
-%             if isa(i_vec, 'IndexedDictionary')
-%                 for m = 1:1:i_vec.length()
-%                     
-%                     if exist('FontSize','var') && numel(FontSize)==length(i_vec)
-%                         varargin{nfontsize} = FontSize(m);
-%                     end
-%                     if exist('FontName','var') && numel(FontName)==length(i_vec)
-%                         varargin{nfontname} = FontName(m);
-%                     end
-%                     if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
-%                         varargin{ncolor} = Color(m,:);
-%                     end
-%                     if exist('INTERP','var') && numel(INTERP,1)==length(i_vec)
-%                         varargin{ninterp} = INTERP(m);
-%                     end
-%                     
-%                     ba.br_lab(m, varargin{:})
+%             for m = 1:1:length(i_vec)
+%                 if exist('FontSize','var') && numel(FontSize) == length(i_vec)
+%                     varargin{nfontsize} = FontSize(m);
+%                 end
+%                 if exist('FontName', 'var') && iscell(FontName) && numel(FontName) == length(i_vec)
+%                     varargin{nfontname} = FontName{m};
+%                 end
+%                 if exist('Color', 'var') && size(Color, 1) == length(i_vec) && size(Color, 2) == 3
+%                     varargin{ncolor} = Color(m, :);
+%                 end
+%                 if exist('INTERP', 'var') && iscell(INTERP) && numel(INTERP) == length(i_vec)
+%                     varargin{ninterp} = INTERP{m};
 %                 end
 %                 
-%             else
-%                 for m = 1:1:length(i_vec)
-%                     if exist('FontSize','var') && numel(FontSize)==length(i_vec)
-%                         varargin{nfontsize} = FontSize(m);
-%                     end
-%                     if exist('FontName','var') && numel(FontName)==length(i_vec)
-%                         varargin{nfontname} = FontName(m);
-%                     end
-%                     if exist('Color','var') && size(Color,1)==length(i_vec) && size(Color,2)==3
-%                         varargin{ncolor} = Color(m,:);
-%                     end
-%                     if exist('INTERP','var') && numel(INTERP,1)==length(i_vec)
-%                         varargin{ninterp} = INTERP(m);
-%                     end
-%                     
-%                     ba.br_lab(m, varargin{:})
-%                 end
+%                 ba.br_lab(i_vec(m), varargin{:})
 %             end
 %         end
 %         function br_labs_on(ba, i_vec)
@@ -1410,7 +1387,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             % See also PlotBrainAtlas.
 %             
 %             if nargin<2 || isempty(i_vec)
-%                 i_vec = 1:1:ba.atlas.getBrainRegions().length();
+%                 i_vec = 1:1:ba.getBrainAtlas().getBrainRegions().length();
 %             end
 %             
 %             for m = 1:1:length(i_vec)
@@ -1429,7 +1406,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             % See also PlotBrainAtlas.
 %             
 %             if nargin<2 || isempty(i_vec)
-%                 i_vec = 1:1:ba.atlas.getBrainRegions().length();
+%                 i_vec = 1:1:ba.getBrainAtlas().getBrainRegions().length();
 %             end
 %             
 %             for m = 1:1:length(i_vec)
@@ -1446,7 +1423,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             
 %             i = NaN;
 %             if ~isempty(h)
-%                 for j = 1:1:ba.atlas.getBrainRegions().length()
+%                 for j = 1:1:ba.getBrainAtlas().getBrainRegions().length()
 %                     if h == ba.labs.h(j)
 %                         i = j;
 %                     end
@@ -1462,7 +1439,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             % See also PlotBrainAtlas.
 %             
 %             i = ba.get_lab_i(h);
-%             br = ba.atlas.get(i);
+%             br = ba.getBrainAtlas().get(i);
 %         end
 %         function br_labs_settings(ba, i_vec, varargin)
 %             % BR_LABS_SETTINGS sets labels' properties
@@ -1483,20 +1460,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %                 i_vec = [];
 %             end
 %             
-%             % sets position of figure
-%             FigPosition = [.50 .30 .25 .30];
-%             FigColor = GUI.BKGCOLOR;
-%             FigName = 'Brain Region Label Settings';
-%             for n = 1:2:length(varargin)
-%                 switch lower(varargin{n})
-%                     case 'figposition'
-%                         FigPosition = varargin{n + 1};
-%                     case 'figcolor'
-%                         FigColor = varargin{n + 1};
-%                     case 'figname'
-%                         FigName = varargin{n + 1};
-%                 end
-%             end
+%             FigPosition = get_from_varargin([.65 .45 .30 .30], 'figposition', varargin);
+%             FigColor = get_from_varargin(GUI.BKGCOLOR, 'figcolor', varargin);
+%             FigName = get_from_varargin('Brain Region Label Settings', 'figname', varargin);
 %             
 %             % create a figure
 %             if isempty(ba.f_labs_settings) || ~ishandle(ba.f_labs_settings)
@@ -1517,77 +1483,64 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             set(ui_list, 'Units', 'normalized')
 %             set(ui_list, 'BackgroundColor', GUI.BKGCOLOR)
 %             set(ui_list, 'Value', i_vec)
-%             set(ui_list, 'Max', 2, 'Min', 0)
+%             set(ui_list, 'Max', 2, 'Min',0)
 %             set(ui_list, 'BackgroundColor', [1 1 1])
-%             set(ui_list, 'Position', [.05 .25 .40 .70])
+%             set(ui_list, 'Position', [.05 .15 .40 .80])
 %             set(ui_list, 'TooltipString', 'Select brain regions');
 %             set(ui_list, 'Callback', {@cb_list});
 %             
+%             ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
+%             set(ui_checkbox_id, 'Units', 'normalized')
+%             set(ui_checkbox_id, 'BackgroundColor', GUI.BKGCOLOR)
+%             set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
+%             set(ui_checkbox_id, 'String', 'id')
+%             set(ui_checkbox_id, 'Value', true)
+%             set(ui_checkbox_id, 'FontWeight', 'bold')
+%             set(ui_checkbox_id, 'TooltipString', 'Shows brain regions by id')
+%             set(ui_checkbox_id, 'Callback', {@cb_id})
+% 
 %             ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
 %             set(ui_checkbox_label, 'Units', 'normalized')
 %             set(ui_checkbox_label, 'BackgroundColor', GUI.BKGCOLOR)
-%             set(ui_checkbox_label, 'Position', [.05 .125 .20 .10])
+%             set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
 %             set(ui_checkbox_label, 'String', 'label')
-%             set(ui_checkbox_label, 'Value', true)
-%             set(ui_checkbox_label, 'FontWeight', 'bold')
+%             set(ui_checkbox_label, 'Value', false)
 %             set(ui_checkbox_label, 'TooltipString', 'Shows brain regions by label')
 %             set(ui_checkbox_label, 'Callback', {@cb_label})
-%             
-%             ui_checkbox_name = uicontrol(f, 'Style', 'checkbox');
-%             set(ui_checkbox_name, 'Units', 'normalized')
-%             set(ui_checkbox_name, 'BackgroundColor', GUI.BKGCOLOR)
-%             set(ui_checkbox_name, 'Position', [.25 .125 .20 .10])
-%             set(ui_checkbox_name, 'String', 'name')
-%             set(ui_checkbox_name, 'Value', false)
-%             set(ui_checkbox_name, 'TooltipString','Shows brain regions by name')
-%             set(ui_checkbox_name, 'Callback', {@cb_name})
 %             
 %             ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
 %             set(ui_checkbox_xyz, 'Units', 'normalized')
 %             set(ui_checkbox_xyz, 'BackgroundColor', GUI.BKGCOLOR)
-%             set(ui_checkbox_xyz, 'Position', [.05 .025 .20 .10])
+%             set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
 %             set(ui_checkbox_xyz, 'String', 'xyz')
 %             set(ui_checkbox_xyz, 'Value', false)
-%             set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by position')
+%             set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by name')
 %             set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
-%             
-%             %             ui_checkbox_hs = uicontrol(f, 'Style', 'checkbox');
-%             %             set(ui_checkbox_hs, 'Units', 'normalized')
-%             %             set(ui_checkbox_hs, 'BackgroundColor', GUI.BKGCOLOR)
-%             %             set(ui_checkbox_hs, 'Position', [.25 .025 .20 .10])
-%             %             set(ui_checkbox_hs, 'String', 'hemisphere')
-%             %             set(ui_checkbox_hs, 'Value', false)
-%             %             set(ui_checkbox_hs, 'TooltipString', 'Shows brain regions by hemisphere')
-%             %             set(ui_checkbox_hs, 'Callback', {@cb_hs})
-%             
+% 
 %             ui_button_show = uicontrol(f, 'Style', 'pushbutton');
-%             set(ui_button_show, 'Units', 'normalized')
-%             set(ui_button_show, 'BackgroundColor', GUI.BKGCOLOR)
-%             set(ui_button_show, 'Position', [.50 .85 .20 .10])
+%             set(ui_button_show, 'Units','normalized')
+%             set(ui_button_show, 'Position', [.50 .85 .45 .10])
 %             set(ui_button_show, 'String', 'Show Regions')
 %             set(ui_button_show, 'TooltipString', 'Show selected brain regions')
 %             set(ui_button_show, 'Callback', {@cb_show})
 %             
 %             ui_button_hide = uicontrol(f, 'Style', 'pushbutton');
 %             set(ui_button_hide, 'Units', 'normalized')
-%             set(ui_button_hide, 'BackgroundColor', GUI.BKGCOLOR)
-%             set(ui_button_hide, 'Position', [.75 .85 .20 .10])
+%             set(ui_button_hide, 'Position', [.50 .75 .45 .10])
 %             set(ui_button_hide, 'String', 'Hide Regions')
 %             set(ui_button_hide, 'TooltipString', 'Hide selected brain regions')
 %             set(ui_button_hide, 'Callback', {@cb_hide})
-%             
+% 
 %             ui_button_font = uicontrol(f,'Style', 'pushbutton');
 %             set(ui_button_font, 'Units', 'normalized')
-%             set(ui_button_font, 'BackgroundColor', GUI.BKGCOLOR)
-%             set(ui_button_font,'Position',[.50 .55 .20 .10])
+%             set(ui_button_font,'Position',[.50 .50 .45 .10])
 %             set(ui_button_font,'String','Font')
 %             set(ui_button_font,'TooltipString','Brain regions labels font')
 %             set(ui_button_font,'Callback',{@cb_font})
 %             
 %             ui_button_color = uicontrol(f, 'Style', 'pushbutton');
 %             set(ui_button_color, 'Units', 'normalized')
-%             set(ui_button_color, 'BackgroundColor', GUI.BKGCOLOR)
-%             set(ui_button_color, 'Position' ,[.75 .55 .20 .10])
+%             set(ui_button_color, 'Position' ,[.50 .35 .45 .10])
 %             set(ui_button_color, 'String', 'Font Color')
 %             set(ui_button_color, 'TooltipString', 'Brain regions labels color')
 %             set(ui_button_color, 'Callback', {@cb_color})
@@ -1595,7 +1548,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             ui_text_interpreter = uicontrol(f, 'Style', 'text');
 %             set(ui_text_interpreter, 'Units', 'normalized')
 %             set(ui_text_interpreter, 'BackgroundColor', GUI.BKGCOLOR)
-%             set(ui_text_interpreter, 'Position', [.50 .225 .20 .10])
+%             set(ui_text_interpreter, 'Position', [.50 .175 .20 .10])
 %             set(ui_text_interpreter, 'String', 'interpreter')
 %             set(ui_text_interpreter, 'HorizontalAlignment', 'left')
 %             set(ui_text_interpreter, 'FontWeight', 'bold')
@@ -1603,7 +1556,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             ui_popup_interpreter = uicontrol(f, 'Style', 'popup', 'String', {''});
 %             set(ui_popup_interpreter, 'Units', 'normalized')
 %             set(ui_popup_interpreter, 'BackgroundColor', GUI.BKGCOLOR)
-%             set(ui_popup_interpreter, 'Position', [.75 .25 .20 .10])
+%             set(ui_popup_interpreter, 'Position', [.75 .20 .20 .10])
 %             set(ui_popup_interpreter, 'String', {'none', 'tex', 'latex'})
 %             set(ui_popup_interpreter, 'Value', 2)
 %             set(ui_popup_interpreter, 'TooltipString', 'Brain regions labels interpreter');
@@ -1611,120 +1564,91 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %             
 %             update_list()
 %             set(f,'Visible','on')
-%             
+% 
 %             function update_list()
-%                 
 %                 % get info
-%                 for j = 1:1:ba.atlas.getBrainRegions().length()
-%                     labels{j} =  ba.atlas.getBrainRegions().getValue(j).getLabel(); %#ok<AGROW>
-%                     ids{j} = ba.atlas.getBrainRegions().getValue(j).getID(); %#ok<AGROW>
-%                     xs{j} =  ba.atlas.getBrainRegions().getValue(j).getX(); %#ok<AGROW>
-%                     ys{j} =  ba.atlas.getBrainRegions().getValue(j).getY(); %#ok<AGROW>
-%                     zs{j} =  ba.atlas.getBrainRegions().getValue(j).getZ(); %#ok<AGROW>
-%                 end
+%                 ids = cellfun(@(br) br.getID(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false); %#ok<PROPLC>
+%                 labels = cellfun(@(br) br.getLabel(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
+%                 xs = cellfun(@(br) br.getX(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
+%                 ys = cellfun(@(br) br.getY(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
+%                 zs = cellfun(@(br) br.getZ(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
 %                 
 %                 % Set list names
-%                 if get(ui_checkbox_label,'Value')
+%                 if get(ui_checkbox_id, 'Value')
+%                     set(ui_list, 'String', ids) %#ok<PROPLC>
+%                 elseif get(ui_checkbox_label, 'Value')
 %                     set(ui_list, 'String', labels)
-%                 elseif get(ui_checkbox_name,'Value')
-%                     set(ui_list, 'String', ids)
-%                 elseif get(ui_checkbox_xyz,'Value')
-%                     xyz = cell(1,ba.atlas.getBrainRegions().length());
-%                     for j = 1:1:ba.atlas.getBrainRegions().length()
+%                 elseif get(ui_checkbox_xyz, 'Value')
+%                     xyz = cell(1, ba.getBrainAtlas().getBrainRegions().length());
+%                     for j = 1:1:ba.getBrainAtlas().getBrainRegions().length()
 %                         xyz{j} = [num2str(xs{j}) '   ' ...
 %                             num2str(ys{j}) '   ' ...
 %                             num2str(zs{j})];
 %                     end
-%                     set(ui_list,'String',xyz)
-%                 elseif get(ui_checkbox_hs,'Value')
-%                     %set(ui_list,'String',ba.atlas.getProps(BrainRegion.HS))
+%                     set(ui_list, 'String', xyz)
 %                 end
 %             end
-%             function cb_list(~,~)  % (src,event)
+%             function cb_list(~, ~)  % (src, event)
 %                 update_list()
 %             end
-%             function cb_label(~,~)  % (src,event)
-%                 set(ui_checkbox_label,'Value',true)
-%                 set(ui_checkbox_label,'FontWeight','bold')
-%                 
-%                 set(ui_checkbox_name,'Value',false)
-%                 set(ui_checkbox_name,'FontWeight','normal')
-%                 
-%                 %                 set(ui_checkbox_hs,'Value',false)
-%                 %                 set(ui_checkbox_hs,'FontWeight','normal')
-%                 
-%                 set(ui_checkbox_xyz,'Value',false)
-%                 set(ui_checkbox_xyz,'FontWeight','normal')
-%                 
-%                 update_list()
-%             end
-%             function cb_name(~,~)  % (src,event)
-%                 set(ui_checkbox_label,'Value',false)
-%                 set(ui_checkbox_label,'FontWeight','normal')
-%                 
-%                 set(ui_checkbox_name,'Value',true)
-%                 set(ui_checkbox_name,'FontWeight','bold')
-%                 
-%                 %                 set(ui_checkbox_hs,'Value',false)
-%                 %                 set(ui_checkbox_hs,'FontWeight','normal')
-%                 
-%                 set(ui_checkbox_xyz,'Value',false)
-%                 set(ui_checkbox_xyz,'FontWeight','normal')
-%                 
-%                 update_list()
-%             end
-%             %             function cb_hs(~,~)  % (src,event)
-%             %                 set(ui_checkbox_label,'Value',false)
-%             %                 set(ui_checkbox_label,'FontWeight','normal')
-%             %
-%             %                 set(ui_checkbox_name,'Value',false)
-%             %                 set(ui_checkbox_name,'FontWeight','normal')
-%             %
-%             %                 set(ui_checkbox_hs,'Value',true)
-%             %                 set(ui_checkbox_hs,'FontWeight','bold')
-%             %
-%             %                 set(ui_checkbox_xyz,'Value',false)
-%             %                 set(ui_checkbox_xyz,'FontWeight','normal')
-%             %
-%             %                 update_list()
-%             %             end
-%             function cb_xyz(~,~)  % (src,event)
+%             function cb_id(~,~)  % (src,event)
+%                 set(ui_checkbox_id, 'Value', true)
+%                 set(ui_checkbox_id, 'FontWeight', 'bold')
+% 
 %                 set(ui_checkbox_label, 'Value', false)
 %                 set(ui_checkbox_label, 'FontWeight', 'normal')
 %                 
-%                 set(ui_checkbox_name, 'Value', false)
-%                 set(ui_checkbox_name, 'FontWeight', 'normal')
+%                 set(ui_checkbox_xyz, 'Value', false)
+%                 set(ui_checkbox_xyz, 'FontWeight', 'normal')
 %                 
-%                 %                 set(ui_checkbox_hs,'Value',false)
-%                 %                 set(ui_checkbox_hs,'FontWeight','normal')
+%                 update_list()
+%             end
+%             function cb_label(~, ~)  % (src, event)
+%                 set(ui_checkbox_id, 'Value', false)
+%                 set(ui_checkbox_id, 'FontWeight', 'normal')
+% 
+%                 set(ui_checkbox_label, 'Value', true)
+%                 set(ui_checkbox_label, 'FontWeight', 'bold')
+%                                 
+%                 set(ui_checkbox_xyz, 'Value', false)
+%                 set(ui_checkbox_xyz, 'FontWeight', 'normal')
+%                 
+%                 update_list()
+%             end
+%             function cb_xyz(~, ~)  % (src, event)
+%                 set(ui_checkbox_id, 'Value', false)
+%                 set(ui_checkbox_id, 'FontWeight', 'normal')
+% 
+%                 set(ui_checkbox_label, 'Value', false)
+%                 set(ui_checkbox_label, 'FontWeight', 'normal')
 %                 
 %                 set(ui_checkbox_xyz, 'Value', true)
 %                 set(ui_checkbox_xyz, 'FontWeight', 'bold')
 %                 
 %                 update_list()
 %             end
-%             function cb_show(~,~)  % (src,event)
+%             function cb_show(~, ~)  % (src, event)
 %                 ba.br_labs(get_br_list())
 %                 ba.br_labs_on(get_br_list())
 %             end
-%             function cb_hide(~,~)  % (src,event)
+%             function cb_hide(~, ~)  % (src, event)
 %                 ba.br_labs_off(get_br_list())
 %             end
-%             function cb_color(~,~)  %  (src,event)
+%             function cb_color(~, ~)  % (src, event)
 %                 color = uisetcolor();
 %                 
-%                 if length(color)==3
+%                 if length(color) == 3
 %                     ba.br_labs(get_br_list(), 'color', color)
 %                 end
 %             end
-%             function cb_font(~,~)  %  (src,event)
+%             function cb_font(~,~)  % (src,event)
 %                 font = uisetfont;
 %                 
 %                 if isstruct(font)
-%                     ba.br_labs(get_br_list(), 'FontSize', font.FontSize,...
-%                         'FontName', font.FontName,...
-%                         'FontWeight', font.FontWeight,...
-%                         'FontAngle', font.FontAngle,...
+%                     ba.br_labs(get_br_list(), 'FontSize', font.FontSize, ...
+%                         'FontName', font.FontName, ...
+%                         'FontWeight', font.FontWeight, ...
+%                         'FontAngle', font.FontAngle, ...
 %                         'FontUnits', font.FontUnits)
 %                 end
 %             end
@@ -1734,23 +1658,459 @@ classdef PlotBrainAtlas < PlotBrainSurf
 %                 ba.br_labs(get_br_list(), 'interpreter', interpreter)
 %             end
 %             function bri = get_br_list()
-%                 if ba.atlas.getBrainRegions().length()>0
+%                 if ba.getBrainAtlas().getBrainRegions().length() > 0
 %                     bri = get(ui_list, 'Value');
 %                 else
 %                     bri = [];
 %                 end
 %             end
 %         end
-%         function br_labs_delete(ba)
-%             for i = 1:ba.atlas.getBrainRegions().length()
-%                 delete(ba.labs.h(i))
-%             end
-%         end
-%         function labs_handles = getLabsHandles(ba)
-%             labs_handles = ba.labs;
-%         end
-%         function answer = checkIfLabsNotEmpty(ba)
-%             answer = any(ba.labs.h, 'all');
-%         end
+    end
+    methods  % Functions labels
+        function h = br_lab(ba, i, varargin)
+            % BR_LAB displays brain region as label
+            %
+            % BR_LAB(BA,I) denotes the brain regions I as a label, if not plotted.
+            %
+            % H = BR_LAB(BA,I) returns the handle to the label denoting the brain
+            %   region I.
+            %
+            % BR_LAB(BA,I,'PropertyName',PropertyValue) sets the property
+            %   of the label's PropertyName to PropertyValue.
+            %   All standard plot properties of text can be used.
+            %   The label properties can also be changed when hidden.
+            %
+            % See also PlotBrainAtlas, text.
+            
+            ba.set_axes();
+            
+            % center coordinates and label
+            X = ba.getBrainAtlas().getBrainRegions().getValue(i).getX();
+            Y = ba.getBrainAtlas().getBrainRegions().getValue(i).getY();
+            Z = ba.getBrainAtlas().getBrainRegions().getValue(i).getZ();
+            LAB = ba.getBrainAtlas().getBrainRegions().getValue(i).getLabel();
+            
+            % display the text
+            if ~ishandle(ba.labs.h(i))
+                
+                ba.labs.h(i) = text( ...
+                    X, ...
+                    Y, ...
+                    Z, ...
+                    LAB,...
+                    'Parent', ba.get_axes(), ...
+                    'FontSize', PlotBrainAtlas.INIT_LAB_FONT_SIZE,...
+                    'Color' ,PlotBrainAtlas.INIT_LAB_FONT_COLOR,...
+                    'FontName', PlotBrainAtlas.INIT_LAB_FONT_NAME,...
+                    'Interpreter', PlotBrainAtlas.INIT_LAB_FONT_INTERPRETER);
+            else
+                if ~isequal(ba.labs.X(i), {X}) || ~isequal(ba.labs.Y(i), {Y}) || ~isequal(ba.labs.Z(i), {Z}) || ~strcmp(ba.labs.LAB(i), LAB)
+                    
+                    set(ba.labs.h(i), 'Position', [X Y Z]);
+                    set(ba.labs.h(i), 'String', LAB);
+                end
+            end
+            
+            % saves new data
+            ba.labs.X(i) = num2cell(X);
+            ba.labs.Y(i) = num2cell(Y);
+            ba.labs.Z(i) = num2cell(Z);
+            ba.labs.LAB(i) = {LAB};
+            
+            % sets properties
+            for n = 1:2:length(varargin)
+                switch lower(varargin{n})
+                    case 'color'
+                        set(ba.labs.h(i), 'Color', varargin{n + 1});
+                    case 'size'
+                        set(ba.labs.h(i), 'FontSize', varargin{n + 1});
+                    case 'name'
+                        set(ba.labs.h(i), 'FontName', varargin{n + 1});
+                    otherwise
+                        set(ba.labs.h(i), varargin{n}, varargin{n + 1});
+                end
+            end
+            
+            % output if needed
+            if nargout>0
+                h = ba.labs.h(i);
+            end
+        end
+        function br_lab_on(ba, i)
+            % BR_LAB_ON shows a label
+            %
+            % BR_LAB_ON(BA,I) shows the label denoting the brain region I.
+            %
+            % See also PlotBrainAtlas.
+            
+            if ishandle(ba.labs.h(i))
+                set(ba.labs.h(i), 'Visible', 'on')
+            end
+        end
+        function br_lab_off(ba, i)
+            % BR_LAB_OFF hides a label
+            %
+            % BR_LAB_OFF(BA,I) hides the label denoting the brain region I.
+            %
+            % See also PlotBrainAtlas.
+            
+            if ishandle(ba.labs.h(i))
+                set(ba.labs.h(i), 'Visible', 'off')
+            end
+        end
+        function bool = br_lab_is_on(ba, i)
+            % BR_LAB_IS_ON checks if label is visible
+            %
+            % BOOL = BR_LAB_IS_ON(BA,I) returns true if the label denoting
+            %   the brain region I is visible and false otherwise.
+            %
+            % See also PlotBrainAtlas.
+            
+            bool = ishandle(ba.labs.h(i)) && strcmpi(get(ba.labs.h(i), 'Visible'), 'on');
+        end
+        function br_labs(ba, i_vec, varargin)
+            % BR_LABS displays multiple brain regions as labels
+            %
+            % BR_LABS(BA,I_VEC) plots the labels denoting the brain regions
+            %   specified in I_VEC, if not plotted.
+            %
+            % BR_LABS(BA,[]) plots the labels for all possible brain regions.
+            %
+            % BR_LABS(BA,I_VEC,'PropertyName',PropertyValue) sets the property
+            %   of the multiple labels' PropertyName to PropertyValue.
+            %   All standard plot properties of text can be used.
+            %   The label properties can also be changed when hidden.
+            %
+            % See also PlotBrainAtlas, surf.
+            
+            % FontSize - FontName - Color - Interpreter
+            for n = 1:2:length(varargin)
+                switch lower(varargin{n})
+                    case 'fontsize'
+                        FontSize = varargin{n+1};
+                        nfontsize = n+1;
+                    case 'fontname'
+                        FontName = varargin{n+1};
+                        nfontname = n+1;
+                    case 'color'
+                        Color = varargin{n+1};
+                        ncolor = n+1;
+                    case 'interpreter'
+                        INTERP = varargin{n+1};
+                        ninterp = n+1;
+                end
+            end
+            
+            if nargin<2 || isempty(i_vec)
+                i_vec = 1:1:ba.getBrainAtlas().getBrainRegions().length();
+            end
+            
+            for m = 1:1:length(i_vec)
+                if exist('FontSize','var') && numel(FontSize) == length(i_vec)
+                    varargin{nfontsize} = FontSize(m);
+                end
+                if exist('FontName', 'var') && iscell(FontName) && numel(FontName) == length(i_vec)
+                    varargin{nfontname} = FontName{m};
+                end
+                if exist('Color', 'var') && size(Color, 1) == length(i_vec) && size(Color, 2) == 3
+                    varargin{ncolor} = Color(m, :);
+                end
+                if exist('INTERP', 'var') && iscell(INTERP) && numel(INTERP) == length(i_vec)
+                    varargin{ninterp} = INTERP{m};
+                end
+                
+                ba.br_lab(i_vec(m), varargin{:})
+            end
+        end
+        function br_labs_on(ba, i_vec)
+            % BR_LABS_ON shows multiple labels
+            %
+            % BR_LABS_ON(BA,I_VEC) shows multiple labels denoting the
+            %   brain regions specified in I_VEC.
+            %
+            % BR_LABS_ON(BA,[]) shows the labels denoting all possible
+            %   brain region combinations.
+            %
+            % See also PlotBrainAtlas.
+            
+            if nargin<2 || isempty(i_vec)
+                i_vec = 1:1:ba.getBrainAtlas().getBrainRegions().length();
+            end
+            
+            for m = 1:1:length(i_vec)
+                ba.br_lab_on(i_vec(m))
+            end
+        end
+        function br_labs_off(ba, i_vec)
+            % BR_LABS_OFF hides multiple labels
+            %
+            % BR_LABS_OFF(BA,I_VEC) hides multiple labels denoting the
+            %   brain regions specified in I_VEC.
+            %
+            % BR_LABS_OFF(BA,[]) hides the labels denoting all possible
+            %   brain region combinations.
+            %
+            % See also PlotBrainAtlas.
+            
+            if nargin<2 || isempty(i_vec)
+                i_vec = 1:1:ba.getBrainAtlas().getBrainRegions().length();
+            end
+            
+            for m = 1:1:length(i_vec)
+                ba.br_lab_off(i_vec(m))
+            end
+        end
+        function i = get_lab_i(ba, h)
+            % GET_LAB_I order number of brain region corresponding to a label
+            %
+            % I = GET_LAB_I(BA,H) returns the order number of the brain regions
+            %   corresponding to the label with handle H.
+            %
+            % See also PlotBrainAtlas.
+            
+            i = NaN;
+            if ~isempty(h)
+                for j = 1:1:ba.getBrainAtlas().getBrainRegions().length()
+                    if h == ba.labs.h(j)
+                        i = j;
+                    end
+                end
+            end
+        end
+        function br = get_lab_br(ba, h)
+            % GET_LAB_BR properties of brain region corresponding to a label
+            %
+            % BR = GET_LAB_BR(BA,H) returns the properties of the brain region
+            %   BR corresponding to the label with handle H.
+            %
+            % See also PlotBrainAtlas.
+            
+            i = ba.get_lab_i(h);
+            br = ba.getBrainAtlas().get(i);
+        end
+        function br_labs_settings(ba, i_vec, varargin)
+            % BR_LABS_SETTINGS sets labels' properties
+            %
+            % BR_LABS_SETTINGS(BA) allows the user to interractively
+            %   change the labels settings via a graphical user interface.
+            %
+            % BR_LABS_SETTINGS(BA,'PropertyName',PropertyValue) sets the property
+            %   of the GUI's PropertyName to PropertyValue.
+            %   Admissible properties are:
+            %       FigPosition  -   position of the GUI on the screen
+            %       FigColor     -   background color of the GUI
+            %       FigName      -   name of the GUI
+            %
+            % See also PlotBrainAtlas.
+            
+            if nargin<2
+                i_vec = [];
+            end
+            
+            FigPosition = get_from_varargin([.65 .45 .30 .30], 'figposition', varargin);
+            FigColor = get_from_varargin(GUI.BKGCOLOR, 'figcolor', varargin);
+            FigName = get_from_varargin('Brain Region Label Settings', 'figname', varargin);
+            
+            % create a figure
+            if isempty(ba.f_labs_settings) || ~ishandle(ba.f_labs_settings)
+                ba.f_labs_settings = figure('Visible', 'off');
+            end
+            f = ba.f_labs_settings;
+            set(f,'units', 'normalized')
+            set(f,'Position', FigPosition)
+            set(f,'Color', FigColor)
+            set(f,'Name', FigName)
+            set(f,'MenuBar', 'none')
+            set(f,'Toolbar', 'none')
+            set(f,'NumberTitle', 'off')
+            set(f,'DockControls', 'off')
+            
+            % Initialization
+            ui_list = uicontrol(f, 'Style', 'listbox');
+            set(ui_list, 'Units', 'normalized')
+            set(ui_list, 'BackgroundColor', GUI.BKGCOLOR)
+            set(ui_list, 'Value', i_vec)
+            set(ui_list, 'Max', 2, 'Min',0)
+            set(ui_list, 'BackgroundColor', [1 1 1])
+            set(ui_list, 'Position', [.05 .15 .40 .80])
+            set(ui_list, 'TooltipString', 'Select brain regions');
+            set(ui_list, 'Callback', {@cb_list});
+            
+            ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
+            set(ui_checkbox_id, 'Units', 'normalized')
+            set(ui_checkbox_id, 'BackgroundColor', GUI.BKGCOLOR)
+            set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
+            set(ui_checkbox_id, 'String', 'id')
+            set(ui_checkbox_id, 'Value', true)
+            set(ui_checkbox_id, 'FontWeight', 'bold')
+            set(ui_checkbox_id, 'TooltipString', 'Shows brain regions by id')
+            set(ui_checkbox_id, 'Callback', {@cb_id})
+
+            ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
+            set(ui_checkbox_label, 'Units', 'normalized')
+            set(ui_checkbox_label, 'BackgroundColor', GUI.BKGCOLOR)
+            set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
+            set(ui_checkbox_label, 'String', 'label')
+            set(ui_checkbox_label, 'Value', false)
+            set(ui_checkbox_label, 'TooltipString', 'Shows brain regions by label')
+            set(ui_checkbox_label, 'Callback', {@cb_label})
+            
+            ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
+            set(ui_checkbox_xyz, 'Units', 'normalized')
+            set(ui_checkbox_xyz, 'BackgroundColor', GUI.BKGCOLOR)
+            set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
+            set(ui_checkbox_xyz, 'String', 'xyz')
+            set(ui_checkbox_xyz, 'Value', false)
+            set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by name')
+            set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
+
+            ui_button_show = uicontrol(f, 'Style', 'pushbutton');
+            set(ui_button_show, 'Units','normalized')
+            set(ui_button_show, 'Position', [.50 .85 .45 .10])
+            set(ui_button_show, 'String', 'Show Regions')
+            set(ui_button_show, 'TooltipString', 'Show selected brain regions')
+            set(ui_button_show, 'Callback', {@cb_show})
+            
+            ui_button_hide = uicontrol(f, 'Style', 'pushbutton');
+            set(ui_button_hide, 'Units', 'normalized')
+            set(ui_button_hide, 'Position', [.50 .75 .45 .10])
+            set(ui_button_hide, 'String', 'Hide Regions')
+            set(ui_button_hide, 'TooltipString', 'Hide selected brain regions')
+            set(ui_button_hide, 'Callback', {@cb_hide})
+
+            ui_button_font = uicontrol(f,'Style', 'pushbutton');
+            set(ui_button_font, 'Units', 'normalized')
+            set(ui_button_font,'Position',[.50 .50 .45 .10])
+            set(ui_button_font,'String','Font')
+            set(ui_button_font,'TooltipString','Brain regions labels font')
+            set(ui_button_font,'Callback',{@cb_font})
+            
+            ui_button_color = uicontrol(f, 'Style', 'pushbutton');
+            set(ui_button_color, 'Units', 'normalized')
+            set(ui_button_color, 'Position' ,[.50 .35 .45 .10])
+            set(ui_button_color, 'String', 'Font Color')
+            set(ui_button_color, 'TooltipString', 'Brain regions labels color')
+            set(ui_button_color, 'Callback', {@cb_color})
+            
+            ui_text_interpreter = uicontrol(f, 'Style', 'text');
+            set(ui_text_interpreter, 'Units', 'normalized')
+            set(ui_text_interpreter, 'BackgroundColor', GUI.BKGCOLOR)
+            set(ui_text_interpreter, 'Position', [.50 .175 .20 .10])
+            set(ui_text_interpreter, 'String', 'interpreter')
+            set(ui_text_interpreter, 'HorizontalAlignment', 'left')
+            set(ui_text_interpreter, 'FontWeight', 'bold')
+            
+            ui_popup_interpreter = uicontrol(f, 'Style', 'popup', 'String', {''});
+            set(ui_popup_interpreter, 'Units', 'normalized')
+            set(ui_popup_interpreter, 'BackgroundColor', GUI.BKGCOLOR)
+            set(ui_popup_interpreter, 'Position', [.75 .20 .20 .10])
+            set(ui_popup_interpreter, 'String', {'none', 'tex', 'latex'})
+            set(ui_popup_interpreter, 'Value', 2)
+            set(ui_popup_interpreter, 'TooltipString', 'Brain regions labels interpreter');
+            set(ui_popup_interpreter, 'Callback', {@cb_interpreter})
+            
+            update_list()
+            set(f,'Visible','on')
+
+            function update_list()
+                % get info
+                ids = cellfun(@(br) br.getID(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false); %#ok<PROPLC>
+                labels = cellfun(@(br) br.getLabel(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
+                xs = cellfun(@(br) br.getX(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
+                ys = cellfun(@(br) br.getY(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
+                zs = cellfun(@(br) br.getZ(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
+                
+                % Set list names
+                if get(ui_checkbox_id, 'Value')
+                    set(ui_list, 'String', ids) %#ok<PROPLC>
+                elseif get(ui_checkbox_label, 'Value')
+                    set(ui_list, 'String', labels)
+                elseif get(ui_checkbox_xyz, 'Value')
+                    xyz = cell(1, ba.getBrainAtlas().getBrainRegions().length());
+                    for j = 1:1:ba.getBrainAtlas().getBrainRegions().length()
+                        xyz{j} = [num2str(xs{j}) '   ' ...
+                            num2str(ys{j}) '   ' ...
+                            num2str(zs{j})];
+                    end
+                    set(ui_list, 'String', xyz)
+                end
+            end
+            function cb_list(~, ~)  % (src, event)
+                update_list()
+            end
+            function cb_id(~,~)  % (src,event)
+                set(ui_checkbox_id, 'Value', true)
+                set(ui_checkbox_id, 'FontWeight', 'bold')
+
+                set(ui_checkbox_label, 'Value', false)
+                set(ui_checkbox_label, 'FontWeight', 'normal')
+                
+                set(ui_checkbox_xyz, 'Value', false)
+                set(ui_checkbox_xyz, 'FontWeight', 'normal')
+                
+                update_list()
+            end
+            function cb_label(~, ~)  % (src, event)
+                set(ui_checkbox_id, 'Value', false)
+                set(ui_checkbox_id, 'FontWeight', 'normal')
+
+                set(ui_checkbox_label, 'Value', true)
+                set(ui_checkbox_label, 'FontWeight', 'bold')
+                                
+                set(ui_checkbox_xyz, 'Value', false)
+                set(ui_checkbox_xyz, 'FontWeight', 'normal')
+                
+                update_list()
+            end
+            function cb_xyz(~, ~)  % (src, event)
+                set(ui_checkbox_id, 'Value', false)
+                set(ui_checkbox_id, 'FontWeight', 'normal')
+
+                set(ui_checkbox_label, 'Value', false)
+                set(ui_checkbox_label, 'FontWeight', 'normal')
+                
+                set(ui_checkbox_xyz, 'Value', true)
+                set(ui_checkbox_xyz, 'FontWeight', 'bold')
+                
+                update_list()
+            end
+            function cb_show(~, ~)  % (src, event)
+                ba.br_labs(get_br_list())
+                ba.br_labs_on(get_br_list())
+            end
+            function cb_hide(~, ~)  % (src, event)
+                ba.br_labs_off(get_br_list())
+            end
+            function cb_color(~, ~)  % (src, event)
+                color = uisetcolor();
+                
+                if length(color) == 3
+                    ba.br_labs(get_br_list(), 'color', color)
+                end
+            end
+            function cb_font(~,~)  % (src,event)
+                font = uisetfont;
+                
+                if isstruct(font)
+                    ba.br_labs(get_br_list(), 'FontSize', font.FontSize, ...
+                        'FontName', font.FontName, ...
+                        'FontWeight', font.FontWeight, ...
+                        'FontAngle', font.FontAngle, ...
+                        'FontUnits', font.FontUnits)
+                end
+            end
+            function cb_interpreter(~,~)  %  (src,event)
+                string = get(ui_popup_interpreter, 'String');
+                interpreter = string{get(ui_popup_interpreter, 'Value')};
+                ba.br_labs(get_br_list(), 'interpreter', interpreter)
+            end
+            function bri = get_br_list()
+                if ba.getBrainAtlas().getBrainRegions().length() > 0
+                    bri = get(ui_list, 'Value');
+                else
+                    bri = [];
+                end
+            end
+        end
     end
 end
