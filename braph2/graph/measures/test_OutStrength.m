@@ -6,7 +6,7 @@ A = [
     0   0   .8
     1   0   0];
 
-known_out_strength = {[1.2, 0.8, 1]'};
+known_out_strength = {[1.2 .8 1]'};
 
 g = GraphWD(A);
 out_strength = OutStrength(g);
@@ -23,17 +23,18 @@ A11 = [
 A12 = eye(3);
 A21 = eye(3);
 A22 = [
-    0 1   .6
-    1 0   .4
-    0 .4  0];
+    0  1   .6
+    1  0   .4
+    0  .4  0];
 A = {
     A11     A12  
     A21     A22
     };
 
 known_out_strength = {
-                     [1.2, 0.8, 1]'
-                     [1.6, 1.4, 0.4]'};
+    [1.2 .8  1]'
+    [1.6 1.4 .4]'
+    };
                                 
 g = MultiplexGraphWD(A);
 out_strength = OutStrength(g);

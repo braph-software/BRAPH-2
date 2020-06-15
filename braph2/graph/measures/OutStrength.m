@@ -64,7 +64,7 @@ classdef OutStrength < Measure
             % MEASURE_CLASS = GETCLASS() returns the class of the out-strength
             % measure.
             %
-            % See also getName(), getDescription(). 
+            % See also getName, getDescription. 
             
             measure_class = 'OutStrength';
         end
@@ -73,7 +73,7 @@ classdef OutStrength < Measure
             %
             % NAME = GETNAME() returns the name of the out-strength measure.
             %
-            % See also getClass(), getDescription().
+            % See also getClass, getDescription.
             
             name = 'Out-strength';
         end
@@ -83,7 +83,7 @@ classdef OutStrength < Measure
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % out-strength measure.
             %
-            % See also getClass(), getName().
+            % See also getClass, getName.
             
             description = [ ...
                 'The out-strength of a node is ' ...
@@ -100,7 +100,8 @@ classdef OutStrength < Measure
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to OutStrength. Empty Array in this case.
             % 
-            % See also getCompatibleGraphList()
+            % See also getCompatibleGraphList.
+            
             available_settings = {};
         end
         function measure_format = getMeasureFormat()
@@ -130,7 +131,7 @@ classdef OutStrength < Measure
             % of compatible graph classes to out-strength. 
             % The measure will not work if the graph is not compatible. 
             %
-            % See also getCompatibleGraphNumber().
+            % See also getCompatibleGraphNumber.
             
             list = { ...
                 'GraphWD' ...
@@ -143,7 +144,7 @@ classdef OutStrength < Measure
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to out-strength.
             % 
-            % See also getCompatibleGraphList().
+            % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('OutStrength');
         end

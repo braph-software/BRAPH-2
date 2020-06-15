@@ -4,9 +4,10 @@
 A = [
     0   .2  1
     0   0   .8
-    1   0   0];
+    1   0   0
+    ];
 
-known_in_strength = {[1, 0.2, 1.8]'};
+known_in_strength = {[1 .2 1.8]'};
 
 g = GraphWD(A);
 in_strength = InStrength(g);
@@ -23,17 +24,18 @@ A11 = [
 A12 = eye(3);
 A21 = eye(3);
 A22 = [
-    0 1   .6
-    1 0   .4
-    0 .4  0];
+    0  1   .6
+    1  0   .4
+    0  .4  0];
 A = {
     A11     A12  
     A21     A22
     };
 
 known_in_strength = {
-                     [1, 0.2, 1.8]'
-                     [1, 1.4, 1]'};
+    [1 .2  1.8]'
+    [1 1.4 1]'
+    };
                                 
 g = MultiplexGraphWD(A);
 in_strength = InStrength(g);
