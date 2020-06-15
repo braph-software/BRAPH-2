@@ -1,9 +1,13 @@
 classdef PlotBrainAtlas < PlotBrainSurf
-    % PlotBrainAtlas < PlotBrainSurf : Plot of a brain atlas
+    % PlotBrainAtlas Plot and manage of a brain atlas
     % PlotBrainAtlas plots and manages the brain regions that make up a
     % a brain atlas. The brain regions can be plotted by using symbols,
     % spheres or labels.
     % It is a subclass of PlotBrainSurf.
+    %
+    % PlotBrainAtlas manages the plot of the brain regions symbols,
+    % spheres, ids and labels. PlotBrainAtlas utilizes the surface created
+    % from PlotBrainSurf to integrate the regions to a brain surface.
     %
     % PlotBrainAtlas properties (Constants):
     %   INIT_SYM_MARKER           -   symbol type

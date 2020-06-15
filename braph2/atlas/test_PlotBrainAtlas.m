@@ -54,11 +54,11 @@ ba.br_labs([1 3 5], ...
 ba.br_labs_settings()
 % ba.br_labs_off()
 
-% close(gcf)
-% close(gcf)
-% close(gcf)
-% close(gcf)
-% close(gcf)
+close(gcf)
+close(gcf)
+close(gcf)
+close(gcf)
+close(gcf)
 
 %% Test 2: Distance Map
 atlas = BrainAtlas.load_from_txt('File', 'desikan_atlas.txt');
@@ -72,4 +72,4 @@ ba.brain('Colormap', 'summer')
 ba.distance_map_on([14 50 68]);
 % ba.distance_map_off()
 
-% close(gcf)
+close(gcf)
