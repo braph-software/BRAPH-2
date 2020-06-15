@@ -5,10 +5,10 @@ classdef GUI
     %
     % GUI is a static class that contains static properties and static
     % methods that all graphical interfaces in BRAPH2 utilize. The static
-    % properties include the background color, font, menu items name and
-    % shortcut characters, and all type of files extension command
-    % messages. GUI static methods control the height, width, close
-    % message, and about menus.
+    % properties include the background color, the font, the menu items name
+    % and shortcut characters, and all type of files extension command
+    % messages. GUI static methods control the height, the width, the close
+    % message, and the about menus.
     %
     % Properties (Constant)
     % COLOR             - GUI font color
@@ -17,7 +17,7 @@ classdef GUI
     % BAE_EXTENSION     - Brain Atlas editor file extension
     % BAE_MSG_PUTFILE   - Brain Atlas editor put file message
     % BAE_MSG_GETFILE   - Brain Atlas editor get file message
-    % MSG_YES           - affirmtive message
+    % MSG_YES           - affirmative message
     % MSG_NO            - negation message
     % BRA_UNITS         - left square bracket character
     % KET_UNITS         - right square bracket character
@@ -25,7 +25,7 @@ classdef GUI
     % TABBKGCOLOR       - tab background color
     % PLOT_SYMBOL_TAG   - plot symbols tag
     % PLOT_SYMBOL_NAME  - plot symbols name
-    % PLOT_LINESTYLE_TAG - plot line style tage
+    % PLOT_LINESTYLE_TAG - plot line style tag
     % PLOT_LINESTYLE_NAME - plot linestyle name
     % FONT_INTERPRETER_TAG - font interpreter tag
     % FONT_INTERPRETER_NAME - font interpreter name
@@ -42,14 +42,14 @@ classdef GUI
     % SAVE_SC           - save command char
     % SAVEAS_CMD        - save as command string
     % IMPORT_TXT_CMD    - import '.txt' file command string
-    % IMPORT_XLS_CMD    - imort '.xls' file command string
-    % IMPORT_JSON_CMD   - improt '.json' file command string
+    % IMPORT_XLS_CMD    - import '.xls' file command string
+    % IMPORT_JSON_CMD   - import '.json' file command string
     % EXPORT_TXT_CMD    - export to '.txt' file command string
     % EXPORT_XLS_CMD    - export to '.xls' file command string
     % EXPORT_JSON_CMD   - export to '.json' file command string
     % CLOSE_CMD         - close command string
     % CLOSE_SC          - close command char
-    % SELECTALL_CMD     - sellect all command string
+    % SELECTALL_CMD     - select all command string
     % CLEARSELECTION_CMD - clear selection command string
     % ADD_CMD           - add command string
     % ADD_SC            - add command char
@@ -73,13 +73,13 @@ classdef GUI
     %
     % GUI methods (static)
     % INIT_FIGURE       - creates and initializes the GUI figure
-    % CLOSE             - closes GUI figure
-    % SETMENUABOUT      - initializes about menu
-    % ABOUT             - message in about menu
+    % CLOSE             - closes the GUI figure
+    % SETMENUABOUT      - initializes the about menu
+    % ABOUT             - message in the about menu
     % SETUNITS          - sets GUI figure units
     % SETBACKGROUNDCOLOR - sets GUI figure background color
-    % DISABLE           - disable all children of a specified object
-    % ENABLE            - enable all children of a specified object
+    % DISABLE           - disables all children of a specified object
+    % ENABLE            - enables all children of a specified object
     % X                 - returns the x initial position of a figure
     % Y                 - returns the y initial position of a figure
     % WIDTH             - returns the width of a figure 
@@ -293,10 +293,10 @@ classdef GUI
     end
     methods (Static)  % constants
         function c = ACCELERATOR()
-            % ACCELERATOR defines accelerator
+            % ACCELERATOR defines the accelerator
             %
             % C = ACCELERATOR() returns the corresponding accelerator depending
-            % on whether the version is for Apple Mac OS X or form Win/Unix.
+            % on whether the version is for Apple Mac OS X or for Win/Unix.
             %
             % See also GUI, ismac.
             
@@ -307,7 +307,7 @@ classdef GUI
             end
         end
         function w = SCREEN_WIDTH()
-            % SCREEN_WIDTH defines screen width
+            % SCREEN_WIDTH defines the screen width
             %
             % W = SCREEN_WIDTH() returns the width of the screen.
             %
@@ -317,7 +317,7 @@ classdef GUI
             w = screensize(3);
         end
         function h = SCREEN_HEIGHT()
-            % SCREEN_HEIGHT defines screen height
+            % SCREEN_HEIGHT defines the screen height
             %
             % W = SCREEN_HEIGHT() returns the height of the screen.
             %
@@ -331,7 +331,7 @@ classdef GUI
         function f = init_figure(AppName, width, height, position)
             % INIT_FIGURE creates and intializes GUI figure
             %
-            % F = INIT_FIGURE(APPNAME,WIDTH,HEIGHT,POSITION) creates a GUI figure
+            % F = INIT_FIGURE(APPNAME, WIDTH, HEIGHT, POSITION) creates a GUI figure
             % F with name APPNAME and initializes the following properties:
             %   WIDTH     -  width of the figure as percentage of the screen width
             %   HEIGHT    -  height of the figure as percentage of the screen height
@@ -377,7 +377,7 @@ classdef GUI
             end
         end
         function [ui_menu_about, ui_menu_about_about] = setMenuAbout(f, AppName)
-            % SETMENUABOUT initializes about menu
+            % SETMENUABOUT initializes the about menu
             %
             % [UI_MENU_ABOUT, UI_MENU_ABOUT_ABOUT] = SETMENUABOUT(APPNAME, F)
             % adds the menu item UI_MENU_ABOUT and its submenu item
@@ -395,7 +395,7 @@ classdef GUI
             set(ui_menu_about_about, 'Callback', ['GUI.about(''' AppName ''')'])
         end
         function about(AppName)
-            % ABOUT message in about menu
+            % ABOUT sets the message in the about menu
             %
             % ABOUT(APPNAME) specifies the message displayed in the about
             % menu in the figure with name APPNAME.
@@ -406,16 +406,16 @@ classdef GUI
                 ['About ' AppName])
         end
         function setUnits(h, alsochildren)
-            % SETUNITS sets GUI figure units
+            % SETUNITS sets the GUI figure units
             %
-            % SETUNITS(H,ALSOCHILDREN) sets the units of the object with
+            % SETUNITS(H, ALSOCHILDREN) sets the units of the object with
             % handle H and all its children to normalized if ALSOCHILDREN
             % is true. If ALSOCHILDREN is false, only the units of the
             % object with handle H are set to normalized.
             %
             % See also GUI.
             
-            if nargin<2
+            if nargin < 2
                 alsochildren = true;
             end
             
@@ -427,7 +427,7 @@ classdef GUI
         function setBackgroundColor(h, alsochildren)
             % SETBACKGROUNDCOLOR sets GUI figure background color
             %
-            % SETBACKGROUNDCOLOR(H,ALSOCHILDREN) sets the background color
+            % SETBACKGROUNDCOLOR(H, ALSOCHILDREN) sets the background color
             % of the object with handle H and all its children to the
             % brain network color if ALSOCHILDREN is true.
             %
@@ -494,9 +494,9 @@ classdef GUI
             end
         end
         function x0 = x(f,r)
-            % X initial position
+            % X returns the initial position
             %
-            % X0 = X(F,R) returns the initial position corresponding to
+            % X0 = X(F, R) returns the initial position corresponding to
             % figure F and ratio R.
             %
             % See also GUI.
@@ -509,9 +509,9 @@ classdef GUI
             x0 = r * pos(1);
         end
         function y0 = y(f,r)
-            % Y initial position
+            % Y returns the initial position
             %
-            % Y0 = Y(F,R) returns the initial position corresponding to
+            % Y0 = Y(F, R) returns the initial position corresponding to
             % figure F and ratio R.
             %
             % See also GUI.
@@ -526,7 +526,7 @@ classdef GUI
         function w = width(f,r)
             % WIDTH width
             %
-            % W = WIDTH(F,R) returns the width corresponding to figure F and ratio R.
+            % W = WIDTH(F, R) returns the width corresponding to figure F and ratio R.
             %
             % See also GUI.
             
@@ -540,7 +540,7 @@ classdef GUI
         function h = height(f,r)
             % HEIGHT height
             %
-            % H = HEIGHT(F,R) returns the height corresponding to figure F and ratio R.
+            % H = HEIGHT(F, R) returns the height corresponding to figure F and ratio R.
             %
             % See also GUI.
             
