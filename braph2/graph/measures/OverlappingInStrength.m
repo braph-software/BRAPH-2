@@ -46,7 +46,7 @@ classdef OverlappingInStrength < InStrength
             if g.is_measure_calculated('InStrength')
                 in_strength = g.getMeasureValue('InStrength');
             else
-                in_strength = calculate@Strength(m);
+                in_strength = calculate@InStrength(m);
             end
             
             N = g.nodenumber();
