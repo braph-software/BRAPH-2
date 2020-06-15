@@ -149,7 +149,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         Shading  % shading value
         Colormap  % colormap value
     end
-    methods  % Basic Functions
+    methods  % Basic functions
         function bs = PlotBrainSurf(brain_surf_file, varargin)
             % PLOTBRAINSURF constructor 
             %
@@ -185,7 +185,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also disp.
             
-            str = ['Brain Surface: ' bs.getBrainSurfFile() ' with ' tostring(bs.vertex_number) ' vertices and ' tostring(bs.vertex_number) ' triangles.'];
+            str = [class(bs) ': ' bs.getBrainSurfFile() ' with ' tostring(bs.vertex_number) ' vertices and ' tostring(bs.vertex_number) ' triangles.'];
         end
         function disp(bs)
             % DISP displays brain surface properties
@@ -195,7 +195,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also tostring.
             
-            disp(['<a href="matlab:help ' class(bs) '">' bs.getBrainSurfFile() '</a>']);
+            disp(['<a href="matlab:help ' class(bs) '">' class(bs) '</a>']);
             disp(['Surface file: ' bs.getBrainSurfFile()]);
             disp(['Number of vertices: ' tostring(bs.vertex_number)]);
             disp(['Number of triangles: ' tostring(bs.tri_number)]);
