@@ -6,7 +6,7 @@ B = {
     };
 graph_class_distance_list = Distance.getCompatibleGraphList();
 
-%% Test 1: Calculation AllGraphs
+%% Test 1: AllGraphs
 for i = 1:1:length(graph_class_distance_list)
     graph_class = graph_class_distance_list{i};
     

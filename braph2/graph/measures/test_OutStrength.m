@@ -1,6 +1,6 @@
 % test OutStrength
 
-%% Test 1: Calculation GraphWD
+%% Test 1: GraphWD
 A = [
     0   .2  1
     0   0   .8
@@ -15,7 +15,7 @@ assert(isequal(out_strength.getValue(), known_out_strength), ...
     [BRAPH2.STR ':OutStrength:' BRAPH2.BUG_ERR], ...
     'OutStrength is not being calculated correctly for GraphWD')
 
-%% Test 2: Calculation MultiplexGraphWD
+%% Test 2: MultiplexGraphWD
 A11 = [
     0   .2  1
     0   0   .8

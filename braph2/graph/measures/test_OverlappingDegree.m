@@ -1,6 +1,6 @@
 % test OverlappingDegree
 
-%% Test 1: Calculation MultiplexGraphBU
+%% Test 1: MultiplexGraphBU
 A11 = [
     0   1   1
     1   0   0
@@ -27,7 +27,7 @@ assert(isequal(overlapping_degree.getValue(), known_overlapping_degree), ...
     [BRAPH2.STR ':OverlappingDegree:' BRAPH2.BUG_ERR], ...
     'OverlappingDegree is not being calculated correctly for MultiplexGraphBU')
 
-%% Test 2: Calculation MultiplexGraphWU
+%% Test 2: MultiplexGraphWU
 A11 = [
     0   .2  1
     .2  0   0

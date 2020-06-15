@@ -1,6 +1,6 @@
 % test InStrength
 
-%% Test 1: Calculation GraphWD
+%% Test 1: GraphWD
 A = [
     0   .2  1
     0   0   .8
@@ -16,7 +16,7 @@ assert(isequal(in_strength.getValue(), known_in_strength), ...
     [BRAPH2.STR ':InStrength:' BRAPH2.BUG_ERR], ...
     'InStrength is not being calculated correctly for GraphWD')
 
-%% Test 2: Calculation MultiplexGraphWD
+%% Test 2: MultiplexGraphWD
 A11 = [
     0   .2  1
     0   0   .8
