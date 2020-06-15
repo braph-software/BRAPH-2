@@ -21,8 +21,8 @@ A = {
 known_overlapping_in_strength = {[3 1.5 1.5]'};
                  
 g = MultiplexGraphWD(A);
-overlapping_strength = OverlappingInStrength(g);
+overlapping_in_strength = OverlappingInStrength(g);
 
-assert(isequal(overlapping_strength.getValue(), known_overlapping_in_strength), ...
+assert(isequal(overlapping_in_strength.getValue(), known_overlapping_in_strength), ...
     [BRAPH2.STR ':OverlappingInStrength:' BRAPH2.BUG_ERR], ...
     'OverlappingInStrength is not being calculated correctly for MultiplexGraphWD.')
