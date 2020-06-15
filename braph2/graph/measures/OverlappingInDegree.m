@@ -7,7 +7,7 @@ classdef OverlappingInDegree < InDegree
     % node in all layers, i.e., it is the sum of the in-degrees of a node in
     % all layers.
     % 
-    % OverlappOverlappingInDegreeingDegree methods:
+    % OverlappingInDegree methods:
     %   OverlappingInDegree         - constructor
     %
     % OverlappingInDegree methods (Static)
