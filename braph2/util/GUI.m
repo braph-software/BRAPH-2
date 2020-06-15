@@ -3,7 +3,12 @@ classdef GUI
     % GUI is a static class that contains constant properties and static
     % functions used by all BRAPH2 graphical user interfaces.
     %
-    % GUI 
+    % GUI is a static class that contains static properties and static
+    % methods that all graphical interfaces in BRAPH2 utilize. The static
+    % properties include the background color, font, menu items name and
+    % shortcut characters, and all type of files extension command
+    % messages. GUI static methods control the height, width, close
+    % message, and about menus.
     %
     % Properties (Constant)
     % COLOR             - GUI font color
