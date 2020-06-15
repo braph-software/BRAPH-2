@@ -33,5 +33,5 @@ bs.camlight('left')
 bs.shading('interp')
 bs.colormap('jet')
 
-% close(gcf)
-% close(gcf)
+close(gcf)
+close(gcf)
