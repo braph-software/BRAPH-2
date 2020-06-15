@@ -75,6 +75,15 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getBrainRegions().move_to_top       - moves an element to the top in the indexed dictionary br_idict
     %   getBrainRegions().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
     %
+    % Useful cellfun expressions:
+    %   cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getLabel(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getNotes(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getX(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getY(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getZ(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getPosition(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %
     % See also BrainRegion, PlotBrainSurf, PlotBrainAtlas, IndexedDictionary.
     
     properties (GetAccess=protected, SetAccess=protected)
@@ -249,14 +258,6 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             brain_surf_file = atlas.brain_surf_file;
         end
-        % Useful cellfun expressions:
-        % cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getLabel(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getNotes(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getX(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getY(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getZ(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getPosition(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
     end
     methods  % Plot functions
         function bs = getPlotBrainSurf(atlas, varargin)
