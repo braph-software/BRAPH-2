@@ -11,3 +11,5 @@ function [r, mask] = bonferroni(pvalues, p)
 % See also fdr, pvalue1, pvalue2, quantiles.
 
 r = p / length(pvalues);
+
+mask = pvalues <= r;
