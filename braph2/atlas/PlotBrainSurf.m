@@ -1,5 +1,5 @@
 classdef PlotBrainSurf < handle & matlab.mixin.Copyable
-    % PlotBrainSurf Plotand and manage a brain surface
+    % PlotBrainSurf Plot and and manage a brain surface
     % PlotBrainSurf plots and manages a brain surface.
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
@@ -9,7 +9,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     % This class provides the common methods needed to manage the plot of 
     % the surface, via a custom panel called 'Brain Surface Settings' where
     % the user can change lighting, material, camlight, shadning, colormap,
-    % facecolor, brain color, face color, edgecolor and background color. 
+    % facecolor, brain color, face color, edge color, and background color. 
     %
     % PlotBrainSurf properties (Constants):
     %   VIEW_3D         -   3D view numeric code
