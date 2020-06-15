@@ -20,15 +20,8 @@ else
         ['Q must be a real number in (0, 1]']) %#ok<*NBRAK>
 end
 x = [1:1:length(pvalues)] / length(pvalues);
-critical_point = x * q;
 pvalues = sort(pvalues);
-index = 0;
-for i = 1:1:length(pvalues)
-    if pvalues(i) <= critical_point(i)
-        index = i;      
-    end
-end
-
+index = max(find(pvalues <= x * q)); %#ok<MXFND>
 if index
     r = pvalues(index);
 else
