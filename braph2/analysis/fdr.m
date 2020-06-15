@@ -6,7 +6,8 @@ function r = fdr(pvalues, q)
 %
 % R = FDR(PVALUES, Q) calculates the false discovery rate (FDR) for PVALUES.
 % Q is a threshold parameter. FDR returns all PValues that are less than
-% the maximum PValue 
+% the maximum PValue that satifies: P <= (i/m)Q, where i is the rank of the
+% test, m is the number of tests and Q is the threshold parameter.
 %
 % See also bonferroni, pvalue1, pvalue2, quantiles.
 
@@ -29,7 +30,7 @@ for i = 1:1:length(pvalues)
 end
 
 if index
-    r = pvalues(1:index);
+    r = pvalues(index);
 else
     r = 0;
 end

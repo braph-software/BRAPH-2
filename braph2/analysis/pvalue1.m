@@ -2,7 +2,7 @@ function P1 = pvalue1(observed_difference, random_differences)
 % PVALUE1 Calculates the one-tailed p-value
 %
 % P1 = PVALUE1(OBSERVED_DIFFERENCE, RANDOM_DIFFERENCES) calculates the
-% two-tailed P-value of OBSERVED_DIFFERENCE with respect to the
+% one-tailed P-value of OBSERVED_DIFFERENCE with respect to the
 % distribution given by RANDOM_DIFFERENCES. 
 % OBSERVED_DIFFERENCE a scalar, vector or matrix with the difference.
 % RANDOM_DIFFERENCES must be a cell array of samples, where each cell contains a

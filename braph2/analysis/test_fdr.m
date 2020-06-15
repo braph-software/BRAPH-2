@@ -17,7 +17,7 @@ sample_array = [0.001, 0.008, 0.039, 0.041, 0.042, 0.060, 0.074, 0.205, 0.212, 0
 
 fdr_output  = fdr(sample_array, 0.25);
 
-fdr_expected = [0.001, 0.008, 0.039, 0.041, 0.042, 0.060];
+fdr_expected = [0.060]; %#ok<NBRAK>
 
 assert(isequal(fdr_expected, fdr_output), ...
     [BRAPH2.STR ':FDR:' BRAPH2.WRONG_OUTPUT], ...
