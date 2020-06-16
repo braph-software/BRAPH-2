@@ -10,7 +10,7 @@ classdef Degree < Measure
     % Degree methods:
     %   Degree                      - constructor
     % 
-    % Degree methods (Static)
+    % Degree descriptive methods (Static)
     %   getClass                    - returns the degree class
     %   getName                     - returns the name of degree measure
     %   getDescription              - returns the description of degree measure
