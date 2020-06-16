@@ -144,7 +144,7 @@ classdef DegreeAv < Degree
             % graphs with DegreeAv
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to Deaverage degreegreeAv.
+            % compatible graphs to average degree.
             % 
             % See also getCompatibleGraphList.
                       
