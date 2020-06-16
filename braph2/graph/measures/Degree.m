@@ -26,8 +26,8 @@ classdef Degree < Measure
     methods
         function m = Degree(g, varargin)
             % DEGREE(G) creates degree with default properties.
-            % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU). 
+            % G is a graph (e.g, an instance of GraphBU, GraphWU,
+            % MultiplexGraphBU or MultiplexGraphBU). 
             %  
             % See also Measure, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
             
