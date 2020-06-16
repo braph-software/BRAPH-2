@@ -4,8 +4,8 @@ classdef InStrength < Measure
     % directed (WD) graphs.
     %
     % It is calculated as the sum of all weights of the inward edges
-    % connected to a node, i.e., it is the sum of the columns of the 
-    % adjacency matrix. 
+    % connected to a node within a layer, i.e., it is the sum of the 
+    % columns of the adjacency matrix. 
     %
     % InStrength methods:
     %   InStrength                  - constructor
@@ -44,7 +44,7 @@ classdef InStrength < Measure
             % See also Measure, OutStrength, GraphWU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix or 2D-cell array 
+            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
             
             in_strength = cell(g.layernumber(), 1);      
             for li = 1:1:g.layernumber()
@@ -88,7 +88,7 @@ classdef InStrength < Measure
             description = [ ...
                 'The in-strength of a node is ' ...
                 'the sum of the weights of all ' ...
-                'the inward edges connected to a node ' ...
+                'the inward edges connected to a node within a layer ' ...
                 'for weighted directed (WD) graphs. ' ...
                 'In-strengths are calculated as sums ' ...
                 'over colums of the weighted connectivity matrix.' ...
