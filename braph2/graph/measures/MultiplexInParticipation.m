@@ -141,7 +141,7 @@ classdef MultiplexInParticipation < InDegree
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with InMultiplexParticipation
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with MultiplexInParticipation
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to multiplex in-participation.
