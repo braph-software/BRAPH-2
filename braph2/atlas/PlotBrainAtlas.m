@@ -270,12 +270,12 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % BR_SYM(BA, I) denotes the brain regions I as a symbol, if not plotted.
             %
             % H = BR_SYM(BA, I) returns the handle to the symbol denoting the brain
-            %   region I.
+            % region I.
             %
             % BR_SYM(BA, I, 'PropertyName', PropertyValue) sets the property
-            %   of the symbol's PropertyName to PropertyValue.
-            %   All standard plot properties of plot3 can be used.
-            %   The symbol properties can also be changed when hidden.
+            % of the symbol's PropertyName to PropertyValue.
+            % All standard plot properties of plot3 can be used.
+            % The symbol properties can also be changed when hidden.
             %
             % See also plot3.
             
@@ -333,7 +333,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sym_on(ba, i)
             % BR_SYM_ON shows a symbol
             %
-            % BR_SYM_ON(BA,I) shows the symbol denoting the brain region I.
+            % BR_SYM_ON(BA, I) shows the symbol denoting the brain region I.
             %
             % See also PlotBrainAtlas.
             
@@ -344,7 +344,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sym_off(ba, i)
             % BR_SYM_OFF hides a symbol
             %
-            % BR_SYM_OFF(BA,I) hides the symbol denoting the brain region I.
+            % BR_SYM_OFF(BA, I) hides the symbol denoting the brain region I.
             %
             % See also PlotBrainAtlas.
             
@@ -355,8 +355,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function bool = br_sym_is_on(ba, i)
             % BR_SYM_IS_ON checks if symbol is visible
             %
-            % BOOL = BR_SYM_IS_ON(BA,I) returns true if the symbol denoting
-            %   the brain region I is visible and false otherwise.
+            % BOOL = BR_SYM_IS_ON(BA, I) returns true if the symbol denoting
+            % the brain region I is visible and false otherwise.
             %
             % See also br_syms.
             
@@ -365,15 +365,15 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_syms(ba, i_vec, varargin)
             % BR_SYMS displays multiple brain regions as symbols
             %
-            % BR_SYMS(BA,I_VEC) plots the symbols denoting the brain regions
-            %   specified in I_VEC, if not plotted.
+            % BR_SYMS(BA, I_VEC) plots the symbols denoting the brain regions
+            % specified in I_VEC, if not plotted.
             %
-            % BR_SYMS(BA,[]) plots the symbols for all possible brain regions.
+            % BR_SYMS(BA, []) plots the symbols for all possible brain regions.
             %
-            % BR_SYMS(BA,I_VEC,'PropertyName',PropertyValue) sets the property
-            %   of the multiple symbols' PropertyName to PropertyValue.
-            %   All standard plot properties of plot3 can be used.
-            %   The symbols properties can also be changed when hidden.
+            % BR_SYMS(BA, I_VEC, 'PropertyName', PropertyValue) sets the property
+            % of the multiple symbols' PropertyName to PropertyValue.
+            % All standard plot properties of plot3 can be used.
+            % The symbols properties can also be changed when hidden.
             %
             % See also br_sym,  plot3.
             
@@ -425,11 +425,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_syms_on(ba, i_vec)
             % BR_SYMS_ON shows multiple symbols
             %
-            % BR_SYMS_ON(BA,I_VEC) shows multiple symbols denoting the
-            %   brain regions specified in I_VEC.
+            % BR_SYMS_ON(BA, I_VEC) shows multiple symbols denoting the
+            % brain regions specified in I_VEC.
             %
-            % BR_SYMS_ON(BA,[]) shows the symbols denoting all possible
-            %   brain region combinations.
+            % BR_SYMS_ON(BA, []) shows the symbols denoting all possible
+            % brain region combinations.
             %
             % See also PlotBrainAtlas.
             
@@ -444,11 +444,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_syms_off(ba, i_vec)
             % BR_SYMS_OFF hides multiple symbols
             %
-            % BR_SYMS_OFF(BA,I_VEC) hides multiple symbols denoting the
-            %   brain regions specified in I_VEC.
+            % BR_SYMS_OFF(BA, I_VEC) hides multiple symbols denoting the
+            % brain regions specified in I_VEC.
             %
-            % BR_SYMS_OFF(BA,[]) hides the symbols denoting all possible
-            %   brain region combinations.
+            % BR_SYMS_OFF(BA, []) hides the symbols denoting all possible
+            % brain region combinations.
             %
             % See also PlotBrainAtlas.
             
@@ -463,8 +463,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function i = get_sym_i(ba, h)
             % GET_SYM_I order number of brain region corresponding to a symbol
             %
-            % I = GET_SYM_I(BA,H) returns the order number of the brain regions
-            %   corresponding to the symbol with handle H.
+            % I = GET_SYM_I(BA, H) returns the order number of the brain regions
+            % corresponding to the symbol with handle H.
             %
             % See also PlotBrainAtlas.
             
@@ -480,8 +480,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br = get_sym_br(ba, h)
             % GET_SYM_BR properties of brain region corresponding to a symbol
             %
-            % BR = GET_SYM_BR(BA,H) returns the properties of the brain region
-            %   BR corresponding to the symbol with handle H.
+            % BR = GET_SYM_BR(BA, H) returns the properties of the brain region
+            % BR corresponding to the symbol with handle H.
             %
             % See also PlotBrainAtlas.
             
@@ -492,14 +492,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % BR_SYMS_SETTINGS sets symbols' properties
             %
             % BR_SYMS_SETTINGS(BA) allows the user to interractively
-            %   change the symbols settings via a graphical user interface.
+            % change the symbols settings via a graphical user interface.
             %
-            % BR_SYMS_SETTINGS(BA,'PropertyName',PropertyValue) sets the property
-            %   of the GUI's PropertyName to PropertyValue.
-            %   Admissible properties are:
-            %       FigPosition  -   position of the GUI on the screen
-            %       FigColor     -   background color of the GUI
-            %       FigName      -   name of the GUI
+            % BR_SYMS_SETTINGS(BA, 'PropertyName', PropertyValue) sets the property
+            % of the GUI's PropertyName to PropertyValue.
+            % Admissible properties are:
+            %     FigPosition  -   position of the GUI on the screen
+            %     FigColor     -   background color of the GUI
+            %     FigName      -   name of the GUI
             %
             % See also PlotBrainAtlas.
             
@@ -730,15 +730,15 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function h = br_sph(ba, i, varargin)
             % BR_SPH displays brain region as sphere
             %
-            % BR_SPH(BA,I) denotes the brain regions I as a sphere, if not plotted.
+            % BR_SPH(BA, I) denotes the brain regions I as a sphere, if not plotted.
             %
-            % H = BR_SPH(BA,I) returns the handle to the sphere denoting the brain
-            %   region I.
+            % H = BR_SPH(BA, I) returns the handle to the sphere denoting the brain
+            % region I.
             %
-            % BR_SPH(BA,I,'PropertyName',PropertyValue) sets the property
-            %   of the sphere's PropertyName to PropertyValue.
-            %   All standard plot properties of surf can be used and also the sphere
-            %   properties listed below.
+            % BR_SPH(BA, I, 'PropertyName', PropertyValue) sets the property
+            % of the sphere's PropertyName to PropertyValue.
+            % All standard plot properties of surf can be used and also the sphere
+            % properties listed below.
             % SPHERE properties:
             %   Color  -   sphere color both edges and faces [default = 'k']
             %   Alpha  -   sphere transparency both edges and faces [default = 0.5]
@@ -818,7 +818,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sph_on(ba, i)
             % BR_SPH_ON shows a sphere
             %
-            % BR_SPH_ON(BA,I) shows the sphere denoting the brain region I.
+            % BR_SPH_ON(BA, I) shows the sphere denoting the brain region I.
             %
             % See also PlotBrainAtlas.
             
@@ -829,7 +829,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sph_off(ba, i)
             % BR_SPH_OFF hides a sphere
             %
-            % BR_SPH_OFF(BA,I) hides the sphere denoting the brain region I.
+            % BR_SPH_OFF(BA, I) hides the sphere denoting the brain region I.
             %
             % See also PlotBrainAtlas.
             
@@ -840,8 +840,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function bool = br_sph_is_on(ba, i)
             % BR_SPH_IS_ON checks if sphere is visible
             %
-            % BOOL = BR_SPH_IS_ON(BA,I) returns true if the sphere denoting
-            %   the brain region I is visible and false otherwise.
+            % BOOL = BR_SPH_IS_ON(BA, I) returns true if the sphere denoting
+            % the brain region I is visible and false otherwise.
             %
             % See also PlotBrainAtlas.
             
@@ -850,15 +850,15 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sphs(ba, i_vec, varargin)
             % BR_SPHS displays multiple brain regions as spheres
             %
-            % BR_SPHS(BA,I_VEC) plots the spheres denoting the brain regions
-            %   specified in I_VEC, if not plotted.
+            % BR_SPHS(BA, I_VEC) plots the spheres denoting the brain regions
+            % specified in I_VEC, if not plotted.
             %
-            % BR_SPHS(BA,[]) plots the spheres for all possible brain regions.
+            % BR_SPHS(BA, []) plots the spheres for all possible brain regions.
             %
-            % BR_SPHS(BA,I_VEC,'PropertyName',PropertyValue) sets the property
-            %   of the multiple spheres' PropertyName to PropertyValue.
-            %   All standard plot properties of surf can be used and also the sphere
-            %   properties listed below.
+            % BR_SPHS(BA, I_VEC, 'PropertyName', PropertyValue) sets the property
+            % of the multiple spheres' PropertyName to PropertyValue.
+            % All standard plot properties of surf can be used and also the sphere
+            % properties listed below.
             % SPHERE properties:
             %   Color  -   sphere color both edges and faces [default = 'k']
             %   Alpha  -   sphere transparency both edges and faces [default = 0.5]
@@ -927,11 +927,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sphs_on(ba, i_vec)
             % BR_SPHS_ON shows multiple spheres
             %
-            % BR_SPHS_ON(BA,I_VEC) shows multiple spheres denoting the
-            %   brain regions specified in I_VEC.
+            % BR_SPHS_ON(BA, I_VEC) shows multiple spheres denoting the
+            % brain regions specified in I_VEC.
             %
-            % BR_SPHS_ON(BA,[]) shows the spheres denoting all possible
-            %   brain region combinations.
+            % BR_SPHS_ON(BA, []) shows the spheres denoting all possible
+            % brain region combinations.
             %
             % See also PlotBrainAtlas.
             
@@ -946,11 +946,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sphs_off(ba, i_vec)
             % BR_SPHS_OFF hides multiple spheres
             %
-            % BR_SPHS_OFF(BA,I_VEC) hides multiple spheres denoting the
-            %   brain regions specified in I_VEC.
+            % BR_SPHS_OFF(BA, I_VEC) hides multiple spheres denoting the
+            % brain regions specified in I_VEC.
             %
-            % BR_SPHS_OFF(BA,[]) hides the spheres denoting all possible
-            %   brain region combinations.
+            % BR_SPHS_OFF(BA, []) hides the spheres denoting all possible
+            % brain region combinations.
             %
             % See also PlotBrainAtlas.
             
@@ -965,8 +965,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function i = get_sph_i(ba, h)
             % GET_SPH_I order number of brain region corresponding to a sphere
             %
-            % I = GET_SPH_I(BA,H) returns the order number of the brain regions
-            %   corresponding to the sphere with handle H.
+            % I = GET_SPH_I(BA, H) returns the order number of the brain regions
+            % corresponding to the sphere with handle H.
             %
             % See also PlotBrainAtlas.
             
@@ -982,8 +982,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br = get_sph_br(ba, h)
             % GET_SPH_BR properties of brain region corresponding to a sphere
             %
-            % BR = GET_SPH_BR(BA,H) returns the properties of the brain region
-            %   BR corresponding to the sphere with handle H.
+            % BR = GET_SPH_BR(BA, H) returns the properties of the brain region
+            % BR corresponding to the sphere with handle H.
             %
             % See also PlotBrainAtlas.
             
@@ -994,14 +994,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % BR_SPHS_SETTINGS sets spheres' properties
             %
             % BR_SPHS_SETTINGS(BA) allows the user to interractively
-            %   change the spheres settings via a graphical user interface.
+            % change the spheres settings via a graphical user interface.
             %
-            % BR_SPHS_SETTINGS(BA,'PropertyName',PropertyValue) sets the property
-            %   of the GUI's PropertyName to PropertyValue.
-            %   Admissible properties are:
-            %       FigPosition  -   position of the GUI on the screen
-            %       FigColor     -   background color of the GUI
-            %       FigName      -   name of the GUI
+            % BR_SPHS_SETTINGS(BA, 'PropertyName', PropertyValue) sets the property
+            % of the GUI's PropertyName to PropertyValue.
+            % Admissible properties are:
+            %     FigPosition  -   position of the GUI on the screen
+            %     FigColor     -   background color of the GUI
+            %     FigName      -   name of the GUI
             %
             % See also PlotBrainAtlas.
             
@@ -1729,15 +1729,15 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function h = br_lab(ba, i, varargin)
             % BR_LAB displays brain region as label
             %
-            % BR_LAB(BA,I) denotes the brain regions I as a label, if not plotted.
+            % BR_LAB(BA, I) denotes the brain regions I as a label, if not plotted.
             %
-            % H = BR_LAB(BA,I) returns the handle to the label denoting the brain
-            %   region I.
+            % H = BR_LAB(BA, I) returns the handle to the label denoting the brain
+            % region I.
             %
-            % BR_LAB(BA,I,'PropertyName',PropertyValue) sets the property
-            %   of the label's PropertyName to PropertyValue.
-            %   All standard plot properties of text can be used.
-            %   The label properties can also be changed when hidden.
+            % BR_LAB(BA, I, 'PropertyName', PropertyValue) sets the property
+            % of the label's PropertyName to PropertyValue.
+            % All standard plot properties of text can be used.
+            % The label properties can also be changed when hidden.
             %
             % See also PlotBrainAtlas, text.
             
@@ -1798,7 +1798,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_lab_on(ba, i)
             % BR_LAB_ON shows a label
             %
-            % BR_LAB_ON(BA,I) shows the label denoting the brain region I.
+            % BR_LAB_ON(BA, I) shows the label denoting the brain region I.
             %
             % See also PlotBrainAtlas.
             
@@ -1809,7 +1809,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_lab_off(ba, i)
             % BR_LAB_OFF hides a label
             %
-            % BR_LAB_OFF(BA,I) hides the label denoting the brain region I.
+            % BR_LAB_OFF(BA, I) hides the label denoting the brain region I.
             %
             % See also PlotBrainAtlas.
             
@@ -1820,8 +1820,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function bool = br_lab_is_on(ba, i)
             % BR_LAB_IS_ON checks if label is visible
             %
-            % BOOL = BR_LAB_IS_ON(BA,I) returns true if the label denoting
-            %   the brain region I is visible and false otherwise.
+            % BOOL = BR_LAB_IS_ON(BA, I) returns true if the label denoting
+            % the brain region I is visible and false otherwise.
             %
             % See also PlotBrainAtlas.
             
@@ -1830,15 +1830,15 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_labs(ba, i_vec, varargin)
             % BR_LABS displays multiple brain regions as labels
             %
-            % BR_LABS(BA,I_VEC) plots the labels denoting the brain regions
-            %   specified in I_VEC, if not plotted.
+            % BR_LABS(BA, I_VEC) plots the labels denoting the brain regions
+            % specified in I_VEC, if not plotted.
             %
-            % BR_LABS(BA,[]) plots the labels for all possible brain regions.
+            % BR_LABS(BA, []) plots the labels for all possible brain regions.
             %
-            % BR_LABS(BA,I_VEC,'PropertyName',PropertyValue) sets the property
-            %   of the multiple labels' PropertyName to PropertyValue.
-            %   All standard plot properties of text can be used.
-            %   The label properties can also be changed when hidden.
+            % BR_LABS(BA, I_VEC, 'PropertyName', PropertyValue) sets the property
+            % of the multiple labels' PropertyName to PropertyValue.
+            % All standard plot properties of text can be used.
+            % The label properties can also be changed when hidden.
             %
             % See also PlotBrainAtlas, surf.
             
@@ -1884,11 +1884,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_labs_on(ba, i_vec)
             % BR_LABS_ON shows multiple labels
             %
-            % BR_LABS_ON(BA,I_VEC) shows multiple labels denoting the
-            %   brain regions specified in I_VEC.
+            % BR_LABS_ON(BA, I_VEC) shows multiple labels denoting the
+            % brain regions specified in I_VEC.
             %
-            % BR_LABS_ON(BA,[]) shows the labels denoting all possible
-            %   brain region combinations.
+            % BR_LABS_ON(BA, []) shows the labels denoting all possible
+            % brain region combinations.
             %
             % See also PlotBrainAtlas.
             
@@ -1903,11 +1903,11 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_labs_off(ba, i_vec)
             % BR_LABS_OFF hides multiple labels
             %
-            % BR_LABS_OFF(BA,I_VEC) hides multiple labels denoting the
-            %   brain regions specified in I_VEC.
+            % BR_LABS_OFF(BA, I_VEC) hides multiple labels denoting the
+            % brain regions specified in I_VEC.
             %
-            % BR_LABS_OFF(BA,[]) hides the labels denoting all possible
-            %   brain region combinations.
+            % BR_LABS_OFF(BA, []) hides the labels denoting all possible
+            % brain region combinations.
             %
             % See also PlotBrainAtlas.
             
@@ -1922,8 +1922,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function i = get_lab_i(ba, h)
             % GET_LAB_I order number of brain region corresponding to a label
             %
-            % I = GET_LAB_I(BA,H) returns the order number of the brain regions
-            %   corresponding to the label with handle H.
+            % I = GET_LAB_I(BA, H) returns the order number of the brain regions
+            % corresponding to the label with handle H.
             %
             % See also PlotBrainAtlas.
             
@@ -1939,8 +1939,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br = get_lab_br(ba, h)
             % GET_LAB_BR properties of brain region corresponding to a label
             %
-            % BR = GET_LAB_BR(BA,H) returns the properties of the brain region
-            %   BR corresponding to the label with handle H.
+            % BR = GET_LAB_BR(BA, H) returns the properties of the brain region
+            % BR corresponding to the label with handle H.
             %
             % See also PlotBrainAtlas.
             
@@ -1951,14 +1951,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % BR_LABS_SETTINGS sets labels' properties
             %
             % BR_LABS_SETTINGS(BA) allows the user to interractively
-            %   change the labels settings via a graphical user interface.
+            % change the labels settings via a graphical user interface.
             %
-            % BR_LABS_SETTINGS(BA,'PropertyName',PropertyValue) sets the property
-            %   of the GUI's PropertyName to PropertyValue.
-            %   Admissible properties are:
-            %       FigPosition  -   position of the GUI on the screen
-            %       FigColor     -   background color of the GUI
-            %       FigName      -   name of the GUI
+            % BR_LABS_SETTINGS(BA, 'PropertyName', PropertyValue) sets the property
+            % of the GUI's PropertyName to PropertyValue.
+            % Admissible properties are:
+            %     FigPosition  -   position of the GUI on the screen
+            %     FigColor     -   background color of the GUI
+            %     FigName      -   name of the GUI
             %
             % See also PlotBrainAtlas.
             
