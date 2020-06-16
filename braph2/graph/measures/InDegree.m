@@ -3,9 +3,9 @@ classdef InDegree < Measure
     % InDegree provides the in-degree of a node for binary directed (BD) and 
     % weighted directed (WD) graphs. 
     %
-    % It is calculated as the number of inward edges connected to the node. 
-    % Self-connections are excluded (i.e. the diagonal of the connection 
-    % matrix is removed).
+    % It is calculated as the number of inward edges connected to a node  
+    % within a layer. Self-connections are excluded (i.e. the diagonal of the  
+    % connection matrix is removed).
     % 
     % InDegree methods:
     %   InDegree                    - constructor
@@ -45,7 +45,7 @@ classdef InDegree < Measure
             
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix or 2D-cell array 
+            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
             
             in_degree = cell(g.layernumber(), 1);         
             for li = 1:1:g.layernumber()
@@ -87,8 +87,8 @@ classdef InDegree < Measure
             % See also getList, getCompatibleGraphList.
             
             description = [ ...
-                'The in-degree of a node is ' ...
-                'the number of inward edges connected to the node. ' ...
+                'The in-degree of a node is the number of' ...
+                'inward edges connected to a node within a layer. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
         end
