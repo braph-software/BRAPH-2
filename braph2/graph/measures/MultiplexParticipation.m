@@ -61,7 +61,7 @@ classdef MultiplexParticipation < Degree
             
             multiplex_participation = zeros(N(1), 1);
             for li = 1:1:L
-                multiplex_participation = multiplex_participation + (degree{li}/overlapping_degree{1}).^2;
+                multiplex_participation = multiplex_participation + (degree{li}./overlapping_degree{1}).^2;
             end
             multiplex_participation = {L / (L - 1) * (1 - multiplex_participation)};
         end
