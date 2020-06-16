@@ -26,8 +26,8 @@ classdef DegreeAv < Degree
     methods
         function m = DegreeAv(g, varargin)
             % DEGREEAV(G) creates average degree with default properties.
-            % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU). 
+            % G is a graph (e.g, an instance of GraphBU, GraphWU,
+            % MultiplexGraphBU or MultiplexGraphBU). 
             %   
             % See also Measure, Degree, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU. 
 
