@@ -3,9 +3,8 @@ classdef MultiplexParticipation < Degree
     % MultiplexParticipationt provides the multiplex participation of a node for binary 
     % undirected (BU) and weighted undirected (WU) multiplexes. 
     %
-    % It is calculated as the sum of the number of edges connected to the
-    % node in all layers, i.e., it is the sum of the degrees of a node in
-    % all layers.
+    % It is calculated as the number of neighbours of a node across the
+    % layers.
     % 
     % MultiplexParticipation methods:
     %   MultiplexParticipation      - constructor
@@ -95,9 +94,8 @@ classdef MultiplexParticipation < Degree
             % See also getClass, getName.
             
             description = [ ...
-                'The multiplex participation of a node is the sum of ' ...
-                'the edges connected to the node in all layers. ' ...
-                'Connection weights are ignored in calculations.' ...
+                'The multiplex participation of a node is the the heterogeneity ' ...
+                'of the number of neighbours of a node across the layers. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
