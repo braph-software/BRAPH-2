@@ -1,6 +1,6 @@
 classdef MultiplexParticipation < Degree
     % MultiplexParticipation Multiplex participation measure
-    % MultiplexParticipationt provides the multiplex participation of a node for binary 
+    % MultiplexParticipation provides the multiplex participation of a node for binary 
     % undirected (BU) and weighted undirected (WU) multiplexes. 
     %
     % It is calculated as the number of neighbours of a node across the
