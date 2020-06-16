@@ -35,7 +35,7 @@ classdef MultiplexParticipation < Degree
         end
     end
     methods (Access=protected)
-        function overlapping_degree = calculate(m)
+        function multiplex_participation = calculate(m)
             % CALCULATE calculates the multiplex participation value of a multiplex
             %
             % MULTIPLEXPARTICIPATION = CALCULATE(M) returns the value of the multiplex
@@ -51,14 +51,20 @@ classdef MultiplexParticipation < Degree
                 degree = calculate@Degree(m);
             end
             
+            if g.is_measure_calculated('OverlappingDegree')
+                overlapping_degree = g.getMeasureValue('OverlappingDegree');
+            else
+                overlapping_degree = OverlappingDegree(g, g.getSettings()).getValue();
+            end
+            
             N = g.nodenumber();
             L = g.layernumber();
             
-            overlapping_degree = zeros(N(1), 1);
+            multiplex_participation = zeros(N(1), 1);
             for li = 1:1:L
-                overlapping_degree = overlapping_degree + degree{li};
+                multiplex_participation = multiplex_participation + degree{li};
             end
-            overlapping_degree = {overlapping_degree};
+            multiplex_participation = {multiplex_participation};
         end
     end  
     methods (Static)  % Descriptive methods
