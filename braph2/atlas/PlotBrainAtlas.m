@@ -30,6 +30,15 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   INIT_SPH_R                -   sphere radius
     %                                 (default = 1)
     %
+    %   INIT_ID_FONT_SIZE         -  id font size
+    %                                (default = 13)
+    %   INIT_ID_FONT_NAME         -  id font name
+    %                                (default = 'Helvetica')
+    %   INIT_ID_FONT_COLOR        -  id font color
+    %                                (default = [0 0 0])
+    %   INIT_ID_FONT_INTERPRETER  -  id font interpreter
+    %                                (default = 'none')
+    %
     %   INIT_LAB_FONT_SIZE        -   label font size
     %                                 (default = 13)
     %   INIT_LAB_FONT_NAME        -   label font name
@@ -38,11 +47,14 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %                                 (default = [0 0 0])
     %   INIT_LAB_FONT_INTERPRETER -   label font interpreter
     %                                 (default = 'none')
-    %   PLOT_SYMBOL_NAME          -   list with symbols options name
-    %   PLOT_SYMBOL_TAG           -   list with symbols options
     %
-    % PlotBrainAtlas methods:
+    % PlotBrainAtlas basic methods:
     %   PlotBrainAtlas    -   constructor
+    %   tostring          -   returns a string representing the plot brain atlas
+    %   disp              -   displays the plot brain atlas
+    %   getBrainAtlas     -   returns the plot brain atlas
+    %   
+    % PlotBrainAtlas symbol methods:
     %   br_sym            -   displays brain region as symbol
     %   br_sym_on         -   shows a symbol
     %   br_sym_off        -   hides a symbol
@@ -54,6 +66,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   get_sym_br        -   properties of brain region corresponding to a symbol
     %   br_syms_settings  -   sets symbols' properties
     %
+    % PlotBrainAtlas sphere methods:
     %   br_sph            -   displays brain region as sphere
     %   br_sph_on         -   shows a sphere
     %   br_sph_off        -   hides a sphere
@@ -65,6 +78,19 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   get_sph_br        -   properties of brain region corresponding to a sphere
     %   br_sphs_settings  -   sets spheres' properties
     %
+    % PlotBrainAtlas id methods:
+    %   br_id             -   displays brain region as id
+    %   br_id_on          -   shows an id
+    %   br_id_off         -   hides an id
+    %   br_id_is_on       -   checks if id is visible
+    %   br_ids            -   displays multiple brain regions as id
+    %   br_ids_on         -   shows multiple ids
+    %   br_ids_off        -   hides multiple ids
+    %   get_id_i          -   order number of brain region corresponding to a id
+    %   get_id_br         -   properties of brain region corresponding to a id
+    %   get_id_settings   -   set id's properties
+    %
+    % PlotBrainAtlas label methods:
     %   br_lab            -   displays brain region as label
     %   br_lab_on         -   shows a label
     %   br_lab_off        -   hides a label
@@ -75,6 +101,10 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   get_lab_i         -   order number of brain region corresponding to a label
     %   get_lab_br        -   properties of brain region corresponding to a label
     %   br_labs_settings  -   sets labels' properties
+    %
+    % PlotBrainAtlas distance methods:
+    %   distance_map_on   -  calculate and sets the colormap axis in the brain surface as a function of distance
+    %   distance_map_off  -  sets the colormap axis in the brian surface to default
     %
     % See also PlotBrainSurf, BrainAtlas, BrainRegion.
     
