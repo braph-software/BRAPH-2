@@ -1,18 +1,18 @@
-classdef InMultiplexParticipation < InDegree
-    % InMultiplexParticipation In-multiplex participation measure
-    % InMultiplexParticipation provides the in-multiplex participation of a node for binary 
+classdef MultiplexInParticipation < InDegree
+    % MultiplexInParticipation Multiplex in-participation measure
+    % MultiplexInParticipation provides the multiplex in-participation of a node for binary 
     % undirected (BU) and weighted undirected (WU) multiplexes. 
     %
     % It is calculated as the number of inward neighbours of a node across the
     % layers.
     % 
-    % InMultiplexParticipation methods:
-    %   InMultiplexParticipation    - constructor
+    % MultiplexInParticipation methods:
+    %   MultiplexInParticipation    - constructor
     %
-    % InMultiplexParticipation methods (Static)
-    %   getClass                    - returns the in-multiplex participation class
-    %   getName                     - returns the name of in-multiplex participation measure
-    %   getDescription              - returns the description of in-multiplex participation measure
+    % MultiplexInParticipation methods (Static)
+    %   getClass                    - returns the multiplex in-participation class
+    %   getName                     - returns the name of multiplex in-participation measure
+    %   getDescription              - returns the description of multiplex in-participation measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns de measure format
     %   getMeasureScope             - returns de measure scope    
@@ -23,8 +23,8 @@ classdef InMultiplexParticipation < InDegree
     % See also Measure, InDegree, OverlappingInDegree, MultiplexGraphBD, MultiplexGraphWD.
     
     methods
-        function m = InMultiplexParticipation(g, varargin)
-            % INMULTIPLEXPARTICIPATION(G) creates in-multiplex participation with default properties.
+        function m = MultiplexInParticipation(g, varargin)
+            % MULTIPLEXINPARTICIPATION(G) creates multiplex in-participation with default properties.
             % G is a directed multiplex (i.e., an instance of
             % MultiplexGraphBD or MultiplexGraphWD).
             %
@@ -34,11 +34,11 @@ classdef InMultiplexParticipation < InDegree
         end
     end
     methods (Access=protected)
-        function in_multiplex_participation = calculate(m)
-            % CALCULATE calculates the in-multiplex participation value of a multiplex
+        function multiplex_in_participation = calculate(m)
+            % CALCULATE calculates the multiplex in-participation value of a multiplex
             %
-            % INMULTIPLEXPARTICIPATION = CALCULATE(M) returns the value of the in-multiplex
-            % participation of a multiplex.
+            % MULTIPLEXINPARTICIPATION = CALCULATE(M) returns the value of the multiplex
+            % in-participation of a multiplex.
             %
             % See also Measure, InDegree, OverlappingInDegree, MultiplexGraphBD, MultiplexGraphWD.
             
@@ -59,78 +59,78 @@ classdef InMultiplexParticipation < InDegree
             N = g.nodenumber();
             L = g.layernumber();
             
-            in_multiplex_participation = zeros(N(1), 1);
+            multiplex_in_participation = zeros(N(1), 1);
             for li = 1:1:L
-                in_multiplex_participation = in_multiplex_participation + (in_degree{li}./overlapping_in_degree{1}).^2;
+                multiplex_in_participation = multiplex_in_participation + (in_degree{li}./overlapping_in_degree{1}).^2;
             end
-            in_multiplex_participation = {L / (L - 1) * (1 - in_multiplex_participation)};
+            multiplex_in_participation = {L / (L - 1) * (1 - multiplex_in_participation)};
         end
     end  
     methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the in-multiplex participation measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the multiplex in-participation measure.
             %
             % See also getName, getDescription. 
             
-            measure_class = 'InMultiplexParticipation';
+            measure_class = 'MultiplexInParticipation';
         end
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the in-multiplex participation measure.
+            % NAME = GETNAME() returns the name of the multiplex in-participation measure.
             %
             % See also getClass, getDescription. 
             
-            name = 'In-multiplex participation';
+            name = 'Multiplex in-participation';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the in-multiplex participation description 
+            % GETDESCRIPTION returns the multiplex in-participation description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % in-multiplex participation measure.
+            % multiplex in-participation measure.
             %
             % See also getClass, getName.
             
             description = [ ...
-                'The in-multiplex participation of a node is the the heterogeneity ' ...
+                'The multiplex in-participation of a node is the the heterogeneity ' ...
                 'of the number of inward neighbours of a node across the layers. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to InMultiplexParticipation
+            % GETAVAILABLESETTINGS returns the setting available to MultiplexInParticipation
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to InMultiplexParticipation. Empty Array in this case.
+            % settings available to MultiplexInParticipation. Empty Array in this case.
             
             available_settings = {};
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of InMultiplexParticipation
+            % GETMEASUREFORMAT returns the measure format of MultiplexInParticipation
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of in-multiplex participation measure (NODAL).
+            % of multiplex in-participation measure (NODAL).
             %
             % See also getMeasureScope.
             
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of InMultiplexParticipation
+            % GETMEASURESCOPE returns the measure scope of MultiplexInParticipation
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of in-multiplex participation measure (SUPERGLOBAL).
+            % measure scope of multiplex in-participation measure (SUPERGLOBAL).
             %
             % See also getMeasureFormat.
             
             measure_scope = Measure.SUPERGLOBAL;
         end
         function list = getCompatibleGraphList()  
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with InMultiplexParticipation 
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with MultiplexInParticipation 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to in-multiplex participation. 
+            % of compatible graph classes to multiplex in-participation. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber. 
@@ -144,11 +144,11 @@ classdef InMultiplexParticipation < InDegree
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with InMultiplexParticipation
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to in-multiplex participation.
+            % compatible graphs to multiplex in-participation.
             % 
             % See also getCompatibleGraphList.
             
-            n = Measure.getCompatibleGraphNumber('InMultiplexParticipation');
+            n = Measure.getCompatibleGraphNumber('MultiplexInParticipation');
         end
     end
 end
