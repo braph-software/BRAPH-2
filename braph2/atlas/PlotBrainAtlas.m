@@ -174,8 +174,15 @@ classdef PlotBrainAtlas < PlotBrainSurf
     end
     methods  % Basic functions
         function ba = PlotBrainAtlas(atlas, varargin)
-            % PLOTBRAINATLAS(ATLAS) constructs the brain atlas plot, it
+            % PLOTBRAINATLAS constructor
+            % 
+            % BA = PLOTBRAINATLAS(ATLAS) constructs the brain atlas plot, it
             % assigns the nodes of atlas to a PlotBrainSurf region.
+            %
+            % BA = PLOTBRAINATLAS (ATLAS, 'Property', VALUE, ...) construc the
+            % brain atlas plot, it assigns the nodes of the atlas to a
+            % PlotBrainSurf region. It passes the properties to the
+            % PlotBrainSurf. 
             %
             % See also PlotBrainSurf, BrainAtlas.
             
@@ -189,21 +196,39 @@ classdef PlotBrainAtlas < PlotBrainSurf
             ba.setRegions();
         end
         function str = tostring(ba)
-            
+            % TOSTRING string with information about plot brain atlas properties
+            %
+            % STR = TOSTRING(BA) returns string with the plot brain atlas
+            % and the plot brain surf.
+            %
+            % See also disp.
             str = [tostring@PlotBrainSurf(ba) ' ' ba.getBrainAtlas().tostring()];
         end
         function disp(ba)
+            % DISP displays brain atlas properties
+            %
+            % DISP(BA) displays the brain surf class and the brain atlas class.
+            %
+            % See also tostring.
             
             disp@PlotBrainSurf(ba)
             disp(ba.getBrainAtlas().tostring())
         end
         function atlas = getBrainAtlas(ba)
+            % GETBRAINATLAS returns the brain atlas
+            %
+            % ATLAS = GETBRAINATLAS(BA) gets the brain atlas
             
             atlas = ba.atlas;
         end
     end
     methods (Access = protected)  % Set Brain Regions
         function setRegions(ba)
+            % SETREGIONS reads the atlas and sets the data
+            %
+            % SETREGIONS(BA) reads the atlas and loads the data.
+            %
+            % See getBrainAtlas.
             
             X = cellfun(@(br) br.getX(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
             Y = cellfun(@(br) br.getY(), ba.getBrainAtlas().getBrainRegions().getValues(), 'UniformOutput', false);
@@ -2149,6 +2174,12 @@ classdef PlotBrainAtlas < PlotBrainSurf
     end
     methods  % distance
         function distance_map_on(ba, i_vec)
+            % DISTANCE_MAP_ON sets the colormap axis as a function of distance
+            %
+            % DISTANCE_MAP_ON(BA, I_VEC) sets the BA colormap axis as a
+            % function of distance to brain regions specified by the I_VEC.
+            %
+            % See also distance_map_off
             
             brain_surf_coords = ba.coord;
             inverse_distance = zeros(length(i_vec), size(brain_surf_coords, 2));
@@ -2162,6 +2193,12 @@ classdef PlotBrainAtlas < PlotBrainSurf
             caxis([prctile(inverse_distance, 1) prctile(inverse_distance, 99)])
         end
         function distance_map_off(ba, facecolor_style)
+            % DISTANCE_MAP_ON sets the colormap axis to default
+            %
+            % DISTANCE_MAP_ON(BA, I_VEC) sets the BA colormap axis to default
+            % to brain regions specified by the I_VEC.
+            %
+            % See also distance_map_on
             
             if nargin < 2
                 facecolor_style = [0 0 0];
