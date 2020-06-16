@@ -125,7 +125,7 @@ classdef OutStrength < Measure
             measure_scope = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList()
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with OutStrength.
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with OutStrength
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
             % of compatible graph classes to out-strength. 
