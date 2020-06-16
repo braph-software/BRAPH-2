@@ -4,8 +4,8 @@ classdef OutStrength < Measure
     % directed (WD) graphs.
     %
     % It is calculated as the sum of all weights of the outward edges
-    % connected to a node, i.e., it is the sum of the columns of the 
-    % adjacency matrix. 
+    % connected to a node within a layer, i.e., it is the sum of the 
+    % columns of the adjacency matrix. 
     %
     % OutStrength methods:
     %   OutStrength                 - constructor
@@ -44,7 +44,7 @@ classdef OutStrength < Measure
             % See also Measure, InStrength, GraphWD, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix or 2D-cell array 
+            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
             
             out_strength = cell(g.layernumber(), 1);      
             for li = 1:1:g.layernumber()
@@ -88,7 +88,7 @@ classdef OutStrength < Measure
             description = [ ...
                 'The out-strength of a node is ' ...
                 'the sum of the weights of all ' ...
-                'the outward edges connected to a node ' ...
+                'the outward edges connected to a node within a layer ' ...
                 'for weighted directed (WD) graphs. ' ...
                 'Out-strengths are calculated as sums ' ...
                 'over colums of the weighted connectivity matrix.' ...
