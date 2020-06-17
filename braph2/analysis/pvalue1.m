@@ -4,10 +4,10 @@ function P1 = pvalue1(observed_difference, random_differences)
 % P1 = PVALUE1(OBSERVED_DIFFERENCE, RANDOM_DIFFERENCES) calculates the
 % one-tailed P-value of OBSERVED_DIFFERENCE with respect to the
 % distribution given by RANDOM_DIFFERENCES. 
-% OBSERVED_DIFFERENCE a scalar, vector or matrix with the difference.
+% OBSERVED_DIFFERENCE is a scalar, a vector or a matrix with the difference.
 % RANDOM_DIFFERENCES must be a cell array of samples, where each cell contains a
-% scalar, vector or matrix with random variables.
-% P2 is a scalar, vector or matrix with the one-sided p-values.
+% scalar, a vector or a matrix with random variables.
+% P1 is a scalar, a vector or a matrix with the one-sided p-values.
 %
 % See also pvalue2, quantiles, fdr, bonferroni.
 
