@@ -18,7 +18,7 @@ else
     P = ceil(abs(P));  % enforces that P is a positive integer
 end
 
-M = numel(values);  % number of samples (per variable)
+M = numel(values);  %#ok<NASGU> % number of samples (per variable)
 
 row_number = size(values{1}, 1);
 column_number = size(values{1}, 2);
