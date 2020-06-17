@@ -86,9 +86,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   br_ids            -   displays multiple brain regions as id
     %   br_ids_on         -   shows multiple ids
     %   br_ids_off        -   hides multiple ids
-    %   get_id_i          -   returns the order number of brain region corresponding to a id
-    %   get_id_br         -   returns properties of brain region corresponding to a id
-    %   get_ids_settings   -   set id's properties
+    %   get_id_i          -   returns the order number of brain region corresponding to an id
+    %   get_id_br         -   returns properties of brain region corresponding to an id
+    %   br_ids_settings   -   sets id's properties
     %
     % PlotBrainAtlas label methods:
     %   br_lab            -   displays brain region as label
