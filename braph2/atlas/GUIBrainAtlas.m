@@ -269,7 +269,9 @@ init_table()
                 end
             case TAB_BR_ID_COL
                 if ~atlas.getBrainRegions().containsKey(newdata)
+                    % change brain region id
                     atlas.getBrainRegions().getValue(i).setID(newdata)
+                    % change brain region key in idict
                     oldkey = atlas.getBrainRegions().getKey(i);
                     atlas.getBrainRegions().replaceKey(oldkey, newdata);
                 end
@@ -297,40 +299,41 @@ init_table()
         update_table_table()
 %         update_figure_brainview()
     end
-% % TODO - MANAGE COUNTER SO THAT IT DOESN'T CREATE POTENTIAL ERRORS
-%     counter_add = 0;
-%     function cb_table_add(~, ~)  % (src, event)
-%         counter_add = counter_add + 1;
-%         dummyBrainRegion = BrainRegion(['ID' num2str(counter_add)], 'Label', 'Notes', 0, 0, 0);
-%         atlas.getBrainRegions().add(dummyBrainRegion.getID(), dummyBrainRegion);
-%         update_table_table()
+    function cb_table_add(~, ~)  % (src, event)
+        br_id = 1;
+        while atlas.getBrainRegions().containsKey(num2str(br_id))
+            br_id = br_id + 1;
+        end
+        br = BrainRegion([num2str(br_id)], '', '', 0, 0, 0);
+        atlas.getBrainRegions().add(br.getID(), br);
+        update_table_table()
 %         update_figure_brainview()
-%     end
-%     function cb_table_remove(~, ~)  % (src, event)
-%         selected = atlas.getBrainRegions().remove_all(selected);
-%         update_table_table()
+    end
+    function cb_table_remove(~, ~)  % (src, event)
+        selected = atlas.getBrainRegions().remove_all(selected);
+        update_table_table()
 %         update_figure_brainview()
-%     end
-%     function cb_table_moveup(~, ~)  % (src, event)
-%         selected = atlas.getBrainRegions().move_up(selected);
-%         update_table_table()
+    end
+    function cb_table_moveup(~, ~)  % (src, event)
+        selected = atlas.getBrainRegions().move_up(selected);
+        update_table_table()
 %         update_figure_brainview()
-%     end
-%     function cb_table_movedown(~, ~)  % (src, event)
-%         selected = atlas.getBrainRegions().move_down(selected);
-%         update_table_table()
+    end
+    function cb_table_movedown(~, ~)  % (src, event)
+        selected = atlas.getBrainRegions().move_down(selected);
+        update_table_table()
 %         update_figure_brainview()
-%     end
-%     function cb_table_move2top(~, ~)  % (src, event)
-%         selected = atlas.getBrainRegions().move_to_top(selected);
-%         update_table_table()
+    end
+    function cb_table_move2top(~, ~)  % (src, event)
+        selected = atlas.getBrainRegions().move_to_top(selected);
+        update_table_table()
 %         update_figure_brainview()
-%     end
-%     function cb_table_move2bottom(~, ~)  % (src, event)
-%         selected = atlas.getBrainRegions().move_to_bottom(selected);
-%         update_table_table()
+    end
+    function cb_table_move2bottom(~, ~)  % (src, event)
+        selected = atlas.getBrainRegions().move_to_bottom(selected);
+        update_table_table()
 %         update_figure_brainview()
-%     end
+    end
 
 %% Make the GUI visible.
 setup()
