@@ -4,7 +4,9 @@ classdef BRAPH2
     %
     % Properties(Constant) - BRAPH2 ID Card:
     %   NAME    - BRAPH2 full name
+    %   VERSION - BRAPH2 version
     %   STR     - BRAPH2 sort string
+    %   BUILD   - BRAPH2 build number
     %
     % Properties(Constant) - BRAPH2 error codes:
     %   WRONG_INPUT     - wrong input value or format in a function
@@ -14,8 +16,9 @@ classdef BRAPH2
     
     properties (Constant)  % BRAPH2 ID Card
         NAME = 'Braph 2.0'  % BRAPH2 full name
+        VERSION = '2.0'  % BRAPH2 version
         STR = 'BRAPH2'  % BRAPH2 sort string
-        BUILD = '2020'
+        BUILD = 2020  % BRAPH2 build number
     end
     properties (Constant)  % BRAPH2 error codes
         WRONG_INPUT = 'WrongInput'  % wrong input value or format in a function
