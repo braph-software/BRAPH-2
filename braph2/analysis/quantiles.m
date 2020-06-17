@@ -1,13 +1,13 @@
 function Q = quantiles(values, P)
-% QUANTILES Calcualtes the quantiles of a distribution
-%
-% Q = QUANTILES(VALUES) calculates the percentiles of VALUES. It is
-% equivalent to QUANTILES(VALUES, 100).
+% QUANTILES Calculates the quantiles of a distribution
 %
 % Q = QUANTILES(VALUES, P) calculates the P-quantiles of VALUES.
 % VALUES must be a cell array of samples, where each cell contains a 
 % scalar, vector or matrix with random variables. Q is a cell array with
 % the quantiles from 0 to Q.
+%
+% Q = QUANTILES(VALUES) calculates the percentiles of VALUES. It is
+% equivalent to QUANTILES(VALUES, 100).
 %
 % See also pvalue1, pvalue2, fdr, bonferroni.
 
