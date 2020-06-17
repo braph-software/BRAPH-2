@@ -278,7 +278,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             }
     end
     properties (GetAccess=protected, SetAccess=protected)
-        A  % adjacency matrix or 2D-cell array of adjacency matrices
+        A  % adjacency matrix (for single-layer graphs) or 2D-cell array of adjacency matrices (for multi-layer graphs)
         settings  % structure with the constructor varagin
         measure_dict  % dictionary with calculated measures
     end
