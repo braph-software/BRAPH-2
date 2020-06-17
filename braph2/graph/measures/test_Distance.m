@@ -262,12 +262,12 @@ assert(isequal(distance.getValue(), known_distance), ...
 
 %% Test 9: Calculation vs BCT
 A = rand(randi(5));
+graph_class_distance_list = Distance.getCompatibleGraphList();
 
 for i = 1:1:length(graph_class_distance_list)/2
     graph_class = graph_class_distance_list{i};
     g = Graph.getGraph(graph_class, A);
     distance = Distance(g);
-    value_distance = distance.getValue();
     
     switch(graph_class)
         case 'GraphBD'
@@ -298,7 +298,7 @@ for i = 1:1:length(graph_class_distance_list)/2
         value_bct = distance_bin(A);
     end
     
-    assert(isequal(value_distance{1}, value_bct), ...
+    assert(isequal(distance.getValue(), {value_bct}), ...
         ['BRAPH:' graph_class ':Distance'], ...
         ['Distance is not calculated for ' graph_class])
     
