@@ -1,7 +1,7 @@
 classdef PlotBrainAtlas < PlotBrainSurf
     % PlotBrainAtlas Plot and manage of a brain atlas
     % PlotBrainAtlas plots and manages the brain regions that make up a
-    % a brain atlas. The brain regions can be plotted by using symbols,
+    % brain atlas. The brain regions can be plotted by using symbols,
     % spheres or labels.
     % It is a subclass of PlotBrainSurf.
     %
@@ -62,8 +62,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   br_syms           -   displays multiple brain regions as symbols
     %   br_syms_on        -   shows multiple symbols
     %   br_syms_off       -   hides multiple symbols
-    %   get_sym_i         -   order number of brain region corresponding to a symbol
-    %   get_sym_br        -   properties of brain region corresponding to a symbol
+    %   get_sym_i         -   returns the order number of brain region corresponding to a symbol
+    %   get_sym_br        -   returns the properties of brain region corresponding to a symbol
     %   br_syms_settings  -   sets symbols' properties
     %
     % PlotBrainAtlas sphere methods:
@@ -74,8 +74,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   br_sphs           -   displays multiple brain regions as spheres
     %   br_sphs_on        -   shows multiple spheres
     %   br_sphs_off       -   hides multiple spheres
-    %   get_sph_i         -   order number of brain region corresponding to a sphere
-    %   get_sph_br        -   properties of brain region corresponding to a sphere
+    %   get_sph_i         -   returns the order number of brain region corresponding to a sphere
+    %   get_sph_br        -   returns the properties of brain region corresponding to a sphere
     %   br_sphs_settings  -   sets spheres' properties
     %
     % PlotBrainAtlas id methods:
@@ -86,9 +86,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   br_ids            -   displays multiple brain regions as id
     %   br_ids_on         -   shows multiple ids
     %   br_ids_off        -   hides multiple ids
-    %   get_id_i          -   order number of brain region corresponding to a id
-    %   get_id_br         -   properties of brain region corresponding to a id
-    %   get_id_settings   -   set id's properties
+    %   get_id_i          -   returns the order number of brain region corresponding to a id
+    %   get_id_br         -   returns properties of brain region corresponding to a id
+    %   get_ids_settings   -   set id's properties
     %
     % PlotBrainAtlas label methods:
     %   br_lab            -   displays brain region as label
@@ -98,13 +98,13 @@ classdef PlotBrainAtlas < PlotBrainSurf
     %   br_labs           -   displays multiple brain regions as label
     %   br_labs_on        -   shows multiple labels
     %   br_labs_off       -   hides multiple labels
-    %   get_lab_i         -   order number of brain region corresponding to a label
-    %   get_lab_br        -   properties of brain region corresponding to a label
+    %   get_lab_i         -   returns the order number of brain region corresponding to a label
+    %   get_lab_br        -   returns the properties of brain region corresponding to a label
     %   br_labs_settings  -   sets labels' properties
     %
     % PlotBrainAtlas distance methods:
     %   distance_map_on   -  calculate and sets the colormap axis in the brain surface as a function of distance
-    %   distance_map_off  -  sets the colormap axis in the brian surface to default
+    %   distance_map_off  -  sets the colormap axis in the brain surface to default
     %
     % See also PlotBrainSurf, BrainAtlas, BrainRegion.
     
@@ -179,7 +179,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % BA = PLOTBRAINATLAS(ATLAS) constructs the brain atlas plot, it
             % assigns the nodes of atlas to a PlotBrainSurf region.
             %
-            % BA = PLOTBRAINATLAS (ATLAS, 'Property', VALUE, ...) construc the
+            % BA = PLOTBRAINATLAS (ATLAS, 'Property', VALUE, ...) constructs the
             % brain atlas plot, it assigns the nodes of the atlas to a
             % PlotBrainSurf region. It passes the properties to the
             % PlotBrainSurf. 
@@ -461,7 +461,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
         end
         function i = get_sym_i(ba, h)
-            % GET_SYM_I order number of brain region corresponding to a symbol
+            % GET_SYM_I returns the order number of brain region corresponding to a symbol
             %
             % I = GET_SYM_I(BA, H) returns the order number of the brain regions
             % corresponding to the symbol with handle H.
@@ -478,7 +478,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
         end
         function br = get_sym_br(ba, h)
-            % GET_SYM_BR properties of brain region corresponding to a symbol
+            % GET_SYM_BR returns the properties of brain region corresponding to a symbol
             %
             % BR = GET_SYM_BR(BA, H) returns the properties of the brain region
             % BR corresponding to the symbol with handle H.
@@ -491,7 +491,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_syms_settings(ba, i_vec, varargin)
             % BR_SYMS_SETTINGS sets symbols' properties
             %
-            % BR_SYMS_SETTINGS(BA) allows the user to interractively
+            % BR_SYMS_SETTINGS(BA) allows the user to interactively
             % change the symbols settings via a graphical user interface.
             %
             % BR_SYMS_SETTINGS(BA, 'PropertyName', PropertyValue) sets the property
@@ -963,7 +963,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
         end
         function i = get_sph_i(ba, h)
-            % GET_SPH_I order number of brain region corresponding to a sphere
+            % GET_SPH_I returns the order number of brain region corresponding to a sphere
             %
             % I = GET_SPH_I(BA, H) returns the order number of the brain regions
             % corresponding to the sphere with handle H.
@@ -980,7 +980,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
         end
         function br = get_sph_br(ba, h)
-            % GET_SPH_BR properties of brain region corresponding to a sphere
+            % GET_SPH_BR returns the properties of brain region corresponding to a sphere
             %
             % BR = GET_SPH_BR(BA, H) returns the properties of the brain region
             % BR corresponding to the sphere with handle H.
@@ -993,7 +993,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_sphs_settings(ba, i_vec, varargin)
             % BR_SPHS_SETTINGS sets spheres' properties
             %
-            % BR_SPHS_SETTINGS(BA) allows the user to interractively
+            % BR_SPHS_SETTINGS(BA) allows the user to interactively
             % change the spheres settings via a graphical user interface.
             %
             % BR_SPHS_SETTINGS(BA, 'PropertyName', PropertyValue) sets the property
@@ -1282,7 +1282,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function h = br_id(ba, i, varargin)
             % BR_ID displays brain region as id
             %
-            % BR_ID(BA, I) denotes the brain regions I as a id, if not plotted.
+            % BR_ID(BA, I) denotes the brain regions I as an id, if not plotted.
             %
             % H = BR_ID(BA, I) returns the handle to the id denoting the brain
             %   region I.
@@ -1473,7 +1473,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
         end
         function i = get_id_i(ba, h)
-            % GET_ID_I order number of brain region corresponding to a id
+            % GET_ID_I returns the order number of brain region corresponding to an id
             %
             % I = GET_ID_I(BA,H) returns the order number of the brain regions
             % corresponding to the id with handle H.
@@ -1490,7 +1490,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
         end
         function br = get_id_br(ba, h)
-            % GET_ID_BR properties of brain region corresponding to a id
+            % GET_ID_BR returns the properties of brain region corresponding to an id
             %
             % BR = GET_ID_BR(BA,H) returns the properties of the brain region
             % BR corresponding to the id with handle H.
@@ -1501,9 +1501,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
             br = ba.getBrainAtlas().get(i);
         end
         function br_ids_settings(ba, i_vec, varargin)
-            % BR_IDS_SETTINGS sets ids properties
+            % BR_IDS_SETTINGS sets ids' properties
             %
-            % BR_IDS_SETTINGS(BA) allows the user to interractively
+            % BR_IDS_SETTINGS(BA) allows the user to interactively
             % change the ids settings via a graphical user interface.
             %
             % BR_IDS_SETTINGS(BA, 'PropertyName', PropertyValue) sets the property
@@ -1920,7 +1920,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
         end
         function i = get_lab_i(ba, h)
-            % GET_LAB_I order number of brain region corresponding to a label
+            % GET_LAB_I returns the order number of brain region corresponding to a label
             %
             % I = GET_LAB_I(BA, H) returns the order number of the brain regions
             % corresponding to the label with handle H.
@@ -1937,7 +1937,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             end
         end
         function br = get_lab_br(ba, h)
-            % GET_LAB_BR properties of brain region corresponding to a label
+            % GET_LAB_BR returns the properties of brain region corresponding to a label
             %
             % BR = GET_LAB_BR(BA, H) returns the properties of the brain region
             % BR corresponding to the label with handle H.
@@ -1950,7 +1950,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
         function br_labs_settings(ba, i_vec, varargin)
             % BR_LABS_SETTINGS sets labels' properties
             %
-            % BR_LABS_SETTINGS(BA) allows the user to interractively
+            % BR_LABS_SETTINGS(BA) allows the user to interactively
             % change the labels settings via a graphical user interface.
             %
             % BR_LABS_SETTINGS(BA, 'PropertyName', PropertyValue) sets the property
@@ -2193,9 +2193,9 @@ classdef PlotBrainAtlas < PlotBrainSurf
             caxis([prctile(inverse_distance, 1) prctile(inverse_distance, 99)])
         end
         function distance_map_off(ba, facecolor_style)
-            % DISTANCE_MAP_ON sets the colormap axis to default
+            % DISTANCE_MAP_OFF sets the colormap axis to default
             %
-            % DISTANCE_MAP_ON(BA, I_VEC) sets the BA colormap axis to default
+            % DISTANCE_MAP_OFF(BA, I_VEC) sets the BA colormap axis to default
             % to brain regions specified by the I_VEC.
             %
             % See also distance_map_on
