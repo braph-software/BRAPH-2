@@ -1,17 +1,16 @@
 classdef Distance < Measure
-    % Distance < Measure: Distance measure
+    % Distance Distance measure
     % Distance provides the distance of a graph for binary undirected (BU),
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
-    % graphs. It is calculated as the shortest path between all pairs of
-    % nodes in the graph. 
+    % graphs. 
+    %
+    % It is calculated as the shortest path between all pairs of
+    % nodes within a layer. 
     % 
     % Distance methods:
     %   Distance                    - constructor
-    %
-    % Distance methods (Access=protected):
-    %   calculate                   - calculates the distance of a graph
     % 
-    % Distance methods (Static)
+    % Distance descriptive methods (Static)
     %   getClass                    - returns the distance class
     %   getName                     - returns the name of distance measure
     %   getDescription              - returns the description of distance measure
@@ -22,22 +21,19 @@ classdef Distance < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Graph, Degree, Strength, PathLength.
+    % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
     properties (GetAccess=protected, SetAccess=protected)
         B  % number of edges matrix 
     end
     methods
         function m = Distance(g, varargin)
-            % DISTANCE(G) creates distance with default measure properties.
+            % DISTANCE(G) creates distance with default properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU). 
+            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
+            % or MultiplexGraphWU). 
             %
-            % DISTANCE(G, 'VALUE', VALUE) creates distance, and sets the value
-            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU).
-            %   
-            % See also Measure, Graph, Degree, Strength, PathLength. 
+            % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
           
             m = m@Measure(g, varargin{:});
         end
@@ -47,13 +43,15 @@ classdef Distance < Measure
             % CALCULATE calculates the distance value of a graph
             %
             % DISTANCE = CALCULATE(M) returns the value of the distance of a
-            % graph.
+            % graph or multiplex.
+            %
+            % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix of the graph
+            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
+            
             distance = cell(g.layernumber(), 1);
             connectivity_type =  g.getConnectivityType(g.layernumber());
-            
             for li = 1:1:g.layernumber()
                 
                 if g.is_graph(g)
@@ -163,7 +161,7 @@ classdef Distance < Measure
             
             description = [ ...
                 'The distance of a graph is ' ...
-                'the shortest path between all pairs of nodes in the graph. ' ...
+                'the shortest path between all pairs of nodes within a layer of the graph. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -177,7 +175,7 @@ classdef Distance < Measure
             available_settings = {};
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of distance
+            % GETMEASUREFORMAT returns the measure format of Distance
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of distance measure (BINODAL).
@@ -187,7 +185,7 @@ classdef Distance < Measure
             measure_format = Measure.BINODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of distance
+            % GETMEASURESCOPE returns the measure scope of Distance
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
             % measure scope of distance measure (UNILAYER).
@@ -198,10 +196,10 @@ classdef Distance < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to Distance 
+            % with Distance 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to Distance. 
+            % of compatible graph classes to distance. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber. 
@@ -219,10 +217,10 @@ classdef Distance < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to Distance 
+            % graphs with Distance 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to Distance.
+            % compatible graphs to distance.
             % 
             % See also getCompatibleGraphList.
             
