@@ -348,7 +348,7 @@ classdef GUI
             
             f = figure();
             set(f, 'Visible', 'off')
-            set(f, 'Position', [1 1 GUI.SCREEN_WIDTH * width GUI.SCREEN_HEIGHT * height])
+            set(f, 'Position', [0 0 GUI.SCREEN_WIDTH * width GUI.SCREEN_HEIGHT * height])
             movegui(f, position)
             set(f, 'Color', GUI.BKGCOLOR)
             set(f, 'Name', [AppName ' - ' BRAPH2.BUILD])
