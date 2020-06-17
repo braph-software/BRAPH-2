@@ -215,70 +215,88 @@ init_table()
         end
         set(ui_edit_table_id, 'String', atlas_id)
     end
-%     function update_table_table()
-%         data = cell(atlas.getBrainRegions().length(), 8);
-%         for i = 1:1:atlas.getBrainRegions().length()
-%             if any(selected == i)
-%                 data{i, TAB_BR_SELECTED_COL} = true;
-%             else
-%                 data{i, TAB_BR_SELECTED_COL} = false;
-%             end
-%             data{i, TAB_BR_ID_COL} = atlas.getBrainRegions().getValue(i).getID();
-%             data{i, TAB_BR_LABEL_COL} = atlas.getBrainRegions().getValue(i).getLabel();
-%             data{i, TAB_BR_X_COL} = atlas.getBrainRegions().getValue(i).getX();
-%             data{i, TAB_BR_Y_COL} = atlas.getBrainRegions().getValue(i).getY();
-%             data{i, TAB_BR_Z_COL} = atlas.getBrainRegions().getValue(i).getZ();
-%             data{i, TAB_BR_NOTES_COL} = atlas.getBrainRegions().getValue(i).getNotes();
-%         end
-%         h_br = data;
-%         set(ui_table_table, 'Data', data)
-%     end
+    function update_table_label()
+        atlas_label = atlas.getLabel();
+        set(ui_edit_table_label, 'String', atlas_label)
+    end
+    function update_table_notes()
+        atlas_notes = atlas.getNotes();
+        set(ui_edit_table_notes, 'String', atlas_notes)
+    end
+    function update_table_table()
+        data = cell(atlas.getBrainRegions().length(), 8);
+        for i = 1:1:atlas.getBrainRegions().length()
+            if any(selected == i)
+                data{i, TAB_BR_SELECTED_COL} = true;
+            else
+                data{i, TAB_BR_SELECTED_COL} = false;
+            end
+            data{i, TAB_BR_ID_COL} = atlas.getBrainRegions().getValue(i).getID();
+            data{i, TAB_BR_LABEL_COL} = atlas.getBrainRegions().getValue(i).getLabel();
+            data{i, TAB_BR_X_COL} = atlas.getBrainRegions().getValue(i).getX();
+            data{i, TAB_BR_Y_COL} = atlas.getBrainRegions().getValue(i).getY();
+            data{i, TAB_BR_Z_COL} = atlas.getBrainRegions().getValue(i).getZ();
+            data{i, TAB_BR_NOTES_COL} = atlas.getBrainRegions().getValue(i).getNotes();
+        end
+        set(ui_table_table, 'Data', data)
+    end
     function cb_table_id(~, ~)  % (src, event)
         atlas.setID(get(ui_edit_table_id,  'String'));
         update_table_id()
     end
-%     function cb_table_edit(~, event)  % (src, event)
-%         i = event.Indices(1);
-%         col = event.Indices(2);
-%         newdata = event.NewData;
-%         switch col
-%             case TAB_BR_SELECTED_COL
-%                 if newdata == 1
-%                     selected = sort(unique([selected(:); i]));
+    function cb_table_label(~, ~)  % (src, event)
+        atlas.setLabel(get(ui_edit_table_label,  'String'));
+        update_table_label()
+    end
+    function cb_table_notes(~, ~)  % (src, event)
+        atlas.setNotes(get(ui_edit_table_notes,  'String'));
+        update_table_notes()
+    end
+    function cb_table_edit(~, event)  % (src, event)
+        i = event.Indices(1);
+        col = event.Indices(2);
+        newdata = event.NewData;
+        switch col
+            case TAB_BR_SELECTED_COL
+                if newdata == 1
+                    selected = sort(unique([selected(:); i]));
 %                     h_br(i, 1) = {newdata};
 %                     figure_brain_region_proximity(1)
-%                 else
-%                     selected = selected(selected~=i);
+                else
+                    selected = selected(selected~=i);
 %                     h_br(i, 1) = {newdata};
 %                     figure_brain_region_proximity(1)
-%                 end
-%             case TAB_BR_ID_COL
-%                 atlas.getBrainRegions().getValue(i).setID(newdata)
-%                 oldkey = atlas.getBrainRegions().getKey(i);
-%                 atlas.getBrainRegions().replaceKey(oldkey, newdata);
-%             case TAB_BR_LABEL_COL
-%                 atlas.getBrainRegions().getValue(i).setLabel(newdata)
-%             case TAB_BR_X_COL
-%                 atlas.getBrainRegions().getValue(i).setX(newdata)
-%             case TAB_BR_Y_COL
-%                 atlas.getBrainRegions().getValue(i).setY(newdata)
-%             case TAB_BR_Z_COL
-%                 atlas.getBrainRegions().getValue(i).setZ(newdata)
-%             case TAB_BR_NOTES_COL
-%                 atlas.getBrainRegions().getValue(i).setNotes(newdata)
-%         end
+                end
+            case TAB_BR_ID_COL
+                if ~atlas.getBrainRegions().containsKey(newdata)
+                    atlas.getBrainRegions().getValue(i).setID(newdata)
+                    oldkey = atlas.getBrainRegions().getKey(i);
+                    atlas.getBrainRegions().replaceKey(oldkey, newdata);
+                end
+            case TAB_BR_LABEL_COL
+                atlas.getBrainRegions().getValue(i).setLabel(newdata)
+            case TAB_BR_X_COL
+                atlas.getBrainRegions().getValue(i).setX(newdata)
+            case TAB_BR_Y_COL
+                atlas.getBrainRegions().getValue(i).setY(newdata)
+            case TAB_BR_Z_COL
+                atlas.getBrainRegions().getValue(i).setZ(newdata)
+            case TAB_BR_NOTES_COL
+                atlas.getBrainRegions().getValue(i).setNotes(newdata)
+        end
+        update_table_table()
+%        update_figure_brainview()
+    end
+    function cb_table_selectall(~, ~)  % (src, event)
+        selected = (1:1:atlas.getBrainRegions().length())';
+        update_table_table()
 %         update_figure_brainview()
-%     end
-%     function cb_table_selectall(~, ~)  % (src, event)
-%         selected = (1:1:atlas.getBrainRegions().length())';
-%         update_table_table()
+    end
+    function cb_table_clearselection(~, ~)  % (src, event)
+        selected = [];
+        update_table_table()
 %         update_figure_brainview()
-%     end
-%     function cb_table_clearselection(~, ~)  % (src, event)
-%         selected = [];
-%         update_table_table()
-%         update_figure_brainview()
-%     end
+    end
 % % TODO - MANAGE COUNTER SO THAT IT DOESN'T CREATE POTENTIAL ERRORS
 %     counter_add = 0;
 %     function cb_table_add(~, ~)  % (src, event)
@@ -322,6 +340,9 @@ set(f, 'Visible', 'on');
     function setup()
         % setup table
         update_table_id()
+        update_table_label()
+        update_table_notes()
+        update_table_table()
     end
 
 end
