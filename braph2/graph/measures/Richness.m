@@ -95,6 +95,12 @@ classdef Richness < Degree
                 else  % default, max degree
                     k_level = max(deg);
                 end
+%                 switch lower(directed_triangles_rule)
+%                     case {'number'}  % number parameter
+%                         k_level = richness_threshold;
+%                     otherwise  % default, mad degree
+%                         k_level = max(deg);
+%                 end
 
                 low_rich_nodes = find(deg <= k_level);  % get lower rich nodes with degree <=k
                 subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <=k of Aii
