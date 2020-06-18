@@ -124,6 +124,9 @@ if ~exist('atlas', 'var')
 end
 selected = [];
 
+% PlotBrainAtlas
+ba = [];
+
 % Callbacks to manage application data
     function cb_open(~, ~)  % (src, event)
         % select file
@@ -441,6 +444,531 @@ init_table()
         update_table_table()
 %         update_figure_brainview()
     end
+
+%% Panel Figure
+% FIG_BRAIN_CMD = 'Show brain';
+% FIG_BRAIN_TP = 'Brain surface on/off';
+% 
+% FIG_BRAINALPHA_CMD = 'Brain transparency';
+% FIG_BRAINALPHA_TP = 'Adjust the transparency of the brain surface';
+% 
+% FIG_AXIS_CMD = 'Show axis';
+% FIG_AXIS_TP = 'Toggle axis on/off';
+% 
+% FIG_GRID_CMD = 'Show grid';
+% FIG_GRID_TP = 'Toggle grid on/off';
+% 
+% FIG_LABELS_CMD = 'Show labels';
+% FIG_LABELS_TP = 'Toggle labels on/off';
+% 
+% FIG_BR_CMD = 'Show brain regions';
+% FIG_BR_TP = 'Toggle brain regions'' markers on/off';
+% 
+% FIG_VIEW_3D_CMD = PlotBrainAtlas.VIEW_3D_CMD;
+% FIG_VIEW_SR_CMD = PlotBrainAtlas.VIEW_SR_CMD;
+% FIG_VIEW_SL_CMD = PlotBrainAtlas.VIEW_SL_CMD;
+% FIG_VIEW_AD_CMD = PlotBrainAtlas.VIEW_AD_CMD;
+% FIG_VIEW_AV_CMD = PlotBrainAtlas.VIEW_AV_CMD;
+% FIG_VIEW_CA_CMD = PlotBrainAtlas.VIEW_CA_CMD;
+% FIG_VIEW_CP_CMD = PlotBrainAtlas.VIEW_CP_CMD;
+% 
+% FIG_ZOOMIN_CMD = 'Zoom in';
+% FIG_ZOOMIN_TP = 'Zoom in';
+% 
+% FIG_ZOOMOUT_CMD = 'Zoom out';
+% FIG_ZOOMOUT_TP = 'Zoom out';
+% 
+% FIG_PAN_CMD = 'Pan';
+% FIG_PAN_TP = 'Pan';
+% 
+% FIG_ROTATE3D_CMD = '3D rotation';
+% FIG_ROTATE3D_TP = '3D rotation';
+% 
+% FIG_DATACURSOR_CMD = 'Data cursor';
+% FIG_DATACURSOR_TP = 'Data cursor';
+% 
+% FIG_SELECTBR_CMD = 'Select';
+% FIG_DESELECTBR_CMD = 'Deselect';
+% FIG_INFOBR_CMD = 'Info';
+% 
+% FIG_INIT_AXISON = 1;
+% FIG_INIT_GRIDON = 1;
+% FIG_INIT_LABELSON = 1;
+% FIG_INIT_BRAIN_VISIBLE = 1;
+% FIG_INIT_BRAIN_ALPHA = .5;
+% 
+% FIG_XLABEL = 'x';
+% FIG_YLABEL = 'y';
+% FIG_ZLABEL = 'z';
+% FIG_UNITS = 'mm';
+% FIG_EDGECOLOR = 'none';
+% FIG_FACECOLOR = [.5 .5 .5];
+% 
+% FIG_INIT_BR_VISIBLE = 1;
+% FIG_BR_MARKER = 'o';
+% FIG_BR_COLOR = 'b';
+% FIG_BR_SIZE = 10;
+% FIG_BRSELECTED_MARKER = FIG_BR_MARKER;
+% FIG_BRSELECTED_COLOR = 'r';
+% FIG_BRSELECTED_SIZE = FIG_BR_SIZE;
+
+ui_panel_figure = uipanel();
+ui_axes_figure = axes();
+% ui_menu_figure_brainfiles = uicontrol(ui_panel_figure, 'Style', 'popupmenu');
+% ui_checkbox_figure_brain = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+% ui_checkbox_figure_distance = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+% ui_slider_figure_brainalpha = uicontrol(ui_panel_figure, 'Style', 'slider');
+% ui_checkbox_figure_axis = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+% ui_checkbox_figure_grid = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+% ui_checkbox_figure_br = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+% ui_checkbox_figure_labels = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+% ui_button_figure_3d = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+% ui_button_figure_sagittalright = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+% ui_button_figure_sagittalleft = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+% ui_button_figure_axialdorsal = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+% ui_button_figure_axialventral = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+% ui_button_figure_coronalanterior = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+% ui_button_figure_coronalposterior = uicontrol(ui_panel_figure, 'Style', 'pushbutton');
+init_figure()
+    function init_figure()
+        GUI.setUnits(ui_panel_figure)
+        GUI.setBackgroundColor(ui_panel_figure)
+        
+        set(ui_panel_figure, 'Position', MAINPANEL_POSITION)
+        
+        set(ui_axes_figure, 'Parent', ui_panel_figure)
+        set(ui_axes_figure, 'Position', [.02 .20 .96 .78])
+        
+%         set(ui_menu_figure_brainfiles, 'Position', [.101 .02 .138 .029])
+%         set(ui_menu_figure_brainfiles, 'String', cellfun(@(x) eraseBetween(x, strfind(x, '.'), length(x)), atlas.getBrainSurfList(), 'UniformOutput', false))
+%         set(ui_menu_figure_brainfiles, 'Callback', {@cb_figure_brainfile})
+
+%         set(ui_checkbox_figure_brain, 'Position', [.10 .11 .10 .03])
+%         set(ui_checkbox_figure_brain, 'String', FIG_BRAIN_CMD)
+%         set(ui_checkbox_figure_brain, 'Value', true)
+%         set(ui_checkbox_figure_brain, 'TooltipString', FIG_BRAIN_TP)
+%         set(ui_checkbox_figure_brain, 'Callback', {@cb_figure_plotsettings})
+%         
+%         set(ui_checkbox_figure_distance, 'Position', [.10 .085 .10 .03])
+%         set(ui_checkbox_figure_distance, 'String', 'Distance')
+%         set(ui_checkbox_figure_distance, 'Value', false)
+%         set(ui_checkbox_figure_distance, 'TooltipString', 'Distance from BR to surf')
+%         set(ui_checkbox_figure_distance, 'Callback', {@cb_figure_distance})
+%         
+%         set(ui_slider_figure_brainalpha, 'Position', [.30 .105 .40 .03])
+%         set(ui_slider_figure_brainalpha, 'String', FIG_BRAINALPHA_CMD)
+%         set(ui_slider_figure_brainalpha, 'Min',0,'Max',1, 'Value',FIG_INIT_BRAIN_ALPHA)
+%         set(ui_slider_figure_brainalpha, 'TooltipString', FIG_BRAINALPHA_TP)
+%         set(ui_slider_figure_brainalpha, 'Callback', {@cb_figure_slider})
+%         
+%         set(ui_checkbox_figure_axis, 'Position', [.80 .11 .18 .03])
+%         set(ui_checkbox_figure_axis, 'String', FIG_AXIS_CMD)
+%         set(ui_checkbox_figure_axis, 'Value', true)
+%         set(ui_checkbox_figure_axis, 'TooltipString', FIG_AXIS_TP)
+%         set(ui_checkbox_figure_axis, 'Callback', {@cb_figure_plotsettings})
+%         
+%         set(ui_checkbox_figure_grid, 'Position', [.80 .08 .18 .03])
+%         set(ui_checkbox_figure_grid, 'String', FIG_GRID_CMD)
+%         set(ui_checkbox_figure_grid, 'Value', true)
+%         set(ui_checkbox_figure_grid, 'TooltipString', FIG_GRID_TP);
+%         set(ui_checkbox_figure_grid, 'Callback', {@cb_figure_plotsettings})
+%         
+%         set(ui_checkbox_figure_br, 'Position', [.80 .05 .18 .03])
+%         set(ui_checkbox_figure_br, 'String', FIG_BR_CMD)
+%         set(ui_checkbox_figure_br, 'Value', true)
+%         set(ui_checkbox_figure_br, 'TooltipString', FIG_BR_TP);
+%         set(ui_checkbox_figure_br, 'Callback', {@figure_br_la})
+%         
+%         set(ui_checkbox_figure_labels, 'Position', [.80 .02 .18 .03])
+%         set(ui_checkbox_figure_labels, 'String', FIG_LABELS_CMD)
+%         set(ui_checkbox_figure_labels, 'Value', true)
+%         set(ui_checkbox_figure_labels, 'TooltipString', FIG_LABELS_TP);
+%         set(ui_checkbox_figure_labels, 'Callback', {@figure_br_la})
+%         
+%         set(ui_button_figure_3d, 'Position', [.10 .05 .14 .03])
+%         set(ui_button_figure_3d, 'String', FIG_VIEW_3D_CMD)
+%         set(ui_button_figure_3d, 'Callback', {@cb_figure_angle})
+%         
+%         set(ui_button_figure_sagittalleft, 'Position', [.25 .05 .14 .03])
+%         set(ui_button_figure_sagittalleft, 'String', FIG_VIEW_SL_CMD)
+%         set(ui_button_figure_sagittalleft, 'Callback', {@cb_figure_angle})
+%         
+%         set(ui_button_figure_sagittalright, 'Position', [.25 .02 .14 .03])
+%         set(ui_button_figure_sagittalright, 'String', FIG_VIEW_SR_CMD)
+%         set(ui_button_figure_sagittalright, 'Callback', {@cb_figure_angle})
+%         
+%         set(ui_button_figure_axialdorsal, 'Position', [.40 .05 .14 .03])
+%         set(ui_button_figure_axialdorsal, 'String', FIG_VIEW_AD_CMD)
+%         set(ui_button_figure_axialdorsal, 'Callback', {@cb_figure_angle})
+%         
+%         set(ui_button_figure_axialventral, 'Position', [.40 .02 .14 .03])
+%         set(ui_button_figure_axialventral, 'String', FIG_VIEW_AV_CMD)
+%         set(ui_button_figure_axialventral, 'Callback', {@cb_figure_angle})
+%         
+%         set(ui_button_figure_coronalanterior, 'Position', [.55 .05 .14 .03])
+%         set(ui_button_figure_coronalanterior, 'String', FIG_VIEW_CA_CMD)
+%         set(ui_button_figure_coronalanterior, 'Callback', {@cb_figure_angle})
+%         
+%         set(ui_button_figure_coronalposterior, 'Position', [.55 .02 .14 .03])
+%         set(ui_button_figure_coronalposterior, 'String', FIG_VIEW_CP_CMD)
+%         set(ui_button_figure_coronalposterior, 'Callback', {@cb_figure_angle})
+    end
+% ui_contextmenu_figure_select = uicontextmenu();
+% ui_contextmenu_figure_select_select = uimenu(ui_contextmenu_figure_select);
+% ui_contextmenu_figure_select_info = uimenu(ui_contextmenu_figure_select);
+% ui_contextmenu_figure_deselect = uicontextmenu();
+% ui_contextmenu_figure_deselect_deselect = uimenu(ui_contextmenu_figure_deselect);
+% ui_contextmenu_figure_deselect_info = uimenu(ui_contextmenu_figure_deselect);
+% ui_contextmenu_brain = uicontextmenu();
+% ui_contextmenu_brain_settings = uimenu(ui_contextmenu_brain);
+% init_contextmenu()
+%     function init_contextmenu()
+%         set(ui_contextmenu_figure_select_select, 'Label', FIG_SELECTBR_CMD)
+%         set(ui_contextmenu_figure_select_select, 'Callback', {@cb_figure_selectbr})
+%         
+%         set(ui_contextmenu_figure_select_info, 'Label', FIG_INFOBR_CMD)
+%         set(ui_contextmenu_figure_select_info, 'Callback', {@cb_figure_infobr})
+%         
+%         set(ui_contextmenu_figure_deselect_deselect, 'Label', FIG_DESELECTBR_CMD)
+%         set(ui_contextmenu_figure_deselect_deselect, 'Callback', {@cb_figure_deselectbr})
+%         
+%         set(ui_contextmenu_figure_deselect_info, 'Label', FIG_INFOBR_CMD)
+%         set(ui_contextmenu_figure_deselect_info, 'Callback', {@cb_figure_infobr})
+%         
+%         set(ui_contextmenu_brain_settings, 'Label', 'Brain Settings')
+%         set(ui_contextmenu_brain_settings, 'Callback', {@cb_brain_settings})
+%     end
+    function create_figure()
+
+%         h_axis = FIG_INIT_AXISON;
+%         axis on
+%         
+%         h_grid = FIG_INIT_GRIDON;
+%         grid on
+%         
+%         delete(h_brain)
+%         delete(h_brain_outer_obj)
+%         h_brain = [];
+%         h_brain_outer_obj = [];
+%         h_brain_visible = FIG_INIT_BRAIN_VISIBLE;
+%         h_brainalpha = FIG_INIT_BRAIN_ALPHA;
+%         h_br_visible = FIG_INIT_BR_VISIBLE;
+%         h_br_distance = 0;
+%         
+%         delete(h_labels)
+%         h_labels = [];
+%         h_labels_visible = FIG_INIT_LABELSON;
+%         
+%         axes(ui_axes_figure)
+%         hold on
+%         daspect([1 1 1]);
+%         
+%         xlabel([FIG_XLABEL ' ' GUI.BRA_UNITS FIG_UNITS GUI.KET_UNITS])
+%         ylabel([FIG_YLABEL ' ' GUI.BRA_UNITS FIG_UNITS GUI.KET_UNITS])
+%         zlabel([FIG_ZLABEL ' ' GUI.BRA_UNITS FIG_UNITS GUI.KET_UNITS])
+%         
+%         ui_contextmenu_brain = uicontextmenu();
+%         ui_contextmenu_brain_settings = uimenu(ui_contextmenu_brain);
+%         set(ui_contextmenu_brain_settings, 'Label', 'Brain Settings')
+%         set(ui_contextmenu_brain_settings, 'Callback', {@cb_brainview_brain_settings})
+%         
+%         ui_contextmenu_brain_light = uimenu(ui_contextmenu_brain);
+%         set(ui_contextmenu_brain_light,'Label','Brain Light')
+%         set(ui_contextmenu_brain_light,'Callback',{@cb_brainview_brain_light})
+%         
+%         ui_contextmenu_atlas_symbols = uimenu(ui_contextmenu_brain);
+%         set(ui_contextmenu_atlas_symbols, 'Label', 'Symbols')
+%         set(ui_contextmenu_atlas_symbols, 'Callback', {@cb_brainview_atlas_symbols})
+%         
+%         ui_contextmenu_atlas_spheres = uimenu(ui_contextmenu_brain);
+%         set(ui_contextmenu_atlas_spheres, 'Label', 'Spheres')
+%         set(ui_contextmenu_atlas_spheres, 'Callback', {@cb_brainview_atlas_spheres})
+%         
+%         ui_contextmenu_atlas_labels = uimenu(ui_contextmenu_brain);
+%         set(ui_contextmenu_atlas_labels, 'Label', 'Labels')
+%         set(ui_contextmenu_atlas_labels, 'Callback', {@cb_brainview_atlas_labels})
+%         
+%         atlas.setBrainSurfFile([brain_surf_file '.nv'])
+%         h_brain_obj = atlas.getPlotBrainAtlas();
+%         h_brain_outer_obj = h_brain_obj;
+%         h_brain = h_brain_obj.brain();
+%         set(h_brain, 'EdgeColor', FIG_EDGECOLOR);
+%         set(h_brain, 'FaceColor', FIG_FACECOLOR);
+%         set(h_brain, 'FaceAlpha', h_brainalpha);
+%         
+%         set(h_brain, 'UiContextMenu', ui_contextmenu_brain)
+%         
+%         
+%         function cb_brainview_brain_settings(~, ~)
+%             h_brain_obj.brain_settings();
+%         end
+%         function cb_brainview_brain_light(~, ~)
+%             h_brain_obj.brain_lighting();
+%         end
+%         function cb_brainview_atlas_symbols(~, ~)
+%             h_brain_obj.br_syms_settings();
+%         end
+%         function cb_brainview_atlas_spheres(~, ~)
+%             h_brain_obj.br_sphs_settings();
+%         end
+%         function cb_brainview_atlas_labels(~, ~)
+%             h_brain_obj.br_labs_settings();
+%         end
+%         
+%         update_figure_light()
+%         update_figure_brainview()
+    end
+%     function update_figure_brainview()
+%         
+%         ui_contextmenu_brain = uicontextmenu();
+%         ui_contextmenu_brain_settings = uimenu(ui_contextmenu_brain);
+%         set(ui_contextmenu_brain_settings, 'Label', 'Settings')
+%         set(ui_contextmenu_brain_settings, 'Callback', {@cb_brainview_brain_settings})
+%         
+%         if get(ui_checkbox_figure_axis, 'Value') ~= h_axis
+%             h_axis = get(ui_checkbox_figure_axis, 'Value');
+%             if h_axis
+%                 axis on
+%                 set(ui_toolbar_axis, 'State', 'on')
+%             else
+%                 axis off
+%                 set(ui_toolbar_axis, 'State', 'off')
+%             end
+%         end
+%         
+%         if get(ui_checkbox_figure_grid,'Value') ~= h_grid
+%             h_grid = get(ui_checkbox_figure_grid, 'Value');
+%             if h_grid
+%                 grid on
+%                 set(ui_toolbar_grid, 'State', 'on');
+%             else
+%                 grid off
+%                 set(ui_toolbar_grid, 'State', 'off');
+%             end
+%         end
+%         
+%         if get(ui_button_figure_3d, 'Value')
+%             view(3)
+%             update_figure_light()
+%             set(ui_button_figure_3d, 'Value', 0);
+%         elseif get(ui_button_figure_sagittalleft, 'Value')
+%             view(-90, 0)
+%             update_figure_light()
+%             set(ui_button_figure_sagittalleft, 'Value', 0);
+%         elseif get(ui_button_figure_sagittalright, 'Value')
+%             view(+90, 0)
+%             update_figure_light()
+%             set(ui_button_figure_sagittalright, 'Value', 0);
+%         elseif get(ui_button_figure_axialdorsal, 'Value')
+%             view(0, +90)
+%             update_figure_light()
+%             set(ui_button_figure_axialdorsal, 'Value', 0);
+%         elseif get(ui_button_figure_axialventral, 'Value')
+%             view(0, -90)
+%             update_figure_light()
+%             set(ui_button_figure_axialventral, 'Value', 0);
+%         elseif get(ui_button_figure_coronalanterior, 'Value')
+%             view(180, 0)
+%             update_figure_light()
+%             set(ui_button_figure_coronalanterior, 'Value', 0);
+%         elseif get(ui_button_figure_coronalposterior, 'Value')
+%             view(0, 0)
+%             update_figure_light()
+%             set(ui_button_figure_coronalposterior, 'Value', 0);
+%         end
+%         
+%         % brain
+%         if get(ui_checkbox_figure_brain, 'Value') ~= h_brain_visible
+%             h_brain_visible = get(ui_checkbox_figure_brain, 'Value');
+%             if h_brain_visible  % brain surface on
+%                 set(h_brain, 'Visible', 'on')
+%                 set(ui_toolbar_brain, 'State', 'on');
+%             else
+%                 set(h_brain, 'Visible', 'off')
+%                 set(ui_toolbar_brain, 'State', 'off');
+%             end
+%         end
+%         
+%         if h_brain_visible
+%             if get(ui_slider_figure_brainalpha, 'Value') ~= h_brainalpha
+%                 h_brainalpha = get(ui_slider_figure_brainalpha, 'Value');
+%                 set(h_brain, 'FaceAlpha', h_brainalpha);
+%             end
+%         end
+%         
+%         % brain regions and labels
+%         if (h_br_visible || h_labels_visible) && ...
+%                 get(ui_checkbox_figure_labels, 'Value') == h_labels_visible && ...
+%                 get(ui_checkbox_figure_br, 'Value') == h_br_visible
+%             
+%             if ~isempty(h_brain_outer_obj.getSphsHandles())
+%                 if h_brain_outer_obj.checkIfSphsNotEmpty() || h_brain_outer_obj.checkIfLabsNotEmpty()
+%                     destroy_figure_brainregionplot()
+%                 end
+%             end
+%             create_figure_brainregionplot();
+%             
+%             for i = 1:1:atlas.getBrainRegions().length()
+%                 userdata = h_br(i, 1:7);
+%                 if userdata{1} ==1
+%                     update_figure_brainregionplot(i);
+%                 end
+%             end
+%         end
+%          
+%     end
+%     function update_figure_light()
+%         delete(findall(f, 'Type', 'light'));
+% % TODO: it should be possible to change these parameters
+%         material dull
+%         lighting gouraud
+%         camlight('Headlight')
+%     end
+%     function create_figure_brainregionplot()
+%         h_brain_outer_obj.br_sphs(atlas.getBrainRegions(), 'color', FIG_BR_COLOR, 'r', 3)
+%         h_brain_outer_obj.br_sphs_on()
+%         
+%         h_brain_outer_obj.br_labs(atlas.getBrainRegions(), 'color', 'k', 'FontSize', 8)
+%         h_brain_outer_obj.br_labs_on()
+%         
+% % TODO syms?        
+% %         h_brain_outer_obj.br_syms();  
+%     end
+%     function destroy_figure_brainregionplot()
+%         h_brain_outer_obj.br_sphs_delete()
+%         h_brain_outer_obj.br_labs_delete()
+%         if h_brain_outer_obj.checkIfSymsNotEmpty()
+%             h_brain_outer_obj.br_syms_delete()
+%         end
+%     end
+%     function update_figure_brainregionplot(i)
+% 
+%         if any(selected==i)
+%             
+%             h_brain_outer_obj.br_sphs(i, 'color', FIG_BRSELECTED_COLOR, 'r', 4)
+%             h_brain_outer_obj.br_sphs_on()
+%             
+%             h_brain_outer_obj.br_labs(i, 'color', 'b', 'FontSize', 8)
+%             h_brain_outer_obj.br_labs_on()
+%          
+%         else
+%             h_brain_outer_obj.br_sphs(i, 'color', FIG_BR_COLOR, 'r', 5)
+%             h_brain_outer_obj.br_sphs_on()
+%             
+%             h_brain_outer_obj.br_labs(i, 'color', 'b', 'FontSize', 8)
+%             h_brain_outer_obj.br_labs_on()
+%         end
+%     end
+%     function cb_figure_plotsettings(~, ~)  % (src,event)
+%         update_figure_brainview()
+%     end
+%     function cb_figure_angle(~, ~)
+%         if get(ui_button_figure_3d, 'Value')
+%             view(3)
+%             update_figure_light()
+%             set(ui_button_figure_3d, 'Value', 0);
+%         elseif get(ui_button_figure_sagittalleft, 'Value')
+%             view(-90, 0)
+%             update_figure_light()
+%             set(ui_button_figure_sagittalleft, 'Value', 0);
+%         elseif get(ui_button_figure_sagittalright, 'Value')
+%             view(+90, 0)
+%             update_figure_light()
+%             set(ui_button_figure_sagittalright, 'Value', 0);
+%         elseif get(ui_button_figure_axialdorsal, 'Value')
+%             view(0, +90)
+%             update_figure_light()
+%             set(ui_button_figure_axialdorsal, 'Value', 0);
+%         elseif get(ui_button_figure_axialventral, 'Value')
+%             view(0, -90)
+%             update_figure_light()
+%             set(ui_button_figure_axialventral, 'Value', 0);
+%         elseif get(ui_button_figure_coronalanterior, 'Value')
+%             view(180,0)
+%             update_figure_light()
+%             set(ui_button_figure_coronalanterior, 'Value', 0);
+%         elseif get(ui_button_figure_coronalposterior, 'Value')
+%             view(0, 0)
+%             update_figure_light()
+%             set(ui_button_figure_coronalposterior, 'Value', 0);
+%         end
+%     end
+%     function cb_figure_selectbr(~, ~)  % (src, event)
+%         userdata = get(gco, 'UserData');
+%         i = userdata{2};
+%         selected = sort([selected; i]);
+%         update_table_table()
+%         update_figure_brainview()
+%     end
+%     function cb_figure_deselectbr(~, ~)  % (src, event)
+%         userdata = get(gco, 'UserData');
+%         i = userdata{2};
+%         selected = selected(selected ~= i);
+%         update_table_table()
+%         update_figure_brainview()
+%     end
+%     function cb_figure_infobr(~, ~)  % (src, event)
+%         set(dcm,'enable','on')
+%     end
+%     function cb_figure_brainfile(~, ~)
+%         destroy_figure_brainregionplot()
+%         val = ui_menu_figure_brainfiles.Value;
+%         str = ui_menu_figure_brainfiles.String;
+%         create_figure(str{val})
+%     end
+%     function cb_figure_slider(~, ~)
+%         if h_brain_visible
+%             if get(ui_slider_figure_brainalpha, 'Value') ~= h_brainalpha
+%                 h_brainalpha = get(ui_slider_figure_brainalpha, 'Value');
+%                 set(h_brain, 'FaceAlpha', h_brainalpha);
+%             end
+%         end
+%     end
+%     function update_figure_br_labels()
+%         % brain regions
+%         if get(ui_checkbox_figure_br, 'Value') ~= h_br_visible
+%             h_br_visible = get(ui_checkbox_figure_br, 'Value');
+%             if h_br_visible  % brain regions on
+%                 h_brain_outer_obj.br_sphs_on()
+%                 set(ui_toolbar_br, 'State', 'on');
+%             else
+%                 h_brain_outer_obj.br_sphs_off()
+%                 set(ui_toolbar_br, 'State', 'off');
+%             end
+%         end
+%         
+%         % labels
+%         if get(ui_checkbox_figure_labels,'Value') ~= h_labels_visible
+%             h_labels_visible = get(ui_checkbox_figure_labels, 'Value');
+%             if h_labels_visible  % labels on
+%                 h_brain_outer_obj.br_labs_on()
+%                 set(ui_toolbar_label, 'State', 'on')
+%             else
+%                 h_brain_outer_obj.br_labs_off()
+%                 set(ui_toolbar_label, 'State', 'off')
+%             end
+%         end        
+%     end
+%     function cb_figure_distance(~, ~) 
+%         figure_brain_region_proximity(0)
+%     end
+%     function figure_brain_region_proximity(action)
+%         if get(ui_checkbox_figure_distance, 'Value') ~= h_br_distance || action == 1
+%             h_br_distance = get(ui_checkbox_figure_distance, 'Value');
+%             b_s = h_brain_outer_obj.getBrainSurface();           
+%             if h_br_distance
+%                 previous_style = get(b_s, 'Facecolor');
+%                 h_brain_outer_obj.distanceMapOn(selected);
+%             else 
+%                 if action ~= 1
+%                     h_brain_outer_obj.distanceMapOff(previous_style);
+%                 end
+%             end            
+%         end
+%     end
+%     function figure_br_la(~, ~)
+%         update_figure_br_labels()
+%     end
 
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
@@ -801,6 +1329,8 @@ set(f, 'Visible', 'on');
         update_table_label()
         update_table_notes()
         update_table_table()
+        % setup figure
+        create_figure()
     end
 
 end
