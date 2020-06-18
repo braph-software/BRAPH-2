@@ -50,7 +50,7 @@ classdef Richness < Degree
             N = g.nodenumber();
             L = g.layernumber();
             
-            richness = zeros(N(1), 1);
+            richness = cell(g.layernumber(), 1);
             directionality_type =  g.getDirectionalityType(g.layernumber());
             for li = 1:1:L
                 
@@ -70,6 +70,8 @@ classdef Richness < Degree
                         degree = calculate@Degree(m);
                     end
                     
+                    deg = degree{li};
+                    
                 else  % directed graphs
                     
                     if g.is_measure_calculated('InDegree')
@@ -84,28 +86,27 @@ classdef Richness < Degree
                         out_degree = OutDegree(g, g.getSettings()).getValue();
                     end
                     
-                    degree = in_degree + out_degree;
+                    deg = in_degree{li} + out_degree{li};
                 end
                 
                 richness_threshold = get_from_varargin('default', 'RichnessThreshold', m.getSettings());
                 if isnumeric(richness_threshold)
                     k_level = richness_threshold;
                 else  % default, max degree
-                    k_level = max(degree);
+                    k_level = max(deg);
                 end
 
-                low_rich_nodes = find(degree <= k_level);  % get lower rich nodes with degree <=k
+                low_rich_nodes = find(deg <= k_level);  % get lower rich nodes with degree <=k
                 subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <=k of Aii
                 subAii(low_rich_nodes, :) = 0;  % remove rows
                 subAii(:, low_rich_nodes) = 0;  % remove columns
                 
                 if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                    richness = richness + sum(subAii);  % degree of high rich nodes   
+                    richness(li) = {sum(subAii)};  % degree of high rich nodes   
                 else
-                    richness = richness + sum(subAii, 1) + sum(subAii, 2);  % degree of high rich nodes   
+                    richness(li) = {sum(subAii, 1) + sum(subAii, 2)};  % degree of high rich nodes   
                 end
             end
-            richness = {richness};
         end
     end  
     methods (Static)  % Descriptive methods
