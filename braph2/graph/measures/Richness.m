@@ -95,7 +95,7 @@ classdef Richness < Degree
                 else  % default, max degree
                     k_level = max(deg);
                 end
-%                 switch lower(directed_triangles_rule)
+%                 switch lower(richness_threshold)
 %                     case {'number'}  % number parameter
 %                         k_level = richness_threshold;
 %                     otherwise  % default, mad degree

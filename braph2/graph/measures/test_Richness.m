@@ -11,7 +11,7 @@ A = [
 known_richness = {[0 0 0]'};
 
 g = GraphBU(A);
-% richness = Richness(g, 'RichnessThreshold', 1);
+% richness = Richness(g, 'RichnessThreshold', ' number' 1);
 richness = Richness(g, 'RichnessThreshold', 'default');
 
 assert(isequal(richness.getValue(), known_richness), ...
