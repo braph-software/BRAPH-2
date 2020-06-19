@@ -7,14 +7,14 @@ A = [
     1   0   0
     ];
 
-known_degree = {[2, 1, 1]'};
+known_degree = {[2 1 1]'};
 
 g = GraphBU(A);
 degree = Degree(g);
 
 assert(isequal(degree.getValue(), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for GraphBU')
+    'Degree is not being calculated correctly for GraphBU.')
 
 %% Test 2: GraphWU
 A = [
@@ -23,7 +23,7 @@ A = [
     1   0   0
     ];
 
-known_degree = {[2, 1, 1]'};
+known_degree = {[2 1 1]'};
 
 g = GraphWU(A);
 degree = Degree(g);
@@ -60,7 +60,7 @@ degree = Degree(g);
 
 assert(isequal(degree.getValue(), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for MultiplexGraphBU')
+    'Degree is not being calculated correctly for MultiplexGraphBU.')
 
 %% Test 4: MultiplexGraphWU
 A11 = [
@@ -90,4 +90,4 @@ degree = Degree(g);
 
 assert(isequal(degree.getValue(), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for MultiplexGraphWU')
+    'Degree is not being calculated correctly for MultiplexGraphWU.')

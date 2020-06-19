@@ -2,44 +2,44 @@
 
 %% Test 1: GraphBU
 A = [
-    0     .1  .2  .25  0; 
-    .125  0   0   0    0; 
-    .2    .5  0   .25  0; 
-    .125  10   0   0    0;
-    0     0   0   0    0
+    0	1   1	1   0; 
+    1   0   0   1   0; 
+    1   0   0   1   0; 
+    1   1   1   0   0;
+    0	0	0   0   0;
     ];
 
 known_distance = {[
-                 0   1   1   1   Inf;
-                 1   0   1   1   Inf;
-                 1   1   0   1   Inf;
-                 1   1   1   0   Inf;
-                 Inf Inf Inf Inf 0;
-                 ]};
+    0   1   1   1   Inf;
+    1   0   2   1   Inf;
+    1   2   0   1   Inf;
+    1   1   1   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]};
 
 g = GraphBU(A);
 distance = Distance(g);
 
 assert(isequal(distance.getValue(), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-    'Distance is not being calculated correctly for GraphBU')
+    'Distance is not being calculated correctly for GraphBU.')
 
 %% Test 2: GraphBD
 A = [
-    0     .1  .2  .25  0; 
-    .125  0   0   0    0; 
-    .2    .5  0   .25  0; 
-    .125  10   0   0    0;
-    0     0   0   0    0
+    0   1	1   1   0; 
+    1	0   0   0   0; 
+    1   1   0   1   0; 
+    1   1   0   0   0;
+    0	0   0   0   0;
     ];
 
 known_distance = {[
-                 0   1   1   1   Inf;
-                 1   0   2   2   Inf;
-                 1   1   0   1   Inf;
-                 1   1   2   0   Inf;
-                 Inf Inf Inf Inf 0;
-                 ]};
+    0   1   1   1   Inf;
+    1   0   2   2   Inf;
+    1   1   0   1   Inf;
+    1   1   2   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]};
 
 g = GraphBD(A);
 distance = Distance(g);
@@ -50,27 +50,27 @@ assert(isequal(distance.getValue(), known_distance), ...
 
 %% Test 3: GraphWU
 A = [
-    0     .1  .2  .25  0; 
-    .125  0   0   0    0; 
-    .2    .5  0   .25  0; 
-    .125  10   0   0    0;
-    0     0   0   0    0
+    0     .1    .2  .25  0; 
+    .125  0     0   0    0; 
+    .2    .5    0   .25  0; 
+    .125  10    0   0    0;
+    0     0     0   0    0
     ];
 
 known_distance = {[
-                 0   5   5   4   Inf;
-                 5   0   2   1   Inf;
-                 5   2   0   3   Inf;
-                 4   1   3   0   Inf;
-                 Inf Inf Inf Inf 0;
-                 ]};
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]};
 
 g = GraphWU(A);
 distance = Distance(g);
 
 assert(isequal(distance.getValue(), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-    'Distance is not being calculated correctly for GraphWU')
+    'Distance is not being calculated correctly for GraphWU.')
 
 %% Test 4: GraphWD
 A = [
@@ -78,187 +78,207 @@ A = [
     .125  0   0   0    0; 
     .2    .5  0   .25  0; 
     .125  10   0   0    0;
-    0     0   0   0    0
+    0     0   0   0    0;
     ];
 
 known_distance = {[
-                 0   5   5   4   Inf;
-                 8   0   13  12  Inf;
-                 5   2   0   4   Inf;
-                 8   1   13  0   Inf;
-                 Inf Inf Inf Inf 0;
-                 ]};
+    0   5   5   4   Inf;
+    8   0   13  12  Inf;
+    5   2   0   4   Inf;
+    8   1   13  0   Inf;
+    Inf Inf Inf Inf 0;
+    ]};
 
 g = GraphWD(A);
 distance = Distance(g);
 
 assert(isequal(distance.getValue(), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-    'Distance is not being calculated correctly for GraphWD')
+    'Distance is not being calculated correctly for GraphWD.')
 
 %% Test 5: MultiplexGraphBU
 A11 = [
-      0     .1  .2  .25  0; 
-      .125  0   0   0    0; 
-      .2    .5  0   .25  0; 
-      .125  10   0   0    0;
-      0     0   0   0    0
-      ];
+    0	1   1  0    0;
+    1   0   0  0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
 A12 = eye(5);
 A21 = eye(5);
 A22 = [
-      0     .1  .2  .25  0; 
-      .125  0   0   0    0; 
-      .2    .5  0   .25  0; 
-      .125  10   0   0    0;
-      0     0   0   0    0
-      ];
+    0   1   1   1   0; 
+    1   0   0   0   0;
+    1   1   0   1   0;
+    1   1   0   0   0;
+    0   0   0   0   0;
+    ];
 A = {
     A11     A12
     A21     A22
     };
 
-known_distance_layer = [
-                       0   1   1   1   Inf;
-                       1   0   1   1   Inf;
-                       1   1   0   1   Inf;
-                       1   1   1   0   Inf;
-                       Inf Inf Inf Inf 0;
-                       ];
 known_distance = {
-                 known_distance_layer
-                 known_distance_layer
-                 };
+    [
+    0   1   1   1   Inf;
+    1   0   1   1   Inf;
+    1   1   0   1   Inf;
+    1   1   1   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   1   1   1   Inf;
+    1   0   1   1   Inf;
+    1   1   0   1   Inf;
+    1   1   1   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
 
 g = MultiplexGraphBU(A);
 distance = Distance(g);
 
 assert(isequal(distance.getValue(), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-    'Distance is not being calculated correctly for MultiplexGraphBU')
+    'Distance is not being calculated correctly for MultiplexGraphBU.')
 
 %% Test 6: MultiplexGraphBD
 A11 = [
-      0     .1  .2  .25  0; 
-      .125  0   0   0    0; 
-      .2    .5  0   .25  0; 
-      .125  10   0   0    0;
-      0     0   0   0    0
-      ];
+    0	1   1   1   0;
+    1   0   0   0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
 A12 = eye(5);
 A21 = eye(5);
 A22 = [
-      0     .1  .2  .25  0; 
-      .125  0   0   0    0; 
-      .2    .5  0   .25  0; 
-      .125  10   0   0    0;
-      0     0   0   0    0
-      ];
+    0	1   1   1   0;
+    1   0   0   0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
 A = {
     A11     A12
     A21     A22
     };
 
-known_distance_layer = [
-                       0   1   1   1   Inf;
-                       1   0   2   2   Inf;
-                       1   1   0   1   Inf;
-                       1   1   2   0   Inf;
-                       Inf Inf Inf Inf 0;
-                       ];
 known_distance = {
-                 known_distance_layer
-                 known_distance_layer
-                 };
+    [
+    0   1   1   1   Inf;
+    1   0   2   2   Inf;
+    1   1   0   1   Inf;
+    1   1   2   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   1   1   1   Inf;
+    1   0   2   2   Inf;
+    1   1   0   1   Inf;
+    1   1   2   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
 
 g = MultiplexGraphBD(A);
 distance = Distance(g);
 
 assert(isequal(distance.getValue(), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-    'Distance is not being calculated correctly for MultiplexGraphBD')
+    'Distance is not being calculated correctly for MultiplexGraphBD.')
 
 %% Test 7: MultiplexGraphWU
 A11 = [
-      0     .1  .2  .25  0; 
-      .125  0   0   0    0; 
-      .2    .5  0   .25  0; 
-      .125  10   0   0    0;
-      0     0   0   0    0
-      ];
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
 A12 = eye(5);
 A21 = eye(5);
 A22 = [
-      0     .1  .2  .25  0; 
-      .125  0   0   0    0; 
-      .2    .5  0   .25  0; 
-      .125  10   0   0    0;
-      0     0   0   0    0
-      ];
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
 A = {
     A11     A12
     A21     A22
     };
 
-known_distance_layer = [
-                       0   5   5   4   Inf;
-                       5   0   2   1   Inf;
-                       5   2   0   3   Inf;
-                       4   1   3   0   Inf;
-                       Inf Inf Inf Inf 0;
-                       ];
 known_distance = {
-                 known_distance_layer
-                 known_distance_layer
-                 };
+    [
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+	]
+    [
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+	]
+    };
 
 g = MultiplexGraphWU(A);
 distance = Distance(g);
 
 assert(isequal(distance.getValue(), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-    'Distance is not being calculated correctly for MultiplexGraphWU')
+    'Distance is not being calculated correctly for MultiplexGraphWU.')
 
 %% Test 8: MultiplexGraphWD
 A11 = [
-      0     .1  .2  .25  0; 
-      .125  0   0   0    0; 
-      .2    .5  0   .25  0; 
-      .125  10   0   0    0;
-      0     0   0   0    0
-      ];
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
 A12 = eye(5);
 A21 = eye(5);
 A22 = [
-      0     .1  .2  .25  0; 
-      .125  0   0   0    0; 
-      .2    .5  0   .25  0; 
-      .125  10   0   0    0;
-      0     0   0   0    0
-      ];
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
 A = {
     A11     A12
     A21     A22
     };
 
-known_distance_layer = [
-                       0   5   5   4   Inf;
-                       8   0   13  12  Inf;
-                       5   2   0   4   Inf;
-                       8   1   13  0   Inf;
-                       Inf Inf Inf Inf 0;
-                       ];
 known_distance = {
-                 known_distance_layer
-                 known_distance_layer
-                 };
+    [
+    0   5   5   4   Inf;
+    8   0   13  12  Inf;
+    5   2   0   4   Inf;
+    8   1   13  0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   5   5   4   Inf;
+    8   0   13  12  Inf;
+    5   2   0   4   Inf;
+    8   1   13  0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
 
 g = MultiplexGraphWD(A);
 distance = Distance(g);
 
 assert(isequal(distance.getValue(), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-    'Distance is not being calculated correctly for MultiplexGraphWD')
+    'Distance is not being calculated correctly for MultiplexGraphWD.')
 
 %% Test 9: Calculation vs BCT
 A = rand(randi(5));
