@@ -9,4 +9,4 @@ atlas.setNotes('Brain atlas notes.')
 GUIBrainAtlas(atlas)
 set(gcf, 'CloseRequestFcn', 'closereq')
 
-% close(gcf)
+close(gcf)
