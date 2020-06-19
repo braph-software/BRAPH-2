@@ -402,7 +402,7 @@ classdef GUI
             %
             % See also GUI.
             
-            msgbox({'' [AppName ' ' BNC.VERSION] '' BNC.AUTHORS '' BNC.COPYRIGHT ''}, ...
+            msgbox({'' [AppName ' ' BRAPH2.VERSION] '' BRAPH2.AUTHORS '' BRAPH2.COPYRIGHT ''}, ...
                 ['About ' AppName])
         end
         function setUnits(h, alsochildren)
