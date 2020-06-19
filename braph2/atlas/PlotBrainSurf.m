@@ -1,5 +1,5 @@
 classdef PlotBrainSurf < handle & matlab.mixin.Copyable
-    % PlotBrainSurf Plot and and manage a brain surface
+    % PlotBrainSurf Plot and manage a brain surface
     % PlotBrainSurf plots and manages a brain surface.
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
