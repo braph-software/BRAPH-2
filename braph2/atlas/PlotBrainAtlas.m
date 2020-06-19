@@ -278,7 +278,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
             %
             % See also PlotBrainAtlas.
             
-            if  ishandle(ba.syms.h(i))
+            if ishandle(ba.syms.h(i))
                 set(ba.syms.h(i), 'Visible', 'on')
             end
         end
