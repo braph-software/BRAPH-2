@@ -11,7 +11,7 @@ function P1 = pvalue1(observed_difference, random_differences)
 %
 % See also pvalue2, quantiles, fdr, bonferroni.
 
-M = numel(random_differences);  %#ok<NASGU> % number of samples (per variable)
+M = numel(random_differences); %#ok<NASGU>  % number of samples (per variable)
 
 row_number = size(random_differences{1}, 1);
 column_number = size(random_differences{1}, 2);
@@ -31,7 +31,7 @@ for i = 1:1:row_number
             P1(i, j) =  ...
                 (length(find(current_random_differences < current_observed_difference)) + 1) ...
                 / ...
-                (length(current_random_differences) + 1);             %#ok<AGROW>
+                (length(current_random_differences) + 1); %#ok<AGROW>
         end
     end
 end
