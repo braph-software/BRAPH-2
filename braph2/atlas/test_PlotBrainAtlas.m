@@ -31,7 +31,7 @@ ba.br_sphs([2 3 4 5], ...
     'FaceAlpha', [1 .7 .5 .1], ...    
     'R', [.2 .5 .7 1])
 ba.br_sphs_settings()
-% ba.br_sphs_off()
+ba.br_sphs_off()
 
 ba.br_ids([2 4], ...
     'FontSize', [20 40], ...
@@ -39,7 +39,7 @@ ba.br_ids([2 4], ...
     'Color', 'r', ...
     'interpreter', {'Latex', 'Tex'})
 ba.br_ids_settings()
-% % ba.br_ids_off()
+ba.br_ids_off()
 
 ba.br_labs([], ...
     'FontSize', 5, ...
@@ -52,7 +52,7 @@ ba.br_labs([1 3 5], ...
     'Color', 'r', ...
     'interpreter', {'Latex', 'Tex', 'none'})
 ba.br_labs_settings()
-% ba.br_labs_off()
+ba.br_labs_off()
 
 close(gcf)
 close(gcf)
@@ -70,6 +70,6 @@ ba.view(PlotBrainAtlas.VIEW_3D);
 ba.br_syms([], 'Size', 10, 'Color', 'r')
 ba.brain('Colormap', 'summer')
 ba.distance_map_on([14 50 68]);
-% ba.distance_map_off()
+ba.distance_map_off()
 
 close(gcf)
