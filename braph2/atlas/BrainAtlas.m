@@ -309,12 +309,16 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also setBrainSurfFile.
 
-            directory = fileparts(which('braph2'));
-            folder_struct = dir([directory filesep 'atlas' filesep 'brainsurfs']);
+            directory = [fileparts(which('braph2')) filesep 'atlas' filesep 'brainsurfs'];
+            folder_struct = dir(directory);
             folder_struct = folder_struct(~ismember({folder_struct(:).name}, {'.', '..'}));  % remove '.' and '..'
             for i = 1:1:length(folder_struct)
-                brain_surf_list{i} = folder_struct(i).name;
-            end            
+                filename = folder_struct(i).name;
+                if isequal(filename(end-2:end), '.nv')
+                    brain_surf_list{i} = folder_struct(i).name;
+                end
+            end
+            brain_surf_list(cellfun('isempty', brain_surf_list)) = [];
         end
         function atlas = load_from_xls(varargin)
             % LOAD_FROM_XLS loads brain atlas from XLS file
