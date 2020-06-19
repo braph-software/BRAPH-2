@@ -75,6 +75,15 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getBrainRegions().move_to_top       - moves an element to the top in the indexed dictionary br_idict
     %   getBrainRegions().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
     %
+    % Useful cellfun expressions:
+    %   cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getLabel(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getNotes(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getX(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getY(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getZ(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getPosition(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %
     % See also BrainRegion, PlotBrainSurf, PlotBrainAtlas, IndexedDictionary.
     
     properties (GetAccess=protected, SetAccess=protected)
@@ -249,14 +258,6 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             brain_surf_file = atlas.brain_surf_file;
         end
-        % Useful cellfun expressions:
-        % cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getLabel(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getNotes(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getX(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getY(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getZ(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getPosition(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
     end
     methods  % Plot functions
         function bs = getPlotBrainSurf(atlas, varargin)
@@ -308,12 +309,16 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also setBrainSurfFile.
 
-            directory = fileparts(which('braph2'));
-            folder_struct = dir([directory filesep 'atlas' filesep 'brainsurfs']);
+            directory = [fileparts(which('braph2')) filesep 'atlas' filesep 'brainsurfs'];
+            folder_struct = dir(directory);
             folder_struct = folder_struct(~ismember({folder_struct(:).name}, {'.', '..'}));  % remove '.' and '..'
             for i = 1:1:length(folder_struct)
-                brain_surf_list{i} = folder_struct(i).name;
-            end            
+                filename = folder_struct(i).name;
+                if isequal(filename(end-2:end), '.nv')
+                    brain_surf_list{i} = folder_struct(i).name;
+                end
+            end
+            brain_surf_list(cellfun('isempty', brain_surf_list)) = [];
         end
         function atlas = load_from_xls(varargin)
             % LOAD_FROM_XLS loads brain atlas from XLS file
