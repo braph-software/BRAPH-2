@@ -2116,16 +2116,18 @@ classdef PlotBrainAtlas < PlotBrainSurf
     methods  % distance
         function distance_map_on(ba, i_vec)
             
-            brain_surf_coords = ba.coord;
-            inverse_distance = zeros(length(i_vec), size(brain_surf_coords, 2));
-            for m = 1:1:length(i_vec)
-                i = i_vec(m);
-                inverse_distance(m, :) = sum((ba.coord - ba.getBrainAtlas().getBrainRegions().getValue(i).getPosition()').^2).^-.5;
+            if ~isempty(i_vec)
+                brain_surf_coords = ba.coord;
+                inverse_distance = zeros(length(i_vec), size(brain_surf_coords, 2));
+                for m = 1:1:length(i_vec)
+                    i = i_vec(m);
+                    inverse_distance(m, :) = sum((ba.coord - ba.getBrainAtlas().getBrainRegions().getValue(i).getPosition()').^2).^-.5;
+                end
+                inverse_distance = max(inverse_distance, [], 1);
+
+                ba.brain('FaceColor', 'interp', 'CData', inverse_distance)
+                caxis([prctile(inverse_distance, 1) prctile(inverse_distance, 99)])
             end
-            inverse_distance = max(inverse_distance, [], 1);
-            
-            ba.brain('FaceColor', 'interp', 'CData', inverse_distance)
-            caxis([prctile(inverse_distance, 1) prctile(inverse_distance, 99)])
         end
         function distance_map_off(ba, facecolor_style)
             
