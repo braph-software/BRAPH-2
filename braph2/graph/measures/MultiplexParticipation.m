@@ -4,6 +4,12 @@ classdef MultiplexParticipation < Degree
     % undirected (BU) and weighted undirected (WU) multiplexes. 
     %
     % It is the heterogenerity of the number of neighbours of a node across the layers.
+    % It is calcualted as:
+    % Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2]
+    % where L is the numebr of layers, ki(l) is the degree in the l-th
+    % layer and oi is the overlapping degree of the node.
+    % Pi = 1 when the degree is the same in all layers and Pi = 0 when a
+    % node has non-zero degree in only one layer.
     % 
     % MultiplexParticipation methods:
     %   MultiplexParticipation      - constructor
