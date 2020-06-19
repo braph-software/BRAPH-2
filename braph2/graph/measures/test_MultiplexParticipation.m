@@ -18,14 +18,14 @@ A = {
     A21     A22
     };
 
-known_multiplex_participation = {[8/9, 8/9, 1]'};
+known_multiplex_participation = {[8/9 8/9 1]'};
 
 g = MultiplexGraphBU(A);
 multiplex_participation = MultiplexParticipation(g);
                  
 assert(isequal(multiplex_participation.getValue(), known_multiplex_participation), ...
     [BRAPH2.STR ':MultiplexParticipation:' BRAPH2.BUG_ERR], ...
-    'MultiplexParticipation is not being calculated correctly for MultiplexGraphBU')
+    'MultiplexParticipation is not being calculated correctly for MultiplexGraphBU.')
 
 %% Test 2: MultiplexGraphWU
 A11 = [
@@ -45,11 +45,11 @@ A = {
     A21     A22
     };
 
-known_multiplex_participation = {[8/9, 8/9, 1]'};
+known_multiplex_participation = {[8/9 8/9 1]'};
 
 g = MultiplexGraphWU(A);           
 multiplex_participation = MultiplexParticipation(g);
 
 assert(isequal(multiplex_participation.getValue(), known_multiplex_participation), ...
     [BRAPH2.STR ':MultiplexParticipation:' BRAPH2.BUG_ERR], ...
-    'MultiplexParticipation is not being calculated correctly for MultiplexGraphWU')
+    'MultiplexParticipation is not being calculated correctly for MultiplexGraphWU.')
