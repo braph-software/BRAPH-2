@@ -26,7 +26,7 @@ else
         'Q must be a real number in (0, 1]')
 end
 
-x = [1:1:length(pvalues)] / length(pvalues);
+x = [1:1:length(pvalues)] / length(pvalues); %#ok<NBRAK>
 pvalues = sort(pvalues);
 index = max(find(pvalues <= x * q)); %#ok<MXFND>
 
