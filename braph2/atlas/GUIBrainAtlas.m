@@ -108,13 +108,13 @@ FIGURE_TP = ['Generate brain figure. Shortcut: ' GUI.ACCELERATOR '+' FIGURE_SC];
 
 % MRICOHORT_CMD = 'New MRI Cohort ...';
 % MRICOHORT_TP = ['Generate new MRI cohort and opens it with ' GUI.MCE_NAME];
-% 
+%
 % fMRICOHORT_CMD = 'New fMRI Cohort ...';
 % fMRICOHORT_TP = ['Generate new fMRI cohort and opens it with ' GUI.fMCE_NAME];
-% 
+%
 % EEGCOHORT_CMD = 'New EEG Cohort ...';
 % EEGCOHORT_TP = ['Generate new EEG cohort and opens it with ' GUI.ECE_NAME];
-% 
+%
 % PETCOHORT_CMD = 'New PET Cohort ...';
 % PETCOHORT_TP = ['Generate new PET cohort and opens it with ' GUI.PCE_NAME];
 
@@ -231,7 +231,7 @@ init_filename()
     function init_filename()
         GUI.setUnits(ui_text_filename)
         GUI.setBackgroundColor(ui_text_filename)
-
+        
         set(ui_text_filename, 'Position', FILENAME_POSITION)
         set(ui_text_filename, 'HorizontalAlignment', 'left')
     end
@@ -252,6 +252,7 @@ ui_panel_table = uipanel();
 ui_edit_table_id = uicontrol(ui_panel_table, 'Style', 'edit');
 ui_edit_table_label = uicontrol(ui_panel_table, 'Style', 'edit');
 ui_edit_table_notes = uicontrol(ui_panel_table, 'Style', 'edit');
+ui_popup_table_brainsurf = uicontrol(ui_panel_table, 'Style', 'popupmenu');
 ui_table_table = uitable(ui_panel_table);
 ui_button_table_selectall = uicontrol(ui_panel_table,'Style', 'pushbutton');
 ui_button_table_clearselection = uicontrol(ui_panel_table,'Style', 'pushbutton');
@@ -274,18 +275,23 @@ init_table()
         set(ui_edit_table_id, 'FontWeight', 'bold')
         set(ui_edit_table_id, 'TooltipString', ID_TP)
         set(ui_edit_table_id, 'Callback', {@cb_table_id})
-
+        
         set(ui_edit_table_label, 'Position', [.42 .95 .56 .04])
         set(ui_edit_table_label, 'HorizontalAlignment', 'left')
         set(ui_edit_table_label, 'FontWeight', 'bold')
         set(ui_edit_table_label, 'TooltipString', LABEL_TP)
         set(ui_edit_table_label, 'Callback', {@cb_table_label})
-
-        set(ui_edit_table_notes, 'Position', [.02 .90 .96 .04])
+        
+        set(ui_edit_table_notes, 'Position', [.42 .90 .56 .04])
         set(ui_edit_table_notes, 'HorizontalAlignment', 'left')
         set(ui_edit_table_notes, 'FontWeight', 'bold')
         set(ui_edit_table_notes, 'TooltipString', NOTES_TP)
         set(ui_edit_table_notes, 'Callback', {@cb_table_notes})
+        
+        set(ui_popup_table_brainsurf, 'Position', [.02 .90 .36 .04])
+        set(ui_popup_table_brainsurf, 'String', atlas.getBrainSurfList())
+        set(ui_popup_table_brainsurf, 'Value', find(strcmpi(atlas.getBrainSurfFile(), get(ui_popup_table_brainsurf, 'String'))))
+        set(ui_popup_table_brainsurf, 'Callback', {@cb_table_brainsurf})
         
         set(ui_table_table, 'Position', [.02 .16 .96 .72])
         set(ui_table_table, 'ColumnName', {'', 'ID', 'Label', 'x', 'y', 'z', 'Notes'})
@@ -350,6 +356,10 @@ init_table()
         atlas_notes = atlas.getNotes();
         set(ui_edit_table_notes, 'String', atlas_notes)
     end
+    function update_table_brainsurf()
+        ba = atlas.getPlotBrainAtlas();
+        create_figure();
+    end
     function update_table_table()
         data = cell(atlas.getBrainRegions().length(), 8);
         for i = 1:1:atlas.getBrainRegions().length()
@@ -379,6 +389,11 @@ init_table()
         atlas.setNotes(get(ui_edit_table_notes,  'String'));
         update_table_notes()
     end
+    function cb_table_brainsurf(~, ~)  % (src, event)
+        brainsurffile_list = get(ui_popup_table_brainsurf, 'String');
+        atlas.setBrainSurfFile(brainsurffile_list{get(ui_popup_table_brainsurf, 'Value')});
+        update_table_brainsurf()
+    end
     function cb_table_edit(~, event)  % (src, event)
         i = event.Indices(1);
         col = event.Indices(2);
@@ -387,12 +402,8 @@ init_table()
             case TAB_BR_SELECTED_COL
                 if newdata == 1
                     selected = sort(unique([selected(:); i]));
-%                     h_br(i, 1) = {newdata};
-%                     figure_brain_region_proximity(1)
                 else
                     selected = selected(selected~=i);
-%                     h_br(i, 1) = {newdata};
-%                     figure_brain_region_proximity(1)
                 end
             case TAB_BR_ID_COL
                 if ~atlas.getBrainRegions().containsKey(newdata)
@@ -466,6 +477,9 @@ init_table()
 FIG_BRAIN_CMD = 'Show brain';
 FIG_BRAIN_TP = 'Brain surface on/off';
 
+FIG_DISTANCE_CMD = 'Highlights';
+FIG_DISTANCE_TP = 'Highlights on/off';
+
 FIG_BRAINALPHA_CMD = 'Brain transparency';
 FIG_BRAINALPHA_TP = 'Adjust the transparency of the brain surface';
 
@@ -510,9 +524,8 @@ FIG_BRSELECTED_SIZE = FIG_BR_SIZE;
 
 ui_panel_figure = uipanel();
 ui_axes_figure = axes();
-ui_menu_figure_brainfiles = uicontrol(ui_panel_figure, 'Style', 'popupmenu');
 ui_checkbox_figure_brain = uicontrol(ui_panel_figure, 'Style', 'checkbox');
-% ui_checkbox_figure_distance = uicontrol(ui_panel_figure, 'Style', 'checkbox');
+ui_checkbox_figure_distance = uicontrol(ui_panel_figure, 'Style', 'checkbox');
 ui_slider_figure_brainalpha = uicontrol(ui_panel_figure, 'Style', 'slider');
 ui_checkbox_figure_axis = uicontrol(ui_panel_figure, 'Style', 'checkbox');
 ui_checkbox_figure_grid = uicontrol(ui_panel_figure, 'Style', 'checkbox');
@@ -535,21 +548,17 @@ init_figure()
         set(ui_axes_figure, 'Parent', ui_panel_figure)
         set(ui_axes_figure, 'Position', [.02 .20 .96 .78])
         
-        set(ui_menu_figure_brainfiles, 'Position', [.101 .02 .138 .029])
-        set(ui_menu_figure_brainfiles, 'String', atlas.getBrainSurfList())
-        set(ui_menu_figure_brainfiles, 'Callback', {@cb_figure_brainfile})
-
         set(ui_checkbox_figure_brain, 'Position', [.10 .11 .10 .03])
         set(ui_checkbox_figure_brain, 'String', FIG_BRAIN_CMD)
         set(ui_checkbox_figure_brain, 'Value', true)
         set(ui_checkbox_figure_brain, 'TooltipString', FIG_BRAIN_TP)
         set(ui_checkbox_figure_brain, 'Callback', {@cb_figure_plotsettings})
         
-%         set(ui_checkbox_figure_distance, 'Position', [.10 .085 .10 .03])
-%         set(ui_checkbox_figure_distance, 'String', 'Distance')
-%         set(ui_checkbox_figure_distance, 'Value', false)
-%         set(ui_checkbox_figure_distance, 'TooltipString', 'Distance from BR to surf')
-%         set(ui_checkbox_figure_distance, 'Callback', {@cb_figure_distance})
+        set(ui_checkbox_figure_distance, 'Position', [.10 .085 .10 .03])
+        set(ui_checkbox_figure_distance, 'String', FIG_DISTANCE_CMD)
+        set(ui_checkbox_figure_distance, 'Value', false)
+        set(ui_checkbox_figure_distance, 'TooltipString', FIG_DISTANCE_TP)
+        set(ui_checkbox_figure_distance, 'Callback', {@cb_figure_plotsettings})
         
         set(ui_slider_figure_brainalpha, 'Position', [.30 .105 .40 .03])
         set(ui_slider_figure_brainalpha, 'String', FIG_BRAINALPHA_CMD)
@@ -629,7 +638,7 @@ init_contextmenus()
         function cb_figure_brainsurf(~, ~)  % (src, event)
             ba.brain_settings();
         end
-
+        
         set(ui_contextmenu_figure_select_select, 'Label', FIG_SELECTBR_CMD)
         set(ui_contextmenu_figure_select_select, 'Callback', {@cb_figure_selectbr})
         
@@ -638,7 +647,7 @@ init_contextmenus()
         
         set(ui_contextmenu_figure_select_settings, 'Label', FIG_SETTINGSBR_CMD)
         set(ui_contextmenu_figure_select_settings, 'Callback', {@cb_figure_settingsbr})
-
+        
         set(ui_contextmenu_figure_deselect_deselect, 'Label', FIG_DESELECTBR_CMD)
         set(ui_contextmenu_figure_deselect_deselect, 'Callback', {@cb_figure_deselectbr})
         
@@ -647,7 +656,7 @@ init_contextmenus()
         
         set(ui_contextmenu_figure_deselect_settings, 'Label', FIG_SETTINGSBR_CMD)
         set(ui_contextmenu_figure_deselect_settings, 'Callback', {@cb_figure_settingsbr})
-
+        
         function cb_figure_selectbr(~, ~)  % (src, event)
             userdata = get(gco, 'UserData');
             i = userdata{2};
@@ -681,14 +690,16 @@ init_contextmenus()
         end
     end
     function create_figure()
-
+        
+        cla(ui_axes_figure)
+        
         ba = atlas.getPlotBrainAtlas();
         ba.set_axes(ui_axes_figure)
         axes(ui_axes_figure)
         
         ba.axis_equal()
         ba.hold_on()
-
+        
         ba.view(PlotBrainSurf.VIEW_3D)
         ba.brain('UiContextMenu', ui_contextmenu_figure_brainsurf)
         
@@ -700,68 +711,66 @@ init_contextmenus()
         ylabel([FIG_YLABEL ' ' GUI.BRA_UNITS FIG_UNITS GUI.KET_UNITS])
         zlabel([FIG_ZLABEL ' ' GUI.BRA_UNITS FIG_UNITS GUI.KET_UNITS])
         
-%         update_figure_light()
         update_figure_brainview()
     end
     function update_figure_brainview()
         
         if get(ui_checkbox_figure_axis, 'Value')
             ba.axis_on()
-%                 set(ui_toolbar_axis, 'State', 'on')
+            set(ui_toolbar_axis, 'State', 'on')
         else
             ba.axis_off()
-%                 set(ui_toolbar_axis, 'State', 'off')
+            set(ui_toolbar_axis, 'State', 'off')
         end
         
         if get(ui_checkbox_figure_grid, 'Value')
             ba.grid_on()
-%             set(ui_toolbar_grid, 'State', 'on');
+            set(ui_toolbar_grid, 'State', 'on');
         else
             ba.grid_off()
-%             set(ui_toolbar_grid, 'State', 'off');
+            set(ui_toolbar_grid, 'State', 'off');
         end
         
         if get(ui_button_figure_3d, 'Value')
             ba.view(PlotBrainAtlas.VIEW_3D)
-%             update_figure_light()
-            set(ui_button_figure_3d, 'Value', 0);
+            set(ui_button_figure_3d, 'Value', false);
         elseif get(ui_button_figure_sagittalleft, 'Value')
             ba.view(PlotBrainAtlas.VIEW_SL)
-%             update_figure_light()
-            set(ui_button_figure_sagittalleft, 'Value', 0);
+            set(ui_button_figure_sagittalleft, 'Value', false);
         elseif get(ui_button_figure_sagittalright, 'Value')
             ba.view(PlotBrainAtlas.VIEW_SR)
-%             update_figure_light()
-            set(ui_button_figure_sagittalright, 'Value', 0);
+            set(ui_button_figure_sagittalright, 'Value', false);
         elseif get(ui_button_figure_axialdorsal, 'Value')
             ba.view(PlotBrainAtlas.VIEW_AD)
-%             update_figure_light()
-            set(ui_button_figure_axialdorsal, 'Value', 0);
+            set(ui_button_figure_axialdorsal, 'Value', false);
         elseif get(ui_button_figure_axialventral, 'Value')
             ba.view(PlotBrainAtlas.VIEW_AV)
-%             update_figure_light()
-            set(ui_button_figure_axialventral, 'Value', 0);
+            set(ui_button_figure_axialventral, 'Value', false);
         elseif get(ui_button_figure_coronalanterior, 'Value')
             ba.view(PlotBrainAtlas.VIEW_CA)
-%             update_figure_light()
-            set(ui_button_figure_coronalanterior, 'Value', 0);
+            set(ui_button_figure_coronalanterior, 'Value', false);
         elseif get(ui_button_figure_coronalposterior, 'Value')
             ba.view(PlotBrainAtlas.VIEW_CP)
-%             update_figure_light()
-            set(ui_button_figure_coronalposterior, 'Value', 0);
+            set(ui_button_figure_coronalposterior, 'Value', false);
         end
-
+        
         % brain
         if get(ui_checkbox_figure_brain, 'Value')
             ba.brain_on()
-%             set(ui_toolbar_brain, 'State', 'on');
+            set(ui_toolbar_brain, 'State', 'on');
         else
             ba.brain_off()
-%             set(ui_toolbar_brain, 'State', 'off');
+            set(ui_toolbar_brain, 'State', 'off');
+        end
+        
+        if get(ui_checkbox_figure_distance, 'Value')
+            ba.distance_map_on(selected);
+        else
+            ba.distance_map_off();
         end
         
         ba.brain('FaceAlpha', get(ui_slider_figure_brainalpha, 'Value'))
-
+        
         % brain regions
         if get(ui_checkbox_figure_br, 'Value')
             ba.br_syms_on()
@@ -800,10 +809,10 @@ init_contextmenus()
                     end
                 end
             end
-%             set(ui_toolbar_br,'State','on');
+            set(ui_toolbar_br, 'State', 'on');
         else
             ba.br_syms_off()
-%             set(ui_toolbar_br,'State','off');
+            set(ui_toolbar_br, 'State', 'off');
         end
         
         % labels
@@ -818,128 +827,15 @@ init_contextmenus()
                     'UIContextMenu', ui_contextmenu_figure_labels, ...
                     'UserData', {1 i X Y Z label});
             end
-%             set(ui_toolbar_br,'State','on');
+            set(ui_toolbar_label, 'State', 'on');
         else
             ba.br_labs_off()
-%             set(ui_toolbar_br,'State','off');
+            set(ui_toolbar_label, 'State', 'off');
         end
-
-%         if (h_br_visible || h_labels_visible) && ...
-%                 get(ui_checkbox_figure_labels, 'Value') == h_labels_visible && ...
-%                 get(ui_checkbox_figure_br, 'Value') == h_br_visible
-%             
-%             if ~isempty(h_brain_outer_obj.getSphsHandles())
-%                 if h_brain_outer_obj.checkIfSphsNotEmpty() || h_brain_outer_obj.checkIfLabsNotEmpty()
-%                     destroy_figure_brainregionplot()
-%                 end
-%             end
-%             create_figure_brainregionplot();
-%             
-%             for i = 1:1:atlas.getBrainRegions().length()
-%                 userdata = h_br(i, 1:7);
-%                 if userdata{1} ==1
-%                     update_figure_brainregionplot(i);
-%                 end
-%             end
-%         end
-%          
     end
-%     function update_figure_light()
-%         delete(findall(f, 'Type', 'light'));
-% % TODO: it should be possible to change these parameters
-%         material dull
-%         lighting gouraud
-%         camlight('Headlight')
-%     end
-%     function create_figure_brainregionplot()
-%         h_brain_outer_obj.br_sphs(atlas.getBrainRegions(), 'color', FIG_BR_COLOR, 'r', 3)
-%         h_brain_outer_obj.br_sphs_on()
-%         
-%         h_brain_outer_obj.br_labs(atlas.getBrainRegions(), 'color', 'k', 'FontSize', 8)
-%         h_brain_outer_obj.br_labs_on()
-%         
-% % TODO syms?        
-% %         h_brain_outer_obj.br_syms();  
-%     end
-%     function destroy_figure_brainregionplot()
-%         h_brain_outer_obj.br_sphs_delete()
-%         h_brain_outer_obj.br_labs_delete()
-%         if h_brain_outer_obj.checkIfSymsNotEmpty()
-%             h_brain_outer_obj.br_syms_delete()
-%         end
-%     end
-%     function update_figure_brainregionplot(i)
-% 
-%         if any(selected==i)
-%             
-%             h_brain_outer_obj.br_sphs(i, 'color', FIG_BRSELECTED_COLOR, 'r', 4)
-%             h_brain_outer_obj.br_sphs_on()
-%             
-%             h_brain_outer_obj.br_labs(i, 'color', 'b', 'FontSize', 8)
-%             h_brain_outer_obj.br_labs_on()
-%          
-%         else
-%             h_brain_outer_obj.br_sphs(i, 'color', FIG_BR_COLOR, 'r', 5)
-%             h_brain_outer_obj.br_sphs_on()
-%             
-%             h_brain_outer_obj.br_labs(i, 'color', 'b', 'FontSize', 8)
-%             h_brain_outer_obj.br_labs_on()
-%         end
-%     end
     function cb_figure_plotsettings(~, ~)  % (src, event)
         update_figure_brainview()
     end
-%     function cb_figure_brainfile(~, ~)
-%         destroy_figure_brainregionplot()
-%         val = ui_menu_figure_brainfiles.Value;
-%         str = ui_menu_figure_brainfiles.String;
-%         create_figure(str{val})
-%     end
-%     function update_figure_br_labels()
-%         % brain regions
-%         if get(ui_checkbox_figure_br, 'Value') ~= h_br_visible
-%             h_br_visible = get(ui_checkbox_figure_br, 'Value');
-%             if h_br_visible  % brain regions on
-%                 h_brain_outer_obj.br_sphs_on()
-%                 set(ui_toolbar_br, 'State', 'on');
-%             else
-%                 h_brain_outer_obj.br_sphs_off()
-%                 set(ui_toolbar_br, 'State', 'off');
-%             end
-%         end
-%         
-%         % labels
-%         if get(ui_checkbox_figure_labels,'Value') ~= h_labels_visible
-%             h_labels_visible = get(ui_checkbox_figure_labels, 'Value');
-%             if h_labels_visible  % labels on
-%                 h_brain_outer_obj.br_labs_on()
-%                 set(ui_toolbar_label, 'State', 'on')
-%             else
-%                 h_brain_outer_obj.br_labs_off()
-%                 set(ui_toolbar_label, 'State', 'off')
-%             end
-%         end        
-%     end
-%     function cb_figure_distance(~, ~) 
-%         figure_brain_region_proximity(0)
-%     end
-%     function figure_brain_region_proximity(action)
-%         if get(ui_checkbox_figure_distance, 'Value') ~= h_br_distance || action == 1
-%             h_br_distance = get(ui_checkbox_figure_distance, 'Value');
-%             b_s = h_brain_outer_obj.getBrainSurface();           
-%             if h_br_distance
-%                 previous_style = get(b_s, 'Facecolor');
-%                 h_brain_outer_obj.distanceMapOn(selected);
-%             else 
-%                 if action ~= 1
-%                     h_brain_outer_obj.distanceMapOff(previous_style);
-%                 end
-%             end            
-%         end
-%     end
-%     function figure_br_la(~, ~)
-%         update_figure_br_labels()
-%     end
 
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
@@ -1052,19 +948,19 @@ init_menu()
         set(ui_menu_brainview_figure, 'Accelerator', FIGURE_SC)
         set(ui_menu_brainview_figure, 'Callback', {@cb_menu_figure})
         
-%         set(ui_menu_cohorts_mricohort, 'Label', MRICOHORT_CMD)
-%         set(ui_menu_cohorts_mricohort, 'Callback', {@cb_menu_mricohort})
-%         
-%         set(ui_menu_cohorts_fmricohort, 'Label', fMRICOHORT_CMD)
-%         set(ui_menu_cohorts_fmricohort, 'Callback', {@cb_menu_fmricohort})
-%         
-%         set(ui_menu_cohorts_eegcohort, 'Label', EEGCOHORT_CMD)
-%         set(ui_menu_cohorts_eegcohort, 'Callback', {@cb_menu_eegcohort})
-%         
-%         set(ui_menu_cohorts_petcohort, 'Label', PETCOHORT_CMD)
-%         set(ui_menu_cohorts_petcohort, 'Callback', {@cb_menu_petcohort})
+        %         set(ui_menu_cohorts_mricohort, 'Label', MRICOHORT_CMD)
+        %         set(ui_menu_cohorts_mricohort, 'Callback', {@cb_menu_mricohort})
+        %
+        %         set(ui_menu_cohorts_fmricohort, 'Label', fMRICOHORT_CMD)
+        %         set(ui_menu_cohorts_fmricohort, 'Callback', {@cb_menu_fmricohort})
+        %
+        %         set(ui_menu_cohorts_eegcohort, 'Label', EEGCOHORT_CMD)
+        %         set(ui_menu_cohorts_eegcohort, 'Callback', {@cb_menu_eegcohort})
+        %
+        %         set(ui_menu_cohorts_petcohort, 'Label', PETCOHORT_CMD)
+        %         set(ui_menu_cohorts_petcohort, 'Callback', {@cb_menu_petcohort})
     end
-[ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME);
+[ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME); %#ok<ASGLU>
     function cb_menu_figure(~, ~)  % (src, event)
         h = figure('Name', ['Brain Atlas - ' atlas.getID()]);
         set(gcf, 'Color', 'w')
@@ -1129,8 +1025,6 @@ ui_toolbar_label = uitoggletool(ui_toolbar);
 init_toolbar()
     function init_toolbar()
         delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-        % delete(findall(ui_toolbar,'Tag','Standard.FileOpen'))
-        % delete(findall(ui_toolbar,'Tag','Standard.SaveFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
@@ -1146,14 +1040,14 @@ init_toolbar()
         
         set(ui_toolbar_save, 'TooltipString', SAVE_TP);
         set(ui_toolbar_save, 'ClickedCallback', {@cb_save})
-                
+        
         set(ui_toolbar_3D, 'Separator', 'on');
-
+        
         set(ui_toolbar_3D, 'TooltipString', FIG_VIEW_3D_CMD);
         set(ui_toolbar_3D, 'CData', imread('icon_view_3d.png'));
         set(ui_toolbar_3D, 'ClickedCallback', {@cb_toolbar_3D})
         function cb_toolbar_3D(~, ~)  % (src, event)
-            set(ui_button_figure_3d, 'Value', 1);
+            set(ui_button_figure_3d, 'Value', true);
             update_figure_brainview()
         end
         
@@ -1161,7 +1055,7 @@ init_toolbar()
         set(ui_toolbar_SL, 'CData', imread('icon_view_sl.png'));
         set(ui_toolbar_SL, 'ClickedCallback', {@cb_toolbar_SL})
         function cb_toolbar_SL(~, ~)  % (src, event)
-            set(ui_button_figure_sagittalleft, 'Value', 1);
+            set(ui_button_figure_sagittalleft, 'Value', true);
             update_figure_brainview()
         end
         
@@ -1169,7 +1063,7 @@ init_toolbar()
         set(ui_toolbar_SR, 'CData', imread('icon_view_sr.png'));
         set(ui_toolbar_SR, 'ClickedCallback', {@cb_toolbar_SR})
         function cb_toolbar_SR(~, ~)  % (src, event)
-            set(ui_button_figure_sagittalright, 'Value', 1);
+            set(ui_button_figure_sagittalright, 'Value', true);
             update_figure_brainview()
         end
         
@@ -1177,7 +1071,7 @@ init_toolbar()
         set(ui_toolbar_AD, 'CData', imread('icon_view_ad.png'));
         set(ui_toolbar_AD, 'ClickedCallback', {@cb_toolbar_AD})
         function cb_toolbar_AD(~, ~)  % (src, event)
-            set(ui_button_figure_axialdorsal, 'Value', 1);
+            set(ui_button_figure_axialdorsal, 'Value', true);
             update_figure_brainview()
         end
         
@@ -1185,7 +1079,7 @@ init_toolbar()
         set(ui_toolbar_AV, 'CData', imread('icon_view_av.png'));
         set(ui_toolbar_AV, 'ClickedCallback', {@cb_toolbar_AV})
         function cb_toolbar_AV(~, ~)  % (src, event)
-            set(ui_button_figure_axialventral, 'Value', 1);
+            set(ui_button_figure_axialventral, 'Value', true);
             update_figure_brainview()
         end
         
@@ -1193,7 +1087,7 @@ init_toolbar()
         set(ui_toolbar_CA, 'CData', imread('icon_view_ca.png'));
         set(ui_toolbar_CA, 'ClickedCallback', {@cb_toolbar_CA})
         function cb_toolbar_CA(~, ~)  % (src, event)
-            set(ui_button_figure_coronalanterior, 'Value', 1);
+            set(ui_button_figure_coronalanterior, 'Value', true);
             update_figure_brainview()
         end
         
@@ -1201,23 +1095,23 @@ init_toolbar()
         set(ui_toolbar_CP, 'CData', imread('icon_view_cp.png'));
         set(ui_toolbar_CP, 'ClickedCallback', {@cb_toolbar_CP})
         function cb_toolbar_CP(~, ~)  % (src, event)
-            set(ui_button_figure_coronalposterior, 'Value', 1);
+            set(ui_button_figure_coronalposterior, 'Value', true);
             update_figure_brainview()
         end
         
         set(ui_toolbar_brain, 'Separator', 'on');
-
+        
         set(ui_toolbar_brain, 'TooltipString', FIG_BRAIN_CMD);
         set(ui_toolbar_brain, 'State', 'on');
         set(ui_toolbar_brain, 'CData', imread('icon_brain.png'));
         set(ui_toolbar_brain, 'OnCallback', {@cb_toolbar_brain_on})
         set(ui_toolbar_brain, 'OffCallback', {@cb_toolbar_brain_off})
         function cb_toolbar_brain_on(~, ~)  % (src, event)
-            set(ui_checkbox_figure_brain, 'Value', 1)
+            set(ui_checkbox_figure_brain, 'Value', true)
             update_figure_brainview()
         end
         function cb_toolbar_brain_off(~, ~)  % (src, event)
-            set(ui_checkbox_figure_brain, 'Value', 0)
+            set(ui_checkbox_figure_brain, 'Value', false)
             update_figure_brainview()
         end
         
@@ -1227,11 +1121,11 @@ init_toolbar()
         set(ui_toolbar_axis, 'OnCallback', {@cb_toolbar_axis_on})
         set(ui_toolbar_axis, 'OffCallback', {@cb_toolbar_axis_off})
         function cb_toolbar_axis_on(~, ~)  % (src, event)
-            set(ui_checkbox_figure_axis, 'Value', 1)
+            set(ui_checkbox_figure_axis, 'Value', true)
             update_figure_brainview()
         end
         function cb_toolbar_axis_off(~, ~)  % (src, event)
-            set(ui_checkbox_figure_axis, 'Value', 0)
+            set(ui_checkbox_figure_axis, 'Value', false)
             update_figure_brainview()
         end
         
@@ -1241,11 +1135,11 @@ init_toolbar()
         set(ui_toolbar_grid, 'OnCallback', {@cb_toolbar_grid_on})
         set(ui_toolbar_grid, 'OffCallback', {@cb_toolbar_grid_off})
         function cb_toolbar_grid_on(~, ~)  % (src, event)
-            set(ui_checkbox_figure_grid, 'Value', 1)
+            set(ui_checkbox_figure_grid, 'Value', true)
             update_figure_brainview()
         end
         function cb_toolbar_grid_off(~, ~)  % (src, event)
-            set(ui_checkbox_figure_grid, 'Value', 0)
+            set(ui_checkbox_figure_grid, 'Value', false)
             update_figure_brainview()
         end
         
@@ -1255,11 +1149,11 @@ init_toolbar()
         set(ui_toolbar_br, 'OnCallback', {@cb_toolbar_br_on})
         set(ui_toolbar_br, 'OffCallback', {@cb_toolbar_br_off})
         function cb_toolbar_br_on(~, ~)  % (src, event)
-            set(ui_checkbox_figure_br, 'Value', 1)
+            set(ui_checkbox_figure_br, 'Value', true)
             update_figure_brainview()
         end
         function cb_toolbar_br_off(~, ~)  % (src, event)
-            set(ui_checkbox_figure_br, 'Value', 0)
+            set(ui_checkbox_figure_br, 'Value', false)
             update_figure_brainview()
         end
         
@@ -1269,11 +1163,11 @@ init_toolbar()
         set(ui_toolbar_label, 'OnCallback', {@cb_toolbar_label_on})
         set(ui_toolbar_label, 'OffCallback', {@cb_toolbar_label_off})
         function cb_toolbar_label_on(~, ~)  % (src, event)
-            set(ui_checkbox_figure_labels, 'Value', 1)
+            set(ui_checkbox_figure_labels, 'Value', true)
             update_figure_brainview()
         end
         function cb_toolbar_label_off(~, ~)  % (src, event)
-            set(ui_checkbox_figure_labels, 'Value', 0)
+            set(ui_checkbox_figure_labels, 'Value', false)
             update_figure_brainview()
         end
     end
