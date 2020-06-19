@@ -2129,14 +2129,10 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 caxis([prctile(inverse_distance, 1) prctile(inverse_distance, 99)])
             end
         end
-        function distance_map_off(ba, facecolor_style)
-            
-            if nargin < 2
-                facecolor_style = [0 0 0];
-            end
+        function distance_map_off(ba)
             
             z_vector = ba.coord(3, :);
-            ba.brain('FaceColor', facecolor_style, 'CData', z_vector)
+            ba.brain('CData', z_vector)
             caxis([min(z_vector) max(z_vector)])
         end
     end
