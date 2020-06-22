@@ -8,7 +8,7 @@ classdef OutDegreeAv < OutDegree
     % layer.
     % 
     % OutDegreeAv methods:
-    %   OutDegreeAv                    - constructor
+    %   OutDegreeAv                 - constructor
     %
     % OutDegreeAv descriptive methods (Static)
     %   getClass                    - returns the average out-degree class
@@ -38,7 +38,7 @@ classdef OutDegreeAv < OutDegree
         function out_degree_av = calculate(m)
             % CALCULATE calculates the average out-degree value of a graph
             %
-            % DEGREEAV = CALCULATE(M) returns the value of the average out-degree 
+            % OUTDEGREEAV = CALCULATE(M) returns the value of the average out-degree 
             % of a binary directed (BD) or weighted directed (WD) graph or multiplex.
             %
             % See also Measure, OutDegree, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
