@@ -97,6 +97,7 @@ classdef Richness < Degree
                 end
 
                 low_rich_nodes = find(deg <= k_level);  % get lower rich nodes with degree <=k
+                Aii = binarize(Aii);  % binarizes the adjacency matrix
                 subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <=k of Aii
                 subAii(low_rich_nodes, :) = 0;  % remove rows
                 subAii(:, low_rich_nodes) = 0;  % remove columns
