@@ -126,7 +126,7 @@ classdef Strength < Measure
             measure_scope = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList()
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Strength.
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Strength
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
             % of compatible graph classes to strength. 

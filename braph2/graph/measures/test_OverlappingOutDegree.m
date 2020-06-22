@@ -1,6 +1,6 @@
 % test OverlappingOutDegree
 
-%% Test 1: Calculation MultiplexGraphBD
+%% Test 1: MultiplexGraphBD
 A11 = [
     0   1   0
     1   0   0
@@ -25,9 +25,9 @@ overlapping_out_degree = OverlappingOutDegree(g);
                  
 assert(isequal(overlapping_out_degree.getValue(), known_overlapping_out_degree), ...
     [BRAPH2.STR ':OverlappingOutDegree:' BRAPH2.BUG_ERR], ...
-    'OverlappingOutDegree is not being calculated correctly for MultiplexGraphBD')
+    'OverlappingOutDegree is not being calculated correctly for MultiplexGraphBD.')
 
-%% Test 2: Calculation MultiplexGraphWD
+%% Test 2: MultiplexGraphWD
 A11 = [
     0   .4  1
     0   0   0
@@ -52,4 +52,4 @@ overlapping_out_degree = OverlappingOutDegree(g);
 
 assert(isequal(overlapping_out_degree.getValue(), known_overlapping_out_degree), ...
     [BRAPH2.STR ':OverlappingOutDegree:' BRAPH2.BUG_ERR], ...
-    'OverlappingOutDegree is not being calculated correctly for MultiplexGraphWD')
+    'OverlappingOutDegree is not being calculated correctly for MultiplexGraphWD.')

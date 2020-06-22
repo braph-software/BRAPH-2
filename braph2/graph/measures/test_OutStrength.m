@@ -4,7 +4,8 @@
 A = [
     0   .2  1
     0   0   .8
-    1   0   0];
+    1   0   0
+    ];
 
 known_out_strength = {[1.2 .8 1]'};
 
@@ -19,13 +20,15 @@ assert(isequal(out_strength.getValue(), known_out_strength), ...
 A11 = [
     0   .2  1
     0   0   .8
-    1   0   0];
+    1   0   0
+    ];
 A12 = eye(3);
 A21 = eye(3);
 A22 = [
     0  1   .6
     1  0   .4
-    0  .4  0];
+    0  .4  0
+    ];
 A = {
     A11     A12  
     A21     A22

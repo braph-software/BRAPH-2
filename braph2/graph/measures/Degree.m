@@ -1,17 +1,16 @@
 classdef Degree < Measure
     % Degree Degree measure
     % Degree provides the degree of a node for binary undirected (BU) and 
-    % weighted undirected (WU) graphs. It is calculated as the number of
-    % edges connected to the node. Self-connections are excluded (i.e. the
-    % diagonal of the connection matrix is removed).
+    % weighted undirected (WU) graphs. 
+    %
+    % It is calculated as the number of edges connected to a node within a 
+    % layer. Self-connections are excluded (i.e. the diagonal of the
+    % connection matrix is removed).
     % 
     % Degree methods:
     %   Degree                      - constructor
-    %
-    % Degree methods (Access=protected):
-    %   calculate                   - calculates the degree of a node
     % 
-    % Degree methods (Static)
+    % Degree descriptive methods (Static)
     %   getClass                    - returns the degree class
     %   getName                     - returns the name of degree measure
     %   getDescription              - returns the description of degree measure
@@ -22,32 +21,30 @@ classdef Degree < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Graph, Strength, Distance, Efficiency.
+    % See also Measure, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
     
     methods
         function m = Degree(g, varargin)
-            % DEGREE(G) creates degree with default measure properties.
-            % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU). 
-            %
-            % DEGREE(G, 'VALUE', VALUE) creates degree, and sets the value
-            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU).
-            %   
-            % See also Measure, Graph, Strength, Distance, Efficency. 
+            % DEGREE(G) creates degree with default properties.
+            % G is a graph (e.g, an instance of GraphBU, GraphWU,
+            % MultiplexGraphBU or MultiplexGraphBU). 
+            %  
+            % See also Measure, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
             
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
         function degree = calculate(m)
-            % CALCULATE calculates the degree value of a node
+            % CALCULATE calculates the degree value of a graph
             %
             % DEGREE = CALCULATE(M) returns the value of the degree of a
-            % node.
+            % binary undirected (BU) or weighted undirected (WU) graph or multiplex.
+            %
+            % See also Measure, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix or 2D-cell array 
+            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
             
             degree = cell(g.layernumber(), 1);
             
@@ -90,8 +87,8 @@ classdef Degree < Measure
             % See also getList, getCompatibleGraphList.
             
             description = [ ...
-                'The degree of a node is ' ...
-                'the number of edges connected to the node. ' ...
+                'The degree of a node is the number of ' ...
+                'edges connected to a node within a layer. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
         end
@@ -106,7 +103,7 @@ classdef Degree < Measure
             available_settings = {};
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of degree
+            % GETMEASUREFORMAT returns the measure format of Degree
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of degree measure (NODAL).
@@ -116,7 +113,7 @@ classdef Degree < Measure
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of degree
+            % GETMEASURESCOPE returns the measure scope of Degree
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
             % measure scope of degree measure (UNILAYER).
@@ -127,7 +124,7 @@ classdef Degree < Measure
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to degree 
+            % with Degree 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
             % of compatible graph classes to degree. 
@@ -144,7 +141,7 @@ classdef Degree < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to degree 
+            % graphs with Degree 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to degree.
