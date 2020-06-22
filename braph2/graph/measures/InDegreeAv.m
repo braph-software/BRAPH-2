@@ -8,7 +8,7 @@ classdef InDegreeAv < InDegree
     % layer.
     % 
     % InDegreeAv methods:
-    %   InDegreeAv                    - constructor
+    %   InDegreeAv                  - constructor
     %
     % InDegreeAv descriptive methods (Static)
     %   getClass                    - returns the average in-degree class
@@ -25,7 +25,7 @@ classdef InDegreeAv < InDegree
     
     methods
         function m = InDegreeAv(g, varargin)
-            % OUTDEGREEAV(G) creates average in-degree with default properties.
+            % INDEGREEAV(G) creates average in-degree with default properties.
             % G is a graph (e.g, an instance of GraphBD, GraphWD,
             % MultiplexGraphBD or MultiplexGraphWD). 
             %   
@@ -35,10 +35,10 @@ classdef InDegreeAv < InDegree
         end
     end
     methods (Access=protected)
-        function out_degree_av = calculate(m)
+        function in_degree_av = calculate(m)
             % CALCULATE calculates the average in-degree value of a graph
             %
-            % DEGREEAV = CALCULATE(M) returns the value of the average in-degree 
+            % INDEGREEAV = CALCULATE(M) returns the value of the average in-degree 
             % of a binary directed (BD) or weighted directed (WD) graph or multiplex.
             %
             % See also Measure, InDegree, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
@@ -46,14 +46,14 @@ classdef InDegreeAv < InDegree
             g = m.getGraph();  % graph from measure class
             
             if g.is_measure_calculated('InDegree')
-                out_degree = g.getMeasureValue('InDegree');
+                in_degree = g.getMeasureValue('InDegree');
             else
-                out_degree = calculate@InDegree(m);
+                in_degree = calculate@InDegree(m);
             end
             
-            out_degree_av = cell(g.layernumber(), 1);
-            for li = 1:1:length(out_degree_av)
-                out_degree_av(li) = {mean(out_degree{li})};
+            in_degree_av = cell(g.layernumber(), 1);
+            for li = 1:1:length(in_degree_av)
+                in_degree_av(li) = {mean(in_degree{li})};
             end
         end
     end
@@ -75,7 +75,7 @@ classdef InDegreeAv < InDegree
             %
             % See also getClass, getDescription. 
             
-            name = 'Average Out-Degree';
+            name = 'Average In-Degree';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the average in-degree description 
@@ -87,7 +87,7 @@ classdef InDegreeAv < InDegree
             
             description = [ ...
                 'The average in-degree of a graph is the average of all ' ...
-                'number of  inward edges connected to a node within a layer. ' ...
+                'number of inward edges connected to a node within a layer. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
