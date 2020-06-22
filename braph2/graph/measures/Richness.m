@@ -89,18 +89,12 @@ classdef Richness < Degree
                     deg = in_degree{li} + out_degree{li};
                 end
                 
-                richness_threshold = get_from_varargin('default', 'RichnessThreshold', m.getSettings());
-                if isnumeric(richness_threshold)
+                richness_threshold = get_from_varargin(0, 'RichnessThreshold', m.getSettings());
+                if richness_threshold > 0
                     k_level = richness_threshold;
-                else  % default, max degree
-                    k_level = max(deg);
+                else  % max degree
+                    k_level = max(deg) - 1;
                 end
-%                 switch lower(richness_threshold)
-%                     case {'number'}  % number parameter
-%                         k_level = richness_threshold;
-%                     otherwise  % default, mad degree
-%                         k_level = max(deg);
-%                 end
 
                 low_rich_nodes = find(deg <= k_level);  % get lower rich nodes with degree <=k
                 subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <=k of Aii
@@ -153,7 +147,10 @@ classdef Richness < Degree
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Richness. Empty Array in this case.
             
-            available_settings = {};
+            %available_settings = {};
+            available_settings = {
+                'RichnessThreshold', Constant.NUMERIC, 0, {'max', 'threshold'};
+                };
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of Richness
