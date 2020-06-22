@@ -445,32 +445,32 @@ init_table()
         br = BrainRegion([num2str(br_id)], '', '', 0, 0, 0);
         atlas.getBrainRegions().add(br.getID(), br);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
     function cb_table_remove(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().remove_all(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
     function cb_table_moveup(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().move_up(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
     function cb_table_movedown(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().move_down(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
     function cb_table_move2top(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().move_to_top(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
     function cb_table_move2bottom(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().move_to_bottom(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
 
 %% Panel Figure
