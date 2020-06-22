@@ -18,14 +18,14 @@ A = {
     A21     A22
     };
 
-known_multiplex_out_participation = {[1, 8/9, 0]'};
+known_multiplex_out_participation = {[1 8/9 0]'};
 
 g = MultiplexGraphBD(A);
 multiplex_out_participation = MultiplexOutParticipation(g);
                  
 assert(isequal(multiplex_out_participation.getValue(), known_multiplex_out_participation), ...
     [BRAPH2.STR ':MultiplexOutParticipation:' BRAPH2.BUG_ERR], ...
-    'MultiplexOutParticipation is not being calculated correctly for MultiplexGraphBD')
+    'MultiplexOutParticipation is not being calculated correctly for MultiplexGraphBD.')
 
 %% Test 2: MultiplexGraphWD
 A11 = [
@@ -45,11 +45,11 @@ A = {
     A21     A22
     };
 
-known_multiplex_out_participation = {[8/9, 0, 1]'};
+known_multiplex_out_participation = {[8/9 0 1]'};
 
 g = MultiplexGraphWD(A);           
 multiplex_out_participation = MultiplexOutParticipation(g);
 
 assert(isequal(multiplex_out_participation.getValue(), known_multiplex_out_participation), ...
     [BRAPH2.STR ':MultiplexOutParticipation:' BRAPH2.BUG_ERR], ...
-    'MultiplexOutParticipation is not being calculated correctly for MultiplexGraphWD')
+    'MultiplexOutParticipation is not being calculated correctly for MultiplexGraphWD.')
