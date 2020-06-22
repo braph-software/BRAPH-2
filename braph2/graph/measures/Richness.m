@@ -148,7 +148,6 @@ classdef Richness < Degree
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Richness. Empty Array in this case.
             
-            %available_settings = {};
             available_settings = {
                 'RichnessThreshold', Constant.NUMERIC, 0, {'max', 'threshold'};
                 };
