@@ -1,5 +1,5 @@
 classdef InStrengthAv < InStrength
-    % InStrengthAv Average strength measure
+    % InStrengthAv Average in-strength measure
     % InStrengthAv provides the average in-strength of a node for weighted 
     % undirected (WU) graphs.
     %
