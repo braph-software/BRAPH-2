@@ -3,8 +3,13 @@ classdef MultiplexInParticipation < InDegree
     % MultiplexInParticipation provides the multiplex in-participation of a node for binary 
     % undirected (BU) and weighted undirected (WU) multiplexes. 
     %
-    % It is calculated as the number of inward neighbours of a node across the
-    % layers.
+    % It is the heterogenerity of the number of inward neighbours of a node across the layers.
+    % It is calcualted as:
+    % Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2]
+    % where L is the numebr of layers, ki(l) is the in-degree in the l-th
+    % layer and oi is the overlapping in-degree of the node.
+    % Pi = 1 when the in-degree is the same in all layers and Pi = 0 when a
+    % node has non-zero in-degree in only one layer.
     % 
     % MultiplexInParticipation methods:
     %   MultiplexInParticipation    - constructor
@@ -92,10 +97,10 @@ classdef MultiplexInParticipation < InDegree
             % multiplex in-participation measure.
             %
             % See also getClass, getName.
-            
+
             description = [ ...
-                'The multiplex in-participation of a node is the the heterogeneity ' ...
-                'of the number of inward neighbours of a node across the layers. ' ...
+                'The multiplex in-participation of a node is the heterogeneity ' ...
+                'of its number of inward neighbours across the layers. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
