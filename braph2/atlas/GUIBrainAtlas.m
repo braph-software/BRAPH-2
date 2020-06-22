@@ -225,6 +225,33 @@ init_datacursormode()
         end
     end
 
+    function init_disable()
+        set(ui_button_table_moveup,'enable','off')
+        set(ui_button_table_movedown,'enable','off')
+        set(ui_button_table_move2top,'enable','off'),
+        set(ui_button_table_move2bottom,'enable','off')
+        
+        set(ui_menu_edit_moveup,'enable','off')
+        set(ui_menu_edit_movedown,'enable','off')
+        set(ui_menu_edit_move2top,'enable','off')
+        set(ui_menu_edit_move2bottom,'enable','off')
+        
+        set(ui_checkbox_figure_distance, 'enable', 'off')
+    end
+    function init_enable()        
+        set(ui_button_table_moveup,'enable','on')
+        set(ui_button_table_movedown,'enable','on')
+        set(ui_button_table_move2top,'enable','on'),
+        set(ui_button_table_move2bottom,'enable','on')
+        
+        set(ui_menu_edit_moveup,'enable','on')
+        set(ui_menu_edit_movedown,'enable','on')
+        set(ui_menu_edit_move2top,'enable','on')
+        set(ui_menu_edit_move2bottom,'enable','on')
+        
+        set(ui_checkbox_figure_distance, 'enable', 'on')
+    end
+
 %% Text File Name
 ui_text_filename = uicontrol('Style','text');
 init_filename()
@@ -237,6 +264,11 @@ init_filename()
     end
     function update_filename(filename)
         set(ui_text_filename, 'String', filename)
+         if atlas.getBrainRegions().length() > 0
+            init_enable()
+        else
+            init_disable()
+        end
     end
 
 %% Panel Table
@@ -445,7 +477,8 @@ init_table()
         br = BrainRegion([num2str(br_id)], '', '', 0, 0, 0);
         atlas.getBrainRegions().add(br.getID(), br);
         update_table_table()
-        update_figure_brainview()
+        init_enable()
+        update_figure_brainview()        
     end
     function cb_table_remove(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().remove_all(selected);
@@ -1210,6 +1243,7 @@ setup_restrictions()
         update_table_table()
         % setup figure
         create_figure()
+        init_disable()
     end
 
 end
