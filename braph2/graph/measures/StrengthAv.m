@@ -11,9 +11,9 @@ classdef StrengthAv < Strength
     %   StrengthAv                  - constructor
     %
     % StrengthAv descriptive methods (Static)
-    %   getClass                    - returns the strength class
-    %   getName                     - returns the name of strength measure
-    %   getDescription              - returns the description of strength measure
+    %   getClass                    - returns the average strength class
+    %   getName                     - returns the name of average strength measure
+    %   getDescription              - returns the description of average strength measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns de measure format
     %   getMeasureScope             - returns de measure scope 
@@ -29,7 +29,7 @@ classdef StrengthAv < Strength
             % G is a weighted undirected (WU) graph (e.g, an instance of 
             % GraphWU or MultiplexGraphWU).
             %
-            % See also Measure, GraphWU, MultiplexGraphWU.
+            % See also Measure, Strength, GraphWU, MultiplexGraphWU.
 
             m = m@Strength(g, varargin{:});
         end
@@ -41,7 +41,7 @@ classdef StrengthAv < Strength
             % STRENGTHAV = CALCULATE(M) returns the value of the average strength
             % of a weighted undirected (WU) graph or multiplex.
             %
-            % See also Measure, GraphWU, MultiplexGraphWU.
+            % See also Measure, Strength, GraphWU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
 
