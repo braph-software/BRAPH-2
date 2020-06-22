@@ -916,7 +916,7 @@ init_menu()
         set(ui_menu_edit_selectall, 'Callback', {@cb_table_selectall})
         
         set(ui_menu_edit_clearselection, 'Label', CLEARSELECTION_CMD)
-        set(ui_menu_edit_clearselection, 'Callback', {@cg_table_clearselection})
+        set(ui_menu_edit_clearselection, 'Callback', {@cb_table_clearselection})
         
         set(ui_menu_edit_add, 'Separator', 'on')
         set(ui_menu_edit_add, 'Label', ADD_CMD)
@@ -938,7 +938,7 @@ init_menu()
         
         set(ui_menu_edit_move2top, 'Label', MOVE2TOP_CMD)
         set(ui_menu_edit_move2top, 'Accelerator', MOVE2TOP_SC)
-        set(ui_menu_edit_move2top, 'Callback', {@cb_vmove2top})
+        set(ui_menu_edit_move2top, 'Callback', {@cb_table_move2top})
         
         set(ui_menu_edit_move2bottom, 'Label', MOVE2BOTTOM_CMD)
         set(ui_menu_edit_move2bottom, 'Accelerator', MOVE2BOTTOM_SC)
