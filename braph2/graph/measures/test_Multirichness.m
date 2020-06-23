@@ -49,7 +49,7 @@ A = {
     A21     A22
     };
      
-known_multirichness = {[3 3 2 0]'};      
+known_multirichness = {[3/2 3/2 1 0]'};      
 
 g = MultiplexGraphBD(A);
 multirichness = Multirichness(g, 'RichnessThreshold', 4, 'MultirichnessCoefficients', [1/2, 1/2]);
@@ -107,7 +107,7 @@ A = {
     A21     A22
     };    
 
-known_multirichness = {[5/2 5/2 1 0]'};      
+known_multirichness = {[5/4 5/4 1/2 0]'};      
 
 g = MultiplexGraphWD(A);
 multirichness = Multirichness(g, 'RichnessThreshold', 4, 'MultirichnessCoefficients', [3/4, 1/4]);
