@@ -37,10 +37,10 @@ classdef Richness < Degree
     end
     methods (Access=protected)
         function richness = calculate(m)
-            % CALCULATE calculates the richness value of a multiplex
+            % CALCULATE calculates the richness value of a graph
             %
             % RICHNESS = CALCULATE(M) returns the value of the richness
-            % of a multiplex.
+            % of a graph.
             %
             % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
