@@ -25,7 +25,7 @@ A = [
     0  1  0  0
     ];
 
-known_richness = {[2 2 0 0]'};
+known_richness = {[1 1 0 0]'};
 
 g = GraphBD(A);
 richness = Richness(g, 'RichnessThreshold', 4);
@@ -59,7 +59,7 @@ A = [
     0   .3  0  0
     ];
 
-known_richness = {[2 2 0 0]'};
+known_richness = {[1 1 0 0]'};
 
 g = GraphWD(A);
 richness = Richness(g, 'RichnessThreshold', 4);
@@ -122,8 +122,8 @@ A = {
     };
 
 known_richness = {
-                 [2 2 0 0]'
-                 [4 4 4 0]'
+                 [1 1 0 0]'
+                 [2 2 2 0]'
                  };      
 
 g = MultiplexGraphBD(A);
@@ -186,8 +186,8 @@ A = {
     };
 
 known_richness = {
-                 [2 2 0 0]'
-                 [4 4 4 0]'
+                 [1 1 0 0]'
+                 [2 2 2 0]'
                  };      
 
 g = MultiplexGraphWD(A);
