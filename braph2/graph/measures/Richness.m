@@ -86,7 +86,7 @@ classdef Richness < Degree
                         out_degree = OutDegree(g, g.getSettings()).getValue();
                     end
                     
-                    deg = in_degree{li} + out_degree{li};
+                    deg = (in_degree{li} + out_degree{li})/2;
                 end
                 
                 richness_threshold = get_from_varargin(0, 'RichnessThreshold', m.getSettings());
