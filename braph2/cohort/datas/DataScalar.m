@@ -13,8 +13,8 @@ classdef DataScalar < Data
         function setValue(d, value)
                         
             assert(isnumeric(value) && numel(value)==1, ...
-                'BRAPH:DataScalar:WrongValue', ...
-                'The value of DataScalar must be a scalar')
+                [BRAPH2.STR ':DataScalar:' BRAPH2.WRONG_INPUT], ...
+                'The value of DataScalar must be a scalar.')
 
             d.value = value;
         end
