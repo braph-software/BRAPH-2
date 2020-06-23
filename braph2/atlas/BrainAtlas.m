@@ -95,7 +95,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     end
     methods  % Basic functions
         function atlas = BrainAtlas(id, label, notes, brain_surf_file, brain_regions)
-            % BrainAtlas(ID, LABEL, NOTES, BRAIN_SURF_FFILE, BRAIN_REGIONS) creates a BrainAtlas with
+            % BrainAtlas(ID, LABEL, NOTES, BRAIN_SURF_FILE, BRAIN_REGIONS) creates a BrainAtlas with
             % given ID, LABEL, NOTES, AND BRAIN_SURF_FILE and initializes the dictionary with
             % BRAIN_REGIONS (cell array of BrainRegions).
             %
