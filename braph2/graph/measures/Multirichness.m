@@ -1,5 +1,5 @@
 classdef Multirichness < Richness
-    % Multirichness Richness measure
+    % Multirichness Multirichness measure
     % Multirichness provides the multirichness of a node for binary undirected (BU),
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
     % multiplexes. 
