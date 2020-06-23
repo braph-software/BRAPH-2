@@ -1,39 +1,26 @@
 classdef Data < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         atlas  % brain atlas
-        value  % data value
+        value  % data value (a matrix)
     end
     methods (Access=protected)
         function d = Data(atlas, value)
             
             assert(isa(atlas, 'BrainAtlas'), ...
-                'BRAPH:Data:BrainAtlas', ...
+                [BRAPH2.STR ':Data:BrainAtlas' BRAPH2.WRONG_INPUT], ...
                 'Data must be constructed with a BrainAtlas.')
             
             d.atlas = atlas;
             d.setValue(value);
         end
-        function d_copy = copyElement(d)
-            % IMPORTANT! It does NOT make a deep copy of the BrainAtlas atlas
-            
-            % Make a shallow copy
-            d_copy = copyElement@matlab.mixin.Copyable(d);
-        end
     end
-    methods
+    methods  % Basic methods
         function str = tostring(d)
-            str = [Data.getClass(d) ' ' int2str(size(d.getValue(), 1)) ' x ' int2str(size(d.getValue(), 2))]; %#ok<NBRAK>
+            str = [Data.getClass(d) ' ' int2str(size(d.getValue(), 1)) ' x ' int2str(size(d.getValue(), 2))];
         end
         function disp(d)
             disp(['<a href="matlab:help ' Data.getClass(d) '">' Data.getClass(d) '</a>'])
             disp([' size: ' int2str(size(d.getValue(), 1)) ' rows x ' int2str(size(d.getValue(), 2)) ' columns'])
-        end
-        function setBrainAtlas(d, atlas)
-            
-            assert(d.getBrainAtlas().getBrainRegions().length() == atlas.getBrainRegions().length(), ...
-                ['BRAPH:' d.getClass() ':AtlasErr'], ...
-                ['When substituting the brain atlas in ' d.getClass() ', the size of the brain atlas must remain the same'])
-            d.atlas = atlas;
         end
         function atlas = getBrainAtlas(d)
             atlas = d.atlas;
@@ -41,11 +28,19 @@ classdef Data < handle & matlab.mixin.Copyable
         function value = getValue(d)
             value = d.value;
         end
+        function setBrainAtlas(d, atlas)
+            
+            assert(d.getBrainAtlas().getBrainRegions().length() == atlas.getBrainRegions().length(), ...
+                [BRAPH2.STR ':' d.getClass() ':' BRAPH2.WRONG_INPUT], ...
+                ['When substituting the brain atlas in ' d.getClass() ', the size of the brain atlas must remain the same.'])
+            
+            d.atlas = atlas;
+        end
     end
-    methods (Abstract)
+    methods (Abstract)  % setValue
         setValue(d, value)  % set the value of the data
     end
-    methods (Static)
+    methods (Static)  % Inspection methods
         function data_list = getList()
             data_list = subclasses( ...
                 'Data', ...
@@ -75,4 +70,12 @@ classdef Data < handle & matlab.mixin.Copyable
             d = eval([data_class '(atlas, varargin{:})']);
         end
     end
+    methods  % Shallow Copy
+        function d_copy = copyElement(d)
+            % IMPORTANT! It does NOT make a deep copy of the BrainAtlas atlas
+            
+            % Make a shallow copy
+            d_copy = copyElement@matlab.mixin.Copyable(d);
+        end
+    end    
 end
