@@ -146,10 +146,14 @@ classdef Richness < Degree
             % GETAVAILABLESETTINGS returns the setting available to Richness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to Richness. Empty Array in this case.
+            % settings available to Richness.
+            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            %                    to the maximum degree - 1.
+            %                    value - RICHNESS k threshold is set to the
+            %                    specificied value (numeric).
             
             available_settings = {
-                'RichnessThreshold', Constant.NUMERIC, 0, {'max', 'threshold'};
+                'RichnessThreshold', BRAPH2.NUMERIC, 0;
                 };
         end
         function measure_format = getMeasureFormat()
