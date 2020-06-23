@@ -73,7 +73,7 @@ classdef Multirichness < Richness
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the richness measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the multirichness measure.
             %
             % See also getName, getDescription. 
             
@@ -82,7 +82,7 @@ classdef Multirichness < Richness
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the richness measure.
+            % NAME = GETNAME() returns the name of the multirichness measure.
             %
             % See also getClass, getDescription. 
             
@@ -110,6 +110,12 @@ classdef Multirichness < Richness
             %                    to the maximum degree - 1.
             %                    value - RICHNESS k threshold is set to the
             %                    specificied value (numeric).
+            % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients 
+            %                    will be set to 1 per each layer.
+            %                    values - MULTIRICHNESS c coefficients
+            %                    will be set to the values specified per
+            %                    each layer if the length of values is
+            %                    equal to the number of layers.
             
             available_settings = {
                  'RichnessThreshold', BRAPH2.NUMERIC, 0
