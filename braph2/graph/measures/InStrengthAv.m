@@ -1,7 +1,7 @@
 classdef InStrengthAv < InStrength
     % InStrengthAv Average in-strength measure
     % InStrengthAv provides the average in-strength of a node for weighted 
-    % undirected (WU) graphs.
+    % directed (WD) graphs.
     %
     % It is calculated as the average of the sum of all weights of the inward edges 
     % connected to a node within a layer, i.e., it is the mean of the in-strength 
@@ -21,15 +21,15 @@ classdef InStrengthAv < InStrength
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, InStrength, GraphWU, MultiplexGraphWU.
+    % See also Measure, InStrength, GraphWD, MultiplexGraphWD.
     
     methods
         function m = InStrengthAv(g, varargin)
             % INSTRENGTHAV(G) creates average in-strength with default properties.
-            % G is a weighted undirected (WU) graph (e.g, an instance of 
-            % GraphWU or MultiplexGraphWU).
+            % G is a weighted directed (WD) graph (e.g, an instance of 
+            % GraphWD or MultiplexGraphWD).
             %
-            % See also Measure, InStrength, GraphWU, MultiplexGraphWU.
+            % See also Measure, InStrength, GraphWD, MultiplexGraphWD.
 
             m = m@InStrength(g, varargin{:});
         end
@@ -39,9 +39,9 @@ classdef InStrengthAv < InStrength
             % CALCULATE calculates the average in-strength value of a graph
             %
             % INSTRENGTHAV = CALCULATE(M) returns the value of the average in-strength
-            % of a weighted undirected (WU) graph or multiplex.
+            % of a weighted directed (WD) graph or multiplex.
             %
-            % See also Measure, InStrength, GraphWU, MultiplexGraphWU.
+            % See also Measure, InStrength, GraphWD, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
 
@@ -89,7 +89,7 @@ classdef InStrengthAv < InStrength
                 'The average in-strength of a node is ' ...
                 'the average of the sum of the weights of ' ...
                 'all the inward edges connected to a node within a layer ' ...
-                'for weighted undirected (WU) graphs. ' ...
+                'for weighted directed (WD) graphs. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
