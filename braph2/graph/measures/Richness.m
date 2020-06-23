@@ -105,7 +105,7 @@ classdef Richness < Degree
                 if directionality_layer == Graph.UNDIRECTED  % undirected graphs
                     richness(li) = {sum(subAii, 1)'};  % degree of high rich nodes   
                 else
-                    richness(li) = {sum(subAii, 1)' + sum(subAii, 2)};  % degree of high rich nodes   
+                    richness(li) = {(sum(subAii, 1)' + sum(subAii, 2))/2};  % degree of high rich nodes   
                 end
             end
         end
