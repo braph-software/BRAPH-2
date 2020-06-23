@@ -358,11 +358,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             for i = 2:1:size(raw, 1)
                 br_id = raw{i, 1};
-                br_label = raw{i, 2};
-                br_notes = raw{i, 3};
-                br_x = raw{i, 4};
-                br_y = raw{i, 5};
-                br_z = raw{i, 6};
+                br_label = raw{i, 2};                
+                br_x = raw{i, 3};
+                br_y = raw{i, 4};
+                br_z = raw{i, 5};
+                br_notes = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
                 atlas.getBrainRegions().add(br.getID(), br);
             end
@@ -406,7 +406,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % creates table
             tab = [
                 {atlas.getID(), {}, {}, {}, {}, {}};
-                table(br_ids, br_label, br_notes, br_x, br_y, br_z)
+                table(br_ids, br_label, br_x, br_y, br_z, br_notes)
                 ];
             
             % save
@@ -450,11 +450,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             for i = 1:1:size(raw, 1)
                 br_id = char(raw{i, 1});
-                br_label = char(raw{i, 2});
-                br_notes = char(raw{i, 3});
-                br_x = raw{i, 4};
-                br_y = raw{i, 5};
-                br_z = raw{i, 6};
+                br_label = char(raw{i, 2});                
+                br_x = raw{i, 3};
+                br_y = raw{i, 4};
+                br_z = raw{i, 5};
+                br_notes = char(raw{i, 6});
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
                 atlas.getBrainRegions().add(br.getID(), br);
             end
@@ -498,7 +498,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % creates table
             tab = [
                 {atlas.getID(), {}, {}, {}, {}, {}};
-                table(br_ids, br_label, br_notes, br_x, br_y, br_z)
+                table(br_ids, br_label, br_x, br_y, br_z, br_notes)
                 ];
             
             % save
@@ -600,7 +600,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 'Build', BRAPH2.BUILD, ...
                 'BrainAtlas', struct( ...
                     'id', atlas.getID(), ...
-                    'br_idict', table(id, label, notes, x, y, z) ...
+                    'br_idict', table(id, label, x, y, z, notes) ...
                     ) ...
                 );
             
