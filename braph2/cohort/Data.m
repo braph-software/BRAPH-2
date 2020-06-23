@@ -44,7 +44,7 @@ classdef Data < handle & matlab.mixin.Copyable
         function data_list = getList()
             data_list = subclasses( ...
                 'Data', ...
-                [fileparts(which('Cohort')) filesep 'datas'] ...
+                [fileparts(which('Data')) filesep 'datas'] ...
                 );
         end
         function data_class = getClass(d)
@@ -70,7 +70,7 @@ classdef Data < handle & matlab.mixin.Copyable
             d = eval([data_class '(atlas, varargin{:})']);
         end
     end
-    methods  % Shallow Copy
+    methods (Access=protected)  % Shallow Copy
         function d_copy = copyElement(d)
             % IMPORTANT! It does NOT make a deep copy of the BrainAtlas atlas
             
