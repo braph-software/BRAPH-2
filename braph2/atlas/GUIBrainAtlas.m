@@ -309,8 +309,8 @@ init_table()
         set(ui_table_table, 'ColumnName', {'', 'ID', 'Label', 'x', 'y', 'z', 'Notes'})
         set(ui_table_table, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'numeric', 'numeric', 'char'})
         set(ui_table_table, 'ColumnEditable', true)
-        set(ui_table_table, 'CellEditCallback', {@cb_table_edit});        
-        set(ui_table_table, 'ColumnWidth',  'auto' )   
+        set(ui_table_table, 'CellEditCallback', {@cb_table_edit})     
+        set(ui_table_table, 'ColumnWidth', 'auto')
         
         set(ui_button_table_selectall, 'Position', [.02 .11 .21 .03])
         set(ui_button_table_selectall, 'String', SELECTALL_CMD)
