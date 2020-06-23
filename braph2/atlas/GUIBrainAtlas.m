@@ -201,7 +201,7 @@ ba = [];
     end
 
 %% GUI inizialization
-f = GUI.init_figure(APPNAME, .8, .8, 'northwest');
+f = GUI.init_figure(APPNAME, .8, .8, 'center');
 
 dcm = datacursormode(f);
 init_datacursormode()
