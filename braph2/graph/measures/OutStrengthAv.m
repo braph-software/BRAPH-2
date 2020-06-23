@@ -1,7 +1,7 @@
 classdef OutStrengthAv < OutStrength
     % OutStrengthAv Average out-strength measure
     % OutStrengthAv provides the average out-strength of a node for weighted 
-    % undirected (WU) graphs.
+    % directed (WD) graphs.
     %
     % It is calculated as the average of the sum of all weights of the outward edges 
     % connected to a node within a layer, i.e., it is the mean of the out-strength 
@@ -21,15 +21,15 @@ classdef OutStrengthAv < OutStrength
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, OutStrength, GraphWU, MultiplexGraphWU.
+    % See also Measure, OutStrength, GraphWD, MultiplexGraphWD.
     
     methods
         function m = OutStrengthAv(g, varargin)
             % OUTSTRENGTHAV(G) creates average out-strength with default properties.
-            % G is a weighted undirected (WU) graph (e.g, an instance of 
-            % GraphWU or MultiplexGraphWU).
+            % G is a weighted directed (WD) graph (e.g, an instance of 
+            % GraphWD or MultiplexGraphWD).
             %
-            % See also Measure, OutStrength, GraphWU, MultiplexGraphWU.
+            % See also Measure, OutStrength, GraphWD, MultiplexGraphWD.
 
             m = m@OutStrength(g, varargin{:});
         end
@@ -39,9 +39,9 @@ classdef OutStrengthAv < OutStrength
             % CALCULATE calculates the average out-strength value of a graph
             %
             % OUTSTRENGTHAV = CALCULATE(M) returns the value of the average out-strength
-            % of a weighted undirected (WU) graph or multiplex.
+            % of a weighted directed (WD) graph or multiplex.
             %
-            % See also Measure, OutStrength, GraphWU, MultiplexGraphWU.
+            % See also Measure, OutStrength, GraphWD, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
 
@@ -89,7 +89,7 @@ classdef OutStrengthAv < OutStrength
                 'The average out-strength of a node is ' ...
                 'the average of the sum of the weights of ' ...
                 'all the outward edges connected to a node within a layer ' ...
-                'for weighted undirected (WU) graphs. ' ...
+                'for weighted directed (WD) graphs. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
