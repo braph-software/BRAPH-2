@@ -5,7 +5,9 @@ classdef Multirichness < Richness
     % multiplexes. 
     %
     % It is calculated as the sum of the number of edges that connect nodes
-    % of degree k or higher in all layers.
+    % of degree k or higher in all layers. The relevance of each layer is
+    % controlled by the coefficients c that are between 0 and 1; the default 
+    % coefficients are (1/layernumber)
     % 
     % Multirichness methods:
     %   Multirichness               - constructor
@@ -27,6 +29,35 @@ classdef Multirichness < Richness
         function m = Multirichness(g, varargin)
             % MULTIRICHNESS(G) creates multirichness with default properties.
             % G is a multiplex (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
+            % or MultiplexGraphWU). 
+            %
+            % MULTIRICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
+            % multirichness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
+            % Admissible THRESHOLD options are:
+            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            %                    to the maximum degree - 1.
+            %                    value - RICHNESS k threshold is set to the
+            %                    specificied value (numeric).
+            % 
+            % MULTIRICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD, 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS) 
+            % creates multirichness measure and initializes the property RichnessThreshold 
+            % with RICHNESSTHRESHOLD and the property MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
+            % Admissible THRESHOLD and COEFFICIENTS options are:
+            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            %                    to the maximum degree - 1.
+            %                    value - RICHNESS k threshold is set to the
+            %                    specificied value (numeric).
+            % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
+            %                    will be set to (1/layernumber) per each layer.
+            %                    values - MULTIRICHNESS c coefficients
+            %                    will be set to the values specified per
+            %                    each layer if the length of values is
+            %                    equal to the number of layers.
+            %
+            % MULTIRICHNESS(G, 'VALUE1', VALUE1, 'VALUE2', VALUE2) creates
+            % multirichness, and sets the value1 to VALUE1 and value2 to
+            % VALUE2. G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
             % or MultiplexGraphWU). 
             %
@@ -55,11 +86,20 @@ classdef Multirichness < Richness
             N = g.nodenumber();
             L = g.layernumber();
             
-            multirichness_coefficients = get_from_varargin([0], 'MultirichnessCoefficients', m.getSettings());
+            multirichness_coefficients = get_from_varargin(0, 'MultirichnessCoefficients', m.getSettings());
+            assert(length(multirichness_coefficients) == L || all(multirichness_coefficients == 0), ...
+                [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
+                ['Multirichness coefficients must have the same length than the ' ...
+                'number of layers (' tostring(L) ') while its length is ' tostring(length(multirichness_coefficients))])
+
             if length(multirichness_coefficients) == L
+                assert(all(multirichness_coefficients <= 1) && all(multirichness_coefficients >= 0), ...
+                    [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
+                    ['Multirichness coefficients must be between 0 and 1 ' ...
+                    'while they are ' tostring(multirichness_coefficients)])
                 c = multirichness_coefficients;
             else  % same relevance for each layer
-                c = ones(1, L);
+                c = ones(1, L)/L;
             end
             
             multirichness = zeros(N(1), 1);
@@ -99,6 +139,8 @@ classdef Multirichness < Richness
             description = [ ...
                 'The multirichness of a node is the sum of ' ...
                 'the edges that connect nodes of degree k or higher in all layers. ' ...
+                'The relevance of each layer is controlled by the coefficients c ' ...
+                'that are between 0 and 1; the default coefficients are (1/layernumber). ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -111,7 +153,7 @@ classdef Multirichness < Richness
             %                    value - RICHNESS k threshold is set to the
             %                    specificied value (numeric).
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients 
-            %                    will be set to 1 per each layer.
+            %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
             %                    will be set to the values specified per
             %                    each layer if the length of values is
