@@ -1,7 +1,8 @@
 % test GUIBrainAtlas
 
 %% Test 1: Basic
-atlas = BrainAtlas.load_from_txt('File', 'desikan_atlas.txt');
+file = [fileparts(which('test_braph2')) filesep 'desikan_atlas.txt'];
+atlas = BrainAtlas.load_from_txt('File', file);
 atlas.setID('BA ID')
 atlas.setLabel('BA name')
 atlas.setNotes('Brain atlas notes.')
