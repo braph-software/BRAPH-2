@@ -1,0 +1,224 @@
+classdef WeightedRichness < Strength
+    % WeightedRichness Weighted richness measure
+    % WeightedRichness provides the weighted richness of a node for weighted 
+    % undirected (WU) and weighted directed (WD) graphs. 
+    %
+    % It is calculated as the sum of the weighted edges that connect nodes
+    % of strength k or higher within a layer. k is set by the user, the
+    % default value is equal to the maximum degree - 1.
+    % 
+    % WeightedRichness methods:
+    %   WeightedRichness            - constructor
+    %
+    % WeightedRichness methods (Static)
+    %   getClass                    - returns the weighted richness class
+    %   getName                     - returns the name of weighted richness measure
+    %   getDescription              - returns the description of weighted richness measure
+    %   getAvailableSettings        - returns the settings available to the class
+    %   getMeasureFormat            - returns de measure format
+    %   getMeasureScope             - returns de measure scope    
+    %   getMeasure                  - returns the degree class
+    %   getCompatibleGraphList      - returns a list of compatible graphs
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs
+    %
+    % See also Measure, Strength, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
+    
+    methods
+        function m = WeightedRichness(g, varargin)
+            % WEIGHTEDRICHNESS(G) creates weighted richness with default properties.
+            % G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
+            % or MultiplexGraphWU). 
+            %
+            % WEIGHTEDRICHNESS(G, 'WeightedRichnessThreshold', WEIGHTEDRICHNESSTHRESHOLD) 
+            % creates weighted richness measure and initializes the property 
+            % WeightedRichnessThreshold with WEIGHTEDRICHNESSTHRESHOLD. 
+            % Admissible THRESHOLD options are:
+            % WEIGHTEDRICHNESSTHRESHOLD = 0 (default) - WEIGHTEDRICHNESS k threshold  
+            %                           is set to the maximum degree - 1.
+            %                           value - WEIGHTEDRICHNESS k threshold is 
+            %                           set to the specificied value (numeric).
+            % 
+            % WEIGHTEDRICHNESS(G, 'VALUE', VALUE) creates weighted richness, and sets 
+            % the value to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
+            % or MultiplexGraphWU). 
+            %
+            % See also Measure, Strength, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
+            
+            m = m@Strength(g, varargin{:});
+        end
+    end
+    methods (Access=protected)
+        function weighted_richness = calculate(m)
+            % CALCULATE calculates the weighted richness value of a graph
+            %
+            % RICHNESS = CALCULATE(M) returns the value of the weighted richness
+            % of a graph.
+            %
+            % See also Measure, Strength, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
+            
+            g = m.getGraph();  % graph from measure class
+            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
+            L = g.layernumber();
+            
+            weighted_richness = cell(g.layernumber(), 1);
+            directionality_type =  g.getDirectionalityType(g.layernumber());
+            for li = 1:1:L
+                
+                if g.is_graph(g)
+                    Aii = A;
+                    directionality_layer = directionality_type;
+                else
+                    Aii = A{li, li};
+                    directionality_layer = directionality_type(li, li);
+                end
+                
+                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+                    
+                    if g.is_measure_calculated('Strength')
+                        strength = g.getMeasureValue('Strength');
+                    else
+                        strength = calculate@Strength(m);
+                    end
+                    
+                    st = strength{li};
+                    
+                else  % directed graphs
+                    
+                    if g.is_measure_calculated('InStrength')
+                        in_strength = g.getMeasureValue('InStrength');
+                    else
+                        in_strength = InStrength(g, g.getSettings()).getValue();
+                    end
+                    
+                    if g.is_measure_calculated('OutStrength')
+                        out_strength = g.getMeasureValue('OutStrength');
+                    else
+                        out_strength = OutStrength(g, g.getSettings()).getValue();
+                    end
+                    
+                    st = (in_strength{li} + out_strength{li})/2;
+                end
+                
+                weighted_richness_threshold = get_from_varargin(0, 'WeightedRichnessThreshold', m.getSettings());
+                assert(mod(weighted_richness_threshold, 1) == 0 && weighted_richness_threshold >= 0, ...
+                    [BRAPH2.STR ':WeightedRichness:' BRAPH2.WRONG_INPUT], ...
+                    ['WeightedRichness threshold must be a positive integer ' ...
+                    'while it is ' tostring(weighted_richness_threshold)])
+
+                if weighted_richness_threshold > 0
+                    k_level = weighted_richness_threshold;
+                else  % max degree
+                    k_level = max(st) - 1;
+                end
+
+                low_rich_nodes = find(st <= k_level);  % get lower rich nodes with strength <= k
+                subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <=k of Aii
+                subAii(low_rich_nodes, :) = 0;  % remove rows
+                subAii(:, low_rich_nodes) = 0;  % remove columns
+                
+                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+                    weighted_richness(li) = {sum(subAii, 1)'};  % strength of high rich nodes   
+                else
+                    weighted_richness(li) = {(sum(subAii, 1)' + sum(subAii, 2))/2};  % strength of high rich nodes   
+                end
+            end
+        end
+    end  
+    methods (Static)  % Descriptive methods
+        function measure_class = getClass()
+            % GETCLASS returns the measure class 
+            %            
+            % MEASURE_CLASS = GETCLASS() returns the class of the weighted richness measure.
+            %
+            % See also getName, getDescription. 
+            
+            measure_class = 'WeightedRichness';
+        end
+        function name = getName()
+            % GETNAME returns the measure name
+            %
+            % NAME = GETNAME() returns the name of the weighted richness measure.
+            %
+            % See also getClass, getDescription. 
+            
+            name = 'Weighted richness';
+        end
+        function description = getDescription()
+            % GETDESCRIPTION returns the weighted richness description 
+            %
+            % DESCRIPTION = GETDESCRIPTION() returns the description of the
+            % weighted richness measure.
+            %
+            % See also getClass, getName.
+            
+            description = [ ...
+                'The weighted richness of a node is the sum of ' ...
+                'the weighted edges that connect nodes of strength k or higher within a layer. ' ...
+                'k is set by the user; the default value is equal to the ' ...
+                'maximum degree -1. ' ...
+                ];
+        end
+        function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the setting available to WeightedRichness
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to WeightedRichness.
+            % WEIGHTEDRICHNESSTHRESHOLD = 0 (default) - WEIGHTEDRICHNESS k threshold  
+            %                           is set to the maximum degree - 1.
+            %                           value - WEIGHTEDRICHNESS k threshold is 
+            %                           set to the specificied value (numeric).
+            
+            available_settings = {
+                'WeightedRichnessThreshold', BRAPH2.NUMERIC, 0, {};
+                };
+        end
+        function measure_format = getMeasureFormat()
+            % GETMEASUREFORMAT returns the measure format of WeightedRichness
+            %
+            % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
+            % of weighted richness measure (NODAL).
+            %
+            % See also getMeasureScope.
+            
+            measure_format = Measure.NODAL;
+        end
+        function measure_scope = getMeasureScope()
+            % GETMEASURESCOPE returns the measure scope of WeightedRichness
+            %
+            % MEASURE_SCOPE = GETMEASURESCOPE() returns the
+            % measure scope of weighted richness measure (UNILAYER).
+            %
+            % See also getMeasureFormat.
+            
+            measure_scope = Measure.UNILAYER;
+        end
+        function list = getCompatibleGraphList()  
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with WeightedRichness 
+            %
+            % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
+            % of compatible graph classes to weighted richness. 
+            % The measure will not work if the graph is not compatible. 
+            %
+            % See also getCompatibleGraphNumber. 
+            
+            list = { ...
+                'GraphWD', ...
+                'GraphWU' ...
+                'MultiplexGraphWD' ...
+                'MultiplexGraphWU' ...
+                };
+        end
+        function n = getCompatibleGraphNumber()
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with WeightedRichness
+            %
+            % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
+            % compatible graphs with weighted richness.
+            % 
+            % See also getCompatibleGraphList.
+            
+            n = Measure.getCompatibleGraphNumber('WeightedRichness');
+        end
+    end
+end
