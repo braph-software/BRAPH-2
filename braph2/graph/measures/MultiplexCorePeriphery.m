@@ -57,11 +57,20 @@ classdef MultiplexCorePeriphery < Multirichness
             N = g.nodenumber();
             L = g.layernumber();
   
-            multirichness_coefficients = get_from_varargin([0], 'MultirichnessCoefficients', m.getSettings());
+            multirichness_coefficients = get_from_varargin(0, 'MultirichnessCoefficients', m.getSettings());
+            assert(length(multirichness_coefficients) == L || all(multirichness_coefficients == 0), ...
+                [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.WRONG_INPUT], ...
+                ['Multirichness coefficients must have the same length than the ' ...
+                'number of layers (' tostring(L) ') while its length is ' tostring(length(multirichness_coefficients))])
+
             if length(multirichness_coefficients) == L
+                assert(all(multirichness_coefficients <= 1) && all(multirichness_coefficients >= 0), ...
+                    [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.WRONG_INPUT], ...
+                    ['Multirichness coefficients must be between 0 and 1 ' ...
+                    'while they are ' tostring(multirichness_coefficients)])
                 c = multirichness_coefficients;
             else  % same relevance for each layer
-                c = ones(1, L);
+                c = ones(1, L)/L;
             end
             
             directionality_type =  g.getDirectionalityType(g.layernumber());
