@@ -117,9 +117,10 @@ classdef Multirichness < Richness
             %                    each layer if the length of values is
             %                    equal to the number of layers.
             
-            available_settings = {
-                 'RichnessThreshold', BRAPH2.NUMERIC, 0
-                 'MultirichnessCoefficients', BRAPH2.NUMERIC, [0];
+            available_settings = getAvailableSettings@Richness();
+
+            available_settings(end+1, :) = {
+                 'MultirichnessCoefficients', BRAPH2.NUMERIC, 0, {};
                 };
         end
         function measure_format = getMeasureFormat()

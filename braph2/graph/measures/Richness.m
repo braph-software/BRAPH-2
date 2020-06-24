@@ -153,7 +153,7 @@ classdef Richness < Degree
             %                    specificied value (numeric).
             
             available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, 0;
+                'RichnessThreshold', BRAPH2.NUMERIC, 0, {};
                 };
         end
         function measure_format = getMeasureFormat()
