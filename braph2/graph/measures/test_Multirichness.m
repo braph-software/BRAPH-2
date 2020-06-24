@@ -20,7 +20,7 @@ A = {
     A21     A22
     };
 
-known_multirichness = {[5 5 4 2]'};      
+known_multirichness = {[5/2 5/2 2 1]'};      
 
 g = MultiplexGraphBU(A);
 multirichness = Multirichness(g, 'RichnessThreshold', 1);
