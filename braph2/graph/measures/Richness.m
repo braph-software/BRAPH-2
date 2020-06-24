@@ -5,7 +5,8 @@ classdef Richness < Degree
     % graphs. 
     %
     % It is calculated as the sum of the number of edges that connect nodes
-    % of degree k or higher within a layer.
+    % of degree k or higher within a layer. k is set by the user, the
+    % default value is equal to the maximum degree - 1.
     % 
     % Richness methods:
     %   Richness                    - constructor
@@ -30,6 +31,19 @@ classdef Richness < Degree
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
             % or MultiplexGraphWU). 
             %
+            % RICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
+            % richness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
+            % Admissible THRESHOLD options are:
+            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            %                    to the maximum degree - 1.
+            %                    value - RICHNESS k threshold is set to the
+            %                    specificied value (numeric).
+            % 
+            % RICHNESS(G, 'VALUE', VALUE) creates richness, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
+            % or MultiplexGraphWU). 
+            %
             % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
             m = m@Degree(g, varargin{:});
@@ -46,8 +60,6 @@ classdef Richness < Degree
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
-            
-            N = g.nodenumber();
             L = g.layernumber();
             
             richness = cell(g.layernumber(), 1);
@@ -90,6 +102,11 @@ classdef Richness < Degree
                 end
                 
                 richness_threshold = get_from_varargin(0, 'RichnessThreshold', m.getSettings());
+                assert(mod(richness_threshold, 1) == 0 && richness_threshold >= 0, ...
+                    [BRAPH2.STR ':Richness:' BRAPH2.WRONG_INPUT], ...
+                    ['Richness threshold must be a positive integer ' ...
+                    'while it is ' tostring(richness_threshold)])
+
                 if richness_threshold > 0
                     k_level = richness_threshold;
                 else  % max degree
@@ -140,6 +157,8 @@ classdef Richness < Degree
             description = [ ...
                 'The richness of a node is the sum of ' ...
                 'the edges that connect nodes of degree k or higher within a layer. ' ...
+                'k is set by the user; the default value is equal to the ' ...
+                'maximum degree -1. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -153,7 +172,7 @@ classdef Richness < Degree
             %                    specificied value (numeric).
             
             available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, 0;
+                'RichnessThreshold', BRAPH2.NUMERIC, 0, {};
                 };
         end
         function measure_format = getMeasureFormat()
