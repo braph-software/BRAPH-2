@@ -31,14 +31,6 @@ classdef MultiplexCorePeriphery < Multirichness
             % G is a multiplex (e.g, an instance of MultiplexGraphBD,
             % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
             %
-            % MULTIPLEXCOREPERIPHERY(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
-            % multiplex core periphery measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
-            % Admissible THRESHOLD options are:
-            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value (numeric).
-            % 
             % MULTIPLEXCOREPERIPHERY(G, 'RichnessThreshold', RICHNESSTHRESHOLD, 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS) 
             % creates multiplex core periphery, measure and initializes the property RichnessThreshold 
             % with RICHNESSTHRESHOLD and the property MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
