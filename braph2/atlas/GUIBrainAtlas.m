@@ -495,7 +495,7 @@ FIG_BRAIN_CMD = 'Show brain';
 FIG_BRAIN_TP = 'Brain surface on/off';
 
 FIG_DISTANCE_CMD = 'Highlights';
-FIG_DISTANCE_TP = 'Highlights on/off';
+FIG_DISTANCE_TP = 'Highlights on/off. Must select a Brain Region first.';
 
 FIG_BRAINALPHA_CMD = 'Brain transparency';
 FIG_BRAINALPHA_TP = 'Adjust the transparency of the brain surface';
