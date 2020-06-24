@@ -28,9 +28,36 @@ classdef MultiplexCorePeriphery < Multirichness
     methods
         function m = MultiplexCorePeriphery(g, varargin)
             % MULTIPLEXCOREPERIPHERY(G) creates multiplex core periphery with default properties.
-            % G is a multiplex (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
-            % or MultiplexGraphWU). 
+            % G is a multiplex (e.g, an instance of MultiplexGraphBD,
+            % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
+            %
+            % MULTIPLEXCOREPERIPHERY(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
+            % multiplex core periphery measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
+            % Admissible THRESHOLD options are:
+            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            %                    to the maximum degree - 1.
+            %                    value - RICHNESS k threshold is set to the
+            %                    specificied value (numeric).
+            % 
+            % MULTIPLEXCOREPERIPHERY(G, 'RichnessThreshold', RICHNESSTHRESHOLD, 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS) 
+            % creates multiplex core periphery, measure and initializes the property RichnessThreshold 
+            % with RICHNESSTHRESHOLD and the property MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
+            % Admissible THRESHOLD and COEFFICIENTS options are:
+            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            %                    to the maximum degree - 1.
+            %                    value - RICHNESS k threshold is set to the
+            %                    specificied value (numeric).
+            % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
+            %                    will be set to (1/layernumber) per each layer.
+            %                    values - MULTIRICHNESS c coefficients
+            %                    will be set to the values specified per
+            %                    each layer if the length of values is
+            %                    equal to the number of layers.
+            %
+            % MULTIPLEXCOREPERIPHERY(G, 'VALUE1', VALUE1, 'VALUE2', VALUE2) creates
+            % multiplex core periphery, and sets the value1 to VALUE1 and value2 to
+            % VALUE2. G is a graph (e.g, an instance of MultiplexGraphBD,
+            % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
             %
             % See also Measure, Multirichness, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
