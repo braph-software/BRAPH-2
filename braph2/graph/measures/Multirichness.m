@@ -31,14 +31,6 @@ classdef Multirichness < Richness
             % G is a multiplex (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
             % or MultiplexGraphWU). 
-            %
-            % MULTIRICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
-            % multirichness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
-            % Admissible THRESHOLD options are:
-            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value (numeric).
             % 
             % MULTIRICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD, 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS) 
             % creates multirichness measure and initializes the property RichnessThreshold 
