@@ -133,8 +133,9 @@ classdef MultiplexCorePeriphery < Multirichness
             [~, rankingInd] = sort(overlapping_degree_coefficients, 'descend');
             multirichness = multirichness{1};
             [~, rankOfMaxMultirichness] = max(multirichness(rankingInd));
-            multiplex_core_periphery = zeros(N, 1);
+            multiplex_core_periphery = zeros(N(1), 1);
             multiplex_core_periphery(rankingInd(1:rankOfMaxMultirichness)) = 1;
+            multiplex_core_periphery = {multiplex_core_periphery};
         end
     end  
     methods (Static)  % Descriptive methods
