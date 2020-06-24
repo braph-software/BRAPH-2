@@ -119,9 +119,9 @@ classdef WeightedRichness < Strength
                 subAii(:, low_rich_nodes) = 0;  % remove columns
                 
                 if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                    weighted_richness(li) = {sum(subAii, 1)'};  % strength of high rich nodes   
+                    weighted_richness(li) = {round(sum(subAii, 1), 6)'};  % strength of high rich nodes   
                 else
-                    weighted_richness(li) = {(sum(subAii, 1)' + sum(subAii, 2))/2};  % strength of high rich nodes   
+                    weighted_richness(li) = {round((sum(subAii, 1)' + sum(subAii, 2)), 6)/2};  % strength of high rich nodes   
                 end
             end
         end
