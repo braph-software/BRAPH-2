@@ -53,7 +53,7 @@ classdef WeightedRichness < Strength
         function weighted_richness = calculate(m)
             % CALCULATE calculates the weighted richness value of a graph
             %
-            % RICHNESS = CALCULATE(M) returns the value of the weighted richness
+            % WEIGHTEDRICHNESS = CALCULATE(M) returns the value of the weighted richness
             % of a graph.
             %
             % See also Measure, Strength, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
