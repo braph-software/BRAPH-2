@@ -245,10 +245,10 @@ init_filename()
     end
 
     function init_disable()
-        set(ui_checkbox_figure_distance, 'enable', 'off')
+%         set(ui_checkbox_figure_distance, 'enable', 'off')
     end
     function init_enable()
-        set(ui_checkbox_figure_distance, 'enable', 'on')
+%         set(ui_checkbox_figure_distance, 'enable', 'on')
     end
 
 %% Panel Table

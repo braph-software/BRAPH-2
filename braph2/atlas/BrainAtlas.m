@@ -335,10 +335,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % file with message MSG.
             %
             % See also BrainAtlas, uigetfile, fopen.
-            
-            % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {}); 
-            
+     
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
@@ -354,6 +351,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             [~, ~, raw] = xlsread(file);
             
             atlas_id = raw{1,1};
+            atlas_surf = raw{1, 2};
+            
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas('', '', '', atlas_surf, {});             
             atlas.setID(atlas_id);
             
             for i = 2:1:size(raw, 1)
@@ -405,7 +406,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % creates table
             tab = [
-                {atlas.getID(), {}, {}, {}, {}, {}};
+                {atlas.getID(), atlas.getBrainSurfFile(), {}, {}, {}, {}};
                 table(br_ids, br_label, br_x, br_y, br_z, br_notes)
                 ];
             
@@ -428,9 +429,6 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also BrainAtlas, uigetfile, readtable
             
-            % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
-            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
@@ -446,6 +444,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             raw = readtable(file);
             
             atlas_ID =  raw.Properties.VariableNames{1};
+            atlas_surf = raw.Properties.VariableNames{2};
+            atlas_surf = strrep(atlas_surf, '_nv', '.nv');
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas('', '', '', atlas_surf, {});
             atlas.setID(atlas_ID);
             
             for i = 1:1:size(raw, 1)
@@ -497,7 +499,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % creates table
             tab = [
-                {atlas.getID(), {}, {}, {}, {}, {}};
+                {atlas.getID(), atlas.getBrainSurfFile(), {}, {}, {}, {}};
                 table(br_ids, br_label, br_x, br_y, br_z, br_notes)
                 ];
             
@@ -520,8 +522,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also BrainAtlas, uigetfile, jsondecode
             
-            % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
+            
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
@@ -540,9 +541,12 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             atlas_id =  fieldnames(raw);
             brain_atlas = atlas_id{3};  % 1: BRAPH, 2:Version, 3:Name           
             brain_atlas_structure = eval(['raw.' brain_atlas]);
-            atlas.setID(brain_atlas_structure.id);
+            atlas_surf = brain_atlas_structure.ba_surf;
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas('', '', '', atlas_surf, {});
+            atlas.setID(brain_atlas_structure.id);            
             intern_structure = fieldnames(brain_atlas_structure);
-            idict = intern_structure{2};  % 1:name, 2:idict
+            idict = intern_structure{3};  % 1:name, 2:surf, 3:idict
             brain_atlas_intern_structure = eval(['brain_atlas_structure.' idict]);
             
             
@@ -600,6 +604,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 'Build', BRAPH2.BUILD, ...
                 'BrainAtlas', struct( ...
                     'id', atlas.getID(), ...
+                    'ba_surf', atlas.getBrainSurfFile(), ...
                     'br_idict', table(id, label, x, y, z, notes) ...
                     ) ...
                 );
