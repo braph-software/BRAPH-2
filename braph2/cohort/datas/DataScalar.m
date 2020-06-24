@@ -31,5 +31,11 @@ classdef DataScalar < Data
                 'A single number representing a scalar value.' ...
                 ]; %#ok<NBRAK>
         end
+        function available_settings = getAvailableSettings(d) %#ok<INUSD>
+            available_settings = {
+                {'DataScalar.Gender', BRAPH2.STRING, 'female', {'female', 'male', 'another'}}, ...
+                {'DataScalar.LevelEducation', BRAPH2.STRING, 'unkown', {'unkown', 'bachelor', 'master', 'phd', 'another'}}, ...
+                };
+        end
     end  
 end
