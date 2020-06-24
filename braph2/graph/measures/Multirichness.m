@@ -28,9 +28,8 @@ classdef Multirichness < Richness
     methods
         function m = Multirichness(g, varargin)
             % MULTIRICHNESS(G) creates multirichness with default properties.
-            % G is a multiplex (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
-            % or MultiplexGraphWU). 
+            % G is a multiplex (e.g, an instance of MultiplexGraphBD,
+            % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
             % 
             % MULTIRICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD, 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS) 
             % creates multirichness measure and initializes the property RichnessThreshold 
@@ -49,9 +48,8 @@ classdef Multirichness < Richness
             %
             % MULTIRICHNESS(G, 'VALUE1', VALUE1, 'VALUE2', VALUE2) creates
             % multirichness, and sets the value1 to VALUE1 and value2 to
-            % VALUE2. G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
-            % or MultiplexGraphWU). 
+            % VALUE2. G is a graph (e.g, an instance of MultiplexGraphBD,
+            % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
             %
             % See also Measure, Richness, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
