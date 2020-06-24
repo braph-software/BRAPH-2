@@ -31,6 +31,19 @@ classdef Richness < Degree
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
             % or MultiplexGraphWU). 
             %
+            % RICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
+            % richness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
+            % Admissible THRESHOLD options are:
+            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            %                    to the maximum degree - 1.
+            %                    value - RICHNESS k threshold is set to the
+            %                    specificied value (numeric).
+            % 
+            % RICHNESS(G, 'VALUE', VALUE) creates richness, and sets the value
+            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
+            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
+            % or MultiplexGraphWU). 
+            %
             % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
             m = m@Degree(g, varargin{:});
