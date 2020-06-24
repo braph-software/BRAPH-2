@@ -61,8 +61,7 @@ close(gcf)
 close(gcf)
 
 %% Test 2: Distance Map
-file = [fileparts(which('test_braph2')) filesep 'desikan_atlas.txt'];
-atlas = BrainAtlas.load_from_txt('File', file);
+atlas = BrainAtlas.load_from_txt('File', 'desikan_atlas.txt');
 ba = PlotBrainAtlas(atlas);
 
 figure
