@@ -1,4 +1,34 @@
 classdef Data < handle & matlab.mixin.Copyable
+    % Data (Abstract) A Data
+    % Data provides the methods necesary for all datas
+    % It is a subclass of handle and matlab.mixin.Copyable
+    %
+    % Data contains and manages brain regions inside an IndexedDictionary; 
+    % thus, it has access to all IndexedDictionary methods. 
+    % Data can be imported/exported to .txt, .xls and .json files.
+    %
+    % Data methods:
+    %   Data                    - Constructor
+    %
+    % Data basic methods:
+    %   tostring                - returns a string representing the Data
+    %   disp                    - displays the Data
+    %   value                   - returns the value
+    %   setBrainAtlas           - sets the Brain Atlas to Data
+    % 
+    % Data abstract methods:
+    %   setValue                - method to be inherit by subclass to set the value
+    %
+    % Data static mehtods
+    %   getList                 - returns the list of subclasses
+    %   getClass                - returns the class
+    %   getName                 - returns the name of the class
+    %   getDescription          - returns the description of the class
+    %   getData                 - returns the data
+    %   getAvailableSettings    - returns the available settings
+    %
+    % See also Cohort, Subject, Group.
+    
     properties (GetAccess=protected, SetAccess=protected)
         atlas  % brain atlas
         value  % data value (a matrix)
