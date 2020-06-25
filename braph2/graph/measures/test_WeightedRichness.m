@@ -11,7 +11,7 @@ A = [
 known_weighted_richness = {[1.1 1.1 2 0]'};
 
 g = GraphWU(A);
-weighted_richness = WeightedRichness(g, 'WeightedRichnessThreshold', 1);
+weighted_richness = WeightedRichness(g, 'WeightedRichnessThreshold', -1);
 
 assert(isequal(weighted_richness.getValue(), known_weighted_richness), ...
     [BRAPH2.STR ':WeightedRichness:' BRAPH2.BUG_ERR], ...
@@ -60,7 +60,7 @@ known_weighted_richness = {
                  };      
 
 g = MultiplexGraphWU(A);
-weighted_richness = WeightedRichness(g, 'WeightedRichnessThreshold', 1);
+weighted_richness = WeightedRichness(g);
 
 assert(isequal(weighted_richness.getValue(), known_weighted_richness), ...
     [BRAPH2.STR ':WeightedRichness:' BRAPH2.BUG_ERR], ...
