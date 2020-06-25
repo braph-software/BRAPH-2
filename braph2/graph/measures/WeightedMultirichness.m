@@ -54,8 +54,8 @@ classdef WeightedMultirichness < WeightedRichness
             %
             % MULTIRICHNESS(G, 'VALUE1', VALUE1, 'VALUE2', VALUE2) creates
             % multirichness, and sets the value1 to VALUE1 and value2 to
-            % VALUE2. G is a graph (e.g, an instance of MultiplexGraphBD,
-            % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
+            % VALUE2. G is a graph (e.g, an instance of MultiplexGraphWD
+            % or MultiplexGraphWU). 
             %
             % See also Measure, WeightedRichness, MultiplexGraphWU, MultiplexGraphWD.
             
