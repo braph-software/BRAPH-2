@@ -20,7 +20,7 @@ classdef PathLength < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Graph, Strength, Distance, Degree.
+    % See also Measure, Distance, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
     
     methods
         function m = PathLength(g, varargin)
@@ -31,15 +31,19 @@ classdef PathLength < Measure
             % PATHLENGTH(G, 'PathLengthRule', PATHLENGTHRULE) creates path 
             % length measure and initializes the property PathLengthRule 
             % with PATHLENGTHRULE. 
-            % PathLength available PATHLENGTHRULE are: 
-            % subgraphs     -   Calculates PATHLENGTH of all subgraphs
-            % harmonic      -   Calculates PATHLENGTH with harmonic average
-            % default       -   Calculates PATHLENGTH with normal average
+            % Admissible PATHLENGTHRULE options are:
+            % PATHLENGTHRULE = subgraphs - Calculates PATHLENGTH of all
+            %                  subgraphs.
+            %                  harmonic - Calculates PATHLENGTH with
+            %                  harmonic average.
+            %                  default - Calculates PATHLENGTH with normal
+            %                  average
             %
-            % PATHLENGTH(G, 'VALUE', VALUE) creates path length, and sets the value
-            % to VALUE. G is a graph (e.g, an instance of GraphBU, Graph WU).
+            % PATHLENGTH(G, 'VALUE', VALUE) creates path length, and sets 
+            % the value to VALUE. G is a graph (e.g, an instance of GraphBU,
+            % GraphWU, MultiplexGraphBU or MultiplexGraphWU).
             %   
-            % See also Measure, Graph, Strength, Distance, GlobalEfficiency. 
+            % See also Measure, Distance, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
             
             m = m@Measure(g, varargin{:});
         end
@@ -50,6 +54,8 @@ classdef PathLength < Measure
             %
             % PATHLENGTH = CALCULATE(M) returns the value of the path length
             % of a node.
+            %
+            % See also Measure, Distance, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
 
