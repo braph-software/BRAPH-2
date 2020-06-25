@@ -57,7 +57,71 @@ assert(isequal(path_length.getValue(), known_path_length), ...
     [BRAPH2.STR ':PathLength:' BRAPH2.BUG_ERR], ...
     'PathLength is not being calculated correctly for GraphWU.')
 
-%% Test 3: Calculation subgraphs GraphWU vs BCT
+%% Test 3: MultiplexGraphBU
+A11 = [
+      0   .1  0   0
+      .2  0   .1  0
+      0   .1  0   .2
+      0   0   .1  0
+      ];
+A12 = eye(4);
+A21 = eye(4);
+A22 = [
+      0   .1  0   0
+      .2  0   .1  0
+      0   .1  0   .2
+      0   0   .1  0
+      ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_path_length = {
+                    [2 4/3 4/3 2]'
+                    [2 4/3 4/3 2]'
+                    };
+
+g = MultiplexGraphBU(A);
+path_length = PathLength(g);
+
+assert(isequal(path_length.getValue(), known_path_length), ...
+    [BRAPH2.STR ':PathLength:' BRAPH2.BUG_ERR], ...
+    'PathLength is not being calculated correctly for MultiplexGraphBU.')
+
+%% Test 4: MultiplexGraphWU
+A11 = [
+      0   .1  0   0
+      .2  0   .1  0
+      0   .1  0   .2
+      0   0   .1  0
+      ];
+A12 = eye(4);
+A21 = eye(4);
+A22 = [
+      0   .1  0   0
+      .2  0   .1  0
+      0   .1  0   .2
+      0   0   .1  0
+      ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_path_length = {
+                    [40/3 10 10 40/3]'
+                    [40/3 10 10 40/3]'
+                    };
+
+g = MultiplexGraphWU(A);
+path_length = PathLength(g, 'PathLengthRule', 'subgraphs');
+
+assert(isequal(path_length.getValue(), known_path_length), ...
+    [BRAPH2.STR ':PathLength:' BRAPH2.BUG_ERR], ...
+    'PathLength is not being calculated correctly for MultiplexGraphWU.')
+
+%% Test 5: Calculation subgraphs GraphWU vs BCT
 A = [
     0   .1  0   0
     .2   0 .1   0
