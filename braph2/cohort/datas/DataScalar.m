@@ -32,10 +32,7 @@ classdef DataScalar < Data
                 ]; %#ok<NBRAK>
         end
         function available_settings = getAvailableSettings(d) %#ok<INUSD>
-            available_settings = {
-                {'DataScalar.Gender', BRAPH2.STRING, 'female', {'female', 'male', 'another'}}, ...
-                {'DataScalar.LevelEducation', BRAPH2.STRING, 'unkown', {'unkown', 'bachelor', 'master', 'phd', 'another'}}, ...
-                };
+            available_settings = {};
         end
     end  
 end

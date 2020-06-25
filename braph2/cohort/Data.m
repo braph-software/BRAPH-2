@@ -15,13 +15,17 @@ classdef Data < handle & matlab.mixin.Copyable
             d.setValue(value);
             
             available_settings = Data.getAvailableSettings(class(d));
-            settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
-            for i = 1:1:length(available_settings)
-                a_s = available_settings{i};
-                available_setting_code = a_s{1, 1};
-                available_setting_default = a_s{1, 3};
-                settings{i, 1} = available_setting_code;
-                settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
+            if isempty(available_settings)
+                settings = {};
+            else
+                settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
+                for i = 1:1:length(available_settings)
+                    a_s = available_settings{i};
+                    available_setting_code = a_s{1, 1};
+                    available_setting_default = a_s{1, 3};
+                    settings{i, 1} = available_setting_code;
+                    settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
+                end
             end
             d.settings = settings;
         end

@@ -38,10 +38,7 @@ classdef DataStructural < Data
                 ];
         end
          function available_settings = getAvailableSettings(d) %#ok<INUSD>
-            available_settings = {
-                {'DataStructural.Gender', BRAPH2.STRING, 'female', {'female', 'male', 'another'}}, ...
-                {'DataStructural.LevelEducation', BRAPH2.STRING, 'unkown', {'unkown', 'bachelor', 'master', 'phd', 'another'}}, ...
-                };
+            available_settings = {};
         end
     end  
 end
