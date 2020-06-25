@@ -445,24 +445,26 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 end
             end
             
-            raw = readtable(file,'PreserveVariableNames',true);
+            raw = textread(file, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
             
-            atlas_ID =  raw.Properties.VariableNames{1};            
-            atlas_label = raw.Properties.VariableNames{2};
-            atlas_notes = raw.Properties.VariableNames{3};
-            atlas_surf = raw.Properties.VariableNames{4};
+            raw = raw(~cellfun('isempty', raw));  % remove empty cells
+            
+            atlas_ID =  raw{1, 1};            
+            atlas_label = raw{2, 1};
+            atlas_notes = raw{3, 1};
+            atlas_surf = raw{4, 1};
             atlas_surf = strrep(atlas_surf, '_nv', '.nv');
   
             % Creates empty BrainAtlas
             atlas = BrainAtlas(atlas_ID, atlas_label, atlas_notes, atlas_surf, {});
             
-            for i = 1:1:size(raw, 1)
+            for i = 5:6:size(raw, 1)
                 br_id = char(raw{i, 1});
-                br_label = char(raw{i, 2});                
-                br_x = raw{i, 3};
-                br_y = raw{i, 4};
-                br_z = raw{i, 5};
-                br_notes = char(raw{i, 6});
+                br_label = char(raw{i+1, 1});                
+                br_x = str2double(raw{i+2, 1});
+                br_y = str2double(raw{i+3, 1});
+                br_z = str2double(raw{i+4, 1});
+                br_notes = char(raw{i+5, 1});
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
                 atlas.getBrainRegions().add(br.getID(), br);
             end
@@ -505,10 +507,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % creates table
             tab = [
-                {atlas.getID(), {}, {}, {}, {}, {}};
-                {atlas.getLabel(), {}, {}, {}, {}, {}};
-                {atlas.getNotes(), {}, {}, {}, {}, {}};
-                {atlas.getBrainSurfFile(), {}, {}, {}, {}, {}};
+                {atlas.getID(), {}, {}, {}, {}, {}}
+                {atlas.getLabel(), {}, {}, {}, {}, {}} 
+                {atlas.getNotes(), {}, {}, {}, {}, {}} 
+                {atlas.getBrainSurfFile(), {}, {}, {}, {}, {}}                 
                 table(br_ids, br_label, br_x, br_y, br_z, br_notes)
                 ];
             
