@@ -29,7 +29,7 @@ classdef InPathLength < Measure
             % MultiplexGraphBD or MultiplexGraphWD).
             %   
             % INPATHLENGTH(G, 'InPathLengthRule', INPATHLENGTHRULE) creates  
-            % path length measure and initializes the property PathLengthRule 
+            % path length measure and initializes the property InPathLengthRule 
             % with INPATHLENGTHRULE. 
             % Admissible PATHLENGTHRULE options are:
             % INPATHLENGTHRULE = 'default' (default) - calculates PATHLENGTH 
