@@ -97,7 +97,7 @@ classdef WeightedMultiplexCorePeriphery < WeightedMultirichness
                 assert(all(weighted_multirichness_coefficients <= 1) && all(weighted_multirichness_coefficients >= 0), ...
                     [BRAPH2.STR ':WeightedMultiplexCorePeriphery:' BRAPH2.WRONG_INPUT], ...
                     ['WeightedMultiplexCorePeriphery coefficients must be between 0 and 1 ' ...
-                    'while they are ' tostring(multirichness_coefficients)])
+                    'while they are ' tostring(weighted_multirichness_coefficients)])
                 c = weighted_multirichness_coefficients;
             else  % same relevance for each layer
                 c = ones(1, L)/L;
@@ -200,7 +200,7 @@ classdef WeightedMultiplexCorePeriphery < WeightedMultirichness
             %                                   each layer if the length of values is
             %                                   equal to the number of layers.
             
-            available_settings = getAvailableSettings@Richness();
+            available_settings = getAvailableSettings@WeightedRichness();
 
             available_settings(end+1, :) = {
                  'WeightedMultirichnessCoefficients', BRAPH2.NUMERIC, 0, {};
