@@ -32,12 +32,12 @@ classdef PathLength < Measure
             % length measure and initializes the property PathLengthRule 
             % with PATHLENGTHRULE. 
             % Admissible PATHLENGTHRULE options are:
-            % PATHLENGTHRULE = subgraphs - Calculates PATHLENGTH of all
+            % PATHLENGTHRULE = 'default' (default) - calculates PATHLENGTH 
+            %                  with normal average
+            %                  'subgraphs' - calculates PATHLENGTH of all
             %                  subgraphs.
-            %                  harmonic - Calculates PATHLENGTH with
+            %                  'harmonic' - calculates PATHLENGTH with
             %                  harmonic average.
-            %                  default - Calculates PATHLENGTH with normal
-            %                  average
             %
             % PATHLENGTH(G, 'VALUE', VALUE) creates path length, and sets 
             % the value to VALUE. G is a graph (e.g, an instance of GraphBU,
@@ -66,27 +66,35 @@ classdef PathLength < Measure
             end
             
             N = g.nodenumber();
-            path_length = zeros(N, 1);            
-          
-            pathLength_rule = get_from_varargin('default', 'PathLengthAvRule', m.getSettings());
-            switch lower(pathLength_rule)
-                case {'subgraphs'}
-                    for u = 1:1:N
-                        Du = distance(:, u);
-                        path_length(u) = mean(Du(Du~=Inf & Du~=0));                        
-                    end
-                     path_length(isnan(path_length)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
-                case {'harmonic'}
-                    for u = 1:1:N
-                        Du = distance(:, u);
-                        path_length(u) = harmmean(Du(Du~=0));
-                    end
-                otherwise  % 'default'
-                    for u = 1:1:N
-                        Du = distance(:, u);
-                        path_length(u) = mean(Du(Du~=0));
-                    end
-            end           
+            L = g.layernumber();
+                       
+            path_length_rule = get_from_varargin('default', 'PathLengthRule', m.getSettings());
+            path_length = cell(L, 1);
+            for li = 1:1:L
+                path_length_layer = zeros(N(1), 1); 
+                distance_layer = distance{li};
+                
+                switch lower(path_length_rule)
+                    case {'subgraphs'}
+                        for u = 1:1:N
+                            Du = distance_layer(:, u);
+                            path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));                        
+                        end
+                         path_length_layer(isnan(path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
+                    case {'harmonic'}
+                        for u = 1:1:N
+                            Du = distance_layer(:, u);
+                            path_length_layer(u) = harmmean(Du(Du~=0));
+                        end
+                    otherwise  % 'default'
+                        for u = 1:1:N
+                            Du = distance_layer(:, u);
+                            path_length_layer(u) = mean(Du(Du~=0));
+                        end
+                end  
+                
+                path_length(li) = {path_length_layer};
+            end
         end
     end
     methods (Static)  % Descriptive methods
@@ -126,14 +134,17 @@ classdef PathLength < Measure
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to PathLength. 
-            % PATHLENGTHAVRULE = 'default' (default) - calculates path length of nodal graph.
-            %                    'subgraphs' - calculates path length of each subgraph.
-            %                    'harmonic'  - calculates the path length using harmonic mean.
+            % PATHLENGTHRULE = 'default' (default) - calculates PATHLENGTH 
+            %                  with normal average
+            %                  'subgraphs' - calculates PATHLENGTH of all
+            %                  subgraphs.
+            %                  'harmonic' - calculates PATHLENGTH with
+            %                  harmonic average.
             % 
             % See also getCompatibleGraphList()
             
             available_settings = {
-                'PathLengthRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                'PathLengthRule', BRAPH2.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
                 };
         end
         function measure_format = getMeasureFormat()
