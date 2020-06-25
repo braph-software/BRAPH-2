@@ -7,7 +7,9 @@ classdef Richness < Degree
     % It is calculated as the sum of the number of edges that connect nodes
     % of degree k or higher within a layer. The value of k is set by the
     % user (setting 'RichnessThreshold'), the default value is equal to the
-    % maximum degree - 1.
+    % maximum degree - 1. For positive thresholds, k equals to the threshold
+    % value; while for negative thresholds, k equals to the maximum degree -
+    % threshold value.
     % 
     % Richness methods:
     %   Richness                    - constructor
@@ -35,10 +37,12 @@ classdef Richness < Degree
             % RICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
             % richness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
             % Admissible THRESHOLD options are:
-            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
             %                    to the maximum degree - 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value (numeric).
+            %                    specificied value if the value is positive.
+            %                    For negative values, k is set to the
+            %                    maximum degree - value.
             % 
             % RICHNESS(G, 'VALUE', VALUE) creates richness, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
@@ -102,16 +106,16 @@ classdef Richness < Degree
                     deg = (in_degree{li} + out_degree{li})/2;
                 end
                 
-                richness_threshold = get_from_varargin(0, 'RichnessThreshold', m.getSettings());
-                assert(mod(richness_threshold, 1) == 0 && richness_threshold >= 0, ...
+                richness_threshold = get_from_varargin(-1, 'RichnessThreshold', m.getSettings());
+                assert(mod(richness_threshold, 1) == 0, ...
                     [BRAPH2.STR ':Richness:' BRAPH2.WRONG_INPUT], ...
-                    ['Richness threshold must be a positive integer ' ...
+                    ['Richness threshold must be an integer value ' ...
                     'while it is ' tostring(richness_threshold)])
 
-                if richness_threshold > 0
-                    k_level = richness_threshold;
-                else  % max degree
-                    k_level = max(deg) - 1;
+                if richness_threshold > 0  % for positive threshold value, k = value
+                    k_level = richness_threshold;  
+                else  % for negative threshold, k = max degree - threshold (default -1)
+                    k_level = max(deg) - abs(richness_threshold);
                 end
 
                 low_rich_nodes = find(deg <= k_level);  % get lower rich nodes with degree <=k
@@ -159,7 +163,9 @@ classdef Richness < Degree
                 'The richness of a node is the sum of ' ...
                 'the edges that connect nodes of degree k or higher within a layer. ' ...
                 'k is set by the user; the default value is equal to the ' ...
-                'maximum degree -1. ' ...
+                'maximum degree - 1. For positive thresholds, k equals to the ' ...
+                'threshold value; while for negative thresholds, k equals to ' ...
+                'the maximum degree - threshold value.' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -167,13 +173,15 @@ classdef Richness < Degree
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Richness.
-            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
             %                    to the maximum degree - 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value (numeric).
+            %                    specificied value if the value is positive.
+            %                    For negative values, k is set to the
+            %                    maximum degree - value.
             
             available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, 0, {};
+                'RichnessThreshold', BRAPH2.NUMERIC, -1, {};
                 };
         end
         function measure_format = getMeasureFormat()
