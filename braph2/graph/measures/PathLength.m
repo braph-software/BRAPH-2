@@ -1,36 +1,37 @@
 classdef PathLength < Measure
-    % PathLength < Measure: Path Length measure
-    % PathLength provides the path length of a node for binary undirected (BU) and 
-    % weighted undirected (WU) graphs. It is calculated as the average shortest
-    % path length from one node to another node.
-    % 
-    % PathLength methods:
-    %   PathLength                  - constructor.
+    % PathLength Path length measure
+    % PathLength provides the path length of a node for binary undirected (BU) 
+    % and weighted undirected (WU) graphs. 
     %
-    % PathLength methods (Access=protected):
-    %   calculate                   - calculates the path length of a node.
+    % It is calculated as the average shortest path length from one node 
+    % to another node within a layer.
+    %    
+    % PathLength methods:
+    %   PathLength                  - constructor             -
     % 
-    % PathLength methods (Static)
-    %   getClass                    - returns the path length class.
-    %   getName                     - returns the name of path length measure.
-    %   getDescription              - returns the description of path length measure.
-    %   getAvailableSettings        - returns the settings available to the class.
-    %   is_global                   - boolean, checks if path length measure is global.
-    %   is_nodal                    - boolean, checks if path length measure is nodal.
-    %   is_binodal                  - boolean, checks if path length measure if binodal.
-    %   getMeasure                  - returns the path length class.
-    %   getCompatibleGraphList      - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
+    % PathLength descriptive methods (Static)
+    %   getClass                    - returns the path length class
+    %   getName                     - returns the name of path length measure
+    %   getDescription              - returns the description of path length measure
+    %   getAvailableSettings        - returns the settings available to the class
+    %   getMeasureFormat            - returns de measure format
+    %   getMeasureScope             - returns de measure scope   
+    %   getMeasure                  - returns the path length class
+    %   getCompatibleGraphList      - returns a list of compatible graphs
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, Graph, Strength, Distance, Degree.
+    
     methods
         function m = PathLength(g, varargin)
-            % PATHLENGTH(G) creates path length with default measure properties.
-            % G is a graph (e.g, an instance of GraphBU, Graph WU). 
+            % PATHLENGTH(G) creates path length with default properties.
+            % G is a graph (e.g, an instance of GraphBU, GraphWU, 
+            % MultiplexGraphBU or MultiplexGraphWU).
             %   
-            % PATHLENGTH(G, 'Settings', SETTINGS) creates path length measure and
-            % initializes the property settings with SETTINGS. PathLength
-            % available SETTINGS are: 
+            % PATHLENGTH(G, 'PathLengthRule', PATHLENGTHRULE) creates path 
+            % length measure and initializes the property PathLengthRule 
+            % with PATHLENGTHRULE. 
+            % PathLength available PATHLENGTHRULE are: 
             % subgraphs     -   Calculates PATHLENGTH of all subgraphs
             % harmonic      -   Calculates PATHLENGTH with harmonic average
             % default       -   Calculates PATHLENGTH with normal average
@@ -82,7 +83,7 @@ classdef PathLength < Measure
             end           
         end
     end
-    methods (Static)
+    methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
@@ -99,7 +100,7 @@ classdef PathLength < Measure
             %
             % See also getClass(), getDescription().
             
-            name = 'Path-Length';
+            name = 'Path length';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the path length description 
@@ -107,7 +108,7 @@ classdef PathLength < Measure
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % path length measure.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getClass, getName.
             
             description = [ ...
                 'The path length is the average shortest ' ...
@@ -126,42 +127,35 @@ classdef PathLength < Measure
             % See also getCompatibleGraphList()
             
             available_settings = {
-                'PathLengthAvRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                'PathLengthRule', Constant.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
                 };
         end
-        function bool = is_global()
-            % IS_GLOBAL checks if path length measure is global (false)
+        function measure_format = getMeasureFormat()
+            % GETMEASUREFORMAT returns the measure format of PathLength
             %
-            % BOOL = IS_GLOBAL() returns false.
+            % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
+            % of path length measure (NODAL).
             %
-            % See also is_nodal, is_binodal.
+            % See also getMeasureScope.
             
-            bool = false;
+            measure_format = Measure.NODAL;
         end
-        function bool = is_nodal()
-            % IS_NODAL checks if path length measure is nodal (true)
+        function measure_scope = getMeasureScope()
+            % GETMEASURESCOPE returns the measure scope of PathLength
             %
-            % BOOL = IS_NODAL() returns true.
+            % MEASURE_SCOPE = GETMEASURESCOPE() returns the
+            % measure scope of path length measure (UNILAYER).
             %
-            % See also is_global, is_binodal.
+            % See also getMeasureFormat.
             
-            bool = true;
-        end
-        function bool = is_binodal()
-            % IS_BINODAL checks if path length measure is binodal (false)
-            %
-            % BOOL = IS_BINODAL() returns false.
-            %
-            % See also is_global, is_nodal.
-            
-            bool = false;
+            measure_scope = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to PathLength 
+            % with PathLength 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to PathLength. 
+            % of compatible graph classes to path length. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber().
@@ -173,10 +167,10 @@ classdef PathLength < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to PathLength 
+            % graphs with PathLength 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to PathLength.
+            % compatible graphs to path length.
             % 
             % See also getCompatibleGraphList().
             
