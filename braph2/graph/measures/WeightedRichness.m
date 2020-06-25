@@ -4,8 +4,9 @@ classdef WeightedRichness < Strength
     % undirected (WU) and weighted directed (WD) graphs. 
     %
     % It is calculated as the sum of the weighted edges that connect nodes
-    % of strength k or higher within a layer. k is set by the user, the
-    % default value is equal to the maximum degree - 1.
+    % of strength k or higher within a layer. The value of k is set by the
+    % user (setting 'WeightedRichnessThreshold'), the default value is 
+    % equal to the maximum strength - 1.
     % 
     % WeightedRichness methods:
     %   WeightedRichness            - constructor
@@ -157,7 +158,7 @@ classdef WeightedRichness < Strength
                 'The weighted richness of a node is the sum of ' ...
                 'the weighted edges that connect nodes of strength k or higher within a layer. ' ...
                 'k is set by the user; the default value is equal to the ' ...
-                'maximum degree -1. ' ...
+                'maximum strength -1. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
