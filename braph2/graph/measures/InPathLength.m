@@ -130,38 +130,38 @@ classdef InPathLength < Measure
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to PathLength
+            % GETAVAILABLESETTINGS returns the setting available to InPathLength
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to PathLength. 
-            % PATHLENGTHRULE = 'default' (default) - calculates PATHLENGTH 
-            %                  with normal average
-            %                  'subgraphs' - calculates PATHLENGTH of all
-            %                  subgraphs.
-            %                  'harmonic' - calculates PATHLENGTH with
-            %                  harmonic average.
+            % settings available to InPathLength. 
+            % INPATHLENGTHRULE = 'default' (default) - calculates PATHLENGTH 
+            %                    with normal average
+            %                    'subgraphs' - calculates PATHLENGTH of all
+            %                    subgraphs.
+            %                    'harmonic' - calculates PATHLENGTH with
+            %                    harmonic average.
             % 
             % See also getCompatibleGraphList()
             
             available_settings = {
-                'PathLengthRule', BRAPH2.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
+                'InPathLengthRule', BRAPH2.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
                 };
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of PathLength
+            % GETMEASUREFORMAT returns the measure format of InPathLength
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of path length measure (NODAL).
+            % of in-path length measure (NODAL).
             %
             % See also getMeasureScope.
             
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of PathLength
+            % GETMEASURESCOPE returns the measure scope of InPathLength
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of path length measure (UNILAYER).
+            % measure scope of in-path length measure (UNILAYER).
             %
             % See also getMeasureFormat.
             
@@ -169,10 +169,10 @@ classdef InPathLength < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % with PathLength 
+            % with InPathLength 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to path length. 
+            % of compatible graph classes to in-path length. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber().
@@ -186,14 +186,14 @@ classdef InPathLength < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs with PathLength 
+            % graphs with InPathLength 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to path length.
+            % compatible graphs to in-path length.
             % 
             % See also getCompatibleGraphList().
             
-            n = Measure.getCompatibleGraphNumber('PathLength');
+            n = Measure.getCompatibleGraphNumber('InPathLength');
         end
     end
 end
