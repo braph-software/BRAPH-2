@@ -77,7 +77,7 @@ classdef OutPathLength < Measure
                 switch lower(out_path_length_rule)
                     case {'subgraphs'}
                         for u = 1:1:N
-                            Du = distance(u, :);
+                            Du = distance_layer(u, :);
                             out_path_length_layer(u) = mean(Du(Du~=0 & Du~=Inf));
                         end
                          out_path_length_layer(isnan(out_path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
