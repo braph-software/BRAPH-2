@@ -68,7 +68,7 @@ classdef OutPathLength < Measure
             N = g.nodenumber();
             L = g.layernumber();
                        
-            out_path_length_rule = get_from_varargin('default', 'InPathLengthRule', m.getSettings());
+            out_path_length_rule = get_from_varargin('default', 'OutPathLengthRule', m.getSettings());
             out_path_length = cell(L, 1);
             for li = 1:1:L
                 out_path_length_layer = zeros(N(1), 1); 
