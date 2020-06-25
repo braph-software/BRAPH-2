@@ -52,7 +52,7 @@ A = {
 known_multirichness = {[4/3 4/3 2/3 0]'};      
 
 g = MultiplexGraphBD(A);
-multirichness = Multirichness(g, 'RichnessThreshold', 2, 'MultirichnessCoefficients', [2/3, 1/3]);
+multirichness = Multirichness(g, 'RichnessThreshold', -1, 'MultirichnessCoefficients', [2/3, 1/3]);
 
 assert(isequal(multirichness.getValue(), known_multirichness), ...
     [BRAPH2.STR ':Multirichness:' BRAPH2.BUG_ERR], ...
@@ -110,7 +110,7 @@ A = {
 known_multirichness = {[5/4 5/4 1/2 0]'};      
 
 g = MultiplexGraphWD(A);
-multirichness = Multirichness(g, 'RichnessThreshold', 2, 'MultirichnessCoefficients', [3/4, 1/4]);
+multirichness = Multirichness(g, 'MultirichnessCoefficients', [3/4, 1/4]);
 
 assert(isequal(multirichness.getValue(), known_multirichness), ...
     [BRAPH2.STR ':Multirichness:' BRAPH2.BUG_ERR], ...
