@@ -3,10 +3,12 @@ classdef WeightedMultirichness < WeightedRichness
     % WeightedMultirichness provides the weighted multirichness of a node for
     % weighted undirected (WU) and weighted directed (WD) multiplexes. 
     %
-    % It is calculated as the sum of the number of weighted edges that connect nodes
-    % of strength k or higher in all layers. The relevance of each layer is
-    % controlled by the coefficients c that are between 0 and 1; the default 
-    % coefficients are (1/layernumber)
+    % It is calculated as the sum of the weighted edges that connect nodes
+    % of strength k or higher in all layers. The value of k is set by the
+    % user (setting 'WeightedRichnessThreshold'), the default value is equal 
+    % to the maximum strength - 1. The relevance of each layer is controlled 
+    % by the coefficients c (setting 'MultirichnessCoefficients') that are 
+    % between 0 and 1, and add up to one; the default coefficients are (1/layernumber)
     % 
     % WeightedMultirichness methods:
     %   WeightedMultirichness       - constructor
