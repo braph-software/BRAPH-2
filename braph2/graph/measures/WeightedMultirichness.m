@@ -38,10 +38,13 @@ classdef WeightedMultirichness < WeightedRichness
             % WeightedRichnessThreshold with WEIGHTEDRICHNESSTHRESHOLD and the property
             % WeightedMultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
             % Admissible THRESHOLD and COEFFICIENTS options are:
-            % WEIGHTEDRICHNESSTHRESHOLD = 0 (default) - WEIGHTEDRICHNESS k threshold  
-            %                           is set to the maximum degree - 1.
+            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
+            %                           is set to the maximum strength - 1.
             %                           value - WEIGHTEDRICHNESS k threshold is 
-            %                           set to the specificied value (numeric).
+            %                           set to the specificied value if the
+            %                           value is positive. For negative
+            %                           values, k is set to the maximum
+            %                           strength - value
             % WEIGHTEDMULTIRICHNESSCOEFFICIENTS = 0 (default) - WEIGHTEDMULTIRICHNESS c coefficients
             %                                   will be set to (1/layernumber) per each layer.
             %                                   values - WEIGHTEDMULTIRICHNESS c coefficients
@@ -141,10 +144,13 @@ classdef WeightedMultirichness < WeightedRichness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to WeightedMultirichness.
-            % WEIGHTEDRICHNESSTHRESHOLD = 0 (default) - WEIGHTEDRICHNESS k threshold  
-            %                           is set to the maximum degree - 1.
+            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
+            %                           is set to the maximum strength - 1.
             %                           value - WEIGHTEDRICHNESS k threshold is 
-            %                           set to the specificied value (numeric).
+            %                           set to the specificied value if the
+            %                           value is positive. For negative
+            %                           values, k is set to the maximum
+            %                           strength - value
             % WEIGHTEDMULTIRICHNESSCOEFFICIENTS = 0 (default) - WEIGHTEDMULTIRICHNESS c coefficients
             %                                   will be set to (1/layernumber) per each layer.
             %                                   values - WEIGHTEDMULTIRICHNESS c coefficients
