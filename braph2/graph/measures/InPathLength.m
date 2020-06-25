@@ -29,14 +29,14 @@ classdef InPathLength < Measure
             % MultiplexGraphBD or MultiplexGraphWD).
             %   
             % INPATHLENGTH(G, 'InPathLengthRule', INPATHLENGTHRULE) creates  
-            % path length measure and initializes the property InPathLengthRule 
+            % in-path length measure and initializes the property InPathLengthRule 
             % with INPATHLENGTHRULE. 
-            % Admissible PATHLENGTHRULE options are:
-            % INPATHLENGTHRULE = 'default' (default) - calculates PATHLENGTH 
+            % Admissible INPATHLENGTHRULE options are:
+            % INPATHLENGTHRULE = 'default' (default) - calculates INPATHLENGTH 
             %                    with normal average
-            %                    'subgraphs' - calculates PATHLENGTH of all
+            %                    'subgraphs' - calculates INPATHLENGTH of all
             %                    subgraphs.
-            %                    'harmonic' - calculates PATHLENGTH with
+            %                    'harmonic' - calculates INPATHLENGTH with
             %                    harmonic average.
             %
             % INPATHLENGTH(G, 'VALUE', VALUE) creates in-path length, and sets 
@@ -134,11 +134,11 @@ classdef InPathLength < Measure
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to InPathLength. 
-            % INPATHLENGTHRULE = 'default' (default) - calculates PATHLENGTH 
+            % INPATHLENGTHRULE = 'default' (default) - calculates INPATHLENGTH 
             %                    with normal average
-            %                    'subgraphs' - calculates PATHLENGTH of all
+            %                    'subgraphs' - calculates INPATHLENGTH of all
             %                    subgraphs.
-            %                    'harmonic' - calculates PATHLENGTH with
+            %                    'harmonic' - calculates INPATHLENGTH with
             %                    harmonic average.
             % 
             % See also getCompatibleGraphList()
