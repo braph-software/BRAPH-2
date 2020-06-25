@@ -1,14 +1,14 @@
 classdef WeightedMultiplexCorePeriphery < WeightedMultirichness
     % WeightedMultiplexCorePeriphery Weighted multiplex core periphery measure
-    % WeightedMultiplexCorePeriphery provides the multiplex core periphery of a node 
-    % for binary undirected (BU), binary directed (BD), weighted undirected 
-    % (WU) and weighted directed (WD) multiplexes. 
+    % WeightedMultiplexCorePeriphery provides the weighted multiplex core 
+    % periphery of a node for weighted undirected (WU) and weighted directed 
+    % (WD) multiplexes. 
     %
     % It is calculated as the value of the rank corresponding to the
-    % maximum multirichness with degree k or higher. It returns 1 for a
+    % maximum multirichness with strength k or higher. It returns 1 for a
     % node belonging to the core and zero otherwise. The value of k is set 
     % by the user (setting 'RichnessThreshold'), the default value is equal
-    % to the maximum degree - 1. The relevance of each layer is controlled
+    % to the maximum strength - 1. The relevance of each layer is controlled
     % by the coefficients c (setting 'MultirichnessCoefficients') that are
     % between 0 and 1, and add up to one; the default coefficients are
     % (1/layernumber).
@@ -17,9 +17,9 @@ classdef WeightedMultiplexCorePeriphery < WeightedMultirichness
     %   WeightedMultiplexCorePeriphery - constructor
     %
     % WeightedMultiplexCorePeriphery methods (Static)
-    %   getClass                    - returns the multiplex core periphery class
-    %   getName                     - returns the name of multiplex core periphery measure
-    %   getDescription              - returns the description of multiplex core periphery measure
+    %   getClass                    - returns the weighted multiplex core periphery class
+    %   getName                     - returns the name of weighted multiplex core periphery measure
+    %   getDescription              - returns the description of weighted multiplex core periphery measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns de measure format
     %   getMeasureScope             - returns de measure scope    
@@ -32,7 +32,7 @@ classdef WeightedMultiplexCorePeriphery < WeightedMultirichness
     methods
         function m = WeightedMultiplexCorePeriphery(g, varargin)
             % WEIGHTEDMULTIPLEXCOREPERIPHERY(G) creates weighted multiplex core periphery with default properties.
-            % G is a multiplex (e.g, an instance of MultiplexGraphWD,
+            % G is a weighted multiplex (e.g, an instance of MultiplexGraphWD,
             %  or MultiplexGraphWU). 
             %
             % WEIGHTEDMULTIPLEXCOREPERIPHERY(G, 'WeightedRichnessThreshold', 
