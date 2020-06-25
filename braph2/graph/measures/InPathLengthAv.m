@@ -29,7 +29,7 @@ classdef InPathLengthAv < InPathLength
             % MultiplexGraphBD or MultiplexGraphWD).
             %   
             % INPATHLENGTHAV(G, 'InPathLengthRule', INPATHLENGTHRULE) creates average 
-            % in-path length measure and initializes the property PathLengthRule 
+            % in-path length measure and initializes the property InPathLengthRule 
             % with INPATHLENGTHRULE. 
             % Admissible INPATHLENGTHRULE options are:
             % INPATHLENGTHRULE = 'default' (default) - calculates INPATHLENGTH 
