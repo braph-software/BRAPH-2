@@ -7,7 +7,7 @@ classdef PathLength < Measure
     % to another node within a layer.
     %    
     % PathLength methods:
-    %   PathLength                  - constructor             -
+    %   PathLength                  - constructor             
     % 
     % PathLength descriptive methods (Static)
     %   getClass                    - returns the path length class
@@ -126,7 +126,7 @@ classdef PathLength < Measure
             
             description = [ ...
                 'The path length is the average shortest ' ...
-                'path lengths of one node to all other nodes.' ...
+                'path lengths of one node to all other nodes within a layer.' ...
                 ];
         end
         function available_settings = getAvailableSettings()
