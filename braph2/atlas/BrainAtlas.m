@@ -229,7 +229,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             label = atlas.label;
         end
         function notes = getNotes(atlas)
-            % GETNOTES returns the notes of the atlas.
+:            % GETNOTES returns the notes of the atlas.
             %
             % NOTES = GETNOTES(ATLAS) returns the notes of the BrainAtlas.
             %
