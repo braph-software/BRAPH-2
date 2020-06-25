@@ -6,7 +6,9 @@ classdef WeightedRichness < Strength
     % It is calculated as the sum of the weighted edges that connect nodes
     % of strength k or higher within a layer. The value of k is set by the
     % user (setting 'WeightedRichnessThreshold'), the default value is 
-    % equal to the maximum strength - 1.
+    % equal to the maximum strength - 1. For positive thresholds, k equals 
+    % to the threshold value; while for negative thresholds, k equals to 
+    % the maximum strength - threshold value.
     % 
     % WeightedRichness methods:
     %   WeightedRichness            - constructor
@@ -35,10 +37,13 @@ classdef WeightedRichness < Strength
             % creates weighted richness measure and initializes the property 
             % WeightedRichnessThreshold with WEIGHTEDRICHNESSTHRESHOLD. 
             % Admissible THRESHOLD options are:
-            % WEIGHTEDRICHNESSTHRESHOLD = 0 (default) - WEIGHTEDRICHNESS k threshold  
-            %                           is set to the maximum degree - 1.
+            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
+            %                           is set to the maximum strength - 1.
             %                           value - WEIGHTEDRICHNESS k threshold is 
-            %                           set to the specificied value (numeric).
+            %                           set to the specificied value if the
+            %                           value is positive. For negative
+            %                           values, k is set to the maximum
+            %                           strength - value
             % 
             % WEIGHTEDRICHNESS(G, 'VALUE', VALUE) creates weighted richness, and sets 
             % the value to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
@@ -102,16 +107,16 @@ classdef WeightedRichness < Strength
                     st = (in_strength{li} + out_strength{li})/2;
                 end
                 
-                weighted_richness_threshold = get_from_varargin(0, 'WeightedRichnessThreshold', m.getSettings());
-                assert(isnumeric(weighted_richness_threshold) == 1 && weighted_richness_threshold >= 0, ...
+                weighted_richness_threshold = get_from_varargin(-1, 'WeightedRichnessThreshold', m.getSettings());
+                assert(isnumeric(weighted_richness_threshold) == 1, ...
                     [BRAPH2.STR ':WeightedRichness:' BRAPH2.WRONG_INPUT], ...
                     ['WeightedRichness threshold must be a positive number ' ...
                     'while it is ' tostring(weighted_richness_threshold)])
 
-                if weighted_richness_threshold > 0
+                if weighted_richness_threshold > 0  % for positive threshold value, k = value
                     k_level = weighted_richness_threshold;
-                else  % max degree
-                    k_level = max(st) - 1;
+                else  % for negative threshold, k = max strength - threshold (default -1)
+                    k_level = max(st) - abs(weighted_richness_threshold);
                 end
 
                 low_rich_nodes = find(st <= k_level);  % get lower rich nodes with strength <= k
@@ -166,13 +171,16 @@ classdef WeightedRichness < Strength
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to WeightedRichness.
-            % WEIGHTEDRICHNESSTHRESHOLD = 0 (default) - WEIGHTEDRICHNESS k threshold  
-            %                           is set to the maximum degree - 1.
+            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
+            %                           is set to the maximum strength - 1.
             %                           value - WEIGHTEDRICHNESS k threshold is 
-            %                           set to the specificied value (numeric).
+            %                           set to the specificied value if the
+            %                           value is positive. For negative
+            %                           values, k is set to the maximum
+            %                           strength - value
             
             available_settings = {
-                'WeightedRichnessThreshold', BRAPH2.NUMERIC, 0, {};
+                'WeightedRichnessThreshold', BRAPH2.NUMERIC, -1, {};
                 };
         end
         function measure_format = getMeasureFormat()
