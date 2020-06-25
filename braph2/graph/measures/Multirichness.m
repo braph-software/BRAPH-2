@@ -5,9 +5,11 @@ classdef Multirichness < Richness
     % multiplexes. 
     %
     % It is calculated as the sum of the number of edges that connect nodes
-    % of degree k or higher in all layers. The relevance of each layer is
-    % controlled by the coefficients c that are between 0 and 1; the default 
-    % coefficients are (1/layernumber)
+    % of degree k or higher in all layers. The value of k is set by the
+    % user (setting 'RichnessThreshold'), the default value is equal to the
+    % maximum degree - 1. The relevance of each layer is controlled by the
+    % coefficients c (setting 'MultirichnessCoefficients') that are between
+    % 0 and 1, and add up to one; the default coefficients are (1/layernumber)
     % 
     % Multirichness methods:
     %   Multirichness               - constructor
@@ -31,9 +33,11 @@ classdef Multirichness < Richness
             % G is a multiplex (e.g, an instance of MultiplexGraphBD,
             % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
             % 
-            % MULTIRICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD, 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS) 
-            % creates multirichness measure and initializes the property RichnessThreshold 
-            % with RICHNESSTHRESHOLD and the property MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
+            % MULTIRICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD,
+            % 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS)  
+            % creates multirichness measure and initializes the property
+            % RichnessThreshold with RICHNESSTHRESHOLD and the property
+            % MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS.
             % Admissible THRESHOLD and COEFFICIENTS options are:
             % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
             %                    to the maximum degree - 1.
