@@ -1,5 +1,4 @@
 % test PathLengthAv
-graph_class_list = {'GraphBU', 'GraphWU'};
 
 %% Test 1: GraphBU
 A = [
