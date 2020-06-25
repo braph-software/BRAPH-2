@@ -36,6 +36,11 @@ classdef Data < handle & matlab.mixin.Copyable
     end
     methods (Access=protected)
         function d = Data(atlas, value, varargin)
+            % DATA(ATLAS, VALUE, 'PROPERTYRULE1', 'VALUE1', ...) creates a
+            % Data object to store Subject data using the ATLAS and VALUE,
+            % with PROPERTYRULES if needed.
+            %
+            % See also Subject, Cohort, Group.
             
             assert(isa(atlas, 'BrainAtlas'), ...
                 [BRAPH2.STR ':Data:BrainAtlas' BRAPH2.WRONG_INPUT], ...
@@ -62,19 +67,50 @@ classdef Data < handle & matlab.mixin.Copyable
     end
     methods  % Basic methods
         function str = tostring(d)
+            % TOSTRING string with information about data
+            %
+            % STRING = TOSTRING(D) returns string with the data class, 
+            % size and value.
+            %
+            % See also disp.
             str = [Data.getClass(d) ' ' int2str(size(d.getValue(), 1)) ' x ' int2str(size(d.getValue(), 2))];
         end
         function disp(d)
+            % TOSTRING displays information about data
+            %
+            % DISP(D) displays information about the data class, size and
+            % value.
+            %
+            % See also tostring.
+            
             disp(['<a href="matlab:help ' Data.getClass(d) '">' Data.getClass(d) '</a>'])
             disp([' size: ' int2str(size(d.getValue(), 1)) ' rows x ' int2str(size(d.getValue(), 2)) ' columns'])
         end
         function atlas = getBrainAtlas(d)
+            % GETBRAINATLAS returns the brain atlas.
+            %
+            % ATLAS = GETBRAINATLAS(D) returns the brain atlas.
+            %
+            % See also getValue.
+            
             atlas = d.atlas;
         end
         function value = getValue(d)
+            % GETVALUE returns the value of data.
+            % 
+            % VALUE = GETVALUE(D) returns the value of the data.
+            %
+            % See also getBrainAtlas.
+            
             value = d.value;
         end
         function setBrainAtlas(d, atlas)
+            % SETBRAINATLAS sets the brain atlas to the data object.
+            %
+            % SETBRAINATLAS(D, ATLAS) sets the brian atlas ATLAS to the 
+            % data object.
+            %
+            % See also SetValue.
             
             assert(d.getBrainAtlas().getBrainRegions().length() == atlas.getBrainRegions().length(), ...
                 [BRAPH2.STR ':' d.getClass() ':' BRAPH2.WRONG_INPUT], ...
