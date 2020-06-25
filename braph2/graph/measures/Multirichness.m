@@ -39,10 +39,12 @@ classdef Multirichness < Richness
             % RichnessThreshold with RICHNESSTHRESHOLD and the property
             % MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS.
             % Admissible THRESHOLD and COEFFICIENTS options are:
-            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
             %                    to the maximum degree - 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value (numeric).
+            %                    specificied value if the value is positive.
+            %                    For negative values, k is set to the
+            %                    maximum degree - value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
@@ -142,10 +144,12 @@ classdef Multirichness < Richness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Multirichness.
-            % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
+            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
             %                    to the maximum degree - 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value (numeric).
+            %                    specificied value if the value is positive.
+            %                    For negative values, k is set to the
+            %                    maximum degree - value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients 
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
