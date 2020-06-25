@@ -19,8 +19,7 @@ A = {
     A11     A12
     A21     A22
     };   
-known_weighted_multirichness = [5.4/4 5.2/4 2 1.8/4]';   
-known_over = [5.4/4 7.6/4 2 4.2/4]';  
+
 known_weighted_multiplex_core_periphery = {[0 0 1 0]'};    
 
 g = MultiplexGraphWU(A);
@@ -50,8 +49,6 @@ A = {
     A21     A22
     };    
 
-known_weighted_multirichness = [0 1 1 0]';   
-known_over = [13.2/8 9/4 16.7/8 6.3/8]';  
 known_weighted_multiplex_core_periphery = {[0 1 0 0]'};
 
 g = MultiplexGraphWD(A);
