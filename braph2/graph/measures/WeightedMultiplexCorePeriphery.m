@@ -43,10 +43,13 @@ classdef WeightedMultiplexCorePeriphery < WeightedMultirichness
             % the property WeightedMultirichnessCoefficients with 
             % WEIGHTEDMULTIRICHNESSCOEFFICIENTS. 
             % Admissible THRESHOLD and COEFFICIENTS options are:
-            % WEIGHTEDRICHNESSTHRESHOLD = 0 (default) - WEIGHTEDRICHNESS k threshold  
-            %                           is set to the maximum degree - 1.
+            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
+            %                           is set to the maximum strength - 1.
             %                           value - WEIGHTEDRICHNESS k threshold is 
-            %                           set to the specificied value (numeric).
+            %                           set to the specificied value if the
+            %                           value is positive. For negative
+            %                           values, k is set to the maximum
+            %                           strength - value
             % WEIGHTEDMULTIRICHNESSCOEFFICIENTS = 0 (default) - WEIGHTEDMULTIRICHNESS c coefficients
             %                                   will be set to (1/layernumber) per each layer.
             %                                   values - WEIGHTEDMULTIRICHNESS c coefficients
@@ -65,43 +68,43 @@ classdef WeightedMultiplexCorePeriphery < WeightedMultirichness
         end
     end
     methods (Access=protected)
-        function multiplex_core_periphery = calculate(m)
-            % CALCULATE calculates the multiplex core periphery value of a multiplex
+        function weighted_multiplex_core_periphery = calculate(m)
+            % CALCULATE calculates the weighted multiplex core periphery value of a weighted multiplex
             %
-            % MULTIPLEXCOREPERIPHERY = CALCULATE(M) returns the value of the multiplex core periphery
-            % of a multiplex.
+            % WEIGHTEDMULTIPLEXCOREPERIPHERY = CALCULATE(M) returns the value 
+            % of the weighted multiplex core periphery of a weighted multiplex.
             %
             % See also Measure, WeightedMultirichness, MultiplexGraphWU, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
             
-            if g.is_measure_calculated('Multirichness')
-                multirichness = g.getMeasureValue('Multirichness');
+            if g.is_measure_calculated('WeightedMultirichness')
+                weighted_multirichness = g.getMeasureValue('WeightedMultirichness');
             else
-                multirichness = calculate@Multirichness(m);
+                weighted_multirichness = calculate@WeightedMultirichness(m);
             end
             
             N = g.nodenumber();
             L = g.layernumber();
   
-            multirichness_coefficients = get_from_varargin(0, 'MultirichnessCoefficients', m.getSettings());
-            assert(length(multirichness_coefficients) == L || all(multirichness_coefficients == 0), ...
-                [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.WRONG_INPUT], ...
-                ['Multirichness coefficients must have the same length than the ' ...
-                'number of layers (' tostring(L) ') while its length is ' tostring(length(multirichness_coefficients))])
+            weighted_multirichness_coefficients = get_from_varargin(0, 'WeightedMultirichnessCoefficients', m.getSettings());
+            assert(length(weighted_multirichness_coefficients) == L || all(weighted_multirichness_coefficients == 0), ...
+                [BRAPH2.STR ':WeightedMultirichness:' BRAPH2.WRONG_INPUT], ...
+                ['WeightedMultirichness coefficients must have the same length than the ' ...
+                'number of layers (' tostring(L) ') while its length is ' tostring(length(weighted_multirichness_coefficients))])
 
-            if length(multirichness_coefficients) == L
-                assert(all(multirichness_coefficients <= 1) && all(multirichness_coefficients >= 0), ...
-                    [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.WRONG_INPUT], ...
-                    ['Multirichness coefficients must be between 0 and 1 ' ...
+            if length(weighted_multirichness_coefficients) == L
+                assert(all(weighted_multirichness_coefficients <= 1) && all(weighted_multirichness_coefficients >= 0), ...
+                    [BRAPH2.STR ':WeightedMultiplexCorePeriphery:' BRAPH2.WRONG_INPUT], ...
+                    ['WeightedMultiplexCorePeriphery coefficients must be between 0 and 1 ' ...
                     'while they are ' tostring(multirichness_coefficients)])
-                c = multirichness_coefficients;
+                c = weighted_multirichness_coefficients;
             else  % same relevance for each layer
                 c = ones(1, L)/L;
             end
             
             directionality_type =  g.getDirectionalityType(g.layernumber());
-            overlapping_degree_coefficients = zeros(N(1), 1);
+            overlapping_strength_coefficients = zeros(N(1), 1);
             for li = 1:1:L
                 if g.is_graph(g)
                     directionality_layer = directionality_type;
@@ -111,142 +114,141 @@ classdef WeightedMultiplexCorePeriphery < WeightedMultirichness
                 
                 if directionality_layer == Graph.UNDIRECTED  % undirected graphs
                     
-                    if g.is_measure_calculated('Degree')
-                        degree = g.getMeasureValue('Degree');
+                    if g.is_measure_calculated('Strength')
+                        strength = g.getMeasureValue('Strength');
                     else
-                        degree = Degree(g, g.getSettings()).getValue();
+                        strength = Strength(g, g.getSettings()).getValue();
                     end
                     
-                    deg = degree{li};
+                    st = strength{li};
                     
                 else  % directed graphs
                     
-                    if g.is_measure_calculated('InDegree')
-                        in_degree = g.getMeasureValue('InDegree');
+                    if g.is_measure_calculated('InStrength')
+                        in_strength = g.getMeasureValue('InStrength');
                     else
-                        in_degree = InDegree(g, g.getSettings()).getValue();
+                        in_strength = InStrength(g, g.getSettings()).getValue();
                     end
                     
-                    if g.is_measure_calculated('OutDegree')
-                        out_degree = g.getMeasureValue('OutDegree');
+                    if g.is_measure_calculated('OutStrength')
+                        out_strength = g.getMeasureValue('OutStrength');
                     else
-                        out_degree = OutDegree(g, g.getSettings()).getValue();
+                        out_strength = OutStrength(g, g.getSettings()).getValue();
                     end
                     
-                    deg = (in_degree{li} + out_degree{li})/2;
+                    st = (in_strength{li} + out_strength{li})/2;
                 end
-                overlapping_degree_coefficients = overlapping_degree_coefficients + c(li)*deg;
+                overlapping_strength_coefficients = overlapping_strength_coefficients + c(li)*st;
             end
             
-            [~, rankingInd] = sort(overlapping_degree_coefficients, 'descend');
-            multirichness = multirichness{1};
-            [~, rankOfMaxMultirichness] = max(multirichness(rankingInd));
-            multiplex_core_periphery = zeros(N(1), 1);
-            multiplex_core_periphery(rankingInd(1:rankOfMaxMultirichness)) = 1;
-            multiplex_core_periphery = {multiplex_core_periphery};
+            [~, rankingInd] = sort(overlapping_strength_coefficients, 'descend');
+            weighted_multirichness = weighted_multirichness{1};
+            [~, rankOfMaxWeightedMultirichness] = max(weighted_multirichness(rankingInd));
+            weighted_multiplex_core_periphery = zeros(N(1), 1);
+            weighted_multiplex_core_periphery(rankingInd(1:rankOfMaxWeightedMultirichness)) = 1;
+            weighted_multiplex_core_periphery = {weighted_multiplex_core_periphery};
         end
     end  
     methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the multiplex core periphery measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the weighted multiplex core periphery measure.
             %
             % See also getName, getDescription. 
             
-            measure_class = 'MultiplexCorePeriphery';
+            measure_class = 'WeightedMultiplexCorePeriphery';
         end
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the multiplex core periphery measure.
+            % NAME = GETNAME() returns the name of the weighted multiplex core periphery measure.
             %
             % See also getClass, getDescription. 
             
-            name = 'Multiplex core periphery';
+            name = 'Weighted multiplex core periphery';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the multiplex core periphery description 
+            % GETDESCRIPTION returns the weighted multiplex core periphery description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % multiplex core periphery measure.
+            % weighted multiplex core periphery measure.
             %
             % See also getClass, getName.
             
             description = [ ...
-                'The multiplex core periphery of a node returns one if ' ...
-                'the node belongs to the core and zero otherwise. ' ...
+                'The weighted multiplex core periphery of a node returns one if ' ...
+                'the node belongs to the core and zero otherwise in a weighted multiplex. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to MultiplexCorePeriphery
+            % GETAVAILABLESETTINGS returns the setting available to WeightedMultiplexCorePeriphery
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to MultiplexCorePeriphery.
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - value.
-            % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients 
-            %                    will be set to (1/layernumber) per each layer.
-            %                    values - MULTIRICHNESS c coefficients
-            %                    will be set to the values specified per
-            %                    each layer if the length of values is
-            %                    equal to the number of layers.
+            % settings available to WeightedMultiplexCorePeriphery.
+            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
+            %                           is set to the maximum strength - 1.
+            %                           value - WEIGHTEDRICHNESS k threshold is 
+            %                           set to the specificied value if the
+            %                           value is positive. For negative
+            %                           values, k is set to the maximum
+            %                           strength - value
+            % WEIGHTEDMULTIRICHNESSCOEFFICIENTS = 0 (default) - WEIGHTEDMULTIRICHNESS c coefficients
+            %                                   will be set to (1/layernumber) per each layer.
+            %                                   values - WEIGHTEDMULTIRICHNESS c coefficients
+            %                                   will be set to the values specified per
+            %                                   each layer if the length of values is
+            %                                   equal to the number of layers.
             
             available_settings = getAvailableSettings@Richness();
 
             available_settings(end+1, :) = {
-                 'MultirichnessCoefficients', BRAPH2.NUMERIC, 0, {};
+                 'WeightedMultirichnessCoefficients', BRAPH2.NUMERIC, 0, {};
                 };
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of MultiplexCorePeriphery
+            % GETMEASUREFORMAT returns the measure format of WeightedMultiplexCorePeriphery
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of multiplex core periphery measure (NODAL).
+            % of weighted multiplex core periphery measure (NODAL).
             %
             % See also getMeasureScope.
             
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of MultiplexCorePeriphery
+            % GETMEASURESCOPE returns the measure scope of WeightedMultiplexCorePeriphery
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of multiplex core periphery measure (SUPERGLOBAL).
+            % measure scope of weighted multiplex core periphery measure (SUPERGLOBAL).
             %
             % See also getMeasureFormat.
             
             measure_scope = Measure.SUPERGLOBAL;
         end
         function list = getCompatibleGraphList()  
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with MultiplexCorePeriphery 
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with WeightedMultiplexCorePeriphery 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to multiplex core periphery. 
+            % of compatible graph classes to weighted multiplex core periphery. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber. 
             
             list = { ...
-                'MultiplexGraphBD', ...
-                'MultiplexGraphBU', ...
                 'MultiplexGraphWD' ...
                 'MultiplexGraphWU' ...
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with MultiplexCorePeriphery
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with WeightedMultiplexCorePeriphery
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs with multiplex core periphery.
+            % compatible graphs with weighted multiplex core periphery.
             % 
             % See also getCompatibleGraphList.
             
-            n = Measure.getCompatibleGraphNumber('MultiplexCorePeriphery');
+            n = Measure.getCompatibleGraphNumber('WeightedMultiplexCorePeriphery');
         end
     end
 end
