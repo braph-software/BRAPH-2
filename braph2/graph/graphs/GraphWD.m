@@ -52,7 +52,7 @@ classdef GraphWD < Graph
             %
             % GRAPH_CLASS = GETCLASS() returns the class, 'GraphWD'.
             %
-            % See also getName, getDescription.
+            % See also getName(), getDescription().
             
             graph_class = 'GraphWD';
         end
@@ -61,7 +61,7 @@ classdef GraphWD < Graph
             %
             % NAME = GETCLASS() returns the name, 'Weighted Directed Graph'.
             %
-            % See also getClass, getDescription.
+            % See also getClass(), getDescription().
             
             name = 'Weighted Directed Graph';
         end
@@ -70,7 +70,7 @@ classdef GraphWD < Graph
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of GRAPHWD.
             %
-            % See also getClass, getName.
+            % See also getClass(), getName().
             
             description = [ ...
                 'In a weighted directed (WD) graph, ' ...
@@ -84,7 +84,7 @@ classdef GraphWD < Graph
             %
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.GRAPH.
             %
-            % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
           
             graph_type = Graph.GRAPH;
         end
@@ -93,7 +93,7 @@ classdef GraphWD < Graph
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.WEIGHTED.
             %    
-            % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
+            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
            
             connectivity_type = Graph.WEIGHTED;
         end
@@ -102,7 +102,7 @@ classdef GraphWD < Graph
             %   
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.DIRECTED.
             %
-            % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
+            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
                    
             directionality_type = Graph.DIRECTED;
         end
@@ -111,7 +111,7 @@ classdef GraphWD < Graph
             %    
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
             %
-            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
        
             selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
@@ -120,7 +120,7 @@ classdef GraphWD < Graph
             %
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
-            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
     
             negativity_type = Graph.NONNEGATIVE;
         end

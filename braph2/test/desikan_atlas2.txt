@@ -1,4 +1,4 @@
-Desikan_Freesurfer_v51_BrainMesh_ICBM152
+Desikan_Freesurfer_v5.1	BrainMesh_ICBM152.nv				
 lSF	superiorfrontal	notes	-12.6	22.9	42.4
 lFP	frontalpole	notes	-8.6	61.7	-8.7
 lRMF	rostralmiddlefrontal	notes	-31.3	41.2	16.5

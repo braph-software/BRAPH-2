@@ -8,10 +8,8 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
     % {KEY, VALUE}, where KEY is a unique alphanumeric key (a string) and
     % VALUE is an object of a class defined in the constructor.
     %
-    % IndexedDictionary methods:
-    %   IndexedDictionary - constructor
-    %   
     % IndexedDictionary basic methods:
+    %   IndexedDictionary - constructor
     %   tostring          - returns a string representing the dictionary
     %   disp              - displays the dictionary
     %
@@ -104,7 +102,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % STR = TOSTRING(IDICT) returns string with the value class and
             % length of the dictionary.
             %
-            % See also disp.
+            % See also disp().
             
             str = ['IndexDictionary of value class ' idict.getValueClass() ' with ' int2str(idict.length()) ' entries.'];
         end
@@ -115,7 +113,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % It provides information about the value class, size, keys and
             % values of the indexed dictionary.
             %
-            % See also tostring.
+            % See also tostring().
             
             disp(['<a href="matlab:help ' class(idict) '">' class(idict) '</a>'])
             disp([' value class: ' idict.getValueClass()])
@@ -150,7 +148,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % BOOL = CONTAINS(IDICT, POINTER) returns true if POINTER (index, key
             % or value) exists in the indexed dictionary DICT.
             %
-            % See also containsIndex, containsKey, containsValue.
+            % See also containsIndex(), containsKey(), containsValue().
             
             if isa(pointer, 'numeric')  % pointer is index
                 bool = idict.containsIndex(pointer);
@@ -168,7 +166,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % BOOL = CONTAINS(IDICT, INDEX) returns true if the INDEX exists
             % in the indexed dictionary IDICT.
             %
-            % See also contains, containsKey, containsValue.
+            % See also contains(), containsKey(), containsValue().
             
             if index > 0 && index <= idict.length() && index == round(index)
                 bool = true;
@@ -182,7 +180,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % BOOL = CONTAINS(IDICT, KEY) returns true if the KEY exists
             % in the indexed dictionary DICT.
             %
-            % See also contains, containsIndex, containsValue.
+            % See also contains(), containsIndex(), containsValue().
             
             bool = false;
             for i = 1:1:idict.length()
@@ -198,7 +196,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % BOOL = CONTAINSVALUE(IDICT, VALUE) returns true if the VALUE exists
             % in the indexed dictionary DICT.
             %
-            % See also contains, containsIndex, containsKey.
+            % See also contains(), containsIndex(), containsKey().
             
             bool = false;
             for i = 1:1:idict.length()
@@ -214,7 +212,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % INDEX = GETINDEX(IDICT, POINTER) returns the index of
             % a POINTER (a key or value).
             %
-            % See also getIndexFromValue, getIndexFromKey.
+            % See also getIndexFromValue(), getIndexFromKey().
             
            if isa(pointer, 'char')  % pointer is key
                 index = idict.getIndexFromKey(pointer);
@@ -227,7 +225,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             %
             % INDEX = GETINDEXFROMKEY(IDICT, KEY) returns the index of KEY.
             %
-            % See also getIndex, getIndexFromValue.
+            % See also getIndex(), getIndexFromValue().
             
             for i = 1:1:idict.length()
                 if isequal(idict.getKey(i), key)
@@ -242,7 +240,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % INDEX = GETINDEXFROMVALUE(IDICT, VALUE) returns the index of
             % the first occurrence of VALUE.
             %
-            % See also getIndexFromValueAll, getIndex, getIndexFromKey.
+            % See also getIndexFromValueAll(), getIndex(), getIndexFromKey().
             
             for i = 1:1:idict.length()                
                 if isequal(idict.getValue(i), value)
@@ -257,7 +255,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % INDEXES = GETINDEXFROMVALUEALL(IDICT, VALUE) returns a cell
             % array with all the indexes of VALUE.
             %
-            % See also getIndexFromValue.
+            % See also getIndexFromValue().
             
             indexes = zeros(1, idict.length());  % create a matrix(1, idict.length)
             for i = 1:1:idict.length()
@@ -274,7 +272,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % KEYS = GETKEYS(IDICT) returns all the keys in the indexed
             % dictionary.
             %
-            % See also getValues.
+            % See also getValues().
             
             keys = cell(1, idict.length());
             for i = 1:1:idict.length()
@@ -289,7 +287,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % index or value). If the POINTER is a value, it returns the
             % first occurrence.
             %
-            % See also getKeyFromIndex, getKeyFromValue.
+            % See also getKeyFromIndex(), getKeyFromValue().
                         
             if isa(pointer, idict.getValueClass())  % pointer is value - not necessarily unique
                 key = idict.getKeyFromValue(pointer);  % first occurrence
@@ -303,7 +301,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             %
             % KEY = GETKEYFROMINDEX(IDICT, INDEX) returns the key of INDEX.
             %
-            % See also getKey, getKeyFromValue.
+            % See also getKey(), getKeyFromValue().
             
             key_and_value = idict.dict(index);
             key = key_and_value{1};
@@ -314,7 +312,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % KEY = GETKEYFROMVALUE(IDICT, VALUE) returns the key of the first 
             % occurrence of VALUE. 
             %
-            % See also getKeyFromValueAll, getKey, getKeyFromIndex.
+            % See also getKeyFromValueAll(), getKey(), getKeyFromIndex().
             
             index = idict.getIndexFromValue(value);
             key_and_value = idict.dict(index);
@@ -326,7 +324,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % KEYS = GETKEYFROMVALUEALL(IDICT, VALUE) returns a cell
             % array with all the keyes that have VALUE.
             % 
-            % See also getIndexFromValue.
+            % See also getIndexFromValue().
             
             indexes = idict.getIndexFromValueAll(value);
 
@@ -341,7 +339,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % VALUES = GETVALUES(IDICT) returns all the values in the
             % indexed dictionary.
             %
-            % See also getKeys.
+            % See also getKeys().
             
             values = cell(1, idict.length());
             for i = 1:1:idict.length()
@@ -355,7 +353,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % VALUE = GETVALUE(IDICT, POINTER) returns the value of POINTER
             % (an index or key).
             %
-            % See also getValueFromIndex, getValueFromKey.
+            % See also getValueFromIndex(), getValueFromKey().
             
             if isa(pointer, 'char')  % pointer is a key
                 value = idict.getValueFromKey(pointer);
@@ -368,7 +366,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             %
             % VALUE = GETVALUEFROMINDEX(IDICT, INDEX) returns the value of INDEX.
             %
-            % See also getValue, getValueFromKey.
+            % See also getValue(), getValueFromKey().
             
             key_and_value = idict.dict(index);
             value = key_and_value{2};
@@ -378,7 +376,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             %
             % VALUE = GETVALUEFROMKEY(IDICT, KEY) returns the value of KEY.
             %
-            % See also getValue, getValueFromIndex.
+            % See also getValue(), getValueFromIndex().
             
             index = idict.getIndexFromKey(key);
             value  = idict.getValueFromIndex(index);
@@ -392,7 +390,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % indexed dictionary in position INDEX. 
             % If INDEX is empty, it adds it to the end of IDICT.
             %
-            % See also remove, replace.
+            % See also remove(), replace().
             
             if nargin < 4 || index < 0 || index > idict.length()
                 index = idict.length() + 1;
@@ -423,7 +421,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % REMOVE(IDICT, POINTER) removes the key and value of POINTER
             % (an index, key or value) from the indexed dictionary IDICT.
             %
-            % See also add, replace.
+            % See also add(), replace().
             
             if isa(pointer, 'char')  % pointer is a key
                 index = idict.getKeyIndex(pointer);
@@ -445,7 +443,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % value of INDEX in the indexed dictionary IDICT with NEW_KEY
             % and NEW_VALUE.
             %
-            % See also add, remove, replaceKey, replaceValue, replaceValueAll.
+            % See also add(), remove(), replaceKey(), replaceValue(), replaceValueAll().
             
             assert(isequal(idict.getValueClass(), class(new_value)), ...
                 'BRAPH:IndexedDictionary:Bug', ...
@@ -462,7 +460,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % REPLACEKEY(IDICT, OLD_KEY, NEW_KEY) replaces OLD_KEY in the
             % indexed dictionary IDICT with NEW_KEY.
             %
-            % See also replace, replaceValue, replaceValueAll.
+            % See also replace(), replaceValue(), replaceValueAll()..
             
             index = idict.getIndexFromKey(old_key);
             value = idict.getValueFromIndex(index);
@@ -475,7 +473,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % with NEW_VALUE in the indexed dictionary IDICT. It replaces
             % only the first occurrence of OLD_VALUE.
             %
-            % See also replace, replaceKey, replaceValueAll.
+            % See also replace(), replaceKey(), replaceValueAll().
             
             index = idict.getIndexFromValue(old_value);
             key = idict.getKeyFromIndex(index);
@@ -488,7 +486,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % occurences of OLD_VALUE in the indexed dictionary IDICT with
             % NEW_VALUE.
             %
-            % See also replace, replaceKey, replaceValue.
+            % See also replace(), replaceKey(), replaceValue().
             
             indexes = idict.getIndexFromValueAll(old_value);
             for i = 1:1:length(indexes)
@@ -503,7 +501,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % elements at INDEX_I and INDEX_J in the indexed dictionary
             % IDICT.
             %
-            % See also move_to.
+            % See also move_to().
 
             if i > j
                 if i > 0 && i <= idict.length() && j > 0 && j <= idict.length() && i ~= j
@@ -526,7 +524,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % MOVE_TO(IDICT, OLD_INDEX, NEW_INDEX) moves an element from position 
             % OLD_INDEX to position NEW_INDEX in the indexed dictionary IDICT.
             %
-            % See also invert.
+            % See also invert().
             
             if i > 0 && i <= idict.length() && j > 0 && j <= idict.length() && i ~= j
                 key_and_value = idict.dict(i);
@@ -541,7 +539,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % whose positions in the indexed dictionary DICT are included
             % in the array SELECTED. It returns an empty array.
             %
-            % See also move_up, move_down, move_to_top, move_to_bottom.
+            % See also move_up(), move_down(), move_to_top(), move_to_bottom().
             
             for i = length(selected):-1:1
                 idict.remove(selected(i))
@@ -556,7 +554,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % dictionary DICT are included in the SELECTED array and
             % returns their final positions. 
             %
-            % See also remove_all, move_down, move_to_top, move_to_bottom.
+            % See also remove_all(), move_down(), move_to_top(), move_to_bottom().
             
             if ~isempty(selected)
                 first_index_to_process = 1;
@@ -582,7 +580,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % dictionary DICT are included in the SELECTED array and
             % returns their final positions.
             %
-            % See also remove_all, move_up, move_to_top, move_to_bottom.
+            % See also remove_all(), move_up(), move_to_top(), move_to_bottom().
             
             if ~isempty(selected)
                 last_index_to_process = numel(selected);
@@ -607,7 +605,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % included in the SELECTED array and returns their final
             % positions.
             %
-            % See also remove_all, move_up, move_down, move_to_bottom.
+            % See also remove_all(), move_up(), move_down(), move_to_bottom().
             
             if ~isempty(selected)
                 for i = 1:1:numel(selected)
@@ -624,7 +622,7 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
             % dictionary are included in the SELECTED array and returns
             % their final positions.
             %
-            % See also remove_all, move_up, move_down, move_to_top.
+            % See also remove_all(), move_up(), move_down(), move_to_top().
             
             if ~isempty(selected)
                 for i = numel(selected):-1:1

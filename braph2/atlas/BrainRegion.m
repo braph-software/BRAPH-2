@@ -7,10 +7,8 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
     % BrainRegion contains and manages the id, label, x coordinate, y 
     % coordinate, z coordinate and the position array of a brain region. 
     %
-    % BrainRegion methods:    
-    %   BrainRegion  - Constructor
-    %
     % BrainRegion basic methods:    
+    %   BrainRegion  - Constructor
     %   tostring     - returns a string representing the brain region
     %   disp         - displays the brain region
     %
@@ -62,7 +60,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % STR = TOSTRING(BR) returns string with the brain class, id, 
             % label, position, and notes.
             %
-            % See also disp.
+            % See also disp().
             
             str = [class(br) ' '  br.getID() ' ' br.getLabel() ' ' tostring(br.getPosition()) ' ' br.getNotes()];
         end
@@ -73,7 +71,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % It provides information about brain region class, label,
             % name, and position.
             %
-            % See also tostring.
+            % See also tostring().
             
             disp(['<a href="matlab:help ' class(br) '">' class(br) '</a>'])
             disp([' id: ' br.getID()])
@@ -89,7 +87,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % SETID(BR, ID) sets the id of the brain region BR.
             % ID must be a string.
             %
-            % See also setLabel, setX, setY, setZ, setPosition, getID.
+            % See also setLabel(), setX(), setY(), setZ(), setPosition(), getID().
             
             assert(ischar(id), ...
                 [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
@@ -103,7 +101,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % SETLABEL(BR, LABEL) sets the label of the brain region BR.
             % LABEL must be a string.
             %
-            % See also setID, setX, setY, setZ, setPosition, getLabel.
+            % See also setID(), setX(), setY(), setZ(), setPosition(), getLabel().
 
             assert(ischar(label), ...
                 [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
@@ -117,7 +115,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % SETNOTES(BR, NOTES) sets the notes of the brain region BR.
             % NOTES must be a string.
             %
-            % See also setID, setX, setY, setZ, setPosition, getNotes.
+            % See also setID(), setX(), setY(), setZ(), setPosition(), getNotes().
 
             assert(ischar(notes), ...
                 [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
@@ -131,7 +129,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % SETX(BR, X) sets the x coordinate of the brain region BR.
             % X must be a number.
             %
-            % See also setID, setLabel, setY, setZ, setPosition, getX.
+            % See also setID(), setLabel(), setY(), setZ(), setPosition(), getX().
             
             assert(isnumeric(x), ...
                 [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
@@ -145,7 +143,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % SETY(BR, Y) sets the y coordinate of the brain region BR.
             % Y must be a number.
             %
-            % See also setID, setLabel, setX, setZ, setPosition, getY.
+            % See also setID(), setLabel(), setX(), setZ(), setPosition(), getY().
 
             assert(isnumeric(y), ...
                 [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
@@ -159,7 +157,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % SETZ(BR, Z) sets the z coordinate of the brain region BR.
             % Z must be a number.
             %
-            % See also setID, setLabel, setX, setY, setPosition, getZ.
+            % See also setID(), setLabel(), setX(), setY(), setPosition(), getZ().
             
             assert(isnumeric(z), ...
                 [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
@@ -173,7 +171,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % SETPOSITION(BR, POSITION) sets an array [X Y Z] where X, Y, Z
             % are coordinates (numbers) of the brain region. 
             %
-            % See also setID, setLabel, setX, setY, setZ, getPosition.
+            % See also setID(), setLabel(), setX(), setY(), setZ(), getPosition().
             
             assert(isnumeric(position) && isequal(size(position), [1, 3]), ...
                 [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
@@ -191,7 +189,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % ID = GETID(BR) returns the id (a string) of the brain
             % region BR.
             %
-            % See also getLabel, getX, getY, getZ, getPosition, setID.
+            % See also getLabel(), getX(), getY(), getZ(), getPosition(), setID().
             
             id = br.id;
         end
@@ -201,7 +199,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % LABEL = GETLABEL(BR) returns the label (a string) of the 
             % brain region BR.
             %
-            % See also getID, getX, getY, getZ, getPosition, setLabel.
+            % See also getID(), getX(), getY(), getZ(), getPosition(), setLabel().
             
             label = br.label;
         end
@@ -211,7 +209,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % NOTES = GETNOTES(BR) returns the notes (a string) of the
             % brain region BR.
             %
-            % See also getLabel, getX, getY, getZ, getPosition, setNotes.
+            % See also getLabel(), getX(), getY(), getZ(), getPosition(), setNotes().
             
             notes = br.notes;
         end
@@ -221,7 +219,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % X = GETX(BR) returns the x coordinate (a number) of the brain
             % region BR.
             %
-            % See also getLabel, getY, getZ, getPosition, setX.
+            % See also getLabel(), getY(), getZ(), getPosition(), setX().
             
             x = br.x;
         end
@@ -231,7 +229,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % Y = GETY(BR) returns the y coordinate (a number) of the brain
             % region BR.
             %
-            % See also getLabel, getX, getZ, getPosition, setY.
+            % See also getLabel(), getX(), getZ(), getPosition(), setY().
             
             y = br.y;
         end
@@ -241,7 +239,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % Z = GETZ(BR) returns the z coordinate (a number) of the brain
             % region BR.
             %
-            % See also getLabel, getX, getY, getPosition, setZ.
+            % See also getLabel(), getX(), getY(), getPosition(), setZ().
             
             z = br.z;
         end
@@ -251,7 +249,7 @@ classdef BrainRegion < handle & matlab.mixin.Copyable
             % POSITION = GETZ(BR) returns the x, y, z coordinates of the brain
             % region BR in an array.
             %
-            % See also getLabel, getX, getY, getZ, setPosition.
+            % See also getLabel(), getX(), getY(), getZ(), setPosition().
             
             r = [br.getX() br.getY() br.getZ()];
         end

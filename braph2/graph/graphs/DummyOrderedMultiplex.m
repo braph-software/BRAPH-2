@@ -68,7 +68,7 @@ classdef DummyOrderedMultiplex < Graph
             %
             % GRAPH_CLASS = GETCLASS() returns the class, 'DummyOrderedMultiplex'.
             %
-            % See also getName, getDescription.
+            % See also getName(), getDescription().
             
             graph_class = 'DummyOrderedMultiplex';
         end
@@ -77,7 +77,7 @@ classdef DummyOrderedMultiplex < Graph
             %
             % NAME = GETCLASS() returns the name, 'Dummy Ordered Multiplex'.
             %
-            % See also getClass, getDescription.
+            % See also getClass(), getDescription().
             
             name = 'Dummy Ordered Multiplex';
         end
@@ -86,7 +86,7 @@ classdef DummyOrderedMultiplex < Graph
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of DUMMYORDEREDMULTIPLEX.
             %
-            % See also getClass, getName.
+            % See also getClass(), getName().
             
             description = [ ...
                 'Dummy ordered multiplex used mainly' ...
@@ -98,7 +98,7 @@ classdef DummyOrderedMultiplex < Graph
             %
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.ORDERED_MULTIPLEX.
             %
-            % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
 
             graph_type = Graph.ORDERED_MULTIPLEX;
         end
@@ -123,7 +123,7 @@ classdef DummyOrderedMultiplex < Graph
             %                     BINARY   BINARY  WEIGHTED 
             % where BINARY = Graph.BINARY and WEIGHTED = Graph.WEIGHTED.
             %
-            % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
+            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
                   
             connectivity_type = [ 
                 Graph.BINARY    Graph.BINARY    Graph.BINARY
@@ -146,7 +146,7 @@ classdef DummyOrderedMultiplex < Graph
             % where DIRECTED = Graph.DIRECTED.
             % If LAYERNUMBER is not three, it throws an error.
             %
-            % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
+            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
                        
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
@@ -176,7 +176,7 @@ classdef DummyOrderedMultiplex < Graph
             % where SELFCONNECTED = Graph.SELFCONNECTED.
             % If LAYERNUMBER is not three, it throws an error.
             %
-            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
                       
             if isempty(varargin)
                 selfconnectivity_type = Graph.SELFCONNECTED;
@@ -206,7 +206,7 @@ classdef DummyOrderedMultiplex < Graph
             % where NONNEGATIVE = Graph.NONNEGATIVE.
             % If LAYERNUMBER is not three, it throws an error.
             %
-            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
             
             if isempty(varargin)
                 negativity_type = Graph.NONNEGATIVE;

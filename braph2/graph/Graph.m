@@ -1,5 +1,5 @@
 classdef Graph < handle & matlab.mixin.Copyable
-    % Graph (Abstract) A graph
+    % Graph A graph
     % Graph provides the methods necessary for all graphs.
     % It is a subclass of handle and matlab.mixin.Copyable.
     %
@@ -8,7 +8,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     % The subclasses must be created inside the folder
     % ./braph/graph/graphs/. 
     %
-    % Graph properties (constants):
+    % Properties(Constant):
     %   GRAPH                       - single layer graph
     %   GRAPH_NAME                  - name of GRAPH 
     %   GRAPH_DESCRIPTION           - description of GRAPH
@@ -330,7 +330,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % CHECKA(GRAPH_TYPE, A) checks if adjacency matrix A or cell array of
             % adjacency matrices A is correct for the GRAPH_TYPE.
             %
-            % See also checkConnectivity, checkDirectionality, checkNegativity, checkSelfConnectivity.
+            % See also checkConnectivity(), checkDirectionality(), checkNegativity(), checkSelfConnectivity().
             
             % Basic checks
             if graph_type == Graph.GRAPH  % if graph, adjacency matrix
@@ -407,7 +407,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % the CONNECTIVITY_TYPE of the graph.
             % This check assumes that checkA has already been passed.
             %
-            % See also checkA, checkDirectionality, checkNegativity, checkSelfConnectivity.
+            % See also checkA(), checkDirectionality(), checkNegativity(), checkSelfConnectivity().
 
             
             if isnumeric(A)  % A is a matrix
@@ -448,7 +448,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % the DIRECTIONALITY_TYPE of the graph.
             % This check assumes that checkA has already been passed.
             %
-            % See also checkA, checkConnectivity, checkNegativity, checkSelfConnectivity.    
+            % See also checkA(), checkConnectivity(), checkNegativity(), checkSelfConnectivity().    
             
             if nargin < 3
                 At = A';
@@ -497,7 +497,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % the SELFCONNECTIVITY_TYPE of the graph.
             % This check assumes that checkA has already been passed.
             %
-            % See also checkA, checkConnectivity, checkDirectionality, checkNegativity.    
+            % See also checkA(), checkConnectivity(), checkDirectionality(), checkNegativity().    
             
             if isnumeric(A)  % A is a matrix
                 switch selfconnectivity_type 
@@ -535,7 +535,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % the NEGATIVITY_TYPE of the graph.
             % This check assumes that checkA has already been passed.
             %
-            % See also checkA, checkConnectivity, checkDirectionality, checkSelfConnectivity.    
+            % See also checkA(), checkConnectivity(), checkDirectionality(), checkSelfConnectivity().    
             
             if isnumeric(A)  % A is a matrix
                 switch negativity_type
@@ -588,7 +588,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % G = GETGRAPH(GRAPH_CLASS, A, 'Settings', SETTINGS)
             % initializes the property settings with SETTINGS.
             %
-            % See also getList, getCompatibleMeasureList.
+            % See also getList(), getCompatibleMeasureList().
             
             g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
         end
@@ -600,7 +600,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % GRAPH_CLASS_LIST = GETLIST() returns the list of graphs
             % (cell array) that are subclasses of Graph.
             %
-            % See also getClass, getCompatibleMeasureList.
+            % See also getClass(), getCompatibleMeasureList()
             
             graph_class_list = subclasses( ...
                 'Graph', ...
@@ -616,7 +616,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % GRAPH_CLASS = GETCLASS(GRAPH_CLASS) returns the class of the
             % graph whose class is the string GRAPH_CLASS.
             %
-            % See also getList, getCompatibleMeasureList.
+            % See also getList(), getCompatibleMeasureList().
             
             if isa(g, 'Graph')
                 graph_class = class(g);
@@ -633,7 +633,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % NAME = GETNAME(GRAPH_CLASS) returns the name (string) of the
             % graph whose class is the string GRAPH_CLASS.
             %
-            % See also getList, getCompatibleMeasureList.
+            % See also getList(), getCompatibleMeasureList().
             
             name = eval([Graph.getClass(g) '.getName()']);
         end
@@ -646,7 +646,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % DESCRIPTION = GETDESCRIPTION(GRAPH_CLASS) returns the
             % description (string) of the graph whose class is GRAPH_CLASS.
             %
-            % See also getList, getCompatibleMeasureList.
+            % See also getList(), getCompatibleMeasureList().
             
             name = eval([Graph.getClass(g) '.getDescription()']);
         end
@@ -661,7 +661,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % of the graph whose class is GRAPH_CLASS (e.g., GRAPH,
             % MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER, MULTILAYER)
             %
-            % See also is_graph, is_multigraph, is_multilayer, is_multiplex, is_ordered_multilayer, is_ordered_multiplex.     
+            % See also is_graph(), is_multigraph(), is_multilayer(), is_multiplex(), is_ordered_multilayer(), is_ordered_multiplex().     
                   
             graph_type = eval([Graph.getClass(g) '.getGraphType()']);
         end
@@ -674,7 +674,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_GRAPH(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is graph (single layer).
             %
-            % See also getGraphType, is_multigraph, is_multilayer, is_multiplex, is_ordered_multilayer, is_ordered_multiplex.     
+            % See also getGraphType(), is_multigraph(), is_multilayer(), is_multiplex(), is_ordered_multilayer(), is_ordered_multiplex().     
                   
             bool = Graph.getGraphType(g) == Graph.GRAPH;
         end
@@ -687,7 +687,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_MULTIGRAPH(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is multigraph.
             %
-            % See also getGraphType, is_graph, is_multilayer, is_multiplex, is_ordered_multilayer, is_ordered_multiplex.     
+            % See also getGraphType(), is_graph(), is_multilayer(), is_multiplex(), is_ordered_multilayer(), is_ordered_multiplex().     
                     
             bool = g.getGraphType() == Graph.MULTIGRAPH;
         end
@@ -700,7 +700,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_ORDERED_MULTIPLEX(GRAPH_CLASS) returns true if graph 
             % whose class is GRAPH_CLASS is ordered multiplex.
             %
-            % See also getGraphType, is_graph, is_multigraph, is_multilayer, is_multiplex, is_ordered_multilayer.     
+            % See also getGraphType(), is_graph(), is_multigraph(), is_multilayer(), is_multiplex(), is_ordered_multilayer().     
                    
             bool = Graph.getGraphType(g) == Graph.ORDERED_MULTIPLEX;
         end
@@ -713,7 +713,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_MULTIPLEX(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is multiplex.
             %
-            % See also getGraphType, is_graph, is_multigraph, is_multilayer, is_ordered_multilayer, is_ordered_multiplex.     
+            % See also getGraphType(), is_graph(), is_multigraph(), is_multilayer(), is_ordered_multilayer(), is_ordered_multiplex().     
               
             bool = Graph.getGraphType(g) == Graph.MULTIPLEX;
         end
@@ -726,7 +726,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_ORDERED_MULTILAYER(GRAPH_CLASS) returns true if graph 
             % whose class is GRAPH_CLASS is ordered multilayer.
             %
-            % See also getGraphType, is_graph, is_multigraph, is_multilayer, is_multiplex, is_ordered_multiplex.     
+            % See also getGraphType(), is_graph(), is_multigraph(), is_multilayer(), is_multiplex(), is_ordered_multiplex().     
                 
             bool = Graph.getGraphType(g) == Graph.ORDERED_MULTILAYER;
         end
@@ -739,7 +739,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_MULTILAYER(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is multilayer.
             %
-            % See also getGraphType, is_graph, is_multigraph, is_multiplex, is_ordered_multilayer, is_ordered_multiplex.     
+            % See also getGraphType(), is_graph(), is_multigraph(), is_multiplex(), is_ordered_multilayer(), is_ordered_multiplex().     
                    
             bool = Graph.getGraphType(g) == Graph.MULTILAYER;
         end
@@ -757,7 +757,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % returns a matrix with the connectivity type of each layer in
             % a multiple layer graph.
             %
-            % See also is_binary, is_weighted.     
+            % See also is_binary(), is_weighted().     
             
             connectivity_type = eval([Graph.getClass(g) '.getConnectivityType(varargin{:})']);
         end
@@ -770,7 +770,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_WEIGHTED(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is weighted.
             %
-            % See also getConnectivityType, is_binary.     
+            % See also getConnectivityType(), is_binary().     
             
             bool = Graph.getConnectivityType(g, varargin{:}) == Graph.WEIGHTED;
         end
@@ -783,7 +783,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_BINARY(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is binary.
             %
-            % See also getConnectivityType, is_weighted.     
+            % See also getConnectivityType(), is_weighted().     
             
             bool = Graph.getConnectivityType(g, varargin{:}) == Graph.BINARY;
         end
@@ -801,7 +801,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % returns a matrix with the directionality type of each layer 
             % in a multiple layer graph.
             %
-            % See also is_directed, is_undirected.     
+            % See also is_directed(), is_undirected().     
                          
             directionality_type = eval([Graph.getClass(g) '.getDirectionalityType(varargin{:})']);
         end
@@ -814,7 +814,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_DIRECTED(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is directed.
             %
-            % See also getDirectionalityType, is_undirected.     
+            % See also getEgdeType(), is_undirected().     
                      
             bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.DIRECTED;
         end
@@ -827,7 +827,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_UNDIRECTED(GRAPH_CLASS) returns true if graph whose
             % class is GRAPH_CLASS is undirected.
             %
-            % See also getDirectionalityType, is_directed.     
+            % See also getEgdeType(), is_directed().     
                     
             bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.UNDIRECTED;
         end
@@ -845,7 +845,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % returns a matrix with the self-connectivity  type of each layer 
             % in a multiple layer graph.
             %
-            % See also is_selfconnected, is_not_selfconnected.     
+            % See also is_selfconnected(), is_not_selfconnected().     
                         
             selfconnectivity_type = eval([Graph.getClass(g) '.getSelfConnectivityType(varargin{:})']);
         end
@@ -858,7 +858,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_SELFCONNECTED(GRAPH_CLASS) returns true if graph
             % whose class is GRAPH_CLASS is self-connected and false otherwise.
             %
-            % See also getSelfConnectivityType, is_not_selfconnected.     
+            % See also getSelfConnectivityType(), is_not_selfconnected().     
              
             bool = Graph.getSelfConnectivityType(g, varargin{:}) == Graph.SELFCONNECTED; 
         end
@@ -871,7 +871,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_NONSELFCONNECTED(GRAPH_CLASS) returns true if graph
             % whose class is GRAPH_CLASS is not self-connected and false otherwise.
             %
-            % See also getSelfConnectivityType, is_selfconnected.     
+            % See also getSelfConnectivityType(), is_selfconnected().     
                   
             bool = Graph.getSelfConnectivityType(g, varargin{:}) == Graph.NONSELFCONNECTED;
         end
@@ -889,7 +889,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % returns a matrix with the negativity  type of each layer in
             % a multiple layer graph.
             %
-            % See also is_negative, is_nonnegative.     
+            % See also is_negative(), is_nonnegative().     
             
             negativity_type = eval([Graph.getClass(g) '.getNegativityType(varargin{:})']);
         end
@@ -902,7 +902,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_NONNEGATIVE(GRAPH_CLASS) returns true if the graph
             % whose class is GRAPH_CLASS allows non-negative values and false otherwise.
             %
-            % See also getNegativityType, is_negative.
+            % See also getNegativityType(), is_negative().
             
             bool = Graph.getNegativityType(g, varargin{:}) == Graph.NONNEGATIVE;
         end
@@ -915,7 +915,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % BOOL = IS_NEGATIVE(GRAPH_CLASS) returns true if the graph
             % whose class is GRAPH_CLASS allows negative values and false otherwise.
             %
-            % See also getNegativityType, is_nonnegative.
+            % See also getNegativityType(), is_nonnegative().
             
             bool = Graph.getNegativityType(g, varargin{:}) == Graph.NEGATIVE;
         end
@@ -967,7 +967,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % STR = TOSTRING(G) returns string with the graph class and size (layers and nodes).
             %
-            % See also disp.
+            % See also disp().
             
             str = [Graph.getClass(g) ': ' int2str(g.layernumber(g)) ' layers with ' int2str(g.nodenumber(g)) ' nodes'];
         end
@@ -979,7 +979,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % (layers and nodes size), value, associated measures and
             % settings.
             %
-            % See also tostring.
+            % See also tostring().
             
             disp(['<a href="matlab:help ' Graph.getClass(g) '">' Graph.getClass(g) '</a>'])
             disp([g.TYPE_DESCRIPTION{Graph.getGraphType(g)} ])
@@ -999,7 +999,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % SETTINGS = GETSETTINGS(G, SETTING_CODE) returns the settings
             % of the graph SETTING_CODE.
             %
-            % See also getA, layernumber, nodenumber.
+            % See also getA(), nodenumber().
             
             if nargin<2
                 res = g.settings;
@@ -1017,7 +1017,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % non single layer graphs it returns an array with the number
             % of nodes in each layer.
             %
-            % See also getA, getSettings, layernumber.
+            % See also getA(), getSettings(), layernumber().
 
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
@@ -1032,7 +1032,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % N = LAYERNUMBER(G) returns the number of layers in graph G.
             %
-            % See also getA, getSettings, nodenumber.
+            % See also getA(), getSettings(), nodenumber().
             
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
@@ -1056,7 +1056,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % (I, J) of the cell array of adjacency matrices A associated
             % to graph G (multiple graph).
             %
-            % See also getSettings, layernumber, nodenumber.
+            % See also getSettings(), layernumber(), nodenumber().
             
             if nargin == 1  % return cell array of adjacency matrices
                 A = g.A;
@@ -1075,7 +1075,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % settings. The user must call getValue() for the new measure M
             % to retrieve the value of measure M.
             %
-            % See also getMeasureValue, is_measure_calculated.
+            % See also getMeasureValue(), is_measure_calculated().
             
             if isKey(g.measure_dict, measure_class)
                 m = g.measure_dict(measure_class);
@@ -1093,7 +1093,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % call the function getMeasureValue() to calculate the measure and
             % obtain a value.
             %
-            % See also getMeasure, getMeasureValue.
+            % See also getMeasure(), getMeasureValue().
             
             if isKey(g.measure_dict, measure_class)
                 bool = g.measure_dict(measure_class).is_value_calculated();
@@ -1107,7 +1107,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % VALUE = GETMEASUREVALUE(G, MEASURE_CLASS) returns the value of
             % a measure of type MEASURE_CLASS.
             %
-            % See also getMeasure, is_measure_calculated.
+            % See also getMeasure(), is_measure_calculated().
             
             value = g.getMeasure(measure_class).getValue();
         end       
@@ -1128,7 +1128,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % NODES are removed by setting all the connections from and to
             % the nodes in the connection matrix to 0.
             %
-            % See also edgeattack.
+            % See also edgeattack().
                         
             if nargin < 3
                 layernumbers = 1:1:g.layernumber();
@@ -1192,7 +1192,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % NODES1 and NODES2 must have the same dimensions.
             %
-            % See also nodeattack.
+            % See also nodeattack().
                 
             if nargin < 4
                 layernumbers1 = 1:1:g.layernumber();

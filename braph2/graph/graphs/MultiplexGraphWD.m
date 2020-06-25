@@ -76,7 +76,7 @@ classdef MultiplexGraphWD < Graph
             %
             % GRAPH_CLASS = GETCLASS() returns the class, 'MultiplexGraphWD'.
             %
-            % See also getName, getDescription.
+            % See also getName(), getDescription().
             
             graph_class = 'MultiplexGraphWD';
         end
@@ -85,7 +85,7 @@ classdef MultiplexGraphWD < Graph
             %
             % NAME = GETCLASS() returns the name, 'Multiplex Weighted Directed Graph'.
             %
-            % See also getClass, getDescription.
+            % See also getClass(), getDescription().
             
             name = 'Multiplex Weighted Directed Graph';
         end
@@ -94,7 +94,7 @@ classdef MultiplexGraphWD < Graph
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of MULTIPLEXGRAPHWD.
             %
-            % See also getClass, getName.
+            % See also getClass(), getName().
             
             description = [ ...
                 'In a multiplex weighted directed graph, ' ...
@@ -107,7 +107,7 @@ classdef MultiplexGraphWD < Graph
             %
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTIPLEX.
             %
-            % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
            
             graph_type = Graph.MULTIPLEX;
         end
@@ -125,7 +125,7 @@ classdef MultiplexGraphWD < Graph
             %                     WEIGHTED  WEIGHTED  WEIGHTED  
             % where WEIGHTED = Graph.WEIGHTED.
             %
-            % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
          
             if isempty(varargin)
                 connectivity_type = Graph.WEIGHTED;
@@ -148,7 +148,7 @@ classdef MultiplexGraphWD < Graph
             %                       DIRECTED  DIRECTED  DIRECTED  
             % where DIRECTED = Graph.DIRECTED.
             %
-            % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
          
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
@@ -172,7 +172,7 @@ classdef MultiplexGraphWD < Graph
             %                         SELFCONNECTED     SELFCONNECTED     NONSELFCONNECTED  
             % where SELFCONNECTED = Graph.SELFCONNECTED and NONSELFCONNECTED = Graph.NONSELFCONNECTED.
             %
-            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
          
             if isempty(varargin)
                 selfconnectivity_type = Graph.SELFCONNECTED;
@@ -195,7 +195,7 @@ classdef MultiplexGraphWD < Graph
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  
             % where NONNEGATIVE = Graph.NONNEGATIVE.
             %
-            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
             
             if isempty(varargin)
                 negativity_type = Graph.NONNEGATIVE;

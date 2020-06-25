@@ -1,13 +1,13 @@
 function Q = quantiles(values, P)
-% QUANTILES Calculates the quantiles of a distribution
+% QUANTILES Calcualtes the quantiles of a distribution
 %
 % Q = QUANTILES(VALUES, P) calculates the P-quantiles of VALUES.
-% VALUES must be a cell array of samples, where each cell contains a 
-% scalar, a vector or a matrix with random variables. Q is a cell array with
-% the quantiles from 0 to Q.
+%   VALUES must be a cell array of samples, where each cell contains a
+%   scalar, vector or matrix with random variables.
+%   Q is a cell array with the quantiles from 0 to Q.
 %
 % Q = QUANTILES(VALUES) calculates the percentiles of VALUES. It is
-% equivalent to QUANTILES(VALUES, 100).
+%   equivalent to QUANTILES(VALUES, 100).
 %
 % See also pvalue1, pvalue2, fdr, bonferroni.
 
@@ -18,7 +18,7 @@ else
     P = ceil(abs(P));  % enforces that P is a positive integer
 end
 
-M = numel(values);  %#ok<NASGU> % number of samples (per variable)
+M = numel(values);  % number of samples (per variable)
 
 row_number = size(values{1}, 1);
 column_number = size(values{1}, 2);

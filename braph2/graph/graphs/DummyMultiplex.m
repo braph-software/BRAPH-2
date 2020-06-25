@@ -71,7 +71,7 @@ classdef DummyMultiplex < Graph
             %
             % GRAPH_CLASS = GETCLASS() returns the class, 'DummyMultiplex'.
             %
-            % See also getName, getDescription.
+            % See also getName(), getDescription().
             
             graph_class = 'DummyMultiplex';
         end
@@ -80,7 +80,7 @@ classdef DummyMultiplex < Graph
             %
             % NAME = GETCLASS() returns the name, 'Dummy Multiplex'.
             %
-            % See also getClass, getDescription.
+            % See also getClass(), getDescription().
             
             name = 'Dummy Multiplex';
         end
@@ -89,7 +89,7 @@ classdef DummyMultiplex < Graph
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of DUMMYMULTIPLEX.
             %
-            % See also getClass, getName.
+            % See also getClass(), getName().
             
             description = [ ...
                 'Dummy multiplex used mainly' ...
@@ -101,7 +101,7 @@ classdef DummyMultiplex < Graph
             %
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTIPLEX.
             %
-            % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
+            % See also getConnectivityType(), getDirectionalityType(), getNegativityType(), getSelfConnectivityType().
 
             graph_type = Graph.MULTIPLEX;
         end
@@ -121,7 +121,7 @@ classdef DummyMultiplex < Graph
             % where BINARY = Graph.BINARY and WEIGHTED = Graph.WEIGHTED.
             % If LAYERNUMBER is odd, it throws an error.
             %           
-            % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
+            % See also Graph, getDirectionalityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
                   
             if isempty(varargin)
                 connectivity_type = Graph.WEIGHTED;
@@ -154,7 +154,7 @@ classdef DummyMultiplex < Graph
             % where DIRECTED = Graph.DIRECTED and UNDIRECTED = Graph.UNDIRECTED.
             % If LAYERNUMBER is odd, it throws an error.
             %
-            % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
+            % See also Graph, getConnectivityType(), getGraphType(), getNegativityType(), getSelfConnectivityType().
                        
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
@@ -186,7 +186,7 @@ classdef DummyMultiplex < Graph
             % where SELFCONNECTED = Graph.SELFCONNECTED.
             % If LAYERNUMBER is odd, it throws an error.
             %
-            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getNegativityType().
                       
             if isempty(varargin)
                 selfconnectivity_type = Graph.SELFCONNECTED;
@@ -216,7 +216,7 @@ classdef DummyMultiplex < Graph
             % where NONNEGATIVE = Graph.NONNEGATIVE.
             % If LAYERNUMBER is odd, it throws an error.
             %
-            % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
+            % See also Graph, getConnectivityType(), getDirectionalityType(), getGraphType(), getSelfConnectivityType().
             
             if isempty(varargin)
                 negativity_type = Graph.NONNEGATIVE;

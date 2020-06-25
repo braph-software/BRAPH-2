@@ -3,12 +3,8 @@ classdef BRAPH2
     % BRAPH2 is a static class that contains the constants used by BRAPH2.
     %
     % Properties(Constant) - BRAPH2 ID Card:
-    %   NAME        - BRAPH2 full name
-    %   VERSION     - BRAPH2 version
-    %   STR         - BRAPH2 sort string
-    %   BUILD       - BRAPH2 build number
-    %   AUTHORS     - BRAPH2 authors
-    %   COPYRIGHT   - BRAPH2 copyright
+    %   NAME    - BRAPH2 full name
+    %   STR     - BRAPH2 sort string
     %
     % Properties(Constant) - BRAPH2 error codes:
     %   WRONG_INPUT     - wrong input value or format in a function
@@ -18,11 +14,8 @@ classdef BRAPH2
     
     properties (Constant)  % BRAPH2 ID Card
         NAME = 'Braph 2.0'  % BRAPH2 full name
-        VERSION = '2.0'  % BRAPH2 version
         STR = 'BRAPH2'  % BRAPH2 sort string
-        BUILD = 2020  % BRAPH2 build number
-        AUTHORS = 'Giovanni Volpe, Mite Mijalkov, Ehsan Kakaei, Joana Braga Pereira, Eric Westman, Emiliano Gomez Ruiz, Anna Canal Garcia, et al.'
-        COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]        
+        BUILD = '2020'
     end
     properties (Constant)  % BRAPH2 error codes
         WRONG_INPUT = 'WrongInput'  % wrong input value or format in a function
@@ -54,10 +47,6 @@ classdef BRAPH2
         JSON_EXTENSION = '*.json'
         JSON_MSG_GETFILE = 'Select JSON file'
         JSON_MSG_PUTFILE = 'Select JSON file'
-        
-        X3D_EXTENSION = '*.x3d'
-        X3D__MSG_GETFILE = 'Select X3D file'
-        
     end
     %         BUILD = 2020
     %         VERSION = '2.0.0'
