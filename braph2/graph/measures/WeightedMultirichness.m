@@ -14,9 +14,9 @@ classdef WeightedMultirichness < WeightedRichness
     %   WeightedMultirichness       - constructor
     %
     % WeightedMultirichness methods (Static)
-    %   getClass                    - returns the multirichness class
-    %   getName                     - returns the name of multirichness measure
-    %   getDescription              - returns the description of multirichness measure
+    %   getClass                    - returns the weighted multirichness class
+    %   getName                     - returns the name of weighted multirichness measure
+    %   getDescription              - returns the description of weighted multirichness measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns de measure format
     %   getMeasureScope             - returns de measure scope    
@@ -29,7 +29,7 @@ classdef WeightedMultirichness < WeightedRichness
     methods
         function m = WeightedMultirichness(g, varargin)
             % WEIGHTEDMULTIRICHNESS(G) creates weighted multirichness with default properties.
-            % G is a multiplex (e.g, an instance of MultiplexGraphWD
+            % G is a weighted multiplex (e.g, an instance of MultiplexGraphWD
             % or MultiplexGraphWU). 
             % 
             % WEIGHTEDMULTIRICHNESS(G, 'WeightedRichnessThreshold', WEIGHTEDRICHNESSTHRESHOLD, 
