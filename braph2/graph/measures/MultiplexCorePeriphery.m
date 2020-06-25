@@ -5,9 +5,13 @@ classdef MultiplexCorePeriphery < Multirichness
     % (WU) and weighted directed (WD) multiplexes. 
     %
     % It is calculated as the value of the rank corresponding to the
-    % maximum multirichness with degree k or higher and coefficients c
-    % in all layers. It returns one for node belonging to the core and zero
-    % otherwise.
+    % maximum multirichness with degree k or higher. It returns 1 for a
+    % node belonging to the core and zero otherwise. The value of k is set 
+    % by the user (setting 'RichnessThreshold'), the default value is equal
+    % to the maximum degree - 1. The relevance of each layer is controlled
+    % by the coefficients c (setting 'MultirichnessCoefficients') that are
+    % between 0 and 1, and add up to one; the default coefficients are
+    % (1/layernumber).
     % 
     % MultiplexCorePeriphery methods:
     %   MultiplexCorePeriphery      - constructor
@@ -31,9 +35,11 @@ classdef MultiplexCorePeriphery < Multirichness
             % G is a multiplex (e.g, an instance of MultiplexGraphBD,
             % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
             %
-            % MULTIPLEXCOREPERIPHERY(G, 'RichnessThreshold', RICHNESSTHRESHOLD, 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS) 
-            % creates multiplex core periphery, measure and initializes the property RichnessThreshold 
-            % with RICHNESSTHRESHOLD and the property MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
+            % MULTIPLEXCOREPERIPHERY(G, 'RichnessThreshold', RICHNESSTHRESHOLD, 
+            % 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS) 
+            % creates multiplex core periphery, measure and initializes the 
+            % property RichnessThreshold with RICHNESSTHRESHOLD and the
+            % property MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
             % Admissible THRESHOLD and COEFFICIENTS options are:
             % RICHNESSTHRESHOLD = 0 (default) - RICHNESS k threshold is set 
             %                    to the maximum degree - 1.
