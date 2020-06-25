@@ -1,7 +1,7 @@
 classdef InPathLengthAv < InPathLength
     % InPathLengthAv Average in-path length measure
     % InPathLengthAv provides the average in-path length of a graph for binary 
-    % undirected (BU) and weighted undirected (WU) graphs. 
+    % undirected (BD) and weighted undirected (WD) graphs. 
     %
     % It is calculated as the average of the sum of the in-path lengths within 
     % each layer.
