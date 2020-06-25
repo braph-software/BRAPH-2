@@ -23,7 +23,7 @@ A = {
 known_weighted_multirichness = {[5.4/4 5.2/4 2 1.8/4]'};      
 
 g = MultiplexGraphWU(A);
-weighted_multirichness = WeightedMultirichness(g, 'WeightedRichnessThreshold', 1, 'WeightedMultirichnessCoefficients', [3/4, 1/4]);
+weighted_multirichness = WeightedMultirichness(g, 'WeightedRichnessThreshold', -1, 'WeightedMultirichnessCoefficients', [3/4, 1/4]);
 
 assert(isequal(weighted_multirichness.getValue(), known_weighted_multirichness), ...
     [BRAPH2.STR ':WeightedMultirichness:' BRAPH2.BUG_ERR], ...
