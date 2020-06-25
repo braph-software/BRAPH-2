@@ -237,19 +237,8 @@ init_filename()
     end
     function update_filename(filename)
         set(ui_text_filename, 'String', filename)
-        if atlas.getBrainRegions().length() > 0
-            init_enable()
-        else
-            init_disable()
-        end
     end
 
-    function init_disable()
-%         set(ui_checkbox_figure_distance, 'enable', 'off')
-    end
-    function init_enable()
-%         set(ui_checkbox_figure_distance, 'enable', 'on')
-    end
 
 %% Panel Table
 TAB_BR_SELECTED_COL = 1;
@@ -457,17 +446,13 @@ init_table()
         end
         br = BrainRegion([num2str(br_id)], '', '', 0, 0, 0);
         atlas.getBrainRegions().add(br.getID(), br);
-        update_table_table()
-        init_enable()
+        update_table_table()        
         create_figure()
     end
     function cb_table_remove(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().remove_all(selected);
         update_table_table()
-        create_figure()
-        if atlas.getBrainRegions().length() == 0        
-            init_disable()
-        end
+        create_figure()        
     end
     function cb_table_moveup(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().move_up(selected);
@@ -495,7 +480,7 @@ FIG_BRAIN_CMD = 'Show brain';
 FIG_BRAIN_TP = 'Brain surface on/off';
 
 FIG_DISTANCE_CMD = 'Highlights';
-FIG_DISTANCE_TP = 'Highlights on/off. Must select a Brain Region first.';
+FIG_DISTANCE_TP = 'Highlights of selected brain regions on/off.';
 
 FIG_BRAINALPHA_CMD = 'Brain transparency';
 FIG_BRAINALPHA_TP = 'Adjust the transparency of the brain surface';
@@ -1227,7 +1212,6 @@ setup_restrictions()
         update_table_table()
         % setup figure
         create_figure()
-        init_disable()
     end
 
 end
