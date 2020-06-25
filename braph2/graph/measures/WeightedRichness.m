@@ -29,9 +29,8 @@ classdef WeightedRichness < Strength
     methods
         function m = WeightedRichness(g, varargin)
             % WEIGHTEDRICHNESS(G) creates weighted richness with default properties.
-            % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
-            % or MultiplexGraphWU). 
+            % G is a weighted graph (e.g, an instance of GraphWD, GraphWU,
+            % MultiplexGraphWD or MultiplexGraphWU). 
             %
             % WEIGHTEDRICHNESS(G, 'WeightedRichnessThreshold', WEIGHTEDRICHNESSTHRESHOLD) 
             % creates weighted richness measure and initializes the property 
