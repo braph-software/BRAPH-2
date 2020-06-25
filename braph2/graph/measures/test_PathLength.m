@@ -47,7 +47,17 @@ assert(isequal({round(path_length_value{1}, 4)}, known_path_length), ...
     [BRAPH2.STR ':PathLength:' BRAPH2.BUG_ERR], ...
     'PathLength is not being calculated correctly for GraphWU.')
 
-%% Test 4: Calculation subgraphs WU vs know Value
+% Subgraphs
+known_path_length = {[40/3 10 10 40/3]'};
+
+g = GraphWU(A);
+path_length = PathLength(g, 'PathLengthRule', 'subgraphs');
+
+assert(isequal(path_length.getValue(), known_path_length), ...
+    [BRAPH2.STR ':PathLength:' BRAPH2.BUG_ERR], ...
+    'PathLength is not being calculated correctly for GraphWU.')
+
+%% Test 3: Calculation subgraphs GraphWU vs BCT
 A = [
     0   .1  0   0
     .2   0 .1   0
@@ -55,39 +65,16 @@ A = [
     0    0 .1   0
     ];
 g = GraphWU(A);
-p = PathLength(g, 'PathLengthAvRule', 'subgraphs');
-p_value = p.getValue();
-p_value = round(p_value,4);
+path_length = PathLength(g, 'PathLengthRule', 'subgraphs');
+path_length_value = path_length.getValue();
+path_length_value = path_length_value{1};
 
-known_solution = [
-    13.3333;
-    10;
-    10;
-    13.3333;
-    ];
+distance = Distance(g).getValue();
+value_bct = round(charpath(distance{1}), 4);
 
-assert( isequal(p_value, known_solution), ...
-    ['BRAPH:PathLength:Subgraphs '], ...
-    ['PathLength is not working for: Subgraphs mean'])
-
-%% Test 5: Calculation subgraphs WU vs BCT
-A = [
-    0   .1  0   0
-    .2   0 .1   0
-    0   .1  0  .2
-    0    0 .1   0
-    ];
-g = GraphWU(A);
-p = PathLength(g, 'PathLengthAvRule', 'subgraphs');
-p_value = p.getValue();
-p_value = round(p_value,4);
-
-d = Distance(g).getValue();
-value_bct = round(charpath(d), 4);
-
-assert( isequal(p_value(1, 1), value_bct), ...
-    ['BRAPH:PathLength:BCT '], ...
-    ['PathLength is not working for: modified BCT comparision'])
+assert( isequal(round(path_length_value(1),4), value_bct), ...
+    [BRAPH2.STR ':PathLength:' BRAPH2.BUG_ERR], ...
+    'PathLength is not working for GraphWU: modified BCT comparision.')
 
 %% Functions to calculate Path Length from 2019_03_03_BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
