@@ -5,8 +5,9 @@ classdef Richness < Degree
     % graphs. 
     %
     % It is calculated as the sum of the number of edges that connect nodes
-    % of degree k or higher within a layer. k is set by the user, the
-    % default value is equal to the maximum degree - 1.
+    % of degree k or higher within a layer. The value of k is set by the
+    % user (setting 'RichnessThreshold'), the default value is equal to the
+    % maximum degree - 1.
     % 
     % Richness methods:
     %   Richness                    - constructor
