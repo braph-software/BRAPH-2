@@ -351,14 +351,14 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             [~, ~, raw] = xlsread(file);
             
             atlas_id = raw{1, 1};
-            atlas_label = raw{1, 2};
-            atlas_notes = raw{1, 3};
-            atlas_surf = raw{1, 4};
+            atlas_label = raw{2, 1};
+            atlas_notes = raw{3, 1};
+            atlas_surf = raw{4, 1};
             
             % Creates empty BrainAtlas
             atlas = BrainAtlas(atlas_id, atlas_label, atlas_notes, atlas_surf, {});
             
-            for i = 2:1:size(raw, 1)
+            for i = 5:1:size(raw, 1)
                 br_id = raw{i, 1};
                 br_label = raw{i, 2};                
                 br_x = raw{i, 3};
@@ -407,7 +407,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % creates table
             tab = [
-                {atlas.getID(), atlas.getLabel(), atlas.getNotes(), atlas.getBrainSurfFile(), {}, {}};
+                {atlas.getID(), {}, {}, {}, {}, {}};
+                {atlas.getLabel(), {}, {}, {}, {}, {}};
+                {atlas.getNotes(), {}, {}, {}, {}, {}};
+                {atlas.getBrainSurfFile(), {}, {}, {}, {}, {}};
                 table(br_ids, br_label, br_x, br_y, br_z, br_notes)
                 ];
             
@@ -502,7 +505,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % creates table
             tab = [
-                {atlas.getID(), atlas.getLabel(), atlas.getNotes(), atlas.getBrainSurfFile(), {}, {}};
+                {atlas.getID(), {}, {}, {}, {}, {}};
+                {atlas.getLabel(), {}, {}, {}, {}, {}};
+                {atlas.getNotes(), {}, {}, {}, {}, {}};
+                {atlas.getBrainSurfFile(), {}, {}, {}, {}, {}};
                 table(br_ids, br_label, br_x, br_y, br_z, br_notes)
                 ];
             
