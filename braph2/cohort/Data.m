@@ -3,9 +3,8 @@ classdef Data < handle & matlab.mixin.Copyable
     % Data provides the methods necesary for all datas
     % It is a subclass of handle and matlab.mixin.Copyable
     %
-    % Data contains and manages brain regions inside an IndexedDictionary; 
-    % thus, it has access to all IndexedDictionary methods. 
-    % Data can be imported/exported to .txt, .xls and .json files.
+    % Data provides the methods necessary for data subclasses to store the
+    % subject data. 
     %
     % Data methods:
     %   Data                    - Constructor
