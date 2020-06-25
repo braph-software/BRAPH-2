@@ -7,8 +7,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     % thus, it has access to all IndexedDictionary methods. 
     % BrainAtlas can be imported/exported to .txt, .xls and .json files.
     %
-    % BrainAtlas basic methods:
+    % BrainAtlas methods:
     %   BrainAtlas              - Constructor
+    %
+    % BrainAtlas basic methods:
     %   tostring                - returns a string representing the BrainAtlas
     %   disp                    - displays the BrainAtlas
     %
@@ -73,6 +75,15 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     %   getBrainRegions().move_to_top       - moves an element to the top in the indexed dictionary br_idict
     %   getBrainRegions().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
     %
+    % Useful cellfun expressions:
+    %   cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getLabel(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getNotes(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getX(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getY(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getZ(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %   cellfun(@(br) br.getPosition(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
+    %
     % See also BrainRegion, PlotBrainSurf, PlotBrainAtlas, IndexedDictionary.
     
     properties (GetAccess=protected, SetAccess=protected)
@@ -84,7 +95,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     end
     methods  % Basic functions
         function atlas = BrainAtlas(id, label, notes, brain_surf_file, brain_regions)
-            % BrainAtlas(ID, LABEL, NOTES, BRAIN_SURF_FFILE, BRAIN_REGIONS) creates a BrainAtlas with
+            % BrainAtlas(ID, LABEL, NOTES, BRAIN_SURF_FILE, BRAIN_REGIONS) creates a BrainAtlas with
             % given ID, LABEL, NOTES, AND BRAIN_SURF_FILE and initializes the dictionary with
             % BRAIN_REGIONS (cell array of BrainRegions).
             %
@@ -110,7 +121,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % STRING = TOSTRING(ATLAS) returns string with the BrainAtlas
             % class, ID, label and size.
             %
-            % See also disp().
+            % See also disp.
             
             str = [class(atlas) ' ' atlas.getID() ' ' atlas.getLabel() ' with ' int2str(atlas.getBrainRegions().length()) ' brain regions'];
         end
@@ -120,12 +131,13 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % DISP(ATLAS) displays information about the atlas class, id,
             % label, notes, and size. BrainRegions key, id, label and position.
             %
-            % See also tostring().
+            % See also tostring.
             
             disp(['<a href="matlab:help ' class(atlas) '">' class(atlas) '</a>'])
             disp([' id: ' atlas.getID()])
             disp([' label: ' atlas.getLabel()])
             disp([' notes: ' atlas.getNotes()])
+            disp([' brain surf file: ' atlas.getBrainSurfFile()])
             disp([' size: ' int2str(atlas.getBrainRegions().length()) ' brain regions'])
             disp([' brain regions:']); %#ok<NBRAK>
             for i = 1:1:atlas.getBrainRegions().length()
@@ -140,7 +152,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % SETID(ATLAS, ID) sets the id of ATLAS to ID.
             %
-            % See also getID().
+            % See also getID.
             
             assert(ischar(id), ...
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
@@ -153,7 +165,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % SETLABEL(ATLAS, LABEL) sets the label of ATLAS to LABEL.
             %
-            % See also getLabel().
+            % See also getLabel.
             
             assert(ischar(label), ...
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
@@ -166,7 +178,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % SETNOTES(ATLAS, NOTES) sets the notes of ATLAS to NAME.
             %
-            % See also getNotes().
+            % See also getNotes.
             
             assert(ischar(notes), ...
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
@@ -181,7 +193,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % correct brain surf, then sets the surf file BRAINSURFFILE 
             % to the BrainAtlas ATLAS.
             %
-            % See also getBrainSurfFile().
+            % See also getBrainSurfFile.
             
             assert(ischar(brain_surf_file), ...
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT ], ...
@@ -203,7 +215,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % ID = GETID(ATLAS) returns the id of the BrainAtlas.
             %
-            % See also setID().
+            % See also setID.
             
             id = atlas.id;
         end
@@ -212,7 +224,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % LABEL = GETLABEL(ATLAS) returns the label of the BrainAtlas.
             %
-            % See also setLabel().
+            % See also setLabel.
             
             label = atlas.label;
         end
@@ -221,7 +233,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % NOTES = GETNOTES(ATLAS) returns the notes of the BrainAtlas.
             %
-            % See also setNotes().
+            % See also setNotes.
             
             notes = atlas.notes;
         end
@@ -232,7 +244,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % dictionary BR_IDICT. This function exposes to the user the
             % methods and functions of the INDEXEDDICTIONARY class.
             %
-            % See also IndexedDictionary, getID().
+            % See also IndexedDictionary, getID.
             
             br_idict = atlas.br_idict;
         end
@@ -242,18 +254,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % BRAIN_SRUF_FILE = GETBRAINSURFFILE(ATLAS) returns the brain
             % surf file of the atlas.
             %
-            % See also setBrainSurfFile().
+            % See also setBrainSurfFile.
             
             brain_surf_file = atlas.brain_surf_file;
         end
-        % Useful cellfun expressions:
-        % cellfun(@(br) br.getID(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getLabel(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getNotes(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getX(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getY(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getZ(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
-        % cellfun(@(br) br.getPosition(), atlas.getBrainRegions().getValues(), 'UniformOutput', false)
     end
     methods  % Plot functions
         function bs = getPlotBrainSurf(atlas, varargin)
@@ -262,7 +266,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % GETPLOTBRAINSURF(ATLAS, VARARGIN) returns the handle of the
             % brain surf plot
             %
-            % See also getPlotBrainAtlas().
+            % See also getPlotBrainAtlas.
             
             bs = PlotBrainSurf(atlas.getBrainSurfFile, varargin{:});
         end
@@ -273,7 +277,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % the brain atlas plot, which contains the surf and the
             % brain regions nodes.
             %
-            % See also getPlotBrainSurf().           
+            % See also getPlotBrainSurf.           
            
             ba = PlotBrainAtlas(atlas, varargin{:});   
         end
@@ -303,14 +307,18 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % BRAIN_SURF_LIST containing the names of all brain surfs
             % inside brainsurfs folder.
             %
-            % See also setBrainSurfFile().
+            % See also setBrainSurfFile.
 
-            directory = fileparts(which('braph2'));
-            folder_struct = dir([directory filesep 'atlas' filesep 'brainsurfs']);
+            directory = [fileparts(which('braph2')) filesep 'atlas' filesep 'brainsurfs'];
+            folder_struct = dir(directory);
             folder_struct = folder_struct(~ismember({folder_struct(:).name}, {'.', '..'}));  % remove '.' and '..'
             for i = 1:1:length(folder_struct)
-                brain_surf_list{i} = folder_struct(i).name;
-            end            
+                filename = folder_struct(i).name;
+                if isequal(filename(end-2:end), '.nv')
+                    brain_surf_list{i} = folder_struct(i).name;
+                end
+            end
+            brain_surf_list(cellfun('isempty', brain_surf_list)) = [];
         end
         function atlas = load_from_xls(varargin)
             % LOAD_FROM_XLS loads brain atlas from XLS file

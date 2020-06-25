@@ -10,6 +10,9 @@
 %   <a href="matlab:help analysis   ">analysis</a>      (folder) analysis
 %   <a href="matlab:help workflows  ">workflows</a>     (folder) workflows
 %   <a href="matlab:help test       ">test</a>          (folder) unit test
+%
+% BRAPH2 license:
+% license.rtf
 
 clc
 help Contents
