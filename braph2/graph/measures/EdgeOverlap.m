@@ -47,7 +47,7 @@ classdef EdgeOverlap < Measure
             N = g.nodenumber();
             L = g.layernumber();
             
-            edge_overlap = zeros(N(1));
+            edge_overlap = zeros(max(N));
             for li = 1:1:L
                 Aii = A{li, li};
                 Aii = binarize(Aii);  % binarizes the adjacency matrix
