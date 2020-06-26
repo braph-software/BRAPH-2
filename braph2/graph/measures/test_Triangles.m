@@ -175,7 +175,7 @@ A = randn(randi(10));
 g = GraphBD(A); 
 
 triangles = Triangles(g, 'DirectedTrianglesRule', 'all');
-triangles_bct = triangles_standard_WD(g.getA());
+triangles_bct = triangles_standard_BD(g.getA());
 
 assert(isequal(triangles.getValue(), {triangles_bct}), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
