@@ -147,7 +147,7 @@ clustering_bct = clustering_standard_WU(g.getA());
 
 assert(isequal(clustering.getValue(), {clustering_bct}), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
-    'Clustering is not being calculated correctly for GraphWU.')
+    'Clustering is not being calculated correctly for BCT.')
 
 %% Test 6: GraphWD: Comparison with standard method 
 clear A
@@ -160,7 +160,7 @@ cl = clustering.getValue();
 
 assert(isequal(round(cl{1}, 10), round(clustering_bct, 10)), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
-    'Clustering is not being calculated correctly for GraphWD.')
+    'Clustering is not being calculated correctly for BCT.')
 
 %% Test 7: GraphBU: Comparison with standard method 
 clear A
@@ -172,7 +172,7 @@ clustering_bct = clustering_standard_BU(g.getA());
 
 assert(isequal(clustering.getValue(), {clustering_bct}), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
-    'Clustering is not being calculated correctly for GraphBU.')
+    'Clustering is not being calculated correctly for BCT.')
 
 %% Test 8: GraphBD: Comparison with standard method 
 clear A
@@ -184,7 +184,7 @@ clustering_bct = clustering_standard_BD(g.getA());
 
 assert(isequal(clustering.getValue(), {clustering_bct}), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
-    'Clustering is not being calculated correctly for GraphBD.')
+    'Clustering is not being calculated correctly for BCT.')
 
 %% Functions to calculate clustering from 2019_03_03_BCT
 
