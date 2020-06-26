@@ -146,7 +146,7 @@ triangles_bct = triangles_standard_WU(g.getA());
 
 assert(isequal(triangles.getValue(), {triangles_bct}), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
-    'Triangles is not being calculated correctly for GraphWU.')
+    'Triangles is not being calculated correctly for BCT.')
 
 %% Test 6: GraphWD: Comparison with standard method 
 A = randn(randi(10));
@@ -157,7 +157,7 @@ triangles_bct = triangles_standard_WD(g.getA());
 
 assert(isequal(triangles.getValue(), {triangles_bct}), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
-    'Triangles is not being calculated correctly for GraphWD.')
+    'Triangles is not being calculated correctly for BCT.')
 
 %% Test 7: GraphBU: Comparison with standard method 
 A = randn(randi(10));
@@ -168,7 +168,7 @@ triangles_bct = triangles_standard_BU(g.getA());
 
 assert(isequal(triangles.getValue(), {triangles_bct}), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
-    'Triangles is not being calculated correctly for GraphBU.')
+    'Triangles is not being calculated correctly for BCT.')
 
 %% Test 8: GraphBD: Comparison with standard method 
 A = randn(randi(10));
@@ -179,7 +179,7 @@ triangles_bct = triangles_standard_BD(g.getA());
 
 assert(isequal(triangles.getValue(), {triangles_bct}), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
-    'Triangles is not being calculated correctly for GraphBD.')
+    'Triangles is not being calculated correctly for BCT.')
 
 % Functions to calculate triangles ADAPTED from 2019_03_03_BCT
 
