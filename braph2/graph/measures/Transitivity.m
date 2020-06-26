@@ -91,8 +91,8 @@ classdef Transitivity < Triangles
                     else
                         degree = Degree(g, g.getSettings()).getValue();
                     end
-
-                    clustering_layer = 2 * triangles{li} ./ (degree{li} .* (degree{li} - 1));
+                    
+                    transitivity_layer = 2 * sum(triangles{li}) ./ sum((degree{li} .* (degree{li} - 1)));
 
                 else  % directed graphs
 
@@ -108,23 +108,10 @@ classdef Transitivity < Triangles
                         out_degree = OutDegree(g, g.getSettings()).getValue();
                     end
 
-                    directed_triangles_rule = get_from_varargin('cycle', 'DirectedTrianglesRule', m.getSettings());
-                    switch lower(directed_triangles_rule)
-                        case {'all'}  % all rule
-                            clustering_layer = triangles{li} ./ ((out_degree{li} + in_degree{li}) .* (out_degree{li} + in_degree{li} - 1) - 2 * diag(Aii^2));
-                        case {'middleman'}  % middleman rule
-                            clustering_layer = triangles{li} ./ ((out_degree{li} .* in_degree{li}) - diag(Aii^2));
-                        case {'in'}  % in rule
-                            clustering_layer = triangles{li} ./ (in_degree{li} .* (in_degree{li} - 1));
-                        case {'out'}  % out rule
-                            clustering_layer = triangles{li} ./ (out_degree{li} .* (out_degree{li} - 1));
-                        otherwise  % {'cycle'}  % cycle rule
-                            clustering_layer = triangles{li} ./ ((out_degree{li} .* in_degree{li}) - diag(Aii^2));
-                    end
-
+                    transitivity_layer = sum(triangles{li}) ./ sum(((out_degree{li} + in_degree{li}) .* (out_degree{li} + in_degree{li} - 1) - 2 * diag(Aii^2))); 
                 end
-                clustering_layer(isnan(clustering_layer)) = 0;  % Should return zeros, not NaN
-                transitivity(li) = {clustering_layer};
+                transitivity_layer(isnan(transitivity_layer)) = 0;  % Should return zeros, not NaN
+                transitivity(li) = {transitivity_layer};
             end
         end
     end  
