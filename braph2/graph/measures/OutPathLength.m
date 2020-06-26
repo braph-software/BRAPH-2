@@ -4,7 +4,9 @@ classdef OutPathLength < Measure
     % and weighted directed (WD) graphs. 
     %
     % It is calculated as the average shortest out-path length from one node 
-    % to another node within a layer.
+    % to another node within a layer. The calculation of out-path length is 
+    % controlled by the out-path length rule (setting 'OutPathLengthRule'), 
+    % the default option calculates the measure with normal average. 
     %    
     % OutPathLength methods:
     %   OutPathLength               - constructor             

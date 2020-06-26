@@ -4,7 +4,9 @@ classdef InPathLength < Measure
     % and weighted directed (WD) graphs. 
     %
     % It is calculated as the average shortest in-path length from one node 
-    % to another node within a layer.
+    % to another node within a layer. The calculation of in-path length is 
+    % controlled by the in-path length rule (setting 'InPathLengthRule'), 
+    % the default option calculates the measure with normal average. 
     %    
     % InPathLength methods:
     %   InPathLength                - constructor             
