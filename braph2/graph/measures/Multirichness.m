@@ -99,7 +99,7 @@ classdef Multirichness < Richness
                 c = ones(1, L)/L;
             end
             
-            multirichness = zeros(N(1), 1);
+            multirichness = zeros(max(N), 1);
             for li = 1:1:L
                 multirichness = multirichness + c(li)*richness{li};
             end
