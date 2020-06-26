@@ -171,11 +171,11 @@ classdef Transitivity < Triangles
             % GETMEASUREFORMAT returns the measure format of Transitivity
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of transitivity measure (NODAL).
+            % of transitivity measure (GLOBAL).
             %
             % See also getMeasureScope.
             
-            measure_format = Measure.NODAL;
+            measure_format = Measure.GLOBAL;
         end
         function measure_scope = getMeasureScope()
             % GETMEASURESCOPE returns the measure scope of Transitivity
