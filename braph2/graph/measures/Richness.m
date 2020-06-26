@@ -9,7 +9,7 @@ classdef Richness < Degree
     % user (setting 'RichnessThreshold'), the default value is equal to the
     % maximum degree - 1. For positive thresholds, k equals to the threshold
     % value; while for negative thresholds, k equals to the maximum degree -
-    % threshold value.
+    % absolute value of the richness threshold.
     % 
     % Richness methods:
     %   Richness                    - constructor
@@ -42,7 +42,7 @@ classdef Richness < Degree
             %                    value - RICHNESS k threshold is set to the
             %                    specificied value if the value is positive.
             %                    For negative values, k is set to the
-            %                    maximum degree - value.
+            %                    maximum degree - absolute value.
             % 
             % RICHNESS(G, 'VALUE', VALUE) creates richness, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,

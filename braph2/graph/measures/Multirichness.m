@@ -9,7 +9,8 @@ classdef Multirichness < Richness
     % user (setting 'RichnessThreshold'), the default value is equal to the
     % maximum degree - 1. The relevance of each layer is controlled by the
     % coefficients c (setting 'MultirichnessCoefficients') that are between
-    % 0 and 1, and add up to one; the default coefficients are (1/layernumber)
+    % 0 and 1, and add up to one; the default coefficients are
+    % (1/layernumber).
     % 
     % Multirichness methods:
     %   Multirichness               - constructor
@@ -44,7 +45,7 @@ classdef Multirichness < Richness
             %                    value - RICHNESS k threshold is set to the
             %                    specificied value if the value is positive.
             %                    For negative values, k is set to the
-            %                    maximum degree - value.
+            %                    maximum degree - absolute value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
