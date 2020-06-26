@@ -57,7 +57,7 @@ classdef Triangles < Measure
         end
     end
     methods (Access=protected)
-        function triangles_layer = calculate(m)
+        function triangles = calculate(m)
             % CALCULATE calculates the number of triangles of a node
             %
             % TRIANGLES = CALCULATE(M) returns the triangles 
@@ -161,7 +161,7 @@ classdef Triangles < Measure
             % See also getCompatibleGraphList()
 
             available_settings = {
-                'DirectedTrianglesRule', Constant.STRING, 'cycle', {'cycle', 'all', 'middleman', 'in', 'out'};
+                'DirectedTrianglesRule', BRAPH2.STRING, 'cycle', {'cycle', 'all', 'middleman', 'in', 'out'};
                 };
         end
         function measure_format = getMeasureFormat()
