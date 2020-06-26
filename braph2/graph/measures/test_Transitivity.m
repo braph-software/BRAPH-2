@@ -107,7 +107,7 @@ transitivity_bct = transitivity_standard_WU(g.getA());
 
 assert(isequal(transitivity.getValue(), {transitivity_bct}), ...
     [BRAPH2.STR ':Transitivity:' BRAPH2.BUG_ERR], ...
-    'Transitivity is not being calculated correctly for GraphWU.')
+    'Transitivity is not being calculated correctly for BCT.')
 
 %% Test 6: GraphWD: Comparison with standard method 
 clear A
@@ -120,7 +120,7 @@ cl = transitivity.getValue();
 
 assert(isequal(round(cl{1}, 10), round(transitivity_bct, 10)), ...
     [BRAPH2.STR ':Transitivity:' BRAPH2.BUG_ERR], ...
-    'Transitivity is not being calculated correctly for GraphWD.')
+    'Transitivity is not being calculated correctly for BCT.')
 
 %% Test 7: GraphBU: Comparison with standard method 
 clear A
@@ -132,7 +132,7 @@ transitivity_bct = transitivity_standard_BU(g.getA());
 
 assert(isequal(transitivity.getValue(), {transitivity_bct}), ...
     [BRAPH2.STR ':Transitivity:' BRAPH2.BUG_ERR], ...
-    'Transitivity is not being calculated correctly for GraphBU.')
+    'Transitivity is not being calculated correctly for BCT.')
 
 %% Test 8: GraphBD: Comparison with standard method 
 clear A
@@ -144,7 +144,7 @@ transitivity_bct = transitivity_standard_BD(g.getA());
 
 assert(isequal(transitivity.getValue(), {transitivity_bct}), ...
     [BRAPH2.STR ':Transitivity:' BRAPH2.BUG_ERR], ...
-    'Transitivity is not being calculated correctly for GraphBD.')
+    'Transitivity is not being calculated correctly for BCT.')
 
 %% Functions to calculate transitivity adapted from 2019_03_03_BCT
 
