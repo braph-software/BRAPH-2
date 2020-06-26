@@ -52,7 +52,7 @@ classdef OverlappingStrength < Strength
             N = g.nodenumber();
             L = g.layernumber();
             
-            overlapping_strength = zeros(N(1), 1);
+            overlapping_strength = zeros(max(N), 1);
             for li = 1:1:L
                 overlapping_strength = overlapping_strength + strength{li};
             end
