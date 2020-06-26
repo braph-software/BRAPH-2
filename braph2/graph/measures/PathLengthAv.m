@@ -118,9 +118,7 @@ classdef PathLengthAv < PathLength
             % 
             % See also getCompatibleGraphList()
             
-            available_settings = {
-                'PathLengthRule', BRAPH2.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
-                };
+            available_settings = getAvailableSettings@PathLength();
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of PathLengthAv
