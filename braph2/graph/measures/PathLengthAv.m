@@ -4,7 +4,9 @@ classdef PathLengthAv < PathLength
     % undirected (BU) and weighted undirected (WU) graphs. 
     %
     % It is calculated as the average of the sum of the path lengths within 
-    % each layer.
+    % each layer. The calculation of path length is controlled by the path
+    % length rule (setting 'PathLengthRule'), the default option calculates
+    % the measure with normal average. 
     % 
     % PathLengthAv methods:
     %   PathLengthAv                - constructor
