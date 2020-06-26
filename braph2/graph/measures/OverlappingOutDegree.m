@@ -54,7 +54,7 @@ classdef OverlappingOutDegree < OutDegree
             N = g.nodenumber();
             L = g.layernumber();
             
-            overlapping_out_degree = zeros(N(1), 1);
+            overlapping_out_degree = zeros(max(N), 1);
             for li = 1:1:L
                 overlapping_out_degree = overlapping_out_degree + out_degree{li};
             end
