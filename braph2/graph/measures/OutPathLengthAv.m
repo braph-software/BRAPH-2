@@ -118,9 +118,7 @@ classdef OutPathLengthAv < OutPathLength
             % 
             % See also getCompatibleGraphList()
             
-            available_settings = {
-                'OutPathLengthRule', BRAPH2.STRING, 'default', {'default', 'subgraphs', 'harmonic'};
-                };
+            available_settings = getAvailableSettings@OutPathLength();
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of OutPathLengthAv
