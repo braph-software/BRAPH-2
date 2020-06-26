@@ -149,32 +149,7 @@ assert(isequal(clustering.getValue(), {clustering_bct}), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
     'Clustering is not being calculated correctly for GraphWU.')
 
-
-%% Test 6: GraphBU: Comparison with standard method 
-clear A
-A = rand(randi(10));
-g = GraphBU(A);
-
-clustering = Clustering(g);
-clustering_bct = clustering_standard_BU(g.getA());
-
-assert(isequal(clustering.getValue(), {clustering_bct}), ...
-    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
-    'Clustering is not being calculated correctly for GraphBU.')
-
-%% Test 7: GraphBD: Comparison with standard method 
-clear A
-A = rand(randi(10));
-g = GraphBD(A); 
-
-clustering = Clustering(g, 'DirectedTrianglesRule', 'all');
-clustering_bct = clustering_standard_BD(g.getA());
-
-assert(isequal(clustering.getValue(), {clustering_bct}), ...
-    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
-    'Clustering is not being calculated correctly for GraphBD.')
-
-%% Test 8: GraphWD: Comparison with standard method 
+%% Test 6: GraphWD: Comparison with standard method 
 clear A
 A = rand(randi(10));
 g = GraphWD(A); 
@@ -186,6 +161,30 @@ cl = clustering.getValue();
 assert(isequal(round(cl{1}, 10), round(clustering_bct, 10)), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
     'Clustering is not being calculated correctly for GraphWD.')
+
+%% Test 7: GraphBU: Comparison with standard method 
+clear A
+A = rand(randi(10));
+g = GraphBU(A);
+
+clustering = Clustering(g);
+clustering_bct = clustering_standard_BU(g.getA());
+
+assert(isequal(clustering.getValue(), {clustering_bct}), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for GraphBU.')
+
+%% Test 8: GraphBD: Comparison with standard method 
+clear A
+A = rand(randi(10));
+g = GraphBD(A); 
+
+clustering = Clustering(g, 'DirectedTrianglesRule', 'all');
+clustering_bct = clustering_standard_BD(g.getA());
+
+assert(isequal(clustering.getValue(), {clustering_bct}), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for GraphBD.')
 
 %% Functions to calculate clustering from 2019_03_03_BCT
 
@@ -215,7 +214,9 @@ end
 
 function stdvalue_WD = clustering_standard_WD(A)                 
 S=A.^(1/3)+(A.').^(1/3);	%symmetrized weights matrix ^1/3
-K=sum(A+A.',2);            	%total degree (in + out)
+K1=sum(A~=0,2);
+K2=sum(A.'~=0,2);
+K=sum(K1+K2,2);            	%total degree (in + out)
 cyc3=diag(S^3)/2;           %number of 3-cycles (ie. directed triangles)
 K(cyc3==0)=inf;             %if no 3-cycles exist, make C=0 (via K=inf)
 CYC3=K.*(K-1)-2*diag(A^2);	%number of all possible 3-cycles
