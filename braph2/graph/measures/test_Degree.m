@@ -1,70 +1,93 @@
 % test Degree
-A = rand(randi(10));
-B = {
-    A   A
-    A   A
-    };
 
 %% Test 1: GraphBU
+A = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+
+known_degree = {[2 1 1]'};
+
 g = GraphBU(A);
 degree = Degree(g);
 
-A(1:length(A)+1:end) = 0;
-A(A<0) = 0;
-A = max(A, A');
-A(A>0) = 1;
-degree_test = {sum(A, 2)};
-
-assert(isequal(degree.getValue(), degree_test), ...
+assert(isequal(degree.getValue(), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for GraphBU')
+    'Degree is not being calculated correctly for GraphBU.')
 
 %% Test 2: GraphWU
+A = [
+    0   .6  1
+    .6  0   0
+    1   0   0
+    ];
+
+known_degree = {[2 1 1]'};
+
 g = GraphWU(A);
 degree = Degree(g);
 
-A(1:length(A)+1:end) = 0;
-A(A<0) = 0;
-A = max(A, A');
-A(A>0) = 1;
-degree_test = {sum(A, 2)};
-
-assert(isequal(degree.getValue(), degree_test), ...
+assert(isequal(degree.getValue(), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
     'Degree is not being calculated correctly for GraphWU')
 
 %% Test 3: MultiplexGraphBU
-g = MultiplexGraphBU(B);
+A11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_degree = {
+    [2 1 1]'
+    [1 2 1]'
+    };
+
+g = MultiplexGraphBU(A);
 degree = Degree(g);
 
-degree_test = cell(2, 1);
-for i=1:1:2
-    Aii = B{i, i};
-    Aii(1:length(Aii)+1:end) = 0;
-    Aii(Aii<0) = 0;
-    Aii = max(Aii, Aii');
-    Aii(Aii>0) = 1;
-    degree_test(i) = {sum(Aii, 2)};
-end
-
-assert(isequal(degree.getValue(), degree_test), ...
+assert(isequal(degree.getValue(), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for MultiplexGraphBU')
+    'Degree is not being calculated correctly for MultiplexGraphBU.')
 
 %% Test 4: MultiplexGraphWU
-g = MultiplexGraphWU(B);
+A11 = [
+    0   .2  1
+    .2  0   0
+    1   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   .3
+    0   .3  0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_degree = {
+    [2 1 1]'
+    [1 2 1]'
+    };
+
+g = MultiplexGraphWU(A);
 degree = Degree(g);
 
-degree_test = cell(2, 1);
-for i=1:1:2
-    Aii = B{i, i};
-    Aii(1:length(Aii)+1:end) = 0;
-    Aii(Aii<0) = 0;
-    Aii = max(Aii, Aii');
-    Aii(Aii>0) = 1;
-    degree_test(i) = {sum(Aii, 2)};
-end
-
-assert(isequal(degree.getValue(), degree_test), ...
+assert(isequal(degree.getValue(), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for MultiplexGraphWU')
+    'Degree is not being calculated correctly for MultiplexGraphWU.')

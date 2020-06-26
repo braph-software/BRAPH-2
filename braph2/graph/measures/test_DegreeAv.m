@@ -1,74 +1,93 @@
 % test DegreeAv
-A = rand(randi(10));
-B = {
-    A   A
-    A   A
-    };
 
 %% Test 1: GraphBU
+A = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+
+known_degree_av = {mean([2 1 1])};
+
 g = GraphBU(A);
 degree_av = DegreeAv(g);
 
-A(1:length(A)+1:end) = 0;
-A(A<0) = 0;
-A(A>0) = 1;
-A = max(A, A');
-degree_test = sum(A, 2);
-degree_av_test = {mean(degree_test)};
-
-assert(isequal(degree_av.getValue(), degree_av_test), ...
+assert(isequal(degree_av.getValue(), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
-    'DegreeAv is not being calculated correctly for GraphBU')
+    'DegreeAv is not being calculated correctly for GraphBU.')
 
 %% Test 2: GraphWU
+A = [
+    0   .6  1
+    .6  0   0
+    1   0   0
+    ];
+
+known_degree_av = {mean([2 1 1])};
+
 g = GraphWU(A);
 degree_av = DegreeAv(g);
 
-A(1:length(A)+1:end) = 0;
-A(A<0) = 0;
-A(A>0) = 1;
-A = max(A, A');
-degree_test = sum(A, 2);
-degree_av_test = {mean(degree_test)};
-
-assert(isequal(degree_av.getValue(), degree_av_test), ...
+assert(isequal(degree_av.getValue(), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
-    'DegreeAv is not being calculated correctly for GraphWU')
+    'DegreeAv is not being calculated correctly for GraphWU.')
 
 %% Test 3: MultiplexGraphBU
-g = MultiplexGraphBU(B);
+A11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_degree_av = {
+    mean([2 1 1])
+    mean([1 2 1])
+    };
+
+g = MultiplexGraphBU(A);
 degree_av = DegreeAv(g);
 
-degree_av_test = cell(2, 1);
-for i=1:1:2
-    Aii = B{i, i};
-    Aii(1:length(Aii)+1:end) = 0;
-    Aii(Aii<0) = 0;
-    Aii = max(Aii, Aii');
-    Aii(Aii>0) = 1;
-    degree_test = sum(Aii, 2);
-    degree_av_test(i) = {mean(degree_test)};
-end
-
-assert(isequal(degree_av.getValue(), degree_av_test), ...
+assert(isequal(degree_av.getValue(), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
-    'DegreeAv is not being calculated correctly for MultiplexGraphBU')
+    'DegreeAv is not being calculated correctly for MultiplexGraphBU.')
 
 %% Test 4: MultiplexGraphWU
-g = MultiplexGraphWU(B);
+A11 = [
+    0   .2  1
+    .2  0   0
+    1   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   .3
+    0   .3  0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_degree_av = {
+    mean([2 1 1])
+    mean([1 2 1])
+    };
+
+g = MultiplexGraphWU(A);
 degree_av = DegreeAv(g);
 
-degree_av_test = cell(2, 1);
-for i=1:1:2
-    Aii = B{i, i};
-    Aii(1:length(Aii)+1:end) = 0;
-    Aii(Aii<0) = 0;
-    Aii = max(Aii, Aii');
-    Aii(Aii>0) = 1;
-    degree_test = sum(Aii, 2);
-    degree_av_test(i) = {mean(degree_test)};
-end
-
-assert(isequal(degree_av.getValue(), degree_av_test), ...
+assert(isequal(degree_av.getValue(), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
-    'DegreeAv is not being calculated correctly for MultiplexGraphWU')
+    'DegreeAv is not being calculated correctly for MultiplexGraphWU.')
