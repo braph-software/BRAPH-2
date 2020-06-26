@@ -1,5 +1,5 @@
 classdef DataFunctional < Data
-    % DataFunctional A Data Connectivity Matrix
+    % DataFunctional A Data functional Matrix
     % DataFunctional implements Data and serves as a container for matrix
     % type data.
     % It is a subclass of Data.
