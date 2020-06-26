@@ -179,5 +179,3 @@ cyc3 = diag((A.^(1/3))^3);
 K(cyc3==0)=inf; 
 stdvalue_WU    = sum(cyc3)./sum((K.*(K-1)));       %transitivity
 end
-
-
