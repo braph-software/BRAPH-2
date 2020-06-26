@@ -6,7 +6,8 @@ classdef Clustering < Triangles
     %
     % It is calculated as the ratio between the number of triangles present 
     % around a node and the maximum number of triangles that could possibly 
-    % be formed around that node within a layer.
+    % be formed around that node within a layer. For directed graphs the 
+    % user can set the rule to calculate the clustering (setting 'DirectedTrianglesRule').
     % 
     % Clustering methods:
     %   Clustering                  - constructor 
@@ -27,7 +28,8 @@ classdef Clustering < Triangles
     methods
         function m = Clustering (g, varargin)
             % CLUSTERING(G) creates clustering with default properties.
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
+            % G is a graph (e.g, an instance of GraphBD, GraphBU, GraphWD,
+            % GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
             % or MultiplexGraphWU).  
             %
             % CLUSTERING(G, 'DirectedTrianglesRule', DIRECTEDTRIANGLESRULE) creates clustering             
