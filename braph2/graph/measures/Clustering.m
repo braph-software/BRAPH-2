@@ -71,47 +71,60 @@ classdef Clustering < Triangles
                 triangles = calculate@Triangles(m);
             end
             
-            if isa(g, 'GraphBU') || isa(g, 'GraphWU')
+            clustering = cell(g.layernumber(), 1);
+            directionality_type =  g.getDirectionalityType(g.layernumber());
+            for li = 1:1:L
                 
-                if g.is_measure_calculated('Degree')
-                    degree = g.getMeasureValue('Degree');                    
+                if g.is_graph(g)
+                    Aii = A;
+                    directionality_layer = directionality_type;
                 else
-                    degree = Degree(g, g.getSettings()).getValue();
+                    Aii = A{li, li};
+                    directionality_layer = directionality_type(li, li);
                 end
                 
-                clustering = 2 * triangles ./ (degree .* (degree - 1));
-                
-            elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')  
-                
-                if g.is_measure_calculated('InDegree')
-                    in_degree = g.getMeasureValue('InDegree');
-                else 
-                    in_degree = InDegree(g, g.getSettings()).getValue();
+                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+
+                    if g.is_measure_calculated('Degree')
+                        degree = g.getMeasureValue('Degree');                    
+                    else
+                        degree = Degree(g, g.getSettings()).getValue();
+                    end
+
+                    clustering_layer = 2 * triangles{li} ./ (degree{li} .* (degree{li} - 1));
+
+                else  % directed graphs
+
+                    if g.is_measure_calculated('InDegree')
+                        in_degree = g.getMeasureValue('InDegree');
+                    else 
+                        in_degree = InDegree(g, g.getSettings()).getValue();
+                    end
+
+                    if g.is_measure_calculated('OutDegree')
+                        out_degree = g.getMeasureValue('OutDegree');
+                    else
+                        out_degree = OutDegree(g, g.getSettings()).getValue();
+                    end
+
+                    directed_triangles_rule = get_from_varargin('cycle', 'DirectedTrianglesRule', m.getSettings());
+                    switch lower(directed_triangles_rule)
+                        case {'all'}  % all rule
+                            clustering_layer = triangles{li} ./ ((out_degree{li} + in_degree{li}) .* (out_degree{li} + in_degree{li} - 1) - 2 * diag(Aii^2));
+                        case {'middleman'}  % middleman rule
+                            clustering_layer = triangles{li} ./ ((out_degree{li} .* in_degree{li}) - diag(Aii^2));
+                        case {'in'}  % in rule
+                            clustering_layer = triangles{li} ./ (in_degree{li} .* (in_degree{li} - 1));
+                        case {'out'}  % out rule
+                            clustering_layer = triangles{li} ./ (out_degree{li} .* (out_degree{li} - 1));
+                        otherwise  % {'cycle'}  % cycle rule
+                            clustering_layer = triangles{li} ./ ((out_degree{li} .* in_degree{li}) - diag(Aii^2));
+                    end
+
                 end
-                
-                if g.is_measure_calculated('OutDegree')
-                    out_degree = g.getMeasureValue('OutDegree');
-                else
-                    out_degree = OutDegree(g, g.getSettings()).getValue();
-                end
-                
-                directed_triangles_rule = get_from_varargin('cycle', 'DirectedTrianglesRule', m.getSettings());
-                switch lower(directed_triangles_rule)
-                    case {'all'}  % all rule
-                        clustering = triangles ./ ((out_degree + in_degree) .* (out_degree + in_degree - 1) - 2 * diag(A^2));
-                    case {'middleman'}  % middleman rule
-                        clustering = triangles ./ ((out_degree .* in_degree) - diag(A^2));
-                    case {'in'}  % in rule
-                        clustering = triangles ./ (in_degree .* (in_degree - 1));
-                    case {'out'}  % out rule
-                        clustering = triangles ./ (out_degree .* (out_degree - 1));
-                    otherwise  % {'cycle'}  % cycle rule
-                        clustering = triangles ./ ((out_degree .* in_degree) - diag(A^2));
-                end
-                
+                clustering_layer(isnan(clustering_layer)) = 0;  % Should return zeros, not NaN
+                clustering(li) = {clustering_layer};
             end
-            
-            clustering(isnan(clustering)) = 0;  % Should return zeros, not NaN
         end
     end  
     methods (Static)
@@ -143,7 +156,7 @@ classdef Clustering < Triangles
             
             description = [ ...
                 'The clustering coefficient of a node is ' ...
-                'the fraction of triangles present around a node.' ...
+                'the fraction of triangles present around a node within a layer.' ...
                 'The clustering coefficient is calculated as the ratio between' ...
                 'the number of triangles present around a node and' ...
                 'the maximum number of triangles that could possibly' ...
@@ -167,9 +180,10 @@ classdef Clustering < Triangles
             % 
             % See also getCompatibleGraphList()
 
-            available_settings = {
-                'DirectedTrianglesRule', Constant.STRING, 'cycle', {'cycle', 'all', 'middleman', 'in', 'out'};
-                };
+%             available_settings = {
+%                 'DirectedTrianglesRule', BRAPH2.STRING, 'cycle', {'cycle', 'all', 'middleman', 'in', 'out'};
+%                 };
+            available_settings = getAvailableSettings@Triangles();
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of Clustering
@@ -193,10 +207,10 @@ classdef Clustering < Triangles
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to Clustering 
+            % with Clustering 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to Clustering. 
+            % of compatible graph classes to clustering. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -214,10 +228,10 @@ classdef Clustering < Triangles
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to Clustering 
+            % graphs with Clustering 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to Clustering.
+            % compatible graphs to clustering.
             % 
             % See also getCompatibleGraphList().
             
