@@ -138,7 +138,8 @@ assert(isequal(clustering.getValue(), known_clustering), ...
     'Clustering is not being calculated correctly for MultiplexGraphBD.')
 
 %% Test 5: GraphWU: Comparison with standard method 
-A = randi(randi(10));
+clear A
+A = rand(randi(10));
 g = GraphWU(A); 
 
 clustering = Clustering(g);
@@ -148,15 +149,41 @@ assert(isequal(clustering.getValue(), {clustering_bct}), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
     'Clustering is not being calculated correctly for GraphWU.')
 
-%% Test 6: GraphWD: Comparison with standard method 
-A = randi(randi(10));
+
+%% Test 6: GraphBU: Comparison with standard method 
+clear A
+A = rand(randi(10));
+g = GraphBU(A);
+
+clustering = Clustering(g);
+clustering_bct = clustering_standard_BU(g.getA());
+
+assert(isequal(clustering.getValue(), {clustering_bct}), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for GraphBU.')
+
+%% Test 7: GraphBD: Comparison with standard method 
+clear A
+A = rand(randi(10));
+g = GraphBD(A); 
+
+clustering = Clustering(g, 'DirectedTrianglesRule', 'all');
+clustering_bct = clustering_standard_BD(g.getA());
+
+assert(isequal(clustering.getValue(), {clustering_bct}), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for GraphBD.')
+
+%% Test 8: GraphWD: Comparison with standard method 
+clear A
+A = rand(randi(10));
 g = GraphWD(A); 
 
 clustering = Clustering(g, 'DirectedTrianglesRule', 'all');
 clustering_bct = clustering_standard_WD(g.getA());
-clustering = clustering.getValue();
+cl = clustering.getValue();
 
-assert(isequal(round(clustering{1}, 10), round(clustering_bct, 10)), ...
+assert(isequal(round(cl{1}, 10), round(clustering_bct, 10)), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
     'Clustering is not being calculated correctly for GraphWD.')
 
