@@ -45,9 +45,8 @@ classdef WeightedRichness < Strength
             %                           strength - value
             % 
             % WEIGHTEDRICHNESS(G, 'VALUE', VALUE) creates weighted richness, and sets 
-            % the value to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
-            % or MultiplexGraphWU). 
+            % the value to VALUE. G is a graph (e.g, an instance of GraphWD, GraphWU,
+            % MultiplexGraphWD or MultiplexGraphWU). 
             %
             % See also Measure, Strength, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
             
