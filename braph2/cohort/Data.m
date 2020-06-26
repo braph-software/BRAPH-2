@@ -185,6 +185,7 @@ classdef Data < handle & matlab.mixin.Copyable
             % available settings of the data.
             % 
             % See also getList, getClass, getName, getDescription, getData.
+            
             available_settings = eval([Data.getClass(d) '.getAvailableSettings()']);        
         end
     end
