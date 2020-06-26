@@ -201,7 +201,7 @@ ba = [];
     end
 
 %% GUI inizialization
-f = GUI.init_figure(APPNAME, .8, .8, 'northwest');
+f = GUI.init_figure(APPNAME, .8, .8, 'center');
 
 dcm = datacursormode(f);
 init_datacursormode()
@@ -238,6 +238,7 @@ init_filename()
     function update_filename(filename)
         set(ui_text_filename, 'String', filename)
     end
+
 
 %% Panel Table
 TAB_BR_SELECTED_COL = 1;
@@ -297,7 +298,8 @@ init_table()
         set(ui_table_table, 'ColumnName', {'', 'ID', 'Label', 'x', 'y', 'z', 'Notes'})
         set(ui_table_table, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'numeric', 'numeric', 'char'})
         set(ui_table_table, 'ColumnEditable', true)
-        set(ui_table_table, 'CellEditCallback', {@cb_table_edit});
+        set(ui_table_table, 'CellEditCallback', {@cb_table_edit})     
+        set(ui_table_table, 'ColumnWidth', 'auto')
         
         set(ui_button_table_selectall, 'Position', [.02 .11 .21 .03])
         set(ui_button_table_selectall, 'String', SELECTALL_CMD)
@@ -444,33 +446,33 @@ init_table()
         end
         br = BrainRegion([num2str(br_id)], '', '', 0, 0, 0);
         atlas.getBrainRegions().add(br.getID(), br);
-        update_table_table()
-        update_figure_brainview()
+        update_table_table()        
+        create_figure()
     end
     function cb_table_remove(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().remove_all(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()        
     end
     function cb_table_moveup(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().move_up(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
     function cb_table_movedown(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().move_down(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
     function cb_table_move2top(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().move_to_top(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
     function cb_table_move2bottom(~, ~)  % (src, event)
         selected = atlas.getBrainRegions().move_to_bottom(selected);
         update_table_table()
-        update_figure_brainview()
+        create_figure()
     end
 
 %% Panel Figure
@@ -478,7 +480,7 @@ FIG_BRAIN_CMD = 'Show brain';
 FIG_BRAIN_TP = 'Brain surface on/off';
 
 FIG_DISTANCE_CMD = 'Highlights';
-FIG_DISTANCE_TP = 'Highlights on/off';
+FIG_DISTANCE_TP = 'Highlights of selected brain regions on/off.';
 
 FIG_BRAINALPHA_CMD = 'Brain transparency';
 FIG_BRAINALPHA_TP = 'Adjust the transparency of the brain surface';
@@ -916,7 +918,7 @@ init_menu()
         set(ui_menu_edit_selectall, 'Callback', {@cb_table_selectall})
         
         set(ui_menu_edit_clearselection, 'Label', CLEARSELECTION_CMD)
-        set(ui_menu_edit_clearselection, 'Callback', {@cg_table_clearselection})
+        set(ui_menu_edit_clearselection, 'Callback', {@cb_table_clearselection})
         
         set(ui_menu_edit_add, 'Separator', 'on')
         set(ui_menu_edit_add, 'Label', ADD_CMD)
@@ -938,7 +940,7 @@ init_menu()
         
         set(ui_menu_edit_move2top, 'Label', MOVE2TOP_CMD)
         set(ui_menu_edit_move2top, 'Accelerator', MOVE2TOP_SC)
-        set(ui_menu_edit_move2top, 'Callback', {@cb_vmove2top})
+        set(ui_menu_edit_move2top, 'Callback', {@cb_table_move2top})
         
         set(ui_menu_edit_move2bottom, 'Label', MOVE2BOTTOM_CMD)
         set(ui_menu_edit_move2bottom, 'Accelerator', MOVE2BOTTOM_SC)
