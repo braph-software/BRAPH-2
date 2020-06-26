@@ -4,7 +4,9 @@ classdef InPathLengthAv < InPathLength
     % undirected (BD) and weighted undirected (WD) graphs. 
     %
     % It is calculated as the average of the sum of the in-path lengths within 
-    % each layer.
+    % each layer. The calculation of in-path length is controlled by the in-path
+    % length rule (setting 'InPathLengthRule'), the default option calculates
+    % the measure with normal average. 
     % 
     % InPathLengthAv methods:
     %   InPathLengthAv              - constructor

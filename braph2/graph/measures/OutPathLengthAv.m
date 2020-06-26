@@ -4,7 +4,9 @@ classdef OutPathLengthAv < OutPathLength
     % undirected (BD) and weighted undirected (WD) graphs. 
     %
     % It is calculated as the average of the sum of the out-path lengths within 
-    % each layer.
+    % each layer. The calculation of out-path length is controlled by the out-path
+    % length rule (setting 'OutPathLengthRule'), the default option calculates
+    % the measure with normal average. 
     % 
     % OutPathLengthAv methods:
     %   OutPathLengthAv             - constructor
