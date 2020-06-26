@@ -170,7 +170,7 @@ assert(isequal(triangles.getValue(), {triangles_bct}), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
     'Triangles is not being calculated correctly for GraphBU.')
 
-%% Test 6: GraphBD: Comparison with standard method 
+%% Test 8: GraphBD: Comparison with standard method 
 A = randn(randi(10));
 g = GraphBD(A); 
 

@@ -73,3 +73,131 @@ clustering = Clustering(g, 'DirectedTrianglesRule', 'all');
 assert(isequal(clustering.getValue(), known_clustering_all), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
     'Clustering is not being calculated correctly for GraphBD.')
+
+%% Test 3: MultiplexGraphBU
+A11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+A12 = eye(4);
+A21 = eye(4);
+A22 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_clustering = {
+                 [2/3 1 2/3 1]'
+                 [2/3 1 2/3 1]'
+                 };      
+
+g = MultiplexGraphBU(A);
+clustering = Clustering(g);
+
+assert(isequal(clustering.getValue(), known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for MultiplexGraphBU.')
+
+%% Test 4: MultiplexGraphBD
+A11 = [
+      0 0 1; 
+      1 0 0; 
+      0 1 0 
+      ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+      0 0 1; 
+      1 0 0; 
+      0 1 0 
+      ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+% cycle rule - default
+known_clustering = {
+                 [1 1 1]'
+                 [1 1 1]'
+                 }; 
+
+g = MultiplexGraphBD(A);
+clustering = Clustering(g, 'DirectedTrianglesRule', 'cycle');
+
+assert(isequal(clustering.getValue(), known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for MultiplexGraphBD.')
+
+%% Test 5: GraphWU: Comparison with standard method 
+A = randi(randi(10));
+g = GraphWU(A); 
+
+clustering = Clustering(g);
+clustering_bct = clustering_standard_WU(g.getA());
+
+assert(isequal(clustering.getValue(), {clustering_bct}), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for GraphWU.')
+
+%% Test 6: GraphWD: Comparison with standard method 
+A = randi(randi(10));
+g = GraphWD(A); 
+
+clustering = Clustering(g, 'DirectedTrianglesRule', 'all');
+clustering_bct = clustering_standard_WD(g.getA());
+clustering = clustering.getValue();
+
+assert(isequal(round(clustering{1}, 10), round(clustering_bct, 10)), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for GraphWD.')
+
+%% Functions to calculate clustering from 2019_03_03_BCT
+
+function stdvalue_BD = clustering_standard_BD(A)
+S=A+A.';                    %symmetrized input graph
+K=sum(S,2);                 %total degree (in + out)
+cyc3=diag(S^3)/2;          %number of 3-cycles (ie. directed triangles)
+K(cyc3==0)=inf;          %if no 3-cycles exist, make C=0 (via K=inf)
+CYC3=K.*(K-1)-2*diag(A^2);	%number of all possible 3-cycles
+stdvalue_BD=cyc3./CYC3;               %clustering coefficient
+end
+
+function stdvalue_BU = clustering_standard_BU(A)
+n=length(A);
+stdvalue_BU=zeros(n,1);
+
+for u=1:n
+    V=find(A(u,:));
+    k=length(V);
+    if k>=2                 %degree must be at least 2
+        S=A(V,V);
+        stdvalue_BU(u)=sum(S(:))/(k^2-k);
+    end
+end
+
+end
+
+function stdvalue_WD = clustering_standard_WD(A)                 
+S=A.^(1/3)+(A.').^(1/3);	%symmetrized weights matrix ^1/3
+K=sum(A+A.',2);            	%total degree (in + out)
+cyc3=diag(S^3)/2;           %number of 3-cycles (ie. directed triangles)
+K(cyc3==0)=inf;             %if no 3-cycles exist, make C=0 (via K=inf)
+CYC3=K.*(K-1)-2*diag(A^2);	%number of all possible 3-cycles
+stdvalue_WD =cyc3./CYC3;               %clustering coefficient
+end
+
+function stdvalue_WU = clustering_standard_WU(A)      
+K=sum(A~=0,2);
+cyc3=diag((A.^(1/3))^3);
+K(cyc3==0)=inf;             %if no 3-cycles exist, make C=0 (via K=inf)
+stdvalue_WU =cyc3./(K.*(K-1));         %clustering coefficient
+end
