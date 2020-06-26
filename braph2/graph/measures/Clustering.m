@@ -64,6 +64,7 @@ classdef Clustering < Triangles
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix of the graph
+            L = g.layernumber();
             
             if g.is_measure_calculated('Triangles')
                 triangles = g.getMeasureValue('Triangles');
@@ -180,9 +181,6 @@ classdef Clustering < Triangles
             % 
             % See also getCompatibleGraphList()
 
-%             available_settings = {
-%                 'DirectedTrianglesRule', BRAPH2.STRING, 'cycle', {'cycle', 'all', 'middleman', 'in', 'out'};
-%                 };
             available_settings = getAvailableSettings@Triangles();
         end
         function measure_format = getMeasureFormat()
