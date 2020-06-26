@@ -4,7 +4,9 @@ classdef PathLength < Measure
     % and weighted undirected (WU) graphs. 
     %
     % It is calculated as the average shortest path length from one node 
-    % to another node within a layer.
+    % to another node within a layer. The calculation of path length is 
+    % controlled by the path length rule (setting 'PathLengthRule'), the
+    % default option calculates the measure with normal average. 
     %    
     % PathLength methods:
     %   PathLength                  - constructor             
