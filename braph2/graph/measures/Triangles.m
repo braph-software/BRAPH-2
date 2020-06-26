@@ -7,7 +7,8 @@ classdef Triangles < Measure
     % It is calculated as the number of a node's neighbor pairs that are   
     % connected to each other. In weighted graphs, the triangles are 
     % calculated as geometric mean of the weights of the edges forming
-    % the triangle. 
+    % the triangle. For directed graphs the useer can set the rule to
+    % calculate the triangles (setting 'DirectedTrianglesRule').
     % 
     % Triangles methods:
     %   Triangles                   - constructor
