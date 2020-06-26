@@ -8,7 +8,8 @@ classdef WeightedMultirichness < WeightedRichness
     % user (setting 'WeightedRichnessThreshold'), the default value is equal 
     % to the maximum strength - 1. The relevance of each layer is controlled 
     % by the coefficients c (setting 'MultirichnessCoefficients') that are 
-    % between 0 and 1, and add up to one; the default coefficients are (1/layernumber)
+    % between 0 and 1, and add up to one; the default coefficients are
+    % (1/layernumber).
     % 
     % WeightedMultirichness methods:
     %   WeightedMultirichness       - constructor
