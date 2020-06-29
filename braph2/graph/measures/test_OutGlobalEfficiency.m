@@ -106,15 +106,15 @@ assert(isequal(out_global_efficiency.getValue(), known_out_global_efficiency), .
     [BRAPH2.STR ':OutGlobalEfficiency:' BRAPH2.BUG_ERR], ...
     'OutGlobalEfficiency is not being calculated correctly for MultiplexGraphWD.')
 
-%% Test 4: GraphBD: Calculation vs BCT
+%% Test 4: GraphWD: Calculation vs BCT
 A = rand(randi(5));
 
-g = GraphBD(A);
+g = GraphWD(A);
 out_global_efficiency = OutGlobalEfficiency(g).getValue();
 out_global_efficiency = out_global_efficiency{1};
-global_efficiency_bct = efficiency_wei(g.getA());
+out_global_efficiency_bct = efficiency_wei(g.getA());
 
-assert(isequal(mean(round(out_global_efficiency, 4)), global_efficiency_bct), ...
+assert(isequal(round(mean(out_global_efficiency), 4), round(out_global_efficiency_bct, 4)), ...
     [BRAPH2.STR ':OutGlobalEfficiency:' BRAPH2.BUG_ERR], ...
     'OutGlobalEfficiency is not being calculated correctly for BCT.')
 
