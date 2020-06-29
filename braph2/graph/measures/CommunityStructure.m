@@ -51,7 +51,7 @@ classdef CommunityStructure < Measure
                     err_string = [
                         'The input connection matrix contains negative weights.\nSpecify ' ...
                         '''negative_sym'' or ''negative_asym'' objective-function types.'];
-                    error(sprintf(err_string))              %#ok<SPERR>
+                    error(sprintf(err_string))
                 end
                 if strcmp(type_B,'potts') && any(any(W ~= logical(W)))
                     error('Potts-model Hamiltonian requires a binary W.')
@@ -71,7 +71,7 @@ classdef CommunityStructure < Measure
                         error('W and B must have the same size.')
                     end
                 end
-                if ~exist('M0','var') || isempty(M0)
+                if ~exist('M0','var') || M0 == 0
                     M0=1:n;
                 elseif numel(M0)~=n
                     error('M0 must contain n elements.')
@@ -140,8 +140,214 @@ classdef CommunityStructure < Measure
                 community_structure = M;
                 
             elseif  isequal(lower(community_structure_algorithm), 'louvain_general')
-            end
-            
+                B = A;
+                limit = m.getSettings('CommunityStructureLGLimit');
+                verbose = m.getSettings('CommunityStructureLGVerbose');
+                randord = m.getSettings('CommunityStructureLGRandord');
+                randmove = m.getSettings('CommunityStructureLGRandmove');
+                
+                %set default for maximum size of modularity matrix
+                if nargin<2||isempty(limit)
+                    limit = 10000;
+                end
+                
+                %set level of reported/displayed text output
+                if nargin<3||isempty(verbose)
+                    verbose = 1;
+                end
+                if verbose
+                    mydisp = @(s) disp(s);
+                else
+                    mydisp = @(s) [];
+                end
+                
+                %set randperm- v. index-ordered
+                if nargin<4||isempty(randord)
+                    randord = 1;
+                end
+                if randord
+                    myord = @(n) randperm(n);
+                else
+                    myord = @(n) 1:n;
+                end
+                
+                %set move function (maximal (original Louvain) or random improvement)
+                if nargin<5||isempty(randmove)
+                    randmove=false;
+                end
+                if randmove
+                    if ischar(randmove)
+                        if any(strcmp(randmove,{'move','moverand','moverandw'}))
+                            movefunction=randmove;
+                        else
+                            error('unknown value for ''randmove''');
+                        end
+                    else
+                        % backwards compatibility: randmove=true
+                        movefunction='moverand';
+                    end
+                else
+                    movefunction='move';
+                end
+                
+                % set initial partition
+                if nargin<6||isempty(S0)
+                    S0=[];
+                end
+                
+                %initialise variables and do symmetry check
+                if isa(B,'function_handle')
+                    n=length(B(1));
+                    S=(1:n)';
+                    if isempty(S0)
+                        S0=(1:n)';
+                    else
+                        if numel(S0)==n
+                            group_handler('assign',S0);
+                            S0=group_handler('return'); % tidy config
+                        else
+                            error('Initial partition does not have the right size for the modularity matrix')
+                        end
+                    end
+                    %symmetry check (only checks symmetry of a small part of the matrix)
+                    M=B;
+                    it(:,1)=M(1);
+                    ii=find(it(2:end)>0,3)+1;
+                    ii=[1,ii'];
+                    for i=2:length(ii)
+                        it(:,i)=M(ii(i));
+                    end
+                    it=it(ii,:);
+                    if norm(full(it-it'))>2*eps
+                        error('Function handle does not correspond to a symmetric matrix. Deviation: %g', norm(full(it-it')))
+                    end
+                else
+                    n = length(B);
+                    S = (1:n)';
+                    if isempty(S0)
+                        S0=(1:n)';
+                    else
+                        if numel(S0)==n
+                            % clean input partition
+                            group_handler('assign',S0);
+                            S0=group_handler('return');
+                        else
+                            error('Initial partition does not have the right size for the modularity matrix');
+                        end
+                    end
+                    %symmetry check and fix if not symmetric
+                    if nnz(B-B')
+                        B=(B+B')/2; disp('WARNING: Forced symmetric B matrix')
+                    end
+                    M=B;
+                end
+                
+                dtot=eps; %keeps track of total change in modularity
+                y = S0;
+                %Run using function handle, if provided
+                while (isa(M,'function_handle')) %loop around each "pass" (in language of Blondel et al) with B function handle
+                    clocktime=clock;
+                    mydisp(['Merging ',num2str(length(y)),' communities  ',datestr(clocktime)]);
+                    Sb=S;
+                    yb=[];
+                    while ~isequal(yb,y)
+                        dstep=1;	%keeps track of change in modularity in pass
+                        yb=[];
+                        while (~isequal(yb,y))&&(dstep/dtot>2*eps)&&(dstep>10*eps) %This is the loop around Blondel et al's "first phase"
+                            yb = y;
+                            dstep=0;
+                            group_handler('assign',y);
+                            for i=myord(length(M(1)))
+                                di=group_handler(movefunction,i,M(i));
+                                dstep=dstep+di;
+                            end
+                            
+                            dtot=dtot+dstep;
+                            y=group_handler('return');
+                            mydisp([num2str(max(y)),' change: ',num2str(dstep),...
+                                ' total: ',num2str(dtot),' relative: ',num2str(dstep/dtot)]);
+                        end
+                        yb=y;
+                    end
+                    
+                    %update partition
+                    S=y(S); %group_handler implements tidyconfig
+                    y = unique(y);  %unique also puts elements in ascending order
+                    
+                    %calculate modularity and return if converged
+                    if isequal(Sb,S)
+                        Q=0;
+                        P=sparse(y,1:length(y),1);
+                        for i=1:length(M(1))
+                            Q=Q+(P*M(i))'*P(:,i);
+                        end
+                        Q=full(Q);
+                        clear('group_handler');
+                        clear('metanetwork_reduce');
+                        return
+                    end
+                    
+                    %check wether #groups < limit
+                    t = length(unique(S));
+                    if (t>limit)
+                        metanetwork_reduce('assign',S); %inputs group information to metanetwork_reduce
+                        M=@(i) metanetwork_i(B,i); %use function handle if #groups>limit
+                    else
+                        metanetwork_reduce('assign',S);
+                        J = zeros(t);   %convert to matrix if #groups small enough
+                        for c=1:t
+                            J(:,c)=m.metanetwork_i(B,c);
+                        end
+                        B = J;
+                        M=B;
+                    end
+                end
+                
+                % Run using matrix B
+                S2 = (1:length(B))';
+                Sb = [];
+               
+                while ~isequal(Sb,S2) %loop around each "pass" (in language of Blondel et al) with B matrix
+                    clocktime=clock;
+                    mydisp(['Merging ',num2str(max(y)),' communities  ',datestr(clocktime)]);
+                    
+                    Sb = S2;
+                    yb = [];
+                    while ~isequal(yb,y)
+                        dstep=1;
+                        while (~isequal(yb,y)) && (dstep/dtot>2*eps) && (dstep>10*eps) %This is the loop around Blondel et al's "first phase"
+                            yb = y;
+                            dstep=0;
+                            group_handler('assign',y);
+                            for i = myord(length(M))
+                                di=group_handler(movefunction,i,M(:,i));
+                                dstep=dstep+di;
+                            end
+                            dtot=dtot+dstep;
+                            y=group_handler('return');
+                            
+                            mydisp([num2str(max(y)),' change: ',num2str(dstep),...
+                                ' total: ',num2str(dtot),' relative: ',num2str(dstep/dtot)]);
+                        end
+                        yb=y;
+                    end
+                    
+                    %update partition
+                    S=y(S);
+                    S2=y(S2);
+                    
+                    if isequal(Sb,S2)
+                        P=sparse(y,1:length(y),1);
+                        Q=full(sum(sum((P*M).*P)));
+                        return
+                    end
+                    
+                    M = m.metanetwork(B,S2);
+                    y = unique(S2);  %unique also puts elements in ascending order
+                end 
+                
+                community_structure = S;
+            end            
         end
     end    
     methods (Static)
@@ -160,25 +366,25 @@ classdef CommunityStructure < Measure
                 'of between group edges.' ...
                 ];
         end
-        function available_settings = available_settings()
+        function available_settings = getAvailableSettings()
             available_settings = {
-                {'CommunityStructureAlgorithm', BRAPH2.STRING, 'louvain_bct', ...
-                {'louvain_bct', 'louvain_general'}}, ...
-                {'CommunityStructureLBCTGamma', BRAPH2.NUMERIC, 1, {}}, ...
-                {'CommunityStructureLBCTM0', BRAPH2.NUMERIC, 0, {}}, ...
-                {'CommunityStructureLBCTB', BRAPH2.STRING, 'modularity', ...
-                {'modularity', 'potts', 'negative_sym', 'negative_asym'}}, ...
-                {'CommunityStructureLGLimit', BRAPH2.NUMERIC, 1000, {}}, ...
-                {'CommunityStructureLGVerbose', BRAPH2.LOGICAL, 1, {1, 0}}, ...
-                {'CommunityStructureLGRandord', BRAPH2.LOGICAL, 1, {1, 0}}, ...
-                {'CommunityStructureLGRandmove', BRAPH2.LOGICL, 1, {1, 0}}
+                'CommunityStructureAlgorithm', BRAPH2.STRING, 'louvain_bct', ...
+                {'louvain_bct', 'louvain_general'}; ...
+                'CommunityStructureLBCTGamma', BRAPH2.NUMERIC, 1, {}; ...
+                'CommunityStructureLBCTM0', BRAPH2.NUMERIC, 0, {}; ...
+                'CommunityStructureLBCTB', BRAPH2.STRING, 'modularity', ...
+                {'modularity', 'potts', 'negative_sym', 'negative_asym'}; ...
+                'CommunityStructureLGLimit', BRAPH2.NUMERIC, 1000, {}; ...
+                'CommunityStructureLGVerbose', BRAPH2.LOGICAL, 1, {1, 0}; ...
+                'CommunityStructureLGRandord', BRAPH2.LOGICAL, 1, {1, 0}; ...
+                'CommunityStructureLGRandmove', BRAPH2.LOGICAL, 1, {1, 0}; ...
                 };
         end
         function measure_format = getMeasureFormat()
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            measure_scope = Measure.MULTILAYER;
+            measure_scope = Measure.UNILAYER;
         end
         function list = getCompatibleGraphList()
             list = { ...
@@ -189,11 +395,25 @@ classdef CommunityStructure < Measure
                 'MultiplexGraphBU', ...
                 'MultiplexGraphBD', ...
                 'MultiplexGraphWU', ...
-                'MultiplexGraphWD' ...                
+                'MultiplexGraphWD' ...
                 };
         end
         function n = getCompatibleGraphNumber()
             n = Measure.getCompatibleGraphNumber('CommunityStructure');
+        end
+        function M = metanetwork(J,S)
+            %Computes new aggregated network (communities --> nodes)
+            PP = sparse(1:length(S),S,1);
+            M = PP'*J*PP;
+        end
+        function Mi = metanetwork_i(J,i)
+            %ith column of metanetwork (used to create function handle)
+            %J is a function handle
+            ind=metanetwork_reduce('nodes',i);
+            for j=ind(:)'
+                metanetwork_reduce('reduce',J(j));
+            end
+            Mi=metanetwork_reduce('return');
         end
     end
 end
