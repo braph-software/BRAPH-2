@@ -108,8 +108,8 @@ assert(isequal(out_global_efficiency.getValue(), known_out_global_efficiency), .
 
 %% Test 4: GraphWD: Calculation vs BCT
 A = rand(randi(5));
-
 g = GraphWD(A);
+
 out_global_efficiency = OutGlobalEfficiency(g).getValue();
 out_global_efficiency = out_global_efficiency{1};
 out_global_efficiency_bct = efficiency_wei(g.getA());
