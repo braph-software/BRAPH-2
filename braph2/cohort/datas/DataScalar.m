@@ -1,12 +1,12 @@
 classdef DataScalar < Data
     methods
-        function d = DataScalar(atlas, value)
+        function d = DataScalar(atlas, value, varargin)
             
             if nargin < 2
                 value = 0;
             end
             
-            d = d@Data(atlas, value);
+            d = d@Data(atlas, value, varargin{:});
         end
     end
     methods
@@ -30,6 +30,9 @@ classdef DataScalar < Data
             description = [ ...
                 'A single number representing a scalar value.' ...
                 ]; %#ok<NBRAK>
+        end
+        function available_settings = getAvailableSettings(d) %#ok<INUSD>
+            available_settings = {};
         end
     end  
 end

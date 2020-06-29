@@ -1,12 +1,12 @@
 classdef DataConnectivity < Data
     methods
-        function d = DataConnectivity(atlas, value)
+        function d = DataConnectivity(atlas, value, varargin)
             
             if nargin < 2
                 value = zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length());
             end
                         
-            d = d@Data(atlas, value);
+            d = d@Data(atlas, value, varargin{:});
         end
     end
     methods
@@ -35,6 +35,9 @@ classdef DataConnectivity < Data
             description = [ ...
                 'A precalculated connectivity matrix.' ...
                 ]; %#ok<NBRAK>
+        end
+        function available_settings = getAvailableSettings(d) %#ok<INUSD>
+            available_settings = {};
         end
     end  
 end
