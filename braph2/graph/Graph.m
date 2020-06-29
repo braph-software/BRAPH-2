@@ -301,8 +301,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             if length(varargin) == 1
                 varargin = varargin{:};
             end
-            
-            settings = get_from_varargin(varargin, 'Settings', varargin{:});
+
             measure_dict = get_from_varargin(containers.Map, 'MeasureDictionary', varargin{:});
             
             Graph.checkA(Graph.getGraphType(g), A);  % performs all necessary checks on A
@@ -319,6 +318,15 @@ classdef Graph < handle & matlab.mixin.Copyable
             end
             
             g.A = A;
+            
+            available_settings = Graph.getAvailableSettings(class(g));
+            settings = cell(1, size(available_settings, 1));
+            for i = 1:1:size(available_settings, 1)
+                available_setting_code = available_settings{i, 1};
+                available_setting_default = available_settings{i, 3};
+                settings{2 * i - 1} = available_setting_code;
+                settings{2 * i} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
+            end
             g.settings = settings;  % initialize the property settings
             g.measure_dict = measure_dict;  % initialize the property measure_dict
         end
@@ -960,6 +968,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             list = Graph.getCompatibleMeasureList(g);
             n = numel(list);
         end
+        function available_settings = getAvailableSettings(g)
+            available_settings = eval([Graph.getClass(g) '.getAvailableSettings(g)']);
+        end
     end
     methods  % Basic methods
         function str = tostring(g)
@@ -1233,6 +1244,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
+    methods (Abstract)
+        randomize_graph(n);
+    end
 %     methods (Access=protected)
 %         function g_copy = copyElement(g)
 %             % COPYELEMENT(G) copies elements of graph
@@ -1280,7 +1294,5 @@ classdef Graph < handle & matlab.mixin.Copyable
 %             A = g.getA(); %#ok<PROPLC>
 %             sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings()); %#ok<PROPLC>
 %         end
-%     methods (Abstract)
-%         randomize_graph(n);
-%     end
+
 end
