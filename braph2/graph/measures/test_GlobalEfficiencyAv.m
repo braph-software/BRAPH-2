@@ -1,6 +1,6 @@
-% test GlobalEfficiencyAv
+% test OutGlobalEfficiencyAv
 
-%% Test 1: GraphBU
+%% Test 1: GraphBD
 A = [
     0   .1  0   0   0
     .2  0   0   0   0
@@ -9,16 +9,16 @@ A = [
     0   0   0   0   0
     ];
 
-known_global_efficiency_av = {mean([1/4 1/4 1/4 1/4 0])};
+known_out_global_efficiency_av = {mean([1/4 1/4 1/4 1/4 0])};
 
-g = GraphBU(A);
-global_efficiency_av = GlobalEfficiencyAv(g);
+g = GraphBD(A);
+out_global_efficiency_av = OutGlobalEfficiencyAv(g);
 
-assert(isequal(global_efficiency_av.getValue(), known_global_efficiency_av), ...
-    [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
-    'GlobalEfficiencyAv is not being calculated correctly for GraphBU.')
+assert(isequal(out_global_efficiency_av.getValue(), known_out_global_efficiency_av), ...
+    [BRAPH2.STR ':OutGlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'OutGlobalEfficiencyAv is not being calculated correctly for GraphBD.')
 
-%% Test 2: GraphWU
+%% Test 2: GraphWD
 A = [
     0   .1  0   0   0
     .2  0   0   0   0
@@ -27,16 +27,16 @@ A = [
     0   0   0   0   0
     ];
 
-known_global_efficiency_av = {mean([1/20 1/20 1/20 1/20 0])};
+known_out_global_efficiency_av = {mean([1/40 1/20 1/20 1/40 0])};
 
-g = GraphWU(A);
-global_efficiency_av = GlobalEfficiencyAv(g);
+g = GraphWD(A);
+out_global_efficiency_av = OutGlobalEfficiencyAv(g);
 
-assert(isequal(global_efficiency_av.getValue(), known_global_efficiency_av), ...
-    [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
-    'GlobalEfficiencyAv is not being calculated correctly for GraphWU.')
+assert(isequal(out_global_efficiency_av.getValue(), known_out_global_efficiency_av), ...
+    [BRAPH2.STR ':OutGlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'OutGlobalEfficiencyAv is not being calculated correctly for GraphWD.')
 
-%% Test 3: MultiplexGraphBU
+%% Test 3: MultiplexGraphBD
 A11 = [
       0   .1  0   0   0
       .2  0   0   0   0
@@ -58,20 +58,20 @@ A = {
     A21     A22
     };
 
-known_global_efficiency_av = {
+known_out_global_efficiency_av = {
                         mean([1/4 1/4 1/4 1/4 0])
                         mean([1/4 1/4 1/4 1/4 0])
                         };
 
 
-g = MultiplexGraphBU(A);
-global_efficiency_av = GlobalEfficiencyAv(g);
+g = MultiplexGraphBD(A);
+out_global_efficiency_av = OutGlobalEfficiencyAv(g);
 
-assert(isequal(global_efficiency_av.getValue(), known_global_efficiency_av), ...
-    [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
-    'GlobalEfficiencyAv is not being calculated correctly for MultiplexGraphBU.')
+assert(isequal(out_global_efficiency_av.getValue(), known_out_global_efficiency_av), ...
+    [BRAPH2.STR ':OutGlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'OutGlobalEfficiencyAv is not being calculated correctly for MultiplexGraphBD.')
 
-%% Test 4: MultiplexGraphWU
+%% Test 4: MultiplexGraphWD
 A11 = [
       0   .1  0   0   0
       .2  0   0   0   0
@@ -93,37 +93,30 @@ A = {
     A21     A22
     };
 
-known_global_efficiency_av = {
-                        mean([1/20 1/20 1/20 1/20 0])
-                        mean([1/20 1/20 1/20 1/20 0])
+known_out_global_efficiency_av = {
+                        mean([1/40 1/20 1/20 1/40 0])
+                        mean([1/40 1/20 1/20 1/40 0])
                         };
 
 
-g = MultiplexGraphWU(A);
-global_efficiency_av = GlobalEfficiencyAv(g);
+g = MultiplexGraphWD(A);
+out_global_efficiency_av = OutGlobalEfficiencyAv(g);
 
-assert(isequal(global_efficiency_av.getValue(), known_global_efficiency_av), ...
-    [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
-    'GlobalEfficiencyAv is not being calculated correctly for MultiplexGraphWU.')
+assert(isequal(out_global_efficiency_av.getValue(), known_out_global_efficiency_av), ...
+    [BRAPH2.STR ':OutGlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'OutGlobalEfficiencyAv is not being calculated correctly for MultiplexGraphWD.')
 
-%% Test 4: GraphBU: Calculation vs BCT
-graph_class = 'GraphBU';
-A = [
-    0   .1  0   0   0
-    .2   0  0   0   0
-    0    0  0  .2   0
-    0    0 .1   0   0
-    0    0  0   0   0
-    ];
+%% Test 4: GraphBD: Calculation vs BCT
+A = rand(randi(5));
+g = GraphBD(A);
 
-g = GraphBU(A);
-global_efficiency_av = GlobalEfficiencyAv(g).getValue();
-global_efficiency_av = global_efficiency_av{1};
-global_efficiency_av_bct = efficiency_bin(g.getA());
+out_global_efficiency_av = OutGlobalEfficiencyAv(g).getValue();
+out_global_efficiency_av = out_global_efficiency_av{1};
+out_global_efficiency_av_bct = efficiency_bin(g.getA());
 
-assert(isequal(round(global_efficiency_av, 4), global_efficiency_av_bct), ...
-    [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
-    'GlobalEfficiencyAv is not being calculated correctly for BCT.')
+assert(isequal(round(out_global_efficiency_av, 4), out_global_efficiency_av_bct), ...
+    [BRAPH2.STR ':OutGlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'OutGlobalEfficiencyAv is not being calculated correctly for BCT.')
 
 function E = efficiency_bin(A,local)
 %EFFICIENCY_BIN     Global efficiency, local efficiency.
@@ -184,7 +177,7 @@ else                                        %global efficiency
     E=sum(e(:))./(n^2-n);
 end
 
-
+E(isnan(E)) = 0;
     function D=distance_inv(A_)
         l=1;                                        %path length
         Lpath=A_;                                   %matrix of paths l
