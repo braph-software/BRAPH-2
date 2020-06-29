@@ -1,5 +1,5 @@
 classdef DataStructural < Data
-    % DataStructurral A Data column vector
+    % DataStructurral A data column vector
     % DataStructurral implements Data and serves as a container for column
     % type data.
     % It is a subclass of Data.
@@ -9,7 +9,7 @@ classdef DataStructural < Data
     % and has the same number of elements as the Brain Atlas.
     %
     % DataStructurral methods:
-    %   DataStructurral        - Constructor
+    %   DataStructurral         - Constructor
     %
     % DataStructurral abstract methods:
     %   setValue                - checks the value and sets it to DataStructurral
@@ -39,7 +39,7 @@ classdef DataStructural < Data
     end
     methods
         function setValue(d, value)
-            % SETVALUE sets the value of the data into the object.
+            % SETVALUE sets the value of the data into the object
             %
             % SETVALUE(D, VALUE) checks that the value of the data is
             % numeric and that it has the correct dimensions. If incorrect
@@ -64,7 +64,7 @@ classdef DataStructural < Data
         function data_class = getClass()
             % GETCLASS returns the class of the data 
             %
-            % DATA_CLASS = GETCLASS() reutrns the class of the data.
+            % DATA_CLASS = GETCLASS() returns the class of the data.
             %
             % See also  getName, getDescription, getAvailableSettings.
             
@@ -80,7 +80,7 @@ classdef DataStructural < Data
             name = 'Structural Brain Data';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the description of the data.
+            % GETDESCRIPTION returns the description of the data
             %
             % DESCRIPTION = GETDESCRIPTION(D) returns the description of
             % the data.

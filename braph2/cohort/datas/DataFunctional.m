@@ -1,5 +1,5 @@
 classdef DataFunctional < Data
-    % DataFunctional A Data functional Matrix
+    % DataFunctional A data functional matrix
     % DataFunctional implements Data and serves as a container for matrix
     % type data.
     % It is a subclass of Data.
@@ -9,7 +9,7 @@ classdef DataFunctional < Data
     % and has the same number of rows as the Brain Atlas.
     %
     % DataFunctional methods:
-    %   DataFunctional        - Constructor
+    %   DataFunctional          - Constructor
     %
     % DataFunctional abstract methods:
     %   setValue                - checks the value and sets it to DataFunctional
@@ -39,7 +39,7 @@ classdef DataFunctional < Data
     end
     methods
         function setValue(d, value)
-            % SETVALUE sets the value of the data into the object.
+            % SETVALUE sets the value of the data into the object
             %
             % SETVALUE(D, VALUE) checks that the value of the data is
             % numeric and that it has the same number of rows as the atlas.
@@ -64,7 +64,7 @@ classdef DataFunctional < Data
         function data_class = getClass()
             % GETCLASS returns the class of the data 
             %
-            % DATA_CLASS = GETCLASS() reutrns the class of the data.
+            % DATA_CLASS = GETCLASS() returns the class of the data.
             %
             % See also  getName, getDescription, getAvailableSettings.
             
@@ -80,7 +80,7 @@ classdef DataFunctional < Data
             name = 'Functional Brain Data';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the description of the data.
+            % GETDESCRIPTION returns the description of the data
             %
             % DESCRIPTION = GETDESCRIPTION(D) returns the description of
             % the data.

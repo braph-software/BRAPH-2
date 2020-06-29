@@ -1,5 +1,5 @@
 classdef DataConnectivity < Data
-    % DataConnectivity A Data Connectivity Matrix
+    % DataConnectivity A data connectivity matrix
     % DataConnectivity implements Data and serves as a container for matrix
     % type data.
     % It is a subclass of Data.
@@ -21,11 +21,12 @@ classdef DataConnectivity < Data
     %   getAvailableSettings    - returns the available settings
     %
     % See also Data, DataFunctional, DataScalar, DataStructural.
+    
     methods
         function d = DataConnectivity(atlas, value, varargin)
             % DATACONNECTIVITY(ATLAS, VALUE, 'PROPERTYVALUE1', 'VALUE1', ...)
             % creates DataConnectivity object, checks if value is present,
-            % and calls for the super class.
+            % and calls for the superclass.
             %
             % See also Data, DataFunctional, DataScalar, DataStructural.
             
@@ -38,7 +39,7 @@ classdef DataConnectivity < Data
     end
     methods
         function setValue(d, value)
-            % SETVALUE sets the value of the data into the object.
+            % SETVALUE sets the value of the data into the object
             %
             % SETVALUE(D, VALUE) checks that the value of the data is
             % numeric and that it has the correct dimensions. If incorrect
@@ -63,7 +64,7 @@ classdef DataConnectivity < Data
         function data_class = getClass()
             % GETCLASS returns the class of the data 
             %
-            % DATA_CLASS = GETCLASS() reutrns the class of the data.
+            % DATA_CLASS = GETCLASS() returns the class of the data.
             %
             % See also  getName, getDescription, getAvailableSettings.
             
@@ -79,7 +80,7 @@ classdef DataConnectivity < Data
             name = 'Connectivity Matrix';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the description of the data.
+            % GETDESCRIPTION returns the description of the data
             %
             % DESCRIPTION = GETDESCRIPTION(D) returns the description of
             % the data.

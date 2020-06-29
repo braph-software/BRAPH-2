@@ -1,6 +1,6 @@
 classdef Data < handle & matlab.mixin.Copyable
     % Data (Abstract) A Data
-    % Data provides the methods necesary for all datas
+    % Data provides the methods necesary for all data types
     % It is a subclass of handle and matlab.mixin.Copyable
     %
     % Data provides the methods necessary for data subclasses to store the
@@ -72,6 +72,7 @@ classdef Data < handle & matlab.mixin.Copyable
             % size and value.
             %
             % See also disp.
+            
             str = [Data.getClass(d) ' ' int2str(size(d.getValue(), 1)) ' x ' int2str(size(d.getValue(), 2))];
         end
         function disp(d)
@@ -86,7 +87,7 @@ classdef Data < handle & matlab.mixin.Copyable
             disp([' size: ' int2str(size(d.getValue(), 1)) ' rows x ' int2str(size(d.getValue(), 2)) ' columns'])
         end
         function atlas = getBrainAtlas(d)
-            % GETBRAINATLAS returns the brain atlas.
+            % GETBRAINATLAS returns the brain atlas
             %
             % ATLAS = GETBRAINATLAS(D) returns the brain atlas.
             %
@@ -95,7 +96,7 @@ classdef Data < handle & matlab.mixin.Copyable
             atlas = d.atlas;
         end
         function value = getValue(d)
-            % GETVALUE returns the value of data.
+            % GETVALUE returns the value of data
             % 
             % VALUE = GETVALUE(D) returns the value of the data.
             %
@@ -104,7 +105,7 @@ classdef Data < handle & matlab.mixin.Copyable
             value = d.value;
         end
         function setBrainAtlas(d, atlas)
-            % SETBRAINATLAS sets the brain atlas to the data object.
+            % SETBRAINATLAS sets the brain atlas to the data object
             %
             % SETBRAINATLAS(D, ATLAS) sets the brian atlas ATLAS to the 
             % data object.
@@ -119,8 +120,8 @@ classdef Data < handle & matlab.mixin.Copyable
         end
     end
     methods (Abstract)  % setValue
-        % SETVALUE(D, VALUE) (Abstract) sets the value of the data.
-        % Must be used by the sub classes. 
+        % SETVALUE(D, VALUE) (Abstract) sets the value of the data
+        % Must be used by the subclasses. 
         
         setValue(d, value)  % set the value of the data
     end
@@ -140,7 +141,7 @@ classdef Data < handle & matlab.mixin.Copyable
         function data_class = getClass(d)
             % GETCLASS returns the class of the data 
             %
-            % DATA_CLASS = GETCLASS(D) reutrns the class of the data.
+            % DATA_CLASS = GETCLASS(D) returns the class of the data.
             %
             % See also getList, getName, getDescription, getData, getAvailableSettings.
             
@@ -160,7 +161,7 @@ classdef Data < handle & matlab.mixin.Copyable
             name = eval([Data.getClass(d) '.getName()']);
         end
         function description = getDescription(d)
-            % GETDESCRIPTION returns the description of the data.
+            % GETDESCRIPTION returns the description of the data
             %
             % DESCRIPTION = GETDESCRIPTION(D) returns the description of
             % the data.

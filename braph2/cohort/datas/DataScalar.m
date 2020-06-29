@@ -1,5 +1,5 @@
 classdef DataScalar < Data
-    % DataScalar A scalar Data
+    % DataScalar A scalar data
     % DataScalar implements Data and serves as a container for scalar
     % type data.
     % It is a subclass of Data.
@@ -9,7 +9,7 @@ classdef DataScalar < Data
     % and has the same dimensions as the Brain Atlas.
     %
     % DataScalar methods:
-    %   DataScalar        - Constructor
+    %   DataScalar              - Constructor
     %
     % DataScalar abstract methods:
     %   setValue                - checks the value and sets it to DataConnectivity
@@ -38,7 +38,7 @@ classdef DataScalar < Data
     end
     methods
         function setValue(d, value)
-            % SETVALUE sets the value of the data into the object.
+            % SETVALUE sets the value of the data into the object
             %
             % SETVALUE(D, VALUE) checks that the value of the data is
             % numeric and that it has the correct dimensions. If incorrect
@@ -58,7 +58,7 @@ classdef DataScalar < Data
         function data_class = getClass()
             % GETCLASS returns the class of the data 
             %
-            % DATA_CLASS = GETCLASS() reutrns the class of the data.
+            % DATA_CLASS = GETCLASS() returns the class of the data.
             %
             % See also  getName, getDescription, getAvailableSettings.
             
@@ -74,7 +74,7 @@ classdef DataScalar < Data
             name = 'Scalar Value';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the description of the data.
+            % GETDESCRIPTION returns the description of the data
             %
             % DESCRIPTION = GETDESCRIPTION(D) returns the description of
             % the data.
