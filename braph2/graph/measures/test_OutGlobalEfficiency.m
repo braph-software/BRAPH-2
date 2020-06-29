@@ -225,7 +225,7 @@ else
     E = sum(di(:)) ./ (n^2 - n);                         	% global efficiency
 end
 
-
+E(isnan(E)) = 0;
     function D=distance_inv_wei(W_)
         
         n_=length(W_);
