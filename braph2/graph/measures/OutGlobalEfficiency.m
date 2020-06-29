@@ -84,7 +84,7 @@ classdef OutGlobalEfficiency < Measure
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % out-global efficiency measure.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getClass(), getName().
             
             description = [ ...
                 'The out-global efficiency is the average inverse ' ...
