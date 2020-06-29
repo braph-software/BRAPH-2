@@ -123,6 +123,11 @@ classdef GraphBU < GraphBD
             
             negativity_type = Graph.NONNEGATIVE;
         end
+        function available_settings = getAvailableSettings(g) %#ok<INUSD>
+            available_settings = { ...
+                 'GraphBU.attempts_per_edge', BRAPH2.NUMERIC, 5, {} ...
+                 };
+        end
     end
 %     methods
 %         function g = GraphBU(A, varargin)
@@ -150,7 +155,7 @@ classdef GraphBU < GraphBD
     methods
         function [randomized_graph, swaps] = randomize_graph(g, varargin)
              % get rules
-            attempts_per_edge = get_from_varargin(10, 'AttemptsPerEdge', varargin{:});
+            attempts_per_edge = g.getSettings('GraphBU.attempts_per_edge');
             
             if nargin<2
                 attempts_per_edge = 5;

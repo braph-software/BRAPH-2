@@ -123,6 +123,11 @@ classdef GraphWU < GraphWD
       
             negativity_type = Graph.NONNEGATIVE;
         end
+        function available_settings = getAvailableSettings(g) %#ok<INUSD>
+            available_settings = { ...
+                 'GraphWU.number_of_weights', BRAPH2.NUMERIC, 5, {} ...
+                 };
+        end
     end
 %     methods
 %         function g = GraphWU(A, varargin)
@@ -150,7 +155,7 @@ classdef GraphWU < GraphWD
     methods
         function [randomized_graph, correlation_coefficients] = randomize_graph(g, varargin)           
             % get rules
-            number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
+            number_of_weights = g.getSettings('GraphWU.number_of_weights');
             
             W = g.getA();
             graph_BU = GraphBU(W);
