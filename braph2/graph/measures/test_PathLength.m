@@ -121,13 +121,9 @@ assert(isequal(path_length.getValue(), known_path_length), ...
     'PathLength is not being calculated correctly for MultiplexGraphWU.')
 
 %% Test 5: Calculation subgraphs GraphWU vs BCT
-A = [
-    0   .1  0   0
-    .2   0 .1   0
-    0   .1  0  .2
-    0    0 .1   0
-    ];
+A = rand(randi(5));
 g = GraphWU(A);
+
 path_length = PathLength(g, 'PathLengthRule', 'subgraphs');
 path_length_value = path_length.getValue();
 path_length_value = path_length_value{1};
@@ -205,9 +201,10 @@ end
 Dv = D(~isnan(D));                  % get non-NaN indices of D
 
 % Mean of entries of D(G)
-% Modified version in order to get the first vector Emiliano Gomez
-
-lambda     = mean(Dv(1:3));  % 1:3 since function is ignoring diagonal and inf in this case
+% Modified version in order to get the first vector Emiliano Gomez, Anna Canal
+n = length(D);
+lambda     = mean(Dv(1:n-1));  % 1:3 since function is ignoring diagonal and inf in this case
+lambda(isnan(lambda)) = 0;
 
 % Efficiency: mean of inverse entries of D(G)
 efficiency = mean(1./Dv);
