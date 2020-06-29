@@ -157,7 +157,7 @@ classdef Distance < Measure
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % distance measure.
             %
-            % See also getList, getCompatibleGraphList.
+            % See also getClass, getName.
             
             description = [ ...
                 'The distance of a graph is ' ...
