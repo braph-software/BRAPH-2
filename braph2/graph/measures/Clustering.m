@@ -65,7 +65,7 @@ classdef Clustering < Triangles
             % See also Measure, Triangles, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix of the graph
+            A = g.getA();  % adjacency matrix of the graph
             L = g.layernumber();
             
             if g.is_measure_calculated('Triangles')
