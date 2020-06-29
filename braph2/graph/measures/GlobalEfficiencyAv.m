@@ -8,7 +8,7 @@ classdef GlobalEfficiencyAv < GlobalEfficiency
     % GlobalEfficiencyAv methods:
     %   GlobalEfficiencyAv          - constructor 
     %
-    % GlobalEfficiencyAv methods (Static)
+    % GlobalEfficiencyAv descriptive methods (Static)
     %   getClass                    - returns the average global efficiency class
     %   getName                     - returns the name of average global efficiency measure
     %   getDescription              - returns the description of average global efficiency measure
@@ -56,7 +56,7 @@ classdef GlobalEfficiencyAv < GlobalEfficiency
             end
         end
     end
-    methods (Static)
+    methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
