@@ -34,13 +34,39 @@ assert(isequal(round(local_efficiency{1}, 4), known_local_efficiency{1}), ...
     [BRAPH2.STR ':LocalEfficiency:' BRAPH2.BUG_ERR], ...
     'LocalEfficiency is not being calculated correctly for GraphWU.')
 
-%% Test 3: GraphBU: Calculation vs BCT
-A = [  
-    0 .2 .2 .1;
-    .2 0 .3 0;
-    .2 .3 0 .3;
-    .1 0 .3 0;
-    ];
+%% Test 3: MultiplexGraphBU
+A11 = [
+      0   .2  .2  .1
+      .2  0   .3  0
+      .2  .3  0   .3
+      .1  0   .3  0
+      ];
+A12 = eye(4);
+A21 = eye(4);
+A22 = [
+      0   .2  .2  .1
+      .2  0   .3  0
+      .2  .3  0   .3
+      .1  0   .3  0
+      ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_local_efficiency = {
+                         [5/6 1 5/6 1]'
+                         [5/6 1 5/6 1]'
+                         };
+
+g = MultiplexGraphBU(A);
+local_efficiency = LocalEfficiency(g);
+
+assert(isequal(local_efficiency.getValue(), known_local_efficiency), ...
+    [BRAPH2.STR ':LocalEfficiency:' BRAPH2.BUG_ERR], ...
+    'LocalEfficiency is not being calculated correctly for MultiplexGraphBU.')
+
+%% Test 5: GraphBU: Calculation vs BCT
 A = rand(randi(5));
 g = GraphBU(A);
 local_efficiency = LocalEfficiency(g).getValue();
