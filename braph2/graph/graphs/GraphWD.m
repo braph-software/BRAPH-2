@@ -156,7 +156,7 @@ classdef GraphWD < Graph
 %         end
 %     end
     methods
-        function [randomized_graph, correlation_coefficents] = randomize_graph(g, varargin)
+        function [randomized_graph, correlation_coefficients] = randomize_graph(g, varargin)
             % get rules
              number_of_weights = g.getSettings('GraphWU.number_of_weights');
             
@@ -220,7 +220,7 @@ classdef GraphWD < Graph
             % calculate correlation of original vs reassinged in/out strength
             rpos_in = corrcoef(sum(W,1), sum(randomized_graph,1));
             rpos_out = corrcoef(sum(W,2), sum(randomized_graph,2));
-            correlation_coefficents = [rpos_in(2) rpos_out(2)];
+            correlation_coefficients = [rpos_in(2) rpos_out(2)];
         end
     end
 %     methods (Static)
