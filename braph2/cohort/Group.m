@@ -24,12 +24,12 @@ classdef Group < handle & matlab.mixin.Copyable
             end            
         end
         function str = tostring(group)
-            str = ['Group ' group.getName() ' with ' int2str(group.subjectnumber()) ' ' group.getSubjectClass()];
+            str = ['Group ' group.getID() ' with ' int2str(group.subjectnumber()) ' ' group.getSubjectClass()];
         end
         function disp(group)
-            disp(['<a href="matlab:help Group">Group</a> with ' int2str(group.subjectnumber()) ' ' group.getName() ' ' ...
+            disp(['<a href="matlab:help Group">Group</a> with ' int2str(group.subjectnumber()) ' ' group.getID() ' ' group.getLabel() ' ' ...
                 '<a href="matlab:help ' group.getSubjectClass() '">' group.getSubjectClass() '</a>'])
-            disp(group.getDescription())
+            disp(group.getNotes())
             subjects = group.getSubjects(); %#ok<PROP>
             str = 'Subject IDs: ';
             for i = 1:1:group.subjectnumber()

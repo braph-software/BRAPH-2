@@ -122,9 +122,11 @@ classdef Cohort < handle & matlab.mixin.Copyable
             %
             % See also Group, Subject, BrainAtlases, IndexedDictionary.
             
-            % subjects must be a cell array of Subjects of class
-            cohort.name = name;
+            cohort.setID(id)
+            cohort.setLabel(label)
+            cohort.setNotes(notes)
             
+            % subjects must be a cell array of Subjects of class
             assert(any(strcmp(Subject.getList(), subject_class)), ...
                 [BRAPH2.STR ':Cohort:' BRAPH2.WRONG_INPUT], ...
                 [subject_class ' is not a valid Subject class'])
@@ -378,8 +380,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % Make a deep copy of group_idict
             cohort_copy.group_idict = IndexedDictionary('Group');
             for group_i = 1:1:cohort.getGroups().length()
-                group_copy = Group(cohort.getSubjectClass(), []);
-                cohort_copy.group_idict.add(group_copy.getName(), group_copy, group_i);
+                group_copy = Group(cohort.getSubjectClass(), ...
+                    cohort.getGroups().getValue(group_i).getID(), ...
+                    cohort.getGroups().getValue(group_i).getLabel(), ...
+                    cohort.getGroups().getValue(group_i).getNotes(), ...
+                    []);
+                cohort_copy.group_idict.add(group_copy.getID(), group_copy, group_i);
                 cohort_copy.addSubjectsToGroup(cohort.getGroupSubjects(group_i), group_i);
             end
         end
