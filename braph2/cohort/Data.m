@@ -1,6 +1,6 @@
 classdef Data < handle & matlab.mixin.Copyable
     % Data (Abstract) A Data
-    % Data provides the methods necesary for all data types
+    % Data provides the methods necessary for all data types
     % It is a subclass of handle and matlab.mixin.Copyable
     %
     % Data provides the methods necessary for data subclasses to store the
