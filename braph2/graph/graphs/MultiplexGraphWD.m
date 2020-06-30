@@ -211,7 +211,7 @@ classdef MultiplexGraphWD < Graph
         end
     end
     methods
-        function [randomized_graph, correlation_coefficents] = randomize_graph(g, varargin)
+        function [randomized_graph, correlation_coefficients] = randomize_graph(g, varargin)
             % get rules
             number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
             
@@ -219,7 +219,7 @@ classdef MultiplexGraphWD < Graph
             multiplex_graph_BD = MultiplexGraphBD(W);
             [A, ~] = multiplex_graph_BD.randomize_graph(varargin{:});
             L = g.layernumber();
-            correlation_coefficents = cell(L, 1);
+            correlation_coefficients = cell(L, 1);
             randomized_graph = A;
             
             for li = 1:1:L
@@ -281,7 +281,7 @@ classdef MultiplexGraphWD < Graph
                 % calculate correlation of original vs reassinged in/out strength
                 rpos_in = corrcoef(sum(Wii, 1), sum(randomized_graph_layer, 1));
                 rpos_out = corrcoef(sum(Wii, 2), sum(randomized_graph_layer, 2));
-                correlation_coefficents(li) = {[rpos_in(2) rpos_out(2)]};
+                correlation_coefficients(li) = {[rpos_in(2) rpos_out(2)]};
                 randomized_graph(li, li) = {randomized_graph_layer};
             end
         end
