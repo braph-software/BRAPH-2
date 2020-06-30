@@ -7,15 +7,10 @@ classdef Group < handle & matlab.mixin.Copyable
         subjects  % list of subjects
     end
     methods  % Basic functions
-        function group = Group(subject_class, subjects, varargin)
+        function group = Group(subject_class, id, label, notes, subjects, varargin)
 
-            id = get_from_varargin('', 'GroupID', varargin{:});
             group.setID(id)
-
-            label = get_from_varargin('', 'GroupLabel', varargin{:});
             group.setLabel(label)
-
-            notes = get_from_varargin('', 'GroupNotes', varargin{:});
             group.setLabel(notes)
             
             assert(any(strcmp(Subject.getList(), subject_class)), ...

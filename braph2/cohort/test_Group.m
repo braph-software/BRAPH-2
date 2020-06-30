@@ -13,26 +13,26 @@ atlas = BrainAtlas('BA', 'brain atlas', 'notes', 'BrainMesh_ICBM152.nv', {br1, b
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
 
-    sub1 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '1');
-    sub2 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '2');
-    sub3 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '3');
-    sub4 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '4');
-    sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '5');
+    sub1 = Subject.getSubject(subject_class, 'id1', 'label 1', 'notes 1', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub2 = Subject.getSubject(subject_class, 'id2', 'label 2', 'notes 2', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub3 = Subject.getSubject(subject_class, 'id3', 'label 3', 'notes 3', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub4 = Subject.getSubject(subject_class, 'id4', 'label 4', 'notes 4', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub5 = Subject.getSubject(subject_class, 'id5', 'label 5', 'notes 5', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
     
-    group = Group(subject_class, {sub1, sub2, sub3 sub4, sub5});
+    group = Group(subject_class, 'id', 'label', 'notes', {sub1, sub2, sub3 sub4, sub5});
 end
 
 %% Test 2: Basic functions
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
 
-    sub1 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '1');
-    sub2 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '2');
-    sub3 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '3');
-    sub4 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '4');
-    sub5 = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)), 'SubjectID', '5');
+    sub1 = Subject.getSubject(subject_class, 'id1', 'label 1', 'notes 1', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub2 = Subject.getSubject(subject_class, 'id2', 'label 2', 'notes 2', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub3 = Subject.getSubject(subject_class, 'id3', 'label 3', 'notes 3', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub4 = Subject.getSubject(subject_class, 'id4', 'label 4', 'notes 4', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub5 = Subject.getSubject(subject_class, 'id5', 'label 5', 'notes 5', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
     
-    group = Group(subject_class, {sub1, sub2, sub3});
+    group = Group(subject_class, 'id', 'label', 'notes', {sub1, sub2, sub3});
     assert(group.subjectnumber() == 3, ...
             ['BRAPH:Group:BasicError'], ...
             ['One of the basic functions of Group does not work']) %#ok<NBRAK>
