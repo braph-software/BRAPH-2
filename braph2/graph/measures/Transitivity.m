@@ -5,7 +5,9 @@ classdef Transitivity < Triangles
     % weighted directed (WD) graphs.
     %
     % It is calculated as the fraction of triangles to the number of 
-    % unordered triplets within a layer.
+    % unordered triplets within a layer. For directed graphs the user can
+    % set the rule to calculate the triangles (setting
+    % 'DirectedTrianglesRule').
     % 
     % Transitivity methods:
     %   Transitivity                - constructor 
