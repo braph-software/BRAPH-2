@@ -200,8 +200,8 @@ classdef SubjectDTI < Subject
             sub_folders = sub_folders([sub_folders(:).isdir] == 1);
             sub_folders = sub_folders(~ismember({sub_folders(:).name}, {'.', '..'}));
             
-            % creates cohort
-            cohort = Cohort('', subject_class, atlases, {});
+            % creates cohort          
+            cohort = Cohort('', '', '', subject_class, atlases, {});
             
             % find all xls or xlsx files per sub folder
             for j = 1:1: length(sub_folders)
@@ -216,24 +216,24 @@ classdef SubjectDTI < Subject
                 % load subjects
                 for i = 1:1:length(files)
                     % read file
-                    [~, ~, raw] = xlsread(fullfile(path, files(i).name));
+                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
                     
                     % get age
                     
                     % create subject
-                    sub_name = erase(files(i).name, '.xlsx');
-                    sub_name = erase(sub_name, '.xls');
-                    subject = Subject.getSubject(subject_class, atlases, ...
-                        'SubjectID', sub_name, ...
-                        'DTI', cell2mat(raw));
+                    sub_id = erase(files(i).name, '.xlsx');
+                    sub_id = erase(sub_id, '.xls');
+                    subject = Subject.getSubject(subject_class, ...
+                        sub_id, raw{1, 1}, raw{2, 1}, atlases, ...                     
+                        'DTI', num);
                     
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
                 end
                 
                 % creates a group per subfolder
-                group = Group(subject_class, subjects, 'GroupName', sub_folders(j).name);
-                cohort.getGroups().add(group.getName(), group, j);                
+                group = Group(subject_class, sub_folders(j).name, ['GroupLabel' j], ['Notes' j], subjects);
+                cohort.getGroups().add(group.getID(), group, j);                
             end
         end
         function save_to_xls(cohort, varargin)
@@ -247,7 +247,7 @@ classdef SubjectDTI < Subject
             
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
-                mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 
                 % get info
                 group = cohort.getGroups().getValue(i);
@@ -255,15 +255,19 @@ classdef SubjectDTI < Subject
                 for j = 1:1:group.subjectnumber()
                     % get subject data
                     subject = subjects_list{j};
-                    name = subject.getID();
+                    id = subject.getID();
+                    label = subject.getLabel();
+                    notes = subject.getNotes();
                     data = subject.getData('DTI');
                     
-                    % create table
+                    % create table                    
                     tab = table(data.getValue());
                     
                     % save
-                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.xlsx'];
-                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.xlsx'];
+                    writematrix(label, file, 'Sheet', 1, 'Range', 'A1');
+                    writematrix(notes, file, 'Sheet', 1, 'Range', 'A2');
+                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A3');
                 end
             end
         end

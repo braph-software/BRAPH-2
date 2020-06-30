@@ -123,7 +123,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % See also Group, Subject, BrainAtlases, IndexedDictionary.
             
             % subjects must be a cell array of Subjects of class
-            cohort.name = name;
+            cohort.id = id;
+            cohort.label = label;
+            cohort.notes = notes;
             
             assert(any(strcmp(Subject.getList(), subject_class)), ...
                 [BRAPH2.STR ':Cohort:' BRAPH2.WRONG_INPUT], ...
