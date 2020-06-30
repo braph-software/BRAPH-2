@@ -53,7 +53,7 @@ classdef Subject < handle & matlab.mixin.Copyable
         datadict  % dictionary with subject data
     end
     methods (Access=protected)
-        function sub = Subject(atlases, varargin)
+        function sub = Subject(id, label, notes, atlases, varargin)
             % SUBJECT(ATLASES) creates a subject. 
             % ATLASES is the brain atlases that subject will use.
             % VARARGIN contains information about the subject id and the
@@ -73,8 +73,9 @@ classdef Subject < handle & matlab.mixin.Copyable
                 'The input atlases must be a cell array of BrainAtlas.')
             sub.atlases = atlases;
             
-            id = get_from_varargin(datestr(now()), 'SubjectID', varargin{:});
             sub.setID(id)
+            sub.setLabel(label)
+            sub.setNotes(notes)
             
             sub.initialize_datadict(atlases, varargin{:})
             

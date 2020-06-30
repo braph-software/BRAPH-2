@@ -8,7 +8,7 @@ br5 = BrainRegion('BR5', 'brain region 5', 'notes 5', 5, 5.5, 5.55);
 atlas = BrainAtlas('BA', 'brain atlas', 'notes', 'BrainMesh_ICBM152.nv', {br1, br2, br3, br4, br5});
 
 %% Test 1: Instantiation
-sub = SubjectfMRI(atlas);
+sub = SubjectfMRI('id', 'label', 'notes', atlas);
 
 % %% Test 2: Save and Load cohort from XLS 
 % % setup

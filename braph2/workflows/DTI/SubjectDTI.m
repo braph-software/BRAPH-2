@@ -23,7 +23,7 @@ classdef SubjectDTI < Subject
     %
     % See also Group, Cohort, SubjectMRI, SubjectfMRI, Subject.
     methods
-        function sub = SubjectDTI(atlas, varargin)
+        function sub = SubjectDTI(id, label, notes, atlas, varargin)
             % SUBJECTDTI(ATLAS) creates a subject of type DTI.
             % ATLAS is the brain atlas that subject DTI will use (it can be
             % either a BrainAtlas or a cell array with a single BrainAtlas).
@@ -45,7 +45,7 @@ classdef SubjectDTI < Subject
                 atlases = atlas;
             end
             
-            sub = sub@Subject(atlases, varargin{:});
+            sub = sub@Subject(id, label, notes, atlases, varargin{:});
         end
     end
     methods (Access=protected)  % Utilifty functions

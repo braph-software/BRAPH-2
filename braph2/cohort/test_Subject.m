@@ -13,10 +13,10 @@ atlas = BrainAtlas('BA', 'brain atlas', 'notes', 'BrainMesh_ICBM152.nv', {br1, b
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     if Subject.getBrainAtlasNumber(subject_class) == 1
-        sub = Subject.getSubject(subject_class, {atlas});
-        sub = Subject.getSubject(subject_class, atlas);
+        sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', {atlas});
+        sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', atlas);
     else
-        sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+        sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
     end
 end
 
@@ -24,7 +24,7 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
     
     assert(isequal(sub.getClass(), subject_class), ...
         ['BRAPH:' subject_class ':StaticFuncImplementation'], ...
@@ -71,7 +71,7 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
 
     atlas_copy = atlas.copy();
     atlasses_copy = repmat({atlas_copy}, 1, sub.getBrainAtlasNumber());
@@ -94,7 +94,7 @@ end
 for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     
-    sub = Subject.getSubject(subject_class, repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+    sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
     
     sub_copy = sub.copy();
     assert(sub ~= sub_copy, ... % different objects, but same values
@@ -141,7 +141,7 @@ for i = 1:1:length(subject_class_list)
     data_list = Subject.getDataList(subject_class);
 
     varargin = data_codes;
-    sub_emptydata = Subject.getSubject(subject_class, atlas);
+    sub_emptydata = Subject.getSubject(subject_class, 'id', 'label', 'notes', atlas);
     n = atlas.getBrainRegions().length();
     for i = 1:1:numel(data_codes)
         varargin{(2*i)-1} = data_codes{i};
@@ -158,7 +158,7 @@ for i = 1:1:length(subject_class_list)
         end
     end
     
-    sub = Subject.getSubject(subject_class, atlas, varargin{:});
+    sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', atlas, varargin{:});
     
     assert(isequal(sub.getDataCodes(), data_codes), ...
         ['BRAPH:' subject_class ':Constructor'], ...

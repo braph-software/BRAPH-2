@@ -23,7 +23,7 @@ classdef SubjectMRI < Subject
     %
     % See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
     methods  % Constructor
-        function sub = SubjectMRI(atlas, varargin)
+        function sub = SubjectMRI(id, label, notes, atlas, varargin)
             % SUBJECTMRI(ATLAS) creates a subject of type MRI.
             % ATLAS is the brain atlas that subject MRI will use (it can be
             % either a BrainAtlas or a cell array with a single BrainAtlas).
@@ -45,7 +45,7 @@ classdef SubjectMRI < Subject
                 atlases = atlas;
             end
             
-            sub = sub@Subject(atlases, varargin{:});
+            sub = sub@Subject(id, label, notes, atlases, varargin{:});
         end
     end
     methods (Access=protected)  % Utilifty functions
