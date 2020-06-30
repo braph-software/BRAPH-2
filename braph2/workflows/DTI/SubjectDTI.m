@@ -366,7 +366,7 @@ classdef SubjectDTI < Subject
             files = dir(fullfile(directory, '*.json'));
             
             % creates cohort
-            cohort = Cohort('', subject_class, atlases, {});
+            cohort = Cohort('', '', '', subject_class, atlases, {});
             
             % load subjects
             for i = 1:1:length(files)
@@ -376,9 +376,11 @@ classdef SubjectDTI < Subject
                 % get age
                 
                 % create subject
-                sub_name = erase(files(i).name, '.json');
-                subject = Subject.getSubject(subject_class, atlases, ...
-                    'SubjectID', num2str(sub_name), ...
+                sub_id = erase(files(i).name, '.json');
+                
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(sub_id), raw.SubjectData.label, ...
+                    raw.SubjectData.notes, atlases, ...
                     'DTI', raw.SubjectData.data);
                 
                 cohort.getSubjects().add(subject.getID(), subject, i);
@@ -386,10 +388,9 @@ classdef SubjectDTI < Subject
             
             % creates group
             if i == length(files)
-                [~, groupname] = fileparts(directory);
-                group = Group(subject_class, cohort.getSubjects().getValues());
-                group.setName(groupname);
-                cohort.getGroups().add(group.getName(), group);
+                [~, groupname] = fileparts(directory);                
+                group = Group(subject_class, groupname, '', '', cohort.getSubjects().getValues());
+                cohort.getGroups().add(group.getID(), group);
             end
         end
         function save_to_json(cohort, varargin)
@@ -403,7 +404,7 @@ classdef SubjectDTI < Subject
             
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
-                mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 
                 % get info
                 group = cohort.getGroups().getValue(i);
@@ -411,21 +412,25 @@ classdef SubjectDTI < Subject
                 for j = 1:1:group.subjectnumber()
                     % get subject data
                     subject = subjects_list{j};
-                    name = subject.getID();
+                    id = subject.getID();
+                    label = subject.getLabel();
+                    notes = subject.getNotes();
                     data = subject.getData('DTI');
                     
                     % create structure to be save
                     structure_to_be_saved = struct( ...
-                        'Braph', Constant.VERSION, ...
-                        'Build', Constant.BUILD, ...
+                        'Braph', BRAPH2.NAME, ...
+                        'Build', BRAPH2.BUILD, ...
                         'SubjectData', struct( ...
-                        'name', name, ...
+                        'name', id, ...
+                        'label', label, ...
+                        'notes', notes, ...
                         'data', data.getValue()) ...
                         );
                            
                     % save
                     json_structure = jsonencode(structure_to_be_saved);
-                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.json'];
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.json'];
                     fid = fopen(file, 'w');
                     if fid == -1, error('Cannot create JSON file'); end
                     fwrite(fid, json_structure, 'char');
