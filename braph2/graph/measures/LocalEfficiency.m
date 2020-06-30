@@ -58,7 +58,11 @@ classdef LocalEfficiency < Measure
                 for i = 1:1:N(li)
                     nodes = find(Aii(i, :)  | Aii(:, i).');  % neighbours of u
                     if numel(nodes) > 1
-                        sub_graph = g.subgraph(g, nodes);
+                        if L > 1
+                            sub_graph = g.subgraph(g, nodes, li);
+                        else
+                            sub_graph = g.subgraph(g, nodes);
+                        end
                         global_efficiency = GlobalEfficiency(sub_graph, g.getSettings()).getValue();
                         local_efficiency_layer(i) = mean(global_efficiency{1});
                     end
