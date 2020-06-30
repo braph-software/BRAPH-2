@@ -253,20 +253,20 @@ classdef MultiplexGraphWD < Graph
                     randomized_graph_layer(edges(selected_edges)) = W_sorted(selected_indices);
 
                     % recalculate expected weight for node I_edges(selected_edge)
-                    WAi = accumarray(I_edges(selected_edges), W_sorted(selected_indices), [N,1]);
-                    Iu = any(WAi,2);
+                    WAi = accumarray(I_edges(selected_edges), W_sorted(selected_indices), [N, 1]);
+                    Iu = any(WAi, 2);
                     % readjust expected weight probabilities
                     F = 1 - WAi(Iu)./S_out(Iu);
-                    P(Iu,:) = P(Iu,:).*F(:,ones(1,N));
+                    P(Iu, :) = P(Iu, :).*F(:, ones(1, N));
                     % readjust in-strength
                     S_out(Iu) = S_out(Iu) - WAi(Iu);
 
                     % recalculate expected weight for node J_edges(selected_edge)
-                    WAj = accumarray(J_edges(selected_edges), W_sorted(selected_indices), [N,1]);
-                    Ju = any(WAj,2);
+                    WAj = accumarray(J_edges(selected_edges), W_sorted(selected_indices), [N, 1]);
+                    Ju = any(WAj, 2);
                     % readjust expected weight probabilities
                     F = 1 - WAj(Ju)./S_in(Ju);
-                    P(:,Ju) = P(:,Ju).*F(:,ones(1,N)).';
+                    P(:, Ju) = P(:, Ju).*F(:, ones(1, N)).';
                     % readjust out-strength
                     S_in(Ju) = S_in(Ju) - WAj(Ju);
 
@@ -279,8 +279,8 @@ classdef MultiplexGraphWD < Graph
                 end
 
                 % calculate correlation of original vs reassinged in/out strength
-                rpos_in = corrcoef(sum(Wii,1), sum(randomized_graph_layer,1));
-                rpos_out = corrcoef(sum(Wii,2), sum(randomized_graph_layer,2));
+                rpos_in = corrcoef(sum(Wii, 1), sum(randomized_graph_layer, 1));
+                rpos_out = corrcoef(sum(Wii, 2), sum(randomized_graph_layer, 2));
                 correlation_coefficents(li) = {[rpos_in(2) rpos_out(2)]};
                 randomized_graph(li, li) = {randomized_graph_layer};
             end
