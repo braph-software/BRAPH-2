@@ -1239,12 +1239,19 @@ classdef Graph < handle & matlab.mixin.Copyable
             % containing only the nodes specified by NODES.
             
             if nargin == 3
-                A = g.getA(layer);
+                A = g.getA(layer); 
+                
+                if g.is_binary(g)
+                    sg = Graph.getGraph('GraphBU', A);
+                else
+                    sg = Graph.getGraph('GraphWU', A);
+                end        
+                
             else
                 A = g.getA();
-            end
+                sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings());
+            end     
             
-            sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings());
         end
     end
 %     methods (Access=protected)
