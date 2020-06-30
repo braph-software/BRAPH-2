@@ -8,7 +8,7 @@ classdef GlobalEfficiency < Measure
     % GlobalEfficiency methods:
     %   GlobalEfficiency            - constructor 
     %
-    % GlobalEfficiency methods (Static)
+    % GlobalEfficiency descriptive methods (Static)
     %   getClass                    - returns the global efficiency class
     %   getName                     - returns the name of global efficiency measure
     %   getDescription              - returns the description of global efficiency measure
@@ -55,11 +55,13 @@ classdef GlobalEfficiency < Measure
             for li = 1:1:L
                 inverse_distance = distance{li}.^-1;  % inverse distance
                 inverse_distance(1:N(li)+1:end) = 0;            
-                global_efficiency(li) = {(sum(inverse_distance, 2) / (N(li)-1))};   
+                global_efficiency_layer = (sum(inverse_distance, 2) / (N(li)-1));
+                global_efficiency_layer(isnan(global_efficiency_layer)) = 0;  % Should return zeros, not NaN
+                global_efficiency(li) = {global_efficiency_layer};  
             end
         end
     end
-    methods (Static)
+    methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
@@ -127,7 +129,7 @@ classdef GlobalEfficiency < Measure
             % with GlobalEfficiency 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to GlobalEfficiency. 
+            % of compatible graph classes to global efficiency. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -144,7 +146,7 @@ classdef GlobalEfficiency < Measure
             % graphs with GlobalEfficiency 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to GlobalEfficiency.
+            % compatible graphs to global efficiency.
             % 
             % See also getCompatibleGraphList().
             

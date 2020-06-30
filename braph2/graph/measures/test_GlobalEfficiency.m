@@ -107,16 +107,9 @@ assert(isequal(global_efficiency.getValue(), known_global_efficiency), ...
     'GlobalEfficiency is not being calculated correctly for MultiplexGraphWU.')
 
 %% Test 4: GraphBU: Calculation vs BCT
-graph_class = 'GraphBU';
-A = [
-    0   .1  0   0   0
-    .2   0  0   0   0
-    0    0  0  .2   0
-    0    0 .1   0   0
-    0    0  0   0   0
-    ];
-
+A = rand(randi(5));
 g = GraphBU(A);
+
 global_efficiency = GlobalEfficiency(g).getValue();
 global_efficiency = global_efficiency{1};
 global_efficiency_bct = efficiency_bin(g.getA());
@@ -184,7 +177,7 @@ else                                        %global efficiency
     E=sum(e(:))./(n^2-n);
 end
 
-
+E(isnan(E)) = 0;
     function D=distance_inv(A_)
         l=1;                                        %path length
         Lpath=A_;                                   %matrix of paths l
