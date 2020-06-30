@@ -283,20 +283,27 @@ classdef SubjectDTI < Subject
             files = dir(fullfile(directory, '*.txt'));
             
             % creates cohort
-            cohort = Cohort('', subject_class, atlases, {});
+            cohort = Cohort('', '', '', subject_class, atlases, {});
             
             % load subjects
             for i = 1:1:length(files)
-                % read file
-                raw = readtable(fullfile(directory, files(i).name));
+                % read file  
+                raw = textread(fullfile(directory, files(i).name), '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
                 
-                % get age
+                raw = raw(~cellfun('isempty', raw));  % remove empty cells
                 
                 % create subject
-                sub_name = erase(files(i).name, '.txt');
-                subject = Subject.getSubject(subject_class, atlases, ...
-                    'SubjectID', sub_name, ...
-                    'DTI', raw{:, :});
+                sub_id = erase(files(i).name, '.txt');
+                label = raw{1, 1};
+                notes = raw{2, 1};
+                B = raw(3:end, 1);
+                B = reshape(B, [atlases.getBrainRegions().length() atlases.getBrainRegions().length()]);
+                B = B';
+                C = cellfun(@(x) str2double(x), B);
+
+                subject = Subject.getSubject(subject_class, ...
+                        sub_id, label, notes, atlases, ...                     
+                        'DTI', C);
                 
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
@@ -304,9 +311,8 @@ classdef SubjectDTI < Subject
             % creates group
             if i == length(files)
                 [~, groupname] = fileparts(directory);
-                group = Group(subject_class, cohort.getSubjects().getValues());
-                group.setName(groupname);
-                cohort.getGroups().add(group.getName(), group);
+                group = Group(subject_class, groupname, '', '',  cohort.getSubjects().getValues());
+                cohort.getGroups().add(group.getID(), group);
             end
         end
         function save_to_txt(cohort, varargin)
@@ -320,7 +326,7 @@ classdef SubjectDTI < Subject
             
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
-                mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 
                 % get info
                 group = cohort.getGroups().getValue(i);
@@ -328,15 +334,23 @@ classdef SubjectDTI < Subject
                 for j = 1:1:group.subjectnumber()
                     % get subject data
                     subject = subjects_list{j};
-                    name = subject.getID();
-                    data = subject.getData('DTI');
+                    id = subject.getID();
+                    label = subject.getLabel();
+                    notes = subject.getNotes();
+                    data = subject.getData('DTI').getValue();
                     
                     % create table
-                    tab = table(data.getValue());
+                    extra_info = cell(2, size(data, 1));
+                    extra_info{1, 1} = label;
+                    extra_info{2, 1} = notes;
+                    tab = [
+                        extra_info;
+                        num2cell(data)
+                        ];
                     
                     % save
-                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.txt'];
-                    writetable(tab, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.txt'];
+                    writecell(tab, file, 'Delimiter', '\t');
                 end
             end
         end

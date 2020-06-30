@@ -62,18 +62,18 @@ input_rule = 'DTI';
 input_data = rand(atlas.getBrainRegions().length(), atlas.getBrainRegions().length());
 save_dir_rule = 'RootDirectory';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased'];
-sub1 = Subject.getSubject(sub_class, atlas, 'SubjectID', '1', input_rule, input_data);
-sub2 = Subject.getSubject(sub_class, atlas, 'SubjectID', '2', input_rule, input_data);
-sub3 = Subject.getSubject(sub_class, atlas, 'SubjectID', '3', input_rule, input_data);
-group = Group(sub_class, {sub1, sub2, sub3}, 'GroupName', 'TestGroup1');
+sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
+sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
+sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule, input_data);
+group = Group(sub_class, 'GroupName1', 'TestGroup1', 'notes1', {sub1, sub2, sub3});
 
-cohort = Cohort('cohorttest', sub_class, atlas, {sub1, sub2, sub3});
-cohort.getGroups().add(group.getName(), group);
+cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2, sub3});
+cohort.getGroups().add(group.getID(), group);
 
 % act
 SubjectDTI.save_to_txt(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectDTI.load_from_txt(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getName()]);
+load_cohort = SubjectDTI.load_from_txt(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getID()]);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
