@@ -24,9 +24,8 @@ classdef DataFunctional < Data
     
     methods
         function d = DataFunctional(atlas, value, varargin)
-            % DATAFUNCTIONAL(ATLAS, VALUE, 'PROPERTYVALUE1', 'VALUE1', ...)
-            % creates DataFunctional object, checks if value is present,
-            % and calls for the super class.
+            % DATAFUNCTIONAL(ATLAS, VALUE) creates DataFunctional object
+            % and calls for the superclass.
             %
             % See also Data, DataConnectivity, DataScalar, DataStructural.
             

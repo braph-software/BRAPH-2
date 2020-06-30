@@ -1,5 +1,5 @@
 classdef Data < handle & matlab.mixin.Copyable
-    % Data (Abstract) A Data
+    % Data (Abstract) A data item
     % Data provides the methods necessary for all data types
     % It is a subclass of handle and matlab.mixin.Copyable
     %
@@ -37,7 +37,7 @@ classdef Data < handle & matlab.mixin.Copyable
         function d = Data(atlas, value, varargin)
             % DATA(ATLAS, VALUE, 'PROPERTYRULE1', 'VALUE1', ...) creates a
             % Data object to store Subject data using the ATLAS and VALUE,
-            % with PROPERTYRULES if needed.
+            % with a list of PROPERTYRULES if needed.
             %
             % See also Subject, Cohort, Group.
             

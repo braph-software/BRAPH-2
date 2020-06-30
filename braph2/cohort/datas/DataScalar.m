@@ -23,9 +23,8 @@ classdef DataScalar < Data
     % See also Data, DataFunctional, DataConnectivity, DataStructural.
     methods
         function d = DataScalar(atlas, value, varargin)
-            % DATASCALAR(ATLAS, VALUE, 'PROPERTYVALUE1', 'VALUE1', ...)
-            % creates DataScalar object, checks if value is present,
-            % and calls for the super class.
+            % DATASCALAR(ATLAS, VALUE) creates DataScalar object and calls
+            % for the superclass.
             %
             % See also Data, DataFunctional, DataConnectivity, DataStructural.
             

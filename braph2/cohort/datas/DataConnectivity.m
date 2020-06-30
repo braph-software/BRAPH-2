@@ -24,9 +24,8 @@ classdef DataConnectivity < Data
     
     methods
         function d = DataConnectivity(atlas, value, varargin)
-            % DATACONNECTIVITY(ATLAS, VALUE, 'PROPERTYVALUE1', 'VALUE1', ...)
-            % creates DataConnectivity object, checks if value is present,
-            % and calls for the superclass.
+            % DATACONNECTIVITY(ATLAS, VALUE) creates DataConnectivity
+            % object and calls for the superclass.
             %
             % See also Data, DataFunctional, DataScalar, DataStructural.
             

@@ -24,9 +24,8 @@ classdef DataStructural < Data
     
     methods
         function d = DataStructural(atlas, value, varargin)
-            % DATASTRUCTURAL(ATLAS, VALUE, 'PROPERTYVALUE1', 'VALUE1', ...)
-            % creates DataStructurral object, checks if value is present,
-            % and calls for the super class.
+            % DATASTRUCTURAL(ATLAS, VALUE) creates DataStructurral object
+            % and calls for the superclass.
             %
             % See also Data, DataFunctional, DataScalar, DataConnectivity.
             
