@@ -216,13 +216,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             randomized_graph = A;
             
             for li = 1:1:L
-                
-                if g.is_graph(g)
-                    Aii = A;
-                else
-                    Aii = A{li, li};
-                end
-                
+                Aii = A{li, li};
                 % remove self connections
                 Aii(1:length(Aii)+1:numel(Aii)) = 0;
                 [I_edges, J_edges] = find(triu(Aii)); % find all the edges
@@ -282,11 +276,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
                         swaps(L) = swaps(L)+1;
                     end
                 end
-                if L > 1
-                    randomized_graph(li, li) = {randomized_graph_layer};
-                else
-                    randomized_graph = randomized_graph_layer;
-                end
+                randomized_graph(li, li) = {randomized_graph_layer};
             end
         end
     end
