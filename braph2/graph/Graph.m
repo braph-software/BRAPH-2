@@ -1242,9 +1242,9 @@ classdef Graph < handle & matlab.mixin.Copyable
                 A = g.getA(layer); 
                 
                 if g.is_binary(g)
-                    sg = Graph.getGraph('GraphBU', A);
+                    sg = Graph.getGraph('GraphBU', A(nodes, nodes), g.getSettings());
                 else
-                    sg = Graph.getGraph('GraphWU', A);
+                    sg = Graph.getGraph('GraphWU', A(nodes, nodes), g.getSettings());
                 end        
                 
             else
