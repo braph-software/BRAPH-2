@@ -10,7 +10,7 @@ atlas = BrainAtlas('BA', 'brain atlas', 'notes', 'BrainMesh_ICBM152.nv', {br1, b
 %% Test 1: Instantiation
 sub = SubjectDTI('id', 'label', 'notes', atlas);
 
-% %% Test 2: Save and Load Cohort XLS
+%% Test 2: Save and Load Cohort XLS
 % setup
 sub_class = 'SubjectDTI';
 input_rule = 'DTI';
