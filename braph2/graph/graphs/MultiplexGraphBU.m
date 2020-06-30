@@ -194,6 +194,11 @@ classdef MultiplexGraphBU < MultiplexGraphBD
                 negativity_type =  Graph.NONNEGATIVE * ones(layernumber);
             end
         end
+        function available_settings = getAvailableSettings(g)  %#ok<INUSD>
+            available_settings = { ...
+                'MultiplexGraphBU.attempts_per_edge', BRAPH2.NUMERIC, 5, {} ...
+                };
+        end
     end
 %     methods
 %         function g = GraphBU(A, varargin)

@@ -194,6 +194,11 @@ classdef MultiplexGraphWU < MultiplexGraphWD
                 negativity_type =  Graph.NONNEGATIVE * ones(layernumber);
             end
         end
+        function available_settings = getAvailableSettings(g)  %#ok<INUSD>
+            available_settings = { ...
+                'MultiplexGraphWU.number_of_weights', BRAPH2.NUMERIC, 5, {} ...
+                };
+        end
     end
 %     methods
 %         function g = GraphWU(A, varargin)
