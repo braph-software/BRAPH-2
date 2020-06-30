@@ -9,7 +9,7 @@ classdef LocalEfficiency < Measure
     % LocalEfficiency methods:
     %   LocalEfficiency             - constructor
     %
-    % LocalEfficiency methods (Static)
+    % LocalEfficiency descriptive methods (Static)
     %   getClass                    - returns the local efficiency class
     %   getName                     - returns the name of local efficiency measure
     %   getDescription              - returns the description of local efficiency measure
@@ -71,7 +71,7 @@ classdef LocalEfficiency < Measure
             end
         end
     end
-    methods (Static)
+    methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
