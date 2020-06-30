@@ -196,7 +196,7 @@ classdef SubjectfMRI < Subject
             end
             
             % creates cohort
-            cohort = Cohort('', subject_class, atlases, {});
+            cohort = Cohort('', '', '', subject_class, atlases, {});
             
             % find all subfolders
             sub_folders = dir(directory);
@@ -216,24 +216,24 @@ classdef SubjectfMRI < Subject
                 % load subjects
                 for i = 1:1:length(files)
                     % read file
-                    [~, ~, raw] = xlsread(fullfile(path, files(i).name));
+                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
                     
                     % get age
                     
                     % create subject
-                    sub_name = erase(files(i).name, '.xlsx');
-                    sub_name = erase(sub_name, '.xls');
-                    subject = Subject.getSubject(subject_class, atlases, ...
-                        'SubjectID', sub_name, ...
-                        'fMRI', cell2mat(raw));
+                    sub_id = erase(files(i).name, '.xlsx');
+                    sub_id = erase(sub_id, '.xls');
+                    subject = Subject.getSubject(subject_class, ...
+                        sub_id, raw{1, 1}, raw{2, 1}, atlases, ...
+                        'fMRI', num);
                     
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
                 end
                 
                  % creates a group per subfolder
-                group = Group(subject_class, subjects, 'GroupName', sub_folders(j).name);
-                cohort.getGroups().add(group.getName(), group, j);      
+                group = Group(subject_class, sub_folders(j).name, ['GroupLabel' j], ['Notes' j], subjects);
+                cohort.getGroups().add(group.getID(), group, j);      
             end
         end
         function save_to_xls(cohort, varargin)
@@ -247,7 +247,7 @@ classdef SubjectfMRI < Subject
             
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
-                mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 
                 % get info
                 group = cohort.getGroups().getValue(i);
@@ -255,15 +255,19 @@ classdef SubjectfMRI < Subject
                 for j = 1:1:group.subjectnumber()
                     % get subject data
                     subject = subjects_list{j};
-                    name = subject.getID();
+                    id = subject.getID();
+                    label = subject.getLabel();
+                    notes = subject.getNotes();
                     data = subject.getData('fMRI');
                     
                     % create table
                     tab = table(data.getValue());
                     
                     % save
-                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.xlsx'];
-                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.xlsx'];
+                    writematrix(label, file, 'Sheet', 1, 'Range', 'A1');
+                    writematrix(notes, file, 'Sheet', 1, 'Range', 'A2');
+                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A3');
                 end
             end
         end
@@ -279,20 +283,27 @@ classdef SubjectfMRI < Subject
             files = dir(fullfile(directory, '*.txt'));
             
             % creates cohort
-            cohort = Cohort('', subject_class, atlases, {});
+            cohort = Cohort('', '', '', subject_class, atlases, {});
             
             % load subjects
             for i = 1:1:length(files)
                 % read file
-                raw = readtable(fullfile(directory, files(i).name));
+                raw = textread(fullfile(directory, files(i).name), '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                raw = raw(~cellfun('isempty', raw));  % remove empty cells
                 
-                % get age
-                
-                % create subject
-                sub_name = erase(files(i).name, '.txt');
-                subject = Subject.getSubject(subject_class, atlases, ...
-                    'SubjectID', sub_name, ...
-                    'fMRI', raw{:, :});
+                 % create subject
+                sub_id = erase(files(i).name, '.txt');
+                label = raw{1, 1};
+                notes = raw{2, 1};
+                B = raw(3:end, 1);
+                number_columns = length(B) / atlases.getBrainRegions().length();
+                B = reshape(B, [number_columns atlases.getBrainRegions().length()]);
+                B = B';
+                C = cellfun(@(x) str2double(x), B);
+
+                subject = Subject.getSubject(subject_class, ...
+                        sub_id, label, notes, atlases, ...                     
+                        'fMRI', C);
                 
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
@@ -300,9 +311,8 @@ classdef SubjectfMRI < Subject
             % creates group
             if i == length(files)
                 [~, groupname] = fileparts(directory);
-                group = Group(subject_class, cohort.getSubjects().getValues());
-                group.setName(groupname);
-                cohort.getGroups().add(group.getName(), group);
+                group = Group(subject_class, groupname, '', '',  cohort.getSubjects().getValues());
+                cohort.getGroups().add(group.getID(), group);
             end
         end
         function save_to_txt(cohort, varargin)
@@ -316,7 +326,7 @@ classdef SubjectfMRI < Subject
             
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
-                mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 
                 % get info
                 group = cohort.getGroups().getValue(i);
@@ -324,15 +334,23 @@ classdef SubjectfMRI < Subject
                 for j = 1:1:group.subjectnumber()
                     % get subject data
                     subject = subjects_list{j};
-                    name = subject.getID();
-                    data = subject.getData('fMRI');
+                    id = subject.getID();
+                    label = subject.getLabel();
+                    notes = subject.getNotes();
+                    data = subject.getData('fMRI').getValue();
                     
                     % create table
-                    tab = table(data.getValue());
+                    extra_info = cell(2, size(data, 2));
+                    extra_info{1, 1} = label;
+                    extra_info{2, 1} = notes;
+                    tab = [
+                        extra_info;
+                        num2cell(data)
+                        ];
                     
                     % save
-                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.txt'];
-                    writetable(tab, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.txt'];
+                    writecell(tab, file, 'Delimiter', '\t');
                 end
             end
         end
@@ -348,7 +366,7 @@ classdef SubjectfMRI < Subject
             files = dir(fullfile(directory, '*.json'));
             
             % creates cohort
-            cohort = Cohort('', subject_class, atlases, {});
+            cohort = Cohort('', '', '', subject_class, atlases, {});
             
             % load subjects
             for i = 1:1:length(files)
@@ -358,9 +376,10 @@ classdef SubjectfMRI < Subject
                 % get age
                 
                 % create subject
-                sub_name = erase(files(i).name, '.json');
-                subject = Subject.getSubject(subject_class, atlases, ...
-                    'SubjectID', num2str(sub_name), ...
+                sub_id = erase(files(i).name, '.json');
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(sub_id), raw.SubjectData.label, ...
+                    raw.SubjectData.notes, atlases, ...
                     'fMRI', raw.SubjectData.data);
                 
                 cohort.getSubjects().add(subject.getID(), subject, i);
@@ -369,9 +388,8 @@ classdef SubjectfMRI < Subject
             % creates group
             if i == length(files)
                 [~, groupname] = fileparts(directory);
-                group = Group(subject_class, cohort.getSubjects().getValues());
-                group.setName(groupname);
-                cohort.getGroups().add(group.getName(), group);
+                group = Group(subject_class, groupname, '', '', cohort.getSubjects().getValues());
+                cohort.getGroups().add(group.getID(), group);
             end
         end
         function save_to_json(cohort, varargin)
@@ -385,7 +403,7 @@ classdef SubjectfMRI < Subject
             
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
-                mkdir(root_directory, cohort.getGroups().getValue(i).getName());
+                mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 
                 % get info
                 group = cohort.getGroups().getValue(i);
@@ -393,21 +411,25 @@ classdef SubjectfMRI < Subject
                 for j = 1:1:group.subjectnumber()
                     % get subject data
                     subject = subjects_list{j};
-                    name = subject.getID();
+                    id = subject.getID();
+                    label = subject.getNotes();
+                    notes = subject.getNotes();
                     data = subject.getData('fMRI');
                     
                     % create structure to be save
                     structure_to_be_saved = struct( ...
-                        'Braph', Constant.VERSION, ...
-                        'Build', Constant.BUILD, ...
+                        'Braph', BRAPH2.NAME, ...
+                        'Build', BRAPH2.BUILD, ...
                         'SubjectData', struct( ...
-                        'name', name, ...
+                        'name', id, ...
+                        'label', label, ...
+                        'notes', notes, ...
                         'data', data.getValue()) ...
                         );
                            
                     % save
                     json_structure = jsonencode(structure_to_be_saved);
-                    file = [root_directory filesep() cohort.getGroups().getValue(i).getName() filesep() name '.json'];
+                    file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.json'];
                     fid = fopen(file, 'w');
                     if fid == -1, error('Cannot create JSON file'); end
                     fwrite(fid, json_structure, 'char');
