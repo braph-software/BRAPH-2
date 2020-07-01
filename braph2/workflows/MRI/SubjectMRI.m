@@ -201,11 +201,23 @@ classdef SubjectMRI < Subject
             end
             
             % search for cohort info file
-            path_cohort = [fileparts(which(file))]; %#ok<NBRAK>
+            file_cohort = erase(file, '.xlsx'); 
+            file_cohort = erase(file_cohort, '.xls');
+            file_cohort = [file_cohort '.txt'];
+            cohort_id = '';
+            cohort_label = '';
+            cohort_notes = '';
+            
+            if exist(file_cohort, 'file')
+                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                cohort_id = raw_cohort{1, 1};
+                cohort_label = raw_cohort{2, 1};
+                cohort_notes = raw_cohort{3, 1};
+            end
             
             
             % creates cohort
-            cohort = Cohort('', '', '', subject_class, atlases, {});
+            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             
             [~, ~, raw] = xlsread(file);
             
@@ -221,9 +233,11 @@ classdef SubjectMRI < Subject
             path = [fileparts(which(file))]; %#ok<NBRAK>
             file_name = erase(file, path);
             file_name = erase(file_name, filesep());
-            file_name = erase(file_name, '.xls');
             file_name = erase(file_name, '.xlsx');
+            file_name = erase(file_name, '.xls');            
             group.setID(file_name);
+            group.setLabel(raw{2, 1});  % set group info
+            group.setNotes(raw{3, 1});
             cohort.getGroups().add(group.getID(), group);
         end
         function save_to_xls(cohort, varargin)
@@ -239,9 +253,9 @@ classdef SubjectMRI < Subject
                 end
             end
             
-            % cohort info
-            file_cohort = erase(file, '.xlsx'); %#ok<NASGU>
-            file_cohort = erase(file, '.xls');
+            % cohort info           
+            file_cohort = erase(file, '.xlsx'); 
+            file_cohort = erase(file_cohort, '.xls');
             file_cohort = [file_cohort '.txt'];
             cohort_info = cell(3, 1);
             cohort_info{1, 1} = cohort.getID();
