@@ -198,10 +198,10 @@ classdef SubjectMultiplexMRI < Subject
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
                 msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(Constant.XLS_EXTENSION, msg);
-                file1 = [filepath filename];
+                [filename1, filepath1, filterindex1] = uigetfile(Constant.XLS_EXTENSION, msg);
+                file1 = [filepath1 filename1];
                 
-                if ~filterindex
+                if ~filterindex1
                     return
                 end
             end
@@ -209,10 +209,10 @@ classdef SubjectMultiplexMRI < Subject
             file2 = get_from_varargin('', 'File2', varargin{:});
             if isequal(file2, '')  % select file
                 msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(Constant.XLS_EXTENSION, msg);
-                file2 = [filepath filename];
+                [filename2, filepath2, filterindex2] = uigetfile(Constant.XLS_EXTENSION, msg);
+                file2 = [filepath2 filename2];
                 
-                if ~filterindex
+                if ~filterindex2
                     return
                 end
             end
@@ -239,12 +239,12 @@ classdef SubjectMultiplexMRI < Subject
             
             % creates group
             group = Group(subject_class,'', '', '', cohort.getSubjects().getValues());
-            path = [fileparts(which(file))]; %#ok<NBRAK>
-            file_name = erase(file, path);
-            file_name = erase(file_name, filesep());
-            file_name = erase(file_name, '.xls');
-            file_name = erase(file_name, '.xlsx');
-            group.setID(file_name);
+            path1 = [fileparts(which(file1))]; %#ok<NBRAK>
+            file_name1 = erase(file1, path1);
+            file_name1 = erase(file_name1, filesep());
+            file_name1 = erase(file_name1, '.xls');
+            file_name1 = erase(file_name1, '.xlsx');
+            group.setID(file_name1);
             cohort.getGroups().add(group.getID(), group);
         end
         function save_to_xls(cohort, varargin)
