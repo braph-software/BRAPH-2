@@ -32,7 +32,7 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectMRI.save_to_xls(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path1);
+SubjectMultiplexMRI.save_to_xls(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path1);
 
 load_cohort = SubjectMRI.load_from_xls(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path1);
 
@@ -83,7 +83,7 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectMRI.save_to_txt(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectMultiplexMRI.save_to_txt(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 load_cohort = SubjectMRI.load_from_txt(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
@@ -132,7 +132,7 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectMRI.save_to_json(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectMultiplexMRI.save_to_json(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 load_cohort = SubjectMRI.load_from_json(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 

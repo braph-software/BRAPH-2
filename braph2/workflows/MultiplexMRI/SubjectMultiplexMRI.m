@@ -329,20 +329,26 @@ classdef SubjectMultiplexMRI < Subject
             row_id = 'ID';
             row_label = 'Label';
             row_notes = 'Notes';
-            first_row_table = table(row_data, 'VariableNames', {'row_datas1'});
-            first_row_table.row_ids = row_id;
-            first_row_table.row_labels = row_label;
-            first_row_table.row_notes = row_notes;
-            first_row_table = [first_row_table(:, 2) first_row_table(:, 3) ...
-                first_row_table(:, 4) first_row_table(:, 1)];
+            first_row_table1 = table(row_data, 'VariableNames', {'row_datas1'});
+            first_row_table1.row_ids = row_id;
+            first_row_table1.row_labels = row_label;
+            first_row_table1.row_notes = row_notes;
+            first_row_table1 = [first_row_table1(:, 2) first_row_table1(:, 3) ...
+                first_row_table1(:, 4) first_row_table1(:, 1)];
+            first_row_table2 = table(row_data, 'VariableNames', {'row_datas2'});
+            first_row_table2.row_ids = row_id;
+            first_row_table2.row_labels = row_label;
+            first_row_table2.row_notes = row_notes;
+            first_row_table2 = [first_row_table2(:, 2) first_row_table2(:, 3) ...
+                first_row_table2(:, 4) first_row_table2(:, 1)];
             
             % creates tables
             tab1 = [
-                first_row_table
+                first_row_table1
                 tab1
                 ];
             tab2 = [
-                first_row_table
+                first_row_table2
                 tab2
                 ];
             
