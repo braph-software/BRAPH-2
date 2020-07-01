@@ -547,7 +547,7 @@ classdef SubjectMultiplexMRI < Subject
         end
         function cohort = load_from_json(subject_class, atlases, varargin)
             % file1 (fullpath)
-            file1 = get_from_varargin('', 'File', varargin{:});
+            file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
                 msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
                 [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
@@ -558,7 +558,7 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             % file2 (fullpath)
-            file2 = get_from_varargin('', 'File', varargin{:});
+            file2 = get_from_varargin('', 'File2', varargin{:});
             if isequal(file2, '')  % select file
                 msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
                 [filename2, filepath2, filterindex2] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
