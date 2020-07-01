@@ -348,8 +348,9 @@ classdef SubjectMultiplexMRI < Subject
                 ];
             
             % save
-            writetable(tab1, file1, 'Sheet', 1, 'WriteVariableNames', 0);
-            writetable(tab2, file2, 'Sheet', 1, 'WriteVariableNames', 0);
+            writecell(group_info, file1);
+            writetable(tab1, file1, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
+            writetable(tab2, file2, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
         end
         function cohort = load_from_txt(subject_class, atlases, varargin)
             % file (fullpath)
