@@ -236,13 +236,12 @@ classdef SubjectMultiplexMRI < Subject
             cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             
             [~, ~, raw1] = xlsread(file1);
-            [~, ~, raw2] = xlsread(file2);
-            
+            [~, ~, raw2] = xlsread(file2);           
             % Assert both files have the same size (they should contain
             % same number of regions and same number of subjects)
-            assert(size(raw1) && size(raw2), ...
+            assert(size(raw1) == size(raw2), ...
                 [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
-                'The input files must have the same number of subjects with data from the same brain regions')
+                'The input excel files must have the same number of subjects with data from the same brain regions')
             
             for i = 2:1:size(raw1, 1)
                 subject = Subject.getSubject(subject_class, ...                    
@@ -330,7 +329,7 @@ classdef SubjectMultiplexMRI < Subject
             row_id = 'ID';
             row_label = 'Label';
             row_notes = 'Notes';
-            first_row_table = table(row_data, 'VariableNames', {'row_datas'});
+            first_row_table = table(row_data, 'VariableNames', {'row_datas1'});
             first_row_table.row_ids = row_id;
             first_row_table.row_labels = row_label;
             first_row_table.row_notes = row_notes;
@@ -351,6 +350,323 @@ classdef SubjectMultiplexMRI < Subject
             writecell(group_info, file1);
             writetable(tab1, file1, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
             writetable(tab2, file2, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
+        end
+        function cohort = load_from_txt(subject_class, atlases, varargin)
+            % file1 (fullpath)
+            file1 = get_from_varargin('', 'File1', varargin{:});
+            if isequal(file1, '')  % select file
+                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(Constant.TXT_EXTENSION, msg);
+                file1 = [filepath1 filename1];
+                
+                if ~filterindex1
+                    return
+                end
+            end
+            % file2 (fullpath)
+            file2 = get_from_varargin('', 'File2', varargin{:});
+            if isequal(file2, '')  % select file
+                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename2, filepath2, filterindex2] = uigetfile(Constant.TXT_EXTENSION, msg);
+                file2 = [filepath2 filename2];
+                
+                if ~filterindex2
+                    return
+                end
+            end
+            
+            % creates cohort
+            cohort = Cohort('', '', '', subject_class, atlases, {});
+            
+            % reads file
+            raw1 = readtable(file1, 'Delimiter', '\t');
+            raw2 = readtable(file2, 'Delimiter', '\t');
+            assert(size(raw1) == size(raw2), ...
+                [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
+                'The input txt files must have the same number of subjects with data from the same brain regions')
+            
+            for i = 1:1:size(raw1, 1)  % first row is being read as table label
+                subject = Subject.getSubject(subject_class, ...                    
+                    char(raw1{i, 1}), char(raw1{i, 2}), char(raw1{i, 3}), atlases, ...
+                    'MRI1', raw1{i, 4:size(raw1, 2)}', ...
+                    'MRI2', raw2{i, 4:size(raw2, 2)}');
+                cohort.getSubjects().add(subject.getID(), subject, i);
+            end
+            
+            % creates group
+            group = Group(subject_class, '', '', '', cohort.getSubjects().getValues());
+            path = [fileparts(which(file1))]; %#ok<NBRAK>
+            file_name = erase(file, path);
+            file_name = erase(file_name, filesep());
+            file_name = erase(file_name, '.txt');
+            group.setID(file_name);
+            cohort.getGroups().add(group.getID(), group);
+        end
+        function save_to_txt(cohort, varargin)
+            % file1 (fullpath)
+            file1 = get_from_varargin('', 'File1', varargin{:});
+            if isequal(file1, '')  % select file
+                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(Constant.TXT_EXTENSION, msg);
+                file1 = [filepath1 filename1];
+                
+                if ~filterindex1
+                    return
+                end
+            end
+            % file2 (fullpath)
+            file2 = get_from_varargin('', 'File2', varargin{:});
+            if isequal(file2, '')  % select file
+                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename2, filepath2, filterindex2] = uigetfile(Constant.TXT_EXTENSION, msg);
+                file2 = [filepath2 filename2];
+                
+                if ~filterindex2
+                    return
+                end
+            end
+            
+            % get info
+            groups = cohort.getGroups().getValues();
+            group = groups{1};  % must change
+            subjects_list = group.getSubjects();
+            
+            for j = 1:1:group.subjectnumber()
+                % get subject data
+                subject = subjects_list{j};
+                row_ids{j, 1} = subject.getID(); %#ok<AGROW>
+                row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
+                row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
+                row_datas1{j, 1} = subject.getData('MRI1').getValue(); %#ok<AGROW>
+                row_datas2{j, 1} = subject.getData('MRI2').getValue(); %#ok<AGROW>
+            end
+            t1 = table(row_ids, row_labels, row_notes, row_datas1);
+            t2 = table(row_ids, row_labels, row_notes, row_datas2);
+
+            atlases = cohort.getBrainAtlases();
+            atlas = atlases{1};  % must change
+            
+            for i = 1:1:atlas.getBrainRegions().length()
+                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
+            end
+            
+            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
+            row_id = 'ID';
+            row_label = 'Label';
+            row_note = 'Notes';
+            first_row_table = table(row_data, 'VariableNames', {'row_datas1'});
+            first_row_table.row_ids = row_id;
+            first_row_table.row_labels = row_label;
+            first_row_table.row_notes = row_note;
+            first_row_table = [first_row_table(:, 2) first_row_table(:, 3) ...
+                first_row_table(:, 4) first_row_table(:, 1)];
+            
+            % creates table
+            tab1 = [
+                first_row_table
+                t1
+                ];
+            tab2 = [
+                first_row_table
+                t1
+                ];
+            
+            % save
+            f_1 = [file1(1:length(file1)-4) '_quotation' file1(length(file1)-3:end)];
+            writetable(tab1, f_1, 'Delimiter', '\t', 'WriteVariableNames', 0);
+            f_2 = [file2(1:length(file2)-4) '_quotation' file2(length(file2)-3:end)];
+            writetable(tab2, f_2, 'Delimiter', '\t', 'WriteVariableNames', 0);
+            
+            % remove quotation marks 1
+            fid = fopen(f_1);
+            C = textscan(fid, '%s', 'delimiter', '\t');
+            fclose(fid);
+            for k=1:numel(C{1, 1})
+                tmp = regexp(C{1, 1}(k),'"'); % find quotation marks
+                C{1,1}{k,1}(tmp{1, 1}) = ''; % substitute with empty spaces
+            end
+            % print new file1
+            fName = file1;
+            fid = fopen(fName, 'w');            % Open the file
+            m = atlas.getBrainRegions().length() + 2;
+            count = 0;
+            
+            for k = 1:numel(C{1, 1})
+                if count == m
+                    fprintf(fid, '%s\r\n', C{1, 1}{k, 1});
+                    count = -1;
+                else
+                    fprintf(fid, '%s\t', C{1, 1}{k, 1});
+                end
+                count = count + 1;
+            end
+            delete(f_1);
+            fclose(fid);
+            
+            % remove quotation marks 2
+            fid = fopen(f_2);
+            C = textscan(fid, '%s', 'delimiter', '\t');
+            fclose(fid);
+            for k=1:numel(C{1, 1})
+                tmp = regexp(C{1, 1}(k),'"'); % find quotation marks
+                C{1,1}{k,1}(tmp{1, 1}) = ''; % substitute with empty spaces
+            end
+            % print new file2
+            fName = file2;
+            fid = fopen(fName, 'w');            % Open the file
+            m = atlas.getBrainRegions().length() + 2;
+            count = 0;
+            
+            for k = 1:numel(C{1, 1})
+                if count == m
+                    fprintf(fid, '%s\r\n', C{1, 1}{k, 1});
+                    count = -1;
+                else
+                    fprintf(fid, '%s\t', C{1, 1}{k, 1});
+                end
+                count = count + 1;
+            end
+            delete(f_2);
+            fclose(fid);
+        end
+        function cohort = load_from_json(subject_class, atlases, varargin)
+            % file1 (fullpath)
+            file1 = get_from_varargin('', 'File', varargin{:});
+            if isequal(file1, '')  % select file
+                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(Constant.JSON_EXTENSION, msg);
+                file1 = [filepath1 filename1];
+                
+                if ~filterindex1
+                    return
+                end
+            end
+            % file2 (fullpath)
+            file2 = get_from_varargin('', 'File', varargin{:});
+            if isequal(file2, '')  % select file
+                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename2, filepath2, filterindex2] = uigetfile(Constant.JSON_EXTENSION, msg);
+                file2 = [filepath2 filename2];
+                
+                if ~filterindex2
+                    return
+                end
+            end
+            
+            % creates cohort
+            cohort = Cohort('', '', '', subject_class, atlases, {});
+            
+            raw1 = jsondecode(fileread(file1)); 
+            raw2 = jsondecode(fileread(file2)); 
+            assert(length(raw1.SubjectData) == length(raw2.SubjectData), ...
+                [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
+                'The input json files must have the same number of subjects with data from the same brain regions')
+            
+            for i = 1:1:length(raw1.SubjectData)
+                id = raw1.SubjectData(i).id;
+                label = raw1.SubjectData(i).label;
+                notes = raw1.SubjectData(i).notes;
+                data1 = raw1.SubjectData(i).data;
+                data2 = raw2.SubjectData(i).data;
+                subject = Subject.getSubject(subject_class, ...                   
+                    id, label, notes, atlases, ...
+                    'MRI1', data1, 'MRI2', data2);
+                cohort.getSubjects().add(subject.getID(), subject, i);
+            end
+            
+            % creates group
+            group = Group(subject_class, '', '', '', cohort.getSubjects().getValues());
+            path = [fileparts(which(file1))]; %#ok<NBRAK>
+            file_name = erase(file1, path);
+            file_name = erase(file_name, filesep());
+            file_name = erase(file_name, '.json');
+            group.setID(file_name);
+            cohort.getGroups().add(group.getID(), group);
+        end
+        function save_to_json(cohort, varargin)
+            % file1 (fullpath)
+            file1 = get_from_varargin('', 'File', varargin{:});
+            if isequal(file1, '')  % select file
+                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(Constant.JSON_EXTENSION, msg);
+                file1 = [filepath1 filename1];
+                
+                if ~filterindex1
+                    return
+                end
+            end
+            % file2 (fullpath)
+            file2 = get_from_varargin('', 'File', varargin{:});
+            if isequal(file2, '')  % select file
+                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename2, filepath2, filterindex2] = uigetfile(Constant.JSON_EXTENSION, msg);
+                file2 = [filepath2 filename2];
+                
+                if ~filterindex2
+                    return
+                end
+            end
+            
+            % get info
+            groups = cohort.getGroups().getValues();
+            group = groups{1};  % must change
+            subjects_list = group.getSubjects();
+            
+            for j = 1:1:group.subjectnumber()
+                % get subject data
+                subject = subjects_list{j};
+               
+                row_ids{j, 1} = subject.getID(); %#ok<AGROW>
+                row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
+                row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
+                row_datas1{j, 1} = subject.getData('MRI1').getValue(); %#ok<AGROW>
+                row_datas2{j, 1} = subject.getData('MRI2').getValue(); %#ok<AGROW>
+            end
+            
+            atlases = cohort.getBrainAtlases();
+            atlas = atlases{1};  % must change
+            
+            % labels
+            for i = 1:1:atlas.getBrainRegions().length()
+                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
+            end            
+            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
+            labels = row_data;
+            
+            % create structure to be save
+            structure_to_be_saved1 = struct( ...
+                'Braph', BRAPH2.NAME, ...
+                'Build', BRAPH2.BUILD, ...
+                'BrainRegionsLabels', labels, ...
+                'SubjectData', struct( ...
+                'id', row_ids, ...
+                'label', row_labels, ...
+                'notes', row_notes, ...
+                'data', row_datas1) ...
+                );
+            structure_to_be_saved2 = struct( ...
+                'Braph', BRAPH2.NAME, ...
+                'Build', BRAPH2.BUILD, ...
+                'BrainRegionsLabels', labels, ...
+                'SubjectData', struct( ...
+                'id', row_ids, ...
+                'label', row_labels, ...
+                'notes', row_notes, ...
+                'data', row_datas2) ...
+                );
+            
+            % save json 1
+            json_structure1 = jsonencode(structure_to_be_saved1);      
+            fid = fopen(file1, 'w');
+            if fid == -1, error('Cannot create JSON file'); end
+            fwrite(fid, json_structure1, 'char');
+            fclose(fid);
+            % save json 2
+            json_structure2 = jsonencode(structure_to_be_saved2); 
+            fid = fopen(file2, 'w');
+            if fid == -1, error('Cannot create JSON file'); end
+            fwrite(fid, json_structure2, 'char');
+            fclose(fid);
         end
     end
 end
