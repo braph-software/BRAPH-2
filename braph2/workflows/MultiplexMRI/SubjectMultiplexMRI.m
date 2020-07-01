@@ -194,7 +194,7 @@ classdef SubjectMultiplexMRI < Subject
     end
     methods (Static)  % Save/load functions
         function cohort = load_from_xls(subject_class, atlases, varargin)
-            % file (fullpath)
+            % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
                 msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
@@ -205,7 +205,7 @@ classdef SubjectMultiplexMRI < Subject
                     return
                 end
             end
-            % file (fullpath)
+            % file2 (fullpath)
             file2 = get_from_varargin('', 'File2', varargin{:});
             if isequal(file2, '')  % select file
                 msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
@@ -248,14 +248,25 @@ classdef SubjectMultiplexMRI < Subject
             cohort.getGroups().add(group.getID(), group);
         end
         function save_to_xls(cohort, varargin)
-            % file (fullpath)
-            file = get_from_varargin('', 'File', varargin{:});
-            if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
-                file = [filepath filename];
+            % file1 (fullpath)
+            file1 = get_from_varargin('', 'File1', varargin{:});
+            if isequal(file1, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(Constant.XLS_EXTENSION, msg);
+                file1 = [filepath1 filename1];
                 
-                if ~filterindex
+                if ~filterindex1
+                    return
+                end
+            end
+            % file2 (fullpath)
+            file2 = get_from_varargin('', 'File2', varargin{:});
+            if isequal(file2, '')  % select file
+                msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                [filename2, filepath2, filterindex2] = uigetfile(Constant.XLS_EXTENSION, msg);
+                file2 = [filepath2 filename2];
+                
+                if ~filterindex2
                     return
                 end
             end
@@ -271,9 +282,11 @@ classdef SubjectMultiplexMRI < Subject
                 row_ids{j, 1} = subject.getID(); %#ok<AGROW>
                 row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
                 row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas{j, 1} = subject.getData('MRI').getValue(); %#ok<AGROW>
+                row_datas1{j, 1} = subject.getData('MRI1').getValue(); %#ok<AGROW>
+                row_datas2{j, 1} = subject.getData('MRI2').getValue(); %#ok<AGROW>
             end
-            tab = table(row_ids, row_labels, row_notes, row_datas);
+            tab1 = table(row_ids, row_labels, row_notes, row_datas1);
+            tab2 = table(row_ids, row_labels, row_notes, row_datas2);
             
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
@@ -293,14 +306,19 @@ classdef SubjectMultiplexMRI < Subject
             first_row_table = [first_row_table(:, 2) first_row_table(:, 3) ...
                 first_row_table(:, 4) first_row_table(:, 1)];
             
-            % creates table
-            tab = [
+            % creates tables
+            tab1 = [
                 first_row_table
-                tab
+                tab1
+                ];
+            tab2 = [
+                first_row_table
+                tab2
                 ];
             
             % save
-            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+            writetable(tab1, file1, 'Sheet', 1, 'WriteVariableNames', 0);
+            writetable(tab2, file2, 'Sheet', 1, 'WriteVariableNames', 0);
         end
         function cohort = load_from_txt(subject_class, atlases, varargin)
             % file (fullpath)
