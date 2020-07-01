@@ -46,11 +46,14 @@ assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), .
 for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length())
     sub = cohort.getSubjects().getValue(i);
     sub_loaded = load_cohort.getSubjects().getValue(i);
-    data = sub.getData(input_rule1);
-    data_loaded = sub_loaded.getData(input_rule1);
+    data1 = sub.getData(input_rule1);
+    data_loaded1 = sub_loaded.getData(input_rule1);
+    data2 = sub.getData(input_rule1);
+    data_loaded2 = sub_loaded.getData(input_rule1);
     assert( ...
         isequal(sub.getID(), sub_loaded.getID()) & ...
-        isequal(data.getValue(), data_loaded.getValue()), ...
+        isequal(data1.getValue(), data_loaded1.getValue()) & ...
+        isequal(data2.getValue(), data_loaded2.getValue()), ...
         [BRAPH2.STR ':SubjectMultiplexMRI:SaveLoadXLS'], ...
         'Problems saving or loading a cohort.')
 end
@@ -63,81 +66,97 @@ delete(cohort_info_path2)
 %% Test 3: Save and Load cohort from TXT
 % setup
 sub_class = 'SubjectMultiplexMRI';
-input_rule1 = 'MRI';
+input_rule1 = 'MRI1';
+input_rule2 = 'MRI2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File';
+input_data2 = rand(atlas.getBrainRegions().length(), 1);
+save_dir_rule1 = 'File1';
+save_dir_rule2 = 'File2';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
-sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule1, input_data1);
-sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule1, input_data1);
-sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule1, input_data1);
+save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.txt'];
+sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule1, input_data1, input_rule2, input_data2);
+sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule1, input_data1, input_rule2, input_data2);
+sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule1, input_data1, input_rule2, input_data2);
 group = Group(sub_class, 'GroupName1', 'TestGroup1', 'notes1', {sub1, sub2, sub3});
 
 cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2, sub3});
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectMRI.save_to_txt(cohort, save_dir_rule1, save_dir_path1);
+SubjectMRI.save_to_txt(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
-load_cohort = SubjectMRI.load_from_txt(sub_class, atlas, save_dir_rule1, save_dir_path1);
+load_cohort = SubjectMRI.load_from_txt(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
-    'BRAPH:SubjectMRI:SaveLoadTXT', ...
+    [BRAPH2.STR ':SubjectMultiplexMRI:SaveLoadTXT'], ...
     'Problems saving or loading a cohort.')
 assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), ...
-    'BRAPH:SubjectMRI:SaveLoadTXT', ...
+    [BRAPH2.STR ':SubjectMultiplexMRI:SaveLoadTXT'], ...
     'Problems saving or loading a cohort.')
 for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length())
     sub = cohort.getSubjects().getValue(i);
     sub_loaded = load_cohort.getSubjects().getValue(i);
-    data = sub.getData(input_rule1);
-    data_loaded = sub_loaded.getData(input_rule1);
+    data1 = sub.getData(input_rule1);
+    data_loaded1 = sub_loaded.getData(input_rule1);
+    data2 = sub.getData(input_rule1);
+    data_loaded2 = sub_loaded.getData(input_rule1);
     assert( ...
         isequal(sub.getID(), sub_loaded.getID()) & ...
-        isequal(round(data.getValue(), 3), round(data_loaded.getValue(), 3)), ...
-        'BRAPH:SubjectMRI:SaveLoadTXT', ...
+        isequal(round(data1.getValue(), 3), round(data_loaded1.getValue(), 3)) & ...
+        isequal(round(data2.getValue(), 3), round(data_loaded2.getValue(), 3 )), ...
+        [BRAPH2.STR ':SubjectMultiplexMRI:SaveLoadTXT'], ...
         'Problems saving or loading a cohort.')
 end
 
 delete(save_dir_path1)
+delete(save_dir_path2)
 
 %% Test 4: Save and Load cohort from JSON
 % setup
 sub_class = 'SubjectMultiplexMRI';
-input_rule1 = 'MRI';
+input_rule1 = 'MRI1';
+input_rule2 = 'MRI2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File';
-save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.json'];
-sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule1, input_data1);
-sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule1, input_data1);
-sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule1, input_data1);
+input_data2 = rand(atlas.getBrainRegions().length(), 1);
+save_dir_rule1 = 'File1';
+save_dir_rule2 = 'File2';
+save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
+save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.txt'];
+sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule1, input_data1, input_rule2, input_data2);
+sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule1, input_data1, input_rule2, input_data2);
+sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule1, input_data1, input_rule2, input_data2);
 group = Group(sub_class, 'GroupName1', 'TestGroup1', 'notes1', {sub1, sub2, sub3});
 
 cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2, sub3});
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectMRI.save_to_json(cohort, save_dir_rule1, save_dir_path1);
+SubjectMRI.save_to_json(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
-load_cohort = SubjectMRI.load_from_json(sub_class, atlas, save_dir_rule1, save_dir_path1);
+load_cohort = SubjectMRI.load_from_json(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
-    'BRAPH:SubjectMRI:SaveLoadTXT', ...
+    [BRAPH2.STR ':SubjectMultiplexMRI:SaveLoadJSON'], ...
     'Problems saving or loading a cohort.')
 assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), ...
-    'BRAPH:SubjectMRI:SaveLoadTXT', ...
+    [BRAPH2.STR ':SubjectMultiplexMRI:SaveLoadJSON'], ...
     'Problems saving or loading a cohort.')
 for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length())
     sub = cohort.getSubjects().getValue(i);
     sub_loaded = load_cohort.getSubjects().getValue(i);
-    data = sub.getData(input_rule1);
-    data_loaded = sub_loaded.getData(input_rule1);
+    data1 = sub.getData(input_rule1);
+    data_loaded1 = sub_loaded.getData(input_rule1);
+    data2 = sub.getData(input_rule1);
+    data_loaded2 = sub_loaded.getData(input_rule1);
     assert( ...
         isequal(sub.getID(), sub_loaded.getID()) & ...
-        isequal(round(data.getValue(), 3), round(data_loaded.getValue(), 3)), ...
-        'BRAPH:SubjectMRI:SaveLoadTXT', ...
+        isequal(round(data1.getValue(), 3), round(data_loaded1.getValue(), 3)) & ...
+        isequal(round(data2.getValue(), 3), round(data_loaded2.getValue(), 3 )), ...
+        [BRAPH2.STR ':SubjectMultiplexMRI:SaveLoadTXT'], ...
         'Problems saving or loading a cohort.')
 end
 
 delete(save_dir_path1)
+delete(save_dir_path2)
