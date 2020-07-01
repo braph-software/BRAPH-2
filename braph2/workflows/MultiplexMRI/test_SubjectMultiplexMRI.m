@@ -32,9 +32,9 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectMultiplexMRI.save_to_xls(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path1);
+SubjectMultiplexMRI.save_to_xls(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
-load_cohort = SubjectMultiplexMRI.load_from_xls(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path1);
+load_cohort = SubjectMultiplexMRI.load_from_xls(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -48,8 +48,8 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
     sub_loaded = load_cohort.getSubjects().getValue(i);
     data1 = sub.getData(input_rule1);
     data_loaded1 = sub_loaded.getData(input_rule1);
-    data2 = sub.getData(input_rule1);
-    data_loaded2 = sub_loaded.getData(input_rule1);
+    data2 = sub.getData(input_rule2);
+    data_loaded2 = sub_loaded.getData(input_rule2);
     assert( ...
         isequal(sub.getID(), sub_loaded.getID()) & ...
         isequal(data1.getValue(), data_loaded1.getValue()) & ...
