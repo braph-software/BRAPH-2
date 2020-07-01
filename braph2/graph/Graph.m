@@ -1232,6 +1232,15 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
+        function sg = subgraph(g, nodes)
+            % SUBGRAPH creates subgraph from given nodes
+            %
+            % SG = SUBGRAPH(G, NODES) creates the graph SG as a subgraph of G
+            % containing only the nodes specified by NODES.
+            
+            A = g.getA();
+            sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings());
+        end
     end
 %     methods (Access=protected)
 %         function g_copy = copyElement(g)
@@ -1270,16 +1279,6 @@ classdef Graph < handle & matlab.mixin.Copyable
 %             end
 %         end
 %     end
-%     methods
-%         function sg = subgraph(g, nodes)
-%             % SUBGRAPH creates subgraph from given nodes
-%             %
-%             % SG = SUBGRAPH(G, NODES) creates the graph SG as a subgraph of G
-%             % containing only the nodes specified by NODES.
-%             
-%             A = g.getA(); %#ok<PROPLC>
-%             sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings()); %#ok<PROPLC>
-%         end
 %     methods (Abstract)
 %         randomize_graph(n);
 %     end
