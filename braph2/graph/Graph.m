@@ -1239,7 +1239,20 @@ classdef Graph < handle & matlab.mixin.Copyable
             % containing only the nodes specified by NODES.
             
             A = g.getA();
-            sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings());
+            
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    A = A(nodes, nodes);
+                otherwise  % multiplex and multilayer
+                    L = g.layernumber();
+                    for li = 1:1:L
+                        for lj = 1:1:L
+                            Aij = A{li, lj};
+                            A(li, lj) = {Aij(nodes, nodes)};
+                        end
+                    end
+            end
+            sg = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
 %     methods (Access=protected)
