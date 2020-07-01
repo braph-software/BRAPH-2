@@ -200,8 +200,21 @@ classdef SubjectDTI < Subject
             sub_folders = sub_folders([sub_folders(:).isdir] == 1);
             sub_folders = sub_folders(~ismember({sub_folders(:).name}, {'.', '..'}));
             
+            % cohort information
+            file_cohort = [directory filesep() 'cohort_info.txt'];
+            cohort_id = '';
+            cohort_label = '';
+            cohort_notes = '';
+            
+            if exist(file_cohort, 'file')
+                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                cohort_id = raw_cohort{1, 1};
+                cohort_label = raw_cohort{2, 1};
+                cohort_notes = raw_cohort{3, 1};
+            end            
+            
             % creates cohort          
-            cohort = Cohort('', '', '', subject_class, atlases, {});
+            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             
             % find all xls or xlsx files per sub folder
             for j = 1:1: length(sub_folders)
@@ -231,8 +244,15 @@ classdef SubjectDTI < Subject
                     subjects{i} = subject; %#ok<AGROW>
                 end
                 
+                % retrieve group information
+                file_group = [directory filesep() sub_folders(j).name filesep() 'group_info.txt'];
+                group_raw = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                group_id = group_raw{1, 1};
+                group_label = group_raw{2, 1};
+                group_notes = group_raw{3, 1};
+                
                 % creates a group per subfolder
-                group = Group(subject_class, sub_folders(j).name, ['GroupLabel' j], ['Notes' j], subjects);
+                group = Group(subject_class, group_id, group_label, group_notes, subjects);
                 cohort.getGroups().add(group.getID(), group, j);                
             end
         end
