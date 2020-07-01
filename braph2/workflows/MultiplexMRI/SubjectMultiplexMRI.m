@@ -243,11 +243,11 @@ classdef SubjectMultiplexMRI < Subject
                 [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
                 'The input excel files must have the same number of subjects with data from the same brain regions')
             
-            for i = 2:1:size(raw1, 1)
-                subject = Subject.getSubject(subject_class, ...                    
+            for i = 5:1:size(raw1, 1)
+                subject = Subject.getSubject(subject_class, ...
                     raw1{i, 1}, raw1{i, 2}, raw1{i, 3}, atlases, ...
                     'MRI1', cell2mat(raw1(i, 4:size(raw1, 2))'), ...
-                    'MRI2', cell2mat(raw2(i, 4:size(raw2, 2))')) ;
+                    'MRI2', cell2mat(raw2(i, 4:size(raw2, 2))'));
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
@@ -257,8 +257,10 @@ classdef SubjectMultiplexMRI < Subject
             file_name1 = erase(file1, path1);
             file_name1 = erase(file_name1, filesep());
             file_name1 = erase(file_name1, '.xlsx');
-            file_name1 = erase(file_name1, '.xls');    
+            file_name1 = erase(file_name1, '.xls'); 
             group.setID(file_name1);
+            group.setLabel(raw1{2, 1});  % set group info
+            group.setNotes(raw1{3, 1});
             cohort.getGroups().add(group.getID(), group);
         end
         function save_to_xls(cohort, varargin)
@@ -354,6 +356,7 @@ classdef SubjectMultiplexMRI < Subject
             
             % save
             writecell(group_info, file1);
+            writecell(group_info, file2);
             writetable(tab1, file1, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
             writetable(tab2, file2, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
         end
@@ -460,21 +463,28 @@ classdef SubjectMultiplexMRI < Subject
             row_id = 'ID';
             row_label = 'Label';
             row_note = 'Notes';
-            first_row_table = table(row_data, 'VariableNames', {'row_datas1'});
-            first_row_table.row_ids = row_id;
-            first_row_table.row_labels = row_label;
-            first_row_table.row_notes = row_note;
-            first_row_table = [first_row_table(:, 2) first_row_table(:, 3) ...
-                first_row_table(:, 4) first_row_table(:, 1)];
+            first_row_table1 = table(row_data, 'VariableNames', {'row_datas1'});
+            first_row_table1.row_ids = row_id;
+            first_row_table1.row_labels = row_label;
+            first_row_table1.row_notes = row_note;
+            first_row_table1 = [first_row_table1(:, 2) first_row_table1(:, 3) ...
+                first_row_table1(:, 4) first_row_table1(:, 1)];
+            
+            first_row_table2 = table(row_data, 'VariableNames', {'row_datas2'});
+            first_row_table2.row_ids = row_id;
+            first_row_table2.row_labels = row_label;
+            first_row_table2.row_notes = row_note;
+            first_row_table2 = [first_row_table2(:, 2) first_row_table2(:, 3) ...
+                first_row_table2(:, 4) first_row_table2(:, 1)];
             
             % creates table
             tab1 = [
-                first_row_table
+                first_row_table1
                 t1
                 ];
             tab2 = [
-                first_row_table
-                t1
+                first_row_table2
+                t2
                 ];
             
             % save
