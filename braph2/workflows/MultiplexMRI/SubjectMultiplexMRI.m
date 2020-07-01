@@ -197,8 +197,8 @@ classdef SubjectMultiplexMRI < Subject
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
-                msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(Constant.XLS_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
                 file1 = [filepath1 filename1];
                 
                 if ~filterindex1
@@ -265,8 +265,8 @@ classdef SubjectMultiplexMRI < Subject
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
-                msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(Constant.XLS_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
                 file1 = [filepath1 filename1];
                 
                 if ~filterindex1
@@ -361,8 +361,8 @@ classdef SubjectMultiplexMRI < Subject
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
-                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(Constant.TXT_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.TXT_EXTENSION, msg);
                 file1 = [filepath1 filename1];
                 
                 if ~filterindex1
@@ -412,8 +412,8 @@ classdef SubjectMultiplexMRI < Subject
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
-                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(Constant.TXT_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.TXT_EXTENSION, msg);
                 file1 = [filepath1 filename1];
                 
                 if ~filterindex1
@@ -539,8 +539,8 @@ classdef SubjectMultiplexMRI < Subject
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File', varargin{:});
             if isequal(file1, '')  % select file
-                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(Constant.JSON_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
                 file1 = [filepath1 filename1];
                 
                 if ~filterindex1
