@@ -242,8 +242,8 @@ classdef SubjectMultiplexMRI < Subject
             path1 = [fileparts(which(file1))]; %#ok<NBRAK>
             file_name1 = erase(file1, path1);
             file_name1 = erase(file_name1, filesep());
-            file_name1 = erase(file_name1, '.xls');
             file_name1 = erase(file_name1, '.xlsx');
+            file_name1 = erase(file_name1, '.xls');    
             group.setID(file_name1);
             cohort.getGroups().add(group.getID(), group);
         end
