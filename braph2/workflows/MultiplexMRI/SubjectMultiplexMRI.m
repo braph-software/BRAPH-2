@@ -217,8 +217,23 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
+            % search for cohort info file
+            file_cohort = erase(file1, '.xlsx');
+            file_cohort = erase(file_cohort, '.xls');
+            file_cohort = [file_cohort '.txt'];
+            cohort_id = '';
+            cohort_label = '';
+            cohort_notes = '';
+            
+            if exist(file_cohort, 'file1')
+                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                cohort_id = raw_cohort{1, 1};
+                cohort_label = raw_cohort{2, 1};
+                cohort_notes = raw_cohort{3, 1};
+            end       
+            
             % creates cohort
-            cohort = Cohort('', '', '', subject_class, atlases, {});
+            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             
             [~, ~, raw1] = xlsread(file1);
             [~, ~, raw2] = xlsread(file2);
