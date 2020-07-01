@@ -34,7 +34,7 @@ cohort.getGroups().add(group.getID(), group);
 % act
 SubjectMultiplexMRI.save_to_xls(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path1);
 
-load_cohort = SubjectMRI.load_from_xls(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path1);
+load_cohort = SubjectMultiplexMRI.load_from_xls(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path1);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -85,7 +85,7 @@ cohort.getGroups().add(group.getID(), group);
 % act
 SubjectMultiplexMRI.save_to_txt(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
-load_cohort = SubjectMRI.load_from_txt(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+load_cohort = SubjectMultiplexMRI.load_from_txt(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -134,7 +134,7 @@ cohort.getGroups().add(group.getID(), group);
 % act
 SubjectMultiplexMRI.save_to_json(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
-load_cohort = SubjectMRI.load_from_json(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+load_cohort = SubjectMultiplexMRI.load_from_json(sub_class, atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...

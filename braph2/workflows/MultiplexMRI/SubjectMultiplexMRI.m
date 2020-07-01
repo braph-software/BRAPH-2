@@ -225,7 +225,7 @@ classdef SubjectMultiplexMRI < Subject
             cohort_label = '';
             cohort_notes = '';
             
-            if exist(file_cohort, 'file1')
+            if exist(file_cohort, 'file')
                 raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
                 cohort_id = raw_cohort{1, 1};
                 cohort_label = raw_cohort{2, 1};
@@ -239,7 +239,7 @@ classdef SubjectMultiplexMRI < Subject
             [~, ~, raw2] = xlsread(file2);           
             % Assert both files have the same size (they should contain
             % same number of regions and same number of subjects)
-            assert(size(raw1) == size(raw2), ...
+            assert(size(raw1, 1) == size(raw2, 1) && size(raw1, 2) == size(raw2, 2), ...
                 [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
                 'The input excel files must have the same number of subjects with data from the same brain regions')
             
@@ -387,7 +387,7 @@ classdef SubjectMultiplexMRI < Subject
             % reads file
             raw1 = readtable(file1, 'Delimiter', '\t');
             raw2 = readtable(file2, 'Delimiter', '\t');
-            assert(size(raw1) == size(raw2), ...
+            assert(size(raw1, 1) == size(raw2, 1) && size(raw1, 2) == size(raw2, 2), ...
                 [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
                 'The input txt files must have the same number of subjects with data from the same brain regions')
             
