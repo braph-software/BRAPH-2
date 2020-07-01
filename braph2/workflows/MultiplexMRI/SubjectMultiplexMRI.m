@@ -286,10 +286,26 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
+            % cohort info           
+            file_cohort = erase(file1, '.xlsx'); 
+            file_cohort = erase(file_cohort, '.xls');
+            file_cohort = [file_cohort '.txt'];
+            cohort_info = cell(3, 1);
+            cohort_info{1, 1} = cohort.getID();
+            cohort_info{2, 1} = cohort.getLabel();
+            cohort_info{3, 1} = cohort.getNotes();
+            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
+            
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
+            
+            % group info
+            group_info = cell(3, 1);
+            group_info{1, 1} = group.getID();
+            group_info{2, 1} = group.getLabel();
+            group_info{3, 1} = group.getNotes();
             
             for j = 1:1:group.subjectnumber()
                 % get subject data
