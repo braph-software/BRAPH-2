@@ -11,7 +11,7 @@ classdef Group < handle & matlab.mixin.Copyable
 
             group.setID(id)
             group.setLabel(label)
-            group.setLabel(notes)
+            group.setNotes(notes)
             
             assert(any(strcmp(Subject.getList(), subject_class)), ...
                 [BRAPH2.STR ':Group:' BRAPH2.WRONG_INPUT], ...

@@ -123,9 +123,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % See also Group, Subject, BrainAtlases, IndexedDictionary.
             
             % subjects must be a cell array of Subjects of class
-            cohort.id = id;
-            cohort.label = label;
-            cohort.notes = notes;
+            cohort.setID(id)
+            cohort.setLabel(label)
+            cohort.setNotes(notes)
             
             assert(any(strcmp(Subject.getList(), subject_class)), ...
                 [BRAPH2.STR ':Cohort:' BRAPH2.WRONG_INPUT], ...
@@ -138,7 +138,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             assert(all(cellfun(@(atlas) isa(atlas, 'BrainAtlas'), atlases)) ...
                 && length(atlases) == Subject.getBrainAtlasNumber(subject_class), ...
                 [BRAPH2.STR ':Cohort:' BRAPH2.WRONG_INPUT], ...
-                ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas']) %#ok<NBRAK>
+                ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas'])
             cohort.atlases = atlases;
             
             cohort.subject_idict = IndexedDictionary(subject_class);
