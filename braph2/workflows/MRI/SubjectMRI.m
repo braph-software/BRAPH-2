@@ -200,12 +200,16 @@ classdef SubjectMRI < Subject
                 end
             end
             
+            % search for cohort info file
+            path_cohort = [fileparts(which(file))]; %#ok<NBRAK>
+            
+            
             % creates cohort
             cohort = Cohort('', '', '', subject_class, atlases, {});
             
             [~, ~, raw] = xlsread(file);
             
-            for i = 2:1:size(raw, 1)
+            for i = 5:1:size(raw, 1)
                 subject = Subject.getSubject(subject_class, ...                    
                     raw{i, 1}, raw{i, 2}, raw{i, 3}, atlases, ...
                     'MRI', cell2mat(raw(i, 4:size(raw, 2))'));
@@ -235,10 +239,26 @@ classdef SubjectMRI < Subject
                 end
             end
             
+            % cohort info
+            file_cohort = erase(file, '.xlsx'); %#ok<NASGU>
+            file_cohort = erase(file, '.xls');
+            file_cohort = [file_cohort '.txt'];
+            cohort_info = cell(3, 1);
+            cohort_info{1, 1} = cohort.getID();
+            cohort_info{2, 1} = cohort.getLabel();
+            cohort_info{3, 1} = cohort.getNotes();
+            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
+            
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
+            
+            % group info
+            group_info = cell(3, 1);
+            group_info{1, 1} = group.getID();
+            group_info{2, 1} = group.getLabel();
+            group_info{3, 1} = group.getNotes();
             
             for j = 1:1:group.subjectnumber()
                 % get subject data
@@ -275,7 +295,8 @@ classdef SubjectMRI < Subject
                 ];
             
             % save
-            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+            writecell(group_info, file);
+            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
         end
         function cohort = load_from_txt(subject_class, atlases, varargin)
             % file (fullpath)
