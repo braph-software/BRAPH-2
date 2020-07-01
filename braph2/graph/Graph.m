@@ -1240,6 +1240,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             A = g.getA();
             
+            %todo: when nodes are cell array (an array of nodes per each matrix of supraadjacency matrix)       
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
                     A = A(nodes, nodes);
