@@ -402,7 +402,7 @@ classdef SubjectMultiplexMRI < Subject
             % creates group
             group = Group(subject_class, '', '', '', cohort.getSubjects().getValues());
             path = [fileparts(which(file1))]; %#ok<NBRAK>
-            file_name = erase(file, path);
+            file_name = erase(file1, path);
             file_name = erase(file_name, filesep());
             file_name = erase(file_name, '.txt');
             group.setID(file_name);
@@ -593,8 +593,8 @@ classdef SubjectMultiplexMRI < Subject
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File', varargin{:});
             if isequal(file1, '')  % select file
-                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(Constant.JSON_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
                 file1 = [filepath1 filename1];
                 
                 if ~filterindex1
