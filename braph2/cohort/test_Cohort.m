@@ -61,12 +61,12 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
-    sub6 = Subject.getSubject(sub_class, 'id6', 'lable 6', 'notes 6', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
+    sub6 = Subject.getSubject(sub_class, 'id6', 'label 6', 'notes 6', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub4, sub5});
     
@@ -95,12 +95,12 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
-    sub6 = Subject.getSubject(sub_class, 'id6', 'lable 6', 'notes 6', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
+    sub6 = Subject.getSubject(sub_class, 'id6', 'label 6', 'notes 6', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
@@ -132,12 +132,12 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
-    sub6 = Subject.getSubject(sub_class, 'id6', 'lable 6', 'notes 6', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
+    sub6 = Subject.getSubject(sub_class, 'id6', 'label 6', 'notes 6', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
@@ -157,12 +157,12 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
-    sub6 = Subject.getSubject(sub_class, 'id6', 'lable 6', 'notes 6', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
+    sub6 = Subject.getSubject(sub_class, 'id6', 'label 6', 'notes 6', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
@@ -185,11 +185,11 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
@@ -218,11 +218,11 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
@@ -245,11 +245,11 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
@@ -269,11 +269,11 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
@@ -293,11 +293,11 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
@@ -317,11 +317,11 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
@@ -341,11 +341,11 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
     group1 = Group(sub_class, 'G1', 'Group 1', 'Group description 1', {});
     group2 = Group(sub_class, 'G2', 'Group 2', 'Group description 2', {});
     group1.addSubject(sub1);
@@ -410,11 +410,11 @@ for i = 1:1:length(sub_class_list)
     
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
-    sub1 = Subject.getSubject(sub_class, 'id1', 'lable 1', 'notes 1', atlases);
-    sub2 = Subject.getSubject(sub_class, 'id2', 'lable 2', 'notes 2', atlases);
-    sub3 = Subject.getSubject(sub_class, 'id3', 'lable 3', 'notes 3', atlases);
-    sub4 = Subject.getSubject(sub_class, 'id4', 'lable 4', 'notes 4', atlases);
-    sub5 = Subject.getSubject(sub_class, 'id5', 'lable 5', 'notes 5', atlases);
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
     
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5});
     
