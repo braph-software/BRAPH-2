@@ -1255,7 +1255,9 @@ classdef Graph < handle & matlab.mixin.Copyable
                         for li = 1:1:L
                             for lj = 1:1:L
                                 Aij = A{li, lj};
-                                A(li, lj) = {Aij(nodes, nodes)};
+                                if isempty(Aij)==0
+                                    A(li, lj) = {Aij(nodes, nodes)};
+                                end
                             end
                         end
                     end
