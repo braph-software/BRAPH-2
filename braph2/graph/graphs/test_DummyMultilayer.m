@@ -163,16 +163,8 @@ assert(isequal(eg.getA(), A_attack), ...
     'Graph.edgeattack() is not working for non single layer graphs')
 
 %% Test 4: Subgraph
-% nodes = {[2, 3]
-%          [2, 3]
-%          [2, 3, 4]
-%          };
 nodes = [2, 3];
-% A_WD_subgraph = [
-%                 1   .3  0
-%                 .3  1   1
-%                 .1  0   1
-%                 ];
+
 A_WD_subgraph = [
                 1   .3  
                 .3  1
