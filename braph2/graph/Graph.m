@@ -1239,17 +1239,24 @@ classdef Graph < handle & matlab.mixin.Copyable
             % containing only the nodes specified by NODES.
             
             A = g.getA();
-            
-            %todo: when nodes are cell array (an array of nodes per each matrix of supraadjacency matrix)       
+                 
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
                     A = A(nodes, nodes);
-                otherwise  % multiplex and multilayer
+                    
+                otherwise  % multigraph, multiplex and multilayer
                     L = g.layernumber();
-                    for li = 1:1:L
-                        for lj = 1:1:L
-                            Aij = A{li, lj};
-                            A(li, lj) = {Aij(nodes, nodes)};
+                    if iscell(nodes)
+                       for li = 1:1:L
+                           Aii = A{li, li};
+                           A(li, li) = {Aii(nodes{li}, nodes{li})};
+                       end
+                    else
+                        for li = 1:1:L
+                            for lj = 1:1:L
+                                Aij = A{li, lj};
+                                A(li, lj) = {Aij(nodes, nodes)};
+                            end
                         end
                     end
             end
