@@ -1,5 +1,5 @@
 classdef MeasurementMultiplexMRI < Measurement
-    % single group of mri subjects
+    % single group of  2 layers multiplex mri subjects
     properties
         value  % value of the measure for the group
     end
