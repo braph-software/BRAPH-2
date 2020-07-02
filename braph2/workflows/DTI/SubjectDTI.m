@@ -321,11 +321,33 @@ classdef SubjectDTI < Subject
             % find all txt files
             files = dir(fullfile(directory, '*.txt'));
             
-            % creates cohort
-            cohort = Cohort('', '', '', subject_class, atlases, {});
+            % cohort information
+            cohort_folder = '';
+            parts = strsplit(directory, '\');
+            for k = 1:1:length(parts)-1
+                cohort_folder = [cohort_folder '\' parts{k}];
+            end
+            file_cohort = [cohort_folder filesep() 'cohort_info.txt'];
+            cohort_id = '';
+            cohort_label = '';
+            cohort_notes = '';
+            
+            if exist(file_cohort, 'file')
+                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                cohort_id = raw_cohort{1, 1};
+                cohort_label = raw_cohort{2, 1};
+                cohort_notes = raw_cohort{3, 1};
+            end
+            
+            % creates cohort          
+            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});       
             
             % load subjects
             for i = 1:1:length(files)
+                
+                if isequal(files(i).name, 'group_info.txt')
+                    continue;
+                end
                 % read file  
                 raw = textread(fullfile(directory, files(i).name), '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
                 
@@ -347,10 +369,17 @@ classdef SubjectDTI < Subject
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
+            % retrieve group information
+                file_group = [directory filesep() 'group_info.txt'];
+                group_raw = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+%                 group_id = group_raw{1, 1};
+                group_label = group_raw{2, 1};
+                group_notes = group_raw{3, 1};
+            
             % creates group
             if i == length(files)
                 [~, groupname] = fileparts(directory);
-                group = Group(subject_class, groupname, '', '',  cohort.getSubjects().getValues());
+                group = Group(subject_class, groupname, group_label, group_notes,  cohort.getSubjects().getValues());
                 cohort.getGroups().add(group.getID(), group);
             end
         end
@@ -366,6 +395,24 @@ classdef SubjectDTI < Subject
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
                 mkdir(root_directory, cohort.getGroups().getValue(i).getID());
+                
+                 % cohort info
+                file_info_cohort = [root_directory filesep() 'cohort_info.txt'];
+                if ~isfile(file_info_cohort)
+                    cohort_info = cell(3, 1);
+                    cohort_info{1, 1} = cohort.getID();
+                    cohort_info{2, 1} = cohort.getLabel();
+                    cohort_info{3, 1} = cohort.getNotes();
+                    writecell(cohort_info, file_info_cohort, 'Delimiter', '\t');
+                end
+                
+                % group info
+                group = cohort.getGroups().getValue(i);
+                group_info = cell(3, 1);
+                group_info{1, 1} = group.getID();
+                group_info{2, 1} = group.getLabel();
+                group_info{3, 1} = group.getNotes();
+                writecell(group_info, [root_directory filesep() group.getID() filesep() 'group_info.txt'], 'Delimiter', '\t');
                 
                 % get info
                 group = cohort.getGroups().getValue(i);
