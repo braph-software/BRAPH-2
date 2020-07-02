@@ -139,3 +139,29 @@ eg = g.edgeattack(g, nodes1, nodes2, layernumbers1, layernumbers2);
 assert(isequal(eg.getA(), A_attack), ...
     [BRAPH2.STR ':DummyMultiplex:' BRAPH2.BUG_ERR], ...
     'Graph.edgeattack() is not working for non single layer graphs')
+
+%% Test 4: Subgraph
+nodes = [2, 3];
+
+A_WU_subgraph = [
+                1    0.3;
+                0.3  1;
+                ];
+
+A_BD_subgraph = [
+                1 1;
+                0 1;
+                ];
+A_subgraph = {
+    A_WU_subgraph       diag(ones(2, 1))    diag(ones(2, 1))    diag(ones(2, 1)) 
+    diag(ones(2, 1))    A_WU_subgraph       diag(ones(2, 1))    diag(ones(2, 1))
+    diag(ones(2, 1))    diag(ones(2, 1))    A_BD_subgraph       diag(ones(2, 1))
+    diag(ones(2, 1))    diag(ones(2, 1))    diag(ones(2, 1))    A_BD_subgraph
+    };
+
+g = DummyMultiplex(A);
+sg = g.subgraph(g, nodes);
+
+assert(isequal(sg.getA(), A_subgraph), ...
+    [BRAPH2.STR ':DummyMultiplex:' BRAPH2.BUG_ERR], ...
+    'Graph.subgraph() is not working for non single layer graphs')
