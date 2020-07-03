@@ -398,8 +398,8 @@ classdef SubjectMultiplexMRI < Subject
             for i = 1:1:length(file_path)-1
                 file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
             end
-            file_cohort_path = file_cohort_path(2:end);
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
+            file_cohort_path = file_cohort_path(2:end); 
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];      
             cohort_id = '';
             cohort_label = '';
             cohort_notes = '';
@@ -642,12 +642,12 @@ classdef SubjectMultiplexMRI < Subject
                 'The input json files must have the same number of subjects with data from the same brain regions')
             
             % get cohort and group info
-            cohort_id = raw.CohortData.id;
-            cohort_label = raw.CohortData.label;
-            cohort_notes = raw.CohortData.notes;
-            group_id = raw.GroupData.id;
-            group_label = raw.GroupData.label;
-            group_notes = raw.GroupData.notes;
+            cohort_id = raw1.CohortData.id;
+            cohort_label = raw1.CohortData.label;
+            cohort_notes = raw1.CohortData.notes;
+            group_id = raw1.GroupData.id;
+            group_label = raw1.GroupData.label;
+            group_notes = raw1.GroupData.notes;
 
             for i = 1:1:length(raw1.SubjectData)
                 id = raw1.SubjectData(i).id;
