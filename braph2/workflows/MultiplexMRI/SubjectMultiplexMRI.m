@@ -217,10 +217,14 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
-            % search for cohort info file
-            file_cohort = erase(file1, '.xlsx');
-            file_cohort = erase(file_cohort, '.xls');
-            file_cohort = [file_cohort '.txt'];
+            % search for cohort info file           
+            file_path = strsplit(file1, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+            file_cohort = file_cohort(2:end);
             cohort_id = '';
             cohort_label = '';
             cohort_notes = '';
@@ -245,7 +249,7 @@ classdef SubjectMultiplexMRI < Subject
             
             for i = 5:1:size(raw1, 1)
                 subject = Subject.getSubject(subject_class, ...
-                    raw1{i, 1}, raw1{i, 2}, raw1{i, 3}, atlases, ...
+                    char(raw1{i, 1}), char(raw1{i, 2}), char(raw1{i, 3}), atlases, ...
                     'MRI1', cell2mat(raw1(i, 4:size(raw1, 2))'), ...
                     'MRI2', cell2mat(raw2(i, 4:size(raw2, 2))'));
                 cohort.getSubjects().add(subject.getID(), subject, i);
@@ -288,9 +292,13 @@ classdef SubjectMultiplexMRI < Subject
             end
             
             % cohort info           
-            file_cohort = erase(file1, '.xlsx'); 
-            file_cohort = erase(file_cohort, '.xls');
-            file_cohort = [file_cohort '.txt'];
+            file_path = strsplit(file, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+            file_cohort = file_cohort(2:end);
             cohort_info = cell(3, 1);
             cohort_info{1, 1} = cohort.getID();
             cohort_info{2, 1} = cohort.getLabel();
@@ -384,8 +392,39 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
+            % search for cohort info file
+            file_path = strsplit(file1, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort_path = file_cohort_path(2:end);
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
+            cohort_id = '';
+            cohort_label = '';
+            cohort_notes = '';
+
+            if exist(file_cohort, 'file')
+                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                cohort_id = raw_cohort{1, 1};
+                cohort_label = raw_cohort{2, 1};
+                cohort_notes = raw_cohort{3, 1};
+            end
+            
             % creates cohort
-            cohort = Cohort('', '', '', subject_class, atlases, {});
+            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            
+            % get group info
+            file_group = [file_cohort_path filesep() 'group_info.txt'];
+            group_id = '';
+            group_label = '';
+            group_notes = '';
+            if exist(file_group, 'file')
+                raw_group = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                group_id = raw_group{1, 1};
+                group_label = raw_group{2, 1};
+                group_notes = raw_group{3, 1};
+            end
             
             % reads file
             raw1 = readtable(file1, 'Delimiter', '\t');
@@ -403,12 +442,14 @@ classdef SubjectMultiplexMRI < Subject
             end
             
             % creates group
-            group = Group(subject_class, '', '', '', cohort.getSubjects().getValues());
+            group = Group(subject_class, group_id, group_label, group_notes, cohort.getSubjects().getValues());
             path = [fileparts(which(file1))]; %#ok<NBRAK>
             file_name = erase(file1, path);
             file_name = erase(file_name, filesep());
             file_name = erase(file_name, '.txt');
             group.setID(file_name);
+            group.setLabel(group_label);
+            group.setNotes(group_notes);
             cohort.getGroups().add(group.getID(), group);
         end
         function save_to_txt(cohort, varargin)
@@ -435,10 +476,32 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
+            % cohort info
+            file_path = strsplit(file1, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort_path = file_cohort_path(2:end);
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
+            cohort_info = cell(3, 1);
+            cohort_info{1, 1} = cohort.getID();
+            cohort_info{2, 1} = cohort.getLabel();
+            cohort_info{3, 1} = cohort.getNotes();
+            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
+            
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
+            
+            % group info
+            file_group = [file_cohort_path filesep() 'group_info.txt'];
+            group_info = cell(3, 1);
+            group_info{1, 1} = group.getID();
+            group_info{2, 1} = group.getLabel();
+            group_info{3, 1} = group.getNotes();
+            writecell(group_info, file_group, 'Delimiter', '\t');
             
             for j = 1:1:group.subjectnumber()
                 % get subject data
@@ -578,6 +641,14 @@ classdef SubjectMultiplexMRI < Subject
                 [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
                 'The input json files must have the same number of subjects with data from the same brain regions')
             
+            % get cohort and group info
+            cohort_id = raw.CohortData.id;
+            cohort_label = raw.CohortData.label;
+            cohort_notes = raw.CohortData.notes;
+            group_id = raw.GroupData.id;
+            group_label = raw.GroupData.label;
+            group_notes = raw.GroupData.notes;
+
             for i = 1:1:length(raw1.SubjectData)
                 id = raw1.SubjectData(i).id;
                 label = raw1.SubjectData(i).label;
@@ -590,8 +661,12 @@ classdef SubjectMultiplexMRI < Subject
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
+            cohort.setID(cohort_id);
+            cohort.setLabel(cohort_label);
+            cohort.setNotes(cohort_notes);
+            
             % creates group
-            group = Group(subject_class, '', '', '', cohort.getSubjects().getValues());
+            group = Group(subject_class, group_id, group_label, group_notes, cohort.getSubjects().getValues());
             path = [fileparts(which(file1))]; %#ok<NBRAK>
             file_name = erase(file1, path);
             file_name = erase(file_name, filesep());
@@ -653,6 +728,14 @@ classdef SubjectMultiplexMRI < Subject
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainRegionsLabels', labels, ...
+                'CohortData', struct( ...
+                'id', cohort.getID(), ...
+                'label', cohort.getLabel(), ...
+                'notes', cohort.getNotes()), ...
+                'GroupData', struct( ...
+                'id', group.getID(), ...
+                'label', group.getLabel(), ...
+                'notes', group.getNotes()), ...
                 'SubjectData', struct( ...
                 'id', row_ids, ...
                 'label', row_labels, ...
@@ -663,6 +746,14 @@ classdef SubjectMultiplexMRI < Subject
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainRegionsLabels', labels, ...
+                'CohortData', struct( ...
+                'id', cohort.getID(), ...
+                'label', cohort.getLabel(), ...
+                'notes', cohort.getNotes()), ...
+                'GroupData', struct( ...
+                'id', group.getID(), ...
+                'label', group.getLabel(), ...
+                'notes', group.getNotes()), ...
                 'SubjectData', struct( ...
                 'id', row_ids, ...
                 'label', row_labels, ...
