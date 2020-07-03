@@ -398,8 +398,8 @@ classdef SubjectMultiplexMRI < Subject
             for i = 1:1:length(file_path)-1
                 file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
             end
-            file_cohort_path = file_cohort_path(2:end);
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
+            file_cohort_path = file_cohort_path(2:end); 
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];      
             cohort_id = '';
             cohort_label = '';
             cohort_notes = '';

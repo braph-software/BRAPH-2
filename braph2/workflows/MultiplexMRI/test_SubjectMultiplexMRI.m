@@ -21,7 +21,7 @@ save_dir_rule1 = 'File1';
 save_dir_rule2 = 'File2';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
 save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.xlsx'];
-cohort_info_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
+save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule1, input_data1, input_rule2, input_data2);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule1, input_data1, input_rule2, input_data2);
 sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule1, input_data1, input_rule2, input_data2);
@@ -59,7 +59,7 @@ end
 
 delete(save_dir_path1)
 delete(save_dir_path2)
-delete(cohort_info_path)
+delete(save_cohort_file)
 
 
 %% Test 3: Save and Load cohort from TXT
