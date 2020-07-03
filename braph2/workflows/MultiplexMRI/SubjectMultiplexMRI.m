@@ -392,8 +392,39 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
+            % search for cohort info file
+            file_path = strsplit(file1, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort_path = file_cohort_path(2:end);
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
+            cohort_id = '';
+            cohort_label = '';
+            cohort_notes = '';
+
+            if exist(file_cohort, 'file')
+                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                cohort_id = raw_cohort{1, 1};
+                cohort_label = raw_cohort{2, 1};
+                cohort_notes = raw_cohort{3, 1};
+            end
+            
             % creates cohort
-            cohort = Cohort('', '', '', subject_class, atlases, {});
+            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            
+            % get group info
+            file_group = [file_cohort_path filesep() 'group_info.txt'];
+            group_id = '';
+            group_label = '';
+            group_notes = '';
+            if exist(file_group, 'file')
+                raw_group = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                group_id = raw_group{1, 1};
+                group_label = raw_group{2, 1};
+                group_notes = raw_group{3, 1};
+            end
             
             % reads file
             raw1 = readtable(file1, 'Delimiter', '\t');
@@ -411,12 +442,14 @@ classdef SubjectMultiplexMRI < Subject
             end
             
             % creates group
-            group = Group(subject_class, '', '', '', cohort.getSubjects().getValues());
+            group = Group(subject_class, group_id, group_label, group_notes, cohort.getSubjects().getValues());
             path = [fileparts(which(file1))]; %#ok<NBRAK>
             file_name = erase(file1, path);
             file_name = erase(file_name, filesep());
             file_name = erase(file_name, '.txt');
             group.setID(file_name);
+            group.setLabel(group_label);
+            group.setNotes(group_notes);
             cohort.getGroups().add(group.getID(), group);
         end
         function save_to_txt(cohort, varargin)
@@ -443,10 +476,32 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
+            % cohort info
+            file_path = strsplit(file1, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort_path = file_cohort_path(2:end);
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
+            cohort_info = cell(3, 1);
+            cohort_info{1, 1} = cohort.getID();
+            cohort_info{2, 1} = cohort.getLabel();
+            cohort_info{3, 1} = cohort.getNotes();
+            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
+            
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
+            
+            % group info
+            file_group = [file_cohort_path filesep() 'group_info.txt'];
+            group_info = cell(3, 1);
+            group_info{1, 1} = group.getID();
+            group_info{2, 1} = group.getLabel();
+            group_info{3, 1} = group.getNotes();
+            writecell(group_info, file_group, 'Delimiter', '\t');
             
             for j = 1:1:group.subjectnumber()
                 % get subject data
