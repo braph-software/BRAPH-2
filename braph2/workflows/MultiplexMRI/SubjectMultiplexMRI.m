@@ -292,7 +292,7 @@ classdef SubjectMultiplexMRI < Subject
             end
             
             % cohort info           
-            file_path = strsplit(file, filesep());
+            file_path = strsplit(file1, filesep());
             file_cohort_path = '';
             for i = 1:1:length(file_path)-1
                 file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
