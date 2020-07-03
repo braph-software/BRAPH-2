@@ -372,7 +372,6 @@ classdef SubjectDTI < Subject
             % retrieve group information
                 file_group = [directory filesep() 'group_info.txt'];
                 group_raw = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-%                 group_id = group_raw{1, 1};
                 group_label = group_raw{2, 1};
                 group_notes = group_raw{3, 1};
             
