@@ -459,6 +459,14 @@ classdef SubjectDTI < Subject
                 % read file
                 raw = jsondecode(fileread(fullfile(directory, files(i).name)));
                 
+                % get cohort and group info
+                cohort_id = raw.CohortData.id;
+                cohort_label = raw.CohortData.label;
+                cohort_notes = raw.CohortData.notes;
+                group_id = raw.GroupData.id;
+                group_label = raw.GroupData.label;
+                group_notes = raw.GroupData.notes;
+                
                 % get age
                 
                 % create subject
@@ -472,10 +480,14 @@ classdef SubjectDTI < Subject
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
+            cohort.setID(cohort_id);
+            cohort.setLabel(cohort_label);
+            cohort.setNotes(cohort_notes);
+            
             % creates group
             if i == length(files)
                 [~, groupname] = fileparts(directory);                
-                group = Group(subject_class, groupname, '', '', cohort.getSubjects().getValues());
+                group = Group(subject_class, groupname, group_label, group_notes, cohort.getSubjects().getValues());
                 cohort.getGroups().add(group.getID(), group);
             end
         end
@@ -492,7 +504,7 @@ classdef SubjectDTI < Subject
             for i=1:1:cohort.getGroups().length()
                 mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 
-                % get info
+                % get info                
                 group = cohort.getGroups().getValue(i);
                 subjects_list = group.getSubjects();
                 for j = 1:1:group.subjectnumber()
@@ -507,8 +519,16 @@ classdef SubjectDTI < Subject
                     structure_to_be_saved = struct( ...
                         'Braph', BRAPH2.NAME, ...
                         'Build', BRAPH2.BUILD, ...
+                        'CohortData', struct( ...
+                        'id', cohort.getID(), ...
+                        'label', cohort.getLabel(), ...
+                        'notes', cohort.getNotes()), ...
+                        'GroupData', struct( ...
+                        'id', group.getID(), ...
+                        'label', group.getLabel(), ...
+                        'notes', group.getNotes()), ...
                         'SubjectData', struct( ...
-                        'name', id, ...
+                        'id', id, ...
                         'label', label, ...
                         'notes', notes, ...
                         'data', data.getValue()) ...
