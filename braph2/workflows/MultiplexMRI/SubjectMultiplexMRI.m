@@ -217,10 +217,14 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
-            % search for cohort info file
-            file_cohort = erase(file1, '.xlsx');
-            file_cohort = erase(file_cohort, '.xls');
-            file_cohort = [file_cohort '.txt'];
+            % search for cohort info file           
+            file_path = strsplit(file1, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+            file_cohort = file_cohort(2:end);
             cohort_id = '';
             cohort_label = '';
             cohort_notes = '';
@@ -288,9 +292,13 @@ classdef SubjectMultiplexMRI < Subject
             end
             
             % cohort info           
-            file_cohort = erase(file1, '.xlsx'); 
-            file_cohort = erase(file_cohort, '.xls');
-            file_cohort = [file_cohort '.txt'];
+            file_path = strsplit(file, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+            file_cohort = file_cohort(2:end);
             cohort_info = cell(3, 1);
             cohort_info{1, 1} = cohort.getID();
             cohort_info{2, 1} = cohort.getLabel();
