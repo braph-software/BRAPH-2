@@ -212,6 +212,13 @@ classdef MultiplexGraphBD < Graph
     end
     methods
         function [randomized_graph, swaps] = randomize_graph(g, varargin)
+            % RANDOMIZE_GRAPH returns a randomized graph and the number of swaps.
+            %
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH() returns the randomized 
+            % graph RANDOMIZED_GRAPH obtained from a number of edge swaps SWAPS.
+            % The randomization it is done layer by layer and then
+            % integrating in the 2-D supra-adjacency matrix cell array.
+            
             % get rules
             attempts_per_edge = get_from_varargin(10, 'AttemptsPerEdge', varargin{:});
             

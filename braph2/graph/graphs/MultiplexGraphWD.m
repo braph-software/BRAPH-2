@@ -212,6 +212,14 @@ classdef MultiplexGraphWD < Graph
     end
     methods
         function [randomized_graph, correlation_coefficients] = randomize_graph(g, varargin)
+            % RANDOMIZE_GRAPH returns a randomized graph and the correlation coefficients.
+            %
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE_GRAPH() 
+            % returns the randomized graph RANDOMIZED_GRAPH and the strength
+            % correlation coefficients from the graph G and the randomized.
+            % The randomization it is done layer by layer and then
+            % integrating in the 2-D supra-adjacency matrix cell array.
+            
             % get rules
             number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
             

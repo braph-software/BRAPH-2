@@ -157,6 +157,11 @@ classdef GraphBD < Graph
 %     end
     methods
         function [randomized_graph, swaps] = randomize_graph(g, varargin)
+            % RANDOMIZE_GRAPH returns a randomized graph and the number of swaps.
+            %
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH() returns the randomized graph
+            % RANDOMIZED_GRAPH obtained from a number of edge swaps SWAPS.
+            
             % get rules
             attempts_per_edge = g.getSettings('GraphBD.attempts_per_edge');
             
