@@ -17,7 +17,7 @@ input_rule = 'MRI';
 input_data = rand(atlas.getBrainRegions().length(), 1);
 save_dir_rule = 'File';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
-cohort_info_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
+save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
 sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule, input_data);
@@ -51,7 +51,7 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
 end
 
 delete(save_dir_path)
-delete(cohort_info_path)
+delete(save_cohort_file)
 
 %% Test 3: Save and Load cohort from TXT
 % setup
@@ -60,6 +60,8 @@ input_rule = 'MRI';
 input_data = rand(atlas.getBrainRegions().length(), 1);
 save_dir_rule = 'File';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
+save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
+save_group_file = [fileparts(which('test_braph2')) filesep 'group_info.txt'];
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
 sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule, input_data);
@@ -93,6 +95,8 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
 end
 
 delete(save_dir_path)
+delete(save_cohort_file)
+delete(save_group_file)
 
 %% Test 4: Save and Load cohort from JSON
 % setup

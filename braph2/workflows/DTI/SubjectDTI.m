@@ -323,11 +323,13 @@ classdef SubjectDTI < Subject
             
             % cohort information
             cohort_folder = '';
-            parts = strsplit(directory, '\');
+            parts = strsplit(directory, filesep());
             for k = 1:1:length(parts)-1
-                cohort_folder = [cohort_folder '\' parts{k}];
+                cohort_folder = [cohort_folder filesep() parts{k}]; %#ok<AGROW>
             end
+            cohort_folder =cohort_folder(2:end);
             file_cohort = [cohort_folder filesep() 'cohort_info.txt'];
+            file_cohort = file_cohort(2:end);
             cohort_id = '';
             cohort_label = '';
             cohort_notes = '';
