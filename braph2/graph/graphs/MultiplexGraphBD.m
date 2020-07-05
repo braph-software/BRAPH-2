@@ -205,6 +205,13 @@ classdef MultiplexGraphBD < Graph
             end
         end
         function available_settings = getAvailableSettings(g)  %#ok<INUSD>
+            % GETAVAILABLESETTINGS returns the available rules of graph
+            %
+            % GETAVAILABLESETTINGS(G) returns an array with the available
+            % settings for the graph. 
+            %
+            % See also getClass, getName, getDescription, getGraphType.
+            
             available_settings = { ...
                 'MultiplexGraphBD.attempts_per_edge', BRAPH2.NUMERIC, 5, {} ...
                 };
@@ -289,7 +296,7 @@ classdef MultiplexGraphBD < Graph
 %             % This function is the constructor, it initializes the class by
 %             % operating the adjacency matrix A with the following
 %             % functions: DEDIAGONALIZE, SEMIPOSITIVE, BINARIZE.
-%             % It calls the superclass constructor GRAPH.
+%             % It calls the super class constructor GRAPH.
 %             %
 %             % GRAPHBD(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
 %             % a GRAPHBD class with adjacency matrix A and it passes the

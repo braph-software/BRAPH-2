@@ -125,6 +125,13 @@ classdef GraphWD < Graph
             negativity_type = Graph.NONNEGATIVE;
         end
         function available_settings = getAvailableSettings(g) %#ok<INUSD>
+            % GETAVAILABLESETTINGS returns the available rules of graph
+            %
+            % GETAVAILABLESETTINGS(G) returns an array with the available
+            % settings for the graph. 
+            %
+            % See also getClass, getName, getDescription, getGraphType.
+            
             available_settings = { ...
                  'GraphWD.number_of_weights', BRAPH2.NUMERIC, 5, {} ...
                  };
@@ -159,7 +166,12 @@ classdef GraphWD < Graph
         function [randomized_graph, correlation_coefficients] = randomize_graph(g, varargin)
             % RANDOMIZE_GRAPH returns a randomized graph and the correlation coefficients.
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE_GRAPH() 
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE_GRAPH(G) 
+            % returns the randomized graph RANDOMIZED_GRAPH and the strength
+            % correlation coefficients from the graph G and the randomized.
+            % Utilizes available graph settings.
+            %
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE_GRAPH(G, 'PROPERTYRULE1', 'VALUE1', ...) 
             % returns the randomized graph RANDOMIZED_GRAPH and the strength
             % correlation coefficients from the graph G and the randomized.
             

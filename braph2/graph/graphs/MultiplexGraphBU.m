@@ -195,16 +195,23 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             end
         end
         function available_settings = getAvailableSettings(g)  %#ok<INUSD>
+            % GETAVAILABLESETTINGS returns the available rules of graph
+            %
+            % GETAVAILABLESETTINGS(G) returns an array with the available
+            % settings for the graph. 
+            %
+            % See also getClass, getName, getDescription, getGraphType.
+            
             available_settings = { ...
                 'MultiplexGraphBU.attempts_per_edge', BRAPH2.NUMERIC, 5, {} ...
                 };
         end
     end
-        methods
+    methods
         function [randomized_graph, swaps] = randomize_graph(g, varargin)
             % RANDOMIZE_GRAPH returns a randomized graph and the number of swaps.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH() returns the randomized 
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH() returns the randomized
             % graph RANDOMIZED_GRAPH obtained from a number of edge swaps SWAPS.
             % The randomization it is done layer by layer and then
             % integrating in the 2-D supra-adjacency matrix cell array.
@@ -228,7 +235,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
                 Aii(1:length(Aii)+1:numel(Aii)) = 0;
                 [I_edges, J_edges] = find(triu(Aii)); % find all the edges
                 E = length(I_edges); % number of edges
- 
+                
                 randomized_graph_layer = Aii;
                 for attempt=1:1:attempts_per_edge*E
                     

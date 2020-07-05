@@ -124,6 +124,13 @@ classdef GraphBU < GraphBD
             negativity_type = Graph.NONNEGATIVE;
         end
         function available_settings = getAvailableSettings(g) %#ok<INUSD>
+            % GETAVAILABLESETTINGS returns the available rules of graph
+            %
+            % GETAVAILABLESETTINGS(G) returns an array with the available
+            % settings for the graph. 
+            %
+            % See also getClass, getName, getDescription, getGraphType.
+            
             available_settings = { ...
                  'GraphBU.attempts_per_edge', BRAPH2.NUMERIC, 5, {} ...
                  };
@@ -156,8 +163,15 @@ classdef GraphBU < GraphBD
         function [randomized_graph, swaps] = randomize_graph(g, varargin)
             % RANDOMIZE_GRAPH returns a randomized graph and the number of swaps.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH() returns the randomized graph
-            % RANDOMIZED_GRAPH obtained from a number of edge swaps SWAPS.
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH(G) 
+            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
+            % number of edge swaps SWAPS. Utilizes available graph
+            % settings.
+            %
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH(G, 'PROPERTYRULE1', 'VALUE1', ...) 
+            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
+            % number of edge swaps SWAPS.
+            %
             
              % get rules
             attempts_per_edge = g.getSettings('GraphBU.attempts_per_edge');
