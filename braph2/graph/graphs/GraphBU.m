@@ -171,9 +171,8 @@ classdef GraphBU < GraphBD
             % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH(G, 'PROPERTYRULE1', 'VALUE1', ...) 
             % returns the randomized graph RANDOMIZED_GRAPH obtained from a
             % number of edge swaps SWAPS.
-            %
             
-             % get rules
+            % get rules
             attempts_per_edge = g.getSettings('GraphBU.attempts_per_edge');
             
             if nargin<2
