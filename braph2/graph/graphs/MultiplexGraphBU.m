@@ -214,7 +214,12 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE() returns the randomized
             % graph RANDOMIZED_GRAPH obtained from a number of edge swaps SWAPS.
             % The randomization it is done layer by layer and then
-            % integrating in the 2-D supra-adjacency matrix cell array.
+            % integrated in the 2-D supra-adjacency matrix cell array.
+            %
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'PROPERTYRULE1', 'VALUE1', ...)
+            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
+            % number of edge swaps SWAPS. The randomization it is done layer 
+            % by layer and then integrated in the 2-D supra-adjacency matrix cell array.
             
             % get rules
             attempts_per_edge = get_from_varargin(10, 'AttemptsPerEdge', varargin{:});
