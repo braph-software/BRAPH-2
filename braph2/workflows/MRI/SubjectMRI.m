@@ -333,6 +333,10 @@ classdef SubjectMRI < Subject
                 end
             end
             
+            % supress warning
+            warning_id = 'MATLAB:table:ModifiedAndSavedVarnames';
+            warning('off', warning_id)
+            
             % search for cohort info file
             file_path = strsplit(file, filesep());
             file_cohort_path = '';
@@ -351,8 +355,7 @@ classdef SubjectMRI < Subject
                 cohort_label = raw_cohort{2, 1};
                 cohort_notes = raw_cohort{3, 1};
             end
-            
-            
+           
             % creates cohort
             cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             
@@ -366,10 +369,8 @@ classdef SubjectMRI < Subject
                 group_id = raw_group{1, 1};
                 group_label = raw_group{2, 1};
                 group_notes = raw_group{3, 1};
-            end
-           
-            
-            
+            end        
+                
             % reads file
             raw = readtable(file, 'Delimiter', '\t');
             
@@ -379,6 +380,9 @@ classdef SubjectMRI < Subject
                     'MRI', raw{i, 4:size(raw, 2)}');
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
+            
+            % warning on
+            warning('on', 'all')
             
             % creates group
             group = Group(subject_class, group_id, group_label, group_notes, cohort.getSubjects().getValues());
