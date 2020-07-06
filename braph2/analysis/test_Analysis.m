@@ -84,7 +84,7 @@ for i = 1:1:length(analysis_class_list)
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
     
     % act
-    measurements = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, group, [measurement_class '.measure_code'], 'Degree');
+    measurements = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, 'Degree', group);
 %     comparison = Comparison.getComparison(comparison_class, 'c1', atlas, {group group}, [comparison_class '.measure_code'], 'Degree');
 %     randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group, [random_comparison_class '.measure_code'], 'Degree');
     analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {measurements}, {}, {});
@@ -100,8 +100,8 @@ end
 for i = 1:1:length(analysis_class_list)
     % setup
     analysis_class = analysis_class_list{i};
-    sub_class = Analysis.getSubjectClass(analysis_class);
-    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
+    subject_class = Analysis.getSubjectClass(analysis_class);
+    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
     sub1 = Subject.getSubject(subject_class, 'id1', 'label 1', 'notes 1', atlases);
     sub2 = Subject.getSubject(subject_class, 'id2', 'label 2', 'notes 2', atlases);
     sub3 = Subject.getSubject(subject_class, 'id3', 'label 3', 'notes 3', atlases);
@@ -112,8 +112,8 @@ for i = 1:1:length(analysis_class_list)
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
     
     % act
-    measurement1 = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, group, [measurement_class '.measure_code'], 'Degree');
-    measurement2 = Measurement.getMeasurement(measurement_class, 'm2 id', 'm2 label', 'm2 notes', atlas, group, [measurement_class '.measure_code'], 'Degree');
+    measurement1 = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, 'Degree', group);
+    measurement2 = Measurement.getMeasurement(measurement_class, 'm2 id', 'm2 label', 'm2 notes', atlas, 'Degree', group);
     measurements = {measurement1, measurement2};
 %     comparison = Comparison.getComparison(comparison_class, 'c1', atlas, {group group}, [comparison_class '.measure_code'], 'Degree');
 %     randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group);
@@ -144,13 +144,13 @@ end
 % for i = 1:1:length(analysis_class_list)
 %     
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
@@ -182,13 +182,13 @@ end
 %     
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
@@ -212,13 +212,13 @@ end
 %     
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
@@ -245,13 +245,13 @@ end
 %     
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
@@ -273,13 +273,13 @@ end
 % for i = 1:1:length(analysis_class_list)
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
@@ -302,13 +302,13 @@ end
 % for i = 1:1:length(analysis_class_list)
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
@@ -337,13 +337,13 @@ end
 % for i = 1:1:length(analysis_class_list)
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     cohort.getGroups().add(group.getName(), group);
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
@@ -370,13 +370,13 @@ end
 % for i = 1:1:length(analysis_class_list)
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     cohort.getGroups().add(group.getName(), group);
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
@@ -402,13 +402,13 @@ end
 % for i = 1:1:length(analysis_class_list)
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     cohort.getGroups().add(group.getName(), group);
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
@@ -435,13 +435,13 @@ end
 % for i = 1:1:length(analysis_class_list)
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3});
-%     group = Group(sub_class, {sub1, sub2, sub3});
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3});
+%     group = Group(subject_class, {sub1, sub2, sub3});
 %     cohort.getGroups().add(group.getName(), group);
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     comparison_class = Analysis.getComparisonClass(analysis_class);
@@ -468,17 +468,17 @@ end
 % for i =1:1:length(analysis_class_list)
 %     % setup
 %     analysis_class = analysis_class_list{i};
-%     sub_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
-%     sub1 = Subject.getSubject(sub_class, atlases);
-%     sub2 = Subject.getSubject(sub_class, atlases);
-%     sub3 = Subject.getSubject(sub_class, atlases);
-%     sub4 = Subject.getSubject(sub_class, atlases);
-%     sub5 = Subject.getSubject(sub_class, atlases);
-%     sub6 = Subject.getSubject(sub_class, atlases);
-%     cohort = Cohort('cohort', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5, sub6});
-%     group = Group(sub_class, {sub1, sub2, sub3});
-%     group2 = Group(sub_class, {sub4, sub5, sub6});    
+%     subject_class = Analysis.getSubjectClass(analysis_class);
+%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+%     sub1 = Subject.getSubject(subject_class, atlases);
+%     sub2 = Subject.getSubject(subject_class, atlases);
+%     sub3 = Subject.getSubject(subject_class, atlases);
+%     sub4 = Subject.getSubject(subject_class, atlases);
+%     sub5 = Subject.getSubject(subject_class, atlases);
+%     sub6 = Subject.getSubject(subject_class, atlases);
+%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3, sub4, sub5, sub6});
+%     group = Group(subject_class, {sub1, sub2, sub3});
+%     group2 = Group(subject_class, {sub4, sub5, sub6});    
 %     cohort.getGroups().add(group.getName(), group);
 %     cohort.getGroups().add(group2.getName(), group2);
 %     measurement_class = Analysis.getMeasurementClass(analysis_class);
