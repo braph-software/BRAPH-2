@@ -17,16 +17,17 @@ group = Group(subject_class, 'id', 'label', 'notes', {sub1, sub2, sub3});
 
 % TODO: get graph type from Analysis
 graph_type = 'GraphWU';
+%graph_type = AnalysisDTI.getGraphType();
 measures = Graph.getCompatibleMeasureList(graph_type);
 
 %% Test 1: Instantiation
 for i = 1:1:numel(measures)
-    measurement = MeasurementDTI('m1', 'label', 'notes', atlas, group, 'MeasurementDTI.MeasureCode', measures{i});
+    measurement = MeasurementDTI('m1', 'label', 'notes', atlas, measures{i}, group);
 end
 
 %% Test 2: Correct size defaults
 for i = 1:1:numel(measures)
-    measurement = MeasurementDTI('m1', 'label', 'notes', atlas, group, 'MeasurementDTI.MeasureCode', measures{i});
+    measurement = MeasurementDTI('m1', 'label', 'notes', atlas, measures{i}, group);
     
     values = measurement.getMeasureValues();
     average_value = measurement.getGroupAverageValue();
@@ -73,7 +74,7 @@ for i = 1:1:numel(measures)
     average_value = mean(reshape(cell2mat(values), [size(values{1}, 1), size(values{1}, 2), group.subjectnumber()]), 3);
     
     % act
-    measurement = MeasurementDTI('m1', 'label', 'notes', atlas, group, 'MeasurementDTI.MeasureCode', measures{i}, ...
+    measurement = MeasurementDTI('m1', 'label', 'notes', atlas, measures{i}, group, ...
         'MeasurementDTI.values', values, ...
         'MeasurementDTI.average_value', average_value ...
         );
