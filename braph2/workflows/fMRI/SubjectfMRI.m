@@ -1,29 +1,29 @@
 classdef SubjectfMRI < Subject
-    % SubjectfMRI  A subject of type DTI
-    % SubjectfMRI represents a subject of type DTI.
-    % It is a subclass of Subject.
+    % SubjectfMRI  A subject of type fMRI
+    % SubjectfMRI represents a subject of type fMRI
+    % It is a subclass of Subject
     %
-    % SubjectfMRI represents a subject of type DTI.
+    % SubjectfMRI represents a subject of type fMRI.
     % It is a subclass of Subject. It implements the methods initialize_datadict
     % and update_brainatlases.
     %
-    % SubjectfMRI methods (Access = protected)
-    %   SubjectfMRI              - Constructor.
+    % SubjectfMRI methods (Access = protected):
+    %   SubjectfMRI              - Constructor
     %
-    % SubjectfMRI methods (Access=protected)
-    %   initialize_datadict     - initializes the data dictionary DATADICT.
-    %   update_brainatlases     - updates the brain atlases in DATADICT.
+    % SubjectfMRI methods (Access=protected):
+    %   initialize_datadict     - initializes the data dictionary DATADICT
+    %   update_brainatlases     - updates the brain atlases in DATADICT
     %
     % SubjectfMRI inspection methods (Static)
-    %   getClass                - returns the class of SubjectfMRI.
-    %   getName                 - returns the name of  SubjectfMRI.
-    %   getDescription          - returns the description of SubjectfMRI.
+    %   getClass                - returns the class of SubjectfMRI
+    %   getName                 - returns the name of  SubjectfMRI
+    %   getDescription          - returns the description of SubjectfMRI
     %   getBrainAtlasNumber     - returns the number of elements of Atlases
     %   getDataList             - returns the type of data of SubjectfMRI
     %   getDataNumber           - returns the number of elements of DATADICT
     %   getDataCodes            - returns the key codes of the data for SubjectfMRI
-    %   getDataClasses          - returns the class of the type of all data of SubjectfMRI.
-    %   getDataClass            - returns the class of the type of a data of SubjectfMRI.
+    %   getDataClasses          - returns the class of the type of all data of SubjectfMRI
+    %   getDataClass            - returns the class of the type of a data of SubjectfMRI
     %   getSubject              - returns a new instantiation of SubjectfMRI
     %
     % Subject load and save methods (Static):
@@ -38,7 +38,7 @@ classdef SubjectfMRI < Subject
     
     methods  % Constructor
         function sub = SubjectfMRI(id, label, notes, atlas, varargin)
-            % SUBJECTfMRI(ID, LABEL, NOTES, ATLASES) creates a subject of type DTI
+            % SUBJECTfMRI(ID, LABEL, NOTES, ATLASES) creates a subject of type fMRI
             % with with ID, LABEL, NOTES. ATLAS is the brain atlas that 
             % subject fMRI will use (it can be either a BrainAtlas or a
             % cell array with a single BrainAtlas).

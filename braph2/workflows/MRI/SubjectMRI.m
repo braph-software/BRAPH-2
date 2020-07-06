@@ -1,29 +1,29 @@
 classdef SubjectMRI < Subject
-    % SubjectMRI  A subject of type DTI
-    % SubjectMRI represents a subject of type DTI.
-    % It is a subclass of Subject.
+    % SubjectMRI  A subject of type MRI
+    % SubjectMRI represents a subject of type MRI
+    % It is a subclass of Subject
     %
-    % SubjectMRI represents a subject of type DTI.
+    % SubjectMRI represents a subject of type MRI.
     % It is a subclass of Subject. It implements the methods initialize_datadict
     % and update_brainatlases.
     %
-    % SubjectMRI methods (Access = protected)
-    %   SubjectMRI              - Constructor.
+    % SubjectMRI methods (Access=protected):
+    %   SubjectMRI              - Constructor
     %
-    % SubjectMRI methods (Access=protected)
-    %   initialize_datadict     - initializes the data dictionary DATADICT.
-    %   update_brainatlases     - updates the brain atlases in DATADICT.
+    % SubjectMRI methods (Access=protected):
+    %   initialize_datadict     - initializes the data dictionary DATADICT
+    %   update_brainatlases     - updates the brain atlases in DATADICT
     %
     % SubjectMRI inspection methods (Static)
-    %   getClass                - returns the class of SubjectMRI.
-    %   getName                 - returns the name of  SubjectMRI.
-    %   getDescription          - returns the description of SubjectMRI.
+    %   getClass                - returns the class of SubjectMRI
+    %   getName                 - returns the name of  SubjectMRI
+    %   getDescription          - returns the description of SubjectMRI
     %   getBrainAtlasNumber     - returns the number of elements of Atlases
     %   getDataList             - returns the type of data of SubjectMRI
     %   getDataNumber           - returns the number of elements of DATADICT
     %   getDataCodes            - returns the key codes of the data for SubjectMRI
-    %   getDataClasses          - returns the class of the type of all data of SubjectMRI.
-    %   getDataClass            - returns the class of the type of a data of SubjectMRI.
+    %   getDataClasses          - returns the class of the type of all data of SubjectMRI
+    %   getDataClass            - returns the class of the type of a data of SubjectMRI
     %   getSubject              - returns a new instantiation of SubjectMRI
     %
     % Subject load and save methods (Static):
@@ -38,7 +38,7 @@ classdef SubjectMRI < Subject
  
     methods  % Constructor
         function sub = SubjectMRI(id, label, notes, atlas, varargin)
-            % SUBJECTMRI(ID, LABEL, NOTES, ATLASES) creates a subject of type DTI
+            % SUBJECTMRI(ID, LABEL, NOTES, ATLASES) creates a subject of type MRI
             % with with ID, LABEL, NOTES. ATLAS is the brain atlas that 
             % subject MRI will use (it can be either a BrainAtlas or a
             % cell array with a single BrainAtlas).
@@ -138,7 +138,7 @@ classdef SubjectMRI < Subject
             % N = GETBRAINATLASNUMBER() returns the number of
             % brain atlases, in this case 1.
             %
-            % See also getList(), getDescription(), getName(), getClass().
+            % See also getDescription, getName, getClass.
             
             atlas_number = 1;
         end
@@ -150,7 +150,7 @@ classdef SubjectMRI < Subject
             %   age            -    DataScalar.
             %   MRI            -    DataStructural.
             %
-            % See also getList()
+            % See also getList
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
@@ -161,7 +161,7 @@ classdef SubjectMRI < Subject
             %
             % N = GETDATANUMBER() returns the number of data.
             %
-            % See also getDataList(), getBrainAtlasNumber().
+            % See also getDataList, getBrainAtlasNumber.
             
             data_number = Subject.getDataNumber('SubjectMRI');
         end
@@ -171,7 +171,7 @@ classdef SubjectMRI < Subject
             % CELL ARRAY = GETDATACODES(SUB) returns a cell array of
             % subject MRI data keys.
             %
-            % See also getList()
+            % See also getList, getDataClasses, getDataNumber
             
             data_codes = Subject.getDataCodes('SubjectMRI');
         end
@@ -185,7 +185,7 @@ classdef SubjectMRI < Subject
             % cell array of subject MRI data classes to the subject whose class is
             % SUBJECT_CLASS.
             %
-            % See also getList(), getDataCodes(), getDataClass().
+            % See also getList, getDataCodes, getDataClass.
             
             data_classes = Subject.getDataClasses('SubjectMRI');
         end
@@ -195,13 +195,25 @@ classdef SubjectMRI < Subject
             % DATA_CLASS = GETDATACLASS(SUB, DATACODE) returns the class of
             % data with code DATACODE
             %
-            % See also getList(), getDataClasses().
+            % See also getList, getDataClasses.
             
             data_class = Subject.getDataNumber('SubjectMRI', data_code);
         end
     end
     methods (Static)  % Save/load functions
         function cohort = load_from_xls(subject_class, atlases, varargin)
+            % LOAD_FROM_XLS loads a file to a Cohort with SubjectMRI
+            %
+            % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES) opens a GUI to
+            % load a directory where it reads '.xls' or '.xlsx' files. It 
+            % creates a cohort of SubjectMRI with brain atlas ATLASES.
+            %
+            % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % load the directory in PATH where it reads '.xls' or '.xlsx'
+            % files. It creates a cohort of SubjectMRI with brain atlas ATLASES.
+            % 
+            % See also save_to_xls, load_from_txt, load_from_json
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
@@ -238,6 +250,18 @@ classdef SubjectMRI < Subject
             cohort.getGroups().add(group.getName(), group);
         end
         function save_to_xls(cohort, varargin)
+            % SAVE_TO_XLS saves the cohort of SubjectMRI to a path
+            %
+            % SAVE_TO_XLS(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectMRI will be saved in '.xls' or 'xlsx'
+            % format.
+            %
+            % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectMRI will be saved in '.xls' or 'xlsx' format in the
+            % specified PATH.
+            % 
+            % See also load_from_xls, save_to_txt, save_to_json
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
@@ -290,6 +314,18 @@ classdef SubjectMRI < Subject
             writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
         end
         function cohort = load_from_txt(subject_class, atlases, varargin)
+            % LOAD_FROM_TXT loads a file to a Cohort with SubjectMRI
+            %
+            % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES) opens a GUI to
+            % load a directory where it reads '.txt' files. It 
+            % creates a cohort of SubjectMRI with brain atlas ATLASES.
+            %
+            % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % load the directory in PATH where it reads '.txt' files.
+            % It creates a cohort of SubjectMRI with brain atlas ATLASES.
+            % 
+            % See also save_to_txt, load_from_xls, load_from_json
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
@@ -326,6 +362,16 @@ classdef SubjectMRI < Subject
             cohort.getGroups().add(group.getName(), group);
         end
         function save_to_txt(cohort, varargin)
+            % SAVE_TO_TXT saves the cohort of SubjectMRI to a path
+            %
+            % SAVE_TO_TXT(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectMRI will be saved in '.txt' format.
+            %
+            % SAVE_TO_TXT(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectMRI will be saved in '.txt' format in the specified PATH.
+            % 
+            % See also load_from_txt, save_to_xls, save_to_json
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
@@ -405,6 +451,18 @@ classdef SubjectMRI < Subject
             fclose(fid);
         end
         function cohort = load_from_json(subject_class, atlases, varargin)
+            % LOAD_FROM_JSON loads a file to a Cohort with SubjectMRI
+            %
+            % COHORT = LOAD_FROM_JSON(SUBJECT_CLASS, ATLASES) opens a GUI to
+            % load a directory where it reads '.json' files. It 
+            % creates a cohort of SubjectMRI with brain atlas ATLASES.
+            %
+            % COHORT = LOAD_FROM_JSON(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % load the directory in PATH where it reads '.json' files.
+            % It creates a cohort of SubjectMRI with brain atlas ATLASES.
+            % 
+            % See also save_to_json, load_from_xls, load_from_txt
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
@@ -441,6 +499,16 @@ classdef SubjectMRI < Subject
             cohort.getGroups().add(group.getName(), group);
         end
         function save_to_json(cohort, varargin)
+            % SAVE_TO_JSON saves the cohort of SubjectMRI to a path
+            %
+            % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectMRI will be saved in '.json' format.
+            %
+            % SAVE_TO_JSON(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectMRI will be saved in '.json' format in the specified PATH.
+            % 
+            % See also load_from_json, save_to_xls, save_to_txt
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file

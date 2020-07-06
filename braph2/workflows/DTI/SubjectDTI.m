@@ -1,29 +1,29 @@
 classdef SubjectDTI < Subject
     % SubjectDTI  A subject of type DTI
-    % SubjectDTI represents a subject of type DTI.
-    % It is a subclass of Subject.
+    % SubjectDTI represents a subject of type DTI
+    % It is a subclass of Subject
     %
     % SubjectDTI represents a subject of type DTI.
     % It is a subclass of Subject. It implements the methods initialize_datadict
     % and update_brainatlases.
     %
-    % SubjectDTI methods (Access = protected)
-    %   SubjectDTI              - Constructor.
+    % SubjectDTI methods (Access = protected):
+    %   SubjectDTI              - Constructor
     %
-    % SubjectDTI methods (Access=protected)
-    %   initialize_datadict     - initializes the data dictionary DATADICT.
-    %   update_brainatlases     - updates the brain atlases in DATADICT.
+    % SubjectDTI methods (Access=protected):
+    %   initialize_datadict     - initializes the data dictionary DATADICT
+    %   update_brainatlases     - updates the brain atlases in DATADICT
     %
     % SubjectDTI inspection methods (Static)
-    %   getClass                - returns the class of SubjectDTI.
-    %   getName                 - returns the name of  SubjectDTI.
-    %   getDescription          - returns the description of SubjectDTI.
+    %   getClass                - returns the class of SubjectDTI
+    %   getName                 - returns the name of  SubjectDTI
+    %   getDescription          - returns the description of SubjectDTI
     %   getBrainAtlasNumber     - returns the number of elements of Atlases
     %   getDataList             - returns the type of data of SubjectDTI
     %   getDataNumber           - returns the number of elements of DATADICT
     %   getDataCodes            - returns the key codes of the data for SubjectDTI
-    %   getDataClasses          - returns the class of the type of all data of SubjectDTI.
-    %   getDataClass            - returns the class of the type of a data of SubjectDTI.
+    %   getDataClasses          - returns the class of the type of all data of SubjectDTI
+    %   getDataClass            - returns the class of the type of a data of SubjectDTI
     %   getSubject              - returns a new instantiation of SubjectDTI
     %
     % Subject load and save methods (Static):
