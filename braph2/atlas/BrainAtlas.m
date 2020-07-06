@@ -95,7 +95,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
     end
     methods  % Basic functions
         function atlas = BrainAtlas(id, label, notes, brain_surf_file, brain_regions)
-            % BrainAtlas(ID, LABEL, NOTES, BRAIN_SURF_FFILE, BRAIN_REGIONS) creates a BrainAtlas with
+            % BrainAtlas(ID, LABEL, NOTES, BRAIN_SURF_FILE, BRAIN_REGIONS) creates a BrainAtlas with
             % given ID, LABEL, NOTES, AND BRAIN_SURF_FILE and initializes the dictionary with
             % BRAIN_REGIONS (cell array of BrainRegions).
             %
@@ -335,10 +335,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % file with message MSG.
             %
             % See also BrainAtlas, uigetfile, fopen.
-            
-            % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {}); 
-            
+     
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
@@ -353,16 +350,21 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             [~, ~, raw] = xlsread(file);
             
-            atlas_id = raw{1,1};
-            atlas.setID(atlas_id);
+            atlas_id = raw{1, 1};
+            atlas_label = raw{2, 1};
+            atlas_notes = raw{3, 1};
+            atlas_surf = raw{4, 1};
             
-            for i = 2:1:size(raw, 1)
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas(atlas_id, atlas_label, atlas_notes, atlas_surf, {});
+            
+            for i = 5:1:size(raw, 1)
                 br_id = raw{i, 1};
-                br_label = raw{i, 2};
-                br_notes = raw{i, 3};
-                br_x = raw{i, 4};
-                br_y = raw{i, 5};
-                br_z = raw{i, 6};
+                br_label = raw{i, 2};                
+                br_x = raw{i, 3};
+                br_y = raw{i, 4};
+                br_z = raw{i, 5};
+                br_notes = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
                 atlas.getBrainRegions().add(br.getID(), br);
             end
@@ -406,7 +408,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % creates table
             tab = [
                 {atlas.getID(), {}, {}, {}, {}, {}};
-                table(br_ids, br_label, br_notes, br_x, br_y, br_z)
+                {atlas.getLabel(), {}, {}, {}, {}, {}};
+                {atlas.getNotes(), {}, {}, {}, {}, {}};
+                {atlas.getBrainSurfFile(), {}, {}, {}, {}, {}};
+                table(br_ids, br_label, br_x, br_y, br_z, br_notes)
                 ];
             
             % save
@@ -428,9 +433,6 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also BrainAtlas, uigetfile, readtable
             
-            % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
-            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
@@ -443,18 +445,26 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 end
             end
             
-            raw = readtable(file);
+            raw = textread(file, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
             
-            atlas_ID =  raw.Properties.VariableNames{1};
-            atlas.setID(atlas_ID);
+            raw = raw(~cellfun('isempty', raw));  % remove empty cells
             
-            for i = 1:1:size(raw, 1)
+            atlas_ID =  raw{1, 1};            
+            atlas_label = raw{2, 1};
+            atlas_notes = raw{3, 1};
+            atlas_surf = raw{4, 1};
+            atlas_surf = strrep(atlas_surf, '_nv', '.nv');
+  
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas(atlas_ID, atlas_label, atlas_notes, atlas_surf, {});
+            
+            for i = 5:6:size(raw, 1)
                 br_id = char(raw{i, 1});
-                br_label = char(raw{i, 2});
-                br_notes = char(raw{i, 3});
-                br_x = raw{i, 4};
-                br_y = raw{i, 5};
-                br_z = raw{i, 6};
+                br_label = char(raw{i+1, 1});                
+                br_x = str2double(raw{i+2, 1});
+                br_y = str2double(raw{i+3, 1});
+                br_z = str2double(raw{i+4, 1});
+                br_notes = char(raw{i+5, 1});
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
                 atlas.getBrainRegions().add(br.getID(), br);
             end
@@ -497,8 +507,11 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             
             % creates table
             tab = [
-                {atlas.getID(), {}, {}, {}, {}, {}};
-                table(br_ids, br_label, br_notes, br_x, br_y, br_z)
+                {atlas.getID(), {}, {}, {}, {}, {}}
+                {atlas.getLabel(), {}, {}, {}, {}, {}} 
+                {atlas.getNotes(), {}, {}, {}, {}, {}} 
+                {atlas.getBrainSurfFile(), {}, {}, {}, {}, {}}                 
+                table(br_ids, br_label, br_x, br_y, br_z, br_notes)
                 ];
             
             % save
@@ -520,8 +533,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             %
             % See also BrainAtlas, uigetfile, jsondecode
             
-            % Creates empty BrainAtlas
-            atlas = BrainAtlas('', '', '', 'BrainMesh_ICBM152.nv', {});
+            
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
@@ -540,9 +552,14 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             atlas_id =  fieldnames(raw);
             brain_atlas = atlas_id{3};  % 1: BRAPH, 2:Version, 3:Name           
             brain_atlas_structure = eval(['raw.' brain_atlas]);
-            atlas.setID(brain_atlas_structure.id);
+            atlas_surf = brain_atlas_structure.ba_surf;
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas('', '', '', atlas_surf, {});
+            atlas.setID(brain_atlas_structure.id);  
+            atlas.setLabel(brain_atlas_structure.label);
+            atlas.setNotes(brain_atlas_structure.notes);
             intern_structure = fieldnames(brain_atlas_structure);
-            idict = intern_structure{2};  % 1:name, 2:idict
+            idict = intern_structure{5};  % 1:name, 2:label, 3:notes, 4:surf, 5:idict
             brain_atlas_intern_structure = eval(['brain_atlas_structure.' idict]);
             
             
@@ -600,7 +617,10 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 'Build', BRAPH2.BUILD, ...
                 'BrainAtlas', struct( ...
                     'id', atlas.getID(), ...
-                    'br_idict', table(id, label, notes, x, y, z) ...
+                    'label', atlas.getLabel(), ...
+                    'notes', atlas.getNotes(), ...
+                    'ba_surf', atlas.getBrainSurfFile(), ...
+                    'br_idict', table(id, label, x, y, z, notes) ...
                     ) ...
                 );
             
