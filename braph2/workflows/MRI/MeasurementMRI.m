@@ -13,7 +13,7 @@ classdef MeasurementMRI < Measurement
 %             available_settings = {
 %                 'MeasurementMRI.MeasureCode', BRAPH2.STRING, measure_list{1}, measure_list;
 %                 };
-            
+
             m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
         end
     end
@@ -26,7 +26,7 @@ classdef MeasurementMRI < Measurement
         function initialize_data(m, varargin)
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
-            
+
             measure_code = m.getMeasureCode();
 
             if Measure.is_global(measure_code)  % global measure
@@ -90,4 +90,4 @@ classdef MeasurementMRI < Measurement
             m = eval([measurement_class '(id, atlas, label, notes, measure_code, group, varargin{:})']);
         end
     end
-end
+end 

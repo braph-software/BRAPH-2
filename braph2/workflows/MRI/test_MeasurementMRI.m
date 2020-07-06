@@ -28,9 +28,9 @@ end
 %% Test 2: Correct size defaults
 for i = 1:1:numel(measures)
     measurement = MeasurementMRI('m1', 'label', 'notes', atlas, measures{i}, group);
-    
+
     value = measurement.getMeasureValue();
-    
+
     if Measure.is_global(measures{i})
         assert(iscell(value) & ...
             isequal(numel(value), 1) & ...
@@ -55,16 +55,16 @@ end
 %% Test 3: Initialize with value
 for i=1:1:numel(measures)
     % setup
-    
+
     A = rand(5);
     g = Graph.getGraph('GraphWU', A);
     m  = Measure.getMeasure(measures{i}, g);
-    
+
     % act
     measurement = MeasurementMRI('m1', 'label', 'notes', atlas, measures{i}, group, ...
         'MeasurementMRI.Value', m.getValue() ...
         );
-    
+
     % assert
     if Measure.is_global(measures{i})
         assert(iscell(measurement.getMeasureValue()) & ...

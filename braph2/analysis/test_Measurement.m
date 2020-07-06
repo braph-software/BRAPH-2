@@ -14,9 +14,9 @@ for i = 1:1:length(measurement_class_list)
     % setup
     measurement_class = measurement_class_list{i};
     subject_class = Measurement.getSubjectClass(measurement_class);
-    
+
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
-    
+
     sub1 = Subject.getSubject(subject_class, 'id1', 'label 1', 'notes 1', atlases);
     sub2 = Subject.getSubject(subject_class, 'id2', 'label 2', 'notes 2', atlases);
     sub3 = Subject.getSubject(subject_class, 'id3', 'label 3', 'notes 3', atlases);
@@ -46,7 +46,7 @@ for i = 1:1:length(measurement_class_list)
     subject_class = Measurement.getSubjectClass(measurement_class);
 
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
-    
+
     sub1 = Subject.getSubject(subject_class, 'id1', 'label 1', 'notes 1', atlases);
     sub2 = Subject.getSubject(subject_class, 'id2', 'label 2', 'notes 2', atlases);
     sub3 = Subject.getSubject(subject_class, 'id3', 'label 3', 'notes 3', atlases);
@@ -82,4 +82,4 @@ for i = 1:1:length(measurement_class_list)
     assert(ischar(measurement.getSubjectClass()), ...
         ['BRAPH' measurement_class 'StaticFunctions'], ...
         [measurement_class '.getSubjectClass() fail.'])
-end
+end 
