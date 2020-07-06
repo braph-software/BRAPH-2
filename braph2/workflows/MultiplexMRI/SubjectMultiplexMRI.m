@@ -392,6 +392,10 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
+            % supress warning
+            warning_id = 'MATLAB:table:ModifiedAndSavedVarnames';
+            warning('off', warning_id)
+            
             % search for cohort info file
             file_path = strsplit(file1, filesep());
             file_cohort_path = '';
@@ -440,6 +444,9 @@ classdef SubjectMultiplexMRI < Subject
                     'MRI2', raw2{i, 4:size(raw2, 2)}');
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
+            
+             % warning on
+            warning('on', 'all')
             
             % creates group
             group = Group(subject_class, group_id, group_label, group_notes, cohort.getSubjects().getValues());
