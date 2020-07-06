@@ -208,16 +208,16 @@ classdef MultiplexGraphWU < MultiplexGraphWD
         end
     end
     methods
-        function [randomized_graph, correlation_coefficients] = randomize_graph(g, varargin)    
-            % RANDOMIZE_GRAPH returns a randomized graph and the correlation coefficients.
+        function [randomized_graph, correlation_coefficients] = randomize(g, varargin)    
+            % RANDOMIZE returns a randomized graph and the correlation coefficients.
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE_GRAPH(G) 
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G) 
             % returns the randomized graph RANDOMIZED_GRAPH and the strength
             % correlation coefficients from the graph G and the randomized.
             % The randomization it is done layer by layer and then
             % integrating in the 2-D supra-adjacency matrix cell array.
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE_GRAPH(G, 'PropertyRule1', 'Value1', ...) 
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'PropertyRule1', 'Value1', ...) 
             % returns the randomized graph RANDOMIZED_GRAPH and the strength
             % correlation coefficients from the graph G and the randomized.
             % The randomization it is done layer by layer and then

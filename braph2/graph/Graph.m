@@ -1245,7 +1245,7 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
     methods (Abstract)
-        randomize_graph(n);
+        randomize(n);
     end
 %     methods (Access=protected)
 %         function g_copy = copyElement(g)

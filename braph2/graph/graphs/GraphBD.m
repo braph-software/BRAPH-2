@@ -163,15 +163,15 @@ classdef GraphBD < Graph
 %         end
 %     end
     methods
-        function [randomized_graph, swaps] = randomize_graph(g, varargin)
-            % RANDOMIZE_GRAPH returns a randomized graph and the number of swaps.
+        function [randomized_graph, swaps] = randomize(g, varargin)
+            % RANDOMIZE returns a randomized graph and the number of swaps.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH(G) 
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G) 
             % returns the randomized graph RANDOMIZED_GRAPH obtained from a
             % number of edge swaps SWAPS. Utilizes available graph
             % settings.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE_GRAPH(G, 'PROPERTYRULE1', 'VALUE1', ...) 
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'PROPERTYRULE1', 'VALUE1', ...) 
             % returns the randomized graph RANDOMIZED_GRAPH obtained from a
             % number of edge swaps SWAPS. 
             
