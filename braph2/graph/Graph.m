@@ -135,9 +135,10 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   getCompatibleMeasureList    - returns a list with the compatible measures
     %   getCompatibleMeasureNumber  - returns a number of the compatible measures
     %
-    % Graph attacks methods (static):
+    % Graph attack and subgraph methods (static):
     %   nodeattack                  - removes given nodes from a graph
     %   edgeattack                  - removes given edges from a graph
+    %   subgraph                    - extracts subgraph
     %
     % See also Measure, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
 
@@ -1112,7 +1113,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             value = g.getMeasure(measure_class).getValue();
         end       
     end
-    methods (Static)  % Attacks
+    methods (Static)  % Attacks and subgraphs
         function ga = nodeattack(g, nodes, layernumbers)
             % NODEATTACK removes given nodes from a graph
             %
@@ -1233,10 +1234,13 @@ classdef Graph < handle & matlab.mixin.Copyable
             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
         function sg = subgraph(g, nodes)
-            % SUBGRAPH creates subgraph from given nodes
+            % SUBGRAPH extracts subgraph
             %
-            % SG = SUBGRAPH(G, NODES) creates the graph SG as a subgraph of G
+            % SG = SUBGRAPH(G, NODES) extracts the graph SG as a subgraph of G
             % containing only the nodes specified by NODES.
+            % If NODES is a vector, the specified nodes are removed from
+            % all layers. If NODES is a cell array of vectors, the
+            % specified nodes are removed from each layer.
             
             A = g.getA();
                  
@@ -1262,6 +1266,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                         end
                     end
             end
+            
             sg = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
