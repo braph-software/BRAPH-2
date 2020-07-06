@@ -269,7 +269,9 @@ classdef SubjectDTI < Subject
             
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
-                mkdir(root_directory, cohort.getGroups().getValue(i).getID());
+                if ~exist([root_directory filesep() cohort.getGroups().getValue(i).getID()], 'dir')
+                    mkdir(root_directory, cohort.getGroups().getValue(i).getID());
+                end
                 
                 % cohort info
                 file_info_cohort = [root_directory filesep() 'cohort_info.txt'];
