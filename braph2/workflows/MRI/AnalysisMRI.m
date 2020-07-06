@@ -1,8 +1,8 @@
 classdef AnalysisMRI < Analysis
     methods  % Constructor
-        function analysis = AnalysisMRI(cohort, measurements, randomcomparisons, comparisons, varargin)
+        function analysis = AnalysisMRI(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
             
-            analysis = analysis@Analysis(cohort, measurements, randomcomparisons, comparisons, varargin{:});
+            analysis = analysis@Analysis(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
     methods  % ID functions
@@ -46,16 +46,18 @@ classdef AnalysisMRI < Analysis
             negative_weight_rule = analysis.getSettings('AnalysisMRI.NegativeWeightRule');
             A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
             
-            graph_type = analysis.getSettings('AnalysisMRI.GraphType');
+            graph_type = AnalysisMRI.getGraphType();
             g = Graph.getGraph(graph_type, A, varargin{:});
             
             measure = Measure.getMeasure(measure_code, g, varargin{:});
-            measurement_value = {measure.getValue()};
-            
+            measurement_value = measure.getValue();
+
             measurement = Measurement.getMeasurement('MeasurementMRI', ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
+                '', ...  % meaurement label
+                '', ...  % meaurement notes
                 analysis.getCohort().getBrainAtlases(), group,  ...
-                'MeasurementMRI.measure_code', measure_code, ...
+                'MeasurementMRI.MeasureCode', measure_code, ...
                 'MeasurementMRI.value', measurement_value ...
                 );
         end
@@ -310,6 +312,9 @@ classdef AnalysisMRI < Analysis
                 'It provides a single graph for each subject group.' ...
                 ];
         end
+        function graph_type = getGraphType()
+            graph_type = 'GraphWU';
+        end
         function subject_class = getSubjectClass()
             subject_class = 'SubjectMRI';
         end
@@ -324,7 +329,6 @@ classdef AnalysisMRI < Analysis
 %         end
         function available_settings = getAvailableSettings(m) %#ok<INUSD>
             available_settings = {
-                {'AnalysisMRI.GraphType', BRAPH2.STRING, 'GraphWU', {'GraphWU'}}, ...
                 {'AnalysisMRI.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
                 {'AnalysisMRI.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
                 {'AnalysisMRI.Longitudinal', BRAPH2.LOGICAL, false, {false, true}}, ...

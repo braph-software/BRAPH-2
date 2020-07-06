@@ -125,12 +125,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
             measurement_idict = analysis.measurement_idict;
         end
         function measurement = getMeasurement(analysis, measure_code, group, varargin)
-            id = analysis.getMeasurementID(measure_code, group, varargin{:});
-            if ~analysis.getMeasurements().contains(id)
+            measurement_id = analysis.getMeasurementID(measure_code, group, varargin{:});
+            if ~analysis.getMeasurements().contains(measurement_id)
                 measurement = calculate_measurement(analysis, measure_code, group, varargin{:});
-                analysis.getMeasurements().add(id, measurement)
+                analysis.getMeasurements().add(measurement_id, measurement)
             end
-            measurement = analysis.getMeasurements().getValue(id);
+            measurement = analysis.getMeasurements().getValue(measurement_id);
         end
 %         function randomparison_idict = getRandomComparisons(analysis)
 %             randomparison_idict = analysis.randomcomparison_idict;
