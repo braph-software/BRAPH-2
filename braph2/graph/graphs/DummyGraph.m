@@ -126,4 +126,11 @@ classdef DummyGraph < Graph
             negativity_type =  Graph.NONNEGATIVE;
         end
     end
+    methods
+        function [randomized_graph, swaps] = randomize(g, varargin)
+            A = g.getA(); % get A
+            randomized_graph = A;
+            swaps = 0; % number of successful edge swaps
+        end
+    end
 end
