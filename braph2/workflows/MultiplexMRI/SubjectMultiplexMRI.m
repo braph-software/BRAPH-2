@@ -392,7 +392,6 @@ classdef SubjectMultiplexMRI < Subject
                 end
             end
             
-            % supress warning
             warning_id = 'MATLAB:table:ModifiedAndSavedVarnames';
             warning('off', warning_id)
             
