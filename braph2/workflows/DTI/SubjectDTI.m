@@ -304,8 +304,8 @@ classdef SubjectDTI < Subject
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.xlsx'];
-                    writematrix(label, file, 'Sheet', 1, 'Range', 'A1');
-                    writematrix(notes, file, 'Sheet', 1, 'Range', 'A2');
+                    writematrix(string(label), file, 'Sheet', 1, 'Range', 'A1');
+                    writematrix(string(notes), file, 'Sheet', 1, 'Range', 'A2');
                     writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A3');
                 end
             end
