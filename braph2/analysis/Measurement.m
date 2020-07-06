@@ -33,7 +33,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             for i = 1:1:size(available_settings, 1)
                 available_setting_code = available_settings{i, 1};
                 available_setting_default = available_settings{i, 3};
-                % TODO check that the value of the settign is amongst the acceptable values
+                % TODO check that the value of the setting is amongst the acceptable values
                 settings{2 * i - 1} = available_setting_code;
                 settings{2 * i} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
             end

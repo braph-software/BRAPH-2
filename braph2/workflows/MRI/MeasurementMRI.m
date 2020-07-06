@@ -76,8 +76,7 @@ classdef MeasurementMRI < Measurement
             subject_class = 'SubjectMRI';
         end        
         function available_settings = getAvailableSettings()
-% TODO: get graph type from Analysis
-            graph_type = 'GraphWU';
+            graph_type = analysis.getSettings('AnalysisMRI.GraphType');
             measure_list = Graph.getCompatibleMeasureList(graph_type);
             
             available_settings = {
