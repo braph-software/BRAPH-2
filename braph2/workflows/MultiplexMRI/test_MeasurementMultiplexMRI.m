@@ -19,16 +19,17 @@ group = Group(subject_class, 'id', 'label', 'notes', {sub1, sub2, sub3, sub4, su
 
 % TODO: get graph type from Analysis
 graph_type = 'MultiplexGraphWU';
+%graph_type = AnalysisMultiplexMRI.getGraphType();
 measures = Graph.getCompatibleMeasureList(graph_type);
 
 %% Test 1: Instantiation
 for i = 1:1:numel(measures)
-    measurement = MeasurementMultiplexMRI('m1', 'label', 'notes', atlas, group, 'MeasurementMultiplexMRI.MeasureCode', measures{i});
+    measurement = MeasurementMultiplexMRI('m1', 'label', 'notes', atlas, measures{i}, group);
 end
 
 %% Test 2: Correct size defaults
 for i = 1:1:numel(measures)
-    measurement = MeasurementMultiplexMRI('m1', 'label', 'notes', atlas, group, 'MeasurementMultiplexMRI.MeasureCode', measures{i});
+    measurement = MeasurementMultiplexMRI('m1', 'label', 'notes', atlas, measures{i}, group);
     
     value = measurement.getMeasureValue();
     
@@ -71,7 +72,7 @@ for i=1:1:numel(measures)
     m  = Measure.getMeasure(measures{i}, g);
     
     % act
-    measurement = MeasurementMultiplexMRI('m1', 'label', 'notes', atlas, group, 'MeasurementMultiplexMRI.MeasureCode', measures{i}, ...
+    measurement = MeasurementMultiplexMRI('m1', 'label', 'notes', atlas, measures{i}, group, ...
         'MeasurementMultiplexMRI.Value', m.getValue() ...
         );
     
