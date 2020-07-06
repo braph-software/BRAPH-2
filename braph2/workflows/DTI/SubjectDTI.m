@@ -35,6 +35,7 @@ classdef SubjectDTI < Subject
     %   save_to_json            - saves the subject data to a '.json' file
     %
     % See also Group, Cohort, SubjectMRI, SubjectfMRI, Subject.
+    
     methods
         function sub = SubjectDTI(id, label, notes, atlas, varargin)
             % SUBJECTDTI(ID, LABEL, NOTES, ATLASES) creates a subject of type DTI
@@ -42,7 +43,7 @@ classdef SubjectDTI < Subject
             % subject DTI will use (it can be either a BrainAtlas or a
             % cell array with a single BrainAtlas).
             %
-            % SUBJECT(AID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
+            % SUBJECTDTI(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
             % creates a DTI subject with ubject ID, LABEL NOTES and ATLASES.
             % SubjectDTI will be initialized by the rules passed in the
             % VARARGIN.
@@ -364,7 +365,7 @@ classdef SubjectDTI < Subject
             % SAVE_TO_TXT(COHORT, 'RootDirectory', PATH) saves the cohort 
             % of SubjectDTI will be saved in '.txt' format in the specified PATH.
             % 
-            % See also load_from_xls, save_to_txt, save_to_json
+            % See also load_from_txt, save_to_xls, save_to_json
             
             % get Root Directory
             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
@@ -447,6 +448,16 @@ classdef SubjectDTI < Subject
             end
         end
         function save_to_json(cohort, varargin)
+            % SAVE_TO_JSON saves the cohort of SubjectsDTI to a path
+            %
+            % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectDTI will be saved in '.json' format.
+            %
+            % SAVE_TO_JSON(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectDTI will be saved in '.json' format in the specified PATH.
+            % 
+            % See also load_from_json, save_to_xls, save_to_txt
+            
             % get Root Directory
             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
             if isequal(root_directory, '')  % no path, open gui
