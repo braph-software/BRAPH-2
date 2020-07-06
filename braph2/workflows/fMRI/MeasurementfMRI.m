@@ -7,7 +7,7 @@ classdef MeasurementfMRI < Measurement
     methods  % Constructor
         function m =  MeasurementfMRI(id, label, notes, atlas, measure_code, group, varargin)
             
-            graph_type = AnalysisMRI.getGraphType();
+            graph_type = AnalysisfMRI.getGraphType();
             measure_list = Graph.getCompatibleMeasureList(graph_type);
             
             assert(ismember(measure_code, measure_list), ...
