@@ -1,4 +1,33 @@
 classdef Data < handle & matlab.mixin.Copyable
+    % Data (Abstract) A data item
+    % Data provides the methods necessary for all data types
+    % It is a subclass of handle and matlab.mixin.Copyable
+    %
+    % Data provides the methods necessary for data subclasses to store the
+    % subject data. 
+    %
+    % Data methods:
+    %   Data                    - Constructor
+    %
+    % Data basic methods:
+    %   tostring                - returns a string representing the Data
+    %   disp                    - displays the Data
+    %   value                   - returns the value
+    %   setBrainAtlas           - sets the Brain Atlas to Data
+    % 
+    % Data abstract methods:
+    %   setValue                - method to be inherit by subclass to set the value
+    %
+    % Data static mehtods
+    %   getList                 - returns the list of subclasses
+    %   getClass                - returns the class
+    %   getName                 - returns the name of the class
+    %   getDescription          - returns the description of the class
+    %   getData                 - returns the data
+    %   getAvailableSettings    - returns the available settings
+    %
+    % See also Cohort, Subject, Group.
+    
     properties (GetAccess=protected, SetAccess=protected)
         atlas  % brain atlas
         value  % data value (a matrix)
@@ -6,6 +35,11 @@ classdef Data < handle & matlab.mixin.Copyable
     end
     methods (Access=protected)
         function d = Data(atlas, value, varargin)
+            % DATA(ATLAS, VALUE, 'PROPERTYRULE1', 'VALUE1', ...) creates a
+            % Data object to store Subject data using the ATLAS and VALUE,
+            % with a list of PROPERTYRULES if needed.
+            %
+            % See also Subject, Cohort, Group.
             
             assert(isa(atlas, 'BrainAtlas'), ...
                 [BRAPH2.STR ':Data:BrainAtlas' BRAPH2.WRONG_INPUT], ...
@@ -32,19 +66,51 @@ classdef Data < handle & matlab.mixin.Copyable
     end
     methods  % Basic methods
         function str = tostring(d)
+            % TOSTRING string with information about data
+            %
+            % STRING = TOSTRING(D) returns string with the data class, 
+            % size and value.
+            %
+            % See also disp.
+            
             str = [Data.getClass(d) ' ' int2str(size(d.getValue(), 1)) ' x ' int2str(size(d.getValue(), 2))];
         end
         function disp(d)
+            % TOSTRING displays information about data
+            %
+            % DISP(D) displays information about the data class, size and
+            % value.
+            %
+            % See also tostring.
+            
             disp(['<a href="matlab:help ' Data.getClass(d) '">' Data.getClass(d) '</a>'])
             disp([' size: ' int2str(size(d.getValue(), 1)) ' rows x ' int2str(size(d.getValue(), 2)) ' columns'])
         end
         function atlas = getBrainAtlas(d)
+            % GETBRAINATLAS returns the brain atlas
+            %
+            % ATLAS = GETBRAINATLAS(D) returns the brain atlas.
+            %
+            % See also getValue.
+            
             atlas = d.atlas;
         end
         function value = getValue(d)
+            % GETVALUE returns the value of data
+            % 
+            % VALUE = GETVALUE(D) returns the value of the data.
+            %
+            % See also getBrainAtlas.
+            
             value = d.value;
         end
         function setBrainAtlas(d, atlas)
+            % SETBRAINATLAS sets the brain atlas to the data object
+            %
+            % SETBRAINATLAS(D, ATLAS) sets the brian atlas ATLAS to the 
+            % data object.
+            %
+            % See also SetValue.
             
             assert(d.getBrainAtlas().getBrainRegions().length() == atlas.getBrainRegions().length(), ...
                 [BRAPH2.STR ':' d.getClass() ':' BRAPH2.WRONG_INPUT], ...
@@ -54,17 +120,30 @@ classdef Data < handle & matlab.mixin.Copyable
         end
     end
     methods (Abstract)  % setValue
+        % SETVALUE(D, VALUE) (Abstract) sets the value of the data
+        % Must be used by the subclasses. 
+        
         setValue(d, value)  % set the value of the data
     end
     methods (Static)  % Inspection methods
         function data_list = getList()
+            % GETLIST returns a list with all subclasses
+            %
+            % DATA_LIST = GETLIST() returns a list with all subclasses.
+            %
+            % See also getClass, getName, getDescription, getData, getAvailableSettings.
+            
             data_list = subclasses( ...
                 'Data', ...
                 [fileparts(which('Data')) filesep 'datas'] ...
                 );
         end
         function data_class = getClass(d)
-            % data class (same as the data object name)
+            % GETCLASS returns the class of the data 
+            %
+            % DATA_CLASS = GETCLASS(D) returns the class of the data.
+            %
+            % See also getList, getName, getDescription, getData, getAvailableSettings.
             
             if isa(d, 'Data')
                 data_class = class(d);
@@ -73,26 +152,55 @@ classdef Data < handle & matlab.mixin.Copyable
             end
         end
         function name = getName(d)
-            % data name
+            % GETNAME returns the name of the data
+            %
+            % NAME = GETNAME(D) returns the name of the data.
+            % 
+            % See also getList, getClass, getDescription, getData, getAvailableSettings.
             
             name = eval([Data.getClass(d) '.getName()']);
         end
         function description = getDescription(d)
-            % data description
+            % GETDESCRIPTION returns the description of the data
+            %
+            % DESCRIPTION = GETDESCRIPTION(D) returns the description of
+            % the data.
+            % 
+            % See also getList, getClass, getName, getData, getAvailableSettings.
             
             description = eval([Data.getClass(d) '.getDescription()']);
         end
         function d = getData(data_class, atlas, varargin) %#ok<INUSD>
+            % GETDATA returns the data
+            %
+            % D = GETDATA(DATA_CLASS, ATLAS, VARARGIN) returns the data
+            % 
+            % See also getList, getClass, getName, getDescription, getAvailableSettings.
+          
             d = eval([data_class '(atlas, varargin{:})']);
         end
         function available_settings = getAvailableSettings(d)
+            % GETAVAILABLESETTINGS returns the available settings of the data
+            %
+            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(D) returns the
+            % available settings of the data.
+            % 
+            % See also getList, getClass, getName, getDescription, getData.
+            
             available_settings = eval([Data.getClass(d) '.getAvailableSettings()']);        
         end
     end
     methods (Access=protected)  % Shallow Copy
         function d_copy = copyElement(d)
-            % IMPORTANT! It does NOT make a deep copy of the BrainAtlas atlas
+            % COPYELEMENT(D) deep copy of data
+            %
+            % D_COPY = COPYELEMENT(D) Makes a shallow copy of the
+            % structure of the data. It does not make a deep copy of
+            % BrainAtlas.
+            %
+            % See also Cohort, Subject, Group.
             
+            % IMPORTANT! It does NOT make a deep copy of the BrainAtlas atlas            
             % Make a shallow copy
             d_copy = copyElement@matlab.mixin.Copyable(d);
         end

@@ -1,46 +1,57 @@
 classdef Measure < handle
-    % Measure < handle (Abstract): A measure
+    % Measure (Abstract) A measure
     % Measure provides the methods necessary for all graph measures. 
     % Instances of this class cannot be created. Use one of the
     % subclasses (e.g., Degree, Strength, Distance, Efficency).
     % The subclasses must be created inside the folder ./braph/graph/measures/.
-    % 
+    %  
     % Measure properties (GetAccess=protected, SetAccess=protected):
-    %   g           - graph.
-    %   settings    - structure with the constructor settings.
-    %   value       - graph measure value
-    %                 the value can be:
-    %                 a SCALAR for GLOBAL measures
-    %                 a COLUMN VECTOR for NODAL measures
-    %                 a SQUARE MATRIX for BINODAL measures
+    %   g               - graph
+    %   settings        - structure with the constructor settings
+    %   value           - graph measure value 
+    %                   the value can be:
+    %                   a CELL for SUPERGLOBAL measures containing GLOBAL, NODAL or BINODAL values
+    %                   a CELL COLUMN VECTOR for UNILAYER measures containing GLOBAL, NODAL or BINODAL values
+    %                   a CELL MATRIX for BILAYER measures containing GLOBAL, NODAL or BINODAL values
+    %                   where   
+    %                   GLOBAL values are SCALAR
+    %                   NODAL values a COLUMN VECTOR whose length is equal to the number of nodes
+    %                   BINODAL values are a SQUARE MATRIX whose dimensions are equal to the number of nodes
     % 
     % Measure methods (Access=protected):
-    %   Measure     - constructor.
+    %   Measure         - constructor
     %
-    % Measure methods:
-    %   tostring    - returns a string representing the measure.
-    %   disp        - displays the measure.
-    %   getGraph    - returns the graph associated with the measure.
-    %   getSettings	- returns the settings of the measure.
-    %   is_value_calculated - boolean, checks if the measure has been calculated.
-    %   getValue	- returns the value of the measure.
+    % Measure basic methods:
+    %   tostring        - returns a string representing the measure
+    %   disp            - displays the measure
+    %   getGraph        - returns the graph associated with the measure
+    %   getSettings     - returns the settings of the measure
+    %   is_value_calculated - boolean, checks if the measure has been calculated
+    %   getValue        - returns the value of the measure
     %   
     % Measure methods (Abstract, Access=protected):
-    %   calculate	- abstract function
-    %                 inheriting classes must implement this method.
+    %   calculate       - abstract function
+    %                   inheriting classes must implement this method
     %
-    % Measure methods (Static)
-    %   getList     - returns a list with subclasses of measure.
-    %   getClass    - returns the class type of the measure.
-    %   getName     - returns the name of the measure.
-    %   getDescription  - returns the description of the measure.
-    %   getAvailableSettings - returns the settings available to the class.
-    %   is_global	- boolean, checks if the measure is global.
-    %   is_nodal	- boolean, checks if the measure is nodal.
-    %   is_binodal	- boolean, checks if the measure if binodal.
-    %   getMeasure	- returns the measure class.
-    %   getCompatibleGraphList - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber - returns the number of compatible graphs.
+    % Measure descriptive methods:
+    %   getMeasureFormat - returns de measure format
+    %   is_global       - boolean, checks if the measure format is global
+    %   is_nodal        - boolean, checks if the measure format is nodal
+    %   is_binodal      - boolean, checks if the measure format if binodal
+    %   getMeasureScope - returns de measure scope
+    %   is_superglobal  - boolean, checks if the measure scope is superglobal
+    %   is_unilayer     - boolean, checks if the measure scope is unilayer
+    %   is_bilayer      - boolean, checks if the measure scope is bilayer
+    %
+    % Measure inspection methods (Static)
+    %   getList         - returns a list with subclasses of measure
+    %   getClass        - returns the class type of the measure
+    %   getName         - returns the name of the measure
+    %   getDescription  - returns the description of the measure
+    %   getAvailableSettings - returns the settings available to the class
+    %   getMeasure      - returns the measure class
+    %   getCompatibleGraphList - returns a list of compatible graphs
+    %   getCompatibleGraphNumber - returns the number of compatible graphs
     %
     % See also Graph, handle, Degree, Strength, Distance, Efficency.
  
@@ -90,7 +101,7 @@ classdef Measure < handle
         
         BILAYER = 3
         BILAYER_NAME = 'Bilayer'
-        BILAYER_DESCRIPTION = ['Bilayer measure consists of a vector with '... 
+        BILAYER_DESCRIPTION = ['Bilayer measure consists of a matrix with '... 
             'nodal/binodal/global measures between layers.']
         
         SCOPE_NUMBER = 3
@@ -112,9 +123,10 @@ classdef Measure < handle
         g  % graph
         settings  % structure with the constructor settings
         value  % graph measure value
-               % SCALAR for GLOBAL measures
-               % COLUMN VECTOR for NODAL measures
-               % SQUARE MATRIX for BINODAL measures
+               % a CELL for SUPERGLOBAL measures containing GLOBAL, NODAL or BINODAL values
+               % a CELL VECTOR for UNILAYER measures containing GLOBAL, NODAL or BINODAL values
+               % a CELL MATRIX for BILAYER measures containing GLOBAL, NODAL or BINODAL values
+               % where GLOBAL values are SCALAR, NODAL values COLUMN VECTOR and BINODAL values SQUARE MATRIX               
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
@@ -160,13 +172,13 @@ classdef Measure < handle
             m.settings = settings;  % initialize the property settings
         end
     end
-    methods
+    methods  % Basic methods
         function str = tostring(m)
             % TOSTRING string with information about the measure
             %
             % STR = TOSTRING(M) returns string with the measure class and size.
             %
-            % See also disp(). 
+            % See also disp. 
             
             str = [Measure.getClass(m) ' size:'  int2str(size(m.getValue(), 1)) ' x '  int2str(size(m.getValue(), 2))];
         end
@@ -177,7 +189,7 @@ classdef Measure < handle
             % It provides information about measure class, size,
             % value, associated graph, and settings.
             %
-            % See also tostring().  
+            % See also tostring.  
             
             disp(['<a href="matlab:help ' Measure.getClass(m) '">' Measure.getClass(m) '</a>'])
             if m.is_value_calculated()
@@ -197,7 +209,7 @@ classdef Measure < handle
             %
             % G = GETGRAPH(M) returns the graph associated to the measure M.
             %
-            % See also getSettings().  
+            % See also getSettings.  
             
             g = m.g;
         end
@@ -209,7 +221,7 @@ classdef Measure < handle
             % SETTING = GETSETTINGS(M, SETTING_CODE) returns the settings
             % of the measure SETING_CODE.
             %
-            % See also getGraph().
+            % See also getGraph.
             
             if nargin<2
                 res = m.settings;
@@ -223,7 +235,7 @@ classdef Measure < handle
             % BOOL = IS_VALUE_CALCULATED(M) returns true  if value has been
             % already calculated.
             %
-            % See also getValue().
+            % See also getValue.
             
             bool = ~isempty(m.value);
         end
@@ -233,7 +245,7 @@ classdef Measure < handle
             % VALUE = GETVALUE(M) returns the value of the measure.
             % If not already calculated, it first calls the function calculate.
             %
-            % See also is_value_calculated().
+            % See also is_value_calculated.
             
             if ~m.is_value_calculated()
                 m.value = m.calculate();
@@ -256,7 +268,7 @@ classdef Measure < handle
             % format of the measure whose class is MEASURE_CLASS (e.g., GLOBAL,
             % NODAL, BINODAL).
             %
-            % See also is_binodal(), is_global(), is_nodal().
+            % See also is_binodal, is_global, is_nodal.
             
             measure_format = eval([Measure.getClass(m) '.getMeasureFormat()']);
         end
@@ -269,7 +281,7 @@ classdef Measure < handle
             % BOOL = IS_GLOBAL(MEASURE_CLASS) returns true if the measure
             % whose class is MEASURE_CLASS is global and false otherwise.
             %
-            % See also is_binodal(), is_nodal().
+            % See also getMeasureFormat, is_binodal, is_nodal.
             
             bool = Measure.getMeasureFormat(m) == Measure.GLOBAL;
         end
@@ -282,7 +294,7 @@ classdef Measure < handle
             % BOOL = IS_NODAL(MEASURE_CLASS) returns true if the measure
             % whose class is MEASURE_CLASS is nodal and false otherwise.
             %
-            % See also is_binodal(), is_global().
+            % See also getMeasureFormat, is_binodal, is_global.
             
             bool = Measure.getMeasureFormat(m) == Measure.NODAL;
         end
@@ -295,7 +307,7 @@ classdef Measure < handle
             % BOOL = IS_BINODAL(MEASURE_CLASS) returns true if a  measure
             % whose class is MEASURE_CALSS is binodal and false otherwise.
             %
-            % See also is_global(), is_nodal().
+            % See also getMeasureFormat, is_global, is_nodal.
             
             bool = Measure.getMeasureFormat(m) == Measure.BINODAL;
         end
@@ -310,7 +322,7 @@ classdef Measure < handle
             % returns the measure scope of the measure whose class is
             % MEASURE_CLASS (e.g., SUPERGLOBAL, UNILAYER, BILAYER).
             %
-            % See also is_bilayer(), is_superglobal(), is_unilayer().
+            % See also is_bilayer, is_superglobal, is_unilayer.
             
             measure_scope = eval([Measure.getClass(m) '.getMeasureScope()']);
         end
@@ -323,7 +335,7 @@ classdef Measure < handle
             % BOOL = IS_SUPERGLOBAL(MEASURE_CLASS) returns true if the measure
             % whose class is MEASURE_CLASS is superglobal and false otherwise.
             %
-            % See also is_bilayer(), is_unilayer().
+            % See also getMeasureScope, is_bilayer, is_unilayer.
             
             bool = Measure.getMeasureScope(m) == Measure.SUPERGLOBAL;
         end
@@ -336,7 +348,7 @@ classdef Measure < handle
             % BOOL = IS_UNILAYER(MEASURE_CLASS) returns true if the measure
             % whose class is MEASURE_CLASS is unilayer and false otherwise.
             %
-            % See also is_bilayer(), is_superglobal().
+            % See also getMeasureScope, is_bilayer, is_superglobal.
             
             bool = Measure.getMeasureScope(m) == Measure.UNILAYER;
         end
@@ -349,19 +361,19 @@ classdef Measure < handle
             % BOOL = IS_BILYER(MEASURE_CLASS) returns true if a measure
             % whose class is MEASURE_CALSS is bi-layer and false otherwise.
             %
-            % See also is_superglobal(), is_unilayer().
+            % See also getMeasureScope, is_superglobal, is_unilayer.
             
             bool = Measure.getMeasureScope(m) == Measure.BILAYER;
         end
     end
-    methods (Static)
+    methods (Static)  % Inspection methods
         function measure_list = getList()
             % GETLIST returns the list of measures
             %
             % MEASURE_LIST = GETLIST() returns the list of measures (cell array)
             % that are subclasses of Measure.
             %
-            % See also getClass(), getCompatibleGraphList().
+            % See also getClass, getCompatibleGraphList.
             
             measure_list = subclasses( ...
                 'Measure', ...
@@ -376,7 +388,7 @@ classdef Measure < handle
             % CLASS = GETCLASS(MEASURE_CLASS) returns the class of the
             % measure whose class if MEASURE_CLASS.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getList, getCompatibleGraphList.
             
             if isa(m, 'Measure')
                 measure_class = class(m);
@@ -392,7 +404,7 @@ classdef Measure < handle
             % NAME = GETNAME(MEASURE_CLASS) returns the name of the
             % measure whose class is MEASURE_CLASS.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getList, getCompatibleGraphList.
             
             name = eval([Measure.getClass(m) '.getName()']);
         end
@@ -405,11 +417,17 @@ classdef Measure < handle
             % DESCRIPTION = GETDESCRIPTION(MEASURE_CLASS) returns the
             % description (string) of the measure whose class is MEASURE_CLASS.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getList, getCompatibleGraphList.
             
             description = eval([Measure.getClass(m) '.getDescription()']);
         end
         function available_settings = getAvailableSettings(m)
+            % GETAVAILABLESETTINGS returns the setting available to Degree
+            %
+            % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
+            % settings available to Degree. Empty Array in this case.
+            % 
+            % See also getList, getCompatibleGraphList, getCompatibleGraphNumber, getMeasure.
             
             available_settings = eval([Measure.getClass(m) '.getAvailableSettings()']);
         end
@@ -425,7 +443,7 @@ classdef Measure < handle
             % M = GETMEASURE(MEASURE_CODE, 'Settings', SETTINGS) 
             % initializes the property settings with SETTINGS. 
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getAvailableSettings, getList, getCompatibleGraphList, getCompatibleGraphNumber.
             
             m = eval([measure_code '(g, varargin{:})']);
         end
@@ -441,7 +459,7 @@ classdef Measure < handle
             % whose class is MEASURE_CLASS. M will not work if the
             % graph is not compatible. 
             %
-            % See also getList(), getCompatibleGraphNumber().
+            % See also getAvailableSettings, getList, getCompatibleGraphNumber, getMeasure.
             
             list = eval([Measure.getClass(m) '.getCompatibleGraphList()']);
         end
@@ -455,7 +473,7 @@ classdef Measure < handle
             % compatible graphs to the a measure whose class is
             % MEASURE_CLASS.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getAvailableSettings, getList, getCompatibleGraphList, getMeasure.
             
             list = Measure.getCompatibleGraphList(m);
             n = numel(list);
