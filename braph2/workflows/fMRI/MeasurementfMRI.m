@@ -5,9 +5,9 @@ classdef MeasurementfMRI < Measurement
         average_value  % average value of the group
     end
     methods  % Constructor
-        function m =  MeasurementfMRI(id, label, notes, atlas, group, varargin)
+        function m =  MeasurementfMRI(id, label, notes, atlas, measure_code, group, varargin)
             
-            m = m@Measurement(id, label, notes, atlas, group, varargin{:});
+            m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
         end
     end
     methods  % Get functions
@@ -23,7 +23,7 @@ classdef MeasurementfMRI < Measurement
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
             
-            measure_code = m.getSettings('MeasurementfMRI.MeasureCode');
+            measure_code = m.getMeasureCode();
             
             if Measure.is_global(measure_code)  % global measure
                 m.values = get_from_varargin( ...
@@ -104,17 +104,11 @@ classdef MeasurementfMRI < Measurement
             % measurement subject class
             subject_class = 'SubjectfMRI';
         end
-        function available_settings = getAvailableSettings()
-            % TODO: get graph type from Analysis
-            graph_type = 'GraphWU';
-            measure_list = Graph.getCompatibleMeasureList(graph_type);
-            
-            available_settings = {
-                'MeasurementfMRI.MeasureCode', BRAPH2.STRING, measure_list{1}, measure_list;
-                };
+        function available_settings = getAvailableSettings()           
+            available_settings = {};
         end
-        function m = getMeasurement(measurement_class, id, label, notes, atlas, group, varargin) 
-            m = eval([measurement_class '(id, atlas, label, notes, group, varargin{:})']);
+        function m = getMeasurement(measurement_class, id, label, notes, atlas, measure_code, group, varargin) 
+            m = eval([measurement_class '(id, atlas, label, notes, measure_code, group, varargin{:})']);
         end
     end
 end

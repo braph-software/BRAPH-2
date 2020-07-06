@@ -21,12 +21,12 @@ measures = Graph.getCompatibleMeasureList(graph_type);
 
 %% Test 1: Instantiation
 for i = 1:1:numel(measures)
-    measurement = MeasurementfMRI('m1', 'label', 'notes', atlas, group, 'MeasurementfMRI.MeasureCode', measures{i});
+    measurement = MeasurementfMRI('m1', 'label', 'notes', atlas, measures{i}, group);
 end
 
 %% Test 2: Correct size defaults
 for i = 1:1:numel(measures)
-    measurement = MeasurementfMRI('m1', 'label', 'notes', atlas, group, 'MeasurementfMRI.MeasureCode', measures{i});
+    measurement = MeasurementfMRI('m1', 'label', 'notes', atlas, measures{i}, group);
     
     values = measurement.getMeasureValues();
     average_value = measurement.getGroupAverageValue();
@@ -73,7 +73,7 @@ for i = 1:1:numel(measures)
     average_value = mean(reshape(cell2mat(values), [size(values{1}, 1), size(values{1}, 2), group.subjectnumber()]), 3);
     
     % act
-    measurement = MeasurementfMRI('m1', 'label', 'notes', atlas, group, 'MeasurementfMRI.MeasureCode', measures{i}, ...
+    measurement = MeasurementfMRI('m1', 'label', 'notes', atlas, measures{i}, group, ...
         'MeasurementfMRI.values', values, ...
         'MeasurementfMRI.average_value', average_value ...
         );
