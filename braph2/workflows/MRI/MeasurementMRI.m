@@ -4,9 +4,17 @@ classdef MeasurementMRI < Measurement
         value  % value of the measure for the group
     end
     methods  % Constructor
-        function m =  MeasurementMRI(id, label, notes, atlas, group, varargin)
+        function m =  MeasurementMRI(id, label, notes, atlas, measure_code, group, varargin)
+
+% TODO: Add assert that the measure_code is in the measure list. The code
+% below can be useful but must be modified.
+%             graph_type = AnalysisMRI.getGraphType();
+%             measure_list = Graph.getCompatibleMeasureList(graph_type);
+%             available_settings = {
+%                 'MeasurementMRI.MeasureCode', BRAPH2.STRING, measure_list{1}, measure_list;
+%                 };
             
-            m = m@Measurement(id, label, notes, atlas, group, varargin{:});
+            m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
         end
     end
     methods  % Get functions
@@ -19,8 +27,8 @@ classdef MeasurementMRI < Measurement
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
             
-            measure_code = m.getSettings('MeasurementMRI.MeasureCode');
-            
+            measure_code = m.getMeasureCode();
+
             if Measure.is_global(measure_code)  % global measure
                 m.value = get_from_varargin( ...
                     repmat({0}, 1, 1), ...  % 1 measure per group
@@ -76,16 +84,10 @@ classdef MeasurementMRI < Measurement
             subject_class = 'SubjectMRI';
         end        
         function available_settings = getAvailableSettings()
-% TODO: get graph type from Analysis
-            graph_type = 'GraphWU';
-            measure_list = Graph.getCompatibleMeasureList(graph_type);
-            
-            available_settings = {
-                'MeasurementMRI.MeasureCode', BRAPH2.STRING, measure_list{1}, measure_list;
-                };
+            available_settings = {};
         end
-        function m = getMeasurement(measurement_class, id, label, notes, atlas, group, varargin) %#ok<INUSD>
-            m = eval([measurement_class '(id, atlas, label, notes, group, varargin{:})']);
+        function m = getMeasurement(measurement_class, id, label, notes, atlas, measure_code, group, varargin) %#ok<INUSD>
+            m = eval([measurement_class '(id, atlas, label, notes, measure_code, group, varargin{:})']);
         end
     end
 end
