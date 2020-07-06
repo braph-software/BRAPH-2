@@ -323,7 +323,7 @@ classdef AnalysisMultiplexMRI < Analysis
             graph_type = 'MultiplexGraphWU';
         end
         function subject_class = getSubjectClass()
-            subject_class = 'MultiplexSubjectMRI';
+            subject_class = 'SubjectMultiplexMRI';
         end
         function measurement_class = getMeasurementClass()
             measurement_class =  'MeasurementMultiplexMRI';
