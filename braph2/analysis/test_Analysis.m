@@ -15,7 +15,7 @@ for i = 1:1:length(analysis_class_list)
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {});
-    analysis = Analysis.getAnalysis(analysis_class, cohort, {}, {}, {});
+    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
 end
 
 %% Test 2: Implementation static methods
@@ -24,7 +24,7 @@ for i = 1:1:length(analysis_class_list)
     sub_class = Analysis.getSubjectClass(analysis_class);
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {});
-    analysis = Analysis.getAnalysis(analysis_class, cohort, {}, {}, {});
+    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
     
     assert(iscell(analysis.getList()), ...
         [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_FUNC], ...
