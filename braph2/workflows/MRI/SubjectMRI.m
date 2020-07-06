@@ -1,15 +1,20 @@
 classdef SubjectMRI < Subject
-    % SubjectMRI < Subject: A subject of type MRI.
-    % SubjectMRI represents a subject of type MRI.
+    % SubjectMRI  A subject of type DTI
+    % SubjectMRI represents a subject of type DTI.
+    % It is a subclass of Subject.
     %
-    % SubjectMRI methods (Access=protected)
-    %   SubjectMRI                 - Constructor.
+    % SubjectMRI represents a subject of type DTI.
+    % It is a subclass of Subject. It implements the methods initialize_datadict
+    % and update_brainatlases.
+    %
+    % SubjectMRI methods (Access = protected)
+    %   SubjectMRI              - Constructor.
     %
     % SubjectMRI methods (Access=protected)
     %   initialize_datadict     - initializes the data dictionary DATADICT.
     %   update_brainatlases     - updates the brain atlases in DATADICT.
     %
-    % SubjectMRI methods (Static)
+    % SubjectMRI inspection methods (Static)
     %   getClass                - returns the class of SubjectMRI.
     %   getName                 - returns the name of  SubjectMRI.
     %   getDescription          - returns the description of SubjectMRI.
@@ -21,18 +26,27 @@ classdef SubjectMRI < Subject
     %   getDataClass            - returns the class of the type of a data of SubjectMRI.
     %   getSubject              - returns a new instantiation of SubjectMRI
     %
-    % See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
+    % Subject load and save methods (Static):
+    %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
+    %   save_to_xls             - saves the subject data to a '.xls' or '.xlsx' file
+    %   load_from_txt           - reads a '.txt' file, loads the data to a new subject
+    %   save_to_txt             - saves the subject data to a '.txt' file
+    %   load_from_json          - reads a '.json' file, loads the data to a new subject
+    %   save_to_json            - saves the subject data to a '.json' file
+    %
+    % See also Group, Cohort, SubjectDTI, SubjectMRI, Subject.
+ 
     methods  % Constructor
         function sub = SubjectMRI(id, label, notes, atlas, varargin)
-            % SUBJECTMRI(ATLAS) creates a subject of type MRI.
-            % ATLAS is the brain atlas that subject MRI will use (it can be
-            % either a BrainAtlas or a cell array with a single BrainAtlas).
+            % SUBJECTMRI(ID, LABEL, NOTES, ATLASES) creates a subject of type DTI
+            % with with ID, LABEL, NOTES. ATLAS is the brain atlas that 
+            % subject MRI will use (it can be either a BrainAtlas or a
+            % cell array with a single BrainAtlas).
             %
-            % SUBJECTMRI(ATLASES, 'SubjectID', ID) creates a subject with
-            % subject id ID.
-            %
-            % SUBJECTMRI(ATLASES, 'age', AGE, 'MRI', MRI) creates a subject
-            % with age AGE and MRI data MRI.
+            % SUBJECTMRI(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
+            % creates a MRI subject with ubject ID, LABEL NOTES and ATLASES.
+            % SubjectfMRI will be initialized by the rules passed in the
+            % VARARGIN.
             %
             % See also See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
             
@@ -50,12 +64,12 @@ classdef SubjectMRI < Subject
     end
     methods (Access=protected)  % Utilifty functions
         function initialize_datadict(sub, varargin)
-            % INITIALIZE_DATADICT initializes the data dictionary
+           % INITIALIZE_DATADICT initializes the data dictionary
             %
-            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'MRI', MRI) initializes the data
+            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'MRI', DATA) initializes the data
             % ditionary with data type and data code of subject mri.
             %
-            % See also update_brainatlases().
+            % See also update_brainatlases.
             
             atlases = sub.getBrainAtlases();
             atlas = atlases{1};
@@ -74,7 +88,7 @@ classdef SubjectMRI < Subject
             % subject MRI using the new values ATLASES. ATLASES must be a
             % cell array with a single BrainAtlas.
             %
-            % See also initialize_datadict().
+            % See also initialize_datadict.
             
             sub.atlases = atlases;
             atlas = atlases{1};
@@ -90,18 +104,18 @@ classdef SubjectMRI < Subject
         function subject_class = getClass()
             % GETCLASS returns the class of the subject
             %
-            % SUBJECT_CLASS = GETCLASS() returns the class SubjectMRI.
+            % SUBJECT_CLASS = GETCLASS() returns the class SubjectMRI
             %
-            % See also getList(), getDescription(), getName()
+            % See also getDescription, getName.
             
             subject_class = 'SubjectMRI';
         end
         function name = getName()
             % GETNAME returns the name of the subject
             %
-            % NAME = GETNAME() returns the name: Subject Functional MRI.
+            % NAME = GETNAME() returns the name: Subject MRI.
             %
-            % See also getList(), getClass().
+            % See also getClass, getDescription.
             
             name = 'Subject Structural MRI';
         end
@@ -109,9 +123,9 @@ classdef SubjectMRI < Subject
             % GETDESCRIPTION returns the description of the subject
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of SubjectMRI.
+            % of SubjectMRI
             %
-            % See also getList(), getName(), getClass().
+            % See also getName, getClass, getBrainAtlasNumber.
             
             description = [ ...
                 'Subject with structural MRI data, ' ...

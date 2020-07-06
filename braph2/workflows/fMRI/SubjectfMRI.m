@@ -66,7 +66,7 @@ classdef SubjectfMRI < Subject
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
-            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'DTI', DTI) initializes the data
+            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'fMRI', DATA) initializes the data
             % ditionary with data type and data code of subject fmri.
             %
             % See also update_brainatlases.
@@ -82,10 +82,10 @@ classdef SubjectfMRI < Subject
             sub.datadict('fMRI') = DataFunctional(atlas, fmri);
         end
         function update_brainatlases(sub, atlases)
-            % UPDATE_BRAINATLASES updates the atlases of the subject dti
+            % UPDATE_BRAINATLASES updates the atlases of the subject fmri
             %
             % UPDATE_BRAINATLASES(SUB, ATLASES) updates the atlases of the
-            % subject dti using the new values ATLASES. ATLASES must be a
+            % subject fMRI using the new values ATLASES. ATLASES must be a
             % cell array with a single BrainAtlas.
             %
             % See also initialize_datadict.
