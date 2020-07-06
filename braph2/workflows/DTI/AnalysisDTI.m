@@ -41,7 +41,7 @@ classdef AnalysisDTI < Analysis
                 A = subject.getData('DTI').getValue();  % DTI matrix
                 g = Graph.getGraph(graph_type, A, varargin{:});
                 measure = Measure.getMeasure(measure_code, g, varargin{:});
-                measures{i} = measure.getValue();
+                measures{i} = cell2mat(measure.getValue());
             end
             
             measure_average = mean(reshape(cell2mat(measures), [size(measures{1}, 1), size(measures{1}, 2), group.subjectnumber()]), 3);
