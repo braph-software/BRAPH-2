@@ -10,7 +10,7 @@ classdef Subject < handle & matlab.mixin.Copyable
     % respective workflow (e.g., ./braph/workflows/MRI/,
     % ./braph/workflows/fMRI/, ./braph/workflows/DTI/).
     %
-    % Subject methods:
+    % Subject methods (Access = protected):
     %   Subject                 - Constructor
     %
     % Subject basic methods:    
@@ -47,7 +47,7 @@ classdef Subject < handle & matlab.mixin.Copyable
     %   getDataClass            - returns the class of the type of a data of the subclass
     %   getSubject              - returns a new instantiation of a subclass
     %
-    % Subject load and save methods (Static):
+    % Subject load and save methods (Abstract, Static):
     %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
     %   save_to_xls             - saves the subject data to a '.xls' or '.xlsx' file
     %   load_from_txt           - reads a '.txt' file, loads the data to a new subject
