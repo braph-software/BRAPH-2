@@ -173,7 +173,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             disp([' group(s): ' int2str(cohort.getGroups().length())])
         end
     end
-    methods  % Set function
+    methods  % Set functions
         function setID(cohort, id)
             
             assert(ischar(id), ...
