@@ -26,3 +26,6 @@ cohort.getGroups().add(group2.getID(), group2)
 
 graph_type = AnalysisDTI.getGraphType();
 measures = Graph.getCompatibleMeasureList(graph_type);
+
+%% Test 1: Instantiation
+analysis = AnalysisDTI('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
