@@ -266,7 +266,9 @@ classdef SubjectfMRI < Subject
             
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
+                if ~exist([root_directory filesep() cohort.getGroups().getValue(i).getID()], 'dir')
                 mkdir(root_directory, cohort.getGroups().getValue(i).getID());
+                end
                 
                 % cohort info
                 file_info_cohort = [root_directory filesep() 'cohort_info.txt'];
@@ -301,8 +303,8 @@ classdef SubjectfMRI < Subject
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.xlsx'];
-                    writematrix(label, file, 'Sheet', 1, 'Range', 'A1');
-                    writematrix(notes, file, 'Sheet', 1, 'Range', 'A2');
+                    writematrix(string(label), file, 'Sheet', 1, 'Range', 'A1');
+                    writematrix(string(notes), file, 'Sheet', 1, 'Range', 'A2');
                     writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A3');
                 end
             end
