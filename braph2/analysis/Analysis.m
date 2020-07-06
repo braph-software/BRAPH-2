@@ -1,5 +1,8 @@
 classdef Analysis < handle & matlab.mixin.Copyable
     properties (GetAccess = protected, SetAccess = protected)
+        id  % analysis id
+        label  % analysis label
+        notes  % analysis notes
         cohort  % cohort
         measurement_idict  % indexed dictionary with measurements
 %         randomcomparison_idict  % indexed dictionary with random comparison
@@ -7,8 +10,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
         settings  % settings structure for analysis
     end
     methods (Access = protected)  % Constructor
-        function analysis = Analysis(cohort, measurements, randomcomparisons, comparisons, varargin)
+        function analysis = Analysis(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
             
+            analysis.setID(id)
+            analysis.setLabel(label)
+            analysis.setNotes(notes)
+
             assert(isa(cohort, 'Cohort') && isequal(cohort.getSubjectClass(), analysis.getSubjectClass()), ...
                 [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
                 ['The first argument must be a Cohort with subjects of class ' analysis.getSubjectClass()])
@@ -72,7 +79,45 @@ classdef Analysis < handle & matlab.mixin.Copyable
 %         calculate_random_comparison(analysis, measure_code, group, varargin)
 %         calculate_comparison(analysis, measure_code, groups, varargin)
     end
+    methods  % Set functions
+        function setID(analysis, id)
+            
+            assert(ischar(id), ...
+                [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
+                'ID must be a string.')
+
+            analysis.id = id;
+        end
+        function setLabel(analysis, label)
+
+            assert(ischar(label), ...
+                [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
+                'Label must be a string.')
+            
+            analysis.label = label;
+        end        
+        function setNotes(analysis, notes)
+
+            assert(ischar(notes), ...
+                [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
+                'Notes must be a string.')
+            
+            analysis.notes = notes;
+        end        
+    end
     methods  % Get functions
+        function id = getID(analysis)
+            
+            id = analysis.id;
+        end
+        function label = getLabel(analysis)
+            
+            label = analysis.label;
+        end
+        function notes = getNotes(analysis)
+
+            notes = analysis.notes;
+        end
         function cohort = getCohort(analysis)
             cohort = analysis.cohort;
         end
@@ -122,8 +167,8 @@ classdef Analysis < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)  % getAnalysis
-        function analysis = getAnalysis(analysis_class, cohort, varargin) %#ok<INUSD>
-            analysis = eval([analysis_class  '(cohort, varargin{:})']);
+        function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>
+            analysis = eval([analysis_class  '(id, label, notes, cohort, varargin{:})']);
         end
     end
     methods (Static)  % Descriptive functions
