@@ -7,12 +7,12 @@ classdef MeasurementfMRI < Measurement
     methods  % Constructor
         function m =  MeasurementfMRI(id, label, notes, atlas, measure_code, group, varargin)
             
-            graph_type = AnalysisfMRI.getGraphType();
-            measure_list = Graph.getCompatibleMeasureList(graph_type);
-            
-            assert(ismember(measure_code, measure_list), ...
-                 [BRAPH2.STR ':MeasurementfMRI:' BRAPH2.BUG_FUNC], ...
-                 'MeasurementfMRI measure_code is not compatible with the permited Measures.');
+%             graph_type = AnalysisfMRI.getGraphType();
+%             measure_list = Graph.getCompatibleMeasureList(graph_type);
+%             
+%             assert(ismember(measure_code, measure_list), ...
+%                  [BRAPH2.STR ':MeasurementfMRI:' BRAPH2.BUG_FUNC], ...
+%                  'MeasurementfMRI measure_code is not compatible with the permited Measures.');
             
             m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
         end
