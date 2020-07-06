@@ -283,7 +283,6 @@ classdef AnalysisDTI < Analysis
                 {'AnalysisDTI.AttemptsPerEdge', BRAPH2.NUMERIC, 1, {}}, ...
                 {'AnalysisDTI.NumberOfWeights', BRAPH2.NUMERIC, 1, {}} ...
                 };
-                };
         end
     end
 end
