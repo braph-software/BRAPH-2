@@ -3,11 +3,11 @@ classdef Subject < handle & matlab.mixin.Copyable
     % Subject provides the methods necessary for all subjects
     % It is a subclass of handle & matlab.mixin.Copyable
     %
-    % Subject provides the methods necessary to manage all subjects,
-    % instances of ths class cannot be created.
-    % Use one of the subclasses (e.g., SubjectMRI, SubjectfMRI, SubjectDTI)
-    % The subclasses must be created inside the folder containing the
-    % respective workflow (e.g., ./braph/workflows/MRI/,
+    % Subject provides the methods necessary to manage all subjects.
+    % Instances of the class cannot be created.
+    % Use one of the subclasses (e.g., SubjectMRI, SubjectfMRI, SubjectDTI, 
+    % SubjectMultiplexMRI). The subclasses must be created inside the
+    % folder containing the respective workflow (e.g., ./braph/workflows/MRI/,
     % ./braph/workflows/fMRI/, ./braph/workflows/DTI/).
     %
     % Subject methods (Access = protected):
@@ -68,7 +68,7 @@ classdef Subject < handle & matlab.mixin.Copyable
         function sub = Subject(id, label, notes, atlases, varargin)
             % SUBJECT creates a subject
             %
-            % SUBJECT(ID, LABEL, NOTES, ATLASES)creates a subject with ID,
+            % SUBJECT(ID, LABEL, NOTES, ATLASES) creates a subject with ID,
             % LABEL, NOTES and ATLASES which are the brain atlases that subject will use.
             % This method is only accessible by the subclasses of Subject.
             %
@@ -133,7 +133,7 @@ classdef Subject < handle & matlab.mixin.Copyable
     end
 	methods  % Set functions
         function setID(sub, id)
-            % SETID sets the id of the subject.
+            % SETID sets the id of the subject
             %
             % SETID(SUBJECT, ID) sets the id of the subject.
             %
@@ -146,7 +146,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             sub.id = id;
         end
         function setLabel(sub, label)
-            % SETLABEL sets the label of the subject.
+            % SETLABEL sets the label of the subject
             %
             % SETLABEL(SUBJECT, LABEL) sets the label of the subject.
             %
@@ -159,7 +159,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             sub.label = label;
         end        
         function setNotes(sub, notes)
-            % SETNOTES sets the notes of the subject.
+            % SETNOTES sets the notes of the subject
             %
             % SETNOTES(SUBJECT, NOTES) sets the notes of the subject.
             %
@@ -172,7 +172,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             sub.notes = notes;
         end        
         function setBrainAtlases(sub, atlases)
-            % SETBRAINATLASES sets the atlases of the subject.
+            % SETBRAINATLASES sets the atlases of the subject
             %
             % SETBRAINATLASES(SUBJECT, ATLASES) sets the array ATLASES
             % with brain atlases. 
@@ -322,13 +322,13 @@ classdef Subject < handle & matlab.mixin.Copyable
             datalist = eval([Subject.getClass(sub) '.getDataList()']);
         end
         function data_number = getDataNumber(sub)
-            % GETDATANUMBER returns the number of data.
+            % GETDATANUMBER returns the number of data
             %
             % N = GETDATANUMBER(SUB) returns the number of data of the
             % subclass SUB
             %
             % N = GETDATANUMBER(SUBJECT_CLASS) returns the number
-            % of  data to the subject whose class is SUBJECT_CLASS.
+            % of data to the subject whose class is SUBJECT_CLASS.
             %
             % See also getDataList, getBrainAtlasNumber, getDataCodes
             
@@ -369,7 +369,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             % GETDATACLASS returns the class of a data.
             %
             % DATA_CLASS = GETDATACLASS(SUB, DATACODE) returns the class of
-            % data with code DATACODE  
+            % data with code DATACODE.
             %
             % See also getList, getDataClasses, getDataList, getDataClasses
             
@@ -391,7 +391,7 @@ classdef Subject < handle & matlab.mixin.Copyable
     end
     methods (Access=protected)  % Deep copy
         function sub_copy = copyElement(sub)
-            % COPYELEMENT(SUB) copies elements of subject.
+            % COPYELEMENT(SUB) copies elements of subject
             %
             % SUB_COPY = COPYELEMENT(SUB) copies elements of the subject SUB.
             % Makes a deep copy of the structure of subject. But it does

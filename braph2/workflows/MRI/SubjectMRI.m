@@ -1,5 +1,5 @@
 classdef SubjectMRI < Subject
-    % SubjectMRI  A subject of type MRI
+    % SubjectMRI A subject of type MRI
     % SubjectMRI represents a subject of type MRI
     % It is a subclass of Subject
     %
@@ -38,6 +38,8 @@ classdef SubjectMRI < Subject
  
     methods  % Constructor
         function sub = SubjectMRI(id, label, notes, atlas, varargin)
+            % SUBJECTMRI creates a subject of type MRI
+            %
             % SUBJECTMRI(ID, LABEL, NOTES, ATLASES) creates a subject of type MRI
             % with with ID, LABEL, NOTES. ATLAS is the brain atlas that 
             % subject MRI will use (it can be either a BrainAtlas or a
@@ -202,14 +204,14 @@ classdef SubjectMRI < Subject
     end
     methods (Static)  % Save/load functions
         function cohort = load_from_xls(subject_class, atlases, varargin)
-            % LOAD_FROM_XLS loads a file to a Cohort with SubjectMRI
+            % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectMRI
             %
             % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES) opens a GUI to
             % load a directory where it reads '.xls' or '.xlsx' files. It 
             % creates a cohort of SubjectMRI with brain atlas ATLASES.
             %
             % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
-            % load the directory in PATH where it reads '.xls' or '.xlsx'
+            % loads the directory in PATH where it reads '.xls' or '.xlsx'
             % files. It creates a cohort of SubjectMRI with brain atlas ATLASES.
             % 
             % See also save_to_xls, load_from_txt, load_from_json
@@ -250,14 +252,14 @@ classdef SubjectMRI < Subject
             cohort.getGroups().add(group.getName(), group);
         end
         function save_to_xls(cohort, varargin)
-            % SAVE_TO_XLS saves the cohort of SubjectMRI to a path
+            % SAVE_TO_XLS saves the cohort of SubjectMRI to a '.xls' file
             %
             % SAVE_TO_XLS(COHORT) opens a GUI to choose the path where the
             % cohort of SubjectMRI will be saved in '.xls' or 'xlsx'
             % format.
             %
             % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort 
-            % of SubjectMRI will be saved in '.xls' or 'xlsx' format in the
+            % of SubjectMRI in '.xls' or 'xlsx' format in the
             % specified PATH.
             % 
             % See also load_from_xls, save_to_txt, save_to_json
@@ -314,14 +316,14 @@ classdef SubjectMRI < Subject
             writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
         end
         function cohort = load_from_txt(subject_class, atlases, varargin)
-            % LOAD_FROM_TXT loads a file to a Cohort with SubjectMRI
+            % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectMRI
             %
             % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES) opens a GUI to
             % load a directory where it reads '.txt' files. It 
             % creates a cohort of SubjectMRI with brain atlas ATLASES.
             %
             % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
-            % load the directory in PATH where it reads '.txt' files.
+            % loads the directory in PATH where it reads '.txt' files.
             % It creates a cohort of SubjectMRI with brain atlas ATLASES.
             % 
             % See also save_to_txt, load_from_xls, load_from_json
@@ -362,13 +364,13 @@ classdef SubjectMRI < Subject
             cohort.getGroups().add(group.getName(), group);
         end
         function save_to_txt(cohort, varargin)
-            % SAVE_TO_TXT saves the cohort of SubjectMRI to a path
+            % SAVE_TO_TXT saves the cohort of SubjectMRI to a '.txt' file
             %
             % SAVE_TO_TXT(COHORT) opens a GUI to choose the path where the
             % cohort of SubjectMRI will be saved in '.txt' format.
             %
             % SAVE_TO_TXT(COHORT, 'RootDirectory', PATH) saves the cohort 
-            % of SubjectMRI will be saved in '.txt' format in the specified PATH.
+            % of SubjectMRI in '.txt' format in the specified PATH.
             % 
             % See also load_from_txt, save_to_xls, save_to_json
             
@@ -451,14 +453,14 @@ classdef SubjectMRI < Subject
             fclose(fid);
         end
         function cohort = load_from_json(subject_class, atlases, varargin)
-            % LOAD_FROM_JSON loads a file to a Cohort with SubjectMRI
+            % LOAD_FROM_JSON loads a '.json' file to a Cohort with SubjectMRI
             %
             % COHORT = LOAD_FROM_JSON(SUBJECT_CLASS, ATLASES) opens a GUI to
             % load a directory where it reads '.json' files. It 
             % creates a cohort of SubjectMRI with brain atlas ATLASES.
             %
             % COHORT = LOAD_FROM_JSON(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
-            % load the directory in PATH where it reads '.json' files.
+            % loads the directory in PATH where it reads '.json' files.
             % It creates a cohort of SubjectMRI with brain atlas ATLASES.
             % 
             % See also save_to_json, load_from_xls, load_from_txt
@@ -499,13 +501,13 @@ classdef SubjectMRI < Subject
             cohort.getGroups().add(group.getName(), group);
         end
         function save_to_json(cohort, varargin)
-            % SAVE_TO_JSON saves the cohort of SubjectMRI to a path
+            % SAVE_TO_JSON saves the cohort of SubjectMRI to a '.json' file
             %
             % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
             % cohort of SubjectMRI will be saved in '.json' format.
             %
             % SAVE_TO_JSON(COHORT, 'RootDirectory', PATH) saves the cohort 
-            % of SubjectMRI will be saved in '.json' format in the specified PATH.
+            % of SubjectMRI in '.json' format in the specified PATH.
             % 
             % See also load_from_json, save_to_xls, save_to_txt
             
