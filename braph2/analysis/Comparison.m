@@ -5,34 +5,26 @@ classdef Comparison < handle & matlab.mixin.Copyable
         notes  % comparison notes
         atlases  % cell array with brain atlases
         measure_code  % measure code
-        groups  % cell array with two groups
+        group_1  % first group
+        group_2  % second group
         settings  % settings of the measurement
     end
     methods (Access = protected)  % Constructor
-        function c = Comparison(id, label, notes, atlases, measure_code, groups, varargin)
+        function c = Comparison(id, label, notes, atlases, measure_code, group_1, group_2, varargin)
 
             c.setID(id)
             c.setLabel(label)
             c.setNotes(notes)
             
-            if ~iscell(atlases)
-                atlases = {atlases};
-            end
-            assert(iscell(atlases) && all(cellfun(@(x) isa(x, 'BrainAtlas'), atlases)), ...
-                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
-                'The input must be a cell containing BrainAtlas objects')
-            c.atlases = atlases;
+            c.setBrainAtlases(atlases)
             
             assert(ischar(measure_code), ...
                 [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
                 'The measure code must be a string.')
             m.measure_code = measure_code;
 
-            assert(iscell(groups) && length(groups) == 2 && all(cellfun(@(x) isa(x, 'Group'), groups)), ...
-                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
-                'The input must be a cell array with two groups')
-            c.groups = groups;
-            
+            c.setGroups(group_1, group_2)
+
             varargin = get_from_varargin(varargin, 'ComparisonSettings', varargin{:});  % returns varargin if no key 'ComparisonSettings'
             available_settings = Comparison.getAvailableSettings(class(c));
             settings = cell(1, size(available_settings, 1));
@@ -45,11 +37,11 @@ classdef Comparison < handle & matlab.mixin.Copyable
             end
             c.settings = settings;  % initialize the property settings
             
-            c.initialize_data(atlases, groups, varargin{:});           
+            c.initialize_data(atlases, varargin{:});           
         end
     end
     methods (Abstract, Access = protected)  % Abstract function
-        initialize_data(c, varargin)  % initialize datadict
+        initialize_data(c, atlases, varargin)  % initialize datadict
     end
     methods  % Basic functions
         function str = tostring(c)
@@ -86,10 +78,24 @@ classdef Comparison < handle & matlab.mixin.Copyable
             c.notes = notes;
         end        
         function setBrainAtlases(c, atlases)
+            if ~iscell(atlases)
+                atlases = {atlases};
+            end
+            assert(iscell(atlases) && all(cellfun(@(x) isa(x, 'BrainAtlas'), atlases)), ...
+                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
+                'The input must be a cell containing BrainAtlas objects')
             c.atlases = atlases;
         end
-        function setGroups(c, groups)
-            c.groups = groups;
+        function setGroups(c, group_1, group_2)
+            assert(isa(group_1, 'Group'), ...
+                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
+                'The input must be a Group object')
+            c.group_1 = group_1;
+            
+            assert(isa(group_2, 'Group'), ...
+                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
+                'The input must be a Group object')
+            c.group_2 = group_2;
         end
     end
     methods  % Get functions
@@ -110,8 +116,9 @@ classdef Comparison < handle & matlab.mixin.Copyable
         function measure_code = getMeasureCode(c)
             measure_code = c.measure_code;
         end
-        function groups = getGroups(c)
-            groups = c.groups;
+        function [group_1, group_2] = getGroups(c)
+            group_1 = c.group_1;
+            group_2 = c.group_2;
         end
         function res = getSettings(c, setting_code)
 
