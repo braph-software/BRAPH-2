@@ -209,7 +209,7 @@ classdef MultiplexGraphWU < MultiplexGraphWD
     end
     methods
         function [randomized_graph, correlation_coefficients] = randomize(g, varargin)    
-            % RANDOMIZE returns a randomized graph and the correlation coefficients.
+            % RANDOMIZE returns a randomized graph and the correlation coefficients
             %
             % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G) 
             % returns the randomized graph RANDOMIZED_GRAPH and the strength

@@ -161,7 +161,7 @@ classdef GraphBU < GraphBD
 %     end
     methods
         function [randomized_graph, swaps] = randomize(g, varargin)
-            % RANDOMIZE returns a randomized graph and the number of swaps.
+            % RANDOMIZE returns a randomized graph and the number of swaps
             %
             % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G) 
             % returns the randomized graph RANDOMIZED_GRAPH obtained from a
