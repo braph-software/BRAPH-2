@@ -212,7 +212,7 @@ for i = 1:1:numel(measures)
     analysis = AnalysisMRI('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
 
     number_of_permutations = 10;
-    calculate_comparison = analysis.getComparison(measure, group1, group2, 'ComparisonMRI.PermutationNumer', number_of_permutations);
+%     calculate_comparison = analysis.getComparison(measure, group1, group2, 'ComparisonMRI.PermutationNumer', number_of_permutations);
     
 %     assert(~isempty(calculate_comparison), ...
 %         [BRAPH2.STR ':AnalysisMRI:calculateComparison'], ...
