@@ -33,7 +33,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 'The input must be a Group object')
             m.group = group;
 
-            varargin = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});  % returns varargin if no key 'Settings'
+            varargin = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});  % returns varargin if no key 'MeasurementSettings'
             available_settings = Measurement.getAvailableSettings(class(m));
             settings = cell(1, size(available_settings, 1));
             for i = 1:1:size(available_settings, 1)
@@ -48,7 +48,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             m.initialize_data(atlases, group, varargin{:});
         end
     end
-    methods (Abstract, Access = protected)  % Abstract method
+    methods (Abstract, Access = protected)  % Abstract function
         initialize_data(m, varargin)  % initialize datadict
     end
     methods  % Basic functions
@@ -159,7 +159,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             sub = eval([measurement_class  '(id, label, notes, atlases, measure_code, group, varargin{:})']);
         end
     end
-    methods (Access = protected)
+    methods (Access = protected)  % Shallow copy
         function measurement_copy = copyElement(m)
             % It does not make a deep copy of atlases or groups
 
