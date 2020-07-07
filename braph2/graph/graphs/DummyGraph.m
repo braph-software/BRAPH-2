@@ -131,7 +131,11 @@ classdef DummyGraph < Graph
     end
     methods (Static)
         function gr = randomize(g, varargin)
-            
+            % RANDOMIZE returns a the graph unchanged for DummyGraph
+            %    
+            % GR = RANDOMIZE(G) returns a the graph unchanged for
+            % DummyGraph. Utilizes available graph settings.
+                        
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
