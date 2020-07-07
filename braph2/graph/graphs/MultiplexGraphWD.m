@@ -230,7 +230,9 @@ classdef MultiplexGraphWD < Graph
             % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'PropertyRule1', 'Value1', ...) 
             % returns the randomized graph RANDOMIZED_GRAPH and the strength
             % correlation coefficients from the graph G and the randomized.
-            % The randomization it is done layer by layer and then
+            % The randomization is performed with the specified number of
+            % weights NUMERICVALUE. The multiplex is randomized layer by  
+            % layer where randomized adjacency matrix of each layer are then  
             % integrated in the 2-D supra-adjacency matrix cell array.
             
             % get rules

@@ -171,9 +171,11 @@ classdef GraphWD < Graph
             % correlation coefficients from the graph G and the randomized.
             % Utilizes available graph settings.
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'PROPERTYRULE1', 'VALUE1', ...) 
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'NUMBEROFWEIGHTS', 'NUMERICVALUE') 
             % returns the randomized graph RANDOMIZED_GRAPH and the strength
             % correlation coefficients from the graph G and the randomized.
+            % The randomization is performed with the specified number of
+            % weights NUMERICVALUE.
             
             % get rules
              number_of_weights = g.getSettings('GraphWU.NumberOfWeights');

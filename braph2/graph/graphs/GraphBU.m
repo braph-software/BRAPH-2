@@ -168,9 +168,10 @@ classdef GraphBU < GraphBD
             % number of edge swaps SWAPS. Utilizes available graph
             % settings.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'PROPERTYRULE1', 'VALUE1', ...) 
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'ATTEMPTSPEREDGE', 'NUMERICVALUE') 
             % returns the randomized graph RANDOMIZED_GRAPH obtained from a
-            % number of edge swaps SWAPS.
+            % number of edge swaps SWAPS and the specified number of attempts 
+            % per edge NUMERICVALUE.
             
             % get rules
             attempts_per_edge = g.getSettings('GraphBU.AttemptsPerEdge');
