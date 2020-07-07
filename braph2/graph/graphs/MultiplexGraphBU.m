@@ -216,10 +216,10 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             % The randomization it is done layer by layer and then
             % integrated in the 2-D supra-adjacency matrix cell array.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'ATTEMPTSPEREDGE', 'NUMERICVALUE') 
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'MultiplexGraphBU.AttemptsPerEdge', NUMBER)
             % returns the randomized graph RANDOMIZED_GRAPH obtained from a
             % number of edge swaps SWAPS and the specified number of attempts 
-            % per edge NUMERICVALUE. The multiplex is randomized layer by 
+            % per edge NUMBER. The multiplex is randomized layer by 
             % layer where randomized adjacency matrix of each layer are then  
             % integrated in the 2-D supra-adjacency matrix cell array.
             

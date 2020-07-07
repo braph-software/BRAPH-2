@@ -217,12 +217,12 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             % The randomization it is done layer by layer and then
             % integrated in the 2-D supra-adjacency matrix cell array.
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'NUMBEROFWEIGHTS', 'NUMERICVALUE') 
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'MultiplexGraphWU.NumberOfWeights', 'NUMBER') 
             % returns the randomized graph RANDOMIZED_GRAPH and the strength
             % correlation coefficients from the graph G and the randomized.
             % The randomization is performed with the specified number of
-            % weights NUMERICVALUE. The multiplex is randomized layer by  
-            % layer where randomized adjacency matrix of each layer are then  
+            % weights NUMBER. The multiplex is randomized layer by layer  
+            % where randomized adjacency matrix of each layer are then  
             % integrated in the 2-D supra-adjacency matrix cell array.
             
             % get rules
