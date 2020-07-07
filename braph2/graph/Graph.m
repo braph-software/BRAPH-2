@@ -139,7 +139,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   nodeattack                  - removes given nodes from a graph
     %   edgeattack                  - removes given edges from a graph
     %
-    % Graph randomization methods (static):
+    % Graph randomization method (static):
     %   randomize                   - randomize graph
     %
     % See also Measure, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
