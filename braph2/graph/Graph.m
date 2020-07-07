@@ -593,7 +593,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             g_new = eval([Graph.getClass(g) '(A, varargin{:})']);
         end
     end
-    methods (Static)  % Descriptive methods
+    methods (Static)  % Descriptive functions
         function graph_class_list = getList()
             % GETLIST returns the list of available graphs
             %
@@ -1007,9 +1007,8 @@ classdef Graph < handle & matlab.mixin.Copyable
                 res = get_from_varargin([], setting_code, g.settings{:});
             end
         end
-
     end
-    methods  % Inspection methods
+    methods  % Inspection functions
         function n = nodenumber(g)
             % NODENUMBER returns the number of nodes in the graph
             %
@@ -1233,8 +1232,8 @@ classdef Graph < handle & matlab.mixin.Copyable
             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
-    methods (Abstract)
-        randomize(n);
+    methods (Abstract)  % Randomize function
+        randomize(g);
     end
 %     methods (Access=protected)
 %         function g_copy = copyElement(g)
