@@ -13,21 +13,21 @@ classdef AnalysisMRI < Analysis
                 tostring(analysis.cohort.getGroups().getIndex(group)) ...
                 ];
         end
-        function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
-            randomcomparison_id = [ ...
-                tostring(analysis.getRandomComparisonClass()) ' ' ...
-                tostring(measure_code) ' ' ...
-                tostring(analysis.cohort.getGroups().getIndex(group)) ...
-                ];
-        end
-%         function comparison_id = getComparisonID(analysis, measure_code, groups, varargin)
-%             comparison_id = [ ...
-%                 tostring(analysis.getComparisonClass()) ' ' ...
+%         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
+%             randomcomparison_id = [ ...
+%                 tostring(analysis.getRandomComparisonClass()) ' ' ...
 %                 tostring(measure_code) ' ' ...
-%                 tostring(analysis.cohort.getGroups().getIndex(groups{1})) ' ' ...
-%                 tostring(analysis.cohort.getGroups().getIndex(groups{2})) ...
+%                 tostring(analysis.cohort.getGroups().getIndex(group)) ...
 %                 ];
 %         end
+        function comparison_id = getComparisonID(analysis, measure_code, group_1, group_2, varargin)
+            comparison_id = [ ...
+                tostring(analysis.getComparisonClass()) ' ' ...
+                tostring(measure_code) ' ' ...
+                tostring(analysis.cohort.getGroups().getIndex(group_1)) ' ' ...
+                tostring(analysis.cohort.getGroups().getIndex(group_2)) ...
+                ];
+        end
     end
     methods (Access = protected)  % Calculation functions
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
@@ -62,6 +62,7 @@ classdef AnalysisMRI < Analysis
                 'MeasurementMRI.value', measurement_value ...
                 );
         end
+function tmp(c)
 %         function randomcomparison = calculate_random_comparison(analysis, measure_code, group, varargin)
 %             % rules
 %             attemptsPerEdge = analysis.getSettings('AnalysisMRI.AttemptsPerEdge');
@@ -192,46 +193,49 @@ classdef AnalysisMRI < Analysis
 %                 'RandomComparisonMRI.number_of_permutations', M ...
 %                 );
 %         end
-%         function comparison = calculate_comparison(analysis, measure_code, groups, varargin)
-%             verbose = analysis.getSettings('AnalysisMRI.ComparisonVerbose');
-%             interruptible = analysis.getSettings('AnalysisMRI.ComparionInterruptible');
-%             is_longitudinal = analysis.getSettings('AnalysisMRI.Longitudinal');
-%             M = get_from_varargin(1e+3, 'NumerOfPermutations', varargin{:});
-%             correlation_rule = analysis.getSettings('AnalysisMRI.CorrelationRule');
-%             negative_weight_rule = analysis.getSettings('AnalysisMRI.NegativeWeightRule');
-%             graph_type = analysis.getSettings('AnalysisMRI.GraphType');
-%             
-%             group_1 = groups{1};
-%             group_2 = groups{2};
-%             
-%             measurements_1 = analysis.calculateMeasurement(measure_code, group_1, varargin{:});
-%             value_1 = measurements_1.getMeasureValue();
-%             
-%             measurements_2 = analysis.calculateMeasurement(measure_code, group_2, varargin{:});
-%             value_2 = measurements_2.getMeasureValue();
-%             
-%             all_permutations_1 = cell(1, M);
-%             all_permutations_2 = cell(1, M);
-%             
-%             subjects_1 = group_1.getSubjects();
-%             subjects_2 = group_2.getSubjects();
-%             
+end
+        function comparison = calculate_comparison(analysis, measure_code, group_1, group_2, varargin)
+            verbose = get_from_varargin(false, 'Verbose', varargin{:});
+            interruptible = get_from_varargin(true, 'Interruptible', varargin{:});
+            
+            is_longitudinal = analysis.getSettings('AnalysisMRI.Longitudinal');
+            M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
+            correlation_rule = analysis.getSettings('AnalysisMRI.CorrelationRule');
+            negative_weight_rule = analysis.getSettings('AnalysisMRI.NegativeWeightRule');
+            graph_type = analysis.getSettings('AnalysisMRI.GraphType');
+
+            measurements_1 = analysis.calculateMeasurement(measure_code, group_1, varargin{:});
+            value_1 = measurements_1.getMeasureValue();
+            
+            measurements_2 = analysis.calculateMeasurement(measure_code, group_2, varargin{:});
+            value_2 = measurements_2.getMeasureValue();
+            
+            all_permutations_1 = cell(1, M);
+            all_permutations_2 = cell(1, M);
+            
+            subjects_1 = group_1.getSubjects();
+            subjects_2 = group_2.getSubjects();
+            
+%             subjects_data_1 = zeros(group.subjectnumber(), atlas.getBrainRegions().length());
 %             for i = 1:1:group_1.subjectnumber()
 %                 subject = subjects_1{i};
-%                 subjects_data_1(:, i) = subject.getData('MRI').getValue();  %#ok<AGROW> % MRI data % here we swaps dimensions to be compatible with permutation
+%                 subjects_data_1(i, :) = subject.getData('MRI').getValue();  % MRI data
 %             end
+%             subjects_data_1 = subjects_data_1';  % here we swaps dimensions to be compatible with permutation
 %             
-%             for i = 1:1:group_2.subjectnumber()
-%                 subject = subjects_2{i};
-%                 subjects_data_2(:, i) = subject.getData('MRI').getValue(); %#ok<AGROW>
+%             subjects_data_2 = zeros(group.subjectnumber(), atlas.getBrainRegions().length());
+%             for i = 1:1:group_1.subjectnumber()
+%                 subject = subjects_1{i};
+%                 subjects_data_2(i, :) = subject.getData('MRI').getValue();  % MRI data
 %             end
-%             
-%             start = tic;
-%             for i = 1:1:M
-%                 if verbose
-%                     disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
-%                 end
-%                 
+%             subjects_data_2 = subjects_data_2';  % here we swaps dimensions to be compatible with permutation
+                        
+            start = tic;
+            for i = 1:1:M
+                if verbose
+                    disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
+                end
+                
 %                 if is_longitudinal
 %                     [permutation_1, permutation_2] = Permutation.permute(subjects_1, subjects_2, is_longitudinal);
 %                 else
@@ -256,8 +260,8 @@ classdef AnalysisMRI < Analysis
 %                 if interruptible
 %                     pause(interruptible)
 %                 end
-%             end
-%             
+            end
+            
 %             difference_mean = cell2mat(value_2) - cell2mat(value_1);  % difference of the mean values of the non permutated groups
 %             difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 1 - permutated group 2
 %             
@@ -297,7 +301,7 @@ classdef AnalysisMRI < Analysis
 %                 'ComparisonMRI.value_2', value_2, ...
 %                 'ComparisonMRI.number_of_permutations', M ....
 %                 );
-%         end
+        end
     end
     methods (Static)  % Descriptive functions
         function analysis_class = getClass()
@@ -325,9 +329,9 @@ classdef AnalysisMRI < Analysis
 %         function randomcomparison_class = getRandomComparisonClass()
 %             randomcomparison_class = 'RandomComparisonMRI';
 %         end
-%         function comparison_class = getComparisonClass()
-%             comparison_class = 'ComparisonMRI';
-%         end
+        function comparison_class = getComparisonClass()
+            comparison_class = 'ComparisonMRI';
+        end
         function available_settings = getAvailableSettings(m) %#ok<INUSD>
             available_settings = {
                 {'AnalysisMRI.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...

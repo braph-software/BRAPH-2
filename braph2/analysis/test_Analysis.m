@@ -58,9 +58,9 @@ for i = 1:1:length(analysis_class_list)
 %         [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_FUNC], ...
 %         [analysis_class '.getRandomComparisonClass() should return a string'])
     
-%     assert(ischar(analysis.getComparisonClass()), ...
-%         [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_FUNC], ...
-%         [analysis_class '.getComparisonClass() should return a string'])
+    assert(ischar(analysis.getComparisonClass()), ...
+        [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_FUNC], ...
+        [analysis_class '.getComparisonClass() should return a string'])
     
     assert(iscell(analysis.getAvailableSettings()), ...
         [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_FUNC], ...
@@ -80,14 +80,14 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', subject_class, atlases, {sub1, sub2, sub3});
     group = Group(subject_class, 'id', 'label', 'notes', {sub1, sub2, sub3});
     measurement_class = Analysis.getMeasurementClass(analysis_class);
-%     comparison_class = Analysis.getComparisonClass(analysis_class);
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
+    comparison_class = Analysis.getComparisonClass(analysis_class);
     
     % act
     measurements = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, 'Degree', group);
-%     comparison = Comparison.getComparison(comparison_class, 'c1', atlas, {group group}, [comparison_class '.measure_code'], 'Degree');
 %     randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group, [random_comparison_class '.measure_code'], 'Degree');
-    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {measurements}, {}, {});
+    comparison = Comparison.getComparison(comparison_class, 'c1 id', 'c1 label', 'c1 notes', atlas, 'Degree', group, group);
+    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {measurements}, {}, {comparison});
 %    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {measurement}, {randomcomparison}, {comparison});
     
     % assert
@@ -108,16 +108,16 @@ for i = 1:1:length(analysis_class_list)
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', subject_class, atlases, {sub1, sub2, sub3});
     group = Group(subject_class, 'id', 'label', 'notes', {sub1, sub2, sub3});
     measurement_class = Analysis.getMeasurementClass(analysis_class);
-%     comparison_class = Analysis.getComparisonClass(analysis_class);
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
+    comparison_class = Analysis.getComparisonClass(analysis_class);
     
     % act
     measurement1 = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, 'Degree', group);
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2 id', 'm2 label', 'm2 notes', atlas, 'Degree', group);
     measurements = {measurement1, measurement2};
-%     comparison = Comparison.getComparison(comparison_class, 'c1', atlas, {group group}, [comparison_class '.measure_code'], 'Degree');
 %     randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group);
-    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, measurements, {}, {});
+    comparison = Comparison.getComparison(comparison_class, 'c1 id', 'c1 label', 'c1 notes', atlas, 'Degree', group, group);
+    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, measurements, {}, {comparison});
 %     analysis = Analysis.getAnalysis(analysis_class, cohort, measurement, {randomcomparison}, {comparison});
     
     % assert
@@ -133,10 +133,9 @@ for i = 1:1:length(analysis_class_list)
 %     assert(analysis.getRandomComparisons().length() == 1, ...
 %         [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_FUNC], ...
 %         [analysis_class '.getRandomComparisons().length() does not work');
-%     assert(analysis.getRandomComparisons().length() == 1, ...
-%         [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_FUNC], ...
-%         'Analysis.getRandomComparisons().length() does not work');
-% TODO Add asserts for comparisons
+    assert(analysis.getComparisons().length() == 1, ...
+        [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_FUNC], ...
+        'Analysis.getComparisons().length() does not work');
     
 end
 
