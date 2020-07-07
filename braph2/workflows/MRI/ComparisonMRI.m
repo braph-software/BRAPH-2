@@ -1,6 +1,5 @@
 classdef ComparisonMRI < Comparison
     properties
-        measure_code  % class of measure
         value_1  % array with the value_1 of the measure for each subject of group 1
         value_2  % array with the value_1 of the measure for each subject of group 1
         difference  % difference
@@ -11,8 +10,11 @@ classdef ComparisonMRI < Comparison
         confidence_interval_max  % max value of the 95% confidence interval
     end
     methods
-        function c =  ComparisonMRI(id, atlas, groups, varargin)
-            c = c@Comparison(id, atlas, groups, varargin{:});
+        function c =  ComparisonMRI(id, label, notes, atlas, measure_code, groups, varargin)
+
+% TODO: Add assert that the measure_code is in the measure list.
+
+            c = c@Comparison(id, label, notes, atlas, measure_code, groups, varargin{:});
         end
         function measure_code = getMeasureCode(c)
             measure_code = c.measure_code;
