@@ -236,10 +236,10 @@ classdef DummyMultiplex < Graph
         end
     end
     methods
-        function [randomized_graph, swaps] = randomize(g, varargin)
-            A = g.getA(); % get A
-            randomized_graph = A;
-            swaps = 0; % number of successful edge swaps
+        function gr = randomize(g, varargin)
+                     
+            A = g.getA(); % get A, which is left unchanged
+            gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
 end
