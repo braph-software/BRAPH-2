@@ -1,38 +1,51 @@
 classdef SubjectMRI < Subject
-    % SubjectMRI < Subject: A subject of type MRI.
+    % SubjectMRI A subject of type MRI
     % SubjectMRI represents a subject of type MRI.
+    % It is a subclass of Subject. It implements the methods initialize_datadict
+    % and update_brainatlases.
     %
-    % SubjectMRI methods (Access=protected)
-    %   SubjectMRI                 - Constructor.
+    % SubjectMRI methods (Access=protected):
+    %   SubjectMRI              - Constructor
     %
-    % SubjectMRI methods (Access=protected)
-    %   initialize_datadict     - initializes the data dictionary DATADICT.
-    %   update_brainatlases     - updates the brain atlases in DATADICT.
+    % SubjectMRI methods (Access=protected):
+    %   initialize_datadict     - initializes the data dictionary DATADICT
+    %   update_brainatlases     - updates the brain atlases in DATADICT
     %
-    % SubjectMRI methods (Static)
-    %   getClass                - returns the class of SubjectMRI.
-    %   getName                 - returns the name of  SubjectMRI.
-    %   getDescription          - returns the description of SubjectMRI.
+    % SubjectMRI inspection methods (Static)
+    %   getClass                - returns the class of SubjectMRI
+    %   getName                 - returns the name of  SubjectMRI
+    %   getDescription          - returns the description of SubjectMRI
     %   getBrainAtlasNumber     - returns the number of elements of Atlases
     %   getDataList             - returns the type of data of SubjectMRI
     %   getDataNumber           - returns the number of elements of DATADICT
     %   getDataCodes            - returns the key codes of the data for SubjectMRI
-    %   getDataClasses          - returns the class of the type of all data of SubjectMRI.
-    %   getDataClass            - returns the class of the type of a data of SubjectMRI.
+    %   getDataClasses          - returns the class of the type of all data of SubjectMRI
+    %   getDataClass            - returns the class of the type of a data of SubjectMRI
     %   getSubject              - returns a new instantiation of SubjectMRI
     %
-    % See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
+    % Subject load and save methods (Static):
+    %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
+    %   save_to_xls             - saves the subject data to a '.xls' or '.xlsx' file
+    %   load_from_txt           - reads a '.txt' file, loads the data to a new subject
+    %   save_to_txt             - saves the subject data to a '.txt' file
+    %   load_from_json          - reads a '.json' file, loads the data to a new subject
+    %   save_to_json            - saves the subject data to a '.json' file
+    %
+    % See also Group, Cohort, SubjectDTI, SubjectMRI, Subject.
+ 
     methods  % Constructor
         function sub = SubjectMRI(id, label, notes, atlas, varargin)
-            % SUBJECTMRI(ATLAS) creates a subject of type MRI.
-            % ATLAS is the brain atlas that subject MRI will use (it can be
-            % either a BrainAtlas or a cell array with a single BrainAtlas).
+            % SUBJECTMRI creates a subject of type MRI
             %
-            % SUBJECTMRI(ATLASES, 'SubjectID', ID) creates a subject with
-            % subject id ID.
+            % SUBJECTMRI(ID, LABEL, NOTES, ATLASES) creates a subject of type MRI
+            % with with ID, LABEL, NOTES. ATLAS is the brain atlas that 
+            % subject MRI will use (it can be either a BrainAtlas or a
+            % cell array with a single BrainAtlas).
             %
-            % SUBJECTMRI(ATLASES, 'age', AGE, 'MRI', MRI) creates a subject
-            % with age AGE and MRI data MRI.
+            % SUBJECTMRI(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
+            % creates a MRI subject with ubject ID, LABEL NOTES and ATLASES.
+            % SubjectfMRI will be initialized by the rules passed in the
+            % VARARGIN.
             %
             % See also See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
             
@@ -50,12 +63,12 @@ classdef SubjectMRI < Subject
     end
     methods (Access=protected)  % Utilifty functions
         function initialize_datadict(sub, varargin)
-            % INITIALIZE_DATADICT initializes the data dictionary
+           % INITIALIZE_DATADICT initializes the data dictionary
             %
-            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'MRI', MRI) initializes the data
+            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'MRI', DATA) initializes the data
             % ditionary with data type and data code of subject mri.
             %
-            % See also update_brainatlases().
+            % See also update_brainatlases.
             
             atlases = sub.getBrainAtlases();
             atlas = atlases{1};
@@ -74,7 +87,7 @@ classdef SubjectMRI < Subject
             % subject MRI using the new values ATLASES. ATLASES must be a
             % cell array with a single BrainAtlas.
             %
-            % See also initialize_datadict().
+            % See also initialize_datadict.
             
             sub.atlases = atlases;
             atlas = atlases{1};
@@ -90,18 +103,18 @@ classdef SubjectMRI < Subject
         function subject_class = getClass()
             % GETCLASS returns the class of the subject
             %
-            % SUBJECT_CLASS = GETCLASS() returns the class SubjectMRI.
+            % SUBJECT_CLASS = GETCLASS() returns the class SubjectMRI
             %
-            % See also getList(), getDescription(), getName()
+            % See also getDescription, getName.
             
             subject_class = 'SubjectMRI';
         end
         function name = getName()
             % GETNAME returns the name of the subject
             %
-            % NAME = GETNAME() returns the name: Subject Functional MRI.
+            % NAME = GETNAME() returns the name: Subject MRI.
             %
-            % See also getList(), getClass().
+            % See also getClass, getDescription.
             
             name = 'Subject Structural MRI';
         end
@@ -109,9 +122,9 @@ classdef SubjectMRI < Subject
             % GETDESCRIPTION returns the description of the subject
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of SubjectMRI.
+            % of SubjectMRI
             %
-            % See also getList(), getName(), getClass().
+            % See also getName, getClass, getBrainAtlasNumber.
             
             description = [ ...
                 'Subject with structural MRI data, ' ...
@@ -124,7 +137,7 @@ classdef SubjectMRI < Subject
             % N = GETBRAINATLASNUMBER() returns the number of
             % brain atlases, in this case 1.
             %
-            % See also getList(), getDescription(), getName(), getClass().
+            % See also getDescription, getName, getClass.
             
             atlas_number = 1;
         end
@@ -136,7 +149,7 @@ classdef SubjectMRI < Subject
             %   age            -    DataScalar.
             %   MRI            -    DataStructural.
             %
-            % See also getList()
+            % See also getList
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
@@ -147,7 +160,7 @@ classdef SubjectMRI < Subject
             %
             % N = GETDATANUMBER() returns the number of data.
             %
-            % See also getDataList(), getBrainAtlasNumber().
+            % See also getDataList, getBrainAtlasNumber.
             
             data_number = Subject.getDataNumber('SubjectMRI');
         end
@@ -157,7 +170,7 @@ classdef SubjectMRI < Subject
             % CELL ARRAY = GETDATACODES(SUB) returns a cell array of
             % subject MRI data keys.
             %
-            % See also getList()
+            % See also getList, getDataClasses, getDataNumber
             
             data_codes = Subject.getDataCodes('SubjectMRI');
         end
@@ -171,7 +184,7 @@ classdef SubjectMRI < Subject
             % cell array of subject MRI data classes to the subject whose class is
             % SUBJECT_CLASS.
             %
-            % See also getList(), getDataCodes(), getDataClass().
+            % See also getList, getDataCodes, getDataClass.
             
             data_classes = Subject.getDataClasses('SubjectMRI');
         end
@@ -181,18 +194,30 @@ classdef SubjectMRI < Subject
             % DATA_CLASS = GETDATACLASS(SUB, DATACODE) returns the class of
             % data with code DATACODE
             %
-            % See also getList(), getDataClasses().
+            % See also getList, getDataClasses.
             
             data_class = Subject.getDataNumber('SubjectMRI', data_code);
         end
     end
     methods (Static)  % Save/load functions
         function cohort = load_from_xls(subject_class, atlases, varargin)
+            % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectMRI
+            %
+            % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES) opens a GUI to
+            % load a directory where it reads '.xls' or '.xlsx' files. It 
+            % creates a cohort of SubjectMRI with brain atlas ATLASES.
+            %
+            % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % loads the directory in PATH where it reads '.xls' or '.xlsx'
+            % files. It creates a cohort of SubjectMRI with brain atlas ATLASES.
+            % 
+            % See also save_to_xls, load_from_txt, load_from_json
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(Constant.XLS_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -200,58 +225,109 @@ classdef SubjectMRI < Subject
                 end
             end
             
+            % search for cohort info file
+            file_path = strsplit(file, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+            file_cohort = file_cohort(2:end);
+            cohort_id = '';
+            cohort_label = '';
+            cohort_notes = '';
+            
+            if exist(file_cohort, 'file')
+                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                cohort_id = raw_cohort{1, 1};
+                cohort_label = raw_cohort{2, 1};
+                cohort_notes = raw_cohort{3, 1};
+            end
+            
+            
             % creates cohort
-            cohort = Cohort('', subject_class, atlases, {});
+            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             
             [~, ~, raw] = xlsread(file);
             
-            for i = 2:1:size(raw, 1)
-                subject = Subject.getSubject(subject_class, ...
-                    atlases, ...
-                    'SubjectID', raw{i,1}, ...
-                    'MRI', cell2mat(raw(i, 2:size(raw,2))'));
+            for i = 5:1:size(raw, 1)
+                subject = Subject.getSubject(subject_class, ...                    
+                    char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlases, ...
+                    'MRI', cell2mat(raw(i, 4:size(raw, 2))'));
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
             % creates group
-            group = Group(subject_class, cohort.getSubjects().getValues());
+            group = Group(subject_class,'', '', '', cohort.getSubjects().getValues());
             path = [fileparts(which(file))]; %#ok<NBRAK>
             file_name = erase(file, path);
             file_name = erase(file_name, filesep());
-            file_name = erase(file_name, '.xls');
             file_name = erase(file_name, '.xlsx');
-            group.setName(file_name);
-            cohort.getGroups().add(group.getName(), group);
+            file_name = erase(file_name, '.xls');            
+            group.setID(file_name);
+            group.setLabel(raw{2, 1});  % set group info
+            group.setNotes(raw{3, 1});
+            cohort.getGroups().add(group.getID(), group);
         end
         function save_to_xls(cohort, varargin)
+            % SAVE_TO_XLS saves the cohort of SubjectMRI to a '.xls' file
+            %
+            % SAVE_TO_XLS(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectMRI will be saved in '.xls' or 'xlsx'
+            % format.
+            %
+            % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectMRI in '.xls' or 'xlsx' format in the
+            % specified PATH.
+            % 
+            % See also load_from_xls, save_to_txt, save_to_json
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.XLS_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(BRAPH2.XLS_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
                     return
                 end
             end
+            
+            % cohort info           
+            file_path = strsplit(file, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+            file_cohort = file_cohort(2:end);
+            cohort_info = cell(3, 1);
+            cohort_info{1, 1} = cohort.getID();
+            cohort_info{2, 1} = cohort.getLabel();
+            cohort_info{3, 1} = cohort.getNotes();
+            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
             
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
             
+            % group info
+            group_info = cell(3, 1);
+            group_info{1, 1} = group.getID();
+            group_info{2, 1} = group.getLabel();
+            group_info{3, 1} = group.getNotes();
+            
             for j = 1:1:group.subjectnumber()
                 % get subject data
                 subject = subjects_list{j};
-                %                         name{j, 1}
-                row_n = subject.getID();
-                data = subject.getData('MRI');
-                row_d = data.getValue()';
-                row_names{j, 1} = row_n; %#ok<AGROW>
-                row_datas{j, 1} = row_d; %#ok<AGROW>
+                row_ids{j, 1} = subject.getID(); %#ok<AGROW>
+                row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
+                row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
+                row_datas{j, 1} = subject.getData('MRI').getValue(); %#ok<AGROW>
             end
-            tab = table(row_names, row_datas);
+            tab = table(row_ids, row_labels, row_notes, row_datas);
             
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
@@ -261,10 +337,15 @@ classdef SubjectMRI < Subject
             end
             
             row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
-            row_name = 'Label';
+            row_id = 'ID';
+            row_label = 'Label';
+            row_notes = 'Notes';
             first_row_table = table(row_data, 'VariableNames', {'row_datas'});
-            first_row_table.row_names = row_name;
-            first_row_table = [first_row_table(:, 2) first_row_table(:, 1)];
+            first_row_table.row_ids = row_id;
+            first_row_table.row_labels = row_label;
+            first_row_table.row_notes = row_notes;
+            first_row_table = [first_row_table(:, 2) first_row_table(:, 3) ...
+                first_row_table(:, 4) first_row_table(:, 1)];
             
             % creates table
             tab = [
@@ -273,14 +354,27 @@ classdef SubjectMRI < Subject
                 ];
             
             % save
-            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+            writecell(group_info, file);
+            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
         end
         function cohort = load_from_txt(subject_class, atlases, varargin)
+            % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectMRI
+            %
+            % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES) opens a GUI to
+            % load a directory where it reads '.txt' files. It 
+            % creates a cohort of SubjectMRI with brain atlas ATLASES.
+            %
+            % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % loads the directory in PATH where it reads '.txt' files.
+            % It creates a cohort of SubjectMRI with brain atlas ATLASES.
+            % 
+            % See also save_to_txt, load_from_xls, load_from_json
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.TXT_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(Constant.TXT_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.TXT_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(BRAPH2.TXT_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -288,59 +382,129 @@ classdef SubjectMRI < Subject
                 end
             end
             
-            % creates cohort
-            cohort = Cohort('', subject_class, atlases, {});
+            % supress warning
+            warning_id = 'MATLAB:table:ModifiedAndSavedVarnames';
+            warning('off', warning_id)
             
+            % search for cohort info file
+            file_path = strsplit(file, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort_path = file_cohort_path(2:end);
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
+            cohort_id = '';
+            cohort_label = '';
+            cohort_notes = '';
+            
+            if exist(file_cohort, 'file')
+                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                cohort_id = raw_cohort{1, 1};
+                cohort_label = raw_cohort{2, 1};
+                cohort_notes = raw_cohort{3, 1};
+            end
+           
+            % creates cohort
+            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            
+            % get group info
+            file_group = [file_cohort_path filesep() 'group_info.txt'];
+            group_id = '';
+            group_label = '';
+            group_notes = '';
+            if exist(file_group, 'file')
+                raw_group = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                group_id = raw_group{1, 1};
+                group_label = raw_group{2, 1};
+                group_notes = raw_group{3, 1};
+            end        
+                
             % reads file
             raw = readtable(file, 'Delimiter', '\t');
             
             for i = 1:1:size(raw, 1)  % first row is being read as table label
-                subject = Subject.getSubject(subject_class, ...
-                    atlases, ...
-                    'SubjectID', num2str(raw{i,1}), ...
-                    'MRI', raw{i, 2:size(raw, 2)}');
+                subject = Subject.getSubject(subject_class, ...                    
+                    char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlases, ...
+                    'MRI', raw{i, 4:size(raw, 2)}');
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
+            % warning on
+            warning('on', 'all')
+            
             % creates group
-            group = Group(subject_class, cohort.getSubjects().getValues());
+            group = Group(subject_class, group_id, group_label, group_notes, cohort.getSubjects().getValues());
             path = [fileparts(which(file))]; %#ok<NBRAK>
             file_name = erase(file, path);
             file_name = erase(file_name, filesep());
             file_name = erase(file_name, '.txt');
-            group.setName(file_name);
-            cohort.getGroups().add(group.getName(), group);
+            group.setID(file_name);
+            group.setLabel(group_label);
+            group.setNotes(group_notes);
+            cohort.getGroups().add(group.getID(), group);
         end
         function save_to_txt(cohort, varargin)
+            % SAVE_TO_TXT saves the cohort of SubjectMRI to a '.txt' file
+            %
+            % SAVE_TO_TXT(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectMRI will be saved in '.txt' format.
+            %
+            % SAVE_TO_TXT(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectMRI in '.txt' format in the specified PATH.
+            % 
+            % See also load_from_txt, save_to_xls, save_to_json
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.TXT_MSG_PUTFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uiputfile(Constant.TXT_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.TXT_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(BRAPH2.TXT_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
                     return
                 end
             end
+            
+           % cohort info           
+            file_path = strsplit(file, filesep());
+            file_cohort_path = '';
+            for i = 1:1:length(file_path)-1
+                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+            end
+            file_cohort_path = file_cohort_path(2:end);
+            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
+            cohort_info = cell(3, 1);
+            cohort_info{1, 1} = cohort.getID();
+            cohort_info{2, 1} = cohort.getLabel();
+            cohort_info{3, 1} = cohort.getNotes();
+            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
             
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
             
+            % group info
+            file_group = [file_cohort_path filesep() 'group_info.txt'];
+            group_info = cell(3, 1);
+            group_info{1, 1} = group.getID();
+            group_info{2, 1} = group.getLabel();
+            group_info{3, 1} = group.getNotes();
+            writecell(group_info, file_group, 'Delimiter', '\t');
+            
+            
             for j = 1:1:group.subjectnumber()
                 % get subject data
                 subject = subjects_list{j};
-                %                         name{j, 1}
-                row_n = subject.getID();
-                data = subject.getData('MRI');
-                row_d = data.getValue()';
-                row_names{j, 1} = row_n; %#ok<AGROW>
-                row_datas{j, 1} = row_d; %#ok<AGROW>
+                row_ids{j, 1} = subject.getID(); %#ok<AGROW>
+                row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
+                row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
+                row_datas{j, 1} = subject.getData('MRI').getValue(); %#ok<AGROW>
             end
-            tab = table(row_names, row_datas);
-            
+            t = table(row_ids, row_labels, row_notes, row_datas);
+
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
             
@@ -349,15 +513,20 @@ classdef SubjectMRI < Subject
             end
             
             row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
-            row_name = 'Label';
+            row_id = 'ID';
+            row_label = 'Label';
+            row_note = 'Notes';
             first_row_table = table(row_data, 'VariableNames', {'row_datas'});
-            first_row_table.row_names = row_name;
-            first_row_table = [first_row_table(:, 2) first_row_table(:, 1)];
+            first_row_table.row_ids = row_id;
+            first_row_table.row_labels = row_label;
+            first_row_table.row_notes = row_note;
+            first_row_table = [first_row_table(:, 2) first_row_table(:, 3) ...
+                first_row_table(:, 4) first_row_table(:, 1)];
             
             % creates table
             tab = [
                 first_row_table
-                tab
+                t
                 ];
             
             % save
@@ -375,7 +544,7 @@ classdef SubjectMRI < Subject
             % print new file
             fName = file;
             fid = fopen(fName, 'w');            % Open the file
-            m = atlas.getBrainRegions().length();
+            m = atlas.getBrainRegions().length() + 2;
             count = 0;
             
             for k = 1:numel(C{1, 1})
@@ -391,11 +560,23 @@ classdef SubjectMRI < Subject
             fclose(fid);
         end
         function cohort = load_from_json(subject_class, atlases, varargin)
+            % LOAD_FROM_JSON loads a '.json' file to a Cohort with SubjectMRI
+            %
+            % COHORT = LOAD_FROM_JSON(SUBJECT_CLASS, ATLASES) opens a GUI to
+            % load a directory where it reads '.json' files. It 
+            % creates a cohort of SubjectMRI with brain atlas ATLASES.
+            %
+            % COHORT = LOAD_FROM_JSON(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % loads the directory in PATH where it reads '.json' files.
+            % It creates a cohort of SubjectMRI with brain atlas ATLASES.
+            % 
+            % See also save_to_json, load_from_xls, load_from_txt
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(Constant.JSON_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -404,34 +585,58 @@ classdef SubjectMRI < Subject
             end
             
             % creates cohort
-            cohort = Cohort('', subject_class, atlases, {});
+            cohort = Cohort('', '', '', subject_class, atlases, {});
             
-            raw = jsondecode(fileread(file));     
+            raw = jsondecode(fileread(file)); 
+            
+             % get cohort and group info
+                cohort_id = raw.CohortData.id;
+                cohort_label = raw.CohortData.label;
+                cohort_notes = raw.CohortData.notes;
+                group_id = raw.GroupData.id;
+                group_label = raw.GroupData.label;
+                group_notes = raw.GroupData.notes;
+                
             for i = 1:1:length(raw.SubjectData)
-                name = raw.SubjectData(i).name;
+                id = raw.SubjectData(i).id;
+                label = raw.SubjectData(i).label;
+                notes = raw.SubjectData(i).notes;
                 data = raw.SubjectData(i).data;
-                subject = Subject.getSubject(subject_class, ...
-                    atlases, ...
-                    'SubjectID', num2str(name), ...
+                subject = Subject.getSubject(subject_class, ...                   
+                    id, label, notes, atlases, ...
                     'MRI', data);
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
+            cohort.setID(cohort_id);
+            cohort.setLabel(cohort_label);
+            cohort.setNotes(cohort_notes);
+            
             % creates group
-            group = Group(subject_class, cohort.getSubjects().getValues());
+            group = Group(subject_class, group_id, group_label, group_notes, cohort.getSubjects().getValues());
             path = [fileparts(which(file))]; %#ok<NBRAK>
             file_name = erase(file, path);
             file_name = erase(file_name, filesep());
             file_name = erase(file_name, '.json');
-            group.setName(file_name);
-            cohort.getGroups().add(group.getName(), group);
+            group.setID(file_name);
+            cohort.getGroups().add(group.getID(), group);
         end
         function save_to_json(cohort, varargin)
+            % SAVE_TO_JSON saves the cohort of SubjectMRI to a '.json' file
+            %
+            % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectMRI will be saved in '.json' format.
+            %
+            % SAVE_TO_JSON(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectMRI in '.json' format in the specified PATH.
+            % 
+            % See also load_from_json, save_to_xls, save_to_txt
+            
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(Constant.XLS_MSG_PUTFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uiputfile(Constant.XLS_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.XLS_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(BRAPH2.XLS_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -447,11 +652,11 @@ classdef SubjectMRI < Subject
             for j = 1:1:group.subjectnumber()
                 % get subject data
                 subject = subjects_list{j};
-                row_n = subject.getID();
-                data = subject.getData('MRI');
-                row_d = data.getValue()';
-                row_names{j, 1} = row_n; %#ok<AGROW>
-                row_datas{j, 1} = row_d; %#ok<AGROW>
+               
+                row_ids{j, 1} = subject.getID(); %#ok<AGROW>
+                row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
+                row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
+                row_datas{j, 1} = subject.getData('MRI').getValue(); %#ok<AGROW>
             end
             
             atlases = cohort.getBrainAtlases();
@@ -466,11 +671,21 @@ classdef SubjectMRI < Subject
             
             % create structure to be save
             structure_to_be_saved = struct( ...
-                'Braph', Constant.VERSION, ...
-                'Build', Constant.BUILD, ...
+                'Braph', BRAPH2.NAME, ...
+                'Build', BRAPH2.BUILD, ...
                 'BrainRegionsLabels', labels, ...
+                'CohortData', struct( ...
+                'id', cohort.getID(), ...
+                'label', cohort.getLabel(), ...
+                'notes', cohort.getNotes()), ...
+                'GroupData', struct( ...
+                'id', group.getID(), ...
+                'label', group.getLabel(), ...
+                'notes', group.getNotes()), ...
                 'SubjectData', struct( ...
-                'name', row_names, ...
+                'id', row_ids, ...
+                'label', row_labels, ...
+                'notes', row_notes, ...
                 'data', row_datas) ...
                 );
             
