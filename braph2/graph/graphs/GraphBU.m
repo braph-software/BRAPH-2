@@ -132,7 +132,7 @@ classdef GraphBU < GraphBD
             % See also getClass, getName, getDescription, getGraphType.
             
             available_settings = { ...
-                 'GraphBU.attempts_per_edge', BRAPH2.NUMERIC, 5, {} ...
+                 'GraphBU.AttemptsPerEdge', BRAPH2.NUMERIC, 5, {} ...
                  };
         end
     end
@@ -173,7 +173,7 @@ classdef GraphBU < GraphBD
             % number of edge swaps SWAPS.
             
             % get rules
-            attempts_per_edge = g.getSettings('GraphBU.attempts_per_edge');
+            attempts_per_edge = g.getSettings('GraphBU.AttemptsPerEdge');
             
             if nargin<2
                 attempts_per_edge = 5;
