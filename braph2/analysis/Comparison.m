@@ -37,11 +37,11 @@ classdef Comparison < handle & matlab.mixin.Copyable
             end
             c.settings = settings;  % initialize the property settings
             
-            c.initialize_data(atlases, varargin{:});           
+            c.initialize_data(varargin{:});           
         end
     end
     methods (Abstract, Access = protected)  % Abstract function
-        initialize_data(c, atlases, varargin)  % initialize datadict
+        initialize_data(c, varargin)  % initialize datadict
     end
     methods  % Basic functions
         function str = tostring(c)
