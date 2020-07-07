@@ -20,7 +20,7 @@ classdef DummyGraph < Graph
     %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
     % Graph randomization method (static):
-    %   randomize                   - randomize graph
+    %   randomize               - randomize graph
     % 
     % See also Graph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
     

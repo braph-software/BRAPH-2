@@ -23,6 +23,9 @@ classdef DummyMultiplex < Graph
     %   getCompatibleMeasureList - returns a list with compatible measures
     %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
+    % Graph randomization method (static):
+    %   randomize               - randomize graph
+    % 
     % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyOrderedMultilayer, DummyOrderedMultiplex.
     
     methods  % Constructor
