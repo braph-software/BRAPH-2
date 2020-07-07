@@ -133,7 +133,7 @@ classdef GraphWD < Graph
             % See also getClass, getName, getDescription, getGraphType.
             
             available_settings = { ...
-                 'GraphWD.number_of_weights', BRAPH2.NUMERIC, 5, {} ...
+                 'GraphWD.NumberOfWeights', BRAPH2.NUMERIC, 5, {} ...
                  };
         end
     end
@@ -176,7 +176,7 @@ classdef GraphWD < Graph
             % correlation coefficients from the graph G and the randomized.
             
             % get rules
-             number_of_weights = g.getSettings('GraphWU.number_of_weights');
+             number_of_weights = g.getSettings('GraphWU.NumberOfWeights');
             
             W = g.getA();
             graph_BD = GraphBD(W);
