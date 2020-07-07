@@ -19,7 +19,6 @@ directories_to_test = { ...
     [directory filesep 'workflows'] ...
     };
 
-addpath([directory filesep 'workflows'])
 workflows_directories = dir([directory filesep 'workflows']);  % get the folder contents
 workflows_directories = workflows_directories([workflows_directories(:).isdir] == 1);  % remove all files (isdir property is 0)
 workflows_directories = workflows_directories(~ismember({workflows_directories(:).name}, {'.', '..'}));  % remove '.' and '..'

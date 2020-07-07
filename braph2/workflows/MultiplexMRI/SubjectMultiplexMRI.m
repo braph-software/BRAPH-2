@@ -444,7 +444,7 @@ classdef SubjectMultiplexMRI < Subject
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
-             % warning on
+            % warning on
             warning('on', 'all')
             
             % creates group
