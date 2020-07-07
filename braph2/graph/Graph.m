@@ -1250,18 +1250,20 @@ classdef Graph < handle & matlab.mixin.Copyable
                     
                 otherwise  % multigraph, multiplex and multilayer
                     L = g.layernumber();
-                    if iscell(nodes)
-                       for li = 1:1:L
-                           Aii = A{li, li};
-                           A(li, li) = {Aii(nodes{li}, nodes{li})};
-                       end
+                    n = cell(L, 1);
+                    if iscell(nodes) 
+                        n = nodes;
                     else
-                        for li = 1:1:L
-                            for lj = 1:1:L
-                                Aij = A{li, lj};
-                                if isempty(Aij)==0
-                                    A(li, lj) = {Aij(nodes, nodes)};
-                                end
+                        for i=1:L
+                            n(i, :) = {nodes};
+                        end
+                    end
+
+                    for li = 1:1:L
+                        for lj = 1:1:L
+                            Aij = A{li, lj};
+                            if isempty(Aij)==0
+                                A(li, lj) = {Aij(n{li}, n{lj})};
                             end
                         end
                     end
