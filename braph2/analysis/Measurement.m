@@ -15,25 +15,16 @@ classdef Measurement < handle & matlab.mixin.Copyable
             m.setLabel(label)
             m.setNotes(notes)
 
-            if ~iscell(atlases)
-                atlases = {atlases};
-            end
-            assert(iscell(atlases) && all(cellfun(@(x) isa(x, 'BrainAtlas'), atlases)), ...
-                [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
-                'The input must be a cell containing BrainAtlas objects')
-            m.atlases = atlases;
+            m.setBrainAtlases(atlases)
 
             assert(ischar(measure_code), ...
                 [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
                 'The measure code must be a string.')
             m.measure_code = measure_code;
 
-            assert(isa(group, 'Group'), ...
-                [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
-                'The input must be a Group object')
-            m.group = group;
+            m.setGroup(group)
 
-            varargin = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});  % returns varargin if no key 'Settings'
+            varargin = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});  % returns varargin if no key 'MeasurementSettings'
             available_settings = Measurement.getAvailableSettings(class(m));
             settings = cell(1, size(available_settings, 1));
             for i = 1:1:size(available_settings, 1)
@@ -45,10 +36,10 @@ classdef Measurement < handle & matlab.mixin.Copyable
             end
             m.settings = settings;  % initialize the property settings
 
-            m.initialize_data(atlases, group, varargin{:});
+            m.initialize_data(varargin{:});
         end
     end
-    methods (Abstract, Access = protected)  % Abstract method
+    methods (Abstract, Access = protected)  % Abstract function
         initialize_data(m, varargin)  % initialize datadict
     end
     methods  % Basic functions
@@ -86,9 +77,18 @@ classdef Measurement < handle & matlab.mixin.Copyable
             m.notes = notes;
         end        
         function setBrainAtlases(m, atlases)
+            if ~iscell(atlases)
+                atlases = {atlases};
+            end
+            assert(iscell(atlases) && all(cellfun(@(x) isa(x, 'BrainAtlas'), atlases)), ...
+                [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
+                'The input must be a cell containing BrainAtlas objects')
             m.atlases = atlases;
         end
         function setGroup(m, group)
+            assert(isa(group, 'Group'), ...
+                [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
+                'The input must be a Group object')
             m.group = group;
         end
     end
@@ -159,7 +159,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             sub = eval([measurement_class  '(id, label, notes, atlases, measure_code, group, varargin{:})']);
         end
     end
-    methods (Access = protected)
+    methods (Access = protected)  % Shallow copy
         function measurement_copy = copyElement(m)
             % It does not make a deep copy of atlases or groups
 
