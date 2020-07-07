@@ -1,49 +1,62 @@
 classdef Comparison < handle & matlab.mixin.Copyable
     properties (GetAccess=protected, SetAccess=protected)
         id  % unique identifier
+        label  % comparison label
+        notes  % comparison notes
         atlases  % cell array with brain atlases
+        measure_code  % measure code
         groups  % cell array with two groups
         settings  % settings of the measurement
     end
-    methods (Access = protected)
-        function c = Comparison(id, atlases, groups, varargin)
-            c.id = tostring(id);
+    methods (Access = protected)  % Constructor
+        function c = Comparison(id, label, notes, atlases, measure_code, groups, varargin)
+
+            c.setID(id)
+            c.setLabel(label)
+            c.setNotes(notes)
             
             if ~iscell(atlases)
                 atlases = {atlases};
             end
             assert(iscell(atlases) && all(cellfun(@(x) isa(x, 'BrainAtlas'), atlases)), ...
-                ['BRAPH:Comparison:AtlasErr'], ...
-                ['The input must be a cell containing BrainAtlas objects']) %#ok<NBRAK>
+                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
+                'The input must be a cell containing BrainAtlas objects')
             c.atlases = atlases;
             
-            assert(iscell(groups) && length(groups)==2 && all(cellfun(@(x) isa(x, 'Group'), groups)), ...
-                ['BRAPH:Comparison:GroupErr'], ...
-                ['The input must be a cell array with two Group']) %#ok<NBRAK>
+            assert(ischar(measure_code), ...
+                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
+                'The measure code must be a string.')
+            m.measure_code = measure_code;
+
+            assert(iscell(groups) && length(groups) == 2 && all(cellfun(@(x) isa(x, 'Group'), groups)), ...
+                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
+                'The input must be a cell array with two groups')
             c.groups = groups;
             
-            c.settings = get_from_varargin(varargin, 'ComparisonSettings', varargin{:});
+            varargin = get_from_varargin(varargin, 'ComparisonSettings', varargin{:});  % returns varargin if no key 'ComparisonSettings'
+            available_settings = Comparison.getAvailableSettings(class(c));
+            settings = cell(1, size(available_settings, 1));
+            for i = 1:1:size(available_settings, 1)
+                available_setting_code = available_settings{i, 1};
+                available_setting_default = available_settings{i, 3};
+                % TODO check that the value of the setting is amongst the acceptable values
+                settings{2 * i - 1} = available_setting_code;
+                settings{2 * i} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
+            end
+            c.settings = settings;  % initialize the property settings
             
             c.initialize_data(atlases, groups, varargin{:});           
         end
-        function comparison_copy = copyElement(c)
-            % It does not make a deep copy of atlases or groups
-            
-            % Make a shallow copy
-            comparison_copy = copyElement@matlab.mixin.Copyable(c);
-            
-        end
     end
-    methods (Abstract, Access = protected)
+    methods (Abstract, Access = protected)  % Abstract function
         initialize_data(c, varargin)  % initialize datadict
     end
-    methods
-        function id = getID(c)
-            id = c.id;
-        end
+    methods  % Basic functions
         function str = tostring(c)
             str = [Comparison.getClass(c) ' ' c.getID()];
         end
+    end
+    methods  % Set functions
         function disp(c)
             disp(['<a href="matlab:help ' Comparison.getClass(c) '">' Comparison.getClass(c) '</a>'])
             disp(['id = ' c.getID()])
@@ -59,6 +72,11 @@ classdef Comparison < handle & matlab.mixin.Copyable
         end
         function groups = getGroups(c)
             groups = c.groups;
+        end
+    end
+    methods  % Get functions
+        function id = getID(c)
+            id = c.id;
         end
     end
     methods (Static)
@@ -92,6 +110,14 @@ classdef Comparison < handle & matlab.mixin.Copyable
         end
         function sub = getComparison(comparisonClass, id, atlases, groups, varargin) %#ok<*INUSD>
             sub = eval([comparisonClass '(id, atlases, groups, varargin{:})']);
+        end
+    end
+    methods (Access = protected)  % Shallow copy
+        function comparison_copy = copyElement(c)
+            % It does not make a deep copy of atlases or groups
+            
+            % Make a shallow copy
+            comparison_copy = copyElement@matlab.mixin.Copyable(c);
         end
     end
 end
