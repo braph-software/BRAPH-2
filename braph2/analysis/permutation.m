@@ -28,8 +28,8 @@ else
     index_permutation_2 = index_permutation_2(index_permutation_2 > 0);
 
     values = [values_1 values_2];
-    permutation_1 = values(index_permutation_1);
-    permutation_2 = values(index_permutation_2);
+    permutation_1 = reshape(values(index_permutation_1), size(values_1));
+    permutation_2 = reshape(values(index_permutation_2), size(values_2));
 end
 
 end

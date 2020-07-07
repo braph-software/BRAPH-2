@@ -34,76 +34,479 @@ assert(isequal(numel(all_values), numel(all_permuted_values)), ...
 for i = 1:1:numel(all_values)
     assert(any(ismember(all_permuted_values, all_values(i))), ...
         ['BRAPH:Analysis:getMeasurementID'], ...
-        ['Permutation.getPermutation() not all elements are present'])  
+        ['Permutation.getPermutation() not all elements are present'])
 end
 
-assert(isequal(sum(all_values), sum(all_permuted_values)), ...
+%% Test 1.2: Numeric arrays
+% setup
+values_1 = [1 2 3 4 5];
+values_2 = [6 7 8 9];
+all_values = [values_1 values_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(values_1, values_2);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(values_1), size(permuted_values_1)), ...
     ['BRAPH:Analysis:Permutation'], ...
     ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
 
+assert(isequal(size(values_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
 
-% asserts:
-% - dimensions
-% - numel of each equal to beginning
-% - all elements are somewhere
+assert(isequal(numel(values_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
 
-%% Test 1.2: Numeric arrays
-values_1 = [1 2 3 4 5];
-values_2 = [6 7 8 9];
+assert(isequal(numel(values_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_values), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+for i = 1:1:numel(all_values)
+    assert(any(ismember(all_permuted_values, all_values(i))), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
 
 %% Test 1.3: Numeric arrays
+% setup
 values_1 = [1 2 3 4 5];
 values_2 = [6 7 8 9 10];
+all_values = [values_1 values_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(values_1, values_2);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(values_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(values_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_values), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+for i = 1:1:numel(all_values)
+    assert(any(ismember(all_permuted_values, all_values(i))), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
 
 %% Test 2: Numeric arrays longitudinal
+% setup
 values_1 = [1 2 3 4 5];
 values_2 = [6 7 8 9 10];
+all_values = [values_1 values_2];
 
+% act
+[permuted_values_1, permuted_values_2] = permutation(values_1, values_2, 1);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(values_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(values_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_values), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+for i = 1:1:numel(all_values)
+    assert(any(ismember(all_permuted_values, all_values(i))), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
+
+%% Test 3.1: Cell arrays 
+% setup
+values_1 = {'a', 'b', 'c', 'd', 'e'};
+values_2 = {'f', 'g', 'h', 'i', 'j', 'k'};
+all_values = [values_1 values_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(values_1, values_2);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(values_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(values_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_values), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+for i = 1:1:numel(all_values)
+    assert(any(ismember(all_permuted_values, all_values(i))), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
+
+%% Test 3.2: Cell arrays 
+% setup
+values_1 = {'a', 'b', 'c', 'd', 'e', 'z'};
+values_2 = {'f', 'g', 'h', 'i'};
+all_values = [values_1 values_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(values_1, values_2);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(values_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(values_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_values), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+for i = 1:1:numel(all_values)
+    assert(any(ismember(all_permuted_values, all_values(i))), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
+
+%% Test 3.3: Cell arrays 
+% setup
+values_1 = {'a', 'b', 'c', 'd'};
+values_2 = {'f', 'g', 'h', 'i'};
+all_values = [values_1 values_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(values_1, values_2);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(values_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(values_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_values), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+for i = 1:1:numel(all_values)
+    assert(any(ismember(all_permuted_values, all_values(i))), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
+
+%% Test 4: Numeric arrays longitudinal
+% setup
+values_1 = {'a', 'b', 'c', 'd'};
+values_2 = {'f', 'g', 'h', 'i'};
+all_values = [values_1 values_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(values_1, values_2, 1);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(values_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(values_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_values), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+for i = 1:1:numel(all_values)
+    assert(any(ismember(all_permuted_values, all_values(i))), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
+
+%% Test 5 Matrix 
+% setup
+values_1 = [1 2 3; 4 5 6;];
+values_2 = [7 8 9; 10 11 12;];
+all_values = [values_1 values_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(values_1, values_2);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(values_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(values_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_values), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+all_values = reshape(all_values, [1 numel(all_values)]);
+for i = 1:1:numel(all_values)
+    assert(any(ismember(all_permuted_values, all_values(i)), 'all'), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
+
+%% Test 6 Matrix Longitudinal
+% setup
+% setup
+values_1 = [1 2 3; 4 5 6;];
+values_2 = [7 8 9; 10 11 12;];
+all_values = [values_1 values_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(values_1, values_2, 1);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(values_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(values_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(values_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_values), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+all_values = reshape(all_values, [1 numel(all_values)]);
+for i = 1:1:numel(all_values)
+    assert(any(ismember(all_permuted_values, all_values(i)), 'all'), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
+
+%% Test 7 DummyObjects 
+% setup
+for i = 1:1:10
+    dummies_1{i} = DummyObject(['1_' i]); %#ok<SAGROW>
+    dummies_2{i} = DummyObject(['2_' i]); %#ok<SAGROW>    
+end
+
+all_dummies = [dummies_1 dummies_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(dummies_1, dummies_2);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(dummies_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(dummies_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(dummies_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(dummies_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_dummies), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+for i = 1:1:numel(all_dummies)
+    d_names{i} = all_dummies{i}.name; %#ok<SAGROW>
+    p_names{i} = all_permuted_values{i}.name; %#ok<SAGROW>
+end
+
+for i = 1:1:numel(all_dummies)
+    assert(any(ismember(p_names, d_names(i))), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
+
+%% Test 8 DummyObjects 
+% setup
+for i = 1:1:10
+    dummies_1{i} = DummyObject(['1_' i]); 
+    dummies_2{i} = DummyObject(['2_' i]);    
+end
+
+all_dummies = [dummies_1 dummies_2];
+
+% act
+[permuted_values_1, permuted_values_2] = permutation(dummies_1, dummies_2, 1);
+all_permuted_values = [permuted_values_1 permuted_values_2];
+
+% assert
+assert(isequal(size(dummies_1), size(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(size(dummies_2), size(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(dummies_1), numel(permuted_values_1)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(dummies_2), numel(permuted_values_2)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+assert(isequal(numel(all_dummies), numel(all_permuted_values)), ...
+    ['BRAPH:Analysis:Permutation'], ...
+    ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
+
+for i = 1:1:numel(all_dummies)
+    d_names{i} = all_dummies{i}.name;
+    p_names{i} = all_permuted_values{i}.name; 
+end
+
+for i = 1:1:numel(all_dummies)
+    assert(any(ismember(p_names, d_names(i))), ...
+        ['BRAPH:Analysis:getMeasurementID'], ...
+        ['Permutation.getPermutation() not all elements are present'])
+end
 
 % %% Test 1 Static Method Non Longitudinal
 % values_1 = ['a' 'b' 'c'];
 % values_2 = ['d' 'e' 'f'];
 % values = [values_1 values_2];
-% 
+%
 % [permutation_1, permutation_2] = permutation(values_1, values_2);
 % permutated_values = [permutation_1  permutation_2];
-% 
+%
 % assert(~isempty(permutation_1), ...
 %     ['BRAPH:AnalysisDTI:Permutation'], ...
 %     ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
-% 
+%
 % assert(~isempty(permutation_2), ...
 %     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
 %     ['Permutation.getPermutation() not working'])
-% 
+%
 % assert(~isequal(permutation_1, permutation_2), ...
 %     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
 %     ['Permutation.getPermutation() output repeats'])
-% 
+%
 % assert(isequal(numel(permutation_1), numel(permutation_2)), ...
 %     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
 %     ['Permutation.getPermutation() size of output is different'])
-% 
+%
 % assert(isequal(numel(permutation_1), numel(values_1)), ...
 %     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
 %     ['Permutation.getPermutation() size of output is not correct'])
-% 
+%
 % assert(isequal(numel(values), numel(permutated_values)), ...
 %     ['BRAPH:AnalysisDTI:getMeasurementID'], ...
 %     ['Permutation.getPermutation() size of all output is not correct'])
-% 
+%
 % for i = 1:1:numel(values)
 %     assert(any(ismember(permutated_values, values(i))), ...
 %         ['BRAPH:AnalysisDTI:getMeasurementID'], ...
 %         ['Permutation.getPermutation() not all elements are present'])
 % end
-% 
+%
 % %% Test 2 Longitudinal
 % group_1 = ['a' 'b' 'c' 'd' 'e' 'f'];
 % group_2 = ['s' 't' 'u' 'v' 'w' 'x'];
-% 
+%
 % [permutation_1, permutation_2] = permutation(group_1, group_2, 1);
-% 
+%
 % indexes = zeros(1, numel(group_1));  % get Permutation internal random indexes from group 1
 % for i = 1:1:numel(group_1)
 %     if permutation_1(i) == group_1(i)
@@ -112,7 +515,7 @@ values_2 = [6 7 8 9 10];
 %         indexes(i) = 1;
 %     end
 % end
-% 
+%
 % assert(~isempty(permutation_1) && ~isempty(permutation_2), ...
 %     ['BRAPH:AnalysisDTI:Permutation'], ...
 %     ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
@@ -122,7 +525,7 @@ values_2 = [6 7 8 9 10];
 % assert(isequal(numel(permutation_1), numel(group_1)), ...
 %     ['BRAPH:AnalysisDTI:Permutation'], ...
 %     ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
-% 
+%
 % for i = 1:1:numel(group_2)  % assert group 2 complies with indexes vector
 %     if indexes(i) == 1
 %         assert(~isequal(group_2(i), permutation_2(i)), ...
@@ -134,13 +537,13 @@ values_2 = [6 7 8 9 10];
 %             ['Permutation.getPermutation() not working']) %#ok<*NBRAK>
 %     end
 % end
-% 
+%
 % %% Test 3 Different Objects Permutation
 % type_column = {[1 2 3 4 5], [6 7 8 9 10]};
 % type_cells = {{'a', 'b', 'c', 'd', 'e'}, {'f', 'g', 'h', 'i', 'j'}};
 % type_matrix  = {[ 1 2 3; 4 5 6;], [7 8 9; 10 11 12;]};
 % types  = {'type_column', 'type_cells', 'type_matrix'};
-% 
+%
 % for i=1:1:numel(types)
 %     val1 = eval([types{i} '{1}']);
 %     val2 = eval([types{i} '{2}']);
