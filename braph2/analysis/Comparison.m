@@ -55,31 +55,74 @@ classdef Comparison < handle & matlab.mixin.Copyable
         function str = tostring(c)
             str = [Comparison.getClass(c) ' ' c.getID()];
         end
-    end
-    methods  % Set functions
         function disp(c)
             disp(['<a href="matlab:help ' Comparison.getClass(c) '">' Comparison.getClass(c) '</a>'])
             disp(['id = ' c.getID()])
         end
+    end
+    methods  % Set functions
+        function setID(c, id)
+
+            assert(ischar(id), ...
+                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
+                'ID must be a string.')
+
+            c.id = id;
+        end
+        function setLabel(c, label)
+
+            assert(ischar(label), ...
+                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
+                'Label must be a string.')
+
+            c.label = label;
+        end        
+        function setNotes(c, notes)
+
+            assert(ischar(notes), ...
+                [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
+                'Notes must be a string.')
+
+            c.notes = notes;
+        end        
         function setBrainAtlases(c, atlases)
             c.atlases = atlases;
         end
-        function atlases = getBrainAtlases(c)
-            atlases = c.atlases;
-        end
         function setGroups(c, groups)
             c.groups = groups;
-        end
-        function groups = getGroups(c)
-            groups = c.groups;
         end
     end
     methods  % Get functions
         function id = getID(c)
             id = c.id;
         end
+        function label = getLabel(c)
+
+            label = c.label;
+        end
+        function notes = getNotes(c)
+
+            notes = c.notes;
+        end
+        function atlases = getBrainAtlases(c)
+            atlases = c.atlases;
+        end
+        function measure_code = getMeasureCode(c)
+            measure_code = c.measure_code;
+        end
+        function groups = getGroups(c)
+            groups = c.groups;
+        end
+        function res = getSettings(c, setting_code)
+
+            if nargin<2
+                res = c.settings;
+            else
+                res = get_from_varargin([], setting_code, c.settings{:});
+            end
+        end
     end
-    methods (Static)
+    methods (Static)  % Descriptive functions
         function comparison_list = getList()
             comparison_list = subclasses('Comparison');
         end
@@ -108,8 +151,12 @@ classdef Comparison < handle & matlab.mixin.Copyable
             % comparison subject class
             subject_class = eval([Comparison.getClass(c) '.getSubjectClass()']);
         end
-        function sub = getComparison(comparisonClass, id, atlases, groups, varargin) %#ok<*INUSD>
-            sub = eval([comparisonClass '(id, atlases, groups, varargin{:})']);
+        function available_settings = getAvailableSettings(c)
+
+            available_settings = eval([Measurement.getClass(c) '.getAvailableSettings()']);
+        end
+        function sub = getComparison(comparison_class, id, label, notes, atlases, measure_code, groups, varargin) %#ok<*INUSD>
+            sub = eval([comparison_class '(id, label, notes, atlases, measure_code, groups, varargin{:})']);
         end
     end
     methods (Access = protected)  % Shallow copy
