@@ -133,7 +133,7 @@ classdef DummyGraph < Graph
         function gr = randomize(g, varargin)
             
             A = g.getA(); % get A, which is left unchanged
-            ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
+            gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
 end
