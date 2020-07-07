@@ -334,8 +334,8 @@ classdef ComparisonDTI < Comparison
                 'ComparisonDTI.PermutationNumber', BRAPH2.NUMERIC, 1000, {};
                 };
         end
-        function sub = getComparison(comparisonClass, id, label, notes, atlas, group_1, group_2, varargin) %#ok<INUSD>
-            sub = eval([comparisonClass '(id, label, notes, atlas, group_1, group_2, varargin{:})']);
+        function sub = getComparison(comparisonClass, id, label, notes, atlas, measure_code, group_1, group_2, varargin) %#ok<INUSD>
+            sub = eval([comparisonClass '(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:})']);
         end
     end
 end
