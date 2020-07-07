@@ -21,7 +21,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
             assert(ischar(measure_code), ...
                 [BRAPH2.STR ':' class(c) ':' BRAPH2.WRONG_INPUT], ...
                 'The measure code must be a string.')
-            m.measure_code = measure_code;
+            c.measure_code = measure_code;
 
             c.setGroups(group_1, group_2)
 
@@ -162,8 +162,8 @@ classdef Comparison < handle & matlab.mixin.Copyable
 
             available_settings = eval([Measurement.getClass(c) '.getAvailableSettings()']);
         end
-        function sub = getComparison(comparison_class, id, label, notes, atlases, measure_code, groups, varargin) %#ok<*INUSD>
-            sub = eval([comparison_class '(id, label, notes, atlases, measure_code, groups, varargin{:})']);
+        function sub = getComparison(comparison_class, id, label, notes, atlases, measure_code, group_1, group_2, varargin) %#ok<*INUSD>
+            sub = eval([comparison_class '(id, label, notes, atlases, measure_code, group_1, group_2, varargin{:})']);
         end
     end
     methods (Access = protected)  % Shallow copy
