@@ -1,6 +1,12 @@
 function [permutation_1, permutation_2] = permutation(values_1, values_2, is_longitudinal)
-% It permutes the objects in values_1 and values_2 regardless of what they
-% are.
+% PERMUTATION Permutes elements between arrays
+%
+% [PERMUTATION_1, PERMUTATION_2] = PERMUTATION(VALUES_1, VALUES_2) It
+% permutes the elements in numerical arrays or cell arrays VALUES_1 and VALUES_2.
+%
+% [PERMUTATION_1, PERMUTATION_2] = PERMUTATION(VALUES_1, VALUES_2, IS_LONGITUDINAL) 
+% It longitudinally permutes the elements between VALUES_1 and VALUES_2.
+% The dimension of VALUES_1 and VALUES_2 must be the same. 
 
 if nargin < 3
     is_longitudinal = false;
@@ -28,8 +34,8 @@ else
     index_permutation_2 = index_permutation_2(index_permutation_2 > 0);
 
     values = [values_1 values_2];
-    permutation_1 = values(index_permutation_1);
-    permutation_2 = values(index_permutation_2);
+    permutation_1 = reshape(values(index_permutation_1), size(values_1));
+    permutation_2 = reshape(values(index_permutation_2), size(values_2));
 end
 
 end
