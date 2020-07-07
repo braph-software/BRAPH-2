@@ -217,7 +217,7 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             % The randomization it is done layer by layer and then
             % integrated in the 2-D supra-adjacency matrix cell array.
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'PropertyRule1', 'Value1', ...) 
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'NUMBEROFWEIGHTS', 'NUMERICVALUE') 
             % returns the randomized graph RANDOMIZED_GRAPH and the strength
             % correlation coefficients from the graph G and the randomized.
             % The randomization is performed with the specified number of
