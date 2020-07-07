@@ -1,7 +1,20 @@
 function [permutation_1, permutation_2] = permutation(values_1, values_2, is_longitudinal)
+% PERMUTATION Permutes elements between two objects
+%
+% [PERMUTATION_1, PERMUTATION_2] = PERMUTATION(VALUES_1, VALUES_2) It
+% permutes the elements in VALUES_1 and VALUES_2 regardles of the type of
+% object.
+%
+% [PERMUTATION_1, PERMUTATION_2] = PERMUTATION(VALUES_1, VALUES_2, IS_LONGITUDINAL) 
+% It longitudinal permutes the elements between VALUES_1 and VALUES_2
+% regardles of the type of object. The dimension of VALUES_1 and VALUES_2
+% must be the same.
+%
+% See also Correlation
+
+
 % It permutes the objects in values_1 and values_2 regardless of what they
 % are.
-
 if nargin < 3
     is_longitudinal = false;
 end
