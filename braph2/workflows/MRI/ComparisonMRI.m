@@ -41,16 +41,15 @@ classdef ComparisonMRI < Comparison
             confidence_interval_max = c.confidence_interval_max;
         end
     end
-    methods (Access=protected)
+    methods (Access=protected)  % Initialize data
         function initialize_data(c, varargin)
             atlases = c.getBrainAtlases();
             atlas = atlases{1};       
             
-            c.measure_code = get_from_varargin('Degree', ...
-                'ComparisonMRI.measure_code', ...
-                varargin{:});
+            c.measure_code = getMeasureCode();
+            
             number_of_permutations = get_from_varargin(1, ...
-                'ComparisonMRI.number_of_permutations', ...
+                'ComparisonMRI.PermutationNumber', ...
                 varargin{:});
             
             if Measure.is_global(c.getMeasureCode())  % global measure
@@ -245,25 +244,29 @@ classdef ComparisonMRI < Comparison
             end
         end
     end
-    methods (Static)
-        function measurement_class = getClass(c) %#ok<*INUSD>
-            measurement_class = 'ComparisonMRI';
+    methods (Static)  % Descriptive functions
+        function class = getClass()
+            class = 'ComparisonMRI';
         end
-        function name = getName(c)
+        function name = getName()
             name = 'Comparison MRI';
         end
-        function description = getDescription(c)
-            % comparison description missing
-            description = '';
+        function description = getDescription()
+            description = 'MRI comparison.';
         end
-        function analysis_class = getAnalysisClass(c)
+        function atlas_number = getBrainAtlasNumber()
+            atlas_number =  1;
+        end
+        function analysis_class = getAnalysisClass()
             analysis_class = 'AnalysisMRI';
         end
-        function subject_class = getSubjectClass(c)
+        function subject_class = getSubjectClass()
             subject_class = 'SubjectMRI';
         end
-        function atlas_number = getBrainAtlasNumber(c)
-            atlas_number =  1;
+        function available_settings = getAvailableSettings()
+            available_settings = {
+                'ComparisonMRI.PermutationNumber', BRAPH2.NUMERIC, 1000, {};
+                };
         end
         function sub = getComparison(comparisonClass, id, atlas, groups, varargin)
             sub = eval([comparisonClass '(id, atlas, groups, varargin{:})']);
