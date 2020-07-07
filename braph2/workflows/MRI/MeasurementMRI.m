@@ -22,7 +22,7 @@ classdef MeasurementMRI < Measurement
             value = m.value;
         end
     end
-    methods (Access=protected)
+    methods (Access=protected)  % Initialize data
         function initialize_data(m, varargin)
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
@@ -62,7 +62,7 @@ classdef MeasurementMRI < Measurement
             end
         end
     end
-    methods (Static)
+    methods (Static)  % Descriptive functions
         function class = getClass()
             class = 'MeasurementMRI';
         end
@@ -76,18 +76,16 @@ classdef MeasurementMRI < Measurement
             atlas_number =  1;
         end
         function analysis_class = getAnalysisClass()
-            % measurement analysis class
             analysis_class = 'AnalysisMRI';
         end
         function subject_class = getSubjectClass()
-            % measurement subject class
             subject_class = 'SubjectMRI';
         end        
         function available_settings = getAvailableSettings()
             available_settings = {};
         end
         function m = getMeasurement(measurement_class, id, label, notes, atlas, measure_code, group, varargin) %#ok<INUSD>
-            m = eval([measurement_class '(id, atlas, label, notes, measure_code, group, varargin{:})']);
+            m = eval([measurement_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
         end
     end
 end 

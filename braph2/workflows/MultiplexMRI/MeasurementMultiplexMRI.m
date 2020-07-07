@@ -97,7 +97,7 @@ classdef MeasurementMultiplexMRI < Measurement
             available_settings = {};
         end
         function m = getMeasurement(measurement_class, id, label, notes, atlas, measure_code, group, varargin) %#ok<INUSD>
-            m = eval([measurement_class '(id, atlas, label, notes, measure_code, group, varargin{:})']);
+            m = eval([measurement_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
         end
     end
 end
