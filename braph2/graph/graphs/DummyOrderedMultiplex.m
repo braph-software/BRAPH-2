@@ -225,7 +225,7 @@ classdef DummyOrderedMultiplex < Graph
             end       
         end
     end
-    methods
+    methods (Static)
         function gr = randomize(g, varargin)
                      
             A = g.getA(); % get A, which is left unchanged
