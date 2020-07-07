@@ -139,6 +139,9 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   nodeattack                  - removes given nodes from a graph
     %   edgeattack                  - removes given edges from a graph
     %
+    % Graph randomization methods (static):
+    %   randomize                   - randomize graph
+    %
     % See also Measure, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
 
 	properties (Constant)
@@ -1232,8 +1235,8 @@ classdef Graph < handle & matlab.mixin.Copyable
             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
-    methods (Abstract)  % Randomize function
-        randomize(g);
+    methods (Static, Abstract)  % Randomize function
+        gr = randomize(g, varargin);
     end
 %     methods (Access=protected)
 %         function g_copy = copyElement(g)
