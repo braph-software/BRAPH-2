@@ -1243,27 +1243,22 @@ classdef Graph < handle & matlab.mixin.Copyable
             % specified nodes are removed from each layer.
             
             A = g.getA();
-                 
+            L = g.layernumber();
+            
+            if ~iscell(nodes)
+                nodes = repmat({nodes}, 1, L);
+            end
+            
             switch Graph.getGraphType(g)
                 case Graph.GRAPH
-                    A = A(nodes, nodes);
+                    A = A(nodes{1}, nodes{1});
                     
                 otherwise  % multigraph, multiplex and multilayer
-                    L = g.layernumber();
-                    n = cell(L, 1);
-                    if iscell(nodes) 
-                        n = nodes;
-                    else
-                        for i=1:L
-                            n(i, :) = {nodes};
-                        end
-                    end
-
                     for li = 1:1:L
                         for lj = 1:1:L
                             Aij = A{li, lj};
-                            if isempty(Aij)==0
-                                A(li, lj) = {Aij(n{li}, n{lj})};
+                            if ~isempty(Aij)
+                                A(li, lj) = {Aij(nodes{li}, nodes{lj})};
                             end
                         end
                     end
