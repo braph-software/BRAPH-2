@@ -9,18 +9,18 @@ classdef ComparisonMRI < Comparison
         confidence_interval_min  % min value of the 95% confidence interval
         confidence_interval_max  % max value of the 95% confidence interval
     end
-    methods
-        function c =  ComparisonMRI(id, label, notes, atlas, measure_code, groups, varargin)
+    methods  % Constructor
+        function c =  ComparisonMRI(id, label, notes, atlas, measure_code, group_1, group_2, varargin)
 
 % TODO: Add assert that the measure_code is in the measure list.
 
-            c = c@Comparison(id, label, notes, atlas, measure_code, groups, varargin{:});
+            c = c@Comparison(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:});
         end
-        function measure_code = getMeasureCode(c)
-            measure_code = c.measure_code;
-        end
-        function values = getGroupValue(c, group_index) %#ok<INUSL>
-            values = eval(['c.value_' tostring(group_index)]);
+    end
+    methods  % Get functions
+        function [values_1, values_2] = getGroupValues(c)
+            values_1 = c.values_1;
+            values_2 = c.values_2;
         end
         function difference = getDifference(c)
             difference = c.difference;
