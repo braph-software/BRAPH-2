@@ -45,7 +45,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             end
             m.settings = settings;  % initialize the property settings
 
-            m.initialize_data(atlases, group, varargin{:});
+            m.initialize_data(varargin{:});
         end
     end
     methods (Abstract, Access = protected)  % Abstract function
