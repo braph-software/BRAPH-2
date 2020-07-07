@@ -1,8 +1,5 @@
 classdef SubjectDTI < Subject
     % SubjectDTI A subject of type DTI
-    % SubjectDTI represents a subject of type DTI
-    % It is a subclass of Subject
-    %
     % SubjectDTI represents a subject of type DTI.
     % It is a subclass of Subject. It implements the methods initialize_datadict
     % and update_brainatlases.

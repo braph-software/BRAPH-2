@@ -1,8 +1,5 @@
 classdef SubjectfMRI < Subject
     % SubjectfMRI A subject of type fMRI
-    % SubjectfMRI represents a subject of type fMRI
-    % It is a subclass of Subject
-    %
     % SubjectfMRI represents a subject of type fMRI.
     % It is a subclass of Subject. It implements the methods initialize_datadict
     % and update_brainatlases.
