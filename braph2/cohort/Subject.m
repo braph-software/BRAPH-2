@@ -3,12 +3,11 @@ classdef Subject < handle & matlab.mixin.Copyable
     % Subject provides the methods necessary for all subjects
     % It is a subclass of handle & matlab.mixin.Copyable
     %
-    % Subject provides the methods necessary to manage all subjects.
-    % Instances of the class cannot be created.
-    % Use one of the subclasses (e.g., SubjectMRI, SubjectfMRI, SubjectDTI, 
-    % SubjectMultiplexMRI). The subclasses must be created inside the
-    % folder containing the respective workflow (e.g., ./braph/workflows/MRI/,
-    % ./braph/workflows/fMRI/, ./braph/workflows/DTI/).
+    % Instances of the class cannot be created. Use one of the subclasses
+    % (e.g., SubjectMRI, SubjectfMRI, SubjectDTI). The subclasses must be
+    % created inside the folder containing the respective workflow (e.g.,
+    % ./braph/workflows/MRI/, ./braph/workflows/fMRI/,
+    % ./braph/workflows/DTI/).
     %
     % Subject methods (Access = protected):
     %   Subject                 - Constructor
@@ -18,8 +17,8 @@ classdef Subject < handle & matlab.mixin.Copyable
     %   disp                    - displays the subject
     %
     % Subject methods (Abstract, Access=protected)
-    %   initialize_datadict     - initializes the data dictionary DATADICT
-    %   update_brainatlases     - updates the brain atlases in DATADICT
+    %   initialize_datadict     - initializes the data dictionary
+    %   update_brainatlases     - updates the brain atlases
     %
     % Subject set methods:
     %   setID                   - sets the ID
@@ -64,7 +63,7 @@ classdef Subject < handle & matlab.mixin.Copyable
         atlases % cell array with brain atlases
         datadict  % dictionary with subject data
     end
-    methods (Access=protected)
+    methods (Access=protected)  % Constructor
         function sub = Subject(id, label, notes, atlases, varargin)
             % SUBJECT creates a subject
             %
@@ -74,10 +73,10 @@ classdef Subject < handle & matlab.mixin.Copyable
             %
             % SUBJECT(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...)
             % creates a subject with subject ID, LABEL NOTES and ATLASES.
-            % Subject will be initialized by the rules passed in the
+            % Subject will be initialized with the settings passed in the
             % VARARGIN.
             % 
-            % See also Group, Cohort, SubjectMRI, SubjectfMRI, SubjectDTI
+            % See also Group, Cohort, SubjectMRI, SubjectfMRI, SubjectDTI.
             
             assert(iscell(atlases) && all(cellfun(@(atlas) isa(atlas, 'BrainAtlas'), atlases)), ...
                 [BRAPH2.STR ':' class(sub) ':' BRAPH2.WRONG_INPUT], ...
@@ -417,7 +416,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             end
         end
     end
-    methods (Static)  % Save/load functions
+    methods (Abstract, Static)  % Save/load functions
         cohort = load_from_xls(subject_class, atlases, varargin)
         save_to_xls(cohort, varargin)
         cohort = load_from_txt(subject_class, atlases, varargin)
