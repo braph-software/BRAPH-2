@@ -16,11 +16,7 @@ cohort_group2 = SubjectMultiplexMRI.load_from_xls('SubjectMultiplexMRI', atlas, 
 
 
 % Init Cohort 
-% group11 = Group('SubjectMultiplexMRI', 'GroupName1', 'TestGroup1', 'notes1', {});
-% group22 = Group('SubjectMultiplexMRI', 'GroupName2', 'TestGroup2', 'notes2', {});
 cohort = Cohort('Cohort Multiplex MRI', 'Cohort Label', 'Cohort notes' , 'SubjectMultiplexMRI', atlas, {});
-% cohort.getGroups().add(group11.getID(), group11);
-% cohort.getGroups().add(group22.getID(), group22);
 
 % Integrating both cohort groups to Cohort
 for i = 1:1:cohort_group1.getSubjects().length()
@@ -43,6 +39,6 @@ group = groups{1}
 group = groups{2}
 
 %% Create Analysis
-analysis = AnalysisMultiplexMRI('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
-
-analysis.getSettings()
+% analysis = AnalysisMultiplexMRI('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
+% 
+% analysis.getSettings()
