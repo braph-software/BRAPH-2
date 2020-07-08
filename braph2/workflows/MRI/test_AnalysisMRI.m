@@ -132,9 +132,9 @@ end
 %     measure = measures{i};
 %     analysis = AnalysisMRI(cohort, {}, {}, {});
 %     number_of_permutations = 10;
-%     calculate_comparison = analysis.calculateRandomComparison(measure, group1, 'NumerOfPermutations', number_of_permutations);
+%     calculated_comparison = analysis.calculateRandomComparison(measure, group1, 'NumerOfPermutations', number_of_permutations);
 %     
-%     assert(~isempty(calculate_comparison), ...
+%     assert(~isempty(calculated_comparison), ...
 %         [BRAPH2.STR ':AnalysisMRI:calculateComparison'], ...
 %         ['AnalysisMRI.calculateComparison() not working']) %#ok<*NBRAK>
 %     
@@ -212,26 +212,27 @@ for i = 1:1:numel(measures)
     analysis = AnalysisMRI('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
 
     number_of_permutations = 10;
-%     calculate_comparison = analysis.getComparison(measure, group1, group2, 'ComparisonMRI.PermutationNumer', number_of_permutations);
+    calculated_comparison = analysis.getComparison(measure, group1, group2, 'PermutationNumber', number_of_permutations);
     
-%     assert(~isempty(calculate_comparison), ...
-%         [BRAPH2.STR ':AnalysisMRI:calculateComparison'], ...
-%         ['AnalysisMRI.calculateComparison() not working']) %#ok<*NBRAK>
-%     
-%     assert(analysis.getComparisons().length() == 1, ...
-%         [BRAPH2.STR ':AnalysisMRI:calculateComparison'], ...
-%         ['AnalysisMRI.calculateComparison() not working'])
-%     
-%     comparison = analysis.getComparisons().getValue(1);
-%     comparison_values_1 = comparison.getGroupValue(1);
-%     comparison_values_2 = comparison.getGroupValue(2);
-%     comparison_difference = comparison.getDifference();
-%     comparison_all_differences = comparison.getAllDifferences();
-%     comparison_p1 = comparison.getP1();
-%     comparison_p2 = comparison.getP2();
-%     comparison_confidence_interval_min = comparison.getConfidenceIntervalMin();
-%     comparison_confidence_interval_max = comparison.getConfidenceIntervalMax();
-%     
+    assert(~isempty(calculated_comparison), ...
+        [BRAPH2.STR ':AnalysisMRI:' BRAPH2.BUG_FUNC], ...
+        ['AnalysisMRI.calculateComparison() not working']) %#ok<*NBRAK>
+    
+    assert(analysis.getComparisons().length() == 1, ...
+        [BRAPH2.STR ':AnalysisMRI:' BRAPH2.BUG_FUNC], ...
+        ['AnalysisMRI.calculateComparison() not working'])
+    
+    comparison = analysis.getComparisons().getValue(1);
+    comparison_values_1 = comparison.getGroupValue(1);
+    comparison_values_2 = comparison.getGroupValue(2);
+    comparison_difference = comparison.getDifference();
+    comparison_all_differences = comparison.getAllDifferences();
+    comparison_p1 = comparison.getP1();
+    comparison_p2 = comparison.getP2();
+    comparison_confidence_interval_min = comparison.getConfidenceIntervalMin();
+    comparison_confidence_interval_max = comparison.getConfidenceIntervalMax();
+    
+% TODO: Emiliano: Adapt this code to the new version of AnalysisMRI and ComparisonMRI
 %     if Measure.is_global(measures{i})
 %         assert(iscell(comparison_values_1) & ...
 %             isequal(numel(comparison_values_1), 1) & ...
