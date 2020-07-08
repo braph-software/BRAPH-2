@@ -232,7 +232,6 @@ for i = 1:1:numel(measures)
     comparison_confidence_interval_min = comparison.getConfidenceIntervalMin();
     comparison_confidence_interval_max = comparison.getConfidenceIntervalMax();
     
-% TODO: Emiliano: Adapt this code to the new version of AnalysisMRI and ComparisonMRI
     if Measure.is_global(measures{i})
         assert(iscell(comparison_values_1) & ...
             isequal(numel(comparison_values_1), 1) & ...
