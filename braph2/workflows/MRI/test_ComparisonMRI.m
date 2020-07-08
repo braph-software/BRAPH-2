@@ -102,30 +102,25 @@ end
 
 % Test 3: Initialize with values
 for i = 1:1:numel(measures)
-%     setup
+    % setup
     number_of_permutations = 10;
     
-    A_1 = rand(atlas.getBrainRegions().length());
-    A_2 = rand(atlas.getBrainRegions().length());
-    g_1 = Graph.getGraph('GraphWU', A_1);
-    g_2 = Graph.getGraph('GraphWU', A_2);
-    m_1  = Measure.getMeasure(measures{i}, g_1);
-    m_2 = Measure.getMeasure(measures{i}, g_2);
-    value_1 = m_1.getValue(); %#ok<*SAGROW>
-    value_2 = m_2.getValue();
+    A = rand(atlas.getBrainRegions().length());
+    g = Graph.getGraph('GraphWU', A);
+    m  = Measure.getMeasure(measures{i}, g);
+    value = m.getValue();
     
-%     for the dimensions 
-    difference  = value_2{1} - value_1{1};
-    
-    for j = 1:1:number_of_permutations
-        all_differences{j} =  value_2{1} - value_1{1};  % similar
-    end
+    % the values are not realistic, just the right format
+    value_1 = value;
+    value_2 = value;
+    difference = value;
+    all_differences = repmat(value, 1, number_of_permutations)
     p1 = difference;  % all similar
     p2 = difference;
     confidence_interval_min = difference;
     confidence_interval_max = difference;
     
-%     act
+    % act
     comparison = ComparisonMRI('c1', ...
         'comparison label', ...
         'comparison notes', ...
