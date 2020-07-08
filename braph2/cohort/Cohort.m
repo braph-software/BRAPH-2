@@ -9,7 +9,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
     % Cohort basic functions methods:
     %   Cohort                  - Constructor
     %   tostring                - returns a string representing the Cohort
-    %   disp                    - disp the cohort
+    %   disp                    - displays the cohort
     %
     % Cohort set functions methods:
     %   setID                   - sets the ID
@@ -23,7 +23,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
     %   getSubjectClass         - returns the general class of subjects
     %   getBrainAtlases         - returns an array with brain atlases
     %   getSubjects             - returns the indexed dictionary with Subjects
-    %   getNewSubjects          - returns a new subject
+    %   getNewSubject          - returns a new subject
     %
     % Cohort get group functions methods:
     %   getGroups               - returns the indexed dictionary with groups
@@ -160,7 +160,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % TOSTRING string with information about the cohort
             %
             % STR = TOSTRING(COHORT) returns string with the cohort subject
-            % class, subjects indexed dictionary length and groups indexed
+            % class, the subjects indexed dictionary length and the groups indexed
             % dictionary length
             %
             % See also disp().
@@ -224,7 +224,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
     end
     methods  % Get functions
         function id = getID(cohort)
-            % GETID returns the id of the cohort.
+            % GETID returns the id of the cohort
             %
             % ID = GETID(COHORT) returns the id of the cohort.
             %
@@ -233,7 +233,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             id = cohort.id;
         end
         function label = getLabel(cohort)
-            % GETLABEL returns the label of the cohort.
+            % GETLABEL returns the label of the cohort
             %
             % LABEL = GETLABEL(COHORT) returns the label of the cohort.
             %
@@ -242,7 +242,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             label = cohort.label;
         end
         function notes = getNotes(cohort)
-            % GETNOTES returns the notes of the cohort.
+            % GETNOTES returns the notes of the cohort
             %
             % NOTES = GETNOTES(SUBJECT) returns the notes of the cohort.
             %
@@ -251,7 +251,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             notes = cohort.notes;
         end        
         function subject_class = getSubjectClass(cohort)
-            % GETSUBJECTCLASS returns the class of subjects in the cohort.
+            % GETSUBJECTCLASS returns the class of subjects in the cohort
             %
             % NAME = GETSUBJECTCLASS(COHORT) returns the class of subjects
             % in the cohort.
@@ -261,7 +261,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             subject_class = cohort.subject_class;
         end
         function atlases = getBrainAtlases(cohort)
-            % GETBRAINATLASES returns the brain atlases.
+            % GETBRAINATLASES returns the brain atlases
             %
             % ATLASES = GETBRAINATLASES(COHORT) returns the brain atlases
             % from the cohort.
@@ -324,7 +324,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
         end
         function addSubjectToGroup(cohort, subject, group)
-            % ADDSUBJECTTOGROUP inserts a subject to a specified group.
+            % ADDSUBJECTTOGROUP inserts a subject to a specified group
             %
             % ADDSUBJECTTOGROUP(COHORT, SUBJECT, GROUP) inserts a SUBJECT
             % to a specified GROUP.
@@ -344,7 +344,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             end
         end
         function addSubjectsToGroup(cohort, subject_indexes, group)
-            % ADDSUBJECTSTOGROUP inserts subjects to a specified group.
+            % ADDSUBJECTSTOGROUP inserts subjects to a specified group
             %
             % ADDSUBJECTSTOGROUP(COHORT, SUBJECT_INDEXES, GROUP) inserts
             % subjects with SUBJECT_INDEX to a specified GROUP.
@@ -356,10 +356,10 @@ classdef Cohort < handle & matlab.mixin.Copyable
             end
         end
         function removeSubjectFromGroup(cohort, subject, group)
-            % REMOVESUBJECTFROMGROUP removes a subject from a specified group.
+            % REMOVESUBJECTFROMGROUP removes a subject from a specified group
             %
             % REMOVESUBJECTFROMGROUP(COHORT, SUBJECT, GROUP) removes a
-            % SUBJECT to a specified GROUP.
+            % SUBJECT from a specified GROUP.
             %
             % See also getGroupSubjects, addSubjectToGroup
             
@@ -377,7 +377,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
         end
         function removeSubjectsFromGroup(cohort, subject_indexes, group)
-            % REMOVESUBJECTSFROMGROUP removes subjects from a specified group.
+            % REMOVESUBJECTSFROMGROUP removes subjects from a specified group
             %
             % REMOVESUBJECTSFROMGROUP(COHORT, SUBJECT_INDEXES, GROUP)
             % removes subjects with SUBJECT_INDEXES from a specified GROUP.
