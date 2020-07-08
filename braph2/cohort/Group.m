@@ -30,8 +30,8 @@ classdef Group < handle & matlab.mixin.Copyable
     %   contains_subject        - checks if the group contains the subject
     %   addSubject              - adds the subject to the group
     %   addSubjects             - adds the subjects to the group
-    %   removeSubject           - remove the subject from the group
-    %   removeSubjects          - remoes the subjects from the group
+    %   removeSubject           - removes the subject from the group
+    %   removeSubjects          - removes the subjects from the group
     %
     % See also Data, Subject, Group.
 
@@ -74,7 +74,7 @@ classdef Group < handle & matlab.mixin.Copyable
         function str = tostring(group)
             % TOSTRING string with information about the group
             %
-            % STR = TOSTRING(SUBJECT) returns string with the group ID,
+            % STR = TOSTRING(SUBJECT) returns a string with the group ID,
             % number of subjects and class of the subjects.
             %
             % See also disp.
@@ -133,7 +133,7 @@ classdef Group < handle & matlab.mixin.Copyable
     end
     methods  % Get functions
         function id = getID(group)
-            % GETID returns the id of the group.
+            % GETID returns the id of the group
             %
             % ID = GETID(GROUP) returns the id of the group.
             %
@@ -142,7 +142,7 @@ classdef Group < handle & matlab.mixin.Copyable
             id = group.id;
         end
         function label = getLabel(group)
-            % GETLABEL returns the label of the group.
+            % GETLABEL returns the label of the group
             %
             % LABEL = GETLABEL(GROUP) returns the label of the group.
             %
@@ -151,7 +151,7 @@ classdef Group < handle & matlab.mixin.Copyable
             label = group.label;
         end
         function notes = getNotes(group)
-            % GETNOTES returns the notes of the group.
+            % GETNOTES returns the notes of the group
             %
             % NOTES = GETNOTES(GROUP) returns the notes of the group.
             %
