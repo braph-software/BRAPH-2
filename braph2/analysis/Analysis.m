@@ -6,7 +6,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         cohort  % cohort
         measurement_idict  % indexed dictionary with measurements
 %         randomcomparison_idict  % indexed dictionary with random comparison
-%         comparison_idict  % indexed dictionary with comparison
+        comparison_idict  % indexed dictionary with comparison
         settings  % settings structure for analysis
     end
     methods (Access = protected)  % Constructor
@@ -45,17 +45,17 @@ classdef Analysis < handle & matlab.mixin.Copyable
 %                 analysis.randomcomparison_idict.add(randomcomparison.getID(), randomcomparison);
 %             end
             
-%             analysis.comparison_idict = IndexedDictionary(analysis.getComparisonClass());
-%             assert(iscell(comparisons), ...
-%                 [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
-%                 ['The fourth input must be a cell array of Comparison objects of class ' analysis.getComparisonClass()])
-%             for i = 1:1:length(comparisons)
-%                 comparison = comparisons{i};
-%                 assert(isequal(comparison.getClass(), analysis.getComparisonClass()), ...
-%                     [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
-%                     ['The fourth input must be a cell array of Comparison objects of class ' analysis.getComparisonClass()])
-%                 analysis.comparison_idict.add(comparison.getID(), comparison);
-%             end
+            analysis.comparison_idict = IndexedDictionary(analysis.getComparisonClass());
+            assert(iscell(comparisons), ...
+                [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
+                ['The fourth input must be a cell array of Comparison objects of class ' analysis.getComparisonClass()])
+            for i = 1:1:length(comparisons)
+                comparison = comparisons{i};
+                assert(isequal(comparison.getClass(), analysis.getComparisonClass()), ...
+                    [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
+                    ['The fourth input must be a cell array of Comparison objects of class ' analysis.getComparisonClass()])
+                analysis.comparison_idict.add(comparison.getID(), comparison);
+            end
             
             available_settings = Analysis.getAvailableSettings(class(analysis));
             settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
@@ -72,12 +72,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
     methods (Abstract)  % ID functions
         getMeasurementID(analysis, measure_code, group, varargin)
 %         getRandomComparisonID(analysis, measure_code, group, varargin)
-%         getComparisonID(analysis, measure_code, groups, varargin)
+        getComparisonID(analysis, measure_code, group_1, group_2, varargin)
     end
     methods (Abstract, Access = protected)  % Calculation functions
         calculate_measurement(analysis, measure_code, group, varargin)
 %         calculate_random_comparison(analysis, measure_code, group, varargin)
-%         calculate_comparison(analysis, measure_code, groups, varargin)
+        calculate_comparison(analysis, measure_code, group_1, group_2, varargin)
     end
     methods  % Set functions
         function setID(analysis, id)
@@ -143,17 +143,17 @@ classdef Analysis < handle & matlab.mixin.Copyable
 %             end
 %             random_comparison = analysis.getRandomComparisons().getValue(id);
 %         end
-%         function comparison_idict = getComparisons(analysis)
-%             comparison_idict = analysis.comparison_idict;
-%         end
-%         function comparison = getComparison(analysis, measure_code, groups, varargin)
-%             id = analysis.getComparisonID(measure_code, groups, varargin{:});
-%             if ~analysis.getComparisons().contains(id)
-%                 comparison = calculate_comparison(analysis, measure_code, groups, varargin{:});
-%                 analysis.getComparisons().add(id, comparison)
-%             end
-%             comparison = analysis.getComparisons().getValue(id);
-%         end
+        function comparison_idict = getComparisons(analysis)
+            comparison_idict = analysis.comparison_idict;
+        end
+        function comparison = getComparison(analysis, measure_code, group_1, group_2, varargin)
+            comparison_id = analysis.getComparisonID(measure_code, group_1, group_2, varargin{:});
+            if ~analysis.getComparisons().contains(comparison_id)
+                comparison = calculate_comparison(analysis, measure_code, group_1, group_2, varargin{:});
+                analysis.getComparisons().add(comparison_id, comparison)
+            end
+            comparison = analysis.getComparisons().getValue(comparison_id);
+        end
         function res = getSettings(analysis, setting_code)
             if nargin<2
                 res = analysis.settings;
@@ -196,15 +196,15 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % cohort class
             subject_class = eval([Analysis.getClass(analysis) '.getSubjectClass()']);
         end
-        function measurmentList = getMeasurementClass(analysis)
-            measurmentList = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
+        function measurment_class = getMeasurementClass(analysis)
+            measurment_class = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
         end
-%         function randomcomparisonList = getRandomComparisonClass(analysis)
-%             randomcomparisonList = eval([Analysis.getClass(analysis) '.getRandomComparisonClass()']);
+%         function randomcomparison_class = getRandomComparisonClass(analysis)
+%             randomcomparison_class = eval([Analysis.getClass(analysis) '.getRandomComparisonClass()']);
 %         end
-%         function comparisonList = getComparisonClass(analysis)
-%             comparisonList = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
-%         end
+        function comparison_class = getComparisonClass(analysis)
+            comparison_class = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
+        end
         function available_settings = getAvailableSettings(analysis)
             available_settings = eval([Analysis.getClass(analysis) '.getAvailableSettings()']);
         end
