@@ -1,7 +1,7 @@
 classdef ComparisonMRI < Comparison
     properties
-        value_1  % array with the value_1 of the measure for each subject of group 1
-        value_2  % array with the value_1 of the measure for each subject of group 1
+        value_1  % value of the measure for group 1
+        value_2  % value of the measure for group 2
         difference  % difference
         all_differences  % all differences obtained through the permutation test
         p1  % p value single tailed
@@ -326,8 +326,8 @@ classdef ComparisonMRI < Comparison
                 'ComparisonMRI.PermutationNumber', BRAPH2.NUMERIC, 1000, {};
                 };
         end
-        function sub = getComparison(comparisonClass, id, label, notes, atlas, group_1, group_2, varargin) %#ok<INUSD>
-            sub = eval([comparisonClass '(id, label, notes, atlas, group_1, group_2, varargin{:})']);
+        function sub = getComparison(comparison_class, id, label, notes, atlas, measure_code, group_1, group_2, varargin)  %#ok<INUSD>
+            sub = eval([comparison_class '(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:})']);
         end
     end
 end
