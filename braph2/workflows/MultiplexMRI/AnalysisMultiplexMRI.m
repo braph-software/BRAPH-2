@@ -210,6 +210,17 @@ classdef AnalysisMultiplexMRI < Analysis
             is_longitudinal = analysis.getSettings('AnalysisMultiplexMRI.Longitudinal');
             M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
 
+            if Measure.is_superglobal(measure_code)
+                rows = 1;
+                columns = 1;
+            elseif Measure.is_unilayer(measure_code)
+                rows = 2;
+                columns = 1;
+            elseif Measure.is_bilayer(measure_code)
+                rows = 2;
+                columns = 2;
+            end
+    
             % Measurements for groups 1 and 2, and their difference
             measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
             value_1 = measurements_1.getMeasureValue();
@@ -242,29 +253,42 @@ classdef AnalysisMultiplexMRI < Analysis
                 measure_permutated_2 = Measure.getMeasure(measure_code, graph_permutated_2, varargin{:});
                 measure_permutated_value_2 = measure_permutated_2.getValue();
                 
-                all_permutations_1(1, i) = measure_permutated_value_1;
-                all_permutations_2(1, i) = measure_permutated_value_2;
+                all_permutations_1{1, i} = measure_permutated_value_1;
+                all_permutations_2{1, i} = measure_permutated_value_2;
                 
                 if interruptible
                     pause(interruptible)
                 end
             end
             
-            difference_all_permutations = cellfun(@(x, y) y - x, all_permutations_1, all_permutations_2, 'UniformOutput', false);
-
-            % Statistical analysis
-% TODO: update with new version of pvalue1 and pvalue2 once available
-% p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
-% p2 = pvalue2(difference_mean, difference_all_permutations);  % double tail
-            p1 = {pvalue1(difference_mean{1}, difference_all_permutations)};  % singe tail,
-            p2 = {pvalue2(difference_mean{1}, difference_all_permutations)};  % double tail
+            difference_all_permutations = cell(rows*columns, M);
+            p1 = cell(rows, columns);
+            p2 =  cell(rows, columns);
+            qtl = cell(rows, columns);
+            ci_lower = cell(rows, columns);
+            ci_upper =  cell(rows, columns);
             
-% TODO: update with new version of quantiles once available (if needed)
-% ci_lower = quantiles(difference_all_permutations, 40, {2, 40});
-            qtl = quantiles(difference_all_permutations, 40);
-            ci_lower = {cellfun(@(x) x(2), qtl)};
-            ci_upper = {cellfun(@(x) x(40), qtl)};
-            
+            for i=1:rows
+                for j=1:columns
+                    difference_all_permutations{i*j} = cellfun(@(x, y) y{i, j} - x{i, j}, all_permutations_1, all_permutations_2, 'UniformOutput', false);
+                    % Statistical analysis
+                    p1{i, j} = {pvalue1(difference_mean{1}, difference_all_permutations{i, j})};  % singe tail,
+                    p2{i, j} = {pvalue2(difference_mean{1}, difference_all_permutations{i, j})};  % double tail
+                    qtl{i, j} = quantiles(difference_all_permutations{i, j}, 40);
+                    ci_lower = {cellfun(@(x) x(2), qtl{i, j})};
+                    ci_upper = {cellfun(@(x) x(40), qtl{i, j})};
+                    
+%                     if size(all_permutations_1{1}, 1) == 2
+%                         difference_all_permutations{2} = cellfun(@(x, y) y{2} - x{2}, all_permutations_1, all_permutations_2, 'UniformOutput', false);
+%                         % Statistical analysis
+%                         p1{2, 1} = {pvalue1(difference_mean{2}, difference_all_permutations{2, 1})};  % singe tail,
+%                         p2{2, 1} = {pvalue2(difference_mean{2}, difference_all_permutations{2, 1})};  % double tail
+%                         qtl{2, 1} = quantiles(difference_all_permutations{2, 1}, 40);
+%                         ci_lower = {cellfun(@(x) x(2), qtl{2, 1})};
+%                         ci_upper = {cellfun(@(x) x(40), qtl{2, 1})};
+%                     end
+                end
+            end
             comparison = Comparison.getComparison('ComparisonMultiplexMRI', ...
                 analysis.getComparisonID(measure_code, group_1, group_2, varargin{:}), ...
                 '', ...  % comparison label
