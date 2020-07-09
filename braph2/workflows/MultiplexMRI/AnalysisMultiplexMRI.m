@@ -36,28 +36,9 @@ classdef AnalysisMultiplexMRI < Analysis
             
             subject_number = numel(subjects);
 
-            data = zeros(subject_number, atlas.getBrainRegions().length());
+            data1 = zeros(subject_number, atlas.getBrainRegions().length());
+            data2 = zeros(subject_number, atlas.getBrainRegions().length());
             for i = 1:1:subject_number
-                subject = subjects{i};
-                data(i, :) = subject.getData('MRI').getValue();  % MRI data
-            end
-            
-            correlation_rule = analysis.getSettings('AnalysisMRI.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisMRI.NegativeWeightRule');
-            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
-            
-            graph_type = AnalysisMRI.getGraphType();
-            g = Graph.getGraph(graph_type, A);
-        end        
-        function measurement = calculate_measurement(analysis, measure_code, group, varargin)
-            atlases = analysis.cohort.getBrainAtlases();
-            atlas = atlases{1};
-
-            subjects = group.getSubjects();
-
-            data1 = zeros(group.subjectnumber(), atlas.getBrainRegions().length());
-            data2 = zeros(group.subjectnumber(), atlas.getBrainRegions().length());
-            for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
                 data1(i, :) = subject.getData('MRI1').getValue();  % MRI data layer 1
                 data2(i, :) = subject.getData('MRI2').getValue();  % MRI data layer 2
@@ -71,8 +52,13 @@ classdef AnalysisMultiplexMRI < Analysis
             A21 = eye(length(A11));
             A = {A11, A12; A21, A22};
             
-            graph_type = AnalysisMultiplexMRI.getGraphType();
-            g = Graph.getGraph(graph_type, A, varargin{:});
+            graph_type = AnalysisMRI.getGraphType();
+            g = Graph.getGraph(graph_type, A);
+        end        
+        function measurement = calculate_measurement(analysis, measure_code, group, varargin)
+            subjects = group.getSubjects();
+
+            g = get_graph_for_subjects(analysis, subjects);
             
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measurement_value = measure.getValue();
