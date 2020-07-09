@@ -52,7 +52,7 @@ classdef AnalysisMultiplexMRI < Analysis
             A21 = eye(length(A11));
             A = {A11, A12; A21, A22};
             
-            graph_type = AnalysisMRI.getGraphType();
+            graph_type = AnalysisMultiplexMRI.getGraphType();
             g = Graph.getGraph(graph_type, A);
         end        
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
