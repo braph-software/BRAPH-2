@@ -19,6 +19,9 @@ classdef DummyGraph < Graph
     %   getCompatibleMeasureList - returns a list with compatible measures
     %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
+    % Graph randomization method (static):
+    %   randomize               - randomize graph
+    % 
     % See also Graph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
     
     methods  % Constructor
@@ -124,6 +127,17 @@ classdef DummyGraph < Graph
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
             
             negativity_type =  Graph.NONNEGATIVE;
+        end
+    end
+    methods (Static)
+        function gr = randomize(g, varargin)
+            % RANDOMIZE returns a the graph unchanged for DummyGraph
+            %    
+            % GR = RANDOMIZE(G) returns a the graph unchanged for
+            % DummyGraph. Utilizes available graph settings.
+                        
+            A = g.getA(); % get A, which is left unchanged
+            gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
     end
 end

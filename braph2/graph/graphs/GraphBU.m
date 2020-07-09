@@ -123,6 +123,18 @@ classdef GraphBU < GraphBD
             
             negativity_type = Graph.NONNEGATIVE;
         end
+        function available_settings = getAvailableSettings(g) %#ok<INUSD>
+            % GETAVAILABLESETTINGS returns the available rules of graph
+            %
+            % GETAVAILABLESETTINGS(G) returns an array with the available
+            % settings for the graph. 
+            %
+            % See also getClass, getName, getDescription, getGraphType.
+            
+            available_settings = { ...
+                 'GraphBU.AttemptsPerEdge', BRAPH2.NUMERIC, 5, {} ...
+                 };
+        end
     end
 %     methods
 %         function g = GraphBU(A, varargin)
@@ -147,80 +159,92 @@ classdef GraphBU < GraphBD
 %             g = g@GraphBD(A, varargin{:});
 %         end
 %     end
-%     methods
-%         function [randomized_graph, swaps] = randomize_graph(g, varargin)
-%              % get rules
-%             attempts_per_edge = get_from_varargin(10, 'AttemptsPerEdge', varargin{:});
-%             
-%             if nargin<2
-%                 attempts_per_edge = 5;
-%             end
-%             
-%             % get A
-%             A = g.getA();
-%             
-%             % remove self connections
-%             A(1:length(A)+1:numel(A)) = 0;
-%             [I_edges, J_edges] = find(triu(A)); % find the edges
-%             E = length(I_edges); % number of edges
-%             
-%             randomized_graph = A;
-%             swaps = 0; % number of successful edge swaps
-%             for attempt=1:1:attempts_per_edge*E
-%                 
-%                 % select two edges
-%                 selected_edges = randperm(E,2);
-%                 node_start_1 = I_edges(selected_edges(1));
-%                 node_end_1 = J_edges(selected_edges(1));
-%                 node_start_2 = I_edges(selected_edges(2));
-%                 node_end_2 = J_edges(selected_edges(2));
-%                 
-%                 if rand(1) > 0.5
-%                     I_edges(selected_edges(2)) = node_end_2;
-%                     J_edges(selected_edges(2)) = node_start_2;
-%                     
-%                     node_start_2 = I_edges(selected_edges(2));
-%                     node_end_2 = J_edges(selected_edges(2));
-%                 end
-%                 
-%                 % Swap edges if:
-%                 % 1) no edge between node_start_1 and node_end_2
-%                 % 2) no edge between node_start_2 and node_end_1
-%                 % 3) node_start_1 ~= node_start_2
-%                 % 4) node_end_1 ~= node_end_2
-%                 % 5) node_start_1 ~= node_end_2
-%                 % 6) node_start_2 ~= node_end_1
-%                 
-%                 if ~randomized_graph(node_start_1, node_end_2) && ...
-%                         ~randomized_graph(node_start_2, node_end_1) && ...
-%                         node_start_1~=node_start_2 && ...
-%                         node_end_1~=node_end_2 && ...
-%                         node_start_1~=node_end_2 && ...
-%                         node_start_2~=node_end_1
-%                     
-%                     % erase old edges
-%                     randomized_graph(node_start_1, node_end_1) = 0;
-%                     randomized_graph(node_end_1, node_start_1) = 0;
-%                     
-%                     randomized_graph(node_start_2, node_end_2) = 0;
-%                     randomized_graph(node_end_2, node_start_2) = 0;
-%                     
-%                     % write new edges
-%                     randomized_graph(node_start_1, node_end_2) = 1;
-%                     randomized_graph(node_end_2, node_start_1) = 1;
-%                     
-%                     randomized_graph(node_start_2, node_end_1) = 1;
-%                     randomized_graph(node_end_1, node_start_2) = 1;
-%                     
-%                     % update edge list
-%                     J_edges(selected_edges(1)) = node_end_2;
-%                     J_edges(selected_edges(2)) = node_end_1;
-%                     
-%                     swaps = swaps+1;
-%                 end
-%             end
-%         end
-%     end
+    methods
+        function [randomized_graph, swaps] = randomize(g, varargin)
+            % RANDOMIZE returns a randomized graph and the number of swaps
+            %
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G) 
+            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
+            % number of edge swaps SWAPS. Utilizes available graph
+            % settings.
+            %
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'GraphBU.AttemptsPerEdge', NUMBER)
+            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
+            % number of edge swaps SWAPS and the specified number of attempts 
+            % per edge NUMBER.
+            
+            % get rules
+            attempts_per_edge = g.getSettings('GraphBU.AttemptsPerEdge');
+            
+            if nargin<2
+                attempts_per_edge = 5;
+            end
+            
+            % get A
+            A = g.getA();
+            
+            % remove self connections
+            A(1:length(A)+1:numel(A)) = 0;
+            [I_edges, J_edges] = find(triu(A)); % find the edges
+            E = length(I_edges); % number of edges
+            
+            randomized_graph = A;
+            swaps = 0; % number of successful edge swaps
+            for attempt=1:1:attempts_per_edge*E
+                
+                % select two edges
+                selected_edges = randperm(E,2);
+                node_start_1 = I_edges(selected_edges(1));
+                node_end_1 = J_edges(selected_edges(1));
+                node_start_2 = I_edges(selected_edges(2));
+                node_end_2 = J_edges(selected_edges(2));
+                
+                if rand(1) > 0.5
+                    I_edges(selected_edges(2)) = node_end_2;
+                    J_edges(selected_edges(2)) = node_start_2;
+                    
+                    node_start_2 = I_edges(selected_edges(2));
+                    node_end_2 = J_edges(selected_edges(2));
+                end
+                
+                % Swap edges if:
+                % 1) no edge between node_start_1 and node_end_2
+                % 2) no edge between node_start_2 and node_end_1
+                % 3) node_start_1 ~= node_start_2
+                % 4) node_end_1 ~= node_end_2
+                % 5) node_start_1 ~= node_end_2
+                % 6) node_start_2 ~= node_end_1
+                
+                if ~randomized_graph(node_start_1, node_end_2) && ...
+                        ~randomized_graph(node_start_2, node_end_1) && ...
+                        node_start_1~=node_start_2 && ...
+                        node_end_1~=node_end_2 && ...
+                        node_start_1~=node_end_2 && ...
+                        node_start_2~=node_end_1
+                    
+                    % erase old edges
+                    randomized_graph(node_start_1, node_end_1) = 0;
+                    randomized_graph(node_end_1, node_start_1) = 0;
+                    
+                    randomized_graph(node_start_2, node_end_2) = 0;
+                    randomized_graph(node_end_2, node_start_2) = 0;
+                    
+                    % write new edges
+                    randomized_graph(node_start_1, node_end_2) = 1;
+                    randomized_graph(node_end_2, node_start_1) = 1;
+                    
+                    randomized_graph(node_start_2, node_end_1) = 1;
+                    randomized_graph(node_end_1, node_start_2) = 1;
+                    
+                    % update edge list
+                    J_edges(selected_edges(1)) = node_end_2;
+                    J_edges(selected_edges(2)) = node_end_1;
+                    
+                    swaps = swaps+1;
+                end
+            end
+        end
+    end
 %     methods (Static)
 %         function list = getCompatibleMeasureList()
 %             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
