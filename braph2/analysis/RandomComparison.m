@@ -16,8 +16,13 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             rc.setNotes(notes)
             
             rc.setBrainAtlases(atlases)
+            
+            assert(ischar(measure_code), ...
+                [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
+                'The measure code must be a string.')
+            rc.measure_code = measure_code;
 
-            rc.setGroups(group_1, group_2)
+            rc.setGroup(group)
             
             varargin = get_from_varargin(varargin, 'RandomComparisonSettings', varargin{:});  % returns varargin if no key 'RandomComparisonSettings'
             available_settings = RandomComparison.getAvailableSettings(class(rc));
@@ -80,7 +85,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                 'The input must be a cell containing BrainAtlas objects')
             rc.atlases = atlases;
         end
-        function setGroups(rc, group)
+        function setGroup(rc, group)
             assert(isa(group, 'Group'), ...
                 [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                 'The input must be a Group object')
