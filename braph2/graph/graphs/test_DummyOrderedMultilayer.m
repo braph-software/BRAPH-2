@@ -153,3 +153,59 @@ eg = g.edgeattack(g, nodes1, nodes2, layernumbers1, layernumbers2);
 assert(isequal(eg.getA(), A_attack), ...
     [BRAPH2.STR ':DummyOrderedMultilayer:' BRAPH2.BUG_ERR], ...
     'Graph.edgeattack() is not working for non single layer graphs')
+
+%% Test 4: Subgraph
+nodes = [2, 3];
+
+A_WD_subgraph = [
+                1   .3  
+                .3  1
+                ];            
+            
+A_BD_subgraph = [
+                1 1
+                0 1
+                ];
+
+A_subgraph = {
+            A_BD_subgraph       diag(ones(2, 1))    {}
+            diag(ones(2, 1))    A_BD_subgraph       A_23(nodes, nodes)
+            {}                  A_32(nodes, nodes)  A_WD_subgraph
+            };
+        
+g = DummyOrderedMultilayer(A);
+sg = g.subgraph(g, nodes);
+
+assert(isequal(sg.getA(), A_subgraph), ...
+    [BRAPH2.STR ':DummyOrderedMultilayer:' BRAPH2.BUG_ERR], ...
+    'Graph.subgraph() is not working for non single layer graphs')
+
+% Different nodes per layer
+nodes = {
+        [2, 3]
+        [2, 3]
+        [3, 4]
+        };
+
+A_WD_subgraph = [
+                1 1 
+                0 1
+                ];            
+            
+A_BD_subgraph = [
+                1 1
+                0 1
+                ];
+
+A_subgraph = {
+            A_BD_subgraph       diag(ones(2, 1))          {}
+            diag(ones(2, 1))    A_BD_subgraph             A_23(nodes{2}, nodes{3})
+            {}                  A_32(nodes{3}, nodes{2})  A_WD_subgraph
+            };
+        
+g = DummyOrderedMultilayer(A);
+sg = g.subgraph(g, nodes);
+
+assert(isequal(sg.getA(), A_subgraph), ...
+    [BRAPH2.STR ':DummyOrderedMultilayer:' BRAPH2.BUG_ERR], ...
+    'Graph.subgraph() is not working for non single layer graphs')

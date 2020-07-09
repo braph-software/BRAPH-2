@@ -135,9 +135,10 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   getCompatibleMeasureList    - returns a list with the compatible measures
     %   getCompatibleMeasureNumber  - returns a number of the compatible measures
     %
-    % Graph attacks methods (static):
+    % Graph attack and subgraph methods (static):
     %   nodeattack                  - removes given nodes from a graph
     %   edgeattack                  - removes given edges from a graph
+    %   subgraph                    - extracts subgraph
     %
     % Graph randomization method (static):
     %   randomize                   - randomize graph
@@ -1114,7 +1115,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             value = g.getMeasure(measure_class).getValue();
         end       
     end
-    methods (Static)  % Attacks
+    methods (Static)  % Attacks and subgraphs
         function ga = nodeattack(g, nodes, layernumbers)
             % NODEATTACK removes given nodes from a graph
             %
@@ -1234,6 +1235,39 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
+        function sg = subgraph(g, nodes)
+            % SUBGRAPH extracts subgraph
+            %
+            % SG = SUBGRAPH(G, NODES) extracts the graph SG as a subgraph of G
+            % containing only the nodes specified by NODES.
+            % If NODES is a vector, the specified nodes are removed from
+            % all layers. If NODES is a cell array of vectors, the
+            % specified nodes are removed from each layer.
+            
+            A = g.getA();
+            L = g.layernumber();
+            
+            if ~iscell(nodes)
+                nodes = repmat({nodes}, 1, L);
+            end
+            
+            switch Graph.getGraphType(g)
+                case Graph.GRAPH
+                    A = A(nodes{1}, nodes{1});
+                    
+                otherwise  % multigraph, multiplex and multilayer
+                    for li = 1:1:L
+                        for lj = 1:1:L
+                            Aij = A{li, lj};
+                            if ~isempty(Aij)
+                                A(li, lj) = {Aij(nodes{li}, nodes{lj})};
+                            end
+                        end
+                    end
+            end
+            
+            sg = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
+        end
     end
     methods (Static, Abstract)  % Randomize function
         gr = randomize(g, varargin);
@@ -1275,15 +1309,4 @@ classdef Graph < handle & matlab.mixin.Copyable
 %             end
 %         end
 %     end
-%     methods
-%         function sg = subgraph(g, nodes)
-%             % SUBGRAPH creates subgraph from given nodes
-%             %
-%             % SG = SUBGRAPH(G, NODES) creates the graph SG as a subgraph of G
-%             % containing only the nodes specified by NODES.
-%             
-%             A = g.getA(); %#ok<PROPLC>
-%             sg = Graph.getGraph(Graph.getClass(g), A(nodes, nodes), g.getSettings()); %#ok<PROPLC>
-%         end
-
 end
