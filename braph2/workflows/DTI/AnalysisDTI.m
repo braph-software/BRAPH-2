@@ -170,13 +170,13 @@ classdef AnalysisDTI < Analysis
             M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
 
             % Measurements for groups 1 and 2, and their difference
-            measurements_1 = analysis.calculateMeasurement(measure_code, group_1, varargin{:});
+            measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
             values_1 = measurements_1.getMeasureValues();         
-            res_1 = mean(reshape(cell2mat(values_1), [size(values_1{1}, 1), size(values_1{1}, 2), group_1.subjectnumber()]), 3);
+            res_1 = {mean(reshape(cell2mat(values_1), [size(values_1{1}, 1), size(values_1{1}, 2), group_1.subjectnumber()]), 3)};
             
-            measurements_2 = analysis.calculateMeasurement(measure_code, group_2, varargin{:});
+            measurements_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
             values_2 = measurements_2.getMeasureValues();
-            res_2 =  mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group_2.subjectnumber()]), 3);
+            res_2 =  {mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group_2.subjectnumber()]), 3)};
             
             all_permutations_1 = cell(1, M);
             all_permutations_2 = cell(1, M);
@@ -201,7 +201,7 @@ classdef AnalysisDTI < Analysis
                 end
             end
             
-            difference_mean = res_2 - res_1;  % difference of the mean values of the non permutated groups
+            difference_mean = {res_2{1} - res_1{1}};  % difference of the mean values of the non permutated groups
             difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 1 - permutated group 2
             
             % Statistical analysis 
