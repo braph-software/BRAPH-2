@@ -32,8 +32,8 @@ classdef AnalysisfMRI < Analysis
     methods (Access = protected)  % Calculation functions
         function graphs = get_graph_for_subjects(analysis, subjects)
             % will return an array of graphs
-            subject_number = numel(subjects);            
-            graphs = cell(1, group.subjectnumber());
+            subject_number = numel(subjects);             
+            graphs = cell(1, subject_number);
   
             for i = 1:1:subject_number
                 subject = subjects{i};
