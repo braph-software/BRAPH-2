@@ -261,9 +261,9 @@ classdef AnalysisDTI < Analysis
 %         function randomcomparison_class = getRandomComparisonClass()
 %             randomcomparison_class = 'RandomComparisonDTI';
 %         end
-%         function comparison_class = getComparisonClass()
-%             comparison_class = 'ComparisonDTI';
-%         end
+        function comparison_class = getComparisonClass()
+            comparison_class = 'ComparisonDTI';
+        end
         function available_settings = getAvailableSettings(m) %#ok<INUSD>
             available_settings = {
                 {'AnalysisDTI.Longitudinal', BRAPH2.LOGICAL, false, {false, true}}, ...
