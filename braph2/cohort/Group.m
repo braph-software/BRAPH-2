@@ -51,10 +51,6 @@ classdef Group < handle & matlab.mixin.Copyable
             % group with ID, LABEL and notes. Adds the SUBJECTS of class
             % SUBJECT_CLASS to the group.
             %
-            % GROUP(SUBJECT_CLASS, ID, LABEL, NOTES, SUBJECTS, 'PROPERTYRULE1', 'VALUE1', ...) 
-            % creates a group with ID, LABEL and notes. Adds the SUBJECTS of class
-            % SUBJECT_CLASS to the group.
-            %
             % See also Data, Subject, Cohort.
 
             group.setID(id)
