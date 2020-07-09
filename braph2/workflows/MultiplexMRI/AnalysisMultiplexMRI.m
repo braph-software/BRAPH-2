@@ -30,6 +30,25 @@ classdef AnalysisMultiplexMRI < Analysis
         end
     end
     methods (Access = protected)  % Calculation functions
+        function g = get_graph_for_subjects(analysis, subjects)
+            atlases = analysis.cohort.getBrainAtlases();
+            atlas = atlases{1};
+            
+            subject_number = numel(subjects);
+
+            data = zeros(subject_number, atlas.getBrainRegions().length());
+            for i = 1:1:subject_number
+                subject = subjects{i};
+                data(i, :) = subject.getData('MRI').getValue();  % MRI data
+            end
+            
+            correlation_rule = analysis.getSettings('AnalysisMRI.CorrelationRule');
+            negative_weight_rule = analysis.getSettings('AnalysisMRI.NegativeWeightRule');
+            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+            
+            graph_type = AnalysisMRI.getGraphType();
+            g = Graph.getGraph(graph_type, A);
+        end        
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
             atlases = analysis.cohort.getBrainAtlases();
             atlas = atlases{1};
