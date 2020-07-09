@@ -251,16 +251,10 @@ for i = 1:1:numel(measures)
     
     % assert
     if Measure.is_superglobal(measures{i})  % superglobal measure
-        rows = 1;
-        columns = 1;
         num_elements = 1;
     elseif Measure.is_unilayer(measures{i})  % unilayer measure
-        rows = 2;
-        columns = 1;
         num_elements = 2;
     elseif Measure.is_bilayer(measures{i})  % bilayer measure
-        rows = 2;
-        columns = 2;
         num_elements = 4;
     end
     
