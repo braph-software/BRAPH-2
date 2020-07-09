@@ -1,66 +1,71 @@
 classdef Cohort < handle & matlab.mixin.Copyable
-    % Cohort < handle & matlab.mixin.Copyable: A cohort
-    % Cohort represents a collection of subjects and groups.
+    % Cohort A cohort of groups
+    % Cohort represents a collection of subjects and groups
+    % It is a subclass of handle and matlab.mixin.Copyable
     %
-    % Cohort properties (GetAccess=protected, SetAccess=protected):
-    %   name                    - name of the brain atlas.
-    %   subject_class           - general class of subjects.
-    %   atlases                 - cell array with brain atlases.
-    %   subject_idict           - indexed dictionary with subjects.
-    %   group_idict             - indexed dictionary with groups.
+    % Cohort is a collection of groups of subjects. It provides the methods
+    % necessary to manage the groups of subjects.
     %
-    % Cohort methods (Access=protected)
-    %   copyElement             - deep copy cohort community structure.
+    % Cohort basic functions methods:
+    %   Cohort                  - Constructor
+    %   tostring                - returns a string representing the Cohort
+    %   disp                    - displays the cohort
     %
-    % Cohort methods:
-    %   Cohort                  - Constructor.
-    %   tostring                - returns a string representing the Cohort.
-    %   disp                    - displays the Cohort.
-    %   getName                 - returns the name of the Cohort.
-    %   getSubjectClass         - returns the general class of subjects.
-    %   getBrainAtlases         - returns an array with brain atlases.
-    %   getSubjects             - returns the indexed dictionary with Subjects.
-    %   getGroups               - returns the indexed dictionary with Groups.
-    %   getNewSubject           - returns a new Subject.
-    %   getGroupSubjects        - returns the Subjects of specified group.
-    %   addSubjectToGroup       - adds a subject to a specified group.
-    %   addSubjectsToGroup      - adds subjects to a specified group.
-    %   removeSubjectFromGroup  - removes a subject from a specified group.
-    %   removeSubjectsFromGroup - removes subjects from a specified group.
+    % Cohort set functions methods:
+    %   setID                   - sets the ID
+    %   setLabel                - sets the label
+    %   setNotes                - sets the notes
+    %
+    % Cohort get functions methods:
+    %   getID                   - returns the ID
+    %   getLabel                - returns the label
+    %   getNotes                - returns the notes
+    %   getSubjectClass         - returns the general class of subjects
+    %   getBrainAtlases         - returns an array with brain atlases
+    %   getSubjects             - returns the indexed dictionary with Subjects
+    %   getNewSubject          - returns a new subject
+    %
+    % Cohort get group functions methods:
+    %   getGroups               - returns the indexed dictionary with groups
+    %   getGroupSubjects        - returns the Subjects of specified group
+    %   addSubjectToGroup       - adds a subject to a specified group
+    %   addSubjectsToGroup      - adds subjects to a specified group
+    %   removeSubjectFromGroup  - removes a subject from a specified group
+    %   removeSubjectsFromGroup - removes subjects from a specified group
     %
     % Additionally, it is possible to use the following IndexDictionary
     % methods through getSubjects():
-    %   getSubjects()                   - returns the indexed dictionary br_idict with BrainRegions.
-    %   getSubjects().tostring          - returns a string representing the indexed dictionary br_idict.
-    %   getSubjects().disp              - displays the indexed dictionary br_idict.
-    %   getSubjects().length            - returns the length of the indexed dictionary br_idict.
-    %   getSubjects().getValueClass     - returns the value_class of the indexed dictionary br_idict.
+    %   getSubjects()                   - returns the indexed dictionary br_idict with BrainRegions
+    %   getSubjects().tostring          - returns a string representing the indexed dictionary br_idict
+    %   getSubjects().disp              - displays the indexed dictionary br_idict
+    %   getSubjects().length            - returns the length of the indexed dictionary br_idict
+    %   getSubjects().getValueClass     - returns the value_class of the indexed dictionary br_idict
     %   getSubjects().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
-    %   getSubjects().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index.
-    %   getSubjects().containsKey       - bool, checks if the indexed dictionary br_idict contains the key.
-    %   getSubjects().containsValue     - bool, checks if the indexed dictionary br_idict contains the value.
-    %   getSubjects().getIndex          - returns the index of the key or value.
-    %   getSubjects().getIndexFromValue - returns the index of the value.
-    %   getSubjects().getIndexFromKey   - returns the index of the key.
-    %   getSubjects().getIndexFromValueAll - returns all the indexes of the same value.
-    %   getSubjects().getValue          - returns the value of the index or the key.
-    %   getSubjects().getValueFromIndex - returns the value of the index.
-    %   getSubjects().getValueFromKey   - returns the value of the key.
-    %   getSubjects().getValues         - returns all the values.
-    %   getSubjects().getKey            - returns the key of the index or value.
-    %   getSubjects().getKeyFromIndex   - returns the key of the index.
-    %   getSubjects().getKeyFromValue   - returns the key of the value.
-    %   getSubjects().getKeyFromValueAll - returns all the keys of the same value.
-    %   getSubjects().getKeys           - returns all the keys.
-    %   getSubjects().add               - adds a key and value to the indexed dictionary br_idict.
-    %   getSubjects().remove            - removes the key and value from the indexed dictionary br_idict.
-    %   getSubjects().replace           - replaces a key and value in the indexed dictionary br_idict.
-    %   getSubjects().replaceKey        - replaces a key in the indexed dictionary br_idict.
-    %   getSubjects().replaceValue      - replaces a value in the indexed dictionary br_idict.
-    %   getSubjects().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict.
-    %   getSubjects().invert            - inverts position of elements in the indexed dictionary br_idict.
-    %   getSubjects().move_to           - move an element to a position in the indexed dictionary br_idict.
-    %   getSubjects().remove_all        - removes all selected elements from the indexed dictionary br_idict.
+    %   getSubjects().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index
+    %   getSubjects().containsKey       - bool, checks if the indexed dictionary br_idict contains the key
+    %   getSubjects().containsValue     - bool, checks if the indexed dictionary br_idict contains the value
+    %   getSubjects().getIndex          - returns the index of the key or value
+    %   getSubjects().getIndexFromValue - returns the index of the value
+    %   getSubjects().getIndexFromKey   - returns the index of the key
+    %   getSubjects().getIndexFromValueAll - returns all the indexes of the same value
+    %   getSubjects().getValue          - returns the value of the index or the key
+    %   getSubjects().getValueFromIndex - returns the value of the index
+    %   getSubjects().getValueFromKey   - returns the value of the key
+    %   getSubjects().getValues         - returns all the values
+    %   getSubjects().getKey            - returns the key of the index or value
+    %   getSubjects().getKeyFromIndex   - returns the key of the index
+    %   getSubjects().getKeyFromValue   - returns the key of the value
+    %   getSubjects().getKeyFromValueAll - returns all the keys of the same value
+    %   getSubjects().getKeys           - returns all the keys
+    %   getSubjects().add               - adds a key and value to the indexed dictionary br_idict
+    %   getSubjects().remove            - removes the key and value from the indexed dictionary br_idict
+    %   getSubjects().replace           - replaces a key and value in the indexed dictionary br_idict
+    %   getSubjects().replaceKey        - replaces a key in the indexed dictionary br_idict
+    %   getSubjects().replaceValue      - replaces a value in the indexed dictionary br_idict
+    %   getSubjects().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict
+    %   getSubjects().invert            - inverts position of elements in the indexed dictionary br_idict
+    %   getSubjects().move_to           - move an element to a position in the indexed dictionary br_idict
+    %   getSubjects().remove_all        - removes all selected elements from the indexed dictionary br_idict
     %   getSubjects().move_up           - moves an element up in the indexed dictionary br_idict
     %   getSubjects().move_down         - moves an element down in the indexed dictionary br_idict
     %   getSubjects().move_to_top       - moves an element to the top in the indexed dictionary br_idict
@@ -68,43 +73,44 @@ classdef Cohort < handle & matlab.mixin.Copyable
     %
     % Additionally, it is possible to use the following IndexDictionary
     % methods through getGroups():
-    %   getGroups()                   - returns the indexed dictionary br_idict with BrainRegions.
-    %   getGroups().tostring          - returns a string representing the indexed dictionary br_idict.
-    %   getGroups().disp              - displays the indexed dictionary br_idict.
-    %   getGroups().length            - returns the length of the indexed dictionary br_idict.
-    %   getGroups().getValueClass     - returns the value_class of the indexed dictionary br_idict.
+    %   getGroups()                   - returns the indexed dictionary br_idict with BrainRegions
+    %   getGroups().tostring          - returns a string representing the indexed dictionary br_idict
+    %   getGroups().disp              - displays the indexed dictionary br_idict
+    %   getGroups().length            - returns the length of the indexed dictionary br_idict
+    %   getGroups().getValueClass     - returns the value_class of the indexed dictionary br_idict
     %   getGroups().contains          - bool, checks if the indexed dictionary br_idict contains the index, key or object
-    %   getGroups().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index.
-    %   getGroups().containsKey       - bool, checks if the indexed dictionary br_idict contains the key.
-    %   getGroups().containsValue     - bool, checks if the indexed dictionary br_idict contains the value.
-    %   getGroups().getIndex          - returns the index of the key or value.
-    %   getGroups().getIndexFromValue - returns the index of the value.
-    %   getGroups().getIndexFromKey   - returns the index of the key.
-    %   getGroups().getIndexFromValueAll - returns all the indexes of the same value.
-    %   getGroups().getValue          - returns the value of the index or the key.
-    %   getGroups().getValueFromIndex - returns the value of the index.
-    %   getGroups().getValueFromKey   - returns the value of the key.
-    %   getGroups().getValues         - returns all the values.
-    %   getGroups().getKey            - returns the key of the index or value.
-    %   getGroups().getKeyFromIndex   - returns the key of the index.
-    %   getGroups().getKeyFromValue   - returns the key of the value.
-    %   getGroups().getKeyFromValueAll - returns all the keys of the same value.
-    %   getGroups().getKeys           - returns all the keys.
-    %   getGroups().add               - adds a key and value to the indexed dictionary br_idict.
-    %   getGroups().remove            - removes the key and value from the indexed dictionary br_idict.
-    %   getGroups().replace           - replaces a key and value in the indexed dictionary br_idict.
-    %   getGroups().replaceKey        - replaces a key in the indexed dictionary br_idict.
-    %   getGroups().replaceValue      - replaces a value in the indexed dictionary br_idict.
-    %   getGroups().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict.
-    %   getGroups().invert            - inverts position of elements in the indexed dictionary br_idict.
-    %   getGroups().move_to           - moves an element to a position in the indexed dictionary br_idict.
-    %   getGroups().remove_all        - removes all selected elements from the indexed dictionary br_idict.
+    %   getGroups().containsIndex     - bool, checks if the indexed dictionary br_idict contains the index
+    %   getGroups().containsKey       - bool, checks if the indexed dictionary br_idict contains the key
+    %   getGroups().containsValue     - bool, checks if the indexed dictionary br_idict contains the value
+    %   getGroups().getIndex          - returns the index of the key or value
+    %   getGroups().getIndexFromValue - returns the index of the value
+    %   getGroups().getIndexFromKey   - returns the index of the key
+    %   getGroups().getIndexFromValueAll - returns all the indexes of the same value
+    %   getGroups().getValue          - returns the value of the index or the key
+    %   getGroups().getValueFromIndex - returns the value of the index
+    %   getGroups().getValueFromKey   - returns the value of the key
+    %   getGroups().getValues         - returns all the values
+    %   getGroups().getKey            - returns the key of the index or value
+    %   getGroups().getKeyFromIndex   - returns the key of the index
+    %   getGroups().getKeyFromValue   - returns the key of the value
+    %   getGroups().getKeyFromValueAll - returns all the keys of the same value
+    %   getGroups().getKeys           - returns all the keys
+    %   getGroups().add               - adds a key and value to the indexed dictionary br_idict
+    %   getGroups().remove            - removes the key and value from the indexed dictionary br_idict
+    %   getGroups().replace           - replaces a key and value in the indexed dictionary br_idict
+    %   getGroups().replaceKey        - replaces a key in the indexed dictionary br_idict
+    %   getGroups().replaceValue      - replaces a value in the indexed dictionary br_idict
+    %   getGroups().replaceValueAll   - replaces all values of same value in the indexed dictionary br_idict
+    %   getGroups().invert            - inverts position of elements in the indexed dictionary br_idict
+    %   getGroups().move_to           - moves an element to a position in the indexed dictionary br_idict
+    %   getGroups().remove_all        - removes all selected elements from the indexed dictionary br_idict
     %   getGroups().move_up           - moves an element up in the indexed dictionary br_idict
     %   getGroups().move_down         - moves an element down in the indexed dictionary br_idict
     %   getGroups().move_to_top       - moves an element to the top in the indexed dictionary br_idict
     %   getGroups().move_to_bottom    - moves an element to the bottom in the indexed dictionary br_idict
     %
-    % See also Group, Subjects, IndexedDictioanry.
+    % See also Group, Subjects, Data, IndexedDictionary.
+    
     properties (GetAccess=protected, SetAccess=protected)
         id  % cohort id
         label  % cohort label
@@ -116,6 +122,8 @@ classdef Cohort < handle & matlab.mixin.Copyable
     end
     methods  % Basic functions
         function cohort = Cohort(id, label, notes, subject_class, atlases, subjects)
+            % COHORT construct a cohort of groups and subjects
+            %
             % COHORT(NAME, SUBJECT_CLASS, ATLASES, SUBJECTS) creates a cohort.
             % The constructor will initialize the properties with the
             % corresponding arguments, with exception of group dictionary.
@@ -152,7 +160,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % TOSTRING string with information about the cohort
             %
             % STR = TOSTRING(COHORT) returns string with the cohort subject
-            % class, subjects indexed dictionary length and groups indexed
+            % class, the subjects indexed dictionary length and the groups indexed
             % dictionary length
             %
             % See also disp().
@@ -175,6 +183,11 @@ classdef Cohort < handle & matlab.mixin.Copyable
     end
     methods  % Set functions
         function setID(cohort, id)
+            % SETID sets the id of the cohort
+            %
+            % SETID(COHORT, ID) sets the id of the cohort.
+            %
+            % See also getID, setLabel, setNotes.
             
             assert(ischar(id), ...
                 [BRAPH2.STR ':' class(cohort) ':' BRAPH2.WRONG_INPUT], ...
@@ -183,6 +196,11 @@ classdef Cohort < handle & matlab.mixin.Copyable
             cohort.id = id;
         end
         function setLabel(cohort, label)
+            % SETLABEL sets the label of the cohort
+            %
+            % SETLABEL(COHORT, LABEL) sets the label of the cohort.
+            %
+            % See also setID, setNotes, getLabel.
 
             assert(ischar(label), ...
                 [BRAPH2.STR ':' class(cohort) ':' BRAPH2.WRONG_INPUT], ...
@@ -191,6 +209,11 @@ classdef Cohort < handle & matlab.mixin.Copyable
             cohort.label = label;
         end        
         function setNotes(cohort, notes)
+            % SETNOTES sets the notes of the cohort
+            %
+            % SETNOTES(COHORT, NOTES) sets the notes of the cohort.
+            %
+            % See also setID, setLabel, getNotes.
 
             assert(ischar(notes), ...
                 [BRAPH2.STR ':' class(cohort) ':' BRAPH2.WRONG_INPUT], ...
@@ -201,34 +224,49 @@ classdef Cohort < handle & matlab.mixin.Copyable
     end
     methods  % Get functions
         function id = getID(cohort)
+            % GETID returns the id of the cohort
+            %
+            % ID = GETID(COHORT) returns the id of the cohort.
+            %
+            % See also setID, getLabel, getNotes, getData.
             
             id = cohort.id;
         end
         function label = getLabel(cohort)
-            
+            % GETLABEL returns the label of the cohort
+            %
+            % LABEL = GETLABEL(COHORT) returns the label of the cohort.
+            %
+            % See also getID, getNotes, setLabel.
+                        
             label = cohort.label;
         end
         function notes = getNotes(cohort)
+            % GETNOTES returns the notes of the cohort
+            %
+            % NOTES = GETNOTES(SUBJECT) returns the notes of the cohort.
+            %
+            % See also getID, getLabel, setNotes, getSubjectClass.
 
             notes = cohort.notes;
         end        
         function subject_class = getSubjectClass(cohort)
-            % GETSUBJECTCLASS returns the class of subjects in the cohort.
+            % GETSUBJECTCLASS returns the class of subjects in the cohort
             %
             % NAME = GETSUBJECTCLASS(COHORT) returns the class of subjects
             % in the cohort.
             %
-            % See also getName(), getBrainAtlases().
+            % See also getName, getBrainAtlases.
             
             subject_class = cohort.subject_class;
         end
         function atlases = getBrainAtlases(cohort)
-            % GETBRAINATLASES returns the brain atlases.
+            % GETBRAINATLASES returns the brain atlases
             %
             % ATLASES = GETBRAINATLASES(COHORT) returns the brain atlases
             % from the cohort.
             %
-            % See also getName(), getSubjectClass().
+            % See also getName, getSubjectClass, getSubjects.
             
             atlases = cohort.atlases;
         end
@@ -239,7 +277,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % dictionary SUBJECT_IDICT. This function exposes to the user
             % the methods and functions of the INDEXEDDICTIONARY class.
             %
-            % See also IndexedDictionary, getName(), getGroups().
+            % See also IndexedDictionary, getName, getGroups.
             
             subject_idict = cohort.subject_idict;
         end
@@ -251,7 +289,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % ATLASES, VARARGIN. It initializes the new instance of the
             % subject class.
             %
-            % See also getSubjects(), Subject.
+            % See also getSubjects, Subject, getSubjectClass.
             
             subject = Subject.getSubject(cohort.getSubjectClass(), id, label, notes, cohort.getBrainAtlases(), varargin{:});
         end
@@ -264,7 +302,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % dictionary GROUP_IDICT. This function exposes to the user
             % the methods and functions of the INDEXEDDICTIONARY class.
             %
-            % See also IndexedDictionary, getName(), getSubjects().
+            % See also IndexedDictionary, getName, getSubjects.
             
             group_idict = cohort.group_idict;
         end
@@ -274,7 +312,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             % [SUBJECT_INDEXES, SUBJECTS] = GETGROUPSUBJECTS(COHORT, INDEX)
             % returns subjects from a specificed group INDEX.
             %
-            % See also addSubjectToGroup(), removeSubjectFromGroup()
+            % See also addSubjectToGroup, removeSubjectFromGroup
             
             subjects = cohort.getGroups().getValue(i).getSubjects();
             subject_indexes = zeros(1, length(subjects));
@@ -286,12 +324,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
         end
         function addSubjectToGroup(cohort, subject, group)
-            % ADDSUBJECTTOGROUP inserts a subject to a specified group.
+            % ADDSUBJECTTOGROUP inserts a subject to a specified group
             %
             % ADDSUBJECTTOGROUP(COHORT, SUBJECT, GROUP) inserts a SUBJECT
             % to a specified GROUP.
             %
-            % See also getGroupSubjects(), removeSubjectFromGroup()
+            % See also getGroupSubjects, removeSubjectFromGroup
             
             if cohort.getSubjects().contains(subject) && cohort.getGroups().contains(group)
                 if ~isa(subject, cohort.getSubjectClass())
@@ -306,24 +344,24 @@ classdef Cohort < handle & matlab.mixin.Copyable
             end
         end
         function addSubjectsToGroup(cohort, subject_indexes, group)
-            % ADDSUBJECTSTOGROUP inserts subjects to a specified group.
+            % ADDSUBJECTSTOGROUP inserts subjects to a specified group
             %
             % ADDSUBJECTSTOGROUP(COHORT, SUBJECT_INDEXES, GROUP) inserts
             % subjects with SUBJECT_INDEX to a specified GROUP.
             %
-            % See also getGroupSubjects(), addSubjectToGroup()
+            % See also getGroupSubjects, addSubjectToGroup
             
             for i = 1:1:length(subject_indexes)
                 cohort.addSubjectToGroup(subject_indexes(i), group);
             end
         end
         function removeSubjectFromGroup(cohort, subject, group)
-            % REMOVESUBJECTFROMGROUP removes a subject from a specified group.
+            % REMOVESUBJECTFROMGROUP removes a subject from a specified group
             %
             % REMOVESUBJECTFROMGROUP(COHORT, SUBJECT, GROUP) removes a
-            % SUBJECT to a specified GROUP.
+            % SUBJECT from a specified GROUP.
             %
-            % See also getGroupSubjects(), addSubjectToGroup()
+            % See also getGroupSubjects, addSubjectToGroup
             
             if cohort.getSubjects().contains(subject) && cohort.getGroups().contains(group)
                 if ~isa(subject, cohort.getSubjectClass())
@@ -339,12 +377,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
         end
         function removeSubjectsFromGroup(cohort, subject_indexes, group)
-            % REMOVESUBJECTSFROMGROUP removes subjects from a specified group.
+            % REMOVESUBJECTSFROMGROUP removes subjects from a specified group
             %
             % REMOVESUBJECTSFROMGROUP(COHORT, SUBJECT_INDEXES, GROUP)
             % removes subjects with SUBJECT_INDEXES from a specified GROUP.
             %
-            % See also getGroupSubjects(), addSubjectsToGroup()
+            % See also getGroupSubjects, addSubjectsToGroup
             
             for i = 1:1:length(subject_indexes)
                 cohort.removeSubjectFromGroup(subject_indexes(i), group);
