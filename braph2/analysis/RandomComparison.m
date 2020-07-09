@@ -117,7 +117,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             end
         end
     end
-    methods (Static)
+    methods (Static)  % Descriptive functions
         function randomcomparisonlist = getList()
             randomcomparisonlist = subclasses('RandomComparison');
         end
@@ -128,7 +128,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                 randomcomparisonclass = rc;
             end
         end
-         function name = getName(rc)
+        function name = getName(rc)
             name = eval([RandomComparison.getClass(rc) '.getName()']);
         end
         function description = getDescription(rc)
@@ -146,8 +146,12 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             % comparison subject class
             subject_class = eval([RandomComparison.getClass(c) '.getSubjectClass()']);
         end
-        function sub = getRandomComparison(randomComparisonClass, id, atlas, group, varargin) %#ok<INUSD>
-            sub = eval([randomComparisonClass '(id, atlas, group, varargin{:})']);
+        function available_settings = getAvailableSettings(rc)
+
+            available_settings = eval([Measurement.getClass(rc) '.getAvailableSettings()']);
+        end
+        function sub = getRandomComparison(randomComparisonClass, id, label, notes, atlas, measure_code, group, varargin) %#ok<INUSD>
+            sub = eval([randomComparisonClass '(id, label, notes, atlas, measure_code, group, varargin{:})']);
         end
     end
     methods (Access =  protected)  % Shallow copy
