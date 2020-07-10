@@ -23,8 +23,8 @@ if ~iscell(values{1})
     Q = for_quantiles(values, P);
 else
     Q = cell(size(values{1}));
-    for r = 1:1:size(values, 1)
-        for c = 1:1:size(values, 2)
+    for r = 1:1:size(values{1}, 1)
+        for c = 1:1:size(values{1}, 2)
             Q(r, c) = {for_quantiles(cellfun(@(x) x{r, c}, values, 'UniformOutput', false), P)};
         end
     end
