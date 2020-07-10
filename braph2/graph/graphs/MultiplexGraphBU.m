@@ -17,8 +17,6 @@ classdef MultiplexGraphBU < MultiplexGraphBD
     %   getDirectionalityType   - returns the directionality type of the graph
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
-    %   getCompatibleMeasureList - returns a list with compatible measures
-    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
     % See also Graph, MultiplexGraphBD, MultiplexGraphWD, MultiplexGraphWU.
     
@@ -301,49 +299,4 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             end
         end
     end
-%     methods
-%         function g = GraphBU(A, varargin)
-%             % GRAPHBU(A) creates a GRAPHBU class with adjacency matrix A.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % function: SYMMETRIZE.
-%             % It calls the superclass constructor GRAPHBD.
-%             %
-%             % GRAPHBU(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-%             % a GRAPHBU class with adjacency matrix A and it passes the
-%             % properties and values to the superclass as VARARGIN.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % function: SYMMETRIZE.
-%             % It calls the superclass constructor GRAPHBD.
-%             %
-%             % See also Graph, GraphBD, GraphWD, GraphWU.
-%             
-%             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
-%             
-%             g = g@GraphBD(A, varargin{:});
-%         end
-%     end
-%     methods (Static)
-%         function list = getCompatibleMeasureList()
-%             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
-%             %
-%             % LIST = GETCOMPATIBLEMEASURELIST() returns a list with
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureNumber().
-%             
-%             list = Graph.getCompatibleMeasureList('GraphBU');
-%         end
-%         function n = getCompatibleMeasureNumber()
-%             % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible measures.
-%             %
-%             % N = GETCOMPATIBLEMEASURENUMBER() returns the number of
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureList().
-%             
-%             n = Graph.getCompatibleMeasureNumber('GraphBU');
-%         end
-%     end
 end

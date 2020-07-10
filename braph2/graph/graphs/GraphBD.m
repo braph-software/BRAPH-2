@@ -16,8 +16,6 @@ classdef GraphBD < Graph
     %   getDirectionalityType   - returns the directionality type of the graph
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
-    %   getCompatibleMeasureList - returns a list with compatible measures
-    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
     % See also Graph, GraphBU, GraphWD, GraphWU.
     
@@ -233,26 +231,4 @@ classdef GraphBD < Graph
             end
         end
     end
-%     methods (Static)
-%         function list = getCompatibleMeasureList()
-%             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
-%             %
-%             % LIST = GETCOMPATIBLEMEASURELIST() returns a list with
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureNumber().
-%             
-%             list = Graph.getCompatibleMeasureList('GraphBD');
-%         end
-%         function n = getCompatibleMeasureNumber()
-%             % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible measures.
-%             %
-%             % N = GETCOMPATIBLEMEASURENUMBER() returns the number of
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureList().
-%             
-%             n = Graph.getCompatibleMeasureNumber('GraphBD');
-%         end
-%     end
 end

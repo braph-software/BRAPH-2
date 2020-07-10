@@ -16,8 +16,6 @@ classdef GraphWD < Graph
     %   getDirectionalityType   - returns the directionality type of the graph
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
-    %   getCompatibleMeasureList - returns a list with compatible measures
-    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
     % See also Graph, GraphBU, GraphBD, GraphWU.
     
@@ -243,26 +241,4 @@ classdef GraphWD < Graph
             correlation_coefficients = [rpos_in(2) rpos_out(2)];
         end
     end
-%     methods (Static)
-%         function list = getCompatibleMeasureList()
-%             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
-%             %
-%             % LIST = GETCOMPATIBLEMEASURELIST() returns a list with
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureNumber().
-%             
-%             list = Graph.getCompatibleMeasureList('GraphWD');
-%         end
-%         function n = getCompatibleMeasureNumber()
-%             % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible measures.
-%             %
-%             % N = GETCOMPATIBLEMEASURENUMBER() returns the number of
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureList().
-%             
-%             n = Graph.getCompatibleMeasureNumber('GraphWD');
-%         end
-%     end
 end
