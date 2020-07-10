@@ -247,11 +247,8 @@ classdef AnalysisMRI < Analysis
             difference_all_permutations = cellfun(@(x, y) y - x, all_permutations_1, all_permutations_2, 'UniformOutput', false);
 
             % Statistical analysis
-% TODO: update with new version of pvalue1 and pvalue2 once available
-% p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
-% p2 = pvalue2(difference_mean, difference_all_permutations);  % double tail
-            p1 = {pvalue1(difference_mean{1}, difference_all_permutations)};  % singe tail,
-            p2 = {pvalue2(difference_mean{1}, difference_all_permutations)};  % double tail
+            p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
+            p2 = pvalue2(difference_mean, difference_all_permutations);  % double tail
             
 % TODO: update with new version of quantiles once available (if needed)
 % ci_lower = quantiles(difference_all_permutations, 40, {2, 40});
