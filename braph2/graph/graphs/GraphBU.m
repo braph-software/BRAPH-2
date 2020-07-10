@@ -129,36 +129,11 @@ classdef GraphBU < GraphBD
             %
             % See also getClass, getName, getDescription, getGraphType.
             
-            available_settings = { ...
-                 % 'GraphBU.AttemptsPerEdge', BRAPH2.NUMERIC, 5, {} ...
-                 };
+            available_settings = {};
         end
     end
-%     methods
-%         function g = GraphBU(A, varargin)
-%             % GRAPHBU(A) creates a GRAPHBU class with adjacency matrix A.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % function: SYMMETRIZE.
-%             % It calls the superclass constructor GRAPHBD.
-%             %
-%             % GRAPHBU(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-%             % a GRAPHBU class with adjacency matrix A and it passes the
-%             % properties and values to the superclass as VARARGIN.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % function: SYMMETRIZE.
-%             % It calls the superclass constructor GRAPHBD.
-%             %
-%             % See also Graph, GraphBD, GraphWD, GraphWU.
-%             
-%             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
-%             
-%             g = g@GraphBD(A, varargin{:});
-%         end
-%     end
-    methods
-        function [randomized_graph, swaps] = randomize(g, varargin)  % what we discussed in cafeteria is this (g, attempts_per_edge)
+    methods  % Randomize function
+        function random_g = randomize(g, varargin)  % what we discussed in cafeteria is this (g, attempts_per_edge)
             % RANDOMIZE returns a randomized graph and the number of swaps
             %
             % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G) 
@@ -173,86 +148,25 @@ classdef GraphBU < GraphBD
             
             % this works with with whts in gv-analysis-randomcomparisons
             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
-                        
-            % get A
+            
             A = g.getA();
-            
-            % remove self connections
-            A(1:length(A)+1:numel(A)) = 0;
-            [I_edges, J_edges] = find(triu(A)); % find the edges
-            E = length(I_edges); % number of edges
-            
-            randomized_A = A;
-            swaps = 0; % number of successful edge swaps
-            for attempt=1:1:attempts_per_edge*E
-                
-                % select two edges
-                selected_edges = randperm(E,2);
-                node_start_1 = I_edges(selected_edges(1));
-                node_end_1 = J_edges(selected_edges(1));
-                node_start_2 = I_edges(selected_edges(2));
-                node_end_2 = J_edges(selected_edges(2));
-                
-                if rand(1) > 0.5
-                    I_edges(selected_edges(2)) = node_end_2;
-                    J_edges(selected_edges(2)) = node_start_2;
-                    
-                    node_start_2 = I_edges(selected_edges(2));
-                    node_end_2 = J_edges(selected_edges(2));
-                end
-                
-                % Swap edges if:
-                % 1) no edge between node_start_1 and node_end_2
-                % 2) no edge between node_start_2 and node_end_1
-                % 3) node_start_1 ~= node_start_2
-                % 4) node_end_1 ~= node_end_2
-                % 5) node_start_1 ~= node_end_2
-                % 6) node_start_2 ~= node_end_1
-                
-                if ~randomized_A(node_start_1, node_end_2) && ...
-                        ~randomized_A(node_start_2, node_end_1) && ...
-                        node_start_1~=node_start_2 && ...
-                        node_end_1~=node_end_2 && ...
-                        node_start_1~=node_end_2 && ...
-                        node_start_2~=node_end_1
-                    
-                    % erase old edges
-                    randomized_A(node_start_1, node_end_1) = 0;
-                    randomized_A(node_end_1, node_start_1) = 0;
-                    
-                    randomized_A(node_start_2, node_end_2) = 0;
-                    randomized_A(node_end_2, node_start_2) = 0;
-                    
-                    % write new edges
-                    randomized_A(node_start_1, node_end_2) = 1;
-                    randomized_A(node_end_2, node_start_1) = 1;
-                    
-                    randomized_A(node_start_2, node_end_1) = 1;
-                    randomized_A(node_end_1, node_start_2) = 1;
-                    
-                    % update edge list
-                    J_edges(selected_edges(1)) = node_end_2;
-                    J_edges(selected_edges(2)) = node_end_1;
-                    
-                    swaps = swaps+1;
-                end
-            end
-            
-            randomized_graph = Graph.getGraph(Graph.getClass(g), randomized_A, varargin{:});
+            random_A = GraphBU.randomize_A(A, attempts_per_edge);
+                        
+            random_g = Graph.getGraph(Graph.getClass(g), ...
+                random_A, ...
+                varargin{:});
         end
     end
-    methods (Static)  % this is as discussed in cafeteria. 
-        function [randomized_graph, swaps] = get_randomized_graph(A, varargin)  
+    methods (Static)  % Randomize A function
+        function [random_A, swaps] = randomize_A(A, attempts_per_edge)  
             % can pass g like. GraphBU.get_randomized_graph(Graph.getGraph(A), 'AttemptsPerEdge', 5)
             
-            attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
-
             % remove self connections
             A(1:length(A)+1:numel(A)) = 0;
             [I_edges, J_edges] = find(triu(A)); % find the edges
             E = length(I_edges); % number of edges
             
-            randomized_A = A;
+            random_A = A;
             swaps = 0; % number of successful edge swaps
             for attempt=1:1:attempts_per_edge*E
                 
@@ -279,26 +193,26 @@ classdef GraphBU < GraphBD
                 % 5) node_start_1 ~= node_end_2
                 % 6) node_start_2 ~= node_end_1
                 
-                if ~randomized_A(node_start_1, node_end_2) && ...
-                        ~randomized_A(node_start_2, node_end_1) && ...
+                if ~random_A(node_start_1, node_end_2) && ...
+                        ~random_A(node_start_2, node_end_1) && ...
                         node_start_1~=node_start_2 && ...
                         node_end_1~=node_end_2 && ...
                         node_start_1~=node_end_2 && ...
                         node_start_2~=node_end_1
                     
                     % erase old edges
-                    randomized_A(node_start_1, node_end_1) = 0;
-                    randomized_A(node_end_1, node_start_1) = 0;
+                    random_A(node_start_1, node_end_1) = 0;
+                    random_A(node_end_1, node_start_1) = 0;
                     
-                    randomized_A(node_start_2, node_end_2) = 0;
-                    randomized_A(node_end_2, node_start_2) = 0;
+                    random_A(node_start_2, node_end_2) = 0;
+                    random_A(node_end_2, node_start_2) = 0;
                     
                     % write new edges
-                    randomized_A(node_start_1, node_end_2) = 1;
-                    randomized_A(node_end_2, node_start_1) = 1;
+                    random_A(node_start_1, node_end_2) = 1;
+                    random_A(node_end_2, node_start_1) = 1;
                     
-                    randomized_A(node_start_2, node_end_1) = 1;
-                    randomized_A(node_end_1, node_start_2) = 1;
+                    random_A(node_start_2, node_end_1) = 1;
+                    random_A(node_end_1, node_start_2) = 1;
                     
                     % update edge list
                     J_edges(selected_edges(1)) = node_end_2;
@@ -307,8 +221,6 @@ classdef GraphBU < GraphBD
                     swaps = swaps+1;
                 end
             end
-            
-            randomized_graph = Graph.getGraph('GraphBU', randomized_A, varargin{:});
         end
     end
 end
