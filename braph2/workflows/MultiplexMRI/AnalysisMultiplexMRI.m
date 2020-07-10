@@ -272,21 +272,11 @@ classdef AnalysisMultiplexMRI < Analysis
                 for j=1:columns
                     difference_all_permutations(i*j, :) = cellfun(@(x, y) y{i, j} - x{i, j}, all_permutations_1, all_permutations_2, 'UniformOutput', false);
                     % Statistical analysis
-                    p1(i, j) = {pvalue1(difference_mean{1}, difference_all_permutations(i, j))};  % singe tail,
-                    p2(i, j) = {pvalue2(difference_mean{1}, difference_all_permutations(i, j))};  % double tail
+                    p1(i, j) = {pvalue1(difference_mean{1}, difference_all_permutations(i*j, :))};  % singe tail,
+                    p2(i, j) = {pvalue2(difference_mean{1}, difference_all_permutations(i*j, :))};  % double tail
                     qtl(i, j) = {quantiles(difference_all_permutations(i, j), 40)};
                     ci_lower(i, j) = {cellfun(@(x) x(2), qtl{i, j})};
                     ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})};
-                    
-%                     if size(all_permutations_1{1}, 1) == 2
-%                         difference_all_permutations{2} = cellfun(@(x, y) y{2} - x{2}, all_permutations_1, all_permutations_2, 'UniformOutput', false);
-%                         % Statistical analysis
-%                         p1{2, 1} = {pvalue1(difference_mean{2}, difference_all_permutations{2, 1})};  % singe tail,
-%                         p2{2, 1} = {pvalue2(difference_mean{2}, difference_all_permutations{2, 1})};  % double tail
-%                         qtl{2, 1} = quantiles(difference_all_permutations{2, 1}, 40);
-%                         ci_lower = {cellfun(@(x) x(2), qtl{2, 1})};
-%                         ci_upper = {cellfun(@(x) x(40), qtl{2, 1})};
-%                     end
                 end
             end
             comparison = Comparison.getComparison('ComparisonMultiplexMRI', ...
