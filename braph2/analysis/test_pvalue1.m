@@ -93,7 +93,7 @@ random_differences = cell(1, M);
 for i = 1:1:size(random_differences, 2)
     random_differences{i} = {
         10 * ones(3) * (i - 1) / (M - 1) - 5; 
-        10 * ones(3) * (i - 1) / (M - 1) - 5
+        10 * ones(3) * (i - 1) / (M - 1) - 5;
         };
 end
 
@@ -105,3 +105,12 @@ P1 = pvalue1(observed_difference, random_differences);
 assert(all(all(cellfun(@(x) all(all(round(100 * x) == 10)), P1))), ...
     [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
     'Error in pvalue1 calculation')
+
+observed_difference = {
+    6 * ones(3) .* (2 * (randn(3)>0) - 1);
+    6 * ones(3) .* (2 * (randn(3)>0) - 1);
+    };
+P1 = pvalue1(observed_difference, random_differences);
+assert(all(all(cellfun(@(x) all(all(round(100 * x) == 0)), P1))), ...
+    [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
+    'Error in quantile calculation')
