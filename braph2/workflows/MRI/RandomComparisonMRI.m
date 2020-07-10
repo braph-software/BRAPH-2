@@ -320,7 +320,9 @@ classdef RandomComparisonMRI < RandomComparison
         end
         function available_settings = getAvailableSettings()
             available_settings = {
-                'RandomComparisonMRI.RandomizationNumber', BRAPH2.NUMERIC, 1000, {};
+                {'RandomComparisonMRI.RandomizationNumber', BRAPH2.NUMERIC, 1000, {}}, ...
+                {'RandomComparisonMRI.AttemptsPerEdge', BRAPH2.NUMERIC, 5, {}}, ...
+                {'RandomComparisonMRI.NumberOfWeights', BRAPH2.NUMERIC, 1, {}} ...
                 };
         end
         function sub = getRandomComparison(random_comparison_class, id, label, notes, atlas, measure_code, group, varargin)

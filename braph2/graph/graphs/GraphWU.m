@@ -179,7 +179,7 @@ classdef GraphWU < GraphWD
             
             W = g.getA();
             graph_BU = GraphBU(W);
-            [A, ~] = graph_BU.randomize_graph(varargin{:});
+            [A, ~] = graph_BU.randomize(varargin{:});
              
             % remove self connections
             A(1:length(A)+1:numel(A)) = 0;
