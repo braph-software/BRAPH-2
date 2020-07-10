@@ -62,3 +62,30 @@ Q = quantiles(values, 10);
 assert(all(all(cellfun(@(x) isequal(round(x), 0:1:10), Q))), ...
     [BRAPH2.STR ':quantiles:' BRAPH2.BUG_FUNC], ...
     'Error in quantile calculation')
+
+%% Test 3: Cell array input
+M = 1e+2;
+values = cell(1, M + 1);
+for i = 1:1:size(values, 2)
+    values{i} = {
+        10 * ones(3) * (i - 1) / (M - 1);
+        10 * ones(3) * (i - 1) / (M - 1);
+        };
+end
+Q = quantiles(values, 10);
+assert(all(all(cellfun(@(x) isequal(round(x{1}), 0:1:10), Q))), ...
+    [BRAPH2.STR ':quantiles:' BRAPH2.BUG_FUNC], ...
+    'Error in quantile calculation')
+
+ M = 1e+5;
+values = cell(1, M + 1);
+for i = 1:1:size(values, 2)
+    values{i} = {
+        10 * rand(3);
+        10 * rand(3);
+        };
+end
+Q = quantiles(values, 10);
+assert(all(all(cellfun(@(x) isequal(round(x{1}), 0:1:10), Q))), ...
+    [BRAPH2.STR ':quantiles:' BRAPH2.BUG_FUNC], ...
+    'Error in quantile calculation')
