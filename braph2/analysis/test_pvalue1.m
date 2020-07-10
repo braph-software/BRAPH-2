@@ -51,12 +51,12 @@ observed_difference = 6 * ones(3, 1) .* (2 * (randn(3, 1)>0) - 1);
 P1 = pvalue1(observed_difference, random_differences);
 assert(all(round(100 * P1) == 0), ...
     [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
-    'Error in quantile calculation')
+    'Error in pvalue1 calculation')
 observed_difference = 6 * ones(3, 1) .* (2 * (randn(3, 1)>0) - 1);
 P1 = pvalue1({observed_difference}, random_differences);
 assert(all(round(100 * P1{1}) == 0), ...
     [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
-    'Error in quantile calculation')
+    'Error in pvalue1 calculation')
 
 %% Test 3: Test matrix input
 M = 1e+3;
@@ -80,12 +80,12 @@ observed_difference = 6 * ones(3) .* (2 * (randn(3)>0) - 1);
 P1 = pvalue1(observed_difference, random_differences);
 assert(all(all(round(100 * P1) == 0)), ...
     [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
-    'Error in quantile calculation')
+    'Error in pvalue1 calculation')
 observed_difference = 6 * ones(3) .* (2 * (randn(3)>0) - 1);
 P1 = pvalue1({observed_difference}, random_differences);
 assert(all(all(round(100 * P1{1}) == 0)), ...
     [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
-    'Error in quantile calculation')
+    'Error in pvalue1 calculation')
 
 %% Test 4: Cell array input
 M = 1e+3;
@@ -113,4 +113,4 @@ observed_difference = {
 P1 = pvalue1(observed_difference, random_differences);
 assert(all(all(cellfun(@(x) all(all(round(100 * x) == 0)), P1))), ...
     [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
-    'Error in quantile calculation')
+    'Error in pvalue1 calculation')
