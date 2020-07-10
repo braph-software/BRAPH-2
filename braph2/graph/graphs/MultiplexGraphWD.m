@@ -16,8 +16,6 @@ classdef MultiplexGraphWD < Graph
     %   getDirectionalityType   - returns the directionality type of the graph
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
-    %   getCompatibleMeasureList - returns a list with compatible measures
-    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
     % See also Graph, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU.
     
@@ -309,51 +307,4 @@ classdef MultiplexGraphWD < Graph
             end
         end
     end
-%     methods
-%         function g = GraphWD(A, varargin)
-%             % GRAPHWD(A) creates a GRAPHWD class with adjacency matrix A.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % functions: DEDIAGONALIZE, SEMIPOSITIVE, STANDARDIZE.
-%             % It calls the superclass constructor GRAPH.
-%             %
-%             % GRAPHWD(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-%             % a GRAPHWD class with adjacency matrix A and it passes the
-%             % properties and values to the superclass as VARARGIN.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % functions: DEDIAGONALIZE, SEMIPOSITIVE, STANDARDIZE.
-%             % It calls the superclass constructor GRAPH.
-%             %
-%             % See also Graph, GraphBU, GraphBD, GraphWU.
-%             
-%             A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
-%             A = semipositivize(A, varargin{:});  % removes negative weights
-%             A = standardize(A, varargin{:});  % ensures all weights are between 0 and 1
-%             
-%             g = g@Graph(A, varargin{:});
-%         end
-%     end
-%     methods (Static)
-%         function list = getCompatibleMeasureList()
-%             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
-%             %
-%             % LIST = GETCOMPATIBLEMEASURELIST() returns a list with
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureNumber().
-%             
-%             list = Graph.getCompatibleMeasureList('GraphWD');
-%         end
-%         function n = getCompatibleMeasureNumber()
-%             % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible measures.
-%             %
-%             % N = GETCOMPATIBLEMEASURENUMBER() returns the number of
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureList().
-%             
-%             n = Graph.getCompatibleMeasureNumber('GraphWD');
-%         end
-%     end
 end
