@@ -17,6 +17,12 @@ classdef GraphWD < Graph
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
     %
+    % GraphWD randomize graph method
+    %   randomize               - returns a randomized graph
+    %
+    % GraphWD randomize A method (Static)
+    %   randomize_A             - returns a randomized correlation matrix
+    %
     % See also Graph, GraphBU, GraphBD, GraphWU.
     
     methods
@@ -130,63 +136,80 @@ classdef GraphWD < Graph
             %
             % See also getClass, getName, getDescription, getGraphType.
             
-            available_settings = { ...
-                 'GraphWD.NumberOfWeights', BRAPH2.NUMERIC, 5, {} ...
-                 };
+            available_settings = {};
         end
     end
-%     methods
-%         function g = GraphWD(A, varargin)
-%             % GRAPHWD(A) creates a GRAPHWD class with adjacency matrix A.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % functions: DEDIAGONALIZE, SEMIPOSITIVE, STANDARDIZE.
-%             % It calls the superclass constructor GRAPH.
-%             %
-%             % GRAPHWD(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-%             % a GRAPHWD class with adjacency matrix A and it passes the
-%             % properties and values to the superclass as VARARGIN.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % functions: DEDIAGONALIZE, SEMIPOSITIVE, STANDARDIZE.
-%             % It calls the superclass constructor GRAPH.
-%             %
-%             % See also Graph, GraphBU, GraphBD, GraphWU.
-%             
-%             A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
-%             A = semipositivize(A, varargin{:});  % removes negative weights
-%             A = standardize(A, varargin{:});  % ensures all weights are between 0 and 1
-%             
-%             g = g@Graph(A, varargin{:});
-%         end
-%     end
     methods
-        function [randomized_graph, correlation_coefficients] = randomize(g, varargin)
+        function random_g = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph and the correlation coefficients
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G) 
-            % returns the randomized graph RANDOMIZED_GRAPH and the strength
-            % correlation coefficients from the graph G and the randomized.
-            % Utilizes available graph settings.
+            % RANDOM_G = RANDOMIZE(G) returns the randomized graph
+            % RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A.
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'GraphWD.NumberOfWeights', 'NUMBER') 
-            % returns the randomized graph RANDOMIZED_GRAPH and the strength
-            % correlation coefficients from the graph G and the randomized.
-            % The randomization is performed with the specified number of
-            % weights NUMBER.
+            % RANDOM_G = RANDOMIZE(G, 'AttemptPerEdge', VALUE, 'NumberOfWeights', VALUE)
+            % returns the randomized graph RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A, it passes the
+            % attempts per edge and the number of weights specified by the user.
+            %
+            % See also randomize_A
             
             % get rules
-             number_of_weights = g.getSettings('GraphWU.NumberOfWeights');
+             number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
+             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
+             
+             A = g.getA();
+             random_A = GraphWD.randomize(A, attempts_per_edge, number_of_weights);
+             random_g = Graph.getGraph(Graph.getClass(g), ...
+                 random_A, ...
+                 varargin{:});
+        end
+    end
+    methods (Static)
+        function [random_A, correlation_coefficients] = randomize_A(A, attempts_per_edge, number_of_weights)
+            % RANDOMIZE_A returns a randomized correlation matrix
+            % This algorithm was proposed by Rubinov and Sporns (Neuroimage 56, 4, 2011).
+            %
+            % RANDOM_A = RANDOMIZE(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
+            % specifies the number of weights sorted at the same time. 
+            % ATTEMPTS_PER_EDGE is passed as an argument to GraphBD.
+            %
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE(G) 
+            % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
+            % specifies the number of weights sorted at the same time, it
+            % will be default value of 10. Returns the correlation coefficients 
+            % between the original and randomized nodal strengths. 
+            % High coefficients indicate more accurate preservation of
+            % the strength sequences. ATTEMPTS_PER_EDGE is passed as an
+            % argument to GraphBD, it will be default value of 5.
+            %
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
+            % specifies the number of weights sorted at the same time. Returns the
+            % correlation coefficients between the original and randomized nodal
+            % strengths. High coefficients indicate more accurate preservation of
+            % the strength sequences. ATTEMPTS_PER_EDGE is passed as an
+            % argument to GraphBD.
+            %
+            % See also randomize
             
-            W = g.getA();
-            graph_BD = GraphBD(W);
-            [A, ~] = graph_BD.randomize_graph(varargin{:});
+            if nargin < 2
+                attempts_per_edge = 5;
+            end
+            
+            if nargin < 3
+                number_of_weights = 10;
+            end
+                        
+            W = A;  % swaps with A
+            A = GraphBD.randomize_A(W, attempts_per_edge);
             % remove self connections
             A(1:length(A)+1:numel(A)) = 0;
             W(1:length(W)+1:numel(W)) = 0;
             W_bin = W > 0;
             N = size(A,1); % number of nodes
-            randomized_graph = zeros(N); % initialize null model matrix
+            random_A = zeros(N); % initialize null model matrix
             
             S_in = sum(W,1).'; % nodal in-strength
             S_out = sum(W,2);  % nodal out-strength
@@ -207,7 +230,7 @@ classdef GraphWD < Graph
                 selected_edges = ind(selected_indices);
                 
                 % assign corresponding sorted weight at this index
-                randomized_graph(edges(selected_edges)) = W_sorted(selected_indices);
+                random_A(edges(selected_edges)) = W_sorted(selected_indices);
                 
                 % recalculate expected weight for node I_edges(selected_edge)
                 WAi = accumarray(I_edges(selected_edges), W_sorted(selected_indices), [N,1]);
@@ -236,8 +259,8 @@ classdef GraphWD < Graph
             end
             
             % calculate correlation of original vs reassinged in/out strength
-            rpos_in = corrcoef(sum(W,1), sum(randomized_graph,1));
-            rpos_out = corrcoef(sum(W,2), sum(randomized_graph,2));
+            rpos_in = corrcoef(sum(W,1), sum(random_A,1));
+            rpos_out = corrcoef(sum(W,2), sum(random_A,2));
             correlation_coefficients = [rpos_in(2) rpos_out(2)];
         end
     end

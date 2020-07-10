@@ -17,6 +17,12 @@ classdef GraphBU < GraphBD
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
     %
+    % GraphBU randomize graph method
+    %   randomize               - returns a randomized graph
+    %
+    % GraphBU randomize A method (Static)
+    %   randomize_A             - returns a randomized correlation matrix
+    %
     % See also Graph, GraphBD, GraphWD, GraphWU.
     
     methods
@@ -134,19 +140,19 @@ classdef GraphBU < GraphBD
     end
     methods  % Randomize function
         function random_g = randomize(g, varargin)  % what we discussed in cafeteria is this (g, attempts_per_edge)
-            % RANDOMIZE returns a randomized graph and the number of swaps
+            % RANDOMIZE returns a randomized graph
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G) 
-            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
-            % number of edge swaps SWAPS. Utilizes available graph
-            % settings.
+            % RANDOM_G = RANDOMIZE(G) returns the randomized graph
+            % RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'GraphBU.AttemptsPerEdge', NUMBER)
-            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
-            % number of edge swaps SWAPS and the specified number of attempts 
-            % per edge NUMBER.
+            % RANDOM_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE) returns the 
+            % randomized graph RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A, it passes the
+            % attempts per edge specified by the user.
+            %
+            % See also randomize_A
             
-            % this works with with whts in gv-analysis-randomcomparisons
             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
             
             A = g.getA();
@@ -158,8 +164,25 @@ classdef GraphBU < GraphBD
         end
     end
     methods (Static)  % Randomize A function
-        function [random_A, swaps] = randomize_A(A, attempts_per_edge)  
-            % can pass g like. GraphBU.get_randomized_graph(Graph.getGraph(A), 'AttemptsPerEdge', 5)
+        function [random_A, swaps] = randomize_A(A, attempts_per_edge) 
+            % RANDOMIZE_A returns a randomized correlation matrix
+            %
+            % RANDOM_A = RANDOMIZE(G) returns the randomized matrix
+            % RANDOM_A. Tries to swap 5 times an edge. 
+            %
+            % [RANDOM_A, SWAPS] = RANDOMIZE(G) returns the randomized matrix
+            % RANDOM_A. Tries to swap 5 times an edge. Returns the number
+            % of succesful edge swaps.
+            %
+            % [RANDOM_A, SWAPS] = RANDOMIZE(G, ATTEMPTS_PER_EDGE) returns the 
+            % randomized matrix RANDOM_A. Tries to swap ATTEMPTS_PER_EDGE
+            % times an edge. Returns the number of succesful edge swaps.
+            %
+            % See also randomize
+            
+            if nargin < 2
+                attempts_per_edge = 5;
+            end
             
             % remove self connections
             A(1:length(A)+1:numel(A)) = 0;

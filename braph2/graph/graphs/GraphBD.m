@@ -17,6 +17,12 @@ classdef GraphBD < Graph
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
     %
+    % GraphBD randomize graph method
+    %   randomize               - returns a randomized graph
+    %
+    % GraphBD randomize A method (Static)
+    %   randomize_A             - returns a randomized correlation matrix
+    %
     % See also Graph, GraphBU, GraphWD, GraphWU.
     
     methods
@@ -130,66 +136,61 @@ classdef GraphBD < Graph
             %
             % See also getClass, getName, getDescription, getGraphType.
             
-            available_settings = { ...
-                 'GraphBD.AttemptsPerEdge', BRAPH2.NUMERIC, 5, {} ...
-                 };
+            available_settings = {};
         end
     end
-%     methods
-%         function g = GraphBD(A, varargin)
-%             % GRAPHBD(A) creates a GRAPHBD class with adjacency matrix A.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % functions: DEDIAGONALIZE, SEMIPOSITIVE, BINARIZE.
-%             % It calls the superclass constructor GRAPH.
-%             %
-%             % GRAPHBD(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-%             % a GRAPHBD class with adjacency matrix A and it passes the
-%             % properties and values to the superclass as VARARGIN.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % functions: DEDIAGONALIZE, SEMIPOSITIVE, BINARIZE.
-%             % It calls the superclass constructor GRAPH.
-%             %
-%             % See also Graph, GraphBU, GraphWD, GraphWU.
-%             
-%             A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
-%             A = semipositivize(A, varargin{:});  % removes negative weights
-%             A = binarize(A, varargin{:});  % enforces binary adjacency matrix
-%             
-%             g = g@Graph(A, varargin{:});
-%         end
-%     end
     methods
-        function [randomized_graph, swaps] = randomize(g, varargin)
-            % RANDOMIZE returns a randomized graph and the number of swaps
+        function random_g = randomize(g, varargin)
+            % RANDOMIZE returns a randomized graph
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G) 
-            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
-            % number of edge swaps SWAPS. Utilizes available graph
-            % settings.
+            % RANDOM_G = RANDOMIZE(G) returns the randomized graph
+            % RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'GraphBD.AttemptsPerEdge', NUMBER)
-            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
-            % number of edge swaps SWAPS and the specified number of attempts 
-            % per edge NUMBER.
+            % RANDOM_G = RANDOMIZE(G, 'AttemptPerEdge', VALUE) returns the 
+            % randomized graph RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A, it passes the
+            % attempts per edge specified by the user.
+            %
+            % See also randomize_A
             
-            % get rules
-            attempts_per_edge = g.getSettings('GraphBD.AttemptsPerEdge');
+            attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
             
-            if nargin<2
+            A = g.getA();
+            random_A = GraphBD.randomize_A(A, attempts_per_edge);
+                        
+            random_g = Graph.getGraph(Graph.getClass(g), ...
+                random_A, ...
+                varargin{:});            
+        end
+    end
+    methods (Static)
+        function [random_A, swaps] = randomize_A(A, attempts_per_edge)
+            % RANDOMIZE_A returns a randomized correlation matrix
+            %
+            % RANDOM_A = RANDOMIZE(G) returns the randomized matrix
+            % RANDOM_A. Tries to swap 5 times an edge. 
+            %
+            % [RANDOM_A, SWAPS] = RANDOMIZE(G) returns the randomized matrix
+            % RANDOM_A. Tries to swap 5 times an edge. Returns the number
+            % of succesful edge swaps.
+            %
+            % [RANDOM_A, SWAPS] = RANDOMIZE(G, ATTEMPTS_PER_EDGE) returns the 
+            % randomized matrix RANDOM_A. Tries to swap ATTEMPTS_PER_EDGE
+            % times an edge. Returns the number of succesful edge swaps.
+            %
+            % See also randomize
+            
+            if nargin < 2
                 attempts_per_edge = 5;
             end
-            
-            % get A
-            A = g.getA();
-            
+
             % remove self connections
             A(1:length(A)+1:numel(A)) = 0;
             [I_edges, J_edges] = find(A); % find all the edges
             E = length(I_edges); % number of edges
             
-            randomized_graph = A;
+            random_A = A;
             swaps = 0; % number of successful edge swaps
             for attempt = 1:1:attempts_per_edge*E
                 
@@ -207,20 +208,20 @@ classdef GraphBD < Graph
                 % 4) node_end_1 ~= node_end_2
                 % 5) node_start_1 ~= node_end_2
                 % 6) node_start_2 ~= node_end_1
-                if ~randomized_graph(node_start_1, node_end_2) && ...
-                        ~randomized_graph(node_start_2, node_end_1) && ...
+                if ~random_A(node_start_1, node_end_2) && ...
+                        ~random_A(node_start_2, node_end_1) && ...
                         node_start_1~=node_start_2 && ...
                         node_end_1~=node_end_2 && ...
                         node_start_1~=node_end_2 && ...
                         node_start_2~=node_end_1
                     
                     % erase old edges
-                    randomized_graph(node_start_1, node_end_1) = 0;
-                    randomized_graph(node_start_2, node_end_2) = 0;
+                    random_A(node_start_1, node_end_1) = 0;
+                    random_A(node_start_2, node_end_2) = 0;
                     
                     % write new edges
-                    randomized_graph(node_start_1, node_end_2) = 1;
-                    randomized_graph(node_start_2, node_end_1) = 1;
+                    random_A(node_start_1, node_end_2) = 1;
+                    random_A(node_start_2, node_end_1) = 1;
                     
                     % update edge list
                     J_edges(selected_edges(1)) = node_end_2;
