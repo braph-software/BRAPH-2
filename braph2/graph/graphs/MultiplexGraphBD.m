@@ -215,7 +215,7 @@ classdef MultiplexGraphBD < Graph
                 };
         end
     end
-    methods
+    methods  % Randomize function
         function [randomized_graph, swaps] = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph and the number of swaps
             %
