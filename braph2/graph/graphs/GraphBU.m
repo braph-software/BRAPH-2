@@ -130,7 +130,7 @@ classdef GraphBU < GraphBD
             % See also getClass, getName, getDescription, getGraphType.
             
             available_settings = { ...
-                 'GraphBU.AttemptsPerEdge', BRAPH2.NUMERIC, 5, {} ...
+                 % 'GraphBU.AttemptsPerEdge', BRAPH2.NUMERIC, 5, {} ...
                  };
         end
     end
@@ -172,7 +172,7 @@ classdef GraphBU < GraphBD
             % per edge NUMBER.
             
             % get rules
-            attempts_per_edge = g.getSettings('GraphBU.AttemptsPerEdge');
+            attempts_per_edge = get_from_varrgin(5, 'GraphBU.AttemptsPerEdge', varargin{:}); %g.getSettings('GraphBU.AttemptsPerEdge');
             
             if nargin<2
                 attempts_per_edge = 5;
@@ -186,7 +186,7 @@ classdef GraphBU < GraphBD
             [I_edges, J_edges] = find(triu(A)); % find the edges
             E = length(I_edges); % number of edges
             
-            randomized_graph = A;
+            randomized_A = A;
             swaps = 0; % number of successful edge swaps
             for attempt=1:1:attempts_per_edge*E
                 
@@ -213,26 +213,26 @@ classdef GraphBU < GraphBD
                 % 5) node_start_1 ~= node_end_2
                 % 6) node_start_2 ~= node_end_1
                 
-                if ~randomized_graph(node_start_1, node_end_2) && ...
-                        ~randomized_graph(node_start_2, node_end_1) && ...
+                if ~randomized_A(node_start_1, node_end_2) && ...
+                        ~randomized_A(node_start_2, node_end_1) && ...
                         node_start_1~=node_start_2 && ...
                         node_end_1~=node_end_2 && ...
                         node_start_1~=node_end_2 && ...
                         node_start_2~=node_end_1
                     
                     % erase old edges
-                    randomized_graph(node_start_1, node_end_1) = 0;
-                    randomized_graph(node_end_1, node_start_1) = 0;
+                    randomized_A(node_start_1, node_end_1) = 0;
+                    randomized_A(node_end_1, node_start_1) = 0;
                     
-                    randomized_graph(node_start_2, node_end_2) = 0;
-                    randomized_graph(node_end_2, node_start_2) = 0;
+                    randomized_A(node_start_2, node_end_2) = 0;
+                    randomized_A(node_end_2, node_start_2) = 0;
                     
                     % write new edges
-                    randomized_graph(node_start_1, node_end_2) = 1;
-                    randomized_graph(node_end_2, node_start_1) = 1;
+                    randomized_A(node_start_1, node_end_2) = 1;
+                    randomized_A(node_end_2, node_start_1) = 1;
                     
-                    randomized_graph(node_start_2, node_end_1) = 1;
-                    randomized_graph(node_end_1, node_start_2) = 1;
+                    randomized_A(node_start_2, node_end_1) = 1;
+                    randomized_A(node_end_1, node_start_2) = 1;
                     
                     % update edge list
                     J_edges(selected_edges(1)) = node_end_2;
@@ -241,6 +241,7 @@ classdef GraphBU < GraphBD
                     swaps = swaps+1;
                 end
             end
+            randomized_graph = Graph.getGraph(Graph.getClass(g), randomized_A, g.getSettings());
         end
     end
 end
