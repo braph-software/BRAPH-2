@@ -240,13 +240,9 @@ classdef AnalysisfMRI < Analysis
                 if verbose
                     disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
                 end
-                
-                if is_longitudinal
-                    [permutation_1, permutation_2] = Permutation.permute(values1, values2, is_longitudinal);
-                else
-                    [permutation_1, permutation_2] = Permutation.permute(values1, values2);
-                end
-                
+                                
+                [permutation_1, permutation_2] = permutation(values1, values2, is_longitudinal);
+
                 mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group_1.subjectnumber()]), 3);
                 mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), group_2.subjectnumber()]), 3);
                 
@@ -263,8 +259,7 @@ classdef AnalysisfMRI < Analysis
             p2 = {pvalue2(difference_mean{1}, difference_all_permutations)};  % double tail
             qtl = quantiles(difference_all_permutations, 40);
             ci_lower = {cellfun(@(x) x(2), qtl)};
-            ci_upper = {cellfun(@(x) x(40), qtl)};
-            
+            ci_upper = {cellfun(@(x) x(40), qtl)};s            
             
             comparison = Comparison.getComparison('ComparisonfMRI', ...
                 analysis.getComparisonID(measure_code, group_1, group_2, varargin{:}), ...
