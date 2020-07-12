@@ -145,11 +145,13 @@ classdef GraphWD < Graph
             %
             % RANDOM_G = RANDOMIZE(G) returns the randomized graph
             % RANDOM_G obtained with a randomized correlation
-            % matrix via the static function randomize_A.
+            % matrix via the static function randomize_A while preserving 
+            % degree and strength distributions.
             %
             % RANDOM_G = RANDOMIZE(G, 'AttemptPerEdge', VALUE, 'NumberOfWeights', VALUE)
             % returns the randomized graph RANDOM_G obtained with a randomized correlation
-            % matrix via the static function randomize_A, it passes the
+            % matrix via the static function randomize_A while preserving 
+            % degree and strength distributions, it passes the
             % attempts per edge and the number of weights specified by the user.
             %
             % See also randomize_A
@@ -159,7 +161,7 @@ classdef GraphWD < Graph
              attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
              
              A = g.getA();
-             random_A = GraphWD.randomize(A, attempts_per_edge, number_of_weights);
+             random_A = GraphWD.randomize_A(A, attempts_per_edge, number_of_weights);
              random_g = Graph.getGraph(Graph.getClass(g), ...
                  random_A, ...
                  varargin{:});
@@ -191,6 +193,10 @@ classdef GraphWD < Graph
             % strengths. High coefficients indicate more accurate preservation of
             % the strength sequences. ATTEMPTS_PER_EDGE is passed as an
             % argument to GraphBD.
+            %
+            % Modification History:
+            % Dec 2015: Original
+            % June 2019: Version 2 (Adam Liberda, Theo Berglin, Mite Mijalkov & Giovanni Volpe)
             %
             % See also randomize
             

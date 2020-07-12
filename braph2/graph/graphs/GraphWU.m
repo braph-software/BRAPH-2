@@ -155,13 +155,12 @@ classdef GraphWU < GraphWD
             %
             % See also randomize_A
             
-            % get rules
-           % get rules
+            % get rules          
              number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
              attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
              
              A = g.getA();
-             random_A = GraphWU.randomize(A, attempts_per_edge, number_of_weights);
+             random_A = GraphWU.randomize_A(A, attempts_per_edge, number_of_weights);
              random_g = Graph.getGraph(Graph.getClass(g), ...
                  random_A, ...
                  varargin{:});           

@@ -145,11 +145,13 @@ classdef GraphBD < Graph
             %
             % RANDOM_G = RANDOMIZE(G) returns the randomized graph
             % RANDOM_G obtained with a randomized correlation
-            % matrix via the static function randomize_A.
+            % matrix via the static function randomize_A while preserving 
+            % degree and strength distributions.
             %
             % RANDOM_G = RANDOMIZE(G, 'AttemptPerEdge', VALUE) returns the 
             % randomized graph RANDOM_G obtained with a randomized correlation
-            % matrix via the static function randomize_A, it passes the
+            % matrix via the static function randomize_A while preserving
+            % degree and strength distributions, it passes the
             % attempts per edge specified by the user.
             %
             % See also randomize_A
@@ -171,13 +173,17 @@ classdef GraphBD < Graph
             % RANDOM_A = RANDOMIZE(G) returns the randomized matrix
             % RANDOM_A. Tries to swap 5 times an edge. 
             %
-            % [RANDOM_A, SWAPS] = RANDOMIZE(G) returns the randomized matrix
-            % RANDOM_A. Tries to swap 5 times an edge. Returns the number
-            % of succesful edge swaps.
+            % [RANDOM_A, SWAPS] = RANDOMIZE(G) attempts to rewire each edge 
+            % 5 times. Returns the randomized matrix RANDOM_A. Returns the
+            % number of succesful edge swaps.  This algorithm was proposed
+            % by Maslov and Sneppen (Science 296, 910, 2002)
             %
-            % [RANDOM_A, SWAPS] = RANDOMIZE(G, ATTEMPTS_PER_EDGE) returns the 
-            % randomized matrix RANDOM_A. Tries to swap ATTEMPTS_PER_EDGE
-            % times an edge. Returns the number of succesful edge swaps.
+            % [RANDOM_A, SWAPS] = RANDOMIZE(G, ATTEMPTS_PER_EDGE) attempts
+            % to rewire each edge ATTEMPTS_PER_EDGE times then it returns the 
+            % randomized matrix RANDOM_A. Returns the number of succesful edge swaps.
+            %
+            % Modification History: 
+            % May 2019: Original (Adam Liberda, Theo Berglin, Mite Mijalkov & Giovanni Volpe)
             %
             % See also randomize
             
