@@ -709,6 +709,20 @@ for i = 1:1:length(graph_class_list)
         [graph_class '.is_negative() must be the opposite of ' graph_class '.is_nonnegative()'])
 end
 
+%% Test 8: Randomize function
+unilayer_graph_list = {'GraphBU', 'GraphBD', 'GraphWU', 'GraphWD'};
+for i = 1:1:4 %length(graph_class_list)    
+    graph_class = unilayer_graph_list{i};
+    A = rand(6);
+    g = Graph.getGraph(graph_class, A);
+    r_g = g.randomize();
+    r_A = r_g.getA();
+    
+    assert(~isequal(A, r_A), ...
+        [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
+        [graph_class '.is_negative() must be the opposite of ' graph_class '.is_nonnegative()'])
+end
+
 % %% Test 8: NodeAttack
 % n = randi(4);
 % nodes = [randi(n), randi(n)];
