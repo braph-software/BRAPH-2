@@ -80,10 +80,10 @@ cohort_2.getGroups().add(group2.getID(), group2);
 % act
 SubjectMRI.save_to_xls(cohort, save_dir_rule, save_dir_path);
 SubjectMRI.save_to_xls(cohort_2, save_dir_rule, save_dir_path_2);
-load_cohort = SubjectMRI.load_from_xls([], sub_class, atlas, save_dir_rule, save_dir_path);
+load_cohort = SubjectMRI.load_from_xls([], sub_class, 'Atlases', atlas, save_dir_rule, save_dir_path);
 
 % load 
-load_cohort_2 =SubjectMRI.load_from_xls(load_cohort, sub_class, atlas, save_dir_rule, save_dir_path_2);
+load_cohort_2 =SubjectMRI.load_from_xls(load_cohort, sub_class, save_dir_rule, save_dir_path_2);
 
 % assert
 assert(isequal(cohort.getSubjects().length() + cohort_2.getSubjects().length(), load_cohort_2.getSubjects().length()), ...
