@@ -200,7 +200,7 @@ classdef SubjectMRI < Subject
         end
     end
     methods (Static)  % Save/load functions
-        function cohort = load_from_xls(cohort, subject_class, varargin)
+        function cohort = load_from_xls(tmp, varargin)
             % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectMRI
             %
             % COHORT = LOAD_FROM_XLS([], SUBJECT_CLASS, 'ATLASES', VALUE) opens a GUI to
@@ -233,7 +233,12 @@ classdef SubjectMRI < Subject
                 end
             end
             
-            if isempty(cohort)
+            % Set/create cohort
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+            else  % tmp is an atlas
+                
+                % search for cohort info file
                 file_path = strsplit(file, filesep());
                 file_cohort_path = '';
                 for i = 1:1:length(file_path)-1
@@ -244,30 +249,19 @@ classdef SubjectMRI < Subject
                 cohort_id = '';
                 cohort_label = '';
                 cohort_notes = '';
-                
                 if exist(file_cohort, 'file')
                     raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
                     cohort_id = raw_cohort{1, 1};
                     cohort_label = raw_cohort{2, 1};
                     cohort_notes = raw_cohort{3, 1};
-                end                
+                end
                 
-                % creates cohort
-                atlases = get_from_varargin('', 'Atlases', varargin{:});
-                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});  
+                % creates new cohort
+                subject_class = 'SubjectMRI';
+                atlas = tmp;
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
             end
-            
-            % search for cohort info file
-         
-            [~, ~, raw] = xlsread(file);
-            atlases = cohort.getBrainAtlases();
-            for i = 5:1:size(raw, 1)
-                subject = Subject.getSubject(subject_class, ...                    
-                    char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlases, ...
-                    'MRI', cell2mat(raw(i, 4:size(raw, 2))'));
-                cohort.getSubjects().add(subject.getID(), subject, i);
-            end
-            
+                     
             % creates group
             group = Group(subject_class,'', '', '', cohort.getSubjects().getValues());
             path = [fileparts(which(file))]; %#ok<NBRAK>
@@ -279,6 +273,16 @@ classdef SubjectMRI < Subject
             group.setLabel(raw{2, 1});  % set group info
             group.setNotes(raw{3, 1});
             cohort.getGroups().add(group.getID(), group);
+            
+            % load subjects to cohort & add them to the group
+            [~, ~, raw] = xlsread(file);
+            atlas = cohort.getBrainAtlases();
+            for i = 5:1:size(raw, 1)
+                subject = Subject.getSubject(subject_class, ...                    
+                    char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlas, ...
+                    'MRI', cell2mat(raw(i, 4:size(raw, 2))'));
+                cohort.getSubjects().add(subject.getID(), subject, i);
+            end
         end
         function save_to_xls(cohort, varargin)
             % SAVE_TO_XLS saves the cohort of SubjectMRI to a '.xls' file
