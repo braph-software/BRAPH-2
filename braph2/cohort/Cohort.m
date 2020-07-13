@@ -33,6 +33,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
     %   removeSubjectFromGroup  - removes a subject from a specified group
     %   removeSubjectsFromGroup - removes subjects from a specified group
     %
+    % Cohort deep copy:
+    %   copy                    - deep copy
+    %
     % Additionally, it is possible to use the following IndexDictionary
     % methods through getSubjects():
     %   getSubjects()                   - returns the indexed dictionary br_idict with BrainRegions
