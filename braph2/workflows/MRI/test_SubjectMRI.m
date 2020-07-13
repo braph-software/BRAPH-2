@@ -62,11 +62,11 @@ save_dir_rule = 'File';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
 save_dir_path_2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.xlsx'];
 save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
+
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
 sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule, input_data);
 group = Group(sub_class, 'GroupName1', 'TestGroup1', 'notes1', {sub1, sub2, sub3});
-
 cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2, sub3});
 cohort.getGroups().add(group.getID(), group);
 
@@ -84,6 +84,7 @@ load_cohort = SubjectMRI.load_from_xls([], sub_class, atlas, save_dir_rule, save
 
 % load 
 load_cohort_2 =SubjectMRI.load_from_xls(load_cohort, sub_class, atlas, save_dir_rule, save_dir_path_2);
+
 % assert
 assert(isequal(cohort.getSubjects().length() + cohort_2.getSubjects().length(), load_cohort_2.getSubjects().length()), ...
     'BRAPH:SubjectMRI:SaveLoadXLS', ...
