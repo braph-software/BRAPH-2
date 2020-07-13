@@ -40,14 +40,16 @@ A = [ 0 1 0 1 0;
     0 1 1 0 0;
     ];
 
-r_A = GraphWU.randomize_A(A);
-g_A = GraphWU(A);
-r_g_A = GraphWU(r_A);
+B = max(A, transpose(A));
 
-d_g = Degree(g_A).getValue();
-d_rg = Degree(r_g_A).getValue();
+r_A = GraphWU.randomize_A(B);
+g = GraphWU(B);
+r_g = GraphWU(r_A);
+d_g = Degree(g).getValue();
+d_rg = Degree(r_g).getValue();
+hist_g = histcounts(d_g{1}, 1:5);
+hist_rg = histcounts(d_rg{1}, 1:5);
 
-% not passing
-% assert(isequal(d_g, d_rg), ...
-%     [BRAPH2.STR ':GraphWU:' BRAPH2.BUG_ERR], ...
-%     'GraphWU is not constructing well')
+assert(isequal(hist_g, hist_rg), ...
+    [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_ERR], ...
+    'GraphBU is not constructing well')

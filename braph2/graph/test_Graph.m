@@ -710,11 +710,9 @@ for i = 1:1:length(graph_class_list)
 end
 
 %% Test 8: Randomize function
-unilayer_graph_list = {'GraphBU', 'GraphBD', 'GraphWU', 'GraphWD'};
-for i = 1:1:4 %length(graph_class_list)    
-    graph_class = unilayer_graph_list{i};
-    A = rand(6);
-    g = Graph.getGraph(graph_class, A);
+for i = 1:1:length(graph_class_list)    
+    graph_class = graph_class_list{i};    
+    g = Graph.getGraph(graph_class, []);
     r_g = g.randomize();
     r_A = r_g.getA();
     

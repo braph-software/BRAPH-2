@@ -42,7 +42,10 @@ classdef GraphWU < GraphWD
             % It calls the superclass constructor GRAPHWD.
             %
             % See also Graph, DummyGraph, GraphBD, GraphWD, GraphBU.
-            
+                        
+            if isempty(A)
+                 A = rand(4);
+            end
             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
             
             g = g@GraphWD(A, varargin{:});

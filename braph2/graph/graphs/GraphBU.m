@@ -43,6 +43,9 @@ classdef GraphBU < GraphBD
             %
             % See also Graph, DummyGraph, GraphBD, GraphWD, GraphWU.
             
+            if isempty(A)
+                 A = rand(4);
+            end
             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
             
             g = g@GraphBD(A, varargin{:});

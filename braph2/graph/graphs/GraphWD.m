@@ -43,6 +43,9 @@ classdef GraphWD < Graph
             %
             % See also Graph, DummyGraph, GraphBU, GraphBD, GraphWU.
             
+            if isempty(A)
+                 A = rand(4);
+            end
             A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
             A = semipositivize(A, varargin{:});  % removes negative weights
             A = standardize(A, varargin{:});  % ensures all weights are between 0 and 1

@@ -43,6 +43,9 @@ classdef GraphBD < Graph
             %
             % See also Graph, DummyGraph, GraphBU, GraphWD, GraphWU.
             
+            if isempty(A)
+                 A = rand(4);
+            end
             A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
             A = semipositivize(A, varargin{:});  % removes negative weights
             A = binarize(A, varargin{:});  % enforces binary adjacency matrix
@@ -146,12 +149,12 @@ classdef GraphBD < Graph
             % RANDOM_G = RANDOMIZE(G) returns the randomized graph
             % RANDOM_G obtained with a randomized correlation
             % matrix via the static function randomize_A while preserving 
-            % degree and strength distributions.
+            % degree distributions.
             %
             % RANDOM_G = RANDOMIZE(G, 'AttemptPerEdge', VALUE) returns the 
             % randomized graph RANDOM_G obtained with a randomized correlation
             % matrix via the static function randomize_A while preserving
-            % degree and strength distributions, it passes the
+            % degree distributions, it passes the
             % attempts per edge specified by the user.
             %
             % See also randomize_A
