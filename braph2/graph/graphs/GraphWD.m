@@ -149,12 +149,12 @@ classdef GraphWD < Graph
             % RANDOM_G = RANDOMIZE(G) returns the randomized graph
             % RANDOM_G obtained with a randomized correlation
             % matrix via the static function randomize_A while preserving 
-            % degree and strength distributions.
+            % degree distributions.
             %
             % RANDOM_G = RANDOMIZE(G, 'AttemptPerEdge', VALUE, 'NumberOfWeights', VALUE)
             % returns the randomized graph RANDOM_G obtained with a randomized correlation
             % matrix via the static function randomize_A while preserving 
-            % degree and strength distributions, it passes the
+            % degree distributions, it passes the
             % attempts per edge and the number of weights specified by the user.
             %
             % See also randomize_A

@@ -233,6 +233,8 @@ classdef MultiplexGraphBD < Graph
             % The multiplex is randomized layer by layer where randomized 
             % adjacency matrix of each layer are then integrated in the 
             % 2-D supra-adjacency matrix cell array.
+            %
+            % See also GraphBD
             
             % get rules
             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
@@ -251,7 +253,7 @@ classdef MultiplexGraphBD < Graph
                 random_A = GraphBD.randomize_A(Aii, attempts_per_edge);
                 random_multi_A(li, li) = {random_A};
             end
-            random_g = MultiplexGraphBD(random_multi_A(li, li), varargin{:});
+            random_g = MultiplexGraphBD(random_multi_A, varargin{:});
         end
     end
 end

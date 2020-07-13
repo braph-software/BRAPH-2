@@ -206,7 +206,7 @@ classdef MultiplexGraphWU < MultiplexGraphWD
         end
     end
     methods
-        function [randomized_graph, correlation_coefficients] = randomize(g, varargin)    
+        function randomized_g = randomize(g, varargin)    
             % RANDOMIZE returns a randomized graph and the correlation coefficients
             %
             % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G) 
@@ -225,72 +225,18 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             
             % get rules
             number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
+            attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
             
-            W = g.getA();
-            multiplex_graph_BU = MultiplexGraphBU(W);
-            [A, ~] = multiplex_graph_BU.randomize_graph(varargin{:});
-            L = g.layernumber();
-            correlation_coefficients = cell(L, 1);
-            randomized_graph = A;
+            A = g.getA();
+            L = g.layernumber();         
+            random_multi_A = A;
             
             for li = 1:1:L
                 Aii = A{li, li};
-                Wii = W{li, li};
-                % remove self connections
-                Aii(1:length(Aii)+1:numel(Aii)) = 0;
-                Wii(1:length(Wii)+1:numel(Wii)) = 0;
-                W_bin = Wii > 0;
-                N = size(Aii, 1);  % number of nodes
-                randomized_graph_layer = zeros(N);  % intialize null model matrix
-
-                S = sum(Wii, 2);  % nodal strength
-                W_sorted = sort(Wii(triu(W_bin)));  % sorted weights vector
-                % find all the edges
-                [I_edges, J_edges] = find(triu(Aii));
-                edges = I_edges + (J_edges - 1)*N;
-                % expected weights matrix
-                P = (S*S.');
-
-                for m = numel(W_sorted):-number_of_weights:1
-
-                    % sort the expected weights matrix
-                    [~, ind] = sort(P(edges));
-
-                    % random index of sorted expected weight
-                    selected_indices = randperm(m, min(m, number_of_weights)).';
-                    selected_edges = ind(selected_indices);
-
-                    % assign corresponding sorted weight at this index
-                    randomized_graph_layer(edges(selected_edges)) = W_sorted(selected_indices);
-
-                    % recalculate expected weight for node I_edges(selected_edge)
-                    % cumulative weight
-                    WA = accumarray([I_edges(selected_edges); J_edges(selected_edges)], W_sorted([selected_indices; selected_indices]), [N, 1]);
-                    IJu = any(WA, 2);
-                    F = 1 - WA(IJu)./S(IJu);
-                    F = F(:, ones(1, N));
-                    % readjust expected weight probabilities
-                    P(IJu, :) = P(IJu, :).*F;
-                    P(:, IJu) = P(:, IJu).*F.';
-                    % re-adjust strengths
-                    S(IJu) = S(IJu) - WA(IJu);
-
-                    % remove the edge/weight from further consideration
-                    selected_edges = ind(selected_indices);
-                    edges(selected_edges) = [];
-                    I_edges(selected_edges) = [];
-                    J_edges(selected_edges) = [];
-                    W_sorted(selected_indices) = [];
-                end
-
-                % calculate the final matrix
-                randomized_graph_layer = randomized_graph_layer + transpose(randomized_graph_layer);
-
-                % calculate correlation of original vs reassinged strength
-                rpos = corrcoef(sum(Wii), sum(randomized_graph_layer));
-                correlation_coefficients = {rpos(2)};
-                randomized_graph(li, li) = {randomized_graph_layer};
+                random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
+                random_multi_A(li, li) = {random_A};
             end
+            randomized_g = MultiplexGraphWU(random_multi_A, varargin{:});
         end
     end
 end

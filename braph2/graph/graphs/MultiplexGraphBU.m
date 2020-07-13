@@ -209,17 +209,22 @@ classdef MultiplexGraphBU < MultiplexGraphBD
         function randomized_g = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE() returns the randomized
-            % graph RANDOMIZED_GRAPH obtained from a number of edge swaps SWAPS.
-            % The randomization it is done layer by layer and then
-            % integrated in the 2-D supra-adjacency matrix cell array.
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE() returns the randomized 
+            % graph RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A while preserving 
+            % degree distributions. The randomization it is done layer by 
+            % layer and then integrated in the 2-D supra-adjacency matrix 
+            % cell array.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'MultiplexGraphBU.AttemptsPerEdge', NUMBER)
-            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
-            % number of edge swaps SWAPS and the specified number of attempts 
-            % per edge NUMBER. The multiplex is randomized layer by 
-            % layer where randomized adjacency matrix of each layer are then  
-            % integrated in the 2-D supra-adjacency matrix cell array.
+            % RANDOMIZED_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE)
+            % returns the randomized graph RANDOM_G obtained with a 
+            % randomized correlation matrix via the static function 
+            % randomize_A while preserving  degree distributions.
+            % The multiplex is randomized layer by layer where randomized 
+            % adjacency matrix of each layer are then integrated in the 
+            % 2-D supra-adjacency matrix cell array
+            %
+            % See also GraphBU
             
             % get rules
             attempts_per_edge = get_from_varargin(10, 'AttemptsPerEdge', varargin{:});
