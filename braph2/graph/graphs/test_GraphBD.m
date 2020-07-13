@@ -47,7 +47,6 @@ assert(isequal(hist_g, hist_rg), ...
     [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_FUNC], ...
     'GraphBD randomize is not working.')
 
-
 %% Test 3: Static randomize function degree distribution preservation
 A = [ 0 1 0 1 0;
       1 0 0 0 1;

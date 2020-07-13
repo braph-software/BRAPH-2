@@ -13,7 +13,7 @@ assert(isequal(g.getA(), A), ...
        [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_ERR], ...
        'GraphBU is not constructing well')
 
-%% Test 2: Randomize Degree distribution preservation
+%% Test 2: Randomize degree distribution preservation
 A = [ 0 1 0 1 0;
       1 0 0 0 1;
       0 0 0 1 0;
@@ -38,7 +38,6 @@ assert(isequal(d_g, d_rg), ...
 assert(isequal(hist_g, hist_rg), ...
     [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_FUNC], ...
     'GraphBU randomize is not working.')
-
 
 %% Test 3: Static randomize function degree distribution preservation
 A = [ 0 1 0 1 0;
