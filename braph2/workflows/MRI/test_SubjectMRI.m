@@ -29,7 +29,7 @@ cohort.getGroups().add(group.getID(), group);
 % act
 SubjectMRI.save_to_xls(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectMRI.load_from_xls([], sub_class, atlas, save_dir_rule, save_dir_path);
+load_cohort = SubjectMRI.load_from_xls([], sub_class, 'Atlases', atlas, save_dir_rule, save_dir_path);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...

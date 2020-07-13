@@ -200,22 +200,22 @@ classdef SubjectMRI < Subject
         end
     end
     methods (Static)  % Save/load functions
-        function cohort = load_from_xls(cohort, subject_class, atlases, varargin)
+        function cohort = load_from_xls(cohort, subject_class, varargin)
             % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectMRI
             %
-            % COHORT = LOAD_FROM_XLS([], SUBJECT_CLASS, ATLASES) opens a GUI to
+            % COHORT = LOAD_FROM_XLS([], SUBJECT_CLASS, 'ATLASES', VALUE) opens a GUI to
             % load a directory where it reads '.xls' or '.xlsx' files. It 
-            % creates a cohort of SubjectMRI with brain atlas ATLASES.
+            % creates a cohort of SubjectMRI with brain atlas VALUE.
             %
-            % COHORT = LOAD_FROM_XLS(COHORT, SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % COHORT = LOAD_FROM_XLS([], SUBJECT_CLASS, 'ATLASES', VALUE, 'Directory', PATH)
             % loads the directory in PATH where it reads '.xls' or '.xlsx'
-            % files. It creates a cohort of SubjectMRI with brain atlas ATLASES.
+            % files. It creates a cohort of SubjectMRI with brain atlas VALUE.
             %
-            % COHORT = LOAD_FROM_XLS(COHORT, SUBJECT_CLASS, ATLASES) opens a GUI to
+            % COHORT = LOAD_FROM_XLS(COHORT, SUBJECT_CLASS) opens a GUI to
             % load a directory where it reads '.xls' or '.xlsx' files. It 
             % loads to the COHORT of SubjectMRI with brain atlas ATLASES.
             %
-            % COHORT = LOAD_FROM_XLS(COHORT, SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % COHORT = LOAD_FROM_XLS(COHORT, SUBJECT_CLASS, 'Directory', PATH)
             % loads the directory in PATH where it reads '.xls' or '.xlsx'
             % files. It loads to the COHORT of SubjectMRI with brain atlas ATLASES.
             % 
@@ -253,13 +253,14 @@ classdef SubjectMRI < Subject
                 end                
                 
                 % creates cohort
+                atlases = get_from_varargin('', 'Atlases', varargin{:});
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});  
             end
             
             % search for cohort info file
          
             [~, ~, raw] = xlsread(file);
-            
+            atlases = cohort.getBrainAtlases();
             for i = 5:1:size(raw, 1)
                 subject = Subject.getSubject(subject_class, ...                    
                     char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlases, ...
