@@ -203,7 +203,7 @@ classdef SubjectMRI < Subject
         function cohort = load_from_xls(cohort, subject_class, atlases, varargin)
             % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectMRI
             %
-            % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES) opens a GUI to
+            % COHORT = LOAD_FROM_XLS([], SUBJECT_CLASS, ATLASES) opens a GUI to
             % load a directory where it reads '.xls' or '.xlsx' files. It 
             % creates a cohort of SubjectMRI with brain atlas ATLASES.
             %
@@ -219,7 +219,7 @@ classdef SubjectMRI < Subject
             % loads the directory in PATH where it reads '.xls' or '.xlsx'
             % files. It loads to the COHORT of SubjectMRI with brain atlas ATLASES.
             % 
-            % See also save_to_xls, load_from_txt, load_from_json
+            % See also save_to_xls, load_from_txt, load_from_json.
             
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
