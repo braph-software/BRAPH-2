@@ -207,10 +207,10 @@ classdef DummyMultilayer < Graph
         function gr = randomize(g, varargin)
             % RANDOMIZE  returns a randomized graph
             %
-            % GR = RANDOMIZE(G, VARARARGIN) returns a randomized graph of
-            % class 'DummyMultilayer'
+            % GR = RANDOMIZE(G) returns a randomized graph of
+            % class 'DummyMultilayer'.
             % 
-            % See also DummyMultilayer
+            % See also DummyMultilayer.
             
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());

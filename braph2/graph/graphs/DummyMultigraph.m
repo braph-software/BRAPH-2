@@ -198,10 +198,10 @@ classdef DummyMultigraph < Graph
         function gr = randomize(g, varargin)
             % RANDOMIZE  returns a randomized graph
             %
-            % GR = RANDOMIZE(G, VARARARGIN) returns a randomized graph of
-            % class 'DummyMultigraph'
+            % GR = RANDOMIZE(G) returns a randomized graph of
+            % class 'DummyMultigraph'.
             % 
-            % See also DummyMultigraph
+            % See also DummyMultigraph.
             
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());

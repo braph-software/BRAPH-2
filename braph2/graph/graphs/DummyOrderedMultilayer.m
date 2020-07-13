@@ -225,12 +225,12 @@ classdef DummyOrderedMultilayer < Graph
     end
     methods  % Randomize methods
         function gr = randomize(g, varargin)
-            % RANDOMIZE  returns a randomized graph
+            % RANDOMIZE returns a randomized graph
             %
-            % GR = RANDOMIZE(G, VARARARGIN) returns a randomized graph of
-            % class 'DummyOrderedMultilayer'
+            % GR = RANDOMIZE(G) returns a randomized graph of
+            % class 'DummyOrderedMultilayer'.
             % 
-            % See also DummyOrderedMultilayer
+            % See also DummyOrderedMultilayer.
             
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
