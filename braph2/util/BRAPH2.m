@@ -14,6 +14,7 @@ classdef BRAPH2
     %   WRONG_INPUT     - wrong input value or format in a function
     %   WRONG_OUTPUT    - wrong output value or format in a function
     %   BUG_FUNC        - bug in a function (wrong behavior)
+    %   BUG_IO          - bug while loading/saving
     %   BUG_COPY        - bug while deep-copying an object
     
     properties (Constant)  % BRAPH2 ID Card
@@ -29,6 +30,7 @@ classdef BRAPH2
         WRONG_OUTPUT = 'WrongOutput'  % wrong output value or format in a function
         BUG_FUNC = 'BugFunc'  % bug in a function (wrong behavior)
         BUG_COPY = 'BugCopy'  % bug while deep-copying an object
+        BUG_IO = 'BugIO'  % bug while loading/saving
         BUG_ERR = 'BugErr'  % Bug in the handling of errors
     end
     properties (Constant)  % BRAPH2 file extensions and messages
