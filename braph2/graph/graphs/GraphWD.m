@@ -142,7 +142,7 @@ classdef GraphWD < Graph
             available_settings = {};
         end
     end
-    methods
+    methods % Randomize methods
         function random_g = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph and the correlation coefficients
             %
@@ -169,8 +169,8 @@ classdef GraphWD < Graph
                  random_A, ...
                  varargin{:});
         end
-    end
-    methods (Static)
+    end 
+    methods (Static) % Randomize methods
         function [random_A, correlation_coefficients] = randomize_A(A, attempts_per_edge, number_of_weights)
             % RANDOMIZE_A returns a randomized correlation matrix
             % This algorithm was proposed by Rubinov and Sporns (Neuroimage 56, 4, 2011).

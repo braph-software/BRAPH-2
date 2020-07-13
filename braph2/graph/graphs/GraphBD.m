@@ -142,7 +142,7 @@ classdef GraphBD < Graph
             available_settings = {};
         end
     end
-    methods
+    methods  % Randomize methods
         function random_g = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph
             %
@@ -169,7 +169,7 @@ classdef GraphBD < Graph
                 varargin{:});            
         end
     end
-    methods (Static)
+    methods (Static)  % Randomize methods
         function [random_A, swaps] = randomize_A(A, attempts_per_edge)
             % RANDOMIZE_A returns a randomized correlation matrix
             %

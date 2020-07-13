@@ -205,7 +205,7 @@ classdef MultiplexGraphWU < MultiplexGraphWD
                 };
         end
     end
-    methods
+    methods  % Randomize methods
         function randomized_g = randomize(g, varargin)    
             % RANDOMIZE returns a randomized graph and the correlation coefficients
             %

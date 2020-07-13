@@ -20,7 +20,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
     %
     % See also Graph, MultiplexGraphBD, MultiplexGraphWD, MultiplexGraphWU.
     
-    methods
+    methods  
         function g = MultiplexGraphBU(A, varargin)
             % MULTIPLEXGRAPHBU(A) creates a MULTIPLEXGRAPHBU class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
@@ -205,7 +205,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
                 };
         end
     end
-    methods
+    methods  % Randomize methods
         function randomized_g = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph
             %

@@ -19,7 +19,7 @@ classdef DummyOrderedMultiplex < Graph
     %   getSelfConnectivityType - returns if graph is self-connected or not self-connected
     %   getNegativityType       - returns if graph is negative or non-negative
     %
-    % Graph randomization method (static):
+    % Graph randomization method:
     %   randomize               - randomize graph
     %
     % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer.
@@ -223,19 +223,15 @@ classdef DummyOrderedMultiplex < Graph
             end
         end
     end
-    methods (Static)
-        function gr = randomize_A(g, varargin)
-            % RANDOMIZE returns a the graph unchanged for DummyOrderedMultiplex
-            %
-            % GR = RANDOMIZE(G) returns a the graph unchanged for
-            % DummyOrderedMultiplex. Utilizes available graph settings.
-            
-            A = g.getA(); % get A, which is left unchanged
-            gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
-        end
-    end
-    methods
+    methods  % Randomize methods
         function gr = randomize(g, varargin)
+            % RANDOMIZE  returns a randomized graph
+            %
+            % GR = RANDOMIZE(G, VARARARGIN) returns a randomized graph of
+            % class 'DummyOrderedMultiplex'
+            % 
+            % See also DummyOrderedMultiplex
+            
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
