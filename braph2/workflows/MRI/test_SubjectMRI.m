@@ -134,7 +134,7 @@ cohort.getGroups().add(group.getID(), group);
 % act
 SubjectMRI.save_to_txt(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectMRI.load_from_txt(sub_class, atlas, save_dir_rule, save_dir_path);
+load_cohort = SubjectMRI.load_from_txt([], sub_class, atlas, save_dir_rule, save_dir_path);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
