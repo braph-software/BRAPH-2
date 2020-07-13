@@ -14,7 +14,7 @@ assert(isequal(g.getA(), A), ...
     [BRAPH2.STR ':MultiplexGraphBU:' BRAPH2.BUG_ERR], ...
     'MultiplexGraphBU is not constructing well')
 
-%% Test 2: Randomize Degree distribution preservation
+%% Test 2: Randomize degree distribution preservation
 B = [ 0 1 0 1 0;
     1 0 0 0 1;
     0 0 0 1 0;

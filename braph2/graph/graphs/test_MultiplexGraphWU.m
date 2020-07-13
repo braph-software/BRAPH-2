@@ -14,7 +14,7 @@ assert(isequal(g.getA(), A), ...
     [BRAPH2.STR ':MultiplexGraphWU:' BRAPH2.BUG_ERR], ...
     'MultiplexGraphWU is not constructing well')
 
-%% Test 2: Randomize Degree distribution preservation
+%% Test 2: Randomize degree distribution preservation
 B = [ 0 1 0 1 0;
     1 0 0 0 1;
     0 0 0 1 0;
@@ -33,7 +33,6 @@ d_g{1} = sort(d_g{1});
 d_g{2} = sort(d_g{2});
 d_rg{1} = sort(d_rg{1});
 d_rg{2} = sort(d_rg{2});
-
 
 hist_g_1 = histcounts(d_g{1}, 1:5);
 hist_rg_1 = histcounts(d_rg{1}, 1:5);
