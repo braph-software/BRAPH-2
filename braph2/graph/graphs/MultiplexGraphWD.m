@@ -17,6 +17,9 @@ classdef MultiplexGraphWD < Graph
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
     %
+    % MultiplexGraphWD randomize graph method
+    %   randomize               - returns a randomized graph
+    %
     % See also Graph, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU.
     
     methods
@@ -216,95 +219,35 @@ classdef MultiplexGraphWD < Graph
         end
     end
     methods
-        function [randomized_graph, correlation_coefficients] = randomize(g, varargin)
-            % RANDOMIZE returns a randomized graph and the correlation coefficients
+        function random_g = randomize(g, varargin)
+            % RANDOMIZE returns a randomized graph
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G) 
-            % returns the randomized graph RANDOMIZED_GRAPH and the strength
-            % correlation coefficients from the graph G and the randomized.
+            % RANDOMIZED_G, CORRELATION_COEFFICIENTS = RANDOMIZE(G) 
+            % returns the randomized graph RANDOMIZED_GRAPH from the graph G.
             % The randomization it is done layer by layer and then
             % integrated in the 2-D supra-adjacency matrix cell array.
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'MultiplexGraphWD.NumberOfWeights', 'NUMBER') 
-            % returns the randomized graph RANDOMIZED_GRAPH and the strength
-            % correlation coefficients from the graph G and the randomized.
+            % RANDOMIZED_G = RANDOMIZE(G, 'AttemptPerEdge', VALUE, 'NumberOfWeights', VALUE) 
+            % returns the randomized graph RANDOMIZED_GRAPH from the graph G.
             % The randomization is performed with the specified number of
             % weights NUMBER. The multiplex is randomized layer by layer 
             % where randomized adjacency matrix of each layer are then  
             % integrated in the 2-D supra-adjacency matrix cell array.
             
             % get rules
-            number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
+             number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
+             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
             
-            W = g.getA();            
-            multiplex_graph_BD = MultiplexGraphBD(W);
-            [A, ~] = multiplex_graph_BD.randomize_graph(varargin{:});
-            L = g.layernumber();
-            correlation_coefficients = cell(L, 1);
-            randomized_graph = A;
+            A = g.getA();
+            L = g.layernumber();         
+            random_multi_A = A;
             
             for li = 1:1:L
                 Aii = A{li, li};
-                Wii = W{li, li};       
-                % remove self connections
-                Aii(1:length(Aii)+1:numel(Aii)) = 0;
-                Wii(1:length(Wii)+1:numel(Wii)) = 0;
-                W_bin = Wii > 0;
-                N = size(Aii, 1);  % number of nodes
-                randomized_graph_layer = zeros(N);  % initialize null model matrix
-                S_in = sum(Wii, 1).';  % nodal in-strength
-                S_out = sum(Wii, 2);  % nodal out-strength
-                W_sorted = sort(Wii(W_bin));  % sorted weights vector
-                % find all the edges
-                [I_edges, J_edges] = find(Aii);
-                edges = I_edges + (J_edges - 1)*N;
-                % expected weights matrix
-                P = (S_out*S_in.');
-
-                for m = numel(W_sorted):-number_of_weights:1
-
-                    % sort the expected weights matrix
-                    [~, ind] = sort(P(edges));
-
-                    % random index of sorted expected weight
-                    selected_indices = randperm(m, min(m,number_of_weights)).';
-                    selected_edges = ind(selected_indices);
-
-                    % assign corresponding sorted weight at this index
-                    randomized_graph_layer(edges(selected_edges)) = W_sorted(selected_indices);
-
-                    % recalculate expected weight for node I_edges(selected_edge)
-                    WAi = accumarray(I_edges(selected_edges), W_sorted(selected_indices), [N, 1]);
-                    Iu = any(WAi, 2);
-                    % readjust expected weight probabilities
-                    F = 1 - WAi(Iu)./S_out(Iu);
-                    P(Iu, :) = P(Iu, :).*F(:, ones(1, N));
-                    % readjust in-strength
-                    S_out(Iu) = S_out(Iu) - WAi(Iu);
-
-                    % recalculate expected weight for node J_edges(selected_edge)
-                    WAj = accumarray(J_edges(selected_edges), W_sorted(selected_indices), [N, 1]);
-                    Ju = any(WAj, 2);
-                    % readjust expected weight probabilities
-                    F = 1 - WAj(Ju)./S_in(Ju);
-                    P(:, Ju) = P(:, Ju).*F(:, ones(1, N)).';
-                    % readjust out-strength
-                    S_in(Ju) = S_in(Ju) - WAj(Ju);
-
-                    % remove the edge/weight from further consideration
-                    selected_edges = ind(selected_indices);
-                    edges(selected_edges) = [];
-                    I_edges(selected_edges) = [];
-                    J_edges(selected_edges) = [];
-                    W_sorted(selected_indices) = [];
-                end
-
-                % calculate correlation of original vs reassinged in/out strength
-                rpos_in = corrcoef(sum(Wii, 1), sum(randomized_graph_layer, 1));
-                rpos_out = corrcoef(sum(Wii, 2), sum(randomized_graph_layer, 2));
-                correlation_coefficients(li) = {[rpos_in(2) rpos_out(2)]};
-                randomized_graph(li, li) = {randomized_graph_layer};
+                random_A = GraphWD.randomize_A(Aii, attempts_per_edge, number_of_weights);
+                random_multi_A(li, li) = {random_A};
             end
+            random_g = MultiplexGraphWD(random_multi_A, varargin{:});
         end
     end
 end

@@ -19,18 +19,18 @@ classdef DummyMultilayer < Graph
     %   getSelfConnectivityType - returns if graph is self-connected or not self-connected
     %   getNegativityType       - returns if graph is negative or non-negative
     %
-    % Graph randomization method (static):
+    % Graph randomization method:
     %   randomize               - randomize graph
-    % 
+    %
     % See also Graph, DummyGraph, DummyMultigraph, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
     
     methods  % Constructor
         function g = DummyMultilayer(A, varargin)
             % DUMMYMULTILAYER() creates a DUMMYMULTILAYER class with a
             % default supra-adjacency matrix A:
-            % A =   BD(4)       BD(4, 3)    WD(4, 2) 
-            %       BD(3, 4)    BD(3)       BD(3, 2)  
-            %       WD(2, 4)    BD(2, 3)    WD(2) 
+            % A =   BD(4)       BD(4, 3)    WD(4, 2)
+            %       BD(3, 4)    BD(3)       BD(3, 2)
+            %       WD(2, 4)    BD(2, 3)    WD(2)
             % where all weights are initialized randomly and
             %       WD(2) = weighted undirected 2 x 2 with weights in [0, 1]
             %       BD(4) = binary directed 4 x 4 with weights in 0 or 1
@@ -42,16 +42,16 @@ classdef DummyMultilayer < Graph
             %
             % DUMMYMULTILAYER(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
             % initializes DUMMYMULTILAYER with the properties and values
-            % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... 
+            % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...
             %
             % See also Graph, DummyGraph, DummyMultigraph, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
-                        
+            
             if isempty(A)
                 A = {
-                round(rand(4))      round(rand(4, 3))   randn(4, 2)
-                round(rand(3, 4))   round(rand(3))      round(rand(3, 2))
-                randn(2, 4)         round(rand(2, 3)) 	randn(2)
-                };
+                    round(rand(4))      round(rand(4, 3))   randn(4, 2)
+                    round(rand(3, 4))   round(rand(3))      round(rand(3, 2))
+                    randn(2, 4)         round(rand(2, 3)) 	randn(2)
+                    };
             end
             
             assert(length(A) == 3, ...
@@ -96,29 +96,29 @@ classdef DummyMultilayer < Graph
         function graph_type = getGraphType()
             % GETGRAPHTYPE returns the graph type
             %
-            % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTILAYER 
+            % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTILAYER
             %
             % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
-
+            
             graph_type = Graph.MULTILAYER;
         end
         function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns a 
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns a
             % matrix with BINARY for the first and second layers, and
             % WEIGHTED for the third layer.
             % It returns:
-            % CONNECTIVITY_TYPE = BINARY    BINARY  WEIGHTED  
-            %                     BINARY    BINARY  BINARY  
-            %                     WEIGHTED  BINARY  WEIGHTED 
+            % CONNECTIVITY_TYPE = BINARY    BINARY  WEIGHTED
+            %                     BINARY    BINARY  BINARY
+            %                     WEIGHTED  BINARY  WEIGHTED
             % where BINARY = Graph.BINARY and WEIGHTED = Graph.WEIGHTED.
-            %           
+            %
             % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
-                        
-            connectivity_type = [ 
+            
+            connectivity_type = [
                 Graph.BINARY    Graph.BINARY    Graph.WEIGHTED
-                Graph.BINARY    Graph.BINARY    Graph.BINARY 
+                Graph.BINARY    Graph.BINARY    Graph.BINARY
                 Graph.WEIGHTED  Graph.BINARY    Graph.WEIGHTED
                 ];
         end
@@ -128,17 +128,17 @@ classdef DummyMultilayer < Graph
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns
             % Graph.DIRECTED.
             %
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns 
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.DIRECTED for all the elements.
             % For example, for the default matrix it returns:
-            % DIRECTIONALITY_TYPE = DIRECTED  DIRECTED  DIRECTED  
-            %                       DIRECTED  DIRECTED  DIRECTED  
-            %                       DIRECTED  DIRECTED  DIRECTED  
+            % DIRECTIONALITY_TYPE = DIRECTED  DIRECTED  DIRECTED
+            %                       DIRECTED  DIRECTED  DIRECTED
+            %                       DIRECTED  DIRECTED  DIRECTED
             % where DIRECTED = Graph.DIRECTED.
             % If LAYERNUMBER is not three, it throws an error.
-            %            
+            %
             % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
-             
+            
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
             else
@@ -158,12 +158,12 @@ classdef DummyMultilayer < Graph
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns
             % Graph.SELFCONNECTED.
             %
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns 
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.SELFCONNECTED for all the elements.
             % For example, for the default matrix it returns:
-            % NEGATIVITY_TYPE = SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  
-            %                   SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  
-            %                   SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  
+            % NEGATIVITY_TYPE = SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
+            %                   SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
+            %                   SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
             % where SELFCONNECTED = Graph.SELFCONNECTED.
             % If LAYERNUMBER is not three, it throws an error.
             %
@@ -173,43 +173,45 @@ classdef DummyMultilayer < Graph
                 selfconnectivity_type = Graph.SELFCONNECTED;
             else
                 layernumber = varargin{1};
-                                
+                
                 assert(layernumber == 3, ...
                     [BRAPH2.STR ':DummyMultilayer:' BRAPH2.WRONG_INPUT], ...
-                    ['The number of layers for DummyMultilayer must be three,' ... 
+                    ['The number of layers for DummyMultilayer must be three,' ...
                     ' while it is ' tostring(layernumber)])
-                   
+                
                 selfconnectivity_type = Graph.SELFCONNECTED * ones(layernumber);
             end
         end
         function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
-            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns 
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns
             % a matrix with Graph.NONNEGATIVE for the first and second
             % layers, and Graph.NEGATIVE for the third layer.
             % It returns:
-            % NEGATIVITY_TYPE = NONNEGATIVE  NONNEGATIVE  NEGATIVE  
-            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  
-            %                   NEGATIVE     NONNEGATIVE  NEGATIVE  
+            % NEGATIVITY_TYPE = NONNEGATIVE  NONNEGATIVE  NEGATIVE
+            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
+            %                   NEGATIVE     NONNEGATIVE  NEGATIVE
             % where NONNEGATIVE = Graph.NONNEGATIVE and NEGATIVE = Graph.NEGATIVE.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
-          
-            negativity_type = [ 
+            
+            negativity_type = [
                 Graph.NONNEGATIVE	Graph.NONNEGATIVE   Graph.NEGATIVE
-                Graph.NONNEGATIVE   Graph.NONNEGATIVE   Graph.NONNEGATIVE 
+                Graph.NONNEGATIVE   Graph.NONNEGATIVE   Graph.NONNEGATIVE
                 Graph.NEGATIVE      Graph.NONNEGATIVE   Graph.NEGATIVE
                 ];
         end
     end
-    methods (Static)
+    methods  % Randomize methods
         function gr = randomize(g, varargin)
-            % RANDOMIZE returns a the graph unchanged for DummyMultilayer
-            %    
-            % GR = RANDOMIZE(G) returns a the graph unchanged for
-            % DummyMultilayer. Utilizes available graph settings.  
-                                   
+            % RANDOMIZE  returns a randomized graph
+            %
+            % GR = RANDOMIZE(G) returns a randomized graph of
+            % class 'DummyMultilayer'.
+            % 
+            % See also DummyMultilayer.
+            
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
