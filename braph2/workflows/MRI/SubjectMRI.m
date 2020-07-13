@@ -207,9 +207,17 @@ classdef SubjectMRI < Subject
             % load a directory where it reads '.xls' or '.xlsx' files. It 
             % creates a cohort of SubjectMRI with brain atlas ATLASES.
             %
-            % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % COHORT = LOAD_FROM_XLS(COHORT, SUBJECT_CLASS, ATLASES, 'Directory', PATH)
             % loads the directory in PATH where it reads '.xls' or '.xlsx'
             % files. It creates a cohort of SubjectMRI with brain atlas ATLASES.
+            %
+            % COHORT = LOAD_FROM_XLS(COHORT, SUBJECT_CLASS, ATLASES) opens a GUI to
+            % load a directory where it reads '.xls' or '.xlsx' files. It 
+            % loads to the COHORT of SubjectMRI with brain atlas ATLASES.
+            %
+            % COHORT = LOAD_FROM_XLS(COHORT, SUBJECT_CLASS, ATLASES, 'Directory', PATH)
+            % loads the directory in PATH where it reads '.xls' or '.xlsx'
+            % files. It loads to the COHORT of SubjectMRI with brain atlas ATLASES.
             % 
             % See also save_to_xls, load_from_txt, load_from_json
             
@@ -242,8 +250,7 @@ classdef SubjectMRI < Subject
                     cohort_id = raw_cohort{1, 1};
                     cohort_label = raw_cohort{2, 1};
                     cohort_notes = raw_cohort{3, 1};
-                end
-                
+                end                
                 
                 % creates cohort
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});  
@@ -360,7 +367,7 @@ classdef SubjectMRI < Subject
             writecell(group_info, file);
             writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
         end
-        function cohort = load_from_txt(subject_class, atlases, varargin)
+        function cohort = load_from_txt(cohort, subject_class, atlases, varargin)
             % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectMRI
             %
             % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES) opens a GUI to
@@ -389,27 +396,30 @@ classdef SubjectMRI < Subject
             warning_id = 'MATLAB:table:ModifiedAndSavedVarnames';
             warning('off', warning_id)
             
-            % search for cohort info file
-            file_path = strsplit(file, filesep());
-            file_cohort_path = '';
-            for i = 1:1:length(file_path)-1
-                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
-            end
-            file_cohort_path = file_cohort_path(2:end);
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
-            cohort_id = '';
-            cohort_label = '';
-            cohort_notes = '';
+            if isempty(cohort)
             
-            if exist(file_cohort, 'file')
-                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                cohort_id = raw_cohort{1, 1};
-                cohort_label = raw_cohort{2, 1};
-                cohort_notes = raw_cohort{3, 1};
+                % search for cohort info file
+                file_path = strsplit(file, filesep());
+                file_cohort_path = '';
+                for i = 1:1:length(file_path)-1
+                    file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+                end
+                file_cohort_path = file_cohort_path(2:end);
+                file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                
+                if exist(file_cohort, 'file')
+                    raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                    cohort_id = raw_cohort{1, 1};
+                    cohort_label = raw_cohort{2, 1};
+                    cohort_notes = raw_cohort{3, 1};
+                end
+                
+                % creates cohort
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             end
-           
-            % creates cohort
-            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             
             % get group info
             file_group = [file_cohort_path filesep() 'group_info.txt'];
