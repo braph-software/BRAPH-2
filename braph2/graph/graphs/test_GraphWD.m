@@ -12,7 +12,7 @@ assert(isequal(g.getA(), A), ...
     [BRAPH2.STR ':GraphWD:' BRAPH2.BUG_ERR], ...
     'GraphWD is not constructing well')
 
-%% Test 2: Randomize Degree preservation
+%% Test 2: Randomize Degree distribution preservation
 A = [ 0 1 0 1 0;
     1 0 0 0 1;
     0 0 0 1 0;
@@ -23,14 +23,16 @@ A = [ 0 1 0 1 0;
 g = GraphWD(A);
 r_g = g.randomize();
 
-in_d_g = InDegree(g).getValue();
-in_d_rg = InDegree(r_g).getValue();
-
-assert(isequal(in_d_g, in_d_rg), ...
-    [BRAPH2.STR ':GraphWD:' BRAPH2.BUG_ERR], ...
+d_g = InDegree(g).getValue();
+d_rg = InDegree(r_g).getValue();
+hist_g = histcounts(d_g{1}, 1:5);
+hist_rg = histcounts(d_rg{1}, 1:5);
+assert(isequal(hist_g, hist_rg), ...
+    [BRAPH2.STR ':GraphWD:' BRAPH2.BUG_FUNC], ...
     'GraphWD is not constructing well')
 
-%% Test 3: Randomize Strength preservation
+
+%% Test 3: Static randomize function degree distribution preservation
 A = [ 0 1 0 1 0;
     1 0 0 0 1;
     0 0 0 1 0;
@@ -38,29 +40,16 @@ A = [ 0 1 0 1 0;
     0 1 1 0 0;
     ];
 
-g = GraphWD(A);
-r_g = g.randomize();
+B = max(A, transpose(A));
 
-in_s_g = {sum(A, 1)'};
-r_A = r_g.getA();
-in_s_rg = {sum(r_A, 1)'};
+r_A = GraphWD.randomize_A(B);
+g = GraphWD(B);
+r_g = GraphWD(r_A);
+d_g = InDegree(g).getValue();
+d_rg = InDegree(r_g).getValue();
+hist_g = histcounts(d_g{1}, 1:5);
+hist_rg = histcounts(d_rg{1}, 1:5);
 
-assert(isequal(in_s_g, in_s_rg), ...
-    [BRAPH2.STR ':GraphWD:' BRAPH2.BUG_ERR], ...
-    'GraphWD is not constructing well')
-
-%% Test 4: Static randomize function strength preservation
-A = [ 0 1 0 1 0;
-    1 0 0 0 1;
-    0 0 0 1 0;
-    1 0 0 0 1;
-    0 1 1 0 0;
-    ];
-
-r_A = GraphWD.randomize_A(A);
-in_s_g = {sum(A, 1)'};
-in_s_rg = {sum(r_A, 1)'};
-
-assert(isequal(in_s_g, in_s_rg), ...
-    [BRAPH2.STR ':GraphWD:' BRAPH2.BUG_ERR], ...
-    'GraphWD is not constructing well')
+assert(isequal(hist_g, hist_rg), ...
+    [BRAPH2.STR ':GraphWD:' BRAPH2.BUG_FUNC], ...
+    'GraphWD randomize_A is not working.')

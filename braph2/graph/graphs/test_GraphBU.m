@@ -13,7 +13,7 @@ assert(isequal(g.getA(), A), ...
        [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_ERR], ...
        'GraphBU is not constructing well')
 
-%% Test 2: Randomize Degree preservation
+%% Test 2: Randomize Degree distribution preservation
 A = [ 0 1 0 1 0;
       1 0 0 0 1;
       0 0 0 1 0;
@@ -24,12 +24,14 @@ A = [ 0 1 0 1 0;
 g = GraphBU(A);
 r_g = g.randomize();
 
-in_d_g = Degree(g).getValue();
-in_d_rg = Degree(r_g).getValue();
+d_g = Degree(g).getValue();
+d_rg = Degree(r_g).getValue();
+hist_g = histcounts(d_g{1}, 1:5);
+hist_rg = histcounts(d_rg{1}, 1:5);
 
-assert(isequal(in_d_g, in_d_rg), ...
-    [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_ERR], ...
-    'GraphBU is not constructing well')
+assert(isequal(hist_g, hist_rg), ...
+    [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_FUNC], ...
+    'GraphBU randomize is not working.')
 
 
 %% Test 3: Static randomize function degree distribution preservation
@@ -51,5 +53,5 @@ hist_g = histcounts(d_g{1}, 1:5);
 hist_rg = histcounts(d_rg{1}, 1:5);
 
 assert(isequal(hist_g, hist_rg), ...
-    [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_ERR], ...
-    'GraphBU is not constructing well')
+    [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_FUNC], ...
+    'GraphBU randomize_A is not working.')

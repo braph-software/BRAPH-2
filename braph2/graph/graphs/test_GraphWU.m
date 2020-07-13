@@ -13,7 +13,7 @@ assert(isequal(g.getA(), A), ...
     [BRAPH2.STR ':GraphWU:' BRAPH2.BUG_ERR], ...
     'GraphWU is not constructing well')
 
-%% Test 2: Randomize Degree preservation
+%% Test 2: Randomize Degree distribution preservation
 A = [ 0 1 0 1 0;
     1 0 0 0 1;
     0 0 0 1 0;
@@ -26,13 +26,15 @@ r_g = g.randomize();
 
 d_g = Degree(g).getValue();
 d_rg = Degree(r_g).getValue();
+hist_g = histcounts(d_g{1}, 1:5);
+hist_rg = histcounts(d_rg{1}, 1:5);
 
-assert(isequal(d_g, d_rg), ...
-    [BRAPH2.STR ':GraphWU:' BRAPH2.BUG_ERR], ...
-    'GraphWU is not constructing well')
+assert(isequal(hist_g, hist_rg), ...
+    [BRAPH2.STR ':GraphWU:' BRAPH2.BUG_FUNC], ...
+    'GraphWU randomize is not working.')
 
 
-%% Test 3: Static randomize function degree preservation
+%% Test 3: Static randomize function degree distribution preservation
 A = [ 0 1 0 1 0;
     1 0 0 0 1;
     0 0 0 1 0;
@@ -51,5 +53,5 @@ hist_g = histcounts(d_g{1}, 1:5);
 hist_rg = histcounts(d_rg{1}, 1:5);
 
 assert(isequal(hist_g, hist_rg), ...
-    [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_ERR], ...
-    'GraphBU is not constructing well')
+    [BRAPH2.STR ':GraphWU:' BRAPH2.BUG_FUNC], ...
+    'GraphWU randomize_A is not working.')
