@@ -26,8 +26,14 @@ r_g = g.randomize();
 
 d_g = Degree(g).getValue();
 d_rg = Degree(r_g).getValue();
-hist_g = histcounts(d_g{1}, 1:5);
-hist_rg = histcounts(d_rg{1}, 1:5);
+d_g = sort(d_g{1});
+d_rg = sort(d_rg{1});
+hist_g = histcounts(d_g, 1:5);
+hist_rg = histcounts(d_rg, 1:5);
+
+assert(isequal(d_g, d_rg), ...
+    [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_FUNC], ...
+    'GraphBU randomize is not working.')
 
 assert(isequal(hist_g, hist_rg), ...
     [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_FUNC], ...
@@ -49,8 +55,14 @@ g = GraphBU(B);
 r_g = GraphBU(r_A);
 d_g = Degree(g).getValue();
 d_rg = Degree(r_g).getValue();
-hist_g = histcounts(d_g{1}, 1:5);
-hist_rg = histcounts(d_rg{1}, 1:5);
+d_g = sort(d_g{1});
+d_rg = sort(d_rg{1});
+hist_g = histcounts(d_g, 1:5);
+hist_rg = histcounts(d_rg, 1:5);
+
+assert(isequal(d_g, d_rg), ...
+    [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_FUNC], ...
+    'GraphBU randomize is not working.')
 
 assert(isequal(hist_g, hist_rg), ...
     [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_FUNC], ...

@@ -25,8 +25,23 @@ r_g = g.randomize();
 
 in_d_g = InDegree(g).getValue();
 in_d_rg = InDegree(r_g).getValue();
-hist_g = histcounts(in_d_g{1}, 1:5);
-hist_rg = histcounts(in_d_rg{1}, 1:5);
+in_d_g = sort(in_d_g{1});
+in_d_rg = sort(in_d_rg{1});
+hist_g = histcounts(in_d_g, 1:5);
+hist_rg = histcounts(in_d_rg, 1:5);
+
+out_d_g = OutDegree(g).getValue();
+out_d_rg = OutDegree(r_g).getValue();
+out_d_g = sort(out_d_g{1});
+out_d_rg = sort(out_d_rg{1});
+
+assert(isequal(in_d_g, in_d_rg), ...
+    [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_FUNC], ...
+    'GraphBD randomize is not working.')
+
+assert(isequal(out_d_g, out_d_rg), ...
+    [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_FUNC], ...
+    'GraphBD randomize is not working.')
 
 assert(isequal(hist_g, hist_rg), ...
     [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_FUNC], ...
@@ -48,8 +63,23 @@ g = GraphBD(B);
 r_g = GraphBD(r_A);
 in_d_g = InDegree(g).getValue();
 in_d_rg = InDegree(r_g).getValue();
-hist_g = histcounts(in_d_g{1}, 1:5);
-hist_rg = histcounts(in_d_rg{1}, 1:5);
+in_d_g = sort(in_d_g{1});
+in_d_rg = sort(in_d_rg{1});
+hist_g = histcounts(in_d_g, 1:5);
+hist_rg = histcounts(in_d_rg, 1:5);
+
+out_d_g = OutDegree(g).getValue();
+out_d_rg = OutDegree(r_g).getValue();
+out_d_g = sort(out_d_g{1});
+out_d_rg = sort(out_d_rg{1});
+
+assert(isequal(in_d_g, in_d_rg), ...
+    [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_FUNC], ...
+    'GraphBD randomize_A is not working.')
+
+assert(isequal(out_d_g, out_d_rg), ...
+    [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_FUNC], ...
+    'GraphBD randomize is not working.')
 
 assert(isequal(hist_g, hist_rg), ...
     [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_FUNC], ...
