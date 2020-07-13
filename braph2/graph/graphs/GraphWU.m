@@ -174,12 +174,12 @@ classdef GraphWU < GraphWD
             % RANDOMIZE_A returns a randomized correlation matrix
             % This algorithm was proposed by Rubinov and Sporns (Neuroimage 56, 4, 2011).
             %
-            % RANDOM_A = RANDOMIZE(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % RANDOM_A = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
             % specifies the number of weights sorted at the same time. 
             % ATTEMPTS_PER_EDGE is passed as an argument to GraphBD.
             %
-            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE(G) 
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G) 
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
             % specifies the number of weights sorted at the same time, it
             % will be default value of 10. Returns the correlation coefficients 
@@ -188,7 +188,7 @@ classdef GraphWU < GraphWD
             % the strength sequences. ATTEMPTS_PER_EDGE is passed as an
             % argument to GraphBD, it will be default value of 5.
             %
-            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
             % specifies the number of weights sorted at the same time. Returns the
             % correlation coefficients between the original and randomized nodal
@@ -196,7 +196,7 @@ classdef GraphWU < GraphWD
             % the strength sequences. ATTEMPTS_PER_EDGE is passed as an
             % argument to GraphBD.
             %
-            % See also randomize
+            % See also randomize.
             
             if nargin < 2
                 attempts_per_edge = 5;

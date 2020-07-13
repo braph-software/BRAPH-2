@@ -18,6 +18,9 @@ classdef MultiplexGraphBU < MultiplexGraphBD
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
     %
+    % MultiplexGraphBU randomize graph method
+    %   randomize               - returns a randomized graph
+    %
     % See also Graph, MultiplexGraphBD, MultiplexGraphWD, MultiplexGraphWU.
     
     methods  

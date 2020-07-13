@@ -173,22 +173,19 @@ classdef GraphBD < Graph
         function [random_A, swaps] = randomize_A(A, attempts_per_edge)
             % RANDOMIZE_A returns a randomized correlation matrix
             %
-            % RANDOM_A = RANDOMIZE(G) returns the randomized matrix
+            % RANDOM_A = RANDOMIZE_A(G) returns the randomized matrix
             % RANDOM_A. Tries to swap 5 times an edge. 
             %
-            % [RANDOM_A, SWAPS] = RANDOMIZE(G) attempts to rewire each edge 
+            % [RANDOM_A, SWAPS] = RANDOMIZE_A(G) attempts to rewire each edge 
             % 5 times. Returns the randomized matrix RANDOM_A. Returns the
             % number of succesful edge swaps.  This algorithm was proposed
             % by Maslov and Sneppen (Science 296, 910, 2002)
             %
-            % [RANDOM_A, SWAPS] = RANDOMIZE(G, ATTEMPTS_PER_EDGE) attempts
+            % [RANDOM_A, SWAPS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE) attempts
             % to rewire each edge ATTEMPTS_PER_EDGE times then it returns the 
             % randomized matrix RANDOM_A. Returns the number of succesful edge swaps.
             %
-            % Modification History: 
-            % May 2019: Original (Adam Liberda, Theo Berglin, Mite Mijalkov & Giovanni Volpe)
-            %
-            % See also randomize
+            % See also randomize.
             
             if nargin < 2
                 attempts_per_edge = 5;

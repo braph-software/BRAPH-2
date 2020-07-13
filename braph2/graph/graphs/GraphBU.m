@@ -175,17 +175,14 @@ classdef GraphBU < GraphBD
             % RANDOM_A = RANDOMIZE(G) returns the randomized matrix
             % RANDOM_A. Tries to swap 5 times an edge. 
             %
-            % [RANDOM_A, SWAPS] = RANDOMIZE(G) attempts to rewire each edge 
+            % [RANDOM_A, SWAPS] = RANDOMIZE_A(G) attempts to rewire each edge 
             % 5 times. Returns the randomized matrix RANDOM_A. Returns the
             % number of succesful edge swaps. This algorithm was proposed
             % by Maslov and Sneppen (Science 296, 910, 2002)
             %
-            % [RANDOM_A, SWAPS] = RANDOMIZE(G, ATTEMPTS_PER_EDGE) attempts
+            % [RANDOM_A, SWAPS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE) attempts
             % to rewire each edge ATTEMPTS_PER_EDGE times then it returns the 
             % randomized matrix RANDOM_A. Returns the number of succesful edge swaps.
-            %
-            % Modification History: 
-            % May 2019: Original (Adam Liberda, Theo Berglin, Mite Mijalkov & Giovanni Volpe)
             %
             % See also randomize
             
