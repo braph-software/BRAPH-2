@@ -143,6 +143,9 @@ classdef Graph < handle & matlab.mixin.Copyable
     % Graph randomization method (static):
     %   randomize                   - randomize graph
     %
+    % Graph deep-copy method:
+    %   copy                        - deep copy
+    %
     % See also Measure, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
 
 	properties (Constant)
@@ -1272,41 +1275,41 @@ classdef Graph < handle & matlab.mixin.Copyable
     methods (Static, Abstract)  % Randomize function
         gr = randomize(g, varargin);
     end
-%     methods (Access=protected)
-%         function g_copy = copyElement(g)
-%             % COPYELEMENT(G) copies elements of graph
-%             %
-%             % G_COPY = COPYELEMENT(G) copies elements of the graph G.
-%             % Makes a deep copy of the structure of the graph.
-%             %
-%             % See also Cohort.
-%             
-%             % Make a shallow copy
-%             g_copy = copyElement@matlab.mixin.Copyable(g);
-%             
-%             % Make a deep copy of settings
-%             g_copy.settings = copy_varargin(g.settings{:});
-%             
-%             % Make a deep copy of measure_dict
-%             g_copy.measure_dict = containers.Map;
-%             measures = values(g.measure_dict);
-%             for i = 1:1:length(measures)
-%                 m = measures{i};
-%                 if m.is_value_calculated()
-%                     g_copy.measure_dict(m.getMeasureCode()) = Measure.getMeasure( ...
-%                         m.getMeasureCode(), ...
-%                         g_copy, ...
-%                         'Value', m.getValue(), ...
-%                         'Settings', copy_varargin(m.getSettings()) ...
-%                         );
-%                 else
-%                     g_copy.measure_dict(m.getMeasureCode()) = Measure.getMeasure( ...
-%                         m.getMeasureCode(), ...
-%                         g_copy, ...
-%                         'Settings', copy_varargin(m.getSettings()) ...
-%                         );
-%                 end
-%             end
-%         end
-%     end
+    methods (Access=protected)  % Deep copy
+        function g_copy = copyElement(g)
+            % COPYELEMENT(G) copies elements of graph
+            %
+            % G_COPY = COPYELEMENT(G) copies elements of the graph G.
+            % Makes a deep copy of the structure of the graph.
+            %
+            % See also Cohort.
+            
+            % Make a shallow copy
+            g_copy = copyElement@matlab.mixin.Copyable(g);
+            
+            % Make a deep copy of settings
+            g_copy.settings = copy_varargin(g.settings{:});
+            
+            % Make a deep copy of measure_dict
+            g_copy.measure_dict = containers.Map;
+            measures = values(g.measure_dict);
+            for i = 1:1:length(measures)
+                m = measures{i};
+                if m.is_value_calculated()
+                    g_copy.measure_dict(m.getMeasureCode()) = Measure.getMeasure( ...
+                        m.getMeasureCode(), ...
+                        g_copy, ...
+                        'Value', m.getValue(), ...
+                        'Settings', copy_varargin(m.getSettings()) ...
+                        );
+                else
+                    g_copy.measure_dict(m.getMeasureCode()) = Measure.getMeasure( ...
+                        m.getMeasureCode(), ...
+                        g_copy, ...
+                        'Settings', copy_varargin(m.getSettings()) ...
+                        );
+                end
+            end
+        end
+    end
 end
