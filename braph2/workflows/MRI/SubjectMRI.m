@@ -200,7 +200,7 @@ classdef SubjectMRI < Subject
         end
     end
     methods (Static)  % Save/load functions
-        function cohort = load_from_xls(subject_class, atlases, varargin)
+        function cohort = load_from_xls(cohort, subject_class, atlases, varargin)
             % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectMRI
             %
             % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES) opens a GUI to
@@ -225,29 +225,32 @@ classdef SubjectMRI < Subject
                 end
             end
             
+            if isempty(cohort)
+                file_path = strsplit(file, filesep());
+                file_cohort_path = '';
+                for i = 1:1:length(file_path)-1
+                    file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+                end
+                file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+                file_cohort = file_cohort(2:end);
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                
+                if exist(file_cohort, 'file')
+                    raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                    cohort_id = raw_cohort{1, 1};
+                    cohort_label = raw_cohort{2, 1};
+                    cohort_notes = raw_cohort{3, 1};
+                end
+                
+                
+                % creates cohort
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});  
+            end
+            
             % search for cohort info file
-            file_path = strsplit(file, filesep());
-            file_cohort_path = '';
-            for i = 1:1:length(file_path)-1
-                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
-            end
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
-            file_cohort = file_cohort(2:end);
-            cohort_id = '';
-            cohort_label = '';
-            cohort_notes = '';
-            
-            if exist(file_cohort, 'file')
-                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                cohort_id = raw_cohort{1, 1};
-                cohort_label = raw_cohort{2, 1};
-                cohort_notes = raw_cohort{3, 1};
-            end
-            
-            
-            % creates cohort
-            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
-            
+         
             [~, ~, raw] = xlsread(file);
             
             for i = 5:1:size(raw, 1)
