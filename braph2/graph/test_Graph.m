@@ -721,6 +721,36 @@ for i = 1:1:length(graph_class_list)
         [graph_class '.is_negative() must be the opposite of ' graph_class '.is_nonnegative()'])
 end
 
+%% Test 9: Copy
+for i = 1:1:length(graph_class_list)
+    graph_class = graph_class_list{i};
+    g = Graph.getGraph(graph_class, []);
+    
+    g_copy = copy(g);
+    
+    measure_class_list = Graph.getCompatibleMeasureList(g);
+    for j = 1:1:length(measure_class_list)
+        measure_class = measure_class_list{j};
+        g.getMeasure(measure_class).getValue();
+    end
+    for j = 1:1:length(measure_class_list)
+        assert(g.is_measure_calculated(measure_class) ~= g_copy.is_measure_calculated(measure_class), ...
+            [BRAPH2.STR ':' graph_class ':' BRAPH2.BUG_COPY], ...
+            [graph_class '.copy() not working properly'])
+        assert(isequal(g.getMeasure(measure_class).getGraph(), g), ...
+            [BRAPH2.STR ':' graph_class ':' BRAPH2.BUG_COPY], ...
+            [graph_class '.copy() not working properly'])
+        assert(isequal(g_copy.getMeasure(measure_class).getGraph(), g_copy), ...
+            [BRAPH2.STR ':' graph_class ':' BRAPH2.BUG_COPY], ...
+            [graph_class '.copy() not working properly'])
+        assert(~isequal(g.getMeasure(measure_class).getGraph(), g_copy), ...
+            [BRAPH2.STR ':' graph_class ':' BRAPH2.BUG_COPY], ...
+            [graph_class '.copy() not working properly'])
+        assert(~isequal(g_copy.getMeasure(measure_class).getGraph(), g), ...
+            ['BRAPH:' graph_class ':Copy'], ...
+            [graph_class '.copy() not working properly'])
+    end
+
 % %% Test 8: NodeAttack
 % n = randi(4);
 % nodes = [randi(n), randi(n)];
@@ -1048,39 +1078,7 @@ end
 % % assert(isequal(eg.getA(eg), D), ...
 % %     [BRAPH2.STR ':Graph:' BRAPH2.BUG_ERR], ...
 % %     'Graph.edgeattack() is not working for non single layer graphs')
-% 
-% % %% Test 10: Copy
-% % for i = 1:1:length(graph_class_list)
-% %     A = rand(randi(10));
-% %     graph_class = graph_class_list{i};
-% %     g = Graph.getGraph(graph_class, A);
-% %     
-% %     g_copy = copy(g);
-% %     
-% %     measure_class_list = g.getCompatibleMeasureList();
-% %     for j = 1:1:length(measure_class_list)
-% %         measure_class = measure_class_list{j};
-% %         g.getMeasure(measure_class).getValue();
-% %     end
-% %     for j = 1:1:length(measure_class_list)
-% %         assert(g.is_measure_calculated(measure_class) ~= g_copy.is_measure_calculated(measure_class), ...
-% %             ['BRAPH:' graph_class ':Copy'], ...
-% %             [graph_class '.copy() not working properly'])
-% %         assert(isequal(g.getMeasure(measure_class).getGraph(), g), ...
-% %             ['BRAPH:' graph_class ':Copy'], ...
-% %             [graph_class '.copy() not working properly'])
-% %         assert(isequal(g_copy.getMeasure(measure_class).getGraph(), g_copy), ...
-% %             ['BRAPH:' graph_class ':Copy'], ...
-% %             [graph_class '.copy() not working properly'])
-% %         assert(~isequal(g.getMeasure(measure_class).getGraph(), g_copy), ...
-% %             ['BR~APH:' graph_class ':Copy'], ...
-% %             [graph_class '.copy() not working properly'])
-% %         assert(~isequal(g_copy.getMeasure(measure_class).getGraph(), g), ...
-% %             ['BRAPH:' graph_class ':Copy'], ...
-% %             [graph_class '.copy() not working properly'])
-% %     end
-% % end
-% % 
+
 % % %% Test 11: Subgraph
 % % for i = 1:1:length(graph_class_list)
 % %     graph_class = graph_class_list{i};
