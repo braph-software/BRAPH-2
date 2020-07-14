@@ -229,17 +229,17 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis_copy.measurement_idict.add(tostring(measurement_copy.getID()), measurement_copy, measurement_i);
             end
             
-%             % deep copy of randomcomparison
-%             analysis_copy.randomcomparison_idict = IndexedDictionary(analysis_copy.getRandomComparisonClass());
-%             for randomcomparisons_i = 1:1:analysis.getRandomComparisons().length()
-%                 randomcomparison = analysis.getRandomComparisons().getValue(randomcomparisons_i);
-%                 randomcomparison_copy = randomcomparison.copy();
-%                 randomcomparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
-%                 group = randomcomparison.getGroup();
-%                 group_copy = analysis_copy.cohort.getGroups().getValue(group.getID());
-%                 randomcomparison_copy.setGroup(group_copy);
-%                 analysis_copy.randomcomparison_idict.add(tostring(randomcomparison_copy.getID()), randomcomparison_copy, randomcomparisons_i);
-%             end
+            % deep copy of randomcomparison
+            analysis_copy.randomcomparison_idict = IndexedDictionary(analysis_copy.getRandomComparisonClass());
+            for randomcomparisons_i = 1:1:analysis.getRandomComparisons().length()
+                randomcomparison = analysis.getRandomComparisons().getValue(randomcomparisons_i);
+                randomcomparison_copy = randomcomparison.copy();
+                randomcomparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
+                group = randomcomparison.getGroup();
+                group_copy = analysis_copy.cohort.getGroups().getValue(group.getID());
+                randomcomparison_copy.setGroup(group_copy);
+                analysis_copy.randomcomparison_idict.add(tostring(randomcomparison_copy.getID()), randomcomparison_copy, randomcomparisons_i);
+            end
             
             % deep copy of comparisons
             analysis_copy.comparison_idict = IndexedDictionary(analysis_copy.getComparisonClass());
