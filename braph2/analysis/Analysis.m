@@ -5,7 +5,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         notes  % analysis notes
         cohort  % cohort
         measurement_idict  % indexed dictionary with measurements
-%         randomcomparison_idict  % indexed dictionary with random comparison
+        randomcomparison_idict  % indexed dictionary with random comparison
         comparison_idict  % indexed dictionary with comparison
         settings  % settings structure for analysis
     end
@@ -33,17 +33,17 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis.measurement_idict.add(measurement.getID(), measurement);
             end
             
-%             analysis.randomcomparison_idict = IndexedDictionary(analysis.getRandomComparisonClass());
-%             assert(iscell(randomcomparisons), ...
-%                 [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
-%                 ['The third input must be a cell array of RandomComparison objects of class ' analysis.getRandomComparisonClass()])
-%             for i = 1:1:length(randomcomparisons)
-%                 randomcomparison = randomcomparisons{i};
-%                 assert(isequal(randomcomparison.getClass(), analysis.getRandomComparisonClass()), ...
-%                     [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
-%                     ['The third input must be a cell array of RandomComparison objects of class ' analysis.getRandomComparisonClass()])
-%                 analysis.randomcomparison_idict.add(randomcomparison.getID(), randomcomparison);
-%             end
+            analysis.randomcomparison_idict = IndexedDictionary(analysis.getRandomComparisonClass());
+            assert(iscell(randomcomparisons), ...
+                [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
+                ['The third input must be a cell array of RandomComparison objects of class ' analysis.getRandomComparisonClass()])
+            for i = 1:1:length(randomcomparisons)
+                randomcomparison = randomcomparisons{i};
+                assert(isequal(randomcomparison.getClass(), analysis.getRandomComparisonClass()), ...
+                    [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
+                    ['The third input must be a cell array of RandomComparison objects of class ' analysis.getRandomComparisonClass()])
+                analysis.randomcomparison_idict.add(randomcomparison.getID(), randomcomparison);
+            end
             
             analysis.comparison_idict = IndexedDictionary(analysis.getComparisonClass());
             assert(iscell(comparisons), ...
@@ -71,12 +71,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
     end
     methods (Abstract)  % ID functions
         getMeasurementID(analysis, measure_code, group, varargin)
-%         getRandomComparisonID(analysis, measure_code, group, varargin)
+        getRandomComparisonID(analysis, measure_code, group, varargin)
         getComparisonID(analysis, measure_code, group_1, group_2, varargin)
     end
     methods (Abstract, Access = protected)  % Calculation functions
         calculate_measurement(analysis, measure_code, group, varargin)
-%         calculate_random_comparison(analysis, measure_code, group, varargin)
+        calculate_random_comparison(analysis, measure_code, group, varargin)
         calculate_comparison(analysis, measure_code, group_1, group_2, varargin)
     end
     methods  % Set functions
@@ -132,17 +132,17 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
             measurement = analysis.getMeasurements().getValue(measurement_id);
         end
-%         function randomparison_idict = getRandomComparisons(analysis)
-%             randomparison_idict = analysis.randomcomparison_idict;
-%         end
-%         function random_comparison = getRandomComparison(analysis, measure_code, group, varargin)
-%             id = analysis.getRandomComparisonID(measure_code, group, varargin{:});
-%             if ~analysis.getRandomComparisons().contains(id)
-%                 random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin{:});
-%                 analysis.getRandomComparisons().add(id, random_comparison)
-%             end
-%             random_comparison = analysis.getRandomComparisons().getValue(id);
-%         end
+        function randomparison_idict = getRandomComparisons(analysis)
+            randomparison_idict = analysis.randomcomparison_idict;
+        end
+        function random_comparison = getRandomComparison(analysis, measure_code, group, varargin)
+            randomcomparison_id = analysis.getRandomComparisonID(measure_code, group, varargin{:});
+            if ~analysis.getRandomComparisons().contains(randomcomparison_id)
+                random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin{:});
+                analysis.getRandomComparisons().add(randomcomparison_id, random_comparison)
+            end
+            random_comparison = analysis.getRandomComparisons().getValue(randomcomparison_id);
+        end
         function comparison_idict = getComparisons(analysis)
             comparison_idict = analysis.comparison_idict;
         end
@@ -196,12 +196,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % cohort class
             subject_class = eval([Analysis.getClass(analysis) '.getSubjectClass()']);
         end
-        function measurment_class = getMeasurementClass(analysis)
-            measurment_class = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
+        function measurement_class = getMeasurementClass(analysis)
+            measurement_class = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
         end
-%         function randomcomparison_class = getRandomComparisonClass(analysis)
-%             randomcomparison_class = eval([Analysis.getClass(analysis) '.getRandomComparisonClass()']);
-%         end
+        function randomcomparison_class = getRandomComparisonClass(analysis)
+            randomcomparison_class = eval([Analysis.getClass(analysis) '.getRandomComparisonClass()']);
+        end
         function comparison_class = getComparisonClass(analysis)
             comparison_class = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
         end
