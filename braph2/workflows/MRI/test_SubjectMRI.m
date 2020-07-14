@@ -417,7 +417,7 @@ assert(isequal(cohort.getGroups().length() + cohort2.getGroups().length(), load_
     'Problems saving or loading a cohort.')
 for i = 1:1:min(cohort.getSubjects().length(), load_cohort_2.getSubjects().length())
     sub = cohort.getSubjects().getValue(i);
-    sub2 = cohort_2.getSubjects().getValue(i);
+    sub2 = cohort2.getSubjects().getValue(i);
     subs_loaded = load_cohort.getSubjects();
     for j = 1:1:subs_loaded.length()
         s = subs_loaded.getValue(j);
@@ -474,7 +474,7 @@ assert(isequal(cohort.getGroups().length() + cohort2.getGroups().length(), load_
     'Problems saving or loading a cohort.')
 for i = 1:1:min(cohort.getSubjects().length(), load_cohort_2.getSubjects().length())
     sub = cohort.getSubjects().getValue(i);
-    sub2 = cohort_2.getSubjects().getValue(i);
+    sub2 = cohort2.getSubjects().getValue(i);
     subs_loaded = load_cohort.getSubjects();
     for j = 1:1:subs_loaded.length()
         s = subs_loaded.getValue(j);
