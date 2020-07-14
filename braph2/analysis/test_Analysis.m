@@ -469,12 +469,12 @@ for i =1:1:length(analysis_class_list)
     cohort.getGroups().add(group1.getID(), group1);
     cohort.getGroups().add(group2.getID(), group2);
     measurement_class = Analysis.getMeasurementClass(analysis_class);
-%     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
+    random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
     comparison_class = Analysis.getComparisonClass(analysis_class);
     measurement = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, 'Degree', group1);
-%     randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group1);
+    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1 id', 'rc1 label', 'rc1 notes', atlas, 'Degree', group1);
     comparison = Comparison.getComparison(comparison_class, 'c1 id', 'cq label', 'c1 notes', atlas, 'Degree', group1, group2);
-    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {measurement}, {}, {comparison});
+    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {measurement}, {randomcomparison}, {comparison});
     
     % act
     analysis_copy = analysis.copy();
@@ -485,12 +485,12 @@ for i =1:1:length(analysis_class_list)
     
     cohort_analysis = analysis.getCohort();
     measurement_analysis_idict = analysis.getMeasurements();
-%     randomcomparison_analysis_idict = analysis.getRandomComparisons();
+    randomcomparison_analysis_idict = analysis.getRandomComparisons();
     comparison_analysis_idict = analysis.getComparisons();
     
     cohort_copy = analysis_copy.getCohort();
     measurement_copy_idict = analysis_copy.getMeasurements();
-%     randomcomparison_copy_idict = analysis_copy.getRandomComparisons();
+    randomcomparison_copy_idict = analysis_copy.getRandomComparisons();
     comparison_copy_idict = analysis_copy.getComparisons();
     
     % cohort part
@@ -571,38 +571,37 @@ for i =1:1:length(analysis_class_list)
         end
     end
     
-%     % randomcomparison part
-%     for r = 1:1:randomcomparison_analysis_idict.length()
-%         randomcomparison_analysis = randomcomparison_analysis_idict.getValue(c);
-%         randomcomparison_copy = randomcomparison_copy_idict.getValue(c);
-%         atlases = randomcomparison_analysis.getBrainAtlases();
-%         atlases_copy = randomcomparison_copy.getBrainAtlases();
-%         
-%         assert(randomcomparison_analysis ~= randomcomparison_copy, ... % different objects
-%             [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
-%             [analysis_class '.copy() does not work'])
-%         
-%         for j = 1:1:length(atlases)
-%             assert(atlases{j} ~= atlases_copy{j}, ... % different objects
-%                 [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
-%                 [analysis_class '.copy() does not work'])
-%         end
-%         
-%         for k = 1:1:numel(randomcomparison_analysis.getGroup())
-%             group = randomcomparison_analysis.getGroup();
-%             group = group;
-%             group_copy = randomcomparison_copy.getGroup();
-%             assert(group ~= group_copy, ... % different objects
-%                 [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
-%                 [analysis_class '.copy() does not work'])
-%             
-%             subs = group.getSubjects();
-%             subs_copy = group_copy.getSubjects();
-%             assert(subs{1} ~= subs_copy{1}, ... % different objects
-%                 [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
-%                 [analysis_class '.copy() does not work'])
-%         end
-%     end
+    % randomcomparison part
+    for rc = 1:1:randomcomparison_analysis_idict.length()
+        randomcomparison_analysis = randomcomparison_analysis_idict.getValue(rc);
+        randomcomparison_copy = randomcomparison_copy_idict.getValue(rc);
+        atlases = randomcomparison_analysis.getBrainAtlases();
+        atlases_copy = randomcomparison_copy.getBrainAtlases();
+        
+        assert(randomcomparison_analysis ~= randomcomparison_copy, ... % different objects
+            [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+            [analysis_class '.copy() does not work'])
+        
+        for j = 1:1:length(atlases)
+            assert(atlases{j} ~= atlases_copy{j}, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+        end
+        
+        for k = 1:1:numel(randomcomparison_analysis.getGroup())
+            group = randomcomparison_analysis.getGroup();
+            group_copy = randomcomparison_copy.getGroup();
+            assert(group ~= group_copy, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+            
+            subs = group.getSubjects();
+            subs_copy = group_copy.getSubjects();
+            assert(subs{1} ~= subs_copy{1}, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+        end
+    end
     
     % comparison part
     for c = 1:1:comparison_analysis_idict.length()
