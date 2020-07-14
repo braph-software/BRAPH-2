@@ -417,11 +417,11 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
     end
     methods (Abstract, Static)  % Save/load functions
-        cohort = load_from_xls(subject_class, atlases, varargin)
+        cohort = load_from_xls(tmp, varargin)  % tmp = cohort/atlases
         save_to_xls(cohort, varargin)
-        cohort = load_from_txt(subject_class, atlases, varargin)
+        cohort = load_from_txt(tmp, varargin)  % tmp = cohort/atlases
         save_to_txt(cohort, varargin)
-        cohort = load_from_json(subject_class, atlases, varargin)
+        cohort = load_from_json(tmp, varargin)  % tmp = cohort/atlases
         save_to_json(cohort, varargin)
     end
 end
