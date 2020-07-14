@@ -5,7 +5,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         notes  % analysis notes
         cohort  % cohort
         measurement_idict  % indexed dictionary with measurements
-%         randomcomparison_idict  % indexed dictionary with random comparison
+        randomcomparison_idict  % indexed dictionary with random comparison
         comparison_idict  % indexed dictionary with comparison
         settings  % settings structure for analysis
     end
@@ -33,17 +33,17 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 analysis.measurement_idict.add(measurement.getID(), measurement);
             end
             
-%             analysis.randomcomparison_idict = IndexedDictionary(analysis.getRandomComparisonClass());
-%             assert(iscell(randomcomparisons), ...
-%                 [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
-%                 ['The third input must be a cell array of RandomComparison objects of class ' analysis.getRandomComparisonClass()])
-%             for i = 1:1:length(randomcomparisons)
-%                 randomcomparison = randomcomparisons{i};
-%                 assert(isequal(randomcomparison.getClass(), analysis.getRandomComparisonClass()), ...
-%                     [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
-%                     ['The third input must be a cell array of RandomComparison objects of class ' analysis.getRandomComparisonClass()])
-%                 analysis.randomcomparison_idict.add(randomcomparison.getID(), randomcomparison);
-%             end
+            analysis.randomcomparison_idict = IndexedDictionary(analysis.getRandomComparisonClass());
+            assert(iscell(randomcomparisons), ...
+                [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
+                ['The third input must be a cell array of RandomComparison objects of class ' analysis.getRandomComparisonClass()])
+            for i = 1:1:length(randomcomparisons)
+                randomcomparison = randomcomparisons{i};
+                assert(isequal(randomcomparison.getClass(), analysis.getRandomComparisonClass()), ...
+                    [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
+                    ['The third input must be a cell array of RandomComparison objects of class ' analysis.getRandomComparisonClass()])
+                analysis.randomcomparison_idict.add(randomcomparison.getID(), randomcomparison);
+            end
             
             analysis.comparison_idict = IndexedDictionary(analysis.getComparisonClass());
             assert(iscell(comparisons), ...
@@ -71,12 +71,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
     end
     methods (Abstract)  % ID functions
         getMeasurementID(analysis, measure_code, group, varargin)
-%         getRandomComparisonID(analysis, measure_code, group, varargin)
+        getRandomComparisonID(analysis, measure_code, group, varargin)
         getComparisonID(analysis, measure_code, group_1, group_2, varargin)
     end
     methods (Abstract, Access = protected)  % Calculation functions
         calculate_measurement(analysis, measure_code, group, varargin)
-%         calculate_random_comparison(analysis, measure_code, group, varargin)
+        calculate_random_comparison(analysis, measure_code, group, varargin)
         calculate_comparison(analysis, measure_code, group_1, group_2, varargin)
     end
     methods  % Set functions
@@ -132,17 +132,17 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
             measurement = analysis.getMeasurements().getValue(measurement_id);
         end
-%         function randomparison_idict = getRandomComparisons(analysis)
-%             randomparison_idict = analysis.randomcomparison_idict;
-%         end
-%         function random_comparison = getRandomComparison(analysis, measure_code, group, varargin)
-%             id = analysis.getRandomComparisonID(measure_code, group, varargin{:});
-%             if ~analysis.getRandomComparisons().contains(id)
-%                 random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin{:});
-%                 analysis.getRandomComparisons().add(id, random_comparison)
-%             end
-%             random_comparison = analysis.getRandomComparisons().getValue(id);
-%         end
+        function randomparison_idict = getRandomComparisons(analysis)
+            randomparison_idict = analysis.randomcomparison_idict;
+        end
+        function random_comparison = getRandomComparison(analysis, measure_code, group, varargin)
+            randomcomparison_id = analysis.getRandomComparisonID(measure_code, group, varargin{:});
+            if ~analysis.getRandomComparisons().contains(randomcomparison_id)
+                random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin{:});
+                analysis.getRandomComparisons().add(randomcomparison_id, random_comparison)
+            end
+            random_comparison = analysis.getRandomComparisons().getValue(randomcomparison_id);
+        end
         function comparison_idict = getComparisons(analysis)
             comparison_idict = analysis.comparison_idict;
         end
@@ -196,12 +196,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % cohort class
             subject_class = eval([Analysis.getClass(analysis) '.getSubjectClass()']);
         end
-        function measurment_class = getMeasurementClass(analysis)
-            measurment_class = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
+        function measurement_class = getMeasurementClass(analysis)
+            measurement_class = eval([Analysis.getClass(analysis) '.getMeasurementClass()']);
         end
-%         function randomcomparison_class = getRandomComparisonClass(analysis)
-%             randomcomparison_class = eval([Analysis.getClass(analysis) '.getRandomComparisonClass()']);
-%         end
+        function randomcomparison_class = getRandomComparisonClass(analysis)
+            randomcomparison_class = eval([Analysis.getClass(analysis) '.getRandomComparisonClass()']);
+        end
         function comparison_class = getComparisonClass(analysis)
             comparison_class = eval([Analysis.getClass(analysis) '.getComparisonClass()']);
         end
@@ -209,26 +209,26 @@ classdef Analysis < handle & matlab.mixin.Copyable
             available_settings = eval([Analysis.getClass(analysis) '.getAvailableSettings()']);
         end
     end    
-%     methods (Access = protected)  % Deep copy    
-%         function analysis_copy = copyElement(analysis)
-%             % shallow copy of Analysis
-%             analysis_copy = copyElement@matlab.mixin.Copyable(analysis);
-%             
-%             % deep copy of cohort
-%             analysis_copy.cohort = analysis.getCohort().copy();
-%             
-%             % deep copy of measurement
-%             analysis_copy.measurement_idict = IndexedDictionary(analysis_copy.getMeasurementClass());
-%             for measurement_i = 1:1:analysis.getMeasurements().length()
-%                 measurement = analysis.getMeasurements().getValue(measurement_i);
-%                 measurement_copy = measurement.copy();
-%                 measurement_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
-%                 group = measurement.getGroup();
-%                 group_copy = analysis_copy.cohort.getGroups().getValue(group.getName());
-%                 measurement_copy.setGroup(group_copy);
-%                 analysis_copy.measurement_idict.add(tostring(measurement_copy.getID()), measurement_copy, measurement_i);
-%             end
-%             
+    methods (Access = protected)  % Deep copy    
+        function analysis_copy = copyElement(analysis)
+            % shallow copy of Analysis
+            analysis_copy = copyElement@matlab.mixin.Copyable(analysis);
+            
+            % deep copy of cohort
+            analysis_copy.cohort = analysis.getCohort().copy();
+            
+            % deep copy of measurement
+            analysis_copy.measurement_idict = IndexedDictionary(analysis_copy.getMeasurementClass());
+            for measurement_i = 1:1:analysis.getMeasurements().length()
+                measurement = analysis.getMeasurements().getValue(measurement_i);
+                measurement_copy = measurement.copy();
+                measurement_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
+                group = measurement.getGroup();
+                group_copy = analysis_copy.cohort.getGroups().getValue(group.getID());
+                measurement_copy.setGroup(group_copy);
+                analysis_copy.measurement_idict.add(tostring(measurement_copy.getID()), measurement_copy, measurement_i);
+            end
+            
 %             % deep copy of randomcomparison
 %             analysis_copy.randomcomparison_idict = IndexedDictionary(analysis_copy.getRandomComparisonClass());
 %             for randomcomparisons_i = 1:1:analysis.getRandomComparisons().length()
@@ -236,25 +236,23 @@ classdef Analysis < handle & matlab.mixin.Copyable
 %                 randomcomparison_copy = randomcomparison.copy();
 %                 randomcomparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
 %                 group = randomcomparison.getGroup();
-%                 group_copy = analysis_copy.cohort.getGroups().getValue(group.getName());
+%                 group_copy = analysis_copy.cohort.getGroups().getValue(group.getID());
 %                 randomcomparison_copy.setGroup(group_copy);
 %                 analysis_copy.randomcomparison_idict.add(tostring(randomcomparison_copy.getID()), randomcomparison_copy, randomcomparisons_i);
 %             end
-%             
-%             % deep copy of comparisons
-%             analysis_copy.comparison_idict = IndexedDictionary(analysis_copy.getComparisonClass());
-%             for comparisons_i = 1:1:analysis.getComparisons().length()
-%                 comparison = analysis.getComparisons().getValue(comparisons_i);
-%                 comparison_copy = comparison.copy();
-%                 comparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
-%                 groups = comparison.getGroups();
-%                 for j = 1:1:numel(groups)
-%                     group = groups{j};
-%                     groups_copy{j} = analysis_copy.cohort.getGroups().getValue(group.getName()); %#ok<AGROW>
-%                 end
-%                 comparison_copy.setGroups(groups_copy);
-%                 analysis_copy.comparison_idict.add(tostring(comparison_copy.getID()), comparison_copy, comparisons_i);
-%             end
-%         end
-%     end
+            
+            % deep copy of comparisons
+            analysis_copy.comparison_idict = IndexedDictionary(analysis_copy.getComparisonClass());
+            for comparisons_i = 1:1:analysis.getComparisons().length()
+                comparison = analysis.getComparisons().getValue(comparisons_i);
+                comparison_copy = comparison.copy();
+                comparison_copy.setBrainAtlases(analysis_copy.cohort.getBrainAtlases());
+                [group1, group2] = comparison.getGroups();
+                group1_copy = analysis_copy.cohort.getGroups().getValue(group1.getID());
+                group2_copy = analysis_copy.cohort.getGroups().getValue(group2.getID());
+                comparison_copy.setGroups(group1_copy, group2_copy);
+                analysis_copy.comparison_idict.add(tostring(comparison_copy.getID()), comparison_copy, comparisons_i);
+            end
+        end
+    end
 end
