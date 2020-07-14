@@ -236,6 +236,7 @@ classdef SubjectMRI < Subject
             % Set/create cohort
             if isa(tmp, 'Cohort')
                 cohort = tmp;
+                subject_class = cohort.getSubjectClass();
             else  % tmp is an atlas
                 
                 % search for cohort info file
@@ -261,8 +262,8 @@ classdef SubjectMRI < Subject
                 atlas = tmp;
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
             end
-                     
-            % creates group
+
+            % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', cohort.getSubjects().getValues());
             path = [fileparts(which(file))]; %#ok<NBRAK>
             file_name = erase(file, path);
@@ -270,18 +271,19 @@ classdef SubjectMRI < Subject
             file_name = erase(file_name, '.xlsx');
             file_name = erase(file_name, '.xls');            
             group.setID(file_name);
-            group.setLabel(raw{2, 1});  % set group info
-            group.setNotes(raw{3, 1});
-            cohort.getGroups().add(group.getID(), group);
+            cohort.getGroups().add(group.getID(), group);   
             
-            % load subjects to cohort & add them to the group
             [~, ~, raw] = xlsread(file);
             atlas = cohort.getBrainAtlases();
-            for i = 5:1:size(raw, 1)
+            
+            for i = 2:1:size(raw, 1)
                 subject = Subject.getSubject(subject_class, ...                    
                     char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlas, ...
                     'MRI', cell2mat(raw(i, 4:size(raw, 2))'));
-                cohort.getSubjects().add(subject.getID(), subject, i);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+                group.addSubject(subject);
             end
         end
         function save_to_xls(cohort, varargin)
@@ -327,13 +329,7 @@ classdef SubjectMRI < Subject
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
-            
-            % group info
-            group_info = cell(3, 1);
-            group_info{1, 1} = group.getID();
-            group_info{2, 1} = group.getLabel();
-            group_info{3, 1} = group.getNotes();
-            
+                        
             for j = 1:1:group.subjectnumber()
                 % get subject data
                 subject = subjects_list{j};
@@ -369,8 +365,7 @@ classdef SubjectMRI < Subject
                 ];
             
             % save
-            writecell(group_info, file);
-            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
+            writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
         end
         function cohort = load_from_txt(cohort, subject_class, atlases, varargin)
             % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectMRI
