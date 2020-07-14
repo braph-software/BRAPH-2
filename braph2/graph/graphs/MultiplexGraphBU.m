@@ -17,12 +17,13 @@ classdef MultiplexGraphBU < MultiplexGraphBD
     %   getDirectionalityType   - returns the directionality type of the graph
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
-    %   getCompatibleMeasureList - returns a list with compatible measures
-    %   getCompatibleMeasureNumber - returns the number of compatible measures
+    %
+    % MultiplexGraphBU randomize graph method
+    %   randomize               - returns a randomized graph
     %
     % See also Graph, MultiplexGraphBD, MultiplexGraphWD, MultiplexGraphWU.
     
-    methods
+    methods  
         function g = MultiplexGraphBU(A, varargin)
             % MULTIPLEXGRAPHBU(A) creates a MULTIPLEXGRAPHBU class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
@@ -207,21 +208,26 @@ classdef MultiplexGraphBU < MultiplexGraphBD
                 };
         end
     end
-    methods
-        function [randomized_graph, swaps] = randomize(g, varargin)
-            % RANDOMIZE returns a randomized graph and the number of swaps
+    methods  % Randomize methods
+        function randomized_g = randomize(g, varargin)
+            % RANDOMIZE returns a randomized graph
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE() returns the randomized
-            % graph RANDOMIZED_GRAPH obtained from a number of edge swaps SWAPS.
-            % The randomization it is done layer by layer and then
-            % integrated in the 2-D supra-adjacency matrix cell array.
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE() returns the randomized 
+            % graph RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A while preserving 
+            % degree distributions. The randomization it is done layer by 
+            % layer and then integrated in the 2-D supra-adjacency matrix 
+            % cell array.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'MultiplexGraphBU.AttemptsPerEdge', NUMBER)
-            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
-            % number of edge swaps SWAPS and the specified number of attempts 
-            % per edge NUMBER. The multiplex is randomized layer by 
-            % layer where randomized adjacency matrix of each layer are then  
-            % integrated in the 2-D supra-adjacency matrix cell array.
+            % RANDOMIZED_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE)
+            % returns the randomized graph RANDOM_G obtained with a 
+            % randomized correlation matrix via the static function 
+            % randomize_A while preserving  degree distributions.
+            % The multiplex is randomized layer by layer where randomized 
+            % adjacency matrix of each layer are then integrated in the 
+            % 2-D supra-adjacency matrix cell array
+            %
+            % See also GraphBU
             
             % get rules
             attempts_per_edge = get_from_varargin(10, 'AttemptsPerEdge', varargin{:});
@@ -232,118 +238,15 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             
             % get A
             A = g.getA();
-            L = g.layernumber();
-            swaps = zeros(1, L); % number of successful edge swaps
-            randomized_graph = A;
+            L = g.layernumber();            
+            random_multi_A = A;
             
             for li = 1:1:L
                 Aii = A{li, li};
-                % remove self connections
-                Aii(1:length(Aii)+1:numel(Aii)) = 0;
-                [I_edges, J_edges] = find(triu(Aii)); % find all the edges
-                E = length(I_edges); % number of edges
-                
-                randomized_graph_layer = Aii;
-                for attempt=1:1:attempts_per_edge*E
-                    
-                    % select two edges
-                    selected_edges = randperm(E,2);
-                    node_start_1 = I_edges(selected_edges(1));
-                    node_end_1 = J_edges(selected_edges(1));
-                    node_start_2 = I_edges(selected_edges(2));
-                    node_end_2 = J_edges(selected_edges(2));
-                    
-                    if rand(1) > 0.5
-                        I_edges(selected_edges(2)) = node_end_2;
-                        J_edges(selected_edges(2)) = node_start_2;
-                        
-                        node_start_2 = I_edges(selected_edges(2));
-                        node_end_2 = J_edges(selected_edges(2));
-                    end
-                    
-                    % Swap edges if:
-                    % 1) no edge between node_start_1 and node_end_2
-                    % 2) no edge between node_start_2 and node_end_1
-                    % 3) node_start_1 ~= node_start_2
-                    % 4) node_end_1 ~= node_end_2
-                    % 5) node_start_1 ~= node_end_2
-                    % 6) node_start_2 ~= node_end_1
-                    
-                    if ~randomized_graph(node_start_1, node_end_2) && ...
-                            ~randomized_graph(node_start_2, node_end_1) && ...
-                            node_start_1~=node_start_2 && ...
-                            node_end_1~=node_end_2 && ...
-                            node_start_1~=node_end_2 && ...
-                            node_start_2~=node_end_1
-                        
-                        % erase old edges
-                        randomized_graph(node_start_1, node_end_1) = 0;
-                        randomized_graph(node_end_1, node_start_1) = 0;
-                        
-                        randomized_graph(node_start_2, node_end_2) = 0;
-                        randomized_graph(node_end_2, node_start_2) = 0;
-                        
-                        % write new edges
-                        randomized_graph(node_start_1, node_end_2) = 1;
-                        randomized_graph(node_end_2, node_start_1) = 1;
-                        
-                        randomized_graph(node_start_2, node_end_1) = 1;
-                        randomized_graph(node_end_1, node_start_2) = 1;
-                        
-                        % update edge list
-                        J_edges(selected_edges(1)) = node_end_2;
-                        J_edges(selected_edges(2)) = node_end_1;
-                        
-                        swaps(L) = swaps(L)+1;
-                    end
-                end
-                randomized_graph(li, li) = {randomized_graph_layer};
+                random_A = GraphBU.randomize_A(Aii, attempts_per_edge);
+                random_multi_A(li, li) = {random_A};
             end
+            randomized_g = MultiplexGraphBU(random_multi_A, varargin{:});
         end
     end
-%     methods
-%         function g = GraphBU(A, varargin)
-%             % GRAPHBU(A) creates a GRAPHBU class with adjacency matrix A.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % function: SYMMETRIZE.
-%             % It calls the superclass constructor GRAPHBD.
-%             %
-%             % GRAPHBU(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-%             % a GRAPHBU class with adjacency matrix A and it passes the
-%             % properties and values to the superclass as VARARGIN.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % function: SYMMETRIZE.
-%             % It calls the superclass constructor GRAPHBD.
-%             %
-%             % See also Graph, GraphBD, GraphWD, GraphWU.
-%             
-%             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
-%             
-%             g = g@GraphBD(A, varargin{:});
-%         end
-%     end
-%     methods (Static)
-%         function list = getCompatibleMeasureList()
-%             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
-%             %
-%             % LIST = GETCOMPATIBLEMEASURELIST() returns a list with
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureNumber().
-%             
-%             list = Graph.getCompatibleMeasureList('GraphBU');
-%         end
-%         function n = getCompatibleMeasureNumber()
-%             % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible measures.
-%             %
-%             % N = GETCOMPATIBLEMEASURENUMBER() returns the number of
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureList().
-%             
-%             n = Graph.getCompatibleMeasureNumber('GraphBU');
-%         end
-%     end
 end

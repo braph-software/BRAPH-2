@@ -3,7 +3,7 @@ classdef DummyGraph < Graph
     % DummyGraph represents a binary undirected graph.
     %
     % DummyGraph consists of a binary undirected graph.
-    %  
+    %
     % DummyGraph methods:
     %   DummyGraph              - constructor
     %
@@ -16,19 +16,17 @@ classdef DummyGraph < Graph
     %   getDirectionalityType   - returns if graph is directed or undirected
     %   getSelfConnectivityType - returns if graph is self-connected or not self-connected
     %   getNegativityType       - returns if graph is negative or non-negative
-    %   getCompatibleMeasureList - returns a list with compatible measures
-    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
-    % Graph randomization method (static):
+    % Graph randomization method:
     %   randomize               - randomize graph
-    % 
+    %
     % See also Graph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
     
     methods  % Constructor
         function g = DummyGraph(A, varargin)
             % DUMMYGRAPH() creates a DUMMYGRAPH class with a
             % default matrix A:
-            % A =   0 1 1  
+            % A =   0 1 1
             %       1 0 0
             %       1 0 0
             %
@@ -37,16 +35,16 @@ classdef DummyGraph < Graph
             %
             % DUMMYGRAPH(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
             % initializes DUMMYGRAPH with the properties and values
-            % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... 
+            % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...
             %
             % See also Graph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
-      
+            
             if isempty(A)
                 A = [
-                0   1   1
-                1   0   0
-                1   0   0
-                ];
+                    0   1   1
+                    1   0   0
+                    1   0   0
+                    ];
             end
             
             g = g@Graph(A, varargin{:});
@@ -89,21 +87,21 @@ classdef DummyGraph < Graph
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.GRAPH.
             %
             % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
-           
+            
             graph_type = Graph.GRAPH;
         end
         function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.BINARY.
-            %    
+            %
             % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
             
             connectivity_type = Graph.BINARY;
         end
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
-            %   
+            %
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.UNDIRECTED.
             %
             % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
@@ -112,7 +110,7 @@ classdef DummyGraph < Graph
         end
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
-            %    
+            %
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
@@ -129,15 +127,17 @@ classdef DummyGraph < Graph
             negativity_type =  Graph.NONNEGATIVE;
         end
     end
-    methods (Static)
+    methods  % Randomize function
         function gr = randomize(g, varargin)
-            % RANDOMIZE returns a the graph unchanged for DummyGraph
-            %    
-            % GR = RANDOMIZE(G) returns a the graph unchanged for
-            % DummyGraph. Utilizes available graph settings.
-                        
+            % RANDOMIZE  returns a randomized graph
+            %
+            % GR = RANDOMIZE(G) returns a randomized graph of
+            % class 'DummyGraph'
+            % 
+            % See also DummyGraph.
+           
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
-    end
+    end  
 end

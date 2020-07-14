@@ -16,8 +16,12 @@ classdef GraphBU < GraphBD
     %   getDirectionalityType   - returns the directionality type of the graph
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
-    %   getCompatibleMeasureList - returns a list with compatible measures
-    %   getCompatibleMeasureNumber - returns the number of compatible measures
+    %
+    % GraphBU randomize graph method
+    %   randomize               - returns a randomized graph
+    %
+    % GraphBU randomize A method (Static)
+    %   randomize_A             - returns a randomized correlation matrix
     %
     % See also Graph, GraphBD, GraphWD, GraphWU.
     
@@ -39,6 +43,9 @@ classdef GraphBU < GraphBD
             %
             % See also Graph, DummyGraph, GraphBD, GraphWD, GraphWU.
             
+            if isempty(A)
+                 A = rand(4);
+            end
             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
             
             g = g@GraphBD(A, varargin{:});
@@ -131,64 +138,64 @@ classdef GraphBU < GraphBD
             %
             % See also getClass, getName, getDescription, getGraphType.
             
-            available_settings = { ...
-                 'GraphBU.AttemptsPerEdge', BRAPH2.NUMERIC, 5, {} ...
-                 };
+            available_settings = {};
         end
     end
-%     methods
-%         function g = GraphBU(A, varargin)
-%             % GRAPHBU(A) creates a GRAPHBU class with adjacency matrix A.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % function: SYMMETRIZE.
-%             % It calls the superclass constructor GRAPHBD.
-%             %
-%             % GRAPHBU(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...) creates
-%             % a GRAPHBU class with adjacency matrix A and it passes the
-%             % properties and values to the superclass as VARARGIN.
-%             % This function is the constructor, it initializes the class by
-%             % operating the adjacency matrix A with the following
-%             % function: SYMMETRIZE.
-%             % It calls the superclass constructor GRAPHBD.
-%             %
-%             % See also Graph, GraphBD, GraphWD, GraphWU.
-%             
-%             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
-%             
-%             g = g@GraphBD(A, varargin{:});
-%         end
-%     end
-    methods
-        function [randomized_graph, swaps] = randomize(g, varargin)
-            % RANDOMIZE returns a randomized graph and the number of swaps
+    methods  % Randomize function
+        function random_g = randomize(g, varargin)  % what we discussed in cafeteria is this (g, attempts_per_edge)
+            % RANDOMIZE returns a randomized graph
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G) 
-            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
-            % number of edge swaps SWAPS. Utilizes available graph
-            % settings.
+            % RANDOM_G = RANDOMIZE(G) returns the randomized graph
+            % RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A while preserving 
+            % degree distributions.
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE(G, 'GraphBU.AttemptsPerEdge', NUMBER)
-            % returns the randomized graph RANDOMIZED_GRAPH obtained from a
-            % number of edge swaps SWAPS and the specified number of attempts 
-            % per edge NUMBER.
+            % RANDOM_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE) returns the 
+            % randomized graph RANDOM_G obtained with a randomized correlation
+            % matrix via the static function randomize_A while preserving
+            % degree distributions, it passes the
+            % attempts per edge specified by the user.
+            %
+            % See also randomize_A
             
-            % get rules
-            attempts_per_edge = g.getSettings('GraphBU.AttemptsPerEdge');
+            attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
             
-            if nargin<2
+            A = g.getA();
+            random_A = GraphBU.randomize_A(A, attempts_per_edge);
+                        
+            random_g = Graph.getGraph(Graph.getClass(g), ...
+                random_A, ...
+                varargin{:});
+        end
+    end
+    methods (Static)  % Randomize A function
+        function [random_A, swaps] = randomize_A(A, attempts_per_edge) 
+            % RANDOMIZE_A returns a randomized correlation matrix
+            %
+            % RANDOM_A = RANDOMIZE(G) returns the randomized matrix
+            % RANDOM_A. Tries to swap 5 times an edge. 
+            %
+            % [RANDOM_A, SWAPS] = RANDOMIZE_A(G) attempts to rewire each edge 
+            % 5 times. Returns the randomized matrix RANDOM_A. Returns the
+            % number of succesful edge swaps. This algorithm was proposed
+            % by Maslov and Sneppen (Science 296, 910, 2002)
+            %
+            % [RANDOM_A, SWAPS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE) attempts
+            % to rewire each edge ATTEMPTS_PER_EDGE times then it returns the 
+            % randomized matrix RANDOM_A. Returns the number of succesful edge swaps.
+            %
+            % See also randomize
+            
+            if nargin < 2
                 attempts_per_edge = 5;
             end
-            
-            % get A
-            A = g.getA();
             
             % remove self connections
             A(1:length(A)+1:numel(A)) = 0;
             [I_edges, J_edges] = find(triu(A)); % find the edges
             E = length(I_edges); % number of edges
             
-            randomized_graph = A;
+            random_A = A;
             swaps = 0; % number of successful edge swaps
             for attempt=1:1:attempts_per_edge*E
                 
@@ -215,26 +222,26 @@ classdef GraphBU < GraphBD
                 % 5) node_start_1 ~= node_end_2
                 % 6) node_start_2 ~= node_end_1
                 
-                if ~randomized_graph(node_start_1, node_end_2) && ...
-                        ~randomized_graph(node_start_2, node_end_1) && ...
+                if ~random_A(node_start_1, node_end_2) && ...
+                        ~random_A(node_start_2, node_end_1) && ...
                         node_start_1~=node_start_2 && ...
                         node_end_1~=node_end_2 && ...
                         node_start_1~=node_end_2 && ...
                         node_start_2~=node_end_1
                     
                     % erase old edges
-                    randomized_graph(node_start_1, node_end_1) = 0;
-                    randomized_graph(node_end_1, node_start_1) = 0;
+                    random_A(node_start_1, node_end_1) = 0;
+                    random_A(node_end_1, node_start_1) = 0;
                     
-                    randomized_graph(node_start_2, node_end_2) = 0;
-                    randomized_graph(node_end_2, node_start_2) = 0;
+                    random_A(node_start_2, node_end_2) = 0;
+                    random_A(node_end_2, node_start_2) = 0;
                     
                     % write new edges
-                    randomized_graph(node_start_1, node_end_2) = 1;
-                    randomized_graph(node_end_2, node_start_1) = 1;
+                    random_A(node_start_1, node_end_2) = 1;
+                    random_A(node_end_2, node_start_1) = 1;
                     
-                    randomized_graph(node_start_2, node_end_1) = 1;
-                    randomized_graph(node_end_1, node_start_2) = 1;
+                    random_A(node_start_2, node_end_1) = 1;
+                    random_A(node_end_1, node_start_2) = 1;
                     
                     % update edge list
                     J_edges(selected_edges(1)) = node_end_2;
@@ -245,26 +252,4 @@ classdef GraphBU < GraphBD
             end
         end
     end
-%     methods (Static)
-%         function list = getCompatibleMeasureList()
-%             % GETCOMPATIBLEMEASURELIST returns a list with compatible measures.
-%             %
-%             % LIST = GETCOMPATIBLEMEASURELIST() returns a list with
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureNumber().
-%             
-%             list = Graph.getCompatibleMeasureList('GraphBU');
-%         end
-%         function n = getCompatibleMeasureNumber()
-%             % GETCOMPATIBLEMEASURENUMBER returns a number of the compatible measures.
-%             %
-%             % N = GETCOMPATIBLEMEASURENUMBER() returns the number of
-%             % compatible measures to the graph.
-%             %
-%             % See also getCompatibleMeasureList().
-%             
-%             n = Graph.getCompatibleMeasureNumber('GraphBU');
-%         end
-%     end
 end

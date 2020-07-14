@@ -18,50 +18,48 @@ classdef DummyOrderedMultilayer < Graph
     %   getDirectionalityType   - returns if graph is directed or undirected
     %   getSelfConnectivityType - returns if graph is self-connected or not self-connected
     %   getNegativityType       - returns if graph is negative or non-negative
-    %   getCompatibleMeasureList - returns a list with compatible measures
-    %   getCompatibleMeasureNumber - returns the number of compatible measures
     %
-    % Graph randomization method (static):
+    % Graph randomization method:
     %   randomize               - randomize graph
-    % 
+    %
     % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultiplex.
     
     methods  % Constructor
         function g = DummyOrderedMultilayer(A, varargin)
             % DUMMYORDEREDMULTILAYER() creates a DUMMYORDEREDMULTILAYER class
             % with a default supra-adjacency matrix A:
-            % A =   BD(4)     BD(4, 3)  []  
-            %       BD(3, 4)  BD(3)     BD(3, 2)  
-            %       []        BD(2, 3)  WD(2) 
+            % A =   BD(4)     BD(4, 3)  []
+            %       BD(3, 4)  BD(3)     BD(3, 2)
+            %       []        BD(2, 3)  WD(2)
             % where all weights are initialized randomly and
             %       BD(4) = binary directed 4 x 4 with weights in 0 or 1
             %       BD(3) = binary directed 3 x 3 with weights in 0 or 1
             %       WD(2) = weighted directed 2 x 2 with weights in [0, 1]
             %
-            % DUMMYORDEREDMULTILAYER(A) creates a DUMMYORDEREDMULTILAYER 
+            % DUMMYORDEREDMULTILAYER(A) creates a DUMMYORDEREDMULTILAYER
             % class with supra-adjacency matrix A.
             % It throws an error if the number of layers of A is not three.
             % It calls the constructor of Graph.
             %
             % DUMMYORDEREDMULTILAYER(A, PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...)
             % initializes DUMMYORDEREDMULTILAYER with the properties and values
-            % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ... 
+            % PROPERTY1, VALUE1, PROPERTY2, VALUE2, ...
             %
             % See also Graph, DummyGraph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultiplex.
-                     
+            
             if isempty(A)
                 A = {
-                    round(rand(4))      round(rand(4, 3))   {} 
-                    round(rand(3, 4))   round(rand(3))      round(rand(3, 2))   
-                    {}                  round(rand(2, 3))   rand(2)             
-                };
+                    round(rand(4))      round(rand(4, 3))   {}
+                    round(rand(3, 4))   round(rand(3))      round(rand(3, 2))
+                    {}                  round(rand(2, 3))   rand(2)
+                    };
             end
             
             assert(length(A) == 3, ...
                 [BRAPH2.STR ':DummyOrderedMultilayer' BRAPH2.WRONG_INPUT], ...
                 ['The number of layers for DummyOrderedMultilayer must be three,' ...
                 ' while it is ' tostring(length(A))])
-                
+            
             g = g@Graph(A, varargin{:});
         end
     end
@@ -102,35 +100,35 @@ classdef DummyOrderedMultilayer < Graph
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.ORDERED_MULTILAYER.
             %
             % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
-
+            
             graph_type = Graph.ORDERED_MULTILAYER;
         end
         function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns a 
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns a
             % matrix with BINARY for the first and second layers, and
             % WEIGHTED for the third layer.
             % It returns:
-            % CONNECTIVITY_TYPE = BINARY   BINARY  BINARY  
-            %                     BINARY   BINARY  BINARY  
-            %                     BINARY   BINARY  WEIGHTED 
+            % CONNECTIVITY_TYPE = BINARY   BINARY  BINARY
+            %                     BINARY   BINARY  BINARY
+            %                     BINARY   BINARY  WEIGHTED
             % where BINARY = Graph.BINARY and WEIGHTED = Graph.WEIGHTED.
-            %   
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns a 
+            %
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns a
             % matrix with BINARY for the first and second layers, and
             % WEIGHTED for the third layer.
             % It returns:
-            % CONNECTIVITY_TYPE = BINARY   BINARY  BINARY  
-            %                     BINARY   BINARY  BINARY  
-            %                     BINARY   BINARY  WEIGHTED 
+            % CONNECTIVITY_TYPE = BINARY   BINARY  BINARY
+            %                     BINARY   BINARY  BINARY
+            %                     BINARY   BINARY  WEIGHTED
             % where BINARY = Graph.BINARY and WEIGHTED = Graph.WEIGHTED.
             %
             % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
-                  
-            connectivity_type = [ 
+            
+            connectivity_type = [
                 Graph.BINARY    Graph.BINARY    Graph.BINARY
-                Graph.BINARY    Graph.BINARY    Graph.BINARY 
+                Graph.BINARY    Graph.BINARY    Graph.BINARY
                 Graph.BINARY    Graph.BINARY    Graph.WEIGHTED
                 ];
         end
@@ -140,27 +138,27 @@ classdef DummyOrderedMultilayer < Graph
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns
             % Graph.DIRECTED.
             %
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns 
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.DIRECTED for all the elements.
             % For example, for the default matrix it returns:
-            % DIRECTIONALITY_TYPE = DIRECTED  DIRECTED  DIRECTED  
-            %                       DIRECTED  DIRECTED  DIRECTED  
-            %                       DIRECTED  DIRECTED  DIRECTED  
+            % DIRECTIONALITY_TYPE = DIRECTED  DIRECTED  DIRECTED
+            %                       DIRECTED  DIRECTED  DIRECTED
+            %                       DIRECTED  DIRECTED  DIRECTED
             % where DIRECTED = Graph.DIRECTED.
             % If LAYERNUMBER is not three, it throws an error.
             %
             % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
-                       
+            
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
             else
                 layernumber = varargin{1};
-
+                
                 assert(layernumber == 3, ...
                     [BRAPH2.STR ':DummyOrderedMultilayer:' BRAPH2.WRONG_INPUT], ...
                     ['The number of layers for DummyOrderedMultilayer must be three,' ...
                     ' while it is ' tostring(layernumber)])
-
+                
                 directionality_type = Graph.DIRECTED * ones(layernumber);
             end
         end
@@ -170,27 +168,27 @@ classdef DummyOrderedMultilayer < Graph
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns
             % Graph.SELFCONNECTED.
             %
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns 
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.SELFCONNECTED for all the elements.
             % For example, for the default matrix it returns:
-            % NEGATIVITY_TYPE = SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  
-            %                   SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  
-            %                   SELFCONNECTED  SELFCONNECTED  SELFCONNECTED  
+            % NEGATIVITY_TYPE = SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
+            %                   SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
+            %                   SELFCONNECTED  SELFCONNECTED  SELFCONNECTED
             % where SELFCONNECTED = Graph.SELFCONNECTED.
             % If LAYERNUMBER is not three, it throws an error.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
-                      
+            
             if isempty(varargin)
                 selfconnectivity_type = Graph.SELFCONNECTED;
             else
                 layernumber = varargin{1};
-
+                
                 assert(layernumber == 3, ...
                     [BRAPH2.STR ':DummyOrderedMultilayer:' BRAPH2.WRONG_INPUT], ...
-                    ['The number of layers for DummyOrderedMultilayer must be three,' ... 
+                    ['The number of layers for DummyOrderedMultilayer must be three,' ...
                     ' while it is ' tostring(layernumber)])
-
+                
                 selfconnectivity_type = Graph.SELFCONNECTED * ones(layernumber);
             end
         end
@@ -199,7 +197,7 @@ classdef DummyOrderedMultilayer < Graph
             %
             % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
-            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(LAYERNUMBER) returns 
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.NONNEGATIVE for all the elements.
             % For example, for the default matrix it returns:
             % NEGATIVITY_TYPE = NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
@@ -215,23 +213,25 @@ classdef DummyOrderedMultilayer < Graph
                 negativity_type = Graph.NONNEGATIVE;
             else
                 layernumber = varargin{1};
-                                
+                
                 assert(layernumber == 3, ...
                     [BRAPH2.STR ':DummyOrderedMultilayer:' BRAPH2.WRONG_INPUT], ...
-                    ['The number of layers for DummyOrderedMultilayer must be three,' ... 
+                    ['The number of layers for DummyOrderedMultilayer must be three,' ...
                     ' while it is ' tostring(layernumber)])
                 
                 negativity_type =  Graph.NONNEGATIVE * ones(layernumber);
-            end       
+            end
         end
     end
-    methods (Static)
+    methods  % Randomize methods
         function gr = randomize(g, varargin)
-            % RANDOMIZE returns a the graph unchanged for DummyOrderedMultilayer
-            %    
-            % GR = RANDOMIZE(G) returns a the graph unchanged for
-            % DummyOrderedMultilayer. Utilizes available graph settings.  
-                               
+            % RANDOMIZE returns a randomized graph
+            %
+            % GR = RANDOMIZE(G) returns a randomized graph of
+            % class 'DummyOrderedMultilayer'.
+            % 
+            % See also DummyOrderedMultilayer.
+            
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
