@@ -168,12 +168,33 @@ classdef Group < handle & matlab.mixin.Copyable
     end
     methods  % Inspection functions
         function n = subjectnumber(group)
+            % SUBJECTNUMBER returns the number of subjects in the group
+            %
+            % N = SUBJECTNUMBER(GROUP) returns the number of subjects in
+            % the group.
+            % 
+            % See also getSubjects, contains_subject, addSubject, removeSubject.
+            
             n = length(group.subjects);
         end
         function subjects = getSubjects(group)
+            % GETSUBJECTS returns the subjects in the group
+            %
+            % SUBJECTS = SUBJECTNUMBER(GROUP) returns the subjects in
+            % the group.
+            % 
+            % See also subjectnumber, contains_subject, addSubject, removeSubject.
+            
             subjects = group.subjects;
         end
         function bool = contains_subject(group, subject)
+            % CONTAINS_SUBJECT checks if the subject is in the group
+            %
+            % BOOL = SUBJECTNUMBER(GROUP, SUBJECT) checks if the subject is in
+            % the group.
+            %
+            % See also subjectnumber, addSubject, removeSubject.
+            
             bool = false;
             for i = 1:1:group.subjectnumber()
                 if group.subjects{i} == subject
@@ -183,17 +204,36 @@ classdef Group < handle & matlab.mixin.Copyable
             end
         end
         function addSubject(group, subject)
+            % ADDSUBJECT adds the subject to the group
+            %
+            % ADDSUBJECT(GROUP, SUBJECT) adds the subject to the group if
+            % its not already a part of the group.
+            %
+            % See also subjectnumber, contains_subject, removeSubject.
+            
             if ~group.contains_subject(subject)
                 group.subjects{end+1} = subject;
             end
         end
         function addSubjects(group, subjects)
+            % ADDSUBJECTS adds the subjects to the group
+            %
+            % ADDSUBJECTS(GROUP, SUBJECTS) adds the subjects to the group.
+            %
+            % See also subjectnumber, contains_subject, addSubject, removeSubject.
+            
             for i = 1:1:length(subjects)
                 subject = subjects{i};
                 group.addSubject(subject)
             end
         end
         function removeSubject(group, subject)
+            % REMOVESUBJECT removes the subject from the group
+            %
+            % REMOVESUBJECT(GROUP, SUBJECT) removes the subject from the group.
+            %
+            % See also subjectnumber, contains_subject, addSubject.
+            
             for i = 1:1:group.subjectnumber()
                 if group.subjects{i} == subject
                     group.subjects(i) = [];
@@ -202,6 +242,11 @@ classdef Group < handle & matlab.mixin.Copyable
             end
         end
         function removeSubjects(group, subjects)
+            % REMOVESUBJECTS removes the subjects from the group
+            %
+            % REMOVESUBJECTS(GROUP, SUBJECTS) removes the subjects from the group.
+            %
+            % See also subjectnumber, contains_subject, addSubject.
             for i = 1:1:length(subjects)
                 subject = subjects{i};
                 group.removeSubject(subject)
