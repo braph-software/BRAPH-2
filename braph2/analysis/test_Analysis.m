@@ -451,161 +451,126 @@ for i = 1:1:length(analysis_class_list)
         'Analysis.move2topMeasurements() does not work')
 end
 
-% %% Test 15: Copy
-% for i =1:1:length(analysis_class_list)
-%     % setup
-%     analysis_class = analysis_class_list{i};
-%     subject_class = Analysis.getSubjectClass(analysis_class);
-%     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
-%     sub1 = Subject.getSubject(subject_class, atlases);
-%     sub2 = Subject.getSubject(subject_class, atlases);
-%     sub3 = Subject.getSubject(subject_class, atlases);
-%     sub4 = Subject.getSubject(subject_class, atlases);
-%     sub5 = Subject.getSubject(subject_class, atlases);
-%     sub6 = Subject.getSubject(subject_class, atlases);
-%     cohort = Cohort('cohort', subject_class, atlases, {sub1, sub2, sub3, sub4, sub5, sub6});
-%     group = Group(subject_class, {sub1, sub2, sub3});
-%     group2 = Group(subject_class, {sub4, sub5, sub6});    
-%     cohort.getGroups().add(group.getName(), group);
-%     cohort.getGroups().add(group2.getName(), group2);
-%     measurement_class = Analysis.getMeasurementClass(analysis_class);
-%     comparison_class = Analysis.getComparisonClass(analysis_class);
+%% Test 15: Copy
+for i =1:1:length(analysis_class_list)
+    % setup
+    analysis_class = analysis_class_list{i};
+    subject_class = Analysis.getSubjectClass(analysis_class);
+    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class));
+    sub1 = Subject.getSubject(subject_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(subject_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(subject_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(subject_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(subject_class, 'id5', 'label 5', 'notes 5', atlases);
+    sub6 = Subject.getSubject(subject_class, 'id6', 'label 6', 'notes 6', atlases);
+    cohort = Cohort('cohort id', 'cohort label', 'cohort notes', subject_class, atlases, {sub1, sub2, sub3, sub4, sub5, sub6});
+    group1 = Group(subject_class, 'gr id 1', 'gr label 1', 'gr notes 1', {sub1, sub2, sub3});
+    group2 = Group(subject_class, 'gr id 2', 'gr label 2', 'gr notes 2', {sub4, sub5, sub6});
+    cohort.getGroups().add(group1.getID(), group1);
+    cohort.getGroups().add(group2.getID(), group2);
+    measurement_class = Analysis.getMeasurementClass(analysis_class);
 %     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
-%     measurement = Measurement.getMeasurement(measurement_class, 'm1', atlas, group, [measurement_class '.measure_code'], 'Degree');
-%     comparison = Comparison.getComparison(comparison_class, 'c1', atlas, {group group2}, [comparison_class '.measure_code'], 'Degree');
-%     randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group);
-%     analysis = Analysis.getAnalysis(analysis_class, cohort, {measurement}, {randomcomparison}, {comparison});
-%     
-%     % act
-%     analysis_copy = analysis.copy();
-%     
-%     assert(analysis ~= analysis_copy, ... % different objects
-%         [BRAPH2.STR ':Analysis:Copy'], ...
-%         ['Analysis.copy() does not work']) %#ok<NBRAK>
-%     
-%     cohort_analysis = analysis.getCohort();
-%     measurement_analysis_idict = analysis.getMeasurements();
-%     comparison_analysis_idict = analysis.getComparisons();
+    comparison_class = Analysis.getComparisonClass(analysis_class);
+    measurement = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, 'Degree', group1);
+%     randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', atlas, group1);
+    comparison = Comparison.getComparison(comparison_class, 'c1 id', 'cq label', 'c1 notes', atlas, 'Degree', group1, group2);
+    analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {measurement}, {}, {comparison});
+    
+    % act
+    analysis_copy = analysis.copy();
+    
+    assert(analysis ~= analysis_copy, ... % different objects
+        [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+        [analysis_class '.copy() does not work'])
+    
+    cohort_analysis = analysis.getCohort();
+    measurement_analysis_idict = analysis.getMeasurements();
 %     randomcomparison_analysis_idict = analysis.getRandomComparisons();
-%     
-%     cohort_copy = analysis_copy.getCohort();
-%     measurement_copy_idict = analysis_copy.getMeasurements();
-%     comparison_copy_idict = analysis_copy.getComparisons();
+    comparison_analysis_idict = analysis.getComparisons();
+    
+    cohort_copy = analysis_copy.getCohort();
+    measurement_copy_idict = analysis_copy.getMeasurements();
 %     randomcomparison_copy_idict = analysis_copy.getRandomComparisons();
-%     
-%     % cohort part
-%     atlases = cohort_analysis.getBrainAtlases();
-%     atlases_copy = cohort_copy.getBrainAtlases();
-%     
-%     assert(cohort_analysis ~= cohort_copy, ... % different objects
-%         [BRAPH2.STR ':Analysis:Copy'], ...
-%         ['Analysis.copy() does not work']) %#ok<NBRAK>
-%     for j = 1:1:length(atlases)
-%         assert(atlases{j} ~= atlases_copy{j}, ... % different objects
-%             [BRAPH2.STR ':Analysis:Copy'], ...
-%             ['Analysis.copy() does not work']) %#ok<NBRAK>
-%     end
-%     
-%     for j = 1:1:cohort.getSubjects().length()
-%         sub = cohort_analysis.getSubjects().getValue(j);
-%         sub_copy = cohort_copy.getSubjects().getValue(j);
-%         assert(sub ~= sub_copy, ... % different objects
-%             [BRAPH2.STR ':Analysis:Copy'], ...
-%             ['Analysis.copy() does not work']) %#ok<NBRAK>
-%         
-%         data_codes = sub.getDataCodes();
-%         for k = 1:1:length(data_codes)
-%             data_code = data_codes{k};
-%             assert(sub.getData(data_code) ~= sub_copy.getData(data_code), ... % different objects
-%                 [BRAPH2.STR ':Analysis:Copy'], ...
-%                 ['Analysis.copy() does not work']) %#ok<NBRAK>
-%             assert(sub.getData(data_code).getBrainAtlas() ~= sub_copy.getData(data_code).getBrainAtlas(), ... % different objects
-%                 [BRAPH2.STR ':Analysis:Copy'], ...
-%                 ['Analysis.copy() does not work']) %#ok<NBRAK>
-%         end
-%     end
-%   
-%     for k = 1:1:cohort_analysis.getGroups().length()
-%         group = cohort_analysis.getGroups().getValue(k);
-%         group_copy = cohort_copy.getGroups().getValue(k);
-%         assert(group ~= group_copy, ... % different objects
-%             [BRAPH2.STR ':Cohort:Copy'], ...
-%             ['Cohort.copy() does not work']) %#ok<NBRAK>
-%         
-%         subs = group.getSubjects();
-%         subs_copy = group_copy.getSubjects();
-%         assert(subs{1} ~= subs_copy{1}, ... % different objects
-%             [BRAPH2.STR ':Cohort:Copy'], ...
-%             ['Cohort.copy() does not work']) %#ok<NBRAK>
-%     end
-%     
-%     % measurement part
-%     for m = 1:1:measurement_analysis_idict.length()
-%         measurement_analysis = measurement_analysis_idict.getValue(m);
-%         measurement_copy = measurement_copy_idict.getValue(m);
-%         atlases = measurement_analysis.getBrainAtlases();
-%         atlases_copy = measurement_copy.getBrainAtlases();
-%         
-%         assert(measurement_analysis ~= measurement_copy, ... % different objects
-%             [BRAPH2.STR ':Analysis:Copy'], ...
-%             ['Analysis.copy() does not work']) %#ok<NBRAK>
-%         
-%         for j = 1:1:length(atlases)
-%             assert(atlases{j} ~= atlases_copy{j}, ... % different objects
-%                 [BRAPH2.STR ':Analysis:Copy'], ...
-%                 ['Analysis.copy() does not work']) %#ok<NBRAK>
-%         end
-%         
-%         for k = 1:1:numel(measurement_analysis.getGroup())
-%             group = measurement_analysis.getGroup();
-%             group_copy = measurement_copy.getGroup();
-%             assert(group ~= group_copy, ... % different objects
-%                 [BRAPH2.STR ':Cohort:Copy'], ...
-%                 ['Cohort.copy() does not work']) %#ok<NBRAK>
-%             
-%             subs = group.getSubjects();
-%             subs_copy = group_copy.getSubjects();
-%             assert(subs{1} ~= subs_copy{1}, ... % different objects
-%                 [BRAPH2.STR ':Cohort:Copy'], ...
-%                 ['Cohort.copy() does not work']) %#ok<NBRAK>
-%         end
-%     end
-%     
-%     % comparison part
-%     for c = 1:1:comparison_analysis_idict.length()
-%         comparison_analysis = comparison_analysis_idict.getValue(c);
-%         comparison_copy = comparison_copy_idict.getValue(c);
-%         atlases = comparison_analysis.getBrainAtlases();
-%         atlases_copy = comparison_copy.getBrainAtlases();
-%         
-%         assert(comparison_analysis ~= comparison_copy, ... % different objects
-%             [BRAPH2.STR ':Analysis:Copy'], ...
-%             ['Analysis.copy() does not work']) %#ok<NBRAK>
-%         
-%         for j = 1:1:length(atlases)
-%             assert(atlases{j} ~= atlases_copy{j}, ... % different objects
-%                 [BRAPH2.STR ':Analysis:Copy'], ...
-%                 ['Analysis.copy() does not work']) %#ok<NBRAK>
-%         end
-%         
-%         for k = 1:1:numel(comparison_analysis.getGroups())
-%             groups = comparison.getGroups();
-%             groups_copy = comparison_copy.getGroups();
-%             for l = 1:1:numel(groups)
-%                 group = groups{l};
-%                 group_copy = groups_copy{l};
-%                 assert(group ~= group_copy, ... % different objects
-%                     [BRAPH2.STR ':Cohort:Copy'], ...
-%                     ['Cohort.copy() does not work']) %#ok<NBRAK>
-%                 
-%                 subs = group.getSubjects();
-%                 subs_copy = group_copy.getSubjects();
-%                 assert(subs{1} ~= subs_copy{1}, ... % different objects
-%                     [BRAPH2.STR ':Cohort:Copy'], ...
-%                     ['Cohort.copy() does not work']) %#ok<NBRAK>
-%             end
-%         end
-%     end
+    comparison_copy_idict = analysis_copy.getComparisons();
+    
+    % cohort part
+    atlases = cohort_analysis.getBrainAtlases();
+    atlases_copy = cohort_copy.getBrainAtlases();
+    
+    assert(cohort_analysis ~= cohort_copy, ... % different objects
+        [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+        [analysis_class '.copy() does not work'])
+    for j = 1:1:length(atlases)
+        assert(atlases{j} ~= atlases_copy{j}, ... % different objects
+            [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+            [analysis_class '.copy() does not work'])
+    end
+    
+    for j = 1:1:cohort.getSubjects().length()
+        sub = cohort_analysis.getSubjects().getValue(j);
+        sub_copy = cohort_copy.getSubjects().getValue(j);
+        assert(sub ~= sub_copy, ... % different objects
+            [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+            [analysis_class '.copy() does not work'])
+        
+        data_codes = sub.getDataCodes();
+        for k = 1:1:length(data_codes)
+            data_code = data_codes{k};
+            assert(sub.getData(data_code) ~= sub_copy.getData(data_code), ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+            assert(sub.getData(data_code).getBrainAtlas() ~= sub_copy.getData(data_code).getBrainAtlas(), ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+        end
+    end
+  
+    for k = 1:1:cohort_analysis.getGroups().length()
+        group = cohort_analysis.getGroups().getValue(k);
+        group_copy = cohort_copy.getGroups().getValue(k);
+        assert(group ~= group_copy, ... % different objects
+            [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+            [analysis_class '.copy() does not work'])
+        
+        subs = group.getSubjects();
+        subs_copy = group_copy.getSubjects();
+        assert(subs{1} ~= subs_copy{1}, ... % different objects
+            [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+            [analysis_class '.copy() does not work'])
+    end
+    
+    % measurement part
+    for m = 1:1:measurement_analysis_idict.length()
+        measurement_analysis = measurement_analysis_idict.getValue(m);
+        measurement_copy = measurement_copy_idict.getValue(m);
+        atlases = measurement_analysis.getBrainAtlases();
+        atlases_copy = measurement_copy.getBrainAtlases();
+        
+        assert(measurement_analysis ~= measurement_copy, ... % different objects
+            [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+            [analysis_class '.copy() does not work'])
+        
+        for j = 1:1:length(atlases)
+            assert(atlases{j} ~= atlases_copy{j}, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+        end
+        
+        for k = 1:1:numel(measurement_analysis.getGroup())
+            group = measurement_analysis.getGroup();
+            group_copy = measurement_copy.getGroup();
+            assert(group ~= group_copy, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+            
+            subs = group.getSubjects();
+            subs_copy = group_copy.getSubjects();
+            assert(subs{1} ~= subs_copy{1}, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+        end
+    end
+    
 %     % randomcomparison part
 %     for r = 1:1:randomcomparison_analysis_idict.length()
 %         randomcomparison_analysis = randomcomparison_analysis_idict.getValue(c);
@@ -614,13 +579,13 @@ end
 %         atlases_copy = randomcomparison_copy.getBrainAtlases();
 %         
 %         assert(randomcomparison_analysis ~= randomcomparison_copy, ... % different objects
-%             [BRAPH2.STR ':Analysis:Copy'], ...
-%             ['Analysis.copy() does not work']) %#ok<NBRAK>
+%             [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+%             [analysis_class '.copy() does not work'])
 %         
 %         for j = 1:1:length(atlases)
 %             assert(atlases{j} ~= atlases_copy{j}, ... % different objects
-%                 [BRAPH2.STR ':Analysis:Copy'], ...
-%                 ['Analysis.copy() does not work']) %#ok<NBRAK>
+%                 [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+%                 [analysis_class '.copy() does not work'])
 %         end
 %         
 %         for k = 1:1:numel(randomcomparison_analysis.getGroup())
@@ -628,14 +593,66 @@ end
 %             group = group;
 %             group_copy = randomcomparison_copy.getGroup();
 %             assert(group ~= group_copy, ... % different objects
-%                 [BRAPH2.STR ':Cohort:Copy'], ...
-%                 ['Cohort.copy() does not work']) %#ok<NBRAK>
+%                 [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+%                 [analysis_class '.copy() does not work'])
 %             
 %             subs = group.getSubjects();
 %             subs_copy = group_copy.getSubjects();
 %             assert(subs{1} ~= subs_copy{1}, ... % different objects
-%                 [BRAPH2.STR ':Cohort:Copy'], ...
-%                 ['Cohort.copy() does not work']) %#ok<NBRAK>
+%                 [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+%                 [analysis_class '.copy() does not work'])
 %         end
 %     end
-% end
+    
+    % comparison part
+    for c = 1:1:comparison_analysis_idict.length()
+        comparison_analysis = comparison_analysis_idict.getValue(c);
+        comparison_copy = comparison_copy_idict.getValue(c);
+        atlases = comparison_analysis.getBrainAtlases();
+        atlases_copy = comparison_copy.getBrainAtlases();
+        
+        assert(comparison_analysis ~= comparison_copy, ... % different objects
+            [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+            [analysis_class '.copy() does not work'])
+        
+        for j = 1:1:length(atlases)
+            assert(atlases{j} ~= atlases_copy{j}, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+        end
+        
+        for k = 1:1:numel(comparison_analysis.getGroups())
+            [group1, group2] = comparison.getGroups();
+            [group1_copy, group2_copy] = comparison_copy.getGroups();
+
+            assert(group1 ~= group1_copy, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+                
+            subs1 = group1.getSubjects();
+            subs1_copy = group1_copy.getSubjects();
+            assert(subs1{1} ~= subs1_copy{1}, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+            assert(group1 ~= group1_copy, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+                
+            subs1 = group1.getSubjects();
+            subs1_copy = group1_copy.getSubjects();
+            assert(subs1{1} ~= subs1_copy{1}, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+
+            assert(group2 ~= group2_copy, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+                
+            subs2 = group2.getSubjects();
+            subs2_copy = group2_copy.getSubjects();
+            assert(subs2{1} ~= subs2_copy{1}, ... % different objects
+                [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
+                [analysis_class '.copy() does not work'])
+        end
+    end
+end
