@@ -750,6 +750,7 @@ for i = 1:1:length(graph_class_list)
             ['BRAPH:' graph_class ':Copy'], ...
             [graph_class '.copy() not working properly'])
     end
+end
 
 % %% Test 8: NodeAttack
 % n = randi(4);
