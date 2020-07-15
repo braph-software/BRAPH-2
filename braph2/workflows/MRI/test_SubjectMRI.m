@@ -17,7 +17,6 @@ input_rule = 'MRI';
 input_data = rand(atlas.getBrainRegions().length(), 1);
 save_dir_rule = 'File';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
-save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
 sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule, input_data);
@@ -51,7 +50,6 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
 end
 
 delete(save_dir_path)
-delete(save_cohort_file)
 
 %% Test 2.2: Save and load to same cohort from XLS
 % setup
@@ -61,7 +59,6 @@ input_data = rand(atlas.getBrainRegions().length(), 1);
 save_dir_rule = 'File';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
 save_dir_path_2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.xlsx'];
-save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
 
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
@@ -112,7 +109,6 @@ end
 
 delete(save_dir_path)
 delete(save_dir_path_2)
-delete(save_cohort_file)
 
 %% Test 2.3 Save and load cohort to same cohort from XLS with repeating subjects in diff groups.
 % setup
@@ -122,7 +118,6 @@ input_data = rand(atlas.getBrainRegions().length(), 1);
 save_dir_rule = 'File';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
 save_dir_path_2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.xlsx'];
-save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
 
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
@@ -171,7 +166,6 @@ end
 
 delete(save_dir_path)
 delete(save_dir_path_2)
-delete(save_cohort_file)
 
 %% Test 3.1: Save and Load cohort from TXT
 % setup
@@ -180,7 +174,6 @@ input_rule = 'MRI';
 input_data = rand(atlas.getBrainRegions().length(), 1);
 save_dir_rule = 'File';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
-save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
 sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule, input_data);
@@ -214,7 +207,6 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
 end
 
 delete(save_dir_path)
-delete(save_cohort_file)
 
 %% Test 3.2 Save and load to same cohort from TXT
 % setup
@@ -224,7 +216,6 @@ input_data = rand(atlas.getBrainRegions().length(), 1);
 save_dir_rule = 'File';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
 save_dir_path_2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.txt'];
-save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
 
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
@@ -275,7 +266,6 @@ end
 
 delete(save_dir_path)
 delete(save_dir_path_2)
-delete(save_cohort_file)
 
 %% Test 3.3 Save and load to same cohort from TXT repeating subjects
 % setup
@@ -285,7 +275,6 @@ input_data = rand(atlas.getBrainRegions().length(), 1);
 save_dir_rule = 'File';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
 save_dir_path_2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.txt'];
-save_cohort_file = [fileparts(which('test_braph2')) filesep 'cohort_info.txt'];
 
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
@@ -334,7 +323,6 @@ end
 
 delete(save_dir_path)
 delete(save_dir_path_2)
-delete(save_cohort_file)
 
 %% Test 4.1: Save and Load cohort from JSON
 % setup

@@ -260,12 +260,11 @@ classdef SubjectMRI < Subject
 
             % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', cohort.getSubjects().getValues());
-            path = [fileparts(which(file))]; %#ok<NBRAK>
-            file_name = erase(file, path);
-            file_name = erase(file_name, filesep());
-            file_name = erase(file_name, '.xlsx');
-            file_name = erase(file_name, '.xls');            
-            group.setID(file_name);
+            group_path = strsplit(file, filesep());
+            group_id = group_path{length(group_path)};            
+            group_id = erase(group_id, '.xlsx');
+            group_id = erase(group_id, '.xls');            
+            group.setID(group_id);
             cohort.getGroups().add(group.getID(), group);   
             
             [~, ~, raw] = xlsread(file);
@@ -305,21 +304,7 @@ classdef SubjectMRI < Subject
                     return
                 end
             end
-            
-            % cohort info           
-            file_path = strsplit(file, filesep());
-            file_cohort_path = '';
-            for i = 1:1:length(file_path)-1
-                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
-            end
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
-            file_cohort = file_cohort(2:end);
-            cohort_info = cell(3, 1);
-            cohort_info{1, 1} = cohort.getID();
-            cohort_info{2, 1} = cohort.getLabel();
-            cohort_info{3, 1} = cohort.getNotes();
-            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
-            
+          
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
@@ -426,11 +411,10 @@ classdef SubjectMRI < Subject
                  
             % creates group
             group = Group(subject_class, '', '', '', cohort.getSubjects().getValues());
-            path = [fileparts(which(file))]; %#ok<NBRAK>
-            file_name = erase(file, path);
-            file_name = erase(file_name, filesep());
-            file_name = erase(file_name, '.txt');
-            group.setID(file_name);
+            group_path = strsplit(file, filesep());
+            group_id = group_path{length(group_path)};            
+            group_id = erase(group_id, '.txt');
+            group.setID(group_id);
             cohort.getGroups().add(group.getID(), group);
             
             % reads file
@@ -471,21 +455,7 @@ classdef SubjectMRI < Subject
                     return
                 end
             end
-            
-           % cohort info           
-            file_path = strsplit(file, filesep());
-            file_cohort_path = '';
-            for i = 1:1:length(file_path)-1
-                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
-            end
-            file_cohort_path = file_cohort_path(2:end);
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
-            cohort_info = cell(3, 1);
-            cohort_info{1, 1} = cohort.getID();
-            cohort_info{2, 1} = cohort.getLabel();
-            cohort_info{3, 1} = cohort.getNotes();
-            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
-            
+     
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
@@ -590,9 +560,9 @@ classdef SubjectMRI < Subject
                 subject_class = cohort.getSubjectClass();
                 atlases = cohort.getBrainAtlases();
             else
-                cohort_id = raw.CohortData.id;
-                cohort_label = raw.CohortData.label;
-                cohort_notes = raw.CohortData.notes;
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
                 % creates cohort
                 subject_class = 'SubjectMRI';
                 atlases = tmp;
@@ -601,11 +571,10 @@ classdef SubjectMRI < Subject
             
             % creates group
             group = Group(subject_class, '', '', '', {});
-            path = [fileparts(which(file))]; %#ok<NBRAK>
-            file_name = erase(file, path);
-            file_name = erase(file_name, filesep());
-            file_name = erase(file_name, '.json');
-            group.setID(file_name);
+            group_path = strsplit(file, filesep());
+            group_id = group_path{length(group_path)};            
+            group_id = erase(group_id, '.json');
+            group.setID(group_id);
             cohort.getGroups().add(group.getID(), group);
 
             for i = 1:1:length(raw.SubjectData)
@@ -636,8 +605,8 @@ classdef SubjectMRI < Subject
             % file (fullpath)
             file = get_from_varargin('', 'File', varargin{:});
             if isequal(file, '')  % select file
-                msg = get_from_varargin(BRAPH2.XLS_MSG_PUTFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uiputfile(BRAPH2.XLS_EXTENSION, msg);
+                msg = get_from_varargin(BRAPH2.JSON_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(BRAPH2.JSON_EXTENSION, msg);
                 file = [filepath filename];
                 
                 if ~filterindex
@@ -675,10 +644,6 @@ classdef SubjectMRI < Subject
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainRegionsLabels', labels, ...
-                'CohortData', struct( ...
-                'id', cohort.getID(), ...
-                'label', cohort.getLabel(), ...
-                'notes', cohort.getNotes()), ...
                 'SubjectData', struct( ...
                 'id', row_ids, ...
                 'label', row_labels, ...

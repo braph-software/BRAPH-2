@@ -17,6 +17,25 @@ classdef ComparisonMRI_WU < Comparison
             c = c@Comparison(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:});
         end
     end
+    methods  % Basic function
+        function disp(c)
+            % DISP overrides Comparison disp
+            %
+            % DISP(M) overrides Comparison disp and displays additional
+            % information about the difference of the ComparisonMRI_WU.
+            % 
+            % See also Comparison
+            
+            c.disp@Comparison()
+            disp(['value group 2 (' tostring(size(c.value_1{1}, 1)) 'x' tostring(size(c.value_1{1}, 2)) ') = {' tostring(c.value_1{1}) '}' ])
+            disp(['value group 2 (' tostring(size(c.value_2{1}, 1)) 'x' tostring(size(c.value_2{1}, 2)) ') = {' tostring(c.value_2{1}) '}' ])
+            disp(['difference (' tostring(size(c.difference{1}, 1)) 'x' tostring(size(c.difference{1}, 2)) ') = {' tostring(c.difference{1}) '}' ])
+            disp(['p1 (' tostring(size(c.p1{1}, 1)) 'x' tostring(size(c.p1{1}, 2)) ') = {' tostring(c.p1{1}) '}' ])
+            disp(['p2 (' tostring(size(c.p2{1}, 1)) 'x' tostring(size(c.p2{1}, 2)) ') = {' tostring(c.p2{1}) '}' ])
+            disp(['confidence interval min (' tostring(size(c.confidence_interval_min{1}, 1)) 'x' tostring(size(c.confidence_interval_min{1}, 2)) ') = {' tostring(c.confidence_interval_min{1}) '}' ])
+            disp(['confidence interval max (' tostring(size(c.confidence_interval_max{1}, 1)) 'x' tostring(size(c.confidence_interval_max{1}, 2)) ') = {' tostring(c.confidence_interval_max{1}) '}' ])
+        end
+    end
     methods  % Get functions
         function [value_1, value_2] = getGroupValues(c)
             value_1 = c.value_1;
