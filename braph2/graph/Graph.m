@@ -6,7 +6,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     % Graph provides the methods necessary for all graphs.
     % Instances of this class cannot be created. Use one of the subclasses.
     % The subclasses must be created inside the folder
-    % ./braph/graph/graphs/. 
+    % ./braph2/graph/graphs/. 
     %
     % Graph properties (constants):
     %   GRAPH                       - single layer graph

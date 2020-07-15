@@ -1,4 +1,27 @@
 classdef Analysis < handle & matlab.mixin.Copyable
+    % Analysis (Abstract) An analysis
+    % Analysis provides the methods necessary for all analysis.
+    % It is a subclss of handle & matlab.mixin.Copyable
+    %
+    % Analysis provides the methods necessary for all analysis subclass. 
+    % Instances of this class cannot be created. Use one of the subclasses.
+    % The subclasses must be created inside the corresponding workflow
+    % ./braph2/workflows/... 
+    %
+    % Analysis Constructor methods (Access = protected)
+    %  Analysis                 - Constructor
+    %
+    % Analysis Abstract methods (Abstract)
+    %  getMeasurement           - asbtract method to be implemented
+    %  getRandomComparison      - asbtract method to be implemented
+    %  getComparison            - abstract method to be implemented
+    %
+    % Analysis set methods
+    %
+    %
+    %
+    
+    
     properties (GetAccess = protected, SetAccess = protected)
         id  % analysis id
         label  % analysis label
