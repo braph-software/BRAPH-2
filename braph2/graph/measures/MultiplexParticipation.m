@@ -3,7 +3,7 @@ classdef MultiplexParticipation < Degree
     % MultiplexParticipation provides the multiplex participation of a node for binary 
     % undirected (BU) and weighted undirected (WU) multiplexes. 
     %
-    % It is the heterogenerity of the number of neighbours of a node across the layers.
+    % It is the homogeneity of the number of neighbours of a node across the layers.
     % It is calcualted as:
     % Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2]
     % where L is the number of layers, ki(l) is the degree in the l-th
@@ -99,7 +99,7 @@ classdef MultiplexParticipation < Degree
             % See also getClass, getName.
             
             description = [ ...
-                'The multiplex participation of a node is the heterogeneity ' ...
+                'The multiplex participation of a node is the homogeneity ' ...
                 'of its number of neighbours across the layers. ' ...
                 ];
         end
