@@ -50,6 +50,8 @@ classdef Comparison < handle & matlab.mixin.Copyable
         function disp(c)
             disp(['<a href="matlab:help ' Comparison.getClass(c) '">' Comparison.getClass(c) '</a>'])
             disp(['id = ' c.getID()])
+            disp(['label = ' c.getLabel()])
+            disp(['notes = ' c.getNotes()])
         end
     end
     methods  % Set functions

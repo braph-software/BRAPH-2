@@ -1,5 +1,6 @@
 % Script example workflow MRI WU
 clear
+%#ok<*NOPTS>
 
 %% Load BrainAtlas
 [file, path, filterindex] = uigetfile('*.xlsx');
@@ -44,24 +45,25 @@ disp(['Loaded Group 2: ' cohort.tostring()])
 analysis = AnalysisMRI_WU('analysis example ID', 'analysis example label', 'analysis example notes', cohort, {}, {}, {});
 disp('AnalysisMRI_WU created.')
 
+groups = analysis.getCohort().getGroups();
+group_1 = groups.getValue(1);
+group_2 = groups.getValue(2);
+
 %% Create Measurement
 measure = 'Degree';
-groups = analysis.getCohort().getGroups();
 
-measurement_group_1 = analysis.getMeasurement(measure, groups.getValue(1));
-measurement_group_2 = analysis.getMeasurement(measure, groups.getValue(2));
-
-disp([measure ' for group 1: ' measurement_group_1.getMeasureValue()])
-disp([measure ' for group 2: ' measurement_group_2.getMeasureValue()])
-
-%% Create Comparison
-number_of_permutations = 10;
-comparison = analysis.getComparison(measure, groups.getValue(1), groups.getValue(2), 'PermutationNumber', number_of_permutations);
-disp([measure ' comparison between groups: ' groups.getValue(1).getID() ' and ' groups.getValue(2).getID() ' : ' comparison.getDifference()])
+measurement_group_1 = analysis.getMeasurement(measure, group_1) 
+measurement_group_2 = analysis.getMeasurement(measure, group_2)
 
 %% Create RandomComparison
-number_of_permutations = 10;
-random_comparison = analysis.getRandomComparison(measure, groups.getValue(1), groups.getValue(2), 'PermutationNumber', number_of_permutations);
-disp([measure ' random comparison between groups: ' groups.getValue(1).getID() ' and ' groups.getValue(2).getID() ' : ' random_comparison.getDifference()])
+measure = 'Degree';
+number_of_randomizations = 10;
 
-disp('Script has finished!')
+random_comparison_group_1 = analysis.getRandomComparison(measure, group_1, 'RandomizationNumber', number_of_randomizations)
+random_comparison_group_2 = analysis.getRandomComparison(measure, group_2, 'RandomizationNumber', number_of_randomizations)
+
+%% Create Comparison
+measure = 'Degree';
+number_of_permutations = 10;
+
+comparison = analysis.getComparison(measure, group_1, group_2, 'PermutationNumber', number_of_permutations)

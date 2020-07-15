@@ -49,6 +49,8 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
         function disp(rc)
             disp(['<a href="matlab:help ' RandomComparison.getClass(rc) '">' RandomComparison.getClass(rc) '</a>'])
             disp(['id = ' rc.getID()])
+            disp(['label = ' rc.getLabel()])
+            disp(['notes = ' rc.getNotes()])
         end
     end
     methods  % Set functions

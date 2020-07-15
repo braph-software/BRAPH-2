@@ -17,6 +17,25 @@ classdef RandomComparisonMRI_WU < RandomComparison
             rc = rc@RandomComparison(id, label, notes, atlas, measure_code, group, varargin{:});
         end
     end
+      methods  % Basic function
+        function disp(rc)
+            % DISP overrides RandomComparison disp
+            %
+            % DISP(M) overrides RandomComparison disp and displays additional
+            % information about the difference of the RandomComparisonMRI_WU.
+            % 
+            % See also Comparison
+            
+            rc.disp@RandomComparison()
+            disp(['value group (' tostring(size(rc.value_group{1}, 1)) 'x' tostring(size(rc.value_group{1}, 2)) ') = {' tostring(rc.value_group{1}) '}' ])
+            disp(['value random (' tostring(size(rc.value_random{1}, 1)) 'x' tostring(size(rc.value_random{1}, 2)) ') = {' tostring(rc.value_random{1}) '}' ])
+            disp(['difference (' tostring(size(rc.difference{1}, 1)) 'x' tostring(size(rc.difference{1}, 2)) ') = {' tostring(rc.difference{1}) '}' ])
+            disp(['p1 (' tostring(size(rc.p1{1}, 1)) 'x' tostring(size(rc.p1{1}, 2)) ') = {' tostring(rc.p1{1}) '}' ])
+            disp(['p2 (' tostring(size(rc.p2{1}, 1)) 'x' tostring(size(rc.p2{1}, 2)) ') = {' tostring(rc.p2{1}) '}' ])
+            disp(['confidence interval min (' tostring(size(rc.confidence_interval_min{1}, 1)) 'x' tostring(size(rc.confidence_interval_min{1}, 2)) ') = {' tostring(rc.confidence_interval_min{1}) '}' ])
+            disp(['confidence interval max (' tostring(size(rc.confidence_interval_max{1}, 1)) 'x' tostring(size(rc.confidence_interval_max{1}, 2)) ') = {' tostring(rc.confidence_interval_max{1}) '}' ])
+        end
+    end
     methods  % Get functions
         function value = getGroupValue(rc)
             value = rc.value_group;

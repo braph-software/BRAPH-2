@@ -17,6 +17,19 @@ classdef MeasurementMRI_WU < Measurement
             m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
         end
     end
+    methods  % Basic function
+        function disp(m)
+            % DISP overrides Measurement disp
+            %
+            % DISP(M) overrides Measurement disp and displays additional
+            % information about the value of the MeasurementMRI_WU.
+            % 
+            % See also Measurement
+            
+            m.disp@Measurement()
+            disp(['value (' tostring(size(m.value{1}, 1)) 'x' tostring(size(m.value{1}, 2)) ') = {' tostring(m.value{1}) '}' ])
+        end
+    end
     methods  % Get functions
         function value = getMeasureValue(m)
             value = m.value;
