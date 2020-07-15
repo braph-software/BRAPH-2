@@ -6,7 +6,7 @@ clear
 if filterindex
     atlas_file = fullfile(path, file);
 else
-    atlas_file = [fileparts(which('example_workflow_MRI_WU.m')) filesep() 'example data MRI' filesep() 'example_desikan_atlas.xlsx'];
+    atlas_file = [fileparts(which('example_workflow_MRI_WU.m')) filesep() 'example data MRI' filesep() 'desikan_atlas.xlsx'];
 end
 clear file filterindex path
 
@@ -19,7 +19,7 @@ disp(['Loaded BrainAtlas: ' atlas.tostring()])
 if filterindex
     group1_file = fullfile(path, file);
 else
-    group1_file = [fileparts(which('workflows')) filesep() 'MRI' filesep() 'example data MRI' filesep() 'xls' filesep() 'gr1_MRI.xlsx'];
+    group1_file = [fileparts(which('example_workflow_MRI_WU.m')) filesep() 'example data MRI' filesep() 'xls' filesep() 'MRI_group1.xlsx'];
 end
 clear file path filterindex;
 
@@ -29,19 +29,21 @@ disp(['Loaded Group 1: ' cohort.tostring()])
 
 %% Load MRI Subject Data for group 2 into the same cohort
 [file, path, filterindex] = uigetfile('.xlsx');
-
 if filterindex
-    group2_file = fullfile(path, file);
-    cohort_group_2 = SubjectMRI.load_from_xls(cohort_group_1', 'File', group2_file);
-else
-    disp('Failed to load SubjectMRI group 2.')
-    clear file path filterindex;
+    group2_file = fullfile(path, file);    
+else    
+    group2_file = [fileparts(which('example_workflow_MRI_WU.m')) filesep() 'example data MRI' filesep() 'xls' filesep() 'MRI_group2.xlsx'];
 end
+clear file path filterindex;
+
+cohort = SubjectMRI.load_from_xls(cohort', 'File', group2_file);
+
+disp(['Loaded Group 2: ' cohort.tostring()])
 
 %% Create Analysis
-% analysis = AnalysisMRI_WU('analysis example ID', 'analysis example label', 'analysis example notes', cohort_group_2, {}, {}, {});
-% disp(['Analysis created: ' analysis.getID()])
-%
+analysis = AnalysisMRI_WU('analysis example ID', 'analysis example label', 'analysis example notes', cohort_group_2, {}, {}, {});
+disp(['Analysis created: ' analysis.tostring()])
+
 % % Create Measurement
 % measure = 'Degree';
 % groups = analysis.getGroups();
