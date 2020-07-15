@@ -26,7 +26,6 @@ addpath([directory filesep 'cohort'])
 addpath([directory filesep 'cohort' filesep 'datas'])
 addpath([directory filesep 'analysis'])
 addpath([directory filesep 'test'])
-
 addpath([directory filesep 'workflows'])
 workflows_directories = dir([directory filesep 'workflows']);   % get the folder contents
 workflows_directories = workflows_directories([workflows_directories(:).isdir] == 1);  % remove all files (isdir property is 0)
