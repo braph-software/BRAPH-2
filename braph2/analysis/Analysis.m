@@ -11,16 +11,44 @@ classdef Analysis < handle & matlab.mixin.Copyable
     % Analysis Constructor methods (Access = protected)
     %  Analysis                 - Constructor
     %
-    % Analysis Abstract methods (Abstract)
-    %  getMeasurement           - asbtract method to be implemented
-    %  getRandomComparison      - asbtract method to be implemented
-    %  getComparison            - abstract method to be implemented
+    % Analysis Abstract ID methods (Abstract)
+    %  getMeasurementID         - asbtract method to be implemented
+    %  getRandomComparisonID    - asbtract method to be implemented
+    %  getComparisonID          - abstract method to be implemented
     %
     % Analysis set methods
+    %  setID                    - sets the ID
+    %  setLabel                 - sets the label
+    %  setNotes                 - sets the notes
     %
+    % Analysis get methods
+    %  getID                    - returns the analysis ID
+    %  getLabel                 - returns the analysis label
+    %  getNotes                 - returns the analysis notes
+    %  getCohort                - returns the analysis cohort
+    %  getMeasurements          - returns the idict measurements
+    %  getMeasurement           - returns the specified measurement
+    %  getRandomComparisons     - returns the idict randomcomparisons
+    %  getRandomComparison      - returns the specified randomcomparison
+    %  getComparisons           - returns the idict comparisons
+    %  getComparison            - returns the specified comparison
+    %  getSettings              - returns the analysis settings structure
+    %  
+    % Analysis getAnalysis methods (Static)
+    %  getAnalysis              - returns a new analysis
     %
+    % Analysis Descriptive methods (Static)
+    %  getList                  - returns a list of analysis subclasses
+    %  getClass                 - returns the class of the analysis
+    %  getName                  - returns the name of the analysis
+    %  getDescription           - returns the description of the analysis
+    %  getSubjectClass          - returns the class of the subject
+    %  getMeasurementClass      - returns the class of the measurement
+    %  getRandomComparisonClass - returns the class of the randomcomparison
+    %  getComparisonClass       - returns the class of the comparison
+    %  getAvailableSettings     - returns the analysis available settings
     %
-    
+    % See also Measurement, RandomComparison, Comparison, IndexDictionary.
     
     properties (GetAccess = protected, SetAccess = protected)
         id  % analysis id
@@ -34,6 +62,20 @@ classdef Analysis < handle & matlab.mixin.Copyable
     end
     methods (Access = protected)  % Constructor
         function analysis = Analysis(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
+            % ANALYSIS Constructor, creates an analysis 
+            %
+            % ANALYSIS = ANALYSIS(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS) 
+            % creates an analysis with ID, LABEL, COHORT, MEASUREMENTS,
+            % RANDOMCOMPARISON and COMPARISONS. It initializes the
+            % ANALYSIS with default settings.
+            %
+            % ANALYSIS = ANALYSIS(ID, LABEL, NOTES, COHORT, MEASUREMENTS, ...
+            %        RANDOMCOMPARISON, COMPARISONS, 'PROPERTYVALUE', VALUE) 
+            % creates an analysis with ID, LABEL, COHORT, MEASUREMENTS,
+            % RANDOMCOMPARISON and COMPARISONS. It initializes the
+            % ANALYSIS with specified settings VALUES.
+            %
+            % See also Measurement, RandomComparison, Comparison
             
             analysis.setID(id)
             analysis.setLabel(label)
@@ -104,6 +146,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
     end
     methods  % Set functions
         function setID(analysis, id)
+            % SETID sets the id 
+            %
+            % SETID(ANALYSIS, ID) sets the id
+            %
+            % See also setLabel, setNotes.
             
             assert(ischar(id), ...
                 [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
@@ -112,6 +159,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
             analysis.id = id;
         end
         function setLabel(analysis, label)
+            % SETLABEL sets the label 
+            %
+            % SETLABEL(ANALYSIS, LABEL) sets the label
+            %
+            % See also setID, setNotes.
 
             assert(ischar(label), ...
                 [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
@@ -120,6 +172,11 @@ classdef Analysis < handle & matlab.mixin.Copyable
             analysis.label = label;
         end        
         function setNotes(analysis, notes)
+            % SETNOTES sets the notes 
+            %
+            % SETNOTES(ANALYSIS, NOTES) sets the notes
+            %
+            % See also setID, setLabel.
 
             assert(ischar(notes), ...
                 [BRAPH2.STR ':' class(analysis) ':' BRAPH2.WRONG_INPUT], ...
@@ -130,24 +187,65 @@ classdef Analysis < handle & matlab.mixin.Copyable
     end
     methods  % Get functions
         function id = getID(analysis)
+            % GETID returns the id
+            %
+            % GETID(ANALYSIS) returns the id
+            %
+            % See also getLabel, getNotes.
             
             id = analysis.id;
         end
         function label = getLabel(analysis)
+            % GETLABEL returns the label
+            %
+            % GETLABEL(ANALYSIS) returns the label
+            %
+            % See also getID, getNotes.
             
             label = analysis.label;
         end
         function notes = getNotes(analysis)
+            % GETNOTES returns the notes
+            %
+            % GETNOTES(ANALYSIS) returns the notes
+            %
+            % See also getID, getLabel.
 
             notes = analysis.notes;
         end
         function cohort = getCohort(analysis)
+            % GETCOHORT returns the cohort
+            %
+            % GETCOHORT(ANALYSIS) returns the cohort
+            %
+            % See also getMeasurements, getRandomComparisons, getComparisons. 
+            
             cohort = analysis.cohort;
         end
         function measurement_idict = getMeasurements(analysis)
+            % GETMEASUREMENTS returns the measurements idict
+            %
+            % GETMEASUREMENTS(ANALYSIS) returns the measurements idict
+            %
+            % See also getMeasurement, getRandomComparisons, getComparisons.
+            
             measurement_idict = analysis.measurement_idict;
         end
         function measurement = getMeasurement(analysis, measure_code, group, varargin)
+            % GETMEASUREMENT returns a specified measurement
+            %
+            % MEASUREMENT = GETMEASUREMENT(ANALYSIS, MEASURE_CODE, GROUP)
+            % checks if the measurement exists in measurement idict. If it
+            % does not exist it will calculate the measurement MEASURE_CODE. 
+            % It uses default settings.
+            %
+            % MEASUREMENT = GETMEASUREMENT(ANALYSIS, MEASURE_CODE, GROUP, 'PropertyRule', VALUE, ...)
+            % checks if the measurement exists in measurement idict. If it
+            % does not exist it will calculate the measurement MEASURE_CODE.
+            % It passes the property VALUES to the calculating function.
+            %
+            % See also getRandomComparison, getComparison
+                        
             measurement_id = analysis.getMeasurementID(measure_code, group, varargin{:});
             if ~analysis.getMeasurements().contains(measurement_id)
                 measurement = calculate_measurement(analysis, measure_code, group, varargin{:});
@@ -156,9 +254,27 @@ classdef Analysis < handle & matlab.mixin.Copyable
             measurement = analysis.getMeasurements().getValue(measurement_id);
         end
         function randomparison_idict = getRandomComparisons(analysis)
+            % GETRANDOMCOMPARISONS returns the randomcomparisons idict
+            %
+            % GETRANDOMCOMPARISONS(ANALYSIS) returns the randomcomparisons idict
+            %
+            % See also getMeasurement, getRandomComparison, getComparisons.
+            
             randomparison_idict = analysis.randomcomparison_idict;
         end
         function random_comparison = getRandomComparison(analysis, measure_code, group, varargin)
+            % GETRANDOMCOMPARISON returns a specified randomcomparison
+            %
+            % RANDOMCOMPARISON = GETRANDOMCOMPARISON(ANALYSIS, MEASURE_CODE, GROUP)
+            % checks if the MEASURE_CODE exists in measurement idict. If it
+            % does not exist it will calculate. It uses default settings.
+            %
+            % MEASUREMENT = GETMEASUREMENT(ANALYSIS, MEASURE_CODE, GROUP, 'PropertyRule', VALUE, ...)
+            % checks if the MEASURE_CODE exists in measurement idict. If it
+            % does not exist it will calculate. It passes the property VALUES
+            % to the calculating function.
+            %
+            % See also getRandomComparison, getComparison
             randomcomparison_id = analysis.getRandomComparisonID(measure_code, group, varargin{:});
             if ~analysis.getRandomComparisons().contains(randomcomparison_id)
                 random_comparison = calculate_random_comparison(analysis, measure_code, group, varargin{:});
@@ -167,6 +283,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
             random_comparison = analysis.getRandomComparisons().getValue(randomcomparison_id);
         end
         function comparison_idict = getComparisons(analysis)
+            % GETCOMPARISONS returns the comparisons idict
+            %
+            % GETCOMPARISONS(ANALYSIS) returns the comparisons idict
+            %
+            % See also getMeasurement, getRandomComparisons, getComparison.
+            
             comparison_idict = analysis.comparison_idict;
         end
         function comparison = getComparison(analysis, measure_code, group_1, group_2, varargin)
