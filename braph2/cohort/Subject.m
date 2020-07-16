@@ -399,7 +399,6 @@ classdef Subject < handle & matlab.mixin.Copyable
             %
             % See also Cohort, Group, Graph.
             
-            
             % IMPORTANT! It does NOT make a deep copy of the BrainAtlas
             % atlas in the data objects
             
