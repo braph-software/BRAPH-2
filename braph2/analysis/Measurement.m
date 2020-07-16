@@ -55,6 +55,18 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods (Access = protected)  % Constructor
         function m = Measurement(id, label, notes, atlases, measure_code, group, varargin)
+            % MEASUREMENT constructs a measurement
+            %
+            % M = MEASUREMENT(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
+            % creates a measurement with ID, LABEL, NOTES, ATLASES of
+            % measure MEASURE_CODE for GROUP.
+            %
+            % M = MEASUREMENT(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP, 'PropertyValue', VALUE, ...)
+            % creates a measurement with ID, LABEL, NOTES, ATLASES of
+            % measure MEASURE_CODE for GROUP. It utilizes the settings
+            % specified in VALUE.
+            %
+            % See also Analysis, RandomComparison, Comparison
 
             m.setID(id)
             m.setLabel(label)
@@ -89,9 +101,23 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods  % Basic functions
         function str = tostring(m)
+            % TOSTRING string with information about the measurement
+            %
+            % STR = TOSTRING(M) returns string with the measurement
+            % class and id.
+            %
+            % See also disp.
+            
             str = [Measurement.getClass(m) ' ' m.getID()];
         end
         function disp(m)
+            % DISP displays information about the measurement
+            %
+            % DISP(M) displays information about the measurement.
+            % It provides information about measurement class and id.
+            %
+            % See also tostring.
+            
             disp(['<a href="matlab:help ' Measurement.getClass(m) '">' Measurement.getClass(m) '</a>'])
             disp(['id = ' m.getID()])
         end        
