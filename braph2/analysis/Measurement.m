@@ -1,4 +1,49 @@
 classdef Measurement < handle & matlab.mixin.Copyable
+    % Measurement (Abstract) A measurement
+    % Measurement provides the methods necessary for all measurements
+    % It is a subclass of handle & matlab.mixin.Copyable
+    %
+    % Measurement provides the methods necessary for all measurements
+    % subclasses. Instances of this class cannot be created. Use on of the
+    % subclases. The subclasses must be created inside the corresponding
+    % workflow ./braph2/workflows/...
+    %
+    % Measurement Constructor methods (Access=protected)
+    %  Measurement                  - Constructor
+    %
+    % Measurement Basic methods
+    %  tostring                     - returns a string representing the class
+    %  disp                         - displays the measurement
+    %  
+    % Measurement set methods
+    %  setID                        - sets the ID
+    %  setLabel                     - sets the label
+    %  setNotes                     - sets the notes
+    %  setBrainAtlases              - sets the atlases to the measurement
+    %  setGroup                     - sets a group to the measurement
+    %
+    % Measurement get methods 
+    %  getID                        - returns the ID
+    %  getLabel                     - returns the label
+    %  getNotes                     - returns the notes
+    %  getBrainAtlases              - returns the atlases
+    %  getMeasureCode               - returns the measure code
+    %  getGroup                     - returns the group
+    %  getSettings                  - returns the settings structure
+    % 
+    % Measurement descriptive methods (Static)
+    %  getList                  - returns a list of measurement subclasses
+    %  getClass                 - returns the class of the measurement
+    %  getName                  - returns the name of the measurement
+    %  getDescription           - returns the description of the measurement
+    %  getBrainAtlasNumber      - returns the number of atlases
+    %  getAnalysisClass         - returns the class of the analysis
+    %  getSubjectClass          - returns the class of the subject
+    %  getAvailableSettings     - returns available settings to the measurement
+    %  getMeasurement           - returns a new measurement
+    %
+    % See also Analysis, RandomComparison, Comparison
+    
     properties (GetAccess=protected, SetAccess=protected)
         id  % unique identifier
         label  % measurement label
