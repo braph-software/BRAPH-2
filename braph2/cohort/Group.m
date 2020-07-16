@@ -35,6 +35,7 @@ classdef Group < handle & matlab.mixin.Copyable
     %
     % See also Data, Subject, Group.
 
+    
     properties % (GetAccess=protected, SetAccess=protected)
         id  % group id
         label  % group label
