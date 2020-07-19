@@ -189,7 +189,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function id = getID(analysis)
             % GETID returns the id
             %
-            % GETID(ANALYSIS) returns the id
+            % ID = GETID(ANALYSIS) returns the id
             %
             % See also getLabel, getNotes.
             
@@ -198,7 +198,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function label = getLabel(analysis)
             % GETLABEL returns the label
             %
-            % GETLABEL(ANALYSIS) returns the label
+            % LABEL = GETLABEL(ANALYSIS) returns the label
             %
             % See also getID, getNotes.
             
@@ -207,7 +207,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function notes = getNotes(analysis)
             % GETNOTES returns the notes
             %
-            % GETNOTES(ANALYSIS) returns the notes
+            % NOTES = GETNOTES(ANALYSIS) returns the notes
             %
             % See also getID, getLabel.
 
