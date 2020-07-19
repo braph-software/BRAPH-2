@@ -1,7 +1,7 @@
 classdef Measurement < handle & matlab.mixin.Copyable
     % Measurement (Abstract) A measurement
-    % Measurement provides the methods necessary for all measurements
-    % It is a subclass of handle & matlab.mixin.Copyable
+    % Measurement provides the methods necessary for all measurements.
+    % It is a subclass of handle & matlab.mixin.Copyable.
     %
     % Measurement provides the methods necessary for all measurements
     % subclasses. Instances of this class cannot be created. Use on of the
@@ -42,7 +42,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
     %  getAvailableSettings     - returns available settings to the measurement
     %  getMeasurement           - returns a new measurement
     %
-    % See also Analysis, RandomComparison, Comparison
+    % See also Analysis, RandomComparison, Comparison.
     
     properties (GetAccess=protected, SetAccess=protected)
         id  % unique identifier
@@ -66,7 +66,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % measure MEASURE_CODE for GROUP. It utilizes the settings
             % specified in VALUE.
             %
-            % See also Analysis, RandomComparison, Comparison
+            % See also Analysis, RandomComparison, Comparison.
 
             m.setID(id)
             m.setLabel(label)
@@ -163,12 +163,13 @@ classdef Measurement < handle & matlab.mixin.Copyable
             m.notes = notes;
         end        
         function setBrainAtlases(m, atlases)
-            % SETNOTES sets the brain atlases 
+            % SETBRAINATLASES sets the brain atlases 
             %
-            % SETNOTES(M, ATLASES) sets the brain atlases of the
+            % SETBRAINATLASES(M, ATLASES) sets the brain atlases of the
             % measurement.
             %
             % See also setID, setLabel, setGroup.
+            
             if ~iscell(atlases)
                 atlases = {atlases};
             end
@@ -178,9 +179,9 @@ classdef Measurement < handle & matlab.mixin.Copyable
             m.atlases = atlases;
         end
         function setGroup(m, group)
-            % SETNOTES sets the group to the measurement 
+            % SETGROUP sets the group to the measurement 
             %
-            % SETNOTES(M, Group) sets the group to the measurement.
+            % SETGROUP(M, Group) sets the group to the measurement.
             %
             % See also setID, setLabel, setBrainAtlases
             
@@ -219,9 +220,9 @@ classdef Measurement < handle & matlab.mixin.Copyable
             notes = m.notes;
         end
         function atlases = getBrainAtlases(m)
-            % GETNOTES returns the brain atlas
+            % GETBRAINATLASES returns the brain atlas
             %
-            % ATLASES = GETNOTES(M) returns the brain atlas
+            % ATLASES = GETBRAINATLASES(M) returns the brain atlas
             %
             % See also getID, getLabel.
             
@@ -251,7 +252,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % GETSETTINGS returns the settings structure.
             %
             % RES = GETSETTINGS(M, SETTING_CODE) returns the settings
-            % setructure.
+            % structure.
             %
             % See also getID, getLabel, getBrainAtlases, getMeasureCode.
 
