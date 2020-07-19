@@ -55,7 +55,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
     end
     methods (Access = protected)  % Constructor
         function rc = RandomComparison(id, label, notes, atlases, measure_code, group, varargin)
-            % RANDOMCOMPARISON constructs a measurement
+            % RANDOMCOMPARISON constructs a random comparison
             %
             % RC = RANDOMCOMPARISON(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
             % creates a random comparison with ID, LABEL, NOTES, ATLASES of
@@ -268,7 +268,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
         function randomcomparisonlist = getList()
             % GETLIST returns the list of random comparison subclasses
             %
-            % MEASUREMENT_LIST = GETLIST() returns the list of random comparison 
+            % RANDOMCOMPARISONLIST = GETLIST() returns the list of random comparison 
             % (cell array) that are subclasses of RandomComparison.
             %
             % See also getClass, getName, getDescription.
@@ -326,6 +326,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             % the analysis where the random comparison will be used.
             %
             % See also getSubjectClass, getClass.
+            
             % comparison analysis class
             analysis_class = eval([RandomComparison.getClass(rc) '.getAnalysisClass()']);
         end
@@ -351,19 +352,19 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             available_settings = eval([RandomComparison.getClass(rc) '.getAvailableSettings()']);
         end
         function sub = getRandomComparison(randomComparisonClass, id, label, notes, atlas, measure_code, group, varargin) %#ok<INUSD>
-            % GETRANDCOMCOMPARISON returns a new random comparison
+            % GETRANDOMCOMPARISON returns a new random comparison
             %
-            % SUB = GETRANDCOMCOMPARISON(RANDOMCOMPARISONCLASS, ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
+            % SUB = GETRANDOMCOMPARISON(RANDOMCOMPARISONCLASS, ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
             % returns a newly created random comparison of class
             % RANDOMCOMPARISONCLASS, and with measure MEASURE_CODE. It
             % initializes with ID, LABEL, NOTES, ATLASES and GROUP. The
             % random comparison will have default settings.
             %
-            % SUB = GETRANDCOMCOMPARISON(RANDOMCOMPARISONCLASS, ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
+            % SUB = GETRANDOMCOMPARISON(RANDOMCOMPARISONCLASS, ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
             % returns a newly created random comparison of class
             % RANDOMCOMPARISONCLASS, and with measure MEASURE_CODE. It
             % initializes with ID, LABEL, NOTES, ATLASES and GROUP. The
-            % measuremnent will have VALUE settings.
+            % random comparison will have VALUE settings.
             %
             % See also getClass, getList.
             
