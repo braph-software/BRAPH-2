@@ -56,13 +56,11 @@ classdef Comparison < handle & matlab.mixin.Copyable
     end
     methods (Access = protected)  % Constructor
         function c = Comparison(id, label, notes, atlases, measure_code, group_1, group_2, varargin)
-            % COMPARISON constructs a comparison
-            %
-            % C = COMPARISON(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP_1, GROUP_2)
+            % COMPARISON(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP_1, GROUP_2)
             % creates a comparison with ID, LABEL, NOTES, ATLASES of
             % measure MEASURE_CODE between GROUP_1 and GROUP_2.
             %
-            % C = COMPARISON(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP_1, GROUP_2, 'PropertyValue', VALUE, ...)
+            % COMPARISON(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...)
             % creates a comparison with ID, LABEL, NOTES, ATLASES of
             % measure MEASURE_CODE  between GROUP_1 and GROUP_2. It 
             % utilizes the settings specified in VALUE.

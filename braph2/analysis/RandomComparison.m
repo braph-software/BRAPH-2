@@ -55,13 +55,11 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
     end
     methods (Access = protected)  % Constructor
         function rc = RandomComparison(id, label, notes, atlases, measure_code, group, varargin)
-            % RANDOMCOMPARISON constructs a random comparison
-            %
-            % RC = RANDOMCOMPARISON(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
+            % RANDOMCOMPARISON(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
             % creates a random comparison with ID, LABEL, NOTES, ATLASES of
             % measure MEASURE_CODE for GROUP.
             %
-            % RC = RANDOMCOMPARISON(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP, 'PropertyValue', VALUE, ...)
+            % RANDOMCOMPARISON(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % creates a random comparison with ID, LABEL, NOTES, ATLASES of
             % measure MEASURE_CODE for GROUP. It utilizes the settings
             % specified in VALUE.
