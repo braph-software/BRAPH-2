@@ -1,9 +1,9 @@
 classdef Analysis < handle & matlab.mixin.Copyable
     % Analysis (Abstract) An analysis
-    % Analysis provides the methods necessary for all analysis.
+    % Analysis provides the methods necessary for all analyses.
     % It is a subclss of handle & matlab.mixin.Copyable
     %
-    % Analysis provides the methods necessary for all analysis subclass. 
+    % Analysis provides the methods necessary for all analysis subclasses. 
     % Instances of this class cannot be created. Use one of the subclasses.
     % The subclasses must be created inside the corresponding workflow
     % ./braph2/workflows/... 
@@ -48,7 +48,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
     %  getComparisonClass       - returns the class of the comparison
     %  getAvailableSettings     - returns the analysis available settings
     %
-    % See also Measurement, RandomComparison, Comparison, IndexDictionary.
+    % See also Measurement, RandomComparison, Comparison, IndexedDictionary.
     
     properties (GetAccess = protected, SetAccess = protected)
         id  % analysis id
@@ -75,7 +75,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % RANDOMCOMPARISON and COMPARISONS. It initializes the
             % ANALYSIS with specified settings VALUES.
             %
-            % See also Measurement, RandomComparison, Comparison
+            % See also Measurement, RandomComparison, Comparison.
             
             analysis.setID(id)
             analysis.setLabel(label)
