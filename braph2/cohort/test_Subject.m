@@ -14,7 +14,7 @@ for i = 1:1:length(subject_class_list)
     subject_class = subject_class_list{i};
     if Subject.getBrainAtlasNumber(subject_class) == 1
         sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', {atlas});
-        sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', atlas);
+%         sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', atlas);
     else
         sub = Subject.getSubject(subject_class, 'id', 'label', 'notes', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
     end
