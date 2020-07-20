@@ -361,7 +361,7 @@ classdef AnalysisST_WU < Analysis
         function name = getName()
             % GETNAME returns the name of structural analysis 
             %
-            % NAME = GETNAME(ANALYSIS) returns the name of ANALYSIS.
+            % NAME = GETNAME() returns the name of ANALYSIS.
             %
             % See also getList, getClass, getDescription.
             
@@ -370,7 +370,7 @@ classdef AnalysisST_WU < Analysis
         function description = getDescription()
             % GETDESCRIPTION returns the description of structural analysis 
             %
-            % DESCRIPTION = GETDESCRIPTION(ANALYSIS) returns the description
+            % DESCRIPTION = GETDESCRIPTION() returns the description
             % of AnalysisST_WU.
             %
             % See also getList, getClass, getName.
