@@ -55,13 +55,11 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods (Access = protected)  % Constructor
         function m = Measurement(id, label, notes, atlases, measure_code, group, varargin)
-            % MEASUREMENT constructs a measurement
-            %
-            % M = MEASUREMENT(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
+            % MEASUREMENT(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP)
             % creates a measurement with ID, LABEL, NOTES, ATLASES of
             % measure MEASURE_CODE for GROUP.
             %
-            % M = MEASUREMENT(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP, 'PropertyValue', VALUE, ...)
+            % MEASUREMENT(ID, LABEL, NOTES, ATLASES, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % creates a measurement with ID, LABEL, NOTES, ATLASES of
             % measure MEASURE_CODE for GROUP. It utilizes the settings
             % specified in VALUE.

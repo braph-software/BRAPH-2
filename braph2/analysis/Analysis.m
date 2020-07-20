@@ -62,15 +62,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
     end
     methods (Access = protected)  % Constructor
         function analysis = Analysis(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
-            % ANALYSIS Constructor, creates an analysis 
-            %
-            % ANALYSIS = ANALYSIS(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS) 
+            % ANALYSIS(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS) 
             % creates an analysis with ID, LABEL, COHORT, MEASUREMENTS,
             % RANDOMCOMPARISON and COMPARISONS. It initializes the
             % ANALYSIS with default settings.
             %
-            % ANALYSIS = ANALYSIS(ID, LABEL, NOTES, COHORT, MEASUREMENTS, ...
-            %        RANDOMCOMPARISON, COMPARISONS, 'PROPERTYVALUE', VALUE) 
+            % ANALYSIS(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...) 
             % creates an analysis with ID, LABEL, COHORT, MEASUREMENTS,
             % RANDOMCOMPARISON and COMPARISONS. It initializes the
             % ANALYSIS with specified settings VALUES.
@@ -239,7 +236,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % does not exist it will calculate the measurement MEASURE_CODE. 
             % It uses default settings.
             %
-            % MEASUREMENT = GETMEASUREMENT(ANALYSIS, MEASURE_CODE, GROUP, 'PropertyRule', VALUE, ...)
+            % MEASUREMENT = GETMEASUREMENT(ANALYSIS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % checks if the measurement exists in measurement idict. If it
             % does not exist it will calculate the measurement MEASURE_CODE.
             % It passes the property VALUES to the calculating function.
@@ -269,7 +266,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % checks if the randomcomparison exists in randomcopmarison idict. 
             % If it does not exist it will calculate. It uses default settings.
             %
-            % RANDOMCOMPARISON = RANDOMCOMPARISON(ANALYSIS, MEASURE_CODE, GROUP, 'PropertyRule', VALUE, ...)
+            % RANDOMCOMPARISON = RANDOMCOMPARISON(ANALYSIS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % checks if the randomcomparison exists in randomcomparison idict.
             % If it does not exist it will calculate. It passes the 
             % property VALUES to the calculating function.
@@ -299,7 +296,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % checks if the comparison exists in comparison idict. If it
             % does not exist it will calculate. It uses default settings.
             %
-            % COMPARISON = GETCOMPARISON(ANALYSIS, MEASURE_CODE, GROUP, 'PropertyRule', VALUE, ...)
+            % COMPARISON = GETCOMPARISON(ANALYSIS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % checks if the comparison exists in comparison idict. If it
             % does not exist it will calculate. It passes the property VALUES
             % to the calculating function.
@@ -340,7 +337,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % returns an analysis object of class ANALYSIS_CLASS with ID,
             % LABEL, NOTES. It initializes with a COHORT and default settings.
             %
-            % ANALYSIS = GETANALYSIS(ANALYSIS_CLASS, ID, LABEL, NOTES, COHORT, 'PropertyValue', VALUE)
+            % ANALYSIS = GETANALYSIS(ANALYSIS_CLASS, ID, LABEL, NOTES, COHORT, PROPERTY, VALUE, ...)
             % returns an analysis object of class ANALYSIS_CLASS with ID,
             % LABEL, NOTES. It initializes with a COHORT and properties
             % VALUES.
