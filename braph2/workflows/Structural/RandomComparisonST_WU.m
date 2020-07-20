@@ -34,7 +34,7 @@ classdef RandomComparisonST_WU < RandomComparison
     %  getAnalysisClass             - returns the class of the analysis
     %  getSubjectClass              - returns the class of the subject
     %  getAvailbleSettings          - returns the available settings
-    %  getComparison                - returns a new comparison
+    %  getRandcomComparison         - returns a new random comparison
     %
     % See also Comparison, AnalysisST_WU, MeasurementST_WU, ComparisonST_WU.
     
@@ -452,7 +452,7 @@ classdef RandomComparisonST_WU < RandomComparison
         function name = getName()
             % GETNAME returns the name of structural random comparison
             %
-            % NAME = GETNAME() returns the name of the RandomComparison ST WU.
+            % NAME = GETNAME() returns the name, RandomComparison ST WU.
             %
             % See also getList, getClass, getDescription.
             
