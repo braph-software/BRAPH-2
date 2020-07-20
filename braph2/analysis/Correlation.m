@@ -33,7 +33,7 @@ classdef Correlation
             % adjacency matrix calculated with the specified correlation rule.
             % May return the p-values correlation matrix P. 
             %
-            % [A, ] = GETADJACENCYMATRIX(DATA, CORRELATION_RULE, NEGATIVE_WEIGHT_RULE) 
+            % [A, P] = GETADJACENCYMATRIX(DATA, CORRELATION_RULE, NEGATIVE_WEIGHT_RULE) 
             % returns an adjacency matrix calculated with the specified correlation rule.
             % It filters the values with the NEGATIVE_WEIGHT_RULE.
             % May return the p-values correlation matrix P.
