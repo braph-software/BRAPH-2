@@ -17,6 +17,7 @@ classdef ComparisonST_WU < Comparison
     %  getGroupValues               - returns the groups measurement value
     %  getGroupValue                - returns the group measurement value
     %  getDifference                - returns the difference between values
+    %  getAllDifferences            - returns all the differecens between values
     %  getP1                        - returns the p-values single tail
     %  getP2                        - returns the p-values double tail
     %  getConfidenceIntervalMin     - returns the min value of the confidence interval
@@ -61,7 +62,7 @@ classdef ComparisonST_WU < Comparison
             %
             % See also MeasurementST_WU, RandomComparisonST_WU, AnalysisST_WU.
             
-            graph_type = AnalysisST.getGraphType();
+            graph_type = AnalysisST_WU.getGraphType();
             measure_list = Graph.getCompatibleMeasureList(graph_type);
             
             assert(ismember(measure_code, measure_list), ...
@@ -484,7 +485,7 @@ classdef ComparisonST_WU < Comparison
             % GETANALYSISCLASS returns the class of the analsysis 
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % anlysis the comparison is part of, 'AnalysisST_WU'.
+            % analysis the comparison is part of, 'AnalysisST_WU'.
             %
             % See also getList, getClass, getName.
             
@@ -523,7 +524,7 @@ classdef ComparisonST_WU < Comparison
             % SUB = GETCOMPARISON(COMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...)
             % returns a new ComparisonST_WU object with COMPARISON_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
-            % it will initialize with default settings.
+            % it will initialize with VALUE settings.
             %
             % See also getClass, getName, getDescription.
             
