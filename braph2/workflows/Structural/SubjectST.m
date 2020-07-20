@@ -1,27 +1,27 @@
-classdef SubjectMRI < Subject
-    % SubjectMRI A subject of type MRI
-    % SubjectMRI represents a subject of type MRI.
+classdef SubjectST < Subject
+    % SubjectST A subject of type Structural
+    % SubjectST represents a subject of type Structural.
     % It is a subclass of Subject. It implements the methods initialize_datadict
     % and update_brainatlases.
     %
-    % SubjectMRI methods (Access=protected):
-    %   SubjectMRI              - Constructor
+    % SubjectST methods (Access=protected):
+    %   SubjectST              - Constructor
     %
-    % SubjectMRI methods (Access=protected):
+    % SubjectST methods (Access=protected):
     %   initialize_datadict     - initializes the data dictionary DATADICT
     %   update_brainatlases     - updates the brain atlases in DATADICT
     %
-    % SubjectMRI inspection methods (Static)
-    %   getClass                - returns the class of SubjectMRI
-    %   getName                 - returns the name of  SubjectMRI
-    %   getDescription          - returns the description of SubjectMRI
+    % SubjectST inspection methods (Static)
+    %   getClass                - returns the class of SubjectST
+    %   getName                 - returns the name of  SubjectST
+    %   getDescription          - returns the description of SubjectST
     %   getBrainAtlasNumber     - returns the number of elements of Atlases
-    %   getDataList             - returns the type of data of SubjectMRI
+    %   getDataList             - returns the type of data of SubjectST
     %   getDataNumber           - returns the number of elements of DATADICT
-    %   getDataCodes            - returns the key codes of the data for SubjectMRI
-    %   getDataClasses          - returns the class of the type of all data of SubjectMRI
-    %   getDataClass            - returns the class of the type of a data of SubjectMRI
-    %   getSubject              - returns a new instantiation of SubjectMRI
+    %   getDataCodes            - returns the key codes of the data for SubjectST
+    %   getDataClasses          - returns the class of the type of all data of SubjectST
+    %   getDataClass            - returns the class of the type of a data of SubjectST
+    %   getSubject              - returns a new instantiation of SubjectST
     %
     % Subject load and save methods (Static):
     %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
@@ -31,20 +31,20 @@ classdef SubjectMRI < Subject
     %   load_from_json          - reads a '.json' file, loads the data to a new subject
     %   save_to_json            - saves the subject data to a '.json' file
     %
-    % See also Group, Cohort, SubjectDTI, SubjectMRI, Subject.
+    % See also Group, Cohort, SubjectDTI, SubjectST, Subject.
  
     methods  % Constructor
-        function sub = SubjectMRI(id, label, notes, atlas, varargin)
-            % SUBJECTMRI creates a subject of type MRI
+        function sub = SubjectST(id, label, notes, atlas, varargin)
+            % SUBJECTST creates a subject of type Structural
             %
-            % SUBJECTMRI(ID, LABEL, NOTES, ATLASES) creates a subject of type MRI
+            % SUBJECTST(ID, LABEL, NOTES, ATLASES) creates a subject of type Structural
             % with with ID, LABEL, NOTES. ATLAS is the brain atlas that 
-            % subject MRI will use (it can be either a BrainAtlas or a
+            % subject Structural will use (it can be either a BrainAtlas or a
             % cell array with a single BrainAtlas).
             %
-            % SUBJECTMRI(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
-            % creates a MRI subject with ubject ID, LABEL NOTES and ATLASES.
-            % SubjectfMRI will be initialized by the rules passed in the
+            % SUBJECTST(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
+            % creates a Structural subject with ubject ID, LABEL NOTES and ATLASES.
+            % SubjectST will be initialized by the rules passed in the
             % VARARGIN.
             %
             % See also See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
@@ -53,7 +53,7 @@ classdef SubjectMRI < Subject
                 atlases = {atlas};
             else
                 assert(iscell(atlas) && length(atlas)==1, ...
-                    ['BRAIN:SubjectMRI:AtlasErr'], ...
+                    ['BRAIN:SubjectST:AtlasErr'], ...
                     ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
                 atlases = atlas;
             end
@@ -65,8 +65,8 @@ classdef SubjectMRI < Subject
         function initialize_datadict(sub, varargin)
            % INITIALIZE_DATADICT initializes the data dictionary
             %
-            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'MRI', DATA) initializes the data
-            % ditionary with data type and data code of subject mri.
+            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'ST', DATA) initializes the data
+            % ditionary with data type and data code of subject structural.
             %
             % See also update_brainatlases.
             
@@ -74,17 +74,17 @@ classdef SubjectMRI < Subject
             atlas = atlases{1};
             
             age = get_from_varargin(0, 'age', varargin{:});
-            mri = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'MRI', varargin{:});  % column vector with the same number of elements as the BrainAtlas
+            structural = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'ST', varargin{:});  % column vector with the same number of elements as the BrainAtlas
             
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
-            sub.datadict('MRI') = DataStructural(atlas, mri);
+            sub.datadict('ST') = DataStructural(atlas, structural);
         end
         function update_brainatlases(sub, atlases)
-            % UPDATE_BRAINATLASES updates the atlases of the subject MRI
+            % UPDATE_BRAINATLASES updates the atlases of the subject Structural
             %
             % UPDATE_BRAINATLASES(SUB, ATLASES) updates the atlases of the
-            % subject MRI using the new values ATLASES. ATLASES must be a
+            % subject Structural using the new values ATLASES. ATLASES must be a
             % cell array with a single BrainAtlas.
             %
             % See also initialize_datadict.
@@ -95,7 +95,7 @@ classdef SubjectMRI < Subject
             d1 = sub.datadict('age');
             d1.setBrainAtlas(atlas)
             
-            d2 = sub.datadict('MRI');
+            d2 = sub.datadict('ST');
             d2.setBrainAtlas(atlas);
         end
     end
@@ -103,31 +103,31 @@ classdef SubjectMRI < Subject
         function subject_class = getClass()
             % GETCLASS returns the class of the subject
             %
-            % SUBJECT_CLASS = GETCLASS() returns the class SubjectMRI
+            % SUBJECT_CLASS = GETCLASS() returns the class SubjectST
             %
             % See also getDescription, getName.
             
-            subject_class = 'SubjectMRI';
+            subject_class = 'SubjectST';
         end
         function name = getName()
             % GETNAME returns the name of the subject
             %
-            % NAME = GETNAME() returns the name: Subject MRI.
+            % NAME = GETNAME() returns the name: Subject Structural.
             %
             % See also getClass, getDescription.
             
-            name = 'Subject Structural MRI';
+            name = 'Subject Structural';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the subject
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of SubjectMRI
+            % of SubjectST
             %
             % See also getName, getClass, getBrainAtlasNumber.
             
             description = [ ...
-                'Subject with structural MRI data, ' ...
+                'Subject with structural data, ' ...
                 'such as cortical thickness for each brain region' ...
                 ];
         end
@@ -145,15 +145,15 @@ classdef SubjectMRI < Subject
             % GETDATALIST returns the list of data
             %
             % CELL ARRAY = GETDATALIST() returns a cell array of
-            % subject data. For Subject MRI, the data list is:
+            % subject data. For Subject Structural, the data list is:
             %   age            -    DataScalar.
-            %   MRI            -    DataStructural.
+            %   Structural            -    DataStructural.
             %
             % See also getList
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
-            datalist('MRI') = 'DataStructural';
+            datalist('ST') = 'DataStructural';
         end
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
@@ -162,31 +162,31 @@ classdef SubjectMRI < Subject
             %
             % See also getDataList, getBrainAtlasNumber.
             
-            data_number = Subject.getDataNumber('SubjectMRI');
+            data_number = Subject.getDataNumber('SubjectST');
         end
         function data_codes = getDataCodes()
             % GETDATACODES returns the list of data keys
             %
             % CELL ARRAY = GETDATACODES(SUB) returns a cell array of
-            % subject MRI data keys.
+            % subject Structural data keys.
             %
             % See also getList, getDataClasses, getDataNumber
             
-            data_codes = Subject.getDataCodes('SubjectMRI');
+            data_codes = Subject.getDataCodes('SubjectST');
         end
         function data_classes = getDataClasses()
             % GETDATACLASSES returns the list of data classes
             %
             % CELL ARRAY = GETDATACLASSES(SUB) returns a cell array of
-            % subject MRI data classes.
+            % subject Structural data classes.
             %
             % CELL ARRAY = GETDATACLASSES(SUBJECT_CLASS) returns a
-            % cell array of subject MRI data classes to the subject whose class is
+            % cell array of subject Structural data classes to the subject whose class is
             % SUBJECT_CLASS.
             %
             % See also getList, getDataCodes, getDataClass.
             
-            data_classes = Subject.getDataClasses('SubjectMRI');
+            data_classes = Subject.getDataClasses('SubjectST');
         end
         function data_class = getDataClass(data_code)
             % GETDATACLASS returns the class of a data.
@@ -196,21 +196,21 @@ classdef SubjectMRI < Subject
             %
             % See also getList, getDataClasses.
             
-            data_class = Subject.getDataNumber('SubjectMRI', data_code);
+            data_class = Subject.getDataNumber('SubjectST', data_code);
         end
     end
     methods (Static)  % Save/load functions
         function cohort = load_from_xls(tmp, varargin)
-            % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectMRI
+            % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectST
             %
             % COHORT = LOAD_FROM_XLS(TMP) opens a GUI to load a directory 
             % where it reads '.xls' or '.xlsx' files. If TMP is a brain atlas 
-            % it will create a cohort of SubjectMRI. If TMP is a cohort
+            % it will create a cohort of SubjectST. If TMP is a cohort
             % then it will load the file into the cohort.
             %
             % COHORT = LOAD_FROM_XLS(TMP, 'Directory', PATH) loads the directory
             % in PATH where it reads '.xls' or '.xlsx' files. If TMP is a
-            % brain atlas the function whill create a cohort of SubjectMRI 
+            % brain atlas the function whill create a cohort of SubjectST 
             % If TMP is a cohort then the function will load the file into
             % the cohort.
             % 
@@ -253,7 +253,7 @@ classdef SubjectMRI < Subject
                 end
                 
                 % creates new cohort
-                subject_class = 'SubjectMRI';
+                subject_class = 'SubjectST';
                 atlas = tmp;
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
             end
@@ -273,7 +273,7 @@ classdef SubjectMRI < Subject
             for i = 2:1:size(raw, 1)
                 subject = Subject.getSubject(subject_class, ...                    
                     char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlas, ...
-                    'MRI', cell2mat(raw(i, 4:size(raw, 2))'));
+                    'ST', cell2mat(raw(i, 4:size(raw, 2))'));
                 if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
@@ -281,14 +281,14 @@ classdef SubjectMRI < Subject
             end
         end
         function save_to_xls(cohort, varargin)
-            % SAVE_TO_XLS saves the cohort of SubjectMRI to a '.xls' file
+            % SAVE_TO_XLS saves the cohort of SubjectST to a '.xls' file
             %
             % SAVE_TO_XLS(COHORT) opens a GUI to choose the path where the
-            % cohort of SubjectMRI will be saved in '.xls' or 'xlsx'
+            % cohort of SubjectST will be saved in '.xls' or 'xlsx'
             % format.
             %
             % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort 
-            % of SubjectMRI in '.xls' or 'xlsx' format in the
+            % of SubjectST in '.xls' or 'xlsx' format in the
             % specified PATH.
             % 
             % See also load_from_xls, save_to_txt, save_to_json
@@ -316,7 +316,7 @@ classdef SubjectMRI < Subject
                 row_ids{j, 1} = subject.getID(); %#ok<AGROW>
                 row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
                 row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas{j, 1} = subject.getData('MRI').getValue(); %#ok<AGROW>
+                row_datas{j, 1} = subject.getData('ST').getValue(); %#ok<AGROW>
             end
             tab = table(row_ids, row_labels, row_notes, row_datas);
             
@@ -348,16 +348,16 @@ classdef SubjectMRI < Subject
             writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
         end
         function cohort = load_from_txt(tmp, varargin)
-            % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectMRI
+            % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectST
             %
             % COHORT = LOAD_FROM_TXT(TMP) opens a GUI to load a directory 
             % where it reads '.txt' files. If TMP is a brain atlas 
-            % it will create a cohort of SubjectMRI. If TMP is a cohort
+            % it will create a cohort of SubjectST. If TMP is a cohort
             % then it will load the file into the cohort.
             %
             % COHORT = LOAD_FROM_TXT(TMP, 'Directory', PATH) loads the directory
             % in PATH where it reads '.txt' files. If TMP is a
-            % brain atlas the function whill create a cohort of SubjectMRI 
+            % brain atlas the function whill create a cohort of SubjectST 
             % If TMP is a cohort then the function will load the file into
             % the cohort.
             % 
@@ -395,7 +395,7 @@ classdef SubjectMRI < Subject
                 cohort_id = '';
                 cohort_label = '';
                 cohort_notes = '';
-                subject_class = 'SubjectMRI';
+                subject_class = 'SubjectST';
                 atlases = tmp;
                 
                 if exist(file_cohort, 'file')
@@ -423,7 +423,7 @@ classdef SubjectMRI < Subject
             for i = 1:1:size(raw, 1)  % first row is being read as table label
                 subject = Subject.getSubject(subject_class, ...                    
                     char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlases, ...
-                    'MRI', raw{i, 4:size(raw, 2)}');
+                    'ST', raw{i, 4:size(raw, 2)}');
                 if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
@@ -434,13 +434,13 @@ classdef SubjectMRI < Subject
             warning('on', 'all')
         end
         function save_to_txt(cohort, varargin)
-            % SAVE_TO_TXT saves the cohort of SubjectMRI to a '.txt' file
+            % SAVE_TO_TXT saves the cohort of SubjectST to a '.txt' file
             %
             % SAVE_TO_TXT(COHORT) opens a GUI to choose the path where the
-            % cohort of SubjectMRI will be saved in '.txt' format.
+            % cohort of SubjectST will be saved in '.txt' format.
             %
             % SAVE_TO_TXT(COHORT, 'RootDirectory', PATH) saves the cohort 
-            % of SubjectMRI in '.txt' format in the specified PATH.
+            % of SubjectST in '.txt' format in the specified PATH.
             % 
             % See also load_from_txt, save_to_xls, save_to_json
             
@@ -467,7 +467,7 @@ classdef SubjectMRI < Subject
                 row_ids{j, 1} = subject.getID(); %#ok<AGROW>
                 row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
                 row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas{j, 1} = subject.getData('MRI').getValue(); %#ok<AGROW>
+                row_datas{j, 1} = subject.getData('ST').getValue(); %#ok<AGROW>
             end
             t = table(row_ids, row_labels, row_notes, row_datas);
 
@@ -526,16 +526,16 @@ classdef SubjectMRI < Subject
             fclose(fid);
         end
         function cohort = load_from_json(tmp, varargin)
-            % LOAD_FROM_JSON loads a '.json' file to a Cohort with SubjectMRI
+            % LOAD_FROM_JSON loads a '.json' file to a Cohort with SubjectST
             %
             % COHORT = LOAD_FROM_JSON(TMP) opens a GUI to load a directory 
             % where it reads '.json' files. If TMP is a brain atlas 
-            % it will create a cohort of SubjectMRI. If TMP is a cohort
+            % it will create a cohort of SubjectST. If TMP is a cohort
             % then it will load the file into the cohort.
             %
             % COHORT = LOAD_FROM_JSON(TMP, 'Directory', PATH) loads the directory
             % in PATH where it reads '.json' files. If TMP is a
-            % brain atlas the function whill create a cohort of SubjectMRI 
+            % brain atlas the function whill create a cohort of SubjectST 
             % If TMP is a cohort then the function will load the file into
             % the cohort.
             % 
@@ -564,7 +564,7 @@ classdef SubjectMRI < Subject
                 cohort_label = '';
                 cohort_notes = '';
                 % creates cohort
-                subject_class = 'SubjectMRI';
+                subject_class = 'SubjectST';
                 atlases = tmp;
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             end
@@ -584,7 +584,7 @@ classdef SubjectMRI < Subject
                 data = raw.SubjectData(i).data;
                 subject = Subject.getSubject(subject_class, ...                   
                     id, label, notes, atlases, ...
-                    'MRI', data);
+                    'ST', data);
                  if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
@@ -592,13 +592,13 @@ classdef SubjectMRI < Subject
             end
         end
         function save_to_json(cohort, varargin)
-            % SAVE_TO_JSON saves the cohort of SubjectMRI to a '.json' file
+            % SAVE_TO_JSON saves the cohort of SubjectST to a '.json' file
             %
             % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
-            % cohort of SubjectMRI will be saved in '.json' format.
+            % cohort of SubjectST will be saved in '.json' format.
             %
             % SAVE_TO_JSON(COHORT, 'RootDirectory', PATH) saves the cohort 
-            % of SubjectMRI in '.json' format in the specified PATH.
+            % of SubjectST in '.json' format in the specified PATH.
             % 
             % See also load_from_json, save_to_xls, save_to_txt
             
@@ -626,7 +626,7 @@ classdef SubjectMRI < Subject
                 row_ids{j, 1} = subject.getID(); %#ok<AGROW>
                 row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
                 row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas{j, 1} = subject.getData('MRI').getValue(); %#ok<AGROW>
+                row_datas{j, 1} = subject.getData('ST').getValue(); %#ok<AGROW>
             end
             
             atlases = cohort.getBrainAtlases();

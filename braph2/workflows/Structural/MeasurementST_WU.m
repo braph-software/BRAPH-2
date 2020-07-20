@@ -1,17 +1,17 @@
-classdef MeasurementMRI_WU < Measurement
-    % single group of mri subjects
+classdef MeasurementST_WU < Measurement
+    % single group of ST subjects
     properties
         value  % value of the measure for the group
     end
     methods  % Constructor
-        function m =  MeasurementMRI_WU(id, label, notes, atlas, measure_code, group, varargin)
+        function m =  MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin)
 
 % TODO: Add assert that the measure_code is in the measure list. The code
 % below can be useful but must be modified.
-%             graph_type = AnalysisMRI_WU.getGraphType();
+%             graph_type = AnalysisST_WU.getGraphType();
 %             measure_list = Graph.getCompatibleMeasureList(graph_type);
 %             available_settings = {
-%                 'MeasurementMRI_WU.MeasureCode', BRAPH2.STRING, measure_list{1}, measure_list;
+%                 'MeasurementST_WU.MeasureCode', BRAPH2.STRING, measure_list{1}, measure_list;
 %                 };
 
             m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
@@ -22,7 +22,7 @@ classdef MeasurementMRI_WU < Measurement
             % DISP overrides Measurement disp
             %
             % DISP(M) overrides Measurement disp and displays additional
-            % information about the value of the MeasurementMRI_WU.
+            % information about the value of the MeasurementST_WU.
             % 
             % See also Measurement
             
@@ -45,54 +45,54 @@ classdef MeasurementMRI_WU < Measurement
             if Measure.is_global(measure_code)  % global measure
                 m.value = get_from_varargin( ...
                     {0}, ...  % 1 measure per group
-                    'MeasurementMRI_WU.Value', ...
+                    'MeasurementST_WU.Value', ...
                     varargin{:});
                 assert(iscell(m.getMeasureValue()) && ...
                     isequal(size(m.getMeasureValue()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [1, 1]), m.getMeasureValue())), ...
-                    [BRAPH2.STR ':MeasurementMRI_WU:' BRAPH2.WRONG_INPUT], ...
-                    'Data not compatible with MeasurementMRI_WU')
+                    [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.WRONG_INPUT], ...
+                    'Data not compatible with MeasurementST_WU')
             elseif Measure.is_nodal(measure_code)  % nodal measure
                 m.value = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length(), 1)}, ...
-                    'MeasurementMRI_WU.Value', ...
+                    'MeasurementST_WU.Value', ...
                     varargin{:});
                 assert(iscell(m.getMeasureValue()) && ...
                     isequal(size(m.getMeasureValue()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), 1]), m.getMeasureValue())), ...
-                    [BRAPH2.STR ':MeasurementMRI_WU:' BRAPH2.WRONG_INPUT], ...
-                    'Data not compatible with MeasurementMRI_WU')
+                    [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.WRONG_INPUT], ...
+                    'Data not compatible with MeasurementST_WU')
             elseif Measure.is_binodal(measure_code)  % binodal measure
                 m.value = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length())}, ...
-                    'MeasurementMRI_WU.Value', ...
+                    'MeasurementST_WU.Value', ...
                     varargin{:});
                 assert(iscell(m.getMeasureValue()) && ...
                     isequal(size(m.getMeasureValue()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), m.getMeasureValue())), ...
-                    [BRAPH2.STR ':MeasurementMRI_WU:' BRAPH2.WRONG_INPUT], ...
-                    'Data not compatible with MeasurementMRI_WU')
+                    [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.WRONG_INPUT], ...
+                    'Data not compatible with MeasurementST_WU')
             end
         end
     end
     methods (Static)  % Descriptive functions
         function class = getClass()
-            class = 'MeasurementMRI_WU';
+            class = 'MeasurementST_WU';
         end
         function name = getName()
-            name = 'Measurement MRI WU';
+            name = 'Measurement ST WU';
         end
         function description = getDescription()
-            description = 'MRI measurement with weighted graphs.';
+            description = 'ST measurement with weighted graphs.';
         end
         function atlas_number = getBrainAtlasNumber()
             atlas_number =  1;
         end
         function analysis_class = getAnalysisClass()
-            analysis_class = 'AnalysisMRI_WU';
+            analysis_class = 'AnalysisST_WU';
         end
         function subject_class = getSubjectClass()
-            subject_class = 'SubjectMRI';
+            subject_class = 'SubjectST';
         end        
         function available_settings = getAvailableSettings()
             available_settings = {};
