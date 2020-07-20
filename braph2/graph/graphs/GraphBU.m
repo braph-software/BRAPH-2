@@ -197,7 +197,7 @@ classdef GraphBU < GraphBD
             
             random_A = A;
             swaps = 0; % number of successful edge swaps
-            for attempt = 1:1:attempts_per_edge*E
+            for attempt = 1:1:attempts_per_edge * E
                 
                 % select two edges
                 selected_edges = randperm(E, 2);
