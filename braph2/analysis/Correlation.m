@@ -32,13 +32,23 @@ classdef Correlation
             % [A, P] = GETADJACENCYMATRIX(DATA, CORRELATION_RULE) returns an
             % adjacency matrix calculated with the specified correlation rule.
             % May return the p-values correlation matrix P. 
+            % Admissible CORRELTION_RULE are:
+            %   'CorrelationRule'   = 'spearman' - pairwise correlations Spearman's rho.
+            %                         'kendall'  - pairwise correlations Kendall's tau.
+            %                         'partial pearson'  - Spearman's rank partial correlations. 
+            %                         'partial spearman' - linear partial Pearson correlations.
+            %                         'person'(default)  - Pearson's linear correlation coefficient.
             %
             % [A, ] = GETADJACENCYMATRIX(DATA, CORRELATION_RULE, NEGATIVE_WEIGHT_RULE) 
             % returns an adjacency matrix calculated with the specified correlation rule.
             % It filters the values with the NEGATIVE_WEIGHT_RULE.
             % May return the p-values correlation matrix P.
+            % Admissible NEGATIVE_WEIGHT_RULE are:
+            %   'NegativeWeightRule' = 'none'   - does not filter the output.
+            %                          'abs'    - output is the absolute value.
+            %                          'zero'(default) - changes all negative values to zero.
             %
-            % See also Analysis, Measurement.
+            % See also Analysis, Measurement, corr, corrcoef, partialcorr.
             
             switch lower(correlation_rule)
                 case 'spearman'
