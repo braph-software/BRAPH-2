@@ -191,16 +191,16 @@ classdef GraphBU < GraphBD
             end
             
             % remove self connections
-            A(1:length(A)+1:numel(A)) = 0;
+            A(1:length(A) + 1:numel(A)) = 0;
             [I_edges, J_edges] = find(triu(A)); % find the edges
             E = length(I_edges); % number of edges
             
             random_A = A;
             swaps = 0; % number of successful edge swaps
-            for attempt=1:1:attempts_per_edge*E
+            for attempt = 1:1:attempts_per_edge * E
                 
                 % select two edges
-                selected_edges = randperm(E,2);
+                selected_edges = randperm(E, 2);
                 node_start_1 = I_edges(selected_edges(1));
                 node_end_1 = J_edges(selected_edges(1));
                 node_start_2 = I_edges(selected_edges(2));
@@ -224,10 +224,10 @@ classdef GraphBU < GraphBD
                 
                 if ~random_A(node_start_1, node_end_2) && ...
                         ~random_A(node_start_2, node_end_1) && ...
-                        node_start_1~=node_start_2 && ...
-                        node_end_1~=node_end_2 && ...
-                        node_start_1~=node_end_2 && ...
-                        node_start_2~=node_end_1
+                        node_start_1 ~= node_start_2 && ...
+                        node_end_1 ~= node_end_2 && ...
+                        node_start_1 ~= node_end_2 && ...
+                        node_start_2 ~= node_end_1
                     
                     % erase old edges
                     random_A(node_start_1, node_end_1) = 0;
@@ -247,7 +247,7 @@ classdef GraphBU < GraphBD
                     J_edges(selected_edges(1)) = node_end_2;
                     J_edges(selected_edges(2)) = node_end_1;
                     
-                    swaps = swaps+1;
+                    swaps = swaps + 1;
                 end
             end
         end

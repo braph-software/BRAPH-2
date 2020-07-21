@@ -52,7 +52,7 @@ classdef MeasurementST_WU < Measurement
             measure_list = Graph.getCompatibleMeasureList(graph_type);            
             assert(ismember(measure_code, measure_list), ...
                 [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.BUG_FUNC], ...
-                'MeasurementST_WU measure_code is not compatible with the permited Measures.');            
+                'MeasurementST_WU measure_code is not compatible with the permited Measures.');
 
             m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
         end

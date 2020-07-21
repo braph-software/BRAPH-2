@@ -718,7 +718,7 @@ for i = 1:1:length(graph_class_list)
     
     assert(~isequal(A, r_A), ...
         [BRAPH2.STR ':' graph_class ':' BRAPH2.WRONG_OUTPUT], ...
-        [graph_class '.is_negative() must be the opposite of ' graph_class '.is_nonnegative()'])
+        [graph_class '.randomize() not working'])
 end
 
 %% Test 9: Copy
