@@ -198,12 +198,23 @@ classdef GraphBU < GraphBD
             [I_edges, J_edges] = find(triu(A)); % find the edges
             E = length(I_edges); % number of edges
             
-            if E < 2
+            if E == 0
                 random_A = A;
                 swaps = 0;
                 return
             end
             
+            if E == 1        
+                A(I_edges(1), J_edges(1)) = 0;
+                A(J_edges(1), I_edges(1)) = 0;
+                selected_nodes = randperm(size(A, 1), 2);
+                A(selected_nodes(1), selected_nodes(2)) = 1;
+                A(selected_nodes(2), selected_nodes(1)) = 1;
+                random_A = A;
+                swaps = 1;  
+                return
+            end
+
             random_A = A;
             swaps = 0; % number of successful edge swaps
             for attempt = 1:1:attempts_per_edge * E

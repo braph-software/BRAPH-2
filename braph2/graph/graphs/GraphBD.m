@@ -199,9 +199,18 @@ classdef GraphBD < Graph
             [I_edges, J_edges] = find(A); % find all the edges
             E = length(I_edges); % number of edges
             
-            if E < 2
+            if E == 0
                 random_A = A;
                 swaps = 0;
+                return
+            end
+            
+            if E == 1        
+                A(I_edges(1), J_edges(1)) = 0;                
+                selected_nodes = randperm(size(A, 1), 2);
+                A(selected_nodes(1), selected_nodes(2)) = 1;             
+                random_A = A;
+                swaps = 1;  
                 return
             end
             
