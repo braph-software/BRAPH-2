@@ -1,4 +1,43 @@
 classdef RandomComparisonST_WU < RandomComparison
+    % RandomComparisonST_WU A random comparison of structural data with weighted undirected graphs
+    % RandomComparisonST_WU is a subclass of Comparison, it implements the
+    % initialization of data methods.
+    %
+    % RandomComparisonST_WU implements the initialization of the data which the
+    % class will save. It checks if the data being saved has correct
+    % dimensions. Structural data can be for example MRI or PET data.
+    %
+    % RandomComparisonST_WU constructor methods:
+    %  RandomComparisonST_WU              - Constructor
+    %
+    % RandomComparisonST_WU basic methods:
+    %  disp                         - displays the comparison
+    %
+    % RandomComparisonST_WU get methods:
+    %  getGroupValue                - returns the group measurement value
+    %  getRandomValue               - returns the random group measurement value
+    %  getDifference                - returns the difference between values
+    %  getAllDifferences            - returns all the differecens between values
+    %  getP1                        - returns the p-values single tail
+    %  getP2                        - returns the p-values double tail
+    %  getConfidenceIntervalMin     - returns the min value of the confidence interval
+    %  getConfidenceIntervalMax     - returns the max value of the confidence interval
+    %
+    % RandomComparisonST_WU initialze data (Access=protected):
+    %  initialize_data              - initializes and checks the data
+    %
+    % RandomComparisonST_WU descriptive methods (Static):
+    %  getClass                     - returns the class of the comparison
+    %  getName                      - returns the name of the comparison
+    %  getDescription               - returns the description of the comparison
+    %  getBrainAtlasNumber          - returns the number of brain atlases
+    %  getAnalysisClass             - returns the class of the analysis
+    %  getSubjectClass              - returns the class of the subject
+    %  getAvailbleSettings          - returns the available settings
+    %  getRandcomComparison         - returns a new random comparison
+    %
+    % See also Comparison, AnalysisST_WU, MeasurementST_WU, ComparisonST_WU.
+    
     properties
         value_group  % array with the value_group of the measure for each subject of group 1
         value_random  % array with the value_group of the measure for each subject of group 1
@@ -11,13 +50,28 @@ classdef RandomComparisonST_WU < RandomComparison
     end
     methods  % Constructor
         function rc =  RandomComparisonST_WU(id, label, notes, atlas, measure_code, group, varargin)
+            % RANDOMCOMPARISONST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
+            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % with the data from GROUP_1 and a random group. It initializes the
+            % RANDOMCOMPARISONST_WU with default settings.
+            %
+            % RANDOMCOMPARISONST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...) 
+            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % with the data from GROUP_1 and a random group. It initializes the
+            % RANDOMCOMPARISONST_WU with VALUE settings.
+            %
+            % See also MeasurementST_WU, ComparisonST_WU, AnalysisST_WU.
             
-            % TODO: Add assert that the measure_code is in the measure list.
+            graph_type = AnalysisST_WU.getGraphType();
+            measure_list = Graph.getCompatibleMeasureList(graph_type);            
+            assert(ismember(measure_code, measure_list), ...
+                [BRAPH2.STR ':RandomComparisonST_WU:' BRAPH2.BUG_FUNC], ...
+                'RandomComparisonST_WU measure_code is not compatible with the permited Measures.');
             
             rc = rc@RandomComparison(id, label, notes, atlas, measure_code, group, varargin{:});
         end
     end
-      methods  % Basic function
+    methods  % Basic function
         function disp(rc)
             % DISP overrides RandomComparison disp
             %
@@ -38,32 +92,97 @@ classdef RandomComparisonST_WU < RandomComparison
     end
     methods  % Get functions
         function value = getGroupValue(rc)
+            % GETGROUPVALUE returns the measure value of the group
+            %
+            % VALUE = GETGROUPVALUE(RC) returns the measure value of the group.
+            % 
+            % See also getRandomValue, getDifference, getAllDifferences.
+            
             value = rc.value_group;
         end
         function random_value = getRandomValue(rc)
+            % GETRANDOMVALUE returns the measure value of the random group
+            %
+            % RANDOM_VALUE = GETRANDOMVALUE(RC) returns the measure value
+            % of the random group.
+            % 
+            % See also getGroupValue, getDifference, getAllDifferences.
+            
             random_value = rc.value_random;
         end
         function difference = getDifference(rc)
+            % GETDIFFERENCE returns the difference between measure values
+            %
+            % DIFFERENCE = GETDIFFERENCE(C) returns the difference between 
+            % measure values of both groups. This difference is the mean of
+            % all differences.
+            % 
+            % See also getGroupValue, getGroupValues, getAllDifferences.
+            
             difference = rc.difference;
         end
         function all_differences = getAllDifferences(rc)
+            % GETALLDIFFERENCES returns the all differences between measure values
+            %
+            % ALL_DIFFERENCES = GETALLDIFFERENCE(RC) returns all differences between 
+            % measure values of both groups.
+            % 
+            % See also getGroupValue, getGroupValues, getDifference.
+            
             all_differences = rc.all_differences;
         end
         function p1 = getP1(rc)
+            % GETP1 returns the single tail p-value of the random comparison
+            %
+            % P1 = GETP1(C) returns the single tail p-value of the random comparison
+            % 
+            % See also getP2, getConfidenceIntervalMin, getConfidenceIntervalMax.
+            
             p1 = rc.p1;
         end
         function p2 = getP2(rc)
+            % GETP2 returns the double tail p-value of the random comparison
+            %
+            % P2 = GETP2(C) returns the double tail p-value of the random comparison
+            % 
+            % See also getP1, getConfidenceIntervalMin, getConfidenceIntervalMax.
+            
             p2 = rc.p2;
         end
         function confidence_interval_min = getConfidenceIntervalMin(rc)
+            % GETCONFIDENCEINTERVALMIN returns minimum value of the confidence interval
+            %
+            % CONFIDENCE_INTERVAL_MIN = GETCONFIDENCEINTERVALMIN(C) 
+            % returns minimum value of the confidence interval
+            % 
+            % See also getP1, getP2, getConfidenceIntervalMax.
+            
             confidence_interval_min = rc.confidence_interval_min;
         end
         function confidence_interval_max = getConfidenceIntervalMax(rc)
+            % GETCONFIDENCEINTERVALMAX returns maximum value of the confidence interval
+            %
+            % CONFIDENCE_INTERVAL_MAX = GETCONFIDENCEINTERVALMAX(C) 
+            % returns maximum value of the confidence interval
+            % 
+            % See also getP1, getP2, getConfidenceIntervalMin.
+            
             confidence_interval_max = rc.confidence_interval_max;
         end
     end
     methods (Access=protected)  % Initialize data
         function initialize_data(rc, varargin)
+            % INITIALIZE_DATA initialize and check the data for the random comparison
+            %
+            % INITIALIZE_DATA(C) initialize and check the data for the
+            % random comparison. It initializes with default settings.
+            %
+            % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and 
+            % check the data for the random comparison. It initializes 
+            % with VALUE settings.
+            %
+            % See also AnalysisST_WU.
+            
             atlases = rc.getBrainAtlases();
             atlas = atlases{1};
             
@@ -187,13 +306,12 @@ classdef RandomComparisonST_WU < RandomComparison
                     repmat({zeros(atlas.getBrainRegions().length(), 1)}, 1, number_of_randomizations), ...
                     'RandomComparisonST_WU.all_differences', ...
                     varargin{:});
-
                 assert(iscell(rc.getAllDifferences()) && ...
                     isequal(size(rc.getAllDifferences()), [1, number_of_randomizations]) && ...
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), 1]), rc.getAllDifferences())), ...
                     [BRAPH2.STR ':RandomComparisonST_WU:' BRAPH2.WRONG_INPUT], ...
                     'Data not compatible with RandomComparisonST_WU')
-
+                    
                 rc.p1 = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length(), 1)}, ...
                     'RandomComparisonST_WU.p1', ...
@@ -320,25 +438,73 @@ classdef RandomComparisonST_WU < RandomComparison
     end
     methods (Static)  % Descriptive functions
         function measurement_class = getClass() %#ok<*INUSD>
+            % GETCLASS returns the class of structural random comparison
+            %
+            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
+            % random comparison. In this case 'RandomComparisonST_WU'.
+            %
+            % See also getList, getName, getDescription.
+            
             measurement_class = 'RandomComparisonST_WU';
         end
         function name = getName()
+            % GETNAME returns the name of structural random comparison
+            %
+            % NAME = GETNAME() returns the name, RandomComparison ST WU.
+            %
+            % See also getList, getClass, getDescription.
+            
             name = 'RandomComparison ST WU';
         end
         function description = getDescription()
+            % GETDESCRIPTION returns the description of structural random comparison 
+            %
+            % DESCRIPTION = GETDESCRIPTION() returns the description
+            % of RandomComparisonST_WU.
+            %
+            % See also getList, getClass, getName.
+            
             % comparison description missing
             description = 'ST random comparison with weighted graphs.';
         end
         function atlas_number = getBrainAtlasNumber()
+            % GETBRAINATLASNUMBER returns the number of brain atlases 
+            %
+            % ATLAS_NUMBER = GETBRAINATLASNUMBER() returns the number of
+            % brain atlases.
+            %
+            % See also getList, getClass, getName.
+            
             atlas_number =  1;
         end
         function analysis_class = getAnalysisClass()
+            % GETANALYSISCLASS returns the class of the analsysis 
+            %
+            % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
+            % analysis the random comparison is part of, 'RandomComparisonST_WU'.
+            %
+            % See also getList, getClass, getName.
+            
             analysis_class = 'AnalysisST_WU';
         end
         function subject_class = getSubjectClass()
+            % GETSUBJETCLASS returns the class of structural random comparison subject
+            %
+            % SUBJECT_CLASS = GETSUBJECT_CLASS() returns the class
+            % of RandomComparisonST_WU subject, 'SubjectST'.
+            %
+            % See also getList, getClass, getName, getDescription.
+            
             subject_class = 'SubjectST';
         end
         function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the available settings of structural random comparison
+            %
+            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the 
+            % available settings of RandomComparisonST_WU.
+            %
+            % See also getClass, getName, getDescription
+            
             available_settings = {
                 'RandomComparisonST_WU.RandomizationNumber', BRAPH2.NUMERIC, 1000, {}; ...
                 'RandomComparisonST_WU.AttemptsPerEdge', BRAPH2.NUMERIC, 5, {}; ...
@@ -346,6 +512,20 @@ classdef RandomComparisonST_WU < RandomComparison
                 };
         end
         function sub = getRandomComparison(random_comparison_class, id, label, notes, atlas, measure_code, group, varargin)
+            % GETRANDOMCOMPARISON returns a new comparison
+            %
+            % SUB = GETRANDOMCOMPARISON(RANDOMCOMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2)
+            % returns a new RandomComparisonST_WU object with RANDOMCOMPARISON_CLASS,
+            % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
+            % it will initialize with default settings.
+            % 
+            % SUB = GETRANDOMCOMPARISON(RANDOMCOMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...)
+            % returns a new RandomComparisonST_WU object with RANDOMCOMPARISON_CLASS,
+            % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
+            % it will initialize with VALUE settings.
+            %
+            % See also getClass, getName, getDescription.
+            
             sub = eval([random_comparison_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
         end
     end
