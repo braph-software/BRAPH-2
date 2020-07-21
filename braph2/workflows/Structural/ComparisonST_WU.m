@@ -1,4 +1,43 @@
 classdef ComparisonST_WU < Comparison
+    % ComparisonST_WU A comparison of structural data with weighted undirected graphs
+    % ComparisonST_WU is a subclass of Comparison, it implements the
+    % initialization of data methods.
+    %
+    % ComparisonST_WU implements the initialization of the data which the
+    % class will save. It checks if the data being saved has correct
+    % dimensions.
+    %
+    % ComparisonST_WU constructor methods:
+    %  ComparisonST_WU              - Constructor
+    %
+    % ComparisonST_WU basic methods:
+    %  disp                         - displays the comparison
+    % 
+    % ComparisonST_WU get methods:
+    %  getGroupValues               - returns the groups measurement value
+    %  getGroupValue                - returns the group measurement value
+    %  getDifference                - returns the difference between values
+    %  getAllDifferences            - returns all the differecens between values
+    %  getP1                        - returns the p-values single tail
+    %  getP2                        - returns the p-values double tail
+    %  getConfidenceIntervalMin     - returns the min value of the confidence interval
+    %  getConfidenceIntervalMax     - returns the max value of the confidence interval
+    %
+    % ComparisonST_WU initialze data (Access=protected):
+    %  initialize_data              - initializes and checks the data
+    %
+    % ComparisonST_WU descriptive methods (Static):
+    %  getClass                     - returns the class of the comparison
+    %  getName                      - returns the name of the comparison
+    %  getDescription               - returns the description of the comparison
+    %  getBrainAtlasNumber          - returns the number of brain atlases
+    %  getAnalysisClass             - returns the class of the analysis
+    %  getSubjectClass              - returns the class of the subject
+    %  getAvailbleSettings          - returns the available settings
+    %  getComparison                - returns a new comparison
+    %
+    % See also Comparison, AnalysisST_WU, MeasurementST_WU, RandomComparisonST_WU. 
+    
     properties
         value_1  % value of the measure for group 1
         value_2  % value of the measure for group 2
@@ -11,8 +50,24 @@ classdef ComparisonST_WU < Comparison
     end
     methods  % Constructor
         function c =  ComparisonST_WU(id, label, notes, atlas, measure_code, group_1, group_2, varargin)
-
-% TODO: Add assert that the measure_code is in the measure list.
+            % COMPARISONST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2) 
+            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % with the data from GROUP_1 and GROUP_2. It initializes the
+            % COMPARISONST_WU with default settings.
+            %
+            % COMPARISONST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...) 
+            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % with the data from GROUP_1 and GROUP_2. It initializes the
+            % COMPARISONST_WU with VALUE settings.
+            %
+            % See also MeasurementST_WU, RandomComparisonST_WU, AnalysisST_WU.
+            
+            graph_type = AnalysisST_WU.getGraphType();
+            measure_list = Graph.getCompatibleMeasureList(graph_type);
+            
+            assert(ismember(measure_code, measure_list), ...
+                [BRAPH2.STR ':ComparisonST_WU:' BRAPH2.BUG_FUNC], ...
+                'ComparisonST_WU measure_code is not compatible with the permited Measures.');            
 
             c = c@Comparison(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:});
         end
@@ -38,10 +93,24 @@ classdef ComparisonST_WU < Comparison
     end
     methods  % Get functions
         function [value_1, value_2] = getGroupValues(c)
+            % GETGROUPVALUES returns the measure values of both groups
+            %
+            % [VALUE_1, VALUE_2] = GETGROUPVALUES(C) returns the measure 
+            % values of both groups.
+            % 
+            % See also getGroupValue, getDifference, getAllDifferences.
+            
             value_1 = c.value_1;
             value_2 = c.value_2;
         end
         function value = getGroupValue(c, group_index)
+            % GETGROUPVALUE returns the measure value of specified group
+            %
+            % VALUE = GETGROUPVALUE(C, GROUP_INDEX) returns the measure value of 
+            % specified group.
+            % 
+            % See also getGroupValues, getDifference, getAllDifferences.
+            
             if group_index == 1
                 value = c.value_1;
             else
@@ -49,26 +118,77 @@ classdef ComparisonST_WU < Comparison
             end
         end
         function difference = getDifference(c)
+            % GETDIFFERENCE returns the difference between measure values
+            %
+            % DIFFERENCE = GETDIFFERENCE(C) returns the difference between 
+            % measure values of both groups. This difference is the mean of
+            % all differences.
+            % 
+            % See also getGroupValue, getGroupValues, getAllDifferences.
+            
             difference = c.difference;
         end
         function all_differences = getAllDifferences(c)
+            % GETALLDIFFERENCES returns the all differences between measure values
+            %
+            % ALL_DIFFERENCES = GETALLDIFFERENCE(C) returns all differences between 
+            % measure values of both groups.
+            % 
+            % See also getGroupValue, getGroupValues, getDifference.
+            
             all_differences = c.all_differences;
         end
         function p1 = getP1(c)
+            % GETP1 returns the single tail p-value of the comparison
+            %
+            % P1 = GETP1(C) returns the single tail p-value of the comparison
+            % 
+            % See also getP2, getConfidenceIntervalMin, getConfidenceIntervalMax.
+            
             p1 = c.p1;
         end
         function p2 = getP2(c)
+            % GETP2 returns the double tail p-value of the comparison
+            %
+            % P2 = GETP2(C) returns the double tail p-value of the comparison
+            % 
+            % See also getP1, getConfidenceIntervalMin, getConfidenceIntervalMax.
+            
             p2 = c.p2;
         end
         function confidence_interval_min = getConfidenceIntervalMin(c)
+            % GETCONFIDENCEINTERVALMIN returns minimum value of the confidence interval
+            %
+            % CONFIDENCE_INTERVAL_MIN = GETCONFIDENCEINTERVALMIN(C) 
+            % returns minimum value of the confidence interval
+            % 
+            % See also getP1, getP2, getConfidenceIntervalMax.
+            
             confidence_interval_min = c.confidence_interval_min;
         end
         function confidence_interval_max = getConfidenceIntervalMax(c)
+            % GETCONFIDENCEINTERVALMAX returns maximum value of the confidence interval
+            %
+            % CONFIDENCE_INTERVAL_MAX = GETCONFIDENCEINTERVALMAX(C) 
+            % returns maximum value of the confidence interval
+            % 
+            % See also getP1, getP2, getConfidenceIntervalMin.
+            
             confidence_interval_max = c.confidence_interval_max;
         end
     end
     methods (Access=protected)  % Initialize data
         function initialize_data(c, varargin)
+            % INITIALIZE_DATA initialize and check the data for the comparison
+            %
+            % INITIALIZE_DATA(C) initialize and check the data for the
+            % comparison. It initializes with default settings.
+            %
+            % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and 
+            % check the data for the comparison. It initializes with VALUE settings.
+            %
+            % See also AnalysisST_WU.
+            
             atlases = c.getBrainAtlases();
             atlas = atlases{1};       
             
@@ -323,29 +443,91 @@ classdef ComparisonST_WU < Comparison
     end
     methods (Static)  % Descriptive functions
         function class = getClass()
+            % GETCLASS returns the class of structural comparison
+            %
+            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
+            % comparison. In this case 'ComparisonST_WU'.
+            %
+            % See also getList, getName, getDescription.
+            
             class = 'ComparisonST_WU';
         end
         function name = getName()
+            % GETNAME returns the name of structural comparison
+            %
+            % NAME = GETNAME() returns the name of the ComparisonST_WU.
+            %
+            % See also getList, getClass, getDescription.
+            
             name = 'Comparison Structural WU';
         end
         function description = getDescription()
+            % GETDESCRIPTION returns the description of structural comparison 
+            %
+            % DESCRIPTION = GETDESCRIPTION() returns the description
+            % of ComparisonST_WU.
+            %
+            % See also getList, getClass, getName.
+            
             description = 'Structural comparison using weighted graphs.';
         end
         function atlas_number = getBrainAtlasNumber()
+            % GETBRAINATLASNUMBER returns the number of brain atlases 
+            %
+            % ATLAS_NUMBER = GETBRAINATLASNUMBER() returns the number of
+            % brain atlases.
+            %
+            % See also getList, getClass, getName.
+            
             atlas_number =  1;
         end
         function analysis_class = getAnalysisClass()
+            % GETANALYSISCLASS returns the class of the analsysis 
+            %
+            % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
+            % analysis the comparison is part of, 'AnalysisST_WU'.
+            %
+            % See also getList, getClass, getName.
+            
             analysis_class = 'AnalysisST_WU';
         end
         function subject_class = getSubjectClass()
+            % GETSUBJETCLASS returns the class of structural comparison subject
+            %
+            % SUBJECT_CLASS = GETSUBJECT_CLASS() returns the class
+            % of ComparisonST_WU subject, 'SubjectST'.
+            %
+            % See also getList, getClass, getName, getDescription.
+            
             subject_class = 'SubjectST';
         end
         function available_settings = getAvailableSettings()
+            % GETAVAILABLESETTINGS returns the available settings of structural comparison
+            %
+            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the 
+            % available settings of ComparisonST_WU.
+            %
+            % See also getClass, getName, getDescription
+            
             available_settings = {
                 'ComparisonST_WU.PermutationNumber', BRAPH2.NUMERIC, 1000, {};
                 };
         end
         function sub = getComparison(comparison_class, id, label, notes, atlas, measure_code, group_1, group_2, varargin)  %#ok<INUSD>
+            % GETCOMPARISON returns a new comparison
+            %
+            % SUB = GETCOMPARISON(COMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2)
+            % returns a new ComparisonST_WU object with COMPARISON_CLASS,
+            % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
+            % it will initialize with default settings.
+            % 
+            % SUB = GETCOMPARISON(COMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...)
+            % returns a new ComparisonST_WU object with COMPARISON_CLASS,
+            % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
+            % it will initialize with VALUE settings.
+            %
+            % See also getClass, getName, getDescription.
+            
             sub = eval([comparison_class '(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:})']);
         end
     end
