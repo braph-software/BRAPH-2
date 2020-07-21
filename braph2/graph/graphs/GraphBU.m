@@ -173,16 +173,19 @@ classdef GraphBU < GraphBD
             % RANDOMIZE_A returns a randomized correlation matrix
             %
             % RANDOM_A = RANDOMIZE(G) returns the randomized matrix
-            % RANDOM_A. Tries to swap 5 times an edge. 
+            % RANDOM_A. Tries to swap 5 times an edge. The matrix has to
+            % contain more than 1 edge.
             %
             % [RANDOM_A, SWAPS] = RANDOMIZE_A(G) attempts to rewire each edge 
             % 5 times. Returns the randomized matrix RANDOM_A. Returns the
-            % number of succesful edge swaps. This algorithm was proposed
+            % number of succesful edge swaps.The matrix has to
+            % contain more than 1 edge. This algorithm was proposed
             % by Maslov and Sneppen (Science 296, 910, 2002)
             %
             % [RANDOM_A, SWAPS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE) attempts
             % to rewire each edge ATTEMPTS_PER_EDGE times then it returns the 
             % randomized matrix RANDOM_A. Returns the number of succesful edge swaps.
+            % The matrix has to contain more than 1 edge.
             %
             % See also randomize
             
@@ -195,6 +198,23 @@ classdef GraphBU < GraphBD
             [I_edges, J_edges] = find(triu(A)); % find the edges
             E = length(I_edges); % number of edges
             
+            if E == 0
+                random_A = A;
+                swaps = 0;
+                return
+            end
+            
+            if E == 1        
+                A(I_edges(1), J_edges(1)) = 0;
+                A(J_edges(1), I_edges(1)) = 0;
+                selected_nodes = randperm(size(A, 1), 2);
+                A(selected_nodes(1), selected_nodes(2)) = 1;
+                A(selected_nodes(2), selected_nodes(1)) = 1;
+                random_A = A;
+                swaps = 1;  
+                return
+            end
+
             random_A = A;
             swaps = 0; % number of successful edge swaps
             for attempt = 1:1:attempts_per_edge * E
