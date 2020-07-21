@@ -1,4 +1,4 @@
-function [B, threshold] = threshold(A, varargin)
+function [B, threshold] = threshold(A, threshold,  varargin)
 % THRESHOLD enforces a threshold in the values of a matrix
 %
 % [B, THRESHOLD] = BINARIZE(A) enforces a threshold in a matrix A by fixing 
@@ -16,7 +16,7 @@ function [B, threshold] = threshold(A, varargin)
 % See also Graph, histogram.
 
 % Threshold and density
-threshold = get_from_varargin(0, 'threshold', varargin{:});
+% threshold = get_from_varargin(0, 'threshold', varargin{:});
 
 density = get_from_varargin([], 'density', varargin{:});
 if density

@@ -4,7 +4,7 @@
 
 A = [1 2 3 4 5; 5 4 3 2 1; 2 3 4 5 1; 3 4 5 1 2; 4 5 1 2 3;];
 T = 3;
-T_A = threshold(A, 'threshold', T);
+T_A = threshold(A, T);
 
 assert(isequal(T_A, ...
     [

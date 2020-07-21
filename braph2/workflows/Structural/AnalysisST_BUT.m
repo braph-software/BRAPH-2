@@ -49,7 +49,9 @@ classdef AnalysisST_BUT < Analysis
             %
             % See also MeasurementST_BUT, RandomComparisonST_BUT, ComparisonST_BUT.
             
-            analysis = analysis@Analysis(id, label, notes, cohort, measurements, randomcomparisons, comparisons, 'threshold', threshold, varargin{:});
+            threshold = get_grom_varargin(0, 'AnalysisSt_BUT.threshold', varargin{:});
+            
+            analysis = analysis@Analysis(id, label, notes, cohort, measurements, randomcomparisons, comparisons, 'AnalysisSt_BUT.threshold', threshold, varargin{:});
         end
     end
     methods  % ID functions
@@ -61,12 +63,13 @@ classdef AnalysisST_BUT < Analysis
             % MEASURE_CODE, the GROUP and all PROPERTIES and VALUES.
             %
             % See also getRandomComparisonID, getComparisonID.
+            threshold = get_from_varargin(0, 'threshold', varargin{:});
             
             measurement_id = [ ...
                 tostring(analysis.getMeasurementClass()) ' ' ...
                 tostring(measure_code) ' ' ...
                 tostring(analysis.cohort.getGroups().getIndex(group)), ...
-                tostring(get_from_varargin(0, 'threshold', varargin{:}) ...
+                tostring(threshold) ...
                 ];
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
@@ -102,7 +105,7 @@ classdef AnalysisST_BUT < Analysis
         end
     end
     methods (Access = protected)  % Calculation functions
-        function g = get_graph_for_subjects(analysis, subjects)
+        function g = get_graph_for_subjects(analysis, subjects, varargin)
             % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
             %
             % G = GET_GRAPH_FOR_SUBJECTS(ANALYSIS, SUBJECTS) creates a
@@ -125,6 +128,7 @@ classdef AnalysisST_BUT < Analysis
             correlation_rule = analysis.getSettings('AnalysisST_BUT.CorrelationRule');
             negative_weight_rule = analysis.getSettings('AnalysisST_BUT.NegativeWeightRule');
             A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+            A = threshold(A, analysis.getSettings('AnalysisSt_BUT.threshold'), varargin{:});
             
             graph_type = AnalysisST_BUT.getGraphType();
             g = Graph.getGraph(graph_type, A);
@@ -147,7 +151,7 @@ classdef AnalysisST_BUT < Analysis
             
             subjects = group.getSubjects();
 
-            g = get_graph_for_subjects(analysis, subjects);
+            g = get_graph_for_subjects(analysis, subjects, varargin{:});
             
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measurement_value = measure.getValue();
@@ -444,7 +448,8 @@ classdef AnalysisST_BUT < Analysis
             available_settings = {
                 {'AnalysisST_BUT.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
                 {'AnalysisST_BUT.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
-                {'AnalysisST_BUT.Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...
+                {'AnalysisST_BUT.Longitudinal', BRAPH2.LOGICAL, false, {false, true}}, ...
+                {'AnalysisSt_BUT.threshold', BRAPH2.NUMERIC, 0 {}} ...
                 };
         end
     end
