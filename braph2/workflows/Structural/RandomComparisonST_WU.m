@@ -5,7 +5,7 @@ classdef RandomComparisonST_WU < RandomComparison
     %
     % RandomComparisonST_WU implements the initialization of the data which the
     % class will save. It checks if the data being saved has correct
-    % dimensions.
+    % dimensions. Structural data can be for example MRI or PET data.
     %
     % RandomComparisonST_WU constructor methods:
     %  RandomComparisonST_WU              - Constructor
@@ -63,8 +63,7 @@ classdef RandomComparisonST_WU < RandomComparison
             % See also MeasurementST_WU, ComparisonST_WU, AnalysisST_WU.
             
             graph_type = AnalysisST_WU.getGraphType();
-            measure_list = Graph.getCompatibleMeasureList(graph_type);
-            
+            measure_list = Graph.getCompatibleMeasureList(graph_type);            
             assert(ismember(measure_code, measure_list), ...
                 [BRAPH2.STR ':RandomComparisonST_WU:' BRAPH2.BUG_FUNC], ...
                 'RandomComparisonST_WU measure_code is not compatible with the permited Measures.');

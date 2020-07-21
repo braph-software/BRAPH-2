@@ -6,7 +6,8 @@ classdef AnalysisST_WU < Analysis
     % AnalysisST_WU implements the abstract analysis calculting methods
     % to obtain a structural measurement, a random comprison or a
     % comparison. AnalysisST_WU also implements the ID methods to get
-    % the correct signature of the analysis. 
+    % the correct signature of the analysis.  
+    % Structural data can be for example MRI or PET data.
     %
     % AnalysisST_WU constructor methods:
     %  AnalysisST_WU               - Constructor
@@ -378,7 +379,8 @@ classdef AnalysisST_WU < Analysis
             description = [ ...
                 'Analysis based on structural data using weighted graphs, ' ...
                 'e.g. cortical thickness for each brain region. ' ...
-                'It provides a single graph for each subject group.' ...
+                'It provides a single graph for each subject group. ' ...
+                'Structural data can be for example MRI or PET data.' ...
                 ];
         end
         function graph_type = getGraphType()

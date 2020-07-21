@@ -5,7 +5,7 @@ classdef MeasurementST_WU < Measurement
     %
     % MeasurementST_WU implements the initialization of the data which the
     % class will save. It checks if the data being saved has correct
-    % dimensions.
+    % dimensions. Structural data can be for example MRI or PET data.
     %
     % MeasurementST_WU constructor methods:
     %  MeasurementST_WU              - Constructor
@@ -49,8 +49,7 @@ classdef MeasurementST_WU < Measurement
             % See also ComparisonST_WU, RandomComparisonST_WU, AnalysisST_WU.
             
             graph_type = AnalysisST_WU.getGraphType();
-            measure_list = Graph.getCompatibleMeasureList(graph_type);
-            
+            measure_list = Graph.getCompatibleMeasureList(graph_type);            
             assert(ismember(measure_code, measure_list), ...
                 [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.BUG_FUNC], ...
                 'MeasurementST_WU measure_code is not compatible with the permited Measures.');            

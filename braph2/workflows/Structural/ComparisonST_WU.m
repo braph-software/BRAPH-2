@@ -5,7 +5,7 @@ classdef ComparisonST_WU < Comparison
     %
     % ComparisonST_WU implements the initialization of the data which the
     % class will save. It checks if the data being saved has correct
-    % dimensions.
+    % dimensions. Structural data can be for example MRI or PET data.
     %
     % ComparisonST_WU constructor methods:
     %  ComparisonST_WU              - Constructor
@@ -63,8 +63,7 @@ classdef ComparisonST_WU < Comparison
             % See also MeasurementST_WU, RandomComparisonST_WU, AnalysisST_WU.
             
             graph_type = AnalysisST_WU.getGraphType();
-            measure_list = Graph.getCompatibleMeasureList(graph_type);
-            
+            measure_list = Graph.getCompatibleMeasureList(graph_type);            
             assert(ismember(measure_code, measure_list), ...
                 [BRAPH2.STR ':ComparisonST_WU:' BRAPH2.BUG_FUNC], ...
                 'ComparisonST_WU measure_code is not compatible with the permited Measures.');            
