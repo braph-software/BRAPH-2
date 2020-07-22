@@ -10,11 +10,11 @@ classdef MeasurementST_BUT< MeasurementST_WU
     % MeasurementST_BUT constructor methods:
     %  MeasurementST_BUT            - Constructor
     %
-    % MeasurementST_BUT basic methods:
-    %  disp                         - displays the comparison
+    % MeasurementST_BUT set methods:
+    %  setThreshold                 - sets the threshold
     % 
     % MeasurementST_BUT get methods:
-    %  getValue                     - returns the value of the measurement
+    %  getThreshold                 - returns the threshold
     %
     % MeasurementST_BUT initialze data (Access=protected):
     %  initialize_data              - initializes and checks the data
@@ -23,10 +23,7 @@ classdef MeasurementST_BUT< MeasurementST_WU
     %  getClass                     - returns the class of the measurement
     %  getName                      - returns the name of the measurement
     %  getDescription               - returns the description of the measurement
-    %  getBrainAtlasNumber          - returns the number of brain atlases
     %  getAnalysisClass             - returns the class of the analysis
-    %  getSubjectClass              - returns the class of the subject
-    %  getAvailbleSettings          - returns the available settings
     %  getMeasurement               - returns a new measurement
     %
     % See also Comparison, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU. 
