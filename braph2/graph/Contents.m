@@ -10,6 +10,7 @@
 %   <a href="matlab:help binarize               ">binarize</a>              (function) binarizes graph
 %   <a href="matlab:help dediagonalize          ">dediagonalize</a>         (function) dediagonalizes graph
 %   <a href="matlab:help diagonalize            ">diagonalize</a>           (function) diagonalizes graph
+%   <a href="matlab:help histogram              ">histogram</a>             (function) histogram of a matrix
 %   <a href="matlab:help semipositivize         ">semipositivize</a>        (function) semipositivizes graph
 %   <a href="matlab:help standardize            ">standardize</a>           (function) standardizes graph
 %   <a href="matlab:help symmetrize             ">symmetrize</a>            (function) symmetrizes graph
