@@ -1,19 +1,20 @@
 classdef ComparisonST_BUT < ComparisonST_WU
-    % ComparisonST_WU A comparison of structural data with weighted undirected graphs
-    % ComparisonST_WU is a subclass of Comparison, it implements the
+    % ComparisonST_BUT A comparison of structural data of fixed threshold binary undirected graphs
+    % ComparisonST_BUT is a subclass of Comparison, it implements the
     % initialization of data methods.
     %
-    % ComparisonST_WU implements the initialization of the data which the
-    % class will save. It checks if the data being saved has correct
-    % dimensions. Structural data can be for example MRI or PET data.
+    % ComparisonST_BUT implements the initialization of the data of fixed
+    % threshold binary undirected graphs which the class will save. 
+    % It checks if the data being saved has correct dimensions. Structural 
+    % data can be for example MRI or PET data.
     %
-    % ComparisonST_WU constructor methods:
-    %  ComparisonST_WU              - Constructor
+    % ComparisonST_BUT constructor methods:
+    %  ComparisonST_BUT              - Constructor
     %
-    % ComparisonST_WU basic methods:
+    % ComparisonST_BUT basic methods:
     %  disp                         - displays the comparison
     % 
-    % ComparisonST_WU get methods:
+    % ComparisonST_BUT get methods:
     %  getGroupValues               - returns the groups measurement value
     %  getGroupValue                - returns the group measurement value
     %  getDifference                - returns the difference between values
@@ -23,10 +24,10 @@ classdef ComparisonST_BUT < ComparisonST_WU
     %  getConfidenceIntervalMin     - returns the min value of the confidence interval
     %  getConfidenceIntervalMax     - returns the max value of the confidence interval
     %
-    % ComparisonST_WU initialze data (Access=protected):
+    % ComparisonST_BUT initialze data (Access=protected):
     %  initialize_data              - initializes and checks the data
     %
-    % ComparisonST_WU descriptive methods (Static):
+    % ComparisonST_BUT descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
     %  getName                      - returns the name of the comparison
     %  getDescription               - returns the description of the comparison
@@ -36,24 +37,24 @@ classdef ComparisonST_BUT < ComparisonST_WU
     %  getAvailbleSettings          - returns the available settings
     %  getComparison                - returns a new comparison
     %
-    % See also Comparison, AnalysisST_WU, MeasurementST_WU, RandomComparisonST_WU. 
+    % See also Comparison, AnalysisST_BUT, MeasurementST_BUT, RandomComparisonST_BUT. 
     
     properties
         threshold  % threshold of the values
     end
     methods  % Constructor
         function c =  ComparisonST_BUT(id, label, notes, atlas, measure_code, group_1, group_2, varargin)
-            % COMPARISONST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2) 
+            % ComparisonST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2) 
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP_1 and GROUP_2. It initializes the
-            % COMPARISONST_WU with default settings.
+            % ComparisonST_BUT with default settings.
             %
-            % COMPARISONST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...) 
+            % ComparisonST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...) 
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP_1 and GROUP_2. It initializes the
-            % COMPARISONST_WU with VALUE settings.
+            % ComparisonST_BUT with VALUE settings.
             %
-            % See also MeasurementST_WU, RandomComparisonST_WU, AnalysisST_WU.
+            % See also MeasurementST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.
             
             c = c@ComparisonST_WU(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:});
             threshold = get_from_varargin(0, 'threshold', varargin{:});
@@ -90,7 +91,7 @@ classdef ComparisonST_BUT < ComparisonST_WU
             % GETCLASS returns the class of structural comparison
             %
             % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
-            % comparison. In this case 'ComparisonST_WU'.
+            % comparison. In this case 'ComparisonST_BUT'.
             %
             % See also getList, getName, getDescription.
             
@@ -99,7 +100,7 @@ classdef ComparisonST_BUT < ComparisonST_WU
         function name = getName()
             % GETNAME returns the name of structural comparison
             %
-            % NAME = GETNAME() returns the name of the ComparisonST_WU.
+            % NAME = GETNAME() returns the name of the ComparisonST_BUT.
             %
             % See also getList, getClass, getDescription.
             
@@ -109,17 +110,18 @@ classdef ComparisonST_BUT < ComparisonST_WU
             % GETDESCRIPTION returns the description of structural comparison 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of ComparisonST_WU.
+            % of ComparisonST_BUT.
             %
             % See also getList, getClass, getName.
             
-            description = 'Structural comparison using .';
+            description = ['Structural comparison using structural data ' ...
+                           'of fixed threshold binary undirected graphs.'];
         end
         function analysis_class = getAnalysisClass()
             % GETANALYSISCLASS returns the class of the analsysis 
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % analysis the comparison is part of, 'AnalysisST_WU'.
+            % analysis the comparison is part of, 'AnalysisST_BUT'.
             %
             % See also getList, getClass, getName.
             
@@ -129,12 +131,12 @@ classdef ComparisonST_BUT < ComparisonST_WU
             % GETCOMPARISON returns a new comparison
             %
             % SUB = GETCOMPARISON(COMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2)
-            % returns a new ComparisonST_WU object with COMPARISON_CLASS,
+            % returns a new ComparisonST_BUT object with COMPARISON_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
             % it will initialize with default settings.
             % 
             % SUB = GETCOMPARISON(COMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...)
-            % returns a new ComparisonST_WU object with COMPARISON_CLASS,
+            % returns a new ComparisonST_BUT object with COMPARISON_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
             % it will initialize with VALUE settings.
             %

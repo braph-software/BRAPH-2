@@ -1,14 +1,15 @@
 classdef RandomComparisonST_BUT < RandomComparisonST_WU
-    % RandomComparisonST_BUT A random comparison of structural data with weighted undirected graphs
+    % RandomComparisonST_BUT A random comparison of structural data of fixed threshold binary undirected graphs
     % RandomComparisonST_BUT is a subclass of Comparison, it implements the
     % initialization of data methods.
     %
-    % RandomComparisonST_BUT implements the initialization of the data which the
-    % class will save. It checks if the data being saved has correct
-    % dimensions. Structural data can be for example MRI or PET data.
+    % RandomComparisonST_BUT implements the initialization of the data of
+    % fixed threshold binary undirected graphs class will save. 
+    % It checks if the data being saved has correct dimensions. 
+    % Structural data can be for example MRI or PET data.
     %
     % RandomComparisonST_BUT constructor methods:
-    %  RandomComparisonST_BUT              - Constructor
+    %  RandomComparisonST_BUT       - Constructor
     %
     % RnomComparisonST_BUT set methods:
     %  setThreshold                 - sets the threshold
@@ -32,12 +33,14 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
         function rc =  RandomComparisonST_BUT(id, label, notes, atlas, measure_code, group, varargin)
             % RandomComparisonST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
-            % with the data from GROUP_1 and a random group. It initializes the
+            % with the data of fixed threshold binary undirected graphs
+            % from GROUP_1 and a random group. It initializes the
             % RandomComparisonST_BUT with default settings.
             %
             % RandomComparisonST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
-            % with the data from GROUP_1 and a random group. It initializes the
+            % with the data of fixed threshold binary undirected graphs
+            % from GROUP_1 and a random group. It initializes the
             % RandomComparisonST_BUT with VALUE settings.
             %
             % See also MeasurementST_BUT, ComparisonST_BUT, AnalysisST_BUT.
@@ -101,7 +104,8 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
             % See also getList, getClass, getName.
             
             % comparison description missing
-            description = 'ST random comparison with.';
+            description = ['ST random comparison with structural data of ' ...
+                          'fixed threshold using weighted graphs.'];
         end
         function analysis_class = getAnalysisClass()
             % GETANALYSISCLASS returns the class of the analsysis

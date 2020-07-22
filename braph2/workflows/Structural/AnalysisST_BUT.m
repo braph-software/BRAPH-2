@@ -31,14 +31,14 @@ classdef AnalysisST_BUT < AnalysisST_WU
     methods
         function analysis = AnalysisST_BUT(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
             % AnalysisST_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
-            % creates a structural analysis with ID, LABEL, COHORT, MEASUREMENTS,
-            % RANDOMCOMPARISON and COMPARISONS. It initializes the
-            % ANALYSISST_WU with default settings.
+            % creates a structural analysis of fixed threshold with ID, LABEL,
+            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It 
+            % initializes the ANALYSISST_WU with default settings.
             %
             % AnalysisST_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
-            % creates a structural analysis with ID, LABEL, COHORT, MEASUREMENTS,
-            % RANDOMCOMPARISON and COMPARISONS. It initializes the
-            % ANALYSISST_WU with specified settings VALUES.
+            % creates a structural analysis of fixed threshold with ID, LABEL,
+            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
+            % initializes the ANALYSISST_WU with specified settings VALUES.
             %
             % See also MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU.
                  
@@ -47,6 +47,15 @@ classdef AnalysisST_BUT < AnalysisST_WU
     end
     methods (Access = protected)
         function g = get_graph_for_subjects(analysis, subjects, varargin)
+            % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
+            %
+            % G = GET_GRAPH_FOR_SUBJECTS(ANALYSIS, SUBJECTS, PROPERY, VALUE, ...) creates a
+            % graph with the correlation matrix made of the data of
+            % subjects. It will binarize the matrix depending on the
+            % PROPERTY and VALUE.
+            %
+            % See also calculate_measurement.
+            
             atlases = analysis.cohort.getBrainAtlases();
             atlas = atlases{1};
             
@@ -72,14 +81,15 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %
             % MEASUREMENT = CALCULTE_MEASUREMENT(ANALYSIS, MEASURE_CODE, GROUP)
             % calculates a measure of type MEASURE_CODE utilizing the data
-            % from GROUP subject. It will return a measurement with the
-            % calculated measure. The function will utilize default
-            % settings.
+            % of fixed threshold from GROUP subject. It will return a
+            % measurement with the calculated measure. The function will 
+            % utilize default settings.
             %
             % MEASUREMENT = CALCULTE_MEASUREMENT(ANALYSIS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % calculates a measure of type MEASURE_CODE utilizing the data
-            % from GROUP subject. It will return a measurement with the
-            % calculated measure. The function will utilize VALUE settings.
+            % of fixed threshold from GROUP subject. It will return a
+            % measurement with the calculated measure. The function will
+            % utilize VALUE settings.
             %
             % See also calculate_random_comparison, calculate_comparison.
             
@@ -105,15 +115,15 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %
             % RANDOMCOMPARISON = CALCULATE_RANDOM_COMPARISON(ANALYSIS, MEASURE_CODE, GROUP)
             % calculates a measure of type MEASURE_CODE utilizing the data
-            % from GROUP subject and random data. It will compare the measures
-            % obtained and will return a random comparison. The function
-            % will utilize default settings.
+            % of fixed threshold from GROUP subject and random data. 
+            % It will compare the measures obtained and will return a random 
+            % comparison. The function will utilize default settings.
             %
             % RANDOMCOMPARISON = CALCULATE_RANDOM_COMPARISON(ANALYSIS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % calculates a measure of type MEASURE_CODE utilizing the data
-            % from GROUP subject and random data. It will compare the measures
-            % obtained and will return a random comparison. The function
-            % will utilize VALUE settings.
+            % of fixed threshold from GROUP subject and random data.
+            % It will compare the measures obtained and will return a random 
+            % comparison. The function will utilize VALUE settings.
             %
             % See also calculate_measurement, calculate_comparison.
             
@@ -196,15 +206,15 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %
             % COMPARISON = CALCULATE_COMPARISON(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2)
             % calculates a measure of type MEASURE_CODE utilizing the data
-            % from GROUP_1 subject and GROUP_2 data. It will compare the measures
-            % obtained and will return a comparison. The function
-            % will utilize default settings.
+            % of fixed threshold from GROUP_1 subject and GROUP_2 data.
+            % It will compare the measures obtained and will return a
+            % comparison. The function will utilize default settings.
             %
             % COMPARISON = CALCULATE_COMPARISON(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...)
             % calculates a measure of type MEASURE_CODE utilizing the data
-            % from GROUP_1 subject and GROUP_2 data. It will compare the measures
-            % obtained and will return a comparison. The function
-            % will utilize VALUE settings.
+            % of fixed threshold from GROUP_1 subject and GROUP_2 data. 
+            % It will compare the measures obtained and will return a 
+            % comparison. The function will utilize VALUE settings.
             %
             % See also calculate_random_comparison, calculate_measurement.
             
@@ -300,7 +310,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
         function name = getName()
             % GETNAME returns the name of structural analysis
             %
-            % NAME = GETNAME() returns the name of ANALYSIS.
+            % NAME = GETNAME() returns the name of the analysis.
             %
             % See also getList, getClass, getDescription.
             
@@ -315,8 +325,8 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % See also getList, getClass, getName.
             
             description = [ ...
-                'Analysis based on structural data using weighted graphs, ' ...
-                'e.g. cortical thickness for each brain region. ' ...
+                'Analysis based on structural data of fixed threshold using ' ...
+                'weighted graphs e.g. cortical thickness for each brain region. ' ...
                 'It provides a single graph for each subject group. ' ...
                 'Structural data can be for example MRI or PET data.' ...
                 ];
@@ -325,7 +335,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % GETMEASUREMENTCLASS returns the class of structural analysis measurement
             %
             % MEASUREMENT_CLASS = GETMEASUREMENT_CLASS() returns the
-            % class of AnalysisST_WU measurement, 'MeasurementST_BUT'.
+            % class of AnalysisST_BUT measurement, 'MeasurementST_BUT'.
             %
             % See also getRandomComparisonClass, getComparisonClass.
             
@@ -335,7 +345,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % GETRANDOMCOMPARISONCLASS returns the class of structural analysis randomcomparison
             %
             % RANDOMCOMPARISON_CLASS = GETRANDOMCOMPARISONCLASS()
-            % returns the class of AnalysisST_WU randomcomparison,
+            % returns the class of AnalysisST_BUT randomcomparison,
             % 'RandomComparisonST_BUT'.
             %
             % See also getMeasurementClass, getComparisonClass.
@@ -346,7 +356,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % GETCOMPARISONCLASS returns the class of structural analysis comparison
             %
             % COMPARISON_CLASS = GETCOMPARISONCLASS() returns the
-            % class of AnalysisST_WU comparison, 'ComparisonST_BUT'.
+            % class of AnalysisST_BUT comparison, 'ComparisonST_BUT'.
             %
             % See also getMeasurementClass, getRandomComparisonClass.
             
@@ -356,7 +366,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % GETAVAILABLESETTINGS returns the available settings of structural analysis
             %
             % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(M) returns the
-            % available settings of AnalysisST_WU.
+            % available settings of AnalysisST_BUT.
             %
             % See also getClass, getName, getDescription
             

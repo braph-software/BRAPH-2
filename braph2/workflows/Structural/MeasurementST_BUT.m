@@ -1,11 +1,12 @@
 classdef MeasurementST_BUT< MeasurementST_WU
-    % MeasurementST_BUT A measurement of structural data with weighted undirected graphs
+    % MeasurementST_BUT A measurement of structural data of fixed threshold binary undirected graphs
     % MeasurementST_BUT is a subclass of MeasurementST_WU, it implements the
     % initialization of data methods.
     %
-    % MeasurementST_BUT implements the initialization of the data which the
-    % class will save. It checks if the data being saved has correct
-    % dimensions. Structural data can be for example MRI or PET data.
+    % MeasurementST_BUT implements the initialization of the data of fixed 
+    % threshold binary undirected graphswhich the class will save.
+    % It checks if the data being saved has correct dimensions. 
+    % Structural data can be for example MRI or PET data.
     %
     % MeasurementST_BUT constructor methods:
     %  MeasurementST_BUT            - Constructor
@@ -26,24 +27,26 @@ classdef MeasurementST_BUT< MeasurementST_WU
     %  getAnalysisClass             - returns the class of the analysis
     %  getMeasurement               - returns a new measurement
     %
-    % See also Comparison, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU. 
+    % See also Comparison, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT. 
    
     properties
         threshold  % threshold of the values
     end
     methods  % Constructor
         function m =  MeasurementST_BUT(id, label, notes, atlas, measure_code, group, varargin)
-            % MEASUREMENTST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
+            % MEASUREMENTST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a measurement with ID, LABEL, ATLAS, MEASURE_CODE,
-            % with the data from GROUP. It initializes the MEASUREMENTST_WU 
+            % with the data of fixed threshold binary undirected graphs
+            % from GROUP. It initializes the MeasurementST_BUT 
             % with default settings.
             %
-            % MEASUREMENTST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...) 
+            % MeasurementST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...) 
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
-            % with the data from GROUP. It initializes the MEASUREMENTST_WU 
+            % with the data of fixed threshold binary undirected graphs
+            % from GROUP. It initializes the MeasurementST_BUT 
             % with VALUE settings.
             %
-            % See also ComparisonST_WU, RandomComparisonST_WU, AnalysisST_WU.
+            % See also ComparisonST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.
             
             m = m@MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin{:});
             threshold = get_from_varargin(0, 'threshold', varargin{:});
@@ -89,7 +92,7 @@ classdef MeasurementST_BUT< MeasurementST_WU
         function name = getName()
             % GETNAME returns the name of structural measurement
             %
-            % NAME = GETNAME() returns the name, Measurement ST WU.
+            % NAME = GETNAME() returns the name, Measurement ST BUT.
             %
             % See also getList, getClass, getDescription.
             
@@ -99,17 +102,18 @@ classdef MeasurementST_BUT< MeasurementST_WU
             % GETDESCRIPTION returns the description of structural measurement
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of MeasurementST_WU.
+            % of MeasurementST_BUT.
             %
             % See also getList, getClass, getName
             
-            description = 'ST measurement with ';
+            description = ['ST measurement with structural data of fixed ' ...
+                           'threshold using  weighted graphs.'];
         end
         function analysis_class = getAnalysisClass()
             % GETANALYSISCLASS returns the class of the analsysis 
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % analysis the random comparison is part of, 'MeasurementST_WU'.
+            % analysis the random comparison is part of, 'MeasurementST_BUT'.
             %
             % See also getList, getClass, getName.
             
@@ -119,12 +123,12 @@ classdef MeasurementST_BUT< MeasurementST_WU
             % GETMEASUREMENT returns a new measurement
             %
             % SUB = GETMEASUREMENT(MEASUREMENT_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % returns a new MeasurementST_WU object with MEASUREMENT_CLASS,
+            % returns a new MeasurementST_BUT object with MEASUREMENT_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
             % it will initialize with default settings.
             % 
             % SUB = GETMEASUREMENT(MEASUREMENT_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
-            % returns a new MeasurementST_WU object with MEASUREMENT_CLASS,
+            % returns a new MeasurementST_BUT object with MEASUREMENT_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
             % it will initialize with VALUE settings.
             %
