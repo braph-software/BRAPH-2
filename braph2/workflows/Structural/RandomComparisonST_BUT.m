@@ -81,7 +81,7 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
             %
             % See also getList, getName, getDescription.
             
-            measurement_class = 'RandomComparisonST_WU';
+            measurement_class = 'RandomComparisonST_BUT';
         end
         function name = getName()
             % GETNAME returns the name of structural random comparison
@@ -90,7 +90,7 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
             %
             % See also getList, getClass, getDescription.
             
-            name = 'RandomComparison ST WU';
+            name = 'RandomComparison ST BUT';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of structural random comparison
@@ -101,7 +101,7 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
             % See also getList, getClass, getName.
             
             % comparison description missing
-            description = 'ST random comparison with weighted graphs.';
+            description = 'ST random comparison with.';
         end
         function analysis_class = getAnalysisClass()
             % GETANALYSISCLASS returns the class of the analsysis
@@ -111,7 +111,7 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
             %
             % See also getList, getClass, getName.
             
-            analysis_class = 'AnalysisST_WU';
+            analysis_class = 'AnalysisST_BUT';
         end
         function sub = getRandomComparison(random_comparison_class, id, label, notes, atlas, measure_code, group, varargin)
             % GETRANDOMCOMPARISON returns a new comparison
