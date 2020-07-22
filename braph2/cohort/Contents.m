@@ -1,6 +1,6 @@
 % BRAPH2 Cohort
 %
-% <a href="matlab:help Cohort                   ">Graph</a>                 (class) cohort class
+% <a href="matlab:help Cohort                   ">Cohort</a>                (class) cohort class
 %
 % <a href="matlab:help Data                     ">Data</a>                  (class) data class
 % <a href="matlab:help datas                    ">datas</a>                 (folder) data subclasses
