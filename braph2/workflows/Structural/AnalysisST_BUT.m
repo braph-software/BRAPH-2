@@ -41,9 +41,8 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % ANALYSISST_WU with specified settings VALUES.
             %
             % See also MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU.
-            
-            threshold = get_from_varargin(0, 'threshold', varargin{:});
-            analysis = analysis@AnalysisST_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, 'threshold', threshold, varargin{:});
+                 
+            analysis = analysis@AnalysisST_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
     methods (Access = protected)
@@ -65,7 +64,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             
             A = binarize(A, varargin{:});
             
-            graph_type = AnalysisST_.getGraphType();
+            graph_type = AnalysisST_WU.getGraphType();
             g = Graph.getGraph(graph_type, A);
         end
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
