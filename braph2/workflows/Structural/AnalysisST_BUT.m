@@ -45,6 +45,50 @@ classdef AnalysisST_BUT < AnalysisST_WU
             analysis = analysis@AnalysisST_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
+     methods  % ID functions
+        function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
+            % GETMEASUREMENTID returns a measurement ID
+            %
+            % MEASUREMENT_ID = GETMEASUREMENTID(ANALYSIS, MEASURE_CODE, GROUP, 'threshold', THRESHOLD)
+            % creates a measurement ID with the ANALYSIS class, the
+            % MEASURE_CODE, the GROUP and the THRESHOLD.
+            %
+            % See also getRandomComparisonID, getComparisonID.            
+            
+            measurement_id = getMeasurementID@AnalysisST_WU(analysis, measure_code, group, varargin{:});
+            
+            threshold = get_from_varargin(0, 'threshold', varargin{:});
+            measurement_id = [measurement_id ' threshold=' num2str(threshold)];          
+        end
+        function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
+            % GETRANDOMCOMPARISONID returns a random comparison ID
+            %
+            % RANDOMCOMPARISON_ID = GETRANDOMCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP, 'threshold', THRESHOLD)
+            % creates a random comparison ID with the ANALYSIS class, the
+            % MEASURE_CODE, the GROUP and the THRESHOLD.
+            %
+            % See also getMeasurementID, getComparisonID.            
+         
+            randomcomparison_id = getRandomComparisonID@Analysis.ST_WU(analysis, measure_code, group, varargin{:});
+            
+            threshold = get_from_varargin(0, 'threshold', varargin{:});
+            randomcomparison_id = [randomcomparison_id ' threshold=' threshold];
+        end
+        function comparison_id = getComparisonID(analysis, measure_code, group_1, group_2, varargin)
+            % GETCOMPARISONID returns a comparison ID
+            %
+            % COMPARISON_ID = GETCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2, 'threshold', THRESHOLD)
+            % creates a random comparison ID with the ANALYSIS class, the
+            % MEASURE_CODE, GROUP_1 and GROUP_2, and the THRESHOLD.
+            %
+            % See also getMeasurementID, getRandomComparisonID.
+            
+            comparison_id = getComparisonID@AnalysisST_WU(analysis, measure_code, group_1, group_2, varargin{:});
+            
+            threshold = get_from_varargin(0, 'threshold', varargin{:});
+            comparison_id = [comparison_id ' threshold=' threshold];
+        end
+    end
     methods (Access = protected)
         function g = get_graph_for_subjects(analysis, subjects, varargin)
             % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
@@ -71,7 +115,8 @@ classdef AnalysisST_BUT < AnalysisST_WU
             negative_weight_rule = analysis.getSettings('AnalysisST_BUT.NegativeWeightRule');
             A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
             
-            A = binarize(A, varargin{:});
+            threshold = get_from_varargin(0, 'threshold', varargin{:});
+            A = binarize(A, threshold, 'treshold', threshold, varargin{:});
             
             graph_type = AnalysisST_WU.getGraphType();
             g = Graph.getGraph(graph_type, A);
@@ -330,6 +375,16 @@ classdef AnalysisST_BUT < AnalysisST_WU
                 'It provides a single graph for each subject group. ' ...
                 'Structural data can be for example MRI or PET data.' ...
                 ];
+        end
+        function graph_type = getGraphType()
+            % GETGRAPHTYPE returns the compatible type of graph
+            %
+            % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of 
+            % graph 'GraphWU'.
+            %
+            % See also getSubjectClass.
+            
+            graph_type = 'GraphWU';
         end
         function measurement_class = getMeasurementClass()
             % GETMEASUREMENTCLASS returns the class of structural analysis measurement

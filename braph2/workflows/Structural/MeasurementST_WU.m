@@ -3,8 +3,8 @@ classdef MeasurementST_WU < Measurement
     % MeasurementST_WU is a subclass of Measurement, it implements the
     % initialization of data methods.
     %
-    % MeasurementST_WU implements the initialization of the data which the
-    % class will save. It checks if the data being saved has correct
+    % MeasurementST_WU implements Measurement initialization of the data 
+    % function class will save. It checks if the data being saved has correct
     % dimensions. Structural data can be for example MRI or PET data.
     %
     % MeasurementST_WU constructor methods:
@@ -37,7 +37,7 @@ classdef MeasurementST_WU < Measurement
     methods  % Constructor
         function m =  MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin)
             % MEASUREMENTST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % creates a measurement with ID, LABEL, ATLAS, MEASURE_CODE,
+            % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
             % with the data from GROUP. It initializes the MEASUREMENTST_WU 
             % with default settings.
             %
