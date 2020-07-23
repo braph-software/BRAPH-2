@@ -45,7 +45,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             analysis = analysis@AnalysisST_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
-     methods  % ID functions
+    methods  % ID functions
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
             % GETMEASUREMENTID returns a measurement ID
             %
