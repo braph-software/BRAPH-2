@@ -49,12 +49,13 @@ classdef MeasurementST_BUT< MeasurementST_WU
             % See also ComparisonST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.
             
             m = m@MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin{:});
+
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             m.setThreshold(threshold)
         end
     end
-    methods  % Set functions
-        function setThreshold(m, t)
+    methods (Access=protected) % Set functions
+        function setThreshold(m, threshold)
             % SETTHRESHOLD sets the measure value of the group
             %
             % SETTHRESHOLD(M, T) sets the measure value of 
@@ -62,20 +63,18 @@ classdef MeasurementST_BUT< MeasurementST_WU
             % 
             % See also getThreshold.
             
-            % maybe check its less than 1?
-                        
-            m.threshold = t;
+            m.threshold = threshold;
         end
     end
     methods  % Get functions
-        function t = getThreshold(m)
+        function threshold = getThreshold(m)
             % GETTHRESHOLD returns the threshold of the data values
             %
             % T = GETTHRESHOLD(M) returns the threshold of the data values.
             %
             % See also getMeasureValue, setThreshold.
             
-            t = m.threshold;
+            threshold = m.threshold;
         end
     end
     methods (Static)  % Descriptive functions
@@ -106,8 +105,11 @@ classdef MeasurementST_BUT< MeasurementST_WU
             %
             % See also getList, getClass, getName
             
-            description = ['ST measurement with structural data of fixed ' ...
-                           'threshold using  weighted graphs.'];
+            description = [ ...
+                'ST measurement with structural data using binary graphs ' ...
+                'calculated at a fixed threshold. ' ...
+                'For example, it can use MRI or PET data.' ...
+                ];
         end
         function analysis_class = getAnalysisClass()
             % GETANALYSISCLASS returns the class of the analsysis 
@@ -119,22 +121,5 @@ classdef MeasurementST_BUT< MeasurementST_WU
             
             analysis_class = 'AnalysisST_BUT';
         end     
-        function m = getMeasurement(measurement_class, id, label, notes, atlas, measure_code, group, varargin) %#ok<INUSD>
-            % GETMEASUREMENT returns a new measurement
-            %
-            % SUB = GETMEASUREMENT(MEASUREMENT_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % returns a new MeasurementST_BUT object with MEASUREMENT_CLASS,
-            % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
-            % it will initialize with default settings.
-            % 
-            % SUB = GETMEASUREMENT(MEASUREMENT_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
-            % returns a new MeasurementST_BUT object with MEASUREMENT_CLASS,
-            % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
-            % it will initialize with VALUE settings.
-            %
-            % See also getClass, getName, getDescription.
-            
-            m = eval([measurement_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
-        end
     end
 end 
