@@ -149,7 +149,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             assert(all(cellfun(@(atlas) isa(atlas, 'BrainAtlas'), atlases)) ...
                 && length(atlases) == Subject.getBrainAtlasNumber(subject_class), ...
                 [BRAPH2.STR ':Cohort:' BRAPH2.WRONG_INPUT], ...
-                ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas']) %#ok<NBRAK>
+                ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas'])
             cohort.atlases = atlases;
             
             cohort.subject_idict = IndexedDictionary(subject_class);
@@ -389,6 +389,74 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
             for i = 1:1:length(subject_indexes)
                 cohort.removeSubjectFromGroup(subject_indexes(i), group);
+            end
+        end
+        function complementary = notGroup(cohort, group)
+            % NOTGROUP returns complementary groups array
+            
+            % can be array or indexeddictionary
+            if cohort.getGroups().contains(group.getID())
+                groups = cohort.getGroups().getValues();
+                groups = cellfun(@(x) x(~isequal(x, group)), groups, 'UniformOutput', false);
+                complementary = groups(cellfun(@(x) ~isempty(x), groups));
+            end            
+        end
+        function intersection = andGroup(cohort, group1, group2)
+            % ANDGROUP returns intersection of groups
+            
+            % should it create a group?
+            if cohort.getGroups().contains(group1.getID()) && cohort.getGroups().contains(group2.getID())
+                subjects_1 = cohort.getGroups().getValue(group1.getID()).getSubjects();                
+                                
+                groups = cellfun(@(x) x(group2.contains_subject(x)), subjects_1, 'UniformOutput', false);  
+                intersection_group = groups(~cellfun('isempty', groups));
+                intersection = Group(cohort.getSubjectClass(), 'ANDGroup', 'Group AND', 'Group description AND', intersection_group);
+            end
+        end
+        function union = orGroup(cohort, group1, group2)
+            % ORGROUP returns union 
+             if cohort.getGroups().contains(group1.getID()) && cohort.getGroups().contains(group2.getID())
+                subjects_1 = cohort.getGroups().getValue(group1.getID()).getSubjects();      
+                subjects_2 = cohort.getGroups().getValue(group2.getID()).getSubjects(); 
+                or_groups = [subjects_1, subjects_2];  % merge
+                or_groups = unique(cellfun(@(x) x.getID(), or_groups, 'UniformOutput', false));  % remove duplicates
+                or_groups = cellfun(@(x) cohort.getSubjects().getValue(x), or_groups, 'UniformOutput', false);  % return subjects                
+                union = Group(cohort.getSubjectClass(), 'UnionGroup', 'UnionGroup', 'Group description NANDGroup', or_groups);  % group return
+            end
+        end
+        function nand = nandGroup(cohort, group1, group2)
+            % NANDGROUP returns compliment of intersection
+            
+            % has to be a group array
+             if cohort.getGroups().contains(group1.getID()) && cohort.getGroups().contains(group2.getID())
+                subjects_1 = cohort.getGroups().getValue(group1.getID()).getSubjects();      
+                subjects_2 = cohort.getGroups().getValue(group2.getID()).getSubjects(); 
+                
+                not_intersected_1 = cellfun(@(x) x(~group1.contains_subject(x)), subjects_2, 'UniformOutput', false);
+                not_intersected_2 = cellfun(@(x) x(~group2.contains_subject(x)), subjects_1, 'UniformOutput', false);
+                
+                nand_inside_groups = [not_intersected_1 not_intersected_2];
+                nand_groups = nand_inside_groups(cellfun(@(x) ~isempty(x), nand_inside_groups));
+                group_nand = Group(cohort.getSubjectClass(), 'NANDGroup', 'NANDGroup', 'Group description NANDGroup', nand_groups);
+                for i = 1:1:cohort.getGroups().length()
+                    if ~isequal(group1, cohort.getGroups().getValue(i)) && ~isequal(group2, cohort.getGroups().getValue(i))
+                        compliment_groups{i} = cohort.getGroups().getValue(i); %#ok<AGROW>
+                    end
+                end
+                compliment_groups_clean = compliment_groups(cellfun(@(x) ~isempty(x), compliment_groups));
+                nand = [compliment_groups_clean {group_nand}];
+            end
+        end
+        function xor = xorGroup(cohort, group1, group2)
+            % XORGROUP returns exclusive or group
+             if cohort.getGroups().contains(group1.getID()) && cohort.getGroups().contains(group2.getID())
+                subjects_1 = cohort.getGroups().getValue(group1.getID()).getSubjects();      
+                subjects_2 = cohort.getGroups().getValue(group2.getID()).getSubjects(); 
+                
+                not_intersected_1 = cellfun(@(x) x(~group1.contains_subject(x)), subjects_2, 'UniformOutput', false);
+                not_intersected_2 = cellfun(@(x) x(~group2.contains_subject(x)), subjects_1, 'UniformOutput', false);
+                
+                xor = [not_intersected_1 not_intersected_2];                
             end
         end
     end

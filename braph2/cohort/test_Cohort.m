@@ -529,3 +529,61 @@ for i = 1:1:length(sub_class_list)
         [BRAPH2.STR ':Cohort:' BRAPH2.BUG_FUNC], ...
         'Cohort.getNewSubject() does not work')
 end
+
+%% Test 16 logic intersection operations
+for i = 1:1:length(sub_class_list)
+    atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
+    
+    sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
+    sub2 = Subject.getSubject(sub_class, 'id2', 'label 2', 'notes 2', atlases);
+    sub3 = Subject.getSubject(sub_class, 'id3', 'label 3', 'notes 3', atlases);
+    sub4 = Subject.getSubject(sub_class, 'id4', 'label 4', 'notes 4', atlases);
+    sub5 = Subject.getSubject(sub_class, 'id5', 'label 5', 'notes 5', atlases);
+    sub6 = Subject.getSubject(sub_class, 'id6', 'label 6', 'notes 6', atlases);
+    sub7 = Subject.getSubject(sub_class, 'id7', 'label 7', 'notes 7', atlases);
+    cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {sub1, sub2, sub3, sub4, sub5, sub6, sub7});
+    
+    % not group
+    group1 = Group(sub_class, 'G1', 'Group 1', 'Group description 1', {sub1, sub2});
+    group2 = Group(sub_class, 'G2', 'Group 2', 'Group description 2', {sub3, sub4, sub5});
+    group3 = Group(sub_class, 'G3', 'Group 3', 'Group description 3', {sub6, sub7});
+    
+    cohort.getGroups().add(group1.getID(), group1)
+    cohort.getGroups().add(group2.getID(), group2)
+    cohort.getGroups().add(group3.getID(), group3) 
+    
+    not_group = cohort.notGroup(group1);
+    
+    assert(length(not_group) == 2, ...
+        [BRAPH2.STR ':Cohort:' BRAPH2.BUG_FUNC], ...
+        'Cohort.notGroup() does not work')
+    
+    % and group
+    group4 = Group(sub_class, 'G4', 'Group 4', 'Group description 4', {sub2, sub4, sub6});
+    cohort.getGroups().add(group4.getID(), group4)
+    
+    and_group = cohort.andGroup(group2, group4);
+    assert(length(and_group.getSubjects()) == 1, ...
+        [BRAPH2.STR ':Cohort:' BRAPH2.BUG_FUNC], ...
+        'Cohort.andGroup() does not work')
+    
+    % or group
+    or_group = cohort.orGroup(group1, group4);
+    assert(length(or_group.getSubjects()) == 4, ...
+        [BRAPH2.STR ':Cohort:' BRAPH2.BUG_FUNC], ...
+        'Cohort.orGroup() does not work')
+    
+    % nand group
+    nand_group = cohort.nandGroup(group1, group4);
+    assert(length(nand_group.getSubjects()) == 3, ...
+        [BRAPH2.STR ':Cohort:' BRAPH2.BUG_FUNC], ...
+        'Cohort.nandGroup() does not work')
+    
+    % xor group
+    xor_group = cohort.xorGroup(group2, group4);
+    assert(length(nand_group.getSubjects()) == 2, ...
+        [BRAPH2.STR ':Cohort:' BRAPH2.BUG_FUNC], ...
+        'Cohort.nandGroup() does not work')
+    
+    
+end
