@@ -161,7 +161,10 @@ classdef MeasurementST_WU < Measurement
             %
             % See also getList, getClass, getName
             
-            description = 'ST measurement with weighted graphs.';
+            description = [ ...
+                'ST measurement with weighted graphs. ' ...
+                'For example, it can use MRI or PET data.' ...
+                ];
         end
         function atlas_number = getBrainAtlasNumber()
             % GETBRAINATLASNUMBER returns the number of brain atlases 
