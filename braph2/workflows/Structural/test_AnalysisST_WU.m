@@ -133,7 +133,7 @@ for i = 1:1:numel(measures)
     analysis = AnalysisST_WU('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
 
     number_of_randomizations = 10;
-    calculated_comparison = analysis.getRandomComparison(measure, group1, 'RandomizationNumber', number_of_randomizations);
+    calculated_comparison = analysis.getRandomComparison(measure, group1, 'RandomComparisonST_WU.RandomizationNumber', number_of_randomizations);
 
     assert(~isempty(calculated_comparison), ...
         [BRAPH2.STR ':AnalysisST_WU:calculateComparison'], ...
