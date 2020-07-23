@@ -41,11 +41,6 @@ classdef MeasurementST_WU < Measurement
             % with the data from GROUP. It initializes the MEASUREMENTST_WU 
             % with default settings.
             %
-            % MEASUREMENTST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...) 
-            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
-            % with the data from GROUP. It initializes the MEASUREMENTST_WU 
-            % with VALUE settings.
-            %
             % See also ComparisonST_WU, RandomComparisonST_WU, AnalysisST_WU.
             
             graph_type = AnalysisST_WU.getGraphType();
