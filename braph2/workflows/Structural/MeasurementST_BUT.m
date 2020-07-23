@@ -1,7 +1,6 @@
 classdef MeasurementST_BUT< MeasurementST_WU
-    % MeasurementST_BUT A measurement of structural data of fixed threshold binary undirected graphs
-    % MeasurementST_BUT is a subclass of MeasurementST_WU, it implements the
-    % initialization of data methods.
+    % MeasurementST_BUT A measurement of structural data with BU graphs at fixed threshold
+    % MeasurementST_BUT is a subclass of MeasurementST_WU.
     %
     % MeasurementST_BUT implements the initialization of the data of fixed 
     % threshold binary undirected graphswhich the class will save.
