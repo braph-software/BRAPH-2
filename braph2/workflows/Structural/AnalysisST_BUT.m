@@ -5,7 +5,8 @@ classdef AnalysisST_BUT < AnalysisST_WU
     %
     % AnalysisST_BUT implements AnalysisST_WU calculting methods
     % to obtain a structural data of fixed threshold binary undirected graphs
-    % measurement, a random comprison or a comparison.
+    % measurement, a random comprison or a comparison. AnalysisST_BUT
+    % overrides the ID methods of its superclass.
     % Structural data can be for example MRI or PET data.
     %
     % AnalysisST_BUT constructor methods:
@@ -161,11 +162,11 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % GETGRAPHTYPE returns the compatible type of graph
             %
             % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of 
-            % graph 'GraphWU'.
+            % graph 'GraphBU'.
             %
             % See also getSubjectClass.
             
-            graph_type = 'GraphWU';
+            graph_type = 'GraphBU';
         end
         function measurement_class = getMeasurementClass()
             % GETMEASUREMENTCLASS returns the class of structural analysis measurement

@@ -65,7 +65,7 @@ classdef ComparisonST_WU < Comparison
             graph_type = AnalysisST_WU.getGraphType();
             measure_list = Graph.getCompatibleMeasureList(graph_type);            
             assert(ismember(measure_code, measure_list), ...
-                [BRAPH2.STR ':ComparisonST_WU:' BRAPH2.BUG_FUNC], ...
+                [BRAPH2.STR ':ComparisonST:' BRAPH2.BUG_FUNC], ...
                 'ComparisonST_WU measure_code is not compatible with the permited Measures.');            
 
             c = c@Comparison(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:});
@@ -185,6 +185,16 @@ classdef ComparisonST_WU < Comparison
             %
             % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and 
             % check the data for the comparison. It initializes with VALUE settings.
+            % Admissible rules are:
+            %  'ComparisonST.PermutationNumber'  - number of permutations
+            %  'ComparisonST.value_1'            - value of group 1
+            %  'ComparisonST.value_2'            - value of group 2
+            %  'ComparisonST.difference'         - value of difference
+            %  'ComparisonST.all_differences'    - value of all differences
+            %  'ComparisonST.p1'                 - single tail p-value
+            %  'ComparisonST.p2'                 - double tail p-value
+            %  'ComparisonST.confidence_min'     - min value in confidence interval
+            %  'ComparisonST.confidence_max'     - max value in confidence interval
             %
             % See also AnalysisST_WU.
             

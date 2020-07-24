@@ -4,7 +4,7 @@ classdef AnalysisST_WU < Analysis
     % needed for structural analysis.
     %
     % AnalysisST_WU implements the abstract analysis calculting methods
-    % to obtain a structural measurement, a random comprison or a
+    % to obtain a structural measurement, a random comparison or a
     % comparison. AnalysisST_WU also implements the ID methods to get
     % the correct signature of the analysis.  
     % Structural data can be for example MRI or PET data.
