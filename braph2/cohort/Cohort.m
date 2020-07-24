@@ -456,7 +456,9 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 not_intersected_1 = cellfun(@(x) x(~group1.contains_subject(x)), subjects_2, 'UniformOutput', false);
                 not_intersected_2 = cellfun(@(x) x(~group2.contains_subject(x)), subjects_1, 'UniformOutput', false);
                 
-                xor = [not_intersected_1 not_intersected_2];                
+                xor_subjects = [not_intersected_1 not_intersected_2];  
+                xor_subjs = xor_subjects(cellfun(@(x) ~isempty(x), xor_subjects));
+                xor = Group(cohort.getSubjectClass(), 'XORGroup', 'XORGroup', 'Group description XORGroup', xor_subjs);
             end
         end
     end

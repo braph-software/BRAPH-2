@@ -532,6 +532,7 @@ end
 
 %% Test 16 logic intersection operations
 for i = 1:1:length(sub_class_list)
+    sub_class = sub_class_list{i};
     atlases = repmat({atlas}, 1, Subject.getBrainAtlasNumber(sub_class));
     
     sub1 = Subject.getSubject(sub_class, 'id1', 'label 1', 'notes 1', atlases);
@@ -575,15 +576,13 @@ for i = 1:1:length(sub_class_list)
     
     % nand group
     nand_group = cohort.nandGroup(group1, group4);
-    assert(length(nand_group.getSubjects()) == 3, ...
+    assert(length(nand_group) == 3, ...
         [BRAPH2.STR ':Cohort:' BRAPH2.BUG_FUNC], ...
         'Cohort.nandGroup() does not work')
     
     % xor group
     xor_group = cohort.xorGroup(group2, group4);
-    assert(length(nand_group.getSubjects()) == 2, ...
+    assert(length(xor_group.getSubjects()) == 4, ...
         [BRAPH2.STR ':Cohort:' BRAPH2.BUG_FUNC], ...
-        'Cohort.nandGroup() does not work')
-    
-    
+        'Cohort.xorGroup() does not work')   
 end
