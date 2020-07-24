@@ -69,7 +69,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %
             % See also getMeasurementID, getComparisonID.            
          
-            randomcomparison_id = getRandomComparisonID@Analysis.ST_WU(analysis, measure_code, group, varargin{:});
+            randomcomparison_id = getRandomComparisonID@AnalysisST_WU(analysis, measure_code, group, varargin{:});
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             randomcomparison_id = [randomcomparison_id ' threshold=' num2str(threshold)];
@@ -111,8 +111,8 @@ classdef AnalysisST_BUT < AnalysisST_WU
                 data(i, :) = subject.getData('ST').getValue();  % st data
             end
             
-            correlation_rule = analysis.getSettings('AnalysisST_BUT.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisST_BUT.NegativeWeightRule');
+            correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');
+            negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
             A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
@@ -198,19 +198,19 @@ classdef AnalysisST_BUT < AnalysisST_WU
             
             comparison_class = 'ComparisonST_BUT';
         end
-        function available_settings = getAvailableSettings(m) %#ok<INUSD>
-            % GETAVAILABLESETTINGS returns the available settings of structural analysis
-            %
-            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(M) returns the
-            % available settings of AnalysisST_BUT.
-            %
-            % See also getClass, getName, getDescription
-            
-            available_settings = {
-                {'AnalysisST_BUT.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
-                {'AnalysisST_BUT.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
-                {'AnalysisST_BUT.Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...
-                };
-        end
+%         function available_settings = getAvailableSettings(m) %#ok<INUSD>
+%             GETAVAILABLESETTINGS returns the available settings of structural analysis
+%             
+%             AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(M) returns the
+%             available settings of AnalysisST_BUT.
+%             
+%             See also getClass, getName, getDescription
+%             
+%             available_settings = {
+%                 {'AnalysisST_BUT.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
+%                 {'AnalysisST_BUT.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
+%                 {'AnalysisST_BUT.Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...
+%                 };
+%         end
     end
 end

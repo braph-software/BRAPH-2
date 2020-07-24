@@ -122,8 +122,8 @@ classdef AnalysisST_WU < Analysis
                 data(i, :) = subject.getData('ST').getValue();  % st data
             end
             
-            correlation_rule = analysis.getSettings('AnalysisST_WU.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisST_WU.NegativeWeightRule');
+            correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');
+            negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
             A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
             
             graph_type = AnalysisST_WU.getGraphType();
@@ -275,7 +275,7 @@ classdef AnalysisST_WU < Analysis
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             
-            is_longitudinal = analysis.getSettings('AnalysisST_WU.Longitudinal');
+            is_longitudinal = analysis.getSettings('AnalysisST.Longitudinal');
             M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
 
             % Measurements for groups 1 and 2, and their difference
@@ -446,9 +446,9 @@ classdef AnalysisST_WU < Analysis
             % See also getClass, getName, getDescription
             
             available_settings = {
-                {'AnalysisST_WU.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
-                {'AnalysisST_WU.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
-                {'AnalysisST_WU.Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...
+                {'AnalysisST.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
+                {'AnalysisST.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
+                {'AnalysisST.Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...
                 };
         end
     end
