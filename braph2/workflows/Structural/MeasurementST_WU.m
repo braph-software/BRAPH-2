@@ -3,8 +3,8 @@ classdef MeasurementST_WU < Measurement
     % MeasurementST_WU is a subclass of Measurement, it implements the
     % initialization of data methods.
     %
-    % MeasurementST_WU implements the initialization of the data which the
-    % class will save. It checks if the data being saved has correct
+    % MeasurementST_WU implements Measurement initialization of the data 
+    % function class will save. It checks if the data being saved has correct
     % dimensions. Structural data can be for example MRI or PET data.
     %
     % MeasurementST_WU constructor methods:
@@ -37,14 +37,9 @@ classdef MeasurementST_WU < Measurement
     methods  % Constructor
         function m =  MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin)
             % MEASUREMENTST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % creates a measurement with ID, LABEL, ATLAS, MEASURE_CODE,
+            % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
             % with the data from GROUP. It initializes the MEASUREMENTST_WU 
             % with default settings.
-            %
-            % MEASUREMENTST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...) 
-            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
-            % with the data from GROUP. It initializes the MEASUREMENTST_WU 
-            % with VALUE settings.
             %
             % See also ComparisonST_WU, RandomComparisonST_WU, AnalysisST_WU.
             
@@ -86,12 +81,12 @@ classdef MeasurementST_WU < Measurement
         function initialize_data(m, varargin)
             % INITIALIZE_DATA initialize and check the data for the measurement
             %
-            % INITIALIZE_DATA(C) initialize and check the data for the
+            % INITIALIZE_DATA(M) initialize and check the data for the
             % measurement. It initializes with default settings.
             %
-            % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and 
-            % check the data for the measurement. It initializes 
-            % with VALUE settings.
+            % INITIALIZE_DATA(M, 'MeasurementST.Value', VALUE) initialize and 
+            % check the data for the measurement. It saves the measurement
+            % VALUE.
             %
             % See also AnalysisST_WU.
             
@@ -103,33 +98,33 @@ classdef MeasurementST_WU < Measurement
             if Measure.is_global(measure_code)  % global measure
                 m.value = get_from_varargin( ...
                     {0}, ...  % 1 measure per group
-                    'MeasurementST_WU.Value', ...
+                    'MeasurementST.Value', ...
                     varargin{:});
                 assert(iscell(m.getMeasureValue()) && ...
                     isequal(size(m.getMeasureValue()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [1, 1]), m.getMeasureValue())), ...
-                    [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.WRONG_INPUT], ...
-                    'Data not compatible with MeasurementST_WU')
+                    [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
+                    ['Data not compatible with: ' class(m)])
             elseif Measure.is_nodal(measure_code)  % nodal measure
                 m.value = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length(), 1)}, ...
-                    'MeasurementST_WU.Value', ...
+                    'MeasurementST.Value', ...
                     varargin{:});
                 assert(iscell(m.getMeasureValue()) && ...
                     isequal(size(m.getMeasureValue()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), 1]), m.getMeasureValue())), ...
-                    [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.WRONG_INPUT], ...
-                    'Data not compatible with MeasurementST_WU')
+                    [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
+                    ['Data not compatible with: ' class(m)])
             elseif Measure.is_binodal(measure_code)  % binodal measure
                 m.value = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length())}, ...
-                    'MeasurementST_WU.Value', ...
+                    'MeasurementST.Value', ...
                     varargin{:});
                 assert(iscell(m.getMeasureValue()) && ...
                     isequal(size(m.getMeasureValue()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), m.getMeasureValue())), ...
-                    [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.WRONG_INPUT], ...
-                    'Data not compatible with MeasurementST_WU')
+                    [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
+                    ['Data not compatible with: ' class(m)])
             end
         end
     end
@@ -161,7 +156,10 @@ classdef MeasurementST_WU < Measurement
             %
             % See also getList, getClass, getName
             
-            description = 'ST measurement with weighted graphs.';
+            description = [ ...
+                'ST measurement with weighted graphs. ' ...
+                'For example, it can use MRI or PET data.' ...
+                ];
         end
         function atlas_number = getBrainAtlasNumber()
             % GETBRAINATLASNUMBER returns the number of brain atlases 
