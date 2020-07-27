@@ -126,6 +126,8 @@ classdef AnalysisST_WU < Analysis
             negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
             A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
             
+            A = binarize(A, varargin{:});
+            
             graph_type = AnalysisST_WU.getGraphType();
             g = Graph.getGraph(graph_type, A);
         end
