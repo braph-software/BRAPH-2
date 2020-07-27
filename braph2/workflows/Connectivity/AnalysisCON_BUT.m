@@ -172,46 +172,32 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             % GETMEASUREMENTCLASS returns the class of connectivity analysis measurement
             %
             % MEASUREMENT_CLASS = GETMEASUREMENT_CLASS() returns the
-            % class of AnalysisCON_BUT measurement, 'MeasurementST_BUT'.
+            % class of AnalysisCON_BUT measurement, 'MeasurementCON_BUT'.
             %
             % See also getRandomComparisonClass, getComparisonClass.
             
-            measurement_class =  'MeasurementST_BUT';
+            measurement_class =  'MeasurementCON_BUT';
         end
         function randomcomparison_class = getRandomComparisonClass()
             % GETRANDOMCOMPARISONCLASS returns the class of connectivity analysis randomcomparison
             %
             % RANDOMCOMPARISON_CLASS = GETRANDOMCOMPARISONCLASS()
             % returns the class of AnalysisCON_BUT randomcomparison,
-            % 'RandomComparisonST_BUT'.
+            % 'RandomComparisonCON_BUT'.
             %
             % See also getMeasurementClass, getComparisonClass.
             
-            randomcomparison_class = 'RandomComparisonST_BUT';
+            randomcomparison_class = 'RandomComparisonCON_BUT';
         end
         function comparison_class = getComparisonClass()
             % GETCOMPARISONCLASS returns the class of connectivity analysis comparison
             %
             % COMPARISON_CLASS = GETCOMPARISONCLASS() returns the
-            % class of AnalysisCON_BUT comparison, 'ComparisonST_BUT'.
+            % class of AnalysisCON_BUT comparison, 'ComparisonCON_BUT'.
             %
             % See also getMeasurementClass, getRandomComparisonClass.
             
-            comparison_class = 'ComparisonST_BUT';
+            comparison_class = 'ComparisonCON_BUT';
         end
-%         function available_settings = getAvailableSettings(m) %#ok<INUSD>
-%             GETAVAILABLESETTINGS returns the available settings of connectivity analysis
-%             
-%             AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(M) returns the
-%             available settings of AnalysisCON_BUT.
-%             
-%             See also getClass, getName, getDescription
-%             
-%             available_settings = {
-%                 {'AnalysisCON_BUT.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
-%                 {'AnalysisCON_BUT.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
-%                 {'AnalysisCON_BUT.Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...
-%                 };
-%         end
     end
 end
