@@ -30,36 +30,25 @@ classdef AnalysisCON_WU < Analysis
         end
     end
     methods (Access = protected)  % Calculation functions
-        function g = get_graph_for_subjects(analysis, subjects, varargin)
-            atlases = analysis.cohort.getBrainAtlases();
-            atlas = atlases{1};
+        function graphs = get_graphs_for_group(analysis, group, varargin)          
             
-            subject_number = numel(subjects);
-
-            data = zeros(subject_number, atlas.getBrainRegions().length());
-            for i = 1:1:subject_number
-                subject = subjects{i};
-                data(i, :) = subject.getData('CON').getValue();  % con data
-            end
-            
-            correlation_rule = analysis.getSettings('AnalysisCON.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisCON.NegativeWeightRule');
-            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
-            
-            graph_type = AnalysisST_WU.getGraphType();
-            g = Graph.getGraph(graph_type, A);            
-        end
-        function measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
-            graph_type = AnalysisCON_WU.getGraphType();
-            
+            graph_type = analysis.getGraphType();            
             subjects = group.getSubjects();
+            graphs = cell(1, group.subjectnumber());
             
-            measures = cell(1, group.subjectnumber());
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
                 A = subject.getData('CON').getValue();  % DTI matrix
-                g = Graph.getGraph(graph_type, A, varargin{:});
-                measure = Measure.getMeasure(measure_code, g, varargin{:});
+                A = binarize(A, varargin{:});
+                graphs{i} = Graph.getGraph(graph_type, A);                 
+            end            
+        end
+        function measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
+           
+            graphs = analysis.get_graphs_for_group(group, varargin{:});
+            measures = cell(1, group.subjectnumber());
+            for i = 1:1:group.subjectnumber()                
+                measure = Measure.getMeasure(measure_code, graphs{i}, varargin{:});
                 measures{i} = cell2mat(measure.getValue());
             end
             
@@ -78,91 +67,63 @@ classdef AnalysisCON_WU < Analysis
         end
         function randomcomparison = calculate_random_comparison(analysis, measure_code, group, varargin)
             % rules
-            attemptsPerEdge = analysis.getSettings('AnalysisCON.AttemptsPerEdge');
-            numerOfWeights = analysis.getSettings('AnalysisCON.NumberOfWeights');            
-            is_longitudinal = analysis.getSettings('AnalysisCON.Longitudinal');
-            
+            attempts_per_edge = analysis.getSettings('AnalysisCON.AttemptsPerEdge');
+            number_of_weights = analysis.getSettings('AnalysisCON.NumberOfWeights');             
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             M = get_from_varargin(1e+3, 'RandomComparisonCON.RandomizationNumber', varargin{:});
             
-            % get randomize graphs of subjects
-            subjects = group.getSubjects();
-            for i = 1:1:numel(subjects)
-                subject = subjects{i};
-                subject_class = subject.getClass();
-                atlas = subject.getBrainAtlases();
-                A = subject.getData('CON').getValue();
-                g = Graph.getGraph(graph_type, A);
-                [permutated_A, ~] = g.randomize_graph('AttemptsPerEdge', attemptsPerEdge, 'NumberOfWeights', numerOfWeights);
-                permuted_subject = Subject.getSubject(subject_class, atlas, 'CON', permutated_A);
-                permuted_subjects{i} = permuted_subject; %#ok<AGROW>
-            end
-            
-            permuted_group = Group(subject_class, permuted_subjects, 'GroupName', ['RandomGroup_' group.getName()]);
-            
-            % create Measurements
-            measurement_group = analysis.calculate_measurement(measure_code, group, varargin{:});
-            measurement_random = analysis.calculate_measurement(measure_code, permuted_group, 'is_randomCON', 1, varargin{:});
-            
-            % get compared values
+            % Measurements for the group
+            measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});
             values_group = measurement_group.getMeasureValues();
-            values_random = measurement_random.getMeasureValues();
-            average_values_group =  mean(reshape(cell2mat(values_group), [size(values_group{1}, 1), size(values_group{1}, 2), group.subjectnumber()]), 3);
-            average_values_random = mean(reshape(cell2mat(values_random), [size(values_random{1}, 1), size(values_random{1}, 2), permuted_group.subjectnumber()]), 3);
+            average_value_group = mean(reshape(cell2mat(values_group), [size(values_group{1}, 1), size(values_group{1}, 2), group.subjectnumber()]), 3);
             
-            all_permutations_1 = cell(1, M);
-            all_permutations_2 = cell(1, M);
+            graphs = analysis.get_graphs_for_group(group, varargin{:});
+            
+            % Randomization
+            all_randomizations = cell(1, M);
+            all_differences = cell(1, M);
             
             start = tic;
             for i = 1:1:M
-                if verbose
+                 if verbose
                     disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
-                end
-                
-                if is_longitudinal
-                    [permutation_1, permutation_2] = Permutation.permute(values_group, values_random, is_longitudinal);
-                else
-                    [permutation_1, permutation_2] = Permutation.permute(values_group, values_random, is_longitudinal);
-                end
-                
-                mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group.subjectnumber()]), 3);
-                mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), permuted_group.subjectnumber()]), 3);
-                
-                all_permutations_1(1, i) = {mean_permutated_1};
-                all_permutations_2(1, i) = {mean_permutated_2};
-                
-                difference_all_permutations{1, i} = mean_permutated_1 - mean_permutated_2; %#ok<AGROW>
-                if interruptible
+                 end
+                 for j = 1:1:length(graphs)
+                     g = graphs{j};
+                     g_random = g.randomize('AttemptsPerEdge', attempts_per_edge, 'NumberOfWeights', number_of_weights);
+                     measure_random = g_random.getMeasure(measure_code);
+                     measure_random_packed = measure_random.getValue();
+                     values_randomizations{j}  =  measure_random_packed{1}; %#ok<AGROW>
+                 end     
+                 mean_groups = mean(reshape(cell2mat(values_group), [size(values_group{1}, 1), size(values_group{1}, 2), group.subjectnumber()]), 3);
+                 mean_randomizations = mean(reshape(cell2mat(values_randomizations), [size(values_randomizations{1}, 1), size(values_randomizations{1}, 2), group.subjectnumber()]), 3);
+                 all_randomizations{1, i} = mean_randomizations;
+                 all_differences{1, i} =  mean_groups - mean_randomizations;
+                 
+                 if interruptible
                     pause(interruptible)
-                end
+                 end                 
             end
             
-            difference_mean = average_values_random - average_values_group;  % difference of the mean values of the non permutated groups
-            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated random group - permutated group
-            
-            p1 = pvalue1(difference_mean, difference_all_permutations);  % singe tail,
-            p2 = pvalue2(difference_mean, difference_all_permutations);  % double tail
-            percentiles = quantiles(difference_all_permutations, 40);  % for confidence interval
-            if size(percentiles) == [1 1] %#ok<BDSCA>
-                ci_lower = percentiles{1}(2);
-                ci_upper = percentiles{1}(40); % 95 percent
-            elseif size(percentiles) == [size(difference_mean, 1) 1] %#ok<BDSCA>
-                for i = 1:1:length(percentiles)
-                    percentil = percentiles{i};
-                    ci_lower{i, 1} = percentil(2);  %#ok<AGROW>
-                    ci_upper{i, 1} = percentil(40); %#ok<AGROW>
-                end
-            else
-                for i = 1:1:size(percentiles, 1)
-                    for j = 1:1:size(percentiles, 2)
-                        percentil = percentiles{i, j};
-                        ci_lower{i, j} = percentil(2); %#ok<AGROW>
-                        ci_upper{i, j} = percentil(40); %#ok<AGROW>
-                    end
-                end
+            all_random = all_randomizations{1};
+            for i = 2:1:M
+                all_random = all_random + all_randomizations{i};
             end
+            average_value_random = {all_random / M};
             
+            value_random = values_randomizations;
+            
+            difference = {average_value_group - average_value_random{1}};
+            
+             % Statistical analysis
+            p1 = pvalue1(difference, all_differences);  % singe tail,
+            p2 = pvalue2(difference, all_differences);  % double tail
+
+            qtl = quantiles(all_differences, 40);
+            ci_lower = {cellfun(@(x) x(2), qtl)};
+            ci_upper = {cellfun(@(x) x(40), qtl)};       
+  
             % create randomComparisonClass
             randomcomparison = RandomComparison.getRandomComparison(analysis.getRandomComparisonClass(), ...
                 analysis.getRandomComparisonID(measure_code, group, varargin{:}), ...
@@ -172,10 +133,10 @@ classdef AnalysisCON_WU < Analysis
                 measure_code, ...
                 group, ...
                 'RandomComparisonCON.RandomizationNumber', M, ...
-                'RandomComparisonCON.value_group', value_group, ...
+                'RandomComparisonCON.value_group', values_group, ...
                 'RandomComparisonCON.value_random', value_random, ...
-                'RandomComparisonCON.average_value_group', average_values, ...
-                'RandomComparisonCON.average_value_random', average_values, ...
+                'RandomComparisonCON.average_value_group', {average_value_group}, ...
+                'RandomComparisonCON.average_value_random', average_value_random, ...
                 'RandomComparisonCON.difference', difference, ...
                 'RandomComparisonCON.all_differences', all_differences, ...
                 'RandomComparisonCON.p1', p1, ...

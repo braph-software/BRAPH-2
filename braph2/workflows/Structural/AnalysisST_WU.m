@@ -128,7 +128,7 @@ classdef AnalysisST_WU < Analysis
             
             A = binarize(A, varargin{:});
             
-            graph_type = AnalysisST_WU.getGraphType();
+            graph_type = analysis.getGraphType();
             g = Graph.getGraph(graph_type, A);
         end
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
