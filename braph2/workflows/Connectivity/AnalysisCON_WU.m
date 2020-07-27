@@ -38,8 +38,7 @@ classdef AnalysisCON_WU < Analysis
             
             for i = 1:1:group.subjectnumber()
                 subject = subjects{i};
-                A = subject.getData('CON').getValue();  % DTI matrix
-                A = binarize(A, varargin{:});
+                A = subject.getData('CON').getValue();  % CON matrix                
                 graphs{i} = Graph.getGraph(graph_type, A);                 
             end            
         end
