@@ -1,27 +1,27 @@
-classdef SubjectDTI < Subject
-    % SubjectDTI A subject of type DTI
-    % SubjectDTI represents a subject of type DTI.
+classdef SubjectCON < Subject
+    % SubjectCON A subject of type CON
+    % SubjectCON represents a subject of type CON.
     % It is a subclass of Subject. It implements the methods initialize_datadict
     % and update_brainatlases.
     %
-    % SubjectDTI methods (Access = protected):
-    %   SubjectDTI              - Constructor
+    % SubjectCON methods (Access = protected):
+    %   SubjectCON              - Constructor
     %
-    % SubjectDTI methods (Access=protected):
+    % SubjectCON methods (Access=protected):
     %   initialize_datadict     - initializes the data dictionary DATADICT
     %   update_brainatlases     - updates the brain atlases in DATADICT
     %
-    % SubjectDTI inspection methods (Static)
-    %   getClass                - returns the class of SubjectDTI
-    %   getName                 - returns the name of  SubjectDTI
-    %   getDescription          - returns the description of SubjectDTI
+    % SubjectCON inspection methods (Static)
+    %   getClass                - returns the class of SubjectCON
+    %   getName                 - returns the name of  SubjectCON
+    %   getDescription          - returns the description of SubjectCON
     %   getBrainAtlasNumber     - returns the number of elements of Atlases
-    %   getDataList             - returns the type of data of SubjectDTI
+    %   getDataList             - returns the type of data of SubjectCON
     %   getDataNumber           - returns the number of elements of DATADICT
-    %   getDataCodes            - returns the key codes of the data for SubjectDTI
-    %   getDataClasses          - returns the class of the type of all data of SubjectDTI
-    %   getDataClass            - returns the class of the type of a data of SubjectDTI
-    %   getSubject              - returns a new instantiation of SubjectDTI
+    %   getDataCodes            - returns the key codes of the data for SubjectCON
+    %   getDataClasses          - returns the class of the type of all data of SubjectCON
+    %   getDataClass            - returns the class of the type of a data of SubjectCON
+    %   getSubject              - returns a new instantiation of SubjectCON
     %
     % Subject load and save methods (Static):
     %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
@@ -34,17 +34,17 @@ classdef SubjectDTI < Subject
     % See also Group, Cohort, SubjectMRI, SubjectfMRI, Subject.
     
     methods
-        function sub = SubjectDTI(id, label, notes, atlas, varargin)
-            % SUBJECTDTI creates a subject of type DTI
+        function sub = SubjectCON(id, label, notes, atlas, varargin)
+            % SUBJECTCON creates a subject of type CON
             %
-            % SUBJECTDTI(ID, LABEL, NOTES, ATLASES) creates a subject of type DTI
+            % SUBJECTCON(ID, LABEL, NOTES, ATLASES) creates a subject of type CON
             % with ID, LABEL, NOTES. ATLAS is the brain atlas that 
-            % subject DTI will use (it can be either a BrainAtlas or a
+            % subject CON will use (it can be either a BrainAtlas or a
             % cell array with a single BrainAtlas).
             %
-            % SUBJECTDTI(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
-            % creates a DTI subject with ID, LABEL NOTES and ATLASES.
-            % SubjectDTI will be initialized by the rules passed in the
+            % SUBJECTCON(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
+            % creates a CON subject with ID, LABEL NOTES and ATLASES.
+            % SubjectCON will be initialized by the rules passed in the
             % VARARGIN.
             %
             % See also See also Group, Cohort, SubjectMRI, SubjectfMRI, Subject.
@@ -65,8 +65,8 @@ classdef SubjectDTI < Subject
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
-            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'DTI', DTI) initializes the data
-            % ditionary with data type and data code of subject dti.
+            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'CON', CON) initializes the data
+            % ditionary with data type and data code of subject CON.
             %
             % See also update_brainatlases.
             
@@ -74,17 +74,17 @@ classdef SubjectDTI < Subject
             atlas = atlases{1};
             
             age = get_from_varargin(0, 'age', varargin{:});
-            dti = get_from_varargin(zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length()), 'DTI', varargin{:});
+            CON = get_from_varargin(zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length()), 'CON', varargin{:});
             
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
-            sub.datadict('DTI') = DataConnectivity(atlas, dti);
+            sub.datadict('CON') = DataConnectivity(atlas, CON);
         end
         function update_brainatlases(sub, atlases)
-            % UPDATE_BRAINATLASES updates the atlases of the subject dti
+            % UPDATE_BRAINATLASES updates the atlases of the subject CON
             %
             % UPDATE_BRAINATLASES(SUB, ATLASES) updates the atlases of the
-            % subject dti using the new values ATLASES. ATLASES must be a
+            % subject CON using the new values ATLASES. ATLASES must be a
             % cell array with a single BrainAtlas.
             %
             % See also initialize_datadict.
@@ -95,7 +95,7 @@ classdef SubjectDTI < Subject
             d1 = sub.datadict('age');
             d1.setBrainAtlas(atlas)
             
-            d2 = sub.datadict('DTI');
+            d2 = sub.datadict('CON');
             d2.setBrainAtlas(atlas);
         end
     end
@@ -103,31 +103,31 @@ classdef SubjectDTI < Subject
         function subject_class = getClass()
             % GETCLASS returns the class of the subject
             %
-            % SUBJECT_CLASS = GETCLASS() returns the class SubjectDTI
+            % SUBJECT_CLASS = GETCLASS() returns the class SubjectCON
             %
             % See also getDescription, getName.
             
-            subject_class = 'SubjectDTI';
+            subject_class = 'SubjectCON';
         end
         function name = getName()
             % GETNAME returns the name of the subject
             %
-            % NAME = GETNAME() returns the name: Subject DTI.
+            % NAME = GETNAME() returns the name: Subject CON.
             %
             % See also getClass, getDescription.
             
-            name = 'Subject DTI';
+            name = 'Subject CON';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the subject
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of SubjectDTI
+            % of SubjectCON
             %
             % See also getName, getClass, getBrainAtlasNumber.
             
             description = [ ...
-                'Subject with DTI connectivity matrix, ' ...
+                'Subject with CON connectivity matrix, ' ...
                 'such as activation timeseries for each brain region' ...
                 ];
         end
@@ -145,15 +145,15 @@ classdef SubjectDTI < Subject
             % GETDATALIST returns the list of data
             %
             % CELL ARRAY = GETDATALIST() returns a cell array of
-            % subject data. For Subject DTI, the data list is:
+            % subject data. For Subject CON, the data list is:
             %   age             -    DataScalar.
-            %   DTI             -    DataConnectivity.
+            %   CON             -    DataConnectivity.
             %
             % See also getList
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
-            datalist('DTI') = 'DataConnectivity';
+            datalist('CON') = 'DataConnectivity';
         end
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
@@ -162,31 +162,31 @@ classdef SubjectDTI < Subject
             %
             % See also getDataList, getBrainAtlasNumber.
             
-            data_number = Subject.getDataNumber('SubjectDTI');
+            data_number = Subject.getDataNumber('SubjectCON');
         end
         function data_codes = getDataCodes()
             % GETDATACODES returns the list of data keys
             %
             % CELL ARRAY = GETDATACODES(SUB) returns a cell array of
-            % subject dti data keys.
+            % subject CON data keys.
             %
             % See also getList, getDataClasses, getDataNumber
             
-            data_codes = Subject.getDataCodes('SubjectDTI');
+            data_codes = Subject.getDataCodes('SubjectCON');
         end
         function data_classes = getDataClasses()
             % GETDATACLASSES returns the list of data classes
             %
             % CELL ARRAY = GETDATACLASSES(SUB) returns a cell array of
-            % subject dti data classes.
+            % subject CON data classes.
             %
             % CELL ARRAY = GETDATACLASSES(SUBJECT_CLASS) returns a
-            % cell array of subject dti data classes to the subject whose class is
+            % cell array of subject CON data classes to the subject whose class is
             % SUBJECT_CLASS.
             %
             % See also getList, getDataCodes, getDataClass.
             
-            data_classes = Subject.getDataClasses('SubjectDTI');
+            data_classes = Subject.getDataClasses('SubjectCON');
         end
         function data_class = getDataClass(data_code)
             % GETDATACLASS returns the class of a data.
@@ -196,20 +196,20 @@ classdef SubjectDTI < Subject
             %
             % See also getList, getDataClasses.
             
-            data_class = Subject.getDataNumber('SubjectDTI', data_code);
+            data_class = Subject.getDataNumber('SubjectCON', data_code);
         end
     end
     methods (Static)  % Save/load functions
         function cohort = load_from_xls(subject_class, atlases, varargin)
-            % LOAD_FROM_XLS loads '.xls' files to a Cohort with SubjectDTI
+            % LOAD_FROM_XLS loads '.xls' files to a Cohort with SubjectCON
             %
             % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES) opens a GUI to
             % load a directory where it reads '.xls' or '.xlsx' files. It 
-            % creates a cohort of SubjectDTI with brain atlas ATLASES.
+            % creates a cohort of SubjectCON with brain atlas ATLASES.
             %
             % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
             % loads the directory in PATH where it reads '.xls' or '.xlsx'
-            % files. It creates a cohort of SubjectDTI with brain atlas ATLASES.
+            % files. It creates a cohort of SubjectCON with brain atlas ATLASES.
             % 
             % See also save_to_xls, load_from_txt, load_from_json
             
@@ -263,7 +263,7 @@ classdef SubjectDTI < Subject
                     sub_id = erase(sub_id, '.xls');
                     subject = Subject.getSubject(subject_class, ...
                         sub_id, char(raw{1, 1}), char(raw{2, 1}), atlases, ...                     
-                        'DTI', num);
+                        'CON', num);
                     
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
@@ -282,14 +282,14 @@ classdef SubjectDTI < Subject
             end
         end
         function save_to_xls(cohort, varargin)
-            % SAVE_TO_XLS saves the cohort of SubjectsDTI to '.xls' files
+            % SAVE_TO_XLS saves the cohort of SubjectsCON to '.xls' files
             %
             % SAVE_TO_XLS(COHORT) opens a GUI to choose the path where the
-            % cohort of SubjectDTI will be saved in '.xls' or 'xlsx'
+            % cohort of SubjectCON will be saved in '.xls' or 'xlsx'
             % format.
             %
             % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort 
-            % of SubjectDTI in '.xls' or 'xlsx' format in the
+            % of SubjectCON in '.xls' or 'xlsx' format in the
             % specified PATH.
             % 
             % See also load_from_xls, save_to_txt, save_to_json
@@ -337,7 +337,7 @@ classdef SubjectDTI < Subject
                     id = subject.getID();
                     label = subject.getLabel();
                     notes = subject.getNotes();
-                    data = subject.getData('DTI');
+                    data = subject.getData('CON');
                     
                     % create table                    
                     tab = table(data.getValue());
@@ -351,15 +351,15 @@ classdef SubjectDTI < Subject
             end
         end
         function cohort = load_from_txt(subject_class, atlases, varargin)
-            % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectDTI
+            % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectCON
             %
             % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES) opens a GUI to
             % load a directory where it reads '.txt' files. It 
-            % creates a cohort of SubjectDTI with brain atlas ATLASES.
+            % creates a cohort of SubjectCON with brain atlas ATLASES.
             %
             % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
             % loads the directory in PATH where it reads '.txt' files.
-            % It creates a cohort of SubjectDTI with brain atlas ATLASES.
+            % It creates a cohort of SubjectCON with brain atlas ATLASES.
             % 
             % See also save_to_txt, load_from_xls, load_from_json
             
@@ -418,7 +418,7 @@ classdef SubjectDTI < Subject
 
                 subject = Subject.getSubject(subject_class, ...
                         sub_id, char(label), char(notes), atlases, ...                     
-                        'DTI', C);
+                        'CON', C);
                 
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
@@ -437,13 +437,13 @@ classdef SubjectDTI < Subject
             end
         end
         function save_to_txt(cohort, varargin)
-            % SAVE_TO_TXT saves the cohort of SubjectsDTI to '.json' files
+            % SAVE_TO_TXT saves the cohort of SubjectsCON to '.json' files
             %
             % SAVE_TO_TXT(COHORT) opens a GUI to choose the path where the
-            % cohort of SubjectDTI will be saved in '.txt' format.
+            % cohort of SubjectCON will be saved in '.txt' format.
             %
             % SAVE_TO_TXT(COHORT, 'RootDirectory', PATH) saves the cohort 
-            % of SubjectDTI in '.txt' format in the specified PATH.
+            % of SubjectCON in '.txt' format in the specified PATH.
             % 
             % See also load_from_txt, save_to_xls, save_to_json
             
@@ -486,7 +486,7 @@ classdef SubjectDTI < Subject
                     id = subject.getID();
                     label = subject.getLabel();
                     notes = subject.getNotes();
-                    data = subject.getData('DTI').getValue();
+                    data = subject.getData('CON').getValue();
                     
                     % create table
                     extra_info = cell(2, size(data, 1));
@@ -504,15 +504,15 @@ classdef SubjectDTI < Subject
             end
         end
         function cohort = load_from_json(subject_class, atlases, varargin)
-            % LOAD_FROM_JSON loads a '.json' file to a Cohort with SubjectDTI
+            % LOAD_FROM_JSON loads a '.json' file to a Cohort with SubjectCON
             %
             % COHORT = LOAD_FROM_JSON(SUBJECT_CLASS, ATLASES) opens a GUI to
             % load a directory where it reads '.json' files. It 
-            % creates a cohort of SubjectDTI with brain atlas ATLASES.
+            % creates a cohort of SubjectCON with brain atlas ATLASES.
             %
             % COHORT = LOAD_FROM_JSON(SUBJECT_CLASS, ATLASES, 'Directory', PATH)
             % loads the directory in PATH where it reads '.json' files.
-            % It creates a cohort of SubjectDTI with brain atlas ATLASES.
+            % It creates a cohort of SubjectCON with brain atlas ATLASES.
             % 
             % See also save_to_json, load_from_xls, load_from_txt
             
@@ -550,7 +550,7 @@ classdef SubjectDTI < Subject
                 subject = Subject.getSubject(subject_class, ...
                     num2str(sub_id), raw.SubjectData.label, ...
                     raw.SubjectData.notes, atlases, ...
-                    'DTI', raw.SubjectData.data);
+                    'CON', raw.SubjectData.data);
                 
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
@@ -567,13 +567,13 @@ classdef SubjectDTI < Subject
             end
         end
         function save_to_json(cohort, varargin)
-            % SAVE_TO_JSON saves the cohort of SubjectsDTI to '.json' files
+            % SAVE_TO_JSON saves the cohort of SubjectsCON to '.json' files
             %
             % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
-            % cohort of SubjectDTI will be saved in '.json' format.
+            % cohort of SubjectCON will be saved in '.json' format.
             %
             % SAVE_TO_JSON(COHORT, 'RootDirectory', PATH) saves the cohort 
-            % of SubjectDTI in '.json' format in the specified PATH.
+            % of SubjectCON in '.json' format in the specified PATH.
             % 
             % See also load_from_json, save_to_xls, save_to_txt
             
@@ -598,7 +598,7 @@ classdef SubjectDTI < Subject
                     id = subject.getID();
                     label = subject.getLabel();
                     notes = subject.getNotes();
-                    data = subject.getData('DTI');
+                    data = subject.getData('CON');
                     
                     % create structure to be save
                     structure_to_be_saved = struct( ...

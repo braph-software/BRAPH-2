@@ -1,4 +1,4 @@
-% test SubjectDTI
+% test SubjectCON
 
 br1 = BrainRegion('BR1', 'brain region 1', 'notes 1', 1, 1.1, 1.11);
 br2 = BrainRegion('BR2', 'brain region 2', 'notes 2', 2, 2.2, 2.22);
@@ -8,12 +8,12 @@ br5 = BrainRegion('BR5', 'brain region 5', 'notes 5', 5, 5.5, 5.55);
 atlas = BrainAtlas('BA', 'brain atlas', 'notes', 'BrainMesh_ICBM152.nv', {br1, br2, br3, br4, br5});
 
 %% Test 1: Instantiation
-sub = SubjectDTI('id', 'label', 'notes', atlas);
+sub = SubjectCON('id', 'label', 'notes', atlas);
 
 %% Test 2: Save and Load Cohort XLS
 % setup
-sub_class = 'SubjectDTI';
-input_rule = 'DTI';
+sub_class = 'SubjectCON';
+input_rule = 'CON';
 input_data = rand(atlas.getBrainRegions().length(), atlas.getBrainRegions().length());
 save_dir_rule = 'RootDirectory';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased'];
@@ -30,16 +30,16 @@ cohort.getGroups().add(group.getID(), group);
 cohort.getGroups().add(group2.getID(), group2);
 
 % act
-SubjectDTI.save_to_xls(cohort, save_dir_rule, save_dir_path);
+SubjectCON.save_to_xls(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectDTI.load_from_xls(sub_class, atlas, 'Directory', save_dir_path);
+load_cohort = SubjectCON.load_from_xls(sub_class, atlas, 'Directory', save_dir_path);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
-    'BRAPH:SubjectDTI:SaveLoadXLS', ...
+    'BRAPH:SubjectCON:SaveLoadXLS', ...
     'Problems saving or loading a cohort.')
 assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), ...
-    'BRAPH:SubjectDTI:SaveLoadXLS', ...
+    'BRAPH:SubjectCON:SaveLoadXLS', ...
     'Problems saving or loading a cohort.')
 for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length())
     sub = cohort.getSubjects().getValue(i);
@@ -49,7 +49,7 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
     assert( ...
         isequal(sub.getID(), sub_loaded.getID()) & ...
         isequal(data.getValue(), data_loaded.getValue()), ...
-        'BRAPH:SubjectDTI:SaveLoadXLS', ...
+        'BRAPH:SubjectCON:SaveLoadXLS', ...
         'Problems saving or loading a cohort.')
 end
 
@@ -57,8 +57,8 @@ rmdir(save_dir_path, 's')
 
 %% Test 3: Save and load cohort TXT
 % setup
-sub_class = 'SubjectDTI';
-input_rule = 'DTI';
+sub_class = 'SubjectCON';
+input_rule = 'CON';
 input_data = rand(atlas.getBrainRegions().length(), atlas.getBrainRegions().length());
 save_dir_rule = 'RootDirectory';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased'];
@@ -71,16 +71,16 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectDTI.save_to_txt(cohort, save_dir_rule, save_dir_path);
+SubjectCON.save_to_txt(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectDTI.load_from_txt(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getID()]);
+load_cohort = SubjectCON.load_from_txt(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getID()]);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
-    'BRAPH:SubjectDTI:SaveLoadTXT', ...
+    'BRAPH:SubjectCON:SaveLoadTXT', ...
     'Problems saving or loading a cohort.')
 assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), ...
-    'BRAPH:SubjectDTI:SaveLoadTXT', ...
+    'BRAPH:SubjectCON:SaveLoadTXT', ...
     'Problems saving or loading a cohort.')
 for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length())
     sub = cohort.getSubjects().getValue(i);
@@ -90,7 +90,7 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
     assert( ...
         isequal(sub.getID(), sub_loaded.getID()) & ...
         isequal(round(data.getValue(),3), round(data_loaded.getValue(),3)), ...
-        'BRAPH:SubjectDTI:SaveLoadTXT', ...
+        'BRAPH:SubjectCON:SaveLoadTXT', ...
         'Problems saving or loading a cohort.')
 end
 
@@ -98,8 +98,8 @@ rmdir(save_dir_path, 's')
 
 %% Test 4: Save and load cohort JSON
 % setup
-sub_class = 'SubjectDTI';
-input_rule = 'DTI';
+sub_class = 'SubjectCON';
+input_rule = 'CON';
 input_data = rand(atlas.getBrainRegions().length(), atlas.getBrainRegions().length());
 save_dir_rule = 'RootDirectory';
 save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased'];
@@ -113,16 +113,16 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectDTI.save_to_json(cohort, save_dir_rule, save_dir_path);
+SubjectCON.save_to_json(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectDTI.load_from_json(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getID()]);
+load_cohort = SubjectCON.load_from_json(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getID()]);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
-    'BRAPH:SubjectDTI:SaveLoadTXT', ...
+    'BRAPH:SubjectCON:SaveLoadTXT', ...
     'Problems saving or loading a cohort.')
 assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), ...
-    'BRAPH:SubjectDTI:SaveLoadTXT', ...
+    'BRAPH:SubjectCON:SaveLoadTXT', ...
     'Problems saving or loading a cohort.')
 for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length())
     sub = cohort.getSubjects().getValue(i);
@@ -132,7 +132,7 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
     assert( ...
         isequal(sub.getID(), sub_loaded.getID()) & ...
         isequal(round(data.getValue(),3), round(data_loaded.getValue(),3)), ...
-        'BRAPH:SubjectDTI:SaveLoadTXT', ...
+        'BRAPH:SubjectCON:SaveLoadTXT', ...
         'Problems saving or loading a cohort.')
 end
 
