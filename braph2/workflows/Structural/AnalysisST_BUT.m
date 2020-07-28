@@ -3,7 +3,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
     % AnalysisST_BUT is a subclass of AnalysisST_WU and implements the methods
     % needed for structural analysis.
     %
-    % AnalysisST_BUT implements AnalysisST_WU calculting methods
+    % AnalysisST_BUT implements AnalysisST_WU calculating methods
     % to obtain a structural data of fixed threshold binary undirected graphs
     % measurement, a random comprison or a comparison. AnalysisST_BUT
     % overrides the ID methods of its superclass.
@@ -199,19 +199,5 @@ classdef AnalysisST_BUT < AnalysisST_WU
             
             comparison_class = 'ComparisonST_BUT';
         end
-%         function available_settings = getAvailableSettings(m) %#ok<INUSD>
-%             GETAVAILABLESETTINGS returns the available settings of structural analysis
-%             
-%             AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(M) returns the
-%             available settings of AnalysisST_BUT.
-%             
-%             See also getClass, getName, getDescription
-%             
-%             available_settings = {
-%                 {'AnalysisST_BUT.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
-%                 {'AnalysisST_BUT.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
-%                 {'AnalysisST_BUT.Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...
-%                 };
-%         end
     end
 end

@@ -8,7 +8,7 @@ classdef RandomComparisonST_WU < RandomComparison
     % dimensions. Structural data can be for example MRI or PET data.
     %
     % RandomComparisonST_WU constructor methods:
-    %  RandomComparisonST_WU              - Constructor
+    %  RandomComparisonST_WU        - Constructor
     %
     % RandomComparisonST_WU basic methods:
     %  disp                         - displays the comparison

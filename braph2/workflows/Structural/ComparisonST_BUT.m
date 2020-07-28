@@ -7,7 +7,7 @@ classdef ComparisonST_BUT < ComparisonST_WU
     % Structural data can be for example MRI or PET data.
     %
     % ComparisonST_BUT constructor methods:
-    %  ComparisonST_BUT              - Constructor
+    %  ComparisonST_BUT             - Constructor
     %
     % ComparisonST_BUT get methods:
     %  getThreshold                 - returns the threshold
