@@ -4,7 +4,7 @@ classdef MeasurementCON_BUT < MeasurementCON_WU
     %
     % MeasurementCON_BUT store a measurement of connectivity data with BU
     % graphs at fixes threshold, for this it implements MeasurementCON_WU
-    % initialization of data. Structural data can be for example MRI or PET data.
+    % initialization of data. Structural data can be for example DTI data.
     %
     % MeasurementCON_BUT constructor methods:
     %  MeasurementCON_BUT            - Constructor
@@ -96,7 +96,7 @@ classdef MeasurementCON_BUT < MeasurementCON_WU
             description = [ ...
                 'CON measurement with connectivity data using binary graphs ' ...
                 'calculated at a fixed threshold. ' ...
-                'For example, it can use MRI or PET data.' ...
+                'For example, it can use DTI data.' ...
                 ];
         end
         function analysis_class = getAnalysisClass()

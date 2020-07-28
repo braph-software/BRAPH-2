@@ -1,24 +1,24 @@
-classdef AnalysisCON_BUT < AnalysisCON_WU
-    % AnalysisCON_BUT An analysis of connectivity data of fixed threshold binary undirected graphs
-    % AnalysisCON_BUT is a subclass of AnalysisCON_WU and implements the methods
+classdef AnalysisCON_BUD < AnalysisCON_WU
+    % AnalysisCON_BUD An analysis of connectivity data of fixed density binary undirected graphs
+    % AnalysisCON_BUD is a subclass of AnalysisCON_WU and implements the methods
     % needed for connectivity analysis.
     %
-    % AnalysisCON_BUT implements AnalysisCON_WU calculating methods
-    % to obtain a connectivity data of fixed threshold binary undirected graphs
-    % measurement, a random comprison or a comparison. AnalysisCON_BUT
+    % AnalysisCON_BUD implements AnalysisCON_WU calculating methods
+    % to obtain a connectivity data of fixed density binary undirected graphs
+    % measurement, a random comprison or a comparison. AnalysisCON_BUD
     % overrides the ID methods of its superclass.
     % Connectivity data can be for example MRI or PET data.
     %
-    % AnalysisCON_BUT constructor methods:
-    %  AnalysisCON_BUT              - Constructor
+    % AnalysisCON_BUD constructor methods:
+    %  AnalysisCON_BUD              - Constructor
     %
-    % AnalysisCON_BUT calcultion methods (Access = protected):
+    % AnalysisCON_BUD calcultion methods (Access = protected):
     %  get_graph_for_subjects       - returns the graph of the correlated matrix
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
     %
-    % AnalysisCON_BUT descriptive methods (Static):
+    % AnalysisCON_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the analysis
     %  getName                      - returns the name of the analysis
     %  getDescription               - returns the description of the analysis
@@ -27,17 +27,17 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
     %  getComparisonClass           - returns the class of the comparison
     %  getAvailbleSettings          - returns the available settings
     %
-    % See also Analysis, MeasurementST_BUT, RandomComparisonST_BUT, ComparisonST_BUT
+    % See also Analysis, MeasurementST_BUD, RandomComparisonST_BUD, ComparisonST_BUD
     
     methods
-        function analysis = AnalysisCON_BUT(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
-            % AnalysisCON_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
-            % creates a connectivity analysis of fixed threshold with ID, LABEL,
+        function analysis = AnalysisCON_BUD(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
+            % AnalysisCON_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
+            % creates a connectivity analysis of fixed density with ID, LABEL,
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It 
             % initializes the ANALYSISST_WU with default settings.
             %
-            % AnalysisCON_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
-            % creates a connectivity analysis of fixed threshold with ID, LABEL,
+            % AnalysisCON_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
+            % creates a connectivity analysis of fixed density with ID, LABEL,
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISST_WU with specified settings VALUES.
             %
@@ -50,44 +50,44 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
             % GETMEASUREMENTID returns a measurement ID
             %
-            % MEASUREMENT_ID = GETMEASUREMENTID(ANALYSIS, MEASURE_CODE, GROUP, 'threshold', THRESHOLD)
+            % MEASUREMENT_ID = GETMEASUREMENTID(ANALYSIS, MEASURE_CODE, GROUP, 'density', DENSITY)
             % creates a measurement ID with the ANALYSIS class, the
-            % MEASURE_CODE, the GROUP and the THRESHOLD.
+            % MEASURE_CODE, the GROUP and the DENSITY.
             %
             % See also getRandomComparisonID, getComparisonID.            
             
             measurement_id = getMeasurementID@AnalysisCON_WU(analysis, measure_code, group, varargin{:});
             
-            threshold = get_from_varargin(0, 'threshold', varargin{:});
-            measurement_id = [measurement_id ' threshold=' num2str(threshold)];          
+            density = get_from_varargin(0, 'density', varargin{:});
+            measurement_id = [measurement_id ' density=' num2str(density)];          
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             % GETRANDOMCOMPARISONID returns a random comparison ID
             %
-            % RANDOMCOMPARISON_ID = GETRANDOMCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP, 'threshold', THRESHOLD)
+            % RANDOMCOMPARISON_ID = GETRANDOMCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP, 'density', DENSITY)
             % creates a random comparison ID with the ANALYSIS class, the
-            % MEASURE_CODE, the GROUP and the THRESHOLD.
+            % MEASURE_CODE, the GROUP and the DENSITY.
             %
             % See also getMeasurementID, getComparisonID.            
          
             randomcomparison_id = getRandomComparisonID@AnalysisCON_WU(analysis, measure_code, group, varargin{:});
             
-            threshold = get_from_varargin(0, 'threshold', varargin{:});
-            randomcomparison_id = [randomcomparison_id ' threshold=' num2str(threshold)];
+            density = get_from_varargin(0, 'density', varargin{:});
+            randomcomparison_id = [randomcomparison_id ' density=' num2str(density)];
         end
         function comparison_id = getComparisonID(analysis, measure_code, group_1, group_2, varargin)
             % GETCOMPARISONID returns a comparison ID
             %
-            % COMPARISON_ID = GETCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2, 'threshold', THRESHOLD)
+            % COMPARISON_ID = GETCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2, 'density', DENSITY)
             % creates a random comparison ID with the ANALYSIS class, the
-            % MEASURE_CODE, GROUP_1 and GROUP_2, and the THRESHOLD.
+            % MEASURE_CODE, GROUP_1 and GROUP_2, and the DENSITY.
             %
             % See also getMeasurementID, getRandomComparisonID.
             
             comparison_id = getComparisonID@AnalysisCON_WU(analysis, measure_code, group_1, group_2, varargin{:});
             
-            threshold = get_from_varargin(0, 'threshold', varargin{:});
-            comparison_id = [comparison_id ' threshold=' num2str(threshold)];
+            density = get_from_varargin(0, 'density', varargin{:});
+            comparison_id = [comparison_id ' density=' num2str(density)];
         end
     end
     methods (Access = protected)
@@ -116,8 +116,8 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             negative_weight_rule = analysis.getSettings('AnalysisCON.NegativeWeightRule');
             A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
             
-            threshold = get_from_varargin(0, 'threshold', varargin{:});
-            A = binarize(A, 'threshold', threshold, varargin{:});
+            density = get_from_varargin(0, 'density', varargin{:});
+            A = binarize(A, 'density', density, varargin{:});
             
             graph_type = AnalysisCON_WU.getGraphType();
             g = Graph.getGraph(graph_type, A);
@@ -128,11 +128,11 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             % GETCLASS returns the class of connectivity analysis
             %
             % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
-            % analysis. In this case AnalysisCON_BUT.
+            % analysis. In this case AnalysisCON_BUD.
             %
             % See also getList, getName, getDescription.
             
-            analysis_class = 'AnalysisCON_BUT';
+            analysis_class = 'AnalysisCON_BUD';
         end
         function name = getName()
             % GETNAME returns the name of connectivity analysis
@@ -141,18 +141,18 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             %
             % See also getList, getClass, getDescription.
             
-            name = 'Analysis Connectivity BUT';
+            name = 'Analysis Connectivity BUD';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of connectivity analysis
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of AnalysisCON_BUT.
+            % of AnalysisCON_BUD.
             %
             % See also getList, getClass, getName.
             
             description = [ ...
-                'Analysis based on connectivity data of fixed threshold using ' ...
+                'Analysis based on connectivity data of fixed density using ' ...
                 'weighted graphs e.g. cortical thickness for each brain region. ' ...
                 'It provides a single graph for each subject group. ' ...
                 'Connectivity data can be for example MRI or PET data.' ...
@@ -172,32 +172,32 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             % GETMEASUREMENTCLASS returns the class of connectivity analysis measurement
             %
             % MEASUREMENT_CLASS = GETMEASUREMENT_CLASS() returns the
-            % class of AnalysisCON_BUT measurement, 'MeasurementCON_BUT'.
+            % class of AnalysisCON_BUD measurement, 'MeasurementCON_BUD'.
             %
             % See also getRandomComparisonClass, getComparisonClass.
             
-            measurement_class =  'MeasurementCON_BUT';
+            measurement_class =  'MeasurementCON_BUD';
         end
         function randomcomparison_class = getRandomComparisonClass()
             % GETRANDOMCOMPARISONCLASS returns the class of connectivity analysis randomcomparison
             %
             % RANDOMCOMPARISON_CLASS = GETRANDOMCOMPARISONCLASS()
-            % returns the class of AnalysisCON_BUT randomcomparison,
-            % 'RandomComparisonCON_BUT'.
+            % returns the class of AnalysisCON_BUD randomcomparison,
+            % 'RandomComparisonCON_BUD'.
             %
             % See also getMeasurementClass, getComparisonClass.
             
-            randomcomparison_class = 'RandomComparisonCON_BUT';
+            randomcomparison_class = 'RandomComparisonCON_BUD';
         end
         function comparison_class = getComparisonClass()
             % GETCOMPARISONCLASS returns the class of connectivity analysis comparison
             %
             % COMPARISON_CLASS = GETCOMPARISONCLASS() returns the
-            % class of AnalysisCON_BUT comparison, 'ComparisonCON_BUT'.
+            % class of AnalysisCON_BUD comparison, 'ComparisonCON_BUD'.
             %
             % See also getMeasurementClass, getRandomComparisonClass.
             
-            comparison_class = 'ComparisonCON_BUT';
+            comparison_class = 'ComparisonCON_BUD';
         end
     end
 end
