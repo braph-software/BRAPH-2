@@ -1,9 +1,9 @@
 classdef AnalysisST_BUD < AnalysisST_WU
     % AnalysisST_BUD An analysis of structural data of fixed density binary undirected graphs
-    % AnalysisST_BUD is a subclass of AnalysisST_WU and implements the methods
+    % AnalysisST_BUD is a subclass of AnalysisST_WU and inherits the methods
     % needed for structural analysis.
     %
-    % AnalysisST_BUD implements AnalysisST_WU calculting methods
+    % AnalysisST_BUD inhertis AnalysisST_WU calculating methods
     % to obtain a structural data of fixed density binary undirected graphs
     % measurement, a random comprison or a comparison. AnalysisST_BUD
     % overrides the ID methods of its superclass.

@@ -2,7 +2,7 @@ classdef ComparisonST_BUD < ComparisonST_WU
     % ComparisonST_BUD A comparison of structural data with BU graphs at fixed density
     % ComparisonST_BUD is a subclass of Comparison.
     %
-    % ComparisonST_BUD store a comparison between two groups.
+    % ComparisonST_BUD stores a comparison between two groups.
     % The data from the groups it compares have a density.
     % Structural data can be for example MRI or PET data.
     %
