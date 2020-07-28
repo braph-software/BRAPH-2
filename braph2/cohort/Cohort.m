@@ -149,7 +149,7 @@ classdef Cohort < handle & matlab.mixin.Copyable
             assert(all(cellfun(@(atlas) isa(atlas, 'BrainAtlas'), atlases)) ...
                 && length(atlases) == Subject.getBrainAtlasNumber(subject_class), ...
                 [BRAPH2.STR ':Cohort:' BRAPH2.WRONG_INPUT], ...
-                ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas']) %#ok<NBRAK>
+                ['The input atlases should be a cell array with ' int2str(Subject.getBrainAtlasNumber(subject_class)) ' BrainAtlas'])
             cohort.atlases = atlases;
             
             cohort.subject_idict = IndexedDictionary(subject_class);
@@ -389,6 +389,111 @@ classdef Cohort < handle & matlab.mixin.Copyable
             
             for i = 1:1:length(subject_indexes)
                 cohort.removeSubjectFromGroup(subject_indexes(i), group);
+            end
+        end
+        function complementary = notGroup(cohort, group)
+            % NOTGROUP returns a group with complementary subjects 
+            % 
+            % COMPLEMENTARY = NOTGROUP(COHORT, GROUP) returns a group with
+            % complementary subjects of GROUP from the COHORT. This group
+            % is not added to the cohort. 
+            %
+            % See also andGroup, orGroup, nandGroup, xorGroup.
+
+            if cohort.getGroups().contains(group)
+                subjects_cohort = cohort.getSubjects().getValues();  
+                complementary_subjects = cellfun(@(x) x(~group.contains_subject(x)), subjects_cohort, 'UniformOutput', false);  
+                complementary_subs = complementary_subjects(~cellfun(@isempty, complementary_subjects));
+                complementary = Group(cohort.getSubjectClass(), ...
+                    ['NOT ' group.getID()], ...
+                    ['NOT ' group.getLabel()], ... 
+                    ['NOT ' group.getNotes()], ...
+                    complementary_subs);
+            end            
+        end
+        function intersection = andGroup(cohort, group1, group2)
+            % ANDGROUP returns intersection of groups
+            %
+            % INTERSECTION = ANDGROUP(COHORT, GROUP) returns a group of the
+            % intersection of subjects between GROUP1 and GROUP2. This group
+            % is not added to the cohort. 
+            %
+            % See also notGroup, orGroup, nandGroup, xorGroup.
+
+            if cohort.getGroups().contains(group1) && cohort.getGroups().contains(group2)
+                subjects_1 = cohort.getGroups().getValue(group1.getID()).getSubjects();
+                subs_ingroups = cellfun(@(x) x(group2.contains_subject(x)), subjects_1, 'UniformOutput', false);  
+                intersection_group = subs_ingroups(~cellfun('isempty', subs_ingroups));
+                intersection = Group(cohort.getSubjectClass(), ...
+                    [group1.getID() ' AND ' group2.getID()], ...
+                    [group1.getLabel() ' AND ' group2.getLabel()], ... 
+                    [group1.getNotes() ' AND ' group2.getNotes()], ...
+                    intersection_group);
+            end
+        end
+        function union = orGroup(cohort, group1, group2)
+            % ORGROUP returns union of subjects between groups
+            %
+            % UNION = ORGROUP(COHORT, GROUP1, GROUP2) returns a group with
+            % the union of all subjects in GROUP1 and GROUP2. This group is
+            % not added to the cohort. 
+            % 
+            % See also notGroup, andGroup, nandGroup, xorGroup.
+            
+             if cohort.getGroups().contains(group1) && cohort.getGroups().contains(group2)
+                subjects_cohort = cohort.getSubjects().getValues();  % return subjects  
+                subs_union = cellfun(@(x) x(group1.contains_subject(x) || group2.contains_subject(x)), subjects_cohort, 'UniformOutput', false);
+                clean_subs_union = subs_union(~cellfun('isempty', subs_union));
+                union = Group(cohort.getSubjectClass(), ...
+                    [group1.getID() ' OR ' group2.getID()], ...
+                    [group1.getLabel() ' OR ' group2.getLabel()], ... 
+                    [group1.getNotes() ' OR ' group2.getNotes()], ...
+                    clean_subs_union);  % group return
+            end
+        end
+        function nand = nandGroup(cohort, group1, group2)
+            % NANDGROUP returns compliment of intersection of subjects
+            %
+            % NAND = NANDGROUP(COHORT, GROUP1, GROUP2) returns a group of
+            % subjects that are compliment of the intersection between
+            % GROUP1 and GROUP2. This group is not added to the cohort. 
+            %
+            % See also notGroup, andGroup, orGroup, xorGroup.         
+
+             if cohort.getGroups().contains(group1) && cohort.getGroups().contains(group2)
+                 subjects_cohort = cohort.getSubjects().getValues();
+                 nand_subjects =  cellfun(@(x) ...
+                     x(~(group1.contains_subject(x) & group2.contains_subject(x))), ...
+                     subjects_cohort, 'UniformOutput', false);
+                 clean_nand = nand_subjects(~cellfun('isempty', nand_subjects));
+                 nand = Group(cohort.getSubjectClass(), ...
+                    [group1.getID() ' NAND ' group2.getID()], ...
+                    [group1.getLabel() ' NAND ' group2.getLabel()], ... 
+                    [group1.getNotes() ' NAND ' group2.getNotes()], ...
+                    clean_nand);  % group return
+            end
+        end
+        function xor = xorGroup(cohort, group1, group2)
+            % XORGROUP returns exclusive intersection of subjects
+            %
+            % XOR = XORGROUP(COHORT, GROUP1, GROUP2) returns a group with 
+            % the exclusive compliment of the intersection of subjects
+            % between GROUP1 and GROUP2. This group is not added to the cohort. 
+            %
+            % See also notGroup, andGroup, orGroup, nandGroup.
+            
+             if cohort.getGroups().contains(group1) && cohort.getGroups().contains(group2)
+                subjects_cohort = cohort.getSubjects().getValues(); 
+                xor_subjects = cellfun(@(x) ...
+                    x((group1.contains_subject(x) || group2.contains_subject(x)) & ...  % or  
+                    ~(group1.contains_subject(x) & group2.contains_subject(x))), ...   % ~and
+                    subjects_cohort, 'UniformOutput', false);
+                clean_xor = xor_subjects(~cellfun('isempty', xor_subjects));
+                xor = Group(cohort.getSubjectClass(), ...
+                    [group1.getID() ' XOR ' group2.getID()], ...
+                    [group1.getLabel() ' XOR ' group2.getLabel()], ... 
+                    [group1.getNotes() ' XOR ' group2.getNotes()], ...
+                    clean_xor);  % group return
             end
         end
     end
