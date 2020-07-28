@@ -5,7 +5,7 @@ classdef SubjectST < Subject
     % and update_brainatlases.
     %
     % SubjectST methods (Access=protected):
-    %   SubjectST              - Constructor
+    %   SubjectST               - Constructor
     %
     % SubjectST methods (Access=protected):
     %   initialize_datadict     - initializes the data dictionary DATADICT

@@ -10,7 +10,7 @@ classdef AnalysisST_WU < Analysis
     % Structural data can be for example MRI or PET data.
     %
     % AnalysisST_WU constructor methods:
-    %  AnalysisST_WU               - Constructor
+    %  AnalysisST_WU                - Constructor
     %
     % AnalysisST_WU ID methods:
     %  getMeasurementID             - returns the measurement ID

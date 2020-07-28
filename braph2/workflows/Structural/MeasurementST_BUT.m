@@ -17,7 +17,6 @@ classdef MeasurementST_BUT < MeasurementST_WU
     %  getName                      - returns the name of the measurement
     %  getDescription               - returns the description of the measurement
     %  getAnalysisClass             - returns the class of the analysis
-
     %
     % See also Comparison, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT. 
    

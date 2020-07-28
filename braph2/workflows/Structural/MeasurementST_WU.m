@@ -8,7 +8,7 @@ classdef MeasurementST_WU < Measurement
     % dimensions. Structural data can be for example MRI or PET data.
     %
     % MeasurementST_WU constructor methods:
-    %  MeasurementST_WU              - Constructor
+    %  MeasurementST_WU             - Constructor
     %
     % MeasurementST_WU basic methods:
     %  disp                         - displays the comparison
