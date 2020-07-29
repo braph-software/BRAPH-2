@@ -1,4 +1,4 @@
-function GUICohort(tmp, restricted)
+function GUICohort(tmp, sub_class, restricted)
 % GUICohort Cohort Editor
 %
 % GUICOHORT(SUBJECT_CLASS) opens an empty cohort with empty atlas for SUBJECT_CLASS type 
@@ -17,11 +17,11 @@ LEFTCOLUMN_WIDTH = .29;
 HEADING_HEIGHT = .12;
 FILENAME_HEIGHT = .02;
 
-MAINPANEL_X0 = LEFTCOLUMN_WIDTH + 2 * MARGIN_X;
-MAINPANEL_Y0 = FILENAME_HEIGHT + 2 * MARGIN_Y;
-MAINPANEL_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
-MAINPANEL_HEIGHT = 1 - FILENAME_HEIGHT - 4 * MARGIN_Y;
-MAINPANEL_POSITION = [MAINPANEL_X0 MAINPANEL_Y0 MAINPANEL_WIDTH MAINPANEL_HEIGHT];
+SUBJECTPANEL_X0 = LEFTCOLUMN_WIDTH + 2 * MARGIN_X;
+SUBJECTPANEL_Y0 = FILENAME_HEIGHT + 2 * MARGIN_Y;
+SUBJECTPANEL_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
+SUBJECTPANEL_HEIGHT = 1 - FILENAME_HEIGHT - 4 * MARGIN_Y;
+SUBJECTPANEL_POSITION = [SUBJECTPANEL_X0 SUBJECTPANEL_Y0 SUBJECTPANEL_WIDTH SUBJECTPANEL_HEIGHT];
 
 % Commands
 OPEN_CMD = GUI.OPEN_CMD; 
@@ -70,7 +70,10 @@ MOVEDOWN_GR_TP = 'Move selected group down';
 %% Application Data
 if exist('tmp', 'var') && isa(tmp, 'Cohort')
     cohort = tmp;
-else
+elseif exist('tmp', 'var') && isa(tmp,'BrainAtlas')  && exist('sub_class', 'var')  % case with atlas  
+    atlas = tmp;
+    cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlas, {});    
+else % string
     assert(ismember(tmp, Subject.getList()));
     atlas = BrainAtlas('Empty BA', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', tmp, atlas, {});
@@ -276,7 +279,7 @@ GRTAB_LBL_COL = 4;
 GRTAB_NOTES_COL = 5;
 
 GRTAB_WIDTH = LEFTCOLUMN_WIDTH;
-GRTAB_HEIGHT = MAINPANEL_HEIGHT;
+GRTAB_HEIGHT = SUBJECTPANEL_HEIGHT;
 GRTAB_X0 = MARGIN_X;
 GRTAB_Y0 = FILENAME_HEIGHT + 2 * MARGIN_Y;
 GRTAB_POSITION = [GRTAB_X0 GRTAB_Y0 GRTAB_WIDTH GRTAB_HEIGHT];
@@ -301,6 +304,8 @@ GRTAB_INTERSECT_TP = 'Intersect two groups';
 
 ui_panel_grtab = uipanel();
 ui_edit_grtab_cohortname = uicontrol(ui_panel_grtab, 'Style', 'edit');
+ui_edit_grtab_cohortlabel = uicontrol(ui_panel_grtab, 'Style', 'edit');
+ui_edit_grtab_cohortnotes = uicontrol(ui_panel_grtab, 'Style', 'edit');
 ui_button_grtab_load_xls = uicontrol(ui_panel_grtab, 'Style', 'pushbutton');
 ui_button_grtab_load_txt = uicontrol(ui_panel_grtab, 'Style', 'pushbutton');
 ui_button_grtab_load_json = uicontrol(ui_panel_grtab, 'Style', 'pushbutton');
@@ -318,7 +323,6 @@ ui_popup_grtab_intersect1 = uicontrol(ui_panel_grtab, 'Style', 'popup', 'String'
 ui_popup_grtab_intersect2 = uicontrol(ui_panel_grtab, 'Style', 'popup', 'String', {''});
 ui_button_grtab_intersect = uicontrol(ui_panel_grtab, 'Style', 'pushbutton');
 init_grtab()
-
     function init_grtab()
         GUI.setUnits(ui_panel_grtab)
         GUI.setBackgroundColor(ui_panel_grtab)
@@ -326,10 +330,20 @@ init_grtab()
         set(ui_panel_grtab, 'Position',GRTAB_POSITION)
         set(ui_panel_grtab, 'BorderType', 'none')
 
-        set(ui_edit_grtab_cohortname, 'Position', [.02 .95 .96 .04])
+        set(ui_edit_grtab_cohortname, 'Position', [.02 .95 .36 .04])
         set(ui_edit_grtab_cohortname, 'HorizontalAlignment', 'left')
         set(ui_edit_grtab_cohortname, 'FontWeight', 'bold')
         set(ui_edit_grtab_cohortname, 'Callback', {@cb_grtab_cohortname})
+        
+        set(ui_edit_grtab_cohortlabel, 'Position', [.42 .95 .56 .04])
+        set(ui_edit_grtab_cohortlabel, 'HorizontalAlignment', 'left')
+        set(ui_edit_grtab_cohortlabel, 'FontWeight', 'bold')
+        set(ui_edit_grtab_cohortlabel, 'Callback', {@cb_grtab_cohortlabel})
+        
+        set(ui_edit_grtab_cohortnotes, 'Position', [.42 .90 .56 .04])
+        set(ui_edit_grtab_cohortnotes, 'HorizontalAlignment', 'left')
+        set(ui_edit_grtab_cohortnotes, 'FontWeight', 'bold')
+        set(ui_edit_grtab_cohortnotes, 'Callback', {@cb_grtab_cohortnotes})
 
         set(ui_button_grtab_load_xls, 'Position',[.02 .90 .96 .035])
         set(ui_button_grtab_load_xls, 'String', GRTAB_LOAD_XLS_CMD)
@@ -431,6 +445,12 @@ init_grtab()
         cohort.setID(get(ui_edit_grtab_cohortname, 'String'));
         update_grtab_cohortname()
     end
+    function cb_grtab_cohortlabel(~, ~)  % (src,event)
+        cohort.setLabel(get(ui_edit_grtab_cohortname, 'String'));
+    end
+    function cb_grtab_cohortnotes(~, ~)  % (src,event)
+        cohort.setNotes(get(ui_edit_grtab_cohortname, 'String'));
+    end
     function cb_grtab_load_xls(~, ~)  % (src,event)
         try
         sub_class = cohort.getSubjectClass();
@@ -529,7 +549,6 @@ init_grtab()
 % Menus
 MENU_FILE = GUI.MENU_FILE;
 MENU_GROUPS = 'Groups';
-
 
 ui_menu_file = uimenu(f,'Label',MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
