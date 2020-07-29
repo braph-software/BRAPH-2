@@ -111,7 +111,7 @@ selected_subjects = [];
     end
     function cb_saveas(~, ~)  % (src, event)
         % select file
-        [file, path, filterindex] = uiputfile(GUI.BAE_EXTENSION, GUI.BAE_MSG_PUTFILE);
+        [file, path, filterindex] = uiputfile(GUI.MCE_EXTENSION, GUI.MCE_MSG_PUTFILE);
         % save file
         if filterindex
             filename = fullfile(path, file);
@@ -127,6 +127,7 @@ selected_subjects = [];
             selected_subjects = [];
             setup()
             update_filename('')
+            update_group_popups()
         end
     end
     function cb_import_xls(~, ~)  % (scr, event)
@@ -137,6 +138,7 @@ selected_subjects = [];
             selected_subjects = [];
             setup()
             update_filename('')
+            update_group_popups()
         end
     end
     function cb_import_json(~, ~)  % (src, event)
@@ -148,6 +150,7 @@ selected_subjects = [];
             selected = [];
             setup()
             update_filename('')
+            update_group_popups()
         end
     end
     function cb_export_txt(~, ~)  % (scr, event)
@@ -306,6 +309,7 @@ ui_panel_grtab = uipanel();
 ui_edit_grtab_cohortname = uicontrol(ui_panel_grtab, 'Style', 'edit');
 ui_edit_grtab_cohortlabel = uicontrol(ui_panel_grtab, 'Style', 'edit');
 ui_edit_grtab_cohortnotes = uicontrol(ui_panel_grtab, 'Style', 'edit');
+ui_label_grtab_subject = uicontrol(ui_panel_grtab, 'Style', 'text');
 ui_button_grtab_load_xls = uicontrol(ui_panel_grtab, 'Style', 'pushbutton');
 ui_button_grtab_load_txt = uicontrol(ui_panel_grtab, 'Style', 'pushbutton');
 ui_button_grtab_load_json = uicontrol(ui_panel_grtab, 'Style', 'pushbutton');
@@ -344,6 +348,12 @@ init_grtab()
         set(ui_edit_grtab_cohortnotes, 'HorizontalAlignment', 'left')
         set(ui_edit_grtab_cohortnotes, 'FontWeight', 'bold')
         set(ui_edit_grtab_cohortnotes, 'Callback', {@cb_grtab_cohortnotes})
+        
+        set(ui_label_grtab_subject, 'Position', [.02 .90 .36 .03])
+        set(ui_label_grtab_subject, 'HorizontalAlignment', 'left')
+        set(ui_label_grtab_subject, 'String', cohort.getSubjectClass())
+        set(ui_label_grtab_subject, 'TooltipString', eval([cohort.getSubjectClass() '.getDescription()']))
+        set(ui_label_grtab_subject, 'enable', 'off')
 
         set(ui_button_grtab_load_xls, 'Position',[.02 .86 .96 .035])
         set(ui_button_grtab_load_xls, 'String', GRTAB_LOAD_XLS_CMD)
@@ -456,7 +466,8 @@ init_grtab()
         sub_class = cohort.getSubjectClass();
         cohort = eval([sub_class '.load_from_xls(cohort)']);             
         % update
-        update_grtab_table()         
+        update_grtab_table()    
+        update_group_popups()
         catch
             errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid XLS file']);
         end
@@ -466,7 +477,8 @@ init_grtab()
         sub_class = cohort.getSubjectClass();
         cohort = eval([sub_class '.load_from_xls(cohort)']);         
         % update
-        update_grtab_table()        
+        update_grtab_table()     
+        update_group_popups()
         catch
             errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid TXT file']);
         end
@@ -546,11 +558,40 @@ init_grtab()
         update_grtab_table()        
     end
 
-% Menus
+%% Groups
+    function update_group_popups()
+        groups = cohort.getGroups().getValues();
+        GroupList = cellfun(@(x) x.getID(), groups, 'UniformOutPut', false);
+
+        if isempty(GroupList)
+            GroupList = {''};
+        end
+        set(ui_popup_grtab_invert, 'String', GroupList)
+        if get(ui_popup_grtab_invert, 'Value') > cohort.getGroups().length() || get(ui_popup_grtab_invert, 'Value') < 1
+            set(ui_popup_grtab_invert, 'Value', 1)
+        end
+        set(ui_popup_grtab_merge1, 'String', GroupList)
+        if get(ui_popup_grtab_merge1, 'Value') > cohort.getGroups().length() || get(ui_popup_grtab_merge1, 'Value') < 1
+            set(ui_popup_grtab_merge1, 'Value', 1)
+        end
+        set(ui_popup_grtab_merge2, 'String', GroupList)
+        if get(ui_popup_grtab_merge2, 'Value') > cohort.getGroups().length() || get(ui_popup_grtab_merge2, 'Value') < 1
+            set(ui_popup_grtab_merge2, 'Value', 1)
+        end
+        set(ui_popup_grtab_intersect1, 'String', GroupList)
+        if get(ui_popup_grtab_intersect1, 'Value') > cohort.getGroups().length() || get(ui_popup_grtab_intersect1, 'Value') < 1
+            set(ui_popup_grtab_intersect1, 'Value', 1)
+        end
+        set(ui_popup_grtab_intersect2, 'String', GroupList)
+        if get(ui_popup_grtab_intersect2, 'Value') > cohort.getGroups().length() || get(ui_popup_grtab_intersect2, 'Value') < 1
+            set(ui_popup_grtab_intersect2, 'Value', 1)
+        end
+    end
+%% Menus
 MENU_FILE = GUI.MENU_FILE;
 MENU_GROUPS = 'Groups';
 
-ui_menu_file = uimenu(f,'Label',MENU_FILE);
+ui_menu_file = uimenu(f, 'Label',MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
 ui_menu_file_save = uimenu(ui_menu_file);
 ui_menu_file_saveas = uimenu(ui_menu_file);
@@ -561,7 +602,7 @@ ui_menu_file_export_txt = uimenu(ui_menu_file);
 ui_menu_file_import_json = uimenu(ui_menu_file);
 ui_menu_file_export_json = uimenu(ui_menu_file);
 ui_menu_file_close = uimenu(ui_menu_file);
-ui_menu_groups = uimenu(f,'Label',MENU_GROUPS);
+ui_menu_groups = uimenu(f, 'Label',MENU_GROUPS);
 ui_menu_groups_load_xls = uimenu(ui_menu_groups);
 ui_menu_groups_load_txt = uimenu(ui_menu_groups);
 ui_menu_groups_load_json = uimenu(ui_menu_groups);
@@ -680,6 +721,7 @@ setup_restrictions()
         % setup table
         update_grtab_cohortname()
         update_grtab_table()
+        update_group_popups()
          
     end
 end
