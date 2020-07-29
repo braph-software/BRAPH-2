@@ -7,13 +7,14 @@ function GUICohort(tmp, restricted)
 %
 % GUICOHORT(COHORT, TRUE) opens a cohort with only reading and basic writing
 
-APPNAME  = GUI.BAE_NAME;  % application name
+APPNAME  = GUI.MCE_NAME;  % application name
 BUILD = BRAPH2.BUILD;
 
 % Dimensions
 MARGIN_X = .01;
 MARGIN_Y = .01;
 LEFTCOLUMN_WIDTH = .29;
+HEADING_HEIGHT = .12;
 FILENAME_HEIGHT = .02;
 
 MAINPANEL_X0 = LEFTCOLUMN_WIDTH + 2 * MARGIN_X;
@@ -313,8 +314,8 @@ GRTAB_LOAD_TXT_TP = 'Load subjects from TXT file. All subjects will be in the sa
 GRTAB_LOAD_JSON_CMD = 'Load subject group from json ...';
 GRTAB_LOAD_JSON_TP = 'Load subjects from JSON file. All subjects will be in the same (new) group';
 
-GRTAB_INVERT_CMD = 'Invert';
-GRTAB_INVERT_TP = 'Invert group';
+GRTAB_NOT_CMD = 'Complementary';
+GRTAB_NOT_TP = 'Complementary of group';
 
 GRTAB_MERGE_CMD = 'Merge';
 GRTAB_MERGE_TP = 'Merge two groups';
@@ -365,8 +366,8 @@ init_grtab()
         set(ui_button_grtab_load_txt, 'Callback', {@cb_grtab_load_txt})
 
         set(ui_button_grtab_load_json, 'Position', [.02 .82 .96 .035])
-        set(ui_button_grtab_load_json, 'String' ,GRTAB_LOAD_XML_CMD)
-        set(ui_button_grtab_load_json, 'TooltipString', GRTAB_LOAD_XML_TP)
+        set(ui_button_grtab_load_json, 'String', GRTAB_LOAD_JSON_CMD)
+        set(ui_button_grtab_load_json, 'TooltipString', GRTAB_LOAD_JSON_TP)
         set(ui_button_grtab_load_json, 'Callback', {@cb_grtab_load_json})
 
         set(ui_table_grtab, 'Position', [.02 .21 .96 .59])
@@ -399,9 +400,9 @@ init_grtab()
         set(ui_popup_grtab_invert, 'TooltipString', 'Select group.');
 
         set(ui_button_grtab_invert, 'Position', [.77 .10 .21 .03])
-        set(ui_button_grtab_invert, 'String', GRTAB_INVERT_CMD)
-        set(ui_button_grtab_invert, 'TooltipString', GRTAB_INVERT_TP)
-        set(ui_button_grtab_invert, 'Callback', {@cb_grtab_invert})
+        set(ui_button_grtab_invert, 'String', GRTAB_NOT_CMD)
+        set(ui_button_grtab_invert, 'TooltipString', GRTAB_NOT_TP)
+        set(ui_button_grtab_invert, 'Callback', {@cb_grtab_complementary})
 
         set(ui_popup_grtab_merge1, 'Position', [.02 .06 .35 .03])
         set(ui_popup_grtab_merge1, 'TooltipString', 'Select group.');
@@ -428,9 +429,9 @@ init_grtab()
     function update_grtab_cohortname()
         cohortname = cohort.getID();
         if isempty(cohortname)
-            set(f, 'Name', [GUI.MCE_NAME ' - ' BNC.VERSION])
+            set(f, 'Name', [GUI.MCE_NAME ' - ' BRAPH2.VERSION])
         else
-            set(f, 'Name', [GUI.MCE_NAME ' - ' BNC.VERSION ' - ' cohortname])
+            set(f, 'Name', [GUI.MCE_NAME ' - ' BRAPH2.VERSION ' - ' cohortname])
         end
         set(ui_edit_grtab_cohortname, 'String', cohortname)
     end
@@ -538,7 +539,230 @@ init_grtab()
         update_grtab_table()
         update_console_panel()
     end
- 
+    function cb_grtab_complementary(~, ~)  % (src,event)
+        g = get(ui_popup_grtab_invert, 'Value');
+        group = cohort.getGroups().getValue(g);
+        complementary = cohort.notgroup(group);
+        cohort.getGroups().add(complementary.getID(), complementary);
+        update_grtab_table()
+        update_groups()
+    end
+    function cb_grtab_merge(~, ~)  % (src,event)
+        g1 = get(ui_popup_grtab_merge1,'Value');
+        g2 = get(ui_popup_grtab_merge2,'Value');
+        group1 = cohort.getGroups().getValue(g1);
+        group2 = cohort.getGroups().getValue(g2);
+        union = cohort.orgroup(group1,group2);
+        cohort.getGroups().add(union.getID(), union);
+        update_grtab_table()
+        update_groups()
+    end
+    function cb_grtab_intersect(~, ~)  % (src,event)
+        g1 = get(ui_popup_grtab_intersect1, 'Value');
+        g2 = get(ui_popup_grtab_intersect2, 'Value');
+        group1 = cohort.getGroups().getValue(g1);
+        group2 = cohort.getGroups().getValue(g2);
+        and_group = cohort.andgroup(group1, group2);
+        cohort.getGroups().add(and_group.getID(), and_group);
+        update_grtab_table()
+        update_groups()
+    end
+
+%% Menus
+MENU_FILE = GUI.MENU_FILE;
+MENU_GROUPS = 'Groups';
+MENU_SUBJECTS = 'Subjects';
+MENU_VIEW = GUI.MENU_VIEW;
+MENU_BRAINVIEW = 'Brain View';
+MENU_ANALYSIS = 'Graph Analysis';
+
+ui_menu_file = uimenu(f,'Label',MENU_FILE);
+ui_menu_file_open = uimenu(ui_menu_file);
+ui_menu_file_save = uimenu(ui_menu_file);
+ui_menu_file_saveas = uimenu(ui_menu_file);
+ui_menu_file_import_xml = uimenu(ui_menu_file);
+ui_menu_file_export_xml = uimenu(ui_menu_file);
+ui_menu_file_close = uimenu(ui_menu_file);
+ui_menu_groups = uimenu(f,'Label',MENU_GROUPS);
+ui_menu_groups_load_xls = uimenu(ui_menu_groups);
+ui_menu_groups_load_txt = uimenu(ui_menu_groups);
+ui_menu_groups_load_xml = uimenu(ui_menu_groups);
+ui_menu_groups_add = uimenu(ui_menu_groups);
+ui_menu_groups_remove = uimenu(ui_menu_groups);
+ui_menu_groups_moveup = uimenu(ui_menu_groups);
+ui_menu_groups_movedown = uimenu(ui_menu_groups);
+ui_menu_subjects = uimenu(f,'Label',MENU_SUBJECTS);
+ui_menu_subjects_selectall = uimenu(ui_menu_subjects);
+ui_menu_subjects_clearselection = uimenu(ui_menu_subjects);
+ui_menu_subjects_add = uimenu(ui_menu_subjects);
+ui_menu_subjects_addabove = uimenu(ui_menu_subjects);
+ui_menu_subjects_addbelow = uimenu(ui_menu_subjects);
+ui_menu_subjects_remove = uimenu(ui_menu_subjects);
+ui_menu_subjects_moveup = uimenu(ui_menu_subjects);
+ui_menu_subjects_movedown = uimenu(ui_menu_subjects);
+ui_menu_subjects_move2top = uimenu(ui_menu_subjects);
+ui_menu_subjects_move2bottom = uimenu(ui_menu_subjects);
+ui_menu_view = uimenu(f,'Label',MENU_VIEW);
+ui_menu_view_groups = uimenu(ui_menu_view);
+ui_menu_view_subjects = uimenu(ui_menu_view);
+ui_menu_view_averages = uimenu(ui_menu_view);
+ui_menu_view_brainview = uimenu(ui_menu_view);
+ui_menu_brainview = uimenu(f,'Label',MENU_BRAINVIEW);
+ui_menu_brainview_figure = uimenu(ui_menu_brainview);
+ui_menu_analysis = uimenu(f,'Label',MENU_ANALYSIS);
+ui_menu_analysis_ga = uimenu(ui_menu_analysis);
+init_menu()
+    function init_menu()
+        set(ui_menu_file_open,'Label',OPEN_CMD)
+        set(ui_menu_file_open,'Accelerator',OPEN_SC)
+        set(ui_menu_file_open,'Callback',{@cb_open})
+        
+        set(ui_menu_file_save,'Separator','on')
+        set(ui_menu_file_save,'Label',SAVE_CMD)
+        set(ui_menu_file_save,'Accelerator',SAVE_SC)
+        set(ui_menu_file_save,'Callback',{@cb_save})
+
+        set(ui_menu_file_saveas,'Label',SAVEAS_CMD)
+        set(ui_menu_file_saveas,'Callback',{@cb_saveas});
+
+        set(ui_menu_file_import_xml,'Separator','on')
+        set(ui_menu_file_import_xml,'Label',IMPORT_JSON_CMD)
+        set(ui_menu_file_import_xml,'Callback',{@cb_import_xml})
+
+        set(ui_menu_file_export_xml,'Label',EXPORT_JSON_CMD)
+        set(ui_menu_file_export_xml,'Callback',{@cb_export_xml})
+
+        set(ui_menu_file_close,'Separator','on')
+        set(ui_menu_file_close,'Label',CLOSE_CMD)
+        set(ui_menu_file_close,'Accelerator',CLOSE_SC);
+        set(ui_menu_file_close,'Callback',['GUI.close(''' APPNAME ''',gcf)'])        
+
+        set(ui_menu_groups_load_xls,'Label',GRTAB_LOAD_XLS_CMD)
+        set(ui_menu_groups_load_xls,'Callback',{@cb_grtab_load_xls})
+
+        set(ui_menu_groups_load_txt,'Label',GRTAB_LOAD_TXT_CMD)
+        set(ui_menu_groups_load_txt,'Callback',{@cb_grtab_load_txt})
+
+        set(ui_menu_groups_load_xml,'Label',GRTAB_LOAD_JSON_CMD)
+        set(ui_menu_groups_load_xml,'Callback',{@cb_grtab_load_xml})
+                
+        set(ui_menu_groups_add,'Separator','on')
+        set(ui_menu_groups_add,'Label',ADD_GR_CMD)
+        set(ui_menu_groups_add,'Callback',{@cb_grtab_add_gr})
+        
+        set(ui_menu_groups_remove,'Label',REMOVE_GR_CMD)
+        set(ui_menu_groups_remove,'Callback',{@cb_grtab_remove_gr})
+            
+        set(ui_menu_groups_moveup,'Label',MOVEUP_GR_CMD)
+        set(ui_menu_groups_moveup,'Callback',{@cb_grtab_moveup_gr})
+            
+        set(ui_menu_groups_movedown,'Label',MOVEDOWN_GR_CMD)
+        set(ui_menu_groups_movedown,'Callback',{@cb_grtab_movedown_gr})
+        
+        set(ui_menu_subjects_selectall,'Separator','on')
+        set(ui_menu_subjects_selectall,'Label',SELECTALL_SUB_CMD)
+        set(ui_menu_subjects_selectall,'Callback',{@cb_groups_selectall_sub})
+            
+        set(ui_menu_subjects_clearselection,'Label',CLEARSELECTION_SUB_CMD)
+        set(ui_menu_subjects_clearselection,'Callback',{@cb_groups_clearselection_sub})
+        
+        set(ui_menu_subjects_add,'Separator','on')
+        set(ui_menu_subjects_add,'Label',ADD_SUB_CMD)
+        set(ui_menu_subjects_add,'Callback',{@cb_groups_add_sub})
+        
+        set(ui_menu_subjects_addabove,'Label',ADDABOVE_SUB_CMD)
+        set(ui_menu_subjects_addabove,'Callback',{@cb_groups_addabove_sub})
+        
+        set(ui_menu_subjects_addbelow,'Label',ADDBELOW_SUB_CMD)
+        set(ui_menu_subjects_addbelow,'Callback',{@cb_groups_addbelow_sub});    
+
+        set(ui_menu_subjects_remove,'Separator','on')
+        set(ui_menu_subjects_remove,'Label',REMOVE_SUB_CMD)
+        set(ui_menu_subjects_remove,'Callback',{@cb_groups_remove_sub})
+            
+        set(ui_menu_subjects_moveup,'Separator','on')
+        set(ui_menu_subjects_moveup,'Label',MOVEUP_SUB_CMD)
+        set(ui_menu_subjects_moveup,'Callback',{@cb_groups_moveup_sub})
+            
+        set(ui_menu_subjects_movedown,'Label',MOVEDOWN_SUB_CMD)
+        set(ui_menu_subjects_movedown,'Callback',{@cb_groups_movedown_sub})
+            
+        set(ui_menu_subjects_move2top,'Label',MOVE2TOP_SUB_CMD)
+        set(ui_menu_subjects_move2top,'Callback',{@cb_groups_move2top_sub})
+            
+        set(ui_menu_subjects_move2bottom,'Label',MOVE2BOTTOM_SUB_CMD)
+        set(ui_menu_subjects_move2bottom,'Callback',{@cb_groups_move2bottom_sub})
+
+    end
+    function cb_menu_figure(~,~)  % (src,event)
+        h = figure('Name', ['MCI Cohort - ' cohort.getProp(MRICohort.NAME)]);
+        set(gcf,'color','w')
+        copyobj(ba.get_axes(),h)
+        set(gca,'Units','normalized')
+        set(gca,'OuterPosition',[0 0 1 1])
+    end
+    function cb_menu_ga(~,~)  % (src,event)
+        if cohort.length()>0
+            GUIMRIGraphAnalysis(cohort.copy())
+        else
+            msgbox('In order to create an MRI analysis the cohort must have at least one subject.', ...
+                'Warning: Empty MRI cohort', ...
+                'warn')
+        end
+    end
+[ui_menu_about,ui_menu_about_about] = GUI.setMenuAbout(f,APPNAME);
+
+%% Toolbar
+set(f,'Toolbar','figure')
+ui_toolbar = findall(f,'Tag','FigureToolBar');
+ui_toolbar_open = findall(ui_toolbar,'Tag','Standard.FileOpen');
+ui_toolbar_save = findall(ui_toolbar,'Tag','Standard.SaveFigure');
+ui_toolbar_zoomin = findall(ui_toolbar,'Tag','Exploration.ZoomIn');
+ui_toolbar_zoomout = findall(ui_toolbar,'Tag','Exploration.ZoomOut');
+ui_toolbar_pan = findall(ui_toolbar,'Tag','Exploration.Pan');
+ui_toolbar_rotate = findall(ui_toolbar,'Tag','Exploration.Rotate');
+ui_toolbar_datacursor = findall(ui_toolbar,'Tag','Exploration.DataCursor');
+ui_toolbar_insertcolorbar = findall(ui_toolbar,'Tag','Annotation.InsertColorbar');
+ui_toolbar_3D = uipushtool(ui_toolbar);
+ui_toolbar_SL = uipushtool(ui_toolbar);
+ui_toolbar_SR = uipushtool(ui_toolbar);
+ui_toolbar_AD = uipushtool(ui_toolbar);
+ui_toolbar_AV = uipushtool(ui_toolbar);
+ui_toolbar_CA = uipushtool(ui_toolbar);
+ui_toolbar_CP = uipushtool(ui_toolbar);
+ui_toolbar_brain = uitoggletool(ui_toolbar);
+ui_toolbar_axis = uitoggletool(ui_toolbar);
+ui_toolbar_grid = uitoggletool(ui_toolbar);
+ui_toolbar_sym = uitoggletool(ui_toolbar);
+ui_toolbar_br = uitoggletool(ui_toolbar);
+ui_toolbar_label = uitoggletool(ui_toolbar);
+init_toolbar()
+    function init_toolbar()
+        % get(findall(ui_toolbar),'Tag')
+        delete(findall(ui_toolbar,'Tag','Standard.NewFigure'))
+        % delete(findall(ui_toolbar,'Tag','Standard.FileOpen'))
+        % delete(findall(ui_toolbar,'Tag','Standard.SaveFigure'))
+        delete(findall(ui_toolbar,'Tag','Standard.PrintFigure'))
+        delete(findall(ui_toolbar,'Tag','Standard.EditPlot'))
+        % delete(findall(ui_toolbar,'Tag','Exploration.ZoomIn'))
+        % delete(findall(ui_toolbar,'Tag','Exploration.ZoomOut'))
+        % delete(findall(ui_toolbar,'Tag','Exploration.Pan'))
+        % delete(findall(ui_toolbar,'Tag','Exploration.Rotate'))
+        % delete(findall(ui_toolbar,'Tag','Exploration.DataCursor'))
+        delete(findall(ui_toolbar,'Tag','Exploration.Brushing'))
+        delete(findall(ui_toolbar,'Tag','DataManager.Linking'))
+        % delete(findall(ui_toolbar,'Tag','Annotation.InsertColorbar'))
+        delete(findall(ui_toolbar,'Tag','Annotation.InsertLegend'))
+        delete(findall(ui_toolbar,'Tag','Plottools.PlottoolsOff'))
+        delete(findall(ui_toolbar,'Tag','Plottools.PlottoolsOn'))
+
+        set(ui_toolbar_open,'TooltipString',OPEN_TP);
+        set(ui_toolbar_open,'ClickedCallback',{@cb_open})
+
+        set(ui_toolbar_save,'TooltipString',SAVE_TP);
+        set(ui_toolbar_save,'ClickedCallback',{@cb_save})
+
+    end
 
 %% Make the GUI visible.
 setup()
@@ -558,9 +782,6 @@ setup_restrictions()
         % setup table
         update_grtab_cohortname()
         update_grtab_table()
-
-        % setup main panel
-        update_groups()
-        update_console_panel_visibility(CONSOLE_GROUPS_CMD)   
+         
     end
 end
