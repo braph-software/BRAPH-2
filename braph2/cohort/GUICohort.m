@@ -434,8 +434,8 @@ init_grtab()
     function cb_grtab_load_xls(~, ~)  % (src,event)
         try
         sub_class = cohort.getSubjectClass();
-        cohort = eval([sub_class '.load_from_xls(' cohort ')']);             
-%         update
+        cohort = eval([sub_class '.load_from_xls(cohort)']);             
+        % update
         update_grtab_table()         
         catch
             errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid XLS file']);
@@ -444,8 +444,8 @@ init_grtab()
     function cb_grtab_load_txt(~, ~)  % (src,event)
         try
         sub_class = cohort.getSubjectClass();
-        cohort = eval([sub_class '.load_from_txt(' cohort ')']);         
-        update
+        cohort = eval([sub_class '.load_from_xls(cohort)']);         
+        % update
         update_grtab_table()        
         catch
             errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid TXT file']);
@@ -454,8 +454,8 @@ init_grtab()
     function cb_grtab_load_json(~, ~)  % (src,event)
         try
         sub_class = cohort.getSubjectClass();
-        cohort = eval([sub_class '.load_from_json(' cohort ')']);
-        update
+        cohort = eval([sub_class '.load_from_xls(cohort)']);
+       % update
         update_grtab_table()
         update_group_popups()
 
