@@ -9,6 +9,18 @@ sub_class = 'SubjectST';
 input_rule = 'ST';
 input_data = rand(atlas.getBrainRegions().length(), 1);
 
+%% Init with Subject 
+GUICohort(sub_class);
+set(gcf, 'CloseRequestFcn', 'closereq')
+
+close(gcf)
+
+%% Init with Atlas
+GUICohort(atlas, sub_class);
+set(gcf, 'CloseRequestFcn', 'closereq')
+
+close(gcf)
+
 %% INIT with cohort
 % Create fictional cohort
 
@@ -37,3 +49,6 @@ cohort.getGroups().add(group.getID(), group);
 cohort.getGroups().add(group2.getID(), group2);
 
 GUICohort(cohort);
+set(gcf, 'CloseRequestFcn', 'closereq')
+
+close(gcf)
