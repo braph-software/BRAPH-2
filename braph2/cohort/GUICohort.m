@@ -20,11 +20,8 @@ FILENAME_HEIGHT = .02;
 MAINPANEL_X0 = LEFTCOLUMN_WIDTH + 2 * MARGIN_X;
 MAINPANEL_Y0 = FILENAME_HEIGHT + 2 * MARGIN_Y;
 MAINPANEL_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
-MAINPANEL_HEIGHT = 1 - FILENAME_HEIGHT - 3 * MARGIN_Y;
+MAINPANEL_HEIGHT = 1 - FILENAME_HEIGHT - 4 * MARGIN_Y;
 MAINPANEL_POSITION = [MAINPANEL_X0 MAINPANEL_Y0 MAINPANEL_WIDTH MAINPANEL_HEIGHT];
-
-FILENAME_WIDTH = 1 - 2 * MARGIN_X;
-FILENAME_POSITION = [MARGIN_X MARGIN_Y FILENAME_WIDTH FILENAME_HEIGHT];
 
 % Commands
 OPEN_CMD = GUI.OPEN_CMD; 
@@ -70,42 +67,12 @@ MOVEUP_GR_TP = 'Move selected group up';
 MOVEDOWN_GR_CMD = GUI.MOVEDOWN_CMD;
 MOVEDOWN_GR_TP = 'Move selected group down';
 
-SELECTALL_SUB_CMD = 'Select all';
-SELECTALL_SUB_TP = 'Select all subjects';
-
-CLEARSELECTION_SUB_CMD = 'Clear selection';
-CLEARSELECTION_SUB_TP = 'Clear subject selection';
-
-ADD_SUB_CMD = 'Add subject';
-ADD_SUBJECTS_TP = 'Add subject at the end of table';
-
-ADDABOVE_SUB_CMD = 'Add above';
-ADDABOVE_SUB_TP = 'Add subjects above selected ones';
-
-ADDBELOW_SUB_CMD = 'Add below';
-ADDBELOW_SUB_TP = 'Add subjects below selected ones';
-
-REMOVE_SUB_CMD = 'Remove';
-REMOVE_SUB_TP = 'Remove selected subjects';
-
-MOVEUP_SUB_CMD = 'Move up';
-MOVEUP_SUB_TP = 'Move selected subjects up';
-
-MOVEDOWN_SUB_CMD = 'Move down';
-MOVEDOWN_SUB_TP = 'Move selected subjects down';
-
-MOVE2TOP_SUB_CMD = 'Move to top';
-MOVE2TOP_SUB_TP = 'Move selected subjects to top of table';
-
-MOVE2BOTTOM_SUB_CMD = 'Move to bottom';
-MOVE2BOTTOM_SUB_TP = 'Move selected subjects to bottom of table';
-
 %% Application Data
 if exist('tmp', 'var') && isa(tmp, 'Cohort')
     cohort = tmp;
 else
     assert(ismember(tmp, Subject.getList()));
-    atlas = BrainAtlas('BA ID', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
+    atlas = BrainAtlas('Empty BA', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', tmp, atlas, {});
 end
 
@@ -197,11 +164,18 @@ fig_comparison = [];
 f = GUI.init_figure(APPNAME, .8, .9, 'center');
 
     function init_disable()
+        GUI.disable(ui_panel_grtab)
+        set(ui_menu_groups, 'enable', 'off')
     end
     function init_enable()
+        GUI.enable(ui_panel_grtab)
+        set(ui_menu_groups, 'enable', 'on')
     end
 
 %% Text File Name
+FILENAME_WIDTH = 1 - 2 * MARGIN_X;
+FILENAME_POSITION = [MARGIN_X MARGIN_Y FILENAME_WIDTH FILENAME_HEIGHT];
+
 ui_text_filename = uicontrol('Style', 'text');
 init_filename()
     function init_filename()
@@ -220,7 +194,7 @@ ATLAS_NAME = 'Brain Atlas';
 ATLAS_WIDTH = LEFTCOLUMN_WIDTH;
 ATLAS_HEIGHT = HEADING_HEIGHT;
 ATLAS_X0 = MARGIN_X;
-ATLAS_Y0 = 1-MARGIN_Y-ATLAS_HEIGHT;
+ATLAS_Y0 = 1 - MARGIN_Y - ATLAS_HEIGHT;
 ATLAS_POSITION = [ATLAS_X0 ATLAS_Y0 ATLAS_WIDTH ATLAS_HEIGHT];
 
 ATLAS_BUTTON_SELECT_CMD = 'Select Atlas';
@@ -234,8 +208,8 @@ ui_panel_atlas = uipanel();
 ui_text_atlas_name = uicontrol(ui_panel_atlas, 'Style', 'text');
 ui_text_atlas_brnumber = uicontrol(ui_panel_atlas, 'Style', 'text');
 ui_button_atlas = uicontrol(ui_panel_atlas, 'Style', 'pushbutton');
-
 init_atlas()
+
     function init_atlas()
         GUI.setUnits(ui_panel_atlas)
         GUI.setBackgroundColor(ui_panel_atlas)
@@ -254,7 +228,9 @@ init_atlas()
         set(ui_button_atlas, 'Callback', {@cb_atlas})
     end
     function update_atlas()
-        if ~isempty(cohort.getBrainAtlases())
+        atlastmp_array = cohort.getBrainAtlases();
+        atlastmp = atlastmp_array{1};
+        if ~isequal(atlastmp.getID(), 'Empty BA') 
             atlases = cohort.getBrainAtlases();
             atlas_hold = atlases{1};
             set(ui_text_atlas_name, 'String', atlas_hold.getID())
@@ -459,12 +435,8 @@ init_grtab()
         try
         sub_class = cohort.getSubjectClass();
         cohort = eval([sub_class '.load_from_xls(' cohort ')']);             
-        % update
-        update_grtab_table()
-        update_subjects()
-        update_group_popups()
-        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
- 
+%         update
+        update_grtab_table()         
         catch
             errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid XLS file']);
         end
@@ -473,12 +445,8 @@ init_grtab()
         try
         sub_class = cohort.getSubjectClass();
         cohort = eval([sub_class '.load_from_txt(' cohort ')']);         
-        % update
-        update_grtab_table()
-        update_subjects()
-        update_group_popups()
-        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
-        
+        update
+        update_grtab_table()        
         catch
             errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid TXT file']);
         end
@@ -487,11 +455,9 @@ init_grtab()
         try
         sub_class = cohort.getSubjectClass();
         cohort = eval([sub_class '.load_from_json(' cohort ')']);
-        % update
+        update
         update_grtab_table()
-        update_subjects()
         update_group_popups()
-        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
 
         catch
             errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid JSON file']);
@@ -515,66 +481,55 @@ init_grtab()
             case GRTAB_NOTES_COL
                 cohort.getGroups().getValue(g).setNotes(newdata)
         end
-        update_grtab_table()
-        update_console_panel()
+        update_grtab_table()        
     end
     function cb_grtab_add_gr(~, ~)  % (src,event)
         group = Group(cohort.getSubjectClass(), 'GroupID 1', 'Label 1', 'Notes 1', {});
         cohort.getGroups().add(group.getID(), group);
         update_grtab_table()
-        update_console_panel()
     end
     function cb_grtab_remove_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().remove_all(selected_group);
         update_grtab_table()
-        update_console_panel()
     end
     function cb_grtab_moveup_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().move_up(selected_group);
         update_grtab_table()
-        update_console_panel()
     end
     function cb_grtab_movedown_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().move_down(selected_group);
         update_grtab_table()
-        update_console_panel()
     end
     function cb_grtab_complementary(~, ~)  % (src,event)
         g = get(ui_popup_grtab_invert, 'Value');
         group = cohort.getGroups().getValue(g);
-        complementary = cohort.notgroup(group);
+        complementary = cohort.notGroup(group);
         cohort.getGroups().add(complementary.getID(), complementary);
         update_grtab_table()
-        update_groups()
     end
     function cb_grtab_merge(~, ~)  % (src,event)
         g1 = get(ui_popup_grtab_merge1,'Value');
         g2 = get(ui_popup_grtab_merge2,'Value');
         group1 = cohort.getGroups().getValue(g1);
         group2 = cohort.getGroups().getValue(g2);
-        union = cohort.orgroup(group1,group2);
+        union = cohort.orGroup(group1,group2);
         cohort.getGroups().add(union.getID(), union);
         update_grtab_table()
-        update_groups()
     end
     function cb_grtab_intersect(~, ~)  % (src,event)
         g1 = get(ui_popup_grtab_intersect1, 'Value');
         g2 = get(ui_popup_grtab_intersect2, 'Value');
         group1 = cohort.getGroups().getValue(g1);
         group2 = cohort.getGroups().getValue(g2);
-        and_group = cohort.andgroup(group1, group2);
+        and_group = cohort.andGroup(group1, group2);
         cohort.getGroups().add(and_group.getID(), and_group);
-        update_grtab_table()
-        update_groups()
+        update_grtab_table()        
     end
 
-%% Menus
+% Menus
 MENU_FILE = GUI.MENU_FILE;
 MENU_GROUPS = 'Groups';
-MENU_SUBJECTS = 'Subjects';
-MENU_VIEW = GUI.MENU_VIEW;
-MENU_BRAINVIEW = 'Brain View';
-MENU_ANALYSIS = 'Graph Analysis';
+
 
 ui_menu_file = uimenu(f,'Label',MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
@@ -591,176 +546,82 @@ ui_menu_groups_add = uimenu(ui_menu_groups);
 ui_menu_groups_remove = uimenu(ui_menu_groups);
 ui_menu_groups_moveup = uimenu(ui_menu_groups);
 ui_menu_groups_movedown = uimenu(ui_menu_groups);
-ui_menu_subjects = uimenu(f,'Label',MENU_SUBJECTS);
-ui_menu_subjects_selectall = uimenu(ui_menu_subjects);
-ui_menu_subjects_clearselection = uimenu(ui_menu_subjects);
-ui_menu_subjects_add = uimenu(ui_menu_subjects);
-ui_menu_subjects_addabove = uimenu(ui_menu_subjects);
-ui_menu_subjects_addbelow = uimenu(ui_menu_subjects);
-ui_menu_subjects_remove = uimenu(ui_menu_subjects);
-ui_menu_subjects_moveup = uimenu(ui_menu_subjects);
-ui_menu_subjects_movedown = uimenu(ui_menu_subjects);
-ui_menu_subjects_move2top = uimenu(ui_menu_subjects);
-ui_menu_subjects_move2bottom = uimenu(ui_menu_subjects);
-ui_menu_view = uimenu(f,'Label',MENU_VIEW);
-ui_menu_view_groups = uimenu(ui_menu_view);
-ui_menu_view_subjects = uimenu(ui_menu_view);
-ui_menu_view_averages = uimenu(ui_menu_view);
-ui_menu_view_brainview = uimenu(ui_menu_view);
-ui_menu_brainview = uimenu(f,'Label',MENU_BRAINVIEW);
-ui_menu_brainview_figure = uimenu(ui_menu_brainview);
-ui_menu_analysis = uimenu(f,'Label',MENU_ANALYSIS);
-ui_menu_analysis_ga = uimenu(ui_menu_analysis);
+
 init_menu()
     function init_menu()
-        set(ui_menu_file_open,'Label',OPEN_CMD)
-        set(ui_menu_file_open,'Accelerator',OPEN_SC)
-        set(ui_menu_file_open,'Callback',{@cb_open})
+        set(ui_menu_file_open, 'Label', OPEN_CMD)
+        set(ui_menu_file_open, 'Accelerator', OPEN_SC)
+        set(ui_menu_file_open, 'Callback', {@cb_open})
         
-        set(ui_menu_file_save,'Separator','on')
-        set(ui_menu_file_save,'Label',SAVE_CMD)
-        set(ui_menu_file_save,'Accelerator',SAVE_SC)
-        set(ui_menu_file_save,'Callback',{@cb_save})
+        set(ui_menu_file_save, 'Separator', 'on')
+        set(ui_menu_file_save, 'Label', SAVE_CMD)
+        set(ui_menu_file_save, 'Accelerator', SAVE_SC)
+        set(ui_menu_file_save, 'Callback', {@cb_save})
 
-        set(ui_menu_file_saveas,'Label',SAVEAS_CMD)
-        set(ui_menu_file_saveas,'Callback',{@cb_saveas});
+        set(ui_menu_file_saveas, 'Label', SAVEAS_CMD)
+        set(ui_menu_file_saveas, 'Callback', {@cb_saveas});
 
-        set(ui_menu_file_import_xml,'Separator','on')
-        set(ui_menu_file_import_xml,'Label',IMPORT_JSON_CMD)
-        set(ui_menu_file_import_xml,'Callback',{@cb_import_xml})
+        set(ui_menu_file_import_xml, 'Separator', 'on')
+        set(ui_menu_file_import_xml, 'Label',IMPORT_JSON_CMD)
+        set(ui_menu_file_import_xml, 'Callback', {@cb_import_xml})
 
-        set(ui_menu_file_export_xml,'Label',EXPORT_JSON_CMD)
-        set(ui_menu_file_export_xml,'Callback',{@cb_export_xml})
+        set(ui_menu_file_export_xml, 'Label', EXPORT_JSON_CMD)
+        set(ui_menu_file_export_xml, 'Callback', {@cb_export_xml})
 
-        set(ui_menu_file_close,'Separator','on')
-        set(ui_menu_file_close,'Label',CLOSE_CMD)
-        set(ui_menu_file_close,'Accelerator',CLOSE_SC);
-        set(ui_menu_file_close,'Callback',['GUI.close(''' APPNAME ''',gcf)'])        
+        set(ui_menu_file_close, 'Separator', 'on')
+        set(ui_menu_file_close, 'Label', CLOSE_CMD)
+        set(ui_menu_file_close, 'Accelerator', CLOSE_SC);
+        set(ui_menu_file_close, 'Callback', ['GUI.close(''' APPNAME ''', gcf)'])        
 
-        set(ui_menu_groups_load_xls,'Label',GRTAB_LOAD_XLS_CMD)
-        set(ui_menu_groups_load_xls,'Callback',{@cb_grtab_load_xls})
+        set(ui_menu_groups_load_xls, 'Label', GRTAB_LOAD_XLS_CMD)
+        set(ui_menu_groups_load_xls, 'Callback', {@cb_grtab_load_xls})
 
-        set(ui_menu_groups_load_txt,'Label',GRTAB_LOAD_TXT_CMD)
-        set(ui_menu_groups_load_txt,'Callback',{@cb_grtab_load_txt})
+        set(ui_menu_groups_load_txt, 'Label', GRTAB_LOAD_TXT_CMD)
+        set(ui_menu_groups_load_txt, 'Callback', {@cb_grtab_load_txt})
 
-        set(ui_menu_groups_load_xml,'Label',GRTAB_LOAD_JSON_CMD)
-        set(ui_menu_groups_load_xml,'Callback',{@cb_grtab_load_xml})
+        set(ui_menu_groups_load_xml, 'Label', GRTAB_LOAD_JSON_CMD)
+        set(ui_menu_groups_load_xml, 'Callback', {@cb_grtab_load_xml})
                 
-        set(ui_menu_groups_add,'Separator','on')
-        set(ui_menu_groups_add,'Label',ADD_GR_CMD)
-        set(ui_menu_groups_add,'Callback',{@cb_grtab_add_gr})
+        set(ui_menu_groups_add, 'Separator', 'on')
+        set(ui_menu_groups_add, 'Label', ADD_GR_CMD)
+        set(ui_menu_groups_add, 'Callback', {@cb_grtab_add_gr})
         
-        set(ui_menu_groups_remove,'Label',REMOVE_GR_CMD)
-        set(ui_menu_groups_remove,'Callback',{@cb_grtab_remove_gr})
+        set(ui_menu_groups_remove, 'Label', REMOVE_GR_CMD)
+        set(ui_menu_groups_remove, 'Callback', {@cb_grtab_remove_gr})
             
-        set(ui_menu_groups_moveup,'Label',MOVEUP_GR_CMD)
-        set(ui_menu_groups_moveup,'Callback',{@cb_grtab_moveup_gr})
+        set(ui_menu_groups_moveup, 'Label', MOVEUP_GR_CMD)
+        set(ui_menu_groups_moveup, 'Callback', {@cb_grtab_moveup_gr})
             
-        set(ui_menu_groups_movedown,'Label',MOVEDOWN_GR_CMD)
-        set(ui_menu_groups_movedown,'Callback',{@cb_grtab_movedown_gr})
-        
-        set(ui_menu_subjects_selectall,'Separator','on')
-        set(ui_menu_subjects_selectall,'Label',SELECTALL_SUB_CMD)
-        set(ui_menu_subjects_selectall,'Callback',{@cb_groups_selectall_sub})
-            
-        set(ui_menu_subjects_clearselection,'Label',CLEARSELECTION_SUB_CMD)
-        set(ui_menu_subjects_clearselection,'Callback',{@cb_groups_clearselection_sub})
-        
-        set(ui_menu_subjects_add,'Separator','on')
-        set(ui_menu_subjects_add,'Label',ADD_SUB_CMD)
-        set(ui_menu_subjects_add,'Callback',{@cb_groups_add_sub})
-        
-        set(ui_menu_subjects_addabove,'Label',ADDABOVE_SUB_CMD)
-        set(ui_menu_subjects_addabove,'Callback',{@cb_groups_addabove_sub})
-        
-        set(ui_menu_subjects_addbelow,'Label',ADDBELOW_SUB_CMD)
-        set(ui_menu_subjects_addbelow,'Callback',{@cb_groups_addbelow_sub});    
-
-        set(ui_menu_subjects_remove,'Separator','on')
-        set(ui_menu_subjects_remove,'Label',REMOVE_SUB_CMD)
-        set(ui_menu_subjects_remove,'Callback',{@cb_groups_remove_sub})
-            
-        set(ui_menu_subjects_moveup,'Separator','on')
-        set(ui_menu_subjects_moveup,'Label',MOVEUP_SUB_CMD)
-        set(ui_menu_subjects_moveup,'Callback',{@cb_groups_moveup_sub})
-            
-        set(ui_menu_subjects_movedown,'Label',MOVEDOWN_SUB_CMD)
-        set(ui_menu_subjects_movedown,'Callback',{@cb_groups_movedown_sub})
-            
-        set(ui_menu_subjects_move2top,'Label',MOVE2TOP_SUB_CMD)
-        set(ui_menu_subjects_move2top,'Callback',{@cb_groups_move2top_sub})
-            
-        set(ui_menu_subjects_move2bottom,'Label',MOVE2BOTTOM_SUB_CMD)
-        set(ui_menu_subjects_move2bottom,'Callback',{@cb_groups_move2bottom_sub})
+        set(ui_menu_groups_movedown, 'Label', MOVEDOWN_GR_CMD)
+        set(ui_menu_groups_movedown, 'Callback', {@cb_grtab_movedown_gr})
 
     end
-    function cb_menu_figure(~,~)  % (src,event)
-        h = figure('Name', ['MCI Cohort - ' cohort.getProp(MRICohort.NAME)]);
-        set(gcf,'color','w')
-        copyobj(ba.get_axes(),h)
-        set(gca,'Units','normalized')
-        set(gca,'OuterPosition',[0 0 1 1])
-    end
-    function cb_menu_ga(~,~)  % (src,event)
-        if cohort.length()>0
-            GUIMRIGraphAnalysis(cohort.copy())
-        else
-            msgbox('In order to create an MRI analysis the cohort must have at least one subject.', ...
-                'Warning: Empty MRI cohort', ...
-                'warn')
-        end
-    end
-[ui_menu_about,ui_menu_about_about] = GUI.setMenuAbout(f,APPNAME);
 
-%% Toolbar
-set(f,'Toolbar','figure')
-ui_toolbar = findall(f,'Tag','FigureToolBar');
-ui_toolbar_open = findall(ui_toolbar,'Tag','Standard.FileOpen');
-ui_toolbar_save = findall(ui_toolbar,'Tag','Standard.SaveFigure');
-ui_toolbar_zoomin = findall(ui_toolbar,'Tag','Exploration.ZoomIn');
-ui_toolbar_zoomout = findall(ui_toolbar,'Tag','Exploration.ZoomOut');
-ui_toolbar_pan = findall(ui_toolbar,'Tag','Exploration.Pan');
-ui_toolbar_rotate = findall(ui_toolbar,'Tag','Exploration.Rotate');
-ui_toolbar_datacursor = findall(ui_toolbar,'Tag','Exploration.DataCursor');
-ui_toolbar_insertcolorbar = findall(ui_toolbar,'Tag','Annotation.InsertColorbar');
-ui_toolbar_3D = uipushtool(ui_toolbar);
-ui_toolbar_SL = uipushtool(ui_toolbar);
-ui_toolbar_SR = uipushtool(ui_toolbar);
-ui_toolbar_AD = uipushtool(ui_toolbar);
-ui_toolbar_AV = uipushtool(ui_toolbar);
-ui_toolbar_CA = uipushtool(ui_toolbar);
-ui_toolbar_CP = uipushtool(ui_toolbar);
-ui_toolbar_brain = uitoggletool(ui_toolbar);
-ui_toolbar_axis = uitoggletool(ui_toolbar);
-ui_toolbar_grid = uitoggletool(ui_toolbar);
-ui_toolbar_sym = uitoggletool(ui_toolbar);
-ui_toolbar_br = uitoggletool(ui_toolbar);
-ui_toolbar_label = uitoggletool(ui_toolbar);
+[ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME); %#ok<ASGLU>
+
+% Toolbar
+set(f, 'Toolbar', 'figure')
+ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+ui_toolbar_open = findall(ui_toolbar, 'Tag', 'Standard.FileOpen');
+ui_toolbar_save = findall(ui_toolbar, 'Tag', 'Standard.SaveFigure');
+
 init_toolbar()
     function init_toolbar()
-        % get(findall(ui_toolbar),'Tag')
-        delete(findall(ui_toolbar,'Tag','Standard.NewFigure'))
-        % delete(findall(ui_toolbar,'Tag','Standard.FileOpen'))
-        % delete(findall(ui_toolbar,'Tag','Standard.SaveFigure'))
-        delete(findall(ui_toolbar,'Tag','Standard.PrintFigure'))
-        delete(findall(ui_toolbar,'Tag','Standard.EditPlot'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.ZoomIn'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.ZoomOut'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.Pan'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.Rotate'))
-        % delete(findall(ui_toolbar,'Tag','Exploration.DataCursor'))
-        delete(findall(ui_toolbar,'Tag','Exploration.Brushing'))
-        delete(findall(ui_toolbar,'Tag','DataManager.Linking'))
-        % delete(findall(ui_toolbar,'Tag','Annotation.InsertColorbar'))
-        delete(findall(ui_toolbar,'Tag','Annotation.InsertLegend'))
-        delete(findall(ui_toolbar,'Tag','Plottools.PlottoolsOff'))
-        delete(findall(ui_toolbar,'Tag','Plottools.PlottoolsOn'))
 
-        set(ui_toolbar_open,'TooltipString',OPEN_TP);
-        set(ui_toolbar_open,'ClickedCallback',{@cb_open})
+        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
+        delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
+        delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
+        delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
+        delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
+        delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
+        delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
+        delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
-        set(ui_toolbar_save,'TooltipString',SAVE_TP);
-        set(ui_toolbar_save,'ClickedCallback',{@cb_save})
+        set(ui_toolbar_open, 'TooltipString', OPEN_TP);
+        set(ui_toolbar_open, 'ClickedCallback', {@cb_open})
+
+        set(ui_toolbar_save, 'TooltipString', SAVE_TP);
+        set(ui_toolbar_save, 'ClickedCallback', {@cb_save})
 
     end
 
