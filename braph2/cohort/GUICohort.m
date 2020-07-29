@@ -117,7 +117,7 @@ selected_subjects = [];
         end
     end
     function cb_import_txt(~, ~)  % (scr, event)
-        cohortstmp = eval([cohort.getSubjectClass()  '.load_from_txt()']);
+        cohortstmp = eval([cohort.getSubjectClass()  '.load_from_txt(cohort)']);
         if ~isempty(cohortstmp)
             cohort = cohortstmp;
             selected_group = [];
@@ -127,7 +127,7 @@ selected_subjects = [];
         end
     end
     function cb_import_xls(~, ~)  % (scr, event)
-        cohortstmp = eval([cohort.getSubjectClass()  '.load_from_xls()']);
+        cohortstmp = eval([cohort.getSubjectClass()  '.load_from_xls(cohort)']);
         if  ~isempty(cohortstmp)
             cohort = cohortstmp;
             selected_group = [];
@@ -137,7 +137,7 @@ selected_subjects = [];
         end
     end
     function cb_import_json(~, ~)  % (src, event)
-        cohortstmp = eval([cohort.getSubjectClass()  '.load_from_json()']);
+        cohortstmp = eval([cohort.getSubjectClass()  '.load_from_json(cohort)']);
         if ~isempty(cohortstmp)
             cohort = cohortstmp;
             selected_group = [];
@@ -535,13 +535,17 @@ ui_menu_file = uimenu(f,'Label',MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
 ui_menu_file_save = uimenu(ui_menu_file);
 ui_menu_file_saveas = uimenu(ui_menu_file);
-ui_menu_file_import_xml = uimenu(ui_menu_file);
-ui_menu_file_export_xml = uimenu(ui_menu_file);
+ui_menu_file_import_xls = uimenu(ui_menu_file);
+ui_menu_file_export_xls = uimenu(ui_menu_file);
+ui_menu_file_import_txt = uimenu(ui_menu_file);
+ui_menu_file_export_txt = uimenu(ui_menu_file);
+ui_menu_file_import_json = uimenu(ui_menu_file);
+ui_menu_file_export_json = uimenu(ui_menu_file);
 ui_menu_file_close = uimenu(ui_menu_file);
 ui_menu_groups = uimenu(f,'Label',MENU_GROUPS);
 ui_menu_groups_load_xls = uimenu(ui_menu_groups);
 ui_menu_groups_load_txt = uimenu(ui_menu_groups);
-ui_menu_groups_load_xml = uimenu(ui_menu_groups);
+ui_menu_groups_load_json = uimenu(ui_menu_groups);
 ui_menu_groups_add = uimenu(ui_menu_groups);
 ui_menu_groups_remove = uimenu(ui_menu_groups);
 ui_menu_groups_moveup = uimenu(ui_menu_groups);
@@ -560,13 +564,27 @@ init_menu()
 
         set(ui_menu_file_saveas, 'Label', SAVEAS_CMD)
         set(ui_menu_file_saveas, 'Callback', {@cb_saveas});
+        
+        set(ui_menu_file_import_xls, 'Separator', 'on')
+        set(ui_menu_file_import_xls, 'Label', IMPORT_XLS_CMD)
+        set(ui_menu_file_import_xls, 'Callback', {@cb_import_xls})
 
-        set(ui_menu_file_import_xml, 'Separator', 'on')
-        set(ui_menu_file_import_xml, 'Label',IMPORT_JSON_CMD)
-        set(ui_menu_file_import_xml, 'Callback', {@cb_import_xml})
+        set(ui_menu_file_export_xls, 'Label', EXPORT_XLS_CMD)
+        set(ui_menu_file_export_xls, 'Callback', {@cb_export_xls})
+        
+        set(ui_menu_file_import_txt, 'Separator', 'on')
+        set(ui_menu_file_import_txt, 'Label', IMPORT_TXT_CMD)
+        set(ui_menu_file_import_txt, 'Callback', {@cb_import_txt})
 
-        set(ui_menu_file_export_xml, 'Label', EXPORT_JSON_CMD)
-        set(ui_menu_file_export_xml, 'Callback', {@cb_export_xml})
+        set(ui_menu_file_export_txt, 'Label', EXPORT_TXT_CMD)
+        set(ui_menu_file_export_txt, 'Callback', {@cb_export_txt})
+
+        set(ui_menu_file_import_json, 'Separator', 'on')
+        set(ui_menu_file_import_json, 'Label', IMPORT_JSON_CMD)
+        set(ui_menu_file_import_json, 'Callback', {@cb_import_json})
+
+        set(ui_menu_file_export_json, 'Label', EXPORT_JSON_CMD)
+        set(ui_menu_file_export_json, 'Callback', {@cb_export_json})
 
         set(ui_menu_file_close, 'Separator', 'on')
         set(ui_menu_file_close, 'Label', CLOSE_CMD)
@@ -578,9 +596,9 @@ init_menu()
 
         set(ui_menu_groups_load_txt, 'Label', GRTAB_LOAD_TXT_CMD)
         set(ui_menu_groups_load_txt, 'Callback', {@cb_grtab_load_txt})
-
-        set(ui_menu_groups_load_xml, 'Label', GRTAB_LOAD_JSON_CMD)
-        set(ui_menu_groups_load_xml, 'Callback', {@cb_grtab_load_xml})
+        
+        set(ui_menu_groups_load_json, 'Label', GRTAB_LOAD_TXT_CMD)
+        set(ui_menu_groups_load_json, 'Callback', {@cb_grtab_load_json})
                 
         set(ui_menu_groups_add, 'Separator', 'on')
         set(ui_menu_groups_add, 'Label', ADD_GR_CMD)

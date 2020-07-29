@@ -18,10 +18,9 @@ sub31 = Subject.getSubject(sub_class, 'SubjectID31', 'label31', 'notes31', atlas
 group11 = Group(sub_class, 'GroupName11', 'TestGroup11', 'notes11', {sub11, sub21, sub31});
 cohort11 = Cohort('cohort11', 'label11', 'notes11', sub_class, atlas, {sub11, sub21, sub31});
 cohort11.getGroups().add(group11.getID(), group11);
-SubjectST.save_to_xls(cohort11);
-SubjectST.save_to_txt(cohort11);
-SubjectST.save_to_json(cohort11);
-
+% SubjectST.save_to_xls(cohort11);
+% SubjectST.save_to_txt(cohort11);
+% SubjectST.save_to_json(cohort11);
 
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule, input_data);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule, input_data);
