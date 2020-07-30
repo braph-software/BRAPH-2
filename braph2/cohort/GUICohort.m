@@ -67,7 +67,7 @@ MOVEUP_GR_TP = 'Move selected group up';
 MOVEDOWN_GR_CMD = GUI.MOVEDOWN_CMD;
 MOVEDOWN_GR_TP = 'Move selected group down';
 
-GROUPPANEL_CMD = 'GroupSubjects';
+GROUPPANEL_CMD = 'Subjects';
 SELECTALL_SUB_CMD = 'Select all';
 SELECTALL_SUB_TP = 'Select all subjects';
 
@@ -669,8 +669,22 @@ init_groups()
             set(ui_table_groups, 'ColumnEditable', true(1, 4)) % false(1, cohort.groupnumber())])
         end        
         
-        group = []; % cohort.getGroups().getValue(selected_group);
-        if ~isempty(group) || ~isempty(selected_group) 
+        if isempty(selected_group) && ~isempty(cohort)
+            subjects = cohort.getSubjects().getValues(); 
+            data = cell(length(subjects), 4);
+            for i = 1:1:length(subjects)
+                sub = subjects{i};
+                if any(selected_subjects==i)
+                    data{i, TAB_GROUPS_SELECTED_COL} = true;
+                else
+                    data{i, TAB_GROUPS_SELECTED_COL} = false;
+                end
+                sub = subjects{i};
+                data{i, TAB_GROUPS_SUBID_COL} = sub.getID();
+                data{i, TAB_GROUPS_SUBLABEL_COL} = sub.getLabel();
+                data{i, TAB_GROUPS_SUBNOTES_COL} = sub.getNotes();
+            end            
+        elseif ~isempty(selected_group)
             group = cohort.getGroups().getValue(selected_group);
             data = cell(group.subjectnumber(), 4);
             subjects = group.getSubjects();
@@ -686,7 +700,7 @@ init_groups()
                 data{i, TAB_GROUPS_SUBNOTES_COL} = sub.getNotes();
             end
         else
-            data= cell(0,0);
+            data = cell(0, 0);
         end       
        
         set(ui_table_groups, 'Data', data)
