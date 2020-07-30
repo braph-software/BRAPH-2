@@ -391,6 +391,16 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 cohort.removeSubjectFromGroup(subject_indexes(i), group);
             end
         end
+        function groups_ids = getSubjectGroups(cohort, subject)
+            all_groups = cohort.getGroups().getValues();
+            for i = 1:1:length(all_groups)
+                group = all_groups{i};
+                if group.contains_subject(subject)
+                    groups_ids_all{i} = group.getID(); %#ok<AGROW>
+                end
+            end
+            groups_ids = groups_ids_all(~cellfun('isempty', groups_ids_all));
+        end
         function complementary = notGroup(cohort, group)
             % NOTGROUP returns a group with complementary subjects 
             % 

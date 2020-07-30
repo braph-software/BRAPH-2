@@ -596,6 +596,7 @@ TAB_GROUPS_SELECTED_COL = 1;
 TAB_GROUPS_SUBID_COL = 2;
 TAB_GROUPS_SUBLABEL_COL = 3;
 TAB_GROUPS_SUBNOTES_COL = 4;
+TAB_GROUPS_SUBGROUP_COL = 5;
 
 ui_panel_groups = uipanel();
 
@@ -670,17 +671,17 @@ init_groups()
     function update_group(varargin)
         
         % subjects of the selected group data table
-        ColumnName = {'', ' Subject ID ', ' Label ',' Notes '};
-        ColumnFormat = {'logical', 'char', 'char', 'char'};
+        ColumnName = {'', ' Subject ID ', ' Label ',' Notes ', ' Group '};
+        ColumnFormat = {'logical', 'char', 'char', 'char', 'char'};
         set(ui_table_groups, 'ColumnName', ColumnName)
         set(ui_table_groups, 'ColumnFormat', ColumnFormat)
         if exist('restricted','var') && restricted
-            set(ui_table_groups, 'ColumnEditable', true(1, 4)) % false(1, cohort.groupnumber())])
+            set(ui_table_groups, 'ColumnEditable', [true(1, 4)  false(5)])
         end        
         
         if isempty(selected_group) && ~isempty(cohort)
             subjects = cohort.getSubjects().getValues(); 
-            data = cell(length(subjects), 4);
+            data = cell(length(subjects), 5);
             for i = 1:1:length(subjects)
                 sub = subjects{i}; %#ok<NASGU>
                 if any(selected_subjects==i)
@@ -689,9 +690,16 @@ init_groups()
                     data{i, TAB_GROUPS_SELECTED_COL} = false;
                 end
                 sub = subjects{i};
+                ids = cohort.getSubjectGroups(sub);
+                ids_string = '';
+                for j = 1:1:length(ids)
+                    ids_string = [ids_string ' ' ids{j}]; %#ok<AGROW>
+                end
+                
                 data{i, TAB_GROUPS_SUBID_COL} = sub.getID();
                 data{i, TAB_GROUPS_SUBLABEL_COL} = sub.getLabel();
                 data{i, TAB_GROUPS_SUBNOTES_COL} = sub.getNotes();
+                data{i, TAB_GROUPS_SUBGROUP_COL} = ids_string;
             end            
         elseif ~isempty(selected_group)
             group = cohort.getGroups().getValue(selected_group);
@@ -704,9 +712,15 @@ init_groups()
                     data{i, TAB_GROUPS_SELECTED_COL} = false;
                 end
                 sub = subjects{i};
+                ids = cohort.getSubjectGroups(sub);
+                ids_string = '';
+                for j = 1:1:length(ids)
+                    ids_string = [ids_string ' ' ids{j}]; %#ok<AGROW>
+                end
                 data{i, TAB_GROUPS_SUBID_COL} = sub.getID();
                 data{i, TAB_GROUPS_SUBLABEL_COL} = sub.getLabel();
                 data{i, TAB_GROUPS_SUBNOTES_COL} = sub.getNotes();
+                data{i, TAB_GROUPS_SUBGROUP_COL} = ids_string;
             end
         else
             data = cell(0, 0);
