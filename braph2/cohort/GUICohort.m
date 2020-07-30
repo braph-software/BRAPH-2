@@ -763,8 +763,11 @@ init_groups()
         update_group()
     end
     function cb_groups_remove_sub(~,~)  % (src,event)
-        selected_subjects = cohort.remove_all(selected_subjects);
-        cohort.getGroups().getValue(selected_group).removeSubjects(selected_subjects);
+        group = cohort.getGroups().getValue(selected_group);
+        subjects = group.getSubjects();
+        subjects = subjects(selected_subjects);
+        cellfun(@(x) group.removeSubject(x) , subjects);
+        selected_subjects = cohort.getSubjects().remove_all(selected_subjects);
         update_grtab_table()
         update_group()
     end
