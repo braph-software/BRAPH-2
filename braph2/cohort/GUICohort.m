@@ -78,7 +78,10 @@ ADD_SUB_CMD = 'Add subject';
 ADD_SUBJECTS_TP = 'Add subject at the end of table';
 
 REMOVE_SUB_CMD = 'Remove';
-REMOVE_SUB_TP = 'Remove selected subjects';
+REMOVE_SUB_TP = 'Remove selected subjects from the cohort and all groups';
+
+REMOVE_SUB_FROM_GRP_CMD = 'Remove from group';
+REMOVE_SUB_FROM_GRP_TP = 'Remove selected subjects only from the group';
 
 MOVEUP_SUB_CMD = 'Move up';
 MOVEUP_SUB_TP = 'Move selected subjects up';
@@ -605,6 +608,7 @@ ui_button_groups_moveup_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton')
 ui_button_groups_movedown_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
 ui_button_groups_move2top_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
 ui_button_groups_move2bottom_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_groups_remove_from_group = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
 init_groups()
     function init_groups()
         GUI.setUnits(ui_panel_groups)
@@ -633,9 +637,14 @@ init_groups()
         set(ui_button_groups_add_subs, 'Callback', {@cb_groups_add_sub})
         
         set(ui_button_groups_remove_subs, 'Position', [.50 .11 .24 .03])
-        set(ui_button_groups_remove_subs, 'String' ,REMOVE_SUB_CMD)
+        set(ui_button_groups_remove_subs, 'String' , REMOVE_SUB_CMD)
         set(ui_button_groups_remove_subs, 'TooltipString', REMOVE_SUB_TP);
         set(ui_button_groups_remove_subs, 'Callback', {@cb_groups_remove_sub})
+        
+        set(ui_button_groups_remove_from_group, 'Position', [.50 .08 .24 .03])
+        set(ui_button_groups_remove_from_group, 'String' , REMOVE_SUB_FROM_GRP_CMD)
+        set(ui_button_groups_remove_from_group, 'TooltipString', REMOVE_SUB_FROM_GRP_TP);
+        set(ui_button_groups_remove_from_group, 'Callback', {@cb_groups_remove_sub_from_group})
         
         set(ui_button_groups_moveup_subs, 'Position', [.74 .11 .24 .03])
         set(ui_button_groups_moveup_subs, 'String', MOVEUP_SUB_CMD)
@@ -673,7 +682,7 @@ init_groups()
             subjects = cohort.getSubjects().getValues(); 
             data = cell(length(subjects), 4);
             for i = 1:1:length(subjects)
-                sub = subjects{i};
+                sub = subjects{i}; %#ok<NASGU>
                 if any(selected_subjects==i)
                     data{i, TAB_GROUPS_SELECTED_COL} = true;
                 else
@@ -779,11 +788,25 @@ init_groups()
         update_group()
     end
     function cb_groups_remove_sub(~,~)  % (src,event)
+        % remove from cohort
+        group = cohort.getGroups().getValue(selected_group);
+        subjects = group.getSubjects();
+        subjects = subjects(selected_subjects);
+        % remove from all the groups
+        groups = cohort.getGroups().getValues();
+        for i = 1:1:length(groups)
+            group = groups{i};
+            cellfun(@(x) group.removeSubject(x) , subjects);
+        end
+        selected_subjects = cohort.getSubjects().remove_all(selected_subjects);
+        update_grtab_table()
+        update_group()
+    end
+    function cb_groups_remove_sub_from_group(~,~)
         group = cohort.getGroups().getValue(selected_group);
         subjects = group.getSubjects();
         subjects = subjects(selected_subjects);
         cellfun(@(x) group.removeSubject(x) , subjects);
-        selected_subjects = cohort.getSubjects().remove_all(selected_subjects);
         update_grtab_table()
         update_group()
     end
