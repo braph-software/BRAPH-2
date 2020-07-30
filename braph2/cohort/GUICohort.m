@@ -20,7 +20,7 @@ FILENAME_HEIGHT = .02;
 GROUPPANEL_X0 = LEFTCOLUMN_WIDTH + (2 * MARGIN_X);
 GROUPPANEL_Y0 = FILENAME_HEIGHT + MARGIN_Y;  % FILENAME_HEIGHT + 2 * MARGIN_Y;
 GROUPPANEL_WIDTH = LEFTCOLUMN_WIDTH ;% 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
-GROUPPANEL_HEIGHT = .9;  % must be 9 1 - FILENAME_HEIGHT - (2 * MARGIN_Y)
+GROUPPANEL_HEIGHT = .96;  % must be 9 1 - FILENAME_HEIGHT - (2 * MARGIN_Y)
 GROUPPANEL_POSITION = [GROUPPANEL_X0 GROUPPANEL_Y0 GROUPPANEL_WIDTH GROUPPANEL_HEIGHT];
 
 % Commands
@@ -584,7 +584,7 @@ init_grtab()
         update_grtab_table()        
     end
 
-%% Groups
+%% Group Subjects
 TAB_GROUPS_SELECTED_COL = 1;
 TAB_GROUPS_SUBID_COL = 2;
 TAB_GROUPS_SUBLABEL_COL = 3;
@@ -613,42 +613,42 @@ init_groups()
         set(ui_table_groups, 'ColumnEditable', true)
         set(ui_table_groups, 'CellEditCallback', {@cb_groups_edit_sub});
         
-         set(ui_button_groups_selectall_subs, 'Position', [.02 .11 .10 .03])
+        set(ui_button_groups_selectall_subs, 'Position', [.02 .11 .24 .03])
         set(ui_button_groups_selectall_subs, 'String' ,SELECTALL_SUB_CMD)
         set(ui_button_groups_selectall_subs, 'TooltipString', SELECTALL_SUB_TP)
         set(ui_button_groups_selectall_subs, 'Callback', {@cb_groups_selectall_sub})
         
-        set(ui_button_groups_clearselection_subs, 'Position', [.02 .08 .10 .03])
+        set(ui_button_groups_clearselection_subs, 'Position', [.02 .08 .24 .03])
         set(ui_button_groups_clearselection_subs, 'String', CLEARSELECTION_SUB_CMD)
         set(ui_button_groups_clearselection_subs, 'TooltipString', CLEARSELECTION_SUB_TP)
         set(ui_button_groups_clearselection_subs, 'Callback', {@cb_groups_clearselection_sub})
         
-        set(ui_button_groups_add_subs, 'Position', [.12 .11 .10 .03])
+        set(ui_button_groups_add_subs, 'Position', [.26 .11 .24 .03])
         set(ui_button_groups_add_subs, 'String', ADD_SUB_CMD)
         set(ui_button_groups_add_subs, 'TooltipString', ADD_SUBJECTS_TP);
         set(ui_button_groups_add_subs, 'Callback', {@cb_groups_add_sub})
         
-        set(ui_button_groups_remove_subs, 'Position', [.22 .11 .10 .03])
+        set(ui_button_groups_remove_subs, 'Position', [.50 .11 .24 .03])
         set(ui_button_groups_remove_subs, 'String' ,REMOVE_SUB_CMD)
         set(ui_button_groups_remove_subs, 'TooltipString', REMOVE_SUB_TP);
         set(ui_button_groups_remove_subs, 'Callback', {@cb_groups_remove_sub})
         
-        set(ui_button_groups_moveup_subs, 'Position', [.32 .11 .10 .03])
+        set(ui_button_groups_moveup_subs, 'Position', [.74 .11 .24 .03])
         set(ui_button_groups_moveup_subs, 'String', MOVEUP_SUB_CMD)
         set(ui_button_groups_moveup_subs, 'TooltipString', MOVEUP_SUB_TP);
         set(ui_button_groups_moveup_subs, 'Callback', {@cb_groups_moveup_sub})
         
-        set(ui_button_groups_movedown_subs, 'Position', [.32 .08 .10 .03])
+        set(ui_button_groups_movedown_subs, 'Position', [.74 .08 .24 .03])
         set(ui_button_groups_movedown_subs, 'String', MOVEDOWN_SUB_CMD)
         set(ui_button_groups_movedown_subs, 'TooltipString', MOVEDOWN_SUB_TP);
         set(ui_button_groups_movedown_subs, 'Callback', {@cb_groups_movedown_sub})
         
-        set(ui_button_groups_move2top_subs, 'Position', [.32 .05 .10 .03])
+        set(ui_button_groups_move2top_subs, 'Position', [.74 .05 .24 .03])
         set(ui_button_groups_move2top_subs, 'String', MOVE2TOP_SUB_CMD)
         set(ui_button_groups_move2top_subs, 'TooltipString', MOVE2TOP_SUB_TP);
         set(ui_button_groups_move2top_subs, 'Callback', {@cb_groups_move2top_sub})
         
-        set(ui_button_groups_move2bottom_subs, 'Position', [.32 .02 .10 .03])
+        set(ui_button_groups_move2bottom_subs, 'Position', [.74 .02 .24 .03])
         set(ui_button_groups_move2bottom_subs, 'String', MOVE2BOTTOM_SUB_CMD)
         set(ui_button_groups_move2bottom_subs, 'TooltipString', MOVE2BOTTOM_SUB_TP);
         set(ui_button_groups_move2bottom_subs, 'Callback', {@cb_groups_move2bottom_sub})
@@ -721,7 +721,7 @@ init_groups()
         i = event.Indices(1);
         col = event.Indices(2);
         newdata = event.NewData;
-        group = cohort.getGroups().getValue(selected_group.getID());
+        group = cohort.getGroups().getValue(selected_group);
         subjects = group.getSubjects();
         subject = subjects{i};
         switch col
@@ -754,7 +754,7 @@ init_groups()
     end
     function cb_groups_add_sub(~,~)  % (src,event)   
         group = cohort.getGroups().getValue(selected_group);
-        sub = Subject.getSubject(cohort.getSubjectClass(), ['New Subject' + num2str(group.subjectnumber()+1)], 'Label', 'Notes'); %#ok<NBRAK>
+        sub = Subject.getSubject(cohort.getSubjectClass(), ['New Subject' num2str(group.subjectnumber()+1)], 'Label', 'Notes', cohort.getBrainAtlases()); 
         cohort.getSubjects().add(sub.getID(), sub);
         group.addSubject(sub);
         update_grtab_table()
