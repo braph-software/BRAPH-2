@@ -197,10 +197,12 @@ f = GUI.init_figure(APPNAME, .8, .9, 'center');
     function init_disable()
         GUI.disable(ui_panel_grtab)
         set(ui_menu_groups, 'enable', 'off')
+        set(ui_menu_subjects,'enable', 'off')
     end
     function init_enable()
         GUI.enable(ui_panel_grtab)
         set(ui_menu_groups, 'enable', 'on')
+        set(ui_menu_subjects,'enable', 'on')
     end
 
 %% Text File Name
@@ -791,6 +793,7 @@ init_groups()
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
 MENU_GROUPS = 'Groups';
+MENU_SUBJECTS = 'Subjects';
 
 ui_menu_file = uimenu(f, 'Label',MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
@@ -803,7 +806,7 @@ ui_menu_file_export_txt = uimenu(ui_menu_file);
 ui_menu_file_import_json = uimenu(ui_menu_file);
 ui_menu_file_export_json = uimenu(ui_menu_file);
 ui_menu_file_close = uimenu(ui_menu_file);
-ui_menu_groups = uimenu(f, 'Label',MENU_GROUPS);
+ui_menu_groups = uimenu(f, 'Label' ,MENU_GROUPS);
 ui_menu_groups_load_xls = uimenu(ui_menu_groups);
 ui_menu_groups_load_txt = uimenu(ui_menu_groups);
 ui_menu_groups_load_json = uimenu(ui_menu_groups);
@@ -811,6 +814,15 @@ ui_menu_groups_add = uimenu(ui_menu_groups);
 ui_menu_groups_remove = uimenu(ui_menu_groups);
 ui_menu_groups_moveup = uimenu(ui_menu_groups);
 ui_menu_groups_movedown = uimenu(ui_menu_groups);
+ui_menu_subjects = uimenu(f, 'Label', MENU_SUBJECTS);
+ui_menu_subjects_selectall = uimenu(ui_menu_subjects);
+ui_menu_subjects_clearselection = uimenu(ui_menu_subjects);
+ui_menu_subjects_add = uimenu(ui_menu_subjects);
+ui_menu_subjects_remove = uimenu(ui_menu_subjects);
+ui_menu_subjects_moveup = uimenu(ui_menu_subjects);
+ui_menu_subjects_movedown = uimenu(ui_menu_subjects);
+ui_menu_subjects_move2top = uimenu(ui_menu_subjects);
+ui_menu_subjects_move2bottom = uimenu(ui_menu_subjects);
 
 init_menu()
     function init_menu()
@@ -873,6 +885,35 @@ init_menu()
             
         set(ui_menu_groups_movedown, 'Label', MOVEDOWN_GR_CMD)
         set(ui_menu_groups_movedown, 'Callback', {@cb_grtab_movedown_gr})
+        
+        set(ui_menu_subjects_selectall,'Separator','on')
+        set(ui_menu_subjects_selectall,'Label',SELECTALL_SUB_CMD)
+        set(ui_menu_subjects_selectall,'Callback',{@cb_groups_selectall_sub})
+            
+        set(ui_menu_subjects_clearselection,'Label',CLEARSELECTION_SUB_CMD)
+        set(ui_menu_subjects_clearselection,'Callback',{@cb_groups_clearselection_sub})
+        
+        set(ui_menu_subjects_add,'Separator','on')
+        set(ui_menu_subjects_add,'Label',ADD_SUB_CMD)
+        set(ui_menu_subjects_add,'Callback',{@cb_groups_add_sub})         
+
+        set(ui_menu_subjects_remove,'Separator','on')
+        set(ui_menu_subjects_remove,'Label',REMOVE_SUB_CMD)
+        set(ui_menu_subjects_remove,'Callback',{@cb_groups_remove_sub})
+            
+        set(ui_menu_subjects_moveup,'Separator','on')
+        set(ui_menu_subjects_moveup,'Label',MOVEUP_SUB_CMD)
+        set(ui_menu_subjects_moveup,'Callback',{@cb_groups_moveup_sub})
+            
+        set(ui_menu_subjects_movedown,'Label',MOVEDOWN_SUB_CMD)
+        set(ui_menu_subjects_movedown,'Callback',{@cb_groups_movedown_sub})
+            
+        set(ui_menu_subjects_move2top,'Label',MOVE2TOP_SUB_CMD)
+        set(ui_menu_subjects_move2top,'Callback',{@cb_groups_move2top_sub})
+            
+        set(ui_menu_subjects_move2bottom,'Label',MOVE2BOTTOM_SUB_CMD)
+        set(ui_menu_subjects_move2bottom,'Callback',{@cb_groups_move2bottom_sub})
+
 
     end
 
