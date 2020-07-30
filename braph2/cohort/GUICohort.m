@@ -77,6 +77,9 @@ CLEARSELECTION_SUB_TP = 'Clear subject selection';
 ADD_SUB_CMD = 'Add subject';
 ADD_SUBJECTS_TP = 'Add subject at the end of table';
 
+CREATE_GRP_FROM_SUBS_CMD = 'Create Group';
+CREATE_GRP_FROM_SUBS_TP = 'Create Group from selection of Subjects';
+
 REMOVE_SUB_CMD = 'Remove';
 REMOVE_SUB_TP = 'Remove selected subjects from the cohort and all groups';
 
@@ -610,6 +613,7 @@ ui_button_groups_movedown_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton
 ui_button_groups_move2top_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
 ui_button_groups_move2bottom_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
 ui_button_groups_remove_from_group = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_create_group_from_subject = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
 init_groups()
     function init_groups()
         GUI.setUnits(ui_panel_groups)
@@ -636,6 +640,11 @@ init_groups()
         set(ui_button_groups_add_subs, 'String', ADD_SUB_CMD)
         set(ui_button_groups_add_subs, 'TooltipString', ADD_SUBJECTS_TP);
         set(ui_button_groups_add_subs, 'Callback', {@cb_groups_add_sub})
+        
+        set(ui_button_create_group_from_subject, 'Position', [.26 .08 .24 .03])
+        set(ui_button_create_group_from_subject, 'String', CREATE_GRP_FROM_SUBS_CMD)
+        set(ui_button_create_group_from_subject, 'TooltipString', CREATE_GRP_FROM_SUBS_TP);
+        set(ui_button_create_group_from_subject, 'Callback', {@cb_groups_create_group_from_subjects})        
         
         set(ui_button_groups_remove_subs, 'Position', [.50 .11 .24 .03])
         set(ui_button_groups_remove_subs, 'String' , REMOVE_SUB_CMD)
@@ -762,9 +771,14 @@ init_groups()
         i = event.Indices(1);
         col = event.Indices(2);
         newdata = event.NewData;
-        group = cohort.getGroups().getValue(selected_group);
-        subjects = group.getSubjects();
-        subject = subjects{i};
+        if ~isempty(selected_group)
+            group = cohort.getGroups().getValue(selected_group);
+            subjects = group.getSubjects();
+            subject = subjects{i};
+        else
+            subjects = cohort.getSubjects().getValues();
+            subject = subjects{i};
+        end
         switch col
             case TAB_GROUPS_SELECTED_COL
                 if newdata == 1
@@ -844,6 +858,18 @@ init_groups()
         selected_subjects = cohort.move_to_bottom(selected_subjects);
         update_grtab_table()
         update_group()
+    end
+    function cb_groups_create_group_from_subjects(~, ~)
+        all_subjects = cohort.getSubjects().getValues();
+        subjects = all_subjects(selected_subjects); 
+        ids_string = '';
+                for j = 1:1:length(subjects)
+                    sub = subjects{j};
+                    ids_string = [ids_string ' ' sub.getID()]; %#ok<AGROW>
+                end
+        group = Group(cohort.getSubjectClass(), ['Group created with: ' ids_string], 'Label', 'Notes', subjects);
+        cohort.getGroups().add(group.getID(), group);
+        update_grtab_table()
     end
 
 %% Menus
