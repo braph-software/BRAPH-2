@@ -196,11 +196,13 @@ f = GUI.init_figure(APPNAME, .8, .9, 'center');
 
     function init_disable()
         GUI.disable(ui_panel_grtab)
+        GUI.disable(ui_panel_groups)
         set(ui_menu_groups, 'enable', 'off')
         set(ui_menu_subjects,'enable', 'off')
     end
     function init_enable()
         GUI.enable(ui_panel_grtab)
+        GUI.enable(ui_panel_groups)
         set(ui_menu_groups, 'enable', 'on')
         set(ui_menu_subjects,'enable', 'on')
     end
