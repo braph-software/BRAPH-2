@@ -12,7 +12,7 @@ classdef ComparisonCON_WU < Comparison
     %
     % ComparisonCON_WU basic methods:
     %  disp                         - displays the comparison
-    % 
+    %
     % ComparisonCON_WU get methods:
     %  getGroupValues               - returns the groups measurement value
     %  getGroupValue                - returns the group measurement value
@@ -36,7 +36,7 @@ classdef ComparisonCON_WU < Comparison
     %  getAvailbleSettings          - returns the available settings
     %  getComparison                - returns a new comparison
     %
-    % See also Comparison, AnalysisCON_WU, MeasurementCON_WU, RandomComparisonCON_WU. 
+    % See also Comparison, AnalysisCON_WU, MeasurementCON_WU, RandomComparisonCON_WU.
     
     properties
         values_1  % array with the values_1 of the measure for each subject of group 1
@@ -52,12 +52,12 @@ classdef ComparisonCON_WU < Comparison
     end
     methods  % Constructor
         function c =  ComparisonCON_WU(id, label, notes, atlas, measure_code, group_1, group_2, varargin)
-            % COMPARISONCON_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2) 
+            % COMPARISONCON_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2)
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP_1 and GROUP_2. It initializes the
             % COMPARISONCON_WU with default settings.
             %
-            % COMPARISONCON_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...) 
+            % COMPARISONCON_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...)
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP_1 and GROUP_2. It initializes the
             % COMPARISONCON_WU with VALUE settings.
@@ -69,17 +69,17 @@ classdef ComparisonCON_WU < Comparison
             assert(ismember(measure_code, measure_list), ...
                 [BRAPH2.STR ':ComparisonCON:' BRAPH2.BUG_FUNC], ...
                 'ComparisonCON measure_code is not compatible with the permited Measures.');
-
+            
             c = c@Comparison(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:});
         end
     end
-    methods  % Get functions        
+    methods  % Get functions
         function [values_1, values_2] = getGroupValues(c)
             % GETGROUPVALUES returns the measure values of both groups
             %
-            % [VALUE_1, VALUE_2] = GETGROUPVALUES(C) returns the measure 
+            % [VALUE_1, VALUE_2] = GETGROUPVALUES(C) returns the measure
             % values of both groups.
-            % 
+            %
             % See also getGroupValue, getDifference, getAllDifferences.
             
             values_1 = c.values_1;
@@ -88,9 +88,9 @@ classdef ComparisonCON_WU < Comparison
         function values = getGroupValue(c, group_index)
             % GETGROUPVALUE returns the measure value of specified group
             %
-            % VALUE = GETGROUPVALUE(C, GROUP_INDEX) returns the measure value of 
+            % VALUE = GETGROUPVALUE(C, GROUP_INDEX) returns the measure value of
             % specified group.
-            % 
+            %
             % See also getGroupValues, getDifference, getAllDifferences.
             
             if group_index == 1
@@ -102,21 +102,21 @@ classdef ComparisonCON_WU < Comparison
         function [average_value_1, average_value_2] = getGroupAverageValues(c)
             % GETGROUPAVERAGEVALUES returns the measure average value of the groups
             %
-            % VALUE = GETGROUPAVERAGEVALUES(C, GROUP_INDEX) returns the measure value of 
-            % specified group.
-            % 
-            % See also getGroupValues, getDifference, getAllDifferences.
+            % [AVERAGEVALUE1, AVERAGEVALUE2] = GETGROUPAVERAGEVALUES(C)
+            % returns the measures average values.
+            %
+            % See also getGroupValues, getDifference, getGroupAverageValue.
             
             average_value_1 = c.average_value_1;
             average_value_2 = c.average_value_2;
         end
         function average_value = getGroupAverageValue(c, group_index)
-            % GETGROUPAVERAGEVALUE returns the measure averge value of specified group
+            % GETGROUPAVERAGEVALUE returns the measure average value of specified group
             %
-            % VALUE = GETGROUPAVERAGEVALUE(C, GROUP_INDEX) returns the measure value of 
-            % specified group.
-            % 
-            % See also getGroupValues, getDifference, getAllDifferences.
+            % AVERAGE_VALUE = GETGROUPAVERAGEVALUE(C, GROUP_INDEX) returns
+            % the measure value of specified group.
+            %
+            % See also getGroupValues, getDifference, getGroupAverageValues.
             
             if group_index == 1
                 average_value = c.average_value_1;
@@ -127,10 +127,10 @@ classdef ComparisonCON_WU < Comparison
         function difference = getDifference(c)
             % GETDIFFERENCE returns the difference between measure values
             %
-            % DIFFERENCE = GETDIFFERENCE(C) returns the difference between 
+            % DIFFERENCE = GETDIFFERENCE(C) returns the difference between
             % measure values of both groups. This difference is the mean of
             % all differences.
-            % 
+            %
             % See also getGroupValue, getGroupValues, getAllDifferences.
             
             difference = c.difference;
@@ -138,9 +138,9 @@ classdef ComparisonCON_WU < Comparison
         function all_differences = getAllDifferences(c)
             % GETALLDIFFERENCES returns the all differences between measure values
             %
-            % ALL_DIFFERENCES = GETALLDIFFERENCE(C) returns all differences between 
+            % ALL_DIFFERENCES = GETALLDIFFERENCE(C) returns all differences between
             % measure values of both groups.
-            % 
+            %
             % See also getGroupValue, getGroupValues, getDifference.
             
             all_differences = c.all_differences;
@@ -149,7 +149,7 @@ classdef ComparisonCON_WU < Comparison
             % GETP1 returns the single tail p-value of the comparison
             %
             % P1 = GETP1(C) returns the single tail p-value of the comparison
-            % 
+            %
             % See also getP2, getConfidenceIntervalMin, getConfidenceIntervalMax.
             
             p1 = c.p1;
@@ -158,7 +158,7 @@ classdef ComparisonCON_WU < Comparison
             % GETP2 returns the double tail p-value of the comparison
             %
             % P2 = GETP2(C) returns the double tail p-value of the comparison
-            % 
+            %
             % See also getP1, getConfidenceIntervalMin, getConfidenceIntervalMax.
             
             p2 = c.p2;
@@ -166,19 +166,19 @@ classdef ComparisonCON_WU < Comparison
         function confidence_interval_min = getConfidenceIntervalMin(c)
             % GETCONFIDENCEINTERVALMIN returns minimum value of the confidence interval
             %
-            % CONFIDENCE_INTERVAL_MIN = GETCONFIDENCEINTERVALMIN(C) 
+            % CONFIDENCE_INTERVAL_MIN = GETCONFIDENCEINTERVALMIN(C)
             % returns minimum value of the confidence interval
-            % 
+            %
             % See also getP1, getP2, getConfidenceIntervalMax.
             
             confidence_interval_min = c.confidence_interval_min;
         end
         function confidence_interval_max = getConfidenceIntervalMax(c)
-             % GETCONFIDENCEINTERVALMAX returns maximum value of the confidence interval
+            % GETCONFIDENCEINTERVALMAX returns maximum value of the confidence interval
             %
-            % CONFIDENCE_INTERVAL_MAX = GETCONFIDENCEINTERVALMAX(C) 
+            % CONFIDENCE_INTERVAL_MAX = GETCONFIDENCEINTERVALMAX(C)
             % returns maximum value of the confidence interval
-            % 
+            %
             % See also getP1, getP2, getConfidenceIntervalMin.
             
             confidence_interval_max = c.confidence_interval_max;
@@ -191,18 +191,20 @@ classdef ComparisonCON_WU < Comparison
             % INITIALIZE_DATA(C) initialize and check the data for the
             % comparison. It initializes with default settings.
             %
-            % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and 
+            % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and
             % check the data for the comparison. It initializes with VALUE settings.
             % Admissible rules are:
-            %  'ComparisonST.PermutationNumber'  - number of permutations
-            %  'ComparisonST.value_1'            - value of group 1
-            %  'ComparisonST.value_2'            - value of group 2
-            %  'ComparisonST.difference'         - value of difference
-            %  'ComparisonST.all_differences'    - value of all differences
-            %  'ComparisonST.p1'                 - single tail p-value
-            %  'ComparisonST.p2'                 - double tail p-value
-            %  'ComparisonST.confidence_min'     - min value in confidence interval
-            %  'ComparisonST.confidence_max'     - max value in confidence interval
+            %  'ComparisonCON.PermutationNumber'  - number of permutations
+            %  'ComparisonCON.value_1'            - value of group 1
+            %  'ComparisonCON.value_2'            - value of group 2
+            %  'ComparisonCON.average_value_1'    - average value of group 1
+            %  'ComparisonCON.average_value_2'    - average value of group 2
+            %  'ComparisonCON.difference'         - value of difference
+            %  'ComparisonCON.all_differences'    - value of all differences
+            %  'ComparisonCON.p1'                 - single tail p-value
+            %  'ComparisonCON.p2'                 - double tail p-value
+            %  'ComparisonCON.confidence_min'     - min value in confidence interval
+            %  'ComparisonCON.confidence_max'     - max value in confidence interval
             %
             % See also AnalysisCON_WU.
             
@@ -307,11 +309,11 @@ classdef ComparisonCON_WU < Comparison
                     all(cellfun(@(x) isequal(size(x), [1, 1]), c.getConfidenceIntervalMin())), ...
                     [BRAPH2.STR ':ComparisonCON_WU:' BRAPH2. WRONG_INPUT], ...
                     'Data not compatible with ComparisonCON_WU')
-                   
+                
                 c.confidence_interval_max = get_from_varargin( ...
                     {0}, ...
                     'ComparisonCON.confidence_max', ...
-                    varargin{:});      
+                    varargin{:});
                 assert(iscell(c.getConfidenceIntervalMax()) && ...
                     isequal(size(c.getConfidenceIntervalMax()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [1, 1]), c.getConfidenceIntervalMax())), ...
@@ -471,7 +473,7 @@ classdef ComparisonCON_WU < Comparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), c.getDifference())), ...
                     [BRAPH2.STR ':ComparisonCON_WU:' BRAPH2. WRONG_INPUT], ...
                     'Data not compatible with ComparisonCON_WU')
-                              
+                
                 c.all_differences = get_from_varargin( ...
                     repmat({zeros(atlas.getBrainRegions().length())}, 1, number_of_permutations), ...
                     'ComparisonCON.all_differences', ...
@@ -481,7 +483,7 @@ classdef ComparisonCON_WU < Comparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), c.getAllDifferences())), ...
                     [BRAPH2.STR ':ComparisonCON_WU:' BRAPH2. WRONG_INPUT], ...
                     'Data not compatible with ComparisonCON_WU')
-                             
+                
                 c.p1 = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length())}, ...
                     'ComparisonCON.p1', ...
@@ -520,15 +522,15 @@ classdef ComparisonCON_WU < Comparison
                     isequal(size(c.getConfidenceIntervalMax()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), c.getConfidenceIntervalMax())), ...
                     [BRAPH2.STR ':ComparisonCON_WU:' BRAPH2. WRONG_INPUT], ...
-                    'Data not compatible with ComparisonCON_WU')           
+                    'Data not compatible with ComparisonCON_WU')
             end
         end
     end
     methods (Static)  % Descriptive functions
-        function class = getClass() 
-             % GETCLASS returns the class of connectivity comparison
+        function class = getClass()
+            % GETCLASS returns the class of connectivity comparison
             %
-            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
+            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
             % comparison. In this case 'ComparisonCON_WU'.
             %
             % See also getList, getName, getDescription.
@@ -545,7 +547,7 @@ classdef ComparisonCON_WU < Comparison
             name = 'Comparison CON WU';
         end
         function description = getDescription()
-             % GETDESCRIPTION returns the description of connectivity comparison 
+            % GETDESCRIPTION returns the description of connectivity comparison
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
             % of ComparisonCON_WU.
@@ -555,7 +557,7 @@ classdef ComparisonCON_WU < Comparison
             description = 'Connectivity comparison';
         end
         function atlas_number = getBrainAtlasNumber()
-            % GETBRAINATLASNUMBER returns the number of brain atlases 
+            % GETBRAINATLASNUMBER returns the number of brain atlases
             %
             % ATLAS_NUMBER = GETBRAINATLASNUMBER() returns the number of
             % brain atlases.
@@ -565,7 +567,7 @@ classdef ComparisonCON_WU < Comparison
             atlas_number =  1;
         end
         function analysis_class = getAnalysisClass()
-            % GETANALYSISCLASS returns the class of the analsysis 
+            % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
             % analysis the comparison is part of, 'AnalysisCON_WU'.
@@ -578,7 +580,7 @@ classdef ComparisonCON_WU < Comparison
             % GETSUBJETCLASS returns the class of connectivity comparison subject
             %
             % SUBJECT_CLASS = GETSUBJECT_CLASS() returns the class
-            % of ComparisonCON_WU subject, 'SubjectST'.
+            % of ComparisonCON_WU subject, 'SubjectCON'.
             %
             % See also getList, getClass, getName, getDescription.
             
@@ -587,7 +589,7 @@ classdef ComparisonCON_WU < Comparison
         function available_settings = getAvailableSettings()
             % GETAVAILABLESETTINGS returns the available settings of connectivity comparison
             %
-            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the 
+            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the
             % available settings of ComparisonCON_WU.
             %
             % See also getClass, getName, getDescription
@@ -603,7 +605,7 @@ classdef ComparisonCON_WU < Comparison
             % returns a new ComparisonCON_WU object with COMPARISON_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
             % it will initialize with default settings.
-            % 
+            %
             % SUB = GETCOMPARISON(COMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...)
             % returns a new ComparisonCON_WU object with COMPARISON_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
