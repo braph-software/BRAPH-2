@@ -17,6 +17,7 @@ classdef GUI
     % BAE_EXTENSION     - Brain Atlas editor file extension
     % BAE_MSG_PUTFILE   - Brain Atlas editor put file message
     % BAE_MSG_GETFILE   - Brain Atlas editor get file message
+% TODO add other changes
     % MSG_YES           - affirmative message
     % MSG_NO            - negation message
     % BRA_UNITS         - left square bracket character
