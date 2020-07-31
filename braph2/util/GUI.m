@@ -98,10 +98,10 @@ classdef GUI
         BAE_MSG_PUTFILE = 'Save brain atlas'
         BAE_MSG_GETFILE = ['Select brain atlas file (' GUI.BAE_EXTENSION ')']
         
-%         MCE_NAME = 'MRI Cohort Editor'
-%         MCE_EXTENSION = '*.mc'
-%         MCE_MSG_PUTFILE = 'Save MRI cohort'
-%         MCE_MSG_GETFILE = ['Select MRI cohort file (' GUI.MCE_EXTENSION ')']
+        MCE_NAME = 'Cohort Editor'
+        MCE_EXTENSION = '*.mc'
+        MCE_MSG_PUTFILE = 'Save cohort'
+        MCE_MSG_GETFILE = ['Select cohort file (' GUI.MCE_EXTENSION ')']
 %         
 %         MGA_NAME = 'MRI Graph Analysis'
 %         MGA_EXTENSION = '*.mga'
