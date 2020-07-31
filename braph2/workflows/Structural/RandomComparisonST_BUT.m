@@ -3,7 +3,7 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
     % RandomComparisonST_BUT is a subclass of RandomComparisonST_WU.
     %
     % RandomComparisonST_BUT store a comparison between a group and a randomly
-    % generated group. The data from the groups it compares have a
+    % generated group. The data from the groups it compares haves a
     % threshold. Structural data can be for example MRI or PET data.
     %
     % RandomComparisonST_BUT constructor methods:

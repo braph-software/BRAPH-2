@@ -10,7 +10,7 @@ classdef AnalysisST_WU < Analysis
     % Structural data can be for example MRI or PET data.
     %
     % AnalysisST_WU constructor methods:
-    %  AnalysisST_WU               - Constructor
+    %  AnalysisST_WU                - Constructor
     %
     % AnalysisST_WU ID methods:
     %  getMeasurementID             - returns the measurement ID
@@ -109,6 +109,15 @@ classdef AnalysisST_WU < Analysis
             % graph with the correlation matrix made of the data of
             % subjects.
             %
+            % G = GET_GRAPH_FOR_SUBJECTS(ANALYSIS, SUBJECTS, PROPERTY, VALUE) creates a
+            % graph with the correlation matrix made of the data of
+            % subjects.
+            % Admissible PROPERTIES are:
+            %   AnalysisST.CorrelationRule     - determines which type of
+            %                                    correlation function will be used
+            %   AnalysisST.NegativeWeightRule  - determines which the type of
+            %                                    filter will be applied to the matrix
+            %
             % See also calculate_measurement.
             
             atlases = analysis.cohort.getBrainAtlases();
@@ -176,7 +185,15 @@ classdef AnalysisST_WU < Analysis
             % calculates a measure of type MEASURE_CODE utilizing the data
             % from GROUP subject and random data. It will compare the measures 
             % obtained and will return a random comparison. The function 
-            % will utilize VALUE settings.
+            % will utilize VALUE settings. 
+            % Available POPERTIES are:
+            %  Verbose             - true to display info about the
+            %                        randomization cycle, false by default
+            %  Interruptible       - true if randomization cycle can be
+            %                        interreput, false by default
+            %  RandomizationNUmber - number of randomizations
+            %  AttemptsPerEdge     - number of swap attempts 
+            %  NumberOfWeigths     - number of weigths sorted at the same time during randomization
             %
             % See also calculate_measurement, calculate_comparison.
             
@@ -269,6 +286,12 @@ classdef AnalysisST_WU < Analysis
             % from GROUP_1 subject and GROUP_2 data. It will compare the measures 
             % obtained and will return a comparison. The function 
             % will utilize VALUE settings.
+            % Available POPERTIES are:
+            %  Verbose             - true to display info about the
+            %                        randomization cycle, false by default
+            %  Interruptible       - true if randomization cycle can be
+            %                        interreput, false by default
+            %  Longitudinal        - checks if the permutation is longitudinal 
             %
             % See also calculate_random_comparison, calculate_measurement.
             

@@ -3,7 +3,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
     % MeasurementST_BUD is a subclass of MeasurementST_WU.
     %
     % MeasurementST_BUD store a measurement of structural data with BU
-    % graphs at fixes density, for this it implements MeasurementST_WU
+    % graphs at fixes density, for this it inherit the MeasurementST_WU
     % initialization of data. Structural data can be for example MRI or PET data.
     %
     % MeasurementST_BUD constructor methods:
