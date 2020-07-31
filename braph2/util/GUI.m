@@ -99,12 +99,12 @@ classdef GUI
         BAE_MSG_GETFILE = ['Select brain atlas file (' GUI.BAE_EXTENSION ')']
         
         CE_NAME = 'Cohort Editor'
-        CE_EXTENSION = '*.mc'
+        CE_EXTENSION = '*.cohort'
         CE_MSG_PUTFILE = 'Save cohort'
         CE_MSG_GETFILE = ['Select cohort file (' GUI.CE_EXTENSION ')']
         
         GA_NAME = 'Graph Analysis'
-        GA_EXTENSION = '*.mga'
+        GA_EXTENSION = '*.analysis'
         GA_MSG_PUTFILE = 'Save graph analysis'
         GA_MSG_GETFILE = ['Select graph analysis file (' GUI.GA_EXTENSION ')']
         
