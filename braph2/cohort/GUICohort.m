@@ -7,7 +7,7 @@ function GUICohort(tmp, sub_class, restricted)
 %
 % GUICOHORT(COHORT, TRUE) opens a cohort with only reading and basic writing
 
-APPNAME  = GUI.MCE_NAME;  % application name
+APPNAME  = GUI.CE_NAME;  % application name
 BUILD = BRAPH2.BUILD;
 
 % Dimensions
@@ -142,7 +142,7 @@ selected_subjects = [];
     end
     function cb_saveas(~, ~)  % (src, event)
         % select file
-        [file, path, filterindex] = uiputfile(GUI.MCE_EXTENSION, GUI.MCE_MSG_PUTFILE);
+        [file, path, filterindex] = uiputfile(GUI.CE_EXTENSION, GUI.CE_MSG_PUTFILE);
         % save file
         if filterindex
             filename = fullfile(path, file);
@@ -467,9 +467,9 @@ init_grtab()
     function update_grtab_cohortname()
         cohortname = cohort.getID();
         if isempty(cohortname)
-            set(f, 'Name', [GUI.MCE_NAME ' - ' BRAPH2.VERSION])
+            set(f, 'Name', [GUI.CE_NAME ' - ' BRAPH2.VERSION])
         else
-            set(f, 'Name', [GUI.MCE_NAME ' - ' BRAPH2.VERSION ' - ' cohortname])
+            set(f, 'Name', [GUI.CE_NAME ' - ' BRAPH2.VERSION ' - ' cohortname])
         end
         set(ui_edit_grtab_cohortname, 'String', cohortname)
     end

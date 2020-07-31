@@ -259,7 +259,7 @@ classdef SubjectST < Subject
             end
 
             % load subjects to cohort & add them to the group
-            group = Group(subject_class,'', '', '', cohort.getSubjects().getValues());
+            group = Group(subject_class,'', '', '', {});
             group_path = strsplit(file, filesep());
             group_id = group_path{length(group_path)};            
             group_id = erase(group_id, '.xlsx');
@@ -410,7 +410,7 @@ classdef SubjectST < Subject
             end            
                  
             % creates group
-            group = Group(subject_class, '', '', '', cohort.getSubjects().getValues());
+            group = Group(subject_class, '', '', '', {});
             group_path = strsplit(file, filesep());
             group_id = group_path{length(group_path)};            
             group_id = erase(group_id, '.txt');

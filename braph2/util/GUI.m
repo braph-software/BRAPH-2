@@ -98,45 +98,15 @@ classdef GUI
         BAE_MSG_PUTFILE = 'Save brain atlas'
         BAE_MSG_GETFILE = ['Select brain atlas file (' GUI.BAE_EXTENSION ')']
         
-        MCE_NAME = 'Cohort Editor'
-        MCE_EXTENSION = '*.mc'
-        MCE_MSG_PUTFILE = 'Save cohort'
-        MCE_MSG_GETFILE = ['Select cohort file (' GUI.MCE_EXTENSION ')']
-%         
-%         MGA_NAME = 'MRI Graph Analysis'
-%         MGA_EXTENSION = '*.mga'
-%         MGA_MSG_PUTFILE = 'Save MRI graph analysis'
-%         MGA_MSG_GETFILE = ['Select MRI graph analysis file (' GUI.MGA_EXTENSION ')']
-%         
-%         fMCE_NAME = 'fMRI Cohort Editor'
-%         fMCE_EXTENSION = '*.fc'
-%         fMCE_MSG_PUTFILE = 'Save fMRI cohort'
-%         fMCE_MSG_GETFILE = ['Select fMRI cohort file (' GUI.fMCE_EXTENSION ')']
-%         
-%         fMGA_NAME = 'fMRI Graph Analysis'
-%         fMGA_EXTENSION = '*.fga'
-%         fMGA_MSG_PUTFILE = 'Save fMRI graph analysis'
-%         fMGA_MSG_GETFILE = ['Select fMRI graph analysis file (' GUI.fMGA_EXTENSION ')']
-%         
-%         ECE_NAME = 'EEG Cohort Editor'
-%         ECE_EXTENSION = '*.ec'
-%         ECE_MSG_PUTFILE = 'Save EEg cohort'
-%         ECE_MSG_GETFILE = ['Select EEG cohort file (' GUI.ECE_EXTENSION ')']
-%         
-%         EGA_NAME = 'EEG Graph Analysis'
-%         EGA_EXTENSION = '*.ega'
-%         EGA_MSG_PUTFILE = 'Save EEG graph analysis'
-%         EGA_MSG_GETFILE = ['Select EEG graph analysis file (' GUI.EGA_EXTENSION ')']
-%         
-%         PCE_NAME = 'PET Cohort Editor'
-%         PCE_EXTENSION = '*.pc'
-%         PCE_MSG_PUTFILE = 'Save PET cohort'
-%         PCE_MSG_GETFILE = ['Select PET cohort file (' GUI.PCE_EXTENSION ')']
-%         
-%         PGA_NAME = 'PET Graph Analysis'
-%         PGA_EXTENSION = '*.pga'
-%         PGA_MSG_PUTFILE = 'Save PET graph analysis'
-%         PGA_MSG_GETFILE = ['Select PET graph analysis file (' GUI.PGA_EXTENSION ')']
+        CE_NAME = 'Cohort Editor'
+        CE_EXTENSION = '*.cohort'
+        CE_MSG_PUTFILE = 'Save cohort'
+        CE_MSG_GETFILE = ['Select cohort file (' GUI.CE_EXTENSION ')']
+        
+        GA_NAME = 'Graph Analysis'
+        GA_EXTENSION = '*.analysis'
+        GA_MSG_PUTFILE = 'Save graph analysis'
+        GA_MSG_GETFILE = ['Select graph analysis file (' GUI.GA_EXTENSION ')']
         
         % GUI general
         MSG_YES = 'Yes'
