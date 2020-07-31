@@ -158,6 +158,7 @@ selected_subjects = [];
             selected_subjects = [];
             setup()
             update_filename('')
+            update_group()
             update_group_popups()
         end
     end
@@ -165,10 +166,11 @@ selected_subjects = [];
         cohortstmp = eval([cohort.getSubjectClass()  '.load_from_xls(cohort)']);
         if  ~isempty(cohortstmp)
             cohort = cohortstmp;
-            selected_group = [];
+            selected_group = [];            
             selected_subjects = [];
             setup()
             update_filename('')
+            update_group()
             update_group_popups()
         end
     end
@@ -181,6 +183,7 @@ selected_subjects = [];
             selected = [];
             setup()
             update_filename('')
+            update_group()
             update_group_popups()
         end
     end
