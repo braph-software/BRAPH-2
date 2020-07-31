@@ -32,6 +32,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
     %   addSubjectsToGroup      - adds subjects to a specified group
     %   removeSubjectFromGroup  - removes a subject from a specified group
     %   removeSubjectsFromGroup - removes subjects from a specified group
+    %   getGroupsWithSubject    - returns the ids of groups with a subject
+    %   notGroup                - returns the complementary group
+    %   andGroup                - returns the intersection of groups
+    %   orGroup                 - returns the union of groups
+    %   nandGroup               - returns the complement of union of groups
+    %   xorGroup                - returns the exclusive intersection of groups
     %
     % Cohort deep copy:
     %   copy                    - deep copy
