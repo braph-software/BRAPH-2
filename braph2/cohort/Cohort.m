@@ -391,7 +391,14 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 cohort.removeSubjectFromGroup(subject_indexes(i), group);
             end
         end
-        function groups_ids = getSubjectGroups(cohort, subject)
+        function groups_ids = getGroupsWithSubject(cohort, subject)
+            % GETGROUPSWITHSUBJECT return the groups ids that contain a subject
+            %
+            % GROUPS_IDS = GETGROUPSWITHSUBJECT(COHORT, SUBJECT) returns
+            % the ids of the groups that contain a SUBJECT.
+            %
+            % See also addSubjectToGroup, removeSubjectFromGroup.
+            
             all_groups = cohort.getGroups().getValues();
             for i = 1:1:length(all_groups)
                 group = all_groups{i};
