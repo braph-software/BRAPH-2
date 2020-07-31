@@ -385,6 +385,8 @@ classdef SubjectCON < Subject
             if isa(tmp, 'Cohort')
                 cohort = tmp;
                 subject_class = cohort.getSubjectClass();
+                atlases = cohort.getBrainAtlases();
+                atlases = atlases{1};              
             else
                 cohort_folder = '';
                 parts = strsplit(directory, filesep());
@@ -419,7 +421,7 @@ classdef SubjectCON < Subject
                 end
                 % read file  
                 raw = textread(fullfile(directory, files(i).name), '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                atlases = cohort.getBrainAtlases();
+                              
                 raw = raw(~cellfun('isempty', raw));  % remove empty cells
                 
                 % create subject
