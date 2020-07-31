@@ -32,7 +32,7 @@ cohort.getGroups().add(group2.getID(), group2);
 % act
 SubjectCON.save_to_xls(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectCON.load_from_xls(sub_class, atlas, 'Directory', save_dir_path);
+load_cohort = SubjectCON.load_from_xls(atlas, 'Directory', save_dir_path);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -73,7 +73,7 @@ cohort.getGroups().add(group.getID(), group);
 % act
 SubjectCON.save_to_txt(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectCON.load_from_txt(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getID()]);
+load_cohort = SubjectCON.load_from_txt(atlas, 'Directory', [save_dir_path filesep() group.getID()]);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -115,7 +115,7 @@ cohort.getGroups().add(group.getID(), group);
 % act
 SubjectCON.save_to_json(cohort, save_dir_rule, save_dir_path);
 
-load_cohort = SubjectCON.load_from_json(sub_class, atlas, 'Directory', [save_dir_path filesep() group.getID()]);
+load_cohort = SubjectCON.load_from_json(atlas, 'Directory', [save_dir_path filesep() group.getID()]);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...

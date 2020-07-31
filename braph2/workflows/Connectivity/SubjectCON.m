@@ -200,7 +200,7 @@ classdef SubjectCON < Subject
         end
     end
     methods (Static)  % Save/load functions
-        function cohort = load_from_xls(subject_class, atlases, varargin)
+        function cohort = load_from_xls(tmp, varargin)
             % LOAD_FROM_XLS loads '.xls' files to a Cohort with SubjectCON
             %
             % COHORT = LOAD_FROM_XLS(SUBJECT_CLASS, ATLASES) opens a GUI to
@@ -216,30 +216,38 @@ classdef SubjectCON < Subject
             % directory
             directory = get_from_varargin('', 'Directory', varargin{:});
             if isequal(directory, '')  % no path, open gui
-                msg = get_from_varargin(Constant.MSG_GETDIR, 'MSG', varargin{:});
+                msg = get_from_varargin(BRAPH2.MSG_GETDIR, 'MSG', varargin{:});
                 directory = uigetdir(msg);
-            end
+            end           
             
             % find all subfolders
             sub_folders = dir(directory);
             sub_folders = sub_folders([sub_folders(:).isdir] == 1);
             sub_folders = sub_folders(~ismember({sub_folders(:).name}, {'.', '..'}));
-            
-            % cohort information
-            file_cohort = [directory filesep() 'cohort_info.txt'];
-            cohort_id = '';
-            cohort_label = '';
-            cohort_notes = '';
-            
-            if exist(file_cohort, 'file')
-                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                cohort_id = raw_cohort{1, 1};
-                cohort_label = raw_cohort{2, 1};
-                cohort_notes = raw_cohort{3, 1};
-            end            
-            
-            % creates cohort          
-            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+            else                
+                % cohort information
+                file_cohort = [directory filesep() 'cohort_info.txt'];
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                
+                if exist(file_cohort, 'file')
+                    raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                    cohort_id = raw_cohort{1, 1};
+                    cohort_label = raw_cohort{2, 1};
+                    cohort_notes = raw_cohort{3, 1};
+                end
+                
+                % creates cohor
+                atlases = tmp;
+                subject_class = 'SubjectCON';
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            end
+
             
             % find all xls or xlsx files per sub folder
             for j = 1:1: length(sub_folders)
@@ -255,7 +263,7 @@ classdef SubjectCON < Subject
                 for i = 1:1:length(files)
                     % read file
                     [num, ~, raw] = xlsread(fullfile(path, files(i).name));
-                    
+                    atlases = cohort.getBrainAtlases();
                     % get age
                     
                     % create subject
@@ -298,7 +306,7 @@ classdef SubjectCON < Subject
             % get Root Directory
             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
             if isequal(root_directory, '')  % no path, open gui
-                msg = get_from_varargin(Constant.MSG_PUTDIR, 'MSG', varargin{:});
+                msg = get_from_varargin(BRAPH2.MSG_PUTDIR, 'MSG', varargin{:});
                 root_directory = uigetdir(msg);
                 
             end
@@ -350,7 +358,7 @@ classdef SubjectCON < Subject
                 end
             end
         end
-        function cohort = load_from_txt(subject_class, atlases, varargin)
+        function cohort = load_from_txt(tmp, varargin)
             % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectCON
             %
             % COHORT = LOAD_FROM_TXT(SUBJECT_CLASS, ATLASES) opens a GUI to
@@ -366,7 +374,7 @@ classdef SubjectCON < Subject
             % directory
             directory = get_from_varargin('', 'Directory', varargin{:});
             if isequal(directory, '')  % no path, open gui
-                msg = get_from_varargin(Constant.MSG_GETDIR, 'MSG', varargin{:});
+                msg = get_from_varargin(BRAPH2.MSG_GETDIR, 'MSG', varargin{:});
                 directory = uigetdir(msg);
             end
             
@@ -374,27 +382,34 @@ classdef SubjectCON < Subject
             files = dir(fullfile(directory, '*.txt'));
             
             % cohort information
-            cohort_folder = '';
-            parts = strsplit(directory, filesep());
-            for k = 1:1:length(parts)-1
-                cohort_folder = [cohort_folder filesep() parts{k}]; %#ok<AGROW>
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+            else
+                cohort_folder = '';
+                parts = strsplit(directory, filesep());
+                for k = 1:1:length(parts)-1
+                    cohort_folder = [cohort_folder filesep() parts{k}]; %#ok<AGROW>
+                end
+                cohort_folder =cohort_folder(2:end);
+                file_cohort = [cohort_folder filesep() 'cohort_info.txt'];
+                file_cohort = file_cohort(2:end);
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                
+                if exist(file_cohort, 'file')
+                    raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                    cohort_id = raw_cohort{1, 1};
+                    cohort_label = raw_cohort{2, 1};
+                    cohort_notes = raw_cohort{3, 1};
+                end
+                atlases = tmp;
+                subject_class = 'SubjectCON';
+                % creates cohort
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             end
-            cohort_folder =cohort_folder(2:end);
-            file_cohort = [cohort_folder filesep() 'cohort_info.txt'];
-            file_cohort = file_cohort(2:end);
-            cohort_id = '';
-            cohort_label = '';
-            cohort_notes = '';
             
-            if exist(file_cohort, 'file')
-                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                cohort_id = raw_cohort{1, 1};
-                cohort_label = raw_cohort{2, 1};
-                cohort_notes = raw_cohort{3, 1};
-            end
-            
-            % creates cohort          
-            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});       
             
             % load subjects
             for i = 1:1:length(files)
@@ -404,7 +419,7 @@ classdef SubjectCON < Subject
                 end
                 % read file  
                 raw = textread(fullfile(directory, files(i).name), '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                
+                atlases = cohort.getBrainAtlases();
                 raw = raw(~cellfun('isempty', raw));  % remove empty cells
                 
                 % create subject
@@ -450,7 +465,7 @@ classdef SubjectCON < Subject
             % get Root Directory
             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
             if isequal(root_directory, '')  % no path, open gui
-                msg = get_from_varargin(Constant.MSG_PUTDIR, 'MSG', varargin{:});
+                msg = get_from_varargin(BRAPH2.MSG_PUTDIR, 'MSG', varargin{:});
                 root_directory = uigetdir(msg);
                 
             end
@@ -503,7 +518,7 @@ classdef SubjectCON < Subject
                 end
             end
         end
-        function cohort = load_from_json(subject_class, atlases, varargin)
+        function cohort = load_from_json(tmp, varargin)
             % LOAD_FROM_JSON loads a '.json' file to a Cohort with SubjectCON
             %
             % COHORT = LOAD_FROM_JSON(SUBJECT_CLASS, ATLASES) opens a GUI to
@@ -519,20 +534,30 @@ classdef SubjectCON < Subject
             % directory
             directory = get_from_varargin('', 'Directory', varargin{:});
             if isequal(directory, '')  % no path, open gui
-                msg = get_from_varargin(Constant.MSG_GETDIR, 'MSG', varargin{:});
+                msg = get_from_varargin(BRAPH2.MSG_GETDIR, 'MSG', varargin{:});
                 directory = uigetdir(msg);
             end
             
             % find all txt files
             files = dir(fullfile(directory, '*.json'));
             
-            % creates cohort
-            cohort = Cohort('', '', '', subject_class, atlases, {});
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+            else
+                % creates cohort
+                atlases = tmp;
+                subject_class = 'SubjectCON';
+                cohort = Cohort('', '', '', subject_class, atlases, {});
+            end
+            
+            
             
             % load subjects
             for i = 1:1:length(files)
                 % read file
                 raw = jsondecode(fileread(fullfile(directory, files(i).name)));
+                atlases = cohort.getBrainAtlases();
                 
                 % get cohort and group info
                 cohort_id = raw.CohortData.id;
@@ -580,7 +605,7 @@ classdef SubjectCON < Subject
             % get Root Directory
             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
             if isequal(root_directory, '')  % no path, open gui
-                msg = get_from_varargin(Constant.MSG_PUTDIR, 'MSG', varargin{:});
+                msg = get_from_varargin(BRAPH2.MSG_PUTDIR, 'MSG', varargin{:});
                 root_directory = uigetdir(msg);
                 
             end
