@@ -843,7 +843,7 @@ init_groups()
             cohort.getSubjects().add(sub.getID(), sub);
             group.addSubject(sub);
         else
-            sub = Subject.getSubject(cohort.getSubjectClass(), ['New Subject' num2str(cohort.getSubjects().length() + 1), 'Label', 'Notes', cohort.getBrainAtlases()]);
+            sub = Subject.getSubject(cohort.getSubjectClass(), ['New Subject' num2str(cohort.getSubjects().length() + 1)], 'Label', 'Notes', cohort.getBrainAtlases());
             cohort.getSubjects().add(sub.getID(), sub);
         end
         
