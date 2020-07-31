@@ -17,11 +17,11 @@ LEFTCOLUMN_WIDTH = .29;
 HEADING_HEIGHT = .12;
 FILENAME_HEIGHT = .02;
 
-SUBJECTPANEL_X0 = LEFTCOLUMN_WIDTH + 2 * MARGIN_X;
-SUBJECTPANEL_Y0 = FILENAME_HEIGHT + 2 * MARGIN_Y;
-SUBJECTPANEL_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
-SUBJECTPANEL_HEIGHT = 1 - FILENAME_HEIGHT - 4 * MARGIN_Y;
-SUBJECTPANEL_POSITION = [SUBJECTPANEL_X0 SUBJECTPANEL_Y0 SUBJECTPANEL_WIDTH SUBJECTPANEL_HEIGHT];
+GROUPPANEL_X0 = LEFTCOLUMN_WIDTH + (2 * MARGIN_X);
+GROUPPANEL_Y0 = FILENAME_HEIGHT + MARGIN_Y;  % FILENAME_HEIGHT + 2 * MARGIN_Y;
+GROUPPANEL_WIDTH = LEFTCOLUMN_WIDTH ;% 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
+GROUPPANEL_HEIGHT = .96;  % must be 9 1 - FILENAME_HEIGHT - (2 * MARGIN_Y)
+GROUPPANEL_POSITION = [GROUPPANEL_X0 GROUPPANEL_Y0 GROUPPANEL_WIDTH GROUPPANEL_HEIGHT];
 
 % Commands
 OPEN_CMD = GUI.OPEN_CMD; 
@@ -66,6 +66,37 @@ MOVEUP_GR_TP = 'Move selected group up';
 
 MOVEDOWN_GR_CMD = GUI.MOVEDOWN_CMD;
 MOVEDOWN_GR_TP = 'Move selected group down';
+
+GROUPPANEL_CMD = 'Subjects';
+SELECTALL_SUB_CMD = 'Select all';
+SELECTALL_SUB_TP = 'Select all subjects';
+
+CLEARSELECTION_SUB_CMD = 'Clear selection';
+CLEARSELECTION_SUB_TP = 'Clear subject selection';
+
+ADD_SUB_CMD = 'Add subject';
+ADD_SUBJECTS_TP = 'Add subject at the end of table';
+
+CREATE_GRP_FROM_SUBS_CMD = 'Create group';
+CREATE_GRP_FROM_SUBS_TP = 'Create group from selection of subjects';
+
+REMOVE_SUB_CMD = 'Remove';
+REMOVE_SUB_TP = 'Remove selected subjects from the cohort and all groups';
+
+REMOVE_SUB_FROM_GRP_CMD = 'Remove from group';
+REMOVE_SUB_FROM_GRP_TP = 'Remove selected subjects only from the group';
+
+MOVEUP_SUB_CMD = 'Move up';
+MOVEUP_SUB_TP = 'Move selected subjects up';
+
+MOVEDOWN_SUB_CMD = 'Move down';
+MOVEDOWN_SUB_TP = 'Move selected subjects down';
+
+MOVE2TOP_SUB_CMD = 'Move to top';
+MOVE2TOP_SUB_TP = 'Move selected subjects to top of table';
+
+MOVE2BOTTOM_SUB_CMD = 'Move to bottom';
+MOVE2BOTTOM_SUB_TP = 'Move selected subjects to bottom of table';
 
 %% Application Data
 if exist('tmp', 'var') && isa(tmp, 'Cohort')
@@ -127,6 +158,7 @@ selected_subjects = [];
             selected_subjects = [];
             setup()
             update_filename('')
+            update_group()
             update_group_popups()
         end
     end
@@ -134,10 +166,11 @@ selected_subjects = [];
         cohortstmp = eval([cohort.getSubjectClass()  '.load_from_xls(cohort)']);
         if  ~isempty(cohortstmp)
             cohort = cohortstmp;
-            selected_group = [];
+            selected_group = [];            
             selected_subjects = [];
             setup()
             update_filename('')
+            update_group()
             update_group_popups()
         end
     end
@@ -150,6 +183,7 @@ selected_subjects = [];
             selected = [];
             setup()
             update_filename('')
+            update_group()
             update_group_popups()
         end
     end
@@ -171,11 +205,15 @@ f = GUI.init_figure(APPNAME, .8, .9, 'center');
 
     function init_disable()
         GUI.disable(ui_panel_grtab)
+        GUI.disable(ui_panel_groups)
         set(ui_menu_groups, 'enable', 'off')
+        set(ui_menu_subjects,'enable', 'off')
     end
     function init_enable()
         GUI.enable(ui_panel_grtab)
+        GUI.enable(ui_panel_groups)
         set(ui_menu_groups, 'enable', 'on')
+        set(ui_menu_subjects,'enable', 'on')
     end
 
 %% Text File Name
@@ -282,7 +320,7 @@ GRTAB_LBL_COL = 4;
 GRTAB_NOTES_COL = 5;
 
 GRTAB_WIDTH = LEFTCOLUMN_WIDTH;
-GRTAB_HEIGHT = SUBJECTPANEL_HEIGHT - ATLAS_HEIGHT;
+GRTAB_HEIGHT = .9 - ATLAS_HEIGHT;
 GRTAB_X0 = MARGIN_X;
 GRTAB_Y0 = FILENAME_HEIGHT + 2 * MARGIN_Y;
 GRTAB_POSITION = [GRTAB_X0 GRTAB_Y0 GRTAB_WIDTH GRTAB_HEIGHT];
@@ -466,7 +504,8 @@ init_grtab()
         sub_class = cohort.getSubjectClass();
         cohort = eval([sub_class '.load_from_xls(cohort)']);             
         % update
-        update_grtab_table()    
+        update_grtab_table() 
+        update_group()
         update_group_popups()
         catch
             errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid XLS file']);
@@ -475,9 +514,10 @@ init_grtab()
     function cb_grtab_load_txt(~, ~)  % (src,event)
         try
         sub_class = cohort.getSubjectClass();
-        cohort = eval([sub_class '.load_from_xls(cohort)']);         
+        cohort = eval([sub_class '.load_from_txt(cohort)']);         
         % update
-        update_grtab_table()     
+        update_grtab_table() 
+        update_group()
         update_group_popups()
         catch
             errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid TXT file']);
@@ -486,9 +526,10 @@ init_grtab()
     function cb_grtab_load_json(~, ~)  % (src,event)
         try
         sub_class = cohort.getSubjectClass();
-        cohort = eval([sub_class '.load_from_xls(cohort)']);
+        cohort = eval([sub_class '.load_from_json(cohort)']);
        % update
         update_grtab_table()
+        update_group()
         update_group_popups()
 
         catch
@@ -513,24 +554,29 @@ init_grtab()
             case GRTAB_NOTES_COL
                 cohort.getGroups().getValue(g).setNotes(newdata)
         end
-        update_grtab_table()        
+        update_grtab_table()   
+        update_group()
     end
     function cb_grtab_add_gr(~, ~)  % (src,event)
         group = Group(cohort.getSubjectClass(), 'GroupID 1', 'Label 1', 'Notes 1', {});
         cohort.getGroups().add(group.getID(), group);
         update_grtab_table()
+        update_group()
     end
     function cb_grtab_remove_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().remove_all(selected_group);
         update_grtab_table()
+        update_group()
     end
     function cb_grtab_moveup_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().move_up(selected_group);
         update_grtab_table()
+        update_group()
     end
     function cb_grtab_movedown_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().move_down(selected_group);
         update_grtab_table()
+        update_group()
     end
     function cb_grtab_complementary(~, ~)  % (src,event)
         g = get(ui_popup_grtab_invert, 'Value');
@@ -538,6 +584,7 @@ init_grtab()
         complementary = cohort.notGroup(group);
         cohort.getGroups().add(complementary.getID(), complementary);
         update_grtab_table()
+        update_group()
     end
     function cb_grtab_merge(~, ~)  % (src,event)
         g1 = get(ui_popup_grtab_merge1,'Value');
@@ -547,6 +594,7 @@ init_grtab()
         union = cohort.orGroup(group1,group2);
         cohort.getGroups().add(union.getID(), union);
         update_grtab_table()
+        update_group()
     end
     function cb_grtab_intersect(~, ~)  % (src,event)
         g1 = get(ui_popup_grtab_intersect1, 'Value');
@@ -555,14 +603,160 @@ init_grtab()
         group2 = cohort.getGroups().getValue(g2);
         and_group = cohort.andGroup(group1, group2);
         cohort.getGroups().add(and_group.getID(), and_group);
-        update_grtab_table()        
+        update_grtab_table()  
+        update_group()
     end
 
-%% Groups
+%% Group Subjects
+TAB_GROUPS_SELECTED_COL = 1;
+TAB_GROUPS_SUBID_COL = 2;
+TAB_GROUPS_SUBLABEL_COL = 3;
+TAB_GROUPS_SUBNOTES_COL = 4;
+ui_panel_groups = uipanel();
+
+ui_table_groups = uitable(ui_panel_groups);
+ui_button_groups_selectall_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_groups_clearselection_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_groups_add_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_groups_remove_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_groups_moveup_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_groups_movedown_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_groups_move2top_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_groups_move2bottom_subs = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+ui_button_create_group_from_subject = uicontrol(ui_panel_groups, 'Style', 'pushbutton');
+init_groups()
+    function init_groups()
+        GUI.setUnits(ui_panel_groups)
+        GUI.setBackgroundColor(ui_panel_groups)
+        
+        set(ui_panel_groups, 'Position', GROUPPANEL_POSITION)
+        set(ui_panel_groups, 'Title', GROUPPANEL_CMD)
+        
+        set(ui_table_groups, 'Position', [.02 .16 .96 .82])
+        set(ui_table_groups, 'ColumnEditable', true)
+        set(ui_table_groups, 'CellEditCallback', {@cb_groups_edit_sub});
+        
+        set(ui_button_groups_selectall_subs, 'Position', [.02 .11 .24 .03])
+        set(ui_button_groups_selectall_subs, 'String' ,SELECTALL_SUB_CMD)
+        set(ui_button_groups_selectall_subs, 'TooltipString', SELECTALL_SUB_TP)
+        set(ui_button_groups_selectall_subs, 'Callback', {@cb_groups_selectall_sub})
+        
+        set(ui_button_groups_clearselection_subs, 'Position', [.02 .08 .24 .03])
+        set(ui_button_groups_clearselection_subs, 'String', CLEARSELECTION_SUB_CMD)
+        set(ui_button_groups_clearselection_subs, 'TooltipString', CLEARSELECTION_SUB_TP)
+        set(ui_button_groups_clearselection_subs, 'Callback', {@cb_groups_clearselection_sub})
+        
+        set(ui_button_groups_add_subs, 'Position', [.26 .11 .24 .03])
+        set(ui_button_groups_add_subs, 'String', ADD_SUB_CMD)
+        set(ui_button_groups_add_subs, 'TooltipString', ADD_SUBJECTS_TP);
+        set(ui_button_groups_add_subs, 'Callback', {@cb_groups_add_sub})
+        
+        set(ui_button_create_group_from_subject, 'Position', [.26 .08 .24 .03])
+        set(ui_button_create_group_from_subject, 'String', CREATE_GRP_FROM_SUBS_CMD)
+        set(ui_button_create_group_from_subject, 'TooltipString', CREATE_GRP_FROM_SUBS_TP);
+        set(ui_button_create_group_from_subject, 'Callback', {@cb_groups_create_group_from_subjects})        
+        
+        set(ui_button_groups_remove_subs, 'Position', [.50 .11 .24 .03])
+        set(ui_button_groups_remove_subs, 'String' , REMOVE_SUB_CMD)
+        set(ui_button_groups_remove_subs, 'TooltipString', REMOVE_SUB_TP);
+        set(ui_button_groups_remove_subs, 'Callback', {@cb_groups_remove_sub})
+               
+        set(ui_button_groups_moveup_subs, 'Position', [.74 .11 .24 .03])
+        set(ui_button_groups_moveup_subs, 'String', MOVEUP_SUB_CMD)
+        set(ui_button_groups_moveup_subs, 'TooltipString', MOVEUP_SUB_TP);
+        set(ui_button_groups_moveup_subs, 'Callback', {@cb_groups_moveup_sub})
+        
+        set(ui_button_groups_movedown_subs, 'Position', [.74 .08 .24 .03])
+        set(ui_button_groups_movedown_subs, 'String', MOVEDOWN_SUB_CMD)
+        set(ui_button_groups_movedown_subs, 'TooltipString', MOVEDOWN_SUB_TP);
+        set(ui_button_groups_movedown_subs, 'Callback', {@cb_groups_movedown_sub})
+        
+        set(ui_button_groups_move2top_subs, 'Position', [.74 .05 .24 .03])
+        set(ui_button_groups_move2top_subs, 'String', MOVE2TOP_SUB_CMD)
+        set(ui_button_groups_move2top_subs, 'TooltipString', MOVE2TOP_SUB_TP);
+        set(ui_button_groups_move2top_subs, 'Callback', {@cb_groups_move2top_sub})
+        
+        set(ui_button_groups_move2bottom_subs, 'Position', [.74 .02 .24 .03])
+        set(ui_button_groups_move2bottom_subs, 'String', MOVE2BOTTOM_SUB_CMD)
+        set(ui_button_groups_move2bottom_subs, 'TooltipString', MOVE2BOTTOM_SUB_TP);
+        set(ui_button_groups_move2bottom_subs, 'Callback', {@cb_groups_move2bottom_sub})
+
+    end
+    function update_group(varargin)         
+        
+        % subjects of the selected group data table
+        ColumnName = {'', ' Subject ID ', ' Label ',' Notes '};
+        ColumnFormat = {'logical', 'char', 'char', 'char'};
+        groups = cohort.getGroups().getValues();
+        for g = 1:1:length(groups)
+            group = groups{g};
+            ColumnName{4 + g} = group.getID();
+            ColumnFormat{4 + g} = 'logical';
+        end
+        set(ui_table_groups, 'ColumnName', ColumnName)
+        set(ui_table_groups, 'ColumnFormat', ColumnFormat)
+        
+        if exist('restricted','var') && restricted
+            set(ui_table_groups, 'ColumnEditable', [true(1, 5)]) %#ok<NBRAK>
+        end
+        
+        if isempty(selected_group) && ~isempty(cohort)
+            subjects = cohort.getSubjects().getValues();
+            data = cell(length(subjects), 5);
+            for i = 1:1:length(subjects)
+                sub = subjects{i};
+                if any(selected_subjects==i)
+                    data{i, TAB_GROUPS_SELECTED_COL} = true;
+                else
+                    data{i, TAB_GROUPS_SELECTED_COL} = false;
+                end                
+                data{i, TAB_GROUPS_SUBID_COL} = sub.getID();
+                data{i, TAB_GROUPS_SUBLABEL_COL} = sub.getLabel();
+                data{i, TAB_GROUPS_SUBNOTES_COL} = sub.getNotes();               
+                for g = 1:1:length(groups)
+                    group = groups{g};                    
+                    if group.contains_subject(sub)
+                        data{i, TAB_GROUPS_SUBNOTES_COL + g} = true;
+                    else
+                        data{i, TAB_GROUPS_SUBNOTES_COL + g} = false;
+                    end
+                end
+            end             
+        elseif ~isempty(selected_group)
+            group = cohort.getGroups().getValue(selected_group);
+            data = cell(group.subjectnumber(), 4);
+            subjects = group.getSubjects();
+            for i = 1:1:group.subjectnumber()
+                if any(selected_subjects==i)
+                    data{i, TAB_GROUPS_SELECTED_COL} = true;
+                else
+                    data{i, TAB_GROUPS_SELECTED_COL} = false;
+                end
+                sub = subjects{i};                
+                data{i, TAB_GROUPS_SUBID_COL} = sub.getID();
+                data{i, TAB_GROUPS_SUBLABEL_COL} = sub.getLabel();
+                data{i, TAB_GROUPS_SUBNOTES_COL} = sub.getNotes();
+                 for g = 1:1:length(groups)
+                    group = groups{g};                    
+                    if group.contains_subject(sub)
+                        data{i, TAB_GROUPS_SUBNOTES_COL + g} = true;
+                    else
+                        data{i, TAB_GROUPS_SUBNOTES_COL + g} = false;
+                    end
+                end
+            end
+        else
+            data = cell(0, 0);
+        end       
+       
+        set(ui_table_groups, 'Data', data)
+%         update_popup_color()
+        update_group_popups()
+    end
     function update_group_popups()
         groups = cohort.getGroups().getValues();
         GroupList = cellfun(@(x) x.getID(), groups, 'UniformOutPut', false);
-
+        
         if isempty(GroupList)
             GroupList = {''};
         end
@@ -587,9 +781,133 @@ init_grtab()
             set(ui_popup_grtab_intersect2, 'Value', 1)
         end
     end
+    function cb_groups_edit_sub(~,event)  % (src,event)
+        i = event.Indices(1);
+        col = event.Indices(2);
+        newdata = event.NewData;
+        if ~isempty(selected_group)
+            group = cohort.getGroups().getValue(selected_group);
+            subjects = group.getSubjects();
+            subject = subjects{i};
+        else
+            subjects = cohort.getSubjects().getValues();
+            subject = subjects{i};
+        end
+        switch col
+            case TAB_GROUPS_SELECTED_COL
+                if newdata == 1
+                    selected_subjects = sort(unique([selected_subjects(:); i]));
+                else
+                    selected_subjects = selected_subjects(selected_subjects ~= i);
+                end
+            case TAB_GROUPS_SUBID_COL
+                subject.setID(newdata)                
+            case TAB_GROUPS_SUBLABEL_COL
+                subject.setLabel(newdata)
+            case TAB_GROUPS_SUBNOTES_COL
+                subject.setNotes(newdata)
+            otherwise
+                g = col - 4;
+                group = cohort.getGroups().getValue(g);
+                if newdata == 1 
+                    if ~group.contains_subject(subject)
+                        group.addSubject(subject)
+                    end                    
+                else
+                    if group.contains_subject(subject)
+                        group.removeSubject(subject)
+                    end 
+                end
+        end
+        update_grtab_table()
+        update_group()
+    end
+    function cb_groups_selectall_sub(~,~)  % (src,event)
+        if ~isempty(selected_group)
+            group = cohort.getGroups().getValue(selected_group);
+            selected_subjects = (1:1:group.subjectnumber());
+        else
+            subjects = cohort.getSubjects().getValues();
+            selected_subjects = (1:1:length(subjects));
+        end
+        update_group()        
+    end
+    function cb_groups_clearselection_sub(~,~)  % (src,event)
+        selected_subjects = [];
+        update_group()        
+    end
+    function cb_groups_add_sub(~,~)  % (src,event)   
+        if ~isempty(selected_group)
+            group = cohort.getGroups().getValue(selected_group);
+            sub = Subject.getSubject(cohort.getSubjectClass(), ['New Subject' num2str(group.subjectnumber() + 1)], 'Label', 'Notes', cohort.getBrainAtlases());
+            cohort.getSubjects().add(sub.getID(), sub);
+            group.addSubject(sub);
+        else
+            sub = Subject.getSubject(cohort.getSubjectClass(), ['New Subject' num2str(cohort.getSubjects().length() + 1)], 'Label', 'Notes', cohort.getBrainAtlases());
+            cohort.getSubjects().add(sub.getID(), sub);
+        end
+        
+        update_grtab_table()
+        update_group()
+    end
+    function cb_groups_remove_sub(~,~)  % (src,event)
+        if ~isempty(selected_group)
+            % remove from cohort
+            group = cohort.getGroups().getValue(selected_group);
+            subjects = group.getSubjects();
+            subjects = subjects(selected_subjects);
+        else
+            subjects = cohort.getSubjects().getValues();
+            subjects = subjects(selected_subjects);
+        end
+        % remove from all the groups
+        groups = cohort.getGroups().getValues();
+        for i = 1:1:length(groups)
+            group = groups{i};
+            cellfun(@(x) group.removeSubject(x) , subjects);
+        end
+        selected_subjects = cohort.getSubjects().remove_all(selected_subjects);
+        update_grtab_table()
+        update_group()
+    end
+    function cb_groups_moveup_sub(~,~)  % (src,event)
+        selected_subjects = cohort.move_up(selected_subjects);
+        
+        update_grtab_table()
+        update_group()
+    end
+    function cb_groups_movedown_sub(~,~)  % (src,event)
+        selected_subjects = cohort.move_down(selected_subjects);
+        update_grtab_table()
+        update_group()
+    end
+    function cb_groups_move2top_sub(~,~)  % (src,event)
+        selected_subjects = cohort.move_to_top(selected_subjects);
+        update_grtab_table()
+        update_group()
+    end
+    function cb_groups_move2bottom_sub(~,~)  % (src,event)
+        selected_subjects = cohort.move_to_bottom(selected_subjects);
+        update_grtab_table()
+        update_group()
+    end
+    function cb_groups_create_group_from_subjects(~, ~)
+        all_subjects = cohort.getSubjects().getValues();
+        subjects = all_subjects(selected_subjects); 
+        ids_string = '';
+                for j = 1:1:length(subjects)
+                    sub = subjects{j};
+                    ids_string = [ids_string ' ' sub.getID()]; %#ok<AGROW>
+                end
+        group = Group(cohort.getSubjectClass(), ['Group created with: ' ids_string], 'Label', 'Notes', subjects);
+        cohort.getGroups().add(group.getID(), group);
+        update_grtab_table()
+    end
+
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
 MENU_GROUPS = 'Groups';
+MENU_SUBJECTS = 'Subjects';
 
 ui_menu_file = uimenu(f, 'Label',MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
@@ -602,7 +920,7 @@ ui_menu_file_export_txt = uimenu(ui_menu_file);
 ui_menu_file_import_json = uimenu(ui_menu_file);
 ui_menu_file_export_json = uimenu(ui_menu_file);
 ui_menu_file_close = uimenu(ui_menu_file);
-ui_menu_groups = uimenu(f, 'Label',MENU_GROUPS);
+ui_menu_groups = uimenu(f, 'Label' ,MENU_GROUPS);
 ui_menu_groups_load_xls = uimenu(ui_menu_groups);
 ui_menu_groups_load_txt = uimenu(ui_menu_groups);
 ui_menu_groups_load_json = uimenu(ui_menu_groups);
@@ -610,6 +928,15 @@ ui_menu_groups_add = uimenu(ui_menu_groups);
 ui_menu_groups_remove = uimenu(ui_menu_groups);
 ui_menu_groups_moveup = uimenu(ui_menu_groups);
 ui_menu_groups_movedown = uimenu(ui_menu_groups);
+ui_menu_subjects = uimenu(f, 'Label', MENU_SUBJECTS);
+ui_menu_subjects_selectall = uimenu(ui_menu_subjects);
+ui_menu_subjects_clearselection = uimenu(ui_menu_subjects);
+ui_menu_subjects_add = uimenu(ui_menu_subjects);
+ui_menu_subjects_remove = uimenu(ui_menu_subjects);
+ui_menu_subjects_moveup = uimenu(ui_menu_subjects);
+ui_menu_subjects_movedown = uimenu(ui_menu_subjects);
+ui_menu_subjects_move2top = uimenu(ui_menu_subjects);
+ui_menu_subjects_move2bottom = uimenu(ui_menu_subjects);
 
 init_menu()
     function init_menu()
@@ -672,6 +999,35 @@ init_menu()
             
         set(ui_menu_groups_movedown, 'Label', MOVEDOWN_GR_CMD)
         set(ui_menu_groups_movedown, 'Callback', {@cb_grtab_movedown_gr})
+        
+        set(ui_menu_subjects_selectall,'Separator','on')
+        set(ui_menu_subjects_selectall,'Label',SELECTALL_SUB_CMD)
+        set(ui_menu_subjects_selectall,'Callback',{@cb_groups_selectall_sub})
+            
+        set(ui_menu_subjects_clearselection,'Label',CLEARSELECTION_SUB_CMD)
+        set(ui_menu_subjects_clearselection,'Callback',{@cb_groups_clearselection_sub})
+        
+        set(ui_menu_subjects_add,'Separator','on')
+        set(ui_menu_subjects_add,'Label',ADD_SUB_CMD)
+        set(ui_menu_subjects_add,'Callback',{@cb_groups_add_sub})         
+
+        set(ui_menu_subjects_remove,'Separator','on')
+        set(ui_menu_subjects_remove,'Label',REMOVE_SUB_CMD)
+        set(ui_menu_subjects_remove,'Callback',{@cb_groups_remove_sub})
+            
+        set(ui_menu_subjects_moveup,'Separator','on')
+        set(ui_menu_subjects_moveup,'Label',MOVEUP_SUB_CMD)
+        set(ui_menu_subjects_moveup,'Callback',{@cb_groups_moveup_sub})
+            
+        set(ui_menu_subjects_movedown,'Label',MOVEDOWN_SUB_CMD)
+        set(ui_menu_subjects_movedown,'Callback',{@cb_groups_movedown_sub})
+            
+        set(ui_menu_subjects_move2top,'Label',MOVE2TOP_SUB_CMD)
+        set(ui_menu_subjects_move2top,'Callback',{@cb_groups_move2top_sub})
+            
+        set(ui_menu_subjects_move2bottom,'Label',MOVE2BOTTOM_SUB_CMD)
+        set(ui_menu_subjects_move2bottom,'Callback',{@cb_groups_move2bottom_sub})
+
 
     end
 
@@ -721,6 +1077,9 @@ setup_restrictions()
         % setup table
         update_grtab_cohortname()
         update_grtab_table()
+        
+        % setup group
+        update_group()
         update_group_popups()
          
     end

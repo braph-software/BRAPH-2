@@ -32,6 +32,12 @@ classdef Cohort < handle & matlab.mixin.Copyable
     %   addSubjectsToGroup      - adds subjects to a specified group
     %   removeSubjectFromGroup  - removes a subject from a specified group
     %   removeSubjectsFromGroup - removes subjects from a specified group
+    %   getGroupsWithSubject    - returns the ids of groups with a subject
+    %   notGroup                - returns the complementary group
+    %   andGroup                - returns the intersection of groups
+    %   orGroup                 - returns the union of groups
+    %   nandGroup               - returns the complement of union of groups
+    %   xorGroup                - returns the exclusive intersection of groups
     %
     % Cohort deep copy:
     %   copy                    - deep copy
@@ -390,6 +396,23 @@ classdef Cohort < handle & matlab.mixin.Copyable
             for i = 1:1:length(subject_indexes)
                 cohort.removeSubjectFromGroup(subject_indexes(i), group);
             end
+        end
+        function groups_ids = getGroupsWithSubject(cohort, subject)
+            % GETGROUPSWITHSUBJECT return the groups ids that contain a subject
+            %
+            % GROUPS_IDS = GETGROUPSWITHSUBJECT(COHORT, SUBJECT) returns
+            % the ids of the groups that contain a SUBJECT.
+            %
+            % See also addSubjectToGroup, removeSubjectFromGroup.
+            
+            all_groups = cohort.getGroups().getValues();
+            for i = 1:1:length(all_groups)
+                group = all_groups{i};
+                if group.contains_subject(subject)
+                    groups_ids_all{i} = group.getID(); %#ok<AGROW>
+                end
+            end
+            groups_ids = groups_ids_all(~cellfun('isempty', groups_ids_all));
         end
         function complementary = notGroup(cohort, group)
             % NOTGROUP returns a group with complementary subjects 
