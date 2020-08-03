@@ -17,10 +17,23 @@ LEFTCOLUMN_WIDTH = .29;
 HEADING_HEIGHT = .12;
 FILENAME_HEIGHT = .02;
 
+ATLAS_WIDTH = LEFTCOLUMN_WIDTH;
+ATLAS_HEIGHT = HEADING_HEIGHT;
+ATLAS_X0 = MARGIN_X;
+ATLAS_Y0 = 1 - MARGIN_Y - ATLAS_HEIGHT;
+ATLAS_POSITION = [ATLAS_X0 ATLAS_Y0 ATLAS_WIDTH ATLAS_HEIGHT];
+
+CONSOLE_X0 = LEFTCOLUMN_WIDTH + (2 * MARGIN_X);
+CONSOLE_Y0 = ATLAS_Y0;
+CONSOLE_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
+CONSOLE_HEIGHT = HEADING_HEIGHT;
+CONSOLE_POSITION = [CONSOLE_X0 CONSOLE_Y0 CONSOLE_WIDTH CONSOLE_HEIGHT];
+
+
 GROUPPANEL_X0 = LEFTCOLUMN_WIDTH + (2 * MARGIN_X);
-GROUPPANEL_Y0 = FILENAME_HEIGHT + MARGIN_Y;  % FILENAME_HEIGHT + 2 * MARGIN_Y;
-GROUPPANEL_WIDTH = LEFTCOLUMN_WIDTH ;% 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
-GROUPPANEL_HEIGHT = .96;  % must be 9 1 - FILENAME_HEIGHT - (2 * MARGIN_Y)
+GROUPPANEL_Y0 = FILENAME_HEIGHT + MARGIN_Y; % 1 - CONSOLE_Y0 + CONSOLE_HEIGHT; 
+GROUPPANEL_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
+GROUPPANEL_HEIGHT = 1 - CONSOLE_HEIGHT - FILENAME_HEIGHT - 3*MARGIN_Y;  % must be 9 1 - FILENAME_HEIGHT - (2 * MARGIN_Y)
 GROUPPANEL_POSITION = [GROUPPANEL_X0 GROUPPANEL_Y0 GROUPPANEL_WIDTH GROUPPANEL_HEIGHT];
 
 % Commands
@@ -158,7 +171,7 @@ selected_subjects = [];
             selected_subjects = [];
             setup()
             update_filename('')
-            update_group()
+            update_groups()
             update_group_popups()
         end
     end
@@ -170,7 +183,7 @@ selected_subjects = [];
             selected_subjects = [];
             setup()
             update_filename('')
-            update_group()
+            update_groups()
             update_group_popups()
         end
     end
@@ -183,7 +196,7 @@ selected_subjects = [];
             selected = [];
             setup()
             update_filename('')
-            update_group()
+            update_groups()
             update_group_popups()
         end
     end
@@ -235,11 +248,6 @@ init_filename()
 
 %% Panel Atlas
 ATLAS_NAME = 'Brain Atlas';
-ATLAS_WIDTH = LEFTCOLUMN_WIDTH;
-ATLAS_HEIGHT = HEADING_HEIGHT;
-ATLAS_X0 = MARGIN_X;
-ATLAS_Y0 = 1 - MARGIN_Y - ATLAS_HEIGHT;
-ATLAS_POSITION = [ATLAS_X0 ATLAS_Y0 ATLAS_WIDTH ATLAS_HEIGHT];
 
 ATLAS_BUTTON_SELECT_CMD = 'Select Atlas';
 ATLAS_BUTTON_SELECT_TP = 'Select brain atlas';
@@ -320,7 +328,7 @@ GRTAB_LBL_COL = 4;
 GRTAB_NOTES_COL = 5;
 
 GRTAB_WIDTH = LEFTCOLUMN_WIDTH;
-GRTAB_HEIGHT = .9 - ATLAS_HEIGHT;
+GRTAB_HEIGHT = .947 - ATLAS_HEIGHT;
 GRTAB_X0 = MARGIN_X;
 GRTAB_Y0 = FILENAME_HEIGHT + 2 * MARGIN_Y;
 GRTAB_POSITION = [GRTAB_X0 GRTAB_Y0 GRTAB_WIDTH GRTAB_HEIGHT];
@@ -505,8 +513,9 @@ init_grtab()
         cohort = eval([sub_class '.load_from_xls(cohort)']);             
         % update
         update_grtab_table() 
-        update_group()
+        update_groups()
         update_group_popups()
+        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
         catch error
             if isequal(error.identifier(), 'MATLAB:unassignedOutputs')
                 errordlg('No file/directory selected. Please choose a file/directory.');
@@ -521,8 +530,9 @@ init_grtab()
         cohort = eval([sub_class '.load_from_txt(cohort)']);         
         % update
         update_grtab_table() 
-        update_group()
+        update_groups()
         update_group_popups()
+        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
         catch error
             if isequal(error.identifier(), 'MATLAB:unassignedOutputs')
                 errordlg('No file/directory selected. Please choose a file/directory.');
@@ -537,9 +547,9 @@ init_grtab()
         cohort = eval([sub_class '.load_from_json(cohort)']);
        % update
         update_grtab_table()
-        update_group()
+        update_groups()
         update_group_popups()
-
+        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
         catch error
             if isequal(error.identifier(), 'MATLAB:unassignedOutputs')
                 errordlg('No file/directory selected. Please choose a file/directory.');
@@ -569,28 +579,28 @@ init_grtab()
                 cohort.getGroups().getValue(g).setNotes(newdata)
         end
         update_grtab_table()   
-        update_group()
+        update_console_panel()        
     end
     function cb_grtab_add_gr(~, ~)  % (src,event)
         group = Group(cohort.getSubjectClass(), 'GroupID 1', 'Label 1', 'Notes 1', {});
         cohort.getGroups().add(group.getID(), group);
         update_grtab_table()
-        update_group()
+        update_console_panel()
     end
     function cb_grtab_remove_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().remove_all(selected_group);
         update_grtab_table()
-        update_group()
+        update_console_panel()
     end
     function cb_grtab_moveup_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().move_up(selected_group);
         update_grtab_table()
-        update_group()
+        update_console_panel()
     end
     function cb_grtab_movedown_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().move_down(selected_group);
         update_grtab_table()
-        update_group()
+        update_console_panel()
     end
     function cb_grtab_complementary(~, ~)  % (src,event)
         g = get(ui_popup_grtab_invert, 'Value');
@@ -598,7 +608,7 @@ init_grtab()
         complementary = cohort.notGroup(group);
         cohort.getGroups().add(complementary.getID(), complementary);
         update_grtab_table()
-        update_group()
+        update_console_panel()
     end
     function cb_grtab_merge(~, ~)  % (src,event)
         g1 = get(ui_popup_grtab_merge1,'Value');
@@ -608,7 +618,7 @@ init_grtab()
         union = cohort.orGroup(group1,group2);
         cohort.getGroups().add(union.getID(), union);
         update_grtab_table()
-        update_group()
+        update_console_panel()
     end
     function cb_grtab_intersect(~, ~)  % (src,event)
         g1 = get(ui_popup_grtab_intersect1, 'Value');
@@ -618,7 +628,225 @@ init_grtab()
         and_group = cohort.andGroup(group1, group2);
         cohort.getGroups().add(and_group.getID(), and_group);
         update_grtab_table()  
-        update_group()
+        update_console_panel()
+    end
+
+%% Consoles
+CONSOLE_GROUPS_CMD = 'Groups';
+CONSOLE_GROUPS_SC = '1';
+CONSOLE_GROUPS_TP = ['List of groups with sujects. Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_GROUPS_SC];
+
+CONSOLE_SUBJECTS_CMD = 'Subject Data';
+CONSOLE_SUBJECTS_SC = '2';
+CONSOLE_SUBJECTS_TP = ['List of subjects with their measures. Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_SUBJECTS_SC];
+
+CONSOLE_PLOTS_CMD = 'Subject Plot';
+CONSOLE_PLOTS_SC = 3;
+CONSOLE_PLOTS_TP = 'Plots';
+
+CONSOLE_BRAINVIEW_CMD = 'Brain View';
+CONSOLE_BRAINVIEW_SC = '4';
+CONSOLE_BRAINVIEW_TP = ['Brain view of the measures. Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_BRAINVIEW_SC];
+
+ui_panel_console = uipanel();
+ui_button_console_groups = uicontrol(ui_panel_console,'Style', 'pushbutton');
+ui_button_console_subjects = uicontrol(ui_panel_console,'Style', 'pushbutton');
+ui_button_console_plots = uicontrol(ui_panel_console,'Style', 'pushbutton');
+ui_button_console_brainview = uicontrol(ui_panel_console,'Style', 'pushbutton');
+init_console()
+    function init_console()
+        GUI.setUnits(ui_panel_console)
+        GUI.setBackgroundColor(ui_panel_console)
+
+        set(ui_panel_console, 'Position', CONSOLE_POSITION)
+        set(ui_panel_console, 'BorderType', 'none')
+
+        set(ui_button_console_groups, 'Position', [.05 .30 .15 .40])
+        set(ui_button_console_groups, 'String', CONSOLE_GROUPS_CMD)
+        set(ui_button_console_groups, 'TooltipString', CONSOLE_GROUPS_TP)
+        set(ui_button_console_groups, 'Callback', {@cb_console_groups})
+        
+        set(ui_button_console_subjects, 'Position', [.30 .30 .15 .40])
+        set(ui_button_console_subjects, 'String', CONSOLE_SUBJECTS_CMD)
+        set(ui_button_console_subjects, 'TooltipString', CONSOLE_SUBJECTS_TP)
+        set(ui_button_console_subjects, 'Callback', {@cb_console_subjects})
+
+        set(ui_button_console_plots, 'Position', [.55 .30 .15 .40])
+        set(ui_button_console_plots, 'String', CONSOLE_PLOTS_CMD)
+        set(ui_button_console_plots, 'TooltipString', CONSOLE_PLOTS_TP)
+        set(ui_button_console_plots, 'Callback', {@cb_console_plots})
+
+        set(ui_button_console_brainview, 'Position', [.80 .30 .15 .40])
+        set(ui_button_console_brainview, 'String', CONSOLE_BRAINVIEW_CMD)
+        set(ui_button_console_brainview, 'TooltipString', CONSOLE_BRAINVIEW_TP)
+        set(ui_button_console_brainview, 'Callback', {@cb_console_brainview})
+    end
+    function update_console_panel_visibility(console_panel_cmd)
+        switch console_panel_cmd
+            case CONSOLE_SUBJECTS_CMD
+                set(ui_panel_groups, 'Visible', 'off')
+%                 set(ui_panel_subjects, 'Visible', 'on')
+%                 set(ui_panel_plots, 'Visible', 'off')
+%                 set(ui_panel_brainview, 'Visible', 'off')
+                
+                set(ui_button_console_groups, 'FontWeight', 'normal')
+                set(ui_button_console_subjects, 'FontWeight', 'bold')
+                set(ui_button_console_plots, 'FontWeight', 'normal')
+                set(ui_button_console_brainview, 'FontWeight', 'normal')
+                
+%                 set([ui_toolbar_zoomin ...
+%                     ui_toolbar_zoomout ...
+%                     ui_toolbar_pan ...
+%                     ui_toolbar_rotate ...
+%                     ui_toolbar_datacursor ...
+%                     ui_toolbar_insertcolorbar ...
+%                     ui_toolbar_3D ...
+%                     ui_toolbar_SL ...
+%                     ui_toolbar_SR ...
+%                     ui_toolbar_AD ...
+%                     ui_toolbar_AV ...
+%                     ui_toolbar_CP ...
+%                     ui_toolbar_CA ...
+%                     ui_toolbar_brain ...
+%                     ui_toolbar_br ...
+%                     ui_toolbar_axis ...
+%                     ui_toolbar_grid ...
+%                     ui_toolbar_label ...
+%                     ui_toolbar_sym], ...
+%                     'Visible', 'off')
+                
+            case CONSOLE_PLOTS_CMD
+                set(ui_panel_groups, 'Visible', 'off')
+%                 set(ui_panel_subjects, 'Visible', 'off')
+%                 set(ui_panel_plots, 'Visible', 'on')
+%                 set(ui_panel_brainview, 'Visible', 'off')
+                
+                set(ui_button_console_groups, 'FontWeight', 'normal')
+                set(ui_button_console_subjects, 'FontWeight', 'normal')
+                set(ui_button_console_plots, 'FontWeight', 'bold')
+                set(ui_button_console_brainview, 'FontWeight', 'normal')
+                
+%                 set([ui_toolbar_zoomin ...
+%                     ui_toolbar_zoomout ...
+%                     ui_toolbar_pan ...
+%                     ui_toolbar_rotate ...
+%                     ui_toolbar_datacursor ...
+%                     ui_toolbar_insertcolorbar ...
+%                     ui_toolbar_3D ...
+%                     ui_toolbar_SL ...
+%                     ui_toolbar_SR ...
+%                     ui_toolbar_AD ...
+%                     ui_toolbar_AV ...
+%                     ui_toolbar_CP ...
+%                     ui_toolbar_CA ...
+%                     ui_toolbar_brain ...
+%                     ui_toolbar_br ...
+%                     ui_toolbar_axis ...
+%                     ui_toolbar_grid ...
+%                     ui_toolbar_label ...
+%                     ui_toolbar_sym], ...
+%                     'Visible', 'off')
+                
+            case CONSOLE_BRAINVIEW_CMD
+                set(ui_panel_groups, 'Visible', 'off')
+%                 set(ui_panel_subjects, 'Visible', 'off')
+%                 set(ui_panel_plots, 'Visible', 'off')
+%                 set(ui_panel_brainview, 'Visible', 'on')
+                
+                set(ui_button_console_groups, 'FontWeight', 'normal')
+                set(ui_button_console_subjects, 'FontWeight', 'normal')
+                set(ui_button_console_plots, 'FontWeight', 'normal')
+                set(ui_button_console_brainview, 'FontWeight', 'bold')
+%                 
+%                 set([ui_toolbar_zoomin ...
+%                     ui_toolbar_zoomout ...
+%                     ui_toolbar_pan ...
+%                     ui_toolbar_rotate ...
+%                     ui_toolbar_datacursor ...
+%                     ui_toolbar_insertcolorbar ...
+%                     ui_toolbar_3D ...
+%                     ui_toolbar_SL ...
+%                     ui_toolbar_SR ...
+%                     ui_toolbar_AD ...
+%                     ui_toolbar_AV ...
+%                     ui_toolbar_CP ...
+%                     ui_toolbar_CA ...
+%                     ui_toolbar_brain ...
+%                     ui_toolbar_br ...
+%                     ui_toolbar_axis ...
+%                     ui_toolbar_grid ...
+%                     ui_toolbar_label ...
+%                     ui_toolbar_sym], ...
+%                     'Visible', 'on')
+%                 
+%                 set([ui_toolbar_zoomin ...
+%                     ui_toolbar_insertcolorbar ...
+%                     ui_toolbar_3D ...
+%                     ui_toolbar_brain], ...
+%                     'Separator', 'on');
+                
+            otherwise % CONSOLE_GROUPS_CMD
+                set(ui_panel_groups, 'Visible', 'on')
+%                 set(ui_panel_subjects, 'Visible', 'off')
+%                 set(ui_panel_plots, 'Visible', 'off')
+%                 set(ui_panel_brainview, 'Visible', 'off')
+                
+                set(ui_button_console_groups, 'FontWeight', 'bold')
+                set(ui_button_console_subjects, 'FontWeight', 'normal')
+                set(ui_button_console_plots, 'FontWeight', 'normal')
+                set(ui_button_console_brainview, 'FontWeight', 'normal')
+                
+%                 set([ui_toolbar_zoomin ...
+%                     ui_toolbar_zoomout ...
+%                     ui_toolbar_pan ...
+%                     ui_toolbar_rotate ...
+%                     ui_toolbar_datacursor ...
+%                     ui_toolbar_insertcolorbar ...
+%                     ui_toolbar_3D ...
+%                     ui_toolbar_SL ...
+%                     ui_toolbar_SR ...
+%                     ui_toolbar_AD ...
+%                     ui_toolbar_AV ...
+%                     ui_toolbar_CP ...
+%                     ui_toolbar_CA ...
+%                     ui_toolbar_brain ...
+%                     ui_toolbar_br ...
+%                     ui_toolbar_axis ...
+%                     ui_toolbar_grid ...
+%                     ui_toolbar_label ...
+%                     ui_toolbar_sym], ...
+%                     'Visible', 'off')
+        end
+    end
+    function update_console_panel()
+        if strcmpi(get(ui_panel_groups,'Visible'),'on')
+            update_groups()
+        end
+        if strcmpi(get(ui_panel_subjects,'Visible'),'on')
+            update_subjects()
+        end
+        if strcmpi(get(ui_panel_plots,'Visible'),'on')
+            update_plots()
+        end
+        if strcmpi(get(ui_panel_brainview,'Visible'),'on')
+            update_brainview()
+        end
+    end
+    function cb_console_groups(~,~)  % (src,event)
+        update_groups()
+        update_console_panel_visibility(CONSOLE_GROUPS_CMD)
+    end
+    function cb_console_subjects(~,~)  % (src,event)
+        update_subjects()
+        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
+    end
+    function cb_console_plots(~,~)  % (src,event)
+        update_plots()
+        update_console_panel_visibility(CONSOLE_PLOTS_CMD)
+    end
+    function cb_console_brainview(~,~)  % (src,event)
+        update_brainview()
+        update_console_panel_visibility(CONSOLE_BRAINVIEW_CMD)
     end
 
 %% Group Subjects
@@ -696,10 +924,10 @@ init_groups()
         set(ui_button_groups_move2bottom_subs, 'Callback', {@cb_groups_move2bottom_sub})
 
     end
-    function update_group(varargin)         
+    function update_groups(varargin)         
         
         % subjects of the selected group data table
-        ColumnName = {'', ' Subject ID ', ' Label ',' Notes '};
+        ColumnName = {'', ' Subject ID ', ' Label ', ' Notes '};
         ColumnFormat = {'logical', 'char', 'char', 'char'};
         groups = cohort.getGroups().getValues();
         for g = 1:1:length(groups)
@@ -710,7 +938,7 @@ init_groups()
         set(ui_table_groups, 'ColumnName', ColumnName)
         set(ui_table_groups, 'ColumnFormat', ColumnFormat)
         
-        if exist('restricted','var') && restricted
+        if exist('restricted', 'var') && restricted
             set(ui_table_groups, 'ColumnEditable', [true(1, 5)]) %#ok<NBRAK>
         end
         
@@ -836,7 +1064,7 @@ init_groups()
                 end
         end
         update_grtab_table()
-        update_group()
+        update_groups()
     end
     function cb_groups_selectall_sub(~,~)  % (src,event)
         if ~isempty(selected_group)
@@ -846,11 +1074,11 @@ init_groups()
             subjects = cohort.getSubjects().getValues();
             selected_subjects = (1:1:length(subjects));
         end
-        update_group()        
+        update_groups()        
     end
     function cb_groups_clearselection_sub(~,~)  % (src,event)
         selected_subjects = [];
-        update_group()        
+        update_groups()        
     end
     function cb_groups_add_sub(~,~)  % (src,event)   
         if ~isempty(selected_group)
@@ -864,7 +1092,7 @@ init_groups()
         end
         
         update_grtab_table()
-        update_group()
+        update_groups()
     end
     function cb_groups_remove_sub(~,~)  % (src,event)
         if ~isempty(selected_group)
@@ -884,28 +1112,28 @@ init_groups()
         end
         selected_subjects = cohort.getSubjects().remove_all(selected_subjects);
         update_grtab_table()
-        update_group()
+        update_groups()
     end
     function cb_groups_moveup_sub(~,~)  % (src,event)
         selected_subjects = cohort.move_up(selected_subjects);
         
         update_grtab_table()
-        update_group()
+        update_groups()
     end
     function cb_groups_movedown_sub(~,~)  % (src,event)
         selected_subjects = cohort.move_down(selected_subjects);
         update_grtab_table()
-        update_group()
+        update_groups()
     end
     function cb_groups_move2top_sub(~,~)  % (src,event)
         selected_subjects = cohort.move_to_top(selected_subjects);
         update_grtab_table()
-        update_group()
+        update_groups()
     end
     function cb_groups_move2bottom_sub(~,~)  % (src,event)
         selected_subjects = cohort.move_to_bottom(selected_subjects);
         update_grtab_table()
-        update_group()
+        update_groups()
     end
     function cb_groups_create_group_from_subjects(~, ~)
         all_subjects = cohort.getSubjects().getValues();
@@ -1016,33 +1244,33 @@ init_menu()
         set(ui_menu_groups_movedown, 'Label', MOVEDOWN_GR_CMD)
         set(ui_menu_groups_movedown, 'Callback', {@cb_grtab_movedown_gr})
         
-        set(ui_menu_subjects_selectall,'Separator','on')
-        set(ui_menu_subjects_selectall,'Label',SELECTALL_SUB_CMD)
-        set(ui_menu_subjects_selectall,'Callback',{@cb_groups_selectall_sub})
+        set(ui_menu_subjects_selectall, 'Separator', 'on')
+        set(ui_menu_subjects_selectall, 'Label',SELECTALL_SUB_CMD)
+        set(ui_menu_subjects_selectall, 'Callback', {@cb_groups_selectall_sub})
             
-        set(ui_menu_subjects_clearselection,'Label',CLEARSELECTION_SUB_CMD)
-        set(ui_menu_subjects_clearselection,'Callback',{@cb_groups_clearselection_sub})
+        set(ui_menu_subjects_clearselection, 'Label',CLEARSELECTION_SUB_CMD)
+        set(ui_menu_subjects_clearselection, 'Callback', {@cb_groups_clearselection_sub})
         
-        set(ui_menu_subjects_add,'Separator','on')
-        set(ui_menu_subjects_add,'Label',ADD_SUB_CMD)
-        set(ui_menu_subjects_add,'Callback',{@cb_groups_add_sub})         
+        set(ui_menu_subjects_add, 'Separator', 'on')
+        set(ui_menu_subjects_add, 'Label',ADD_SUB_CMD)
+        set(ui_menu_subjects_add, 'Callback', {@cb_groups_add_sub})         
 
-        set(ui_menu_subjects_remove,'Separator','on')
-        set(ui_menu_subjects_remove,'Label',REMOVE_SUB_CMD)
-        set(ui_menu_subjects_remove,'Callback',{@cb_groups_remove_sub})
+        set(ui_menu_subjects_remove, 'Separator', 'on')
+        set(ui_menu_subjects_remove, 'Label',REMOVE_SUB_CMD)
+        set(ui_menu_subjects_remove, 'Callback', {@cb_groups_remove_sub})
             
-        set(ui_menu_subjects_moveup,'Separator','on')
-        set(ui_menu_subjects_moveup,'Label',MOVEUP_SUB_CMD)
-        set(ui_menu_subjects_moveup,'Callback',{@cb_groups_moveup_sub})
+        set(ui_menu_subjects_moveup, 'Separator', 'on')
+        set(ui_menu_subjects_moveup, 'Label',MOVEUP_SUB_CMD)
+        set(ui_menu_subjects_moveup, 'Callback', {@cb_groups_moveup_sub})
             
-        set(ui_menu_subjects_movedown,'Label',MOVEDOWN_SUB_CMD)
-        set(ui_menu_subjects_movedown,'Callback',{@cb_groups_movedown_sub})
+        set(ui_menu_subjects_movedown, 'Label',MOVEDOWN_SUB_CMD)
+        set(ui_menu_subjects_movedown, 'Callback', {@cb_groups_movedown_sub})
             
-        set(ui_menu_subjects_move2top,'Label',MOVE2TOP_SUB_CMD)
-        set(ui_menu_subjects_move2top,'Callback',{@cb_groups_move2top_sub})
+        set(ui_menu_subjects_move2top, 'Label',MOVE2TOP_SUB_CMD)
+        set(ui_menu_subjects_move2top, 'Callback', {@cb_groups_move2top_sub})
             
-        set(ui_menu_subjects_move2bottom,'Label',MOVE2BOTTOM_SUB_CMD)
-        set(ui_menu_subjects_move2bottom,'Callback',{@cb_groups_move2bottom_sub})
+        set(ui_menu_subjects_move2bottom, 'Label',MOVE2BOTTOM_SUB_CMD)
+        set(ui_menu_subjects_move2bottom, 'Callback', {@cb_groups_move2bottom_sub})
 
 
     end
@@ -1094,8 +1322,10 @@ setup_restrictions()
         update_grtab_cohortname()
         update_grtab_table()
         
+        update_console_panel_visibility(CONSOLE_GROUPS_CMD)
+        
         % setup group
-        update_group()
+        update_groups()
         update_group_popups()
          
     end
