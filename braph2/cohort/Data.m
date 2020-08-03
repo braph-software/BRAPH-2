@@ -12,7 +12,7 @@ classdef Data < handle & matlab.mixin.Copyable
     % Data basic methods:
     %   tostring                - returns a string representing the Data
     %   disp                    - displays the Data
-    %   value                   - returns the value
+    %   getValue                - returns the value
     %   setBrainAtlas           - sets the Brain Atlas to Data
     % 
     % Data abstract methods:

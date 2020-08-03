@@ -320,7 +320,7 @@ init_atlas()
         end
     end
 
-%% Panel Group Table
+%% Panel Groups Table
 GRTAB_SELECTED_COL = 1;
 GRTAB_NAME_COL = 2;
 GRTAB_SUBN_COL = 3;
@@ -685,7 +685,7 @@ init_console()
         switch console_panel_cmd
             case CONSOLE_SUBJECTS_CMD
                 set(ui_panel_groups, 'Visible', 'off')
-%                 set(ui_panel_subjects, 'Visible', 'on')
+                set(ui_panel_subjects, 'Visible', 'on')
 %                 set(ui_panel_plots, 'Visible', 'off')
 %                 set(ui_panel_brainview, 'Visible', 'off')
                 
@@ -717,7 +717,7 @@ init_console()
                 
             case CONSOLE_PLOTS_CMD
                 set(ui_panel_groups, 'Visible', 'off')
-%                 set(ui_panel_subjects, 'Visible', 'off')
+                set(ui_panel_subjects, 'Visible', 'off')
 %                 set(ui_panel_plots, 'Visible', 'on')
 %                 set(ui_panel_brainview, 'Visible', 'off')
                 
@@ -749,7 +749,7 @@ init_console()
                 
             case CONSOLE_BRAINVIEW_CMD
                 set(ui_panel_groups, 'Visible', 'off')
-%                 set(ui_panel_subjects, 'Visible', 'off')
+                set(ui_panel_subjects, 'Visible', 'off')
 %                 set(ui_panel_plots, 'Visible', 'off')
 %                 set(ui_panel_brainview, 'Visible', 'on')
                 
@@ -787,7 +787,7 @@ init_console()
                 
             otherwise % CONSOLE_GROUPS_CMD
                 set(ui_panel_groups, 'Visible', 'on')
-%                 set(ui_panel_subjects, 'Visible', 'off')
+                set(ui_panel_subjects, 'Visible', 'off')
 %                 set(ui_panel_plots, 'Visible', 'off')
 %                 set(ui_panel_brainview, 'Visible', 'off')
                 
@@ -819,13 +819,13 @@ init_console()
         end
     end
     function update_console_panel()
-        if strcmpi(get(ui_panel_groups,'Visible'),'on')
+        if strcmpi(get(ui_panel_groups,'Visible'), 'on')
             update_groups()
         end
-        if strcmpi(get(ui_panel_subjects,'Visible'),'on')
+        if strcmpi(get(ui_panel_subjects,'Visible'), 'on')            
             update_subjects()
         end
-        if strcmpi(get(ui_panel_plots,'Visible'),'on')
+        if strcmpi(get(ui_panel_plots,'Visible'), 'on')
             update_plots()
         end
         if strcmpi(get(ui_panel_brainview,'Visible'),'on')
@@ -836,7 +836,7 @@ init_console()
         update_groups()
         update_console_panel_visibility(CONSOLE_GROUPS_CMD)
     end
-    function cb_console_subjects(~,~)  % (src,event)
+    function cb_console_subjects(~,~)  % (src,event)        
         update_subjects()
         update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
     end
@@ -849,7 +849,7 @@ init_console()
         update_console_panel_visibility(CONSOLE_BRAINVIEW_CMD)
     end
 
-%% Group Subjects
+%% Groups Subject demographic data
 TAB_GROUPS_SELECTED_COL = 1;
 TAB_GROUPS_SUBID_COL = 2;
 TAB_GROUPS_SUBLABEL_COL = 3;
@@ -1147,6 +1147,147 @@ init_groups()
         cohort.getGroups().add(group.getID(), group);
         update_grtab_table()
     end
+
+%% Panel 2 - Subjects
+SUBJECTS_SAVE_TXT_CMD = 'Save subjects as txt ...';
+SUBJECTS_SAVE_TXT_TP = 'Save group as txt file';
+
+ui_panel_subjects = uipanel();
+ui_table_subjects = uitable(ui_panel_subjects);
+ui_list_subjects = uicontrol(ui_panel_subjects, 'Style', 'listbox');
+ui_button_subjects_save_txt = uicontrol(ui_panel_subjects, 'Style', 'pushbutton');
+init_subjects()
+    function init_subjects()
+        GUI.setUnits(ui_panel_subjects)
+        GUI.setBackgroundColor(ui_panel_subjects)
+
+        set(ui_panel_subjects, 'Position', GROUPPANEL_POSITION)
+        set(ui_panel_subjects, 'Title', CONSOLE_SUBJECTS_CMD)
+
+        set(ui_table_subjects, 'Position', [.25 .11 .73 .88])
+        set(ui_table_subjects, 'ColumnFormat', {'numeric'})
+        set(ui_table_subjects, 'CellEditCallback', {@cb_subjects_edit_data});
+
+        set(ui_button_subjects_save_txt, 'Position', [.72 .09 .26 .05])
+        set(ui_button_subjects_save_txt, 'String', SUBJECTS_SAVE_TXT_CMD)
+        set(ui_button_subjects_save_txt, 'TooltipString', SUBJECTS_SAVE_TXT_TP)
+        set(ui_button_subjects_save_txt, 'Callback', {@cb_subjects_save_txt}) 
+        
+        set(ui_list_subjects, 'Position', [.03 .02 .2 .97])
+        set(ui_list_subjects, 'String', '')
+        set(ui_list_subjects, 'TooltipString', 'Select subject');
+        set(ui_list_subjects, 'Value', 1)
+        set(ui_list_subjects, 'Max', -1, 'Min', 0)
+        set(ui_list_subjects, 'Callback', {@cb_subjects_list});
+    end
+    function update_subjects()
+        update_subjects_list()
+        update_subjects_table()
+    end
+    function update_subjects_list()
+        if isempty(selected_group) && ~isempty(cohort)
+            subjects = cohort.getSubjects().getValues();
+            for i = 1:1:length(subjects)
+                sub = subjects{i};
+                subjects_ids{i} = sub.getID(); %#ok<AGROW>
+            end
+            set(ui_list_subjects, 'String', subjects_ids)                
+        elseif ~isempty(selected_group)
+            group = cohort.getGroups().getValue(selected_group);
+            subjects = group.getSubjects();
+            for i = 1:1:length(subjects)
+                sub = subjects{i};
+                subjects_ids{i} = sub.getID(); %#ok<AGROW>
+            end
+            set(ui_list_subjects, 'String', subjects_ids)
+        else
+            set(ui_list_subjects, 'String', 'empty')
+        end  
+    end
+    function update_subjects_table()
+        value = get(ui_list_subjects, 'Value');
+         
+        subject = cohort.getSubjects().getValue(value);
+        
+        % region name
+        atlases = cohort.getBrainAtlases();
+        atlas = atlases{1};
+        atlas_br = atlas.getBrainRegions();
+        ColumnName = cell(1, atlas_br.length());
+        for n = 1:1:atlas_br.length()
+            ColumnName{n} = atlas_br.getValue(n).getID();
+        end
+        set(ui_table_subjects, 'ColumnName', ColumnName)
+        
+        if ~isempty(subject)
+            data_codes = subject.getDataCodes();  % type, age
+            data_obj = subject.getData(data_codes{1}); 
+            data = data_obj.getValue();
+            
+            % subject data table
+            RowName = cell(1, size(data, 1));
+            for j = 1:1:length(RowName)
+                RowName{j} = j;
+            end
+            
+            set(ui_table_subjects, 'RowName', RowName)
+            if isequal(data_codes{1}, 'ST')
+                set(ui_table_subjects, 'Data', data')
+            else
+                set(ui_table_subjects, 'Data', data)
+            end
+            
+        else
+            set(ui_table_subjects, 'RowName', '')
+            set(ui_table_subjects, 'Data', [])
+        end        
+    end
+
+        
+    function cb_subjects_edit_data(~,event)  % (src,event)
+%         j = event.Indices(1);
+%         col = event.Indices(2);
+%         newdata = event.NewData;
+%         switch col
+%             case TAB_SUBJECTS_INDEX_COL
+%                 ;
+%             otherwise
+%                 if cohort.groupnumber()>0 && ~isempty(selected_group)
+%                     groupdata = cohort.getGroup(selected_group).getProp(Group.DATA);
+%                 else
+%                     groupdata = true(1,cohort.length());
+%                 end
+%                 indices = find(groupdata==true);
+%                 
+%                 i = indices(j);
+%                 n = col-1;                
+%                 data = cohort.get(i).getProp(MRISubject.DATA);
+%                 data(n) = newdata;
+%                 cohort.get(i).setProp(MRISubject.DATA,data);
+%         end
+%         update_grtab_table()
+%         update_subjects()
+    end
+    function cb_subjects_save_txt(~,~)  % (src,event)
+%         % select indices
+%         if cohort.groupnumber()>0 && ~isempty(selected_group)
+%             groupdata = cohort.getGroup(selected_group).getProp(Group.DATA);
+%         else
+%             groupdata = true(1,cohort.length());
+%         end
+%         indices = find(groupdata==true);
+% 
+%         % create and save cohort
+%         cohorttmp = MRICohort(cohort.getBrainAtlas());
+%         for i = indices
+%             cohorttmp.add(cohort.get(i));
+%         end
+%         cohorttmp.savetotxt(BNC.TXT_MSG_PUTFILE)
+    end
+    function cb_subjects_list(~,~)  % (src,event)
+        update_subjects_table()
+    end
+
 
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
