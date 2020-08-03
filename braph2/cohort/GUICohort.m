@@ -507,8 +507,12 @@ init_grtab()
         update_grtab_table() 
         update_group()
         update_group_popups()
-        catch
-            errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid XLS file']);
+        catch error
+            if isequal(error.identifier(), 'MATLAB:unassignedOutputs')
+                errordlg('No file/directory selected. Please choose a file/directory.');
+            else
+                errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid XLS file']);
+            end
         end
     end
     function cb_grtab_load_txt(~, ~)  % (src,event)
@@ -519,8 +523,12 @@ init_grtab()
         update_grtab_table() 
         update_group()
         update_group_popups()
-        catch
-            errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid TXT file']);
+        catch error
+            if isequal(error.identifier(), 'MATLAB:unassignedOutputs')
+                errordlg('No file/directory selected. Please choose a file/directory.');
+            else
+                errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid TXT file']);
+            end
         end
     end
     function cb_grtab_load_json(~, ~)  % (src,event)
@@ -532,8 +540,12 @@ init_grtab()
         update_group()
         update_group_popups()
 
-        catch
-            errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid JSON file']);
+        catch error
+            if isequal(error.identifier(), 'MATLAB:unassignedOutputs')
+                errordlg('No file/directory selected. Please choose a file/directory.');
+            else
+                errordlg(['The file is not a valid ' sub_class ' Subjects file. Please load a valid JSON file']);
+            end
         end
     end
     function cb_grtab_edit_gr(~, event)  % (src,event)
@@ -548,7 +560,9 @@ init_grtab()
                     selected_group = [];
                 end
             case GRTAB_NAME_COL
-                cohort.getGroups().getValue(g).setID(newdata)   
+                if ~cohort.getGroups().contains(newdata)
+                    cohort.getGroups().getValue(g).setID(newdata)
+                end
             case GRTAB_LBL_COL
                 cohort.getGroups().getValue(g).setLabel(newdata)
             case GRTAB_NOTES_COL
@@ -801,7 +815,9 @@ init_groups()
                     selected_subjects = selected_subjects(selected_subjects ~= i);
                 end
             case TAB_GROUPS_SUBID_COL
-                subject.setID(newdata)                
+                if ~cohort.getSubjects().contains(newdata)
+                    subject.setID(newdata)
+                end
             case TAB_GROUPS_SUBLABEL_COL
                 subject.setLabel(newdata)
             case TAB_GROUPS_SUBNOTES_COL
