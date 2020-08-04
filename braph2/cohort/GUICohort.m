@@ -572,6 +572,8 @@ init_grtab()
             case GRTAB_NAME_COL
                 if ~cohort.getGroups().contains(newdata)
                     cohort.getGroups().getValue(g).setID(newdata)
+                    oldkey = cohort.getGroups().getKey(g);
+                    cohort.getGroups().replaceKey(oldkey, newdata);
                 end
             case GRTAB_LBL_COL
                 cohort.getGroups().getValue(g).setLabel(newdata)
@@ -1045,6 +1047,8 @@ init_groups()
             case TAB_GROUPS_SUBID_COL
                 if ~cohort.getSubjects().contains(newdata)
                     subject.setID(newdata)
+                    oldkey = cohort.getSubjects().getKey(subject);
+                    cohort.getSubjects().replaceKey(oldkey, newdata);
                 end
             case TAB_GROUPS_SUBLABEL_COL
                 subject.setLabel(newdata)
