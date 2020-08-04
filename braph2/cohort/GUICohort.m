@@ -171,8 +171,7 @@ selected_subjects = [];
             selected_subjects = [];
             setup()
             update_filename('')
-            update_groups()
-            update_group_popups()
+            init_enable()
         end
     end
     function cb_import_xls(~, ~)  % (scr, event)
@@ -183,8 +182,7 @@ selected_subjects = [];
             selected_subjects = [];
             setup()
             update_filename('')
-            update_groups()
-            update_group_popups()
+            init_enable()
         end
     end
     function cb_import_json(~, ~)  % (src, event)
@@ -193,11 +191,9 @@ selected_subjects = [];
             cohort = cohortstmp;
             selected_group = [];
             selected_subjects = [];
-            selected = [];
             setup()
             update_filename('')
-            update_groups()
-            update_group_popups()
+            init_enable()
         end
     end
     function cb_export_txt(~, ~)  % (scr, event)
@@ -219,14 +215,18 @@ f = GUI.init_figure(APPNAME, .8, .9, 'center');
     function init_disable()
         GUI.disable(ui_panel_grtab)
         GUI.disable(ui_panel_groups)
+        GUI.disable(ui_panel_console)
         set(ui_menu_groups, 'enable', 'off')
-        set(ui_menu_subjects,'enable', 'off')
+        set(ui_menu_subjects, 'enable', 'off')         
     end
     function init_enable()
-        GUI.enable(ui_panel_grtab)
-        GUI.enable(ui_panel_groups)
+        GUI.enable(ui_panel_grtab)        
         set(ui_menu_groups, 'enable', 'on')
-        set(ui_menu_subjects,'enable', 'on')
+        set(ui_menu_subjects, 'enable', 'on')
+        if cohort.getSubjects().length() > 0
+            GUI.enable(ui_panel_console)
+            GUI.enable(ui_panel_groups)
+        end
     end
 
 %% Text File Name
@@ -515,7 +515,8 @@ init_grtab()
         update_grtab_table() 
         update_groups()
         update_group_popups()
-        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
+        update_console_panel_visibility(CONSOLE_GROUPS_CMD)
+        init_enable()
         catch error
             if isequal(error.identifier(), 'MATLAB:unassignedOutputs')
                 errordlg('No file/directory selected. Please choose a file/directory.');
@@ -532,7 +533,8 @@ init_grtab()
         update_grtab_table() 
         update_groups()
         update_group_popups()
-        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
+        update_console_panel_visibility(CONSOLE_GROUPS_CMD)
+        init_enable()
         catch error
             if isequal(error.identifier(), 'MATLAB:unassignedOutputs')
                 errordlg('No file/directory selected. Please choose a file/directory.');
@@ -549,7 +551,8 @@ init_grtab()
         update_grtab_table()
         update_groups()
         update_group_popups()
-        update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
+        update_console_panel_visibility(CONSOLE_GROUPS_CMD)
+        init_enable()
         catch error
             if isequal(error.identifier(), 'MATLAB:unassignedOutputs')
                 errordlg('No file/directory selected. Please choose a file/directory.');
@@ -821,16 +824,16 @@ init_console()
         end
     end
     function update_console_panel()
-        if strcmpi(get(ui_panel_groups,'Visible'), 'on')
+        if strcmpi(get(ui_panel_groups, 'Visible'), 'on')
             update_groups()
         end
-        if strcmpi(get(ui_panel_subjects,'Visible'), 'on')            
+        if strcmpi(get(ui_panel_subjects, 'Visible'), 'on')            
             update_subjects()
         end
-        if strcmpi(get(ui_panel_plots,'Visible'), 'on')
+        if strcmpi(get(ui_panel_plots, 'Visible'), 'on')
             update_plots()
         end
-        if strcmpi(get(ui_panel_brainview,'Visible'),'on')
+        if strcmpi(get(ui_panel_brainview, 'Visible'), 'on')
             update_brainview()
         end
     end
@@ -1170,9 +1173,9 @@ init_subjects()
 
         set(ui_table_subjects, 'Position', [.25 .11 .73 .88])
         set(ui_table_subjects, 'ColumnFormat', {'numeric'})
-        set(ui_table_subjects, 'CellEditCallback', {@cb_subjects_edit_data});
+        set(ui_table_groups, 'ColumnEditable', false)        
 
-        set(ui_button_subjects_save_txt, 'Position', [.72 .09 .26 .05])
+        set(ui_button_subjects_save_txt, 'Position', [.72 .01 .26 .05])
         set(ui_button_subjects_save_txt, 'String', SUBJECTS_SAVE_TXT_CMD)
         set(ui_button_subjects_save_txt, 'TooltipString', SUBJECTS_SAVE_TXT_TP)
         set(ui_button_subjects_save_txt, 'Callback', {@cb_subjects_save_txt}) 
@@ -1209,8 +1212,7 @@ init_subjects()
         end  
     end
     function update_subjects_table()
-        value = get(ui_list_subjects, 'Value');
-         
+        value = get(ui_list_subjects, 'Value');         
         subject = cohort.getSubjects().getValue(value);
         
         % region name
@@ -1245,48 +1247,9 @@ init_subjects()
             set(ui_table_subjects, 'RowName', '')
             set(ui_table_subjects, 'Data', [])
         end        
-    end
-
-        
-    function cb_subjects_edit_data(~,event)  % (src,event)
-%         j = event.Indices(1);
-%         col = event.Indices(2);
-%         newdata = event.NewData;
-%         switch col
-%             case TAB_SUBJECTS_INDEX_COL
-%                 ;
-%             otherwise
-%                 if cohort.groupnumber()>0 && ~isempty(selected_group)
-%                     groupdata = cohort.getGroup(selected_group).getProp(Group.DATA);
-%                 else
-%                     groupdata = true(1,cohort.length());
-%                 end
-%                 indices = find(groupdata==true);
-%                 
-%                 i = indices(j);
-%                 n = col-1;                
-%                 data = cohort.get(i).getProp(MRISubject.DATA);
-%                 data(n) = newdata;
-%                 cohort.get(i).setProp(MRISubject.DATA,data);
-%         end
-%         update_grtab_table()
-%         update_subjects()
-    end
+    end      
     function cb_subjects_save_txt(~,~)  % (src,event)
-%         % select indices
-%         if cohort.groupnumber()>0 && ~isempty(selected_group)
-%             groupdata = cohort.getGroup(selected_group).getProp(Group.DATA);
-%         else
-%             groupdata = true(1,cohort.length());
-%         end
-%         indices = find(groupdata==true);
-% 
-%         % create and save cohort
-%         cohorttmp = MRICohort(cohort.getBrainAtlas());
-%         for i = indices
-%             cohorttmp.add(cohort.get(i));
-%         end
-%         cohorttmp.savetotxt(BNC.TXT_MSG_PUTFILE)
+        eval([cohort.getSubjectClass() '.save_to_txt(cohort)']);
     end
     function cb_subjects_list(~,~)  % (src,event)
         update_subjects_table()
@@ -1466,7 +1429,7 @@ setup_restrictions()
         % setup table
         update_grtab_cohortname()
         update_grtab_table()
-        
+              
         update_console_panel_visibility(CONSOLE_GROUPS_CMD)
         
         % setup group
