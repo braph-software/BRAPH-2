@@ -1174,7 +1174,8 @@ init_subjects()
 
         set(ui_table_subjects, 'Position', [.25 .11 .73 .88])
         set(ui_table_subjects, 'ColumnFormat', {'numeric'})
-        set(ui_table_subjects, 'ColumnEditable', false)        
+        set(ui_table_subjects, 'ColumnEditable', true)  
+        set(ui_table_subjects, 'CellEditCallback', {@cb_subjects_edit_table});
 
         set(ui_button_subjects_save_txt, 'Position', [.72 .01 .26 .05])
         set(ui_button_subjects_save_txt, 'String', SUBJECTS_SAVE_TXT_CMD)
@@ -1207,8 +1208,10 @@ init_subjects()
                 sub = subjects{i};
                 subjects_ids{i} = sub.getID(); %#ok<AGROW>
             end
+            set(ui_list_subjects, 'Value', 1)
             set(ui_list_subjects, 'String', subjects_ids)
         else
+            set(ui_list_subjects, 'Value', 1)
             set(ui_list_subjects, 'String', 'empty')
         end  
     end
@@ -1249,10 +1252,31 @@ init_subjects()
             set(ui_table_subjects, 'Data', [])
         end        
     end      
-    function cb_subjects_save_txt(~,~)  % (src,event)
+    function cb_subjects_save_txt(~, ~)  % (src,event)
         eval([cohort.getSubjectClass() '.save_to_txt(cohort)']);
     end
-    function cb_subjects_list(~,~)  % (src,event)
+    function cb_subjects_list(~, ~)  % (src,event)
+        update_subjects_table()
+    end
+    function cb_subjects_edit_table(~, event)
+        j = event.Indices(1);
+        col = event.Indices(2);
+        newdata = event.NewData;
+        
+        value = get(ui_list_subjects, 'Value');
+        subject = cohort.getSubjects().getValue(value);
+        
+        datacodes = eval([cohort.getSubjectClass() '.getDataCodes()']);
+        data_obj = subject.getData(datacodes{1});
+        data = data_obj.getValue(); 
+        if isequal(datacodes{1}, 'ST')
+            data(col, j) = newdata;  % because we inverse to a row for the gui
+        else
+            data(j, col) = newdata;
+        end
+        subject.setData(datacodes{1}, data);      
+        
+        update_grtab_table()
         update_subjects_table()
     end
 
