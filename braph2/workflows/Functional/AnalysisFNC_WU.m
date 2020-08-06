@@ -295,7 +295,7 @@ classdef AnalysisFNC_WU < Analysis
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             
             is_longitudinal = analysis.getSettings('AnalysisFNC.Longitudinal');
-            M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
+            M = get_from_varargin(1e+3, 'ComparisonFNC.PermutationNumber', varargin{:});
             
             % Measurements for groups 1 and 2, and their difference
             measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
