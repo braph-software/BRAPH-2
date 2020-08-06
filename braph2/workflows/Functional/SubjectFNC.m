@@ -319,25 +319,10 @@ classdef SubjectFNC < Subject
                 if ~exist([root_directory filesep() cohort.getGroups().getValue(i).getID()], 'dir')
                     mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 end
-                
-                % cohort info
-                file_info_cohort = [root_directory filesep() 'cohort_info.txt'];
-                if ~isfile(file_info_cohort)
-                    cohort_info = cell(3, 1);
-                    cohort_info{1, 1} = cohort.getID();
-                    cohort_info{2, 1} = cohort.getLabel();
-                    cohort_info{3, 1} = cohort.getNotes();
-                    writecell(cohort_info, file_info_cohort, 'Delimiter', '\t');
-                end
-                
+
                 % group info
                 group = cohort.getGroups().getValue(i);
-                group_info = cell(3, 1);
-                group_info{1, 1} = group.getID();
-                group_info{2, 1} = group.getLabel();
-                group_info{3, 1} = group.getNotes();
-                writecell(group_info, [root_directory filesep() group.getID() filesep() 'group_info.txt'], 'Delimiter', '\t');
-                
+          
                 % get subject info
                 subjects_list = group.getSubjects();
                 for j = 1:1:group.subjectnumber()
@@ -477,24 +462,6 @@ classdef SubjectFNC < Subject
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
                 mkdir(root_directory, cohort.getGroups().getValue(i).getID());
-                
-                % cohort info
-                file_info_cohort = [root_directory filesep() 'cohort_info.txt'];
-                if ~isfile(file_info_cohort)
-                    cohort_info = cell(3, 1);
-                    cohort_info{1, 1} = cohort.getID();
-                    cohort_info{2, 1} = cohort.getLabel();
-                    cohort_info{3, 1} = cohort.getNotes();
-                    writecell(cohort_info, file_info_cohort, 'Delimiter', '\t');
-                end
-                
-                % group info
-                group = cohort.getGroups().getValue(i);
-                group_info = cell(3, 1);
-                group_info{1, 1} = group.getID();
-                group_info{2, 1} = group.getLabel();
-                group_info{3, 1} = group.getNotes();
-                writecell(group_info, [root_directory filesep() group.getID() filesep() 'group_info.txt'], 'Delimiter', '\t');
                 
                 % get info
                 group = cohort.getGroups().getValue(i);
