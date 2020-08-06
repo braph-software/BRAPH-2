@@ -106,8 +106,8 @@ FIGURE_CMD = GUI.FIGURE_CMD;
 FIGURE_SC = GUI.FIGURE_SC;
 FIGURE_TP = ['Generate brain figure. Shortcut: ' GUI.ACCELERATOR '+' FIGURE_SC];
 
-% MRICOHORT_CMD = 'New MRI Cohort ...';
-% MRICOHORT_TP = ['Generate new MRI cohort and opens it with ' GUI.MCE_NAME];
+COHORT_CMD = 'New Cohort ...';
+COHORT_TP = ['Generate new cohort and opens it with ' GUI.CE_NAME];
 %
 % fMRICOHORT_CMD = 'New fMRI Cohort ...';
 % fMRICOHORT_TP = ['Generate new fMRI cohort and opens it with ' GUI.fMCE_NAME];
@@ -843,7 +843,7 @@ init_contextmenus()
 MENU_FILE = GUI.MENU_FILE;
 MENU_EDIT = GUI.MENU_EDIT;
 MENU_BRAINVIEW = 'Brain View';
-% MENU_COHORTS = 'Subject Cohorts';
+MENU_COHORTS = 'Subject Cohorts';
 
 ui_menu_file = uimenu(f, 'Label', MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
@@ -867,8 +867,8 @@ ui_menu_edit_move2top = uimenu(ui_menu_edit);
 ui_menu_edit_move2bottom = uimenu(ui_menu_edit);
 ui_menu_brainview = uimenu(f, 'Label', MENU_BRAINVIEW);
 ui_menu_brainview_figure = uimenu(ui_menu_brainview);
-% % ui_menu_cohorts = uimenu(f, 'Label', MENU_COHORTS);
-% % ui_menu_cohorts_mricohort = uimenu(ui_menu_cohorts);
+ui_menu_cohorts = uimenu(f, 'Label', MENU_COHORTS);
+ui_menu_cohorts_cohort = uimenu(ui_menu_cohorts);
 % % ui_menu_cohorts_fmricohort = uimenu(ui_menu_cohorts);
 % % ui_menu_cohorts_eegcohort = uimenu(ui_menu_cohorts);
 % % ui_menu_cohorts_petcohort = uimenu(ui_menu_cohorts);
@@ -950,8 +950,8 @@ init_menu()
         set(ui_menu_brainview_figure, 'Accelerator', FIGURE_SC)
         set(ui_menu_brainview_figure, 'Callback', {@cb_menu_figure})
         
-        %         set(ui_menu_cohorts_mricohort, 'Label', MRICOHORT_CMD)
-        %         set(ui_menu_cohorts_mricohort, 'Callback', {@cb_menu_mricohort})
+        set(ui_menu_cohorts_cohort, 'Label', COHORT_CMD)
+        set(ui_menu_cohorts_cohort, 'Callback', {@cb_menu_cohort})
         %
         %         set(ui_menu_cohorts_fmricohort, 'Label', fMRICOHORT_CMD)
         %         set(ui_menu_cohorts_fmricohort, 'Callback', {@cb_menu_fmricohort})
@@ -970,15 +970,15 @@ init_menu()
         set(gca, 'Units', 'normalized')
         set(gca, 'OuterPosition', [0 0 1 1])
     end
-%     function cb_menu_mricohort(~, ~)  % (src, event)
-%         if atlas.getBrainRegions().length() > 0
-%             GUIMRICohort(atlas.copy())
-%         else
-%             msgbox('In order to create an MRI cohort the brain atlas must have at least one brain region.', ...
-%                 'Warning: Empty brain atlas', ...
-%                 'warn')
-%         end
-%     end
+    function cb_menu_cohort(~, ~)  % (src, event)
+        if atlas.getBrainRegions().length() > 0
+            GUICohort(atlas.copy(), 'SubjectST')  % pass the sub, somwhow dynamic
+        else
+            msgbox('In order to create an cohort the brain atlas must have at least one brain region.', ...
+                'Warning: Empty brain atlas', ...
+                'warn')
+        end
+    end
 %     function cb_menu_fmricohort(~,~) % (src,event)
 %         if atlas.getBrainRegions().length()>0
 %             GUIfMRICohort(atlas.copy())
