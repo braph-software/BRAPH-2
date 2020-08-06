@@ -31,7 +31,7 @@ classdef SubjectST < Subject
     %   load_from_json          - reads a '.json' file, loads the data to a new subject
     %   save_to_json            - saves the subject data to a '.json' file
     %
-    % See also Group, Cohort, SubjectDTI, SubjectST, Subject.
+    % See also Group, Cohort, Subject, SubjectST, SubjectCON, SubjectFNC.
  
     methods  % Constructor
         function sub = SubjectST(id, label, notes, atlas, varargin)
