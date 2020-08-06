@@ -24,9 +24,9 @@ ATLAS_Y0 = 1 - MARGIN_Y - ATLAS_HEIGHT;
 ATLAS_POSITION = [ATLAS_X0 ATLAS_Y0 ATLAS_WIDTH ATLAS_HEIGHT];
 
 CONSOLE_X0 = LEFTCOLUMN_WIDTH + (2 * MARGIN_X);
-CONSOLE_Y0 = ATLAS_Y0;
+CONSOLE_Y0 = ATLAS_Y0 + 0.06;
 CONSOLE_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
-CONSOLE_HEIGHT = HEADING_HEIGHT;
+CONSOLE_HEIGHT = HEADING_HEIGHT / 2 ;
 CONSOLE_POSITION = [CONSOLE_X0 CONSOLE_Y0 CONSOLE_WIDTH CONSOLE_HEIGHT];
 
 
@@ -125,12 +125,11 @@ end
 
 selected_group = [];
 selected_subjects = [];
-ba = [];
 
 % Callbacks to manage application data
     function cb_open(~, ~)  % (src, event)
         % select file
-        [file, path, filterindex] = uigetfile(GUI.BAE_EXTENSION, GUI.BAE_MSG_GETFILE);
+        [file, path, filterindex] = uigetfile(GUI.CE_EXTENSION, GUI.CE_MSG_GETFILE);
         % load file
         if filterindex
             filename = fullfile(path, file);
@@ -208,9 +207,6 @@ ba = [];
     end
 
 %% GUI Initialization
-fig_subject = [];
-fig_group = [];
-fig_comparison = [];
 f = GUI.init_figure(APPNAME, .8, .9, 'center');
 
     function init_disable()
@@ -353,7 +349,7 @@ GRTAB_INTERSECT_CMD = 'Intersect';
 GRTAB_INTERSECT_TP = 'Intersect two groups';
 
 ui_panel_grtab = uipanel();
-ui_edit_grtab_cohortname = uicontrol(ui_panel_grtab, 'Style', 'edit');
+ui_edit_grtab_cohortid = uicontrol(ui_panel_grtab, 'Style', 'edit');
 ui_edit_grtab_cohortlabel = uicontrol(ui_panel_grtab, 'Style', 'edit');
 ui_edit_grtab_cohortnotes = uicontrol(ui_panel_grtab, 'Style', 'edit');
 ui_label_grtab_subject = uicontrol(ui_panel_grtab, 'Style', 'text');
@@ -381,10 +377,10 @@ init_grtab()
         set(ui_panel_grtab, 'Position',GRTAB_POSITION)
         set(ui_panel_grtab, 'BorderType', 'none')
 
-        set(ui_edit_grtab_cohortname, 'Position', [.02 .95 .36 .03])
-        set(ui_edit_grtab_cohortname, 'HorizontalAlignment', 'left')
-        set(ui_edit_grtab_cohortname, 'FontWeight', 'bold')
-        set(ui_edit_grtab_cohortname, 'Callback', {@cb_grtab_cohortname})
+        set(ui_edit_grtab_cohortid, 'Position', [.02 .95 .36 .03])
+        set(ui_edit_grtab_cohortid, 'HorizontalAlignment', 'left')
+        set(ui_edit_grtab_cohortid, 'FontWeight', 'bold')
+        set(ui_edit_grtab_cohortid, 'Callback', {@cb_grtab_cohortname})
         
         set(ui_edit_grtab_cohortlabel, 'Position', [.42 .95 .56 .03])
         set(ui_edit_grtab_cohortlabel, 'HorizontalAlignment', 'left')
@@ -480,7 +476,7 @@ init_grtab()
         else
             set(f, 'Name', [GUI.CE_NAME ' - ' BRAPH2.VERSION ' - ' cohortname])
         end
-        set(ui_edit_grtab_cohortname, 'String', cohortname)
+        set(ui_edit_grtab_cohortid, 'String', cohortname)
     end
     function update_grtab_table()
         groups_idict = cohort.getGroups();
@@ -499,14 +495,14 @@ init_grtab()
         set(ui_table_grtab, 'Data', data)
     end
     function cb_grtab_cohortname(~, ~)  % (src,event)
-        cohort.setID(get(ui_edit_grtab_cohortname, 'String'));
+        cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
         update_grtab_cohortname()
     end
     function cb_grtab_cohortlabel(~, ~)  % (src,event)
-        cohort.setLabel(get(ui_edit_grtab_cohortname, 'String'));
+        cohort.setLabel(get(ui_edit_grtab_cohortid, 'String'));
     end
     function cb_grtab_cohortnotes(~, ~)  % (src,event)
-        cohort.setNotes(get(ui_edit_grtab_cohortname, 'String'));
+        cohort.setNotes(get(ui_edit_grtab_cohortid, 'String'));
     end
     function cb_grtab_load_xls(~, ~)  % (src,event)
         try
@@ -646,19 +642,9 @@ CONSOLE_SUBJECTS_CMD = 'Subject Data';
 CONSOLE_SUBJECTS_SC = '2';
 CONSOLE_SUBJECTS_TP = ['List of subjects with their measures. Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_SUBJECTS_SC];
 
-CONSOLE_PLOTS_CMD = 'Subject Plot';
-CONSOLE_PLOTS_SC = 3;
-CONSOLE_PLOTS_TP = 'Plots';
-
-CONSOLE_BRAINVIEW_CMD = 'Brain View';
-CONSOLE_BRAINVIEW_SC = '4';
-CONSOLE_BRAINVIEW_TP = ['Brain view of the measures. Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_BRAINVIEW_SC];
-
 ui_panel_console = uipanel();
 ui_button_console_groups = uicontrol(ui_panel_console,'Style', 'pushbutton');
 ui_button_console_subjects = uicontrol(ui_panel_console,'Style', 'pushbutton');
-ui_button_console_plots = uicontrol(ui_panel_console,'Style', 'pushbutton');
-ui_button_console_brainview = uicontrol(ui_panel_console,'Style', 'pushbutton');
 init_console()
     function init_console()
         GUI.setUnits(ui_panel_console)
@@ -667,161 +653,33 @@ init_console()
         set(ui_panel_console, 'Position', CONSOLE_POSITION)
         set(ui_panel_console, 'BorderType', 'none')
 
-        set(ui_button_console_groups, 'Position', [.05 .30 .15 .40])
+        set(ui_button_console_groups, 'Position', [.02 .05 .24 .6])
         set(ui_button_console_groups, 'String', CONSOLE_GROUPS_CMD)
         set(ui_button_console_groups, 'TooltipString', CONSOLE_GROUPS_TP)
         set(ui_button_console_groups, 'Callback', {@cb_console_groups})
         
-        set(ui_button_console_subjects, 'Position', [.30 .30 .15 .40])
+        set(ui_button_console_subjects, 'Position', [.26 .05 .24 .6])
         set(ui_button_console_subjects, 'String', CONSOLE_SUBJECTS_CMD)
         set(ui_button_console_subjects, 'TooltipString', CONSOLE_SUBJECTS_TP)
         set(ui_button_console_subjects, 'Callback', {@cb_console_subjects})
 
-        set(ui_button_console_plots, 'Position', [.55 .30 .15 .40])
-        set(ui_button_console_plots, 'String', CONSOLE_PLOTS_CMD)
-        set(ui_button_console_plots, 'TooltipString', CONSOLE_PLOTS_TP)
-        set(ui_button_console_plots, 'Callback', {@cb_console_plots})
-
-        set(ui_button_console_brainview, 'Position', [.80 .30 .15 .40])
-        set(ui_button_console_brainview, 'String', CONSOLE_BRAINVIEW_CMD)
-        set(ui_button_console_brainview, 'TooltipString', CONSOLE_BRAINVIEW_TP)
-        set(ui_button_console_brainview, 'Callback', {@cb_console_brainview})
     end
     function update_console_panel_visibility(console_panel_cmd)
         switch console_panel_cmd
             case CONSOLE_SUBJECTS_CMD
                 set(ui_panel_groups, 'Visible', 'off')
-                set(ui_panel_subjects, 'Visible', 'on')
-                set(ui_panel_plots, 'Visible', 'off')
-                set(ui_panel_brainview, 'Visible', 'off')
+                set(ui_panel_subjects, 'Visible', 'on')           
                 
                 set(ui_button_console_groups, 'FontWeight', 'normal')
-                set(ui_button_console_subjects, 'FontWeight', 'bold')
-                set(ui_button_console_plots, 'FontWeight', 'normal')
-                set(ui_button_console_brainview, 'FontWeight', 'normal')
-                
-                set([ui_toolbar_zoomin ...
-                    ui_toolbar_zoomout ...
-                    ui_toolbar_pan ...
-                    ui_toolbar_rotate ...
-                    ui_toolbar_datacursor ...
-                    ui_toolbar_insertcolorbar ...
-                    ui_toolbar_3D ...
-                    ui_toolbar_SL ...
-                    ui_toolbar_SR ...
-                    ui_toolbar_AD ...
-                    ui_toolbar_AV ...
-                    ui_toolbar_CP ...
-                    ui_toolbar_CA ...
-                    ui_toolbar_brain ...
-                    ui_toolbar_br ...
-                    ui_toolbar_axis ...
-                    ui_toolbar_grid ...
-                    ui_toolbar_label ...
-                    ui_toolbar_sym], ...
-                    'Visible', 'off')
-                
-            case CONSOLE_PLOTS_CMD
-                set(ui_panel_groups, 'Visible', 'off')
-                set(ui_panel_subjects, 'Visible', 'off')
-                set(ui_panel_plots, 'Visible', 'on')
-                set(ui_panel_brainview, 'Visible', 'off')
-                
-                set(ui_button_console_groups, 'FontWeight', 'normal')
-                set(ui_button_console_subjects, 'FontWeight', 'normal')
-                set(ui_button_console_plots, 'FontWeight', 'bold')
-                set(ui_button_console_brainview, 'FontWeight', 'normal')
-                
-                set([ui_toolbar_zoomin ...
-                    ui_toolbar_zoomout ...
-                    ui_toolbar_pan ...
-                    ui_toolbar_rotate ...
-                    ui_toolbar_datacursor ...
-                    ui_toolbar_insertcolorbar ...
-                    ui_toolbar_3D ...
-                    ui_toolbar_SL ...
-                    ui_toolbar_SR ...
-                    ui_toolbar_AD ...
-                    ui_toolbar_AV ...
-                    ui_toolbar_CP ...
-                    ui_toolbar_CA ...
-                    ui_toolbar_brain ...
-                    ui_toolbar_br ...
-                    ui_toolbar_axis ...
-                    ui_toolbar_grid ...
-                    ui_toolbar_label ...
-                    ui_toolbar_sym], ...
-                    'Visible', 'off')
-                
-            case CONSOLE_BRAINVIEW_CMD
-                set(ui_panel_groups, 'Visible', 'off')
-                set(ui_panel_subjects, 'Visible', 'off')
-                set(ui_panel_plots, 'Visible', 'off')
-                set(ui_panel_brainview, 'Visible', 'on')
-                
-                set(ui_button_console_groups, 'FontWeight', 'normal')
-                set(ui_button_console_subjects, 'FontWeight', 'normal')
-                set(ui_button_console_plots, 'FontWeight', 'normal')
-                set(ui_button_console_brainview, 'FontWeight', 'bold')
-                
-                set([ui_toolbar_zoomin ...
-                    ui_toolbar_zoomout ...
-                    ui_toolbar_pan ...
-                    ui_toolbar_rotate ...
-                    ui_toolbar_datacursor ...
-                    ui_toolbar_insertcolorbar ...
-                    ui_toolbar_3D ...
-                    ui_toolbar_SL ...
-                    ui_toolbar_SR ...
-                    ui_toolbar_AD ...
-                    ui_toolbar_AV ...
-                    ui_toolbar_CP ...
-                    ui_toolbar_CA ...
-                    ui_toolbar_brain ...
-                    ui_toolbar_br ...
-                    ui_toolbar_axis ...
-                    ui_toolbar_grid ...
-                    ui_toolbar_label ...
-                    ui_toolbar_sym], ...
-                    'Visible', 'on')
-                
-                set([ui_toolbar_zoomin ...
-                    ui_toolbar_insertcolorbar ...
-                    ui_toolbar_3D ...
-                    ui_toolbar_brain], ...
-                    'Separator', 'on');
-                
+                set(ui_button_console_subjects, 'FontWeight', 'bold')             
+           
             otherwise % CONSOLE_GROUPS_CMD
                 set(ui_panel_groups, 'Visible', 'on')
                 set(ui_panel_subjects, 'Visible', 'off')
-                set(ui_panel_plots, 'Visible', 'off')
-                set(ui_panel_brainview, 'Visible', 'off')
                 
                 set(ui_button_console_groups, 'FontWeight', 'bold')
                 set(ui_button_console_subjects, 'FontWeight', 'normal')
-                set(ui_button_console_plots, 'FontWeight', 'normal')
-                set(ui_button_console_brainview, 'FontWeight', 'normal')
-                
-                set([ui_toolbar_zoomin ...
-                    ui_toolbar_zoomout ...
-                    ui_toolbar_pan ...
-                    ui_toolbar_rotate ...
-                    ui_toolbar_datacursor ...
-                    ui_toolbar_insertcolorbar ...
-                    ui_toolbar_3D ...
-                    ui_toolbar_SL ...
-                    ui_toolbar_SR ...
-                    ui_toolbar_AD ...
-                    ui_toolbar_AV ...
-                    ui_toolbar_CP ...
-                    ui_toolbar_CA ...
-                    ui_toolbar_brain ...
-                    ui_toolbar_br ...
-                    ui_toolbar_axis ...
-                    ui_toolbar_grid ...
-                    ui_toolbar_label ...
-                    ui_toolbar_sym], ...
-                    'Visible', 'off')
+             
         end
     end
     function update_console_panel()
@@ -831,12 +689,6 @@ init_console()
         if strcmpi(get(ui_panel_subjects, 'Visible'), 'on')            
             update_subjects()
         end
-        if strcmpi(get(ui_panel_plots, 'Visible'), 'on')
-            update_plots()
-        end
-        if strcmpi(get(ui_panel_brainview, 'Visible'), 'on')
-            update_brainview()
-        end
     end
     function cb_console_groups(~,~)  % (src,event)
         update_groups()
@@ -845,14 +697,6 @@ init_console()
     function cb_console_subjects(~,~)  % (src,event)        
         update_subjects()
         update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
-    end
-    function cb_console_plots(~,~)  % (src,event)
-        update_plots()
-        update_console_panel_visibility(CONSOLE_PLOTS_CMD)
-    end
-    function cb_console_brainview(~,~)  % (src,event)
-        update_brainview()
-        update_console_panel_visibility(CONSOLE_BRAINVIEW_CMD)
     end
 
 %% Groups Subject demographic data
@@ -884,47 +728,47 @@ init_groups()
         set(ui_table_groups, 'ColumnEditable', true)
         set(ui_table_groups, 'CellEditCallback', {@cb_groups_edit_sub});
         
-        set(ui_button_groups_selectall_subs, 'Position', [.02 .11 .24 .03])
+        set(ui_button_groups_selectall_subs, 'Position', [.02 .11 .18 .03])
         set(ui_button_groups_selectall_subs, 'String' ,SELECTALL_SUB_CMD)
         set(ui_button_groups_selectall_subs, 'TooltipString', SELECTALL_SUB_TP)
         set(ui_button_groups_selectall_subs, 'Callback', {@cb_groups_selectall_sub})
         
-        set(ui_button_groups_clearselection_subs, 'Position', [.02 .08 .24 .03])
+        set(ui_button_groups_clearselection_subs, 'Position', [.02 .08 .18 .03])
         set(ui_button_groups_clearselection_subs, 'String', CLEARSELECTION_SUB_CMD)
         set(ui_button_groups_clearselection_subs, 'TooltipString', CLEARSELECTION_SUB_TP)
         set(ui_button_groups_clearselection_subs, 'Callback', {@cb_groups_clearselection_sub})
         
-        set(ui_button_groups_add_subs, 'Position', [.26 .11 .24 .03])
+        set(ui_button_groups_add_subs, 'Position', [.22 .11 .18 .03])
         set(ui_button_groups_add_subs, 'String', ADD_SUB_CMD)
         set(ui_button_groups_add_subs, 'TooltipString', ADD_SUBJECTS_TP);
-        set(ui_button_groups_add_subs, 'Callback', {@cb_groups_add_sub})
+        set(ui_button_groups_add_subs, 'Callback', {@cb_groups_add_sub})        
         
-        set(ui_button_create_group_from_subject, 'Position', [.26 .08 .24 .03])
-        set(ui_button_create_group_from_subject, 'String', CREATE_GRP_FROM_SUBS_CMD)
-        set(ui_button_create_group_from_subject, 'TooltipString', CREATE_GRP_FROM_SUBS_TP);
-        set(ui_button_create_group_from_subject, 'Callback', {@cb_groups_create_group_from_subjects})        
-        
-        set(ui_button_groups_remove_subs, 'Position', [.50 .11 .24 .03])
+        set(ui_button_groups_remove_subs, 'Position', [.41 .11 .18 .03])
         set(ui_button_groups_remove_subs, 'String' , REMOVE_SUB_CMD)
         set(ui_button_groups_remove_subs, 'TooltipString', REMOVE_SUB_TP);
-        set(ui_button_groups_remove_subs, 'Callback', {@cb_groups_remove_sub})
+        set(ui_button_groups_remove_subs, 'Callback', {@cb_groups_remove_sub})        
+           
+        set(ui_button_create_group_from_subject, 'Position', [.60 .11 .18 .03])
+        set(ui_button_create_group_from_subject, 'String', CREATE_GRP_FROM_SUBS_CMD)
+        set(ui_button_create_group_from_subject, 'TooltipString', CREATE_GRP_FROM_SUBS_TP);
+        set(ui_button_create_group_from_subject, 'Callback', {@cb_groups_create_group_from_subjects})     
                
-        set(ui_button_groups_moveup_subs, 'Position', [.74 .11 .24 .03])
+        set(ui_button_groups_moveup_subs, 'Position', [.80 .11 .18 .03])
         set(ui_button_groups_moveup_subs, 'String', MOVEUP_SUB_CMD)
         set(ui_button_groups_moveup_subs, 'TooltipString', MOVEUP_SUB_TP);
         set(ui_button_groups_moveup_subs, 'Callback', {@cb_groups_moveup_sub})
         
-        set(ui_button_groups_movedown_subs, 'Position', [.74 .08 .24 .03])
+        set(ui_button_groups_movedown_subs, 'Position', [.80 .08 .18 .03])
         set(ui_button_groups_movedown_subs, 'String', MOVEDOWN_SUB_CMD)
         set(ui_button_groups_movedown_subs, 'TooltipString', MOVEDOWN_SUB_TP);
         set(ui_button_groups_movedown_subs, 'Callback', {@cb_groups_movedown_sub})
         
-        set(ui_button_groups_move2top_subs, 'Position', [.74 .05 .24 .03])
+        set(ui_button_groups_move2top_subs, 'Position', [.80 .05 .18 .03])
         set(ui_button_groups_move2top_subs, 'String', MOVE2TOP_SUB_CMD)
         set(ui_button_groups_move2top_subs, 'TooltipString', MOVE2TOP_SUB_TP);
         set(ui_button_groups_move2top_subs, 'Callback', {@cb_groups_move2top_sub})
         
-        set(ui_button_groups_move2bottom_subs, 'Position', [.74 .02 .24 .03])
+        set(ui_button_groups_move2bottom_subs, 'Position', [.80 .02 .18 .03])
         set(ui_button_groups_move2bottom_subs, 'String', MOVE2BOTTOM_SUB_CMD)
         set(ui_button_groups_move2bottom_subs, 'TooltipString', MOVE2BOTTOM_SUB_TP);
         set(ui_button_groups_move2bottom_subs, 'Callback', {@cb_groups_move2bottom_sub})
@@ -1157,13 +1001,13 @@ init_groups()
     end
 
 %% Panel 2 - Subjects
-SUBJECTS_SAVE_TXT_CMD = 'Save subjects as txt ...';
-SUBJECTS_SAVE_TXT_TP = 'Save group as txt file';
 
 ui_panel_subjects = uipanel();
+ui_edit_subtab_subjectid = uicontrol(ui_panel_subjects, 'Style', 'edit');
+ui_edit_subtab_subjectlabel = uicontrol(ui_panel_subjects, 'Style', 'edit');
+ui_edit_subtab_subjectnotes = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_table_subjects = uitable(ui_panel_subjects);
 ui_list_subjects = uicontrol(ui_panel_subjects, 'Style', 'listbox');
-ui_button_subjects_save_txt = uicontrol(ui_panel_subjects, 'Style', 'pushbutton');
 init_subjects()
     function init_subjects()
         GUI.setUnits(ui_panel_subjects)
@@ -1171,17 +1015,27 @@ init_subjects()
 
         set(ui_panel_subjects, 'Position', GROUPPANEL_POSITION)
         set(ui_panel_subjects, 'Title', CONSOLE_SUBJECTS_CMD)
+        
+        set(ui_edit_subtab_subjectid, 'Position', [.25 .95 .30 .03])
+        set(ui_edit_subtab_subjectid, 'HorizontalAlignment', 'left')
+        set(ui_edit_subtab_subjectid, 'FontWeight', 'bold')
+        set(ui_edit_subtab_subjectid, 'Callback', {@cb_subtab_subjectid})
+        
+        set(ui_edit_subtab_subjectlabel, 'Position', [.50 .95 .30 .03])
+        set(ui_edit_subtab_subjectlabel, 'HorizontalAlignment', 'left')
+        set(ui_edit_subtab_subjectlabel, 'FontWeight', 'bold')
+        set(ui_edit_subtab_subjectlabel, 'Callback', {@cb_subtab_subjectlabel})
+        
+        set(ui_edit_subtab_subjectnotes, 'Position', [.50 .90 .30 .03])
+        set(ui_edit_subtab_subjectnotes, 'HorizontalAlignment', 'left')
+        set(ui_edit_subtab_subjectnotes, 'FontWeight', 'bold')
+        set(ui_edit_subtab_subjectnotes, 'Callback', {@cb_subtab_subjectnotes})
 
-        set(ui_table_subjects, 'Position', [.25 .11 .73 .88])
+        set(ui_table_subjects, 'Position', [.25 .02 .73 .75])
         set(ui_table_subjects, 'ColumnFormat', {'numeric'})
         set(ui_table_subjects, 'ColumnEditable', true)  
         set(ui_table_subjects, 'CellEditCallback', {@cb_subjects_edit_table});
 
-        set(ui_button_subjects_save_txt, 'Position', [.72 .01 .26 .05])
-        set(ui_button_subjects_save_txt, 'String', SUBJECTS_SAVE_TXT_CMD)
-        set(ui_button_subjects_save_txt, 'TooltipString', SUBJECTS_SAVE_TXT_TP)
-        set(ui_button_subjects_save_txt, 'Callback', {@cb_subjects_save_txt}) 
-        
         set(ui_list_subjects, 'Position', [.03 .02 .2 .97])
         set(ui_list_subjects, 'String', '')
         set(ui_list_subjects, 'TooltipString', 'Select subject');
@@ -1251,12 +1105,10 @@ init_subjects()
             set(ui_table_subjects, 'RowName', '')
             set(ui_table_subjects, 'Data', [])
         end        
-    end      
-    function cb_subjects_save_txt(~, ~)  % (src,event)
-        eval([cohort.getSubjectClass() '.save_to_txt(cohort)']);
-    end
+    end 
     function cb_subjects_list(~, ~)  % (src,event)
         update_subjects_table()
+        update_subtab_subjectinfo()
     end
     function cb_subjects_edit_table(~, event)
         j = event.Indices(1);
@@ -1268,243 +1120,37 @@ init_subjects()
         
         datacodes = eval([cohort.getSubjectClass() '.getDataCodes()']);
         data_obj = subject.getData(datacodes{1});
-        data = data_obj.getValue(); 
+        data = data_obj.getValue();
         if isequal(datacodes{1}, 'ST')
             data(col, j) = newdata;  % because we inverse to a row for the gui
         else
             data(j, col) = newdata;
         end
-        subject.setData(datacodes{1}, data);      
+        subject.setData(datacodes{1}, data);
         
         update_grtab_table()
         update_subjects_table()
     end
-
-%% Panel 3 - Plots
-ui_panel_plots = uipanel();
-ui_axes_plots = axes();
-init_plots();
-    function init_plots()
-        GUI.setUnits(ui_panel_plots)
-        GUI.setBackgroundColor(ui_panel_plots)
-        
-        set(ui_panel_plots, 'Position', GROUPPANEL_POSITION)
-        set(ui_panel_plots, 'Title', CONSOLE_PLOTS_CMD)
-        
-        set(ui_axes_plots, 'Parent', ui_panel_plots)
-        set(ui_axes_plots, 'Position', [.02 .20 .96 .78])
+    function cb_subtab_subjectid(~, ~)  % (src,event)
+        cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
+        update_grtab_cohortname()
     end
-    function update_plots()
+    function cb_subtab_subjectlabel(~, ~)  % (src,event)
+        cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
+        update_grtab_cohortname()
     end
-
-%% Panel 4 - Brain View
-BRAINVIEW_XLABEL = 'x';
-BRAINVIEW_YLABEL = 'y';
-BRAINVIEW_ZLABEL = 'z';
-BRAINVIEW_UNITS = 'mm';
-
-BRAINVIEW_3D_CMD = PlotBrainSurf.VIEW_3D_CMD;
-BRAINVIEW_SR_CMD = PlotBrainSurf.VIEW_SR_CMD;
-BRAINVIEW_SL_CMD = PlotBrainSurf.VIEW_SL_CMD;
-BRAINVIEW_AD_CMD = PlotBrainSurf.VIEW_AD_CMD;
-BRAINVIEW_AV_CMD = PlotBrainSurf.VIEW_AV_CMD;
-BRAINVIEW_CA_CMD = PlotBrainSurf.VIEW_CA_CMD;
-BRAINVIEW_CP_CMD = PlotBrainSurf.VIEW_CP_CMD;
-
-BRAINVIEW_ZOOMIN_CMD = 'Zoom in';
-BRAINVIEW_ZOOMIN_TP = 'Zoom in';
-
-BRAINVIEW_ZOOMOUT_CMD = 'Zoom out';
-BRAINVIEW_ZOOMOUT_TP = 'Zoom out';
-
-BRAINVIEW_PAN_CMD = 'Pan';
-BRAINVIEW_PAN_TP = 'Pan';
-
-BRAINVIEW_ROTATE3D_CMD = '3D rotation';
-BRAINVIEW_ROTATE3D_TP = '3D rotation';
-
-BRAINVIEW_DATACURSOR_CMD = 'Data cursor';
-BRAINVIEW_DATACURSOR_TP = 'Data cursor';
-
-BRAINVIEW_INSERTCOLORBAR_CMD = 'Colorbar';
-BRAINVIEW_INSERTCOLORBAR_TP = 'Insert colorbar';
-
-BRAINVIEW_BRAIN_CMD = 'Brain';
-BRAINVIEW_BRAIN_TP = 'Brain surface on/off';
-
-BRAINVIEW_BR_CMD = 'Regions';
-BRAINVIEW_BR_TP = 'Brain regions on/off';
-
-BRAINVIEW_AXIS_CMD = 'Show axis';
-BRAINVIEW_AXIS_TP = 'Toggle axis on/off';
-
-BRAINVIEW_GRID_CMD = 'Show grid';
-BRAINVIEW_GRID_TP = 'Toggle grid on/off';
-
-BRAINVIEW_LABELS_CMD = 'Show labels';
-BRAINVIEW_LABELS_TP = 'Toggle labels on/off';
-
-BRAINVIEW_SYMS_CMD = 'Show symbols';
-BRAINVIEW_SYMS_TP = 'Toggle symbols on/off';
-
-BRAINVIEW_BRAIN_SETTINGS = 'Brain settings';
-BRAINVIEW_BR_SETTINGS = 'Brain region sphere settings';
-BRAINVIEW_SYM_SETTINGS = 'Brain region symbols settings';
-BRAINVIEW_LAB_SETTINGS = 'Brain region labels settings';
-
-ui_panel_brainview = uipanel();
-ui_axes_brainview = axes();
-init_brainview()
-    function init_brainview()
-        GUI.setUnits(ui_panel_brainview)
-        GUI.setBackgroundColor(ui_panel_brainview)
-
-        set(ui_panel_brainview, 'Position', GROUPPANEL_POSITION)
-        set(ui_panel_brainview, 'Title', CONSOLE_BRAINVIEW_CMD)
-
-        set(ui_axes_brainview, 'Parent', ui_panel_brainview)
-        set(ui_axes_brainview, 'Position', [.02 .20 .96 .78])
-
+    function cb_subtab_subjectnotes(~, ~)  % (src,event)
+        cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
+        update_grtab_cohortname()
     end
-    function update_brainview()
-        % brain
-        if strcmpi(get(ui_toolbar_brain, 'State'), 'on')
-            ba.brain_on()
-            
-            ui_contextmenu_brain = uicontextmenu();
-            ui_contextmenu_brain_settings = uimenu(ui_contextmenu_brain);
-            set(ui_contextmenu_brain_settings, 'Label', BRAINVIEW_BRAIN_SETTINGS)
-            set(ui_contextmenu_brain_settings, 'Callback', {@cb_brainview_brain_settings})
-            ui_contextmenu_sym_settings = uimenu(ui_contextmenu_brain);
-            set(ui_contextmenu_sym_settings, 'Label', BRAINVIEW_SYM_SETTINGS)
-            set(ui_contextmenu_sym_settings, 'Callback', {@cb_brainview_sym_settings})
-            ui_contextmenu_br_settings = uimenu(ui_contextmenu_brain);
-            set(ui_contextmenu_br_settings, 'Label', BRAINVIEW_BR_SETTINGS)
-            set(ui_contextmenu_br_settings, 'Callback', {@cb_brainview_br_settings})
-            ui_contextmenu_lab_settings = uimenu(ui_contextmenu_brain);
-            set(ui_contextmenu_lab_settings, 'Label', BRAINVIEW_LAB_SETTINGS)
-            set(ui_contextmenu_lab_settings, 'Callback', {@cb_brainview_lab_settings})
-            ba.brain('UIContextMenu', ui_contextmenu_brain)
-        else
-            ba.brain_off()
-        end
-
-        % brain regions symbols
-        if strcmpi(get(ui_toolbar_sym, 'State'), 'on')
-            ba.br_syms_on()
-            ba.br_syms()
-            
-            ui_contextmenu_sym = uicontextmenu();
-            ui_contextmenu_brain_settings = uimenu(ui_contextmenu_sym);
-            set(ui_contextmenu_brain_settings, 'Label',BRAINVIEW_BRAIN_SETTINGS)
-            set(ui_contextmenu_brain_settings, 'Callback', {@cb_brainview_brain_settings})
-            ui_contextmenu_sym_settings = uimenu(ui_contextmenu_sym);
-            set(ui_contextmenu_sym_settings, 'Label',BRAINVIEW_SYM_SETTINGS)
-            set(ui_contextmenu_sym_settings, 'Callback', {@cb_brainview_sym_settings})
-            ui_contextmenu_br_settings = uimenu(ui_contextmenu_sym);
-            set(ui_contextmenu_br_settings, 'Label',BRAINVIEW_BR_SETTINGS)
-            set(ui_contextmenu_br_settings, 'Callback', {@cb_brainview_br_settings})
-            ui_contextmenu_lab_settings = uimenu(ui_contextmenu_sym);
-            set(ui_contextmenu_lab_settings, 'Label',BRAINVIEW_LAB_SETTINGS)
-            set(ui_contextmenu_lab_settings, 'Callback', {@cb_brainview_lab_settings})
-            ba.br_syms([], 'UIContextMenu',ui_contextmenu_sym)
-        else
-            ba.br_syms_off()            
-        end
+    function update_subtab_subjectinfo()
+        value = get(ui_list_subjects, 'Value');         
+        subject = cohort.getSubjects().getValue(value);
         
-        % brain regions
-        if strcmpi(get(ui_toolbar_br, 'State'), 'on')
-            ba.br_sphs_on()
-            
-            ui_contextmenu_br = uicontextmenu();
-            ui_contextmenu_brain_settings = uimenu(ui_contextmenu_br);
-            set(ui_contextmenu_brain_settings, 'Label',BRAINVIEW_BRAIN_SETTINGS)
-            set(ui_contextmenu_brain_settings, 'Callback', {@cb_brainview_brain_settings})
-            ui_contextmenu_sym_settings = uimenu(ui_contextmenu_br);
-            set(ui_contextmenu_sym_settings, 'Label',BRAINVIEW_SYM_SETTINGS)
-            set(ui_contextmenu_sym_settings, 'Callback', {@cb_brainview_sym_settings})
-            ui_contextmenu_br_settings = uimenu(ui_contextmenu_br);
-            set(ui_contextmenu_br_settings, 'Label',BRAINVIEW_BR_SETTINGS)
-            set(ui_contextmenu_br_settings, 'Callback', {@cb_brainview_br_settings})
-            ui_contextmenu_lab_settings = uimenu(ui_contextmenu_br);
-            set(ui_contextmenu_lab_settings, 'Label',BRAINVIEW_LAB_SETTINGS)
-            set(ui_contextmenu_lab_settings, 'Callback', {@cb_brainview_lab_settings})
-            ba.br_sphs([], 'UIContextMenu',ui_contextmenu_br)            
-        else
-            ba.br_sphs_off()            
-        end
-        
-        % brain region labels
-        if strcmpi(get(ui_toolbar_label, 'State'), 'on')
-            ba.br_labs_on()
-            ba.br_labs()
-            
-            ui_contextmenu_lab = uicontextmenu();
-            ui_contextmenu_brain_settings = uimenu(ui_contextmenu_lab);
-            set(ui_contextmenu_brain_settings, 'Label',BRAINVIEW_BRAIN_SETTINGS)
-            set(ui_contextmenu_brain_settings, 'Callback', {@cb_brainview_brain_settings})
-            ui_contextmenu_sym_settings = uimenu(ui_contextmenu_lab);
-            set(ui_contextmenu_sym_settings, 'Label',BRAINVIEW_SYM_SETTINGS)
-            set(ui_contextmenu_sym_settings, 'Callback', {@cb_brainview_sym_settings})
-            ui_contextmenu_br_settings = uimenu(ui_contextmenu_lab);
-            set(ui_contextmenu_br_settings, 'Label',BRAINVIEW_BR_SETTINGS)
-            set(ui_contextmenu_br_settings, 'Callback', {@cb_brainview_br_settings})
-            ui_contextmenu_lab_settings = uimenu(ui_contextmenu_lab);
-            set(ui_contextmenu_lab_settings, 'Label',BRAINVIEW_LAB_SETTINGS)
-            set(ui_contextmenu_lab_settings, 'Callback', {@cb_brainview_lab_settings})
-            ba.br_labs([], 'UIContextMenu',ui_contextmenu_lab)            
-        else
-            ba.br_labs_off()            
-        end   
-
-        % axis
-        if strcmpi(get(ui_toolbar_axis, 'State'), 'on')
-            ba.axis_on()
-        else
-            ba.axis_off()            
-        end
-        
-        % grid
-        if strcmpi(get(ui_toolbar_grid, 'State'), 'on')
-            ba.grid_on()
-        else
-            ba.grid_off()            
-        end
+        set(ui_edit_subtab_subjectid, 'String', subject.getID())
+        set(ui_edit_subtab_subjectlabel, 'String', subject.getLabel())
+        set(ui_edit_subtab_subjectnotes, 'String', subject.getNotes())
     end
-    function cb_brainview_brain_settings(~,~)  % (src,event)
-        ba.brain_settings('FigName', [APPNAME ' - ' BRAINVIEW_BRAIN_SETTINGS])
-    end
-    function cb_brainview_sym_settings(~,~)  % (src,event)
-        
-        i = ba.get_sym_i(gco);
-        
-        if isfinite(i)
-            ba.br_syms_settings(i, 'FigName', [APPNAME ' - ' BRAINVIEW_SYM_SETTINGS ' - '])
-        else
-            ba.br_syms_settings([], 'FigName', [APPNAME ' - ' BRAINVIEW_SYM_SETTINGS ' - '])            
-        end
-    end
-    function cb_brainview_br_settings(~,~)  % (src,event)
-        
-        i = ba.get_sph_i(gco);
-        
-        if isfinite(i)
-            ba.br_sphs_settings(i, 'FigName', [APPNAME ' - ' BRAINVIEW_BR_SETTINGS ' - '])
-        else
-            ba.br_sphs_settings([], 'FigName', [APPNAME ' - ' BRAINVIEW_BR_SETTINGS ' - '])
-        end
-    end
-    function cb_brainview_lab_settings(~,~)  % (src,event)
-        
-        i = ba.get_lab_i(gco);
-        
-        if isfinite(i)
-            ba.br_labs_settings(i, 'FigName', [APPNAME ' - ' BRAINVIEW_LAB_SETTINGS ' - '])
-        else
-            ba.br_labs_settings([], 'FigName', [APPNAME ' - ' BRAINVIEW_LAB_SETTINGS ' - '])
-        end
-    end
-
 
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
@@ -1640,25 +1286,7 @@ set(f, 'Toolbar', 'figure')
 ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
 ui_toolbar_open = findall(ui_toolbar, 'Tag', 'Standard.FileOpen');
 ui_toolbar_save = findall(ui_toolbar, 'Tag', 'Standard.SaveFigure');
-ui_toolbar_zoomin = findall(ui_toolbar, 'Tag', 'Exploration.ZoomIn');
-ui_toolbar_zoomout = findall(ui_toolbar, 'Tag', 'Exploration.ZoomOut');
-ui_toolbar_pan = findall(ui_toolbar, 'Tag', 'Exploration.Pan');
-ui_toolbar_rotate = findall(ui_toolbar, 'Tag', 'Exploration.Rotate');
-ui_toolbar_datacursor = findall(ui_toolbar, 'Tag', 'Exploration.DataCursor');
-ui_toolbar_insertcolorbar = findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar');
-ui_toolbar_3D = uipushtool(ui_toolbar);
-ui_toolbar_SL = uipushtool(ui_toolbar);
-ui_toolbar_SR = uipushtool(ui_toolbar);
-ui_toolbar_AD = uipushtool(ui_toolbar);
-ui_toolbar_AV = uipushtool(ui_toolbar);
-ui_toolbar_CA = uipushtool(ui_toolbar);
-ui_toolbar_CP = uipushtool(ui_toolbar);
-ui_toolbar_brain = uitoggletool(ui_toolbar);
-ui_toolbar_axis = uitoggletool(ui_toolbar);
-ui_toolbar_grid = uitoggletool(ui_toolbar);
-ui_toolbar_sym = uitoggletool(ui_toolbar);
-ui_toolbar_br = uitoggletool(ui_toolbar);
-ui_toolbar_label = uitoggletool(ui_toolbar);
+
 init_toolbar()
       function init_toolbar()
         delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
@@ -1675,132 +1303,7 @@ init_toolbar()
 
         set(ui_toolbar_save, 'TooltipString', SAVE_TP);
         set(ui_toolbar_save, 'ClickedCallback', {@cb_save})
-
-        set(ui_toolbar_zoomin, 'TooltipString', BRAINVIEW_ZOOMIN_TP);
-        set(ui_toolbar_zoomin, 'Separator', 'off')
-        
-        set(ui_toolbar_zoomout, 'TooltipString', BRAINVIEW_ZOOMOUT_TP);
-        
-        set(ui_toolbar_pan, 'TooltipString', BRAINVIEW_PAN_TP);
-
-        set(ui_toolbar_rotate, 'TooltipString', BRAINVIEW_ROTATE3D_TP);
-
-        set(ui_toolbar_datacursor, 'TooltipString', BRAINVIEW_DATACURSOR_TP);
-
-        set(ui_toolbar_insertcolorbar, 'TooltipString', BRAINVIEW_INSERTCOLORBAR_TP);
-        set(ui_toolbar_insertcolorbar, 'Separator', 'off')
-
-        set(ui_toolbar_3D, 'TooltipString', BRAINVIEW_3D_CMD);
-        set(ui_toolbar_3D, 'CData', imread('icon_view_3d.png'));
-        set(ui_toolbar_3D, 'Separator', 'off');
-        set(ui_toolbar_3D, 'ClickedCallback', {@cb_toolbar_3D})
-        function  cb_toolbar_3D(~,~)  % (src,event)
-            ba.view(PlotBrainSurf.VIEW_3D)
-            ba.update_light()
-        end
-        
-        set(ui_toolbar_SL, 'TooltipString',BRAINVIEW_SL_CMD);
-        set(ui_toolbar_SL, 'CData',imread('icon_view_sl.png'));
-        set(ui_toolbar_SL, 'ClickedCallback',{@cb_toolbar_SL})
-        function  cb_toolbar_SL(~,~)  % (src,event)
-            ba.view(PlotBrainSurf.VIEW_SL)
-            ba.update_light()
-        end
-        
-        set(ui_toolbar_SR, 'TooltipString',BRAINVIEW_SR_CMD);
-        set(ui_toolbar_SR, 'CData',imread('icon_view_sr.png'));
-        set(ui_toolbar_SR, 'ClickedCallback',{@cb_toolbar_SR})
-        function  cb_toolbar_SR(~,~)  % (src,event)
-            ba.view(PlotBrainSurf.VIEW_SR)
-            ba.update_light()
-        end
-        
-        set(ui_toolbar_AD, 'TooltipString',BRAINVIEW_AD_CMD);
-        set(ui_toolbar_AD, 'CData',imread('icon_view_ad.png'));
-        set(ui_toolbar_AD, 'ClickedCallback',{@cb_toolbar_AD})
-        function  cb_toolbar_AD(~,~)  % (src,event)
-            ba.view(PlotBrainSurf.VIEW_AD)
-            ba.update_light()
-        end
-        
-        set(ui_toolbar_AV, 'TooltipString',BRAINVIEW_AV_CMD);
-        set(ui_toolbar_AV, 'CData',imread('icon_view_av.png'));
-        set(ui_toolbar_AV, 'ClickedCallback',{@cb_toolbar_AV})
-        function  cb_toolbar_AV(~,~)  % (src,event)
-            ba.view(PlotBrainSurf.VIEW_AV)
-            ba.update_light()
-        end
-        
-        set(ui_toolbar_CA, 'TooltipString',BRAINVIEW_CA_CMD);
-        set(ui_toolbar_CA, 'CData',imread('icon_view_ca.png'));
-        set(ui_toolbar_CA, 'ClickedCallback',{@cb_toolbar_CA})
-        function  cb_toolbar_CA(~,~)  % (src,event)
-            ba.view(PlotBrainSurf.VIEW_CA)
-            ba.update_light()
-        end
-        
-        set(ui_toolbar_CP, 'TooltipString',BRAINVIEW_CP_CMD);
-        set(ui_toolbar_CP, 'CData',imread('icon_view_cp.png'));
-        set(ui_toolbar_CP, 'ClickedCallback',{@cb_toolbar_CP})
-        function  cb_toolbar_CP(~,~)  % (src,event)
-            ba.view(PlotBrainSurf.VIEW_CP)
-            ba.update_light()
-        end
-        
-        set(ui_toolbar_brain, 'TooltipString',BRAINVIEW_BRAIN_CMD);
-        set(ui_toolbar_brain, 'State', 'on');
-        set(ui_toolbar_brain, 'CData',imread('icon_brain.png'));
-        set(ui_toolbar_brain, 'Separator', 'off');
-        set(ui_toolbar_brain, 'OnCallback',{@cb_toolbar_brain})
-        set(ui_toolbar_brain, 'OffCallback',{@cb_toolbar_brain})
-        function cb_toolbar_brain(~,~)  % (src,event)
-            update_brainview()
-        end
-        
-        set(ui_toolbar_axis, 'TooltipString',BRAINVIEW_AXIS_CMD);
-        set(ui_toolbar_axis, 'State', 'on');
-        set(ui_toolbar_axis, 'CData',imread('icon_axis.png'));
-        set(ui_toolbar_axis, 'OnCallback',{@cb_toolbar_axis})
-        set(ui_toolbar_axis, 'OffCallback',{@cb_toolbar_axis})
-        function cb_toolbar_axis(~,~)  % (src,event)
-            update_brainview()
-        end
-        
-        set(ui_toolbar_grid, 'TooltipString',BRAINVIEW_GRID_CMD);
-        set(ui_toolbar_grid, 'State', 'on');
-        set(ui_toolbar_grid, 'CData',imread('icon_grid.png'));
-        set(ui_toolbar_grid, 'OnCallback',{@cb_toolbar_grid})
-        set(ui_toolbar_grid, 'OffCallback',{@cb_toolbar_grid})
-        function cb_toolbar_grid(~,~)  % (src,event)
-            update_brainview()
-        end
-        
-        set(ui_toolbar_sym, 'TooltipString',BRAINVIEW_SYMS_CMD);
-        set(ui_toolbar_sym, 'State', 'on');
-        set(ui_toolbar_sym, 'CData',imread('icon_symbol.png'));
-        set(ui_toolbar_sym, 'OnCallback',{@cb_toolbar_sym})
-        set(ui_toolbar_sym, 'OffCallback',{@cb_toolbar_sym})
-        function cb_toolbar_sym(~,~)  % (src,event)
-            update_brainview()
-        end
-        
-        set(ui_toolbar_br, 'TooltipString',BRAINVIEW_BR_CMD);
-        set(ui_toolbar_br, 'State', 'on');
-        set(ui_toolbar_br, 'CData',imread('icon_sphere.png'));
-        set(ui_toolbar_br, 'OnCallback',{@cb_toolbar_sph})
-        set(ui_toolbar_br, 'OffCallback',{@cb_toolbar_sph})
-        function cb_toolbar_sph(~,~)  % (src,event)
-            update_brainview()
-        end
-        
-        set(ui_toolbar_label, 'TooltipString',BRAINVIEW_LABELS_CMD);
-        set(ui_toolbar_label, 'State', 'off');
-        set(ui_toolbar_label, 'CData',imread('icon_label.png'));
-        set(ui_toolbar_label, 'OnCallback',{@cb_toolbar_label})
-        set(ui_toolbar_label, 'OffCallback',{@cb_toolbar_label})
-        function cb_toolbar_label(~,~)  % (src,event)
-            update_brainview()
-        end
+       
     end
 
 
@@ -1828,28 +1331,6 @@ setup_restrictions()
         % setup group
         update_groups()
         update_group_popups()
-        
-        % setup plots
-        cla(ui_axes_plots)
-        x = -1:001:1;
-        y = sin(x);
-        plot(x, y, 'Parent', ui_axes_plots);
-        hold(ui_axes_plots, 'on')
-               
-        % setup brain view
-        cla(ui_axes_brainview)
-        ba = PlotBrainAtlas(atlas);
-        ba.set_axes(ui_axes_brainview)
-        ba.hold_on()
-
-        ba.view(PlotBrainSurf.VIEW_3D)
-        ba.br_syms()
-        ba.br_sphs()
-        ba.br_labs()
-        ba.axis_equal()
-        
-        xlabel([BRAINVIEW_XLABEL ' ' GUI.BRA_UNITS BRAINVIEW_UNITS GUI.KET_UNITS])
-        ylabel([BRAINVIEW_YLABEL ' ' GUI.BRA_UNITS BRAINVIEW_UNITS GUI.KET_UNITS])
-        zlabel([BRAINVIEW_ZLABEL ' ' GUI.BRA_UNITS BRAINVIEW_UNITS GUI.KET_UNITS])    
+         
     end
 end
