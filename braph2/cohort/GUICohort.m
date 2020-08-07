@@ -690,12 +690,13 @@ init_console()
             update_subjects()
         end
     end
-    function cb_console_groups(~,~)  % (src,event)
+    function cb_console_groups(~, ~)  % (src,event)
         update_groups()
         update_console_panel_visibility(CONSOLE_GROUPS_CMD)
     end
-    function cb_console_subjects(~,~)  % (src,event)        
+    function cb_console_subjects(~, ~)  % (src,event)        
         update_subjects()
+        update_subtab_subjectinfo()
         update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
     end
 
@@ -746,32 +747,32 @@ init_groups()
         set(ui_button_groups_remove_subs, 'Position', [.41 .11 .18 .03])
         set(ui_button_groups_remove_subs, 'String' , REMOVE_SUB_CMD)
         set(ui_button_groups_remove_subs, 'TooltipString', REMOVE_SUB_TP);
-        set(ui_button_groups_remove_subs, 'Callback', {@cb_groups_remove_sub})        
-           
-        set(ui_button_create_group_from_subject, 'Position', [.60 .11 .18 .03])
-        set(ui_button_create_group_from_subject, 'String', CREATE_GRP_FROM_SUBS_CMD)
-        set(ui_button_create_group_from_subject, 'TooltipString', CREATE_GRP_FROM_SUBS_TP);
-        set(ui_button_create_group_from_subject, 'Callback', {@cb_groups_create_group_from_subjects})     
-               
-        set(ui_button_groups_moveup_subs, 'Position', [.80 .11 .18 .03])
+        set(ui_button_groups_remove_subs, 'Callback', {@cb_groups_remove_sub})       
+
+        set(ui_button_groups_moveup_subs, 'Position', [.60 .11 .18 .03])
         set(ui_button_groups_moveup_subs, 'String', MOVEUP_SUB_CMD)
         set(ui_button_groups_moveup_subs, 'TooltipString', MOVEUP_SUB_TP);
         set(ui_button_groups_moveup_subs, 'Callback', {@cb_groups_moveup_sub})
         
-        set(ui_button_groups_movedown_subs, 'Position', [.80 .08 .18 .03])
+        set(ui_button_groups_movedown_subs, 'Position', [.60 .08 .18 .03])
         set(ui_button_groups_movedown_subs, 'String', MOVEDOWN_SUB_CMD)
         set(ui_button_groups_movedown_subs, 'TooltipString', MOVEDOWN_SUB_TP);
         set(ui_button_groups_movedown_subs, 'Callback', {@cb_groups_movedown_sub})
         
-        set(ui_button_groups_move2top_subs, 'Position', [.80 .05 .18 .03])
+        set(ui_button_groups_move2top_subs, 'Position', [.60 .05 .18 .03])
         set(ui_button_groups_move2top_subs, 'String', MOVE2TOP_SUB_CMD)
         set(ui_button_groups_move2top_subs, 'TooltipString', MOVE2TOP_SUB_TP);
         set(ui_button_groups_move2top_subs, 'Callback', {@cb_groups_move2top_sub})
         
-        set(ui_button_groups_move2bottom_subs, 'Position', [.80 .02 .18 .03])
+        set(ui_button_groups_move2bottom_subs, 'Position', [.60 .02 .18 .03])
         set(ui_button_groups_move2bottom_subs, 'String', MOVE2BOTTOM_SUB_CMD)
         set(ui_button_groups_move2bottom_subs, 'TooltipString', MOVE2BOTTOM_SUB_TP);
         set(ui_button_groups_move2bottom_subs, 'Callback', {@cb_groups_move2bottom_sub})
+        
+        set(ui_button_create_group_from_subject, 'Position', [.80 .11 .18 .03])
+        set(ui_button_create_group_from_subject, 'String', CREATE_GRP_FROM_SUBS_CMD)
+        set(ui_button_create_group_from_subject, 'TooltipString', CREATE_GRP_FROM_SUBS_TP);
+        set(ui_button_create_group_from_subject, 'Callback', {@cb_groups_create_group_from_subjects})   
 
     end
     function update_groups(varargin)         
@@ -841,8 +842,7 @@ init_groups()
             data = cell(0, 0);
         end       
        
-        set(ui_table_groups, 'Data', data)
-%         update_popup_color()
+        set(ui_table_groups, 'Data', data)       
         update_group_popups()
     end
     function update_group_popups()
@@ -873,7 +873,7 @@ init_groups()
             set(ui_popup_grtab_intersect2, 'Value', 1)
         end
     end
-    function cb_groups_edit_sub(~,event)  % (src,event)
+    function cb_groups_edit_sub(~, event)  % (src,event)
         i = event.Indices(1);
         col = event.Indices(2);
         newdata = event.NewData;
@@ -918,7 +918,7 @@ init_groups()
         update_grtab_table()
         update_groups()
     end
-    function cb_groups_selectall_sub(~,~)  % (src,event)
+    function cb_groups_selectall_sub(~, ~)  % (src,event)
         if ~isempty(selected_group)
             group = cohort.getGroups().getValue(selected_group);
             selected_subjects = (1:1:group.subjectnumber());
@@ -928,11 +928,11 @@ init_groups()
         end
         update_groups()        
     end
-    function cb_groups_clearselection_sub(~,~)  % (src,event)
+    function cb_groups_clearselection_sub(~, ~)  % (src,event)
         selected_subjects = [];
         update_groups()        
     end
-    function cb_groups_add_sub(~,~)  % (src,event)   
+    function cb_groups_add_sub(~, ~)  % (src,event)   
         if ~isempty(selected_group)
             group = cohort.getGroups().getValue(selected_group);
             sub = Subject.getSubject(cohort.getSubjectClass(), ['New Subject' num2str(group.subjectnumber() + 1)], 'Label', 'Notes', cohort.getBrainAtlases());
@@ -946,7 +946,7 @@ init_groups()
         update_grtab_table()
         update_groups()
     end
-    function cb_groups_remove_sub(~,~)  % (src,event)
+    function cb_groups_remove_sub(~, ~)  % (src,event)
         if ~isempty(selected_group)
             % remove from cohort
             group = cohort.getGroups().getValue(selected_group);
@@ -966,23 +966,23 @@ init_groups()
         update_grtab_table()
         update_groups()
     end
-    function cb_groups_moveup_sub(~,~)  % (src,event)
+    function cb_groups_moveup_sub(~, ~)  % (src,event)
         selected_subjects = cohort.move_up(selected_subjects);
         
         update_grtab_table()
         update_groups()
     end
-    function cb_groups_movedown_sub(~,~)  % (src,event)
+    function cb_groups_movedown_sub(~, ~)  % (src,event)
         selected_subjects = cohort.move_down(selected_subjects);
         update_grtab_table()
         update_groups()
     end
-    function cb_groups_move2top_sub(~,~)  % (src,event)
+    function cb_groups_move2top_sub(~, ~)  % (src,event)
         selected_subjects = cohort.move_to_top(selected_subjects);
         update_grtab_table()
         update_groups()
     end
-    function cb_groups_move2bottom_sub(~,~)  % (src,event)
+    function cb_groups_move2bottom_sub(~, ~)  % (src,event)
         selected_subjects = cohort.move_to_bottom(selected_subjects);
         update_grtab_table()
         update_groups()
@@ -990,23 +990,29 @@ init_groups()
     function cb_groups_create_group_from_subjects(~, ~)
         all_subjects = cohort.getSubjects().getValues();
         subjects = all_subjects(selected_subjects); 
+        n = cohort.getGroups().length()+1;
         ids_string = '';
                 for j = 1:1:length(subjects)
                     sub = subjects{j};
                     ids_string = [ids_string ' ' sub.getID()]; %#ok<AGROW>
                 end
-        group = Group(cohort.getSubjectClass(), ['Group created with: ' ids_string], 'Label', 'Notes', subjects);
+        group = Group(cohort.getSubjectClass(), ['Group created with: ' ids_string ' ' num2str(n)], 'Label', 'Notes', subjects);
         cohort.getGroups().add(group.getID(), group);
         update_grtab_table()
+        update_groups()
     end
 
 %% Panel 2 - Subjects
-
+tbl = [];
 ui_panel_subjects = uipanel();
+ui_tablepanel_subjects = uipanel(ui_panel_subjects);
+ui_label_subtab_id_text = uicontrol(ui_panel_subjects, 'Style', 'text');
+ui_label_subtab_label_text = uicontrol(ui_panel_subjects, 'Style', 'text');
+ui_label_subtab_notes_text = uicontrol(ui_panel_subjects, 'Style', 'text');
 ui_edit_subtab_subjectid = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_edit_subtab_subjectlabel = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_edit_subtab_subjectnotes = uicontrol(ui_panel_subjects, 'Style', 'edit');
-ui_table_subjects = uitable(ui_panel_subjects);
+% ui_table_subjects = uitable(ui_panel_subjects);
 ui_list_subjects = uicontrol(ui_panel_subjects, 'Style', 'listbox');
 init_subjects()
     function init_subjects()
@@ -1016,25 +1022,47 @@ init_subjects()
         set(ui_panel_subjects, 'Position', GROUPPANEL_POSITION)
         set(ui_panel_subjects, 'Title', CONSOLE_SUBJECTS_CMD)
         
-        set(ui_edit_subtab_subjectid, 'Position', [.25 .95 .30 .03])
+        set(ui_tablepanel_subjects, 'Parent', ui_panel_subjects)
+        set(ui_tablepanel_subjects, 'Position', [.25 .02 .74 .85])
+        
+        set(ui_label_subtab_id_text, 'Position', [.25 .96 .36 .04])
+        set(ui_label_subtab_id_text, 'HorizontalAlignment', 'center')
+        set(ui_label_subtab_id_text, 'FontWeight', 'bold')
+        set(ui_label_subtab_id_text, 'FontSize', 12)
+        set(ui_label_subtab_id_text, 'ForegroundColor', 'black')
+        set(ui_label_subtab_id_text, 'String', 'ID')
+        set(ui_label_subtab_id_text, 'enable', 'off')
+        
+        set(ui_edit_subtab_subjectid, 'Position', [.69 .96 .30 .04])
         set(ui_edit_subtab_subjectid, 'HorizontalAlignment', 'left')
         set(ui_edit_subtab_subjectid, 'FontWeight', 'bold')
         set(ui_edit_subtab_subjectid, 'Callback', {@cb_subtab_subjectid})
         
-        set(ui_edit_subtab_subjectlabel, 'Position', [.50 .95 .30 .03])
+        set(ui_label_subtab_label_text, 'Position', [.25 .92 .36 .04])
+        set(ui_label_subtab_label_text, 'HorizontalAlignment', 'center')
+        set(ui_label_subtab_label_text, 'FontWeight', 'bold')
+        set(ui_label_subtab_label_text, 'FontSize', 12)
+        set(ui_label_subtab_label_text, 'ForegroundColor', 'black')
+        set(ui_label_subtab_label_text, 'String', 'LABEL')
+        set(ui_label_subtab_label_text, 'enable', 'off')
+        
+        set(ui_edit_subtab_subjectlabel, 'Position', [.69 .92 .30 .04])
         set(ui_edit_subtab_subjectlabel, 'HorizontalAlignment', 'left')
         set(ui_edit_subtab_subjectlabel, 'FontWeight', 'bold')
         set(ui_edit_subtab_subjectlabel, 'Callback', {@cb_subtab_subjectlabel})
         
-        set(ui_edit_subtab_subjectnotes, 'Position', [.50 .90 .30 .03])
+        set(ui_label_subtab_notes_text, 'Position', [.25 .88 .36 .04])
+        set(ui_label_subtab_notes_text, 'HorizontalAlignment', 'center')
+        set(ui_label_subtab_notes_text, 'FontWeight', 'bold')
+        set(ui_label_subtab_notes_text, 'FontSize', 12)
+        set(ui_label_subtab_notes_text, 'ForegroundColor', 'black')
+        set(ui_label_subtab_notes_text, 'String', 'NOTES')
+        set(ui_label_subtab_notes_text, 'enable', 'off')
+        
+        set(ui_edit_subtab_subjectnotes, 'Position', [.69 .88 .30 .04])
         set(ui_edit_subtab_subjectnotes, 'HorizontalAlignment', 'left')
         set(ui_edit_subtab_subjectnotes, 'FontWeight', 'bold')
         set(ui_edit_subtab_subjectnotes, 'Callback', {@cb_subtab_subjectnotes})
-
-        set(ui_table_subjects, 'Position', [.25 .02 .73 .75])
-        set(ui_table_subjects, 'ColumnFormat', {'numeric'})
-        set(ui_table_subjects, 'ColumnEditable', true)  
-        set(ui_table_subjects, 'CellEditCallback', {@cb_subjects_edit_table});
 
         set(ui_list_subjects, 'Position', [.03 .02 .2 .97])
         set(ui_list_subjects, 'String', '')
@@ -1072,65 +1100,39 @@ init_subjects()
     function update_subjects_table()
         value = get(ui_list_subjects, 'Value');         
         subject = cohort.getSubjects().getValue(value);
-        
-        % region name
-        atlases = cohort.getBrainAtlases();
-        atlas = atlases{1};
-        atlas_br = atlas.getBrainRegions();
-        ColumnName = cell(1, atlas_br.length());
-        for n = 1:1:atlas_br.length()
-            ColumnName{n} = atlas_br.getValue(n).getID();
-        end
-        set(ui_table_subjects, 'ColumnName', ColumnName)
-        
+        tbl = subject.getDataPanel(subject);
         if ~isempty(subject)
-            data_codes = subject.getDataCodes();  % type, age
-            data_obj = subject.getData(data_codes{1}); 
-            data = data_obj.getValue();
-            
-            % subject data table
-            RowName = cell(1, size(data, 1));
-            for j = 1:1:length(RowName)
-                RowName{j} = j;
-            end
-            
-            set(ui_table_subjects, 'RowName', RowName)
-            if isequal(data_codes{1}, 'ST')
-                set(ui_table_subjects, 'Data', data')
-            else
-                set(ui_table_subjects, 'Data', data)
-            end
-            
-        else
-            set(ui_table_subjects, 'RowName', '')
-            set(ui_table_subjects, 'Data', [])
-        end        
+            tbl.panel_on();
+            tbl.getDataPanel(ui_tablepanel_subjects);
+        else 
+            tbl.panel_off();
+        end             
     end 
     function cb_subjects_list(~, ~)  % (src,event)
         update_subjects_table()
         update_subtab_subjectinfo()
     end
-    function cb_subjects_edit_table(~, event)
-        j = event.Indices(1);
-        col = event.Indices(2);
-        newdata = event.NewData;
-        
-        value = get(ui_list_subjects, 'Value');
-        subject = cohort.getSubjects().getValue(value);
-        
-        datacodes = eval([cohort.getSubjectClass() '.getDataCodes()']);
-        data_obj = subject.getData(datacodes{1});
-        data = data_obj.getValue();
-        if isequal(datacodes{1}, 'ST')
-            data(col, j) = newdata;  % because we inverse to a row for the gui
-        else
-            data(j, col) = newdata;
-        end
-        subject.setData(datacodes{1}, data);
-        
-        update_grtab_table()
-        update_subjects_table()
-    end
+%     function cb_subjects_edit_table(~, event)
+%         j = event.Indices(1);
+%         col = event.Indices(2);
+%         newdata = event.NewData;
+%         
+%         value = get(ui_list_subjects, 'Value');
+%         subject = cohort.getSubjects().getValue(value);
+%         
+%         datacodes = eval([cohort.getSubjectClass() '.getDataCodes()']);
+%         data_obj = subject.getData(datacodes{1});
+%         data = data_obj.getValue();
+%         if isequal(datacodes{1}, 'ST')
+%             data(col, j) = newdata;  % because we inverse to a row for the gui
+%         else
+%             data(j, col) = newdata;
+%         end
+%         subject.setData(datacodes{1}, data);
+%         
+%         update_grtab_table()
+%         update_subjects_table()
+%     end
     function cb_subtab_subjectid(~, ~)  % (src,event)
         cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
         update_grtab_cohortname()
@@ -1330,7 +1332,7 @@ setup_restrictions()
         
         % setup group
         update_groups()
-        update_group_popups()
-         
+        update_group_popups()     
+
     end
 end

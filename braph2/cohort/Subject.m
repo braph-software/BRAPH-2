@@ -254,8 +254,8 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
     end
     methods  % Plot functions
-        function plt = getDataPanel(sub)
-            % plots
+        function plotPanel = getDataPanel(sub, varargin)
+            plotPanel = DataPanel(sub, varargin{:});
         end
     end
     methods (Static)  % Inspection functions
