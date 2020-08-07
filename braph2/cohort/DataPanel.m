@@ -22,10 +22,11 @@ classdef DataPanel < handle & matlab.mixin.Copyable
         end
     end
     methods
-        function h = getDataPanel(dt_pnl, varargin)           
-            parent = varargin{1}; 
+        function h = getDataPanel(dt_pnl, varargin)          
+             
             data_codes = dt_pnl.subject.getDataCodes();
             data_list = dt_pnl.subject.getDataList();
+            sub_obj = dt_pnl.subject;
             
             atlases = dt_pnl.subject.getBrainAtlases();
             atlas = atlases{1};  
@@ -36,11 +37,13 @@ classdef DataPanel < handle & matlab.mixin.Copyable
             data = data_obj.getValue();
             
             if isempty(dt_pnl.h_panel) || ~ishandle(dt_pnl.h_panel)
+                parent = varargin{1};
                 dt_pnl.h_panel = uitable('Parent', parent);
                 set(dt_pnl.h_panel, 'Units', 'normalized')
                 set(dt_pnl.h_panel, 'Position', [0 0 1 1])
                 set(dt_pnl.h_panel, 'ColumnFormat', {'numeric'})
                 set(dt_pnl.h_panel, 'ColumnEditable', true)
+                set(dt_pnl.h_panel, 'CellEditCallback', {@cb_subtab_edit_table, sub_obj})
                 
                 % columns and rows names
                 ColumnName = cell(1, atlas_br.length());
@@ -59,10 +62,21 @@ classdef DataPanel < handle & matlab.mixin.Copyable
                 
                 for j = 1:1:length(RowName)
                     RowName{j} = j;
+                end                
+                set(dt_pnl.h_panel, 'RowName', RowName)                          
+            end
+            
+            function cb_subtab_edit_table(~, event, subject)                
+                m = event.Indices(1);
+                col = event.Indices(2);
+                newdata = event.NewData;
+                if isequal(data_list(data_codes{1}), 'DataStructural')
+                    data(col, m) = newdata;
+                else
+                    data(m, col) = newdata;
                 end
-                
-                set(dt_pnl.h_panel, 'RowName', RowName)               
-                
+                subject.setData(data_codes{1}, data);
+                getDataPanel(dt_pnl)
             end
            
              % output if needed
