@@ -124,6 +124,7 @@ classdef Data < handle & matlab.mixin.Copyable
         % Must be used by the subclasses. 
         
         setValue(d, value)  % set the value of the data
+        getDataPanel(d, parent, varargin)
     end
     methods (Static)  % Inspection methods
         function data_list = getList()
@@ -205,4 +206,9 @@ classdef Data < handle & matlab.mixin.Copyable
             d_copy = copyElement@matlab.mixin.Copyable(d);
         end
     end    
+%     methods 
+%         function dtn_panel = getDataPanel(d, parent, index)
+%             
+%         end
+%     end
 end

@@ -1003,7 +1003,6 @@ init_groups()
     end
 
 %% Panel 2 - Subjects
-tbl = [];
 ui_panel_subjects = uipanel();
 ui_tablepanel_subjects = uipanel(ui_panel_subjects);
 ui_label_subtab_id_text = uicontrol(ui_panel_subjects, 'Style', 'text');
@@ -1012,7 +1011,6 @@ ui_label_subtab_notes_text = uicontrol(ui_panel_subjects, 'Style', 'text');
 ui_edit_subtab_subjectid = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_edit_subtab_subjectlabel = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_edit_subtab_subjectnotes = uicontrol(ui_panel_subjects, 'Style', 'edit');
-% ui_table_subjects = uitable(ui_panel_subjects);
 ui_list_subjects = uicontrol(ui_panel_subjects, 'Style', 'listbox');
 init_subjects()
     function init_subjects()
@@ -1026,40 +1024,40 @@ init_subjects()
         set(ui_tablepanel_subjects, 'Position', [.25 .02 .74 .85])
         
         set(ui_label_subtab_id_text, 'Position', [.25 .96 .36 .04])
-        set(ui_label_subtab_id_text, 'HorizontalAlignment', 'center')
+        set(ui_label_subtab_id_text, 'HorizontalAlignment', 'left')
         set(ui_label_subtab_id_text, 'FontWeight', 'bold')
         set(ui_label_subtab_id_text, 'FontSize', 12)
         set(ui_label_subtab_id_text, 'ForegroundColor', 'black')
         set(ui_label_subtab_id_text, 'String', 'ID')
         set(ui_label_subtab_id_text, 'enable', 'off')
         
-        set(ui_edit_subtab_subjectid, 'Position', [.69 .96 .30 .04])
+        set(ui_edit_subtab_subjectid, 'Position', [.50 .96 0.49 .04])
         set(ui_edit_subtab_subjectid, 'HorizontalAlignment', 'left')
         set(ui_edit_subtab_subjectid, 'FontWeight', 'bold')
         set(ui_edit_subtab_subjectid, 'Callback', {@cb_subtab_subjectid})
         
-        set(ui_label_subtab_label_text, 'Position', [.25 .92 .36 .04])
-        set(ui_label_subtab_label_text, 'HorizontalAlignment', 'center')
+        set(ui_label_subtab_label_text, 'Position', [.25 .92 0.49 .04])
+        set(ui_label_subtab_label_text, 'HorizontalAlignment', 'left')
         set(ui_label_subtab_label_text, 'FontWeight', 'bold')
         set(ui_label_subtab_label_text, 'FontSize', 12)
         set(ui_label_subtab_label_text, 'ForegroundColor', 'black')
         set(ui_label_subtab_label_text, 'String', 'LABEL')
         set(ui_label_subtab_label_text, 'enable', 'off')
         
-        set(ui_edit_subtab_subjectlabel, 'Position', [.69 .92 .30 .04])
+        set(ui_edit_subtab_subjectlabel, 'Position', [.5 .92 0.49 .04])
         set(ui_edit_subtab_subjectlabel, 'HorizontalAlignment', 'left')
         set(ui_edit_subtab_subjectlabel, 'FontWeight', 'bold')
         set(ui_edit_subtab_subjectlabel, 'Callback', {@cb_subtab_subjectlabel})
         
         set(ui_label_subtab_notes_text, 'Position', [.25 .88 .36 .04])
-        set(ui_label_subtab_notes_text, 'HorizontalAlignment', 'center')
+        set(ui_label_subtab_notes_text, 'HorizontalAlignment', 'left')
         set(ui_label_subtab_notes_text, 'FontWeight', 'bold')
         set(ui_label_subtab_notes_text, 'FontSize', 12)
         set(ui_label_subtab_notes_text, 'ForegroundColor', 'black')
         set(ui_label_subtab_notes_text, 'String', 'NOTES')
         set(ui_label_subtab_notes_text, 'enable', 'off')
         
-        set(ui_edit_subtab_subjectnotes, 'Position', [.69 .88 .30 .04])
+        set(ui_edit_subtab_subjectnotes, 'Position', [.5 .88 .49 .04])
         set(ui_edit_subtab_subjectnotes, 'HorizontalAlignment', 'left')
         set(ui_edit_subtab_subjectnotes, 'FontWeight', 'bold')
         set(ui_edit_subtab_subjectnotes, 'Callback', {@cb_subtab_subjectnotes})
@@ -1099,40 +1097,17 @@ init_subjects()
     end
     function update_subjects_table()
         value = get(ui_list_subjects, 'Value');         
-        subject = cohort.getSubjects().getValue(value);
-        tbl = subject.getDataPanel(subject);
+        subject = cohort.getSubjects().getValue(value);        
         if ~isempty(subject)
-            tbl.panel_on();
-            tbl.getDataPanel(ui_tablepanel_subjects);
+            subject.getDataPanel(ui_tablepanel_subjects);
         else 
-            tbl.panel_off();
+            
         end             
     end 
     function cb_subjects_list(~, ~)  % (src,event)
         update_subjects_table()
         update_subtab_subjectinfo()
     end
-%     function cb_subjects_edit_table(~, event)
-%         j = event.Indices(1);
-%         col = event.Indices(2);
-%         newdata = event.NewData;
-%         
-%         value = get(ui_list_subjects, 'Value');
-%         subject = cohort.getSubjects().getValue(value);
-%         
-%         datacodes = eval([cohort.getSubjectClass() '.getDataCodes()']);
-%         data_obj = subject.getData(datacodes{1});
-%         data = data_obj.getValue();
-%         if isequal(datacodes{1}, 'ST')
-%             data(col, j) = newdata;  % because we inverse to a row for the gui
-%         else
-%             data(j, col) = newdata;
-%         end
-%         subject.setData(datacodes{1}, data);
-%         
-%         update_grtab_table()
-%         update_subjects_table()
-%     end
     function cb_subtab_subjectid(~, ~)  % (src,event)
         cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
         update_grtab_cohortname()

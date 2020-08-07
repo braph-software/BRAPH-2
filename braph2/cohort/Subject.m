@@ -33,6 +33,9 @@ classdef Subject < handle & matlab.mixin.Copyable
     %   setBrainAtlases         - sets the brain atlases 
     %   getData                 - returns the data from DATADICT
     %
+    % Subject plot methods
+    %   getDataPanel            - returns a uicontrol handle
+    %
     % Subject inspection methods (Static):
     %   getList                 - returns a list with subclasses of Subject
     %   getClass                - returns the class of the subclass
@@ -45,6 +48,9 @@ classdef Subject < handle & matlab.mixin.Copyable
     %   getDataClasses          - returns the class of the type of all data of the subclass
     %   getDataClass            - returns the class of the type of a data of the subclass
     %   getSubject              - returns a new instantiation of a subclass
+    %
+    % Subject GUI methods (Static):
+    %   getMenuAtlasPanel       - returns a GUIBrainAtlas uimenu handle
     %
     % Subject load and save methods (Abstract, Static):
     %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
@@ -62,6 +68,7 @@ classdef Subject < handle & matlab.mixin.Copyable
         notes  % subject notes
         atlases % cell array with brain atlases
         datadict  % dictionary with subject data
+        h_panel
     end
     methods (Access=protected)  % Constructor
         function sub = Subject(id, label, notes, atlases, varargin)
@@ -254,9 +261,56 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
     end
     methods  % Plot functions
-        function plotPanel = getDataPanel(sub, varargin)
-            plotPanel = DataPanel(sub, varargin{:});
-        end
+        function h = getDataPanel(sub, varargin)
+            % GETDATAPANEL returns a panel handle with data ui content
+            %
+            % H = GETDATAPANEL(SUB, PARENT) creates a uipanel handle and
+            % sets it to PARENT, then it creates uicontrols for each data
+            % type the datadict has. It populates the controls dynamically
+            % with the corresponding data.
+            %
+            % See also getMenuAtlasPanel.
+            
+            data_codes = sub.getDataCodes();
+            data_list = sub.getDataList(); 
+            atlas = sub.atlases{1};
+            
+            parent = varargin{1};
+            sub.h_panel = uipanel('Parent', parent);
+            set(sub.h_panel, 'Units', 'normalized')
+            set(sub.h_panel, 'Position', [0 0 1 1])          
+
+            % create data tables
+            for i = 1:1:length(data_list)
+                if isequal(data_list(data_codes{i}), 'DataScalar')                    
+                    height = 0.04;
+                    width = 0.11;
+                    y = 1 - height;
+                else
+                    height = 0.9;
+                    if isequal(data_list(data_codes{i}), 'DataStructural')
+                        width = 0.265;
+                    else
+                        width = 0.98;
+                    end                    
+                    y = 1 - (0.1 + i*height);
+                end 
+                inner_panel = uipanel('Parent', sub.h_panel);                
+                set(inner_panel, 'Position', [0.01 y width height])
+                inner_obj = sub.getData(data_codes{i});
+                
+                % rownames
+                brs = atlas.getBrainRegions().getValues();
+                for j = 1:1:length(brs)
+                    br = brs{j};
+                    rownames{j} = br.getID(); %#ok<AGROW>
+                end
+                tbl = inner_obj.getDataPanel(inner_panel, 'Title', data_codes{i}, 'RowNames', rownames);                
+            end
+             if nargout > 0
+                h = sub.h_panel;
+            end   
+        end        
     end
     methods (Static)  % Inspection functions
         function subject_list = getList()
@@ -442,6 +496,18 @@ classdef Subject < handle & matlab.mixin.Copyable
                 d = sub.getData(data_code);
                 sub_copy.datadict(data_code) = d.copy();
             end
+        end
+    end
+    methods (Static)  % GUI functions
+        function getMenuAtlasPanel(subject_class, atlas, parent, varargin) %#ok<INUSD>
+            % GETMENUATLASPANEL returns the subject class panel handle
+            %
+            % GETMENUATLASPANEL(SUBJECT_CLASS, ATLAS, PARENT, PROPERTY, VALUE)
+            % returns the SUBJECT_CLASS GUIBrainAtlas Cohort uimenu handle.
+            %
+            % See also getDataPanel.
+            
+            eval([subject_class '(atlas, parent, varargin{:})'])           
         end
     end
     methods (Abstract, Static)  % Save/load functions

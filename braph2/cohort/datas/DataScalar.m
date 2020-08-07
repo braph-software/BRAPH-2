@@ -21,6 +21,9 @@ classdef DataScalar < Data
     %   getAvailableSettings    - returns the available settings
     %
     % See also Data, DataFunctional, DataConnectivity, DataStructural.
+    properties
+        h_panel
+    end
     methods
         function d = DataScalar(atlas, value, varargin)
             % DATASCALAR(ATLAS, VALUE) creates DataScalar object and calls
@@ -51,6 +54,21 @@ classdef DataScalar < Data
                 'The value of DataScalar must be a scalar.')
 
             d.value = value;
+        end
+        function h = getDataPanel(d, parent, varargin)
+            title = get_from_varargin('Age', 'Title', varargin{:});
+            
+            
+            value_holder = d.value;
+            d.h_panel = uicontrol('Parent', parent);
+            set(d.h_panel, 'Style', 'Text')
+            set(d.h_panel, 'Units', 'normalized')
+            set(d.h_panel, 'Position', [0.001 0.001 1 1])
+            set(d.h_panel, 'String', [title ': ' num2str(value_holder)])
+            
+             if nargout > 0
+                h = d.h_panel;
+            end   
         end
     end
     methods (Static)

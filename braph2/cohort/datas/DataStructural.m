@@ -21,7 +21,9 @@ classdef DataStructural < Data
     %   getAvailableSettings    - returns the available settings
     %
     % See also Data, DataFunctional, DataScalar, DataConnectivity.
-    
+    properties
+        h_panel
+    end
     methods
         function d = DataStructural(atlas, value, varargin)
             % DATASTRUCTURAL(ATLAS, VALUE) creates DataStructurral object
@@ -57,6 +59,28 @@ classdef DataStructural < Data
                 ])
 
             d.value = value;
+        end
+        function h = getDataPanel(d, parent, varargin)
+                value_holder = d.value;
+                d.h_panel = uitable('Parent', parent);
+                RowName = get_from_varargin({}, 'RowNames', varargin{:});
+                set(d.h_panel, 'Units', 'normalized')
+                set(d.h_panel, 'Position', [0 0 1 1])
+                set(d.h_panel, 'ColumnFormat', {'numeric'})
+                set(d.h_panel, 'ColumnEditable', true)
+                set(d.h_panel, 'RowName', RowName)
+                set(d.h_panel, 'Data', value_holder)
+                set(d.h_panel, 'CellEditCallback', {@cb_data_table})
+
+            function cb_data_table(~, event)
+                m = event.Indices(1);
+                col = event.Indices(2);
+                newdata = event.NewData;
+                d.value(m, col) = newdata;
+            end
+             if nargout > 0
+                h = d.h_panel;
+            end   
         end
     end
     methods (Static)

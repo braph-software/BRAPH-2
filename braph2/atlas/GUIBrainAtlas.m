@@ -868,7 +868,6 @@ ui_menu_edit_move2bottom = uimenu(ui_menu_edit);
 ui_menu_brainview = uimenu(f, 'Label', MENU_BRAINVIEW);
 ui_menu_brainview_figure = uimenu(ui_menu_brainview);
 ui_menu_cohorts = uimenu(f, 'Label', MENU_COHORTS);
-ui_menu_cohorts_cohort = uimenu(ui_menu_cohorts);
 % % ui_menu_cohorts_fmricohort = uimenu(ui_menu_cohorts);
 % % ui_menu_cohorts_eegcohort = uimenu(ui_menu_cohorts);
 % % ui_menu_cohorts_petcohort = uimenu(ui_menu_cohorts);
@@ -950,17 +949,11 @@ init_menu()
         set(ui_menu_brainview_figure, 'Accelerator', FIGURE_SC)
         set(ui_menu_brainview_figure, 'Callback', {@cb_menu_figure})
         
-        set(ui_menu_cohorts_cohort, 'Label', COHORT_CMD)
-        set(ui_menu_cohorts_cohort, 'Callback', {@cb_menu_cohort})
-        %
-        %         set(ui_menu_cohorts_fmricohort, 'Label', fMRICOHORT_CMD)
-        %         set(ui_menu_cohorts_fmricohort, 'Callback', {@cb_menu_fmricohort})
-        %
-        %         set(ui_menu_cohorts_eegcohort, 'Label', EEGCOHORT_CMD)
-        %         set(ui_menu_cohorts_eegcohort, 'Callback', {@cb_menu_eegcohort})
-        %
-        %         set(ui_menu_cohorts_petcohort, 'Label', PETCOHORT_CMD)
-        %         set(ui_menu_cohorts_petcohort, 'Callback', {@cb_menu_petcohort})
+        subjects = Subject.getList();
+        for i=1:1:length(subjects)
+            sub = subjects{i};
+            eval([sub '.getMenuAtlasPanel(atlas.copy(), ui_menu_cohorts)']);            
+        end
     end
 [ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME); %#ok<ASGLU>
     function cb_menu_figure(~, ~)  % (src, event)
