@@ -33,8 +33,8 @@ CONSOLE_POSITION = [CONSOLE_X0 CONSOLE_Y0 CONSOLE_WIDTH CONSOLE_HEIGHT];
 GROUPPANEL_X0 = LEFTCOLUMN_WIDTH + (2 * MARGIN_X);
 GROUPPANEL_Y0 = FILENAME_HEIGHT + MARGIN_Y; % 1 - CONSOLE_Y0 + CONSOLE_HEIGHT; 
 GROUPPANEL_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
-GROUPPANEL_HEIGHT = 1 - CONSOLE_HEIGHT - FILENAME_HEIGHT - 3*MARGIN_Y;  % must be 9 1 - FILENAME_HEIGHT - (2 * MARGIN_Y)
-GROUPPANEL_POSITION = [GROUPPANEL_X0 GROUPPANEL_Y0 GROUPPANEL_WIDTH GROUPPANEL_HEIGHT];
+GROUPPANEL_HEIGHT = 1 - FILENAME_HEIGHT - 3*MARGIN_Y;  % must be 9 1 - FILENAME_HEIGHT - (2 * MARGIN_Y)
+GROUPPANEL_POSITION = [GROUPPANEL_X0 GROUPPANEL_Y0 GROUPPANEL_WIDTH .9];
 
 % Commands
 OPEN_CMD = GUI.OPEN_CMD; 
@@ -112,19 +112,24 @@ MOVE2BOTTOM_SUB_CMD = 'Move to bottom';
 MOVE2BOTTOM_SUB_TP = 'Move selected subjects to bottom of table';
 
 %% Application Data
+atlases = [];
 if exist('tmp', 'var') && isa(tmp, 'Cohort')
     cohort = tmp;
-elseif exist('tmp', 'var') && isa(tmp,'BrainAtlas')  && exist('sub_class', 'var')  % case with atlas  
+elseif exist('tmp', 'var') && isa(tmp, 'BrainAtlas')  && exist('sub_class', 'var') % case with atlas  
     atlas = tmp;
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlas, {});    
+elseif exist('tmp', 'var') && iscell(tmp) && all(cellfun(@(x) isa(x, 'BrainAtlas'), calculated_value))
+    atlases = tmp;
+    cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlases, {});
 else % string
     assert(ismember(tmp, Subject.getList()));
-    atlas = BrainAtlas('Empty BA', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
+    atlas = BrainAtlas('Empty BA', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});    
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', tmp, atlas, {});
 end
 
 selected_group = [];
 selected_subjects = [];
+selected_atlases = [];
 
 % Callbacks to manage application data
     function cb_open(~, ~)  % (src, event)
@@ -243,79 +248,6 @@ init_filename()
         set(ui_text_filename, 'String', filename)
     end
 
-%% Panel Atlas
-ATLAS_NAME = 'Brain Atlas';
-
-ATLAS_BUTTON_SELECT_CMD = 'Select Atlas';
-ATLAS_BUTTON_SELECT_TP = 'Select brain atlas';
-ATLAS_BUTTON_SELECT_MSG = 'Select file (*.atlas) from where to load brain atlas.';
-
-ATLAS_BUTTON_VIEW_CMD = 'View Atlas';
-ATLAS_BUTTON_VIEW_TP = ['Open brain atlas with ' GUI.BAE_NAME];
-
-ui_panel_atlas = uipanel();
-ui_text_atlas_name = uicontrol(ui_panel_atlas, 'Style', 'text');
-ui_text_atlas_brnumber = uicontrol(ui_panel_atlas, 'Style', 'text');
-ui_button_atlas = uicontrol(ui_panel_atlas, 'Style', 'pushbutton');
-init_atlas()
-
-    function init_atlas()
-        GUI.setUnits(ui_panel_atlas)
-        GUI.setBackgroundColor(ui_panel_atlas)
-        
-        set(ui_panel_atlas, 'Position', ATLAS_POSITION)
-        set(ui_panel_atlas, 'Title', ATLAS_NAME)
-        
-        set(ui_text_atlas_name, 'Position', [.10 .50 .40 .20])
-        set(ui_text_atlas_name, 'HorizontalAlignment', 'left')
-        set(ui_text_atlas_name, 'FontWeight', 'bold')
-        
-        set(ui_text_atlas_brnumber, 'Position', [.10 .30 .40 .20])
-        set(ui_text_atlas_brnumber, 'HorizontalAlignment', 'left')
-
-        set(ui_button_atlas, 'Position', [.55 .30 .40 .40])
-        set(ui_button_atlas, 'Callback', {@cb_atlas})
-    end
-    function update_atlas()
-        atlastmp_array = cohort.getBrainAtlases();
-        atlastmp = atlastmp_array{1};
-        if ~isequal(atlastmp.getID(), 'Empty BA') 
-            atlases = cohort.getBrainAtlases();
-            atlas_hold = atlases{1};
-            set(ui_text_atlas_name, 'String', atlas_hold.getID())
-            set(ui_text_atlas_brnumber, 'String', ['brain region number = ' int2str(atlas_hold.getBrainRegions().length())])
-            set(ui_button_atlas, 'String', ATLAS_BUTTON_VIEW_CMD)
-            set(ui_button_atlas, 'TooltipString', ATLAS_BUTTON_VIEW_TP);
-            init_enable()
-        else
-            set(ui_text_atlas_name, 'String', '- - -')
-            set(ui_text_atlas_brnumber, 'String', 'brain region number = 0')
-            set(ui_button_atlas, 'String', ATLAS_BUTTON_SELECT_CMD)
-            set(ui_button_atlas, 'TooltipString', ATLAS_BUTTON_SELECT_TP);
-            init_disable()
-        end
-    end
-    function cb_atlas(src, ~)  % (src,event)
-        if strcmp(get(src, 'String'), ATLAS_BUTTON_VIEW_CMD)
-            atlases = cohort.getBrainAtlases();
-            atlas_hold = atlases{1};
-            GUIBrainAtlas(atlas_hold, true)  % open atlas with restricted permissions
-        else  % clears also the cohort
-            % select file
-            [file, path, filterindex] = uigetfile(GUI.BAE_EXTENSION, GUI.BAE_MSG_GETFILE);
-            
-            % load file
-            if filterindex
-                filename = fullfile(path, file);
-                temp = load(filename, '-mat', 'atlas');
-                if isa(temp.atlas, 'BrainAtlas')
-                    atlas = temp.atlas;
-                    cohort = Cohort('cohort id', 'cohort label', 'cohort notes', tmp, atlas, {});
-                    setup()
-                end
-            end
-        end
-    end
 
 %% Panel Groups Table
 GRTAB_SELECTED_COL = 1;
@@ -634,15 +566,26 @@ init_grtab()
     end
 
 %% Consoles
+CONSOLE_ATLAS_CMD = 'Atlas';
+CONSOLE_ATLASES_CMD = 'Atlases';
+CONSOLE_ATLAS_SC = '1';
+if isempty(atlases)
+    CONSOLE_ATLAS_CHOOSEN_CMD = CONSOLE_ATLAS_CMD;
+else
+    CONSOLE_ATLAS_CHOOSEN_CMD = CONSOLE_ATLASES_CMD;
+end
+CONSOLE_ATLAS_TP = ['List of ' CONSOLE_ATLAS_CHOOSEN_CMD ' Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_ATLAS_SC];
+
 CONSOLE_GROUPS_CMD = 'Groups';
-CONSOLE_GROUPS_SC = '1';
+CONSOLE_GROUPS_SC = '2';
 CONSOLE_GROUPS_TP = ['List of groups with sujects. Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_GROUPS_SC];
 
 CONSOLE_SUBJECTS_CMD = 'Subject Data';
-CONSOLE_SUBJECTS_SC = '2';
+CONSOLE_SUBJECTS_SC = '3';
 CONSOLE_SUBJECTS_TP = ['List of subjects with their measures. Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_SUBJECTS_SC];
 
 ui_panel_console = uipanel();
+ui_button_console_atlases = uicontrol(ui_panel_console, 'Style', 'pushbutton');
 ui_button_console_groups = uicontrol(ui_panel_console,'Style', 'pushbutton');
 ui_button_console_subjects = uicontrol(ui_panel_console,'Style', 'pushbutton');
 init_console()
@@ -652,13 +595,18 @@ init_console()
 
         set(ui_panel_console, 'Position', CONSOLE_POSITION)
         set(ui_panel_console, 'BorderType', 'none')
+        
+        set(ui_button_console_atlases, 'Position', [.02 .05 .24 .6])
+        set(ui_button_console_atlases, 'String', CONSOLE_ATLAS_CHOOSEN_CMD)
+        set(ui_button_console_atlases, 'TooltipString', CONSOLE_ATLAS_TP)
+        set(ui_button_console_atlases, 'Callback', {@cb_console_atlases})
 
-        set(ui_button_console_groups, 'Position', [.02 .05 .24 .6])
+        set(ui_button_console_groups, 'Position', [.26 .05 .24 .6])
         set(ui_button_console_groups, 'String', CONSOLE_GROUPS_CMD)
         set(ui_button_console_groups, 'TooltipString', CONSOLE_GROUPS_TP)
         set(ui_button_console_groups, 'Callback', {@cb_console_groups})
         
-        set(ui_button_console_subjects, 'Position', [.26 .05 .24 .6])
+        set(ui_button_console_subjects, 'Position', [.52 .05 .24 .6])
         set(ui_button_console_subjects, 'String', CONSOLE_SUBJECTS_CMD)
         set(ui_button_console_subjects, 'TooltipString', CONSOLE_SUBJECTS_TP)
         set(ui_button_console_subjects, 'Callback', {@cb_console_subjects})
@@ -666,19 +614,32 @@ init_console()
     end
     function update_console_panel_visibility(console_panel_cmd)
         switch console_panel_cmd
-            case CONSOLE_SUBJECTS_CMD
+            case CONSOLE_ATLAS_CHOOSEN_CMD
                 set(ui_panel_groups, 'Visible', 'off')
-                set(ui_panel_subjects, 'Visible', 'on')           
+                set(ui_panel_subjects, 'Visible', 'off')
+%                 set(ui_panel_atlases, 'Visible', 'on')
                 
                 set(ui_button_console_groups, 'FontWeight', 'normal')
-                set(ui_button_console_subjects, 'FontWeight', 'bold')             
-           
-            otherwise % CONSOLE_GROUPS_CMD
-                set(ui_panel_groups, 'Visible', 'on')
-                set(ui_panel_subjects, 'Visible', 'off')
-                
-                set(ui_button_console_groups, 'FontWeight', 'bold')
                 set(ui_button_console_subjects, 'FontWeight', 'normal')
+                set(ui_button_console_atlases, 'FontWeight', 'bold')
+                
+            case CONSOLE_SUBJECTS_CMD
+                set(ui_panel_groups, 'Visible', 'off')                 
+%                 set(ui_panel_atlases, 'Visible', 'off')
+                set(ui_panel_subjects, 'Visible', 'on') 
+                
+                set(ui_button_console_groups, 'FontWeight', 'normal')
+                set(ui_button_console_atlases, 'FontWeight', 'normal')  
+                set(ui_button_console_subjects, 'FontWeight', 'bold')
+           
+            otherwise % CONSOLE_GROUPS_CMD                
+%                 set(ui_panel_atlases, 'Visible', 'off')
+                set(ui_panel_subjects, 'Visible', 'off')
+                set(ui_panel_groups, 'Visible', 'on')
+                
+                set(ui_button_console_subjects, 'FontWeight', 'normal')                
+                set(ui_button_console_atlases, 'FontWeight', 'normal')                 
+                set(ui_button_console_groups, 'FontWeight', 'bold')
              
         end
     end
@@ -689,6 +650,9 @@ init_console()
         if strcmpi(get(ui_panel_subjects, 'Visible'), 'on')            
             update_subjects()
         end
+         if strcmpi(get(ui_panel_atlases, 'Visible'), 'on')            
+            update_atlases()
+        end
     end
     function cb_console_groups(~, ~)  % (src,event)
         update_groups()
@@ -698,6 +662,147 @@ init_console()
         update_subjects()
         update_subtab_subjectinfo()
         update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
+    end
+    function cb_console_atlases(~, ~)
+        update_atlas_panel()
+        update_console_panel_visibility(CONSOLE_ATLAS_CHOOSEN_CMD)
+    end
+
+%% Panel Atlas
+if isempty(atlases)
+    ATLAS_NAME = 'Brain Atlas';
+    ATLAS_BUTTON_SELECT_CMD = 'Select Atlas';
+    ATLAS_BUTTON_SELECT_TP = 'Select brain atlas';
+    ATLAS_BUTTON_SELECT_MSG = 'Select file (*.atlas) from where to load brain atlas.';
+else
+    ATLAS_NAME = 'Brain Atlases';
+    ATLAS_BUTTON_SELECT_CMD = 'Select Atlases';
+    ATLAS_BUTTON_SELECT_TP = 'Select brain atlases';
+    ATLAS_BUTTON_SELECT_MSG = 'Select file (*.atlas) from where to load brain atlas.';
+end
+
+ATLAS_BUTTON_VIEW_CMD = 'View Atlas';
+ATLAS_BUTTON_ADD_CMD = 'Add Atlas';
+ATLAS_BUTTON_VIEW_TP = ['Open brain atlas with ' GUI.BAE_NAME];
+
+
+ui_panel_atlas = uipanel();
+ui_panel_atlas_table = uitable(ui_panel_atlas);
+ui_text_atlas_name = uicontrol(ui_panel_atlas, 'Style', 'text');
+ui_text_atlas_brnumber = uicontrol(ui_panel_atlas, 'Style', 'text');
+ui_button_add_atlas = uicontrol(ui_panel_atlas, 'Style', 'pushbutton');
+ui_button_view_atlas = uicontrol(ui_panel_atlas, 'Style', 'pushbutton');
+init_atlas()
+
+    function init_atlas()
+        GUI.setUnits(ui_panel_atlas)
+        GUI.setBackgroundColor(ui_panel_atlas)
+        
+        set(ui_panel_atlas, 'Position', GROUPPANEL_POSITION)
+        set(ui_panel_atlas, 'Title', ATLAS_NAME)
+        
+        % from left to right and top to buttom
+        set(ui_button_add_atlas, 'Position', [.10 .60 .20 .15])
+        set(ui_button_add_atlas, 'String', ATLAS_BUTTON_ADD_CMD)
+        set(ui_button_add_atlas, 'TooltipString', ATLAS_BUTTON_SELECT_CMD);
+        set(ui_button_add_atlas, 'Callback', {@cb_atlas})
+        
+        set(ui_button_view_atlas, 'Position', [.30 .60 .20 ,.15])
+        set(ui_button_view_atlas, 'String', ATLAS_BUTTON_VIEW_CMD)
+        set(ui_button_view_atlas, 'TooltipString', ATLAS_BUTTON_VIEW_TP);
+        set(ui_button_view_atlas, 'Callback', {@cb_atlas_view})
+        
+        set(ui_text_atlas_name, 'Position', [.10 .40 .25 .15])
+        set(ui_text_atlas_name, 'HorizontalAlignment', 'left')
+        set(ui_text_atlas_name, 'FontWeight', 'bold')
+        
+        set(ui_text_atlas_brnumber, 'Position', [.10 .30 .25 .15])
+        set(ui_text_atlas_brnumber, 'HorizontalAlignment', 'left')        
+        
+        set(ui_panel_atlas_table, 'Position', [.40 .20 .20 .15])
+        set(ui_panel_atlas_table, 'ColumnEditable', true)
+        set(ui_panel_atlas_table, 'CellEditCallback', {@cb_atlas_table})
+    end
+    function update_atlas_panel()
+        atlastmp_array = cohort.getBrainAtlases();
+        subject_type = cohort.getSubjectClass();
+        n = eval([subject_type '.getBrainAtlasNumber()']);
+        if isempty(atlases) && n == 1   % one atlas
+            atlastmp = atlastmp_array{1};
+            if ~isequal(atlastmp.getID(), 'Empty BA')
+                atlases = cohort.getBrainAtlases();
+                atlas_hold = atlases{1};
+                set(ui_text_atlas_name, 'String', atlas_hold.getID())
+                set(ui_text_atlas_brnumber, 'String', ['brain region number = ' int2str(atlas_hold.getBrainRegions().length())])
+                init_enable()
+                %update atlas table 
+            else
+                set(ui_text_atlas_name, 'String', '- - -')
+                set(ui_text_atlas_brnumber, 'String', 'brain region number = 0')
+                init_disable()                
+            end
+        else  % multiple atlas
+            % atls has to be selection
+             if all(cellfun(@(x) isequal(x.getID(), 'Empty BA'), atlastmp_array)) 
+                atlases = cohort.getBrainAtlases();
+                atlas_hold = atlases{1};
+                set(ui_text_atlas_name, 'String', atlas_hold.getID())
+                set(ui_text_atlas_brnumber, 'String', ['brain region number = ' int2str(atlas_hold.getBrainRegions().length())])
+                init_enable()
+            else
+                set(ui_text_atlas_name, 'String', '- - -')
+                set(ui_text_atlas_brnumber, 'String', 'brain region number = 0')
+                init_disable()
+             end            
+        end      
+    end
+    function update_atlas_table()
+        ColumnName = {'', ' Atlas ID ', ' Label ', ' Notes '};
+        ColumnFormat = {'logical', 'char', 'char', 'char'};
+        set(ui_panel_atlas_table, 'ColumnName', ColumnName)
+        set(ui_panel_atlas_table, 'ColumnFormat', ColumnFormat)
+        atlases_tmp = cohort.getBrainAtlases();
+        data = cell(length(atlases_tmp), 4);
+        for i = 1:1:length(atlases_tmp)
+                atls = atlases_tmp{i};
+                if any(selected_ == i)
+                    data{i, 1} = true;
+                else
+                    data{i, 1} = false;
+                end                
+                data{i, 2} = atls.getID();
+                data{i, 3} = atls.getLabel();
+                data{i, 4} = atls.getNotes();    
+        end
+        set(ui_panel_atlas_table, 'Data', cohort.getBrainAtlases())        
+    end
+    function cb_atlas_view(~, ~)
+        % get atlas value from table
+         atlas_hold = selected_atlases;
+         GUIBrainAtlas(atlas_hold, true)  % open atlas with restricted permissions
+    end
+    function cb_atlas(~, ~)  % (src,event)       
+        
+        [file, path, filterindex] = uigetfile(GUI.BAE_EXTENSION, GUI.BAE_MSG_GETFILE);        
+        % load file
+        if filterindex
+            filename = fullfile(path, file);
+            temp = load(filename, '-mat', 'atlas');
+            if isa(temp.atlas, 'BrainAtlas')
+                n = Subject.getBrainAtlasNumber(cohort.getSubjectClass());
+                if n > 1
+                    % update_atlas_table();
+                    atlases = cohort.getBrainAtlases();
+                    atlases{length(atlases)+1} = temp.atlas;
+                    cohort = Cohort('cohort id', 'cohort label', 'cohort notes', tmp, atlases, {});
+                    setup()                    
+                else
+                    atlas = temp.atlas;
+                    cohort = Cohort('cohort id', 'cohort label', 'cohort notes', tmp, atlas, {});
+                    setup()
+                end                
+            end
+        end
     end
 
 %% Groups Subject demographic data
@@ -1297,13 +1402,14 @@ setup_restrictions()
 %% Auxiliary functions
     function setup()      
         % setup atlas
-        update_atlas()
+        update_atlas_panel()
+        update_atlas_table()
         
         % setup table
         update_grtab_cohortname()
         update_grtab_table()
               
-        update_console_panel_visibility(CONSOLE_GROUPS_CMD)
+        update_console_panel_visibility(CONSOLE_ATLAS_CHOOSEN_CMD)
         
         % setup group
         update_groups()

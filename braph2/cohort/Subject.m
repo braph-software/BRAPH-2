@@ -289,7 +289,7 @@ classdef Subject < handle & matlab.mixin.Copyable
                 else
                     height = 0.9;
                     if isequal(data_list(data_codes{i}), 'DataStructural')
-                        width = 0.265;
+                        width = 0.275;
                     else
                         width = 0.98;
                     end                    

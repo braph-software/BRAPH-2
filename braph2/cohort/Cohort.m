@@ -229,7 +229,14 @@ classdef Cohort < handle & matlab.mixin.Copyable
                 'Notes must be a string.')
             
             cohort.notes = notes;
-        end        
+        end  
+        function setBrianAtlases(cohort, atlases)
+            % those this has to change all subject atlases?
+            n = eval([cohort.getSubjectClass() ' .getBrainAtlasNumber()']);
+            if iscell(atlases) && all(cellfun(@(x) isa(x, 'BrainAtlas'), atlases)) 
+                cohort.atlases = atlases;
+            end
+        end
     end
     methods  % Get functions
         function id = getID(cohort)
