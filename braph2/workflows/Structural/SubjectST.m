@@ -277,8 +277,17 @@ classdef SubjectST < Subject
                 subject_class = 'SubjectST';
                 atlas = tmp;
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
-            end
-
+            end            
+            
+            [~, ~, raw] = xlsread(file);
+            atlas = cohort.getBrainAtlases();
+            
+            % sneak peak to see if it is a subject
+            sub_tmp = Subject.getSubject(subject_class, ...
+                char(raw{2, 1}), char(raw{2, 2}), char(raw{2, 3}), atlas, ...
+                'ST', cell2mat(raw(2, 4:size(raw, 2))'));
+            delete(sub_tmp);
+            
             % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', {});
             group_path = strsplit(file, filesep());
@@ -288,9 +297,6 @@ classdef SubjectST < Subject
             group.setID(group_id);
             cohort.getGroups().add(group.getID(), group);   
             
-            [~, ~, raw] = xlsread(file);
-            atlas = cohort.getBrainAtlases();
-            
             for i = 2:1:size(raw, 1)
                 subject = Subject.getSubject(subject_class, ...                    
                     char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlas, ...
@@ -299,7 +305,7 @@ classdef SubjectST < Subject
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
                 group.addSubject(subject);
-            end
+            end              
         end
         function save_to_xls(cohort, varargin)
             % SAVE_TO_XLS saves the cohort of SubjectST to a '.xls' file
@@ -428,19 +434,27 @@ classdef SubjectST < Subject
                 
                 % creates cohort
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
-            end            
-                 
-            % creates group
-            group = Group(subject_class, '', '', '', {});
-            group_path = strsplit(file, filesep());
-            group_id = group_path{length(group_path)};            
-            group_id = erase(group_id, '.txt');
-            group.setID(group_id);
-            cohort.getGroups().add(group.getID(), group);
+            end     
             
             % reads file
             raw = readtable(file, 'Delimiter', '\t');
             atlases = cohort.getBrainAtlases();
+            
+            % sneak peak to see if it is a subject
+            sub_tmp = Subject.getSubject(subject_class, ...
+                char(raw{1, 1}), char(raw{1, 2}), char(raw{1, 3}), atlases, ...
+                'ST', raw{1, 4:size(raw, 2)}');
+            
+            delete(sub_tmp);
+            
+            % creates group
+            group = Group(subject_class, '', '', '', {});
+            group_path = strsplit(file, filesep());
+            group_id = group_path{length(group_path)};
+            group_id = erase(group_id, '.txt');
+            group.setID(group_id);
+            cohort.getGroups().add(group.getID(), group);
+            
             for i = 1:1:size(raw, 1)  % first row is being read as table label
                 subject = Subject.getSubject(subject_class, ...                    
                     char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlases, ...
@@ -450,7 +464,6 @@ classdef SubjectST < Subject
                 end
                 group.addSubject(subject);
             end
-            
             % warning on
             warning('on', 'all')
         end
@@ -588,7 +601,12 @@ classdef SubjectST < Subject
                 subject_class = 'SubjectST';
                 atlases = tmp;
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
-            end
+            end           
+            
+            % sneak peak            
+            subject = Subject.getSubject(subject_class, ...
+                raw.SubjectData(1).id, raw.SubjectData(1).label, raw.SubjectData(1).notes, atlases, ...
+                'ST', raw.SubjectData(1).data);
             
             % creates group
             group = Group(subject_class, '', '', '', {});
