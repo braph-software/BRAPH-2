@@ -261,7 +261,7 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
     end
     methods  % Plot functions
-        function h = getDataPanel(sub, varargin)
+        function h = getDataPanel(sub, ui_parent)
             % GETDATAPANEL returns a panel handle with data ui content
             %
             % H = GETDATAPANEL(SUB, PARENT) creates a uipanel handle and
@@ -275,37 +275,25 @@ classdef Subject < handle & matlab.mixin.Copyable
             data_list = sub.getDataList(); 
             atlas = sub.atlases{1};
             
-            parent = varargin{1};
-            sub.h_panel = uipanel('Parent', parent);
+            sub.h_panel = uipanel('Parent', ui_parent);
             set(sub.h_panel, 'Units', 'normalized')
             set(sub.h_panel, 'Position', [0 0 1 1])          
 
             % create data tables
+            height = 1/length(data_list);
+            width = 1;
+            x = 0;
             for i = 1:1:length(data_list)
-                if isequal(data_list(data_codes{i}), 'DataScalar')                    
-                    height = 0.04;
-                    width = 0.11;
-                    y = 1 - height;
-                else
-                    height = 0.9;
-                    if isequal(data_list(data_codes{i}), 'DataStructural')
-                        width = 0.265;
-                    else
-                        width = 0.98;
-                    end                    
-                    y = 1 - (0.1 + i*height);
-                end 
+                y = 1 - i * height;
+
                 inner_panel = uipanel('Parent', sub.h_panel);                
-                set(inner_panel, 'Position', [0.01 y width height])
+                set(inner_panel, 'Position', [x y width height])
+                set(inner_panel, 'Title', data_codes{i})
+                
                 inner_obj = sub.getData(data_codes{i});
                 
-                % rownames
-                brs = atlas.getBrainRegions().getValues();
-                for j = 1:1:length(brs)
-                    br = brs{j};
-                    rownames{j} = br.getID(); %#ok<AGROW>
-                end
-                tbl = inner_obj.getDataPanel(inner_panel, 'Title', data_codes{i}, 'RowNames', rownames);                
+                
+                tbl = inner_obj.getDataPanel(inner_panel);                
             end
              if nargout > 0
                 h = sub.h_panel;
@@ -499,15 +487,24 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)  % GUI functions
-        function getMenuAtlasPanel(subject_class, atlas, parent, varargin) %#ok<INUSD>
-            % GETMENUATLASPANEL returns the subject class panel handle
+        function sub_atlas_menu = getMenuAtlasPanel(sub, atlas, ui_menu_parent) 
+            % GETMENUATLASPANEL ui menu item to open cohort
             %
-            % GETMENUATLASPANEL(SUBJECT_CLASS, ATLAS, PARENT, PROPERTY, VALUE)
-            % returns the SUBJECT_CLASS GUIBrainAtlas Cohort uimenu handle.
+            % H = GETMENUATLASPANEL(SUBJECT, ATLAS, UI_MENU_PARENT) creates
+            % a ui menu item to open a new GUI Cohrort for SUBJECT (which
+            % can be either a subject class or a subject object), connects
+            % it to UI_MENU_PARENT, and returns an handle to the ui menu
+            % item.
             %
             % See also getDataPanel.
+
+            sub_atlas_menu = uimenu(ui_menu_parent);
+            set(sub_atlas_menu, 'Label', [Subject.getName(sub) ' Cohort'])
+            set(sub_atlas_menu, 'Callback', {@subject_menu_atlas})
             
-            eval([subject_class '(atlas, parent, varargin{:})'])           
+            function subject_menu_atlas(~, ~)
+                GUICohort(atlas.copy(), Subject.getClass(sub));
+            end
         end
     end
     methods (Abstract, Static)  % Save/load functions

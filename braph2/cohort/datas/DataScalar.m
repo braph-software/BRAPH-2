@@ -55,16 +55,20 @@ classdef DataScalar < Data
 
             d.value = value;
         end
-        function h = getDataPanel(d, parent, varargin)
-            title = get_from_varargin('Age', 'Title', varargin{:});
-            
+        function h = getDataPanel(d, parent)          
             
             value_holder = d.value;
             d.h_panel = uicontrol('Parent', parent);
-            set(d.h_panel, 'Style', 'Text')
+            set(d.h_panel, 'Style', 'edit')
             set(d.h_panel, 'Units', 'normalized')
-            set(d.h_panel, 'Position', [0.001 0.001 1 1])
-            set(d.h_panel, 'String', [title ': ' num2str(value_holder)])
+            set(d.h_panel, 'Position', [0.01 0.9 0.5 0.1])
+            set(d.h_panel, 'String', value_holder)
+            set(d.h_panel, 'Callback', {@cb_edit_scalar})
+            
+            function cb_edit_scalar(~, ~)
+                newdata = get(d.h_panel, 'String');
+                d.value = newdata;
+            end
             
              if nargout > 0
                 h = d.h_panel;

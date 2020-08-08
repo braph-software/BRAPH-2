@@ -60,10 +60,18 @@ classdef DataStructural < Data
 
             d.value = value;
         end
-        function h = getDataPanel(d, parent, varargin)
+        function h = getDataPanel(d, parent)
                 value_holder = d.value;
                 d.h_panel = uitable('Parent', parent);
-                RowName = get_from_varargin({}, 'RowNames', varargin{:});
+                
+                % rownames
+                atlas = d.atlas;
+                brs = atlas.getBrainRegions().getValues();
+                for j = 1:1:length(brs)
+                    br = brs{j};
+                    RowName{j} = br.getID(); %#ok<AGROW>
+                end
+                
                 set(d.h_panel, 'Units', 'normalized')
                 set(d.h_panel, 'Position', [0 0 1 1])
                 set(d.h_panel, 'ColumnFormat', {'numeric'})

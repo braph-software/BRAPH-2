@@ -950,9 +950,9 @@ init_menu()
         set(ui_menu_brainview_figure, 'Callback', {@cb_menu_figure})
         
         subjects = Subject.getList();
-        for i=1:1:length(subjects)
+        for i = 1:1:length(subjects)
             sub = subjects{i};
-            eval([sub '.getMenuAtlasPanel(atlas.copy(), ui_menu_cohorts)']);            
+            Subject.getMenuAtlasPanel(sub, atlas, ui_menu_cohorts);            
         end
     end
 [ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME); %#ok<ASGLU>

@@ -1028,7 +1028,7 @@ init_subjects()
         set(ui_label_subtab_id_text, 'FontWeight', 'bold')
         set(ui_label_subtab_id_text, 'FontSize', 12)
         set(ui_label_subtab_id_text, 'ForegroundColor', 'black')
-        set(ui_label_subtab_id_text, 'String', 'ID')
+        set(ui_label_subtab_id_text, 'String', 'SUBJECT ID')
         set(ui_label_subtab_id_text, 'enable', 'off')
         
         set(ui_edit_subtab_subjectid, 'Position', [.50 .96 0.49 .04])
@@ -1041,7 +1041,7 @@ init_subjects()
         set(ui_label_subtab_label_text, 'FontWeight', 'bold')
         set(ui_label_subtab_label_text, 'FontSize', 12)
         set(ui_label_subtab_label_text, 'ForegroundColor', 'black')
-        set(ui_label_subtab_label_text, 'String', 'LABEL')
+        set(ui_label_subtab_label_text, 'String', 'SUBJECT LABEL')
         set(ui_label_subtab_label_text, 'enable', 'off')
         
         set(ui_edit_subtab_subjectlabel, 'Position', [.5 .92 0.49 .04])
@@ -1054,7 +1054,7 @@ init_subjects()
         set(ui_label_subtab_notes_text, 'FontWeight', 'bold')
         set(ui_label_subtab_notes_text, 'FontSize', 12)
         set(ui_label_subtab_notes_text, 'ForegroundColor', 'black')
-        set(ui_label_subtab_notes_text, 'String', 'NOTES')
+        set(ui_label_subtab_notes_text, 'String', 'SUBJECT NOTES')
         set(ui_label_subtab_notes_text, 'enable', 'off')
         
         set(ui_edit_subtab_subjectnotes, 'Position', [.5 .88 .49 .04])
@@ -1109,15 +1109,28 @@ init_subjects()
         update_subtab_subjectinfo()
     end
     function cb_subtab_subjectid(~, ~)  % (src,event)
-        cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
-        update_grtab_cohortname()
+        newdata = get(ui_edit_subtab_subjectid, 'String');
+        value = get(ui_list_subjects, 'Value');         
+        subject = cohort.getSubjects().getValue(value);
+        if ~cohort.getSubjects().contains(newdata)
+            subject.setID(newdata)
+            oldkey = cohort.getSubjects().getKey(subject);
+            cohort.getSubjects().replaceKey(oldkey, newdata);
+        end        
+        update_subjects_list()
     end
     function cb_subtab_subjectlabel(~, ~)  % (src,event)
-        cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
+        newdata = get(ui_edit_subtab_subjectlabel, 'String');
+        value = get(ui_list_subjects, 'Value');         
+        subject = cohort.getSubjects().getValue(value);
+        subject.setLabel(newdata)            
         update_grtab_cohortname()
     end
     function cb_subtab_subjectnotes(~, ~)  % (src,event)
-        cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
+        newdata = get(ui_edit_subtab_subjectnotes, 'String');
+        value = get(ui_list_subjects, 'Value');         
+        subject = cohort.getSubjects().getValue(value);
+        subject.setNotes(newdata)            
         update_grtab_cohortname()
     end
     function update_subtab_subjectinfo()
