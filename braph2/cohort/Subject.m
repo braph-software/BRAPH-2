@@ -34,7 +34,7 @@ classdef Subject < handle & matlab.mixin.Copyable
     %   getData                 - returns the data from DATADICT
     %
     % Subject plot methods
-    %   getDataPanel            - returns a uicontrol handle
+    %   getDataPanel            - returns the data panel
     %
     % Subject inspection methods (Static):
     %   getList                 - returns a list with subclasses of Subject
@@ -187,30 +187,6 @@ classdef Subject < handle & matlab.mixin.Copyable
             
             sub.update_brainatlases(atlases);
         end  
-        function setData(sub, varargin)
-            % SETDATA sets the data to and already existing value
-            %
-            % SETDATA(SUB, AGE, VALUE, DATATYPE, VALUE) sets the VALUE of
-            % DATATYPE type to and already initialized value. It may
-            % containg AGE VALUE. 
-            %
-            % See also setID, getData.
-            
-            data_codes = sub.getDataCodes();
-            data_list = sub.getDataList();
-            age_data_object = data_list(data_codes{2});
-            data_object = data_list(data_codes{1});
-            
-            atlas = sub.atlases{1}; %#ok<NASGU>
-            
-            old_data = sub.getData(data_codes{1}).getValue();
-            
-            age = get_from_varargin(0, 'age', varargin{:}); %#ok<NASGU>
-            data = get_from_varargin(zeros(size(old_data)), data_codes{1}, varargin{:}); %#ok<NASGU>
-            sub.datadict(data_codes{2}) = eval([age_data_object '(atlas, age)']);
-            sub.datadict(data_codes{1}) = eval([data_object '(atlas, data)']);            
-            
-        end
     end
     methods  % Get functions
         function id = getID(sub)

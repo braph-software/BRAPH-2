@@ -10,9 +10,8 @@ classdef DataStructural < Data
     %
     % DataStructurral methods:
     %   DataStructurral         - Constructor
-    %
-    % DataStructurral abstract methods:
-    %   setValue                - checks the value and sets it to DataStructurral
+    %   setValue                - set value
+    %   getDataPanel            - returns data panel
     %
     % DataStructurral static mehtods
     %   getClass                - returns the class
@@ -21,9 +20,7 @@ classdef DataStructural < Data
     %   getAvailableSettings    - returns the available settings
     %
     % See also Data, DataFunctional, DataScalar, DataConnectivity.
-    properties
-        h_panel
-    end
+    
     methods
         function d = DataStructural(atlas, value, varargin)
             % DATASTRUCTURAL(ATLAS, VALUE) creates DataStructurral object
@@ -37,8 +34,6 @@ classdef DataStructural < Data
             
             d = d@Data(atlas, value, varargin{:});
         end
-    end
-    methods
         function setValue(d, value)
             % SETVALUE sets the value of the data into the object
             %
@@ -60,7 +55,7 @@ classdef DataStructural < Data
 
             d.value = value;
         end
-        function h = getDataPanel(d, uiparent)
+        function h = getDataPanel(d, ui_parent)
             % GETDATAPANEL creates a uitable and returns it
             %
             % GETDATAPANEL(D, UIPARENT) creates a uitable with D values and
@@ -69,7 +64,7 @@ classdef DataStructural < Data
             % See also setValue.
             
                 value_holder = d.value;
-                d.h_panel = uitable('Parent', uiparent);
+                h_panel = uitable('Parent', ui_parent);
                 
                 % rownames
                 atlas = d.atlas;
@@ -79,13 +74,13 @@ classdef DataStructural < Data
                     RowName{j} = br.getID(); %#ok<AGROW>
                 end
                 
-                set(d.h_panel, 'Units', 'normalized')
-                set(d.h_panel, 'Position', [0 0 1 1])
-                set(d.h_panel, 'ColumnFormat', {'numeric'})
-                set(d.h_panel, 'ColumnEditable', true)
-                set(d.h_panel, 'RowName', RowName)
-                set(d.h_panel, 'Data', value_holder)
-                set(d.h_panel, 'CellEditCallback', {@cb_data_table})
+                set(h_panel, 'Units', 'normalized')
+                set(h_panel, 'Position', [0 0 1 1])
+                set(h_panel, 'ColumnFormat', {'numeric'})
+                set(h_panel, 'ColumnEditable', true)
+                set(h_panel, 'RowName', RowName)
+                set(h_panel, 'Data', value_holder)
+                set(h_panel, 'CellEditCallback', {@cb_data_table})
 
             function cb_data_table(~, event)
                 m = event.Indices(1);
@@ -93,8 +88,9 @@ classdef DataStructural < Data
                 newdata = event.NewData;
                 d.value(m, col) = newdata;
             end
-             if nargout > 0
-                h = d.h_panel;
+            
+            if nargout > 0
+                h = h_panel;
             end   
         end
     end
