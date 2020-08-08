@@ -96,9 +96,6 @@ CREATE_GRP_FROM_SUBS_TP = 'Create group from selection of subjects';
 REMOVE_SUB_CMD = 'Remove';
 REMOVE_SUB_TP = 'Remove selected subjects from the cohort and all groups';
 
-REMOVE_SUB_FROM_GRP_CMD = 'Remove from group';
-REMOVE_SUB_FROM_GRP_TP = 'Remove selected subjects only from the group';
-
 MOVEUP_SUB_CMD = 'Move up';
 MOVEUP_SUB_TP = 'Move selected subjects up';
 
@@ -493,6 +490,12 @@ init_grtab()
             data{g, GRTAB_NOTES_COL} = groups_idict.getValue(g).getNotes();
         end
         set(ui_table_grtab, 'Data', data)
+        
+        if groups_idict.length() < 1
+            disable_group_intersect_buttons()
+        else            
+            enable_group_intersect_buttons()
+        end
     end
     function cb_grtab_cohortname(~, ~)  % (src,event)
         cohort.setID(get(ui_edit_grtab_cohortid, 'String'));
@@ -583,8 +586,8 @@ init_grtab()
         update_grtab_table()   
         update_console_panel()        
     end
-    function cb_grtab_add_gr(~, ~)  % (src,event)
-        group = Group(cohort.getSubjectClass(), 'GroupID 1', 'Label 1', 'Notes 1', {});
+    function cb_grtab_add_gr(~, ~)  % (src,event)        
+        group = Group(cohort.getSubjectClass(), ['GroupID ' num2str(cohort.getGroups().length())], 'Label 1', 'Notes 1', {});
         cohort.getGroups().add(group.getID(), group);
         update_grtab_table()
         update_console_panel()
@@ -593,6 +596,7 @@ init_grtab()
         selected_group = cohort.getGroups().remove_all(selected_group);
         update_grtab_table()
         update_console_panel()
+        update_group_popups()
     end
     function cb_grtab_moveup_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().move_up(selected_group);
@@ -608,7 +612,9 @@ init_grtab()
         g = get(ui_popup_grtab_invert, 'Value');
         group = cohort.getGroups().getValue(g);
         complementary = cohort.notGroup(group);
-        cohort.getGroups().add(complementary.getID(), complementary);
+        if ~cohort.getGroups().contains(complementary.getID())
+            cohort.getGroups().add(complementary.getID(), complementary);
+        end
         update_grtab_table()
         update_console_panel()
     end
@@ -618,7 +624,9 @@ init_grtab()
         group1 = cohort.getGroups().getValue(g1);
         group2 = cohort.getGroups().getValue(g2);
         union = cohort.orGroup(group1,group2);
-        cohort.getGroups().add(union.getID(), union);
+        if ~cohort.getGroups().contains(union.getID())
+            cohort.getGroups().add(union.getID(), union);
+        end
         update_grtab_table()
         update_console_panel()
     end
@@ -628,9 +636,22 @@ init_grtab()
         group1 = cohort.getGroups().getValue(g1);
         group2 = cohort.getGroups().getValue(g2);
         and_group = cohort.andGroup(group1, group2);
-        cohort.getGroups().add(and_group.getID(), and_group);
+        if ~cohort.getGroups().contains(and_group.getID())
+            cohort.getGroups().add(and_group.getID(), and_group);
+        end
         update_grtab_table()  
         update_console_panel()
+    end
+
+    function disable_group_intersect_buttons()
+        set(ui_button_grtab_invert, 'enable', 'off')
+        set(ui_button_grtab_merge, 'enable', 'off')
+        set(ui_button_grtab_intersect, 'enable', 'off')      
+    end
+    function enable_group_intersect_buttons()
+        set(ui_button_grtab_invert, 'enable', 'on')
+        set(ui_button_grtab_merge, 'enable', 'on')
+        set(ui_button_grtab_intersect, 'enable', 'on')
     end
 
 %% Consoles
@@ -935,7 +956,7 @@ init_groups()
     function cb_groups_add_sub(~, ~)  % (src,event)   
         if ~isempty(selected_group)
             group = cohort.getGroups().getValue(selected_group);
-            sub = Subject.getSubject(cohort.getSubjectClass(), ['New Subject' num2str(group.subjectnumber() + 1)], 'Label', 'Notes', cohort.getBrainAtlases());
+            sub = Subject.getSubject(cohort.getSubjectClass(), ['New Subject ' group.getID() ' ' num2str(group.subjectnumber() + 1)], 'Label', 'Notes', cohort.getBrainAtlases());
             cohort.getSubjects().add(sub.getID(), sub);
             group.addSubject(sub);
         else
@@ -945,6 +966,7 @@ init_groups()
         
         update_grtab_table()
         update_groups()
+        enable_subjects_button()
     end
     function cb_groups_remove_sub(~, ~)  % (src,event)
         if ~isempty(selected_group)
@@ -965,25 +987,30 @@ init_groups()
         selected_subjects = cohort.getSubjects().remove_all(selected_subjects);
         update_grtab_table()
         update_groups()
+        
+        if cohort.getSubjects().length() < 1
+            disable_subjects_button()
+        end
+        
     end
     function cb_groups_moveup_sub(~, ~)  % (src,event)
-        selected_subjects = cohort.move_up(selected_subjects);
+        selected_subjects = cohort.getSubjects().move_up(selected_subjects);
         
         update_grtab_table()
         update_groups()
     end
     function cb_groups_movedown_sub(~, ~)  % (src,event)
-        selected_subjects = cohort.move_down(selected_subjects);
+        selected_subjects = cohort.getSubjects().move_down(selected_subjects);
         update_grtab_table()
         update_groups()
     end
     function cb_groups_move2top_sub(~, ~)  % (src,event)
-        selected_subjects = cohort.move_to_top(selected_subjects);
+        selected_subjects = cohort.getSubjects().move_to_top(selected_subjects);
         update_grtab_table()
         update_groups()
     end
     function cb_groups_move2bottom_sub(~, ~)  % (src,event)
-        selected_subjects = cohort.move_to_bottom(selected_subjects);
+        selected_subjects = cohort.getSubjects().move_to_bottom(selected_subjects);
         update_grtab_table()
         update_groups()
     end
@@ -1000,6 +1027,12 @@ init_groups()
         cohort.getGroups().add(group.getID(), group);
         update_grtab_table()
         update_groups()
+    end
+    function disable_subjects_button()
+        set(ui_button_console_subjects, 'enable', 'off')
+    end
+    function enable_subjects_button()
+        set(ui_button_console_subjects, 'enable', 'on')
     end
 
 %% Panel 2 - Subjects
@@ -1076,20 +1109,30 @@ init_subjects()
     function update_subjects_list()
         if isempty(selected_group) && ~isempty(cohort)
             subjects = cohort.getSubjects().getValues();
-            for i = 1:1:length(subjects)
-                sub = subjects{i};
-                subjects_ids{i} = sub.getID(); %#ok<AGROW>
+            if length(subjects) < 1
+                set(ui_list_subjects, 'Value', 1)
+                set(ui_list_subjects, 'String', 'empty')
+            else
+                for i = 1:1:length(subjects)
+                    sub = subjects{i};
+                    subjects_ids{i} = sub.getID(); %#ok<AGROW>
+                end
+                set(ui_list_subjects, 'String', subjects_ids)
             end
-            set(ui_list_subjects, 'String', subjects_ids)                
         elseif ~isempty(selected_group)
-            group = cohort.getGroups().getValue(selected_group);
+            group = cohort.getGroups().getValue(selected_group);            
             subjects = group.getSubjects();
-            for i = 1:1:length(subjects)
-                sub = subjects{i};
-                subjects_ids{i} = sub.getID(); %#ok<AGROW>
+            if length(subjects) < 1
+                set(ui_list_subjects, 'Value', 1)
+                set(ui_list_subjects, 'String', 'empty')
+            else                
+                for i = 1:1:length(subjects)
+                    sub = subjects{i};
+                    subjects_ids{i} = sub.getID(); %#ok<AGROW>
+                end
+                set(ui_list_subjects, 'Value', 1)
+                set(ui_list_subjects, 'String', subjects_ids)
             end
-            set(ui_list_subjects, 'Value', 1)
-            set(ui_list_subjects, 'String', subjects_ids)
         else
             set(ui_list_subjects, 'Value', 1)
             set(ui_list_subjects, 'String', 'empty')

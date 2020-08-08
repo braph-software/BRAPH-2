@@ -60,9 +60,16 @@ classdef DataStructural < Data
 
             d.value = value;
         end
-        function h = getDataPanel(d, parent)
+        function h = getDataPanel(d, uiparent)
+            % GETDATAPANEL creates a uitable and returns it
+            %
+            % GETDATAPANEL(D, UIPARENT) creates a uitable with D values and
+            % sets the uitable to the UIPARENT.
+            %
+            % See also setValue.
+            
                 value_holder = d.value;
-                d.h_panel = uitable('Parent', parent);
+                d.h_panel = uitable('Parent', uiparent);
                 
                 % rownames
                 atlas = d.atlas;

@@ -292,7 +292,6 @@ classdef Subject < handle & matlab.mixin.Copyable
                 
                 inner_obj = sub.getData(data_codes{i});
                 
-                
                 tbl = inner_obj.getDataPanel(inner_panel);                
             end
              if nargout > 0

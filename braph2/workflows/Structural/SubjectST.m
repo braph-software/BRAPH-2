@@ -23,9 +23,6 @@ classdef SubjectST < Subject
     %   getDataClass            - returns the class of the type of a data of SubjectST
     %   getSubject              - returns a new instantiation of SubjectST
     %
-    % SubjectST GUI methods (Static):
-    %   getMenuAtlasPanel       - returns a GUIBrainAtlas uimenu handle
-    %
     % SubjectST load and save methods (Static):
     %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
     %   save_to_xls             - saves the subject data to a '.xls' or '.xlsx' file
@@ -200,24 +197,6 @@ classdef SubjectST < Subject
             % See also getList, getDataClasses.
             
             data_class = Subject.getDataNumber('SubjectST', data_code);
-        end
-    end
-    methods (Static)  % GUI methods
-        function getMenuAtlasPanel(atlas, parent, varargin)
-            % GETMENUATLASPANEL returns the subject class panel handle
-            %
-            % GETMENUATLASPANEL(ATLAS, PARENT, PROPERTY, VALUE) returns
-            % the SubjectST GUIBrainAtlas Cohort uimenu handle.
-            %
-            % See also getDataPanel.
-            
-            sub_atlas_menu = uimenu(parent);
-            set(sub_atlas_menu, 'Label', 'SubjectST Cohort')
-            set(sub_atlas_menu, 'Callback', {@subject_menu_atlas})
-            
-            function subject_menu_atlas(~, ~)
-                GUICohort(atlas, 'SubjectST');
-            end            
         end
     end
     methods (Static)  % Save/load functions
