@@ -591,6 +591,7 @@ init_grtab()
         cohort.getGroups().add(group.getID(), group);
         update_grtab_table()
         update_console_panel()
+        update_group_popups()
     end
     function cb_grtab_remove_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().remove_all(selected_group);
@@ -602,11 +603,13 @@ init_grtab()
         selected_group = cohort.getGroups().move_up(selected_group);
         update_grtab_table()
         update_console_panel()
+        update_group_popups()
     end
     function cb_grtab_movedown_gr(~, ~)  % (src,event)
         selected_group = cohort.getGroups().move_down(selected_group);
         update_grtab_table()
         update_console_panel()
+        update_group_popups()
     end
     function cb_grtab_complementary(~, ~)  % (src,event)
         g = get(ui_popup_grtab_invert, 'Value');
@@ -617,6 +620,7 @@ init_grtab()
         end
         update_grtab_table()
         update_console_panel()
+        update_group_popups()
     end
     function cb_grtab_merge(~, ~)  % (src,event)
         g1 = get(ui_popup_grtab_merge1,'Value');
@@ -629,6 +633,7 @@ init_grtab()
         end
         update_grtab_table()
         update_console_panel()
+        update_group_popups()
     end
     function cb_grtab_intersect(~, ~)  % (src,event)
         g1 = get(ui_popup_grtab_intersect1, 'Value');
@@ -641,6 +646,7 @@ init_grtab()
         end
         update_grtab_table()  
         update_console_panel()
+        update_group_popups()
     end
 
     function disable_group_intersect_buttons()
