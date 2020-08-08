@@ -10,9 +10,8 @@ classdef DataConnectivity < Data
     %
     % DataConnectivity methods:
     %   DataConnectivity        - Constructor
-    %
-    % DataConnectivity abstract methods:
-    %   setValue                - checks the value and sets it to DataConnectivity
+    %   setValue                - set value
+    %   getDataPanel            - returns data panel
     %
     % DataConnectivity static mehtods
     %   getClass                - returns the class
@@ -35,8 +34,6 @@ classdef DataConnectivity < Data
                         
             d = d@Data(atlas, value, varargin{:});
         end
-    end
-    methods
         function setValue(d, value)
             % SETVALUE sets the value of the data into the object
             %

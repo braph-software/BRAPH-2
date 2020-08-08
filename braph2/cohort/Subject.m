@@ -33,6 +33,9 @@ classdef Subject < handle & matlab.mixin.Copyable
     %   setBrainAtlases         - sets the brain atlases 
     %   getData                 - returns the data from DATADICT
     %
+    % Subject plot methods
+    %   getDataPanel            - returns the data panel
+    %
     % Subject inspection methods (Static):
     %   getList                 - returns a list with subclasses of Subject
     %   getClass                - returns the class of the subclass
@@ -45,6 +48,9 @@ classdef Subject < handle & matlab.mixin.Copyable
     %   getDataClasses          - returns the class of the type of all data of the subclass
     %   getDataClass            - returns the class of the type of a data of the subclass
     %   getSubject              - returns a new instantiation of a subclass
+    %
+    % Subject GUI methods (Static):
+    %   getMenuAtlasPanel       - returns a GUIBrainAtlas uimenu handle
     %
     % Subject load and save methods (Abstract, Static):
     %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
@@ -62,6 +68,7 @@ classdef Subject < handle & matlab.mixin.Copyable
         notes  % subject notes
         atlases % cell array with brain atlases
         datadict  % dictionary with subject data
+        h_panel
     end
     methods (Access=protected)  % Constructor
         function sub = Subject(id, label, notes, atlases, varargin)
@@ -179,7 +186,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             % See also setID, setLabel, setNotes, getBrainAtlases.
             
             sub.update_brainatlases(atlases);
-        end
+        end  
     end
     methods  % Get functions
         function id = getID(sub)
@@ -228,6 +235,45 @@ classdef Subject < handle & matlab.mixin.Copyable
             
             d = sub.datadict(data_code);
         end
+    end
+    methods  % Plot functions
+        function h = getDataPanel(sub, ui_parent)
+            % GETDATAPANEL returns a panel handle with data ui content
+            %
+            % H = GETDATAPANEL(SUB, PARENT) creates a uipanel handle and
+            % sets it to PARENT, then it creates uicontrols for each data
+            % type the datadict has. It populates the controls dynamically
+            % with the corresponding data.
+            %
+            % See also getMenuAtlasPanel.
+            
+            data_codes = sub.getDataCodes();
+            data_list = sub.getDataList(); 
+            atlas = sub.atlases{1};
+            
+            sub.h_panel = uipanel('Parent', ui_parent);
+            set(sub.h_panel, 'Units', 'normalized')
+            set(sub.h_panel, 'Position', [0 0 1 1])          
+
+            % create data tables
+            height = 1/length(data_list);
+            width = 1;
+            x = 0;
+            for i = 1:1:length(data_list)
+                y = 1 - i * height;
+
+                inner_panel = uipanel('Parent', sub.h_panel);                
+                set(inner_panel, 'Position', [x y width height])
+                set(inner_panel, 'Title', data_codes{i})
+                
+                inner_obj = sub.getData(data_codes{i});
+                
+                tbl = inner_obj.getDataPanel(inner_panel);                
+            end
+             if nargout > 0
+                h = sub.h_panel;
+            end   
+        end        
     end
     methods (Static)  % Inspection functions
         function subject_list = getList()
@@ -412,6 +458,27 @@ classdef Subject < handle & matlab.mixin.Copyable
                 data_code = data_codes{i};
                 d = sub.getData(data_code);
                 sub_copy.datadict(data_code) = d.copy();
+            end
+        end
+    end
+    methods (Static)  % GUI functions
+        function sub_atlas_menu = getMenuAtlasPanel(sub, atlas, ui_menu_parent) 
+            % GETMENUATLASPANEL ui menu item to open cohort
+            %
+            % H = GETMENUATLASPANEL(SUBJECT, ATLAS, UI_MENU_PARENT) creates
+            % a ui menu item to open a new GUI Cohrort for SUBJECT (which
+            % can be either a subject class or a subject object), connects
+            % it to UI_MENU_PARENT, and returns an handle to the ui menu
+            % item.
+            %
+            % See also getDataPanel.
+
+            sub_atlas_menu = uimenu(ui_menu_parent);
+            set(sub_atlas_menu, 'Label', [Subject.getName(sub) ' Cohort'])
+            set(sub_atlas_menu, 'Callback', {@subject_menu_atlas})
+            
+            function subject_menu_atlas(~, ~)
+                GUICohort(atlas.copy(), Subject.getClass(sub));
             end
         end
     end

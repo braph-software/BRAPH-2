@@ -10,9 +10,8 @@ classdef DataScalar < Data
     %
     % DataScalar methods:
     %   DataScalar              - Constructor
-    %
-    % DataScalar abstract methods:
-    %   setValue                - checks the value and sets it to DataConnectivity
+    %   setValue                - set value
+    %   getDataPanel            - returns data panel
     %
     % DataScalar static mehtods
     %   getClass                - returns the class
@@ -21,6 +20,7 @@ classdef DataScalar < Data
     %   getAvailableSettings    - returns the available settings
     %
     % See also Data, DataFunctional, DataConnectivity, DataStructural.
+    
     methods
         function d = DataScalar(atlas, value, varargin)
             % DATASCALAR(ATLAS, VALUE) creates DataScalar object and calls
@@ -34,8 +34,6 @@ classdef DataScalar < Data
             
             d = d@Data(atlas, value, varargin{:});
         end
-    end
-    methods
         function setValue(d, value)
             % SETVALUE sets the value of the data into the object
             %
@@ -51,6 +49,25 @@ classdef DataScalar < Data
                 'The value of DataScalar must be a scalar.')
 
             d.value = value;
+        end
+        function h = getDataPanel(d, ui_parent)          
+            
+            value_holder = d.value;
+            h_panel = uicontrol('Parent', ui_parent);
+            set(h_panel, 'Style', 'edit')
+            set(h_panel, 'Units', 'normalized')
+            set(h_panel, 'Position', [0.01 0.9 0.5 0.1])
+            set(h_panel, 'String', value_holder)
+            set(h_panel, 'Callback', {@cb_edit_scalar})
+            
+            function cb_edit_scalar(~, ~)
+                newdata = get(h_panel, 'String');
+                d.value = newdata;
+            end
+            
+             if nargout > 0
+                h = h_panel;
+            end   
         end
     end
     methods (Static)

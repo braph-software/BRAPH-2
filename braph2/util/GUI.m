@@ -108,7 +108,7 @@ classdef GUI
         GA_EXTENSION = '*.analysis'
         GA_MSG_PUTFILE = 'Save graph analysis'
         GA_MSG_GETFILE = ['Select graph analysis file (' GUI.GA_EXTENSION ')']
-        
+             
         % GUI general
         MSG_YES = 'Yes'
         MSG_NO = 'No'

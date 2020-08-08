@@ -10,9 +10,8 @@ classdef DataStructural < Data
     %
     % DataStructurral methods:
     %   DataStructurral         - Constructor
-    %
-    % DataStructurral abstract methods:
-    %   setValue                - checks the value and sets it to DataStructurral
+    %   setValue                - set value
+    %   getDataPanel            - returns data panel
     %
     % DataStructurral static mehtods
     %   getClass                - returns the class
@@ -35,8 +34,6 @@ classdef DataStructural < Data
             
             d = d@Data(atlas, value, varargin{:});
         end
-    end
-    methods
         function setValue(d, value)
             % SETVALUE sets the value of the data into the object
             %
@@ -57,6 +54,44 @@ classdef DataStructural < Data
                 ])
 
             d.value = value;
+        end
+        function h = getDataPanel(d, ui_parent)
+            % GETDATAPANEL creates a uitable and returns it
+            %
+            % GETDATAPANEL(D, UIPARENT) creates a uitable with D values and
+            % sets the uitable to the UIPARENT.
+            %
+            % See also setValue.
+            
+                value_holder = d.value;
+                h_panel = uitable('Parent', ui_parent);
+                
+                % rownames
+                atlas = d.atlas;
+                brs = atlas.getBrainRegions().getValues();
+                for j = 1:1:length(brs)
+                    br = brs{j};
+                    RowName{j} = br.getID(); %#ok<AGROW>
+                end
+                
+                set(h_panel, 'Units', 'normalized')
+                set(h_panel, 'Position', [0 0 1 1])
+                set(h_panel, 'ColumnFormat', {'numeric'})
+                set(h_panel, 'ColumnEditable', true)
+                set(h_panel, 'RowName', RowName)
+                set(h_panel, 'Data', value_holder)
+                set(h_panel, 'CellEditCallback', {@cb_data_table})
+
+            function cb_data_table(~, event)
+                m = event.Indices(1);
+                col = event.Indices(2);
+                newdata = event.NewData;
+                d.value(m, col) = newdata;
+            end
+            
+            if nargout > 0
+                h = h_panel;
+            end   
         end
     end
     methods (Static)

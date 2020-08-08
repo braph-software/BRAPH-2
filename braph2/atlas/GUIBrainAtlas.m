@@ -106,18 +106,6 @@ FIGURE_CMD = GUI.FIGURE_CMD;
 FIGURE_SC = GUI.FIGURE_SC;
 FIGURE_TP = ['Generate brain figure. Shortcut: ' GUI.ACCELERATOR '+' FIGURE_SC];
 
-% MRICOHORT_CMD = 'New MRI Cohort ...';
-% MRICOHORT_TP = ['Generate new MRI cohort and opens it with ' GUI.MCE_NAME];
-%
-% fMRICOHORT_CMD = 'New fMRI Cohort ...';
-% fMRICOHORT_TP = ['Generate new fMRI cohort and opens it with ' GUI.fMCE_NAME];
-%
-% EEGCOHORT_CMD = 'New EEG Cohort ...';
-% EEGCOHORT_TP = ['Generate new EEG cohort and opens it with ' GUI.ECE_NAME];
-%
-% PETCOHORT_CMD = 'New PET Cohort ...';
-% PETCOHORT_TP = ['Generate new PET cohort and opens it with ' GUI.PCE_NAME];
-
 %% Application data
 if ~exist('atlas', 'var')
     atlas = BrainAtlas('BA ID', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
@@ -843,7 +831,7 @@ init_contextmenus()
 MENU_FILE = GUI.MENU_FILE;
 MENU_EDIT = GUI.MENU_EDIT;
 MENU_BRAINVIEW = 'Brain View';
-% MENU_COHORTS = 'Subject Cohorts';
+MENU_COHORTS = 'Subject Cohorts';
 
 ui_menu_file = uimenu(f, 'Label', MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
@@ -867,8 +855,7 @@ ui_menu_edit_move2top = uimenu(ui_menu_edit);
 ui_menu_edit_move2bottom = uimenu(ui_menu_edit);
 ui_menu_brainview = uimenu(f, 'Label', MENU_BRAINVIEW);
 ui_menu_brainview_figure = uimenu(ui_menu_brainview);
-% % ui_menu_cohorts = uimenu(f, 'Label', MENU_COHORTS);
-% % ui_menu_cohorts_mricohort = uimenu(ui_menu_cohorts);
+ui_menu_cohorts = uimenu(f, 'Label', MENU_COHORTS);
 % % ui_menu_cohorts_fmricohort = uimenu(ui_menu_cohorts);
 % % ui_menu_cohorts_eegcohort = uimenu(ui_menu_cohorts);
 % % ui_menu_cohorts_petcohort = uimenu(ui_menu_cohorts);
@@ -950,17 +937,11 @@ init_menu()
         set(ui_menu_brainview_figure, 'Accelerator', FIGURE_SC)
         set(ui_menu_brainview_figure, 'Callback', {@cb_menu_figure})
         
-        %         set(ui_menu_cohorts_mricohort, 'Label', MRICOHORT_CMD)
-        %         set(ui_menu_cohorts_mricohort, 'Callback', {@cb_menu_mricohort})
-        %
-        %         set(ui_menu_cohorts_fmricohort, 'Label', fMRICOHORT_CMD)
-        %         set(ui_menu_cohorts_fmricohort, 'Callback', {@cb_menu_fmricohort})
-        %
-        %         set(ui_menu_cohorts_eegcohort, 'Label', EEGCOHORT_CMD)
-        %         set(ui_menu_cohorts_eegcohort, 'Callback', {@cb_menu_eegcohort})
-        %
-        %         set(ui_menu_cohorts_petcohort, 'Label', PETCOHORT_CMD)
-        %         set(ui_menu_cohorts_petcohort, 'Callback', {@cb_menu_petcohort})
+        subjects = Subject.getList();
+        for i = 1:1:length(subjects)
+            sub = subjects{i};
+            Subject.getMenuAtlasPanel(sub, atlas, ui_menu_cohorts);            
+        end
     end
 [ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME); %#ok<ASGLU>
     function cb_menu_figure(~, ~)  % (src, event)
@@ -970,42 +951,6 @@ init_menu()
         set(gca, 'Units', 'normalized')
         set(gca, 'OuterPosition', [0 0 1 1])
     end
-%     function cb_menu_mricohort(~, ~)  % (src, event)
-%         if atlas.getBrainRegions().length() > 0
-%             GUIMRICohort(atlas.copy())
-%         else
-%             msgbox('In order to create an MRI cohort the brain atlas must have at least one brain region.', ...
-%                 'Warning: Empty brain atlas', ...
-%                 'warn')
-%         end
-%     end
-%     function cb_menu_fmricohort(~,~) % (src,event)
-%         if atlas.getBrainRegions().length()>0
-%             GUIfMRICohort(atlas.copy())
-%         else
-%             msgbox('In order to create an fMRI cohort the brain atlas must have at least one brain region.', ...
-%                 'Warning: Empty brain atlas', ...
-%                 'warn')
-%         end
-%     end
-%     function cb_menu_eegcohort(~,~) % (src,event)
-%         if atlas.getBrainRegions().length()>0
-%             GUIEEGCohort(atlas.copy())
-%         else
-%             msgbox('In order to create an EEG cohort the brain atlas must have at least one brain region.', ...
-%                 'Warning: Empty brain atlas', ...
-%                 'warn')
-%         end
-%     end
-%     function cb_menu_petcohort(~,~) % (src,event)
-%         if atlas.getBrainRegions().length()>0
-%             GUIPETCohort(atlas.copy())
-%         else
-%             msgbox('In order to create an PET cohort the brain atlas must have at least one brain region.', ...
-%                 'Warning: Empty brain atlas', ...
-%                 'warn')
-%         end
-%     end
 
 %% Toolbar
 set(f, 'Toolbar', 'figure')

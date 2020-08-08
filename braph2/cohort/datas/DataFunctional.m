@@ -10,9 +10,8 @@ classdef DataFunctional < Data
     %
     % DataFunctional methods:
     %   DataFunctional          - Constructor
-    %
-    % DataFunctional abstract methods:
-    %   setValue                - checks the value and sets it to DataFunctional
+    %   setValue                - set value
+    %   getDataPanel            - returns data panel
     %
     % DataFunctional static mehtods
     %   getClass                - returns the class
@@ -35,8 +34,6 @@ classdef DataFunctional < Data
             
             d = d@Data(atlas, value, varargin{:});
         end
-    end
-    methods
         function setValue(d, value)
             % SETVALUE sets the value of the data into the object
             %

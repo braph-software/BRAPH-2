@@ -12,11 +12,13 @@ classdef Data < handle & matlab.mixin.Copyable
     % Data basic methods:
     %   tostring                - returns a string representing the Data
     %   disp                    - displays the Data
-    %   value                   - returns the value
+    %   getValue                - returns the value
+    %   getBrainAtlas           - returns the brain atlas
     %   setBrainAtlas           - sets the Brain Atlas to Data
     % 
     % Data abstract methods:
-    %   setValue                - method to be inherit by subclass to set the value
+    %   setValue                - set value
+    %   getDataPanel            - returns data panel
     %
     % Data static mehtods
     %   getList                 - returns the list of subclasses
@@ -64,7 +66,7 @@ classdef Data < handle & matlab.mixin.Copyable
             d.settings = settings;
         end
     end
-    methods  % Basic methods
+    methods  % basic methods
         function str = tostring(d)
             % TOSTRING string with information about data
             %
@@ -119,13 +121,11 @@ classdef Data < handle & matlab.mixin.Copyable
             d.atlas = atlas;
         end
     end
-    methods (Abstract)  % setValue
-        % SETVALUE(D, VALUE) (Abstract) sets the value of the data
-        % Must be used by the subclasses. 
-        
+    methods (Abstract)  % abstract methods
         setValue(d, value)  % set the value of the data
+        getDataPanel(d, ui_parent)  % returns data panel
     end
-    methods (Static)  % Inspection methods
+    methods (Static)  % inspection methods
         function data_list = getList()
             % GETLIST returns a list with all subclasses
             %
@@ -190,7 +190,7 @@ classdef Data < handle & matlab.mixin.Copyable
             available_settings = eval([Data.getClass(d) '.getAvailableSettings()']);        
         end
     end
-    methods (Access=protected)  % Shallow Copy
+    methods (Access=protected)  % shallow copy
         function d_copy = copyElement(d)
             % COPYELEMENT(D) deep copy of data
             %
