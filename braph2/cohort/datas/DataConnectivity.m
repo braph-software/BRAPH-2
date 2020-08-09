@@ -42,7 +42,7 @@ classdef DataConnectivity < Data
             % it throws and error, if correct it sets the value to the
             % object.
             %
-            % See also getValue.
+            % See also getValue, getDataPanel.
 
             regionnumber = d.getBrainAtlas().getBrainRegions().length();
             assert(isnumeric(value) && isequal(size(value), [regionnumber, regionnumber]), ...
