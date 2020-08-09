@@ -391,7 +391,6 @@ init_grtab()
         
         set(ui_label_grtab_subject, 'Position', [.02 .90 .36 .03])
         set(ui_label_grtab_subject, 'HorizontalAlignment', 'left')
-        set(ui_label_grtab_subject, 'String', cohort.getSubjectClass())
         set(ui_label_grtab_subject, 'TooltipString', eval([cohort.getSubjectClass() '.getDescription()']))
         set(ui_label_grtab_subject, 'enable', 'off')
 
@@ -490,6 +489,7 @@ init_grtab()
             data{g, GRTAB_NOTES_COL} = groups_idict.getValue(g).getNotes();
         end
         set(ui_table_grtab, 'Data', data)
+        set(ui_label_grtab_subject, 'String', [cohort.getSubjectClass() ' (' num2str(cohort.getSubjects().length()) ')'])
         
         if groups_idict.length() < 1
             disable_group_intersect_buttons()
