@@ -13,8 +13,8 @@ classdef Data < handle & matlab.mixin.Copyable
     %   tostring                - returns a string representing the Data
     %   disp                    - displays the Data
     %   getValue                - returns the value
-    %   getBrainAtlas           - returns the brain atlas
     %   setBrainAtlas           - sets the Brain Atlas to Data
+    %   getBrainAtlas           - returns the brain atlas    
     % 
     % Data abstract methods:
     %   setValue                - set value
@@ -88,24 +88,15 @@ classdef Data < handle & matlab.mixin.Copyable
             disp(['<a href="matlab:help ' Data.getClass(d) '">' Data.getClass(d) '</a>'])
             disp([' size: ' int2str(size(d.getValue(), 1)) ' rows x ' int2str(size(d.getValue(), 2)) ' columns'])
         end
-        function atlas = getBrainAtlas(d)
-            % GETBRAINATLAS returns the brain atlas
-            %
-            % ATLAS = GETBRAINATLAS(D) returns the brain atlas.
-            %
-            % See also getValue.
-            
-            atlas = d.atlas;
-        end
         function value = getValue(d)
             % GETVALUE returns the value of data
-            % 
+            %
             % VALUE = GETVALUE(D) returns the value of the data.
             %
             % See also getBrainAtlas.
             
             value = d.value;
-        end
+        end        
         function setBrainAtlas(d, atlas)
             % SETBRAINATLAS sets the brain atlas to the data object
             %
@@ -119,6 +110,15 @@ classdef Data < handle & matlab.mixin.Copyable
                 ['When substituting the brain atlas in ' d.getClass() ', the size of the brain atlas must remain the same.'])
             
             d.atlas = atlas;
+        end
+        function atlas = getBrainAtlas(d)
+            % GETBRAINATLAS returns the brain atlas
+            %
+            % ATLAS = GETBRAINATLAS(D) returns the brain atlas.
+            %
+            % See also getValue.
+            
+            atlas = d.atlas;
         end
     end
     methods (Abstract)  % abstract methods

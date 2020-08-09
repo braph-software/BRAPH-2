@@ -42,7 +42,7 @@ classdef DataScalar < Data
             % it throws and error, if correct it sets the value to the
             % object.
             %
-            % See also getValue.   
+            % See also getValue, getDataPanel.
             
             assert(isnumeric(value) && numel(value)==1, ...
                 [BRAPH2.STR ':DataScalar:' BRAPH2.WRONG_INPUT], ...

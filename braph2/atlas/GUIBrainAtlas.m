@@ -856,9 +856,6 @@ ui_menu_edit_move2bottom = uimenu(ui_menu_edit);
 ui_menu_brainview = uimenu(f, 'Label', MENU_BRAINVIEW);
 ui_menu_brainview_figure = uimenu(ui_menu_brainview);
 ui_menu_cohorts = uimenu(f, 'Label', MENU_COHORTS);
-% % ui_menu_cohorts_fmricohort = uimenu(ui_menu_cohorts);
-% % ui_menu_cohorts_eegcohort = uimenu(ui_menu_cohorts);
-% % ui_menu_cohorts_petcohort = uimenu(ui_menu_cohorts);
 init_menu()
     function init_menu()
         % menu open/save

@@ -42,7 +42,7 @@ classdef DataFunctional < Data
             % If incorrect it throws and error, if correct it sets the
             % value to the object.
             %
-            % See also getValue.
+            % See also getValue, getDataPanel.
             
             regionnumber = d.getBrainAtlas().getBrainRegions().length();
             assert(isnumeric(value) && size(value, 1)==regionnumber, ...
@@ -55,7 +55,7 @@ classdef DataFunctional < Data
             
             d.value = value;
         end
-         function h = getDataPanel(d, ui_parent)
+        function h = getDataPanel(d, ui_parent)
             % GETDATAPANEL creates a uitable and returns it
             %
             % GETDATAPANEL(D, UIPARENT) creates a uitable with D values and
@@ -63,25 +63,25 @@ classdef DataFunctional < Data
             %
             % See also setValue.
             
-                value_holder = d.value;
-                h_panel = uitable('Parent', ui_parent);
-                
-                % rownames
-                atlas = d.atlas;
-                brs = atlas.getBrainRegions().getValues();
-                for j = 1:1:length(brs)
-                    br = brs{j};
-                    RowName{j} = br.getID(); %#ok<AGROW>
-                end
-                
-                set(h_panel, 'Units', 'normalized')
-                set(h_panel, 'Position', [0 0 1 1])
-                set(h_panel, 'ColumnFormat', {'numeric'})
-                set(h_panel, 'ColumnEditable', true)
-                set(h_panel, 'RowName', RowName)
-                set(h_panel, 'Data', value_holder)
-                set(h_panel, 'CellEditCallback', {@cb_data_table})
-
+            value_holder = d.value;
+            h_panel = uitable('Parent', ui_parent);
+            
+            % rownames
+            atlas = d.atlas;
+            brs = atlas.getBrainRegions().getValues();
+            for j = 1:1:length(brs)
+                br = brs{j};
+                RowName{j} = br.getID(); %#ok<AGROW>
+            end
+            
+            set(h_panel, 'Units', 'normalized')
+            set(h_panel, 'Position', [0 0 1 1])
+            set(h_panel, 'ColumnFormat', {'numeric'})
+            set(h_panel, 'ColumnEditable', true)
+            set(h_panel, 'RowName', RowName)
+            set(h_panel, 'Data', value_holder)
+            set(h_panel, 'CellEditCallback', {@cb_data_table})
+            
             function cb_data_table(~, event)
                 m = event.Indices(1);
                 col = event.Indices(2);
@@ -91,12 +91,12 @@ classdef DataFunctional < Data
             
             if nargout > 0
                 h = h_panel;
-            end   
+            end
         end
     end
     methods (Static)
         function data_class = getClass()
-            % GETCLASS returns the class of the data 
+            % GETCLASS returns the class of the data
             %
             % DATA_CLASS = GETCLASS() returns the class of the data.
             %
@@ -108,7 +108,7 @@ classdef DataFunctional < Data
             % GETNAME returns the name of the data
             %
             % NAME = GETNAME(D) returns the name of the data.
-            % 
+            %
             % See also getClass, getDescription, getAvailableSettings.
             
             name = 'Functional Brain Data';
@@ -118,7 +118,7 @@ classdef DataFunctional < Data
             %
             % DESCRIPTION = GETDESCRIPTION(D) returns the description of
             % the data.
-            % 
+            %
             % See also getClass, getName, getAvailableSettings.
             
             description = [ ...
@@ -131,10 +131,10 @@ classdef DataFunctional < Data
             %
             % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(D) returns the
             % available settings of the data.
-            % 
+            %
             % See also getClass, getName, getDescription.
             
             available_settings = {};
         end
-    end  
+    end
 end
