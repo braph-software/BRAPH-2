@@ -49,9 +49,6 @@ classdef Subject < handle & matlab.mixin.Copyable
     %   getDataClass            - returns the class of the type of a data of the subclass
     %   getSubject              - returns a new instantiation of a subclass
     %
-    % Subject GUI methods (Static):
-    %   getMenuAtlasPanel       - returns a GUIBrainAtlas uimenu handle
-    %
     % Subject load and save methods (Abstract, Static):
     %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
     %   save_to_xls             - saves the subject data to a '.xls' or '.xlsx' file
@@ -245,7 +242,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             % type the datadict has. It populates the controls dynamically
             % with the corresponding data.
             %
-            % See also getMenuAtlasPanel.
+            % See also getData, getBrainAtlases, getDataCodes, getDataList.
             
             data_codes = sub.getDataCodes();
             data_list = sub.getDataList(); 
@@ -458,27 +455,6 @@ classdef Subject < handle & matlab.mixin.Copyable
                 data_code = data_codes{i};
                 d = sub.getData(data_code);
                 sub_copy.datadict(data_code) = d.copy();
-            end
-        end
-    end
-    methods (Static)  % GUI functions
-        function sub_atlas_menu = getMenuAtlasPanel(sub, atlas, ui_menu_parent) 
-            % GETMENUATLASPANEL ui menu item to open cohort
-            %
-            % H = GETMENUATLASPANEL(SUBJECT, ATLAS, UI_MENU_PARENT) creates
-            % a ui menu item to open a new GUI Cohrort for SUBJECT (which
-            % can be either a subject class or a subject object), connects
-            % it to UI_MENU_PARENT, and returns an handle to the ui menu
-            % item.
-            %
-            % See also getDataPanel.
-
-            sub_atlas_menu = uimenu(ui_menu_parent);
-            set(sub_atlas_menu, 'Label', [Subject.getName(sub) ' Cohort'])
-            set(sub_atlas_menu, 'Callback', {@subject_menu_atlas})
-            
-            function subject_menu_atlas(~, ~)
-                GUICohort(atlas.copy(), Subject.getClass(sub));
             end
         end
     end

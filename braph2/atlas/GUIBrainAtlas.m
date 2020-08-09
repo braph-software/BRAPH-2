@@ -937,7 +937,20 @@ init_menu()
         subjects = Subject.getList();
         for i = 1:1:length(subjects)
             sub = subjects{i};
-            Subject.getMenuAtlasPanel(sub, atlas, ui_menu_cohorts);            
+            sub_atlas_menu = uimenu(ui_menu_cohorts);
+            set(sub_atlas_menu, 'Label', [Subject.getName(sub) ' Cohort'])
+            set(sub_atlas_menu, 'Callback', {@subject_menu_atlas_subs})            
+        end
+        
+        function subject_menu_atlas_subs(src, ~)
+            subject_label_char_array = get(src, 'Label');
+            subject_name = erase(subject_label_char_array, ' Cohort');
+            for j = 1:1:length(subjects)
+                sub = subjects{j};
+                if isequal(subject_name, Subject.getName(sub))
+                    GUICohort(atlas.copy(), Subject.getClass(sub));
+                end
+            end            
         end
     end
 [ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME); %#ok<ASGLU>
