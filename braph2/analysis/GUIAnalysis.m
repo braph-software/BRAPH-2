@@ -246,6 +246,7 @@ init_graph_settings()
         
         set(ui_graph_setttings_inner_panel, 'Position', [0.02 0.02 0.98 .85])
         set(ui_graph_setttings_inner_panel, 'Title', 'Analysis Settings')
+        set(ui_graph_setttings_inner_panel, 'Units', 'normalized')
         
         set(ui_graph_analysis_id, 'Position', [.02 .95 .36 .03])
         set(ui_graph_analysis_id, 'HorizontalAlignment', 'left')
@@ -261,52 +262,35 @@ init_graph_settings()
         set(ui_graph_analysis_notes, 'HorizontalAlignment', 'left')
         set(ui_graph_analysis_notes, 'FontWeight', 'bold')
         set(ui_graph_analysis_notes, 'Callback', {@cb_calc_ga_notes}) 
-        
-%         ga.getSettingsPanel(ui_graph_setttings_inner_panel);
+       
         
         available_settings = ga.getAvailableSettings();
-        inner_panel_height = 1/length(available_settings);
-        inner_panel_width = 1;
-        inner_panel_x = 0;
-        
+        texts = zeros(length(available_settings), 1);
+        fields =  zeros(length(available_settings), 1);
+        inner_panel_height = 1/length(available_settings);        
         
         for j = 1:1:length(available_settings)
             as = available_settings{j};
-            inner_panel_y = 1 - j * inner_panel_height; 
-            inner_panel = uipanel('Parent', ui_graph_setttings_inner_panel);
-            set(inner_panel, 'Position', [inner_panel_x inner_panel_y inner_panel_width inner_panel_height])
-            set(inner_panel, 'Title', as{1, 1})
+            y_correction = 0.2;
+            inner_panel_y = 1 - j * inner_panel_height + y_correction; 
 
-            sett_text_x =  0.0;
-            sett_text_y = 0.0;
-            sett_text_width = 1;
-            sett_text_height = 1;
-            sett_pop_width = 0.56;
-            sett_pop_y = 0.4;
-            sett_pop_x = 0.40;
-            sett_pop_height = 0.04;
+            texts(j, 1) = uicontrol('Parent', ui_graph_setttings_inner_panel, 'Style', 'text', ...
+                 'Units', 'normalized', 'FontSize', 6, 'Position', [0.01 inner_panel_y 0.50 0.03], 'String', as{1,1});
             
-            inner_text = uicontrol('Parent', inner_panel);
-            set(inner_text, 'Style', 'text')
-            set(inner_text, 'Position', [sett_text_x sett_text_y sett_text_width sett_text_height])
-            set(inner_text, 'String', as{1, 1})
-            set(inner_text, 'HorizontalAlignment', 'center')
-            set(inner_text, 'FontWeight', 'bold')
-            
+            fields(j, 1) = uicontrol('Parent', ui_graph_setttings_inner_panel,  ...
+                'Units', 'normalized', 'Position', [0.58 inner_panel_y+0.01 0.40 0.03] );
+ 
             if isequal(as{1, 2}, 1) % string
-                inner_popup = uicontrol(inner_panel, 'Style', 'popup');
-                set(inner_popup, 'Position', [sett_pop_x sett_pop_y sett_pop_width sett_pop_height])
-                set(inner_popup, 'String', as{1, 4})
-                set(inner_popup, 'HorizontalAlignment', 'left')
-                set(inner_popup, 'FontWeight', 'bold')
+                set(fields(j, 1), 'Style', 'popup');
+                set(fields(j, 1), 'String', as{1, 4})
+                set(fields(j, 1), 'HorizontalAlignment', 'left')
+                set(fields(j, 1), 'FontWeight', 'bold')
             elseif isequal(as{1, 2}, 2) % numerical
-                inner_popup = uicontrol(inner_panel, 'Style', 'edit');
-                set(inner_popup, 'Position', [sett_pop_x sett_pop_y sett_pop_width sett_pop_height])
-                set(inner_popup, 'String', as{1, 3})  % put default
+                set(fields(j, 1), 'Style', 'edit');
+                set(fields(j, 1), 'String', as{1, 3})  % put default
             else % logical                
-                inner_popup = uicontrol(inner_panel, 'Style', 'popup');
-                set(inner_popup, 'Position', [sett_pop_x sett_pop_y sett_pop_width sett_pop_height])
-                set(inner_popup, 'String', {'true', 'false'}) 
+                set(fields(j, 1), 'Style', 'popup');
+                set(fields(j, 1), 'String', {'true', 'false'}) 
             end
         end
     end
