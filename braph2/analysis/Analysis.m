@@ -42,6 +42,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
     %  getClass                 - returns the class of the analysis
     %  getName                  - returns the name of the analysis
     %  getDescription           - returns the description of the analysis
+    %  getGraphType             - returns the compatible type of graph
     %  getSubjectClass          - returns the class of the subject
     %  getMeasurementClass      - returns the class of the measurement
     %  getRandomComparisonClass - returns the class of the randomcomparison
@@ -364,7 +365,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
             % analysis.
             %
-            % See also getList, getName, getDescription.
+            % See also getList, getName, getDescription, getGraphType.
             
             if isa(analysis, 'Analysis')
                 analysis_class = class(analysis);
@@ -387,9 +388,19 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % DESCRIPTION = GETDESCRIPTION(ANALYSIS) returns the description
             % of ANALYSIS.
             %
-            % See also getList, getClass, getName.
+            % See also getList, getClass, getName, getGraphType.
             
             description = eval([Analysis.getClass(analysis) '.getDescription()']);
+        end
+        function graph_type = getGraphType(analysis)
+            % GETGRAPHTYPE returns the type of graph comptible with the analysis
+            %
+            % GRAPH_TYPE = GETGRAPHTYPE(ANALYSIS) returns the type of graph
+            % compatible with the ANALYSIS.
+            %
+            % See also getClass, getName, getDescription.
+            
+            graph_type = eval([Analysis.getClass(analysis) '.getGraphType()']);
         end
         function subject_class = getSubjectClass(analysis)
             % GETSUBJETCLASS returns the class of analysis subclass subject
