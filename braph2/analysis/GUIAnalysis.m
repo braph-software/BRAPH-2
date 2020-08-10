@@ -354,7 +354,7 @@ init_measures_table()
         
         data = cell(length(mlist), 3);
         for mi = 1:1:length(mlist)
-            if any(selected_group == mi)
+            if any(selected_measures == mi)
                 data{mi, TAB_LOGICAL_COL} = true;
             else
                 data{mi, TAB_LOGICAL_COL} = false;
