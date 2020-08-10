@@ -114,7 +114,7 @@ if exist('tmp', 'var') && isa(tmp, 'Cohort')
 elseif exist('tmp', 'var') && isa(tmp,'BrainAtlas')  && exist('sub_class', 'var')  % case with atlas  
     atlas = tmp;
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', sub_class, atlas, {});    
-else % string
+else % case with string corresponding to subject class
     assert(ismember(tmp, Subject.getList()));
     atlas = BrainAtlas('Empty BA', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
     cohort = Cohort('cohort id', 'cohort label', 'cohort notes', tmp, atlas, {});
@@ -255,7 +255,6 @@ ui_text_atlas_name = uicontrol(ui_panel_atlas, 'Style', 'text');
 ui_text_atlas_brnumber = uicontrol(ui_panel_atlas, 'Style', 'text');
 ui_button_atlas = uicontrol(ui_panel_atlas, 'Style', 'pushbutton');
 init_atlas()
-
     function init_atlas()
         GUI.setUnits(ui_panel_atlas)
         GUI.setBackgroundColor(ui_panel_atlas)
