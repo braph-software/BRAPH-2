@@ -275,7 +275,7 @@ init_graph_settings()
             inner_panel_y = 1 - j * inner_panel_height + y_correction; 
 
             texts(j, 1) = uicontrol('Parent', ui_graph_setttings_inner_panel, 'Style', 'text', ...
-                 'Units', 'normalized', 'FontSize', 6, 'Position', [0.01 inner_panel_y 0.50 0.03], 'String', as{1,1});
+                 'Units', 'normalized', 'FontSize', 6, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y 0.50 0.03], 'String', as{1,1});
             
             fields(j, 1) = uicontrol('Parent', ui_graph_setttings_inner_panel,  ...
                 'Units', 'normalized', 'Position', [0.58 inner_panel_y+0.01 0.40 0.03] );
@@ -354,6 +354,11 @@ init_measures_table()
         
         data = cell(length(mlist), 3);
         for mi = 1:1:length(mlist)
+            if any(selected_group == mi)
+                data{mi, TAB_LOGICAL_COL} = true;
+            else
+                data{mi, TAB_LOGICAL_COL} = false;
+            end
             data{mi, TAB_NAME_COL} = Measure.getName(mlist{mi});
             if Measure.is_nodal(mlist{mi})
                 data{mi, TAB_NODAL_COL} = TAB_NODAL;               
