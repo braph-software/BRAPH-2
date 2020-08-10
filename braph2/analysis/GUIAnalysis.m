@@ -315,16 +315,19 @@ init_graph_settings()
     end
 
 %% Panel - Measure Table
-TAB_NAME_COL = 1;
-TAB_NODAL_COL = 2;
+TAB_LOGICAL_COL = 1;
+TAB_NAME_COL = 2;
+TAB_NODAL_COL = 3;
 TAB_NODAL = 'Global';
 TAB_GLOBAL = 'Nodal';
 TAB_BINODAL = 'Binodal';
-TAB_LAYER_COL = 3;
+TAB_LAYER_COL = 4;
 TAB_UNILAYER = 'Unilayer';
 TAB_BILAYER = 'Bilayer';
 TAB_SUPERGLOBAL = 'Super Global';
-TAB_TXT_COL = 4;
+TAB_TXT_COL = 5;
+
+selected_measures = [];
 
 TAB_WIDTH = 1 - 2 * MARGIN_X;
 TAB_X0 = MARGIN_X;
@@ -338,10 +341,11 @@ init_measures_table()
         GUI.setBackgroundColor(ui_table_calc)
        
         set(ui_table_calc, 'Position', TAB_POSITION)
-        set(ui_table_calc, 'ColumnName', {'   Brain Measure   ', ' global/nodal/binodal ', ' unilayer/bilayer/superglobal ' , '   notes   '})
-        set(ui_table_calc, 'ColumnFormat', {'char', {TAB_NODAL TAB_GLOBAL TAB_BINODAL}, {TAB_UNILAYER TAB_BILAYER TAB_SUPERGLOBAL} , 'char'})
-        set(ui_table_calc, 'ColumnEditable', [false false false false])
-        set(ui_table_calc, 'ColumnWidth', {GUI.width(f, .15 * TAB_WIDTH), GUI.width(f, .07 * TAB_WIDTH), GUI.width(f, .07 * TAB_WIDTH), GUI.width(f, .70 * TAB_WIDTH)})
+        set(ui_table_calc, 'ColumnName', {'', '   Brain Measure   ', '  Property  ', '  Scope  ' , '   Notes   '})
+        set(ui_table_calc, 'ColumnFormat', {'logical', 'char', {TAB_NODAL TAB_GLOBAL TAB_BINODAL}, {TAB_UNILAYER TAB_BILAYER TAB_SUPERGLOBAL} , 'char'})
+        set(ui_table_calc, 'ColumnEditable', [true false false false false])
+        set(ui_table_calc, 'ColumnWidth', {GUI.width(f, 0.02 * TAB_WIDTH), GUI.width(f, .15 * TAB_WIDTH), GUI.width(f, .07 * TAB_WIDTH), GUI.width(f, .07 * TAB_WIDTH), GUI.width(f, .68 * TAB_WIDTH)})
+        set(ui_table_calc, 'CellEditCallback', {@cb_measure_tbl})
     end
     function update_tab()        
         update_popups_grouplist()
@@ -380,6 +384,9 @@ init_measures_table()
                 % binary undirected (fix threshold) & binary undirected (fix density)
                 mlist = Graph.getCompatibleMeasureList('GraphBU');
         end
+    end
+    function cb_measure_tbl(~, ~)
+        % something with select measures
     end
 
 %% Menus
