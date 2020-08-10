@@ -223,222 +223,111 @@ init_cohort()
         end
     end
 
-%% Panel - Calc
-CALC_WIDTH = LEFTCOLUMN_WIDTH;
-CALC_HEIGHT = MAINPANEL_HEIGHT - COHORT_HEIGHT - MARGIN_Y;
-CALC_X0 = MARGIN_X;
-CALC_Y0 = FILENAME_HEIGHT + TAB_HEIGHT + 3 * MARGIN_Y;
-CALC_POSITION = [CALC_X0 CALC_Y0 CALC_WIDTH CALC_HEIGHT];
+%% Panel - Settings
+SET_WIDTH = LEFTCOLUMN_WIDTH;
+SET_HEIGHT = MAINPANEL_HEIGHT - COHORT_HEIGHT - MARGIN_Y;
+SET_X0 = MARGIN_X;
+SET_Y0 = FILENAME_HEIGHT + TAB_HEIGHT + 3 * MARGIN_Y;
+SET_POSITION = [SET_X0 SET_Y0 SET_WIDTH SET_HEIGHT];
 
-CALC_BUTTON_CMD = 'Start analysis';
-CALC_BUTTON_TP = 'Sets the correlation matrix and starts an analysis';
-SBG_BUTTON_CMD = 'Subgraph analysis';
-SBG_BUTTON_TP = 'Creates a subgraph for analysis';
+ui_graph_settings = uipanel();
+ui_graph_analysis_id = uicontrol(ui_graph_settings, 'Style', 'edit');
+ui_graph_analysis_label = uicontrol(ui_graph_settings, 'Style', 'edit');
+ui_graph_analysis_notes = uicontrol(ui_graph_settings, 'Style', 'edit');
+ui_graph_setttings_inner_panel = uipanel(ui_graph_settings);
 
-EDIT_COMM_BUTTON_CMD = 'Edit';
-EDIT_COMM_BUTTON_TP = 'Edit the community structure defined for a graph';
-DEFAULT_COMM_BUTTON_CMD = 'Default';
-DEFAULT_COMM_BUTTON_TP = 'Default/Discard community structure defined for a graph';
-
-ui_panel_calc = uipanel();
-ui_edit_calc_ganame = uicontrol(ui_panel_calc, 'Style', 'edit');
-
-ui_popup_calc_corr = uicontrol(ui_panel_calc, 'Style', 'popup', 'String', {''});
-ui_text_calc_corr = uicontrol(ui_panel_calc, 'Style', 'text');
-ui_popup_calc_graph = uicontrol(ui_panel_calc, 'Style', 'popup', 'String', {''});
-ui_text_calc_graph = uicontrol(ui_panel_calc, 'Style', 'text');
-ui_popup_calc_neg = uicontrol(ui_panel_calc, 'Style', 'popup', 'String', {''});
-ui_text_calc_neg = uicontrol(ui_panel_calc, 'Style', 'text');
-ui_button_calc_set = uicontrol(ui_panel_calc, 'Style', 'pushbutton');
-ui_button_calc_sub = uicontrol(ui_panel_calc, 'Style', 'pushbutton');
-
-% ui_panel_community = uipanel(ui_panel_calc);
-% ui_text_community_property = uicontrol(ui_panel_community, 'Style', 'text');
-% ui_text_community_algorithm = uicontrol(ui_panel_community, 'Style', 'text');
-% ui_text_community_gamma = uicontrol(ui_panel_community, 'Style', 'text');
-% ui_text_community_number = uicontrol(ui_panel_community, 'Style', 'text');
-% ui_button_community_edit = uicontrol(ui_panel_community, 'Style', 'pushbutton');
-% ui_button_community_default = uicontrol(ui_panel_community, 'Style', 'pushbutton');
-
-init_calc()
-    function init_calc()
-        GUI.setUnits(ui_panel_calc)
-        GUI.setBackgroundColor(ui_panel_calc)
+init_graph_settings()
+    function init_graph_settings()
+        GUI.setUnits(ui_graph_settings)
+        GUI.setBackgroundColor(ui_graph_settings)
         
-        set(ui_panel_calc, 'Position', CALC_POSITION)
-        set(ui_panel_calc, 'BorderType', 'none')
+        set(ui_graph_settings, 'Position', SET_POSITION)
+        set(ui_graph_settings, 'BorderType', 'none')
         
-        set(ui_edit_calc_ganame, 'Position', [.02 .95 .96 .04])
-        set(ui_edit_calc_ganame, 'HorizontalAlignment', 'left')
-        set(ui_edit_calc_ganame, 'FontWeight', 'bold')
-        set(ui_edit_calc_ganame, 'Callback', {@cb_calc_ganame})
-                
-        set(ui_text_calc_graph, 'Position', [.02 .850 .30 .04])
-        set(ui_text_calc_graph, 'String', 'Graph')
-        set(ui_text_calc_graph, 'HorizontalAlignment', 'left')
-        set(ui_text_calc_graph, 'FontWeight', 'bold')
+        set(ui_graph_setttings_inner_panel, 'Position', [0.02 0.02 0.98 .85])
+        set(ui_graph_setttings_inner_panel, 'Title', 'Analysis Settings')
         
-        set(ui_popup_calc_graph, 'String', MRIGraphAnalysis.GRAPH_OPTIONS)
-        set(ui_popup_calc_graph, 'Position', [.40 .860 .56 .04])
-        set(ui_popup_calc_graph, 'TooltipString', 'Select a graph type');
-        set(ui_popup_calc_graph, 'Callback', {@cb_calc_graph});
+        set(ui_graph_analysis_id, 'Position', [.02 .95 .36 .03])
+        set(ui_graph_analysis_id, 'HorizontalAlignment', 'left')
+        set(ui_graph_analysis_id, 'FontWeight', 'bold')
+        set(ui_graph_analysis_id, 'Callback', {@cb_calc_ga_id})
         
-        set(ui_text_calc_corr, 'Position', [.02 .780 .30 .04])
-        set(ui_text_calc_corr, 'String', 'Correlation')
-        set(ui_text_calc_corr, 'HorizontalAlignment', 'left')
-        set(ui_text_calc_corr, 'FontWeight', 'bold')
+        set(ui_graph_analysis_label, 'Position', [.42 .95 .56 .03])
+        set(ui_graph_analysis_label, 'HorizontalAlignment', 'left')
+        set(ui_graph_analysis_label, 'FontWeight', 'bold')
+        set(ui_graph_analysis_label, 'Callback', {@cb_calc_ga_label})
         
-        set(ui_popup_calc_corr, 'String', MRIGraphAnalysis.CORR_OPTIONS)
-        set(ui_popup_calc_corr, 'Position', [.40 .790 .56 .04])
-        set(ui_popup_calc_corr, 'TooltipString', 'Select a matrix correlation');
-        set(ui_popup_calc_corr, 'Callback', {@cb_calc_corr});
+        set(ui_graph_analysis_notes, 'Position', [.42 .90 .56 .03])
+        set(ui_graph_analysis_notes, 'HorizontalAlignment', 'left')
+        set(ui_graph_analysis_notes, 'FontWeight', 'bold')
+        set(ui_graph_analysis_notes, 'Callback', {@cb_calc_ga_notes}) 
         
-        set(ui_text_calc_neg, 'Position', [.02 .710 .30 .04])
-        set(ui_text_calc_neg, 'String', 'Negative corrs.')
-        set(ui_text_calc_neg, 'HorizontalAlignment', 'left')
-        set(ui_text_calc_neg, 'FontWeight', 'bold')
+%         ga.getSettingsPanel(ui_graph_setttings_inner_panel);
         
-        set(ui_popup_calc_neg, 'String', MRIGraphAnalysis.NEG_OPTIONS)
-        set(ui_popup_calc_neg, 'Position', [.40 .720 .56 .04])
-        set(ui_popup_calc_neg, 'TooltipString', 'Select a negative correlations handling');
-        set(ui_popup_calc_neg, 'Callback', {@cb_calc_neg});
+        available_settings = ga.getAvailableSettings();
+        inner_panel_height = 1/length(available_settings);
+        inner_panel_width = 1;
+        inner_panel_x = 0;
         
-        set(ui_button_calc_set, 'Position', [.20 .02 .60 .08])
-        set(ui_button_calc_set, 'String', CALC_BUTTON_CMD)
-        set(ui_button_calc_set, 'TooltipString', CALC_BUTTON_TP)
-        set(ui_button_calc_set, 'Callback', {@cb_calc_set})
         
-        set(ui_button_calc_sub, 'Position', [.20 .12 .60 .08])
-        set(ui_button_calc_sub, 'String', SBG_BUTTON_CMD)
-        set(ui_button_calc_sub, 'TooltipString', SBG_BUTTON_TP)
-        set(ui_button_calc_sub, 'Callback', {@cb_calc_sub})
+        for j = 1:1:length(available_settings)
+            as = available_settings{j};
+            inner_panel_y = 1 - j * inner_panel_height; 
+            inner_panel = uipanel('Parent', ui_graph_setttings_inner_panel);
+            set(inner_panel, 'Position', [inner_panel_x inner_panel_y inner_panel_width inner_panel_height])
+            set(inner_panel, 'Title', as{1, 1})
 
-%         set(ui_panel_community, 'Position',[.02 .30 0.96 0.30])
-%         set(ui_panel_community, 'Title', 'Community structure')
-%         GUI.setUnits(ui_panel_community)
-%         GUI.setBackgroundColor(ui_panel_community)
-%         
-%         set(ui_text_community_property, 'Position',[.05 .75 .95 .20])
-%         set(ui_text_community_property, 'HorizontalAlignment', 'left')
-%         
-%         set(ui_text_community_algorithm, 'Position',[.05 .65 .60 .10])
-%         set(ui_text_community_algorithm, 'HorizontalAlignment', 'left')
-%         
-%         set(ui_text_community_gamma, 'Position',[.05 .5 .60 .10])
-%         set(ui_text_community_gamma, 'HorizontalAlignment', 'left')
-%         
-%         set(ui_text_community_number, 'Position',[.05 .35 .60 .10])
-%         set(ui_text_community_number, 'HorizontalAlignment', 'left')
-%         
-%         set(ui_button_community_edit, 'Position',[.05 .10 .40 .20])
-%         set(ui_button_community_edit, 'Callback', {@cb_comm_edit})
-%         set(ui_button_community_edit, 'String',EDIT_COMM_BUTTON_CMD)
-%         set(ui_button_community_edit, 'TooltipString',EDIT_COMM_BUTTON_TP)
-%         
-%         set(ui_button_community_default, 'Position',[.55 .10 .40 .20])
-%         set(ui_button_community_default, 'Callback', {@cb_comm_default})
-%         set(ui_button_community_default, 'String',DEFAULT_COMM_BUTTON_CMD)
-%         set(ui_button_community_default, 'TooltipString',DEFAULT_COMM_BUTTON_TP)
-    end
-    function update_calc_ganame()
-        ganame = ga.getProp(MRICohort.NAME);
-        if isempty(ganame)
-            set(f, 'Name',[GUI.MGA_NAME ' - ' BNC.VERSION])
-        else
-            set(f, 'Name',[GUI.MGA_NAME ' - ' BNC.VERSION ' - ' ganame])
-        end
-        set(ui_edit_calc_ganame, 'String',ganame)
-    end
-    function update_calc()
-        graph = get(ui_popup_calc_graph, 'Value');
-        corr = get(ui_popup_calc_corr, 'Value');
-        neg = get(ui_popup_calc_neg, 'Value');
-        switch graph
-            case 1  % weighted undirected
-                ga = MRIGraphAnalysisWU(cohort,cs, ...
-                    MRIGraphAnalysis.CORR, MRIGraphAnalysis.CORR_OPTIONS{corr}, ...
-                    MRIGraphAnalysis.NEG, MRIGraphAnalysis.NEG_OPTIONS{neg} ...
-                    );
-            case 2  % binary undirected (fix threshold)
-                ga = MRIGraphAnalysisBUT(cohort,cs, ...
-                    MRIGraphAnalysis.CORR, MRIGraphAnalysis.CORR_OPTIONS{corr}, ...
-                    MRIGraphAnalysis.NEG, MRIGraphAnalysis.NEG_OPTIONS{neg} ...
-                    );
-            otherwise  % binary undirected (fix density)
-                ga = MRIGraphAnalysisBUD(cohort,cs, ...
-                    MRIGraphAnalysis.CORR, MRIGraphAnalysis.CORR_OPTIONS{corr}, ...
-                    MRIGraphAnalysis.NEG, MRIGraphAnalysis.NEG_OPTIONS{neg} ...
-                    );
-        end
-    end
-    function cb_calc_ganame(~,~)  % (src,event)
-        ga.setProp(MRIGraphAnalysis.NAME,get(ui_edit_calc_ganame, 'String'));
-        update_calc_ganame()
-    end
-    function cb_calc_graph(~,~)  %  (src,event)
-        update_calc()
-        update_tab()
-        update_matrix()
-    end
-    function cb_calc_corr(~,~)  %  (src,event)
-        update_calc()
-        update_tab()
-        update_matrix()
-    end
-    function cb_calc_neg(~,~)  %  (src,event)
-        update_calc()
-        update_tab()
-        update_matrix()
-    end
-    function cb_comm_edit(src,~)  % (src,event)
-        if ~isempty(cohort.getProps(MRISubject.DATA))
-
-            fig_structure = GUIMRIGraphAnalysisStructure(fig_structure,ga);
-            waitfor(fig_structure);
-
-            update_community_info()
-        else
-            errordlg('Select a non-empty cohort in order to define community structure',...
-                'Select a cohort', 'modal');
-        end
-    end
-    function cb_comm_default(~,~)  % (src,event)
-
-            cs.setCi(ones(1,cohort.getBrainAtlas.length()))
-            cs.setAlgorithm(Structure.ALGORITHM_LOUVAIN)
-            cs.setGamma(1)
-            cs.setNotes('dynamic community structure')
+            sett_text_x =  0.0;
+            sett_text_y = 0.0;
+            sett_text_width = 1;
+            sett_text_height = 1;
+            sett_pop_width = 0.56;
+            sett_pop_y = 0.4;
+            sett_pop_x = 0.40;
+            sett_pop_height = 0.04;
             
-            update_community_info()
-            update_matrix()
-    end
-    function cb_calc_set(~,~)  % (src,event)
-        if ga.getCohort().groupnumber()>0
-            if isa(ga, 'MRIGraphAnalysisWU')
-                GUIMRIGraphAnalysisWU(copy(ga))
-            elseif isa(ga, 'MRIGraphAnalysisBUT')
-                GUIMRIGraphAnalysisBUT(copy(ga))
-            elseif isa(ga, 'MRIGraphAnalysisBUD')
-                GUIMRIGraphAnalysisBUD(copy(ga))
+            inner_text = uicontrol('Parent', inner_panel);
+            set(inner_text, 'Style', 'text')
+            set(inner_text, 'Position', [sett_text_x sett_text_y sett_text_width sett_text_height])
+            set(inner_text, 'String', as{1, 1})
+            set(inner_text, 'HorizontalAlignment', 'center')
+            set(inner_text, 'FontWeight', 'bold')
+            
+            if isequal(as{1, 2}, 1) % string
+                inner_popup = uicontrol(inner_panel, 'Style', 'popup');
+                set(inner_popup, 'Position', [sett_pop_x sett_pop_y sett_pop_width sett_pop_height])
+                set(inner_popup, 'String', as{1, 4})
+                set(inner_popup, 'HorizontalAlignment', 'left')
+                set(inner_popup, 'FontWeight', 'bold')
+            elseif isequal(as{1, 2}, 2) % numerical
+                inner_popup = uicontrol(inner_panel, 'Style', 'edit');
+                set(inner_popup, 'Position', [sett_pop_x sett_pop_y sett_pop_width sett_pop_height])
+                set(inner_popup, 'String', as{1, 3})  % put default
+            else % logical                
+                inner_popup = uicontrol(inner_panel, 'Style', 'popup');
+                set(inner_popup, 'Position', [sett_pop_x sett_pop_y sett_pop_width sett_pop_height])
+                set(inner_popup, 'String', {'true', 'false'}) 
             end
         end
     end
-    function cb_calc_sub(~,~)  % (src,event)
-        if ~isempty(cohort.getProps(MRISubject.DATA))
-
-            fig_structure = GUIMRIGraphAnalysisSubgraph(fig_structure,ga);
-            waitfor(fig_structure);
-
+    function update_set_ga_id()
+        ga_id = ga.getID();
+        if isempty(ga_id)
+            set(f, 'Name', [GUI.GA_NAME ' - ' BRAPH2.VERSION])
         else
-            errordlg('Select a non-empty cohort in order to define a subgraph',...
-                'Select a cohort', 'modal');
+            set(f, 'Name', [GUI.GA_NAME ' - ' BRAPH2.VERSION ' - ' ga_id])
         end
+        set(ui_graph_analysis_id, 'String', ga_id)
     end
-    function update_community_info()
-        set(ui_text_community_property, 'String',['structure = ' cs.getNotes()])
-        set(ui_text_community_algorithm, 'String',['algorithm = ' cs.getAlgorithm()])
-        set(ui_text_community_gamma, 'String',['gamma = ' num2str(cs.getGamma())])
-        set(ui_text_community_number, 'String',['community number = ' int2str(numel(unique(cs.getCi)))])
+    function cb_calc_ga_id(~, ~)
+        ga.setID(get(ui_graph_analysis_id, 'String'))
+        update_set_ga_id()
+    end
+    function cb_calc_ga_label(~, ~)
+        ga.setLabel(get(ui_graph_analysis_label, 'String'))
+    end
+    function cb_calc_ga_notes(~, ~)
+        ga.setNotes(get(ui_graph_analysis_notes, 'String'))
     end
 
 %% Panel - Measure Table
@@ -498,9 +387,9 @@ init_measures_table()
         end
         set(ui_table_calc, 'Data', data)
     end
-    function mlist = measurelist()
-        a = 1;
-        switch  a %get(ui_popup_calc_graph, 'Value')
+    function mlist = measurelist()    
+        a =1;
+        switch a% get(ui_popup_calc_graph, 'Value')
             case 1  % weighted undirected               
                 mlist = Graph.getCompatibleMeasureList('GraphWU');
             otherwise
@@ -589,6 +478,6 @@ set(f, 'Visible', 'on');
 %         update_matrix()
         
         % setup data
-%         update_calc_ganame()
+        update_set_ga_id()
     end
 end
