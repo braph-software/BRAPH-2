@@ -331,49 +331,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
         end
     end
-    methods  % plot functions
-        function panel = getSettingsPanel(analysis, uiparent)
-            available_settings = analysis.getAvailableSettings();
-            inner_panel_height = 1/length(available_settings) - 0.3;
-            inner_panel_width = 1;
-            inner_panel_x = 0;
-            
-             for i = 1:1:length(available_settings)
-                 as = available_settings{i};
-                 inner_panel_y = 1 - i * inner_panel_height;
-                 inner_panel = uipanel(uiparent);
-                 set(inner_panel, 'Position', [inner_panel_x inner_panel_y inner_panel_width inner_panel_height])
-                 set(inner_panel, 'Title', as{1, 1})
-                 
-                 inner_obj = analysis.getDataPanelObject(inner_panel, i);
-                 
-             end
-             
-             if nargout > 0
-                h = sub.h_panel;
-            end 
-        end
-        function h = getDataPanelObject(analysis, ui_parent, position)
-            available_settings = analysis.getAvailableSettings();
-            as = available_settings{position};
-            
-            sett_text_x =  0.0;
-            sett_text_y = 0.0;
-            sett_text_width = 1;
-            sett_text_height = 1;
-            
-            ui_object = uicontrol('Parent', ui_parent);
-            set(ui_object, 'Style', 'text')
-            set(ui_object, 'Position', [sett_text_x sett_text_y sett_text_width sett_text_height])
-            set(ui_object, 'String', as{1, 1})
-            set(ui_object, 'HorizontalAlignment', 'center')
-            set(ui_object, 'FontWeight', 'bold')
-            set(ui_object, 'Visible', 'on'  )
-            if nargout > 0
-                h = ui_object;
-            end
-        end        
-    end
     methods (Static)  % getAnalysis
         function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>
             % GETANALYSIS returns an analysis object
