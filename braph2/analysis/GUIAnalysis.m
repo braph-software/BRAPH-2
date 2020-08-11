@@ -49,18 +49,13 @@ elseif exist('tmp', 'var') && isa(tmp, 'Cohort') % pass a cohort
         end        
     end    
     cohort = ga.getCohort();
-else % string of analysis class
-    % this is missing BUD and BUT options from start
+else % string of analysis class    
      assert(ismember(tmp, analysis_list));     
-     subject_type = Analysis.getSubjectClass(tmp);    
-     for i = 1:1:length(analysis_list)
-        analysis = analysis_list{i};
-        if isequal(Analysis.getSubjectClass(analysis), subject_type) && isequal(Analysis.getGraphType(analysis), 'GraphWU')
-            atlas = BrainAtlas('Empty BA', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
-            cohort = Cohort('Empty Cohort', 'cohort label', 'cohort notes', subject_type, atlas, {});
-            ga = Analysis.getAnalysis(analysis, 'Empty GA', '', '', cohort, {}, {}, {});
-        end        
-    end        
+     subject_type = Analysis.getSubjectClass(tmp);         
+    
+     atlas = BrainAtlas('Empty BA', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
+     cohort = Cohort('Empty Cohort', 'cohort label', 'cohort notes', subject_type, atlas, {});
+     ga = Analysis.getAnalysis(tmp, 'Empty GA', '', '', cohort, {}, {}, {});        
 end
 
     function cb_open(~, ~)
@@ -194,14 +189,10 @@ init_cohort()
                             isfield(temp, 'cohort') && isa(temp.cohort, 'Cohort') && ...
                             isfield(temp, 'selected_group') && isfield(temp, 'selected_subjects')
                         cohort = temp.cohort;
-                        for j = 1:1:length(analysis_list)
-                            analysis = analysis_list{j};
-                            if isequal(Analysis.getSubjectClass(analysis), subject_type) && isequal(Analysis.getGraphType(analysis), 'GraphWU')
-                                ga = Analysis.getAnalysis(analysis, ['Empty GA with ' cohort.getID()], '', '', cohort, {}, {}, {}); 
-                            end
-                        end
-                        setup()
-                    end
+                        analysis = ga.getClass();                          
+                        ga = Analysis.getAnalysis(analysis, ['Empty GA with ' cohort.getID()], '', '', cohort, {}, {}, {});
+                    end                    
+                    setup()                    
                 end
             catch ME
                 errordlg(ME.error)
