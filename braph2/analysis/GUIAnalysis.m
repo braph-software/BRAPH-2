@@ -390,15 +390,8 @@ init_measures_table_panel()
         end
         set(ui_table_calc, 'Data', data)
     end
-    function mlist = measurelist()    
-        a = 1;
-        switch a% get(ui_popup_calc_graph, 'Value')
-            case 1  % weighted undirected               
-                mlist = Graph.getCompatibleMeasureList('GraphWU');
-            otherwise
-                % binary undirected (fix threshold) & binary undirected (fix density)
-                mlist = Graph.getCompatibleMeasureList('GraphBU');
-        end
+    function mlist = measurelist()             
+        mlist = Graph.getCompatibleMeasureList(ga.getGraphType());
     end
     function cb_measure_tbl(~, event)
         g = event.Indices(1);
@@ -417,48 +410,95 @@ init_measures_table_panel()
     end
     function update_measure_settings_panel()
         mlist = measurelist();
-        measure = mlist{selected_measure};        
-        measure_settings = Measure.getAvailableSettings(measure);
-        
-        if isempty(measure_settings)
-           set(ui_measures_settings_panel, 'Visible', 'off')
-        else
-            set(ui_measures_settings_panel, 'Visible', 'on')
-            measure_labels = zeros(size(measure_settings, 1), 1);
-            measure_fields =  zeros(size(measure_settings, 1), 1);
-            inner_measure_panel_height = 1/length(measure_settings);
+        if ~isempty(selected_measure)
+            measure = mlist{selected_measure};
+            measure_settings = Measure.getAvailableSettings(measure);
             
-            for j = 1:1:size(measure_settings, 1)
-                if size(measure_settings, 1) == 1
-                    ms = measure_settings;
-                else
-                    ms = measure_settings{j};
-                end
+            if isempty(measure_settings)
+                set(ui_measures_settings_panel, 'Visible', 'off')
+            else
+                set(ui_measures_settings_panel, 'Visible', 'on')
+                measure_labels = zeros(size(measure_settings, 1), 1);
+                measure_fields =  zeros(size(measure_settings, 1), 1);
+                inner_measure_panel_height = 1/length(measure_settings);
                 
-                y_correction = 0.1;
-                inner_panel_y = 1 - j * inner_measure_panel_height + y_correction;
-                
-                measure_labels(j, 1) = uicontrol('Parent', ui_measures_settings_panel, 'Style', 'text', ...
-                    'Units', 'normalized', 'FontSize', 10, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y-0.2 0.50 0.2], 'String', ms{1,1});
-                
-                measure_fields(j, 1) = uicontrol('Parent', ui_measures_settings_panel,  ...
-                    'Units', 'normalized', 'Position', [0.58 inner_panel_y 0.40 0.003] );
-                
-                if isequal(ms{1, 2}, 1) % string
-                    set(measure_fields(j, 1), 'Style', 'popup');
-                    set(measure_fields(j, 1), 'String', ms{1, 4})
-                    set(measure_fields(j, 1), 'HorizontalAlignment', 'left')
-                    set(measure_fields(j, 1), 'FontWeight', 'bold')
-                elseif isequal(ms{1, 2}, 2) % numerical
-                    set(measure_fields(j, 1), 'Style', 'edit');
-                    set(measure_fields(j, 1), 'String', ms{1, 3})  % put default
-                else % logical
-                    set(measure_fields(j, 1), 'Style', 'popup');
-                    set(measure_fields(j, 1), 'String', {'true', 'false'})
+                for j = 1:1:size(measure_settings, 1)
+                    if size(measure_settings, 1) == 1
+                        ms = measure_settings;
+                    else
+                        ms = measure_settings{j};
+                    end
+                    
+                    y_correction = 0.1;
+                    inner_panel_y = 1 - j * inner_measure_panel_height + y_correction;
+                    
+                    measure_labels(j, 1) = uicontrol('Parent', ui_measures_settings_panel, 'Style', 'text', ...
+                        'Units', 'normalized', 'FontSize', 10, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y-0.2 0.50 0.2], 'String', ms{1,1});
+                    
+                    measure_fields(j, 1) = uicontrol('Parent', ui_measures_settings_panel,  ...
+                        'Units', 'normalized', 'Position', [0.58 inner_panel_y 0.40 0.003] );
+                    
+                    if isequal(ms{1, 2}, 1) % string
+                        set(measure_fields(j, 1), 'Style', 'popup');
+                        set(measure_fields(j, 1), 'String', ms{1, 4})
+                        set(measure_fields(j, 1), 'HorizontalAlignment', 'left')
+                        set(measure_fields(j, 1), 'FontWeight', 'bold')
+                    elseif isequal(ms{1, 2}, 2) % numerical
+                        set(measure_fields(j, 1), 'Style', 'edit');
+                        set(measure_fields(j, 1), 'String', ms{1, 3})  % put default
+                    else % logical
+                        set(measure_fields(j, 1), 'Style', 'popup');
+                        set(measure_fields(j, 1), 'String', {'true', 'false'})
+                    end
                 end
             end
         end
     end
+
+%% Panel Plot Matrix
+CONSOLE_MATRIX_CMD  = 'Correlation Matrix';
+
+ui_matrix_panel = uipanel();
+ui_matrix_axes = axes();
+ui_matrix_group_text = uicontrol(ui_matrix_panel, 'Style', 'text');
+ui_matrix_group_popup = uicontrol(ui_matrix_panel, 'Style', 'popup', 'String', {''});
+ui_matrix_plot_correlation = uicontrol(ui_matrix_panel, 'Style', 'checkbox');
+ui_matrix_plot_histogram  =uicontrol(ui_matrix_panel, 'Style', 'checkbox');
+init_matrix()
+    function init_matrix()
+        GUI.setUnits(ui_matrix_panel)
+        GUI.setBackgroundColor(ui_matrix_panel)
+        
+        set(ui_matrix_panel, 'Position', MAINPANEL_POSITION)
+        set(ui_matrix_panel, 'Title', CONSOLE_MATRIX_CMD)
+        
+        set(ui_matrix_axes,'Parent', ui_matrix_panel)
+        set(ui_matrix_axes,'Position', [.05 .05 .60 .88])
+        
+        set(ui_matrix_group_text, 'Position', [.69 .88 .05 .045])
+        set(ui_matrix_group_text, 'String', 'Group  ')
+        set(ui_matrix_group_text, 'HorizontalAlignment', 'right')
+        set(ui_matrix_group_text, 'FontWeight', 'bold')
+        
+%         ui_popups_grouplists = [ui_popups_grouplists ui_matrix_group_popup];
+        set(ui_matrix_group_popup, 'Position', [.75 .88 .23 .05])
+        set(ui_matrix_group_popup, 'TooltipString', 'Select group');
+        set(ui_matrix_group_popup, 'Callback', {@cb_matrix});
+        
+        set(ui_matrix_plot_correlation, 'Position', [.70 .82 .28 .05])
+        set(ui_matrix_plot_correlation, 'String', 'correlation matrix')
+        set(ui_matrix_plot_correlation, 'Value', true)
+        set(ui_matrix_plot_correlation, 'TooltipString', 'Select matrix')
+        set(ui_matrix_plot_correlation, 'FontWeight', 'bold')
+        set(ui_matrix_plot_correlation, 'Callback', {@cb_matrix_correlation})
+        
+        set(ui_matrix_plot_histogram, 'Position', [.70 .76 .28 .05])
+        set(ui_matrix_plot_histogram, 'String', 'histogram')
+        set(ui_matrix_plot_histogram, 'Value', false)
+        set(ui_matrix_plot_histogram, 'TooltipString', 'Select histogram of correlation coefficients')
+        set(ui_matrix_plot_histogram, 'Callback', {@cb_matrix_histogram})
+    end
+
 
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
@@ -470,7 +510,7 @@ ui_menu_file_save = uimenu(ui_menu_file);
 ui_menu_file_saveas = uimenu(ui_menu_file);
 ui_menu_file_close = uimenu(ui_menu_file);
 init_menu()
- function init_menu()
+    function init_menu()
         set(ui_menu_file_open, 'Label', OPEN_CMD)
         set(ui_menu_file_open, 'Accelerator', OPEN_SC)
         set(ui_menu_file_open, 'Callback', {@cb_open})
@@ -482,13 +522,13 @@ init_menu()
         
         set(ui_menu_file_saveas, 'Label', SAVEAS_CMD)
         set(ui_menu_file_saveas, 'Callback', {@cb_saveas});
-
+        
         set(ui_menu_file_close, 'Separator', 'on')
         set(ui_menu_file_close, 'Label', CLOSE_CMD)
         set(ui_menu_file_close, 'Accelerator', CLOSE_SC);
         set(ui_menu_file_close, 'Callback', ['GUI.close(''' APPNAME ''', gcf)'])
-           
- end
+        
+    end
 [ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME);
 
 %% Toolbar
