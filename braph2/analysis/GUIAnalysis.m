@@ -63,7 +63,7 @@ else % string of analysis class
     end        
 end
 
-ui_popups_grouplists = [];
+popups_grouplists = [];
 
     function cb_open(~, ~)
         % select file
@@ -107,7 +107,8 @@ ui_popups_grouplists = [];
         else
             group_list = {''};
         end
-        set(ui_popups_grouplists, 'String', group_list)
+        popups_grouplists = group_list;
+        update_matrix_popup_groups()
     end
 
 %% GUI Init
@@ -478,9 +479,9 @@ init_matrix()
         set(ui_matrix_group_text, 'Position', [.69 .88 .05 .045])
         set(ui_matrix_group_text, 'String', 'Group  ')
         set(ui_matrix_group_text, 'HorizontalAlignment', 'right')
-        set(ui_matrix_group_text, 'FontWeight', 'bold')
+        set(ui_matrix_group_text, 'FontWeight', 'bold')        
         
-%         ui_popups_grouplists = [ui_popups_grouplists ui_matrix_group_popup];
+       
         set(ui_matrix_group_popup, 'Position', [.75 .88 .23 .05])
         set(ui_matrix_group_popup, 'TooltipString', 'Select group');
         set(ui_matrix_group_popup, 'Callback', {@cb_matrix});
@@ -498,6 +499,15 @@ init_matrix()
         set(ui_matrix_plot_histogram, 'TooltipString', 'Select histogram of correlation coefficients')
         set(ui_matrix_plot_histogram, 'Callback', {@cb_matrix_histogram})
     end
+    function update_matrix_popup_groups()
+        if ~isempty(popups_grouplists)
+         set(ui_matrix_group_popup, 'String', popups_grouplists)
+        else
+         set(ui_matrix_group_popup, 'String', {''})
+        end
+    end
+
+
 
 
 %% Menus
@@ -578,6 +588,7 @@ set(f, 'Visible', 'on');
 %         update_calc()
         update_tab()
 %         update_matrix()
+update_matrix_popup_groups()
         
         % setup data
         update_set_ga_id()
