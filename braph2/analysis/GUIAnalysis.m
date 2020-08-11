@@ -1,4 +1,4 @@
-function GUIAnalysis(tmp, atlas)
+function GUIAnalysis(tmp)
 
 %% General Constants
 APPNAME = GUI.GA_NAME;
@@ -51,14 +51,14 @@ elseif exist('tmp', 'var') && isa(tmp, 'Cohort') % pass a cohort
     cohort = ga.getCohort();
 else % string of analysis class
     % this is missing BUD and BUT options from start
-     assert(ismember(tmp, analysis_list));
-     assert(isa(atlas, 'BrainAtlas'));
+     assert(ismember(tmp, analysis_list));     
      subject_type = Analysis.getSubjectClass(tmp);    
      for i = 1:1:length(analysis_list)
         analysis = analysis_list{i};
         if isequal(Analysis.getSubjectClass(analysis), subject_type) && isequal(Analysis.getGraphType(analysis), 'GraphWU')
+            atlas = BrainAtlas('Empty BA', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
             cohort = Cohort('Empty Cohort', 'cohort label', 'cohort notes', subject_type, atlas, {});
-            ga = Analysis.getAnalysis(analysis, 'Empty GA', '', '', cohort, {}, {}, {}); %#ok<NASGU>
+            ga = Analysis.getAnalysis(analysis, 'Empty GA', '', '', cohort, {}, {}, {});
         end        
     end        
 end
@@ -242,11 +242,12 @@ init_graph_settings()
         GUI.setBackgroundColor(ui_graph_settings)
         
         set(ui_graph_settings, 'Position', SET_POSITION)
-        set(ui_graph_settings, 'BorderType', 'none')
+        set(ui_graph_settings, 'BorderType', 'none')        
         
         set(ui_graph_setttings_inner_panel, 'Position', [0.02 0.02 0.98 .85])
         set(ui_graph_setttings_inner_panel, 'Title', 'Analysis Settings')
         set(ui_graph_setttings_inner_panel, 'Units', 'normalized')
+        set(ui_graph_setttings_inner_panel, 'BorderType', 'none')
         
         set(ui_graph_analysis_id, 'Position', [.02 .95 .36 .03])
         set(ui_graph_analysis_id, 'HorizontalAlignment', 'left')
@@ -327,25 +328,34 @@ TAB_BILAYER = 'Bilayer';
 TAB_SUPERGLOBAL = 'Super Global';
 TAB_TXT_COL = 5;
 
-selected_measures = [];
+selected_measure = [];
 
 TAB_WIDTH = 1 - 2 * MARGIN_X;
 TAB_X0 = MARGIN_X;
 TAB_Y0 = 2 * MARGIN_Y + FILENAME_HEIGHT;
 TAB_POSITION = [TAB_X0 TAB_Y0 TAB_WIDTH TAB_HEIGHT];
 
-ui_table_calc = uitable(f);
-init_measures_table()
-    function init_measures_table()
-        GUI.setUnits(ui_table_calc)
-        GUI.setBackgroundColor(ui_table_calc)
-       
-        set(ui_table_calc, 'Position', TAB_POSITION)
+ui_measures_panel = uipanel();
+ui_table_calc = uitable(ui_measures_panel);
+ui_measures_settings_panel = uipanel(ui_measures_panel);
+init_measures_table_panel()
+    function init_measures_table_panel()
+        GUI.setUnits(ui_measures_panel)
+        GUI.setBackgroundColor(ui_measures_panel)
+        
+        set(ui_measures_panel, 'Position', TAB_POSITION)
+        set(ui_measures_panel, 'BorderType', 'none')
+        
+        set(ui_table_calc, 'Position', [0 0.02 0.7 1])   
         set(ui_table_calc, 'ColumnName', {'', '   Brain Measure   ', '  Property  ', '  Scope  ' , '   Notes   '})
         set(ui_table_calc, 'ColumnFormat', {'logical', 'char', {TAB_NODAL TAB_GLOBAL TAB_BINODAL}, {TAB_UNILAYER TAB_BILAYER TAB_SUPERGLOBAL} , 'char'})
         set(ui_table_calc, 'ColumnEditable', [true false false false false])
         set(ui_table_calc, 'ColumnWidth', {GUI.width(f, 0.02 * TAB_WIDTH), GUI.width(f, .15 * TAB_WIDTH), GUI.width(f, .07 * TAB_WIDTH), GUI.width(f, .07 * TAB_WIDTH), GUI.width(f, .68 * TAB_WIDTH)})
         set(ui_table_calc, 'CellEditCallback', {@cb_measure_tbl})
+        
+        set(ui_measures_settings_panel, 'Units', 'Normalized')
+        set(ui_measures_settings_panel, 'Position', [0.702 0 0.29 1])
+        
     end
     function update_tab()        
         update_popups_grouplist()
@@ -354,7 +364,7 @@ init_measures_table()
         
         data = cell(length(mlist), 3);
         for mi = 1:1:length(mlist)
-            if any(selected_measures == mi)
+            if any(selected_measure == mi)
                 data{mi, TAB_LOGICAL_COL} = true;
             else
                 data{mi, TAB_LOGICAL_COL} = false;
@@ -381,7 +391,7 @@ init_measures_table()
         set(ui_table_calc, 'Data', data)
     end
     function mlist = measurelist()    
-        a =1;
+        a = 1;
         switch a% get(ui_popup_calc_graph, 'Value')
             case 1  % weighted undirected               
                 mlist = Graph.getCompatibleMeasureList('GraphWU');
@@ -390,8 +400,64 @@ init_measures_table()
                 mlist = Graph.getCompatibleMeasureList('GraphBU');
         end
     end
-    function cb_measure_tbl(~, ~)
-        % something with select measures
+    function cb_measure_tbl(~, event)
+        g = event.Indices(1);
+        col = event.Indices(2);
+        newdata = event.NewData;
+        switch col
+            case TAB_LOGICAL_COL
+                if newdata == 1
+                    selected_measure = g;
+                else
+                    selected_measure = [];
+                end
+        end
+        update_tab()
+        update_measure_settings_panel()
+    end
+    function update_measure_settings_panel()
+        mlist = measurelist();
+        measure = mlist{selected_measure};        
+        measure_settings = Measure.getAvailableSettings(measure);
+        
+        if isempty(measure_settings)
+           set(ui_measures_settings_panel, 'Visible', 'off')
+        else
+            set(ui_measures_settings_panel, 'Visible', 'on')
+            measure_labels = zeros(size(measure_settings, 1), 1);
+            measure_fields =  zeros(size(measure_settings, 1), 1);
+            inner_measure_panel_height = 1/length(measure_settings);
+            
+            for j = 1:1:size(measure_settings, 1)
+                if size(measure_settings, 1) == 1
+                    ms = measure_settings;
+                else
+                    ms = measure_settings{j};
+                end
+                
+                y_correction = 0.1;
+                inner_panel_y = 1 - j * inner_measure_panel_height + y_correction;
+                
+                measure_labels(j, 1) = uicontrol('Parent', ui_measures_settings_panel, 'Style', 'text', ...
+                    'Units', 'normalized', 'FontSize', 10, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y-0.2 0.50 0.2], 'String', ms{1,1});
+                
+                measure_fields(j, 1) = uicontrol('Parent', ui_measures_settings_panel,  ...
+                    'Units', 'normalized', 'Position', [0.58 inner_panel_y 0.40 0.003] );
+                
+                if isequal(ms{1, 2}, 1) % string
+                    set(measure_fields(j, 1), 'Style', 'popup');
+                    set(measure_fields(j, 1), 'String', ms{1, 4})
+                    set(measure_fields(j, 1), 'HorizontalAlignment', 'left')
+                    set(measure_fields(j, 1), 'FontWeight', 'bold')
+                elseif isequal(ms{1, 2}, 2) % numerical
+                    set(measure_fields(j, 1), 'Style', 'edit');
+                    set(measure_fields(j, 1), 'String', ms{1, 3})  % put default
+                else % logical
+                    set(measure_fields(j, 1), 'Style', 'popup');
+                    set(measure_fields(j, 1), 'String', {'true', 'false'})
+                end
+            end
+        end
     end
 
 %% Menus
