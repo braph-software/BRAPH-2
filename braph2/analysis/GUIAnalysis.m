@@ -63,8 +63,6 @@ else % string of analysis class
     end        
 end
 
-popups_grouplists = [];
-
     function cb_open(~, ~)
         % select file
          [file,path,filterindex] = uigetfile(GUI.GA_EXTENSION, GUI.GA_MSG_GETFILE);
@@ -98,18 +96,7 @@ popups_grouplists = [];
             update_filename(filename)
         end
     end
-    function update_popups_grouplist()
-        if ga.getCohort().getGroups().length() > 0
-            group_list = {};
-            for g = 1:1:ga.getCohort().getGroups().length()
-                group_list{g} = ga.getCohort().getGroups().getValue(g).getID(); %#ok<AGROW>
-            end
-        else
-            group_list = {''};
-        end
-        popups_grouplists = group_list;
-        update_matrix_popup_groups()
-    end
+ 
 
 %% GUI Init
 f = GUI.init_figure(APPNAME, .9, .9, 'center');
@@ -132,7 +119,7 @@ init_filename()
         set(ui_text_filename, 'HorizontalAlignment', 'left')
     end
     function update_filename(filename)
-        set(ui_text_filename, 'String', filename)
+        set(ui_text_filename, 'String', [filename ' Settings'])
     end
 
 %% Panel Cohort
@@ -175,8 +162,6 @@ init_cohort()
         set(ui_button_cohort, 'Callback', {@cb_cohort})
     end
     function update_cohort()
-        update_popups_grouplist()
-        
         if ~isempty(cohort) && ~isequal(cohort.getID(), 'Empty Cohort')
             set(ui_text_cohort_name, 'String', cohort.getID())
             set(ui_text_cohort_subjectnumber, 'String', ['subject number = ' num2str(cohort.getSubjects().length())])
@@ -212,14 +197,15 @@ init_cohort()
                         for j = 1:1:length(analysis_list)
                             analysis = analysis_list{j};
                             if isequal(Analysis.getSubjectClass(analysis), subject_type) && isequal(Analysis.getGraphType(analysis), 'GraphWU')
-                                ga = Analysis.getAnalysis(analysis, 'Empty GA', '', '', cohort, {}, {}, {}); 
+                                ga = Analysis.getAnalysis(analysis, ['Empty GA with ' cohort.getID()], '', '', cohort, {}, {}, {}); 
                             end
                         end
                         setup()
                     end
                 end
-            catch
-                errordlg('The file is not a valid Cohort file. Please load a valid .cohort file');
+            catch ME
+                errordlg(ME.error)
+%                 errordlg('The file is not a valid Cohort file. Please load a valid .cohort file');
             end
         end
     end
@@ -301,7 +287,7 @@ init_graph_settings()
         if isempty(ga_id)
             set(f, 'Name', [GUI.GA_NAME ' - ' BRAPH2.VERSION])
         else
-            set(f, 'Name', [GUI.GA_NAME ' - ' BRAPH2.VERSION ' - ' ga_id])
+            set(f, 'Name', [GUI.GA_NAME ' - ' BRAPH2.VERSION ' - ' ga_id ' - Settings' ])
         end
         set(ui_graph_analysis_id, 'String', ga_id)
     end
@@ -358,9 +344,7 @@ init_measures_table_panel()
         set(ui_measures_settings_panel, 'Position', [0.702 0 0.29 1])
         
     end
-    function update_tab()        
-        update_popups_grouplist()
-        
+    function update_tab()     
         mlist = measurelist();
         
         data = cell(length(mlist), 3);
@@ -461,10 +445,10 @@ CONSOLE_MATRIX_CMD  = 'Correlation Matrix';
 
 ui_matrix_panel = uipanel();
 ui_matrix_axes = axes();
-ui_matrix_group_text = uicontrol(ui_matrix_panel, 'Style', 'text');
-ui_matrix_group_popup = uicontrol(ui_matrix_panel, 'Style', 'popup', 'String', {''});
-ui_matrix_plot_correlation = uicontrol(ui_matrix_panel, 'Style', 'checkbox');
-ui_matrix_plot_histogram  =uicontrol(ui_matrix_panel, 'Style', 'checkbox');
+% ui_matrix_group_text = uicontrol(ui_matrix_panel, 'Style', 'text');
+% ui_matrix_group_popup = uicontrol(ui_matrix_panel, 'Style', 'popup', 'String', {''});
+% ui_matrix_plot_correlation = uicontrol(ui_matrix_panel, 'Style', 'checkbox');
+% ui_matrix_plot_histogram  = uicontrol(ui_matrix_panel, 'Style', 'checkbox');
 init_matrix()
     function init_matrix()
         GUI.setUnits(ui_matrix_panel)
@@ -476,38 +460,32 @@ init_matrix()
         set(ui_matrix_axes,'Parent', ui_matrix_panel)
         set(ui_matrix_axes,'Position', [.05 .05 .60 .88])
         
-        set(ui_matrix_group_text, 'Position', [.69 .88 .05 .045])
-        set(ui_matrix_group_text, 'String', 'Group  ')
-        set(ui_matrix_group_text, 'HorizontalAlignment', 'right')
-        set(ui_matrix_group_text, 'FontWeight', 'bold')        
-        
-       
-        set(ui_matrix_group_popup, 'Position', [.75 .88 .23 .05])
-        set(ui_matrix_group_popup, 'TooltipString', 'Select group');
-        set(ui_matrix_group_popup, 'Callback', {@cb_matrix});
-        
-        set(ui_matrix_plot_correlation, 'Position', [.70 .82 .28 .05])
-        set(ui_matrix_plot_correlation, 'String', 'correlation matrix')
-        set(ui_matrix_plot_correlation, 'Value', true)
-        set(ui_matrix_plot_correlation, 'TooltipString', 'Select matrix')
-        set(ui_matrix_plot_correlation, 'FontWeight', 'bold')
-        set(ui_matrix_plot_correlation, 'Callback', {@cb_matrix_correlation})
-        
-        set(ui_matrix_plot_histogram, 'Position', [.70 .76 .28 .05])
-        set(ui_matrix_plot_histogram, 'String', 'histogram')
-        set(ui_matrix_plot_histogram, 'Value', false)
-        set(ui_matrix_plot_histogram, 'TooltipString', 'Select histogram of correlation coefficients')
-        set(ui_matrix_plot_histogram, 'Callback', {@cb_matrix_histogram})
+%         set(ui_matrix_group_text, 'Position', [.69 .88 .05 .045])
+%         set(ui_matrix_group_text, 'String', 'Group  ')
+%         set(ui_matrix_group_text, 'HorizontalAlignment', 'right')
+%         set(ui_matrix_group_text, 'FontWeight', 'bold')        
+%         
+%        
+%         set(ui_matrix_group_popup, 'Position', [.75 .88 .23 .05])
+%         set(ui_matrix_group_popup, 'TooltipString', 'Select group');
+%         set(ui_matrix_group_popup, 'Callback', {@cb_matrix});
+%         
+%         set(ui_matrix_plot_correlation, 'Position', [.70 .82 .28 .05])
+%         set(ui_matrix_plot_correlation, 'String', 'correlation matrix')
+%         set(ui_matrix_plot_correlation, 'Value', true)
+%         set(ui_matrix_plot_correlation, 'TooltipString', 'Select matrix')
+%         set(ui_matrix_plot_correlation, 'FontWeight', 'bold')
+%         set(ui_matrix_plot_correlation, 'Callback', {@cb_matrix_correlation})
+%         
+%         set(ui_matrix_plot_histogram, 'Position', [.70 .76 .28 .05])
+%         set(ui_matrix_plot_histogram, 'String', 'histogram')
+%         set(ui_matrix_plot_histogram, 'Value', false)
+%         set(ui_matrix_plot_histogram, 'TooltipString', 'Select histogram of correlation coefficients')
+%         set(ui_matrix_plot_histogram, 'Callback', {@cb_matrix_histogram})
     end
-    function update_matrix_popup_groups()
-        if ~isempty(popups_grouplists)
-         set(ui_matrix_group_popup, 'String', popups_grouplists)
-        else
-         set(ui_matrix_group_popup, 'String', {''})
-        end
+    function update_matrix()     
+        ga.getMatrixPanel('UIParent', ui_matrix_panel, 'UIParentAxes', ui_matrix_axes)
     end
-
-
 
 
 %% Menus
@@ -587,8 +565,7 @@ set(f, 'Visible', 'on');
         % setup graph analysis
 %         update_calc()
         update_tab()
-%         update_matrix()
-update_matrix_popup_groups()
+        update_matrix()
         
         % setup data
         update_set_ga_id()

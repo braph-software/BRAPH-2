@@ -246,7 +246,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             
             data_codes = sub.getDataCodes();
             data_list = sub.getDataList(); 
-            atlas = sub.atlases{1};
+            atlas = sub.atlases{1};           
             
             sub.h_panel = uipanel('Parent', ui_parent);
             set(sub.h_panel, 'Units', 'normalized')

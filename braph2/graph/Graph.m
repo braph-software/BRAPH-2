@@ -120,6 +120,9 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_nonnegative              - checks whether graph allows non-negative values
     %   is_negative                 - checks whether graph allows negative values
     %
+    % Graph plot methods
+    %   getGraphPlot                - creates a uipanel
+    %
     % Graph basic methods:
     %   tostring                    - returns a string representing the graph
     %   disp                        - displays the graph
@@ -966,6 +969,19 @@ classdef Graph < handle & matlab.mixin.Copyable
             
             list = Graph.getCompatibleMeasureList(g);
             n = numel(list);
+        end
+    end
+    methods (Static)  % Plot Panel method
+        function g_panel = getGraphPlot(g, varargin)
+            % GETGRAPHPLOT creates a plot and returns the handle
+            %
+            % G_PANEL = GETGRAPHPLOTPANEL(G, PROPERTY1, VALUE1, ...)
+            % creates a plot and using the values passed to G, it populates
+            % with appropiate uicontrols.
+            %
+            % See also getCompatibleMeasureList.
+            
+            g_panel = eval([Graph.getClass(g) '.getGraphPlot(varargin{:})']);
         end
     end
     methods  % Basic methods

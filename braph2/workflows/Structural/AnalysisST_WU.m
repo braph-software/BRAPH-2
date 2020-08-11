@@ -101,7 +101,7 @@ classdef AnalysisST_WU < Analysis
                 ];
         end
     end
-    methods (Access = protected)  % Calculation functions
+    methods
         function g = get_graph_for_subjects(analysis, subjects, varargin)
             % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
             %
@@ -138,6 +138,8 @@ classdef AnalysisST_WU < Analysis
             graph_type = AnalysisST_WU.getGraphType();
             g = Graph.getGraph(graph_type, A);
         end
+    end
+    methods (Access = protected)  % Calculation functions        
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
             % CALCULATE_MEASUREMENT returns a measurement
             %

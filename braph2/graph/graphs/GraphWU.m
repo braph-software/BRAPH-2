@@ -42,9 +42,9 @@ classdef GraphWU < GraphWD
             % It calls the superclass constructor GRAPHWD.
             %
             % See also Graph, DummyGraph, GraphBD, GraphWD, GraphBU.
-                        
+            
             if isempty(A)
-                 A = rand(4);
+                A = rand(4);
             end
             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
             
@@ -91,34 +91,34 @@ classdef GraphWU < GraphWD
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.GRAPH.
             %
             % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
-       
+            
             graph_type = Graph.GRAPH;
         end
         function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.WEIGHTED.
-            %    
+            %
             % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
-          
+            
             connectivity_type = Graph.WEIGHTED;
         end
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
-            %   
+            %
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.UNDIRECTED.
             %
             % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
-             
+            
             directionality_type = Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
-            %    
+            %
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
-       
+            
             selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
         function negativity_type = getNegativityType(varargin)
@@ -127,24 +127,253 @@ classdef GraphWU < GraphWD
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
-      
+            
             negativity_type = Graph.NONNEGATIVE;
         end
         function available_settings = getAvailableSettings(g) %#ok<INUSD>
             % GETAVAILABLESETTINGS returns the available rules of graph
             %
             % GETAVAILABLESETTINGS(G) returns an array with the available
-            % settings for the graph. 
+            % settings for the graph.
             %
             % See also getClass, getName, getDescription, getGraphType.
-             
+            
             available_settings = { ...
-                 'GraphWU.NumberOfWeights', BRAPH2.NUMERIC, 5, {} ...
-                 };
+                'GraphWU.NumberOfWeights', BRAPH2.NUMERIC, 5, {} ...
+                };
+        end
+    end
+    methods (Static)  % Plot Panel method
+        function g_panel = getGraphPlot(A, varargin)
+            % GETGRAPHPLOT calls the appropiate function to plot
+            %
+            % G_PANEL = GETGRAPHPLOT(G, PLOTTYPE, VALUE) using VALUE
+            % chooses the corresponding function to return a plot.
+            %
+            % See also getCompatibleMeasureList, plotb, plotw, hist.
+            
+            type_of_plot = get_from_varargin('correlation', 'Graph.PlotType', varargin{:});
+            switch type_of_plot
+                case 'binary'
+                    g_panel = GraphWU.plotb(A, varargin{:});
+                case 'histogram'
+                    g_panel = GraphWU.hist(A, varargin{:});
+                otherwise  % correlation
+                    g_panel = GraphWU.plotw(A, varargin{:});
+            end
+        end
+        function h = plotw(A, varargin)
+            % PLOTW plots a weighted matrix
+            %
+            % H = PLOTW(A) plots the weighted matrix A and returns the handle to
+            %   the plot H.
+            %
+            % H = PLOTW(A,'PropertyName',PropertyValue) sets the property of the
+            %   matrix plot PropertyName to PropertyValue.
+            %   All standard plot properties of surf can be used.
+            %   Additional admissive properties are:
+            %       xlabels   -   1:1:number of matrix elements (default)
+            %       ylabels   -   1:1:number of matrix elements (default)
+            %
+            % See also Graph, plotb, surf.
+            
+            N = length(A);
+            
+            % x labels
+            xlabels = (1:1:N);
+            for n = 1:2:length(varargin)
+                if strcmpi(varargin{n}, 'xlabels')
+                    xlabels = varargin{n + 1};
+                end
+            end
+            if ~iscell(xlabels)
+                xlabels = {xlabels};
+            end
+            
+            % y labels
+            ylabels = (1:1:N);
+            for n = 1:2:length(varargin)
+                if strcmpi(varargin{n}, 'ylabels')
+                    ylabels = varargin{n + 1};
+                end
+            end
+            if ~iscell(ylabels)
+                ylabels = {ylabels};
+            end
+            
+            ht = surf((0:1:N), ...
+                (0:1:N), ...
+                [A, zeros(size(A, 1),1); zeros(1, size(A, 1) + 1)]);
+            view(2)
+            shading flat
+            axis equal square tight
+            grid off
+            box on
+            set(gca, ...
+                'XAxisLocation', 'top', ...
+                'XTick', (1:1:N) - .5, ...
+                'XTickLabel', {}, ...
+                'YAxisLocation', 'left', ...
+                'YDir', 'Reverse', ...
+                'YTick', (1:1:N) - .5, ...
+                'YTickLabel', ylabels)
+            
+            if ~verLessThan('matlab', '8.4.0')
+                set(gca, ...
+                    'XTickLabelRotation', 90, ...
+                    'XTickLabel', xlabels)
+            else
+                t = text((1:1:N) - .5, zeros(1,N), xlabels);
+                set(t, ...
+                    'HorizontalAlignment', 'left', ...
+                    'VerticalAlignment', 'middle', ...
+                    'Rotation', 90);
+            end
+            
+            colormap jet
+            
+            % output if needed
+            if nargout>0
+                h = ht;
+            end
+        end
+        function h = plotb(A,varargin)
+            % PLOTB plots a binary matrix
+            %
+            % H = PLOTB(A) plots the binarized version of weighted matrix A and
+            %   returns the handle to the plot H.
+            %   The matrix A can be binarized by fixing the threshold
+            %   (default, threshold=0.5).
+            %
+            % H = PLOTB(A,'PropertyName',PropertyValue) sets the property of the
+            %   matrix plot PropertyName to PropertyValue.
+            %   All standard plot properties of surf can be used.
+            %   Additional admissive properties are:
+            %       threshold   -   0.5 (default)
+            %       xlabels     -   1:1:number of matrix elements (default)
+            %       ylabels     -   1:1:number of matrix elements (default)
+            %
+            % See also Graph, binarize, plotw, surf.
+            
+            N = length(A);
+            
+            % threshold
+            threshold = .5;
+            for n = 1:2:length(varargin)
+                if strcmpi(varargin{n},'threshold')
+                    threshold = varargin{n+1};
+                end
+            end
+            
+            % x labels
+            xlabels = (1:1:N);
+            for n = 1:2:length(varargin)
+                if strcmpi(varargin{n},'xlabels')
+                    xlabels = varargin{n+1};
+                end
+            end
+            if ~iscell(xlabels)
+                xlabels = {xlabels};
+            end
+            
+            % y labels
+            ylabels = (1:1:N);
+            for n = 1:2:length(varargin)
+                if strcmpi(varargin{n},'ylabels')
+                    ylabels = varargin{n+1};
+                end
+            end
+            if ~iscell(ylabels)
+                ylabels = {ylabels};
+            end
+            
+            B = Graph.binarize(A,'threshold',threshold);
+            
+            ht = surf((0:1:N), ...
+                (0:1:N), ...
+                [B, zeros(size(B,1),1); zeros(1,size(B,1)+1)]);
+            view(2)
+            shading flat
+            axis equal square tight
+            grid off
+            box on
+            set(gca, ...
+                'XAxisLocation','top', ...
+                'XTick',(1:1:N)-.5, ...
+                'XTickLabel',{}, ...
+                'YAxisLocation','left', ...
+                'YDir','Reverse', ...
+                'YTick',(1:1:N)-.5, ...
+                'YTickLabel',ylabels)
+            
+            if ~verLessThan('matlab', '8.4.0')
+                set(gca, ...
+                    'XTickLabelRotation',90, ...
+                    'XTickLabel',xlabels)
+            else
+                t = text((1:1:N)-.5,zeros(1,N),xlabels);
+                set(t, ...
+                    'HorizontalAlignment','left', ...
+                    'VerticalAlignment','middle', ...
+                    'Rotation',90);
+            end
+            
+            colormap bone
+            
+            % output if needed
+            if nargout>0
+                h = ht;
+            end
+        end
+        function h = hist(A,varargin)
+            % HIST plots the histogram and density of a matrix
+            %
+            % H = HIST(A) plots the histogram of a matrix A and the associated density and
+            %   returns the handle to the plot H.
+            %
+            % H = HIST(A,'PropertyName',PropertyValue) sets the property of the histogram
+            %   plot PropertyName to PropertyValue.
+            %   All standard plot properties of surf can be used.
+            %   Additional admissive properties are:
+            %       bins       -   -1:.001:1 (default)
+            %       diagonal   -   'exclude' (default) | 'include'
+            %
+            % See also Graph, histogram.
+            
+            [count,bins,density] = Graph.histogram(A,varargin{:});
+            
+            bins = [bins(1) bins bins(end)];
+            count = [0 count 0];
+            density = [100 density 0];
+            
+            hold on
+            ht1 = fill(bins,count,'k');
+            ht2 = plot(bins,density,'b','linewidth',2);
+            hold off
+            xlabel('coefficient values / threshold')
+            ylabel('coefficient counts / density')
+            
+            grid off
+            box on
+            axis square tight
+            set(gca, ...
+                'XAxisLocation','bottom', ...
+                'XTickLabelMode','auto', ...
+                'XTickMode','auto', ...
+                'YTickLabelMode','auto', ...
+                'YAxisLocation','left', ...
+                'YDir','Normal', ...
+                'YTickMode','auto', ...
+                'YTickLabelMode','auto')
+            
+            % output if needed
+            if nargout>0
+                h = [ht1 ht2];
+            end
         end
     end
     methods  % Randomize methods
-        function random_g = randomize(g, varargin)  
+        function random_g = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph and the correlation coefficients
             %
             % RANDOM_G = RANDOMIZE(G) returns the randomized graph
@@ -158,37 +387,37 @@ classdef GraphWU < GraphWD
             %
             % See also randomize_A
             
-            % get rules          
-             number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
-             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
-             
-             A = g.getA();
-             random_A = GraphWU.randomize_A(A, attempts_per_edge, number_of_weights);
-             random_g = Graph.getGraph(Graph.getClass(g), ...
-                 random_A, ...
-                 varargin{:});           
+            % get rules
+            number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
+            attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
+            
+            A = g.getA();
+            random_A = GraphWU.randomize_A(A, attempts_per_edge, number_of_weights);
+            random_g = Graph.getGraph(Graph.getClass(g), ...
+                random_A, ...
+                varargin{:});
         end
-    end  
-     methods (Static)  % Randomize methods
+    end
+    methods (Static)  % Randomize methods
         function [random_A, correlation_coefficients] = randomize_A(A, attempts_per_edge, number_of_weights)
             % RANDOMIZE_A returns a randomized correlation matrix
             % This algorithm was proposed by Rubinov and Sporns (Neuroimage 56, 4, 2011).
             %
-            % RANDOM_A = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % RANDOM_A = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS)
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
-            % specifies the number of weights sorted at the same time. 
+            % specifies the number of weights sorted at the same time.
             % ATTEMPTS_PER_EDGE is passed as an argument to GraphBD.
             %
-            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G) 
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G)
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
             % specifies the number of weights sorted at the same time, it
-            % will be default value of 10. Returns the correlation coefficients 
-            % between the original and randomized nodal strengths. 
+            % will be default value of 10. Returns the correlation coefficients
+            % between the original and randomized nodal strengths.
             % High coefficients indicate more accurate preservation of
             % the strength sequences. ATTEMPTS_PER_EDGE is passed as an
             % argument to GraphBD, it will be default value of 5.
             %
-            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS)
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
             % specifies the number of weights sorted at the same time. Returns the
             % correlation coefficients between the original and randomized nodal
@@ -205,10 +434,10 @@ classdef GraphWU < GraphWD
             if nargin < 3
                 number_of_weights = 10;
             end
-                        
+            
             W = A;  % swaps with A
             A = GraphBU.randomize_A(W, attempts_per_edge);
-             
+            
             % remove self connections
             A(1:length(A)+1:numel(A)) = 0;
             W(1:length(W)+1:numel(W)) = 0;
