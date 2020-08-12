@@ -12,8 +12,10 @@ classdef AnalysisST_BUD < AnalysisST_WU
     % AnalysisST_BUD constructor methods:
     %  AnalysisST_BUD               - Constructor
     %
-    % AnalysisST_BUD calcultion methods (Access = protected):
+    % AnalysisST_BUD graph methods (Access = protected)
     %  get_graph_for_subjects       - returns the graph of the correlated matrix
+    % 
+    % AnalysisST_BUD calculation methods (Access = protected):    
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
@@ -90,7 +92,7 @@ classdef AnalysisST_BUD < AnalysisST_WU
             comparison_id = [comparison_id ' density=' num2str(density)];
         end
     end
-    methods (Access = protected)
+    methods (Access = protected)  % graph methods
         function g = get_graph_for_subjects(analysis, subjects, varargin)
             % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
             %
@@ -101,20 +103,7 @@ classdef AnalysisST_BUD < AnalysisST_WU
             %
             % See also calculate_measurement.
             
-            atlases = analysis.cohort.getBrainAtlases();
-            atlas = atlases{1};
-            
-            subject_number = numel(subjects);
-            
-            data = zeros(subject_number, atlas.getBrainRegions().length());
-            for i = 1:1:subject_number
-                subject = subjects{i};
-                data(i, :) = subject.getData('ST').getValue();  % st data
-            end
-            
-            correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
-            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+            A = analysis.get_weighted_correlation_matrix(subjects, varargin{:});
             
             density = get_from_varargin(0, 'density', varargin{:});
             A = binarize(A, 'density', density, varargin{:});

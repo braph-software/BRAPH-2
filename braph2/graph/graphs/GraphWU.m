@@ -42,9 +42,9 @@ classdef GraphWU < GraphWD
             % It calls the superclass constructor GRAPHWD.
             %
             % See also Graph, DummyGraph, GraphBD, GraphWD, GraphBU.
-                        
+            
             if isempty(A)
-                 A = rand(4);
+                A = rand(4);
             end
             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
             
@@ -91,34 +91,34 @@ classdef GraphWU < GraphWD
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.GRAPH.
             %
             % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
-       
+            
             graph_type = Graph.GRAPH;
         end
         function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.WEIGHTED.
-            %    
+            %
             % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
-          
+            
             connectivity_type = Graph.WEIGHTED;
         end
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
-            %   
+            %
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.UNDIRECTED.
             %
             % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
-             
+            
             directionality_type = Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
-            %    
+            %
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
-       
+            
             selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
         function negativity_type = getNegativityType(varargin)
@@ -127,24 +127,24 @@ classdef GraphWU < GraphWD
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
-      
+            
             negativity_type = Graph.NONNEGATIVE;
         end
         function available_settings = getAvailableSettings(g) %#ok<INUSD>
             % GETAVAILABLESETTINGS returns the available rules of graph
             %
             % GETAVAILABLESETTINGS(G) returns an array with the available
-            % settings for the graph. 
+            % settings for the graph.
             %
             % See also getClass, getName, getDescription, getGraphType.
-             
+            
             available_settings = { ...
-                 'GraphWU.NumberOfWeights', BRAPH2.NUMERIC, 5, {} ...
-                 };
+                'GraphWU.NumberOfWeights', BRAPH2.NUMERIC, 5, {} ...
+                };
         end
     end
     methods  % Randomize methods
-        function random_g = randomize(g, varargin)  
+        function random_g = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph and the correlation coefficients
             %
             % RANDOM_G = RANDOMIZE(G) returns the randomized graph
@@ -158,37 +158,37 @@ classdef GraphWU < GraphWD
             %
             % See also randomize_A
             
-            % get rules          
-             number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
-             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
-             
-             A = g.getA();
-             random_A = GraphWU.randomize_A(A, attempts_per_edge, number_of_weights);
-             random_g = Graph.getGraph(Graph.getClass(g), ...
-                 random_A, ...
-                 varargin{:});           
+            % get rules
+            number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
+            attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
+            
+            A = g.getA();
+            random_A = GraphWU.randomize_A(A, attempts_per_edge, number_of_weights);
+            random_g = Graph.getGraph(Graph.getClass(g), ...
+                random_A, ...
+                varargin{:});
         end
-    end  
-     methods (Static)  % Randomize methods
+    end
+    methods (Static)  % Randomize methods
         function [random_A, correlation_coefficients] = randomize_A(A, attempts_per_edge, number_of_weights)
             % RANDOMIZE_A returns a randomized correlation matrix
             % This algorithm was proposed by Rubinov and Sporns (Neuroimage 56, 4, 2011).
             %
-            % RANDOM_A = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % RANDOM_A = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS)
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
-            % specifies the number of weights sorted at the same time. 
+            % specifies the number of weights sorted at the same time.
             % ATTEMPTS_PER_EDGE is passed as an argument to GraphBD.
             %
-            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G) 
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G)
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
             % specifies the number of weights sorted at the same time, it
-            % will be default value of 10. Returns the correlation coefficients 
-            % between the original and randomized nodal strengths. 
+            % will be default value of 10. Returns the correlation coefficients
+            % between the original and randomized nodal strengths.
             % High coefficients indicate more accurate preservation of
             % the strength sequences. ATTEMPTS_PER_EDGE is passed as an
             % argument to GraphBD, it will be default value of 5.
             %
-            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS)
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
             % specifies the number of weights sorted at the same time. Returns the
             % correlation coefficients between the original and randomized nodal
@@ -205,10 +205,10 @@ classdef GraphWU < GraphWD
             if nargin < 3
                 number_of_weights = 10;
             end
-                        
+            
             W = A;  % swaps with A
             A = GraphBU.randomize_A(W, attempts_per_edge);
-             
+            
             % remove self connections
             A(1:length(A)+1:numel(A)) = 0;
             W(1:length(W)+1:numel(W)) = 0;

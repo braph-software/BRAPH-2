@@ -259,7 +259,7 @@ classdef GUI
         MOVE2BOTTOM_CMD = 'Move to bottom';
         MOVE2BOTTOM_SC = 'B';
         
-        FIGURE_CMD = 'Generate figure';
+        FIGURE_CMD = 'Generate figure ...';
         FIGURE_SC = 'F';
     end
     methods (Static)  % constants

@@ -12,8 +12,10 @@ classdef AnalysisST_BUT < AnalysisST_WU
     % AnalysisST_BUT constructor methods:
     %  AnalysisST_BUT               - Constructor
     %
-    % AnalysisST_BUT calcultion methods (Access = protected):
+    % AnalysisST_BUT graph methods (Access = protected)
     %  get_graph_for_subjects       - returns the graph of the correlated matrix
+    % 
+    % AnalysisST_BUT calcultion methods (Access = protected):
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
@@ -101,20 +103,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %
             % See also calculate_measurement.
             
-            atlases = analysis.cohort.getBrainAtlases();
-            atlas = atlases{1};
-            
-            subject_number = numel(subjects);
-            
-            data = zeros(subject_number, atlas.getBrainRegions().length());
-            for i = 1:1:subject_number
-                subject = subjects{i};
-                data(i, :) = subject.getData('ST').getValue();  % st data
-            end
-            
-            correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
-            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+            A = analysis.get_weighted_correlation_matrix(subjects, varargin{:});
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             A = binarize(A, 'treshold', threshold, varargin{:});
