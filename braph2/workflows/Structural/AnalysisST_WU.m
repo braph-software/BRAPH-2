@@ -649,18 +649,18 @@ classdef AnalysisST_WU < Analysis
                 set(ui_matrix_weighted_checkbox, 'Value', false)
                 set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
                 
-                set(ui_matrix_histogram_checkbox, 'Value', false)
-                set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+                set(ui_matrix_histogram_checkbox, 'Value', true)
+                set(ui_matrix_histogram_checkbox, 'FontWeight', 'bold')
                 
                 set(ui_matrix_density_checkbox, 'Value', false)
                 set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
                 set(ui_matrix_density_edit, 'Enable', 'off')
                 set(ui_matrix_density_slider, 'Enable', 'off')
                 
-                set(ui_matrix_threshold_checkbox, 'Value', true)
-                set(ui_matrix_threshold_checkbox, 'FontWeight', 'bold')
-                set(ui_matrix_threshold_edit, 'Enable', 'on')
-                set(ui_matrix_threshold_slider, 'Enable', 'on')
+                set(ui_matrix_threshold_checkbox, 'Value', false)
+                set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+                set(ui_matrix_threshold_edit, 'Enable', 'off')
+                set(ui_matrix_threshold_slider, 'Enable', 'off')
                 
                 update_matrix()
             end
@@ -680,10 +680,8 @@ classdef AnalysisST_WU < Analysis
             end
             function update_matrix()
                 % i need to ask graph to return the plot 'Graph.PlotType'
-                if contains(analysis_class, 'BUD') && isequal(analysis_graph, 'GraphBU') % density
-                    graph_type_value = 'histogram';
-                    graph_rule = 'density';
-                    graph_rule_value = 0; % get_from_varargin(0, 'density', varargin{:});
+                if  get(ui_matrix_histogram_checkbox, 'Value') % histogram
+                    graph_type_value = 'histogram';                    
                 elseif contains(analysis_class, 'BUT') && isequal(analysis_graph, 'GraphBU')  % threshold
                     graph_type_value = 'binary';
                     graph_rule = 'threshold';
@@ -693,16 +691,20 @@ classdef AnalysisST_WU < Analysis
                     graph_rule = 'nothing';
                     graph_rule_value = 0;
                 end
-
+                
                 if ~isempty(groups)
-                    % get A                    
+                    % get A
                     group = analysis.getCohort().getGroups().getValue(selected_group);
                     subjects = group.getSubjects();
                     graph = analysis.get_graph_for_subjects(subjects, varargin{:});
-                    A = graph.getA();                   
+                    A = graph.getA();
                     
-                    matrix_plot = graph.Plot(A, graph_rule, ...
-                        graph_rule_value, 'Graph.PlotType', graph_type_value);
+                    if get(ui_matrix_histogram_checkbox, 'Value')
+                        matrix_plot = graph.Plot(A, 'Graph.PlotType', graph_type_value);
+                    else                     
+                        matrix_plot = graph.Plot(A, graph_rule, ...
+                            graph_rule_value, 'Graph.PlotType', graph_type_value);
+                    end
                 end                
             end
             

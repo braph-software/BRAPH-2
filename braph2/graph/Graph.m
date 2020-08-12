@@ -983,11 +983,11 @@ classdef Graph < handle & matlab.mixin.Copyable
             plot_type = get_from_varargin('correlation', 'Graph.PlotType', varargin{:});
             switch plot_type
                 case 'binary'
-                    h_plot = GraphWU.plotb(A, varargin{:});
+                    h_plot = Graph.plotb(A, varargin{:});
                 case 'histogram'
-                    h_plot = GraphWU.hist(A, varargin{:});
+                    h_plot = Graph.hist(A, varargin{:});
                 otherwise  % correlation
-                    h_plot = GraphWU.plotw(A, varargin{:});
+                    h_plot = Graph.plotw(A, varargin{:});
             end
         end
         function h = plotw(A, varargin)
@@ -1153,7 +1153,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                 h = ht;
             end
         end
-        function h = hist(A,varargin)
+        function h = hist(A, varargin)
             % HIST plots the histogram and density of a matrix
             %
             % H = HIST(A) plots the histogram of a matrix A and the associated density and
@@ -1168,7 +1168,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also Graph, histogram.
             
-            [count, bins, density] = Graph.histogram(A, varargin{:});
+            [count, bins, density] = histogram(A, varargin{:});
             
             bins = [bins(1) bins bins(end)];
             count = [0 count 0];
