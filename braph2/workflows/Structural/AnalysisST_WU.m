@@ -105,6 +105,24 @@ classdef AnalysisST_WU < Analysis
         end
     end
     methods (Access = protected)  % graph methods
+        function A = get_weighted_correlation_matrix(analysis, subjects, varargin)
+            
+            atlases = analysis.cohort.getBrainAtlases();
+            atlas = atlases{1};
+            
+            subject_number = numel(subjects);
+
+            data = zeros(subject_number, atlas.getBrainRegions().length());
+            for i = 1:1:subject_number
+                subject = subjects{i};
+                data(i, :) = subject.getData('ST').getValue();  % st data
+            end          
+            
+            correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');          
+            negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
+            
+            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);            
+        end
         function g = get_graph_for_subjects(analysis, subjects, varargin)
             % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
             %
@@ -123,22 +141,8 @@ classdef AnalysisST_WU < Analysis
             %
             % See also calculate_measurement.
             
-            atlases = analysis.cohort.getBrainAtlases();
-            atlas = atlases{1};
+            A = analysis.get_weighted_correlation_matrix(subjects, varargin{:});
             
-            subject_number = numel(subjects);
-
-            data = zeros(subject_number, atlas.getBrainRegions().length());
-            for i = 1:1:subject_number
-                subject = subjects{i};
-                data(i, :) = subject.getData('ST').getValue();  % st data
-            end          
-            
-            correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');          
-            negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
-            
-            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
-                        
             graph_type = AnalysisST_WU.getGraphType();
             g = Graph.getGraph(graph_type, A);
         end
@@ -481,7 +485,7 @@ classdef AnalysisST_WU < Analysis
                 };
         end
     end
-    methods   % Plot Graph Panel
+    methods  % Plot panel functions
         function graph_panel = getGraphPanel(analysis, varargin)
            % GETGRAPHPANEL creates a matrix uipanel
            %
@@ -697,17 +701,16 @@ classdef AnalysisST_WU < Analysis
                     % get A
                     group = analysis.getCohort().getGroups().getValue(selected_group);
                     subjects = group.getSubjects();
-                    graph = analysis.get_graph_for_subjects(subjects, varargin{:});
-                    A = graph.getA();
+                    A = analysis.get_weighted_correlation_matrix(subjects, varargin{:});
                     
                     if get(ui_matrix_histogram_checkbox, 'Value')                        
-                        matrix_plot = graph.plot(A, 'Graph.PlotType', graph_type_value);
+                        matrix_plot = Graph.plot(A, 'Graph.PlotType', graph_type_value);
                     else         
                         % get atlas labels
                         atlases = analysis.getCohort().getBrainAtlases();
                         atlas = atlases{1};
                         br_labels = atlas.getBrainRegions().getKeys();
-                        matrix_plot = graph.plot(A, graph_rule, ...
+                        matrix_plot = Graph.plot(A, graph_rule, ...
                             graph_rule_value, 'Graph.PlotType', graph_type_value, 'xlabels', br_labels, 'ylabels', br_labels);
                     end
                 end                
