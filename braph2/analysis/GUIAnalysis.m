@@ -32,6 +32,9 @@ SAVEAS_CMD = GUI.SAVEAS_CMD;
 CLOSE_CMD = GUI.CLOSE_CMD;
 CLOSE_SC = GUI.CLOSE_SC;
 
+FIGURE_CMD = GUI.FIGURE_CMD;
+FIGURE_SC = GUI.FIGURE_SC;
+
 CLOSE_TP = ['Close ' APPNAME '. Shortcut: ' GUI.ACCELERATOR '+' CLOSE_SC];
 
 %% Application Data
@@ -91,9 +94,15 @@ end
 f = GUI.init_figure(APPNAME, .9, .9, 'center');
     function init_disable()
         GUI.disable(ui_matrix_panel)
+        GUI.disable(ui_graph_settings)
+        GUI.disable(ui_measures_panel)  
+        set(ui_matrix_panel, 'Visible', 'off')
     end
     function init_enable()
         GUI.enable(ui_matrix_panel)
+        GUI.enable(ui_graph_settings)
+        GUI.enable(ui_measures_panel)
+        set(ui_matrix_panel, 'Visible', 'on')
     end
 
 %% Text File Name
@@ -209,6 +218,7 @@ ui_graph_analysis_id = uicontrol(ui_graph_settings, 'Style', 'edit');
 ui_graph_analysis_label = uicontrol(ui_graph_settings, 'Style', 'edit');
 ui_graph_analysis_notes = uicontrol(ui_graph_settings, 'Style', 'edit');
 ui_graph_setttings_inner_panel = uipanel(ui_graph_settings);
+ui_graph_settings_analysis_button = uicontrol(ui_graph_settings, 'Style', 'pushbutton');
 
 init_graph_settings()
     function init_graph_settings()
@@ -218,7 +228,7 @@ init_graph_settings()
         set(ui_graph_settings, 'Position', SET_POSITION)
         set(ui_graph_settings, 'BorderType', 'none')        
         
-        set(ui_graph_setttings_inner_panel, 'Position', [0 0 0.98 .85])
+        set(ui_graph_setttings_inner_panel, 'Position', [0 0.15 0.98 .7])
         set(ui_graph_setttings_inner_panel, 'Title', 'Analysis Settings')
         set(ui_graph_setttings_inner_panel, 'Units', 'normalized')        
         
@@ -251,10 +261,10 @@ init_graph_settings()
             inner_panel_y = 1 - j * inner_panel_height + y_correction; 
 
             texts(j, 1) = uicontrol('Parent', ui_graph_setttings_inner_panel, 'Style', 'text', ...
-                 'Units', 'normalized', 'FontSize', 10, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y 0.50 0.04], 'String', erase(as{1,1}, ['Analysis' dc{1} '.']));
+                 'Units', 'normalized', 'FontSize', 10, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y 0.50 0.07], 'String', erase(as{1,1}, ['Analysis' dc{1} '.']));
             
             fields(j, 1) = uicontrol('Parent', ui_graph_setttings_inner_panel,  ...
-                'Units', 'normalized', 'Position', [0.58 inner_panel_y+0.01 0.40 0.03] );
+                'Units', 'normalized', 'Position', [0.58 inner_panel_y+0.04 0.40 0.03] );
  
             if isequal(as{1, 2}, 1) % string
                 set(fields(j, 1), 'Style', 'popup');
@@ -272,6 +282,11 @@ init_graph_settings()
                 set(fields(j, 1), 'Callback', {@cb_analysis_settings_popup})
             end
         end
+
+        set(ui_graph_settings_analysis_button, 'Position', [.20 .02 .60 .08])
+        set(ui_graph_settings_analysis_button, 'String', 'Start Analysis')
+        set(ui_graph_settings_analysis_button, 'TooltipString', 'Start Analysis')
+        set(ui_graph_settings_analysis_button, 'Callback', {@cb_calc_settings_start_analysis})
     end
     function update_set_ga_id()       
         if isempty(ga.getID())
@@ -293,6 +308,8 @@ init_graph_settings()
     end
     function cb_analysis_settings_popup(~, ~)
         update_matrix(); 
+    end
+    function cb_calc_settings_start_analysis(~, ~)
     end
 
 %% Panel - Measure Table
@@ -479,6 +496,8 @@ ui_menu_file_open = uimenu(ui_menu_file);
 ui_menu_file_save = uimenu(ui_menu_file);
 ui_menu_file_saveas = uimenu(ui_menu_file);
 ui_menu_file_close = uimenu(ui_menu_file);
+ui_menu_plotview = uimenu(f, 'Label', 'Plot View');
+ui_menu_plotview_figure = uimenu(ui_menu_plotview);
 init_menu()
     function init_menu()
         set(ui_menu_file_open, 'Label', OPEN_CMD)
@@ -498,8 +517,19 @@ init_menu()
         set(ui_menu_file_close, 'Accelerator', CLOSE_SC);
         set(ui_menu_file_close, 'Callback', ['GUI.close(''' APPNAME ''', gcf)'])
         
+        set(ui_menu_plotview_figure, 'Label', FIGURE_CMD)
+        set(ui_menu_plotview_figure, 'Accelerator', FIGURE_SC)
+        set(ui_menu_plotview_figure, 'Callback', {@cb_menu_figure})
+        
     end
 [ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME);
+    function cb_menu_figure(~, ~)  % (src, event)
+        h = figure('Name', ['Correlation Matrix - ' ga.getName()]);
+        set(gcf, 'Color', 'w')
+        copyobj(ui_matrix_axes, h)
+        set(gca, 'Units', 'normalized')
+        set(gca, 'OuterPosition', [0 0 1 1])
+    end
 
 %% Toolbar
 set(f, 'Toolbar', 'figure')
@@ -536,14 +566,11 @@ setup()
 set(f, 'Visible', 'on');
 
 %% Auxiliary functions
-    function setup()
-        
+    function setup()        
         % setup cohort
-        update_cohort()
+        update_cohort()        
         
-
         % setup graph analysis
-%         update_calc()
         update_tab()
         update_matrix()
         
