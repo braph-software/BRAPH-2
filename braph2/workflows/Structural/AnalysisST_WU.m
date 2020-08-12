@@ -17,8 +17,11 @@ classdef AnalysisST_WU < Analysis
     %  getRandomComparisonID        - returns the random comparison ID
     %  getComparisonID              - returns the comparison ID
     %
-    % AnalysisST_WU calcultion methods (Access = protected):
-    %  get_graph_for_subjects       - returns the graph of the correlated matrix
+    % AnalysisST_WU graph methods (Access = protected)
+    %  get_weighted_correlation_matrix - returns the correlated matrix
+    %  get_graph_for_subjects       - returns the graph with the correlated matrix
+    % 
+    % AnalysisST_WU calcultion methods (Access = protected):    
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
@@ -106,6 +109,13 @@ classdef AnalysisST_WU < Analysis
     end
     methods (Access = protected)  % graph methods
         function A = get_weighted_correlation_matrix(analysis, subjects, varargin)
+            % GET_WEIGHTED_CORRELATION_MATRIX creates a correlated matrix
+            %
+            % A = GET_WEIGHTED_CORRELATION_MATRIX(ANALYSIS, SUBJECTS) 
+            % creates a correlated matrix using the SUBJECTS data. Applies
+            % the ANALYSIS settings to correlate.
+            % 
+            % See also get_graph_for_subjects.
             
             atlases = analysis.cohort.getBrainAtlases();
             atlas = atlases{1};

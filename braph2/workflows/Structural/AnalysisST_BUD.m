@@ -12,8 +12,10 @@ classdef AnalysisST_BUD < AnalysisST_WU
     % AnalysisST_BUD constructor methods:
     %  AnalysisST_BUD               - Constructor
     %
-    % AnalysisST_BUD calcultion methods (Access = protected):
+    % AnalysisST_BUD graph methods (Access = protected)
     %  get_graph_for_subjects       - returns the graph of the correlated matrix
+    % 
+    % AnalysisST_BUD calculation methods (Access = protected):    
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
