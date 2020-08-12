@@ -1,11 +1,11 @@
-% test GUIAnalysis
+% test GUIAnalysisSettings
 
 %% Pass type of analysis
 
 atlas_file = [fileparts(which('example_workflow_ST_WU.m')) filesep() 'example data ST (MRI)' filesep() 'desikan_atlas.xlsx'];
 atlas = BrainAtlas.load_from_xls('File', atlas_file);
 
-GUIAnalysis('AnalysisST_WU')
+GUIAnalysisSettings('AnalysisST_WU')
 
 set(gcf, 'CloseRequestFcn', 'closereq')
 close(gcf)
@@ -15,7 +15,7 @@ cohort_file = [fileparts(which('example_workflow_ST_WU.m')) filesep() 'example d
 temp = load(cohort_file, '-mat', 'cohort', 'selected_group', 'selected_subjects', 'BUILD');
 cohort = temp.cohort;
 
-GUIAnalysis(cohort, 'AnalysisST_WU')
+GUIAnalysisSettings(cohort, 'AnalysisST_WU')
 
 set(gcf, 'CloseRequestFcn', 'closereq')
 close(gcf)

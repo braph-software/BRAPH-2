@@ -1,4 +1,4 @@
-function GUIAnalysis(tmp, analysis_class)
+function GUIAnalysisSettings(tmp, analysis_class)
 
 %% General Constants
 APPNAME = GUI.GA_NAME;
@@ -66,7 +66,7 @@ end
                    isfield(temp, 'ga') && ...
                    ismember(temp.getClass(), analysis_list)
                 ga = temp.ga;
-                GUIAnalysis(ga)
+                GUIAnalysisSettings(ga)
             end
         end
     end

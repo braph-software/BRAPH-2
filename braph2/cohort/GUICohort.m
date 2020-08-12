@@ -1328,7 +1328,7 @@ init_menu()
             for j = 1:1:length(analysis_list)
                 analysis = analysis_list{j};
                 if isequal(erase(analysis_label_chr_array, ' ...'), Analysis.getName(analysis))
-                    GUIAnalysis(cohort.copy(), Analysis.getClass(analysis));
+                    GUIAnalysisSettings(cohort.copy(), Analysis.getClass(analysis));
                 end
             end  
         end
