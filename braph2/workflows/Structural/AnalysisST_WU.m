@@ -131,8 +131,17 @@ classdef AnalysisST_WU < Analysis
                 data(i, :) = subject.getData('ST').getValue();  % st data
             end
             
-            correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
+           
+            correlation_rule = get_from_varargin([], 'AnalysisST.CorrelationRule', varargin{:});
+            if isempty(correlation_rule)
+                correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');
+            end
+            
+            negative_weight_rule = get_from_varargin([], 'AnalysisST.CorrelationRule', varargin{:});
+            if isempty(negative_weight_rule)
+                negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
+            end
+            
             A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
                         
             graph_type = AnalysisST_WU.getGraphType();
@@ -686,16 +695,11 @@ classdef AnalysisST_WU < Analysis
                 end
 
                 if ~isempty(groups)
-                    % get A
-                    if isequal(data_list(data_codes{1}), 'DataStructural')
-                        group = analysis.getCohort().getGroups().getValue(selected_group);
-                        subjects = group.getSubjects();
-                        graph = analysis.get_graph_for_subjects(subjects);
-                        A = graph.getA();
-                    else
-                        graph = analysis.get_graph_for_subject(subject);  % this is missing
-                        A = graph.getA();  % not for multiplex?
-                    end
+                    % get A                    
+                    group = analysis.getCohort().getGroups().getValue(selected_group);
+                    subjects = group.getSubjects();
+                    graph = analysis.get_graph_for_subjects(subjects, varargin{:});
+                    A = graph.getA();                   
                     
                     matrix_plot = graph.Plot(A, graph_rule, ...
                         graph_rule_value, 'Graph.PlotType', graph_type_value);

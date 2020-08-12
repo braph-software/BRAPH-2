@@ -96,8 +96,10 @@ end
 %% GUI Init
 f = GUI.init_figure(APPNAME, .9, .9, 'center');
     function init_disable()
+        GUI.disable(ui_matrix_panel)
     end
     function init_enable()
+        GUI.enable(ui_matrix_panel)
     end
 
 %% Text File Name
@@ -266,12 +268,15 @@ init_graph_settings()
                 set(fields(j, 1), 'String', as{1, 4})
                 set(fields(j, 1), 'HorizontalAlignment', 'left')
                 set(fields(j, 1), 'FontWeight', 'bold')
+                set(fields(j, 1), 'Callback', {@cb_analysis_settings_popup})
             elseif isequal(as{1, 2}, 2) % numerical
                 set(fields(j, 1), 'Style', 'edit');
                 set(fields(j, 1), 'String', as{1, 3})  % put default
+                set(fields(j, 1), 'Callback', {@cb_analysis_settings_popup})
             else % logical                
                 set(fields(j, 1), 'Style', 'popup');
                 set(fields(j, 1), 'String', {'true', 'false'}) 
+                set(fields(j, 1), 'Callback', {@cb_analysis_settings_popup})
             end
         end
     end
@@ -293,6 +298,9 @@ init_graph_settings()
     end
     function cb_calc_ga_notes(~, ~)
         ga.setNotes(get(ui_graph_analysis_notes, 'String'))
+    end
+    function cb_analysis_settings_popup(~, ~)
+        update_matrix(); 
     end
 
 %% Panel - Measure Table
@@ -434,14 +442,11 @@ init_measures_table_panel()
     end
 
 %% Panel Plot Matrix
+initial_number_childs = 0;
 CONSOLE_MATRIX_CMD  = 'Correlation Matrix';
 
 ui_matrix_panel = uipanel();
 ui_matrix_axes = axes();
-% ui_matrix_group_text = uicontrol(ui_matrix_panel, 'Style', 'text');
-% ui_matrix_group_popup = uicontrol(ui_matrix_panel, 'Style', 'popup', 'String', {''});
-% ui_matrix_plot_correlation = uicontrol(ui_matrix_panel, 'Style', 'checkbox');
-% ui_matrix_plot_histogram  = uicontrol(ui_matrix_panel, 'Style', 'checkbox');
 init_matrix()
     function init_matrix()
         GUI.setUnits(ui_matrix_panel)
@@ -452,34 +457,26 @@ init_matrix()
         
         set(ui_matrix_axes,'Parent', ui_matrix_panel)
         set(ui_matrix_axes,'Position', [.05 .05 .60 .88])
-        
-%         set(ui_matrix_group_text, 'Position', [.69 .88 .05 .045])
-%         set(ui_matrix_group_text, 'String', 'Group  ')
-%         set(ui_matrix_group_text, 'HorizontalAlignment', 'right')
-%         set(ui_matrix_group_text, 'FontWeight', 'bold')        
-%         
-%        
-%         set(ui_matrix_group_popup, 'Position', [.75 .88 .23 .05])
-%         set(ui_matrix_group_popup, 'TooltipString', 'Select group');
-%         set(ui_matrix_group_popup, 'Callback', {@cb_matrix});
-%         
-%         set(ui_matrix_plot_correlation, 'Position', [.70 .82 .28 .05])
-%         set(ui_matrix_plot_correlation, 'String', 'correlation matrix')
-%         set(ui_matrix_plot_correlation, 'Value', true)
-%         set(ui_matrix_plot_correlation, 'TooltipString', 'Select matrix')
-%         set(ui_matrix_plot_correlation, 'FontWeight', 'bold')
-%         set(ui_matrix_plot_correlation, 'Callback', {@cb_matrix_correlation})
-%         
-%         set(ui_matrix_plot_histogram, 'Position', [.70 .76 .28 .05])
-%         set(ui_matrix_plot_histogram, 'String', 'histogram')
-%         set(ui_matrix_plot_histogram, 'Value', false)
-%         set(ui_matrix_plot_histogram, 'TooltipString', 'Select histogram of correlation coefficients')
-%         set(ui_matrix_plot_histogram, 'Callback', {@cb_matrix_histogram})
     end
     function update_matrix()     
-        ga.getMatrixPanel('UIParent', ui_matrix_panel, 'UIParentAxes', ui_matrix_axes)
+        childs = allchild(ui_graph_setttings_inner_panel);
+        if initial_number_childs == 0
+            initial_number_childs = length(childs);
+        end
+        subject = ga.getSubjectClass();
+        dc = Subject.getDataCodes(subject); 
+        for j = initial_number_childs:-1:1
+            % text, value : pairs values, nonpair is name
+            k  = initial_number_childs - j + 1;
+            if rem(j, 2) == 0
+                correlation_rules_array{k} = ['Analysis' dc{1} '.' childs(j).String];
+            else
+                correlation_rules_array{k} = childs(j).String{childs(j).Value};
+            end            
+        end
+        
+        ga.getMatrixPanel('UIParent', ui_matrix_panel, 'UIParentAxes', ui_matrix_axes, correlation_rules_array{:})
     end
-
 
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
@@ -552,9 +549,7 @@ set(f, 'Visible', 'on');
         % setup cohort
         update_cohort()
         
-        % setup community panel
-%         update_community_info()
-        
+
         % setup graph analysis
 %         update_calc()
         update_tab()
