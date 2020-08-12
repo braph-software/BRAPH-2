@@ -121,7 +121,7 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_negative                 - checks whether graph allows negative values
     %
     % Graph plot methods Static
-    %   Plot                        - chooses the corresponding type of plot
+    %   plot                        - chooses the corresponding type of plot
     %   plotw                       - plots a weighted graph
     %   plotb                       - plots a binary graph
     %   histogram                   - plots a histogram
@@ -975,13 +975,13 @@ classdef Graph < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)  % Plot Panel method
-        function h_plot = Plot(A, varargin)
+        function h_plot = plot(A, varargin)
             % PLOT calls the appropiate function to plot
             %
-            % G_PANEL = GETGRAPHPLOT(G, PLOTTYPE, VALUE) using VALUE
+            % H_PLOT = PLOT(G, PLOTRULE, VALUE) using VALUE
             % chooses the corresponding function to return a plot.
             %
-            % See also getCompatibleMeasureList, plotb, plotw, hist.
+            % See also plotb, plotw, hist.
             
             plot_type = get_from_varargin('correlation', 'Graph.PlotType', varargin{:});
             switch plot_type

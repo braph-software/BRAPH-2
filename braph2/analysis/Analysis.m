@@ -34,6 +34,9 @@ classdef Analysis < handle & matlab.mixin.Copyable
     %  getComparison            - returns the specified comparison
     %  getSettings              - returns the analysis settings structure
     %
+    % Analysis plot methods (Abstract)
+    %  getGraphPanel            - abstract method to be implemented
+    %
     % Analysis getAnalysis methods (Static)
     %  getAnalysis              - returns a new analysis
     %
@@ -330,6 +333,9 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 end
             end
         end
+    end
+    methods (Abstract) % Plot abstract methods
+        getGraphPanel(anlysis, varargin)
     end
     methods (Static)  % getAnalysis
         function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>
