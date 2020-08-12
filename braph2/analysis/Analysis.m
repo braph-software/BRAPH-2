@@ -334,7 +334,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
         end
     end
-    methods (Abstract) % Plot abstract methods
+    methods (Abstract)  % Plot abstract methods
         getGraphPanel(anlysis, varargin)
     end
     methods (Static)  % getAnalysis
