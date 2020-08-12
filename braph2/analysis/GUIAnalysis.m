@@ -246,7 +246,9 @@ init_graph_settings()
         available_settings = ga.getAvailableSettings();
         texts = zeros(length(available_settings), 1);
         fields =  zeros(length(available_settings), 1);
-        inner_panel_height = 1/length(available_settings);        
+        inner_panel_height = 1/length(available_settings); 
+        subject = ga.getSubjectClass();
+        dc = Subject.getDataCodes(subject);
         
         for j = 1:1:length(available_settings)
             as = available_settings{j};
@@ -254,7 +256,7 @@ init_graph_settings()
             inner_panel_y = 1 - j * inner_panel_height + y_correction; 
 
             texts(j, 1) = uicontrol('Parent', ui_graph_setttings_inner_panel, 'Style', 'text', ...
-                 'Units', 'normalized', 'FontSize', 6, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y 0.50 0.03], 'String', as{1,1});
+                 'Units', 'normalized', 'FontSize', 10, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y 0.50 0.04], 'String', erase(as{1,1}, ['Analysis' dc{1} '.']));
             
             fields(j, 1) = uicontrol('Parent', ui_graph_setttings_inner_panel,  ...
                 'Units', 'normalized', 'Position', [0.58 inner_panel_y+0.01 0.40 0.03] );
