@@ -1319,7 +1319,7 @@ init_menu()
         for i = 1:1:length(analysis_list)
             analysis = analysis_list{i};
             cohort_analysis_menu = uimenu(ui_menu_analysis);
-            set(cohort_analysis_menu, 'Label', analysis)
+            set(cohort_analysis_menu, 'Label', [Analysis.getName(analysis) ' ...'])
             set(cohort_analysis_menu, 'Callback', {@cb_menu_analysis})            
         end
         
@@ -1327,7 +1327,7 @@ init_menu()
             analysis_label_chr_array = get(src, 'Label');
             for j = 1:1:length(analysis_list)
                 analysis = analysis_list{j};
-                if isequal(analysis_label_chr_array, Analysis.getClass(analysis))
+                if isequal(erase(analysis_label_chr_array, ' ...'), Analysis.getName(analysis))
                     GUIAnalysis(cohort.copy(), Analysis.getClass(analysis));
                 end
             end  

@@ -41,15 +41,15 @@ if exist('tmp', 'var') && ismember(class(tmp), analysis_list) % pass an analysis
     cohort = ga.getCohort();
 elseif exist('tmp', 'var') && isa(tmp, 'Cohort') && exist('analysis_class', 'var') % pass a cohort
     % defaul will be WU
-    ga = Analysis.getAnalysis(analysis_class, 'Empty GA', '', '', tmp, {}, {}, {});    
+    ga = Analysis.getAnalysis(analysis_class, '', '', '', tmp, {}, {}, {});    
     cohort = ga.getCohort();
 else % string of analysis class    
      assert(ismember(tmp, analysis_list));     
      subject_type = Analysis.getSubjectClass(tmp);         
     
-     atlas = BrainAtlas('Empty BA', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
-     cohort = Cohort('Empty Cohort', 'cohort label', 'cohort notes', subject_type, atlas, {});
-     ga = Analysis.getAnalysis(tmp, 'Empty GA', '', '', cohort, {}, {}, {});        
+     atlas = BrainAtlas('', 'Brain Atlas Label', 'Brain atlas notes.', 'BrainMesh_ICBM152.nv', {});
+     cohort = Cohort('', 'cohort label', 'cohort notes', subject_type, atlas, {});
+     ga = Analysis.getAnalysis(tmp, '', '', '', cohort, {}, {}, {});        
 end
 
     function cb_open(~, ~)
@@ -153,7 +153,7 @@ init_cohort()
         set(ui_button_cohort, 'Callback', {@cb_cohort})
     end
     function update_cohort()
-        if ~isempty(cohort) && ~isequal(cohort.getID(), 'Empty Cohort')
+        if ~isempty(cohort) && ~isequal(cohort.getID(), '')
             set(ui_text_cohort_name, 'String', cohort.getID())
             set(ui_text_cohort_subjectnumber, 'String', ['subject number = ' num2str(cohort.getSubjects().length())])
             set(ui_text_cohort_groupnumber, 'String', ['group number = ' num2str(cohort.getGroups().length())])
@@ -218,12 +218,11 @@ init_graph_settings()
         set(ui_graph_settings, 'Position', SET_POSITION)
         set(ui_graph_settings, 'BorderType', 'none')        
         
-        set(ui_graph_setttings_inner_panel, 'Position', [0.02 0.02 0.98 .85])
+        set(ui_graph_setttings_inner_panel, 'Position', [0 0 0.98 .85])
         set(ui_graph_setttings_inner_panel, 'Title', 'Analysis Settings')
-        set(ui_graph_setttings_inner_panel, 'Units', 'normalized')
-        set(ui_graph_setttings_inner_panel, 'BorderType', 'none')
+        set(ui_graph_setttings_inner_panel, 'Units', 'normalized')        
         
-        set(ui_graph_analysis_id, 'Position', [.02 .95 .36 .03])
+        set(ui_graph_analysis_id, 'Position', [0 .95 .36 .03])
         set(ui_graph_analysis_id, 'HorizontalAlignment', 'left')
         set(ui_graph_analysis_id, 'FontWeight', 'bold')
         set(ui_graph_analysis_id, 'Callback', {@cb_calc_ga_id})
@@ -276,7 +275,7 @@ init_graph_settings()
     end
     function update_set_ga_id()       
         if isempty(ga.getID())
-            set(f, 'Name', [GUI.GA_NAME ' - ' BRAPH2.VERSION])
+            set(f, 'Name', [GUI.GA_NAME ' Settings - ' BRAPH2.VERSION])
         else
             set(f, 'Name', [GUI.GA_NAME ' Settings - ' ga.getID()  ])
         end
@@ -311,7 +310,7 @@ TAB_TXT_COL = 5;
 
 selected_measure = [];
 
-TAB_WIDTH = 1 - 2 * MARGIN_X;
+TAB_WIDTH = 1 - 1.25 * MARGIN_X;
 TAB_X0 = MARGIN_X;
 TAB_Y0 = 2 * MARGIN_Y + FILENAME_HEIGHT;
 TAB_POSITION = [TAB_X0 TAB_Y0 TAB_WIDTH TAB_HEIGHT];
@@ -327,8 +326,8 @@ init_measures_table_panel()
         set(ui_measures_panel, 'Position', TAB_POSITION)
         set(ui_measures_panel, 'BorderType', 'none')
         
-        set(ui_table_calc, 'Position', [0 0.02 0.7 1])   
-        set(ui_table_calc, 'ColumnName', {'', '   Brain Measure   ', '  Property  ', '  Scope  ' , '   Notes   '})
+        set(ui_table_calc, 'Position', [0 0.02 0.7 0.98])   
+        set(ui_table_calc, 'ColumnName', {'', '   Brain Measure   ', '  Format  ', '  Scope  ' , '   Notes   '})
         set(ui_table_calc, 'ColumnFormat', {'logical', 'char', {TAB_NODAL TAB_GLOBAL TAB_BINODAL}, {TAB_UNILAYER TAB_BILAYER TAB_SUPERGLOBAL} , 'char'})
         set(ui_table_calc, 'ColumnEditable', [true false false false false])
         set(ui_table_calc, 'ColumnWidth', {GUI.width(f, 0.02 * TAB_WIDTH), GUI.width(f, .15 * TAB_WIDTH), GUI.width(f, .07 * TAB_WIDTH), GUI.width(f, .07 * TAB_WIDTH), GUI.width(f, .68 * TAB_WIDTH)})

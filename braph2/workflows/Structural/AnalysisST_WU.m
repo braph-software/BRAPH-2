@@ -520,7 +520,7 @@ classdef AnalysisST_WU < Analysis
             %  create the options     ****************
             % groups popup
             ui_matrix_groups_popup = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'popup');
-            set(ui_matrix_groups_popup, 'Position', [.75 .88 .23 .05])
+            set(ui_matrix_groups_popup, 'Position', [.70 .88 .28 .05])
             set(ui_matrix_groups_popup, 'TooltipString', 'Select Group')
             set(ui_matrix_groups_popup, 'String', groups_labels)
             set(ui_matrix_groups_popup, 'Callback', {@cb_group_popup})

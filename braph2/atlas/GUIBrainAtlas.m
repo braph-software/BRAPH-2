@@ -938,13 +938,13 @@ init_menu()
         for i = 1:1:length(subjects)
             sub = subjects{i};
             sub_atlas_menu = uimenu(ui_menu_cohorts);
-            set(sub_atlas_menu, 'Label', [Subject.getName(sub) ' Cohort'])
+            set(sub_atlas_menu, 'Label', [Subject.getName(sub) ' Cohort ...'])
             set(sub_atlas_menu, 'Callback', {@subject_menu_atlas_subs})            
         end
         
         function subject_menu_atlas_subs(src, ~)
             subject_label_char_array = get(src, 'Label');
-            subject_name = erase(subject_label_char_array, ' Cohort');
+            subject_name = erase(subject_label_char_array, ' Cohort ...');
             for j = 1:1:length(subjects)
                 sub = subjects{j};
                 if isequal(subject_name, Subject.getName(sub))
