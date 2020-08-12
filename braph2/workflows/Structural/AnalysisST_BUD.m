@@ -90,7 +90,7 @@ classdef AnalysisST_BUD < AnalysisST_WU
             comparison_id = [comparison_id ' density=' num2str(density)];
         end
     end
-    methods 
+    methods (Access = protected)
         function g = get_graph_for_subjects(analysis, subjects, varargin)
             % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
             %

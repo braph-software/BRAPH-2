@@ -104,7 +104,7 @@ classdef AnalysisST_WU < Analysis
                 ];
         end
     end
-    methods
+    methods (Access = protected)  % graph methods
         function g = get_graph_for_subjects(analysis, subjects, varargin)
             % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
             %
@@ -132,18 +132,10 @@ classdef AnalysisST_WU < Analysis
             for i = 1:1:subject_number
                 subject = subjects{i};
                 data(i, :) = subject.getData('ST').getValue();  % st data
-            end
+            end          
             
-           
-            correlation_rule = get_from_varargin([], 'AnalysisST.CorrelationRule', varargin{:});
-            if isempty(correlation_rule)
-                correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');
-            end
-            
-            negative_weight_rule = get_from_varargin([], 'AnalysisST.CorrelationRule', varargin{:});
-            if isempty(negative_weight_rule)
-                negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
-            end
+            correlation_rule = analysis.getSettings('AnalysisST.CorrelationRule');          
+            negative_weight_rule = analysis.getSettings('AnalysisST.NegativeWeightRule');
             
             A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
                         
@@ -490,10 +482,10 @@ classdef AnalysisST_WU < Analysis
         end
     end
     methods   % Plot Graph Panel
-        function matrix_panel = getGraphPanel(analysis, varargin)
-           % GETMATRIXPANEL creates a matrix uipanel
+        function graph_panel = getGraphPanel(analysis, varargin)
+           % GETGRAPHPANEL creates a matrix uipanel
            %
-           % MATRIX_PANEL = GETMATRIXPANEL(ANALYSIS, PROPERTY, RULE, ...)
+           % GRAPH_PANEL = GETGRAPHPANEL(ANALYSIS, PROPERTY, RULE, ...)
            % creates a uipanel with group selection uicontrol, weighted
            % plot uicontrol, density uicontorol, and threshold uicontrol.
            %
@@ -510,8 +502,7 @@ classdef AnalysisST_WU < Analysis
                 groups_labels = 'No groups';
             end
             
-            selected_group = 1;
-            
+            selected_group = 1;            
             matrix_plot = [];
             
             cla(ui_parent_axes)
@@ -701,13 +692,15 @@ classdef AnalysisST_WU < Analysis
                 end
                 
                 if ~isempty(groups)
+                    cla(ui_parent_axes)
+                    axes(ui_parent_axes)
                     % get A
                     group = analysis.getCohort().getGroups().getValue(selected_group);
                     subjects = group.getSubjects();
                     graph = analysis.get_graph_for_subjects(subjects, varargin{:});
                     A = graph.getA();
                     
-                    if get(ui_matrix_histogram_checkbox, 'Value')
+                    if get(ui_matrix_histogram_checkbox, 'Value')                        
                         matrix_plot = graph.plot(A, 'Graph.PlotType', graph_type_value);
                     else         
                         % get atlas labels
@@ -723,7 +716,7 @@ classdef AnalysisST_WU < Analysis
             update_matrix()
         
             if nargout > 0
-                matrix_panel = matrix_plot;
+                graph_panel = matrix_plot;
             end
             
         end

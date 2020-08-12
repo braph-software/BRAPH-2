@@ -1089,12 +1089,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             N = length(A);
             
             % threshold
-            threshold = .5;
-            for n = 1:2:length(varargin)
-                if strcmpi(varargin{n}, 'threshold')
-                    threshold = varargin{n + 1};
-                end
-            end
+            threshold = get_from_varargin(0, 'threshold', varargin{:});
+            
+            % density 
+            density = get_from_varargin([], 'density', varargin{:});
             
             % x labels
             xlabels = (1:1:N);
@@ -1118,7 +1116,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                 ylabels = {ylabels};
             end
             
-            B = binarize(A, 'threshold', threshold);
+            B = binarize(A, 'threshold', threshold, 'density', density);
             
             ht = surf((0:1:N), ...
                 (0:1:N), ...

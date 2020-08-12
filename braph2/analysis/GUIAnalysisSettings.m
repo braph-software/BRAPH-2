@@ -37,6 +37,8 @@ FIGURE_SC = GUI.FIGURE_SC;
 
 CLOSE_TP = ['Close ' APPNAME '. Shortcut: ' GUI.ACCELERATOR '+' CLOSE_SC];
 
+initial_number_childs = 0;
+
 %% Application Data
 analysis_list = Analysis.getList();
 if exist('tmp', 'var') && ismember(class(tmp), analysis_list) % pass an analysis
@@ -97,12 +99,27 @@ f = GUI.init_figure(APPNAME, .9, .9, 'center');
         GUI.disable(ui_graph_settings)
         GUI.disable(ui_measures_panel)  
         set(ui_matrix_panel, 'Visible', 'off')
+        
+        childs = allchild(ui_graph_setttings_inner_panel);
+        if initial_number_childs == 0
+            initial_number_childs = length(childs);
+        end        
+        for j = initial_number_childs:-1:1           
+           set(childs(j), 'enable', 'off')
+        end
     end
     function init_enable()
         GUI.enable(ui_matrix_panel)
         GUI.enable(ui_graph_settings)
         GUI.enable(ui_measures_panel)
         set(ui_matrix_panel, 'Visible', 'on')
+        childs = allchild(ui_graph_setttings_inner_panel);
+        if initial_number_childs == 0
+            initial_number_childs = length(childs);
+        end        
+        for j = initial_number_childs:-1:1           
+           set(childs(j), 'enable', 'on')
+        end
     end
 
 %% Text File Name
@@ -307,7 +324,24 @@ init_graph_settings()
         ga.setNotes(get(ui_graph_analysis_notes, 'String'))
     end
     function cb_analysis_settings_popup(~, ~)
-        update_matrix(); 
+        childs = allchild(ui_graph_setttings_inner_panel);
+        if initial_number_childs == 0
+            initial_number_childs = length(childs);
+        end
+        subject = ga.getSubjectClass();
+        dc = Subject.getDataCodes(subject); 
+        for j = initial_number_childs:-1:1
+            % text, value : pairs values, nonpair is name
+            k  = initial_number_childs - j + 1;
+            if rem(j, 2) == 0
+                correlation_rules_array{k} = ['Analysis' dc{1} '.' childs(j).String];
+            else
+                correlation_rules_array{k} = childs(j).String{childs(j).Value};
+            end            
+        end
+        analysis = ga.getClass();
+        ga = Analysis.getAnalysis(analysis, ['Empty GA with ' cohort.getID()], '', '', cohort, {}, {}, {}, correlation_rules_array);
+        setup(); 
     end
     function cb_calc_settings_start_analysis(~, ~)
     end
@@ -451,7 +485,6 @@ init_measures_table_panel()
     end
 
 %% Panel Plot Matrix
-initial_number_childs = 0;
 CONSOLE_MATRIX_CMD  = 'Correlation Matrix';
 
 ui_matrix_panel = uipanel();
@@ -484,7 +517,7 @@ init_matrix()
             end            
         end
         
-        ga.getMatrixPanel('UIParent', ui_matrix_panel, 'UIParentAxes', ui_matrix_axes, correlation_rules_array{:})
+        ga.getGraphPanel('UIParent', ui_matrix_panel, 'UIParentAxes', ui_matrix_axes, correlation_rules_array{:})
     end
 
 %% Menus
