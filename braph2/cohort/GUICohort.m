@@ -211,12 +211,14 @@ f = GUI.init_figure(APPNAME, .8, .9, 'center');
         GUI.disable(ui_panel_groups)
         GUI.disable(ui_panel_console)
         set(ui_menu_groups, 'enable', 'off')
-        set(ui_menu_subjects, 'enable', 'off')         
+        set(ui_menu_subjects, 'enable', 'off')    
+        set(ui_table_groups, 'enable', 'off')
     end
     function init_enable()
         GUI.enable(ui_panel_grtab)        
         set(ui_menu_groups, 'enable', 'on')
         set(ui_menu_subjects, 'enable', 'on')
+        set(ui_table_groups, 'enable', 'on')
         if cohort.getSubjects().length() > 0
             GUI.enable(ui_panel_console)
             GUI.enable(ui_panel_groups)

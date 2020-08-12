@@ -99,6 +99,7 @@ f = GUI.init_figure(APPNAME, .9, .9, 'center');
         GUI.disable(ui_graph_settings)
         GUI.disable(ui_measures_panel)  
         set(ui_matrix_panel, 'Visible', 'off')
+        set(ui_table_calc, 'enable', 'off')
         
         childs = allchild(ui_graph_setttings_inner_panel);
         if initial_number_childs == 0
@@ -119,6 +120,7 @@ f = GUI.init_figure(APPNAME, .9, .9, 'center');
         end        
         for j = initial_number_childs:-1:1           
            set(childs(j), 'enable', 'on')
+           set(ui_table_calc, 'enable', 'on')
         end
     end
 
