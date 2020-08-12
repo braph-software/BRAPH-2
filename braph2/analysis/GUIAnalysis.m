@@ -1,4 +1,4 @@
-function GUIAnalysis(tmp)
+function GUIAnalysis(tmp, analysis_class)
 
 %% General Constants
 APPNAME = GUI.GA_NAME;
@@ -39,15 +39,9 @@ analysis_list = Analysis.getList();
 if exist('tmp', 'var') && ismember(class(tmp), analysis_list) % pass an analysis
     ga = Analysis.getAnalysis(tmp);
     cohort = ga.getCohort();
-elseif exist('tmp', 'var') && isa(tmp, 'Cohort') % pass a cohort
+elseif exist('tmp', 'var') && isa(tmp, 'Cohort') && exist('analysis_class', 'var') % pass a cohort
     % defaul will be WU
-    subject_type = tmp.getSubjectClass();
-    for i = 1:1:length(analysis_list)
-        analysis = analysis_list{i};
-        if isequal(Analysis.getSubjectClass(analysis), subject_type) && isequal(Analysis.getGraphType(analysis), 'GraphWU')
-            ga = Analysis.getAnalysis(analysis, 'Empty GA', '', '', tmp, {}, {}, {});
-        end        
-    end    
+    ga = Analysis.getAnalysis(analysis_class, 'Empty GA', '', '', tmp, {}, {}, {});    
     cohort = ga.getCohort();
 else % string of analysis class    
      assert(ismember(tmp, analysis_list));     
@@ -280,14 +274,13 @@ init_graph_settings()
             end
         end
     end
-    function update_set_ga_id()
-        ga_id = ga.getID();
-        if isempty(ga_id)
+    function update_set_ga_id()       
+        if isempty(ga.getID())
             set(f, 'Name', [GUI.GA_NAME ' - ' BRAPH2.VERSION])
         else
-            set(f, 'Name', [GUI.GA_NAME ' - ' BRAPH2.VERSION ' - ' ga_id ' - Settings' ])
+            set(f, 'Name', [GUI.GA_NAME ' Settings - ' ga.getID()  ])
         end
-        set(ui_graph_analysis_id, 'String', ga_id)
+        set(ui_graph_analysis_id, 'String', ga.getID())
     end
     function cb_calc_ga_id(~, ~)
         ga.setID(get(ui_graph_analysis_id, 'String'))

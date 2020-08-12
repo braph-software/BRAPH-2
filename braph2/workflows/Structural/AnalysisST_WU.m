@@ -33,6 +33,9 @@ classdef AnalysisST_WU < Analysis
     %  getRandomComparisonClass     - returns the class of the random comparison
     %  getComparisonClass           - returns the class of the comparison
     %  getAvailbleSettings          - returns the available settings
+    %
+    % AnalysisST_WU Plot panel methods
+    %  getMatrixPanel               - creates a uipanel     
     % 
     % See also Analysis, MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU
     
@@ -488,24 +491,25 @@ classdef AnalysisST_WU < Analysis
     end
     methods   % Plot Matrix Panel
         function matrix_panel = getMatrixPanel(analysis, varargin)
-            % i need the class, a graph type, and get_graphs function
-            analysis_class = analysis.getClass();
-            analysis_graph = analysis.getGraphType();
-            
-            data_codes = Subject.getDataCodes(analysis.getSubjectClass());
-            data_list = Subject.getDataList(analysis.getSubjectClass());
-            
+           % GETMATRIXPANEL creates a matrix uipanel
+           %
+           % MATRIX_PANEL = GETMATRIXPANEL(ANALYSIS, PROPERTY, RULE, ...)
+           % creates a uipanel with group selection uicontrol, weighted
+           % plot uicontrol, density uicontorol, and threshold uicontrol.
+           %
+           % See also getClass, getSubjectClass, getGraphType.
+           
             ui_parent = get_from_varargin([], 'UIParent', varargin{:});
             ui_parent_axes = get_from_varargin([], 'UIParentAxes', varargin{:});
             
-            % this has to be here
+            % get groups labels
             groups = analysis.getCohort().getGroups().getValues();
             if ~isempty(groups)
                 groups_labels = analysis.getCohort().getGroups().getKeys();
             else
                 groups_labels = 'No groups';
             end
-            subject = analysis.getSubjectClass();
+            
             selected_group = 1;
             
             matrix_plot = [];
@@ -705,9 +709,13 @@ classdef AnalysisST_WU < Analysis
                     
                     if get(ui_matrix_histogram_checkbox, 'Value')
                         matrix_plot = graph.Plot(A, 'Graph.PlotType', graph_type_value);
-                    else                     
+                    else         
+                        % get atlas labels
+                        atlases = analysis.getCohort().getBrainAtlases();
+                        atlas = atlases{1};
+                        br_labels = atlas.getBrainRegions().getKeys();
                         matrix_plot = graph.Plot(A, graph_rule, ...
-                            graph_rule_value, 'Graph.PlotType', graph_type_value);
+                            graph_rule_value, 'Graph.PlotType', graph_type_value, 'xlabels', br_labels, 'ylabels', br_labels);
                     end
                 end                
             end

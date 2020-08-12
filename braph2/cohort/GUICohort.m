@@ -1223,6 +1223,7 @@ ui_menu_subjects_moveup = uimenu(ui_menu_subjects);
 ui_menu_subjects_movedown = uimenu(ui_menu_subjects);
 ui_menu_subjects_move2top = uimenu(ui_menu_subjects);
 ui_menu_subjects_move2bottom = uimenu(ui_menu_subjects);
+ui_menu_analysis = uimenu(f, 'Label', 'Analysis');
 
 init_menu()
     function init_menu()
@@ -1313,6 +1314,24 @@ init_menu()
             
         set(ui_menu_subjects_move2bottom, 'Label',MOVE2BOTTOM_SUB_CMD)
         set(ui_menu_subjects_move2bottom, 'Callback', {@cb_groups_move2bottom_sub})
+        
+        analysis_list = Analysis.getList();
+        for i = 1:1:length(analysis_list)
+            analysis = analysis_list{i};
+            cohort_analysis_menu = uimenu(ui_menu_analysis);
+            set(cohort_analysis_menu, 'Label', analysis)
+            set(cohort_analysis_menu, 'Callback', {@cb_menu_analysis})            
+        end
+        
+        function cb_menu_analysis(src, ~)
+            analysis_label_chr_array = get(src, 'Label');
+            for j = 1:1:length(analysis_list)
+                analysis = analysis_list{j};
+                if isequal(analysis_label_chr_array, Analysis.getClass(analysis))
+                    GUIAnalysis(cohort.copy(), Analysis.getClass(analysis));
+                end
+            end  
+        end
 
 
     end

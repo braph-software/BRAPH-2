@@ -120,8 +120,11 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_nonnegative              - checks whether graph allows non-negative values
     %   is_negative                 - checks whether graph allows negative values
     %
-    % Graph plot methods
-    %   getGraphPlot                - creates a uipanel
+    % Graph plot methods Static
+    %   Plot                        - chooses the corresponding type of plot
+    %   plotw                       - plots a weighted graph
+    %   plotb                       - plots a binary graph
+    %   histogram                   - plots a histogram
     %
     % Graph basic methods:
     %   tostring                    - returns a string representing the graph
