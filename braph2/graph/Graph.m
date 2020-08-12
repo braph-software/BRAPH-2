@@ -1115,7 +1115,7 @@ classdef Graph < handle & matlab.mixin.Copyable
                 ylabels = {ylabels};
             end
             
-            B = Graph.binarize(A,'threshold', threshold);
+            B = binarize(A, 'threshold', threshold);
             
             ht = surf((0:1:N), ...
                 (0:1:N), ...

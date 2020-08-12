@@ -682,10 +682,14 @@ classdef AnalysisST_WU < Analysis
                 % i need to ask graph to return the plot 'Graph.PlotType'
                 if  get(ui_matrix_histogram_checkbox, 'Value') % histogram
                     graph_type_value = 'histogram';                    
-                elseif contains(analysis_class, 'BUT') && isequal(analysis_graph, 'GraphBU')  % threshold
+                elseif get(ui_matrix_threshold_checkbox, 'Value')  % threshold
                     graph_type_value = 'binary';
                     graph_rule = 'threshold';
-                    graph_rule_value = 0;
+                    graph_rule_value = str2double(get(ui_matrix_threshold_edit, 'String'));
+                elseif get(ui_matrix_density_checkbox, 'Value')  % density
+                    graph_type_value = 'binary';
+                    graph_rule = 'density';
+                    graph_rule_value = str2double(get(ui_matrix_density_edit, 'String')); 
                 else  % weighted correlation
                     graph_type_value = 'correlation';
                     graph_rule = 'nothing';
