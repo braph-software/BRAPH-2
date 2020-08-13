@@ -49,6 +49,7 @@ cohort = ga.getCohort();
 selected_calc = [];
 selected_regionmeasures = [];
 selected_brainmeasures = [];
+selected_group = [];
 
     function cb_open(~, ~)
         % select file
@@ -453,6 +454,9 @@ init_calc()
             end
         end
         update_tab()
+    end
+    function cb_calc_calculate(~, ~)
+        group = ga.getCohort().getGroups().getValue(selected_group);
     end
 
 %% Menus
