@@ -108,7 +108,12 @@ classdef GUI
         GA_EXTENSION = '*.analysis'
         GA_MSG_PUTFILE = 'Save graph analysis'
         GA_MSG_GETFILE = ['Select graph analysis file (' GUI.GA_EXTENSION ')']
-             
+        
+%         GAS_NAME = 'Graph Analysis Settings'
+%         GAS_EXTENSION = '*.analysis'
+%         GAS_MSG_PUTFILE = 'Save graph analysis'
+%         GAS_MSG_GETFILE = ['Select graph analysis file (' GUI.GA_EXTENSION ')']
+%              
         % GUI general
         MSG_YES = 'Yes'
         MSG_NO = 'No'
@@ -322,7 +327,7 @@ classdef GUI
             set(f, 'Position', [0 0 GUI.SCREEN_WIDTH * width GUI.SCREEN_HEIGHT * height])
             movegui(f, position)
             set(f, 'Color', GUI.BKGCOLOR)
-            set(f, 'Name', [AppName ' - ' BRAPH2.BUILD])
+            set(f, 'Name', [AppName ' - ' num2str(BRAPH2.BUILD)])
             set(f, 'MenuBar', 'none')
             set(f, 'NumberTitle', 'off')
             set(f, 'DockControls', 'off')

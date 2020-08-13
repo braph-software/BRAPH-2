@@ -346,6 +346,7 @@ init_graph_settings()
         setup(); 
     end
     function cb_calc_settings_start_analysis(~, ~)
+        GUIAnalysis(ga)
     end
 
 %% Panel - Measure Table
