@@ -720,7 +720,8 @@ classdef AnalysisST_WU < Analysis
                         atlases = analysis.getCohort().getBrainAtlases();
                         atlas = atlases{1};
                         br_labels = atlas.getBrainRegions().getKeys();
-                        matrix_plot = Graph.plot(A, graph_rule, ...
+                        graph = Graph.getGraph(analysis.getGraphType(), A);
+                        matrix_plot = graph.plot(A, graph_rule, ...
                             graph_rule_value, 'Graph.PlotType', graph_type_value, 'xlabels', br_labels, 'ylabels', br_labels);
                     end
                 end                

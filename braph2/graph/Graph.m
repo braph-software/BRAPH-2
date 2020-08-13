@@ -120,8 +120,10 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_nonnegative              - checks whether graph allows non-negative values
     %   is_negative                 - checks whether graph allows negative values
     %
+    % Graph (Static, Abstract) plot methods.
+    %   plot                        - abstract method to be implemented                  
+    % 
     % Graph plot methods Static
-    %   plot                        - chooses the corresponding type of plot
     %   plotw                       - plots a weighted graph
     %   plotb                       - plots a binary graph
     %   histogram                   - plots a histogram
@@ -974,25 +976,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             n = numel(list);
         end
     end
-    methods (Static)  % Plot Panel method
-        function h_plot = plot(A, varargin)
-            % PLOT calls the appropiate function to plot
-            %
-            % H_PLOT = PLOT(G, PLOTRULE, VALUE) using VALUE
-            % chooses the corresponding function to return a plot.
-            %
-            % See also plotb, plotw, hist.
-            
-            plot_type = get_from_varargin('correlation', 'Graph.PlotType', varargin{:});
-            switch plot_type
-                case 'binary'
-                    h_plot = Graph.plotb(A, varargin{:});
-                case 'histogram'
-                    h_plot = Graph.hist(A, varargin{:});
-                otherwise  % correlation
-                    h_plot = Graph.plotw(A, varargin{:});
-            end
-        end
+    methods (Static, Abstract)  % plot abstract methods
+        plot(A, varargin)
+    end
+   methods (Static)  % plot static methods
         function h = plotw(A, varargin)
             % PLOTW plots a weighted matrix
             %

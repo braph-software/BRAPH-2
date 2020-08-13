@@ -23,6 +23,9 @@ classdef GraphBD < Graph
     % GraphBD randomize A method (Static)
     %   randomize_A             - returns a randomized correlation matrix
     %
+    % GraphBD plot method (Static)
+    %   plot                    - determines which kind of plot method to use
+    %
     % See also Graph, GraphBU, GraphWD, GraphWU.
     
     methods
@@ -253,6 +256,26 @@ classdef GraphBD < Graph
                     
                     swaps = swaps+1;
                 end
+            end
+        end
+    end
+    methods (Static)  % Plot static method
+        function h_plot = plot(A, varargin)
+            % PLOT calls the appropiate function to plot
+            %
+            % H_PLOT = PLOT(G, PLOTRULE, VALUE) using VALUE
+            % chooses the corresponding function to return a plot.
+            %
+            % See also plotb, plotw, hist.
+            
+            plot_type = get_from_varargin('correlation', 'Graph.PlotType', varargin{:});
+            switch plot_type
+                case 'binary'
+                    h_plot = Graph.plotb(A, varargin{:});
+                case 'histogram'
+                    h_plot = Graph.hist(A, varargin{:});
+                otherwise  % correlation
+                    h_plot = Graph.plotw(A, varargin{:});
             end
         end
     end

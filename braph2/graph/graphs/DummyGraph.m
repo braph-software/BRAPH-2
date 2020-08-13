@@ -20,6 +20,9 @@ classdef DummyGraph < Graph
     % Graph randomization method:
     %   randomize               - randomize graph
     %
+    % Graph plot method (Static)
+    %   plot                    - determines which kind of plot method to use
+    %
     % See also Graph, DummyMultigraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
     
     methods  % Constructor
@@ -133,11 +136,16 @@ classdef DummyGraph < Graph
             %
             % GR = RANDOMIZE(G) returns a randomized graph of
             % class 'DummyGraph'
-            % 
+            %
             % See also DummyGraph.
-           
+            
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end
-    end  
+    end
+    methods (Static)  % Plot static method
+        function h_plot = plot(A, varargin) %#ok<INUSD,STOUT>
+           % nothing to return
+        end
+    end
 end

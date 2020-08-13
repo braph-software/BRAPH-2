@@ -17,13 +17,16 @@ classdef GraphWU < GraphWD
     %   getSelfConnectivityType - returns the self-connectivity type of the graph
     %   getNegativityType       - returns the negativity type of the graph
     %
-    % GraphWD randomize graph method
+    % GraphWU randomize graph method
     %   randomize               - returns a randomized graph
     %
-    % GraphWD randomize A method (Static)
+    % GraphWU randomize A method (Static)
     %   randomize_A             - returns a randomized correlation matrix
     %
-    % See also Graph, GraphBD, GraphWU, GraphWD.
+    % GraphWU plot method (Static)
+    %   plot                    - determines which kind of plot method to use
+    %
+    % See also Graph, GraphBD, GraphBU, GraphWD.
     
     methods
         function g = GraphWU(A, varargin)
@@ -262,6 +265,26 @@ classdef GraphWU < GraphWD
             % calculate correlation of original vs reassinged strength
             rpos = corrcoef(sum(W), sum(random_A));
             correlation_coefficients = rpos(2);
+        end
+    end
+    methods (Static)  % Plot static method
+        function h_plot = plot(A, varargin)
+            % PLOT calls the appropiate function to plot
+            %
+            % H_PLOT = PLOT(G, PLOTRULE, VALUE) using VALUE
+            % chooses the corresponding function to return a plot.
+            %
+            % See also plotb, plotw, hist.
+            
+            plot_type = get_from_varargin('correlation', 'Graph.PlotType', varargin{:});
+            switch plot_type
+                case 'binary'
+                    h_plot = Graph.plotb(A, varargin{:});
+                case 'histogram'
+                    h_plot = Graph.hist(A, varargin{:});
+                otherwise  % correlation
+                    h_plot = Graph.plotw(A, varargin{:});
+            end
         end
     end
 end

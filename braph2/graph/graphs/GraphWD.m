@@ -23,6 +23,9 @@ classdef GraphWD < Graph
     % GraphWD randomize A method (Static)
     %   randomize_A             - returns a randomized correlation matrix
     %
+    % GraphWU plot method (Static)
+    %   plot                    - determines which kind of plot method to use
+    %
     % See also Graph, GraphBU, GraphBD, GraphWU.
     
     methods
@@ -44,7 +47,7 @@ classdef GraphWD < Graph
             % See also Graph, DummyGraph, GraphBU, GraphBD, GraphWU.
             
             if isempty(A)
-                 A = rand(4);
+                A = rand(4);
             end
             A = dediagonalize(A, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
             A = semipositivize(A, varargin{:});  % removes negative weights
@@ -85,41 +88,41 @@ classdef GraphWD < Graph
                 'indicating the strength of the connection, ' ...
                 'and they are directed.' ...
                 ];
-        end      
+        end
         function graph_type = getGraphType()
             % GETGRAPHTYPE returns the graph type
             %
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.GRAPH.
             %
             % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
-          
+            
             graph_type = Graph.GRAPH;
         end
         function connectivity_type = getConnectivityType(varargin)
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.WEIGHTED.
-            %    
+            %
             % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
-           
+            
             connectivity_type = Graph.WEIGHTED;
         end
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
-            %   
+            %
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.DIRECTED.
             %
             % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
-                   
+            
             directionality_type = Graph.DIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
-            %    
+            %
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
-       
+            
             selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
         function negativity_type = getNegativityType(varargin)
@@ -128,14 +131,14 @@ classdef GraphWD < Graph
             % NEGATIVITY_TYPE = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
-    
+            
             negativity_type = Graph.NONNEGATIVE;
         end
         function available_settings = getAvailableSettings(g) %#ok<INUSD>
             % GETAVAILABLESETTINGS returns the available rules of graph
             %
             % GETAVAILABLESETTINGS(G) returns an array with the available
-            % settings for the graph. 
+            % settings for the graph.
             %
             % See also getClass, getName, getDescription, getGraphType.
             
@@ -148,48 +151,48 @@ classdef GraphWD < Graph
             %
             % RANDOM_G = RANDOMIZE(G) returns the randomized graph
             % RANDOM_G obtained with a randomized correlation
-            % matrix via the static function randomize_A while preserving 
+            % matrix via the static function randomize_A while preserving
             % degree distributions.
             %
             % RANDOM_G = RANDOMIZE(G, 'AttemptPerEdge', VALUE, 'NumberOfWeights', VALUE)
             % returns the randomized graph RANDOM_G obtained with a randomized correlation
-            % matrix via the static function randomize_A while preserving 
+            % matrix via the static function randomize_A while preserving
             % degree distributions, it passes the
             % attempts per edge and the number of weights specified by the user.
             %
             % See also randomize_A
             
             % get rules
-             number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
-             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
-             
-             A = g.getA();
-             random_A = GraphWD.randomize_A(A, attempts_per_edge, number_of_weights);
-             random_g = Graph.getGraph(Graph.getClass(g), ...
-                 random_A, ...
-                 varargin{:});
+            number_of_weights = get_from_varargin(10, 'NumberOfWeights', varargin{:});
+            attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
+            
+            A = g.getA();
+            random_A = GraphWD.randomize_A(A, attempts_per_edge, number_of_weights);
+            random_g = Graph.getGraph(Graph.getClass(g), ...
+                random_A, ...
+                varargin{:});
         end
-    end 
+    end
     methods (Static) % Randomize methods
         function [random_A, correlation_coefficients] = randomize_A(A, attempts_per_edge, number_of_weights)
             % RANDOMIZE_A returns a randomized correlation matrix
             % This algorithm was proposed by Rubinov and Sporns (Neuroimage 56, 4, 2011).
             %
-            % RANDOM_A = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % RANDOM_A = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS)
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
-            % specifies the number of weights sorted at the same time. 
+            % specifies the number of weights sorted at the same time.
             % ATTEMPTS_PER_EDGE is passed as an argument to GraphBD.
             %
-            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G) 
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G)
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
             % specifies the number of weights sorted at the same time, it
-            % will be default value of 10. Returns the correlation coefficients 
-            % between the original and randomized nodal strengths. 
+            % will be default value of 10. Returns the correlation coefficients
+            % between the original and randomized nodal strengths.
             % High coefficients indicate more accurate preservation of
             % the strength sequences. ATTEMPTS_PER_EDGE is passed as an
             % argument to GraphBD, it will be default value of 5.
             %
-            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS) 
+            % [RANDOM_A, CORRELATION_COEFFICIENTS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE, NUMBER_OF_WEIGHTS)
             % returns the randomized matrix. RANDOM_A. NUMBER_OF_WEIGHTS
             % specifies the number of weights sorted at the same time. Returns the
             % correlation coefficients between the original and randomized nodal
@@ -206,7 +209,7 @@ classdef GraphWD < Graph
             if nargin < 3
                 number_of_weights = 10;
             end
-                        
+            
             W = A;  % swaps with A
             A = GraphBD.randomize_A(W, attempts_per_edge);
             % remove self connections
@@ -267,6 +270,26 @@ classdef GraphWD < Graph
             rpos_in = corrcoef(sum(W,1), sum(random_A,1));
             rpos_out = corrcoef(sum(W,2), sum(random_A,2));
             correlation_coefficients = [rpos_in(2) rpos_out(2)];
+        end
+    end
+    methods (Static)  % Plot static method
+        function h_plot = plot(A, varargin)
+            % PLOT calls the appropiate function to plot
+            %
+            % H_PLOT = PLOT(G, PLOTRULE, VALUE) using VALUE
+            % chooses the corresponding function to return a plot.
+            %
+            % See also plotb, plotw, hist.
+            
+            plot_type = get_from_varargin('correlation', 'Graph.PlotType', varargin{:});
+            switch plot_type
+                case 'binary'
+                    h_plot = Graph.plotb(A, varargin{:});
+                case 'histogram'
+                    h_plot = Graph.hist(A, varargin{:});
+                otherwise  % correlation
+                    h_plot = Graph.plotw(A, varargin{:});
+            end
         end
     end
 end

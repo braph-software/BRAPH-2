@@ -23,6 +23,9 @@ classdef GraphBU < GraphBD
     % GraphBU randomize A method (Static)
     %   randomize_A             - returns a randomized correlation matrix
     %
+    % GraphBU plot method (Static)
+    %   plot                    - determines which kind of plot method to use
+    %
     % See also Graph, GraphBD, GraphWD, GraphWU.
     
     methods
@@ -44,13 +47,13 @@ classdef GraphBU < GraphBD
             % See also Graph, DummyGraph, GraphBD, GraphWD, GraphWU.
             
             if isempty(A)
-                 A = rand(4);
+                A = rand(4);
             end
             A = symmetrize(A, varargin{:});  % enforces symmetry of adjacency matrix
             
             g = g@GraphBD(A, varargin{:});
         end
-    end 
+    end
     methods (Static)  % Descriptive methods
         function graph_class = getClass()
             % GETCLASS returns the class of the graph.
@@ -98,28 +101,28 @@ classdef GraphBU < GraphBD
             % GETCONNECTIVITYTYPE returns the connectivity type of the graph
             %
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns Graph.BINARY.
-            %    
+            %
             % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
-           
+            
             connectivity_type = Graph.BINARY;
         end
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
-            %   
+            %
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns Graph.UNDIRECTED.
             %
             % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
-        
+            
             directionality_type = Graph.UNDIRECTED;
         end
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
-            %    
+            %
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns Graph.NONSELFCONNECTED.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
-           
-            selfconnectivity_type = Graph.NONSELFCONNECTED; 
+            
+            selfconnectivity_type = Graph.NONSELFCONNECTED;
         end
         function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE returns the negativity type of the graph
@@ -134,7 +137,7 @@ classdef GraphBU < GraphBD
             % GETAVAILABLESETTINGS returns the available rules of graph
             %
             % GETAVAILABLESETTINGS(G) returns an array with the available
-            % settings for the graph. 
+            % settings for the graph.
             %
             % See also getClass, getName, getDescription, getGraphType.
             
@@ -147,10 +150,10 @@ classdef GraphBU < GraphBD
             %
             % RANDOM_G = RANDOMIZE(G) returns the randomized graph
             % RANDOM_G obtained with a randomized correlation
-            % matrix via the static function randomize_A while preserving 
+            % matrix via the static function randomize_A while preserving
             % degree distributions.
             %
-            % RANDOM_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE) returns the 
+            % RANDOM_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE) returns the
             % randomized graph RANDOM_G obtained with a randomized correlation
             % matrix via the static function randomize_A while preserving
             % degree distributions, it passes the
@@ -162,28 +165,28 @@ classdef GraphBU < GraphBD
             
             A = g.getA();
             random_A = GraphBU.randomize_A(A, attempts_per_edge);
-                        
+            
             random_g = Graph.getGraph(Graph.getClass(g), ...
                 random_A, ...
                 varargin{:});
         end
     end
     methods (Static)  % Randomize A function
-        function [random_A, swaps] = randomize_A(A, attempts_per_edge) 
+        function [random_A, swaps] = randomize_A(A, attempts_per_edge)
             % RANDOMIZE_A returns a randomized correlation matrix
             %
             % RANDOM_A = RANDOMIZE(G) returns the randomized matrix
             % RANDOM_A. Tries to swap 5 times an edge. The matrix has to
             % contain more than 1 edge.
             %
-            % [RANDOM_A, SWAPS] = RANDOMIZE_A(G) attempts to rewire each edge 
+            % [RANDOM_A, SWAPS] = RANDOMIZE_A(G) attempts to rewire each edge
             % 5 times. Returns the randomized matrix RANDOM_A. Returns the
             % number of succesful edge swaps.The matrix has to
             % contain more than 1 edge. This algorithm was proposed
             % by Maslov and Sneppen (Science 296, 910, 2002)
             %
             % [RANDOM_A, SWAPS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE) attempts
-            % to rewire each edge ATTEMPTS_PER_EDGE times then it returns the 
+            % to rewire each edge ATTEMPTS_PER_EDGE times then it returns the
             % randomized matrix RANDOM_A. Returns the number of succesful edge swaps.
             % The matrix has to contain more than 1 edge.
             %
@@ -204,17 +207,17 @@ classdef GraphBU < GraphBD
                 return
             end
             
-            if E == 1        
+            if E == 1
                 A(I_edges(1), J_edges(1)) = 0;
                 A(J_edges(1), I_edges(1)) = 0;
                 selected_nodes = randperm(size(A, 1), 2);
                 A(selected_nodes(1), selected_nodes(2)) = 1;
                 A(selected_nodes(2), selected_nodes(1)) = 1;
                 random_A = A;
-                swaps = 1;  
+                swaps = 1;
                 return
             end
-
+            
             random_A = A;
             swaps = 0; % number of successful edge swaps
             for attempt = 1:1:attempts_per_edge * E
@@ -269,6 +272,26 @@ classdef GraphBU < GraphBD
                     
                     swaps = swaps + 1;
                 end
+            end
+        end
+    end
+    methods (Static)  % Plot static method
+        function h_plot = plot(A, varargin)
+            % PLOT calls the appropiate function to plot
+            %
+            % H_PLOT = PLOT(G, PLOTRULE, VALUE) using VALUE
+            % chooses the corresponding function to return a plot.
+            %
+            % See also plotb, plotw, hist.
+            
+            plot_type = get_from_varargin('correlation', 'Graph.PlotType', varargin{:});
+            switch plot_type
+                case 'binary'
+                    h_plot = Graph.plotb(A, varargin{:});
+                case 'histogram'
+                    h_plot = Graph.hist(A, varargin{:});
+                otherwise  % correlation
+                    h_plot = Graph.plotw(A, varargin{:});
             end
         end
     end
