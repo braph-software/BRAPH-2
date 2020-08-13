@@ -21,9 +21,6 @@ classdef MultiplexGraphWU < MultiplexGraphWD
     % MultiplexGraphWU randomize graph method
     %   randomize               - returns a randomized graph
     %
-    % Graph plot method (Static)
-    %   plot                    - determines which kind of plot method to use
-    %
     % See also Graph, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD.
     
     methods
@@ -243,11 +240,6 @@ classdef MultiplexGraphWU < MultiplexGraphWD
                 random_multi_A(li, li) = {random_A};
             end
             randomized_g = MultiplexGraphWU(random_multi_A, varargin{:});
-        end
-    end
-    methods (Static)  % Plot static method
-        function h_plot = plot(A, varargin) %#ok<INUSD,STOUT>
-            % nothing to return
         end
     end
 end

@@ -976,8 +976,10 @@ classdef Graph < handle & matlab.mixin.Copyable
             n = numel(list);
         end
     end
-    methods (Static, Abstract)  % plot abstract methods
-        plot(A, varargin)
+    methods (Static)  % plot abstract methods
+        function h =  plot(A, varargin) %#ok<INUSD>
+            h = axes();
+        end
     end
    methods (Static)  % plot static methods
         function h = plotw(A, varargin)
