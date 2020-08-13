@@ -229,7 +229,7 @@ classdef DummyOrderedMultilayer < Graph
             %
             % GR = RANDOMIZE(G) returns a randomized graph of
             % class 'DummyOrderedMultilayer'.
-            % 
+            %
             % See also DummyOrderedMultilayer.
             
             A = g.getA(); % get A, which is left unchanged

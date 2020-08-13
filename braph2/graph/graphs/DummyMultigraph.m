@@ -22,7 +22,7 @@ classdef DummyMultigraph < Graph
     %
     % Graph randomization method:
     %   randomize               - randomize graph
-    %
+    %  
     % See also Graph, DummyGraph, DummyMultilayer, DummyMultiplex, DummyOrderedMultilayer, DummyOrderedMultiplex.
     
     methods  % Constructor

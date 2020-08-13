@@ -229,7 +229,7 @@ classdef DummyOrderedMultiplex < Graph
             %
             % GR = RANDOMIZE(G) returns a randomized graph of
             % class 'DummyOrderedMultiplex'.
-            % 
+            %
             % See also DummyOrderedMultiplex.
             
             A = g.getA(); % get A, which is left unchanged

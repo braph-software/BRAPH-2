@@ -2,7 +2,7 @@ classdef MultiplexGraphWU < MultiplexGraphWD
     % MultiplexGraphWU A multiplex weighted undirected graph
     % MultiplexGraphWU represents a multiplex weighted undirected graph.
     %
-    % MultiplexGraphWU consists of a multiplex where the layers are weighted 
+    % MultiplexGraphWU consists of a multiplex where the layers are weighted
     % undirected graphs and the connections are weighted directed graphs.
     %
     % MultiplexGraphWU methods:
@@ -98,7 +98,7 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTIPLEX.
             %
             % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
-                       
+            
             graph_type = Graph.MULTIPLEX;
         end
         function connectivity_type = getConnectivityType(varargin)
@@ -107,22 +107,22 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns
             % Graph.WEIGHTED.
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns 
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.WEIGHTED for all the elements.
             % For example, for a 3x3 matrix it returns:
             % CONNECTIVITY_TYPE = WEIGHTED  WEIGHTED  WEIGHTED
-            %                     WEIGHTED  WEIGHTED  WEIGHTED  
-            %                     WEIGHTED  WEIGHTED  WEIGHTED  
+            %                     WEIGHTED  WEIGHTED  WEIGHTED
+            %                     WEIGHTED  WEIGHTED  WEIGHTED
             % where WEIGHTED = Graph.WEIGHTED.
             %
             % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
-         
+            
             if isempty(varargin)
                 connectivity_type = Graph.WEIGHTED;
             else
-                layernumber = varargin{1};             
+                layernumber = varargin{1};
                 connectivity_type = Graph.WEIGHTED * ones(layernumber);
-            end 
+            end
         end
         function directionality_type = getDirectionalityType(varargin)
             % GETDIRECTIONALITYTYPE returns the directionality type of the graph
@@ -130,23 +130,23 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns
             % Graph.DIRECTED.
             %
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns 
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.UNDIRECTED for all the elements.
             % For example, for a 3x3 matrix it returns:
             % DIRECTIONALITY_TYPE = UNDIRECTED  DIRECTED    DIRECTED
-            %                       DIRECTED    UNDIRECTED  DIRECTED  
-            %                       DIRECTED    DIRECTED    UNDIRECTED  
+            %                       DIRECTED    UNDIRECTED  DIRECTED
+            %                       DIRECTED    DIRECTED    UNDIRECTED
             % where UNDIRECTED = Graph.UNDIRECTED and DIRECTED = Graph.DIRECTED.
             %
             % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
-         
+            
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
             else
-                layernumber = varargin{1};             
+                layernumber = varargin{1};
                 directionality_type = Graph.DIRECTED * ones(layernumber);
                 directionality_type(1:layernumber+1:end) = Graph.UNDIRECTED;
-            end   
+            end
         end
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
@@ -154,36 +154,36 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns
             % Graph.SELFCONNECTED.
             %
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns 
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.NONSELFCONNECTED for the diagonal elements and
             % Graph.SELFCONNECTED for the off-diagonal elements.
             % For example, for a 3x3 matrix it returns:
             % SELFCONNECTIVITY_TYPE = NONSELFCONNECTED  SELFCONNECTED     SELFCONNECTED
-            %                         SELFCONNECTED     NONSELFCONNECTED  SELFCONNECTED  
-            %                         SELFCONNECTED     SELFCONNECTED     NONSELFCONNECTED  
+            %                         SELFCONNECTED     NONSELFCONNECTED  SELFCONNECTED
+            %                         SELFCONNECTED     SELFCONNECTED     NONSELFCONNECTED
             % where SELFCONNECTED = Graph.SELFCONNECTED and NONSELFCONNECTED = Graph.NONSELFCONNECTED.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
-         
+            
             if isempty(varargin)
                 selfconnectivity_type = Graph.SELFCONNECTED;
             else
-                layernumber = varargin{1};             
+                layernumber = varargin{1};
                 selfconnectivity_type = Graph.SELFCONNECTED * ones(layernumber);
-                selfconnectivity_type(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
-            end 
+                selfconnectivity_type(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
+            end
         end
         function negativity_type = getNegativityType(varargin)
             % GETNEGATIVITYTYPE returns the negativity type of the graph
             %
             % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
-            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(LAYERNUMBER) returns 
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.NONNEGATIVE for all the elements.
             % For example, for a 3x3 matrix it returns:
             % NEGATIVITY_TYPE = NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
-            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  
+            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
             % where NONNEGATIVE = Graph.NONNEGATIVE.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
@@ -199,7 +199,7 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             % GETAVAILABLESETTINGS returns the available rules of graph
             %
             % GETAVAILABLESETTINGS(G) returns an array with the available
-            % settings for the graph. 
+            % settings for the graph.
             %
             % See also getClass, getName, getDescription, getGraphType.
             
@@ -209,21 +209,21 @@ classdef MultiplexGraphWU < MultiplexGraphWD
         end
     end
     methods  % Randomize methods
-        function randomized_g = randomize(g, varargin)    
+        function randomized_g = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph and the correlation coefficients
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G) 
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G)
             % returns the randomized graph RANDOMIZED_GRAPH and the strength
             % correlation coefficients from the graph G and the randomized.
             % The randomization it is done layer by layer and then
             % integrated in the 2-D supra-adjacency matrix cell array.
             %
-            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'MultiplexGraphWU.NumberOfWeights', 'NUMBER') 
+            % RANDOMIZED_GRAPH, CORRELATION_COEFFICIENTS = RANDOMIZE(G, 'MultiplexGraphWU.NumberOfWeights', 'NUMBER')
             % returns the randomized graph RANDOMIZED_GRAPH and the strength
             % correlation coefficients from the graph G and the randomized.
             % The randomization is performed with the specified number of
-            % weights NUMBER. The multiplex is randomized layer by layer  
-            % where randomized adjacency matrix of each layer are then  
+            % weights NUMBER. The multiplex is randomized layer by layer
+            % where randomized adjacency matrix of each layer are then
             % integrated in the 2-D supra-adjacency matrix cell array.
             
             % get rules
@@ -231,7 +231,7 @@ classdef MultiplexGraphWU < MultiplexGraphWD
             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
             
             A = g.getA();
-            L = g.layernumber();         
+            L = g.layernumber();
             random_multi_A = A;
             
             for li = 1:1:L

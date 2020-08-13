@@ -1,10 +1,10 @@
 classdef MultiplexGraphBU < MultiplexGraphBD
     % MultiplexGraphBU A multiplex binary undirected graph
     % MultiplexGraphBU represents a multiplex binary undirected graph.
-    %  
-    % MultiplexGraphBU consists of a multiplex where the layers are binary 
+    %
+    % MultiplexGraphBU consists of a multiplex where the layers are binary
     % undirected graphs and the connections are binary directed graphs.
-    % 
+    %
     % MultiplexGraphBU methods:
     %   MultiplexGraphBU        - constructor
     %
@@ -23,7 +23,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
     %
     % See also Graph, MultiplexGraphBD, MultiplexGraphWD, MultiplexGraphWU.
     
-    methods  
+    methods
         function g = MultiplexGraphBU(A, varargin)
             % MULTIPLEXGRAPHBU(A) creates a MULTIPLEXGRAPHBU class with adjacency matrix A.
             % This function is the constructor, it initializes the class by
@@ -43,11 +43,11 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             
             if isempty(A)
                 A = {
-                    symmetrize(round(rand(4)))  round(diag(rand(4, 1)))     round(diag(rand(4, 1)))	
-                    round(diag(rand(4, 1)))     symmetrize(round(rand(4))) 	round(diag(rand(4, 1)))	
-                    round(diag(rand(4, 1)))     round(diag(rand(4, 1)))     symmetrize(round(rand(4)))   
+                    symmetrize(round(rand(4)))  round(diag(rand(4, 1)))     round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1)))     symmetrize(round(rand(4))) 	round(diag(rand(4, 1)))
+                    round(diag(rand(4, 1)))     round(diag(rand(4, 1)))     symmetrize(round(rand(4)))
                     };
-            end    
+            end
             
             L = length(A);  % number of layers
             for layer = 1:1:L
@@ -58,7 +58,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             
             g = g@MultiplexGraphBD(A, varargin{:});
         end
-    end 
+    end
     methods (Static)  % Descriptive methods
         function graph_class = getClass()
             % GETCLASS returns the class of the graph.
@@ -98,7 +98,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             % GRAPH_TYPE = GETGRAPHTYPE() returns Graph.MULTIPLEX.
             %
             % See also getConnectivityType, getDirectionalityType, getNegativityType, getSelfConnectivityType.
-
+            
             graph_type = Graph.MULTIPLEX;
         end
         function connectivity_type = getConnectivityType(varargin)
@@ -107,20 +107,20 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE() returns
             % Graph.BINARY.
             %
-            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns 
+            % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.BINARY for all the elements.
             % For example, for a 3x3 matrix it returns:
             % CONNECTIVITY_TYPE = BINARY  BINARY  BINARY
-            %                     BINARY  BINARY  BINARY  
-            %                     BINARY  BINARY  BINARY  
+            %                     BINARY  BINARY  BINARY
+            %                     BINARY  BINARY  BINARY
             % where BINARY = Graph.BINARY.
             %
             % See also Graph, getDirectionalityType, getGraphType, getNegativityType, getSelfConnectivityType.
-         
+            
             if isempty(varargin)
                 connectivity_type = Graph.BINARY;
             else
-                layernumber = varargin{1};             
+                layernumber = varargin{1};
                 connectivity_type = Graph.BINARY * ones(layernumber);
             end
         end
@@ -130,23 +130,23 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE() returns
             % Graph.DIRECTED.
             %
-            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns 
+            % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.UNDIRECTED for all the elements.
             % For example, for a 3x3 matrix it returns:
             % DIRECTIONALITY_TYPE = UNDIRECTED  DIRECTED    DIRECTED
-            %                       DIRECTED    UNDIRECTED  DIRECTED  
-            %                       DIRECTED    DIRECTED    UNDIRECTED  
+            %                       DIRECTED    UNDIRECTED  DIRECTED
+            %                       DIRECTED    DIRECTED    UNDIRECTED
             % where UNDIRECTED = Graph.UNDIRECTED and DIRECTED = Graph.DIRECTED.
             %
             % See also Graph, getConnectivityType, getGraphType, getNegativityType, getSelfConnectivityType.
-         
+            
             if isempty(varargin)
                 directionality_type = Graph.DIRECTED;
             else
-                layernumber = varargin{1};             
+                layernumber = varargin{1};
                 directionality_type = Graph.DIRECTED * ones(layernumber);
                 directionality_type(1:layernumber+1:end) = Graph.UNDIRECTED;
-            end            
+            end
         end
         function selfconnectivity_type = getSelfConnectivityType(varargin)
             % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
@@ -154,23 +154,23 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE() returns
             % Graph.SELFCONNECTED.
             %
-            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns 
+            % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.NONSELFCONNECTED for the diagonal elements and
             % Graph.SELFCONNECTED for the off-diagonal elements.
             % For example, for a 3x3 matrix it returns:
             % SELFCONNECTIVITY_TYPE = NONSELFCONNECTED  SELFCONNECTED     SELFCONNECTED
-            %                         SELFCONNECTED     NONSELFCONNECTED  SELFCONNECTED  
-            %                         SELFCONNECTED     SELFCONNECTED     NONSELFCONNECTED  
+            %                         SELFCONNECTED     NONSELFCONNECTED  SELFCONNECTED
+            %                         SELFCONNECTED     SELFCONNECTED     NONSELFCONNECTED
             % where SELFCONNECTED = Graph.SELFCONNECTED and NONSELFCONNECTED = Graph.NONSELFCONNECTED.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getNegativityType.
-         
+            
             if isempty(varargin)
                 selfconnectivity_type = Graph.SELFCONNECTED;
             else
-                layernumber = varargin{1};             
+                layernumber = varargin{1};
                 selfconnectivity_type = Graph.SELFCONNECTED * ones(layernumber);
-                selfconnectivity_type(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
+                selfconnectivity_type(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
             end
         end
         function negativity_type = getNegativityType(varargin)
@@ -178,12 +178,12 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             %
             % NEGATIVITY_TYPE  = GETNEGATIVITYTYPE() returns Graph.NONNEGATIVE.
             %
-            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(LAYERNUMBER) returns 
+            % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(LAYERNUMBER) returns
             % a matrix with Graph.NONNEGATIVE for all the elements.
             % For example, for a 3x3 matrix it returns:
             % NEGATIVITY_TYPE = NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
             %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
-            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE  
+            %                   NONNEGATIVE  NONNEGATIVE  NONNEGATIVE
             % where NONNEGATIVE = Graph.NONNEGATIVE.
             %
             % See also Graph, getConnectivityType, getDirectionalityType, getGraphType, getSelfConnectivityType.
@@ -199,7 +199,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             % GETAVAILABLESETTINGS returns the available rules of graph
             %
             % GETAVAILABLESETTINGS(G) returns an array with the available
-            % settings for the graph. 
+            % settings for the graph.
             %
             % See also getClass, getName, getDescription, getGraphType.
             
@@ -212,19 +212,19 @@ classdef MultiplexGraphBU < MultiplexGraphBD
         function randomized_g = randomize(g, varargin)
             % RANDOMIZE returns a randomized graph
             %
-            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE() returns the randomized 
+            % RANDOMIZED_GRAPH, SWAPS = RANDOMIZE() returns the randomized
             % graph RANDOM_G obtained with a randomized correlation
-            % matrix via the static function randomize_A while preserving 
-            % degree distributions. The randomization it is done layer by 
-            % layer and then integrated in the 2-D supra-adjacency matrix 
+            % matrix via the static function randomize_A while preserving
+            % degree distributions. The randomization it is done layer by
+            % layer and then integrated in the 2-D supra-adjacency matrix
             % cell array.
             %
             % RANDOMIZED_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE)
-            % returns the randomized graph RANDOM_G obtained with a 
-            % randomized correlation matrix via the static function 
+            % returns the randomized graph RANDOM_G obtained with a
+            % randomized correlation matrix via the static function
             % randomize_A while preserving  degree distributions.
-            % The multiplex is randomized layer by layer where randomized 
-            % adjacency matrix of each layer are then integrated in the 
+            % The multiplex is randomized layer by layer where randomized
+            % adjacency matrix of each layer are then integrated in the
             % 2-D supra-adjacency matrix cell array
             %
             % See also GraphBU
@@ -238,7 +238,7 @@ classdef MultiplexGraphBU < MultiplexGraphBD
             
             % get A
             A = g.getA();
-            L = g.layernumber();            
+            L = g.layernumber();
             random_multi_A = A;
             
             for li = 1:1:L
