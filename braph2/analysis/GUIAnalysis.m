@@ -49,7 +49,6 @@ cohort = ga.getCohort();
 selected_calc = [];
 selected_regionmeasures = [];
 selected_brainmeasures = [];
-selected_group = [];
 selected_groups = [];
 
     function cb_open(~, ~)
@@ -457,7 +456,7 @@ init_calc()
         update_tab()
     end
     function cb_calc_calculate(~, ~)
-        group = ga.getCohort().getGroups().getValue(selected_group);
+        group = ga.getCohort().getGroups().getValue(selected_groups);
         mlist = measurelist();
         mlist = mlist(selected_calc);
         for j = 1:1:length(selected_calc)
@@ -479,7 +478,13 @@ init_calc()
         end
     end
     function cb_calc_random(~, ~)
-        group = ga.getCohort().getGroups().getValue(
+        group = ga.getCohort().getGroups().getValue(selected_groups);
+        mlist = measurelist();
+        mlist = mlist(selected_calc);
+        for j = 1:1:length(selected_calc)
+            measure_code = mlist{j};
+            ga.getRandomComparison(measure_code, group);
+        end
     end
 
 %% Menus
