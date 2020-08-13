@@ -121,8 +121,8 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_negative                 - checks whether graph allows negative values
     %
     % Graph (Static, Abstract) plot methods.
-    %   plot                        - abstract method to be implemented                  
-    % 
+    %   plot                        - abstract method to be implemented
+    %
     % Graph plot methods Static
     %   plotw                       - plots a weighted graph
     %   plotb                       - plots a binary graph
@@ -981,7 +981,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             h = axes();
         end
     end
-   methods (Static)  % plot static methods
+    methods (Static)  % plot static methods
         function h = plotw(A, varargin)
             % PLOTW plots a weighted matrix
             %
@@ -1080,7 +1080,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % threshold
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             
-            % density 
+            % density
             density = get_from_varargin([], 'density', varargin{:});
             
             % x labels
