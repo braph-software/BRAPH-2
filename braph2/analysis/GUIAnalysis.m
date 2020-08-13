@@ -50,6 +50,7 @@ selected_calc = [];
 selected_regionmeasures = [];
 selected_brainmeasures = [];
 selected_group = [];
+selected_groups = [];
 
     function cb_open(~, ~)
         % select file
@@ -457,6 +458,28 @@ init_calc()
     end
     function cb_calc_calculate(~, ~)
         group = ga.getCohort().getGroups().getValue(selected_group);
+        mlist = measurelist();
+        mlist = mlist(selected_calc);
+        for j = 1:1:length(selected_calc)
+            measure_code = mlist{j};
+            ga.getMeasure(measure_code, group);
+        end
+    end
+    function cb_calc_compare(~, ~)
+        groups = cell(length(seleted_groups), 1);
+        for j = 1:1:length(selected_groups)
+            groups{j} = ga.getCohort().getGroups().getValue(selected_groups{j});
+        end
+        
+        mlist = measurelist();
+        mlist = mlist(selected_calc);
+        for j  = 1:1:length(selected_calc)
+            measure_code = mlist{j};
+            ga.getComparison(measure_code, groups);
+        end
+    end
+    function cb_calc_random(~, ~)
+        group = ga.getCohort().getGroups().getValue(
     end
 
 %% Menus
