@@ -120,8 +120,8 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_nonnegative              - checks whether graph allows non-negative values
     %   is_negative                 - checks whether graph allows negative values
     %
-    % Graph (Static, Abstract) plot methods.
-    %   plot                        - abstract method to be implemented
+    % Graph  plot general method (Static)
+    %   plot                        - method to be overridden.
     %
     % Graph plot methods Static
     %   plotw                       - plots a weighted graph
@@ -976,7 +976,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             n = numel(list);
         end
     end
-    methods (Static)  % plot abstract methods
+    methods (Static)  % plot Static methods
         function h =  plot(A, varargin) %#ok<INUSD>
             h = axes();
         end
