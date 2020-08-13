@@ -712,16 +712,15 @@ classdef AnalysisST_WU < Analysis
                     group = analysis.getCohort().getGroups().getValue(selected_group);
                     subjects = group.getSubjects();
                     A = analysis.get_weighted_correlation_matrix(subjects, varargin{:});
-                    graph = Graph.getGraph(analysis.getGraphType(), A);
                     
                     if get(ui_matrix_histogram_checkbox, 'Value')                        
-                        matrix_plot = graph.plot(A, 'Graph.PlotType', graph_type_value);
+                        matrix_plot = GraphBU.plot(A, 'Graph.PlotType', graph_type_value); Graph.plo
                     else         
                         % get atlas labels
                         atlases = analysis.getCohort().getBrainAtlases();
                         atlas = atlases{1};
                         br_labels = atlas.getBrainRegions().getKeys();                        
-                        matrix_plot = graph.plot(A, graph_rule, ...
+                        matrix_plot = GraphWU.plot(A, graph_rule, ...
                             graph_rule_value, 'Graph.PlotType', graph_type_value, 'xlabels', br_labels, 'ylabels', br_labels);
                     end
                 end                
