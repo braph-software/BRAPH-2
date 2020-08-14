@@ -13,9 +13,9 @@ TAB_HEIGHT = .20;
 FILENAME_HEIGHT = .02;
 
 MAINPANEL_X0 = LEFTCOLUMN_WIDTH + 2 * MARGIN_X;
-MAINPANEL_Y0 = FILENAME_HEIGHT + TAB_HEIGHT + 3 * MARGIN_Y;
+MAINPANEL_Y0 =  MARGIN_Y;
 MAINPANEL_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
-MAINPANEL_HEIGHT = 1 - TAB_HEIGHT - FILENAME_HEIGHT - 4 * MARGIN_Y;
+MAINPANEL_HEIGHT = 1 - COHORT_HEIGHT - FILENAME_HEIGHT;
 MAINPANEL_POSITION = [MAINPANEL_X0 MAINPANEL_Y0 MAINPANEL_WIDTH MAINPANEL_HEIGHT];
 
 % Commands
@@ -241,12 +241,6 @@ ui_calc_analysis_id = uicontrol(ui_calc_panel, 'Style', 'edit');
 ui_calc_analysis_label = uicontrol(ui_calc_panel, 'Style', 'edit');
 ui_calc_analysis_notes = uicontrol(ui_calc_panel, 'Style', 'edit');
 ui_calc_settings_panel = uipanel(ui_calc_panel);
-ui_calc_table = uitable(ui_calc_panel);
-ui_calc_selectall_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
-ui_calc_clear_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
-ui_calc_global_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
-ui_calc_nodal_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
-ui_calc_binodal_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
 ui_calc_comparison_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
 ui_calc_randomcomparison_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
 ui_calc_measurement_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
@@ -276,38 +270,6 @@ init_calc()
         set(ui_calc_settings_panel, 'Position', [0 0.64 0.98 .25])
         set(ui_calc_settings_panel, 'Title', 'Analysis Settings')
         set(ui_calc_settings_panel, 'Units', 'normalized')
-        
-        set(ui_calc_table, 'Position', [0 0.27 0.98 .35])
-        set(ui_calc_table, 'Units', 'normalized')
-        set(ui_calc_table, 'ColumnName', {'', '   Brain Measure   ',' Format ', ' Scope ', '   Notes   '})
-        set(ui_calc_table, 'ColumnFormat', {'logical', 'char', {TAB_NODAL TAB_GLOBAL TAB_BINODAL}, {TAB_UNILAYER TAB_BILAYER TAB_SUPERGLOBAL} , 'char'})
-        set(ui_calc_table, 'ColumnEditable', [true false false false false])
-        set(ui_calc_table, 'CellEditCallback', {@cb_calc_edit});
-        
-        set(ui_calc_selectall_button, 'Position', [.02 .23 .47 .03])
-        set(ui_calc_selectall_button, 'String', SELECTALL_CALC_CMD)
-        set(ui_calc_selectall_button, 'TooltipString', SELECTALL_CALC_TP)
-        set(ui_calc_selectall_button, 'Callback', {@cb_calc_selectall})
-        
-        set(ui_calc_clear_button, 'Position', [.51 .23 .47 .03])
-        set(ui_calc_clear_button, 'String', CLEARSELECTION_CALC_CMD)
-        set(ui_calc_clear_button, 'TooltipString', CLEARSELECTION_CALC_TP)
-        set(ui_calc_clear_button, 'Callback', {@cb_calc_clearselection})
-        
-        set(ui_calc_global_button, 'Position', [.02 .20 .47 .03])
-        set(ui_calc_global_button, 'String', SELECTGLOBAL_CALC_CMD)
-        set(ui_calc_global_button, 'TooltipString', SELECTGLOBAL_CALC_TP)
-        set(ui_calc_global_button, 'Callback', {@cb_calc_global})
-        
-        set(ui_calc_nodal_button, 'Position', [.51 .20 .47 .03])
-        set(ui_calc_nodal_button, 'String', SELECTNODAL_CALC_CMD)
-        set(ui_calc_nodal_button, 'TooltipString', SELECTNODAL_CALC_TP)
-        set(ui_calc_nodal_button, 'Callback', {@cb_calc_nodal})
-        
-        set(ui_calc_binodal_button, 'Position', [.51 .17 .47 .03])
-        set(ui_calc_binodal_button, 'String', SELECTBINODAL_CALC_CMD)
-        set(ui_calc_binodal_button, 'TooltipString', SELECTBINODAL_CALC_TP)
-        set(ui_calc_binodal_button, 'Callback', {@cb_calc_binodal})
         
         set(ui_calc_measurement_button, 'Position', [.02 .12 .96 .045])
         set(ui_calc_measurement_button, 'String', CALCULATE_CALC_CMD)
@@ -380,134 +342,56 @@ init_calc()
     function cb_calc_ga_notes(~, ~)
         ga.setNotes(get(ui_calc_analysis_notes, 'String'))
     end
-    function update_tab()
-        mlist = measurelist();
-        
-        data = cell(length(mlist), 3);
-        for mi = 1:1:length(mlist)
-            if any(selected_calc == mi)
-                data{mi, 1} = true;
-            else
-                data{mi, 1} = false;
-            end
-            data{mi, 2} = Measure.getName(mlist{mi});
-            if Measure.is_nodal(mlist{mi})
-                data{mi, 3} = TAB_NODAL;
-            elseif Measure.is_global(mlist{mi})
-                data{mi, 3} = TAB_GLOBAL;
-            else
-                data{mi, 3} = TAB_BINODAL;
-            end
-            
-            if Measure.is_superglobal(mlist{mi})
-                data{mi, 4} = TAB_SUPERGLOBAL;
-            elseif Measure.is_unilayer(mlist{mi})
-                data{mi, 4} = TAB_UNILAYER;
-            else
-                data{mi, 4} = TAB_BILAYER;
-            end
-            
-            data{mi, 5} = Measure.getDescription(mlist{mi});
-        end
-        set(ui_calc_table, 'Data', data)
-    end
     function mlist = measurelist()
         mlist = Graph.getCompatibleMeasureList(ga.getGraphType());
     end
-    function cb_calc_edit(~, event)
-    end
-    function cb_calc_selectall(~, ~)
-        mlist = measurelist();
-        selected_calc = (1:1:length(mlist))';
-        update_tab()
-    end
-    function cb_calc_clearselection(~, ~)
-        selected_calc = [];
-        update_tab()
-    end
-    function cb_calc_global(~, ~)
-        selected_calc = [];
-        mlist = measurelist();
-        for mi = 1:1:length(mlist)
-            if Measure.is_global(mlist{mi})
-                selected_calc = [selected_calc; mi]; %#ok<AGROW>
-            end
-        end
-        update_tab()
-    end
-    function cb_calc_nodal(~, ~)
-        selected_calc = [];
-        mlist = measurelist();
-        for mi = 1:1:length(mlist)
-            if Measure.is_nodal(mlist{mi})
-                selected_calc = [selected_calc; mi]; %#ok<AGROW>
-            end
-        end
-        update_tab()
-    end
-    function cb_calc_binodal(~, ~)
-        selected_calc = [];
-        mlist = measurelist();
-        for mi = 1:1:length(mlist)
-            if Measure.is_binodal(mlist{mi})
-                selected_calc = [selected_calc; mi]; %#ok<AGROW>
-            end
-        end
-        update_tab()
-    end
-    function cb_calc_calculate(~, ~)
-        group = ga.getCohort().getGroups().getValue(selected_groups);
-        mlist = measurelist();
-        mlist = mlist(selected_calc);
-        for j = 1:1:length(selected_calc)
-            measure_code = mlist{j};
-            ga.getMeasure(measure_code, group);
-        end
+    function cb_calc_calculate(~, ~)       
+        Measurement.getMesurementPanel(ga.getMeasurementClass(), ga)
     end
     function cb_calc_compare(~, ~)
-        groups = cell(length(seleted_groups), 1);
-        for j = 1:1:length(selected_groups)
-            groups{j} = ga.getCohort().getGroups().getValue(selected_groups{j});
-        end
-        
-        mlist = measurelist();
-        mlist = mlist(selected_calc);
-        for j  = 1:1:length(selected_calc)
-            measure_code = mlist{j};
-            ga.getComparison(measure_code, groups);
-        end
+%         groups = cell(length(seleted_groups), 1);
+%         for j = 1:1:length(selected_groups)
+%             groups{j} = ga.getCohort().getGroups().getValue(selected_groups{j});
+%         end
+%         
+%         mlist = measurelist();
+%         mlist = mlist(selected_calc);
+%         for j  = 1:1:length(selected_calc)
+%             measure_code = mlist{j};
+%             ga.getComparison(measure_code, groups);
+%         end
     end
     function cb_calc_random(~, ~)
-        group = ga.getCohort().getGroups().getValue(selected_groups);
-        mlist = measurelist();
-        mlist = mlist(selected_calc);
-        for j = 1:1:length(selected_calc)
-            measure_code = mlist{j};
-            ga.getRandomComparison(measure_code, group);
-        end
+%         group = ga.getCohort().getGroups().getValue(selected_groups);
+%         mlist = measurelist();
+%         mlist = mlist(selected_calc);
+%         for j = 1:1:length(selected_calc)
+%             measure_code = mlist{j};
+%             ga.getRandomComparison(measure_code, group);
+%         end
     end
 
 %% Console
-CONSOLE_WIDTH = 1-LEFTCOLUMN_WIDTH-3*MARGIN_X;
-CONSOLE_HEIGHT = HEADING_HEIGHT;
+CONSOLE_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
+CONSOLE_HEIGHT = COHORT_HEIGHT;
 CONSOLE_X0 = LEFTCOLUMN_WIDTH+2*MARGIN_X;
 CONSOLE_Y0 = 1-MARGIN_Y-CONSOLE_HEIGHT;
 CONSOLE_POSITION = [CONSOLE_X0 CONSOLE_Y0 CONSOLE_WIDTH CONSOLE_HEIGHT];
 
-CONSOLE_MATRIX_CMD = 'Correlation Matrix';
+CONSOLE_MATRIX_CMD = 'Adjacency';
 CONSOLE_MATRIX_SC = '1';
 CONSOLE_MATRIX_TP = ['Visualizes correlation matrix. Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_MATRIX_SC];
 
-CONSOLE_MEASURES_CMD = 'Measures';
+CONSOLE_MEASURES_CMD = 'Global Measures';
 CONSOLE_MEASURES_SC = '2';
-CONSOLE_MEASURES_TP = 'Visualizes Measurements';
+CONSOLE_MEASURES_TP = 'Visualizes Global Measurements';
 
 ui_console_panel = uipanel();
 ui_console_matrix_button  = uicontrol(ui_console_panel, 'Style', 'pushbutton');
-ui_console_measures_button = uicontorl(ui_console_panel, 'Style', 'pushbutton');
+ui_console_measures_button = uicontrol(ui_console_panel, 'Style', 'pushbutton');
 init_console()
     function init_console()
-         GUI.setUnits(ui_console_panel)
+        GUI.setUnits(ui_console_panel)
         GUI.setBackgroundColor(ui_console_panel)
         
         set(ui_console_panel, 'Position', CONSOLE_POSITION)
@@ -521,13 +405,15 @@ init_console()
         set(ui_console_measures_button, 'Position', [.30 .30 .15 .40])
         set(ui_console_measures_button, 'String', CONSOLE_MEASURES_CMD)
         set(ui_console_measures_button, 'TooltipString', CONSOLE_MEASURES_TP)
-        set(ui_console_measures_button, 'Callback', {@cb_console_measures})
+        set(ui_console_measures_button, 'Callback', {@cb_console_global})
     end
     function update_console_panel_visibility(console_panel_cmd)
         switch console_panel_cmd
             case CONSOLE_MEASURES_CMD
-                set(ui_panel_matrix, 'Visible', 'off')
-                set(ui_panel_measures, 'Visible', 'on')
+                childs_visibility(ui_panel_matrix, 'off')
+                childs_visibility(ui_panel_global, 'on')
+%                 set(ui_panel_matrix, 'Visible', 'off')
+%                 set(ui_panel_global, 'Visible', 'on')
 %                 set(ui_panel_regionmeasures,'Visible','off')
 %                 set(ui_panel_brainview,'Visible','off')
                 
@@ -630,8 +516,10 @@ init_console()
 %                 set(ui_toolbar_3D,'Separator','on');
                 
             otherwise % CONSOLE_MATRIX_CMD
-                set(ui_panel_matrix, 'Visible', 'on')
-                set(ui_panel_measures, 'Visible', 'off')
+                childs_visibility(ui_panel_matrix, 'on')
+                childs_visibility(ui_panel_global, 'off')
+%                 set(ui_panel_matrix, 'Visible', 'on')
+%                 set(ui_panel_global, 'Visible', 'off')
 %                 set(ui_panel_regionmeasures, 'Visible', 'off')
 % %                 set(ui_panel_brainview, 'Visible', 'off')
 %                 
@@ -669,13 +557,60 @@ init_console()
         if strcmpi(get(ui_panel_matrix, 'Visible'), 'on')
             update_matrix()
             
-        else strcmpi(get(ui_panel_measures, 'Visible'), 'on')
-            update_brainmeasures()
-            %         elseif strcmpi(get(ui_panel_regionmeasures,'Visible'),'on')
-            %             update_regionmeasures()
-            %         elseif strcmpi(get(ui_panel_brainview,'Visible'),'on')
-            %             update_brainview()
+        elseif strcmpi(get(ui_panel_global, 'Visible'), 'on')
+            update_global_panel()
         end
+    end
+    function cb_console_matrix(~, ~)         
+        update_console_panel_visibility(CONSOLE_MATRIX_CMD)
+        update_console_panel()
+    end
+    function cb_console_global(~, ~)        
+        update_console_panel_visibility(CONSOLE_MEASURES_CMD)
+        update_global_panel()
+    end
+    function childs_visibility(handle, rule)
+        childs = allchild(handle);
+        set(handle, 'visible', rule)
+        for i = 1:1:length(childs)
+            set(childs(i), 'visible', rule)
+        end        
+    end
+
+%% Panel Plot Matrix
+CONSOLE_MATRIX_CMD  = 'Correlation Matrix';
+
+ui_panel_matrix = uipanel();
+ui_matrix_axes = axes();
+init_matrix()
+    function init_matrix()
+        GUI.setUnits(ui_panel_matrix)
+        GUI.setBackgroundColor(ui_panel_matrix)
+        
+        set(ui_panel_matrix, 'Position', MAINPANEL_POSITION)
+        set(ui_panel_matrix, 'Title', CONSOLE_MATRIX_CMD)
+        
+        set(ui_matrix_axes, 'Parent', ui_panel_matrix)
+        set(ui_matrix_axes, 'Position', [.05 .05 .60 .88])
+    end
+    function update_matrix()
+        ga.getGraphPanel('UIParent', ui_panel_matrix, 'UIParentAxes', ui_matrix_axes)
+    end
+
+%% Panel Global
+PANEL_GLOBAL_TITLE  = 'Global Measures';
+
+ui_panel_global = uipanel();
+init_global()
+    function init_global()
+        GUI.setUnits(ui_panel_global)
+        GUI.setBackgroundColor(ui_panel_global)
+       
+        set(ui_panel_global, 'Position', MAINPANEL_POSITION)
+        set(ui_panel_global, 'Title', PANEL_GLOBAL_TITLE)
+    end
+    function update_global_panel()
+        ga.getMeasurementPanel('UIParent', ui_panel_global)
     end
 
 %% Menus
@@ -762,7 +697,7 @@ set(f, 'Visible', 'on');
         update_cohort()
         
         % setup graph analysis
-        update_tab()
+        update_matrix()
         
         % setup console
         update_console_panel_visibility(CONSOLE_MATRIX_CMD)

@@ -3,7 +3,7 @@ classdef MeasurementST_WU < Measurement
     % MeasurementST_WU is a subclass of Measurement, it implements the
     % initialization of data methods.
     %
-    % MeasurementST_WU implements Measurement initialization of the data 
+    % MeasurementST_WU implements Measurement initialization of the data
     % function class will save. It checks if the data being saved has correct
     % dimensions. Structural data can be for example MRI or PET data.
     %
@@ -12,7 +12,7 @@ classdef MeasurementST_WU < Measurement
     %
     % MeasurementST_WU basic methods:
     %  disp                         - displays the comparison
-    % 
+    %
     % MeasurementST_WU get methods:
     %  getValue                     - returns the value of the measurement
     %
@@ -29,8 +29,8 @@ classdef MeasurementST_WU < Measurement
     %  getAvailbleSettings          - returns the available settings
     %  getMeasurement               - returns a new measurement
     %
-    % See also Comparison, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU. 
-   
+    % See also Comparison, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU.
+    
     properties
         value  % value of the measure for the group
     end
@@ -38,17 +38,17 @@ classdef MeasurementST_WU < Measurement
         function m =  MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin)
             % MEASUREMENTST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
-            % with the data from GROUP. It initializes the MEASUREMENTST_WU 
+            % with the data from GROUP. It initializes the MEASUREMENTST_WU
             % with default settings.
             %
             % See also ComparisonST_WU, RandomComparisonST_WU, AnalysisST_WU.
             
             graph_type = AnalysisST_WU.getGraphType();
-            measure_list = Graph.getCompatibleMeasureList(graph_type);            
+            measure_list = Graph.getCompatibleMeasureList(graph_type);
             assert(ismember(measure_code, measure_list), ...
                 [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.BUG_FUNC], ...
                 'MeasurementST_WU measure_code is not compatible with the permited Measures.');
-
+            
             m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
         end
     end
@@ -58,7 +58,7 @@ classdef MeasurementST_WU < Measurement
             %
             % DISP(M) overrides Measurement disp and displays additional
             % information about the value of the MeasurementST_WU.
-            % 
+            %
             % See also Measurement
             
             m.disp@Measurement()
@@ -69,9 +69,9 @@ classdef MeasurementST_WU < Measurement
         function value = getMeasureValue(m)
             % GETGROUPVALUE returns the measure value of the group
             %
-            % VALUE = GETMEASUREVALUE(M) returns the measure value of 
+            % VALUE = GETMEASUREVALUE(M) returns the measure value of
             % the group.
-            % 
+            %
             % See also getClass, getName, getDescription.
             
             value = m.value;
@@ -84,7 +84,7 @@ classdef MeasurementST_WU < Measurement
             % INITIALIZE_DATA(M) initialize and check the data for the
             % measurement. It initializes with default settings.
             %
-            % INITIALIZE_DATA(M, 'MeasurementST.Value', VALUE) initialize and 
+            % INITIALIZE_DATA(M, 'MeasurementST.Value', VALUE) initialize and
             % check the data for the measurement. It saves the measurement
             % VALUE.
             %
@@ -92,9 +92,9 @@ classdef MeasurementST_WU < Measurement
             
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
-
+            
             measure_code = m.getMeasureCode();
-
+            
             if Measure.is_global(measure_code)  % global measure
                 m.value = get_from_varargin( ...
                     {0}, ...  % 1 measure per group
@@ -132,7 +132,7 @@ classdef MeasurementST_WU < Measurement
         function class = getClass()
             % GETCLASS returns the class of structural measurement
             %
-            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
+            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
             % measurement. In this case 'MeasurementST_WU'.
             %
             % See also getList, getName, getDescription.
@@ -162,7 +162,7 @@ classdef MeasurementST_WU < Measurement
                 ];
         end
         function atlas_number = getBrainAtlasNumber()
-            % GETBRAINATLASNUMBER returns the number of brain atlases 
+            % GETBRAINATLASNUMBER returns the number of brain atlases
             %
             % ATLAS_NUMBER = GETBRAINATLASNUMBER() returns the number of
             % brain atlases.
@@ -172,7 +172,7 @@ classdef MeasurementST_WU < Measurement
             atlas_number =  1;
         end
         function analysis_class = getAnalysisClass()
-            % GETANALYSISCLASS returns the class of the analsysis 
+            % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
             % analysis the random comparison is part of, 'MeasurementST_WU'.
@@ -190,11 +190,11 @@ classdef MeasurementST_WU < Measurement
             % See also getList, getClass, getName, getDescription.
             
             subject_class = 'SubjectST';
-        end        
+        end
         function available_settings = getAvailableSettings()
             % GETAVAILABLESETTINGS returns the available settings of structural measurement
             %
-            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the 
+            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the
             % available settings of MeasurementST_WU.
             %
             % See also getClass, getName, getDescription
@@ -208,7 +208,7 @@ classdef MeasurementST_WU < Measurement
             % returns a new MeasurementST_WU object with MEASUREMENT_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
             % it will initialize with default settings.
-            % 
+            %
             % SUB = GETMEASUREMENT(MEASUREMENT_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % returns a new MeasurementST_WU object with MEASUREMENT_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
@@ -219,4 +219,321 @@ classdef MeasurementST_WU < Measurement
             m = eval([measurement_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
         end
     end
-end 
+    methods (Static)
+        function getMesurementPanel(analysis)
+            % variables
+            mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());
+            selected_calc = [];
+            stop = false;
+            start = 0;
+            
+            % commands
+            NAME = ['Analysis Measurements for: ' analysis.getID()];
+            
+            CALC_SELECTED_COL = 1;
+            CALC_NAME_COL = 2;
+            CALC_FORMAT_COL = 3;
+            CALC_SCOPE_COL = 4;            
+           
+            CALC_GLOBAL = 'Global';
+            CALC_NODAL = 'Nodal';
+            CALC_BINODAL = 'Binodal';
+            CALC_SUPERGLOBAL = 'Superglobal';
+            CALC_UNILAYER = 'Unilayer';
+            CALC_BILAYER = 'Bilayer';
+            
+            CALC_TXT_COL = 5;
+            SELECTALL_CALC_CMD = GUI.SELECTALL_CMD;
+            SELECTALL_CALC_TP = 'Select all measures';
+            
+            CLEARSELECTION_CALC_CMD = GUI.CLEARSELECTION_CMD;
+            CLEARSELECTION_CALC_TP = 'Clear measure selection';
+            
+            SELECTGLOBAL_CALC_CMD = 'Select Global';
+            SELECTGLOBAL_CALC_TP = 'Select all global measures';
+            
+            SELECTNODAL_CALC_CMD = 'Select Nodal';
+            SELECTNODAL_CALC_TP = 'Select all nodal measures';
+            
+            SELECTBINODAL_CALC_CMD = 'Select Binodal';
+            SELECTBINODAL_CALC_TP = 'Select all Binodal measures';
+            
+            % figure
+            f = GUI.init_figure(NAME, .55, .4, 'west');
+            
+            % Main Panel
+            PANEL_POSITION = [0 0 1 1];
+            
+            ui_panel = uipanel();
+            
+            ui_calc_table = uitable(ui_panel);
+            ui_calc_selectall_button = uicontrol(ui_panel, 'Style', 'pushbutton');
+            ui_calc_clear_button = uicontrol(ui_panel, 'Style', 'pushbutton');
+            ui_calc_global_button = uicontrol(ui_panel, 'Style', 'pushbutton');
+            ui_calc_nodal_button = uicontrol(ui_panel, 'Style', 'pushbutton');
+            ui_calc_binodal_button = uicontrol(ui_panel, 'Style', 'pushbutton');
+            
+            ui_popup_group = uicontrol(ui_panel, 'Style', 'popup', 'String',{''});
+            ui_text_info = uicontrol(ui_panel, 'Style', 'text');
+            ui_edit_info = uicontrol(ui_panel, 'Style', 'edit');
+            ui_button_stop = uicontrol(ui_panel, 'Style', 'pushbutton');
+            ui_button_resume = uicontrol(ui_panel, 'Style', 'pushbutton');
+            init_calculate()
+            update_popups_grouplists()
+            update_tab()
+            
+            % Menu
+            [ui_menu_about,ui_menu_about_about] = GUI.setMenuAbout(f, NAME); %#ok<ASGLU>
+            
+            % Make the GUI visible.
+            set(f, 'Visible', 'on');
+            
+            % callbacks
+            function init_calculate()
+                GUI.setUnits(ui_panel)
+                GUI.setBackgroundColor(ui_panel)
+                
+                set(ui_panel, 'Position', PANEL_POSITION)
+                set(ui_panel, 'BorderType', 'none')
+                
+                set(ui_calc_table, 'BackgroundColor', GUI.TABBKGCOLOR)
+                set(ui_calc_table, 'Position', [.02 .15 .5 .83])
+                set(ui_calc_table, 'ColumnName', {'', '   Brain Measure   ', ' Format ', ' Scope ',  '   notes   '})
+                set(ui_calc_table, 'ColumnFormat', {'logical', 'char', {CALC_GLOBAL CALC_NODAL CALC_BINODAL}, {CALC_SUPERGLOBAL CALC_UNILAYER CALC_BILAYER}, 'char'})
+                set(ui_calc_table, 'ColumnEditable', [true false false false false])
+                set(ui_calc_table, 'CellEditCallback', {@cb_calc_edit});
+                
+                set(ui_calc_selectall_button, 'Position', [.02 .08 .24 .06])
+                set(ui_calc_selectall_button, 'String', SELECTALL_CALC_CMD)
+                set(ui_calc_selectall_button, 'TooltipString', SELECTALL_CALC_TP)
+                set(ui_calc_selectall_button, 'Callback', {@cb_calc_selectall})
+                
+                set(ui_calc_clear_button, 'Position', [.26 .08 .24 .06])
+                set(ui_calc_clear_button, 'String', CLEARSELECTION_CALC_CMD)
+                set(ui_calc_clear_button, 'TooltipString', CLEARSELECTION_CALC_TP)
+                set(ui_calc_clear_button, 'Callback', {@cb_calc_clearselection})
+                
+                set(ui_calc_global_button, 'Position', [.02 .02 .16 .06])
+                set(ui_calc_global_button, 'String',SELECTGLOBAL_CALC_CMD)
+                set(ui_calc_global_button, 'TooltipString',SELECTGLOBAL_CALC_TP)
+                set(ui_calc_global_button, 'Callback', {@cb_calc_global})
+                
+                set(ui_calc_nodal_button, 'Position', [.18 .02 .16 .06])
+                set(ui_calc_nodal_button, 'String',SELECTNODAL_CALC_CMD)
+                set(ui_calc_nodal_button, 'TooltipString',SELECTNODAL_CALC_TP)
+                set(ui_calc_nodal_button, 'Callback', {@cb_calc_nodal})
+                
+                set(ui_calc_binodal_button, 'Position', [.34 .02 .16 .06])
+                set(ui_calc_binodal_button, 'String', SELECTBINODAL_CALC_CMD)
+                set(ui_calc_binodal_button, 'TooltipString', SELECTBINODAL_CALC_TP)
+                set(ui_calc_binodal_button, 'Callback', {@cb_calc_binodal})
+                
+                set(ui_popup_group, 'Position', [.55 .90 .4 .08])
+                set(ui_popup_group, 'TooltipString', 'Select group 1');
+                
+                set(ui_text_info, 'Position', [.55 .63 .40 .08])
+                set(ui_text_info, 'String', 'MeasurementST')
+                set(ui_text_info, 'FontWeight', 'bold')
+                set(ui_text_info, 'FontSize',12)
+                
+                set(ui_edit_info, 'BackgroundColor', [1 1 1])
+                set(ui_edit_info, 'Position', [.55 .15 .42 .47])
+                set(ui_edit_info, 'Max',2)
+                set(ui_edit_info, 'HorizontalAlignment', 'left')
+                set(ui_edit_info, 'Enable', 'inactive')
+                
+                set(ui_button_stop, 'Position', [.55 .02 .18 .12])
+                set(ui_button_stop, 'String', 'Calculate measures')
+                set(ui_button_stop, 'Callback', {@cb_stop})
+                
+                set(ui_button_resume, 'Position', [.80 .02 .18 .12])
+                set(ui_button_resume, 'String', 'Resume')
+                set(ui_button_resume, 'Enable', 'off')
+                set(ui_button_resume, 'Callback', {@cb_resume})
+            end
+            function deactivate_components()
+                set(ui_calc_table, 'Enable', 'off')
+                set(ui_calc_selectall_button, 'Enable', 'off')
+                set(ui_calc_clear_button, 'Enable', 'off')
+                set(ui_calc_global_button, 'Enable', 'off')
+                set(ui_calc_nodal_button, 'Enable', 'off')
+                set(ui_calc_binodal_button, 'Enable', 'off')
+                set(ui_popup_group, 'Enable', 'off')
+            end
+            function activate_components()
+                set(ui_calc_table, 'Enable', 'on')
+                set(ui_calc_selectall_button, 'Enable', 'on')
+                set(ui_calc_clear_button, 'Enable', 'on')
+                set(ui_calc_global_button, 'Enable', 'on')
+                set(ui_calc_nodal_button, 'Enable', 'on')
+                set(ui_calc_binodal_button, 'Enable', 'on')
+                set(ui_popup_group, 'Enable', 'on')
+            end
+            function cb_stop(src,~)  % (src,event)
+                deactivate_components()
+                start = tic;
+                if strcmp(get(src, 'String'), 'Calculate measures')
+                    if analysis.getCohort().getGroups().length() > 0
+                        if isempty(selected_calc)
+                            errordlg('Select measures to be calculated', 'Select measures', 'modal');
+                            activate_components()
+                        else
+                            set(ui_button_stop, 'String', 'stop')
+                            group = get(ui_popup_group, 'Value');
+                            mlist = mlist(selected_calc);
+                            
+                            calculate(analysis, mlist, group)
+                        end
+                    else
+                        errordlg('Define a group in order to perform calculations', 'Define a group', 'modal');
+                        activate_components()
+                    end
+                    
+                else
+                    if strcmp(get(src, 'String'), 'stop')
+                        set(ui_button_stop, 'String', 'Calculate measures')
+                        set(ui_button_stop, 'Enable', 'off')
+                        set(ui_button_resume, 'Enable', 'on')
+                        stop = true;
+                    end
+                end
+                set(ui_button_stop, 'String', 'Calculate measures')
+            end
+            function cb_resume(~,~)  % (src,event)
+                stop = false;
+                set(ui_button_stop, 'Enable', 'on')
+                set(ui_button_resume, 'Enable', 'off')
+                set(ui_button_stop, 'String', 'stop')
+                group = get(ui_popup_group, 'Value');
+                
+                calculate(analysis, mlist(selected_calc), group)
+            end
+            function update_tab()                
+                data = cell(length(mlist), 3);
+                for mi = 1:1:length(mlist)
+                    if any(selected_calc == mi)
+                        data{mi, CALC_SELECTED_COL} = true;
+                    else
+                        data{mi, CALC_SELECTED_COL} = false;
+                    end
+                    data{mi, CALC_NAME_COL} = Measure.getName(mlist{mi});
+                    if Measure.is_nodal(mlist{mi})
+                        data{mi, CALC_FORMAT_COL} = CALC_NODAL;
+                    elseif Measure.is_global(mlist{mi})
+                        data{mi, CALC_FORMAT_COL} = CALC_GLOBAL;
+                    else
+                        data{mi, CALC_FORMAT_COL} = CALC_BINODAL;
+                    end
+                    
+                    if Measure.is_superglobal(mlist{mi})
+                        data{mi, CALC_SCOPE_COL} = CALC_SUPERGLOBAL;
+                    elseif Measure.is_unilayer(mlist{mi})
+                        data{mi, CALC_SCOPE_COL} = CALC_UNILAYER;
+                    else
+                        data{mi, CALC_SCOPE_COL} = CALC_BILAYER;
+                    end
+                    
+                    data{mi, CALC_TXT_COL} = Measure.getDescription(mlist{mi});
+                end
+                set(ui_calc_table, 'Data', data)
+            end
+            function cb_calc_edit(~,event)  % (src,event)
+                mi = event.Indices(1);
+                col = event.Indices(2);
+                newdata = event.NewData;
+                switch col
+                    case CALC_SELECTED_COL
+                        if newdata==1
+                            selected_calc = sort(unique([selected_calc(:); mi]));
+                        else
+                            selected_calc = selected_calc(selected_calc~=mi);
+                        end
+                end
+            end
+            function cb_calc_selectall(~,~)  % (src,event)
+                selected_calc = (1:1:length(mlist))';
+                update_tab()
+            end
+            function cb_calc_clearselection(~,~)  % (src,event)
+                selected_calc = [];
+                update_tab()
+            end
+            function cb_calc_global(~,~)  % (src,event)
+                selected_calc = [];
+                for mi = 1:1:length(mlist)
+                    if Measure.is_global(mlist{mi})
+                        selected_calc = [selected_calc; mi]; %#ok<AGROW>
+                    end
+                end
+                update_tab()
+            end
+            function cb_calc_nodal(~,~)  % (src,event)
+                selected_calc = [];
+                for mi = 1:1:length(mlist)
+                    if Measure.is_nodal(mlist{mi})
+                        selected_calc = [selected_calc; mi]; %#ok<AGROW>
+                    end
+                end
+                update_tab()
+            end
+            function cb_calc_binodal(~, ~)
+                selected_calc = [];
+                for mi = 1:1:length(mlist)
+                    if Measure.is_binodal(mlist{mi})
+                        selected_calc = [selected_calc; mi]; %#ok<AGROW>
+                    end
+                end
+                update_tab()
+            end
+            
+            % Auxilry functions 
+            function update_popups_grouplists()
+                if analysis.getCohort().getGroups().length() > 0
+                    % updates group lists of popups
+                    GroupList = {};
+                    for g = 1:1:analysis.getCohort().getGroups().length()
+                        group = analysis.getCohort().getGroups().getValue(g);
+                        GroupList{g} = group.getID(); %#ok<AGROW>
+                    end
+                else
+                    GroupList = {''};
+                end
+                set(ui_popup_group, 'String', GroupList)
+            end
+            function calculate(analysis, mlist, g)
+                L = 100;
+                txt = cell(1, L);
+                
+                group = analysis.getCohort().getGroups().getValue(g);
+                
+                for mi = 1:1:length(mlist)
+                    % missing the measuremente parameters
+                    m = analysis.getMeasurement(mlist{mi}, group);
+                    msg = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10, 10)) 's - group = ' int2str(g) ' - ' mlist{mi}];
+                    
+                    % visualize status
+                    txt(2:L) = txt(1:L-1);
+                    txt{1} = msg;
+                    set(ui_edit_info, 'String', txt)
+                    
+                    pause(.001)
+                    
+                    if stop
+                        break
+                    end
+                end
+                
+                if (isempty(mlist) || mi==length(mlist))
+                    txt(4:L) = txt(1:L-3);
+                    txt{1} = 'DONE!!!';
+                    txt{2} = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10,10)) 's'];
+                    txt{3} = '';
+                    set(ui_edit_info, 'String',txt)
+                    
+                    set(ui_button_stop, 'Enable', 'off')
+                    set(ui_button_resume, 'Enable', 'off')
+                end
+            end        
+        end
+    end
+end

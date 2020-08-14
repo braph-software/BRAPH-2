@@ -370,6 +370,11 @@ classdef Measurement < handle & matlab.mixin.Copyable
             sub = eval([measurement_class  '(id, label, notes, atlases, measure_code, group, varargin{:})']);
         end
     end
+    methods (Static) % plot functions
+        function  getMesurementPanel(measure_class, analysis) %#ok<INUSD>
+            eval([Measurement.getClass(measure_class) '.getMesurementPanel(analysis)']);
+        end
+    end
     methods (Access = protected)  % Shallow copy
         function measurement_copy = copyElement(m)
             % COPYELEMENT copies elements of measurement
