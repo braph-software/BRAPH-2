@@ -832,7 +832,7 @@ classdef AnalysisST_WU < Analysis
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
                     for j = 1:1:analysis.getMeasurements().length()
                         measurement = analysis.getMeasurements().getValue(j);
-                        if isa(group, 'Cell') && ismember(measurement.getMeasureCode(), global_list)
+                        if isa(group, 'cell') && ismember(measurement.getMeasureCode(), global_list)
                             for k =1:1:length(group)
                                 g = group{k};
                                 if isequal(measurement.getGroup(), g) 
