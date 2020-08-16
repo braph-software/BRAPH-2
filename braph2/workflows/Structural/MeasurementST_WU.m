@@ -219,7 +219,7 @@ classdef MeasurementST_WU < Measurement
             m = eval([measurement_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
         end
     end
-    methods (Static)
+    methods (Static)  % Plot MeasurementGUI Child Panel
         function variables = getChildPanel(analysis, uiparent) %#ok<INUSL>
             set(uiparent, 'Visible', 'off')
             variables = [];            

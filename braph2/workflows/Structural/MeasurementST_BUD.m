@@ -17,10 +17,10 @@ classdef MeasurementST_BUD < MeasurementST_WU
     %  getName                      - returns the name of the measurement
     %  getDescription               - returns the description of the measurement
     %  getAnalysisClass             - returns the class of the analysis
-
+    
     %
-    % See also Comparison, AnalysisST_BUD, ComparisonST_BUD, RandomComparisonST_BUD. 
-   
+    % See also Comparison, AnalysisST_BUD, ComparisonST_BUD, RandomComparisonST_BUD.
+    
     properties (Access = protected)
         density  % density of the values
     end
@@ -28,16 +28,16 @@ classdef MeasurementST_BUD < MeasurementST_WU
         function m =  MeasurementST_BUD(id, label, notes, atlas, measure_code, group, varargin)
             % MEASUREMENTST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'density',  THRESHOLD)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
-            % with the data from GROUP, this data will have a fixed THRESHOLD. 
+            % with the data from GROUP, this data will have a fixed THRESHOLD.
             %
-            % MEASUREMENTST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP) 
+            % MEASUREMENTST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP, this data will have a fixed default density.
             %
             % See also ComparisonST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.
             
             m = m@MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin{:});
-
+            
             density = get_from_varargin(0, 'density', varargin{:});
             m.setDensity(density)
         end
@@ -46,9 +46,9 @@ classdef MeasurementST_BUD < MeasurementST_WU
         function setDensity(m, density)
             % SETDENSITY sets the measure fixed density of values
             %
-            % SETDENSITY(M, DENSITY) sets the measure fixed density of 
+            % SETDENSITY(M, DENSITY) sets the measure fixed density of
             % values.
-            % 
+            %
             % See also getDensity.
             
             m.density = density;
@@ -69,7 +69,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
         function class = getClass()
             % GETCLASS returns the class of structural measurement BUD
             %
-            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
+            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
             % measurement. In this case 'MeasurementST_BUD'.
             %
             % See also getList, getName, getDescription.
@@ -100,7 +100,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
                 ];
         end
         function analysis_class = getAnalysisClass()
-            % GETANALYSISCLASS returns the class of the analsysis 
+            % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
             % analysis the measurement is part of, 'AnalysisST_BUT'.
@@ -108,6 +108,28 @@ classdef MeasurementST_BUD < MeasurementST_WU
             % See also getClass, getName, getDescription.
             
             analysis_class = 'AnalysisST_BUD';
-        end     
+        end
     end
-end 
+    methods (Static)  % Plot MeasurementGUI Child Panel
+        function variables = getChildPanel(analysis, uiparent) %#ok<INUSL>
+            set(uiparent, 'Visible', 'on')
+            ui_density_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_density_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            init_child_panel()
+            function init_child_panel()
+                set(ui_density_text, 'String', 'Density')
+                set(ui_density_text, 'Position', [.01 .9 .3 .08])
+                set(ui_density_text, 'Fontweight', 'bold')
+                
+                set(ui_density_edit, 'String', 0)
+                set(ui_density_edit, 'Position', [.31 .9 .3 .08])
+                set(ui_density_edit, 'Callback', {@cb_measurement_density})
+                
+            end
+            function cb_measurement_density(~,~)
+                setappdata(uiparent, 'density', str2double(get(ui_density_edit, 'String')))
+            end
+            variables = {'density'};
+        end
+    end
+end

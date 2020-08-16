@@ -412,6 +412,9 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % figure
             f = GUI.init_figure(NAME, .35, .6, 'west');
             
+            % dynamic variables
+            variables = [];
+            
             % Main Panel
             PANEL_POSITION = [0 0 1 1];
             
@@ -441,8 +444,8 @@ classdef Measurement < handle & matlab.mixin.Copyable
             [ui_menu_about,ui_menu_about_about] = GUI.setMenuAbout(f, NAME); %#ok<ASGLU>
             
             % Make the GUI visible.
-            set(f, 'Visible', 'on');
-            
+            set(f, 'Visible', 'on');         
+    
             % callbacks
             function init_calculate()
                 GUI.setUnits(ui_panel)
@@ -668,6 +671,18 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 L = 100;
                 txt = cell(1, L);
                 
+                if isempty(variables)
+                    rule = '';
+                    value = '';
+                else
+                    if contains('threshold', variables)
+                            rule = 'threshold';
+                            value =  getappdata(ui_child_panel, 'threshold');
+                    elseif isequal(variables, 'density')
+                            rule = 'density';
+                            value = getappdata(ui_child_panel, 'density');                            
+                    end
+                end
                 
                 if isequal(g, 1)
                     group = analysis.getCohort().getGroups().getValues();                   
@@ -675,7 +690,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                         gr = group{i};
                         for mi = 1:1:length(mlist)
                             % missing the measuremente parameters
-                            m = analysis.getMeasurement(mlist{mi}, gr);
+                            m = analysis.getMeasurement(mlist{mi}, gr, rule, value);
                             msg = ['time = ' int2str(toc(start)) '.'  int2str(mod(toc(start)*10, 10)) 's - group = ' gr.tostring() ' - ' mlist{mi}];
                             
                             % visualize status
@@ -696,7 +711,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                     group = analysis.getCohort().getGroups().getValue(g);
                     for mi = 1:1:length(mlist)
                         % missing the measuremente parameters
-                        m = analysis.getMeasurement(mlist{mi}, group);
+                        m = analysis.getMeasurement(mlist{mi}, group, rule, value);
                         msg = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10, 10)) 's - group = ' int2str(g) ' - ' mlist{mi}];
                         
                         % visualize status

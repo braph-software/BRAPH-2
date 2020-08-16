@@ -11,7 +11,7 @@ cohort_file = [fileparts(which('example_workflow_ST_WU.m')) filesep() 'example d
 temp = load(cohort_file, '-mat', 'cohort', 'selected_group', 'selected_subjects', 'BUILD');
 cohort = temp.cohort;
 
-GUIAnalysisSettings(cohort, 'AnalysisST_WU')
+GUIAnalysisSettings(cohort, 'AnalysisST_BUD')
 
 set(gcf, 'CloseRequestFcn', 'closereq')
 close(gcf)

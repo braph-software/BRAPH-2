@@ -18,8 +18,8 @@ classdef MeasurementST_BUT < MeasurementST_WU
     %  getDescription               - returns the description of the measurement
     %  getAnalysisClass             - returns the class of the analysis
     %
-    % See also Comparison, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT. 
-   
+    % See also Comparison, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT.
+    
     properties (Access = protected)
         threshold  % threshold of the values
     end
@@ -27,16 +27,16 @@ classdef MeasurementST_BUT < MeasurementST_WU
         function m =  MeasurementST_BUT(id, label, notes, atlas, measure_code, group, varargin)
             % MEASUREMENTST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'threshold',  THRESHOLD)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
-            % with the data from GROUP, this data will have a fixed THRESHOLD. 
+            % with the data from GROUP, this data will have a fixed THRESHOLD.
             %
-            % MeasurementST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP) 
+            % MeasurementST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP, this data will have a fixed default threshold.
             %
             % See also ComparisonST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.
             
             m = m@MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin{:});
-
+            
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             m.setThreshold(threshold)
         end
@@ -45,9 +45,9 @@ classdef MeasurementST_BUT < MeasurementST_WU
         function setThreshold(m, threshold)
             % SETTHRESHOLD sets the measure value of the group
             %
-            % SETTHRESHOLD(M, THRESHOLD) sets the measure value of 
+            % SETTHRESHOLD(M, THRESHOLD) sets the measure value of
             % the group.
-            % 
+            %
             % See also getThreshold.
             
             m.threshold = threshold;
@@ -68,7 +68,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
         function class = getClass()
             % GETCLASS returns the class of structural measurement BUT
             %
-            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
+            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
             % measurement. In this case 'MeasurementST_BUT'.
             %
             % See also getList, getName, getDescription.
@@ -99,7 +99,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
                 ];
         end
         function analysis_class = getAnalysisClass()
-            % GETANALYSISCLASS returns the class of the analsysis 
+            % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
             % analysis the measurement is part of, 'AnalysisST_BUT'.
@@ -107,6 +107,28 @@ classdef MeasurementST_BUT < MeasurementST_WU
             % See also getClass, getName, getDescription.
             
             analysis_class = 'AnalysisST_BUT';
-        end     
+        end
     end
-end 
+    methods (Static)  % Plot MeasurementGUI Child Panel
+        function variables = getChildPanel(analysis, uiparent) %#ok<INUSL>
+            set(uiparent, 'Visible', 'on')
+            ui_threshold_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_threshold_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            init_child_panel()
+            function init_child_panel()
+                set(ui_threshold_text, 'String', 'Threshold')
+                set(ui_threshold_text, 'Position', [.01 .9 .3 .08])
+                set(ui_threshold_text, 'Fontweight', 'bold')
+                
+                set(ui_threshold_edit, 'String', 0)
+                set(ui_threshold_edit, 'Position', [.31 .9 .3 .08])
+                set(ui_threshold_edit, 'Callback', {@cb_measurement_threshold})
+                
+            end
+            function cb_measurement_threshold(~,~)
+               setappdata(uiparent, 'threshold', str2double(get(ui_threshold_edit, 'String')))
+            end       
+             variables = {'threshold'};
+        end
+    end
+end
