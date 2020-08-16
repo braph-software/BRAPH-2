@@ -733,7 +733,7 @@ classdef AnalysisST_WU < Analysis
             end
             
         end
-        function global_panel = getMeasurementPanel(analysis, varargin)
+        function global_panel = getGlobalPanel(analysis, varargin)
             uiparent = get_from_varargin([], 'UIParent', varargin{:});           
            
             % declre constans
@@ -767,9 +767,8 @@ classdef AnalysisST_WU < Analysis
             ui_checkbox_brainmeasures_meas = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');
-            ui_popup_brainmeasures_comp_group1 = uicontrol(ui_mainpanel, 'Style', 'popup', 'String',{''});
-            init_global_panel()          
-            
+            ui_popup_brainmeasures_comp_groups = uicontrol(ui_mainpanel, 'Style', 'listbox');
+            init_global_panel()         
             function init_global_panel()
                 GUI.setUnits(ui_mainpanel)
                 
@@ -778,58 +777,72 @@ classdef AnalysisST_WU < Analysis
                 set(ui_global_tbl, 'CellEditCallback', {@cb_brainmeasures_table_edit})
                 
                 set(ui_global_tbl, 'Units', 'normalized')
-                set(ui_button_brainmeasures_selectall, 'Position', [.02 .14 .10 .03])
+                set(ui_button_brainmeasures_selectall, 'Position', [.2 .14 .10 .03])
                 set(ui_button_brainmeasures_selectall, 'String', SELECTALL_MEAS_CMD)
                 set(ui_button_brainmeasures_selectall, 'TooltipString', SELECTALL_MEAS_TP)
                 set(ui_button_brainmeasures_selectall, 'Callback', {@cb_brainmeasures_selectall})
                 
-                set(ui_button_brainmeasures_clearselection, 'Position', [.13 .14 .10 .03])
+                set(ui_button_brainmeasures_clearselection, 'Position', [.3 .14 .10 .03])
                 set(ui_button_brainmeasures_clearselection, 'String', CLEARSELECTION_MEAS_CMD)
                 set(ui_button_brainmeasures_clearselection, 'TooltipString', CLEARSELECTION_MEAS_TP)
                 set(ui_button_brainmeasures_clearselection, 'Callback', {@cb_brainmeasures_clearselection})
                 
-                set(ui_button_brainmeasures_remove, 'Position', [.24 .14 .10 .03])
+                set(ui_button_brainmeasures_remove, 'Position', [.4 .14 .10 .03])
                 set(ui_button_brainmeasures_remove, 'String', REMOVE_MEAS_CMD)
                 set(ui_button_brainmeasures_remove, 'TooltipString', REMOVE_MEAS_TP)
                 set(ui_button_brainmeasures_remove, 'Callback', {@cb_brainmeasures_remove})
                 
-                set(ui_checkbox_brainmeasures_meas, 'Position', [.02 .09 .10 .03])
+                set(ui_checkbox_brainmeasures_meas, 'Position', [.2 .09 .10 .03])
                 set(ui_checkbox_brainmeasures_meas, 'String', 'measure')
                 set(ui_checkbox_brainmeasures_meas, 'Value', true)
                 set(ui_checkbox_brainmeasures_meas, 'TooltipString', 'Select measure')
                 set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'bold')
                 set(ui_checkbox_brainmeasures_meas, 'Callback', {@cb_brainmeasures_meas})
                 
-                set(ui_checkbox_brainmeasures_comp, 'Position',[.12 .09 .10 .03])
+                set(ui_checkbox_brainmeasures_comp, 'Position',[.3 .09 .10 .03])
                 set(ui_checkbox_brainmeasures_comp, 'String', 'comparison')
                 set(ui_checkbox_brainmeasures_comp, 'Value', false)
                 set(ui_checkbox_brainmeasures_comp, 'TooltipString', 'Select comparison')
                 set(ui_checkbox_brainmeasures_comp, 'Callback', {@cb_brainmeasures_comp})
                 
-                set(ui_checkbox_brainmeasures_rand, 'Position', [.22 .09 .15 .03])
+                set(ui_checkbox_brainmeasures_rand, 'Position', [.4 .09 .15 .03])
                 set(ui_checkbox_brainmeasures_rand, 'String', 'random comparison')
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
                 set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_brainmeasures_rand})               
                
-                set(ui_popup_brainmeasures_comp_group1, 'Position',[.02 .04 .10 .03])
-                set(ui_popup_brainmeasures_comp_group1, 'Enable', 'on')
-                set(ui_popup_brainmeasures_comp_group1, 'String', analysis.getCohort().getGroups().getKeys())
-                set(ui_popup_brainmeasures_comp_group1, 'TooltipString', 'Select group 1');
-                set(ui_popup_brainmeasures_comp_group1, 'Callback',{@cb_brainmeasures_table})
+                set(ui_popup_brainmeasures_comp_groups, 'Position',[.02 .02 .15 .145])
+                set(ui_popup_brainmeasures_comp_groups, 'Enable', 'on')
+                set(ui_popup_brainmeasures_comp_groups, 'String', [{'All groups'}, analysis.getCohort().getGroups().getKeys()])
+                set(ui_popup_brainmeasures_comp_groups, 'TooltipString', 'Select group 1');
+                set(ui_popup_brainmeasures_comp_groups, 'Callback', {@cb_brainmeasures_table})
             end
             function update_brainmeasures_table()
                 data = {}; %#ok<NASGU>
                 RowName = [];
                 
-                group_index = get(ui_popup_brainmeasures_comp_group1, 'Value');
-                group = analysis.getCohort().getGroups().getValue(group_index);
+                selected_index = get(ui_popup_brainmeasures_comp_groups, 'Value');
+                if isequal(selected_index, 1)
+                    group = analysis.getCohort().getGroups().getValues();
+                else
+                    selected_index = selected_index-1;
+                    group = analysis.getCohort().getGroups().getValue(selected_index);
+                end
 
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
                     for j = 1:1:analysis.getMeasurements().length()
                         measurement = analysis.getMeasurements().getValue(j);
-                        if ismember(measurement.getMeasureCode(), global_list) && isequal(measurement.getGroup(), group)
-                            global_measurements{j} = measurement;                             %#ok<AGROW>
+                        if isa(group, 'Cell') && ismember(measurement.getMeasureCode(), global_list)
+                            for k =1:1:length(group)
+                                g = group{k};
+                                if isequal(measurement.getGroup(), g) 
+                                    global_measurements{j} = measurement; %#ok<AGROW>
+                                end
+                            end
+                        else
+                            if ismember(measurement.getMeasureCode(), global_list) && isequal(measurement.getGroup(), group)
+                                global_measurements{j} = measurement;                 
+                            end
                         end
                     end
                     
@@ -900,7 +913,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
-                set(ui_popup_brainmeasures_comp_group1, 'Enable', 'on')             
+                set(ui_popup_brainmeasures_comp_groups, 'Enable', 'on')             
                 
                 update_brainmeasures_table()
             end

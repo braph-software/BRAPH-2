@@ -241,6 +241,7 @@ ui_calc_analysis_id = uicontrol(ui_calc_panel, 'Style', 'edit');
 ui_calc_analysis_label = uicontrol(ui_calc_panel, 'Style', 'edit');
 ui_calc_analysis_notes = uicontrol(ui_calc_panel, 'Style', 'edit');
 ui_calc_settings_panel = uipanel(ui_calc_panel);
+ui_calc_new_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
 ui_calc_comparison_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
 ui_calc_randomcomparison_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
 ui_calc_measurement_button = uicontrol(ui_calc_panel, 'Style', 'pushbutton');
@@ -271,20 +272,26 @@ init_calc()
         set(ui_calc_settings_panel, 'Title', 'Analysis Settings')
         set(ui_calc_settings_panel, 'Units', 'normalized')
         
-        set(ui_calc_measurement_button, 'Position', [.02 .12 .96 .045])
+        set(ui_calc_new_button, 'Position', [.02 .5 .96 .045])
+        set(ui_calc_new_button, 'String', 'New Analysis')
+        set(ui_calc_new_button, 'Callback', {@cb_calc_new})
+        
+        set(ui_calc_measurement_button, 'Position', [.02 .22 .96 .045])
         set(ui_calc_measurement_button, 'String', CALCULATE_CALC_CMD)
         set(ui_calc_measurement_button, 'TooltipString', CALCULATE_CALC_TP)
         set(ui_calc_measurement_button, 'Callback', {@cb_calc_calculate})
         
-        set(ui_calc_comparison_button, 'Position', [.02 .08 .96 .045])
+        set(ui_calc_comparison_button, 'Position', [.02 .16 .96 .045])
         set(ui_calc_comparison_button, 'String', COMPARE_CALC_CMD)
         set(ui_calc_comparison_button, 'TooltipString', COMPARE_CALC_TP)
         set(ui_calc_comparison_button, 'Callback', {@cb_calc_compare})
+        set(ui_calc_comparison_button, 'enable', 'off')
         
-        set(ui_calc_randomcomparison_button, 'Position', [.02 .04 .96 .045])
+        set(ui_calc_randomcomparison_button, 'Position', [.02 .10 .96 .045])
         set(ui_calc_randomcomparison_button, 'String', RANDOM_CALC_CMD)
         set(ui_calc_randomcomparison_button, 'TooltipString', RANDOM_CALC_TP)
         set(ui_calc_randomcomparison_button, 'Callback', {@cb_calc_random})
+        set(ui_calc_randomcomparison_button, 'enable', 'off')
         
         available_settings = ga.getAvailableSettings();
         texts = zeros(length(available_settings), 1);
@@ -370,6 +377,9 @@ init_calc()
 %             ga.getRandomComparison(measure_code, group);
 %         end
     end
+    function cb_calc_new(~, ~)
+        GUIAnalysis(ga);
+    end
 
 %% Console
 CONSOLE_WIDTH = 1 - LEFTCOLUMN_WIDTH - 3 * MARGIN_X;
@@ -382,13 +392,28 @@ CONSOLE_MATRIX_CMD = 'Adjacency';
 CONSOLE_MATRIX_SC = '1';
 CONSOLE_MATRIX_TP = ['Visualizes correlation matrix. Shortcut: ' GUI.ACCELERATOR '+' CONSOLE_MATRIX_SC];
 
-CONSOLE_MEASURES_CMD = 'Global Measures';
-CONSOLE_MEASURES_SC = '2';
-CONSOLE_MEASURES_TP = 'Visualizes Global Measurements';
+CONSOLE_GLOBAL_CMD = 'Global Measures';
+CONSOLE_GLOBAL_SC = '2';
+CONSOLE_GLOBAL_TP = 'Visualizes Global Measurements';
+
+CONSOLE_NODAL_CMD = 'Nodal Measures';
+CONSOLE_NODAL_SC = '3';
+CONSOLE_NODAL_TP = 'Visualizes Nodal Measurements';
+
+CONSOLE_BINODAL_CMD = 'Binodal Measures';
+CONSOLE_BINODAL_SC = '4';
+CONSOLE_BINODAL_TP = 'Visualizes Binodal Measurements';
+
+CONSOLE_BRAINVIEW_CMD = 'Brain View';
+CONSOLE_BRAINVIEW_SC = '5';
+CONSOLE_BRAINVIEW_TP = 'Visualizes BrainView';
 
 ui_console_panel = uipanel();
 ui_console_matrix_button  = uicontrol(ui_console_panel, 'Style', 'pushbutton');
-ui_console_measures_button = uicontrol(ui_console_panel, 'Style', 'pushbutton');
+ui_console_global_button = uicontrol(ui_console_panel, 'Style', 'pushbutton');
+ui_console_nodal_button = uicontrol(ui_console_panel, 'Style', 'pushbutton');
+ui_console_binodal_button = uicontrol(ui_console_panel, 'Style', 'pushbutton');
+ui_console_brainview_button = uicontrol(ui_console_panel, 'Style', 'pushbutton');
 init_console()
     function init_console()
         GUI.setUnits(ui_console_panel)
@@ -397,19 +422,37 @@ init_console()
         set(ui_console_panel, 'Position', CONSOLE_POSITION)
         set(ui_console_panel, 'BorderType', 'none')
         
-        set(ui_console_matrix_button, 'Position', [.05 .30 .15 .40])
+        set(ui_console_matrix_button, 'Position', [.05 .30 .10 .40])
         set(ui_console_matrix_button, 'String', CONSOLE_MATRIX_CMD)
         set(ui_console_matrix_button, 'TooltipString', CONSOLE_MATRIX_TP)
         set(ui_console_matrix_button, 'Callback', {@cb_console_matrix})
         
-        set(ui_console_measures_button, 'Position', [.30 .30 .15 .40])
-        set(ui_console_measures_button, 'String', CONSOLE_MEASURES_CMD)
-        set(ui_console_measures_button, 'TooltipString', CONSOLE_MEASURES_TP)
-        set(ui_console_measures_button, 'Callback', {@cb_console_global})
+        set(ui_console_global_button, 'Position', [.16 .30 .10 .40])
+        set(ui_console_global_button, 'String', CONSOLE_GLOBAL_CMD)
+        set(ui_console_global_button, 'TooltipString', CONSOLE_GLOBAL_TP)
+        set(ui_console_global_button, 'Callback', {@cb_console_global})
+        
+        set(ui_console_nodal_button, 'Position', [.27 .30 .10 .40])
+        set(ui_console_nodal_button, 'String', CONSOLE_NODAL_CMD)
+        set(ui_console_nodal_button, 'TooltipString', CONSOLE_GLOBAL_TP)
+        set(ui_console_nodal_button, 'Callback', {@cb_console_nodal})
+        set(ui_console_nodal_button, 'enable', 'off')
+        
+        set(ui_console_binodal_button, 'Position', [.38 .30 .10 .40])
+        set(ui_console_binodal_button, 'String', CONSOLE_BINODAL_CMD)
+        set(ui_console_binodal_button, 'TooltipString', CONSOLE_GLOBAL_TP)
+        set(ui_console_binodal_button, 'Callback', {@cb_console_binodal})
+        set(ui_console_binodal_button, 'enable', 'off')
+        
+        set(ui_console_brainview_button, 'Position', [.49 .30 .1 .40])
+        set(ui_console_brainview_button, 'String', CONSOLE_BRAINVIEW_CMD)
+        set(ui_console_brainview_button, 'TooltipString', CONSOLE_GLOBAL_TP)
+        set(ui_console_brainview_button, 'Callback', {@cb_console_brainview})
+        set(ui_console_brainview_button, 'enable', 'off')
     end
     function update_console_panel_visibility(console_panel_cmd)
         switch console_panel_cmd
-            case CONSOLE_MEASURES_CMD
+            case CONSOLE_GLOBAL_CMD
                 childs_visibility(ui_panel_matrix, 'off')
                 childs_visibility(ui_panel_global, 'on')
 %                 set(ui_panel_matrix, 'Visible', 'off')
@@ -418,7 +461,7 @@ init_console()
 %                 set(ui_panel_brainview,'Visible','off')
                 
                 set(ui_console_matrix_button, 'FontWeight', 'normal')
-                set(ui_console_measures_button, 'FontWeight', 'bold')
+                set(ui_console_global_button, 'FontWeight', 'bold')
 %                 set(ui_button_console_regionmeasures,'FontWeight','normal')
 %                 set(ui_button_console_brainview,'FontWeight','normal')
                 
@@ -524,7 +567,7 @@ init_console()
 % %                 set(ui_panel_brainview, 'Visible', 'off')
 %                 
                 set(ui_console_matrix_button, 'FontWeight', 'bold')
-                set(ui_console_measures_button, 'FontWeight', 'normal')
+                set(ui_console_global_button, 'FontWeight', 'normal')
 %                 set(ui_button_console_regionmeasures,'FontWeight','normal')
 %                 set(ui_button_console_brainview,'FontWeight','normal')
 %                 
@@ -566,7 +609,7 @@ init_console()
         update_console_panel()
     end
     function cb_console_global(~, ~)        
-        update_console_panel_visibility(CONSOLE_MEASURES_CMD)
+        update_console_panel_visibility(CONSOLE_GLOBAL_CMD)
         update_global_panel()
     end
     function childs_visibility(handle, rule)
@@ -610,7 +653,7 @@ init_global()
         set(ui_panel_global, 'Title', PANEL_GLOBAL_TITLE)
     end
     function update_global_panel()
-        ga.getMeasurementPanel('UIParent', ui_panel_global)
+        ga.getGlobalPanel('UIParent', ui_panel_global)
     end
 
 %% Menus
