@@ -678,7 +678,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                     if contains('threshold', variables)
                             rule = 'threshold';
                             value =  getappdata(ui_child_panel, 'threshold');
-                    elseif isequal(variables, 'density')
+                    elseif contains('density', variables)
                             rule = 'density';
                             value = getappdata(ui_child_panel, 'density');                            
                     end

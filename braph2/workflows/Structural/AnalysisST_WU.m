@@ -768,12 +768,19 @@ classdef AnalysisST_WU < Analysis
             ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_popup_brainmeasures_comp_groups = uicontrol(ui_mainpanel, 'Style', 'listbox');
+            ui_plot_measure_panel = uipanel(ui_mainpanel, 'Units', 'normalized');
             init_global_panel()         
             function init_global_panel()
                 GUI.setUnits(ui_mainpanel)
                 
-                set(ui_global_tbl, 'BackgroundColor', GUI.TABBKGCOLOR)               
-                set(ui_global_tbl, 'Position', [.02 .19 .96 .79])
+                set(ui_global_tbl, 'BackgroundColor', GUI.TABBKGCOLOR)
+                if isequal(analysis.getMeasurementClass(), 'MeasurementST_WU')
+                    set(ui_global_tbl, 'Position', [.02 .19 .96 .79])
+                    set(ui_plot_measure_panel, 'Position', [0 0 0 0])
+                else
+                    set(ui_global_tbl, 'Position', [.02 .19 .5 .79])                    
+                    set(ui_plot_measure_panel, 'Position', [.53 .19 .47 .79])
+                end
                 set(ui_global_tbl, 'CellEditCallback', {@cb_brainmeasures_table_edit})
                 
                 set(ui_global_tbl, 'Units', 'normalized')
