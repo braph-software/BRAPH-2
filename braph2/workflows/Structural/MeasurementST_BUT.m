@@ -160,6 +160,10 @@ classdef MeasurementST_BUT < MeasurementST_WU
                 set(ui_threshold_max_edit, 'String', newdata);
             end
              variables = {'threshold'};
+             setappdata(uiparent, 'threshold', ...
+                   str2double(get(ui_threshold_min_edit, 'String')) : ...
+                   str2double(get(ui_threshold_edit, 'String')) : ...
+                   str2double(get(ui_threshold_max_edit, 'String')))
         end
     end
 end
