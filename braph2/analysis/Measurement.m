@@ -413,7 +413,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             f = GUI.init_figure(NAME, .35, .6, 'west');
             
             % dynamic variables
-            variables = [];
+            handle_child_panel = [];
             
             % Main Panel
             PANEL_POSITION = [0 0 1 1];
@@ -462,32 +462,32 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 set(ui_calc_table, 'ColumnWidth', {GUI.width(f, .98 * 0.1), GUI.width(f, .98 * 0.1), GUI.width(f, .98 * 0.1), GUI.width(f, .98 * 0.1), GUI.width(f, .98 * 0.51)})
                 set(ui_calc_table, 'CellEditCallback', {@cb_calc_edit});
                 
-                set(ui_calc_selectall_button, 'Position', [.01 .64 .15 .05])
+                set(ui_calc_selectall_button, 'Position', [.01 .64 .21 .04])
                 set(ui_calc_selectall_button, 'String', SELECTALL_CALC_CMD)
                 set(ui_calc_selectall_button, 'TooltipString', SELECTALL_CALC_TP)
                 set(ui_calc_selectall_button, 'Callback', {@cb_calc_selectall})
                 
-                set(ui_calc_clear_button, 'Position', [.01 .58 .15 .05])
+                set(ui_calc_clear_button, 'Position', [.01 .59 .21 .04])
                 set(ui_calc_clear_button, 'String', CLEARSELECTION_CALC_CMD)
                 set(ui_calc_clear_button, 'TooltipString', CLEARSELECTION_CALC_TP)
                 set(ui_calc_clear_button, 'Callback', {@cb_calc_clearselection})
                 
-                set(ui_calc_global_button, 'Position', [.22 .64 .15 .05])
+                set(ui_calc_global_button, 'Position', [.24 .64 .21 .04])
                 set(ui_calc_global_button, 'String',SELECTGLOBAL_CALC_CMD)
                 set(ui_calc_global_button, 'TooltipString',SELECTGLOBAL_CALC_TP)
                 set(ui_calc_global_button, 'Callback', {@cb_calc_global})
                 
-                set(ui_calc_nodal_button, 'Position', [.22 .58 .15 .05])
+                set(ui_calc_nodal_button, 'Position', [.24 .59 .21 .04])
                 set(ui_calc_nodal_button, 'String',SELECTNODAL_CALC_CMD)
                 set(ui_calc_nodal_button, 'TooltipString',SELECTNODAL_CALC_TP)
                 set(ui_calc_nodal_button, 'Callback', {@cb_calc_nodal})
                 
-                set(ui_calc_binodal_button, 'Position', [.22 .52 .15 .05])
+                set(ui_calc_binodal_button, 'Position', [.24 .54 .21 .04])
                 set(ui_calc_binodal_button, 'String', SELECTBINODAL_CALC_CMD)
                 set(ui_calc_binodal_button, 'TooltipString', SELECTBINODAL_CALC_TP)
                 set(ui_calc_binodal_button, 'Callback', {@cb_calc_binodal})
                 
-                set(ui_popup_group, 'Position', [.01 .25 .44 .2])
+                set(ui_popup_group, 'Position', [.01 .25 .44 .28])
                 set(ui_popup_group, 'TooltipString', 'Select group 1');
                 
                 set(ui_text_info, 'Position', [.5 .1 .4 .34])
@@ -515,7 +515,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 
             end
             function init_child_panel()
-                variables = Measurement.getChildPanel(measurement_class, analysis, ui_child_panel);  %#ok<NASGU>
+                handle_child_panel = Measurement.getChildPanel(measurement_class, analysis, ui_child_panel);
             end
             function deactivate_components()
                 set(ui_calc_table, 'Enable', 'off')
@@ -671,18 +671,20 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 L = 100;
                 txt = cell(1, L);
                 
-                if isempty(variables)
+                if isempty(handle_child_panel.variables)
                     rule = '';
                     value = '';
                 else
-                    if contains('threshold', variables)
+                    if contains('threshold', handle_child_panel.variables)
                             rule = 'threshold';
                             value =  getappdata(ui_child_panel, 'threshold');
-                    elseif contains('density', variables)
+                    elseif contains('density', handle_child_panel.variables)
                             rule = 'density';
                             value = getappdata(ui_child_panel, 'density');                            
                     end
                 end
+                
+                disable_child_panel()
                 
                 if isequal(g, 1)
                     group = analysis.getCohort().getGroups().getValues();                   
@@ -754,11 +756,16 @@ classdef Measurement < handle & matlab.mixin.Copyable
                     set(ui_button_resume, 'Enable', 'off')
                 end
             end
+            function disable_child_panel()
+                set(handle_child_panel.step, 'enable', 'off')
+                set(handle_child_panel.min, 'enable', 'off')
+                set(handle_child_panel.max, 'enable', 'off')
+            end
         end
     end
     methods (Static)  % Plot child panel
-        function variables =  getChildPanel(measurement_class, analysis, uiparent)
-            variables = eval([measurement_class '.getChildPanel(analysis, uiparent)']);
+        function handle =  getChildPanel(measurement_class, analysis, uiparent)
+            handle = eval([measurement_class '.getChildPanel(analysis, uiparent)']);
         end
     end
     methods (Access = protected)  % Shallow copy

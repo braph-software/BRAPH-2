@@ -110,7 +110,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
         end
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
-        function variables = getChildPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
             set(uiparent, 'Visible', 'on')
             ui_threshold_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_threshold_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
@@ -159,7 +159,10 @@ classdef MeasurementST_BUT < MeasurementST_WU
                 newdata = get(src, 'String');
                 set(ui_threshold_max_edit, 'String', newdata);
             end
-             variables = {'threshold'};
+             handle.variables = {'threshold'};
+             handle.step = ui_threshold_edit;
+             handle.min = ui_threshold_min_edit;
+             handle.max = ui_threshold_max_edit;
              setappdata(uiparent, 'threshold', ...
                    str2double(get(ui_threshold_min_edit, 'String')) : ...
                    str2double(get(ui_threshold_edit, 'String')) : ...
