@@ -690,7 +690,14 @@ classdef Measurement < handle & matlab.mixin.Copyable
                         gr = group{i};
                         for mi = 1:1:length(mlist)
                             % missing the measuremente parameters
-                            m = analysis.getMeasurement(mlist{mi}, gr, rule, value);
+                            if iscell(value)
+                                for vals = 1:1:length(value)
+                                    value_step = value{vals};
+                                     m = analysis.getMeasurement(mlist{mi}, gr, rule, value_step);
+                                end
+                            else
+                                 m = analysis.getMeasurement(mlist{mi}, gr, rule, value);
+                            end
                             msg = ['time = ' int2str(toc(start)) '.'  int2str(mod(toc(start)*10, 10)) 's - group = ' gr.tostring() ' - ' mlist{mi}];
                             
                             % visualize status
@@ -711,7 +718,14 @@ classdef Measurement < handle & matlab.mixin.Copyable
                     group = analysis.getCohort().getGroups().getValue(g);
                     for mi = 1:1:length(mlist)
                         % missing the measuremente parameters
-                        m = analysis.getMeasurement(mlist{mi}, group, rule, value);
+                        if length(value) > 1
+                            for vals = 1:1:length(value)
+                                value_step = value(vals);
+                                m = analysis.getMeasurement(mlist{mi}, group, rule, value_step);
+                            end
+                        else
+                            m = analysis.getMeasurement(mlist{mi}, group, rule, value);
+                        end
                         msg = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10, 10)) 's - group = ' int2str(g) ' - ' mlist{mi}];
                         
                         % visualize status

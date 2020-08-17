@@ -114,20 +114,51 @@ classdef MeasurementST_BUT < MeasurementST_WU
             set(uiparent, 'Visible', 'on')
             ui_threshold_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_threshold_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_threshold_min_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_threshold_min_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_threshold_max_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_threshold_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             init_child_panel()
             function init_child_panel()
                 set(ui_threshold_text, 'String', 'Threshold')
-                set(ui_threshold_text, 'Position', [.01 .9 .3 .08])
+                set(ui_threshold_text, 'Position', [.01 .8 .3 .08])
                 set(ui_threshold_text, 'Fontweight', 'bold')
                 
-                set(ui_threshold_edit, 'String', 0)
-                set(ui_threshold_edit, 'Position', [.31 .9 .3 .08])
+                set(ui_threshold_edit, 'String', 0.1)
+                set(ui_threshold_edit, 'Position', [.31 .8 .3 .08])
                 set(ui_threshold_edit, 'Callback', {@cb_measurement_threshold})
+                
+                set(ui_threshold_min_text, 'String', 'Min')
+                set(ui_threshold_min_text, 'Position', [.01 .9 .3 .08])
+                set(ui_threshold_min_text, 'Fontweight', 'bold')
+                
+                set(ui_threshold_min_edit, 'String', -1)
+                set(ui_threshold_min_edit, 'Position', [.31 .9 .3 .08])
+                set(ui_threshold_min_edit, 'Callback', {@cb_measurement_min})
+                
+                set(ui_threshold_max_text, 'String', 'Max')
+                set(ui_threshold_max_text, 'Position', [.01 .7 .3 .08])
+                set(ui_threshold_max_text, 'Fontweight', 'bold')
+                
+                set(ui_threshold_max_edit, 'String', 1)
+                set(ui_threshold_max_edit, 'Position', [.31 .7 .3 .08])
+                set(ui_threshold_max_edit, 'Callback', {@cb_measurement_max})
                 
             end
             function cb_measurement_threshold(~,~)
-               setappdata(uiparent, 'threshold', str2double(get(ui_threshold_edit, 'String')))
-            end       
+               setappdata(uiparent, 'threshold', ...
+                   str2double(get(ui_threshold_min_edit, 'String')) : ...
+                   str2double(get(ui_threshold_edit, 'String')) : ...
+                   str2double(get(ui_threshold_max_edit, 'String')))
+            end 
+            function cb_measurement_min(src, ~)
+                newdata = get(src, 'String');
+                set(ui_threshold_min_edit, 'String', newdata);
+            end
+            function cb_measurement_max(src, ~)
+                newdata = get(src, 'String');
+                set(ui_threshold_max_edit, 'String', newdata);
+            end
              variables = {'threshold'};
         end
     end

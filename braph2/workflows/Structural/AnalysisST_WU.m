@@ -768,7 +768,8 @@ classdef AnalysisST_WU < Analysis
             ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_popup_brainmeasures_comp_groups = uicontrol(ui_mainpanel, 'Style', 'listbox');
-            ui_plot_measure_panel = uipanel(ui_mainpanel, 'Units', 'normalized');
+            ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
+            ui_plot_measure_axes = axes();
             init_global_panel()         
             function init_global_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -776,10 +777,19 @@ classdef AnalysisST_WU < Analysis
                 set(ui_global_tbl, 'BackgroundColor', GUI.TABBKGCOLOR)
                 if isequal(analysis.getMeasurementClass(), 'MeasurementST_WU')
                     set(ui_global_tbl, 'Position', [.02 .19 .96 .79])
-                    set(ui_plot_measure_panel, 'Position', [0 0 0 0])
+                    GUI.setUnits(ui_plot_measure_panel)
+                    GUI.setBackgroundColor(ui_plot_measure_panel)
+                    
+                    set(ui_plot_measure_axes, 'Parent', ui_plot_measure_panel)
+                    set(ui_plot_measure_axes, 'Position', [.01 .01 .9 .6])
                 else
                     set(ui_global_tbl, 'Position', [.02 .19 .5 .79])                    
-                    set(ui_plot_measure_panel, 'Position', [.53 .19 .47 .79])
+                    GUI.setUnits(ui_plot_measure_panel)
+                    GUI.setBackgroundColor(ui_plot_measure_panel) 
+                    set(ui_plot_measure_panel, 'Position', [.52 .00 .48 .98])
+                    
+                    set(ui_plot_measure_axes, 'Parent', ui_plot_measure_panel)
+                    set(ui_plot_measure_axes, 'Position', [.1 .2 .8 .79])
                 end
                 set(ui_global_tbl, 'CellEditCallback', {@cb_brainmeasures_table_edit})
                 
@@ -893,6 +903,9 @@ classdef AnalysisST_WU < Analysis
 
                 end
             end  
+            function init_plot_measure_panel()
+                analysis.getMainPanelMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes);
+            end
             function cb_brainmeasures_table(~, ~)
                 update_brainmeasures_table()
             end
@@ -972,6 +985,7 @@ classdef AnalysisST_WU < Analysis
             end
             
             update_brainmeasures_table()
+            init_plot_measure_panel()
             
             if nargout > 0
                 global_panel = ui_mainpanel;
