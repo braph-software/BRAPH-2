@@ -462,12 +462,12 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 set(ui_calc_table, 'ColumnWidth', {GUI.width(f, .98 * 0.1), GUI.width(f, .98 * 0.1), GUI.width(f, .98 * 0.1), GUI.width(f, .98 * 0.1), GUI.width(f, .98 * 0.51)})
                 set(ui_calc_table, 'CellEditCallback', {@cb_calc_edit});
                 
-                set(ui_calc_selectall_button, 'Position', [.01 .6 .2 .05])
+                set(ui_calc_selectall_button, 'Position', [.01 .64 .15 .05])
                 set(ui_calc_selectall_button, 'String', SELECTALL_CALC_CMD)
                 set(ui_calc_selectall_button, 'TooltipString', SELECTALL_CALC_TP)
                 set(ui_calc_selectall_button, 'Callback', {@cb_calc_selectall})
                 
-                set(ui_calc_clear_button, 'Position', [.01 .55 .2 .05])
+                set(ui_calc_clear_button, 'Position', [.01 .58 .15 .05])
                 set(ui_calc_clear_button, 'String', CLEARSELECTION_CALC_CMD)
                 set(ui_calc_clear_button, 'TooltipString', CLEARSELECTION_CALC_TP)
                 set(ui_calc_clear_button, 'Callback', {@cb_calc_clearselection})
@@ -487,7 +487,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 set(ui_calc_binodal_button, 'TooltipString', SELECTBINODAL_CALC_TP)
                 set(ui_calc_binodal_button, 'Callback', {@cb_calc_binodal})
                 
-                set(ui_popup_group, 'Position', [.01 .01 .4 .5])
+                set(ui_popup_group, 'Position', [.01 .25 .44 .2])
                 set(ui_popup_group, 'TooltipString', 'Select group 1');
                 
                 set(ui_text_info, 'Position', [.5 .1 .4 .34])
@@ -496,22 +496,22 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 set(ui_text_info, 'FontSize',12)
                 
                 set(ui_edit_info, 'BackgroundColor', [1 1 1])
-                set(ui_edit_info, 'Position', [.5 .09 .45 .3])
+                set(ui_edit_info, 'Position', [.01 .08 .98 .15])
                 set(ui_edit_info, 'Max',2)
                 set(ui_edit_info, 'HorizontalAlignment', 'left')
                 set(ui_edit_info, 'Enable', 'inactive')
                 
-                set(ui_button_stop, 'Position', [.55 .02 .15 .05])
+                set(ui_button_stop, 'Position', [.25 .02 .25 .04])
                 set(ui_button_stop, 'String', 'Calculate measures')
                 set(ui_button_stop, 'Callback', {@cb_stop})
                 
-                set(ui_button_resume, 'Position', [.80 .02 .15 .05])
+                set(ui_button_resume, 'Position', [.51 .02 .25 .04])
                 set(ui_button_resume, 'String', 'Resume')
                 set(ui_button_resume, 'Enable', 'off')
                 set(ui_button_resume, 'Callback', {@cb_resume})
                 
                 set(ui_child_panel, 'Units', 'normalized')
-                set(ui_child_panel, 'Position', [.5 .4 .49 .29])
+                set(ui_child_panel, 'Position', [.46 .25 .53 .44])
                 
             end
             function init_child_panel()
