@@ -863,9 +863,9 @@ classdef AnalysisST_WU < Analysis
                         end
                     end
                     
-                    if exist('global_measurements', 'var')
-                        set(ui_global_tbl, 'ColumnName', {'', ' value ', ' name', ' label ', ' notes ', ' measure ', ' group '})
-                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'numeric', 'char', 'char', 'char', 'char', 'char'})
+                    if exist('global_measurements', 'var') 
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
                         set(ui_global_tbl, 'ColumnEditable', [true false false false false false false])
                         
                         data = cell(length(global_measurements), 7);
@@ -877,19 +877,19 @@ classdef AnalysisST_WU < Analysis
                                 data{i, 1} = false;
                             end
                             global_value = measurement.getMeasureValue();
-                            data{i, 2} = global_value{1};
-                            data{i, 3} = measurement.getID();
-                            data{i, 4} = measurement.getLabel();
-                            data{i, 5} = measurement.getNotes();
-                            data{i, 6} = measurement.getNotes();
-                            data{i, 7} = measurement.getMeasureCode();
+                            data{i, 2} = measurement.getMeasureCode(); 
+                            data{i, 3} = measurement.getGroup().getID();
+                            data{i, 4} = global_value{1}; 
+                            data{i, 5} = measurement.getID(); 
+                            data{i, 6} = measurement.getLabel();
+                            data{i, 7} = measurement.getNotes();
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_global_tbl, 'Data', data)
                         set(ui_global_tbl, 'RowName', RowName)
                     else
-                        set(ui_global_tbl, 'ColumnName', {'', ' value ', ' name', ' label ', ' notes ', ' measure ', ' group '})
-                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'numeric', 'char', 'char', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
                         set(ui_global_tbl, 'ColumnEditable', [true false false false false false false])
                         set(ui_global_tbl, 'Data', [])
                         set(ui_global_tbl, 'RowName', [])
