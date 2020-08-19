@@ -285,7 +285,6 @@ init_calc()
         set(ui_calc_comparison_button, 'String', COMPARE_CALC_CMD)
         set(ui_calc_comparison_button, 'TooltipString', COMPARE_CALC_TP)
         set(ui_calc_comparison_button, 'Callback', {@cb_calc_compare})
-        set(ui_calc_comparison_button, 'enable', 'off')
         
         set(ui_calc_randomcomparison_button, 'Position', [.02 .10 .96 .045])
         set(ui_calc_randomcomparison_button, 'String', RANDOM_CALC_CMD)
@@ -356,17 +355,7 @@ init_calc()
         Measurement.getMesurementPanel(ga.getMeasurementClass(), ga)
     end
     function cb_calc_compare(~, ~)
-%         groups = cell(length(seleted_groups), 1);
-%         for j = 1:1:length(selected_groups)
-%             groups{j} = ga.getCohort().getGroups().getValue(selected_groups{j});
-%         end
-%         
-%         mlist = measurelist();
-%         mlist = mlist(selected_calc);
-%         for j  = 1:1:length(selected_calc)
-%             measure_code = mlist{j};
-%             ga.getComparison(measure_code, groups);
-%         end
+        Comparison.getComparisonPanel(ga.getComparisonClass(), ga)
     end
     function cb_calc_random(~, ~)
 %         group = ga.getCohort().getGroups().getValue(selected_groups);

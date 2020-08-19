@@ -111,7 +111,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
         end
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
-        function variables = getChildPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
             set(uiparent, 'Visible', 'on')
             ui_density_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_density_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
@@ -121,11 +121,11 @@ classdef MeasurementST_BUD < MeasurementST_WU
             ui_density_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             init_child_panel()
             function init_child_panel()
-                set(ui_density_text, 'String', 'Threshold')
+                set(ui_density_text, 'String', 'Density')
                 set(ui_density_text, 'Position', [.01 .8 .3 .08])
                 set(ui_density_text, 'Fontweight', 'bold')
                 
-                set(ui_density_edit, 'String', 0.1)
+                set(ui_density_edit, 'String', 1)
                 set(ui_density_edit, 'Position', [.31 .8 .3 .08])
                 set(ui_density_edit, 'Callback', {@cb_measurement_density})
                 
@@ -133,7 +133,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
                 set(ui_density_min_text, 'Position', [.01 .9 .3 .08])
                 set(ui_density_min_text, 'Fontweight', 'bold')
                 
-                set(ui_density_min_edit, 'String', -1)
+                set(ui_density_min_edit, 'String', 0)
                 set(ui_density_min_edit, 'Position', [.31 .9 .3 .08])
                 set(ui_density_min_edit, 'Callback', {@cb_measurement_min})
                 
@@ -141,7 +141,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
                 set(ui_density_max_text, 'Position', [.01 .7 .3 .08])
                 set(ui_density_max_text, 'Fontweight', 'bold')
                 
-                set(ui_density_max_edit, 'String', 1)
+                set(ui_density_max_edit, 'String', 100)
                 set(ui_density_max_edit, 'Position', [.31 .7 .3 .08])
                 set(ui_density_max_edit, 'Callback', {@cb_measurement_max})
                 
@@ -160,7 +160,14 @@ classdef MeasurementST_BUD < MeasurementST_WU
                 newdata = get(src, 'String');
                 set(ui_density_max_edit, 'String', newdata);
             end
-            variables = {'density'};
+            handle.variables = {'density'};
+            handle.step = ui_density_edit;
+            handle.min = ui_density_min_edit;
+            handle.max = ui_density_max_edit;
+            setappdata(uiparent, 'density', ...
+                    str2double(get(ui_density_min_edit, 'String')) : ...
+                    str2double(get(ui_density_edit, 'String')) : ...
+                    str2double(get(ui_density_max_edit, 'String')))            
         end
     end
 end

@@ -540,4 +540,63 @@ classdef ComparisonST_WU < Comparison
             sub = eval([comparison_class '(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:})']);
         end
     end
+    methods (Static)  % Plot ComparisonGUI Child Panel
+        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+            set(uiparent, 'Visible', 'on')
+             
+            ui_verbose_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_verbose_popup = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'popup');
+            ui_interruptible_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_interruptible_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_permutation_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_permutation_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            init_child_panel()
+            function init_child_panel()
+                set(ui_verbose_text, 'String', 'Verbose')
+                set(ui_verbose_text, 'Position', [.01 .76 .3 .08])
+                set(ui_verbose_text, 'Fontweight', 'bold')
+                
+                set(ui_verbose_popup, 'String', {'false' 'true'})
+                set(ui_verbose_popup, 'Position', [.31 .76 .3 .08])
+                set(ui_verbose_popup, 'Callback', {@cb_comparison_verbose})
+                
+                set(ui_interruptible_text, 'String', 'Interruptible')
+                set(ui_interruptible_text, 'Position', [.01 .9 .3 .08])
+                set(ui_interruptible_text, 'Fontweight', 'bold')
+                
+                set(ui_interruptible_edit, 'String', 0.001)
+                set(ui_interruptible_edit, 'Position', [.31 .9 .3 .08])
+                set(ui_interruptible_edit, 'Callback', {@cb_comparison_interruptible})
+                
+                set(ui_permutation_text, 'String', 'Perumtation Number')
+                set(ui_permutation_text, 'Position', [.01 .6 .3 .14])
+                set(ui_permutation_text, 'Fontweight', 'bold')
+                
+                set(ui_permutation_edit, 'String', 1000)
+                set(ui_permutation_edit, 'Position', [.31 .63 .3 .08])
+                set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
+            end
+            function cb_comparison_verbose(~, ~)
+                if  get(ui_verbose_popup, 'Value')
+                    setappdata(uiparent, 'verbose', 0) 
+                else
+                    setappdata(uiparent, 'verbose', 1) 
+                end
+                
+            end
+            function cb_comparison_interruptible(~, ~)
+                setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
+            end
+            function cb_comparison_permutation(~, ~)
+                setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
+            end
+            handle.variables = [];
+            handle.verbose = ui_verbose_popup;
+            handle.interruptible = ui_interruptible_edit;
+            handle.permutation = ui_permutation_edit;
+            setappdata(uiparent, 'verbose', 0)
+            setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
+            setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
+        end
+    end
 end

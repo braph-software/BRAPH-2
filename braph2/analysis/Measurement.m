@@ -473,13 +473,13 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 set(ui_calc_clear_button, 'Callback', {@cb_calc_clearselection})
                 
                 set(ui_calc_global_button, 'Position', [.24 .64 .21 .04])
-                set(ui_calc_global_button, 'String',SELECTGLOBAL_CALC_CMD)
-                set(ui_calc_global_button, 'TooltipString',SELECTGLOBAL_CALC_TP)
+                set(ui_calc_global_button, 'String', SELECTGLOBAL_CALC_CMD)
+                set(ui_calc_global_button, 'TooltipString', SELECTGLOBAL_CALC_TP)
                 set(ui_calc_global_button, 'Callback', {@cb_calc_global})
                 
                 set(ui_calc_nodal_button, 'Position', [.24 .59 .21 .04])
-                set(ui_calc_nodal_button, 'String',SELECTNODAL_CALC_CMD)
-                set(ui_calc_nodal_button, 'TooltipString',SELECTNODAL_CALC_TP)
+                set(ui_calc_nodal_button, 'String', SELECTNODAL_CALC_CMD)
+                set(ui_calc_nodal_button, 'TooltipString', SELECTNODAL_CALC_TP)
                 set(ui_calc_nodal_button, 'Callback', {@cb_calc_nodal})
                 
                 set(ui_calc_binodal_button, 'Position', [.24 .54 .21 .04])
@@ -490,7 +490,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 set(ui_popup_group, 'Position', [.01 .25 .44 .28])
                 set(ui_popup_group, 'TooltipString', 'Select group 1');
                 
-                set(ui_text_info, 'Position', [.5 .1 .4 .34])
+                set(ui_text_info, 'Position', [.5 .1 .4 .2])
                 set(ui_text_info, 'String', 'MeasurementST')
                 set(ui_text_info, 'FontWeight', 'bold')
                 set(ui_text_info, 'FontSize',12)
