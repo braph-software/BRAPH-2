@@ -909,16 +909,16 @@ classdef AnalysisST_WU < Analysis
                                 end
                             end
                         else
-                            if ismember(comparison.getMeasureCode(), global_list) && isequal(comparison.getGroup(), group)
+                            if ismember(comparison.getMeasureCode(), global_list) && isequal(comparison.getGroups(), group)
                                 global_comparison{j} = comparison;                 
                             end
                         end
                     end
                     
                     if exist('global_comparison', 'var') 
-                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' difference ', 'all differences', 'p1', 'p2', 'c.i. min', 'c.i. max', ' name ', ' label ', ' notes '})
-                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'char', 'char', 'char'})
-                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false false false false false false false])
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false])
                         
                         data = cell(length(global_comparison), 7);
                         for i = 1:1:length(global_comparison)
@@ -935,15 +935,9 @@ classdef AnalysisST_WU < Analysis
                             data{i, 4} = group_2.getID();
                             data{i, 5} = val_1{1};
                             data{i, 6} = val_2{1};
-                            data{i, 7} = 'NAN';%comparison.getDifference();
-                            data{i, 8} = 'NAN';%comparison.getAllDifferences();  % this is a list
-                            data{i, 9} = 'NAN';%comparison.getP1();
-                            data{i, 10} = 'NAN';%comparison.getP2();
-                            data{i, 11} = 'NAN';%comparison.getConfidenceIntervalMin();
-                            data{i, 12} = 'NAN';%comparison.getConfidenceIntervalMax();
-                            data{i, 13} = comparison.getID(); 
-                            data{i, 14} = comparison.getLabel();
-                            data{i, 15} = comparison.getNotes();
+                            data{i, 7} = comparison.getID(); 
+                            data{i, 8} = comparison.getLabel();
+                            data{i, 9} = comparison.getNotes();
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_global_tbl, 'Data', data)
