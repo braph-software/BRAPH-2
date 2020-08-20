@@ -695,10 +695,10 @@ classdef Measurement < handle & matlab.mixin.Copyable
                             if iscell(value)
                                 for vals = 1:1:length(value)
                                     value_step = value{vals};
-                                     m = analysis.getMeasurement(mlist{mi}, gr, rule, value_step);
+                                     m = analysis.getMeasurement(mlist{mi}, gr, rule, value_step); %#ok<NASGU>
                                 end
                             else
-                                 m = analysis.getMeasurement(mlist{mi}, gr, rule, value);
+                                 m = analysis.getMeasurement(mlist{mi}, gr, rule, value); %#ok<NASGU>
                             end
                             msg = ['time = ' int2str(toc(start)) '.'  int2str(mod(toc(start)*10, 10)) 's - group = ' gr.tostring() ' - ' mlist{mi}];
                             
@@ -723,10 +723,10 @@ classdef Measurement < handle & matlab.mixin.Copyable
                         if length(value) > 1
                             for vals = 1:1:length(value)
                                 value_step = value(vals);
-                                m = analysis.getMeasurement(mlist{mi}, group, rule, value_step);
+                                m = analysis.getMeasurement(mlist{mi}, group, rule, value_step); %#ok<NASGU>
                             end
                         else
-                            m = analysis.getMeasurement(mlist{mi}, group, rule, value);
+                            m = analysis.getMeasurement(mlist{mi}, group, rule, value); %#ok<NASGU>
                         end
                         msg = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10, 10)) 's - group = ' int2str(g) ' - ' mlist{mi}];
                         
@@ -766,7 +766,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)  % Plot child panel
-        function handle =  getChildPanel(measurement_class, analysis, uiparent)
+        function handle =  getChildPanel(measurement_class, analysis, uiparent) %#ok<INUSD>
             handle = eval([measurement_class '.getChildPanel(analysis, uiparent)']);
         end
     end

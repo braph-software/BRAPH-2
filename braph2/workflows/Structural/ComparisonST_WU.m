@@ -577,12 +577,7 @@ classdef ComparisonST_WU < Comparison
                 set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
             end
             function cb_comparison_verbose(~, ~)
-                if  get(ui_verbose_popup, 'Value')
-                    setappdata(uiparent, 'verbose', 0) 
-                else
-                    setappdata(uiparent, 'verbose', 1) 
-                end
-                
+               setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)              
             end
             function cb_comparison_interruptible(~, ~)
                 setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
@@ -594,7 +589,7 @@ classdef ComparisonST_WU < Comparison
             handle.verbose = ui_verbose_popup;
             handle.interruptible = ui_interruptible_edit;
             handle.permutation = ui_permutation_edit;
-            setappdata(uiparent, 'verbose', 0)
+            setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)
             setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
             setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
         end

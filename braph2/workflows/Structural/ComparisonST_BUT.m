@@ -191,7 +191,7 @@ classdef ComparisonST_BUT < ComparisonST_WU
                 set(ui_threshold_max_edit, 'String', newdata);
             end
             function cb_comparison_verbose(~, ~)
-                setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'String'))
+                setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)
             end
             function cb_comparison_interruptible(~, ~)
                 setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
@@ -204,11 +204,14 @@ classdef ComparisonST_BUT < ComparisonST_WU
             handle.step = ui_threshold_edit;
             handle.min = ui_threshold_min_edit;
             handle.max = ui_threshold_max_edit;
+            handle.verbose = ui_verbose_popup;
+            handle.interruptible = ui_interruptible_edit;
+            handle.permutation = ui_permutation_edit;
             setappdata(uiparent, 'threshold', ...
                 str2double(get(ui_threshold_min_edit, 'String')) : ...
                 str2double(get(ui_threshold_edit, 'String')) : ...
                 str2double(get(ui_threshold_max_edit, 'String')))
-            setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'String'))
+            setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)
             setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
             setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
         end

@@ -190,8 +190,8 @@ classdef ComparisonST_BUD < ComparisonST_WU
                 newdata = get(src, 'String');
                 set(ui_density_max_edit, 'String', newdata);
             end
-            function cb_comparison_verbose(~, ~)
-                setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'String'))
+            function cb_comparison_verbose(~, ~)                
+                setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)
             end
             function cb_comparison_interruptible(~, ~)
                 setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
@@ -203,12 +203,15 @@ classdef ComparisonST_BUD < ComparisonST_WU
             handle.variables = {'density'};
             handle.step = ui_density_edit;
             handle.min = ui_density_min_edit;
-            handle.max = ui_density_max_edit;
+            handle.max = ui_density_max_edit;       
+            handle.verbose = ui_verbose_popup;
+            handle.interruptible = ui_interruptible_edit;
+            handle.permutation = ui_permutation_edit;
             setappdata(uiparent, 'density', ...
                 str2double(get(ui_density_min_edit, 'String')) : ...
                 str2double(get(ui_density_edit, 'String')) : ...
                 str2double(get(ui_density_max_edit, 'String')))
-            setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'String'))
+            setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)
             setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
             setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
         end

@@ -190,7 +190,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
         end
     end
     methods  % Plot Measure plot panel
-        function getMainPanelMeasurePlot(analysis, ui_parent_panel, ui_parent_axes)
+        function p = getMainPanelMeasurePlot(analysis, ui_parent_panel, ui_parent_axes)
             measurements = analysis.getMeasurements().getValues();  % array
             % i need to plot threshold vs measurement values
             y_label = [];

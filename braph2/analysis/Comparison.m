@@ -749,6 +749,11 @@ classdef Comparison < handle & matlab.mixin.Copyable
                 set(handle_child_panel.verbose, 'enable', 'off')
                 set(handle_child_panel.interruptible, 'enable', 'off')
                 set(handle_child_panel.permutation, 'enable', 'off')
+                if ~isempty(handle_child_panel.variables)
+                    set(handle_child_panel.step, 'enable', 'off')
+                    set(handle_child_panel.min, 'enable', 'off')
+                    set(handle_child_panel.max, 'enable', 'off')
+                end
             end
             
         end

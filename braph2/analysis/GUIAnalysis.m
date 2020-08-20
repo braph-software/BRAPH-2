@@ -290,7 +290,6 @@ init_calc()
         set(ui_calc_randomcomparison_button, 'String', RANDOM_CALC_CMD)
         set(ui_calc_randomcomparison_button, 'TooltipString', RANDOM_CALC_TP)
         set(ui_calc_randomcomparison_button, 'Callback', {@cb_calc_random})
-        set(ui_calc_randomcomparison_button, 'enable', 'off')
         
         available_settings = ga.getAvailableSettings();
         texts = zeros(length(available_settings), 1);
@@ -358,13 +357,7 @@ init_calc()
         Comparison.getComparisonPanel(ga.getComparisonClass(), ga)
     end
     function cb_calc_random(~, ~)
-%         group = ga.getCohort().getGroups().getValue(selected_groups);
-%         mlist = measurelist();
-%         mlist = mlist(selected_calc);
-%         for j = 1:1:length(selected_calc)
-%             measure_code = mlist{j};
-%             ga.getRandomComparison(measure_code, group);
-%         end
+        RandomComparison.getRandomComparisonPanel(ga.getRandomComparisonClass(), ga)
     end
     function cb_calc_new(~, ~)
         GUIAnalysis(ga);
