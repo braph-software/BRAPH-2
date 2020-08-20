@@ -324,7 +324,7 @@ init_calc()
                 set(fields(j, 1), 'enable', 'off')
             else % logical
                 set(fields(j, 1), 'Style', 'popup');
-                set(fields(j, 1), 'String', ga.getSettings(as{1,1}))
+                set(fields(j, 1), 'String', {'true', 'false'})
                 set(fields(j, 1), 'enable', 'off')
             end
         end

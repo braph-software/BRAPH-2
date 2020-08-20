@@ -757,9 +757,11 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 end
             end
             function disable_child_panel()
-                set(handle_child_panel.step, 'enable', 'off')
-                set(handle_child_panel.min, 'enable', 'off')
-                set(handle_child_panel.max, 'enable', 'off')
+                if ~isempty(handle_child_panel.variables)
+                    set(handle_child_panel.step, 'enable', 'off')
+                    set(handle_child_panel.min, 'enable', 'off')
+                    set(handle_child_panel.max, 'enable', 'off')
+                end
             end
         end
     end

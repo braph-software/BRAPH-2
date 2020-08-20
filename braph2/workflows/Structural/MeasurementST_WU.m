@@ -220,9 +220,9 @@ classdef MeasurementST_WU < Measurement
         end
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
-        function variables = getChildPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
             set(uiparent, 'Visible', 'off')
-            variables = [];            
+             handle.variables = [];           
         end
     end
 end
