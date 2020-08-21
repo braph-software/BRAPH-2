@@ -36,6 +36,9 @@ classdef ComparisonST_WU < Comparison
     %  getAvailbleSettings          - returns the available settings
     %  getComparison                - returns a new comparison
     %
+    % ComparisonST_WU plot methods (Static):
+    %  getChildPanel                - returns a UIPanel
+    % 
     % See also Comparison, AnalysisST_WU, MeasurementST_WU, RandomComparisonST_WU. 
     
     properties
@@ -542,6 +545,14 @@ classdef ComparisonST_WU < Comparison
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
         function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. Modificable settings are: Verbose, Interruptible and
+            % Permutation.
+            %
+            % See also ComparisonST_WU.
+            
             set(uiparent, 'Visible', 'on')
              
             ui_verbose_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');

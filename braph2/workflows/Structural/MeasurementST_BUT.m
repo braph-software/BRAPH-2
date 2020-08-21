@@ -18,6 +18,9 @@ classdef MeasurementST_BUT < MeasurementST_WU
     %  getDescription               - returns the description of the measurement
     %  getAnalysisClass             - returns the class of the analysis
     %
+    % MeasurementST_BUT plot methods (Static):
+    %  getChildPanel                - returns a UIPanel
+    %
     % See also Comparison, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT.
     
     properties (Access = protected)
@@ -109,8 +112,15 @@ classdef MeasurementST_BUT < MeasurementST_WU
             analysis_class = 'AnalysisST_BUT';
         end
     end
-    methods (Static)  % Plot MeasurementGUI Child Panel
+    methods (Static)  % Plot functions
         function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. With threshold settings options.
+            %
+            % See also MeasurementST_BUT.
+            
             set(uiparent, 'Visible', 'on')
             ui_threshold_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_threshold_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');

@@ -29,6 +29,9 @@ classdef MeasurementST_WU < Measurement
     %  getAvailbleSettings          - returns the available settings
     %  getMeasurement               - returns a new measurement
     %
+    % MeasurementST_WU plot methods (Static):
+    %  getChildPanel                - returns a UIPanel
+    %
     % See also Comparison, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU.
     
     properties
@@ -219,8 +222,15 @@ classdef MeasurementST_WU < Measurement
             m = eval([measurement_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
         end
     end
-    methods (Static)  % Plot MeasurementGUI Child Panel
+    methods (Static)  % Plot methods
         function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. For WU in empty.
+            %
+            % See also MeasurementST_WU.
+            
             set(uiparent, 'Visible', 'off')
              handle.variables = [];           
         end

@@ -18,6 +18,9 @@ classdef ComparisonST_BUD < ComparisonST_WU
     %  getDescription               - returns the description of the comparison
     %  getAnalysisClass             - returns the class of the analysis
     %
+    % ComparisonST_BUD plot methods (Static):
+    %  getChildPanel                - returns a UIPanel
+    % 
     % See also Comparison, AnalysisST_BUT, MeasurementST_BUT, RandomComparisonST_BUT.
     
     properties (Access = protected)
@@ -112,6 +115,14 @@ classdef ComparisonST_BUD < ComparisonST_WU
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
         function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. Modificable settings are: Verbose, Interruptible,
+            % Permutation and Density.
+            %
+            % See also ComparisonST_BUD.
+            
             set(uiparent, 'Visible', 'on')
             ui_density_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_density_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');

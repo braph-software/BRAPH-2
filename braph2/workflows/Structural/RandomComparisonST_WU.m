@@ -36,6 +36,9 @@ classdef RandomComparisonST_WU < RandomComparison
     %  getAvailbleSettings          - returns the available settings
     %  getRandcomComparison         - returns a new random comparison
     %
+    % RandomComparisonST_WU plot methods (Static):
+    %  getChildPanel                - returns a UIPanel
+    % 
     % See also Comparison, AnalysisST_WU, MeasurementST_WU, ComparisonST_WU.
     
     properties
@@ -448,6 +451,14 @@ classdef RandomComparisonST_WU < RandomComparison
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
         function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. Modificable settings are: Verbose, Interruptible and
+            % Randomization.
+            %
+            % See also RandomComparisonST_WU.
+            
             set(uiparent, 'Visible', 'on')
             
             ui_verbose_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');

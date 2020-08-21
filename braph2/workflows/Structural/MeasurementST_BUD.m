@@ -16,8 +16,10 @@ classdef MeasurementST_BUD < MeasurementST_WU
     %  getClass                     - returns the class of the measurement
     %  getName                      - returns the name of the measurement
     %  getDescription               - returns the description of the measurement
-    %  getAnalysisClass             - returns the class of the analysis
-    
+    %  getAnalysisClass             - returns the class of the analysis    
+    %
+    % MeasurementST_BUD plot methods (Static):
+    %  getChildPanel                - returns a UIPanel
     %
     % See also Comparison, AnalysisST_BUD, ComparisonST_BUD, RandomComparisonST_BUD.
     
@@ -112,6 +114,13 @@ classdef MeasurementST_BUD < MeasurementST_WU
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
         function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. With density settings options.
+            %
+            % See also MeasurementST_BUD.
+            
             set(uiparent, 'Visible', 'on')
             ui_density_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_density_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
