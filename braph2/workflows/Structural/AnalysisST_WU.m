@@ -1036,7 +1036,7 @@ classdef AnalysisST_WU < Analysis
                         end
                 end
                 
-                update_brainmeasures_table();
+                update_global_table();
             end
             function cb_global_meas(~,~)  % (src,event)
                 set(ui_checkbox_brainmeasures_meas, 'Value', true)
@@ -1083,15 +1083,15 @@ classdef AnalysisST_WU < Analysis
                     selected_brainmeasures = sort(unique([selected_brainmeasures(:); r]));
                 end
                 
-                update_brainmeasures_table()
+                update_global_table()
             end
             function cb_global_clearselection(~,~)  % (src,event)
                 selected_brainmeasures  = [];
-                update_brainmeasures_table()
+                update_global_table()
             end
             function cb_global_remove(~, ~)
                 analysis.getMeasurements().remove(selected_brainmeasures);
-                update_brainmeasures_table()
+                update_global_table()
             end
             
             update_global_table()
