@@ -14,8 +14,8 @@ classdef AnalysisST_BUD < AnalysisST_WU
     %
     % AnalysisST_BUD graph methods (Access = protected)
     %  get_graph_for_subjects       - returns the graph of the correlated matrix
-    % 
-    % AnalysisST_BUD calculation methods (Access = protected):    
+    %
+    % AnalysisST_BUD calculation methods (Access = protected):
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
@@ -29,13 +29,16 @@ classdef AnalysisST_BUD < AnalysisST_WU
     %  getComparisonClass           - returns the class of the comparison
     %  getAvailbleSettings          - returns the available settings
     %
+    % AnalysisST_BUD Plot UIPanels
+    %  getMainPanelMeasurePlot      - creates a uipanel for a plot
+    %
     % See also Analysis, MeasurementST_BUD, RandomComparisonST_BUD, ComparisonST_BUD
     
     methods
         function analysis = AnalysisST_BUD(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
             % AnalysisST_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
             % creates a structural analysis of fixed density with ID, LABEL,
-            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It 
+            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISST_WU with default settings.
             %
             % AnalysisST_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
@@ -44,7 +47,7 @@ classdef AnalysisST_BUD < AnalysisST_WU
             % initializes the ANALYSISST_WU with specified settings VALUES.
             %
             % See also MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU.
-                 
+            
             analysis = analysis@AnalysisST_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
@@ -56,12 +59,12 @@ classdef AnalysisST_BUD < AnalysisST_WU
             % creates a measurement ID with the ANALYSIS class, the
             % MEASURE_CODE, the GROUP and the DENSITY.
             %
-            % See also getRandomComparisonID, getComparisonID.            
+            % See also getRandomComparisonID, getComparisonID.
             
             measurement_id = getMeasurementID@AnalysisST_WU(analysis, measure_code, group, varargin{:});
             
             density = get_from_varargin(0, 'density', varargin{:});
-            measurement_id = [measurement_id ' density=' num2str(density)];          
+            measurement_id = [measurement_id ' density=' num2str(density)];
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             % GETRANDOMCOMPARISONID returns a random comparison ID
@@ -70,8 +73,8 @@ classdef AnalysisST_BUD < AnalysisST_WU
             % creates a random comparison ID with the ANALYSIS class, the
             % MEASURE_CODE, the GROUP and the DENSITY.
             %
-            % See also getMeasurementID, getComparisonID.            
-         
+            % See also getMeasurementID, getComparisonID.
+            
             randomcomparison_id = getRandomComparisonID@AnalysisST_WU(analysis, measure_code, group, varargin{:});
             
             density = get_from_varargin(0, 'density', varargin{:});
@@ -150,7 +153,7 @@ classdef AnalysisST_BUD < AnalysisST_WU
         function graph_type = getGraphType()
             % GETGRAPHTYPE returns the compatible type of graph
             %
-            % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of 
+            % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of
             % graph 'GraphBU'.
             %
             % See also getSubjectClass.
@@ -188,5 +191,94 @@ classdef AnalysisST_BUD < AnalysisST_WU
             
             comparison_class = 'ComparisonST_BUD';
         end
+    end
+    methods  % Plot panel
+        function p = getMainPanelMeasurePlot(analysis, ui_parent_panel, ui_parent_axes)
+            % GETMAINPANELMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETMAINPANELMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            measurements = analysis.getMeasurements().getValues();  % array
+            % i need to plot threshold vs measurement values
+            y_label = [];
+            X = [];
+            Y = [];
+            x_ = [0 0];
+            y_ = [0 0];
+            for i = 1:1:length(measurements)
+                m = measurements{i};
+                X{i} = m.getThreshold();  %#ok<AGROW>
+                val_cell = m.getMeasureValue();
+                Y{i} = val_cell{1};   %#ok<AGROW>
+                y_label = m.getMeasureCode();
+            end
+            
+            if ~isempty(X) && ~isempty(Y)
+                x_ = cell2mat(X);
+                y_ = cell2mat(Y);
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, y_label)
+            
+            ui_show_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox');
+            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            init_uicontrols()
+            function init_uicontrols()
+                set(ui_show_checkbox, 'Units', 'normalized')
+                set(ui_show_checkbox, 'Position', [.45 .08 .2 .05])
+                set(ui_show_checkbox, 'String', 'Hide figure')
+                set(ui_show_checkbox, 'Value', false)
+                set(ui_show_checkbox, 'TooltipString', 'Hide/Show figures')
+                set(ui_show_checkbox, 'Callback', {@cb_hide_checkbox})
+                
+                set(ui_min_text, 'Units', 'normalized')
+                set(ui_min_text, 'Position', [.01 .07 .15 .05])
+                set(ui_min_text, 'String', 'Min')
+                
+                set(ui_min_edit, 'Units', 'normalized')
+                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
+                set(ui_min_edit, 'String', x_(1))
+                
+                set(ui_max_text, 'Units', 'normalized')
+                set(ui_max_text, 'Position', [.01 .05 .15 .05])
+                set(ui_max_text, 'String', 'Max')
+                
+                set(ui_max_edit, 'Units', 'normalized')
+                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
+                set(ui_max_edit, 'String', x_(end))
+                
+                set(ui_step_text, 'Units', 'normalized')
+                set(ui_step_text, 'Position', [.01 .03 .15 .05])
+                set(ui_step_text, 'String', 'Step')
+                
+                set(ui_step_edit, 'Units', 'normalized')
+                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
+                set(ui_step_edit, 'String', x_(2) - x_(1))
+                
+            end
+        end        
     end
 end

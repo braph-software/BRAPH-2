@@ -38,7 +38,9 @@ classdef AnalysisST_WU < Analysis
     %  getAvailbleSettings          - returns the available settings
     %
     % AnalysisST_WU Plot panel methods
-    %  getMatrixPanel               - creates a uipanel     
+    %  getGraphPanel                - creates a uipanel     
+    %  getGlobalPanel               - creates a uipanel for GUIAnalysis
+    %  getMainPanelMeasurePlot      - creates a uipanel for a plot
     % 
     % See also Analysis, MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU
     
@@ -734,6 +736,14 @@ classdef AnalysisST_WU < Analysis
             
         end
         function global_panel = getGlobalPanel(analysis, varargin)
+            % GETGLOBALPANEL creates the global uipanel for GUIAnalysis
+            %
+            % GLOBAL_PANEL = GETGLOBALPANEL(ANALYSIS, PROPERTY, VALUE, ...)
+            % creates a uipanel that contains information about global
+            % measures in Measurement, RandomComparison and Comparison.
+            %
+            % See also getGraphPanel, getMainPanelMeasurePlot.
+            
             uiparent = get_from_varargin([], 'UIParent', varargin{:});           
            
             % declre constans
@@ -1042,6 +1052,14 @@ classdef AnalysisST_WU < Analysis
             end
         end
         function p = getMainPanelMeasurePlot(analysis, ui_parent_panel, ui_parent_axes) %#ok<INUSD>
+            % GETMAINPANELMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETMAINPANELMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis. It's empty for WU.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
             p = [];
         end
     end

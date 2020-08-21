@@ -42,6 +42,10 @@ classdef Comparison < handle & matlab.mixin.Copyable
     %  getAvailableSettings     - returns available settings to the comparison
     %  getRandomComparion       - returns a new comparison
     %
+    % Comparison Plot methods (Static)
+    %  getComparisonPanel       - creates a UI Figure for Comparison Settings
+    %  getChildPanel            - returns a dynamic UIPanel
+    %
     % See also Analysis, Measurement, RandomComparison.
     
     properties (GetAccess=protected, SetAccess=protected)
@@ -379,6 +383,14 @@ classdef Comparison < handle & matlab.mixin.Copyable
     end
     methods (Static)  % Plot general panel
         function getComparisonPanel(comparison_class, analysis)
+            % GETCOMPARISONPANEL creates a UI figure to specify Comparison settings
+            %
+            % GETCOMPARISONPANEL(COMPARISON_CLASS, ANALYSIS) creates a UI
+            % figure where the user specifies the Analysis Comparison
+            % Settings.
+            %
+            % See also getChildPanel.
+            
             % variables
             mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());
             selected_calc = [];
@@ -756,10 +768,15 @@ classdef Comparison < handle & matlab.mixin.Copyable
                 end
             end
             
-        end
-    end
-    methods (Static)  % Plot child panel
+        end   
         function handle =  getChildPanel(comparison_class, analysis, uiparent)
+            % GETCHILDPANEL returns a dynamic panel to the Comparison UIfigure
+            %
+            % HANDLE = GETCHILDPANEL(COMPARISON_CLASS, ANALYSIS, UIPARENT)
+            % returns a dynamic panel to the Comparison UIFigure.
+            %
+            % See also getComparisonPanel
+            
             handle = eval([comparison_class '.getChildPanel(analysis, uiparent)']);
         end
     end

@@ -42,6 +42,10 @@ classdef Measurement < handle & matlab.mixin.Copyable
     %  getAvailableSettings     - returns available settings to the measurement
     %  getMeasurement           - returns a new measurement
     %
+    % Measurement Plot Methods (Static)
+    %  getMesurementPanel       - creates a UIFigure for Measurement Settings
+    %  getChildPanel            - returns a dynamic UIPanel
+    %
     % See also Analysis, RandomComparison, Comparison.
     
     properties (GetAccess=protected, SetAccess=protected)
@@ -372,6 +376,14 @@ classdef Measurement < handle & matlab.mixin.Copyable
     end
     methods (Static)  % Plot general panel
         function getMesurementPanel(measurement_class, analysis)
+            % GETMEASUREMENTPANEL creates a UI figure to specify Measurement settings
+            %
+            % GETMEASUREMENTPANEL(MEASUREMENT_CLASS, ANALYSIS) creates a UI
+            % figure where the user specifies the Analysis Measurement
+            % Settings.
+            %
+            % See also getChildPanel.
+            
             % variables
             mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());
             selected_calc = [];
@@ -444,8 +456,8 @@ classdef Measurement < handle & matlab.mixin.Copyable
             [ui_menu_about,ui_menu_about_about] = GUI.setMenuAbout(f, NAME); %#ok<ASGLU>
             
             % Make the GUI visible.
-            set(f, 'Visible', 'on');         
-    
+            set(f, 'Visible', 'on');
+            
             % callbacks
             function init_calculate()
                 GUI.setUnits(ui_panel)
@@ -676,18 +688,18 @@ classdef Measurement < handle & matlab.mixin.Copyable
                     value = '';
                 else
                     if contains('threshold', handle_child_panel.variables)
-                            rule = 'threshold';
-                            value =  getappdata(ui_child_panel, 'threshold');
+                        rule = 'threshold';
+                        value =  getappdata(ui_child_panel, 'threshold');
                     elseif contains('density', handle_child_panel.variables)
-                            rule = 'density';
-                            value = getappdata(ui_child_panel, 'density');                            
+                        rule = 'density';
+                        value = getappdata(ui_child_panel, 'density');
                     end
                 end
                 
                 disable_child_panel()
                 
                 if isequal(g, 1)
-                    group = analysis.getCohort().getGroups().getValues();                   
+                    group = analysis.getCohort().getGroups().getValues();
                     for i = 1:1:length(group)
                         gr = group{i};
                         for mi = 1:1:length(mlist)
@@ -695,10 +707,10 @@ classdef Measurement < handle & matlab.mixin.Copyable
                             if iscell(value)
                                 for vals = 1:1:length(value)
                                     value_step = value{vals};
-                                     m = analysis.getMeasurement(mlist{mi}, gr, rule, value_step); %#ok<NASGU>
+                                    m = analysis.getMeasurement(mlist{mi}, gr, rule, value_step); %#ok<NASGU>
                                 end
                             else
-                                 m = analysis.getMeasurement(mlist{mi}, gr, rule, value); %#ok<NASGU>
+                                m = analysis.getMeasurement(mlist{mi}, gr, rule, value); %#ok<NASGU>
                             end
                             msg = ['time = ' int2str(toc(start)) '.'  int2str(mod(toc(start)*10, 10)) 's - group = ' gr.tostring() ' - ' mlist{mi}];
                             
@@ -763,10 +775,15 @@ classdef Measurement < handle & matlab.mixin.Copyable
                     set(handle_child_panel.max, 'enable', 'off')
                 end
             end
-        end
-    end
-    methods (Static)  % Plot child panel
+        end       
         function handle =  getChildPanel(measurement_class, analysis, uiparent) %#ok<INUSD>
+            % GETCHILDPANEL returns a dynamic panel to the Measurement UIfigure
+            %
+            % HANDLE = GETCHILDPANEL(MEASUREMENT_CLASS, ANALYSIS, UIPARENT)
+            % returns a dynamic panel to the Meaasurement UIFigure.
+            %
+            % See also getMesurementPanel
+            
             handle = eval([measurement_class '.getChildPanel(analysis, uiparent)']);
         end
     end

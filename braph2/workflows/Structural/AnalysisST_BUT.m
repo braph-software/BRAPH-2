@@ -29,6 +29,9 @@ classdef AnalysisST_BUT < AnalysisST_WU
     %  getComparisonClass           - returns the class of the comparison
     %  getAvailbleSettings          - returns the available settings
     %
+    % AnalysisST_BUT Plot UIPanels
+    %  getMainPanelMeasurePlot      - creates a uipanel for a plot 
+    %
     % See also Analysis, MeasurementST_BUT, RandomComparisonST_BUT, ComparisonST_BUT
     
     methods
@@ -189,8 +192,16 @@ classdef AnalysisST_BUT < AnalysisST_WU
             comparison_class = 'ComparisonST_BUT';
         end
     end
-    methods  % Plot Measure plot panel
+    methods  % Plot panel
         function p = getMainPanelMeasurePlot(analysis, ui_parent_panel, ui_parent_axes)
+            % GETMAINPANELMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETMAINPANELMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
             measurements = analysis.getMeasurements().getValues();  % array
             % i need to plot threshold vs measurement values
             y_label = [];
