@@ -459,12 +459,8 @@ classdef RandomComparisonST_WU < RandomComparison
             %
             % See also RandomComparisonST_WU.
             
-            set(uiparent, 'Visible', 'on')
+            set(uiparent, 'Visible', 'on')            
             
-            ui_verbose_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_verbose_popup = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'popup');
-            ui_interruptible_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_interruptible_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             ui_randomization_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_randomization_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             ui_attempts_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
@@ -473,51 +469,30 @@ classdef RandomComparisonST_WU < RandomComparison
             ui_weights_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             init_child_panel()
             function init_child_panel()
-                set(ui_verbose_text, 'String', 'Verbose')
-                set(ui_verbose_text, 'Position', [.01 .76 .3 .08])
-                set(ui_verbose_text, 'Fontweight', 'bold')
-                
-                set(ui_verbose_popup, 'String', {'false' 'true'})
-                set(ui_verbose_popup, 'Position', [.31 .76 .3 .08])
-                set(ui_verbose_popup, 'Callback', {@cb_randomcomparison_verbose})
-                
-                set(ui_interruptible_text, 'String', 'Interruptible')
-                set(ui_interruptible_text, 'Position', [.01 .9 .3 .08])
-                set(ui_interruptible_text, 'Fontweight', 'bold')
-                
-                set(ui_interruptible_edit, 'String', 0.001)
-                set(ui_interruptible_edit, 'Position', [.31 .9 .3 .08])
-                set(ui_interruptible_edit, 'Callback', {@cb_randomcomparison_interruptible})
-                
+                               
                 set(ui_randomization_text, 'String', 'Randomization Number')
-                set(ui_randomization_text, 'Position', [.01 .56 .3 .14])
+                set(ui_randomization_text, 'Position', [.01 .86 .47 .08])
                 set(ui_randomization_text, 'Fontweight', 'bold')
                 
                 set(ui_randomization_edit, 'String', 1000)
-                set(ui_randomization_edit, 'Position', [.31 .6 .3 .08])
+                set(ui_randomization_edit, 'Position', [.5 .87 .45 .08])
                 set(ui_randomization_edit, 'Callback', {@cb_randomcomparison_permutation})
                 
                 set(ui_attempts_text, 'String', 'Attempts per Edge')
-                set(ui_attempts_text, 'Position', [.01 .4 .3 .14])
+                set(ui_attempts_text, 'Position', [.01 .76 .47 .08])
                 set(ui_attempts_text, 'Fontweight', 'bold')
                 
                 set(ui_attempts_edit, 'String', 5)
-                set(ui_attempts_edit, 'Position', [.31 .45 .3 .08])
+                set(ui_attempts_edit, 'Position', [.5 .77 .45 .08])
                 set(ui_attempts_edit, 'Callback', {@cb_randomcomparison_attempts})
                 
                 set(ui_weights_text, 'String', 'Number of Weights')
-                set(ui_weights_text, 'Position', [.01 .26 .3 .14])
+                set(ui_weights_text, 'Position', [.01 .66 .47 .08])
                 set(ui_weights_text, 'Fontweight', 'bold')
                 
                 set(ui_weights_edit, 'String', 1)
-                set(ui_weights_edit, 'Position', [.31 .3 .3 .08])
+                set(ui_weights_edit, 'Position', [.5 .67 .45 .08])
                 set(ui_weights_edit, 'Callback', {@cb_randomcomparison_weights})
-            end
-            function cb_randomcomparison_verbose(~, ~)
-                setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)       
-            end
-            function cb_randomcomparison_interruptible(~, ~)
-                setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
             end
             function cb_randomcomparison_permutation(~, ~)
                 setappdata(uiparent, 'permutation', str2double(get(ui_randomization_edit, 'String')))
@@ -529,11 +504,7 @@ classdef RandomComparisonST_WU < RandomComparison
                 setappdata(uiparent, 'weights', str2double(get(ui_weights_edit, 'String')))
             end
             handle.variables = [];
-            handle.verbose = ui_verbose_popup;
-            handle.interruptible = ui_interruptible_edit;
             handle.randomization = ui_randomization_edit;
-            setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)
-            setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
             setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
             setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
             setappdata(uiparent, 'weights', str2double(get(ui_weights_edit, 'String')))

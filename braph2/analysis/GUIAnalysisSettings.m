@@ -151,7 +151,7 @@ COHORT_POSITION = [COHORT_X0 COHORT_Y0 COHORT_WIDTH COHORT_HEIGHT];
 COHORT_BUTTON_SELECT_CMD = 'Select Cohort';
 COHORT_BUTTON_SELECT_TP = 'Select file (*.cohort) from where to load a Cohort';
 
-COHORT_BUTTON_VIEW_CMD = 'View Cohort';
+COHORT_BUTTON_VIEW_CMD = 'View Cohort ...';
 COHORT_BUTTON_VIEW_TP = ['Open Cohort with ' GUI.CE_NAME '.'];
 
 ui_panel_cohort = uipanel();
@@ -303,7 +303,7 @@ init_graph_settings()
         end
 
         set(ui_graph_settings_analysis_button, 'Position', [.20 .02 .60 .08])
-        set(ui_graph_settings_analysis_button, 'String', 'Start Analysis')
+        set(ui_graph_settings_analysis_button, 'String', 'Start Analysis ...')
         set(ui_graph_settings_analysis_button, 'TooltipString', 'Start Analysis')
         set(ui_graph_settings_analysis_button, 'Callback', {@cb_calc_settings_start_analysis})
     end

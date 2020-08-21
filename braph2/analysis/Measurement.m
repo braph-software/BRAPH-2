@@ -440,7 +440,6 @@ classdef Measurement < handle & matlab.mixin.Copyable
             ui_calc_binodal_button = uicontrol(ui_panel, 'Style', 'pushbutton');
             
             ui_popup_group = uicontrol(ui_panel, 'Style', 'listbox', 'String', {''});
-            ui_text_info = uicontrol(ui_panel, 'Style', 'text');
             ui_edit_info = uicontrol(ui_panel, 'Style', 'edit');
             ui_button_stop = uicontrol(ui_panel, 'Style', 'pushbutton');
             ui_button_resume = uicontrol(ui_panel, 'Style', 'pushbutton');
@@ -501,12 +500,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 
                 set(ui_popup_group, 'Position', [.01 .25 .44 .28])
                 set(ui_popup_group, 'TooltipString', 'Select group 1');
-                
-                set(ui_text_info, 'Position', [.5 .1 .4 .2])
-                set(ui_text_info, 'String', 'MeasurementST')
-                set(ui_text_info, 'FontWeight', 'bold')
-                set(ui_text_info, 'FontSize',12)
-                
+               
                 set(ui_edit_info, 'BackgroundColor', [1 1 1])
                 set(ui_edit_info, 'Position', [.01 .08 .98 .15])
                 set(ui_edit_info, 'Max',2)

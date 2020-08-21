@@ -123,7 +123,7 @@ COHORT_POSITION = [COHORT_X0 COHORT_Y0+0.01 COHORT_WIDTH COHORT_HEIGHT];
 COHORT_BUTTON_SELECT_CMD = 'Select Cohort';
 COHORT_BUTTON_SELECT_TP = 'Select file (*.cohort) from where to load a Cohort';
 
-COHORT_BUTTON_VIEW_CMD = 'View Cohort';
+COHORT_BUTTON_VIEW_CMD = 'View Cohort ...';
 COHORT_BUTTON_VIEW_TP = ['Open Cohort with ' GUI.CE_NAME '.'];
 
 SELECTALL_CALC_CMD = GUI.SELECTALL_CMD;
@@ -141,13 +141,13 @@ SELECTNODAL_CALC_TP = 'Select all nodal measures';
 SELECTBINODAL_CALC_CMD = 'Select Binodal';
 SELECTBINODAL_CALC_TP = 'Select all Binodal measures';
 
-CALCULATE_CALC_CMD = 'Calculate Group Measures';
+CALCULATE_CALC_CMD = 'Calculate Group Measures ...';
 CALCULATE_CALC_TP = 'Calculates selected measures for a group';
 
-COMPARE_CALC_CMD = 'Compare Group Measures';
+COMPARE_CALC_CMD = 'Compare Group Measures ...';
 COMPARE_CALC_TP = 'Compares selected measures for two group';
 
-RANDOM_CALC_CMD = 'Compare With Random Graph';
+RANDOM_CALC_CMD = 'Compare With Random Graph ...';
 RANDOM_CALC_TP = 'Compares selected measures with a random graph';
 
 ui_panel_cohort = uipanel();
@@ -268,25 +268,25 @@ init_calc()
         set(ui_calc_analysis_notes, 'FontWeight', 'bold')
         set(ui_calc_analysis_notes, 'Callback', {@cb_calc_ga_notes})
         
-        set(ui_calc_settings_panel, 'Position', [0 0.64 0.98 .25])
+        set(ui_calc_settings_panel, 'Position', [0 0.19 0.98 .61])
         set(ui_calc_settings_panel, 'Title', 'Analysis Settings')
         set(ui_calc_settings_panel, 'Units', 'normalized')
         
-        set(ui_calc_new_button, 'Position', [.02 .5 .96 .045])
-        set(ui_calc_new_button, 'String', 'New Analysis')
+        set(ui_calc_new_button, 'Position', [.02 .83 .96 .045])
+        set(ui_calc_new_button, 'String', 'New Analysis ...')
         set(ui_calc_new_button, 'Callback', {@cb_calc_new})
         
-        set(ui_calc_measurement_button, 'Position', [.02 .22 .96 .045])
+        set(ui_calc_measurement_button, 'Position', [.02 .12 .96 .045])
         set(ui_calc_measurement_button, 'String', CALCULATE_CALC_CMD)
         set(ui_calc_measurement_button, 'TooltipString', CALCULATE_CALC_TP)
         set(ui_calc_measurement_button, 'Callback', {@cb_calc_calculate})
         
-        set(ui_calc_comparison_button, 'Position', [.02 .16 .96 .045])
+        set(ui_calc_comparison_button, 'Position', [.02 .06 .96 .045])
         set(ui_calc_comparison_button, 'String', COMPARE_CALC_CMD)
         set(ui_calc_comparison_button, 'TooltipString', COMPARE_CALC_TP)
         set(ui_calc_comparison_button, 'Callback', {@cb_calc_compare})
         
-        set(ui_calc_randomcomparison_button, 'Position', [.02 .10 .96 .045])
+        set(ui_calc_randomcomparison_button, 'Position', [.02 .0 .96 .045])
         set(ui_calc_randomcomparison_button, 'String', RANDOM_CALC_CMD)
         set(ui_calc_randomcomparison_button, 'TooltipString', RANDOM_CALC_TP)
         set(ui_calc_randomcomparison_button, 'Callback', {@cb_calc_random})

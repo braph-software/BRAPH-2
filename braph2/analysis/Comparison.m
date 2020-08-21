@@ -448,7 +448,6 @@ classdef Comparison < handle & matlab.mixin.Copyable
             
             ui_popup_group_1 = uicontrol(ui_panel, 'Style', 'popup', 'String', {''});
             ui_popup_group_2 = uicontrol(ui_panel, 'Style', 'popup', 'String', {''});
-            ui_text_info = uicontrol(ui_panel, 'Style', 'text');
             ui_edit_info = uicontrol(ui_panel, 'Style', 'edit');
             ui_button_stop = uicontrol(ui_panel, 'Style', 'pushbutton');
             ui_button_resume = uicontrol(ui_panel, 'Style', 'pushbutton');
@@ -512,11 +511,6 @@ classdef Comparison < handle & matlab.mixin.Copyable
                 
                 set(ui_popup_group_2, 'Position', [.01 .3 .44 .1])
                 set(ui_popup_group_2, 'TooltipString', 'Select group 1');
-                
-                set(ui_text_info, 'Position', [.5 .1 .4 .2])
-                set(ui_text_info, 'String', 'ComparisonST')
-                set(ui_text_info, 'FontWeight', 'bold')
-                set(ui_text_info, 'FontSize',12)
                 
                 set(ui_edit_info, 'BackgroundColor', [1 1 1])
                 set(ui_edit_info, 'Position', [.01 .08 .98 .15])
@@ -722,14 +716,10 @@ classdef Comparison < handle & matlab.mixin.Copyable
                         for vals = 1:1:length(value)
                             value_step = value(vals);
                             m = analysis.getComparison(mlist{mi}, group_1, group_2, rule, value_step, ...
-                                'Verbose', getappdata(ui_child_panel, 'verbose'), ...
-                                'Interruptible', getappdata(ui_child_panel, 'interruptible'), ...
                                 'PermutationNumber', getappdata(ui_child_panel, 'permutation'));
                         end
                     else
                         m = analysis.getComparison(mlist{mi}, group_1, group_2, rule, value, ...
-                                'Verbose', getappdata(ui_child_panel, 'verbose'), ...
-                                'Interruptible', getappdata(ui_child_panel, 'interruptible'), ...
                                 'PermutationNumber', getappdata(ui_child_panel, 'permutation'));
                     end
                     msg = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10, 10)) 's - group = ' int2str(g_1) ' - ' mlist{mi}];
@@ -758,8 +748,6 @@ classdef Comparison < handle & matlab.mixin.Copyable
                 end
             end
             function disable_child_panel()
-                set(handle_child_panel.verbose, 'enable', 'off')
-                set(handle_child_panel.interruptible, 'enable', 'off')
                 set(handle_child_panel.permutation, 'enable', 'off')
                 if ~isempty(handle_child_panel.variables)
                     set(handle_child_panel.step, 'enable', 'off')

@@ -441,7 +441,6 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             ui_calc_binodal_button = uicontrol(ui_panel, 'Style', 'pushbutton');
             
             ui_popup_group_1 = uicontrol(ui_panel, 'Style', 'listbox', 'String', {''});
-            ui_text_info = uicontrol(ui_panel, 'Style', 'text');
             ui_edit_info = uicontrol(ui_panel, 'Style', 'edit');
             ui_button_stop = uicontrol(ui_panel, 'Style', 'pushbutton');
             ui_button_resume = uicontrol(ui_panel, 'Style', 'pushbutton');
@@ -502,12 +501,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                 
                 set(ui_popup_group_1, 'Position', [.01 .25 .44 .28])
                 set(ui_popup_group_1, 'TooltipString', 'Select group 1');
-                
-                set(ui_text_info, 'Position', [.5 .1 .4 .2])
-                set(ui_text_info, 'String', 'RandomComparisonST')
-                set(ui_text_info, 'FontWeight', 'bold')
-                set(ui_text_info, 'FontSize',12)
-                
+                                
                 set(ui_edit_info, 'BackgroundColor', [1 1 1])
                 set(ui_edit_info, 'Position', [.01 .08 .98 .15])
                 set(ui_edit_info, 'Max',2)
@@ -707,16 +701,12 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                         for vals = 1:1:length(value)
                             value_step = value(vals);
                             m = analysis.getRandomComparison(mlist{mi}, group_1, rule, value_step, ...
-                                'Verbose', getappdata(ui_child_panel, 'verbose'), ...
-                                'Interruptible', getappdata(ui_child_panel, 'interruptible'), ...
                                 'RandomizationNumber', getappdata(ui_child_panel, 'randomization'), ...
                                 'AttemptsPerEdge', getappdata(ui_child_panel, 'attempts'), ...
                                 'NumberOfWeights', getappdata(ui_child_panel, 'weigths')); %#ok<NASGU>
                         end
                     else
                         m = analysis.getRandomComparison(mlist{mi}, group_1, rule, value, ...
-                                'Verbose', getappdata(ui_child_panel, 'verbose'), ...
-                                'Interruptible', getappdata(ui_child_panel, 'interruptible'), ...
                                 'RandomizationNumber', getappdata(ui_child_panel, 'randomization'), ...
                                 'AttemptsPerEdge', getappdata(ui_child_panel, 'attempts'), ...
                                 'NumberOfWeights', getappdata(ui_child_panel, 'weigths')); %#ok<NASGU>
@@ -747,8 +737,6 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                 end
             end
             function disable_child_panel()
-                set(handle_child_panel.verbose, 'enable', 'off')
-                set(handle_child_panel.interruptible, 'enable', 'off')
                 set(handle_child_panel.randomization, 'enable', 'off')
                 if ~isempty(handle_child_panel.variables)
                     set(handle_child_panel.step, 'enable', 'off')

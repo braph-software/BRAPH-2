@@ -130,60 +130,40 @@ classdef ComparisonST_BUD < ComparisonST_WU
             ui_density_min_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             ui_density_max_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_density_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
-            ui_verbose_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_verbose_popup = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'popup');
-            ui_interruptible_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_interruptible_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             ui_permutation_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_permutation_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             init_child_panel()
             function init_child_panel()
                 set(ui_density_text, 'String', 'Density')
-                set(ui_density_text, 'Position', [.01 .8 .2 .08])
+                set(ui_density_text, 'Position', [.01 .65 .47 .08])
                 set(ui_density_text, 'Fontweight', 'bold')
                 
                 set(ui_density_edit, 'String', 1)
-                set(ui_density_edit, 'Position', [.21 .8 .2 .08])
+                set(ui_density_edit, 'Position', [.5 .67 .45 .08])
                 set(ui_density_edit, 'Callback', {@cb_comparison_density})
                 
                 set(ui_density_min_text, 'String', 'Min')
-                set(ui_density_min_text, 'Position', [.01 .9 .2 .08])
+                set(ui_density_min_text, 'Position', [.01 .75 .47 .08])
                 set(ui_density_min_text, 'Fontweight', 'bold')
                 
                 set(ui_density_min_edit, 'String', 0)
-                set(ui_density_min_edit, 'Position', [.21 .9 .2 .08])
+                set(ui_density_min_edit, 'Position', [.5 .77 .45 .08])
                 set(ui_density_min_edit, 'Callback', {@cb_comparison_min})
                 
                 set(ui_density_max_text, 'String', 'Max')
-                set(ui_density_max_text, 'Position', [.01 .7 .2 .08])
+                set(ui_density_max_text, 'Position', [.01 .55 .47 .08])
                 set(ui_density_max_text, 'Fontweight', 'bold')
                 
                 set(ui_density_max_edit, 'String', 100)
-                set(ui_density_max_edit, 'Position', [.21 .7 .2 .08])
+                set(ui_density_max_edit, 'Position', [.5 .57 .45 .08])
                 set(ui_density_max_edit, 'Callback', {@cb_comparison_max})
                 
-                set(ui_verbose_text, 'String', 'Verbose')
-                set(ui_verbose_text, 'Position', [.41 .8 .3 .08])
-                set(ui_verbose_text, 'Fontweight', 'bold')
-                
-                set(ui_verbose_popup, 'String', {'false' 'true'})
-                set(ui_verbose_popup, 'Position', [.71 .8 .2 .08])
-                set(ui_verbose_popup, 'Callback', {@cb_comparison_verbose})
-                
-                set(ui_interruptible_text, 'String', 'Interruptible')
-                set(ui_interruptible_text, 'Position', [.41 .9 .3 .08])
-                set(ui_interruptible_text, 'Fontweight', 'bold')
-                
-                set(ui_interruptible_edit, 'String', 0.001)
-                set(ui_interruptible_edit, 'Position', [.71 .9 .2 .08])
-                set(ui_interruptible_edit, 'Callback', {@cb_comparison_interruptible})
-                
                 set(ui_permutation_text, 'String', 'Perumtation Number')
-                set(ui_permutation_text, 'Position', [.41 .65 .3 .14])
+                set(ui_permutation_text, 'Position', [.01 .85 .47 .08])
                 set(ui_permutation_text, 'Fontweight', 'bold')
                 
                 set(ui_permutation_edit, 'String', 1000)
-                set(ui_permutation_edit, 'Position', [.71 .7 .2 .08])
+                set(ui_permutation_edit, 'Position', [.5 .87 .45 .08])
                 set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
                 
             end
@@ -201,12 +181,6 @@ classdef ComparisonST_BUD < ComparisonST_WU
                 newdata = get(src, 'String');
                 set(ui_density_max_edit, 'String', newdata);
             end
-            function cb_comparison_verbose(~, ~)                
-                setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)
-            end
-            function cb_comparison_interruptible(~, ~)
-                setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
-            end
             function cb_comparison_permutation(~, ~)
                 setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
             end
@@ -214,16 +188,12 @@ classdef ComparisonST_BUD < ComparisonST_WU
             handle.variables = {'density'};
             handle.step = ui_density_edit;
             handle.min = ui_density_min_edit;
-            handle.max = ui_density_max_edit;       
-            handle.verbose = ui_verbose_popup;
-            handle.interruptible = ui_interruptible_edit;
+            handle.max = ui_density_max_edit; 
             handle.permutation = ui_permutation_edit;
             setappdata(uiparent, 'density', ...
                 str2double(get(ui_density_min_edit, 'String')) : ...
                 str2double(get(ui_density_edit, 'String')) : ...
                 str2double(get(ui_density_max_edit, 'String')))
-            setappdata(uiparent, 'verbose', get(ui_verbose_popup, 'Value')-1)
-            setappdata(uiparent, 'interruptible', str2double(get(ui_interruptible_edit, 'String')))
             setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
         end
     end
