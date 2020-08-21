@@ -876,6 +876,7 @@ classdef AnalysisST_WU < Analysis
                     end
                     
                     if exist('global_measurements', 'var') 
+                        global_measurements =  global_measurements(~cellfun(@isempty, global_measurements));
                         set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
                         set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
                         set(ui_global_tbl, 'ColumnEditable', [true false false false false false false])
@@ -904,28 +905,29 @@ classdef AnalysisST_WU < Analysis
                         set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
                         set(ui_global_tbl, 'ColumnEditable', [true false false false false false false])
                         set(ui_global_tbl, 'Data', [])
-                        set(ui_global_tbl, 'RowName', [])
-                        
+                        set(ui_global_tbl, 'RowName', [])                        
                     end
                                         
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
                      for j = 1:1:analysis.getComparisons().length()
                         comparison = analysis.getComparisons().getValue(j);
+                        [a, b] = comparison.getGroups();
                         if isa(group, 'cell') && ismember(comparison.getMeasureCode(), global_list)
                             for k =1:1:length(group)
                                 g = group{k};
-                                if isequal(comparison.getGroups(), g) 
+                                if isequal(a, g) || isequal (b, g)
                                     global_comparison{j} = comparison; %#ok<AGROW>
                                 end
                             end
                         else
-                            if ismember(comparison.getMeasureCode(), global_list) && isequal(comparison.getGroups(), group)
+                            if ismember(comparison.getMeasureCode(), global_list) && (isequal(a, group) || isequal (b, group))
                                 global_comparison{j} = comparison;                 
                             end
                         end
                     end
                     
                     if exist('global_comparison', 'var') 
+                        global_comparison =  global_comparison(~cellfun(@isempty, global_comparison));
                         set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
                         set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
                         set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false])
@@ -953,16 +955,64 @@ classdef AnalysisST_WU < Analysis
                         set(ui_global_tbl, 'Data', data)
                         set(ui_global_tbl, 'RowName', RowName)
                     else
-                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
-                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
-                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false])
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false])
                         set(ui_global_tbl, 'Data', [])
-                        set(ui_global_tbl, 'RowName', [])
-                        
+                        set(ui_global_tbl, 'RowName', [])                        
                     end
                     
                 elseif get(ui_checkbox_brainmeasures_rand, 'Value')
-
+                    for j = 1:1:analysis.getRandomComparisons().length()
+                        randomcomparison = analysis.getRandomComparisons().getValue(j);
+                        if isa(group, 'cell') && ismember(randomcomparison.getMeasureCode(), global_list)
+                            for k =1:1:length(group)
+                                g = group{k};
+                                if isequal(randomcomparison.getGroup(), g) 
+                                    global_randomcomparison{j} = randomcomparison; %#ok<AGROW>
+                                end
+                            end
+                        else
+                            if ismember(randomcomparison.getMeasureCode(), global_list) && isequal(randomcomparison.getGroup(), group)
+                                global_randomcomparison{j} = randomcomparison;                 
+                            end
+                        end
+                    end
+                    
+                    if exist('global_randomcomparison', 'var') 
+                        global_randomcomparison =  global_randomcomparison(~cellfun(@isempty, global_randomcomparison));
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false])
+                        
+                        data = cell(length(global_randomcomparison), 7);
+                        for i = 1:1:length(global_randomcomparison)
+                            randomcomparison = global_randomcomparison{i};
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end    
+                            group_val =  randomcomparison.getGroupValue();
+                            random_val = randomcomparison.getRandomValue();
+                            data{i, 2} = randomcomparison.getMeasureCode(); 
+                            data{i, 3} = randomcomparison.getGroup().getID();
+                            data{i, 4} = group_val{1};
+                            data{i, 5} = random_val{1};
+                            data{i, 6} = randomcomparison.getID(); 
+                            data{i, 7} = randomcomparison.getLabel();
+                            data{i, 8} = randomcomparison.getNotes();
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_global_tbl, 'Data', data)
+                        set(ui_global_tbl, 'RowName', RowName)
+                    else
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false])
+                        set(ui_global_tbl, 'Data', [])
+                        set(ui_global_tbl, 'RowName', [])                        
+                    end
                 end
             end  
             function init_plot_measure_panel()
