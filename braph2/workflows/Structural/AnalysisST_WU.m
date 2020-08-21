@@ -1032,13 +1032,13 @@ classdef AnalysisST_WU < Analysis
                                 selected_brainmeasures = [selected_brainmeasures g];
                             end
                         else
-                            selected_brainmeasures = selected_brainmeasures(selected_brainmeasures~=g);
+                            selected_brainmeasures = selected_brainmeasures(selected_brainmeasures ~= g);
                         end
                 end
                 
                 update_global_table();
             end
-            function cb_global_meas(~,~)  % (src,event)
+            function cb_global_meas(~, ~)  % (src,event)
                 set(ui_checkbox_brainmeasures_meas, 'Value', true)
                 set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'bold')
                 set(ui_checkbox_brainmeasures_comp, 'Value', false)
@@ -1049,7 +1049,7 @@ classdef AnalysisST_WU < Analysis
                 
                 update_global_table()
             end
-            function cb_global_comp(~,~)  % (src,event)
+            function cb_global_comp(~, ~)  % (src,event)
                 set(ui_checkbox_brainmeasures_meas, 'Value', false)
                 set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'normal')
                 set(ui_checkbox_brainmeasures_comp, 'Value', true)
@@ -1060,7 +1060,7 @@ classdef AnalysisST_WU < Analysis
                 
                 update_global_table()
             end
-            function cb_global_rand(~,~)  % (src,event)
+            function cb_global_rand(~, ~)  % (src,event)
                 set(ui_checkbox_brainmeasures_meas, 'Value', false)
                 set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'normal')
                 set(ui_checkbox_brainmeasures_comp, 'Value', false)
@@ -1071,7 +1071,7 @@ classdef AnalysisST_WU < Analysis
                 
                 update_global_table()
             end
-            function cb_global_selectall(~,~)  % (src,event)
+            function cb_global_selectall(~, ~)  % (src,event)
                 for j = 1:1:analysis.getMeasurements().length()
                     measurement = analysis.getMeasurements().getValue(j);
                     if ismember(measurement.getMeasureCode(), global_list)
