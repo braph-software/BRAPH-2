@@ -37,7 +37,7 @@ classdef RandomComparisonST_WU < RandomComparison
     %  getRandcomComparison         - returns a new random comparison
     %
     % RandomComparisonST_WU plot methods (Static):
-    %  getChildPanel                - returns a UIPanel
+    %  getRandomComparisonSettingsPanel - returns a UIPanel
     % 
     % See also Comparison, AnalysisST_WU, MeasurementST_WU, ComparisonST_WU.
     
@@ -450,7 +450,7 @@ classdef RandomComparisonST_WU < RandomComparison
         end
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
-        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getRandomComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic

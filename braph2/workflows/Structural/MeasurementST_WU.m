@@ -30,7 +30,7 @@ classdef MeasurementST_WU < Measurement
     %  getMeasurement               - returns a new measurement
     %
     % MeasurementST_WU plot methods (Static):
-    %  getChildPanel                - returns a UIPanel
+    %  getMeasurementSettingsPanel  - returns a UIPanel
     %
     % See also Comparison, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU.
     
@@ -223,7 +223,7 @@ classdef MeasurementST_WU < Measurement
         end
     end
     methods (Static)  % Plot methods
-        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getMeasurementSettingsPanel(analysis, uiparent) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic

@@ -382,7 +382,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)  % Plot general panel
-        function getComparisonPanel(comparison_class, analysis)
+        function GUIComparison(comparison_class, analysis)
             % GETCOMPARISONPANEL creates a UI figure to specify Comparison settings
             %
             % GETCOMPARISONPANEL(COMPARISON_CLASS, ANALYSIS) creates a UI
@@ -532,7 +532,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
                 
             end
             function init_child_panel()
-                handle_child_panel = Comparison.getChildPanel(comparison_class, analysis, ui_child_panel);
+                handle_child_panel = Comparison.getComparisonSettingsPanel(comparison_class, analysis, ui_child_panel);
             end
             function deactivate_components()
                 set(ui_calc_table, 'Enable', 'off')
@@ -757,7 +757,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
             end
             
         end   
-        function handle =  getChildPanel(comparison_class, analysis, uiparent)
+        function handle =  getComparisonSettingsPanel(comparison_class, analysis, uiparent)
             % GETCHILDPANEL returns a dynamic panel to the Comparison UIfigure
             %
             % HANDLE = GETCHILDPANEL(COMPARISON_CLASS, ANALYSIS, UIPARENT)
@@ -765,7 +765,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
             %
             % See also getComparisonPanel
             
-            handle = eval([comparison_class '.getChildPanel(analysis, uiparent)']);
+            handle = eval([comparison_class '.getComparisonSettingsPanel(analysis, uiparent)']);
         end
     end
     methods (Access = protected)  % Shallow copy

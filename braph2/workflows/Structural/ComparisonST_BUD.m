@@ -19,7 +19,7 @@ classdef ComparisonST_BUD < ComparisonST_WU
     %  getAnalysisClass             - returns the class of the analysis
     %
     % ComparisonST_BUD plot methods (Static):
-    %  getChildPanel                - returns a UIPanel
+    %  getComparisonSettingsPanel   - returns a UIPanel
     % 
     % See also Comparison, AnalysisST_BUT, MeasurementST_BUT, RandomComparisonST_BUT.
     
@@ -114,7 +114,7 @@ classdef ComparisonST_BUD < ComparisonST_WU
         end
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
-        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic

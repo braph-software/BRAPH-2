@@ -37,7 +37,7 @@ classdef ComparisonST_WU < Comparison
     %  getComparison                - returns a new comparison
     %
     % ComparisonST_WU plot methods (Static):
-    %  getChildPanel                - returns a UIPanel
+    %  getComparisonSettingsPanel   - returns a UIPanel
     % 
     % See also Comparison, AnalysisST_WU, MeasurementST_WU, RandomComparisonST_WU. 
     
@@ -544,7 +544,7 @@ classdef ComparisonST_WU < Comparison
         end
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
-        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic

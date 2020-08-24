@@ -375,7 +375,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)  % Plot general panel
-        function getMesurementPanel(measurement_class, analysis)
+        function GUIMeasurement(measurement_class, analysis)
             % GETMEASUREMENTPANEL creates a UI figure to specify Measurement settings
             %
             % GETMEASUREMENTPANEL(MEASUREMENT_CLASS, ANALYSIS) creates a UI
@@ -521,7 +521,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 
             end
             function init_child_panel()
-                handle_child_panel = Measurement.getChildPanel(measurement_class, analysis, ui_child_panel);
+                handle_child_panel = Measurement.getMeasurementSettingsPanel(measurement_class, analysis, ui_child_panel);
             end
             function deactivate_components()
                 set(ui_calc_table, 'Enable', 'off')
@@ -770,7 +770,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 end
             end
         end       
-        function handle =  getChildPanel(measurement_class, analysis, uiparent) %#ok<INUSD>
+        function handle =  getMeasurementSettingsPanel(measurement_class, analysis, uiparent) %#ok<INUSD>
             % GETCHILDPANEL returns a dynamic panel to the Measurement UIfigure
             %
             % HANDLE = GETCHILDPANEL(MEASUREMENT_CLASS, ANALYSIS, UIPARENT)
@@ -778,7 +778,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             %
             % See also getMesurementPanel
             
-            handle = eval([measurement_class '.getChildPanel(analysis, uiparent)']);
+            handle = eval([measurement_class '.getMeasurementSettingsPanel(analysis, uiparent)']);
         end
     end
     methods (Access = protected)  % Shallow copy

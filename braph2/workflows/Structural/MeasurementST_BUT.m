@@ -19,7 +19,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
     %  getAnalysisClass             - returns the class of the analysis
     %
     % MeasurementST_BUT plot methods (Static):
-    %  getChildPanel                - returns a UIPanel
+    %  getMeasurementSettingsPanel  - returns a UIPanel
     %
     % See also Comparison, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT.
     
@@ -113,7 +113,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
         end
     end
     methods (Static)  % Plot functions
-        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getMeasurementSettingsPanel(analysis, uiparent) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic

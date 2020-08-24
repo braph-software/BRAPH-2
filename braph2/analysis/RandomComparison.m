@@ -376,7 +376,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
         end
     end
     methods (Static)  % Plot general panel
-        function getRandomComparisonPanel(comparison_class, analysis)
+        function GUIRandomComparison(comparison_class, analysis)
             % GETRANDOMCOMPARISONPANEL creates a UI figure to specify RandomComparison settings
             %
             % GETRANDOMCOMPARISONPANEL(RANDOMCOMPARISON_CLASS, ANALYSIS) creates a UI
@@ -522,7 +522,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                 
             end
             function init_child_panel()
-                handle_child_panel = Comparison.getChildPanel(comparison_class, analysis, ui_child_panel);
+                handle_child_panel = RandomComparison.getRandomComparisonSettingsPanel(comparison_class, analysis, ui_child_panel);
             end
             function deactivate_components()
                 set(ui_calc_table, 'Enable', 'off')
@@ -541,7 +541,6 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                 set(ui_calc_nodal_button, 'Enable', 'on')
                 set(ui_calc_binodal_button, 'Enable', 'on')
                 set(ui_popup_group_1, 'Enable', 'on')
-                set(ui_popup_group_2, 'Enable', 'on')
             end
             function cb_stop(src, ~)  % (src,event)
                 deactivate_components()
@@ -745,7 +744,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
                 end
             end            
         end 
-        function handle =  getChildPanel(random_comparison_class, analysis, uiparent) %#ok<INUSD>
+        function handle =  getRandomComparisonSettingsPanel(random_comparison_class, analysis, uiparent) %#ok<INUSD>
             % GETCHILDPANEL returns a dynamic panel to the RandomComparison UIfigure
             %
             % HANDLE = GETCHILDPANEL(RANDOMCOMPARISON_CLASS, ANALYSIS, UIPARENT)
@@ -753,7 +752,7 @@ classdef RandomComparison < handle & matlab.mixin.Copyable
             %
             % See also getRandomComparisonPanel
             
-            handle = eval([random_comparison_class '.getChildPanel(analysis, uiparent)']);
+            handle = eval([random_comparison_class '.getRandomComparisonSettingsPanel(analysis, uiparent)']);
         end
     end
     methods (Access =  protected)  % Shallow copy

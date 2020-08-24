@@ -19,7 +19,7 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
     %  getAnalysisClass             - returns the class of the analysis
     %
     % RandomComparisonST_BUT plot methods (Static):
-    %  getChildPanel                - returns a UIPanel
+    %  getRandomComparisonSettingsPanel - returns a UIPanel
     % 
     % See also Comparison, AnalysisST_BUT, MeasurementST_BUT, ComparisonST_BUT.
     
@@ -115,7 +115,7 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
         end
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
-        function handle = getChildPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getRandomComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic

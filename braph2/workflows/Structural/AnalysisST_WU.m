@@ -40,7 +40,6 @@ classdef AnalysisST_WU < Analysis
     % AnalysisST_WU Plot panel methods
     %  getGraphPanel                - creates a uipanel     
     %  getGlobalPanel               - creates a uipanel for GUIAnalysis
-    %  getMainPanelMeasurePlot      - creates a uipanel for a plot
     % 
     % See also Analysis, MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU
     
@@ -732,8 +731,7 @@ classdef AnalysisST_WU < Analysis
         
             if nargout > 0
                 graph_panel = matrix_plot;
-            end
-            
+            end            
         end
         function global_panel = getGlobalPanel(analysis, varargin)
             % GETGLOBALPANEL creates the global uipanel for GUIAnalysis
@@ -1016,7 +1014,13 @@ classdef AnalysisST_WU < Analysis
                 end
             end  
             function init_plot_measure_panel()
-                analysis.getMainPanelMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes);
+                class_name = analysis.getClass();
+                class_suffix = class_name(end-2:end);                
+                if  isequal(class_suffix, 'BUT')
+                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, 'XLabel', 'Threshold');
+                elseif isequal(class_suffix, 'BUD')
+                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, 'XLabel', 'Density');                
+                end                
             end
             function cb_global_table(~, ~)
                 update_global_table()
@@ -1100,17 +1104,6 @@ classdef AnalysisST_WU < Analysis
             if nargout > 0
                 global_panel = ui_mainpanel;
             end
-        end
-        function p = getMainPanelMeasurePlot(analysis, ui_parent_panel, ui_parent_axes) %#ok<INUSD>
-            % GETMAINPANELMEASUREPLOT creates a uipanel to contain a plot
-            %
-            % P = GETMAINPANELMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES)
-            % creates a uipanel to contain the plot displayed in the global
-            % measure panel for GUIAnalysis. It's empty for WU.
-            %
-            % See also getGraphPanel, getGlobalPanel.
-            
-            p = [];
-        end
+        end        
     end
 end

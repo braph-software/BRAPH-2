@@ -351,13 +351,13 @@ init_calc()
         mlist = Graph.getCompatibleMeasureList(ga.getGraphType());
     end
     function cb_calc_calculate(~, ~)       
-        Measurement.getMesurementPanel(ga.getMeasurementClass(), ga)
+        Measurement.GUIMeasurement(ga.getMeasurementClass(), ga)
     end
     function cb_calc_compare(~, ~)
-        Comparison.getComparisonPanel(ga.getComparisonClass(), ga)
+        Comparison.GUIComparison(ga.getComparisonClass(), ga)
     end
     function cb_calc_random(~, ~)
-        RandomComparison.getRandomComparisonPanel(ga.getRandomComparisonClass(), ga)
+        RandomComparison.GUIRandomComparison(ga.getRandomComparisonClass(), ga)
     end
     function cb_calc_new(~, ~)
         GUIAnalysis(ga);
