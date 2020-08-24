@@ -50,6 +50,8 @@ selected_calc = [];
 selected_regionmeasures = [];
 selected_brainmeasures = [];
 selected_groups = [];
+current_figure_axes = [];
+current_figure_name = [];
 
     function cb_open(~, ~)
         % select file
@@ -444,6 +446,7 @@ init_console()
                 
                 set(ui_console_matrix_button, 'FontWeight', 'normal')
                 set(ui_console_global_button, 'FontWeight', 'bold')
+                
 %                 set(ui_button_console_regionmeasures,'FontWeight','normal')
 %                 set(ui_button_console_brainview,'FontWeight','normal')
                 
@@ -619,6 +622,8 @@ init_matrix()
         set(ui_matrix_axes, 'Position', [.05 .05 .60 .88])
     end
     function update_matrix()
+        current_figure_axes = ui_matrix_axes;
+        current_figure_name = 'Correlation Matrix';
         ga.getGraphPanel('UIParent', ui_panel_matrix, 'UIParentAxes', ui_matrix_axes)
     end
 
@@ -626,6 +631,7 @@ init_matrix()
 PANEL_GLOBAL_TITLE  = 'Global Measures';
 
 ui_panel_global = uipanel();
+ui_panel_global_axes = axes();
 init_global()
     function init_global()
         GUI.setUnits(ui_panel_global)
@@ -635,7 +641,9 @@ init_global()
         set(ui_panel_global, 'Title', PANEL_GLOBAL_TITLE)
     end
     function update_global_panel()
-        ga.getGlobalPanel('UIParent', ui_panel_global)
+        current_figure_axes = ui_panel_global_axes;
+         current_figure_name = 'Global Measure Plot';
+        ga.getGlobalPanel('UIParent', ui_panel_global, 'UIAxesGlobal', ui_panel_global_axes)
     end
 
 %% Menus
@@ -675,9 +683,9 @@ init_menu()
     end
 [ui_menu_about,  ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME);
     function cb_menu_figure(~,  ~)  % (src,  event)
-        h = figure('Name', ['Correlation Matrix - ' ga.getName()]);
+        h = figure('Name', [current_figure_name ' - ' ga.getName()]);
         set(gcf, 'Color', 'w')
-        copyobj(ui_matrix_axes, h)
+        copyobj(current_figure_axes, h)
         set(gca, 'Units', 'normalized')
         set(gca, 'OuterPosition', [0 0 1 1])
     end

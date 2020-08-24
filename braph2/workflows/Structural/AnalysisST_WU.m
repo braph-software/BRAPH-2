@@ -743,7 +743,7 @@ classdef AnalysisST_WU < Analysis
             % See also getGraphPanel, getMainPanelMeasurePlot.
             
             uiparent = get_from_varargin([], 'UIParent', varargin{:});           
-           
+            
             % declre constans
             SELECTALL_MEAS_CMD = GUI.SELECTALL_CMD;
             SELECTALL_MEAS_TP = 'Select all measures';
@@ -777,7 +777,7 @@ classdef AnalysisST_WU < Analysis
             ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_popup_brainmeasures_comp_groups = uicontrol(ui_mainpanel, 'Style', 'listbox');
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
-            ui_plot_measure_axes = axes();
+            ui_plot_measure_axes = get_from_varargin([], 'UIAxesGlobal', varargin{:});
             init_global_panel()         
             function init_global_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -840,7 +840,7 @@ classdef AnalysisST_WU < Analysis
                
                 set(ui_popup_brainmeasures_comp_groups, 'Position',[.02 .02 .15 .145])
                 set(ui_popup_brainmeasures_comp_groups, 'Enable', 'on')
-                set(ui_popup_brainmeasures_comp_groups, 'String', [{'All groups'}, analysis.getCohort().getGroups().getKeys()])
+                set(ui_popup_brainmeasures_comp_groups, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_popup_brainmeasures_comp_groups, 'TooltipString', 'Select group 1');
                 set(ui_popup_brainmeasures_comp_groups, 'Callback', {@cb_global_table})
             end
@@ -848,13 +848,8 @@ classdef AnalysisST_WU < Analysis
                 data = {}; %#ok<NASGU>
                 RowName = [];
                 
-                selected_index = get(ui_popup_brainmeasures_comp_groups, 'Value');
-                if isequal(selected_index, 1)
-                    group = analysis.getCohort().getGroups().getValues();
-                else
-                    selected_index = selected_index-1;
-                    group = analysis.getCohort().getGroups().getValue(selected_index);
-                end
+                selected_index = get(ui_popup_brainmeasures_comp_groups, 'Value');                
+                group = analysis.getCohort().getGroups().getValue(selected_index);
 
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
                     for j = 1:1:analysis.getMeasurements().length()
@@ -1017,13 +1012,14 @@ classdef AnalysisST_WU < Analysis
                 class_name = analysis.getClass();
                 class_suffix = class_name(end-2:end);                
                 if  isequal(class_suffix, 'BUT')
-                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, 'XLabel', 'Threshold');
+                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_brainmeasures_comp_groups, 'Value'), 'XLabel', 'Threshold');
                 elseif isequal(class_suffix, 'BUD')
-                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, 'XLabel', 'Density');                
+                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_brainmeasures_comp_groups, 'Value'), 'XLabel', 'Density');                
                 end                
             end
             function cb_global_table(~, ~)
                 update_global_table()
+                init_plot_measure_panel()
             end
             function cb_global_table_edit(~, event)  % (src,event)
                 g = event.Indices(1);
