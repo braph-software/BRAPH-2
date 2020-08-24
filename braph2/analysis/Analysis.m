@@ -355,6 +355,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             
             measurements = analysis.getMeasurements().getValues();  % array
             group = analysis.getCohort().getGroups().getValue(group);
+            x_label = get_from_varargin('', 'XLabel', varargin{:});
             measurements = measurements(find(cellfun(@(x) isequal(x.getGroup(), group) , measurements))); %#ok<FNDSB>
             % i need to plot threshold vs measurement values
             y_label = [];
@@ -363,8 +364,8 @@ classdef Analysis < handle & matlab.mixin.Copyable
             x_ = [0 0];
             y_ = [0 0]; %#ok<NASGU>
             for i = 1:1:length(measurements)
-                m = measurements{i};
-                X{i} = m.getThreshold();  %#ok<AGROW>
+                m = measurements{i};                
+                X{i} = eval(['m.get' x_label '()']);  %#ok<AGROW>
                 val_cell = m.getMeasureValue();
                 Y{i} = val_cell{1};   %#ok<AGROW>
                 y_label = m.getMeasureCode();
@@ -386,8 +387,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                     'Color', [0 0 1]);
             else
             end
-           
-           x_label = get_from_varargin('', 'XLabel', varargin{:});
+                      
            xlabel(ui_parent_axes, x_label)
            ylabel(ui_parent_axes, y_label)
            
@@ -433,7 +433,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 
             end
         end
-        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, groups, varargin)
+        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES)
@@ -443,18 +443,28 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % See also getGraphPanel, getGlobalPanel.
             
             comparisons = analysis.getComparisons().getValues();  % array
-            % i need to plot threshold vs measurement values
+            group1 = analysis.getCohort().getGroups().getValue(group_1);
+            group2 = analysis.getCohort().getGroups().getValue(group_2);
+            x_label = get_from_varargin('', 'XLabel', varargin{:});
+            for i = 1:1:length(comparisons)
+                comparison = comparisons{i};
+                [g1, g2] = comparison.getGroups();
+                if isequal(g1, group1) && isequal(g2, group2)
+                    comparisons_{i} = comparison; %#ok<AGROW>
+                end
+            end
+            comparison_to_plot = comparisons_(~cellfun(@isempty, comparisons_));
             y_label = [];
             X = [];
             Y = [];
             x_ = [0 0];
             y_ = [0 0]; %#ok<NASGU>
-            for i = 1:1:length(comparisons)
-                m = comparisons{i};
-                X{i} = m.getThreshold();  %#ok<AGROW>
-                val_cell = m.getMeasureValue();
+            for i = 1:1:length(comparison_to_plot)
+                c = comparison_to_plot{i};
+                X{i} = eval(['c.get' x_label '()']);  %#ok<AGROW>
+                val_cell = c.getDifference();
                 Y{i} = val_cell{1};   %#ok<AGROW>
-                y_label = m.getMeasureCode();
+                y_label = c.getMeasureCode();
             end   
             
             if ~isempty(X) && ~isempty(Y)

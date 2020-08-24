@@ -775,7 +775,9 @@ classdef AnalysisST_WU < Analysis
             ui_checkbox_brainmeasures_meas = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');
-            ui_popup_brainmeasures_comp_groups = uicontrol(ui_mainpanel, 'Style', 'listbox');
+            ui_listbox_brainmeasures_comp_groups = uicontrol(ui_mainpanel, 'Style', 'listbox');
+            ui_popup_globalmeasures_group1 = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_popup_globalmeasures_group2 = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
             ui_plot_measure_axes = get_from_varargin([], 'UIAxesGlobal', varargin{:});
             init_global_panel()         
@@ -836,19 +838,31 @@ classdef AnalysisST_WU < Analysis
                 set(ui_checkbox_brainmeasures_rand, 'String', 'random comparison')
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
-                set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_global_rand})               
-               
-                set(ui_popup_brainmeasures_comp_groups, 'Position',[.02 .02 .15 .145])
-                set(ui_popup_brainmeasures_comp_groups, 'Enable', 'on')
-                set(ui_popup_brainmeasures_comp_groups, 'String', analysis.getCohort().getGroups().getKeys())
-                set(ui_popup_brainmeasures_comp_groups, 'TooltipString', 'Select group 1');
-                set(ui_popup_brainmeasures_comp_groups, 'Callback', {@cb_global_table})
+                set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_global_rand})  
+                
+                set(ui_popup_globalmeasures_group1, 'Position', [.02 .1 .15 .07])
+                set(ui_popup_globalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_globalmeasures_group1, 'Callback', {@cb_global_table})
+                set(ui_popup_globalmeasures_group1, 'Enable', 'off')
+                set(ui_popup_globalmeasures_group1, 'Visible', 'off')
+                
+                set(ui_popup_globalmeasures_group2, 'Position', [.02 .02 .15 .07])
+                set(ui_popup_globalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_globalmeasures_group2, 'Callback', {@cb_global_table})
+                set(ui_popup_globalmeasures_group2, 'Enable', 'off')
+                set(ui_popup_globalmeasures_group2, 'Visible', 'off')
+                
+                set(ui_listbox_brainmeasures_comp_groups, 'Position',[.02 .02 .15 .145])
+                set(ui_listbox_brainmeasures_comp_groups, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_listbox_brainmeasures_comp_groups, 'TooltipString', 'Select group 1');
+                set(ui_listbox_brainmeasures_comp_groups, 'Callback', {@cb_global_table})
+                
             end
             function update_global_table()
                 data = {}; %#ok<NASGU>
                 RowName = [];
                 
-                selected_index = get(ui_popup_brainmeasures_comp_groups, 'Value');                
+                selected_index = get(ui_listbox_brainmeasures_comp_groups, 'Value');                
                 group = analysis.getCohort().getGroups().getValue(selected_index);
 
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
@@ -1008,13 +1022,45 @@ classdef AnalysisST_WU < Analysis
                     end
                 end
             end  
+            function update_popup_or_listbox()
+                 if get(ui_checkbox_brainmeasures_comp, 'Value')
+                    set(ui_popup_globalmeasures_group1, 'Enable', 'on')
+                    set(ui_popup_globalmeasures_group1, 'Visible', 'on')                    
+                    
+                    set(ui_popup_globalmeasures_group2, 'Enable', 'on')
+                    set(ui_popup_globalmeasures_group2, 'Visible', 'on')
+                    
+                    set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'off')
+                    set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'off')
+                 else
+                     set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
+                     set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'on')
+                     
+                     set(ui_popup_globalmeasures_group1, 'Enable', 'off')
+                     set(ui_popup_globalmeasures_group1, 'Visible', 'off')
+                     
+                     set(ui_popup_globalmeasures_group2, 'Enable', 'off')
+                     set(ui_popup_globalmeasures_group2, 'Visible', 'off')
+                end
+            end
             function init_plot_measure_panel()
+                cla(ui_plot_measure_axes)
                 class_name = analysis.getClass();
                 class_suffix = class_name(end-2:end);                
                 if  isequal(class_suffix, 'BUT')
-                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_brainmeasures_comp_groups, 'Value'), 'XLabel', 'Threshold');
+                    if get(ui_checkbox_brainmeasures_meas, 'Value')
+                        analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_listbox_brainmeasures_comp_groups, 'Value'), 'XLabel', 'Threshold');
+                    elseif get(ui_checkbox_brainmeasures_comp, 'Value')
+                        analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_globalmeasures_group1, 'Value'), get(ui_popup_globalmeasures_group2, 'Value'), 'XLabel', 'Threshold');
+                    elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                    end                    
                 elseif isequal(class_suffix, 'BUD')
-                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_brainmeasures_comp_groups, 'Value'), 'XLabel', 'Density');                
+                    if get(ui_checkbox_brainmeasures_meas, 'Value')
+                        analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_listbox_brainmeasures_comp_groups, 'Value'), 'XLabel', 'Density');
+                    elseif get(ui_checkbox_brainmeasures_comp, 'Value')
+                        analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_globalmeasures_group1, 'Value'), get(ui_popup_globalmeasures_group2, 'Value'), 'XLabel', 'Density');
+                    elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                    end                
                 end                
             end
             function cb_global_table(~, ~)
@@ -1045,9 +1091,11 @@ classdef AnalysisST_WU < Analysis
                 set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
-                set(ui_popup_brainmeasures_comp_groups, 'Enable', 'on')             
+                set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')             
                 
                 update_global_table()
+                update_popup_or_listbox()
+                init_plot_measure_panel()
             end
             function cb_global_comp(~, ~)  % (src,event)
                 set(ui_checkbox_brainmeasures_meas, 'Value', false)
@@ -1056,9 +1104,11 @@ classdef AnalysisST_WU < Analysis
                 set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'bold')
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
-                set(ui_popup_brainmeasures_comp_groups, 'Enable', 'on')
+                set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
                 
                 update_global_table()
+                update_popup_or_listbox()
+                init_plot_measure_panel()
             end
             function cb_global_rand(~, ~)  % (src,event)
                 set(ui_checkbox_brainmeasures_meas, 'Value', false)
@@ -1067,9 +1117,11 @@ classdef AnalysisST_WU < Analysis
                 set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
                 set(ui_checkbox_brainmeasures_rand, 'Value', true)
                 set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'bold')
-                set(ui_popup_brainmeasures_comp_groups, 'Enable', 'on')
+                set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
                 
                 update_global_table()
+                update_popup_or_listbox()
+                init_plot_measure_panel()
             end
             function cb_global_selectall(~, ~)  % (src,event)
                 for j = 1:1:analysis.getMeasurements().length()
