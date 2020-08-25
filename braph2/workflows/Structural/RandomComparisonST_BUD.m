@@ -204,15 +204,15 @@ classdef RandomComparisonST_BUD < RandomComparisonST_WU
                 set(ui_density_max_edit, 'String', newdata);
             end
             function cb_randomcomparison_permutation(~, ~)
-                setappdata(uiparent, 'permutation', str2double(get(ui_randomization_edit, 'String')))
+                setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
             end
             function cb_randomcomparison_attempts(~, ~)
                 setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
             end
             function cb_randomcomparison_weights(~, ~)
-                setappdata(uiparent, 'weights', str2double(get(ui_weights_edit, 'String')))
+                setappdata(uiparent, 'numberweigths', str2double(get(ui_weights_edit, 'String')))
             end
-            handle.variables = [];
+            handle.variables = {'density'};
             handle.step = ui_density_edit;
             handle.min = ui_density_min_edit;
             handle.max = ui_density_max_edit;
@@ -223,7 +223,7 @@ classdef RandomComparisonST_BUD < RandomComparisonST_WU
                 str2double(get(ui_density_max_edit, 'String')))
             setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
             setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
-            setappdata(uiparent, 'weights', str2double(get(ui_weights_edit, 'String')))
+            setappdata(uiparent, 'numberweigths', str2double(get(ui_weights_edit, 'String')))
         end
     end
 end

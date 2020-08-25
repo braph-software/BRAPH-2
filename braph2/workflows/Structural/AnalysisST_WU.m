@@ -1053,6 +1053,7 @@ classdef AnalysisST_WU < Analysis
                     elseif get(ui_checkbox_brainmeasures_comp, 'Value')
                         analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_globalmeasures_group1, 'Value'), get(ui_popup_globalmeasures_group2, 'Value'), 'XLabel', 'Threshold');
                     elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                        analysis.getGlobalRancomComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_listbox_brainmeasures_comp_groups, 'Value'), 'XLabel', 'Threshold');
                     end                    
                 elseif isequal(class_suffix, 'BUD')
                     if get(ui_checkbox_brainmeasures_meas, 'Value')
@@ -1060,6 +1061,7 @@ classdef AnalysisST_WU < Analysis
                     elseif get(ui_checkbox_brainmeasures_comp, 'Value')
                         analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_globalmeasures_group1, 'Value'), get(ui_popup_globalmeasures_group2, 'Value'), 'XLabel', 'Density');
                     elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                        analysis.getGlobalRandomComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_listbox_brainmeasures_comp_groups, 'Value'), 'XLabel', 'Density');
                     end                
                 end                
             end

@@ -40,7 +40,8 @@ classdef Analysis < handle & matlab.mixin.Copyable
     %
     % Analysis plot methods
     %  getGlobalMeasurePlot     - returns a plot
-    %  getGlobalComparisonPlot  - returns a plots
+    %  getGlobalComparisonPlot  - returns a plot
+    %  getGlobalRandomComparisonPlot - returns a plot
     %
     % Analysis getAnalysis methods (Static)
     %  getAnalysis              - returns a new analysis
@@ -436,7 +437,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
             %
-            % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES)
+            % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
             % creates a uipanel to contain the plot displayed in the global
             % measure panel for GUIAnalysis.
             %
@@ -446,6 +447,8 @@ classdef Analysis < handle & matlab.mixin.Copyable
             group1 = analysis.getCohort().getGroups().getValue(group_1);
             group2 = analysis.getCohort().getGroups().getValue(group_2);
             x_label = get_from_varargin('', 'XLabel', varargin{:});
+            comparisons_ = [];
+            comparison_to_plot = [];
             for i = 1:1:length(comparisons)
                 comparison = comparisons{i};
                 [g1, g2] = comparison.getGroups();
@@ -453,7 +456,9 @@ classdef Analysis < handle & matlab.mixin.Copyable
                     comparisons_{i} = comparison; %#ok<AGROW>
                 end
             end
-            comparison_to_plot = comparisons_(~cellfun(@isempty, comparisons_));
+            if ~isempty(comparisons_)
+                comparison_to_plot = comparisons_(~cellfun(@isempty, comparisons_));
+            end
             y_label = [];
             X = [];
             Y = [];
@@ -465,6 +470,95 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 val_cell = c.getDifference();
                 Y{i} = val_cell{1};   %#ok<AGROW>
                 y_label = c.getMeasureCode();
+            end   
+            
+            if ~isempty(X) && ~isempty(Y)
+                x_ = cell2mat(X);
+                y_ = cell2mat(Y);
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+           
+           x_label = get_from_varargin('', 'XLabel', varargin{:});
+           xlabel(ui_parent_axes, x_label)
+           ylabel(ui_parent_axes, y_label)
+           
+           ui_show_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox');
+           ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
+           ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+           ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
+           ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+           ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
+           ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+           init_uicontrols()
+            function init_uicontrols()
+                set(ui_show_checkbox, 'Units', 'normalized')
+                set(ui_show_checkbox, 'Position', [.45 .08 .2 .05])
+                set(ui_show_checkbox, 'String', 'Hide figure')
+                set(ui_show_checkbox, 'Value', false)
+                set(ui_show_checkbox, 'TooltipString', 'Hide/Show figures')
+                set(ui_show_checkbox, 'Callback', {@cb_hide_checkbox})
+                
+                set(ui_min_text, 'Units', 'normalized')
+                set(ui_min_text, 'Position', [.01 .07 .15 .05])
+                set(ui_min_text, 'String', 'Min')
+                
+                set(ui_min_edit, 'Units', 'normalized')
+                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
+                set(ui_min_edit, 'String', x_(1))
+                
+                set(ui_max_text, 'Units', 'normalized')
+                set(ui_max_text, 'Position', [.01 .05 .15 .05])
+                set(ui_max_text, 'String', 'Max')
+                
+                set(ui_max_edit, 'Units', 'normalized')
+                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
+                set(ui_max_edit, 'String', x_(end))
+                
+                set(ui_step_text, 'Units', 'normalized')
+                set(ui_step_text, 'Position', [.01 .03 .15 .05])
+                set(ui_step_text, 'String', 'Step')
+                
+                set(ui_step_edit, 'Units', 'normalized')
+                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
+                set(ui_step_edit, 'String', x_(2) - x_(1))
+                
+            end
+        end
+        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
+            % GETGLOBALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETGLOBALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            randomcomparisons = analysis.getRandomComparisons().getValues();  % array
+            group = analysis.getCohort().getGroups().getValue(group);
+            x_label = get_from_varargin('', 'XLabel', varargin{:});
+            random_comparison = randomcomparisons(find(cellfun(@(x) isequal(x.getGroup(), group), randomcomparisons))); %#ok<FNDSB>
+            y_label = [];
+            X = [];
+            Y = [];
+            x_ = [0 0];
+            y_ = [0 0]; %#ok<NASGU>
+            for i = 1:1:length(random_comparison)
+                rc = random_comparison{i};
+                X{i} = eval(['rc.get' x_label '()']);  %#ok<AGROW>
+                val_cell = rc.getDifference();
+                Y{i} = val_cell{1};   %#ok<AGROW>
+                y_label = rc.getMeasureCode();
             end   
             
             if ~isempty(X) && ~isempty(Y)

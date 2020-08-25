@@ -476,7 +476,7 @@ classdef RandomComparisonST_WU < RandomComparison
                 
                 set(ui_randomization_edit, 'String', 1000)
                 set(ui_randomization_edit, 'Position', [.5 .87 .45 .08])
-                set(ui_randomization_edit, 'Callback', {@cb_randomcomparison_permutation})
+                set(ui_randomization_edit, 'Callback', {@cb_randomcomparison_randomization})
                 
                 set(ui_attempts_text, 'String', 'Attempts per Edge')
                 set(ui_attempts_text, 'Position', [.01 .76 .47 .08])
@@ -494,8 +494,8 @@ classdef RandomComparisonST_WU < RandomComparison
                 set(ui_weights_edit, 'Position', [.5 .67 .45 .08])
                 set(ui_weights_edit, 'Callback', {@cb_randomcomparison_weights})
             end
-            function cb_randomcomparison_permutation(~, ~)
-                setappdata(uiparent, 'permutation', str2double(get(ui_randomization_edit, 'String')))
+            function cb_randomcomparison_randomization(~, ~)
+                setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
             end
             function cb_randomcomparison_attempts(~, ~)
                 setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))

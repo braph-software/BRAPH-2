@@ -170,7 +170,7 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
                 
                 set(ui_randomization_edit, 'String', 1000)
                 set(ui_randomization_edit, 'Position', [.5 .87 .45 .08])
-                set(ui_randomization_edit, 'Callback', {@cb_randomcomparison_permutation})
+                set(ui_randomization_edit, 'Callback', {@cb_randomcomparison_randomization})
                 
                 set(ui_attempts_text, 'String', 'Attempts per Edge')
                 set(ui_attempts_text, 'Position', [.01 .76 .47 .08])
@@ -202,16 +202,16 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
                 newdata = get(src, 'String');
                 set(ui_threshold_max_edit, 'String', newdata);
             end            
-            function cb_randomcomparison_permutation(~, ~)
-                setappdata(uiparent, 'permutation', str2double(get(ui_randomization_edit, 'String')))
+            function cb_randomcomparison_randomization(~, ~)
+                setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
             end
             function cb_randomcomparison_attempts(~, ~)
                 setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
             end
             function cb_randomcomparison_weights(~, ~)
-                setappdata(uiparent, 'weights', str2double(get(ui_weights_edit, 'String')))
+                setappdata(uiparent, 'numberweigths', str2double(get(ui_weights_edit, 'String')))
             end
-            handle.variables = [];
+            handle.variables = {'threshold'};
             handle.step = ui_threshold_edit;
             handle.min = ui_threshold_min_edit;
             handle.max = ui_threshold_max_edit;
@@ -222,7 +222,7 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
                 str2double(get(ui_threshold_max_edit, 'String')))
             setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
             setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
-            setappdata(uiparent, 'weights', str2double(get(ui_weights_edit, 'String')))
+            setappdata(uiparent, 'numberweigths', str2double(get(ui_weights_edit, 'String')))
         end
     end
 end
