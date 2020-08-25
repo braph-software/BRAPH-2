@@ -392,7 +392,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
            xlabel(ui_parent_axes, x_label)
            ylabel(ui_parent_axes, y_label)
            
-           ui_show_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox');
            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
@@ -401,12 +400,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
            init_uicontrols()
             function init_uicontrols()
-                set(ui_show_checkbox, 'Units', 'normalized')
-                set(ui_show_checkbox, 'Position', [.45 .08 .2 .05])
-                set(ui_show_checkbox, 'String', 'Hide figure')
-                set(ui_show_checkbox, 'Value', false)
-                set(ui_show_checkbox, 'TooltipString', 'Hide/Show figures')
-                set(ui_show_checkbox, 'Callback', {@cb_hide_checkbox})
                 
                 set(ui_min_text, 'Units', 'normalized')
                 set(ui_min_text, 'Position', [.01 .07 .15 .05])
@@ -493,7 +486,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
            xlabel(ui_parent_axes, x_label)
            ylabel(ui_parent_axes, y_label)
            
-           ui_show_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox');
            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
@@ -501,14 +493,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
            init_uicontrols()
-            function init_uicontrols()
-                set(ui_show_checkbox, 'Units', 'normalized')
-                set(ui_show_checkbox, 'Position', [.45 .08 .2 .05])
-                set(ui_show_checkbox, 'String', 'Hide figure')
-                set(ui_show_checkbox, 'Value', false)
-                set(ui_show_checkbox, 'TooltipString', 'Hide/Show figures')
-                set(ui_show_checkbox, 'Callback', {@cb_hide_checkbox})
-                
+            function init_uicontrols()                
                 set(ui_min_text, 'Units', 'normalized')
                 set(ui_min_text, 'Position', [.01 .07 .15 .05])
                 set(ui_min_text, 'String', 'Min')
@@ -582,7 +567,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
            xlabel(ui_parent_axes, x_label)
            ylabel(ui_parent_axes, y_label)
            
-           ui_show_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox');
            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
@@ -590,14 +574,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
            init_uicontrols()
-            function init_uicontrols()
-                set(ui_show_checkbox, 'Units', 'normalized')
-                set(ui_show_checkbox, 'Position', [.45 .08 .2 .05])
-                set(ui_show_checkbox, 'String', 'Hide figure')
-                set(ui_show_checkbox, 'Value', false)
-                set(ui_show_checkbox, 'TooltipString', 'Hide/Show figures')
-                set(ui_show_checkbox, 'Callback', {@cb_hide_checkbox})
-                
+            function init_uicontrols()                
                 set(ui_min_text, 'Units', 'normalized')
                 set(ui_min_text, 'Position', [.01 .07 .15 .05])
                 set(ui_min_text, 'String', 'Min')

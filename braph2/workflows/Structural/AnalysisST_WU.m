@@ -780,6 +780,7 @@ classdef AnalysisST_WU < Analysis
             ui_popup_globalmeasures_group2 = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
             ui_plot_measure_axes = get_from_varargin([], 'UIAxesGlobal', varargin{:});
+            ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             init_global_panel()         
             function init_global_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -795,10 +796,10 @@ classdef AnalysisST_WU < Analysis
                     set(ui_plot_measure_axes, 'Position', [.00 .00 .0 .0])
                     set(ui_plot_measure_axes, 'Visible', 'off')
                 else
-                    set(ui_global_tbl, 'Position', [.02 .19 .5 .79])                    
+                    set(ui_global_tbl, 'Position', [.02 .19 .4 .79])                    
                     GUI.setUnits(ui_plot_measure_panel)
                     GUI.setBackgroundColor(ui_plot_measure_panel) 
-                    set(ui_plot_measure_panel, 'Position', [.52 .00 .48 .98])
+                    set(ui_plot_measure_panel, 'Position', [.42 .00 .58 .98])
                     
                     set(ui_plot_measure_axes, 'Parent', ui_plot_measure_panel)
                     set(ui_plot_measure_axes, 'Position', [.1 .2 .8 .79])
@@ -806,35 +807,35 @@ classdef AnalysisST_WU < Analysis
                     set(ui_global_tbl, 'CellEditCallback', {@cb_global_table_edit})
                 
                 set(ui_global_tbl, 'Units', 'normalized')
-                set(ui_button_brainmeasures_selectall, 'Position', [.2 .14 .10 .03])
+                set(ui_button_brainmeasures_selectall, 'Position', [.19 .14 .10 .03])
                 set(ui_button_brainmeasures_selectall, 'String', SELECTALL_MEAS_CMD)
                 set(ui_button_brainmeasures_selectall, 'TooltipString', SELECTALL_MEAS_TP)
                 set(ui_button_brainmeasures_selectall, 'Callback', {@cb_global_selectall})
                 
-                set(ui_button_brainmeasures_clearselection, 'Position', [.3 .14 .10 .03])
+                set(ui_button_brainmeasures_clearselection, 'Position', [.19 .10 .10 .03])
                 set(ui_button_brainmeasures_clearselection, 'String', CLEARSELECTION_MEAS_CMD)
                 set(ui_button_brainmeasures_clearselection, 'TooltipString', CLEARSELECTION_MEAS_TP)
                 set(ui_button_brainmeasures_clearselection, 'Callback', {@cb_global_clearselection})
                 
-                set(ui_button_brainmeasures_remove, 'Position', [.4 .14 .10 .03])
+                set(ui_button_brainmeasures_remove, 'Position', [.19 .06 .10 .03])
                 set(ui_button_brainmeasures_remove, 'String', REMOVE_MEAS_CMD)
                 set(ui_button_brainmeasures_remove, 'TooltipString', REMOVE_MEAS_TP)
                 set(ui_button_brainmeasures_remove, 'Callback', {@cb_global_remove})
                 
-                set(ui_checkbox_brainmeasures_meas, 'Position', [.2 .09 .10 .03])
+                set(ui_checkbox_brainmeasures_meas, 'Position', [.3 .14 .10 .03])
                 set(ui_checkbox_brainmeasures_meas, 'String', 'measure')
                 set(ui_checkbox_brainmeasures_meas, 'Value', true)
                 set(ui_checkbox_brainmeasures_meas, 'TooltipString', 'Select measure')
                 set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'bold')
                 set(ui_checkbox_brainmeasures_meas, 'Callback', {@cb_global_meas})
                 
-                set(ui_checkbox_brainmeasures_comp, 'Position',[.3 .09 .10 .03])
+                set(ui_checkbox_brainmeasures_comp, 'Position',[.3 .10 .10 .03])
                 set(ui_checkbox_brainmeasures_comp, 'String', 'comparison')
                 set(ui_checkbox_brainmeasures_comp, 'Value', false)
                 set(ui_checkbox_brainmeasures_comp, 'TooltipString', 'Select comparison')
                 set(ui_checkbox_brainmeasures_comp, 'Callback', {@cb_global_comp})
                 
-                set(ui_checkbox_brainmeasures_rand, 'Position', [.4 .09 .15 .03])
+                set(ui_checkbox_brainmeasures_rand, 'Position', [.3 .06 .15 .03])
                 set(ui_checkbox_brainmeasures_rand, 'String', 'random comparison')
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
@@ -856,6 +857,12 @@ classdef AnalysisST_WU < Analysis
                 set(ui_listbox_brainmeasures_comp_groups, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_listbox_brainmeasures_comp_groups, 'TooltipString', 'Select group 1');
                 set(ui_listbox_brainmeasures_comp_groups, 'Callback', {@cb_global_table})
+                
+                set(ui_plot_hide_checkbox, 'Position', [.3 .02 .10 .03])
+                set(ui_plot_hide_checkbox, 'String', 'Show Plot')
+                set(ui_plot_hide_checkbox, 'Value', true)
+                set(ui_plot_hide_checkbox, 'TooltipString', 'Show/Hide Plot')
+                set(ui_plot_hide_checkbox, 'Callback', {@cb_show_plot})
                 
             end
             function update_global_table()
@@ -1064,6 +1071,21 @@ classdef AnalysisST_WU < Analysis
                         analysis.getGlobalRandomComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_listbox_brainmeasures_comp_groups, 'Value'), 'XLabel', 'Density');
                     end                
                 end                
+            end
+            function cb_show_plot(~, ~)
+                 if isequal(get(ui_plot_hide_checkbox, 'Value'), 0)
+                    set(ui_global_tbl, 'Position', [.02 .19 .96 .79])
+                    
+                    set(ui_plot_measure_panel, 'Position', [.0 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Position', [.00 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Visible', 'off')
+                 else 
+                    set(ui_global_tbl, 'Position', [.02 .19 .4 .79]) 
+                    set(ui_plot_measure_panel, 'Position', [.42 .00 .58 .98])
+                    
+                    set(ui_plot_measure_axes, 'Position', [.1 .2 .8 .79])
+                    set(ui_plot_measure_axes, 'Visible', 'on')
+                end
             end
             function cb_global_table(~, ~)
                 update_global_table()
