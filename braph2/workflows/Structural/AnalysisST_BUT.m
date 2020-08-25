@@ -14,7 +14,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
     %
     % AnalysisST_BUT graph methods (Access = protected)
     %  get_graph_for_subjects       - returns the graph of the correlated matrix
-    % 
+    %
     % AnalysisST_BUT calcultion methods (Access = protected):
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
@@ -30,7 +30,9 @@ classdef AnalysisST_BUT < AnalysisST_WU
     %  getAvailbleSettings          - returns the available settings
     %
     % AnalysisST_BUT Plot UIPanels
-    %  getMainPanelMeasurePlot      - creates a uipanel for a plot 
+    %  getGlobalMeasurePlot         - returns a global measurement plot
+    %  getGlobalComparisonPlot      - returns a global comparison plot
+    %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
     %
     % See also Analysis, MeasurementST_BUT, RandomComparisonST_BUT, ComparisonST_BUT
     
@@ -38,7 +40,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
         function analysis = AnalysisST_BUT(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
             % AnalysisST_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
             % creates a structural analysis of fixed threshold with ID, LABEL,
-            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It 
+            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISST_WU with default settings.
             %
             % AnalysisST_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
@@ -47,7 +49,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % initializes the ANALYSISST_WU with specified settings VALUES.
             %
             % See also MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU.
-                 
+            
             analysis = analysis@AnalysisST_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
@@ -59,12 +61,12 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % creates a measurement ID with the ANALYSIS class, the
             % MEASURE_CODE, the GROUP and the THRESHOLD.
             %
-            % See also getRandomComparisonID, getComparisonID.            
+            % See also getRandomComparisonID, getComparisonID.
             
             measurement_id = getMeasurementID@AnalysisST_WU(analysis, measure_code, group, varargin{:});
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
-            measurement_id = [measurement_id ' threshold=' num2str(threshold)];          
+            measurement_id = [measurement_id ' threshold=' num2str(threshold)];
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             % GETRANDOMCOMPARISONID returns a random comparison ID
@@ -73,8 +75,8 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % creates a random comparison ID with the ANALYSIS class, the
             % MEASURE_CODE, the GROUP and the THRESHOLD.
             %
-            % See also getMeasurementID, getComparisonID.            
-         
+            % See also getMeasurementID, getComparisonID.
+            
             randomcomparison_id = getRandomComparisonID@AnalysisST_WU(analysis, measure_code, group, varargin{:});
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
@@ -153,7 +155,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
         function graph_type = getGraphType()
             % GETGRAPHTYPE returns the compatible type of graph
             %
-            % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of 
+            % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of
             % graph 'GraphBU'.
             %
             % See also getSubjectClass.
@@ -190,6 +192,259 @@ classdef AnalysisST_BUT < AnalysisST_WU
             % See also getMeasurementClass, getRandomComparisonClass.
             
             comparison_class = 'ComparisonST_BUT';
+        end
+    end
+    methods  % plot methods
+        function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
+            % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETGLOBALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            measurements = analysis.getMeasurements().getValues();  % array
+            group = analysis.getCohort().getGroups().getValue(group);
+            measurements = measurements(find(cellfun(@(x) isequal(x.getGroup(), group) , measurements))); %#ok<FNDSB>
+            % i need to plot threshold vs measurement values
+            y_label = [];
+            X = [];
+            Y = [];
+            x_ = [0 0];
+            y_ = [0 0]; %#ok<NASGU>
+            for i = 1:1:length(measurements)
+                m = measurements{i};
+                X{i} = m.getThreshold();  %#ok<AGROW>
+                val_cell = m.getMeasureValue();
+                Y{i} = val_cell{1};   %#ok<AGROW>
+                y_label = m.getMeasureCode();
+            end
+            
+            if ~isempty(X) && ~isempty(Y)
+                x_ = cell2mat(X);
+                y_ = cell2mat(Y);
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            xlabel(ui_parent_axes, 'Threshold')
+            ylabel(ui_parent_axes, y_label)
+            
+            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            init_uicontrols()
+            function init_uicontrols()
+                
+                set(ui_min_text, 'Units', 'normalized')
+                set(ui_min_text, 'Position', [.01 .07 .15 .05])
+                set(ui_min_text, 'String', 'Min')
+                
+                set(ui_min_edit, 'Units', 'normalized')
+                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
+                set(ui_min_edit, 'String', x_(1))
+                
+                set(ui_max_text, 'Units', 'normalized')
+                set(ui_max_text, 'Position', [.01 .05 .15 .05])
+                set(ui_max_text, 'String', 'Max')
+                
+                set(ui_max_edit, 'Units', 'normalized')
+                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
+                set(ui_max_edit, 'String', x_(end))
+                
+                set(ui_step_text, 'Units', 'normalized')
+                set(ui_step_text, 'Position', [.01 .03 .15 .05])
+                set(ui_step_text, 'String', 'Step')
+                
+                set(ui_step_edit, 'Units', 'normalized')
+                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
+                set(ui_step_edit, 'String', x_(2) - x_(1))
+                
+            end
+        end
+        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
+            % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            comparisons = analysis.getComparisons().getValues();  % array
+            group1 = analysis.getCohort().getGroups().getValue(group_1);
+            group2 = analysis.getCohort().getGroups().getValue(group_2);
+            comparisons_ = [];
+            comparison_to_plot = [];
+            for i = 1:1:length(comparisons)
+                comparison = comparisons{i};
+                [g1, g2] = comparison.getGroups();
+                if isequal(g1, group1) && isequal(g2, group2)
+                    comparisons_{i} = comparison; %#ok<AGROW>
+                end
+            end
+            if ~isempty(comparisons_)
+                comparison_to_plot = comparisons_(~cellfun(@isempty, comparisons_));
+            end
+            y_label = [];
+            X = [];
+            Y = [];
+            x_ = [0 0];
+            y_ = [0 0]; %#ok<NASGU>
+            for i = 1:1:length(comparison_to_plot)
+                c = comparison_to_plot{i};
+                X{i} = c.getThreshold();  %#ok<AGROW>
+                val_cell = c.getDifference();
+                Y{i} = val_cell{1};   %#ok<AGROW>
+                y_label = c.getMeasureCode();
+            end
+            
+            if ~isempty(X) && ~isempty(Y)
+                x_ = cell2mat(X);
+                y_ = cell2mat(Y);
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            xlabel(ui_parent_axes, 'Threshold')
+            ylabel(ui_parent_axes, y_label)
+            
+            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            init_uicontrols()
+            function init_uicontrols()
+                set(ui_min_text, 'Units', 'normalized')
+                set(ui_min_text, 'Position', [.01 .07 .15 .05])
+                set(ui_min_text, 'String', 'Min')
+                
+                set(ui_min_edit, 'Units', 'normalized')
+                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
+                set(ui_min_edit, 'String', x_(1))
+                
+                set(ui_max_text, 'Units', 'normalized')
+                set(ui_max_text, 'Position', [.01 .05 .15 .05])
+                set(ui_max_text, 'String', 'Max')
+                
+                set(ui_max_edit, 'Units', 'normalized')
+                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
+                set(ui_max_edit, 'String', x_(end))
+                
+                set(ui_step_text, 'Units', 'normalized')
+                set(ui_step_text, 'Position', [.01 .03 .15 .05])
+                set(ui_step_text, 'String', 'Step')
+                
+                set(ui_step_edit, 'Units', 'normalized')
+                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
+                set(ui_step_edit, 'String', x_(2) - x_(1))
+                
+            end
+        end
+        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
+            % GETGLOBALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETGLOBALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            randomcomparisons = analysis.getRandomComparisons().getValues();  % array
+            group = analysis.getCohort().getGroups().getValue(group);
+            random_comparison = randomcomparisons(find(cellfun(@(x) isequal(x.getGroup(), group), randomcomparisons))); %#ok<FNDSB>
+            y_label = [];
+            X = [];
+            Y = [];
+            x_ = [0 0];
+            y_ = [0 0]; %#ok<NASGU>
+            for i = 1:1:length(random_comparison)
+                rc = random_comparison{i};
+                X{i} = rc.getThreshold();  %#ok<AGROW>
+                val_cell = rc.getDifference();
+                Y{i} = val_cell{1};   %#ok<AGROW>
+                y_label = rc.getMeasureCode();
+            end
+            
+            if ~isempty(X) && ~isempty(Y)
+                x_ = cell2mat(X);
+                y_ = cell2mat(Y);
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            xlabel(ui_parent_axes, 'Threshold')
+            ylabel(ui_parent_axes, y_label)
+            
+            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
+            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
+            init_uicontrols()
+            function init_uicontrols()
+                set(ui_min_text, 'Units', 'normalized')
+                set(ui_min_text, 'Position', [.01 .07 .15 .05])
+                set(ui_min_text, 'String', 'Min')
+                
+                set(ui_min_edit, 'Units', 'normalized')
+                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
+                set(ui_min_edit, 'String', x_(1))
+                
+                set(ui_max_text, 'Units', 'normalized')
+                set(ui_max_text, 'Position', [.01 .05 .15 .05])
+                set(ui_max_text, 'String', 'Max')
+                
+                set(ui_max_edit, 'Units', 'normalized')
+                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
+                set(ui_max_edit, 'String', x_(end))
+                
+                set(ui_step_text, 'Units', 'normalized')
+                set(ui_step_text, 'Position', [.01 .03 .15 .05])
+                set(ui_step_text, 'String', 'Step')
+                
+                set(ui_step_edit, 'Units', 'normalized')
+                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
+                set(ui_step_edit, 'String', x_(2) - x_(1))
+                
+            end
         end
     end
 end
