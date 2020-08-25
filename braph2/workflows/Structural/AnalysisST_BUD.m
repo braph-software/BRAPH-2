@@ -367,7 +367,7 @@ classdef AnalysisST_BUD < AnalysisST_WU
                 
             end
         end
-        function p = getGlobalRancomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
+        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
             % GETGLOBALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VALUE, ...)

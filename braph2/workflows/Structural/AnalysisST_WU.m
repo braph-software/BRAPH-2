@@ -1060,7 +1060,7 @@ classdef AnalysisST_WU < Analysis
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
                     analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_globalmeasures_group1, 'Value'), get(ui_popup_globalmeasures_group2, 'Value'));
                 elseif get(ui_checkbox_brainmeasures_rand, 'Value')
-                    analysis.getGlobalRancomComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_listbox_brainmeasures_comp_groups, 'Value'));
+                    analysis.getGlobalRandomComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_listbox_brainmeasures_comp_groups, 'Value'));
                 end
             end
             function cb_show_plot(~, ~)
