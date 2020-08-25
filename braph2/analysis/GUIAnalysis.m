@@ -353,13 +353,13 @@ init_calc()
         mlist = Graph.getCompatibleMeasureList(ga.getGraphType());
     end
     function cb_calc_calculate(~, ~)       
-        Measurement.GUIMeasurement(ga.getMeasurementClass(), ga)
+        GUIMeasurement(ga.getMeasurementClass(), ga)
     end
     function cb_calc_compare(~, ~)
-        Comparison.GUIComparison(ga.getComparisonClass(), ga)
+        GUIComparison(ga.getComparisonClass(), ga)
     end
     function cb_calc_random(~, ~)
-        RandomComparison.GUIRandomComparison(ga.getRandomComparisonClass(), ga)
+        GUIRandomComparison(ga.getRandomComparisonClass(), ga)
     end
     function cb_calc_new(~, ~)
         GUIAnalysis(ga);
@@ -639,6 +639,8 @@ init_global()
        
         set(ui_panel_global, 'Position', MAINPANEL_POSITION)
         set(ui_panel_global, 'Title', PANEL_GLOBAL_TITLE)
+        
+        set(ui_panel_global_axes, 'Position', [0 0 0 0])
     end
     function update_global_panel()
         current_figure_axes = ui_panel_global_axes;
