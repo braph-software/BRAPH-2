@@ -33,6 +33,9 @@ classdef Analysis < handle & matlab.mixin.Copyable
     %  getComparisons           - returns the idict comparisons
     %  getComparison            - returns the specified comparison
     %  getSettings              - returns the analysis settings structure
+    %  selectMeasurements       - returns a list with selected measurements values
+    %  selectComparisons        - returns a list with selected comparisons values
+    %  selectRandomComparisons  - returns a list with selected random comparisons values
     %
     % Analysis plot methods (Abstract)
     %  getGraphPanel            - returns a correlation matrix graph uipanel
@@ -67,7 +70,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
         randomcomparison_idict  % indexed dictionary with random comparison
         comparison_idict  % indexed dictionary with comparison
         settings  % settings structure for analysis
-        
     end
     methods (Access = protected)  % Constructor
         function analysis = Analysis(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
@@ -337,13 +339,105 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 end
             end
         end
+        function list = selectMeasurements(analysis, measure_code, group, method) 
+            % SELECTMEASUREMENTS returns a list with the group measurements values
+            %
+            % MEASUREMENTS = SELECTMEASUREMENTS(ANALYSIS, MEASURE_CODE, GROUP)
+            % returns a list containing the Measurements of type
+            % MEASURE_CODE for GROUP. 
+            %
+            % LIST = SELECTMEASUREMENTS(ANALYSIS, MEASURE_CODE, GROUP, METHOD)
+            % returns a list containing the results of applying METHODS to
+            % the Measurements of type MEASURE_CODE for GROUP. For example,
+            % METHOD can be '.getValue()'.
+            %
+            % See also getSettings, getMeasurement, getCohort, selectRandomComparisons
+            
+            all_measurements = analysis.getMeasurements().getValues();
+            selected_measurements = all_measurements(find( ...
+                cellfun(@(x) isequal(x.getGroup(), group) && isequal(x.getMeasureCode, measure_code), ...
+                all_measurements) ...
+                )); %#ok<FNDSB>
+
+            if nargin == 4
+                list = cell(size(selected_measurements));
+                for i = 1:1:length(selected_measurements)
+                    m = selected_measurements{i}; %#ok<NASGU>
+                    list{i} =  eval(['m' method]);
+                end
+            else
+                list = selected_measurements;
+            end
+        end
+        function list = selectComparisons(analysis, measure_code, group1, group2, method)
+            % SELECTCOMPARISONS returns a list with the group measurements values
+            %
+            % COMPARISONS = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP)
+            % returns a list containing the Measurements of type
+            % MEASURE_CODE for GROUP. 
+            %
+            % LIST = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP, METHOD)
+            % returns a list containing the results of applying METHODS to
+            % the Comparisons of type MEASURE_CODE for GROUP. For example,
+            % METHOD can be '.getValue()'.
+            %
+            % See also getSettings, getMeasurement, getCohort, selectMeasurements            
+            
+            all_comparisons = analysis.getComparisons().getValues();
+            selected_comparisons = cell();
+            for i = 1:1:length(all_comparisons)
+                comparison = all_comparisons{i};
+                [g1, g2] = comparison.getGroups();
+                if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
+                    selected_comparisons{end + 1} = eval(['comparison' method]); %#ok<AGROW>
+                end
+            end
+            
+            if nargin == 5
+                list = cell(size(selected_comparisons));
+                for i = 1:1:length(selected_comparisons)
+                    m = selected_comparisons{i}; %#ok<NASGU>
+                    list{i} =  eval(['m' method]);
+                end
+            else
+                list = selected_comparisons;
+            end            
+        end
+        function list = selectRandomComparisons(analysis, measure_code, group, method)
+            % SELECTRANDOMCOMPARISONS returns a list with the group measurements values
+            %
+            % RANDOMCOMPARISONS = SELECTRANDOMCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP)
+            % returns a list containing the Measurements of type
+            % MEASURE_CODE for GROUP. 
+            %
+            % LIST = SELECTRANDOMCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP, METHOD)
+            % returns a list containing the results of applying METHODS to
+            % the Random Comparisons of type MEASURE_CODE for GROUP. For example,
+            % METHOD can be '.getValue()'.
+            %
+            % See also getSettings, getMeasurement, getCohort, selectComparisons            
+            
+            all_randomcomparisons = analysis.getRandomComparisons().getValues();
+            selected_randomcomparisons = all_randomcomparisons(find(cellfun(@(x) isequal(x.getGroup(), group) ...
+                && isequal(x.getMeasureCode, measure_code) , all_randomcomparisons))); %#ok<FNDSB>
+            
+            list = cell(size(selected_randomcomparisons));
+            if nargin == 4
+                for i = 1:1:length(selected_randomcomparisons)
+                    rc = selected_randomcomparisons{i}; %#ok<NASGU>
+                    list{i} =  eval(['rc' method]);
+                end
+            else
+                list = selected_randomcomparisons;
+            end
+        end
     end
     methods (Abstract)  % Plot abstract methods
         getGraphPanel(analysis, varargin)
         getGlobalPanel(analysis, varargin) 
-        getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
-        getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
-        getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
+        getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
+        getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
+        getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
     end
     methods (Static)  % getAnalysis
         function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>

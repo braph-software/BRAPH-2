@@ -195,36 +195,21 @@ classdef AnalysisST_BUT < AnalysisST_WU
         end
     end
     methods  % plot methods
-        function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
+        function p = getGlobalMeasurePlot(analysis,ui_parent_panel, ui_parent_axes, measure_code, group, varargin) %#ok<INUSL>
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
             % creates a uipanel to contain the plot displayed in the global
             % measure panel for GUIAnalysis.
-            %
+            %            
             % See also getGraphPanel, getGlobalPanel.
-            
-            measurements = analysis.getMeasurements().getValues();  % array
-            group = analysis.getCohort().getGroups().getValue(group);
-            measurements = measurements(find(cellfun(@(x) isequal(x.getGroup(), group) , measurements))); %#ok<FNDSB>
-            % i need to plot threshold vs measurement values
-            y_label = [];
-            X = [];
-            Y = [];
-            x_ = [0 0];
-            y_ = [0 0]; %#ok<NASGU>
-            for i = 1:1:length(measurements)
-                m = measurements{i};
-                X{i} = m.getThreshold();  %#ok<AGROW>
-                val_cell = m.getMeasureValue();
-                Y{i} = val_cell{1};   %#ok<AGROW>
-                y_label = m.getMeasureCode();
-            end
-            
-            if ~isempty(X) && ~isempty(Y)
+
+            X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');
+            Y = analysis.selectMeasurements(measure_code, group, '.getMeasureValue()');
+
+            if ~isempty(X) && ~isempty(Y)                
                 x_ = cell2mat(X);
-                y_ = cell2mat(Y);
-                
+                y_ = cell2mat([Y{:}]);
                 p = plot(ui_parent_axes, ...
                     x_, ...
                     y_, ...
@@ -234,49 +219,16 @@ classdef AnalysisST_BUT < AnalysisST_WU
                     'MarkerFaceColor', [.9 .4 .1], ...
                     'LineStyle', '-', ...
                     'LineWidth', 1, ...
-                    'Color', [0 0 1]);
+                    'Color', [0 0 1], ...
+                    varargin{:});
             else
             end
             
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, y_label)
+            ylabel(ui_parent_axes, measure_code)
             
-            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            init_uicontrols()
-            function init_uicontrols()
-                
-                set(ui_min_text, 'Units', 'normalized')
-                set(ui_min_text, 'Position', [.01 .07 .15 .05])
-                set(ui_min_text, 'String', 'Min')
-                
-                set(ui_min_edit, 'Units', 'normalized')
-                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
-                set(ui_min_edit, 'String', x_(1))
-                
-                set(ui_max_text, 'Units', 'normalized')
-                set(ui_max_text, 'Position', [.01 .05 .15 .05])
-                set(ui_max_text, 'String', 'Max')
-                
-                set(ui_max_edit, 'Units', 'normalized')
-                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
-                set(ui_max_edit, 'String', x_(end))
-                
-                set(ui_step_text, 'Units', 'normalized')
-                set(ui_step_text, 'Position', [.01 .03 .15 .05])
-                set(ui_step_text, 'String', 'Step')
-                
-                set(ui_step_edit, 'Units', 'normalized')
-                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
-                set(ui_step_edit, 'String', x_(2) - x_(1))
-                
-            end
         end
-        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
+        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
@@ -285,37 +237,12 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            comparisons = analysis.getComparisons().getValues();  % array
-            group1 = analysis.getCohort().getGroups().getValue(group_1);
-            group2 = analysis.getCohort().getGroups().getValue(group_2);
-            comparisons_ = [];
-            comparison_to_plot = [];
-            for i = 1:1:length(comparisons)
-                comparison = comparisons{i};
-                [g1, g2] = comparison.getGroups();
-                if isequal(g1, group1) && isequal(g2, group2)
-                    comparisons_{i} = comparison; %#ok<AGROW>
-                end
-            end
-            if ~isempty(comparisons_)
-                comparison_to_plot = comparisons_(~cellfun(@isempty, comparisons_));
-            end
-            y_label = [];
-            X = [];
-            Y = [];
-            x_ = [0 0];
-            y_ = [0 0]; %#ok<NASGU>
-            for i = 1:1:length(comparison_to_plot)
-                c = comparison_to_plot{i};
-                X{i} = c.getThreshold();  %#ok<AGROW>
-                val_cell = c.getDifference();
-                Y{i} = val_cell{1};   %#ok<AGROW>
-                y_label = c.getMeasureCode();
-            end
+            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getThreshold()');
+            Y = analysis.selectComparisons(measure_code, group_1, group_2, '.getDifference()');
             
             if ~isempty(X) && ~isempty(Y)
                 x_ = cell2mat(X);
-                y_ = cell2mat(Y);
+                y_ = cell2mat([Y{:}]);
                 
                 p = plot(ui_parent_axes, ...
                     x_, ...
@@ -330,71 +257,85 @@ classdef AnalysisST_BUT < AnalysisST_WU
             else
             end
             
+            hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, y_label)
+            ylabel(ui_parent_axes, measure_code)
             
-            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            init_uicontrols()
-            function init_uicontrols()
-                set(ui_min_text, 'Units', 'normalized')
-                set(ui_min_text, 'Position', [.01 .07 .15 .05])
-                set(ui_min_text, 'String', 'Min')
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
                 
-                set(ui_min_edit, 'Units', 'normalized')
-                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
-                set(ui_min_edit, 'String', x_(1))
-                
-                set(ui_max_text, 'Units', 'normalized')
-                set(ui_max_text, 'Position', [.01 .05 .15 .05])
-                set(ui_max_text, 'String', 'Max')
-                
-                set(ui_max_edit, 'Units', 'normalized')
-                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
-                set(ui_max_edit, 'String', x_(end))
-                
-                set(ui_step_text, 'Units', 'normalized')
-                set(ui_step_text, 'Position', [.01 .03 .15 .05])
-                set(ui_step_text, 'String', 'Step')
-                
-                set(ui_step_edit, 'Units', 'normalized')
-                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
-                set(ui_step_edit, 'String', x_(2) - x_(1))
-                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMin()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMax()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
             end
         end
-        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
-            % GETGLOBALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
+            % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
             %
-            % P = GETGLOBALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VALUE, ...)
+            % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
             % creates a uipanel to contain the plot displayed in the global
             % measure panel for GUIAnalysis.
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            randomcomparisons = analysis.getRandomComparisons().getValues();  % array
-            group = analysis.getCohort().getGroups().getValue(group);
-            random_comparison = randomcomparisons(find(cellfun(@(x) isequal(x.getGroup(), group), randomcomparisons))); %#ok<FNDSB>
-            y_label = [];
-            X = [];
-            Y = [];
-            x_ = [0 0];
-            y_ = [0 0]; %#ok<NASGU>
-            for i = 1:1:length(random_comparison)
-                rc = random_comparison{i};
-                X{i} = rc.getThreshold();  %#ok<AGROW>
-                val_cell = rc.getDifference();
-                Y{i} = val_cell{1};   %#ok<AGROW>
-                y_label = rc.getMeasureCode();
-            end
+            X = analysis.selectRandomComparisons(measure_code, group, '.getThreshold()');
+            Y = analysis.selectRandomComparisons(measure_code, group, '.getDifference()');
             
             if ~isempty(X) && ~isempty(Y)
                 x_ = cell2mat(X);
-                y_ = cell2mat(Y);
+                y_ = cell2mat([Y{:}]);
                 
                 p = plot(ui_parent_axes, ...
                     x_, ...
@@ -409,41 +350,68 @@ classdef AnalysisST_BUT < AnalysisST_WU
             else
             end
             
+            hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, y_label)
+            ylabel(ui_parent_axes, measure_code)
             
-            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            init_uicontrols()
-            function init_uicontrols()
-                set(ui_min_text, 'Units', 'normalized')
-                set(ui_min_text, 'Position', [.01 .07 .15 .05])
-                set(ui_min_text, 'String', 'Min')
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
                 
-                set(ui_min_edit, 'Units', 'normalized')
-                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
-                set(ui_min_edit, 'String', x_(1))
-                
-                set(ui_max_text, 'Units', 'normalized')
-                set(ui_max_text, 'Position', [.01 .05 .15 .05])
-                set(ui_max_text, 'String', 'Max')
-                
-                set(ui_max_edit, 'Units', 'normalized')
-                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
-                set(ui_max_edit, 'String', x_(end))
-                
-                set(ui_step_text, 'Units', 'normalized')
-                set(ui_step_text, 'Position', [.01 .03 .15 .05])
-                set(ui_step_text, 'String', 'Step')
-                
-                set(ui_step_edit, 'Units', 'normalized')
-                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
-                set(ui_step_edit, 'String', x_(2) - x_(1))
-                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMin()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMax()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
             end
         end
     end

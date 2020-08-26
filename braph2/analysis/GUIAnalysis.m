@@ -1,8 +1,12 @@
-function GUIAnalysis(ga)
+function GUIAnalysis(ga, measure_rules)
 
 %% General Constants
 APPNAME = GUI.GA_NAME;
 BUILD = BRAPH2.BUILD;
+
+if nargin == 1
+    measure_rules = {'', ''};
+end
 
 % Panels Dimensions
 MARGIN_X = .01;
@@ -353,13 +357,13 @@ init_calc()
         mlist = Graph.getCompatibleMeasureList(ga.getGraphType());
     end
     function cb_calc_calculate(~, ~)       
-        GUIMeasurement(ga.getMeasurementClass(), ga)
+        GUIMeasurement(ga.getMeasurementClass(), ga, measure_rules)
     end
     function cb_calc_compare(~, ~)
-        GUIComparison(ga.getComparisonClass(), ga)
+        GUIComparison(ga.getComparisonClass(), ga, measure_rules)
     end
     function cb_calc_random(~, ~)
-        GUIRandomComparison(ga.getRandomComparisonClass(), ga)
+        GUIRandomComparison(ga.getRandomComparisonClass(), ga, measure_rules)
     end
     function cb_calc_new(~, ~)
         GUIAnalysis(ga);

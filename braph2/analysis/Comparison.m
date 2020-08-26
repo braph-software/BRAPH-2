@@ -28,7 +28,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
     %  getNotes                     - returns the notes
     %  getBrainAtlases              - returns the atlases
     %  getMeasureCode               - returns the measure code
-    %  getGroup                     - returns the group
+    %  getGroups                    - returns the group
     %  getSettings                  - returns the settings structure
     % 
     % Comparison descriptive methods (Static)

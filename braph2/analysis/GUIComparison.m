@@ -1,4 +1,4 @@
-function GUIComparison(comparison_class, analysis)
+function GUIComparison(comparison_class, analysis, measure_rules)
 % GUICOMPARISON creates a UI figure to specify Comparison settings
 %
 % GUICOMPARISON(COMPARISON_CLASS, ANALYSIS) creates a UI
@@ -332,11 +332,11 @@ set(f, 'Visible', 'on');
                 for vals = 1:1:length(value)
                     value_step = value(vals);
                     m = analysis.getComparison(mlist{mi}, group_1, group_2, rule, value_step, ...
-                        'PermutationNumber', getappdata(ui_child_panel, 'permutation'));
+                        'PermutationNumber', getappdata(ui_child_panel, 'permutation'), measure_rules{:});
                 end
             else
                 m = analysis.getComparison(mlist{mi}, group_1, group_2, rule, value, ...
-                    'PermutationNumber', getappdata(ui_child_panel, 'permutation'));
+                    'PermutationNumber', getappdata(ui_child_panel, 'permutation'), measure_rules{:});
             end
             msg = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10, 10)) 's - group = ' int2str(g_1) ' - ' mlist{mi}];
             
