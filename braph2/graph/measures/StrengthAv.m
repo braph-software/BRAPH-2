@@ -15,8 +15,9 @@ classdef StrengthAv < Strength
     %   getName                     - returns the name of average strength measure
     %   getDescription              - returns the description of average strength measure
     %   getAvailableSettings        - returns the settings available to the class
-    %   getMeasureFormat            - returns de measure format
-    %   getMeasureScope             - returns de measure scope 
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure
     %   getMeasure                  - returns the strength class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs

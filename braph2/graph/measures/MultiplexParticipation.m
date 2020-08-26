@@ -19,8 +19,9 @@ classdef MultiplexParticipation < Degree
     %   getName                     - returns the name of multiplex participation measure
     %   getDescription              - returns the description of multiplex participation measure
     %   getAvailableSettings        - returns the settings available to the class
-    %   getMeasureFormat            - returns de measure format
-    %   getMeasureScope             - returns de measure scope    
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure
     %   getMeasure                  - returns the degree class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
