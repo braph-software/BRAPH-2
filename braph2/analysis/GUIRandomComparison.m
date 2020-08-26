@@ -1,4 +1,4 @@
-function GUIRandomComparison(comparison_class, analysis)
+function GUIRandomComparison(comparison_class, analysis, measure_rules)
 % GETRANDOMCOMPARISONPANEL creates a UI figure to specify RandomComparison settings
 %
 % GETRANDOMCOMPARISONPANEL(RANDOMCOMPARISON_CLASS, ANALYSIS) creates a UI
@@ -324,13 +324,13 @@ set(f, 'Visible', 'on');
                     m = analysis.getRandomComparison(mlist{mi}, group_1, rule, value_step, ...
                         'RandomizationNumber', getappdata(ui_child_panel, 'randomization'), ...
                         'AttemptsPerEdge', getappdata(ui_child_panel, 'attempts'), ...
-                        'NumberOfWeights', getappdata(ui_child_panel, 'numberweigths')); %#ok<NASGU>
+                        'NumberOfWeights', getappdata(ui_child_panel, 'numberweigths'), measure_rules{:}); %#ok<NASGU>
                 end
             else
                 m = analysis.getRandomComparison(mlist{mi}, group_1, rule, value, ...
                     'RandomizationNumber', getappdata(ui_child_panel, 'randomization'), ...
                     'AttemptsPerEdge', getappdata(ui_child_panel, 'attempts'), ...
-                    'NumberOfWeights', getappdata(ui_child_panel, 'weigths')); %#ok<NASGU>
+                    'NumberOfWeights', getappdata(ui_child_panel, 'weigths'), measure_rules{:}); %#ok<NASGU>
             end
             msg = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10, 10)) 's - group = ' int2str(g_1) ' - ' mlist{mi}];
             

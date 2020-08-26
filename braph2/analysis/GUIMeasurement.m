@@ -1,5 +1,5 @@
 
-function GUIMeasurement(measurement_class, analysis)
+function GUIMeasurement(measurement_class, analysis, measure_rules)
 % GUIMEASUREMENT creates a UI figure to specify Measurement settings
 %
 % GUIMEASUREMENT(MEASUREMENT_CLASS, ANALYSIS) creates a UI
@@ -325,10 +325,10 @@ set(f, 'Visible', 'on');
                     if iscell(value)
                         for vals = 1:1:length(value)
                             value_step = value{vals};
-                            m = analysis.getMeasurement(mlist{mi}, gr, rule, value_step); %#ok<NASGU>
+                            m = analysis.getMeasurement(mlist{mi}, gr, rule, value_step, measure_rules{:}); %#ok<NASGU>
                         end
                     else
-                        m = analysis.getMeasurement(mlist{mi}, gr, rule, value); %#ok<NASGU>
+                        m = analysis.getMeasurement(mlist{mi}, gr, rule, value, measure_rules{:}); %#ok<NASGU>
                     end
                     msg = ['time = ' int2str(toc(start)) '.'  int2str(mod(toc(start)*10, 10)) 's - group = ' gr.tostring() ' - ' mlist{mi}];
                     
@@ -353,10 +353,10 @@ set(f, 'Visible', 'on');
                 if length(value) > 1
                     for vals = 1:1:length(value)
                         value_step = value(vals);
-                        m = analysis.getMeasurement(mlist{mi}, group, rule, value_step); %#ok<NASGU>
+                        m = analysis.getMeasurement(mlist{mi}, group, rule, value_step, measure_rules{:}); %#ok<NASGU>
                     end
                 else
-                    m = analysis.getMeasurement(mlist{mi}, group, rule, value); %#ok<NASGU>
+                    m = analysis.getMeasurement(mlist{mi}, group, rule, value, measure_rules{:}); %#ok<NASGU>
                 end
                 msg = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10, 10)) 's - group = ' int2str(g) ' - ' mlist{mi}];
                 

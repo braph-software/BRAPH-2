@@ -38,6 +38,7 @@ FIGURE_SC = GUI.FIGURE_SC;
 CLOSE_TP = ['Close ' APPNAME '. Shortcut: ' GUI.ACCELERATOR '+' CLOSE_SC];
 
 initial_number_childs = 0;
+maesures_rules = [];
 
 %% Application Data
 analysis_list = Analysis.getList();
@@ -346,15 +347,15 @@ init_graph_settings()
         setup(); 
     end
     function cb_calc_settings_start_analysis(~, ~)
-        GUIAnalysis(ga)
+        GUIAnalysis(ga, maesures_rules)
     end
 
 %% Panel - Measure Table
 TAB_LOGICAL_COL = 1;
 TAB_NAME_COL = 2;
 TAB_NODAL_COL = 3;
-TAB_NODAL = 'Global';
-TAB_GLOBAL = 'Nodal';
+TAB_NODAL = 'Nodal';
+TAB_GLOBAL = 'Global';
 TAB_BINODAL = 'Binodal';
 TAB_LAYER_COL = 4;
 TAB_UNILAYER = 'Unilayer';
@@ -475,14 +476,27 @@ init_measures_table_panel()
                         set(measure_fields(j, 1), 'String', ms{1, 4})
                         set(measure_fields(j, 1), 'HorizontalAlignment', 'left')
                         set(measure_fields(j, 1), 'FontWeight', 'bold')
+                        set(measure_fields(j, 1), 'Callback', {@cb_measure_settings})
                     elseif isequal(ms{1, 2}, 2) % numerical
                         set(measure_fields(j, 1), 'Style', 'edit');
                         set(measure_fields(j, 1), 'String', ms{1, 3})  % put default
+                        set(measure_fields(j, 1), 'Callback', {@cb_measure_settings})
                     else % logical
                         set(measure_fields(j, 1), 'Style', 'popup');
                         set(measure_fields(j, 1), 'String', {'true', 'false'})
+                        set(measure_fields(j, 1), 'Callback', {@cb_measure_settings})
                     end
-                end
+                end 
+            end
+        end
+        function cb_measure_settings(src, ~)
+            measure = mlist{selected_measure};
+            measure_settings = Measure.getAvailableSettings(measure);
+            if isequal(src.Style, 'popupmenu')
+                selection = src.String{src.Value};
+                maesures_rules{end+1} = measure_settings{1,1}; 
+                maesures_rules{end+1} = selection;
+                
             end
         end
     end
