@@ -228,7 +228,7 @@ classdef Richness < Degree
             % NAME, VALUES = GETPARAMETERINFORMATION() returns the name (string) and 
             % the values of the richness parameter.
             
-            name = "Richness threshold";
+            name = 'Richness threshold';
             richness_threshold = get_from_varargin(-1, 'RichnessThreshold', m.getSettings());
             values = 1:1:richness_threshold;
         end
