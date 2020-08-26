@@ -35,7 +35,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
     %  getSettings              - returns the analysis settings structure
     %  selectMeasurements       - returns a list with selected measurements values
     %  selectComparisons        - returns a list with selected comparisons values
-    %  selectRandomComparisons  - returns a list with selected randomcomparisons values
+    %  selectRandomComparisons  - returns a list with selected random comparisons values
     %
     % Analysis plot methods (Abstract)
     %  getGraphPanel            - returns a correlation matrix graph uipanel
@@ -359,7 +359,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 all_measurements) ...
                 )); %#ok<FNDSB>
 
-            if nargin==4
+            if nargin == 4
                 list = cell(size(selected_measurements));
                 for i = 1:1:length(selected_measurements)
                     m = selected_measurements{i}; %#ok<NASGU>
@@ -383,26 +383,24 @@ classdef Analysis < handle & matlab.mixin.Copyable
             %
             % See also getSettings, getMeasurement, getCohort, selectMeasurements            
             
-            all_comparisons = analysis.getComparisons().getValues();  % arraylist_
-            list_ = cell(size(all_comparisons));
-            if nargin==5
-                for i = 1:1:length(all_comparisons)
-                    comparison = all_comparisons{i};
-                    [g1, g2] = comparison.getGroups();
-                    if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
-                        list_{i} = eval(['comparison' method]); %#ok<AGROW>
-                    end
+            all_comparisons = analysis.getComparisons().getValues();
+            selected_comparisons = cell();
+            for i = 1:1:length(all_comparisons)
+                comparison = all_comparisons{i};
+                [g1, g2] = comparison.getGroups();
+                if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
+                    selected_comparisons{end + 1} = eval(['comparison' method]); %#ok<AGROW>
                 end
-                list = list_(~cellfun(@isempty, list_));
+            end
+            
+            if nargin == 5
+                list = cell(size(selected_comparisons));
+                for i = 1:1:length(selected_comparisons)
+                    m = selected_comparisons{i}; %#ok<NASGU>
+                    list{i} =  eval(['m' method]);
+                end
             else
-                for i = 1:1:length(all_comparisons)
-                    comparison = all_comparisons{i};
-                    [g1, g2] = comparison.getGroups();
-                    if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
-                        list_{i} = comparison; %#ok<AGROW>
-                    end
-                end
-                list = list_(~cellfun(@isempty, list_));
+                list = selected_comparisons;
             end            
         end
         function list = selectRandomComparisons(analysis, measure_code, group, method)
@@ -421,9 +419,10 @@ classdef Analysis < handle & matlab.mixin.Copyable
             
             all_randomcomparisons = analysis.getRandomComparisons().getValues();
             selected_randomcomparisons = all_randomcomparisons(find(cellfun(@(x) isequal(x.getGroup(), group) ...
-                && isequal(x.getMeasureCode, measure_code) , all_randomcomparisons)));    %#ok<FNDSB>
+                && isequal(x.getMeasureCode, measure_code) , all_randomcomparisons))); %#ok<FNDSB>
+            
             list = cell(size(selected_randomcomparisons));
-            if nargin==4
+            if nargin == 4
                 for i = 1:1:length(selected_randomcomparisons)
                     rc = selected_randomcomparisons{i}; %#ok<NASGU>
                     list{i} =  eval(['rc' method]);
@@ -437,8 +436,8 @@ classdef Analysis < handle & matlab.mixin.Copyable
         getGraphPanel(analysis, varargin)
         getGlobalPanel(analysis, varargin) 
         getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
-        getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
-        getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
+        getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
+        getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
     end
     methods (Static)  % getAnalysis
         function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>
