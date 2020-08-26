@@ -118,6 +118,29 @@ classdef Measure < handle
             Measure.BILAYER_DESCRIPTION
             }
         
+        % Parametricity
+        PARAMETRIC = 1
+        PARAMETRIC_NAME = 'Parametric'
+        PARAMETRIC_DESCRIPTION = ['Parametric measure consists of a measure ' ...
+            'that outputs the results based on a parameter.']
+        
+        NONPARAMETRIC = 2
+        NONPARAMETRIC_NAME = 'Non-parametric'
+        NONPARAMETRIC_DESCRIPTION = ['Non-parametric measure consists of a measure ' ...
+            'where the results are not based on a parameter.']
+        
+        PARAMETRICITY_NUMBER = 2
+        
+        PARAMETRICITY_NAME = {
+            Measure.PARAMETRIC_NAME
+            Measure.NONPARAMETRIC_NAME
+            }
+
+        PARAMETRICITY_DESCRIPTION = {
+            Measure.PARAMETRIC_DESCRIPTION
+            Measure.NONPARAMETRIC_DESCRIPTION
+            }
+        
     end
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
@@ -364,6 +387,46 @@ classdef Measure < handle
             % See also getMeasureScope, is_superglobal, is_unilayer.
             
             bool = Measure.getMeasureScope(m) == Measure.BILAYER;
+        end
+        function parametricity = getParametricity(m)
+            % GETPARAMETRICITY returns the parametricity of the measure
+            %
+            % PARAMETRICITY = GETPARAMETRICITY(M) returns the
+            % parametricity of measure M (e.g., NONPARAMETRIC, PARAMETRIC).
+            %
+            % PARAMETRICITY = GETPARAMETRICITY(MEASURE_CLASS)
+            % returns the parametricity of the measure whose class is
+            % MEASURE_CLASS (e.g., NONPARAMETRIC, PARAMETRIC).
+            %
+            % See also is_nonparametric, is_parametric.
+            
+            parametricity = eval([Measure.getClass(m) '.getParametricity)']);
+        end
+        function bool = is_parametric(m)
+            % IS_PARAMETRIC checks if measure is parametric
+            %
+            % BOOL = IS_PARAMETRIC(M) returns true if the concrete measure M
+            % is parametric and false otherwise.
+            %
+            % BOOL = IS_PARAMETRIC(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is parametric and false otherwise.
+            %
+            % See also getParametricity, is_nonparametric.
+            
+            bool = Measure.getParametricity(m) == Measure.PARAMETRIC;
+        end
+        function bool = is_nonparametric(m)
+            % IS_NONPARAMETRIC checks if measure is non-parametric
+            %
+            % BOOL = IS_NONPARAMETRIC(M) returns true if the concrete measure M
+            % is non-parametric and false otherwise.
+            %
+            % BOOL = IS_NONPARAMETRIC(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is non-parametric and false otherwise.
+            %
+            % See also getParametricity, is_parametric.
+            
+            bool = Measure.getParametricity(m) == Measure.NONPARAMETRIC;
         end
     end
     methods (Static)  % Inspection methods
