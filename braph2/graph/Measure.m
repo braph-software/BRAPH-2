@@ -34,14 +34,17 @@ classdef Measure < handle
     %                   inheriting classes must implement this method
     %
     % Measure descriptive methods:
-    %   getMeasureFormat - returns de measure format
+    %   getMeasureFormat - returns the measure format
     %   is_global       - boolean, checks if the measure format is global
     %   is_nodal        - boolean, checks if the measure format is nodal
     %   is_binodal      - boolean, checks if the measure format if binodal
-    %   getMeasureScope - returns de measure scope
+    %   getMeasureScope - returns the measure scope
     %   is_superglobal  - boolean, checks if the measure scope is superglobal
     %   is_unilayer     - boolean, checks if the measure scope is unilayer
     %   is_bilayer      - boolean, checks if the measure scope is bilayer
+    %   getParametricity - returns the parametricity of the measure 
+    %   is_parametric   - boolean, checks if the measure is parametric
+    %   is_nonparametric - boolean, checks if the measure is non-parametric
     %
     % Measure inspection methods (Static)
     %   getList         - returns a list with subclasses of measure
@@ -509,6 +512,17 @@ classdef Measure < handle
             % See also getAvailableSettings, getList, getCompatibleGraphList, getCompatibleGraphNumber.
             
             m = eval([measure_code '(g, varargin{:})']);
+        end
+        function [name, values] = getParameterInformation(m)
+            % GETPARAMETERINFORMATION returns the name and the values of the measure parameter
+            %
+            % NAME, VALUES = GETPARAMETERINFORMATION(M) returns the name (string) and 
+            % the values of the concrete measure M parameter.
+            %
+            % NAME, VALUES = GETPARAMETERINFORMATION(MEASURE_CLASS) returns the name 
+            % and the values of the parameter measure whose class is MEASURE_CLASS.
+            
+            [name, values] = eval([Measure.getClass(m) '.getParameterInformation()']);
         end
         function list = getCompatibleGraphList(m)
             % GETCOMPATIBLEGRAPHLIST returns the list of graphs
