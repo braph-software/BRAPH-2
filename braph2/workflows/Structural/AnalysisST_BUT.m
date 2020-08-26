@@ -195,7 +195,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
         end
     end
     methods  % plot methods
-        function p = getGlobalMeasurePlot(analysis, ui_parent_axes, measure_code, group, varargin)
+        function p = getGlobalMeasurePlot(analysis,ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
@@ -228,7 +228,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             ylabel(ui_parent_axes, measure_code)
             
         end
-        function p = getGlobalComparisonPlot(analysis, ui_parent_axes, measure_code, group_1, group_2, varargin)
+        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
@@ -260,7 +260,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             xlabel(ui_parent_axes, 'Threshold')
             ylabel(ui_parent_axes, measure_code)
         end
-        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_axes, measure_code, group, varargin)
+        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
