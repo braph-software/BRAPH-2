@@ -34,6 +34,8 @@ classdef Analysis < handle & matlab.mixin.Copyable
     %  getComparison            - returns the specified comparison
     %  getSettings              - returns the analysis settings structure
     %  selectMeasurements       - returns a list with selected measurements values
+    %  selectComparisons        - returns a list with selected comparisons values
+    %  selectRandomComparisons  - returns a list with selected randomcomparisons values
     %
     % Analysis plot methods (Abstract)
     %  getGraphPanel            - returns a correlation matrix graph uipanel
@@ -345,7 +347,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % returns a list containing the GROUP Measurements values of type
             % MEASURE_CODE.
             %
-            % See also getSettings, getMeasurement, getCohort.
+            % See also getSettings, getMeasurement, getCohort, selectRandomComparisons
             
             analysis_case = get_from_varargin('', 'AnalysisCase', varargin{:});
             measurements = analysis.getMeasurements().getValues();
@@ -355,7 +357,50 @@ classdef Analysis < handle & matlab.mixin.Copyable
             list = cell(size(filter));
             for i = 1:1:length(filter)
                 m = filter{i}; %#ok<NASGU>
-                list{i} =  eval(['m' analysis_case]); %#ok<AGROW>
+                list{i} =  eval(['m' analysis_case]);
+            end
+        end
+        function list = selectComparisons(analysis, measure_code, group1, group2, varargin)
+            % SELECTCOMPARISONS returns a list with the group comparisons values
+            %
+            % LIST = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP1, GROUP2, VARARGIN)
+            % returns a list containing the GROUP Comparisons values of type
+            % MEASURE_CODE.
+            %
+            % See also getSettings, getMeasurement, getCohort, selectMeasurements
+            
+            analysis_case = get_from_varargin('', 'AnalysisCase', varargin{:});
+            comparisons = analysis.getComparisons().getValues();  % array
+            group1 = analysis.getCohort().getGroups().getValue(group1);
+            group2 = analysis.getCohort().getGroups().getValue(group2);
+            list_ = cell(size(comparisons));
+            for i = 1:1:length(comparisons)
+                comparison = comparisons{i};
+                [g1, g2] = comparison.getGroups();
+                if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
+                    list_{i} = eval(['comparison' analysis_case]);
+                end
+            end
+            list = list_(~cellfun(@isempty, list_));
+        end
+        function list = selectRandomComparisons(analysis, measure_code, group, varargin)
+            % SELECTRANDOMCOMPARISONS returns a list with the group random comparisons values
+            %
+            % LIST = SELECTRANDOMCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP, VARARGIN)
+            % returns a list containing the GROUP Random Comparisons values of type
+            % MEASURE_CODE.
+            %
+            % See also getSettings, getMeasurement, getCohort, selectComparisons
+            
+            analysis_case = get_from_varargin('', 'AnalysisCase', varargin{:});
+            randomcomparisons = analysis.getRandomComparisons().getValues();
+            group = analysis.getCohort().getGroups().getValue(group);
+            filter = randomcomparisons(find(cellfun(@(x) isequal(x.getGroup(), group) ...
+                && isequal(x.getMeasureCode, measure_code) , randomcomparisons)));    %#ok<FNDSB>
+            list = cell(size(filter));
+            for i = 1:1:length(filter)
+                rc = filter{i}; %#ok<NASGU>
+                list{i} =  eval(['rc' analysis_case]);
             end
         end
     end

@@ -228,7 +228,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             ylabel(ui_parent_axes, measure_code)
             
         end
-        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
+        function p = getGlobalComparisonPlot(analysis, ui_parent_axes, measure_code, group_1, group_2, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
@@ -237,37 +237,12 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            comparisons = analysis.getComparisons().getValues();  % array
-            group1 = analysis.getCohort().getGroups().getValue(group_1);
-            group2 = analysis.getCohort().getGroups().getValue(group_2);
-            comparisons_ = [];
-            comparison_to_plot = [];
-            for i = 1:1:length(comparisons)
-                comparison = comparisons{i};
-                [g1, g2] = comparison.getGroups();
-                if isequal(g1, group1) && isequal(g2, group2)
-                    comparisons_{i} = comparison; %#ok<AGROW>
-                end
-            end
-            if ~isempty(comparisons_)
-                comparison_to_plot = comparisons_(~cellfun(@isempty, comparisons_));
-            end
-            y_label = [];
-            X = [];
-            Y = [];
-            x_ = [0 0];
-            y_ = [0 0]; %#ok<NASGU>
-            for i = 1:1:length(comparison_to_plot)
-                c = comparison_to_plot{i};
-                X{i} = c.getThreshold();  %#ok<AGROW>
-                val_cell = c.getDifference();
-                Y{i} = val_cell{1};   %#ok<AGROW>
-                y_label = c.getMeasureCode();
-            end
+            X = analysis.selectComparisons(measure_code, group_1, group_2, 'AnalysisCase', '.getThreshold()');
+            Y = analysis.selectComparisons(measure_code, group_1, group_2, 'AnalysisCase', '.getDifference()');
             
             if ~isempty(X) && ~isempty(Y)
                 x_ = cell2mat(X);
-                y_ = cell2mat(Y);
+                y_ = cell2mat([Y{:}]);
                 
                 p = plot(ui_parent_axes, ...
                     x_, ...
@@ -283,70 +258,23 @@ classdef AnalysisST_BUT < AnalysisST_WU
             end
             
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, y_label)
-            
-            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            init_uicontrols()
-            function init_uicontrols()
-                set(ui_min_text, 'Units', 'normalized')
-                set(ui_min_text, 'Position', [.01 .07 .15 .05])
-                set(ui_min_text, 'String', 'Min')
-                
-                set(ui_min_edit, 'Units', 'normalized')
-                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
-                set(ui_min_edit, 'String', x_(1))
-                
-                set(ui_max_text, 'Units', 'normalized')
-                set(ui_max_text, 'Position', [.01 .05 .15 .05])
-                set(ui_max_text, 'String', 'Max')
-                
-                set(ui_max_edit, 'Units', 'normalized')
-                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
-                set(ui_max_edit, 'String', x_(end))
-                
-                set(ui_step_text, 'Units', 'normalized')
-                set(ui_step_text, 'Position', [.01 .03 .15 .05])
-                set(ui_step_text, 'String', 'Step')
-                
-                set(ui_step_edit, 'Units', 'normalized')
-                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
-                set(ui_step_edit, 'String', x_(2) - x_(1))
-                
-            end
+            ylabel(ui_parent_axes, measure_code)
         end
-        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
-            % GETGLOBALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_axes, measure_code, group, varargin)
+            % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
             %
-            % P = GETGLOBALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VALUE, ...)
+            % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
             % creates a uipanel to contain the plot displayed in the global
             % measure panel for GUIAnalysis.
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            randomcomparisons = analysis.getRandomComparisons().getValues();  % array
-            group = analysis.getCohort().getGroups().getValue(group);
-            random_comparison = randomcomparisons(find(cellfun(@(x) isequal(x.getGroup(), group), randomcomparisons))); %#ok<FNDSB>
-            y_label = [];
-            X = [];
-            Y = [];
-            x_ = [0 0];
-            y_ = [0 0]; %#ok<NASGU>
-            for i = 1:1:length(random_comparison)
-                rc = random_comparison{i};
-                X{i} = rc.getThreshold();  %#ok<AGROW>
-                val_cell = rc.getDifference();
-                Y{i} = val_cell{1};   %#ok<AGROW>
-                y_label = rc.getMeasureCode();
-            end
+            X = analysis.selectRandomComparisons(measure_code, group, 'AnalysisCase', '.getThreshold()');
+            Y = analysis.selectRandomComparisons(measure_code, group, 'AnalysisCase', '.getDifference()');
             
             if ~isempty(X) && ~isempty(Y)
                 x_ = cell2mat(X);
-                y_ = cell2mat(Y);
+                y_ = cell2mat([Y{:}]);
                 
                 p = plot(ui_parent_axes, ...
                     x_, ...
@@ -362,41 +290,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             end
             
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, y_label)
-            
-            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            init_uicontrols()
-            function init_uicontrols()
-                set(ui_min_text, 'Units', 'normalized')
-                set(ui_min_text, 'Position', [.01 .07 .15 .05])
-                set(ui_min_text, 'String', 'Min')
-                
-                set(ui_min_edit, 'Units', 'normalized')
-                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
-                set(ui_min_edit, 'String', x_(1))
-                
-                set(ui_max_text, 'Units', 'normalized')
-                set(ui_max_text, 'Position', [.01 .05 .15 .05])
-                set(ui_max_text, 'String', 'Max')
-                
-                set(ui_max_edit, 'Units', 'normalized')
-                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
-                set(ui_max_edit, 'String', x_(end))
-                
-                set(ui_step_text, 'Units', 'normalized')
-                set(ui_step_text, 'Position', [.01 .03 .15 .05])
-                set(ui_step_text, 'String', 'Step')
-                
-                set(ui_step_edit, 'Units', 'normalized')
-                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
-                set(ui_step_edit, 'String', x_(2) - x_(1))
-                
-            end
+            ylabel(ui_parent_axes, measure_code)
         end
     end
 end
