@@ -784,6 +784,7 @@ classdef AnalysisST_WU < Analysis
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
             ui_plot_measure_axes = get_from_varargin([], 'UIAxesGlobal', varargin{:});
             ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            ui_selectedmeasure_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
             init_global_panel()
             function init_global_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -844,19 +845,19 @@ classdef AnalysisST_WU < Analysis
                 set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
                 set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_global_rand})
                 
-                set(ui_popup_globalmeasures_group1, 'Position', [.02 .1 .15 .07])
+                set(ui_popup_globalmeasures_group1, 'Position', [.02 .11 .15 .05])
                 set(ui_popup_globalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_popup_globalmeasures_group1, 'Callback', {@cb_global_table})
                 set(ui_popup_globalmeasures_group1, 'Enable', 'off')
                 set(ui_popup_globalmeasures_group1, 'Visible', 'off')
                 
-                set(ui_popup_globalmeasures_group2, 'Position', [.02 .02 .15 .07])
+                set(ui_popup_globalmeasures_group2, 'Position', [.02 .06 .15 .05])
                 set(ui_popup_globalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_popup_globalmeasures_group2, 'Callback', {@cb_global_table})
                 set(ui_popup_globalmeasures_group2, 'Enable', 'off')
                 set(ui_popup_globalmeasures_group2, 'Visible', 'off')
                 
-                set(ui_listbox_brainmeasures_comp_groups, 'Position',[.02 .02 .15 .145])
+                set(ui_listbox_brainmeasures_comp_groups, 'Position',[.02 .07 .15 .1])
                 set(ui_listbox_brainmeasures_comp_groups, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_listbox_brainmeasures_comp_groups, 'TooltipString', 'Select group 1');
                 set(ui_listbox_brainmeasures_comp_groups, 'Callback', {@cb_global_table})
@@ -867,6 +868,10 @@ classdef AnalysisST_WU < Analysis
                 set(ui_plot_hide_checkbox, 'TooltipString', 'Show/Hide Plot')
                 set(ui_plot_hide_checkbox, 'Callback', {@cb_show_plot})
                 
+                set(ui_selectedmeasure_popup, 'Position', [.02 .01 .15 .05])
+                set(ui_selectedmeasure_popup, 'String', global_list)
+                set(ui_selectedmeasure_popup, 'Callback', {@cb_global_table})
+                
             end
             function update_global_table()
                 data = {}; %#ok<NASGU>
@@ -875,18 +880,21 @@ classdef AnalysisST_WU < Analysis
                 selected_index = get(ui_listbox_brainmeasures_comp_groups, 'Value');
                 group = analysis.getCohort().getGroups().getValue(selected_index);
                 
+                measures = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
+                
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
                     for j = 1:1:analysis.getMeasurements().length()
                         measurement = analysis.getMeasurements().getValue(j);
                         if isa(group, 'cell') && ismember(measurement.getMeasureCode(), global_list)
                             for k =1:1:length(group)
                                 g = group{k};
-                                if isequal(measurement.getGroup(), g)
+                                if isequal(measurement.getGroup(), g) && isequal(selected_measure, measurement.getMeasureCode())
                                     global_measurements{j} = measurement; %#ok<AGROW>
                                 end
                             end
                         else
-                            if ismember(measurement.getMeasureCode(), global_list) && isequal(measurement.getGroup(), group)
+                            if ismember(measurement.getMeasureCode(), global_list) && isequal(measurement.getGroup(), group) && isequal(selected_measure, measurement.getMeasureCode())
                                 global_measurements{j} = measurement;
                             end
                         end
@@ -932,12 +940,12 @@ classdef AnalysisST_WU < Analysis
                         if isa(group, 'cell') && ismember(comparison.getMeasureCode(), global_list)
                             for k =1:1:length(group)
                                 g = group{k};
-                                if isequal(a, g) || isequal (b, g)
+                                if isequal(a, g) || isequal (b, g) && isequal(selected_measure, comparison.getMeasureCode())
                                     global_comparison{j} = comparison; %#ok<AGROW>
                                 end
                             end
                         else
-                            if ismember(comparison.getMeasureCode(), global_list) && (isequal(a, group) || isequal (b, group))
+                            if ismember(comparison.getMeasureCode(), global_list) && (isequal(a, group) || isequal (b, group)) && isequal(selected_measure, comparison.getMeasureCode())
                                 global_comparison{j} = comparison;
                             end
                         end
@@ -985,12 +993,12 @@ classdef AnalysisST_WU < Analysis
                         if isa(group, 'cell') && ismember(randomcomparison.getMeasureCode(), global_list)
                             for k =1:1:length(group)
                                 g = group{k};
-                                if isequal(randomcomparison.getGroup(), g)
+                                if isequal(randomcomparison.getGroup(), g) && isequal(selected_measure, randomcomparison.getMeasureCode())
                                     global_randomcomparison{j} = randomcomparison; %#ok<AGROW>
                                 end
                             end
                         else
-                            if ismember(randomcomparison.getMeasureCode(), global_list) && isequal(randomcomparison.getGroup(), group)
+                            if ismember(randomcomparison.getMeasureCode(), global_list) && isequal(randomcomparison.getGroup(), group) && isequal(selected_measure, randomcomparison.getMeasureCode())
                                 global_randomcomparison{j} = randomcomparison;
                             end
                         end
@@ -1055,8 +1063,10 @@ classdef AnalysisST_WU < Analysis
             end
             function init_plot_measure_panel()
                 cla(ui_plot_measure_axes)
+                measures = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
-                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_listbox_brainmeasures_comp_groups, 'Value'));
+                    analysis.getGlobalMeasurePlot(ui_plot_measure_axes, selected_measure , get(ui_listbox_brainmeasures_comp_groups, 'Value'));
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
                     analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, get(ui_popup_globalmeasures_group1, 'Value'), get(ui_popup_globalmeasures_group2, 'Value'));
                 elseif get(ui_checkbox_brainmeasures_rand, 'Value')
@@ -1168,7 +1178,7 @@ classdef AnalysisST_WU < Analysis
                 global_panel = ui_mainpanel;
             end
         end
-        function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin) %#ok<INUSD>
+        function p = getGlobalMeasurePlot(analysis, ui_parent_axes, measure_code, group, varargin) %#ok<INUSD>
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)

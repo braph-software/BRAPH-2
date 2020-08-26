@@ -195,7 +195,7 @@ classdef AnalysisST_BUD < AnalysisST_WU
         end
     end
     methods  % plot methods
-        function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
+        function p = getGlobalMeasurePlot(analysis, ui_parent_axes, measure_code, group, varargin)
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
@@ -204,92 +204,24 @@ classdef AnalysisST_BUD < AnalysisST_WU
             %
             % See also getGraphPanel, getGlobalPanel.
 
-% X = Analysis.selectMeasurements(measure, group, 'getDensity()');
-% Y = Analysis.selectMeasurements(measure, group, 'getMeasureValue()');
-% 
-% p = plot(ui_parent_axes, ...
-%     X, ...
-%     Y, ...
-%     'Marker', 'o', ...
-%     'MarkerSize', 10, ...
-%     'MarkerEdgeColor', [0 0 1], ...
-%     'MarkerFaceColor', [.9 .4 .1], ...
-%     'LineStyle', '-', ...
-%     'LineWidth', 1, ...
-%     'Color', [0 0 1], ...
-%     varargin{:});
-
-            measurements = analysis.getMeasurements().getValues();  % array
-            group = analysis.getCohort().getGroups().getValue(group);
-            measurements = measurements(find(cellfun(@(x) isequal(x.getGroup(), group) , measurements))); %#ok<FNDSB>
-            % i need to plot threshold vs measurement values
-            y_label = [];
-            X = [];
-            Y = [];
-            x_ = [0 0];
-            y_ = [0 0]; %#ok<NASGU>
-            for i = 1:1:length(measurements)
-                m = measurements{i};
-                X{i} = m.getDensity();  %#ok<AGROW>
-                val_cell = m.getMeasureValue();
-                Y{i} = val_cell{1};   %#ok<AGROW>
-                y_label = m.getMeasureCode();
-            end
+            X = analysis.selectMeasurements(measure_code, group, 'AnalysisCase', 'getDensity()');
+            Y = analysis.selectMeasurements(measure_code, group, 'AnalysisCase', 'getMeasureValue()');
             
-            if ~isempty(X) && ~isempty(Y)
-                x_ = cell2mat(X);
-                y_ = cell2mat(Y);
-                
-                p = plot(ui_parent_axes, ...
-                    x_, ...
-                    y_, ...
-                    'Marker', 'o', ...
-                    'MarkerSize', 10, ...
-                    'MarkerEdgeColor', [0 0 1], ...
-                    'MarkerFaceColor', [.9 .4 .1], ...
-                    'LineStyle', '-', ...
-                    'LineWidth', 1, ...
-                    'Color', [0 0 1]);
-            else
-            end
+            p = plot(ui_parent_axes, ...
+                X, ...
+                Y, ...
+                'Marker', 'o', ...
+                'MarkerSize', 10, ...
+                'MarkerEdgeColor', [0 0 1], ...
+                'MarkerFaceColor', [.9 .4 .1], ...
+                'LineStyle', '-', ...
+                'LineWidth', 1, ...
+                'Color', [0 0 1], ...
+                varargin{:});
             
             xlabel(ui_parent_axes, 'Density')
-            ylabel(ui_parent_axes, y_label)
-            
-            ui_min_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_min_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_max_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_text = uicontrol(ui_parent_panel, 'Style', 'text');
-            ui_step_edit = uicontrol(ui_parent_panel, 'Style', 'text');
-            init_uicontrols()
-            function init_uicontrols()
-                
-                set(ui_min_text, 'Units', 'normalized')
-                set(ui_min_text, 'Position', [.01 .07 .15 .05])
-                set(ui_min_text, 'String', 'Min')
-                
-                set(ui_min_edit, 'Units', 'normalized')
-                set(ui_min_edit, 'Position', [.16 .07 .15 .05])
-                set(ui_min_edit, 'String', x_(1))
-                
-                set(ui_max_text, 'Units', 'normalized')
-                set(ui_max_text, 'Position', [.01 .05 .15 .05])
-                set(ui_max_text, 'String', 'Max')
-                
-                set(ui_max_edit, 'Units', 'normalized')
-                set(ui_max_edit, 'Position', [.16 .05 .15 .05])
-                set(ui_max_edit, 'String', x_(end))
-                
-                set(ui_step_text, 'Units', 'normalized')
-                set(ui_step_text, 'Position', [.01 .03 .15 .05])
-                set(ui_step_text, 'String', 'Step')
-                
-                set(ui_step_edit, 'Units', 'normalized')
-                set(ui_step_edit, 'Position', [.16 .03 .15 .05])
-                set(ui_step_edit, 'String', x_(2) - x_(1))
-                
-            end
+            ylabel(ui_parent_axes, measure_code)
+
         end
         function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot

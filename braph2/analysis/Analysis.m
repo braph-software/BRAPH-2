@@ -33,6 +33,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
     %  getComparisons           - returns the idict comparisons
     %  getComparison            - returns the specified comparison
     %  getSettings              - returns the analysis settings structure
+    %  selectMeasurements       - returns a list with selected measurements values
     %
     % Analysis plot methods (Abstract)
     %  getGraphPanel            - returns a correlation matrix graph uipanel
@@ -337,11 +338,31 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 end
             end
         end
+        function list = selectMeasurements(analysis, measure_code, group, varargin) 
+            % SELECTMEASUREMENTS returns a list with the group measurements values
+            %
+            % LIST = SELECTMEASUREMENTS(ANALYSIS, MEASURE_CODE, GROUP, VARARGIN)
+            % returns a list containing the GROUP Measurements values of type
+            % MEASURE_CODE.
+            %
+            % See also getSettings, getMeasurement, getCohort.
+            
+            analysis_case = get_from_varargin('', 'AnalysisCase', varargin{:});
+            measurements = analysis.getMeasurements().getValues();
+            group = analysis.getCohort().getGroups().getValue(group);
+            filter = measurements(find(cellfun(@(x) isequal(x.getGroup(), group) ...
+                && isequal(x.getMeasureCode, measure_code) , measurements)));    %#ok<FNDSB>
+            list = cell(size(filter));
+            for i = 1:1:length(filter)
+                m = filter{i}; %#ok<NASGU>
+                list{i} =  eval(['m' analysis_case]); %#ok<AGROW>
+            end
+        end
     end
     methods (Abstract)  % Plot abstract methods
         getGraphPanel(analysis, varargin)
         getGlobalPanel(analysis, varargin) 
-        getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
+        getGlobalMeasurePlot(analysis, ui_parent_axes, measure_code, group, varargin)
         getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
         getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
     end
