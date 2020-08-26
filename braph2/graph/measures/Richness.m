@@ -67,9 +67,10 @@ classdef Richness < Degree
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
             L = g.layernumber();
+            N = g.nodenumber();
             
-            richness = cell(g.layernumber(), 1);
-            directionality_type =  g.getDirectionalityType(g.layernumber());
+            richness = cell(L, 1);
+            directionality_type =  g.getDirectionalityType(L);
             for li = 1:1:L
                 
                 if g.is_graph(g)
@@ -118,9 +119,8 @@ classdef Richness < Degree
                 else  % for negative threshold, k = max degree - threshold (default -1)
                     k_level = max(deg) - abs(richness_threshold);
                 end
-
-                
-                richness_layer = zeros(N(1), 1, k_level);
+            
+                richness_layer = zeros(N(1), 1, int32(k_level));
                 for k = 1:k_level
                     low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
                     Aii = binarize(Aii);  % binarizes the adjacency matrix

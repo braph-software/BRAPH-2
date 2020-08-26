@@ -80,7 +80,7 @@ classdef Multirichness < Richness
             else
                 richness = calculate@Richness(m);
             end
-            
+
             N = g.nodenumber();
             L = g.layernumber();
             
@@ -102,7 +102,8 @@ classdef Multirichness < Richness
             
             multirichness = zeros(N(1), 1);
             for li = 1:1:L
-                multirichness = multirichness + c(li)*richness{li};
+                ri = richness{li};  % to fix when making this measure also parametric
+                multirichness = multirichness + c(li)*ri(:, :, 1);  % to fix when making this measure also parametric
             end
             multirichness = {multirichness};
         end
