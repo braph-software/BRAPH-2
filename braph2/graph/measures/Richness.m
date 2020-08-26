@@ -119,17 +119,23 @@ classdef Richness < Degree
                     k_level = max(deg) - abs(richness_threshold);
                 end
 
-                low_rich_nodes = find(deg <= k_level);  % get lower rich nodes with degree <=k
-                Aii = binarize(Aii);  % binarizes the adjacency matrix
-                subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <=k of Aii
-                subAii(low_rich_nodes, :) = 0;  % remove rows
-                subAii(:, low_rich_nodes) = 0;  % remove columns
                 
-                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                    richness(li) = {sum(subAii, 1)'};  % degree of high rich nodes   
-                else
-                    richness(li) = {(sum(subAii, 1)' + sum(subAii, 2))/2};  % degree of high rich nodes   
+                richness_layer = zeros(N(1), 1, k_level);
+                for k = 1:k_level
+                    low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
+                    Aii = binarize(Aii);  % binarizes the adjacency matrix
+                    subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <= k of Aii
+                    subAii(low_rich_nodes, :) = 0;  % remove rows
+                    subAii(:, low_rich_nodes) = 0;  % remove columns
+                    
+                    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+                        richness_layer(:, 1, k) = sum(subAii, 1)';  % degree of high rich nodes
+                    else
+                        richness_layer(:, 1, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
+                    end
+
                 end
+                richness(li) = {richness_layer};  % add richness of layer li          
             end
         end
     end  
@@ -213,7 +219,7 @@ classdef Richness < Degree
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.NONPARAMETRIC;
+            parametricity = Measure.PARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Richness 
