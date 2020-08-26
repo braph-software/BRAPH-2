@@ -21,8 +21,9 @@ classdef Richness < Degree
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
-    %   getParametricity            - returns the parametricity of the measure   
+    %   getParametricity            - returns the parametricity of richness measure
     %   getMeasure                  - returns the degree class
+    %   getParameterInformation     - returns the name and the values of richness measure parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
@@ -220,6 +221,16 @@ classdef Richness < Degree
             % See also getMeasureFormat, getMeasureScope.
             
             parametricity = Measure.PARAMETRIC;
+        end
+        function [name, values] = getParameterInformation()
+            % GETPARAMETERINFORMATION returns the name and the values of the richness parameter
+            %
+            % NAME, VALUES = GETPARAMETERINFORMATION() returns the name (string) and 
+            % the values of the richness parameter.
+            
+            name = "Richness threshold";
+            richness_threshold = get_from_varargin(-1, 'RichnessThreshold', m.getSettings());
+            values = 1:1:richness_threshold;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Richness 

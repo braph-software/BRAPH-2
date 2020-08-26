@@ -53,6 +53,7 @@ classdef Measure < handle
     %   getDescription  - returns the description of the measure
     %   getAvailableSettings - returns the settings available to the class
     %   getMeasure      - returns the measure class
+    %   getParameterInformation - returns the name and the values of a measure parameter
     %   getCompatibleGraphList - returns a list of compatible graphs
     %   getCompatibleGraphNumber - returns the number of compatible graphs
     %
