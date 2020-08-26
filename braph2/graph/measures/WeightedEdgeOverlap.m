@@ -115,6 +115,16 @@ classdef WeightedEdgeOverlap < Measure
             
             measure_scope = Measure.SUPERGLOBAL;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of WeightedEdgeOverlap
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of weighted edge overlap measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs to WeightedEdgeOverlap
             %

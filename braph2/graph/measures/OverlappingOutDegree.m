@@ -122,6 +122,16 @@ classdef OverlappingOutDegree < OutDegree
             
             measure_scope = Measure.SUPERGLOBAL;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of OverlappingOutDegree
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of overlapping out-degree measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with OverlappingOutDegree 
             %

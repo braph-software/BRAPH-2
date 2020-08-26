@@ -122,6 +122,16 @@ classdef OverlappingInDegree < InDegree
             
             measure_scope = Measure.SUPERGLOBAL;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of OverlappingInDegree
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of overlapping in-degree measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with OverlappingInDegree 
             %

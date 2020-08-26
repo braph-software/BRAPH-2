@@ -131,6 +131,16 @@ classdef MultiplexInParticipation < InDegree
             
             measure_scope = Measure.SUPERGLOBAL;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of MultiplexInParticipation
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of multiplex in-participation measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with MultiplexInParticipation 
             %

@@ -118,6 +118,16 @@ classdef OverlappingStrengthAv < OverlappingStrength
             
             measure_scope = Measure.SUPERGLOBAL;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of OverlappingStrengthAv
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of average overlapping strength measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with OverlappingStrengthAv
             %

@@ -222,6 +222,16 @@ classdef MultiplexCorePeriphery < Multirichness
             
             measure_scope = Measure.SUPERGLOBAL;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of MultiplexCorePeriphery
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of multiplex core periphery measure (PARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with MultiplexCorePeriphery 
             %
