@@ -4,6 +4,10 @@ function GUIAnalysis(ga, measure_rules)
 APPNAME = GUI.GA_NAME;
 BUILD = BRAPH2.BUILD;
 
+if nargin == 1
+    measure_rules = {'', ''};
+end
+
 % Panels Dimensions
 MARGIN_X = .01;
 MARGIN_Y = .01;

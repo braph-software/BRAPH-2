@@ -356,10 +356,10 @@ classdef Analysis < handle & matlab.mixin.Copyable
             all_measurements = analysis.getMeasurements().getValues();
             selected_measurements = all_measurements(find( ...
                 cellfun(@(x) isequal(x.getGroup(), group) && isequal(x.getMeasureCode, measure_code), ...
-                all_measurements, 'UniformOutput',false) ...
+                all_measurements) ...
                 )); %#ok<FNDSB>
 
-            if isset(method)
+            if nargin==4
                 list = cell(size(selected_measurements));
                 for i = 1:1:length(selected_measurements)
                     m = selected_measurements{i}; %#ok<NASGU>
@@ -369,47 +369,67 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 list = selected_measurements;
             end
         end
-        function list = selectComparisons(analysis, measure_code, group1, group2, varargin)
-            % SELECTCOMPARISONS returns a list with the group comparisons values
+        function list = selectComparisons(analysis, measure_code, group1, group2, method)
+            % SELECTCOMPARISONS returns a list with the group measurements values
             %
-            % LIST = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP1, GROUP2, VARARGIN)
-            % returns a list containing the GROUP Comparisons values of type
-            % MEASURE_CODE.
+            % COMPARISONS = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP)
+            % returns a list containing the Measurements of type
+            % MEASURE_CODE for GROUP. 
             %
-            % See also getSettings, getMeasurement, getCohort, selectMeasurements
+            % LIST = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP, METHOD)
+            % returns a list containing the results of applying METHODS to
+            % the Comparisons of type MEASURE_CODE for GROUP. For example,
+            % METHOD can be '.getValue()'.
+            %
+            % See also getSettings, getMeasurement, getCohort, selectMeasurements            
             
-            analysis_case = get_from_varargin('', 'AnalysisCase', varargin{:});
-            comparisons = analysis.getComparisons().getValues();  % array
-            group1 = analysis.getCohort().getGroups().getValue(group1);
-            group2 = analysis.getCohort().getGroups().getValue(group2);
-            list_ = cell(size(comparisons));
-            for i = 1:1:length(comparisons)
-                comparison = comparisons{i};
-                [g1, g2] = comparison.getGroups();
-                if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
-                    list_{i} = eval(['comparison' analysis_case]);
+            all_comparisons = analysis.getComparisons().getValues();  % arraylist_
+            list_ = cell(size(all_comparisons));
+            if nargin==5
+                for i = 1:1:length(all_comparisons)
+                    comparison = all_comparisons{i};
+                    [g1, g2] = comparison.getGroups();
+                    if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
+                        list_{i} = eval(['comparison' method]); %#ok<AGROW>
+                    end
                 end
-            end
-            list = list_(~cellfun(@isempty, list_));
+                list = list_(~cellfun(@isempty, list_));
+            else
+                for i = 1:1:length(all_comparisons)
+                    comparison = all_comparisons{i};
+                    [g1, g2] = comparison.getGroups();
+                    if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
+                        list_{i} = comparison; %#ok<AGROW>
+                    end
+                end
+                list = list_(~cellfun(@isempty, list_));
+            end            
         end
-        function list = selectRandomComparisons(analysis, measure_code, group, varargin)
-            % SELECTRANDOMCOMPARISONS returns a list with the group random comparisons values
+        function list = selectRandomComparisons(analysis, measure_code, group, method)
+            % SELECTRANDOMCOMPARISONS returns a list with the group measurements values
             %
-            % LIST = SELECTRANDOMCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP, VARARGIN)
-            % returns a list containing the GROUP Random Comparisons values of type
-            % MEASURE_CODE.
+            % RANDOMCOMPARISONS = SELECTRANDOMCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP)
+            % returns a list containing the Measurements of type
+            % MEASURE_CODE for GROUP. 
             %
-            % See also getSettings, getMeasurement, getCohort, selectComparisons
+            % LIST = SELECTRANDOMCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP, METHOD)
+            % returns a list containing the results of applying METHODS to
+            % the Random Comparisons of type MEASURE_CODE for GROUP. For example,
+            % METHOD can be '.getValue()'.
+            %
+            % See also getSettings, getMeasurement, getCohort, selectComparisons            
             
-            analysis_case = get_from_varargin('', 'AnalysisCase', varargin{:});
-            randomcomparisons = analysis.getRandomComparisons().getValues();
-            group = analysis.getCohort().getGroups().getValue(group);
-            filter = randomcomparisons(find(cellfun(@(x) isequal(x.getGroup(), group) ...
-                && isequal(x.getMeasureCode, measure_code) , randomcomparisons)));    %#ok<FNDSB>
-            list = cell(size(filter));
-            for i = 1:1:length(filter)
-                rc = filter{i}; %#ok<NASGU>
-                list{i} =  eval(['rc' analysis_case]);
+            all_randomcomparisons = analysis.getRandomComparisons().getValues();
+            selected_randomcomparisons = all_randomcomparisons(find(cellfun(@(x) isequal(x.getGroup(), group) ...
+                && isequal(x.getMeasureCode, measure_code) , all_randomcomparisons)));    %#ok<FNDSB>
+            list = cell(size(selected_randomcomparisons));
+            if nargin==4
+                for i = 1:1:length(selected_randomcomparisons)
+                    rc = selected_randomcomparisons{i}; %#ok<NASGU>
+                    list{i} =  eval(['rc' method]);
+                end
+            else
+                list = selected_randomcomparisons;
             end
         end
     end

@@ -204,8 +204,8 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %            
             % See also getGraphPanel, getGlobalPanel.
 
-            X = analysis.selectMeasurements(measure_code, group, 'AnalysisCase', '.getThreshold()');
-            Y = analysis.selectMeasurements(measure_code, group, 'AnalysisCase', '.getMeasureValue()');
+            X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');
+            Y = analysis.selectMeasurements(measure_code, group, '.getMeasureValue()');
 
             if ~isempty(X) && ~isempty(Y)                
                 x_ = cell2mat(X);
@@ -237,8 +237,8 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectComparisons(measure_code, group_1, group_2, 'AnalysisCase', '.getThreshold()');
-            Y = analysis.selectComparisons(measure_code, group_1, group_2, 'AnalysisCase', '.getDifference()');
+            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getThreshold()');
+            Y = analysis.selectComparisons(measure_code, group_1, group_2, '.getDifference()');
             
             if ~isempty(X) && ~isempty(Y)
                 x_ = cell2mat(X);
@@ -257,8 +257,69 @@ classdef AnalysisST_BUT < AnalysisST_WU
             else
             end
             
+            hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
             ylabel(ui_parent_axes, measure_code)
+            
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMin()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMax()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
+            end
         end
         function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
@@ -269,8 +330,8 @@ classdef AnalysisST_BUT < AnalysisST_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectRandomComparisons(measure_code, group, 'AnalysisCase', '.getThreshold()');
-            Y = analysis.selectRandomComparisons(measure_code, group, 'AnalysisCase', '.getDifference()');
+            X = analysis.selectRandomComparisons(measure_code, group, '.getThreshold()');
+            Y = analysis.selectRandomComparisons(measure_code, group, '.getDifference()');
             
             if ~isempty(X) && ~isempty(Y)
                 x_ = cell2mat(X);
@@ -289,8 +350,69 @@ classdef AnalysisST_BUT < AnalysisST_WU
             else
             end
             
+            hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
             ylabel(ui_parent_axes, measure_code)
+            
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMin()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMax()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
+            end
         end
     end
 end
