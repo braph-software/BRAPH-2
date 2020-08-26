@@ -70,7 +70,6 @@ classdef Analysis < handle & matlab.mixin.Copyable
         randomcomparison_idict  % indexed dictionary with random comparison
         comparison_idict  % indexed dictionary with comparison
         settings  % settings structure for analysis
-        
     end
     methods (Access = protected)  % Constructor
         function analysis = Analysis(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
