@@ -146,7 +146,7 @@ classdef ClusteringAv < Clustering
             % GETPARAMETRICITY returns the parametricity of ClusteringAv
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of average clustering measure (UNILAYER).
+            % parametricity of average clustering measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             

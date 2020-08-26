@@ -117,6 +117,16 @@ classdef EdgeOverlap < Measure
             
             measure_scope = Measure.SUPERGLOBAL;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of EdgeOverlap
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of edge overlap measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with EdgeOverlap
             %

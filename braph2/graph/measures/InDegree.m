@@ -126,7 +126,7 @@ classdef InDegree < Measure
             % GETPARAMETRICITY returns the parametricity of InDegree
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of in-degree measure (UNILAYER).
+            % parametricity of in-degree measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             

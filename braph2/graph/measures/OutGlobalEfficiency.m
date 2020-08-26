@@ -124,6 +124,16 @@ classdef OutGlobalEfficiency < Measure
             
             measure_scope = Measure.UNILAYER;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of OutGlobalEfficiency
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of out-global efficiency measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
             % with OutGlobalEfficiency 

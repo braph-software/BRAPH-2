@@ -209,7 +209,7 @@ classdef Clustering < Triangles
             % GETPARAMETRICITY returns the parametricity of Clustering
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of clustering measure (UNILAYER).
+            % parametricity of clustering measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             

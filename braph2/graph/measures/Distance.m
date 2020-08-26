@@ -198,7 +198,7 @@ classdef Distance < Measure
             % GETPARAMETRICITY returns the parametricity of Distance
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of distance measure (UNILAYER).
+            % parametricity of distance measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             

@@ -118,7 +118,7 @@ classdef DegreeOverlap < EdgeOverlap
             % GETPARAMETRICITY returns the parametricity of DegreeOverlap
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of degree overlap measure (UNILAYER).
+            % parametricity of degree overlap measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             

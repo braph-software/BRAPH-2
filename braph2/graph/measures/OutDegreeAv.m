@@ -125,7 +125,7 @@ classdef OutDegreeAv < OutDegree
             % GETPARAMETRICITY returns the parametricity of OutDegreeAv
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of average out-degree measure (UNILAYER).
+            % parametricity of average out-degree measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             

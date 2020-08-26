@@ -126,7 +126,7 @@ classdef DegreeAv < Degree
             % GETPARAMETRICITY returns the parametricity of DegreeAv
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of average degree measure (UNILAYER).
+            % parametricity of average degree measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
