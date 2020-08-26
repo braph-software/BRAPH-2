@@ -122,6 +122,16 @@ classdef OutDegree < Measure
             
             measure_scope = Measure.UNILAYER;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of OutDegree
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of out-degree measure (UNILAYER).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with OutDegree 
             %

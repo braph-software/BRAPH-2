@@ -114,6 +114,16 @@ classdef DegreeOverlap < EdgeOverlap
             
             measure_scope = Measure.SUPERGLOBAL;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of DegreeOverlap
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of degree overlap measure (UNILAYER).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with DegreeOverlap 
             %

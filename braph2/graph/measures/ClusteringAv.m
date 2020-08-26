@@ -142,6 +142,16 @@ classdef ClusteringAv < Clustering
             
             measure_scope = Measure.UNILAYER;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of ClusteringAv
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of average clustering measure (UNILAYER).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList() 
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
             % with ClusteringAv

@@ -121,6 +121,16 @@ classdef InDegreeAv < InDegree
             
             measure_scope = Measure.UNILAYER;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of InDegreeAv
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of average in-degree measure (UNILAYER).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList() 
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
             % with InDegreeAv
