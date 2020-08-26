@@ -407,7 +407,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
     methods (Abstract)  % Plot abstract methods
         getGraphPanel(analysis, varargin)
         getGlobalPanel(analysis, varargin) 
-        getGlobalMeasurePlot(analysis, ui_parent_axes, measure_code, group, varargin)
+        getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
         getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin)
         getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin)
     end
