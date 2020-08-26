@@ -340,24 +340,34 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 end
             end
         end
-        function list = selectMeasurements(analysis, measure_code, group, varargin) 
+        function list = selectMeasurements(analysis, measure_code, group, method) 
             % SELECTMEASUREMENTS returns a list with the group measurements values
             %
-            % LIST = SELECTMEASUREMENTS(ANALYSIS, MEASURE_CODE, GROUP, VARARGIN)
-            % returns a list containing the GROUP Measurements values of type
-            % MEASURE_CODE.
+            % MEASUREMENTS = SELECTMEASUREMENTS(ANALYSIS, MEASURE_CODE, GROUP)
+            % returns a list containing the Measurements of type
+            % MEASURE_CODE for GROUP. 
+            %
+            % LIST = SELECTMEASUREMENTS(ANALYSIS, MEASURE_CODE, GROUP, METHOD)
+            % returns a list containing the results of applying METHODS to
+            % the Measurements of type MEASURE_CODE for GROUP. For example,
+            % METHOD can be '.getValue()'.
             %
             % See also getSettings, getMeasurement, getCohort, selectRandomComparisons
             
-            analysis_case = get_from_varargin('', 'AnalysisCase', varargin{:});
-            measurements = analysis.getMeasurements().getValues();
-            group = analysis.getCohort().getGroups().getValue(group);
-            filter = measurements(find(cellfun(@(x) isequal(x.getGroup(), group) ...
-                && isequal(x.getMeasureCode, measure_code) , measurements)));    %#ok<FNDSB>
-            list = cell(size(filter));
-            for i = 1:1:length(filter)
-                m = filter{i}; %#ok<NASGU>
-                list{i} =  eval(['m' analysis_case]);
+            all_measurements = analysis.getMeasurements().getValues();
+            selected_measurements = all_measurements(find( ...
+                cellfun(@(x) isequal(x.getGroup(), group) && isequal(x.getMeasureCode, measure_code), ...
+                all_measurements, 'UniformOutput',false) ...
+                )); %#ok<FNDSB>
+
+            if isset(method)
+                list = cell(size(selected_measurements));
+                for i = 1:1:length(selected_measurements)
+                    m = selected_measurements{i}; %#ok<NASGU>
+                    list{i} =  eval(['m' method]);
+                end
+            else
+                list = selected_measurements;
             end
         end
         function list = selectComparisons(analysis, measure_code, group1, group2, varargin)
