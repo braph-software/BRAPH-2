@@ -204,6 +204,16 @@ classdef Richness < Degree
             
             measure_scope = Measure.UNILAYER;
         end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of Richness
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of richness measure (PARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
+        end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Richness 
             %
