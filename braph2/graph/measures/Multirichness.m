@@ -103,7 +103,11 @@ classdef Multirichness < Richness
             multirichness = zeros(N(1), 1);
             for li = 1:1:L
                 ri = richness{li};  % to fix when making this measure also parametric
-                multirichness = multirichness + c(li)*ri(:, 1, 1);  % to fix when making this measure also parametric
+                if isempty(ri)
+                    multirichness = multirichness + c(li)*zeros(N(1), 1);  % to fix when making this measure also parametric
+                else
+                    multirichness = multirichness + c(li)*ri(:, 1, 1);  % to fix when making this measure also parametric
+                end
             end
             multirichness = {multirichness};
         end
