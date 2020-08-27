@@ -222,14 +222,19 @@ classdef Richness < Degree
             
             parametricity = Measure.PARAMETRIC;
         end
-        function [name, values] = getParameterInformation()
+        function [name, values] = getParameterInformation(varargin)
             % GETPARAMETERINFORMATION returns the name and the values of the richness parameter
             %
             % NAME, VALUES = GETPARAMETERINFORMATION() returns the name (string) and 
             % the values of the richness parameter.
             
             name = 'Richness threshold';
-            richness_threshold = get_from_varargin(-1, 'RichnessThreshold', m.getSettings());
+            
+            if isempty(varargin)
+                richness_threshold = 1;
+            else
+                richness_threshold = varargin{1};
+            end
             values = 1:1:richness_threshold;
         end
         function list = getCompatibleGraphList()  
