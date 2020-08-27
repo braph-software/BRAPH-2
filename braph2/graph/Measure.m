@@ -17,7 +17,9 @@ classdef Measure < handle
     %                   GLOBAL values are SCALAR
     %                   NODAL values a COLUMN VECTOR whose length is equal to the number of nodes
     %                   BINODAL values are a SQUARE MATRIX whose dimensions are equal to the number of nodes
-    % 
+    %                   If the measure is PARAMETRIC the third dimension of
+    %                   the value is used
+    %
     % Measure methods (Access=protected):
     %   Measure         - constructor
     %
@@ -53,7 +55,7 @@ classdef Measure < handle
     %   getDescription  - returns the description of the measure
     %   getAvailableSettings - returns the settings available to the class
     %   getMeasure      - returns the measure class
-    %   getParameterInformation - returns the name and the values of a measure parameter
+    %   getParameterInformation - returns the name and the values of a measure's parameter
     %   getCompatibleGraphList - returns a list of compatible graphs
     %   getCompatibleGraphNumber - returns the number of compatible graphs
     %
@@ -515,13 +517,13 @@ classdef Measure < handle
             m = eval([measure_code '(g, varargin{:})']);
         end
         function [name, values] = getParameterInformation(m)
-            % GETPARAMETERINFORMATION returns the name and the values of the measure parameter
+            % GETPARAMETERINFORMATION returns the name and the values of the measure's parameter
             %
             % NAME, VALUES = GETPARAMETERINFORMATION(M) returns the name (string) and 
             % the values of the concrete measure M parameter.
             %
             % NAME, VALUES = GETPARAMETERINFORMATION(MEASURE_CLASS) returns the name 
-            % and the values of the parameter measure whose class is MEASURE_CLASS.
+            % and the values of the parameter of the measure whose class is MEASURE_CLASS.
             
             [name, values] = eval([Measure.getClass(m) '.getParameterInformation()']);
         end
