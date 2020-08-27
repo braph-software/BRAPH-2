@@ -381,27 +381,50 @@ classdef Analysis < handle & matlab.mixin.Copyable
             % the Comparisons of type MEASURE_CODE for GROUP. For example,
             % METHOD can be '.getValue()'.
             %
-            % See also getSettings, getMeasurement, getCohort, selectMeasurements            
+            % See also getSettings, getMeasurement, getCohort, selectMeasurements 
             
-            all_comparisons = analysis.getComparisons().getValues();
-            selected_comparisons = cell();
-            for i = 1:1:length(all_comparisons)
-                comparison = all_comparisons{i};
-                [g1, g2] = comparison.getGroups();
-                if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
-                    selected_comparisons{end + 1} = eval(['comparison' method]); %#ok<AGROW>
-                end
-            end
-            
+            all_comparisons = analysis.getComparisons().getValues();  % arraylist_
+            list_ = cell(size(all_comparisons));
             if nargin == 5
-                list = cell(size(selected_comparisons));
-                for i = 1:1:length(selected_comparisons)
-                    m = selected_comparisons{i}; %#ok<NASGU>
-                    list{i} =  eval(['m' method]);
+                for i = 1:1:length(all_comparisons)
+                    comparison = all_comparisons{i};
+                    [g1, g2] = comparison.getGroups();
+                    if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
+                        list_{i} = eval(['comparison' method]);
+                    end
+                       list = list_(~cellfun(@isempty, list_));
                 end
             else
-                list = selected_comparisons;
-            end            
+                for i = 1:1:length(all_comparisons)
+                    comparison = all_comparisons{i};
+                    [g1, g2] = comparison.getGroups();
+                    if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
+                        list_{i} = comparison; 
+                    end
+                end
+                    list = list_(~cellfun(@isempty, list_));
+            end
+%             
+%             all_comparisons = analysis.getComparisons().getValues();
+%             selected_comparisons = cell(size(all_comparisons));
+%             for i = 1:1:length(all_comparisons)
+%                 comparison = all_comparisons{i};
+%                 [g1, g2] = comparison.getGroups();
+%                 if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
+%                     selected_comparisons{end + 1} = eval(['comparison' method]); %#ok<AGROW>
+%                 end
+%             end
+%             
+%             if nargin == 5
+%                 list = cell(size(selected_comparisons));
+%                 for i = 1:1:length(selected_comparisons)
+%                     m = selected_comparisons{i}; %#ok<NASGU>
+%                     list{i} =  eval(['m' method]);
+%                 end
+%             else
+%                 list = selected_comparisons;
+%             end    
+
         end
         function list = selectRandomComparisons(analysis, measure_code, group, method)
             % SELECTRANDOMCOMPARISONS returns a list with the group measurements values
@@ -435,9 +458,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
     methods (Abstract)  % Plot abstract methods
         getGraphPanel(analysis, varargin)
         getGlobalPanel(analysis, varargin) 
+        getNodalPanel(analysis, varargin)
         getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
         getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
         getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
+        getNodalMeasurePlot(analysis, ui_prent_panel, ui_parent_axes, mesure_code, group, brain_region, varargin)
+        getNodalComparisonPlot(analysis, ui_prent_panel, ui_parent_axes, mesure_code, group_1, group_2, brain_region, varargin)
     end
     methods (Static)  % getAnalysis
         function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>

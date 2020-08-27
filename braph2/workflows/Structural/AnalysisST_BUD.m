@@ -414,5 +414,42 @@ classdef AnalysisST_BUD < AnalysisST_WU
                 end
             end
         end
+        function p = getNodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_regions, varargin) %#ok<INUSL>
+            % GETNODALMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %            
+            % See also getGraphPanel, getGlobalPanel.
+
+            X = analysis.selectMeasurements(measure_code, group, '.getDensity()');
+            Y = analysis.selectMeasurements(measure_code, group, '.getMeasureValue()');
+            for i = 1:1:length(Y)
+                y_unique_cell = Y{i};
+                y_nodal_values = y_unique_cell{1};
+                y_brain_region{i} = y_nodal_values(brain_regions); %#ok<AGROW>
+            end
+
+            if ~isempty(X) && ~isempty(y_brain_region)                
+                x_ = cell2mat(X);
+                y_ = [y_brain_region{:}];
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1], ...
+                    varargin{:});
+            else
+            end
+            
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, measure_code)
+        end
     end
 end
