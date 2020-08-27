@@ -424,7 +424,6 @@ init_console()
         set(ui_console_nodal_button, 'String', CONSOLE_NODAL_CMD)
         set(ui_console_nodal_button, 'TooltipString', CONSOLE_GLOBAL_TP)
         set(ui_console_nodal_button, 'Callback', {@cb_console_nodal})
-        set(ui_console_nodal_button, 'enable', 'off')
         
         set(ui_console_binodal_button, 'Position', [.38 .30 .10 .40])
         set(ui_console_binodal_button, 'String', CONSOLE_BINODAL_CMD)
@@ -443,76 +442,21 @@ init_console()
             case CONSOLE_GLOBAL_CMD
                 childs_visibility(ui_panel_matrix, 'off')
                 childs_visibility(ui_panel_global, 'on')
-%                 set(ui_panel_matrix, 'Visible', 'off')
-%                 set(ui_panel_global, 'Visible', 'on')
-%                 set(ui_panel_regionmeasures,'Visible','off')
-%                 set(ui_panel_brainview,'Visible','off')
+                childs_visibility(ui_panel_nodal, 'off')
                 
                 set(ui_console_matrix_button, 'FontWeight', 'normal')
                 set(ui_console_global_button, 'FontWeight', 'bold')
+                set(ui_console_nodal_button, 'FontWeight', 'normal')               
+
+            case CONSOLE_NODAL_CMD
+                childs_visibility(ui_panel_matrix, 'off')
+                childs_visibility(ui_panel_global, 'off')
+                childs_visibility(ui_panel_nodal, 'on')
                 
-%                 set(ui_button_console_regionmeasures,'FontWeight','normal')
-%                 set(ui_button_console_brainview,'FontWeight','normal')
+                set(ui_console_matrix_button, 'FontWeight', 'normal')
+                set(ui_console_global_button, 'FontWeight', 'normal')
+                set(ui_console_nodal_button, 'FontWeight', 'bold')
                 
-%                 set([ui_toolbar_zoomin ...
-%                     ui_toolbar_zoomout ...
-%                     ui_toolbar_pan ...
-%                     ui_toolbar_datacursor ...
-%                     ui_toolbar_insertcolorbar], ...
-%                     'Visible','on')
-%                 set([ui_toolbar_rotate ...
-%                     ui_toolbar_3D ...
-%                     ui_toolbar_SL ...
-%                     ui_toolbar_SR ...
-%                     ui_toolbar_AD ...
-%                     ui_toolbar_AV ...
-%                     ui_toolbar_CP ...
-%                     ui_toolbar_CA ...
-%                     ui_toolbar_brain ...
-%                     ui_toolbar_br ...
-%                     ui_toolbar_axis ...
-%                     ui_toolbar_grid ...
-%                     ui_toolbar_label ...
-%                     ui_toolbar_sym], ...
-%                     'Visible','off')
-%                 set(ui_toolbar_brain,'Separator','off');
-%                 set(ui_toolbar_3D,'Separator','off');
-                
-%             case CONSOLE_REGIONMEASURES_CMD
-%                 set(ui_panel_matrix,'Visible','off')
-%                 set(ui_panel_brainmeasures,'Visible','off')
-%                 set(ui_panel_regionmeasures,'Visible','on')
-%                 set(ui_panel_brainview,'Visible','off')
-%                 
-%                 set(ui_button_console_matrix,'FontWeight','normal')
-%                 set(ui_button_console_brainmeasures,'FontWeight','normal')
-%                 set(ui_button_console_regionmeasures,'FontWeight','bold')
-%                 set(ui_button_console_brainview,'FontWeight','normal')
-%                 
-%                 set([ui_toolbar_zoomin ...
-%                     ui_toolbar_zoomout ...
-%                     ui_toolbar_pan ...
-%                     ui_toolbar_datacursor ...
-%                     ui_toolbar_insertcolorbar], ...
-%                     'Visible','on')
-%                 set([ui_toolbar_rotate ...
-%                     ui_toolbar_3D ...
-%                     ui_toolbar_SL ...
-%                     ui_toolbar_SR ...
-%                     ui_toolbar_AD ...
-%                     ui_toolbar_AV ...
-%                     ui_toolbar_CP ...
-%                     ui_toolbar_CA ...
-%                     ui_toolbar_brain ...
-%                     ui_toolbar_br ...
-%                     ui_toolbar_axis ...
-%                     ui_toolbar_grid ...
-%                     ui_toolbar_label ...
-%                     ui_toolbar_sym], ...
-%                     'Visible','off')
-%                 set(ui_toolbar_brain,'Separator','off');
-%                 set(ui_toolbar_3D,'Separator','off');
-%                 
 %             case CONSOLE_BRAINVIEW_CMD
 %                 set(ui_panel_matrix,'Visible','off')
 %                 set(ui_panel_brainmeasures,'Visible','off')
@@ -550,47 +494,20 @@ init_console()
             otherwise % CONSOLE_MATRIX_CMD
                 childs_visibility(ui_panel_matrix, 'on')
                 childs_visibility(ui_panel_global, 'off')
-%                 set(ui_panel_matrix, 'Visible', 'on')
-%                 set(ui_panel_global, 'Visible', 'off')
-%                 set(ui_panel_regionmeasures, 'Visible', 'off')
-% %                 set(ui_panel_brainview, 'Visible', 'off')
-%                 
+                childs_visibility(ui_panel_nodal, 'off')
+                
                 set(ui_console_matrix_button, 'FontWeight', 'bold')
                 set(ui_console_global_button, 'FontWeight', 'normal')
-%                 set(ui_button_console_regionmeasures,'FontWeight','normal')
-%                 set(ui_button_console_brainview,'FontWeight','normal')
-%                 
-%                 set([ui_toolbar_zoomin ...
-%                     ui_toolbar_zoomout ...
-%                     ui_toolbar_pan ...
-%                     ui_toolbar_datacursor ...
-%                     ui_toolbar_insertcolorbar], ...
-%                     'Visible','on')
-%                 set([ui_toolbar_rotate ...
-%                     ui_toolbar_3D ...
-%                     ui_toolbar_SL ...
-%                     ui_toolbar_SR ...
-%                     ui_toolbar_AD ...
-%                     ui_toolbar_AV ...
-%                     ui_toolbar_CP ...
-%                     ui_toolbar_CA ...
-%                     ui_toolbar_brain ...
-%                     ui_toolbar_br ...
-%                     ui_toolbar_axis ...
-%                     ui_toolbar_grid ...
-%                     ui_toolbar_label ...
-%                     ui_toolbar_sym], ...
-%                     'Visible','off')
-%                 set(ui_toolbar_brain,'Separator','off');
-%                 set(ui_toolbar_3D,'Separator','off');
+                set(ui_console_nodal_button, 'FontWeight', 'normal')
         end
     end
     function update_console_panel()
         if strcmpi(get(ui_panel_matrix, 'Visible'), 'on')
-            update_matrix()
-            
+            update_matrix()            
         elseif strcmpi(get(ui_panel_global, 'Visible'), 'on')
             update_global_panel()
+        elseif strcmpi(get(ui_panel_nodal, 'Visible'), 'on')
+            update_nodal_panel()
         end
     end
     function cb_console_matrix(~, ~)         
@@ -600,6 +517,10 @@ init_console()
     function cb_console_global(~, ~)        
         update_console_panel_visibility(CONSOLE_GLOBAL_CMD)
         update_global_panel()
+    end
+    function cb_console_nodal(~, ~)
+        update_console_panel_visibility(CONSOLE_NODAL_CMD)
+        update_nodal_panel()
     end
     function childs_visibility(handle, rule)
         childs = allchild(handle);
@@ -648,8 +569,29 @@ init_global()
     end
     function update_global_panel()
         current_figure_axes = ui_panel_global_axes;
-         current_figure_name = 'Global Measure Plot';
+        current_figure_name = 'Global Measure Plot';
         ga.getGlobalPanel('UIParent', ui_panel_global, 'UIAxesGlobal', ui_panel_global_axes)
+    end
+
+%% Panel Nodal
+PANEL_NODAL_TITLE = 'NODAL MEASURES';
+
+ui_panel_nodal = uipanel();
+ui_panel_nodal_axes = axes();
+init_nodal()
+    function init_nodal()
+        GUI.setUnits(ui_panel_nodal)
+        GUI.setBackgroundColor(ui_panel_nodal)
+        
+        set(ui_panel_nodal, 'Position', MAINPANEL_POSITION)
+        set(ui_panel_nodal, 'Title', PANEL_NODAL_TITLE)
+        
+        set(ui_panel_nodal_axes, 'Position', [0 0 0 0])
+    end
+    function update_nodal_panel()
+        current_figure_axes = ui_panel_nodal_axes;
+        current_figure_name = 'Nodal Measure Plot';
+        ga.getNodalPanel('UIParent', ui_panel_nodal, 'UIAxesNodal', ui_panel_nodal_axes);
     end
 
 %% Menus
