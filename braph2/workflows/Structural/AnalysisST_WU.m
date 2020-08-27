@@ -44,6 +44,9 @@ classdef AnalysisST_WU < Analysis
     %  getGlobalMeasurePlot         - returns a global measurement plot
     %  getGlobalComparisonPlot      - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
+    %  getNodalMeasurePlot          - returns a nodal mesure plot
+    %  getNodalComparisonPlot       - returns a nodal comprison plot
+    %  getNodalRandomComparisonPlot - returns a nodal randomcomparison plot
     %
     % See also Analysis, MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU
     
@@ -1663,6 +1666,17 @@ classdef AnalysisST_WU < Analysis
             % GETNODALCOMPARISONPLOT creates a uipanel to contain a plot
             %
             % P = GETNODALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, BRAIN_REGION, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getNodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, mesure_code, group, brain_region, varargin) %#ok<INUSD>
+            % GETNODALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
             % creates a uipanel to contain the plot displayed in the nodal
             % measure panel for GUIAnalysis.
             %
