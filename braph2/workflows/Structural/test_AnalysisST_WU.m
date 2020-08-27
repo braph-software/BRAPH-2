@@ -336,8 +336,11 @@ for i = 1:1:numel(measures)
     analysis = AnalysisST_WU('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
 
     number_of_permutations = 10;
-    calculated_comparison = analysis.getComparison(measure, group1, group2, 'PermutationNumber', number_of_permutations);
-    
+    if Measure.is_nonparametric(measure)
+        calculated_comparison = analysis.getComparison(measure, group1, group2, 'PermutationNumber', number_of_permutations);
+    else
+        calculated_comparison = analysis.getComparison(measure, group1, group2, 'PermutationNumber', number_of_permutations, 'RichnessThreshold', 2);  % problem, fix all the parameters for permutations
+    end
     assert(~isempty(calculated_comparison), ...
         [BRAPH2.STR ':AnalysisST_WU:' BRAPH2.BUG_FUNC], ...
         'AnalysisST_WU.getComparison() not working')
