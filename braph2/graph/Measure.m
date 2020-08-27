@@ -406,7 +406,7 @@ classdef Measure < handle
             %
             % See also is_nonparametric, is_parametric.
             
-            parametricity = eval([Measure.getClass(m) '.getParametricity)']);
+            parametricity = eval([Measure.getClass(m) '.getParametricity()']);
         end
         function bool = is_parametric(m)
             % IS_PARAMETRIC checks if measure is parametric
