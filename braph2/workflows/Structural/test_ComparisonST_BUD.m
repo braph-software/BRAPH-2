@@ -192,7 +192,7 @@ for i = 1:1:numel(measures)
     end
 end
 
-% Test 3: Initialize with values
+%% Test 3: Initialize with values
 for i = 1:1:numel(measures)
     % setup
     number_of_permutations = 10;
