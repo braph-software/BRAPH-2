@@ -21,12 +21,12 @@ classdef Richness < Degree
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of richness measure
     %   getMeasure                  - returns the degree class
-    %   getParameterName            - returns the name of richness measure parameter
+    %   getParameterName            - returns the name of richness measure's parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % Richness methods 
-    %   getParameterValues          - returns the values of richness measure parameter
+    %   getParameterValues          - returns the values of richness measure's parameter
     %
     % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     

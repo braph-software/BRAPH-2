@@ -19,6 +19,7 @@ classdef Measure < handle
     %                   BINODAL values are a SQUARE MATRIX whose dimensions are equal to the number of nodes
     %                   If the measure is PARAMETRIC the third dimension of
     %                   the value is used
+    %   parameter       - measure parameter
     %
     % Measure methods (Access=protected):
     %   Measure         - constructor
@@ -30,6 +31,8 @@ classdef Measure < handle
     %   getSettings     - returns the settings of the measure
     %   is_value_calculated - boolean, checks if the measure has been calculated
     %   getValue        - returns the value of the measure
+    %   getParameter    - returns the measure's parameter
+    %   getParameterValues - returns the values of the measure's parameter
     %   
     % Measure methods (Abstract, Access=protected):
     %   calculate       - abstract function
@@ -55,7 +58,7 @@ classdef Measure < handle
     %   getDescription  - returns the description of the measure
     %   getAvailableSettings - returns the settings available to the class
     %   getMeasure      - returns the measure class
-    %   getParameterInformation - returns the name and the values of a measure's parameter
+    %   getParameterName - returns the name of a measure's parameter
     %   getCompatibleGraphList - returns a list of compatible graphs
     %   getCompatibleGraphNumber - returns the number of compatible graphs
     %
