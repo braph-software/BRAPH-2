@@ -266,7 +266,7 @@ classdef Richness < Degree
             % VALUES = GETPARAMETERVALUES() returns the values of
             % the richness parameter.
             
-            values = length(m.getParameter());
+            values = 1:1:m.getParameter();
         end
     end
 end
