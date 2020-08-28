@@ -155,7 +155,8 @@ classdef Measure < handle
                % a CELL for SUPERGLOBAL measures containing GLOBAL, NODAL or BINODAL values
                % a CELL VECTOR for UNILAYER measures containing GLOBAL, NODAL or BINODAL values
                % a CELL MATRIX for BILAYER measures containing GLOBAL, NODAL or BINODAL values
-               % where GLOBAL values are SCALAR, NODAL values COLUMN VECTOR and BINODAL values SQUARE MATRIX               
+               % where GLOBAL values are SCALAR, NODAL values COLUMN VECTOR and BINODAL values SQUARE MATRIX 
+        parameter % measure parameter
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
@@ -282,6 +283,21 @@ classdef Measure < handle
             
             value = m.value;
         end
+        function values = getParameterValues(m)
+             % GETPARAMETERVALUES returns the values of the measure's parameter
+             %
+             % VALUES = GETPARAMETERVALUES(M) returns the values of
+             % the concrete measure M parameter.
+             %
+             % VALUES= GETPARAMETERVALUES(MEASURE_CLASS) returns the values
+             % of the parameter of the measure whose class is MEASURE_CLASS.
+             
+             if Measure.is_parametric(m)
+                 values = eval([Measure.getClass(m) '.getParameterValues()']);
+             else
+                 values = [];
+             end
+         end
     end
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure
@@ -516,16 +532,20 @@ classdef Measure < handle
             
             m = eval([measure_code '(g, varargin{:})']);
         end
-        function [name, values] = getParameterInformation(m)
-            % GETPARAMETERINFORMATION returns the name and the values of the measure's parameter
+        function name = getParameterName(m)
+            % GETPARAMETERNAME returns the name of the measure's parameter
             %
-            % NAME, VALUES = GETPARAMETERINFORMATION(M) returns the name (string) and 
-            % the values of the concrete measure M parameter.
+            % NAME = GETPARAMETERNAME(M) returns the name (string) of 
+            % the concrete measure M parameter.
             %
-            % NAME, VALUES = GETPARAMETERINFORMATION(MEASURE_CLASS) returns the name 
-            % and the values of the parameter of the measure whose class is MEASURE_CLASS.
+            % NAME= GETPARAMETERNAME(MEASURE_CLASS) returns the name of
+            % the parameter of the measure whose class is MEASURE_CLASS.
             
-            [name, values] = eval([Measure.getClass(m) '.getParameterInformation()']);
+            if Measure.is_parametric(m)  
+                name = eval([Measure.getClass(m) '.getParameterName()']);
+            else
+                name = '';
+            end
         end
         function list = getCompatibleGraphList(m)
             % GETCOMPATIBLEGRAPHLIST returns the list of graphs
