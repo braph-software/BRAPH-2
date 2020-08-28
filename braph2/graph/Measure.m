@@ -31,7 +31,7 @@ classdef Measure < handle
     %   getSettings     - returns the settings of the measure
     %   is_value_calculated - boolean, checks if the measure has been calculated
     %   getValue        - returns the value of the measure
-    %   getParameter    - returns the measure's parameter
+    %   getParameter    - returns the parameter of the measure
     %   getParameterValues - returns the values of the measure's parameter
     %   
     % Measure methods (Abstract, Access=protected):
