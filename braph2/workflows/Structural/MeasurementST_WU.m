@@ -15,6 +15,7 @@ classdef MeasurementST_WU < Measurement
     % 
     % MeasurementST_WU get methods:
     %  getValue                     - returns the value of the measurement
+    %  getMeasureParameterValues    - returns the values of the measure's parameter
     %
     % MeasurementST_WU initialze data (Access=protected):
     %  initialize_data              - initializes and checks the data
@@ -78,7 +79,7 @@ classdef MeasurementST_WU < Measurement
             value = m.value;
         end
         function parameter_values = getMeasureParameterValues(m)
-            % GETMEASUREPARAMETERVALUES returns the values of the measure parameter
+            % GETMEASUREPARAMETERVALUES returns the values of the measure's parameter
             %
             % PARAMETER_VALUES = GETMEASUREPARAMETERVALUES(M) returns the values 
             % of the measure parameter.
