@@ -4,12 +4,10 @@ classdef Richness < Degree
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
     % graphs. 
     %
-    % It is calculated as the sum of the number of edges that connect nodes
-    % of degree k or higher within a layer. The value of k is set by the
-    % user (setting 'RichnessThreshold'), the default value is equal to the
-    % maximum degree - 1. For positive thresholds, k equals to the threshold
-    % value; while for negative thresholds, k equals to the maximum degree -
-    % absolute value of the richness threshold.
+    % It is a parametric measure, from i = 1 to the k level it calculates 
+    % the sum of the number of edges that connect nodes of degree i or higher 
+    % within a layer. The value of k is set by the user (setting 'RichnessThreshold'), 
+    % the default value is equal to 1.
     % 
     % Richness methods:
     %   Richness                    - constructor
@@ -23,9 +21,12 @@ classdef Richness < Degree
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of richness measure
     %   getMeasure                  - returns the degree class
-    %   getParameterInformation     - returns the name and the values of richness measure parameter
+    %   getParameterName            - returns the name of richness measure parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
+    %
+    % Richness methods 
+    %   getParameterValues          - returns the values of richness measure parameter
     %
     % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
@@ -39,12 +40,10 @@ classdef Richness < Degree
             % RICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
             % richness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
             % Admissible THRESHOLD options are:
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
+            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
+            %                    to 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - absolute value.
+            %                    specificied value.
             % 
             % RICHNESS(G, 'VALUE', VALUE) creates richness, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
@@ -179,15 +178,13 @@ classdef Richness < Degree
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Richness.
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
+            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
+            %                    to 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - value.
+            %                    specificied value.
             
             available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, -1, {};
+                'RichnessThreshold', BRAPH2.NUMERIC, 2, {};
                 };
         end
         function measure_format = getMeasureFormat()
