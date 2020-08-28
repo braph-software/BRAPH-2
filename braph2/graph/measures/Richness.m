@@ -115,14 +115,12 @@ classdef Richness < Degree
                     ['Richness threshold must be an integer value ' ...
                     'while it is ' tostring(richness_threshold)])
 
-                if richness_threshold > 0  % for positive threshold value, k = value
-                    k_level = richness_threshold;  
-                else  % for negative threshold, k = max degree - threshold (default -1)
-                    k_level = max(deg) - abs(richness_threshold);
-                end
+                
+                k_level = abs(richness_threshold);  
+                m.setParameter(k_level)  % Set the parameter
             
                 richness_layer = zeros(N(1), 1, int32(k_level));
-                for k = 1:k_level
+                for k = 1:1:k_level
                     low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
                     Aii = binarize(Aii);  % binarizes the adjacency matrix
                     subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <= k of Aii
@@ -222,21 +220,13 @@ classdef Richness < Degree
             
             parametricity = Measure.PARAMETRIC;
         end
-        function [name, values] = getParameterInformation(m)
-            % GETPARAMETERINFORMATION returns the name and the values of the richness parameter
+        function name = getParameterName()
+            % GETPARAMETERNAME returns the name of the richness parameter
             %
-            % NAME, VALUES = GETPARAMETERINFORMATION() returns the name (string) and 
-            % the values of the richness parameter.
+            % NAME = GETPARAMETERNAME() returns the name (string) of 
+            % the richness parameter.
             
             name = 'Richness threshold';
-            richness_threshold = get_from_varargin(1, 'RichnessThreshold', m.getSettings());
-            if richness_threshold > 0  % for positive threshold value, k = value
-                values = 1:1:richness_threshold;
-            else  % for negative threshold, k = max degree - threshold (default -1)
-                %k_level2 = max(deg) - abs(richness_threshold);  % problem knowing the degree
-                %values = 1:1:k_level2;
-                values = k_level; % will gives errors to negative thresholds now
-            end
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Richness 
@@ -267,6 +257,16 @@ classdef Richness < Degree
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Richness');
+        end
+    end
+    methods 
+        function values = getParameterValues(m)
+            % GETPARAMETERVALUES returns the values of the richness parameter
+            %
+            % VALUES = GETPARAMETERVALUES() returns the values of
+            % the richness parameter.
+            
+            values = length(m.getParameter());
         end
     end
 end

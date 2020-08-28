@@ -30,7 +30,7 @@ rich(:, 1, 2) = [1 1 0 0]';
 known_richness = {rich};
 
 g = GraphBD(A);
-richness = Richness(g, 'RichnessThreshold', -1);
+richness = Richness(g, 'RichnessThreshold', 2);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
@@ -66,7 +66,7 @@ rich(:, 1, 2) = [1 1 0 0]';
 known_richness = {rich};
 
 g = GraphWD(A);
-richness = Richness(g);
+richness = Richness(g, 'RichnessThreshold', 2);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
