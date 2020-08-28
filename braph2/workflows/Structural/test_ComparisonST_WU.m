@@ -22,14 +22,27 @@ measures = Graph.getCompatibleMeasureList(graph_type);
 
 %% Test 1: Instantiation
 for i = 1:1:numel(measures)
-    comparison = ComparisonST_WU('c1', 'label', 'notes', atlas, measures{i}, group, group);
+    
+    A = rand(atlas.getBrainRegions().length());
+    g = Graph.getGraph('GraphWU', A);
+    m  = Measure.getMeasure(measures{i}, g);
+    parameter_values = m.getParameterValues();
+    parameter_values_length = max(1, length(parameter_values));
+    
+    comparison = ComparisonST_WU('c1', 'label', 'notes', atlas, measures{i}, group, group, 'ComparisonST.ParameterValuesLength', parameter_values_length);
 end
 
 %% Test 2: Correct Size defaults
 for i = 1:1:numel(measures)
     number_of_permutations = 10;
     
-    comparison = ComparisonST_WU('c1', 'label', 'notes', atlas, measures{i}, group, group, 'ComparisonST.PermutationNumber', number_of_permutations);
+    A = rand(atlas.getBrainRegions().length());
+    g = Graph.getGraph('GraphWU', A);
+    m  = Measure.getMeasure(measures{i}, g);
+    parameter_values = m.getParameterValues();
+    parameter_values_length = max(1, length(parameter_values));
+    
+    comparison = ComparisonST_WU('c1', 'label', 'notes', atlas, measures{i}, group, group, 'ComparisonST.PermutationNumber', number_of_permutations, 'ComparisonST.ParameterValuesLength', parameter_values_length);
     
     value_1 = comparison.getGroupValue(1);    
     value_2 = comparison.getGroupValue(2);
@@ -201,6 +214,8 @@ for i = 1:1:numel(measures)
     g = Graph.getGraph('GraphWU', A);
     m  = Measure.getMeasure(measures{i}, g);
     value = m.getValue();
+    parameter_values = m.getParameterValues();
+    parameter_values_length = max(1, length(parameter_values));
     
     % the values are not realistic, just the right format
     value_1 = value;
@@ -228,7 +243,8 @@ for i = 1:1:numel(measures)
         'ComparisonST.p1', p1, ...
         'ComparisonST.p2', p2, ....
         'ComparisonST.confidence_min', confidence_interval_min, ...
-        'ComparisonST.confidence_max', confidence_interval_max ...
+        'ComparisonST.confidence_max', confidence_interval_max, ...
+        'ComparisonST.ParameterValuesLength', parameter_values_length ...
         );
     
     comparison_value_1 = comparison.getGroupValue(1);
