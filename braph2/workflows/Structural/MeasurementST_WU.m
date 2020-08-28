@@ -33,6 +33,7 @@ classdef MeasurementST_WU < Measurement
    
     properties
         value  % value of the measure for the group
+        parameter_values  % parameter values of the measure
     end
     methods  % Constructor
         function m =  MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin)
@@ -67,7 +68,7 @@ classdef MeasurementST_WU < Measurement
     end
     methods  % Get functions
         function value = getMeasureValue(m)
-            % GETGROUPVALUE returns the measure value of the group
+            % GETMEASUREVALUE returns the measure value of the group
             %
             % VALUE = GETMEASUREVALUE(M) returns the measure value of 
             % the group.
@@ -75,6 +76,16 @@ classdef MeasurementST_WU < Measurement
             % See also getClass, getName, getDescription.
             
             value = m.value;
+        end
+        function parameter_values = getMeasureParameterValues(m)
+            % GETMEASUREPARAMETERVALUES returns the values of the measure parameter
+            %
+            % PARAMETER_VALUES = GETMEASUREPARAMETERVALUES(M) returns the values 
+            % of the measure parameter.
+            % 
+            % See also getClass, getName, getDescription.
+            
+            parameter_values = m.parameter_values;
         end
     end
     methods (Access=protected)  % Initialize data
@@ -88,13 +99,18 @@ classdef MeasurementST_WU < Measurement
             % check the data for the measurement. It saves the measurement
             % VALUE.
             %
-            % See also AnalysisST_WU.
-            
+            % See also AnalysisST_WU.     
+
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
 
             measure_code = m.getMeasureCode();
             
+            m.parameter_values = get_from_varargin( ...
+                    {1}, ...  % 1 dimension minimum
+                    'MeasurementST.ParameterValues', ...
+                    varargin{:});
+
             if Measure.is_global(measure_code)  % global measure
                 m.value = get_from_varargin( ...
                     {0}, ...  % 1 measure per group
@@ -102,7 +118,7 @@ classdef MeasurementST_WU < Measurement
                     varargin{:});
                 assert(iscell(m.getMeasureValue()) && ...
                     isequal(size(m.getMeasureValue()), [1, 1]) && ...
-                    all(cellfun(@(x) isequal(size(x, 1), 1), m.getMeasureValue())) &&...
+                    all(cellfun(@(x) isequal(size(x, 1), 1), m.getMeasureValue())) && ...
                     all(cellfun(@(x) isequal(size(x, 2), 1), m.getMeasureValue())), ...
                     [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(m)])
