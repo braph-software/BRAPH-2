@@ -41,12 +41,16 @@ classdef Analysis < handle & matlab.mixin.Copyable
     %  getGraphPanel            - returns a correlation matrix graph uipanel
     %  getGlobalPanel           - returns a global measure uipanel
     %  getNodalPanel            - returns a nodal measure uipanel
+    %  getBinodalPanel          - returns a binodal measure uipanel
     %  getGlobalMeasurePlot     - returns a global measure plot
     %  getGlobalComparisonPlot  - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
     %  getNodalMeasurePlot      - returns a nodal mesure plot
     %  getNodalComparisonPlot   - returns a nodal comprison plot
     %  getNodalRandomComparisonPlot - returns a nodal randomcomparison plot
+    %  getBinodalMeasurePlot      - returns a binodal mesure plot
+    %  getBinodalComparisonPlot   - returns a binodal comprison plot
+    %  getBinodalRandomComparisonPlot - returns a binodal randomcomparison plot
     %
     % Analysis getAnalysis methods (Static)
     %  getAnalysis              - returns a new analysis
@@ -463,12 +467,16 @@ classdef Analysis < handle & matlab.mixin.Copyable
         getGraphPanel(analysis, varargin)
         getGlobalPanel(analysis, varargin) 
         getNodalPanel(analysis, varargin)
+        getBinodalPanel(analysis, varargin)
         getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
         getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
         getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
         getNodalMeasurePlot(analysis, ui_prent_panel, ui_parent_axes, mesure_code, group, brain_region, varargin)
         getNodalComparisonPlot(analysis, ui_prent_panel, ui_parent_axes, mesure_code, group_1, group_2, brain_region, varargin)
         getNodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, mesure_code, group, brain_region, varargin)
+        getBinodalMeasurePlot(analysis, ui_prent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)
+        getBinodalComparisonPlot(analysis, ui_prent_panel, ui_parent_axes, measure_code, group_1, group_2, brain_region_1, brain_region_2, varargin)
+        getBinodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)
     end
     methods (Static)  % getAnalysis
         function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>

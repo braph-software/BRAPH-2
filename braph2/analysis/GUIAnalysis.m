@@ -429,7 +429,6 @@ init_console()
         set(ui_console_binodal_button, 'String', CONSOLE_BINODAL_CMD)
         set(ui_console_binodal_button, 'TooltipString', CONSOLE_GLOBAL_TP)
         set(ui_console_binodal_button, 'Callback', {@cb_console_binodal})
-        set(ui_console_binodal_button, 'enable', 'off')
         
         set(ui_console_brainview_button, 'Position', [.49 .30 .1 .40])
         set(ui_console_brainview_button, 'String', CONSOLE_BRAINVIEW_CMD)
@@ -443,19 +442,34 @@ init_console()
                 childs_visibility(ui_panel_matrix, 'off')
                 childs_visibility(ui_panel_global, 'on')
                 childs_visibility(ui_panel_nodal, 'off')
+                childs_visibility(ui_panel_binodal, 'off')
                 
                 set(ui_console_matrix_button, 'FontWeight', 'normal')
                 set(ui_console_global_button, 'FontWeight', 'bold')
-                set(ui_console_nodal_button, 'FontWeight', 'normal')               
+                set(ui_console_nodal_button, 'FontWeight', 'normal')  
+                set(ui_console_binodal_button, 'FontWeight', 'normal')
 
             case CONSOLE_NODAL_CMD
                 childs_visibility(ui_panel_matrix, 'off')
                 childs_visibility(ui_panel_global, 'off')
-                childs_visibility(ui_panel_nodal, 'on')
+                childs_visibility(ui_panel_nodal, 'on')                
+                childs_visibility(ui_panel_binodal, 'off')
                 
                 set(ui_console_matrix_button, 'FontWeight', 'normal')
                 set(ui_console_global_button, 'FontWeight', 'normal')
-                set(ui_console_nodal_button, 'FontWeight', 'bold')
+                set(ui_console_nodal_button, 'FontWeight', 'bold')                
+                set(ui_console_binodal_button, 'FontWeight', 'normal')
+                
+            case CONSOLE_BINODAL_CMD
+                childs_visibility(ui_panel_matrix, 'off')
+                childs_visibility(ui_panel_global, 'off')
+                childs_visibility(ui_panel_nodal, 'off')
+                childs_visibility(ui_panel_binodal, 'on')
+                
+                set(ui_console_matrix_button, 'FontWeight', 'normal')
+                set(ui_console_global_button, 'FontWeight', 'normal')
+                set(ui_console_nodal_button, 'FontWeight', 'normal')  
+                set(ui_console_binodal_button, 'FontWeight', 'bold')
                 
 %             case CONSOLE_BRAINVIEW_CMD
 %                 set(ui_panel_matrix,'Visible','off')
@@ -495,10 +509,12 @@ init_console()
                 childs_visibility(ui_panel_matrix, 'on')
                 childs_visibility(ui_panel_global, 'off')
                 childs_visibility(ui_panel_nodal, 'off')
+                childs_visibility(ui_panel_binodal, 'off')
                 
                 set(ui_console_matrix_button, 'FontWeight', 'bold')
                 set(ui_console_global_button, 'FontWeight', 'normal')
                 set(ui_console_nodal_button, 'FontWeight', 'normal')
+                set(ui_console_binodal_button, 'FontWeight', 'normal')
         end
     end
     function update_console_panel()
@@ -508,7 +524,9 @@ init_console()
             update_global_panel()
         elseif strcmpi(get(ui_panel_nodal, 'Visible'), 'on')
             update_nodal_panel()
-        end
+        elseif strcmpi(get(ui_panel_binodal, 'Visible'), 'on')
+            update_binodal_panel()
+        end        
     end
     function cb_console_matrix(~, ~)         
         update_console_panel_visibility(CONSOLE_MATRIX_CMD)
@@ -521,6 +539,10 @@ init_console()
     function cb_console_nodal(~, ~)
         update_console_panel_visibility(CONSOLE_NODAL_CMD)
         update_nodal_panel()
+    end
+    function cb_console_binodal(~, ~)
+        update_console_panel_visibility(CONSOLE_BINODAL_CMD)
+        update_binodal_panel()
     end
     function childs_visibility(handle, rule)
         childs = allchild(handle);
@@ -592,6 +614,28 @@ init_nodal()
         current_figure_axes = ui_panel_nodal_axes;
         current_figure_name = 'Nodal Measure Plot';
         ga.getNodalPanel('UIParent', ui_panel_nodal, 'UIAxesNodal', ui_panel_nodal_axes);
+    end
+
+
+%% Panel Binodal
+PANEL_BINODAL_TITLE = 'BINODAL MEASURES';
+
+ui_panel_binodal = uipanel();
+ui_panel_binodal_axes = axes();
+init_binodal()
+    function init_binodal()
+        GUI.setUnits(ui_panel_binodal)
+        GUI.setBackgroundColor(ui_panel_binodal)
+        
+        set(ui_panel_binodal, 'Position', MAINPANEL_POSITION)
+        set(ui_panel_binodal, 'Title', PANEL_BINODAL_TITLE)
+        
+        set(ui_panel_binodal_axes, 'Position', [0 0 0 0])
+    end
+    function update_binodal_panel()
+        current_figure_axes = ui_panel_binodal_axes;
+        current_figure_name = 'Nodal Measure Plot';
+        ga.getBinodalPanel('UIParent', ui_panel_binodal, 'UIAxesNodal', ui_panel_binodal_axes);
     end
 
 %% Menus
