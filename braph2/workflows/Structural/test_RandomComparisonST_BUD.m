@@ -22,14 +22,26 @@ measures = Graph.getCompatibleMeasureList(graph_type);
 
 %% Test 1: Instantiation
 for i = 1:1:numel(measures)
-    randomcomparison = RandomComparisonST_BUD('rc1', 'label', 'notes', atlas, measures{i}, group);
+    
+    A = rand(atlas.getBrainRegions().length());
+    g = Graph.getGraph('GraphBU', A);
+    m  = Measure.getMeasure(measures{i}, g);
+    parameter_values = m.getParameterValues();
+    parameter_values_length = max(1, length(parameter_values));
+    
+    randomcomparison = RandomComparisonST_BUD('rc1', 'label', 'notes', atlas, measures{i}, group, 'RandomComparisonST.ParameterValuesLength', parameter_values_length);
 end
 
 %% Test 2: Correct Size defaults
 for i = 1:1:numel(measures)
     number_of_randomizations = 10;
-    
-    randomcomparison = RandomComparisonST_BUD('rc1', 'label', 'notes', atlas, measures{i}, group, 'RandomComparisonST.RandomizationNumber', number_of_randomizations);
+
+    A = rand(atlas.getBrainRegions().length());
+    g = Graph.getGraph('GraphBU', A);
+    m  = Measure.getMeasure(measures{i}, g);
+    parameter_values = m.getParameterValues();
+    parameter_values_length = max(1, length(parameter_values));    
+    randomcomparison = RandomComparisonST_BUD('rc1', 'label', 'notes', atlas, measures{i}, group, 'RandomComparisonST.RandomizationNumber', number_of_randomizations, 'RandomComparisonST.ParameterValuesLength', parameter_values_length);
     
     value_group = randomcomparison.getGroupValue();    
     value_random = randomcomparison.getRandomValue();
@@ -201,6 +213,8 @@ for i = 1:1:numel(measures)
     g = Graph.getGraph('GraphBU', A);
     m  = Measure.getMeasure(measures{i}, g);
     value = m.getValue();
+    parameter_values = m.getParameterValues();
+    parameter_values_length = max(1, length(parameter_values));
     
     % the values are not realistic, just the right format
     value_group = value;
@@ -227,7 +241,8 @@ for i = 1:1:numel(measures)
         'RandomComparisonST.p1', p1, ...
         'RandomComparisonST.p2', p2, ....
         'RandomComparisonST.confidence_min', confidence_interval_min, ...
-        'RandomComparisonST.confidence_max', confidence_interval_max ...
+        'RandomComparisonST.confidence_max', confidence_interval_max, ...
+        'RandomComparisonST.ParameterValuesLength', parameter_values_length ...
         );
     
     comparison_value_group = randomcomparison.getGroupValue();
