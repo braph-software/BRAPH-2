@@ -14,7 +14,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
     % Measurement Basic methods
     %  tostring                     - returns a string representing the class
     %  disp                         - displays the measurement
-    %  
+    %
     % Measurement set methods
     %  setID                        - sets the ID
     %  setLabel                     - sets the label
@@ -22,7 +22,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
     %  setBrainAtlases              - sets the atlases to the measurement
     %  setGroup                     - sets a group to the measurement
     %
-    % Measurement get methods 
+    % Measurement get methods
     %  getID                        - returns the ID
     %  getLabel                     - returns the label
     %  getNotes                     - returns the notes
@@ -30,7 +30,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
     %  getMeasureCode               - returns the measure code
     %  getGroup                     - returns the group
     %  getSettings                  - returns the settings structure
-    % 
+    %
     % Measurement descriptive methods (Static)
     %  getList                  - returns a list of measurement subclasses
     %  getClass                 - returns the class of the measurement
@@ -41,6 +41,9 @@ classdef Measurement < handle & matlab.mixin.Copyable
     %  getSubjectClass          - returns the class of the subject
     %  getAvailableSettings     - returns available settings to the measurement
     %  getMeasurement           - returns a new measurement
+    %
+    % Measurement Plot Methods (Static)
+    %  getMeasurementSettingsPanel - returns a dynamic UIPanel
     %
     % See also Analysis, RandomComparison, Comparison.
     
@@ -65,20 +68,20 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % specified in VALUE.
             %
             % See also Analysis, RandomComparison, Comparison.
-
+            
             m.setID(id)
             m.setLabel(label)
             m.setNotes(notes)
-
+            
             m.setBrainAtlases(atlases)
-
+            
             assert(ischar(measure_code), ...
                 [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
                 'The measure code must be a string.')
             m.measure_code = measure_code;
-
+            
             m.setGroup(group)
-
+            
             varargin = get_from_varargin(varargin, 'MeasurementSettings', varargin{:});  % returns varargin if no key 'MeasurementSettings'
             available_settings = Measurement.getAvailableSettings(class(m));
             settings = cell(1, size(available_settings, 1));
@@ -90,7 +93,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
                 settings{2 * i} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
             end
             m.settings = settings;  % initialize the property settings
-
+            
             m.initialize_data(varargin{:});
         end
     end
@@ -120,50 +123,50 @@ classdef Measurement < handle & matlab.mixin.Copyable
             disp(['id = ' m.getID()])
             disp(['label = ' m.getLabel()])
             disp(['notes = ' m.getNotes()])
-        end        
+        end
     end
     methods  % Set functions
         function setID(m, id)
-            % SETID sets the id 
+            % SETID sets the id
             %
             % SETID(M, ID) sets the id
             %
             % See also setLabel, setNotes.
-
+            
             assert(ischar(id), ...
                 [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
                 'ID must be a string.')
-
+            
             m.id = id;
         end
         function setLabel(m, label)
-            % SETLABEL sets the label 
+            % SETLABEL sets the label
             %
             % SETLABEL(M, LABEL) sets the label
             %
             % See also setID, setNotes.
-
+            
             assert(ischar(label), ...
                 [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
                 'Label must be a string.')
-
+            
             m.label = label;
-        end        
+        end
         function setNotes(m, notes)
-            % SETNOTES sets the notes 
+            % SETNOTES sets the notes
             %
             % SETNOTES(M, NOTES) sets the notes
             %
             % See also setID, setLabel.
-
+            
             assert(ischar(notes), ...
                 [BRAPH2.STR ':' class(m) ':' BRAPH2.WRONG_INPUT], ...
                 'Notes must be a string.')
-
+            
             m.notes = notes;
-        end        
+        end
         function setBrainAtlases(m, atlases)
-            % SETBRAINATLASES sets the brain atlases 
+            % SETBRAINATLASES sets the brain atlases
             %
             % SETBRAINATLASES(M, ATLASES) sets the brain atlases of the
             % measurement.
@@ -179,7 +182,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             m.atlases = atlases;
         end
         function setGroup(m, group)
-            % SETGROUP sets the group to the measurement 
+            % SETGROUP sets the group to the measurement
             %
             % SETGROUP(M, Group) sets the group to the measurement.
             %
@@ -207,7 +210,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % LABEL = GETLABEL(M) returns the label
             %
             % See also getID, getNotes.
-
+            
             label = m.label;
         end
         function notes = getNotes(m)
@@ -216,7 +219,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % NOTES = GETNOTES(M) returns the notes
             %
             % See also getID, getLabel.
-
+            
             notes = m.notes;
         end
         function atlases = getBrainAtlases(m)
@@ -229,7 +232,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             atlases = m.atlases;
         end
         function measure_code = getMeasureCode(m)
-            % GETMEASURECODE returns the measure code 
+            % GETMEASURECODE returns the measure code
             %
             % MEASURE_CODE = GETMEASURECODE(M) returns the measure code of
             % the measurement.
@@ -239,7 +242,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             measure_code = m.measure_code;
         end
         function group = getGroup(m)
-            % GETGROUP returns the group of subjects 
+            % GETGROUP returns the group of subjects
             %
             % GROUP = GETGROUP(M) returns the group of subjects of
             % the measurement.
@@ -255,7 +258,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % structure.
             %
             % See also getID, getLabel, getBrainAtlases, getMeasureCode.
-
+            
             if nargin<2
                 res = m.settings;
             else
@@ -267,7 +270,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
         function measurement_list = getList()
             % GETLIST returns the list of measurement subclasses
             %
-            % MEASUREMENT_LIST = GETLIST() returns the list of measurement 
+            % MEASUREMENT_LIST = GETLIST() returns the list of measurement
             % (cell array) that are subclasses of Measurement.
             %
             % See also getClass, getName, getDescription.
@@ -277,7 +280,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
         function measurement_class = getClass(m)
             % GETCLASS returns the class of measurement
             %
-            % MEASUREMENT_CLASS = GETCLASS(M) returns the class of 
+            % MEASUREMENT_CLASS = GETCLASS(M) returns the class of
             % measurement.
             %
             % See also getList, getName, getDescription.
@@ -319,7 +322,7 @@ classdef Measurement < handle & matlab.mixin.Copyable
             atlas_number =  eval([Measurement.getClass(m) '.getBrainAtlasNumber()']);
         end
         function analysis_class = getAnalysisClass(m)
-            % GETANALYSISCLASS returns the class of the analysis 
+            % GETANALYSISCLASS returns the class of the analysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS(M) returns the class of
             % the analysis where the measurement will be used.
@@ -335,19 +338,19 @@ classdef Measurement < handle & matlab.mixin.Copyable
             % SUBJECT_CLASS = GETSUBJECTCLASS(M) returns the class of the
             % subjects whithin the group of the measurement.
             %
-            % See also getAnalysisClass, getClass.            
+            % See also getAnalysisClass, getClass.
             
             % measurement subject class
             subject_class = eval([Measurement.getClass(m) '.getSubjectClass()']);
-        end        
+        end
         function available_settings = getAvailableSettings(m)
             % GETAVAILABLESETTINGS returns the available settings
             %
             % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(M) returns the
             % available settings of the measurement.
             %
-            % See also getAnalysisClass, getClass.    
-
+            % See also getAnalysisClass, getClass.
+            
             available_settings = eval([Measurement.getClass(m) '.getAvailableSettings()']);
         end
         function sub = getMeasurement(measurement_class, id, label, notes, atlases, measure_code, group, varargin) %#ok<INUSD>
@@ -370,19 +373,31 @@ classdef Measurement < handle & matlab.mixin.Copyable
             sub = eval([measurement_class  '(id, label, notes, atlases, measure_code, group, varargin{:})']);
         end
     end
+    methods (Static)  % Plot general panel      
+        function handle =  getMeasurementSettingsPanel(measurement_class, analysis, uiparent) %#ok<INUSD>
+            % GETCHILDPANEL returns a dynamic panel to the Measurement UIfigure
+            %
+            % HANDLE = GETCHILDPANEL(MEASUREMENT_CLASS, ANALYSIS, UIPARENT)
+            % returns a dynamic panel to the Meaasurement UIFigure.
+            %
+            % See also getMesurementPanel
+            
+            handle = eval([measurement_class '.getMeasurementSettingsPanel(analysis, uiparent)']);
+        end
+    end
     methods (Access = protected)  % Shallow copy
         function measurement_copy = copyElement(m)
             % COPYELEMENT copies elements of measurement
             %
             % MEASUREMENT_COPY = COPYELEMENT(M) copies elements of the
-            % measurement M. 
+            % measurement M.
             %
             % See also Cohort, Analysis.
             
             % It does not make a deep copy of atlases or groups
-
+            
             % Make a shallow copy
             measurement_copy = copyElement@matlab.mixin.Copyable(m);
         end
-    end    
+    end
 end

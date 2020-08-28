@@ -28,7 +28,7 @@ classdef Comparison < handle & matlab.mixin.Copyable
     %  getNotes                     - returns the notes
     %  getBrainAtlases              - returns the atlases
     %  getMeasureCode               - returns the measure code
-    %  getGroup                     - returns the group
+    %  getGroups                    - returns the group
     %  getSettings                  - returns the settings structure
     % 
     % Comparison descriptive methods (Static)
@@ -41,6 +41,9 @@ classdef Comparison < handle & matlab.mixin.Copyable
     %  getSubjectClass          - returns the class of the subject
     %  getAvailableSettings     - returns available settings to the comparison
     %  getRandomComparion       - returns a new comparison
+    %
+    % Comparison Plot methods (Static)
+    %  getComparisonSettingsPanel - returns a dynamic UIPanel
     %
     % See also Analysis, Measurement, RandomComparison.
     
@@ -375,6 +378,18 @@ classdef Comparison < handle & matlab.mixin.Copyable
             % See also getClass, getList
             
             sub = eval([comparison_class '(id, label, notes, atlases, measure_code, group_1, group_2, varargin{:})']);
+        end
+    end
+    methods (Static)  % Plot general panel       
+        function handle =  getComparisonSettingsPanel(comparison_class, analysis, uiparent)
+            % GETCHILDPANEL returns a dynamic panel to the Comparison UIfigure
+            %
+            % HANDLE = GETCHILDPANEL(COMPARISON_CLASS, ANALYSIS, UIPARENT)
+            % returns a dynamic panel to the Comparison UIFigure.
+            %
+            % See also getComparisonPanel
+            
+            handle = eval([comparison_class '.getComparisonSettingsPanel(analysis, uiparent)']);
         end
     end
     methods (Access = protected)  % Shallow copy

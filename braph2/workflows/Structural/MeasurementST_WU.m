@@ -3,7 +3,7 @@ classdef MeasurementST_WU < Measurement
     % MeasurementST_WU is a subclass of Measurement, it implements the
     % initialization of data methods.
     %
-    % MeasurementST_WU implements Measurement initialization of the data 
+    % MeasurementST_WU implements Measurement initialization of the data
     % function class will save. It checks if the data being saved has correct
     % dimensions. Structural data can be for example MRI or PET data.
     %
@@ -12,7 +12,7 @@ classdef MeasurementST_WU < Measurement
     %
     % MeasurementST_WU basic methods:
     %  disp                         - displays the comparison
-    % 
+    %
     % MeasurementST_WU get methods:
     %  getValue                     - returns the value of the measurement
     %
@@ -29,8 +29,11 @@ classdef MeasurementST_WU < Measurement
     %  getAvailbleSettings          - returns the available settings
     %  getMeasurement               - returns a new measurement
     %
-    % See also Comparison, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU. 
-   
+    % MeasurementST_WU plot methods (Static):
+    %  getMeasurementSettingsPanel  - returns a UIPanel
+    %
+    % See also Comparison, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU.
+    
     properties
         value  % value of the measure for the group
     end
@@ -38,17 +41,17 @@ classdef MeasurementST_WU < Measurement
         function m =  MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin)
             % MEASUREMENTST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
-            % with the data from GROUP. It initializes the MEASUREMENTST_WU 
+            % with the data from GROUP. It initializes the MEASUREMENTST_WU
             % with default settings.
             %
             % See also ComparisonST_WU, RandomComparisonST_WU, AnalysisST_WU.
             
             graph_type = AnalysisST_WU.getGraphType();
-            measure_list = Graph.getCompatibleMeasureList(graph_type);            
+            measure_list = Graph.getCompatibleMeasureList(graph_type);
             assert(ismember(measure_code, measure_list), ...
                 [BRAPH2.STR ':MeasurementST_WU:' BRAPH2.BUG_FUNC], ...
                 'MeasurementST_WU measure_code is not compatible with the permited Measures.');
-
+            
             m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
         end
     end
@@ -58,7 +61,7 @@ classdef MeasurementST_WU < Measurement
             %
             % DISP(M) overrides Measurement disp and displays additional
             % information about the value of the MeasurementST_WU.
-            % 
+            %
             % See also Measurement
             
             m.disp@Measurement()
@@ -69,9 +72,9 @@ classdef MeasurementST_WU < Measurement
         function value = getMeasureValue(m)
             % GETGROUPVALUE returns the measure value of the group
             %
-            % VALUE = GETMEASUREVALUE(M) returns the measure value of 
+            % VALUE = GETMEASUREVALUE(M) returns the measure value of
             % the group.
-            % 
+            %
             % See also getClass, getName, getDescription.
             
             value = m.value;
@@ -84,7 +87,7 @@ classdef MeasurementST_WU < Measurement
             % INITIALIZE_DATA(M) initialize and check the data for the
             % measurement. It initializes with default settings.
             %
-            % INITIALIZE_DATA(M, 'MeasurementST.Value', VALUE) initialize and 
+            % INITIALIZE_DATA(M, 'MeasurementST.Value', VALUE) initialize and
             % check the data for the measurement. It saves the measurement
             % VALUE.
             %
@@ -92,9 +95,9 @@ classdef MeasurementST_WU < Measurement
             
             atlases = m.getBrainAtlases();
             atlas = atlases{1};
-
+            
             measure_code = m.getMeasureCode();
-
+            
             if Measure.is_global(measure_code)  % global measure
                 m.value = get_from_varargin( ...
                     {0}, ...  % 1 measure per group
@@ -132,7 +135,7 @@ classdef MeasurementST_WU < Measurement
         function class = getClass()
             % GETCLASS returns the class of structural measurement
             %
-            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
+            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
             % measurement. In this case 'MeasurementST_WU'.
             %
             % See also getList, getName, getDescription.
@@ -162,7 +165,7 @@ classdef MeasurementST_WU < Measurement
                 ];
         end
         function atlas_number = getBrainAtlasNumber()
-            % GETBRAINATLASNUMBER returns the number of brain atlases 
+            % GETBRAINATLASNUMBER returns the number of brain atlases
             %
             % ATLAS_NUMBER = GETBRAINATLASNUMBER() returns the number of
             % brain atlases.
@@ -172,7 +175,7 @@ classdef MeasurementST_WU < Measurement
             atlas_number =  1;
         end
         function analysis_class = getAnalysisClass()
-            % GETANALYSISCLASS returns the class of the analsysis 
+            % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
             % analysis the random comparison is part of, 'MeasurementST_WU'.
@@ -190,11 +193,11 @@ classdef MeasurementST_WU < Measurement
             % See also getList, getClass, getName, getDescription.
             
             subject_class = 'SubjectST';
-        end        
+        end
         function available_settings = getAvailableSettings()
             % GETAVAILABLESETTINGS returns the available settings of structural measurement
             %
-            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the 
+            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the
             % available settings of MeasurementST_WU.
             %
             % See also getClass, getName, getDescription
@@ -208,7 +211,7 @@ classdef MeasurementST_WU < Measurement
             % returns a new MeasurementST_WU object with MEASUREMENT_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
             % it will initialize with default settings.
-            % 
+            %
             % SUB = GETMEASUREMENT(MEASUREMENT_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % returns a new MeasurementST_WU object with MEASUREMENT_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
@@ -219,4 +222,17 @@ classdef MeasurementST_WU < Measurement
             m = eval([measurement_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
         end
     end
-end 
+    methods (Static)  % Plot methods
+        function handle = getMeasurementSettingsPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. For WU in empty.
+            %
+            % See also MeasurementST_WU.
+            
+            set(uiparent, 'Visible', 'off')
+             handle.variables = [];           
+        end
+    end
+end
