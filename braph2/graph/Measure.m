@@ -307,7 +307,11 @@ classdef Measure < handle
             % PARAMETER= GETPARAMETER(MEASURE_CLASS) returns the parameter
             % of the measure whose class is MEASURE_CLASS.
             
-            parameter = m.parameter;
+            if Measure.is_parametric(m)
+                parameter = m.parameter;
+            else
+                parameter = 1;
+            end
         end
         function values = getParameterValues(m)
              % GETPARAMETERVALUES returns the values of the measure's parameter
