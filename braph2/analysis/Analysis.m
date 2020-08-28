@@ -40,9 +40,17 @@ classdef Analysis < handle & matlab.mixin.Copyable
     % Analysis plot methods (Abstract)
     %  getGraphPanel            - returns a correlation matrix graph uipanel
     %  getGlobalPanel           - returns a global measure uipanel
+    %  getNodalPanel            - returns a nodal measure uipanel
+    %  getBinodalPanel          - returns a binodal measure uipanel
     %  getGlobalMeasurePlot     - returns a global measure plot
     %  getGlobalComparisonPlot  - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
+    %  getNodalMeasurePlot      - returns a nodal mesure plot
+    %  getNodalComparisonPlot   - returns a nodal comprison plot
+    %  getNodalRandomComparisonPlot - returns a nodal randomcomparison plot
+    %  getBinodalMeasurePlot      - returns a binodal mesure plot
+    %  getBinodalComparisonPlot   - returns a binodal comprison plot
+    %  getBinodalRandomComparisonPlot - returns a binodal randomcomparison plot
     %
     % Analysis getAnalysis methods (Static)
     %  getAnalysis              - returns a new analysis
@@ -340,7 +348,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
         end
         function list = selectMeasurements(analysis, measure_code, group, method) 
-            % SELECTMEASUREMENTS returns a list with the group measurements values
+            % SELECTMEASUREMENTS returns a list with the group measurements
             %
             % MEASUREMENTS = SELECTMEASUREMENTS(ANALYSIS, MEASURE_CODE, GROUP)
             % returns a list containing the Measurements of type
@@ -370,38 +378,39 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
         end
         function list = selectComparisons(analysis, measure_code, group1, group2, method)
-            % SELECTCOMPARISONS returns a list with the group measurements values
+            % SELECTCOMPARISONS returns a list with the group comparisons
             %
-            % COMPARISONS = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP)
-            % returns a list containing the Measurements of type
-            % MEASURE_CODE for GROUP. 
+            % COMPARISONS = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP1, GROUP2)
+            % returns a list containing the Comparisons of type
+            % MEASURE_CODE for GROUP1 and GROUP2. 
             %
-            % LIST = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP, METHOD)
+            % LIST = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP1, GROUP2, METHOD)
             % returns a list containing the results of applying METHODS to
-            % the Comparisons of type MEASURE_CODE for GROUP. For example,
+            % the Comparisons of type MEASURE_CODE for GROUP1 and GROUP2. For example,
             % METHOD can be '.getValue()'.
             %
-            % See also getSettings, getMeasurement, getCohort, selectMeasurements            
-            
+            % See also getSettings, getMeasurement, getCohort, selectMeasurements 
+
             all_comparisons = analysis.getComparisons().getValues();
-            selected_comparisons = cell();
+            selected_comparisons = cell(size(all_comparisons));
             for i = 1:1:length(all_comparisons)
-                comparison = all_comparisons{i};
-                [g1, g2] = comparison.getGroups();
-                if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
-                    selected_comparisons{end + 1} = eval(['comparison' method]); %#ok<AGROW>
+                c = all_comparisons{i};
+                [g1, g2] = c.getGroups();
+                if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, c.getMeasureCode())
+                    selected_comparisons{i} = c; 
                 end
             end
+            selected_comparisons(~cellfun(@isempty, selected_comparisons)) = [];
             
             if nargin == 5
-                list = cell(size(selected_comparisons));
+                list = cell(size(selected_comparisons));                
                 for i = 1:1:length(selected_comparisons)
-                    m = selected_comparisons{i}; %#ok<NASGU>
-                    list{i} =  eval(['m' method]);
+                    c = all_comparisons{i}; %#ok<NASGU>
+                    list{i} = eval(['c' method]);
                 end
             else
                 list = selected_comparisons;
-            end            
+            end
         end
         function list = selectRandomComparisons(analysis, measure_code, group, method)
             % SELECTRANDOMCOMPARISONS returns a list with the group measurements values
@@ -435,9 +444,17 @@ classdef Analysis < handle & matlab.mixin.Copyable
     methods (Abstract)  % Plot abstract methods
         getGraphPanel(analysis, varargin)
         getGlobalPanel(analysis, varargin) 
+        getNodalPanel(analysis, varargin)
+        getBinodalPanel(analysis, varargin)
         getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
         getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
         getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
+        getNodalMeasurePlot(analysis, ui_prent_panel, ui_parent_axes, mesure_code, group, brain_region, varargin)
+        getNodalComparisonPlot(analysis, ui_prent_panel, ui_parent_axes, mesure_code, group_1, group_2, brain_region, varargin)
+        getNodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, mesure_code, group, brain_region, varargin)
+        getBinodalMeasurePlot(analysis, ui_prent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)
+        getBinodalComparisonPlot(analysis, ui_prent_panel, ui_parent_axes, measure_code, group_1, group_2, brain_region_1, brain_region_2, varargin)
+        getBinodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)
     end
     methods (Static)  % getAnalysis
         function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>

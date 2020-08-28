@@ -39,10 +39,17 @@ classdef AnalysisST_WU < Analysis
     %
     % AnalysisST_WU Plot panel methods
     %  getGraphPanel                - creates a uipanel
-    %  getGlobalPanel               - creates a uipanel for GUIAnalysis
+    %  getGlobalPanel               - creates a global uipanel for GUIAnalysis
+    %  getNodalPanel                - creates a nodal uipanel for GUIAnalysis 
     %  getGlobalMeasurePlot         - returns a global measurement plot
     %  getGlobalComparisonPlot      - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
+    %  getNodalMeasurePlot          - returns a nodal mesure plot
+    %  getNodalComparisonPlot       - returns a nodal comprison plot
+    %  getNodalRandomComparisonPlot - returns a nodal randomcomparison plot
+    %  getBinodalMeasurePlot      - returns a binodal mesure plot
+    %  getBinodalComparisonPlot   - returns a binodal comprison plot
+    %  getBinodalRandomComparisonPlot - returns a binodal randomcomparison plot
     %
     % See also Analysis, MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU
     
@@ -747,7 +754,7 @@ classdef AnalysisST_WU < Analysis
             
             uiparent = get_from_varargin([], 'UIParent', varargin{:});
             
-            % declre constans
+            % declare constans
             SELECTALL_MEAS_CMD = GUI.SELECTALL_CMD;
             SELECTALL_MEAS_TP = 'Select all measures';
             
@@ -1171,7 +1178,10 @@ classdef AnalysisST_WU < Analysis
                 update_global_table()
             end
             function cb_global_remove(~, ~)
-                analysis.getMeasurements().remove(selected_brainmeasures);
+               for i = 1:1:length(selected_brainmeasures)
+                    k = selected_brainmeasures(i);
+                    analysis.getMeasurements().remove(k);
+                end
                 update_global_table()
             end
             
@@ -1181,6 +1191,870 @@ classdef AnalysisST_WU < Analysis
             if nargout > 0
                 global_panel = ui_mainpanel;
             end
+        end
+        function nodal_panel = getNodalPanel(analysis, varargin)
+            % GETNODALPANEL creates the nodal uipanel for GUIAnalysis
+            %
+            % NODAL_PANEL = GETNODALPANEL(ANALYSIS, PROPERTY, VALUE, ...)
+            % creates a uipanel that contains information about nodal
+            % measures in Measurement, RandomComparison and Comparison.
+            %
+            % See also getGraphPanel, getMainPanelMeasurePlot, getGlobalPanel
+            
+            uiparent = get_from_varargin([], 'UIParent', varargin{:});
+            
+            % declare constans
+            SELECTALL_MEAS_CMD = GUI.SELECTALL_CMD;
+            SELECTALL_MEAS_TP = 'Select all measures';
+            
+            CLEARSELECTION_MEAS_CMD = GUI.CLEARSELECTION_CMD;
+            CLEARSELECTION_MEAS_TP = 'Clear measure selection';
+            
+            REMOVE_MEAS_CMD = GUI.REMOVE_CMD;
+            REMOVE_MEAS_TP = 'Remove selected measures';
+            
+            % get global measures list
+            mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());
+            for mi = 1:1:length(mlist)
+                if Measure.is_nodal(mlist{mi})
+                    n_list{mi} = mlist{mi}; %#ok<AGROW>
+                end
+            end
+            nodal_list = n_list(~cellfun(@isempty, n_list));
+            
+            % get brain regions list
+            atlases = analysis.getCohort().getBrainAtlases();
+            atlas = atlases{1};  % change when multiatlases            
+            br_list = atlas.getBrainRegions().getKeys();
+            
+            % declare variables
+            selected_brainmeasures = [];
+            
+            % declare the uicontrols
+            ui_mainpanel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 1]);
+            ui_nodal_tbl = uitable(ui_mainpanel);
+            ui_button_brainmeasures_selectall = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
+            ui_button_brainmeasures_clearselection = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
+            ui_button_brainmeasures_remove = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
+            ui_checkbox_brainmeasures_meas = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');            
+            ui_popup_nodalmeasures_group1 = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_popup_nodalmeasures_group2 = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_selectedmeasure_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_selectedbr_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
+            ui_plot_measure_axes = get_from_varargin([], 'UIAxesNodal', varargin{:});
+            ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');            
+            init_nodal_panel()
+            function init_nodal_panel()
+                GUI.setUnits(ui_mainpanel)
+                
+                set(ui_nodal_tbl, 'BackgroundColor', GUI.TABBKGCOLOR)
+                if isequal(analysis.getMeasurementClass(), 'MeasurementST_WU')
+                    set(ui_nodal_tbl, 'Position', [.02 .21 .96 .77])
+                    GUI.setUnits(ui_plot_measure_panel)
+                    GUI.setBackgroundColor(ui_plot_measure_panel)
+                    
+                    set(ui_plot_measure_panel, 'Position', [.0 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Parent', ui_plot_measure_panel)
+                    set(ui_plot_measure_axes, 'Position', [.00 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Visible', 'off')
+                else
+                    set(ui_nodal_tbl, 'Position', [.02 .21 .4 .77])
+                    GUI.setUnits(ui_plot_measure_panel)
+                    GUI.setBackgroundColor(ui_plot_measure_panel)
+                    set(ui_plot_measure_panel, 'Position', [.42 .00 .58 .98])
+                    
+                    set(ui_plot_measure_axes, 'Parent', ui_plot_measure_panel)
+                    set(ui_plot_measure_axes, 'Position', [.1 .2 .8 .79])
+                end
+                set(ui_nodal_tbl, 'CellEditCallback', {@cb_nodal_table_edit})
+                
+                set(ui_nodal_tbl, 'Units', 'normalized')
+                set(ui_button_brainmeasures_selectall, 'Position', [.19 .16 .10 .04])
+                set(ui_button_brainmeasures_selectall, 'String', SELECTALL_MEAS_CMD)
+                set(ui_button_brainmeasures_selectall, 'TooltipString', SELECTALL_MEAS_TP)
+                set(ui_button_brainmeasures_selectall, 'Callback', {@cb_nodal_selectall})
+                
+                set(ui_button_brainmeasures_clearselection, 'Position', [.19 .11 .10 .04])
+                set(ui_button_brainmeasures_clearselection, 'String', CLEARSELECTION_MEAS_CMD)
+                set(ui_button_brainmeasures_clearselection, 'TooltipString', CLEARSELECTION_MEAS_TP)
+                set(ui_button_brainmeasures_clearselection, 'Callback', {@cb_nodal_clearselection})
+                
+                set(ui_button_brainmeasures_remove, 'Position', [.19 .06 .10 .04])
+                set(ui_button_brainmeasures_remove, 'String', REMOVE_MEAS_CMD)
+                set(ui_button_brainmeasures_remove, 'TooltipString', REMOVE_MEAS_TP)
+                set(ui_button_brainmeasures_remove, 'Callback', {@cb_nodal_remove})
+                
+                set(ui_checkbox_brainmeasures_meas, 'Position', [.3 .16 .10 .04])
+                set(ui_checkbox_brainmeasures_meas, 'String', 'measure')
+                set(ui_checkbox_brainmeasures_meas, 'Value', true)
+                set(ui_checkbox_brainmeasures_meas, 'TooltipString', 'Select measure')
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'bold')
+                set(ui_checkbox_brainmeasures_meas, 'Callback', {@cb_nodal_meas})
+                
+                set(ui_checkbox_brainmeasures_comp, 'Position',[.3 .11 .10 .04])
+                set(ui_checkbox_brainmeasures_comp, 'String', 'comparison')
+                set(ui_checkbox_brainmeasures_comp, 'Value', false)
+                set(ui_checkbox_brainmeasures_comp, 'TooltipString', 'Select comparison')
+                set(ui_checkbox_brainmeasures_comp, 'Callback', {@cb_nodal_comp})
+                
+                set(ui_checkbox_brainmeasures_rand, 'Position', [.3 .06 .15 .04])
+                set(ui_checkbox_brainmeasures_rand, 'String', 'random comparison')
+                set(ui_checkbox_brainmeasures_rand, 'Value', false)
+                set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
+                set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_nodal_rand})
+   
+                set(ui_plot_hide_checkbox, 'Position', [.3 .01 .10 .04])
+                set(ui_plot_hide_checkbox, 'String', 'Show Plot')
+                set(ui_plot_hide_checkbox, 'Value', true)
+                set(ui_plot_hide_checkbox, 'TooltipString', 'Show/Hide Plot')
+                set(ui_plot_hide_checkbox, 'Callback', {@cb_show_plot})
+                
+                set(ui_popup_nodalmeasures_group1, 'Position', [.02 .16 .15 .04])
+                set(ui_popup_nodalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_nodalmeasures_group1, 'Callback', {@cb_nodal_table})
+
+                set(ui_popup_nodalmeasures_group2, 'Position', [.02 .11 .15 .04])
+                set(ui_popup_nodalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_nodalmeasures_group2, 'Callback', {@cb_nodal_table})
+                set(ui_popup_nodalmeasures_group2, 'Enable', 'off')
+                set(ui_popup_nodalmeasures_group2, 'Visible', 'off')
+                
+                set(ui_selectedmeasure_popup, 'Position', [.02 .06 .15 .04])
+                set(ui_selectedmeasure_popup, 'String', nodal_list)
+                set(ui_selectedmeasure_popup, 'Callback', {@cb_nodal_table})
+                
+                set(ui_selectedbr_popup, 'Position', [.02 .01 .15 .04])
+                set(ui_selectedbr_popup, 'String', br_list)
+                set(ui_selectedbr_popup, 'Callback', {@cb_nodal_table})
+                
+            end
+            function update_nodal_table()
+                data = {}; %#ok<NASGU>
+                RowName = [];
+                
+                selected_index_1 = get(ui_popup_nodalmeasures_group1, 'Value');
+                group_1 = analysis.getCohort().getGroups().getValue(selected_index_1);
+                
+                selected_index_2 = get(ui_popup_nodalmeasures_group1, 'Value');
+                group_2 = analysis.getCohort().getGroups().getValue(selected_index_2);
+                
+                measures = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
+                
+                selected_br = get(ui_selectedbr_popup, 'Value');
+                
+                if get(ui_checkbox_brainmeasures_meas, 'Value')
+                    for j = 1:1:analysis.getMeasurements().length()
+                        measurement = analysis.getMeasurements().getValue(j);
+                        if ismember(measurement.getMeasureCode(), nodal_list) && isequal(measurement.getGroup(), group_1) && isequal(selected_measure, measurement.getMeasureCode())
+                            nodal_measurements{j} = measurement; %#ok<AGROW>
+                        end
+                    end
+                    
+                    if exist('nodal_measurements', 'var')
+                        nodal_measurements =  nodal_measurements(~cellfun(@isempty, nodal_measurements));
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false])
+                        
+                        data = cell(length(nodal_measurements), 7);
+                        for i = 1:1:length(nodal_measurements)
+                            measurement = nodal_measurements{i};
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end
+                            nodal_values_cell = measurement.getMeasureValue();
+                            nodal_values = nodal_values_cell{1};
+                            selected_nodal_value = nodal_values(selected_br);
+                            data{i, 2} = measurement.getMeasureCode();
+                            data{i, 3} = measurement.getGroup().getID();
+                            data{i, 4} = selected_nodal_value;
+                            data{i, 5} = measurement.getID();
+                            data{i, 6} = measurement.getLabel();
+                            data{i, 7} = measurement.getNotes();
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_nodal_tbl, 'Data', data)
+                        set(ui_nodal_tbl, 'RowName', RowName)
+                    else
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false])
+                        set(ui_nodal_tbl, 'Data', [])
+                        set(ui_nodal_tbl, 'RowName', [])
+                    end
+                    
+                elseif get(ui_checkbox_brainmeasures_comp, 'Value')
+                    for j = 1:1:analysis.getComparisons().length()
+                        comparison = analysis.getComparisons().getValue(j);
+                        [a, b] = comparison.getGroups();                        
+                        if ismember(comparison.getMeasureCode(), nodal_list) && (isequal(a, group_1) || isequal (b, group_2)) && isequal(selected_measure, comparison.getMeasureCode())
+                            nodal_comparison{j} = comparison; %#ok<AGROW>
+                        end                        
+                    end
+                    
+                    if exist('nodal_comparison', 'var')
+                        nodal_comparison =  nodal_comparison(~cellfun(@isempty, nodal_comparison));
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        
+                        data = cell(length(nodal_comparison), 7);
+                        for i = 1:1:length(nodal_comparison)
+                            comparison = nodal_comparison{i};
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end
+                            [val_1, val_2]  = comparison.getGroupValues();
+                            [group_1, group_2] = comparison.getGroups();
+                            nodal_values_1 = val_1{1};
+                            nodal_values_2 = val_2{1};
+                            data{i, 2} = comparison.getMeasureCode();
+                            data{i, 3} = group_1.getID();
+                            data{i, 4} = group_2.getID();
+                            data{i, 5} = nodal_values_1(selected_br);
+                            data{i, 6} = nodal_values_2(selected_br);
+                            data{i, 7} = comparison.getID();
+                            data{i, 8} = comparison.getLabel();
+                            data{i, 9} = comparison.getNotes();
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_nodal_tbl, 'Data', data)
+                        set(ui_nodal_tbl, 'RowName', RowName)
+                    else
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        set(ui_nodal_tbl, 'Data', [])
+                        set(ui_nodal_tbl, 'RowName', [])
+                    end
+                    
+                elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                    for j = 1:1:analysis.getRandomComparisons().length()
+                        randomcomparison = analysis.getRandomComparisons().getValue(j);                     
+                        if ismember(randomcomparison.getMeasureCode(), nodal_list) && isequal(randomcomparison.getGroup(), group_1) && isequal(selected_measure, randomcomparison.getMeasureCode())
+                            nodal_randomcomparison{j} = randomcomparison; %#ok<AGROW>
+                        end                        
+                    end
+                    
+                    if exist('nodal_randomcomparison', 'var')
+                        nodal_randomcomparison =  nodal_randomcomparison(~cellfun(@isempty, nodal_randomcomparison));
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false])
+                        
+                        data = cell(length(nodal_randomcomparison), 7);
+                        for i = 1:1:length(nodal_randomcomparison)
+                            randomcomparison = nodal_randomcomparison{i};
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end
+                            group_val =  randomcomparison.getGroupValue();
+                            random_val = randomcomparison.getRandomValue();
+                            group_val_nodal = group_val{1};
+                            random_val_nodal = random_val{1};
+                            data{i, 2} = randomcomparison.getMeasureCode();
+                            data{i, 3} = randomcomparison.getGroup().getID();
+                            data{i, 4} = group_val_nodal(selected_br);
+                            data{i, 5} = random_val_nodal(selected_br);
+                            data{i, 6} = randomcomparison.getID();
+                            data{i, 7} = randomcomparison.getLabel();
+                            data{i, 8} = randomcomparison.getNotes();
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_nodal_tbl, 'Data', data)
+                        set(ui_nodal_tbl, 'RowName', RowName)
+                    else
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false])
+                        set(ui_nodal_tbl, 'Data', [])
+                        set(ui_nodal_tbl, 'RowName', [])
+                    end
+                end
+            end
+            function update_group_popups()
+                if get(ui_checkbox_brainmeasures_comp, 'Value')
+                    set(ui_popup_nodalmeasures_group1, 'Enable', 'on')
+                    set(ui_popup_nodalmeasures_group1, 'Visible', 'on')
+                    
+                    set(ui_popup_nodalmeasures_group2, 'Enable', 'on')
+                    set(ui_popup_nodalmeasures_group2, 'Visible', 'on')
+                else
+                    set(ui_popup_nodalmeasures_group1, 'Enable', 'on')
+                    set(ui_popup_nodalmeasures_group1, 'Visible', 'on')
+                    
+                    set(ui_popup_nodalmeasures_group2, 'Enable', 'off')
+                    set(ui_popup_nodalmeasures_group2, 'Visible', 'off')
+                end
+            end
+            function init_plot_nodal_panel()
+                cla(ui_plot_measure_axes)
+                measures = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
+                if get(ui_checkbox_brainmeasures_meas, 'Value')
+                    analysis.getNodalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_nodalmeasures_group1, 'Value')), ...
+                        get(ui_selectedbr_popup, 'Value'));
+                elseif get(ui_checkbox_brainmeasures_comp, 'Value')
+                    analysis.getNodalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_nodalmeasures_group1, 'Value')), ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_nodalmeasures_group2, 'Value')), ...
+                        get(ui_selectedbr_popup, 'Value'));
+                elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                    analysis.getNodalRandomComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_nodalmeasures_group1, 'Value')), ...
+                        get(ui_selectedbr_popup, 'Value'));
+                end
+            end
+            function cb_show_plot(~, ~)
+                if isequal(get(ui_plot_hide_checkbox, 'Value'), 0)
+                    set(ui_nodal_tbl, 'Position', [.02 .21 .96 .77])
+                    
+                    set(ui_plot_measure_panel, 'Position', [.0 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Position', [.00 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Visible', 'off')
+                else
+                    set(ui_nodal_tbl, 'Position', [.02 .21 .4 .77])
+                    set(ui_plot_measure_panel, 'Position', [.42 .00 .58 .98])
+                    
+                    set(ui_plot_measure_axes, 'Position', [.1 .2 .8 .79])
+                    set(ui_plot_measure_axes, 'Visible', 'on')
+                end
+            end
+            function cb_nodal_table(~, ~)
+                update_nodal_table()
+                init_plot_nodal_panel()
+            end
+            function cb_nodal_table_edit(~, event)  % (src,event)
+                g = event.Indices(1);
+                col = event.Indices(2);
+                newdata = event.NewData;
+                switch col
+                    case 1
+                        if newdata == 1
+                            if ~ismember(g, selected_brainmeasures)
+                                selected_brainmeasures = [selected_brainmeasures g];
+                            end
+                        else
+                            selected_brainmeasures = selected_brainmeasures(selected_brainmeasures ~= g);
+                        end
+                end
+                
+                update_global_table();
+            end
+            function cb_nodal_meas(~, ~)  % (src,event)
+                set(ui_checkbox_brainmeasures_meas, 'Value', true)
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'bold')
+                set(ui_checkbox_brainmeasures_comp, 'Value', false)
+                set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_rand, 'Value', false)
+                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
+                
+                update_nodal_table()
+                update_group_popups()
+                init_plot_nodal_panel()
+            end
+            function cb_nodal_comp(~, ~)  % (src,event)
+                set(ui_checkbox_brainmeasures_meas, 'Value', false)
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_comp, 'Value', true)
+                set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'bold')
+                set(ui_checkbox_brainmeasures_rand, 'Value', false)
+                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
+                
+                update_nodal_table()
+                update_group_popups()
+                init_plot_nodal_panel()
+            end
+            function cb_nodal_rand(~, ~)  % (src,event)
+                set(ui_checkbox_brainmeasures_meas, 'Value', false)
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_comp, 'Value', false)
+                set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_rand, 'Value', true)
+                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'bold')
+                
+                update_nodal_table()
+                update_group_popups()
+                init_plot_nodal_panel()
+            end
+            function cb_nodal_selectall(~, ~)  % (src,event)
+                for j = 1:1:analysis.getMeasurements().length()
+                    measurement = analysis.getMeasurements().getValue(j);
+                    if ismember(measurement.getMeasureCode(), nodal_list)
+                        nodal_measurements{j} = measurement;                             %#ok<AGROW>
+                    end
+                end
+                
+                for r = 1:1:length(nodal_measurements)
+                    selected_brainmeasures = sort(unique([selected_brainmeasures(:); r]));
+                end
+                
+                update_nodal_table()
+            end
+            function cb_nodal_clearselection(~,~)  % (src,event)
+                selected_brainmeasures  = [];
+                update_nodal_table()
+            end
+            function cb_nodal_remove(~, ~)
+                for i = 1:1:length(selected_brainmeasures)
+                    k = selected_brainmeasures(i);
+                    analysis.getMeasurements().remove(k);
+                end
+                update_nodal_table()
+            end
+            
+            update_nodal_table()
+            init_plot_nodal_panel()
+            
+            if nargout > 0
+                nodal_panel = ui_mainpanel;
+            end            
+        end
+        function binodal_panel = getBinodalPanel(analysis, varargin)
+            % GETBINODALPANEL creates the binodal uipanel for GUIAnalysis
+            %
+            % BINODAL_PANEL = GETBINODALPANEL(ANALYSIS, PROPERTY, VALUE, ...)
+            % creates a uipanel that contains information about binodal
+            % measures in Measurement, RandomComparison and Comparison.
+            %
+            % See also getGraphPanel, getMainPanelMeasurePlot, getGlobalPanel
+            
+            uiparent = get_from_varargin([], 'UIParent', varargin{:});
+            
+            % declare constans
+            SELECTALL_MEAS_CMD = GUI.SELECTALL_CMD;
+            SELECTALL_MEAS_TP = 'Select all measures';
+            
+            CLEARSELECTION_MEAS_CMD = GUI.CLEARSELECTION_CMD;
+            CLEARSELECTION_MEAS_TP = 'Clear measure selection';
+            
+            REMOVE_MEAS_CMD = GUI.REMOVE_CMD;
+            REMOVE_MEAS_TP = 'Remove selected measures';
+            
+            % get global measures list
+            mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());
+            for mi = 1:1:length(mlist)
+                if Measure.is_binodal(mlist{mi})
+                    n_list{mi} = mlist{mi}; %#ok<AGROW>
+                end
+            end
+            binodal_list = n_list(~cellfun(@isempty, n_list));
+            
+            % get brain regions list
+            atlases = analysis.getCohort().getBrainAtlases();
+            atlas = atlases{1};  % change when multiatlases            
+            br_list = atlas.getBrainRegions().getKeys();
+            
+            % declare variables
+            selected_brainmeasures = [];
+            
+            % declare the uicontrols
+            ui_mainpanel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 1]);
+            ui_binodal_tbl = uitable(ui_mainpanel);
+            ui_button_brainmeasures_selectall = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
+            ui_button_brainmeasures_clearselection = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
+            ui_button_brainmeasures_remove = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
+            ui_checkbox_brainmeasures_meas = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');            
+            ui_popup_binodalmeasures_group1 = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_popup_binodalmeasures_group2 = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_selectedmeasure_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_selectedbr1_popup = uicontrol(ui_mainpanel, 'Style', 'popup');            
+            ui_selectedbr2_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
+            ui_plot_measure_axes = get_from_varargin([], 'UIAxesNodal', varargin{:});
+            ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');            
+            init_binodal_panel()
+            function init_binodal_panel()
+                GUI.setUnits(ui_mainpanel)
+                
+                set(ui_binodal_tbl, 'BackgroundColor', GUI.TABBKGCOLOR)
+                if isequal(analysis.getMeasurementClass(), 'MeasurementST_WU')
+                    set(ui_binodal_tbl, 'Position', [.02 .21 .96 .77])
+                    GUI.setUnits(ui_plot_measure_panel)
+                    GUI.setBackgroundColor(ui_plot_measure_panel)
+                    
+                    set(ui_plot_measure_panel, 'Position', [.0 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Parent', ui_plot_measure_panel)
+                    set(ui_plot_measure_axes, 'Position', [.00 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Visible', 'off')
+                else
+                    set(ui_binodal_tbl, 'Position', [.02 .21 .4 .77])
+                    GUI.setUnits(ui_plot_measure_panel)
+                    GUI.setBackgroundColor(ui_plot_measure_panel)
+                    set(ui_plot_measure_panel, 'Position', [.42 .00 .58 .98])
+                    
+                    set(ui_plot_measure_axes, 'Parent', ui_plot_measure_panel)
+                    set(ui_plot_measure_axes, 'Position', [.1 .2 .8 .79])
+                end
+                set(ui_binodal_tbl, 'CellEditCallback', {@cb_binodal_table_edit})
+                
+                set(ui_binodal_tbl, 'Units', 'normalized')
+                set(ui_button_brainmeasures_selectall, 'Position', [.19 .16 .10 .04])
+                set(ui_button_brainmeasures_selectall, 'String', SELECTALL_MEAS_CMD)
+                set(ui_button_brainmeasures_selectall, 'TooltipString', SELECTALL_MEAS_TP)
+                set(ui_button_brainmeasures_selectall, 'Callback', {@cb_binodal_selectall})
+                
+                set(ui_button_brainmeasures_clearselection, 'Position', [.19 .11 .10 .04])
+                set(ui_button_brainmeasures_clearselection, 'String', CLEARSELECTION_MEAS_CMD)
+                set(ui_button_brainmeasures_clearselection, 'TooltipString', CLEARSELECTION_MEAS_TP)
+                set(ui_button_brainmeasures_clearselection, 'Callback', {@cb_binodal_clearselection})
+                
+                set(ui_button_brainmeasures_remove, 'Position', [.19 .06 .10 .04])
+                set(ui_button_brainmeasures_remove, 'String', REMOVE_MEAS_CMD)
+                set(ui_button_brainmeasures_remove, 'TooltipString', REMOVE_MEAS_TP)
+                set(ui_button_brainmeasures_remove, 'Callback', {@cb_binodal_remove})
+                
+                set(ui_checkbox_brainmeasures_meas, 'Position', [.3 .16 .10 .04])
+                set(ui_checkbox_brainmeasures_meas, 'String', 'measure')
+                set(ui_checkbox_brainmeasures_meas, 'Value', true)
+                set(ui_checkbox_brainmeasures_meas, 'TooltipString', 'Select measure')
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'bold')
+                set(ui_checkbox_brainmeasures_meas, 'Callback', {@cb_binodal_meas})
+                
+                set(ui_checkbox_brainmeasures_comp, 'Position',[.3 .11 .10 .04])
+                set(ui_checkbox_brainmeasures_comp, 'String', 'comparison')
+                set(ui_checkbox_brainmeasures_comp, 'Value', false)
+                set(ui_checkbox_brainmeasures_comp, 'TooltipString', 'Select comparison')
+                set(ui_checkbox_brainmeasures_comp, 'Callback', {@cb_binodal_comp})
+                
+                set(ui_checkbox_brainmeasures_rand, 'Position', [.3 .06 .15 .04])
+                set(ui_checkbox_brainmeasures_rand, 'String', 'random comparison')
+                set(ui_checkbox_brainmeasures_rand, 'Value', false)
+                set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
+                set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_binodal_rand})
+   
+                set(ui_plot_hide_checkbox, 'Position', [.3 .01 .10 .04])
+                set(ui_plot_hide_checkbox, 'String', 'Show Plot')
+                set(ui_plot_hide_checkbox, 'Value', true)
+                set(ui_plot_hide_checkbox, 'TooltipString', 'Show/Hide Plot')
+                set(ui_plot_hide_checkbox, 'Callback', {@cb_show_plot})
+                
+                set(ui_popup_binodalmeasures_group1, 'Position', [.02 .16 .15 .04])
+                set(ui_popup_binodalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_binodalmeasures_group1, 'Callback', {@cb_binodal_table})
+
+                set(ui_popup_binodalmeasures_group2, 'Position', [.02 .11 .15 .04])
+                set(ui_popup_binodalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_binodalmeasures_group2, 'Callback', {@cb_binodal_table})
+                set(ui_popup_binodalmeasures_group2, 'Enable', 'off')
+                set(ui_popup_binodalmeasures_group2, 'Visible', 'off')
+                
+                set(ui_selectedmeasure_popup, 'Position', [.02 .06 .15 .04])
+                set(ui_selectedmeasure_popup, 'String', binodal_list)
+                set(ui_selectedmeasure_popup, 'Callback', {@cb_binodal_table})
+                
+                set(ui_selectedbr1_popup, 'Position', [.02 .01 .07 .04])
+                set(ui_selectedbr1_popup, 'String', br_list)
+                set(ui_selectedbr1_popup, 'Callback', {@cb_binodal_table})
+                
+                set(ui_selectedbr2_popup, 'Position', [.1 .01 .07 .04])
+                set(ui_selectedbr2_popup, 'String', br_list)
+                set(ui_selectedbr2_popup, 'Callback', {@cb_binodal_table})
+                
+            end
+            function update_binodal_table()
+                data = {}; %#ok<NASGU>
+                RowName = [];
+                
+                selected_index_1 = get(ui_popup_binodalmeasures_group1, 'Value');
+                group_1 = analysis.getCohort().getGroups().getValue(selected_index_1);
+                
+                selected_index_2 = get(ui_popup_binodalmeasures_group1, 'Value');
+                group_2 = analysis.getCohort().getGroups().getValue(selected_index_2);
+                
+                measures = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
+                
+                selected_br1 = get(ui_selectedbr1_popup, 'Value');
+                selected_br2 = get(ui_selectedbr2_popup, 'Value');
+                
+                if get(ui_checkbox_brainmeasures_meas, 'Value')
+                    for j = 1:1:analysis.getMeasurements().length()
+                        measurement = analysis.getMeasurements().getValue(j);
+                        if ismember(measurement.getMeasureCode(), binodal_list) && isequal(measurement.getGroup(), group_1) && isequal(selected_measure, measurement.getMeasureCode())
+                            binodal_measurements{j} = measurement; %#ok<AGROW>
+                        end
+                    end
+                    
+                    if exist('binodal_measurements', 'var')
+                        binodal_measurements =  binodal_measurements(~cellfun(@isempty, binodal_measurements));
+                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
+                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
+                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false])
+                        
+                        data = cell(length(binodal_measurements), 7);
+                        for i = 1:1:length(binodal_measurements)
+                            measurement = binodal_measurements{i};
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end
+                            binodal_values_cell = measurement.getMeasureValue();
+                            binodal_values = binodal_values_cell{1};
+                            selected_binodal_value = binodal_values(selected_br1, selected_br2);
+                            data{i, 2} = measurement.getMeasureCode();
+                            data{i, 3} = measurement.getGroup().getID();
+                            data{i, 4} = selected_binodal_value;
+                            data{i, 5} = measurement.getID();
+                            data{i, 6} = measurement.getLabel();
+                            data{i, 7} = measurement.getNotes();
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_binodal_tbl, 'Data', data)
+                        set(ui_binodal_tbl, 'RowName', RowName)
+                    else
+                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
+                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
+                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false])
+                        set(ui_binodal_tbl, 'Data', [])
+                        set(ui_binodal_tbl, 'RowName', [])
+                    end
+                    
+                elseif get(ui_checkbox_brainmeasures_comp, 'Value')
+                    for j = 1:1:analysis.getComparisons().length()
+                        comparison = analysis.getComparisons().getValue(j);
+                        [a, b] = comparison.getGroups();                        
+                        if ismember(comparison.getMeasureCode(), binodal_list) && (isequal(a, group_1) || isequal (b, group_2)) && isequal(selected_measure, comparison.getMeasureCode())
+                            binodal_comparison{j} = comparison; %#ok<AGROW>
+                        end                        
+                    end
+                    
+                    if exist('binodal_comparison', 'var')
+                        binodal_comparison =  binodal_comparison(~cellfun(@isempty, binodal_comparison));
+                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
+                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        
+                        data = cell(length(binodal_comparison), 7);
+                        for i = 1:1:length(binodal_comparison)
+                            comparison = binodal_comparison{i};
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end
+                            [val_1, val_2]  = comparison.getGroupValues();
+                            [group_1, group_2] = comparison.getGroups();
+                            binodal_values_1 = val_1{1};
+                            binodal_values_2 = val_2{1};
+                            data{i, 2} = comparison.getMeasureCode();
+                            data{i, 3} = group_1.getID();
+                            data{i, 4} = group_2.getID();
+                            data{i, 5} = binodal_values_1(selected_br1, selected_br2);
+                            data{i, 6} = binodal_values_2(selected_br1, selected_br2);
+                            data{i, 7} = comparison.getID();
+                            data{i, 8} = comparison.getLabel();
+                            data{i, 9} = comparison.getNotes();
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_binodal_tbl, 'Data', data)
+                        set(ui_binodal_tbl, 'RowName', RowName)
+                    else
+                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
+                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        set(ui_binodal_tbl, 'Data', [])
+                        set(ui_binodal_tbl, 'RowName', [])
+                    end
+                    
+                elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                    for j = 1:1:analysis.getRandomComparisons().length()
+                        randomcomparison = analysis.getRandomComparisons().getValue(j);                     
+                        if ismember(randomcomparison.getMeasureCode(), binodal_list) && isequal(randomcomparison.getGroup(), group_1) && isequal(selected_measure, randomcomparison.getMeasureCode())
+                            binodal_randomcomparison{j} = randomcomparison; %#ok<AGROW>
+                        end                        
+                    end
+                    
+                    if exist('binodal_randomcomparison', 'var')
+                        binodal_randomcomparison =  binodal_randomcomparison(~cellfun(@isempty, binodal_randomcomparison));
+                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
+                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false])
+                        
+                        data = cell(length(binodal_randomcomparison), 7);
+                        for i = 1:1:length(binodal_randomcomparison)
+                            randomcomparison = binodal_randomcomparison{i};
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end
+                            group_val =  randomcomparison.getGroupValue();
+                            random_val = randomcomparison.getRandomValue();
+                            group_val_binodal = group_val{1};
+                            random_val_binodal = random_val{1};
+                            data{i, 2} = randomcomparison.getMeasureCode();
+                            data{i, 3} = randomcomparison.getGroup().getID();
+                            data{i, 4} = group_val_binodal(selected_br1, selected_br2);
+                            data{i, 5} = random_val_binodal(selected_br1, selected_br2);
+                            data{i, 6} = randomcomparison.getID();
+                            data{i, 7} = randomcomparison.getLabel();
+                            data{i, 8} = randomcomparison.getNotes();
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_binodal_tbl, 'Data', data)
+                        set(ui_binodal_tbl, 'RowName', RowName)
+                    else
+                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
+                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false])
+                        set(ui_binodal_tbl, 'Data', [])
+                        set(ui_binodal_tbl, 'RowName', [])
+                    end
+                end
+            end
+            function update_group_popups()
+                if get(ui_checkbox_brainmeasures_comp, 'Value')
+                    set(ui_popup_binodalmeasures_group1, 'Enable', 'on')
+                    set(ui_popup_binodalmeasures_group1, 'Visible', 'on')
+                    
+                    set(ui_popup_binodalmeasures_group2, 'Enable', 'on')
+                    set(ui_popup_binodalmeasures_group2, 'Visible', 'on')
+                else
+                    set(ui_popup_binodalmeasures_group1, 'Enable', 'on')
+                    set(ui_popup_binodalmeasures_group1, 'Visible', 'on')
+                    
+                    set(ui_popup_binodalmeasures_group2, 'Enable', 'off')
+                    set(ui_popup_binodalmeasures_group2, 'Visible', 'off')
+                end
+            end
+            function init_plot_binodal_panel()
+                cla(ui_plot_measure_axes)
+                measures = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
+                if get(ui_checkbox_brainmeasures_meas, 'Value')
+                    analysis.getBinodalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_binodalmeasures_group1, 'Value')), ...
+                        get(ui_selectedbr1_popup, 'Value'), get(ui_selectedbr2_popup, 'Value'));
+                elseif get(ui_checkbox_brainmeasures_comp, 'Value')
+                    analysis.getBinodalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_binodalmeasures_group1, 'Value')), ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_binodalmeasures_group2, 'Value')), ...
+                        get(ui_selectedbr1_popup, 'Value'), get(ui_selectedbr2_popup, 'Value'));
+                elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                    analysis.getBinodalRandomComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_binodalmeasures_group1, 'Value')), ...
+                        get(ui_selectedbr1_popup, 'Value'), get(ui_selectedbr2_popup, 'Value'));
+                end
+            end
+            function cb_show_plot(~, ~)
+                if isequal(get(ui_plot_hide_checkbox, 'Value'), 0)
+                    set(ui_binodal_tbl, 'Position', [.02 .21 .96 .77])
+                    
+                    set(ui_plot_measure_panel, 'Position', [.0 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Position', [.00 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Visible', 'off')
+                else
+                    set(ui_binodal_tbl, 'Position', [.02 .21 .4 .77])
+                    set(ui_plot_measure_panel, 'Position', [.42 .00 .58 .98])
+                    
+                    set(ui_plot_measure_axes, 'Position', [.1 .2 .8 .79])
+                    set(ui_plot_measure_axes, 'Visible', 'on')
+                end
+            end
+            function cb_binodal_table(~, ~)
+                update_binodal_table()
+                init_plot_binodal_panel()
+            end
+            function cb_binodal_table_edit(~, event)  % (src,event)
+                g = event.Indices(1);
+                col = event.Indices(2);
+                newdata = event.NewData;
+                switch col
+                    case 1
+                        if newdata == 1
+                            if ~ismember(g, selected_brainmeasures)
+                                selected_brainmeasures = [selected_brainmeasures g];
+                            end
+                        else
+                            selected_brainmeasures = selected_brainmeasures(selected_brainmeasures ~= g);
+                        end
+                end
+                
+                update_global_table();
+            end
+            function cb_binodal_meas(~, ~)  % (src,event)
+                set(ui_checkbox_brainmeasures_meas, 'Value', true)
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'bold')
+                set(ui_checkbox_brainmeasures_comp, 'Value', false)
+                set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_rand, 'Value', false)
+                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
+                
+                update_binodal_table()
+                update_group_popups()
+                init_plot_binodal_panel()
+            end
+            function cb_binodal_comp(~, ~)  % (src,event)
+                set(ui_checkbox_brainmeasures_meas, 'Value', false)
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_comp, 'Value', true)
+                set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'bold')
+                set(ui_checkbox_brainmeasures_rand, 'Value', false)
+                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
+                
+                update_binodal_table()
+                update_group_popups()
+                init_plot_binodal_panel()
+            end
+            function cb_binodal_rand(~, ~)  % (src,event)
+                set(ui_checkbox_brainmeasures_meas, 'Value', false)
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_comp, 'Value', false)
+                set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_rand, 'Value', true)
+                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'bold')
+                
+                update_binodal_table()
+                update_group_popups()
+                init_plot_binodal_panel()
+            end
+            function cb_binodal_selectall(~, ~)  % (src,event)
+                for j = 1:1:analysis.getMeasurements().length()
+                    measurement = analysis.getMeasurements().getValue(j);
+                    if ismember(measurement.getMeasureCode(), binodal_list)
+                        binodal_measurements{j} = measurement;                             %#ok<AGROW>
+                    end
+                end
+                
+                for r = 1:1:length(binodal_measurements)
+                    selected_brainmeasures = sort(unique([selected_brainmeasures(:); r]));
+                end
+                
+                update_binodal_table()
+            end
+            function cb_binodal_clearselection(~,~)  % (src,event)
+                selected_brainmeasures  = [];
+                update_binodal_table()
+            end
+            function cb_binodal_remove(~, ~)
+                for i = 1:1:length(selected_brainmeasures)
+                    k = selected_brainmeasures(i);
+                    analysis.getMeasurements().remove(k);
+                end
+                update_binodal_table()
+            end
+            
+            update_binodal_table()
+            init_plot_binodal_panel()
+            
+            if nargout > 0
+                binodal_panel = ui_mainpanel;
+            end        
         end
         function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin) %#ok<INUSD>
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
@@ -1209,6 +2083,72 @@ classdef AnalysisST_WU < Analysis
             %
             % P = GETGLOBALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
             % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getNodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region, varargin) %#ok<INUSD>
+            % GETNODALMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, BRAINREGION, PROPERTY, VLAUE)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getNodalPanel.
+            
+            p = [];
+        end
+        function p = getNodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, brain_region, varargin) %#ok<INUSD>
+            % GETNODALCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, BRAIN_REGION, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getNodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region, varargin) %#ok<INUSD>
+            % GETNODALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2,  BRAINREGION, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getBinodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin) %#ok<INUSD>
+            % GETBINODALMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETBINODALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP,  BRAINREGION1,  BRAINREGION2, PROPERTY, VLAUE)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getBinodalPanel.
+            
+            p = [];
+        end
+        function p = getBinodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, brain_region_1, brain_region_2, varargin) %#ok<INUSD>
+            % GETNODALCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, BRAINREGION1,  BRAINREGION2, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the binodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getBinodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin) %#ok<INUSD>
+            % GETNODALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, BRAINREGION1,  BRAINREGION2, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the binodal
             % measure panel for GUIAnalysis.
             %
             % See also getGraphPanel, getGlobalPanel.
