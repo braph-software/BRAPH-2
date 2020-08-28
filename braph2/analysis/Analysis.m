@@ -344,7 +344,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
         end
         function list = selectMeasurements(analysis, measure_code, group, method) 
-            % SELECTMEASUREMENTS returns a list with the group measurements values
+            % SELECTMEASUREMENTS returns a list with the group measurements
             %
             % MEASUREMENTS = SELECTMEASUREMENTS(ANALYSIS, MEASURE_CODE, GROUP)
             % returns a list containing the Measurements of type
@@ -374,61 +374,39 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
         end
         function list = selectComparisons(analysis, measure_code, group1, group2, method)
-            % SELECTCOMPARISONS returns a list with the group measurements values
+            % SELECTCOMPARISONS returns a list with the group comparisons
             %
-            % COMPARISONS = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP)
-            % returns a list containing the Measurements of type
-            % MEASURE_CODE for GROUP. 
+            % COMPARISONS = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP1, GROUP2)
+            % returns a list containing the Comparisons of type
+            % MEASURE_CODE for GROUP1 and GROUP2. 
             %
-            % LIST = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP, METHOD)
+            % LIST = SELECTCOMPARISONS(ANALYSIS, MEASURE_CODE, GROUP1, GROUP2, METHOD)
             % returns a list containing the results of applying METHODS to
-            % the Comparisons of type MEASURE_CODE for GROUP. For example,
+            % the Comparisons of type MEASURE_CODE for GROUP1 and GROUP2. For example,
             % METHOD can be '.getValue()'.
             %
             % See also getSettings, getMeasurement, getCohort, selectMeasurements 
+
+            all_comparisons = analysis.getComparisons().getValues();
+            selected_comparisons = cell(size(all_comparisons));
+            for i = 1:1:length(all_comparisons)
+                c = all_comparisons{i};
+                [g1, g2] = c.getGroups();
+                if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, c.getMeasureCode())
+                    selected_comparisons{i} = c; 
+                end
+            end
+            selected_comparisons(~cellfun(@isempty, selected_comparisons)) = [];
             
-            all_comparisons = analysis.getComparisons().getValues();  % arraylist_
-            list_ = cell(size(all_comparisons));
             if nargin == 5
-                for i = 1:1:length(all_comparisons)
-                    comparison = all_comparisons{i};
-                    [g1, g2] = comparison.getGroups();
-                    if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
-                        list_{i} = eval(['comparison' method]);
-                    end
-                       list = list_(~cellfun(@isempty, list_));
+                list = cell(size(selected_comparisons));                
+                for i = 1:1:length(selected_comparisons)
+                    c = all_comparisons{i}; %#ok<NASGU>
+                    list{i} = eval(['c' method]);
                 end
             else
-                for i = 1:1:length(all_comparisons)
-                    comparison = all_comparisons{i};
-                    [g1, g2] = comparison.getGroups();
-                    if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
-                        list_{i} = comparison; 
-                    end
-                end
-                    list = list_(~cellfun(@isempty, list_));
+                list = selected_comparisons;
             end
-%             
-%             all_comparisons = analysis.getComparisons().getValues();
-%             selected_comparisons = cell(size(all_comparisons));
-%             for i = 1:1:length(all_comparisons)
-%                 comparison = all_comparisons{i};
-%                 [g1, g2] = comparison.getGroups();
-%                 if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, comparison.getMeasureCode())
-%                     selected_comparisons{end + 1} = eval(['comparison' method]); %#ok<AGROW>
-%                 end
-%             end
-%             
-%             if nargin == 5
-%                 list = cell(size(selected_comparisons));
-%                 for i = 1:1:length(selected_comparisons)
-%                     m = selected_comparisons{i}; %#ok<NASGU>
-%                     list{i} =  eval(['m' method]);
-%                 end
-%             else
-%                 list = selected_comparisons;
-%             end    
-
         end
         function list = selectRandomComparisons(analysis, measure_code, group, method)
             % SELECTRANDOMCOMPARISONS returns a list with the group measurements values
