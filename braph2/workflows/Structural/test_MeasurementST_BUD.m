@@ -59,10 +59,12 @@ for i=1:1:numel(measures)
     A = rand(5);
     g = Graph.getGraph('GraphBU', A);
     m  = Measure.getMeasure(measures{i}, g);
+    value = m.getValue();
+    parameter_values = m.getParameterValues();
 
     % act
     measurement = MeasurementST_BUD('m1', 'label', 'notes', atlas, measures{i}, group, ...
-        'MeasurementST.Value', m.getValue() ...
+        'MeasurementST.Value', value, 'MeasurementST.ParameterValues', parameter_values ...
         );
 
     % assert
