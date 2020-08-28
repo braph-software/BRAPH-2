@@ -133,9 +133,9 @@ classdef DummyGraph < Graph
             %
             % GR = RANDOMIZE(G) returns a randomized graph of
             % class 'DummyGraph'
-            % 
+            %
             % See also DummyGraph.
-           
+            
             A = g.getA(); % get A, which is left unchanged
             gr = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
         end

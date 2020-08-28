@@ -120,8 +120,8 @@ classdef Graph < handle & matlab.mixin.Copyable
     %   is_nonnegative              - checks whether graph allows non-negative values
     %   is_negative                 - checks whether graph allows negative values
     %
-    % Graph plot methods Static
-    %   plot                        - chooses the corresponding type of plot
+    % Graph plot general method (static):
+    %   plot                        - method to be overridden.
     %   plotw                       - plots a weighted graph
     %   plotb                       - plots a binary graph
     %   histogram                   - plots a histogram
@@ -974,24 +974,9 @@ classdef Graph < handle & matlab.mixin.Copyable
             n = numel(list);
         end
     end
-    methods (Static)  % Plot Panel method
-        function h_plot = plot(A, varargin)
-            % PLOT calls the appropiate function to plot
-            %
-            % H_PLOT = PLOT(G, PLOTRULE, VALUE) using VALUE
-            % chooses the corresponding function to return a plot.
-            %
-            % See also plotb, plotw, hist.
-            
-            plot_type = get_from_varargin('correlation', 'Graph.PlotType', varargin{:});
-            switch plot_type
-                case 'binary'
-                    h_plot = Graph.plotb(A, varargin{:});
-                case 'histogram'
-                    h_plot = Graph.hist(A, varargin{:});
-                otherwise  % correlation
-                    h_plot = Graph.plotw(A, varargin{:});
-            end
+    methods (Static)  % plot static methods
+        function h = plot(A, varargin) %#ok<INUSD>
+            h = axes();
         end
         function h = plotw(A, varargin)
             % PLOTW plots a weighted matrix
@@ -1091,7 +1076,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             % threshold
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             
-            % density 
+            % density
             density = get_from_varargin([], 'density', varargin{:});
             
             % x labels
