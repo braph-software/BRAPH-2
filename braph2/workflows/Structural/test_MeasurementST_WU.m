@@ -58,13 +58,15 @@ for i=1:1:numel(measures)
 
     A = rand(5);
     g = Graph.getGraph('GraphWU', A);
-    m  = Measure.getMeasure(measures{i}, g);
+    m = Measure.getMeasure(measures{i}, g);
+    value = m.getValue();
+    parameter_values = m.getParameterValues();
 
     % act
     measurement = MeasurementST_WU('m1', 'label', 'notes', atlas, measures{i}, group, ...
-        'MeasurementST_WU.Value', m.getValue() ...
+        'MeasurementST.Value', value, 'MeasurementST.ParameterValues', parameter_values ...
         );
-
+    
     % assert
     if Measure.is_global(measures{i})
         assert(iscell(measurement.getMeasureValue()) & ...
