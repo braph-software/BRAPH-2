@@ -283,6 +283,32 @@ classdef Measure < handle
             
             value = m.value;
         end
+        function setParameter(m, parameter)
+            % SETPARAMETER sets the parameter of the measure
+            %
+            % PARAMETER = SETPARAMETER(M) sets the parameter of
+            % the concrete measure M.
+            %
+            % PARAMETER= SETPARAMETER(MEASURE_CLASS) sets the parameter
+            % of the measure whose class is MEASURE_CLASS.
+            
+            if Measure.is_parametric(m)
+                m.parameter = parameter;
+            else
+                m.parameter = 1;
+            end
+        end
+        function parameter = getParameter(m)
+            % GETPARAMETER returns the parameter of the measure 
+            %
+            % PARAMETER = GETPARAMETER(M) returns the parameter of
+            % the concrete measure M.
+            %
+            % PARAMETER= GETPARAMETER(MEASURE_CLASS) returns the parameter
+            % of the measure whose class is MEASURE_CLASS.
+            
+            parameter = m.parameter;
+        end
         function values = getParameterValues(m)
              % GETPARAMETERVALUES returns the values of the measure's parameter
              %
