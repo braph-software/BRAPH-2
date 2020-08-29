@@ -229,6 +229,8 @@ classdef AnalysisST_WU < Analysis
             % Measurements for the group
             measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});
             value_group = measurement_group.getMeasureValue();
+            parameter_value_group = measurement_group.getMeasureParameterValues();
+            parameter_values_length = max(1, length(parameter_value_group));
 
             g = analysis.get_graph_for_subjects(group.getSubjects(), varargin{:});
             
@@ -263,6 +265,8 @@ classdef AnalysisST_WU < Analysis
             
             difference = {value_group{1} - value_random{1}};
             
+            %TODO: change pvalue1 and pvalue2 functions or change how we
+            %send the variables
             % Statistical analysis
             p1 = pvalue1(difference, all_differences);  % singe tail,
             p2 = pvalue2(difference, all_differences);  % double tail
@@ -291,6 +295,7 @@ classdef AnalysisST_WU < Analysis
                 'RandomComparisonST.p2', p2, ....
                 'RandomComparisonST.confidence_min', ci_lower, ...
                 'RandomComparisonST.confidence_max', ci_upper, ...
+                'RandomComparisonST.ParameterValuesLength', parameter_values_length, ...
                 varargin{:} ...
                 );
         end
@@ -329,6 +334,16 @@ classdef AnalysisST_WU < Analysis
             
             measurement_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
             value_2 = measurement_2.getMeasureValue();
+            
+            parameter_value_1 = measurement_1.getMeasureParameterValues();
+            parameter_value_2 = measurement_2.getMeasureParameterValues();
+            parameter_values_length1 = max(1, length(parameter_value_1));
+            parameter_values_length2 = max(1, length(parameter_value_2));
+            
+            % assert parameter_values_length1 and parameter_values_length2 are equal
+            assert(isequal(parameter_values_length1, parameter_values_length2), ...
+                [BRAPH2.STR ':' measure_code ':' BRAPH2.BUG_ERR], ...
+                'The parameter of the measure needs to be the same for both groups.')
             
             difference_mean = cellfun(@(x, y) y - x, value_2, value_1, 'UniformOutput', false);
 
@@ -392,6 +407,7 @@ classdef AnalysisST_WU < Analysis
                 'ComparisonST.p2', p2, ...
                 'ComparisonST.confidence_min', ci_lower, ...
                 'ComparisonST.confidence_max', ci_upper, ...
+                'ComparisonST.ParameterValuesLength', parameter_values_length1, ...
                 varargin{:} ...
                 );
         end
