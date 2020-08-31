@@ -42,7 +42,7 @@ for i = 1:1:numel(measures)
     parameter_values = m.getParameterValues();
     parameter_values_length = max(1, length(parameter_values));
     
-    comparison = ComparisonST_BUT('c1', 'label', 'notes', atlas, measures{i}, group, group, 'ComparisonST.PermutationNumber', number_of_permutations, 'ComparisonST.ParameterValuesLength', parameter_values_length);
+    comparison = ComparisonST_BUT('c1', 'label', 'notes', atlas, measures{i}, group, group, 'ComparisonST.PermutationNumber', number_of_permutations, 'ComparisonST.ParameterValues', parameter_values);
     
     value_1 = comparison.getGroupValue(1);    
     value_2 = comparison.getGroupValue(2);
@@ -52,6 +52,12 @@ for i = 1:1:numel(measures)
     p2 = comparison.getP2();  % p value double tailed
     confidence_interval_min = comparison.getConfidenceIntervalMin();  % min value of the 95% confidence interval
     confidence_interval_max = comparison.getConfidenceIntervalMax(); % max value of the 95% confidence interval
+    comparison_parameter_values = comparison.getParameterValues();
+    comparison_parameter_values_length = max(1, length(comparison_parameter_values));
+    
+    assert(isequal(parameter_values_length, comparison_parameter_values_length),  ... 
+    [BRAPH2.STR ':ComparisonST_BUT:' BRAPH2.BUG_FUNC], ...
+    'ComparisonST_BUT does not initialize correctly the parameter of the measures')
    
     if Measure.is_global(measures{i})
         assert(iscell(value_1) && ...
@@ -292,7 +298,7 @@ for i = 1:1:numel(measures)
         'ComparisonST.p2', p2, ....
         'ComparisonST.confidence_min', confidence_interval_min, ...
         'ComparisonST.confidence_max', confidence_interval_max, ...
-        'ComparisonST.ParameterValuesLength', parameter_values_length ...
+        'ComparisonST.ParameterValues', parameter_values ...
         );
     
     comparison_value_1 = comparison.getGroupValue(1);
@@ -303,7 +309,12 @@ for i = 1:1:numel(measures)
     comparison_p2 = comparison.getP2();
     comparison_confidence_interval_min = comparison.getConfidenceIntervalMin();
     comparison_confidence_interval_max = comparison.getConfidenceIntervalMax();
+    comparison_parameter_values = comparison.getParameterValues();
     
+    assert(isequal(parameter_values, comparison_parameter_values),  ... 
+    [BRAPH2.STR ':ComparisonST_BUT:' BRAPH2.BUG_FUNC], ...
+    'ComparisonST_BUT does not initialize correctly the parameter of the measures')
+      
     % assert
     if Measure.is_global(measures{i})
         

@@ -21,15 +21,8 @@ graph_type = AnalysisST_WU.getGraphType();
 measures = Graph.getCompatibleMeasureList(graph_type);
 
 %% Test 1: Instantiation
-for i = 1:1:numel(measures)
-    
-    A = rand(atlas.getBrainRegions().length());
-    g = Graph.getGraph('GraphWU', A);
-    m  = Measure.getMeasure(measures{i}, g);
-    parameter_values = m.getParameterValues();
-    parameter_values_length = max(1, length(parameter_values));
-    
-    randomcomparison = RandomComparisonST_WU('rc1', 'label', 'notes', atlas, measures{i}, group, 'RandomComparisonST.ParameterValuesLength', parameter_values_length);
+for i = 1:1:numel(measures)   
+    randomcomparison = RandomComparisonST_WU('rc1', 'label', 'notes', atlas, measures{i}, group);
 end
 
 %% Test 2: Correct Size defaults
