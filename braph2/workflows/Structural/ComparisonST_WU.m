@@ -22,6 +22,7 @@ classdef ComparisonST_WU < Comparison
     %  getP2                        - returns the p-values double tail
     %  getConfidenceIntervalMin     - returns the min value of the confidence interval
     %  getConfidenceIntervalMax     - returns the max value of the confidence interval
+    %  getMeasureParameterValues    - returns the values of the measure's parameter
     %
     % ComparisonST_WU initialze data (Access=protected):
     %  initialize_data              - initializes and checks the data
@@ -176,10 +177,10 @@ classdef ComparisonST_WU < Comparison
             
             confidence_interval_max = c.confidence_interval_max;
         end
-        function parameter_values = getParameterValues(c)
-            % GETPARAMETERVALUES returns the values of the measure's parameter
+        function parameter_values = getMeasureParameterValues(c)
+            % GETMEASUREPARAMETERVALUES returns the values of the measure's parameter
             %
-            % PARAMETER_VALUES = GETPARAMETERVALUES(C) returns the values
+            % PARAMETER_VALUES = GETMEASUREPARAMETERVALUES(C) returns the values
             % of the measure parameter of the comparison.
             %
             % See also getGroupValue, getGroupValues, getDifference, getAllDifferences.

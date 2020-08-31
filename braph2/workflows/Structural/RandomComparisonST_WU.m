@@ -22,6 +22,7 @@ classdef RandomComparisonST_WU < RandomComparison
     %  getP2                        - returns the p-values double tail
     %  getConfidenceIntervalMin     - returns the min value of the confidence interval
     %  getConfidenceIntervalMax     - returns the max value of the confidence interval
+    %  getMeasureParameterValues    - returns the values of the measure's parameter 
     %
     % RandomComparisonST_WU initialze data (Access=protected):
     %  initialize_data              - initializes and checks the data
@@ -170,10 +171,10 @@ classdef RandomComparisonST_WU < RandomComparison
             
             confidence_interval_max = rc.confidence_interval_max;
         end
-        function parameter_values = getParameterValues(rc)
-            % GETPARAMETERVALUES returns the values of the measure's parameter 
+        function parameter_values = getMeasureParameterValues(rc)
+            % GETMEASUREPARAMETERVALUES returns the values of the measure's parameter 
             %
-            % PARAMETER_VALUES = GETPARAMETERVALUES(RC) returns the values
+            % PARAMETER_VALUES = GETMEASUREPARAMETERVALUES(RC) returns the values
             % of the measure parameter of the random comparison.
             %
             % See also getGroupValue, getGroupValues, getDifference, getAllDifferences.
