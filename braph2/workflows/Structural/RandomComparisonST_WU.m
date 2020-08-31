@@ -47,6 +47,7 @@ classdef RandomComparisonST_WU < RandomComparison
         p2  % p value double tailed
         confidence_interval_min  % min value of the 95% confidence interval
         confidence_interval_max  % max value of the 95% confidence interval
+        parameter_values  % parameter values of the measure
     end
     methods  % Constructor
         function rc =  RandomComparisonST_WU(id, label, notes, atlas, measure_code, group, varargin)
@@ -169,6 +170,16 @@ classdef RandomComparisonST_WU < RandomComparison
             
             confidence_interval_max = rc.confidence_interval_max;
         end
+        function parameter_values = getParameterValues(m)
+            % GETPARAMETERVALUES returns the values of the measure's parameter 
+            %
+            % PARAMETER_VALUES = GETPARAMETERVALUES(M) returns the values
+            % of the measure parameter of the random comparison.
+            %
+            % See also getGroupValue, getGroupValues, getDifference, getAllDifferences.
+            
+            parameter_values = m.parameter_values;
+        end
     end
     methods (Access=protected)  % Initialize data
         function initialize_data(rc, varargin)
@@ -198,11 +209,11 @@ classdef RandomComparisonST_WU < RandomComparison
             
             measure_code = rc.getMeasureCode();
             
-            parameter_values = get_from_varargin( ...
+            m.parameter_values = get_from_varargin( ...
                 [], ...  % 1 dimension minimum
-                'RandomComparisonST.ParameterValuesLength', ...
+                'RandomComparisonST.ParameterValues', ...
                 varargin{:});
-            parameter_values_length = max(1, parameter_values);
+            parameter_values_length = max(1, length(m.parameter_values));
             
             number_of_randomizations = rc.getSettings('RandomComparisonST.RandomizationNumber');
             

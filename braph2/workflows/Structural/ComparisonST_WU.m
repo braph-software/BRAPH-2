@@ -47,6 +47,7 @@ classdef ComparisonST_WU < Comparison
         p2  % p value double tailed
         confidence_interval_min  % min value of the 95% confidence interval
         confidence_interval_max  % max value of the 95% confidence interval
+        parameter_values  % parameter values of the measure
     end
     methods  % Constructor
         function c =  ComparisonST_WU(id, label, notes, atlas, measure_code, group_1, group_2, varargin)
@@ -175,6 +176,16 @@ classdef ComparisonST_WU < Comparison
             
             confidence_interval_max = c.confidence_interval_max;
         end
+        function parameter_values = getParameterValues(m)
+            % GETPARAMETERVALUES returns the values of the measure's parameter
+            %
+            % PARAMETER_VALUES = GETPARAMETERVALUES(M) returns the values
+            % of the measure parameter of the comparison.
+            %
+            % See also getGroupValue, getGroupValues, getDifference, getAllDifferences.
+            
+            parameter_values = m.parameter_values;
+        end
     end
     methods (Access=protected)  % Initialize data
         function initialize_data(c, varargin)
@@ -203,11 +214,11 @@ classdef ComparisonST_WU < Comparison
             
             measure_code = c.getMeasureCode();
             
-            parameter_values = get_from_varargin( ...
+            m.parameter_values = get_from_varargin( ...
                 [], ...  % 1 dimension minimum
-                'ComparisonST.ParameterValuesLength', ...
+                'ComparisonST.ParameterValues', ...
                 varargin{:});
-            parameter_values_length = max(1, parameter_values);
+            parameter_values_length = max(1, length(m.parameter_values));
             
             number_of_permutations = c.getSettings('ComparisonST.PermutationNumber');
             
