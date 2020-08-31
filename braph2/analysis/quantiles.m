@@ -36,12 +36,15 @@ end
         
         row_number = size(values{1}, 1);
         column_number = size(values{1}, 2);
-        
+        d_number = size(values{1}, 3);  % add the 3rd dimension 
+           
         Q = cell(row_number, column_number);
         for i = 1:1:row_number
             for j = 1:1:column_number
-                current_values = cellfun(@(x) x(i, j), values);
-                Q{i, j} = [min(current_values), quantile(current_values, P - 1), max(current_values)];
+                for t = 1:1:d_number
+                    current_values = cellfun(@(x) x(i, j, t), values);
+                    Q{i, j, t} = [min(current_values), quantile(current_values, P - 1), max(current_values)];
+                end
             end
         end
     end
