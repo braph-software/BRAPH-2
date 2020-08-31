@@ -145,7 +145,7 @@ for i = 1:1:numel(measures)
     parameter_values_length = max(1, length(parameter_value_group));
 
     number_of_randomizations = 10;
-    calculated_comparison = analysis.getRandomComparison(measure, group1, 'RandomizationNumber', number_of_randomizations, 'RandomComparisonST.ParameterValuesLength', parameter_values_length);
+    calculated_comparison = analysis.getRandomComparison(measure, group1, 'RandomizationNumber', number_of_randomizations, 'RandomComparisonST.ParameterValues', parameter_value_group);
 
     assert(~isempty(calculated_comparison), ...
         [BRAPH2.STR ':AnalysisST_WU:calculateComparison'], ...
@@ -164,7 +164,13 @@ for i = 1:1:numel(measures)
     randomcomparison_p2 = randomcomparison.getP2();
     randomcomparison_confidence_interval_min = randomcomparison.getConfidenceIntervalMin();
     randomcomparison_confidence_interval_max = randomcomparison.getConfidenceIntervalMax();
+    randomcomparison_parameter_values = randomcomparison.getParameterValues(); 
+    randomcomparison_parameter_values_length = max(1, length(randomcomparison_parameter_values));
     
+    assert(isequal(parameter_values_length, randomcomparison_parameter_values_length),  ... 
+    [BRAPH2.STR ':AnalysisST_WU:' BRAPH2.BUG_FUNC], ...
+    'AnalysisST_WU.getRandomComparison() does not initialize correctly the parameter of the measures')
+
     if Measure.is_global(measure)
         assert(iscell(randomcomparison_value_group) && ...
             isequal(numel(randomcomparison_value_group), 1) && ...
@@ -374,7 +380,7 @@ for i = 1:1:numel(measures)
   
     number_of_permutations = 10;
 
-    calculated_comparison = analysis.getComparison(measure, group1, group2, 'PermutationNumber', number_of_permutations, 'ComparisonST.ParameterValuesLength', parameter_values_length);
+    calculated_comparison = analysis.getComparison(measure, group1, group2, 'PermutationNumber', number_of_permutations, 'ComparisonST.ParameterValues', parameter_value_group);
 
     assert(~isempty(calculated_comparison), ...
         [BRAPH2.STR ':AnalysisST_WU:' BRAPH2.BUG_FUNC], ...
@@ -393,6 +399,12 @@ for i = 1:1:numel(measures)
     comparison_p2 = randomcomparison.getP2();
     comparison_confidence_interval_min = randomcomparison.getConfidenceIntervalMin();
     comparison_confidence_interval_max = randomcomparison.getConfidenceIntervalMax();
+    comparison_parameter_values = randomcomparison.getParameterValues(); 
+    comparison_parameter_values_length = max(1, length(comparison_parameter_values));
+    
+    assert(isequal(parameter_values_length, comparison_parameter_values_length),  ... 
+    [BRAPH2.STR ':AnalysisST_WU:' BRAPH2.BUG_FUNC], ...
+    'AnalysisST_WU.getComparison() does not initialize correctly the parameter of the measures')
         
     if Measure.is_global(measure)
         assert(iscell(comparison_values_1) && ...
