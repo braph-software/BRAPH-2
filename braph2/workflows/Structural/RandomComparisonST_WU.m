@@ -114,7 +114,7 @@ classdef RandomComparisonST_WU < RandomComparison
         function difference = getDifference(rc)
             % GETDIFFERENCE returns the difference between measure values
             %
-            % DIFFERENCE = GETDIFFERENCE(C) returns the difference between 
+            % DIFFERENCE = GETDIFFERENCE(RC) returns the difference between 
             % measure values of both groups. This difference is the mean of
             % all differences.
             % 
@@ -135,7 +135,7 @@ classdef RandomComparisonST_WU < RandomComparison
         function p1 = getP1(rc)
             % GETP1 returns the single tail p-value of the random comparison
             %
-            % P1 = GETP1(C) returns the single tail p-value of the random comparison
+            % P1 = GETP1(RC) returns the single tail p-value of the random comparison
             % 
             % See also getP2, getConfidenceIntervalMin, getConfidenceIntervalMax.
             
@@ -144,7 +144,7 @@ classdef RandomComparisonST_WU < RandomComparison
         function p2 = getP2(rc)
             % GETP2 returns the double tail p-value of the random comparison
             %
-            % P2 = GETP2(C) returns the double tail p-value of the random comparison
+            % P2 = GETP2(RC) returns the double tail p-value of the random comparison
             % 
             % See also getP1, getConfidenceIntervalMin, getConfidenceIntervalMax.
             
@@ -153,7 +153,7 @@ classdef RandomComparisonST_WU < RandomComparison
         function confidence_interval_min = getConfidenceIntervalMin(rc)
             % GETCONFIDENCEINTERVALMIN returns minimum value of the confidence interval
             %
-            % CONFIDENCE_INTERVAL_MIN = GETCONFIDENCEINTERVALMIN(C) 
+            % CONFIDENCE_INTERVAL_MIN = GETCONFIDENCEINTERVALMIN(RC) 
             % returns minimum value of the confidence interval
             % 
             % See also getP1, getP2, getConfidenceIntervalMax.
@@ -163,22 +163,22 @@ classdef RandomComparisonST_WU < RandomComparison
         function confidence_interval_max = getConfidenceIntervalMax(rc)
             % GETCONFIDENCEINTERVALMAX returns maximum value of the confidence interval
             %
-            % CONFIDENCE_INTERVAL_MAX = GETCONFIDENCEINTERVALMAX(C) 
+            % CONFIDENCE_INTERVAL_MAX = GETCONFIDENCEINTERVALMAX(RC) 
             % returns maximum value of the confidence interval
             % 
             % See also getP1, getP2, getConfidenceIntervalMin.
             
             confidence_interval_max = rc.confidence_interval_max;
         end
-        function parameter_values = getParameterValues(m)
+        function parameter_values = getParameterValues(rc)
             % GETPARAMETERVALUES returns the values of the measure's parameter 
             %
-            % PARAMETER_VALUES = GETPARAMETERVALUES(M) returns the values
+            % PARAMETER_VALUES = GETPARAMETERVALUES(RC) returns the values
             % of the measure parameter of the random comparison.
             %
             % See also getGroupValue, getGroupValues, getDifference, getAllDifferences.
             
-            parameter_values = m.parameter_values;
+            parameter_values = rc.parameter_values;
         end
     end
     methods (Access=protected)  % Initialize data
@@ -209,11 +209,11 @@ classdef RandomComparisonST_WU < RandomComparison
             
             measure_code = rc.getMeasureCode();
             
-            m.parameter_values = get_from_varargin( ...
+            rc.parameter_values = get_from_varargin( ...
                 [], ...  % 1 dimension minimum
                 'RandomComparisonST.ParameterValues', ...
                 varargin{:});
-            parameter_values_length = max(1, length(m.parameter_values));
+            parameter_values_length = max(1, length(rc.parameter_values));
             
             number_of_randomizations = rc.getSettings('RandomComparisonST.RandomizationNumber');
             

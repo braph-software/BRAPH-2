@@ -40,8 +40,8 @@ for i = 1:1:numel(measures)
     g = Graph.getGraph('GraphBU', A);
     m  = Measure.getMeasure(measures{i}, g);
     parameter_values = m.getParameterValues();
-    parameter_values_length = max(1, length(parameter_values));    
-    randomcomparison = RandomComparisonST_BUD('rc1', 'label', 'notes', atlas, measures{i}, group, 'RandomComparisonST.RandomizationNumber', number_of_randomizations, 'RandomComparisonST.ParameterValuesLength', parameter_values_length);
+
+    randomcomparison = RandomComparisonST_BUD('rc1', 'label', 'notes', atlas, measures{i}, group, 'RandomComparisonST.RandomizationNumber', number_of_randomizations, 'RandomComparisonST.ParameterValues', parameter_values);
     
     value_group = randomcomparison.getGroupValue();    
     value_random = randomcomparison.getRandomValue();
@@ -51,6 +51,13 @@ for i = 1:1:numel(measures)
     p2 = randomcomparison.getP2();  % p value double tailed
     confidence_interval_min = randomcomparison.getConfidenceIntervalMin();  % min value of the 95% confidence interval
     confidence_interval_max = randomcomparison.getConfidenceIntervalMax(); % max value of the 95% confidence interval
+    comparison_parameter_values = randomcomparison.getParameterValues();
+    parameter_values_length = max(1, length(parameter_values));
+    comparison_parameter_values_length = max(1, length(comparison_parameter_values));
+    
+    assert(isequal(parameter_values_length, comparison_parameter_values_length),  ... 
+    [BRAPH2.STR ':RandomComparisonST_BUD:' BRAPH2.BUG_FUNC], ...
+    'RandomComparisonST_BUD does not initialize correctly the parameter of the measures')
 
     if Measure.is_global(measures{i})
         assert(iscell(value_group) && ...
@@ -262,7 +269,6 @@ for i = 1:1:numel(measures)
     m  = Measure.getMeasure(measures{i}, g);
     value = m.getValue();
     parameter_values = m.getParameterValues();
-    parameter_values_length = max(1, length(parameter_values));
     
     % the values are not realistic, just the right format
     value_group = value;
@@ -290,7 +296,7 @@ for i = 1:1:numel(measures)
         'RandomComparisonST.p2', p2, ....
         'RandomComparisonST.confidence_min', confidence_interval_min, ...
         'RandomComparisonST.confidence_max', confidence_interval_max, ...
-        'RandomComparisonST.ParameterValuesLength', parameter_values_length ...
+        'RandomComparisonST.ParameterValues', parameter_values ...
         );
     
     comparison_value_group = randomcomparison.getGroupValue();
@@ -301,6 +307,12 @@ for i = 1:1:numel(measures)
     comparison_p2 = randomcomparison.getP2();
     comparison_confidence_interval_min = randomcomparison.getConfidenceIntervalMin();
     comparison_confidence_interval_max = randomcomparison.getConfidenceIntervalMax();
+    comparison_parameter_values = randomcomparison.getParameterValues();
+    parameter_values_length = max(1, length(parameter_values));   
+    
+    assert(isequal(parameter_values, comparison_parameter_values),  ... 
+    [BRAPH2.STR ':RandomComparisonST_BUD:' BRAPH2.BUG_FUNC], ...
+    'RandomComparisonST_BUD does not initialize correctly the parameter of the measures')
     
     % assert
     if Measure.is_global(measures{i})

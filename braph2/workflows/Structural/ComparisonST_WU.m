@@ -176,15 +176,15 @@ classdef ComparisonST_WU < Comparison
             
             confidence_interval_max = c.confidence_interval_max;
         end
-        function parameter_values = getParameterValues(m)
+        function parameter_values = getParameterValues(c)
             % GETPARAMETERVALUES returns the values of the measure's parameter
             %
-            % PARAMETER_VALUES = GETPARAMETERVALUES(M) returns the values
+            % PARAMETER_VALUES = GETPARAMETERVALUES(C) returns the values
             % of the measure parameter of the comparison.
             %
             % See also getGroupValue, getGroupValues, getDifference, getAllDifferences.
             
-            parameter_values = m.parameter_values;
+            parameter_values = c.parameter_values;
         end
     end
     methods (Access=protected)  % Initialize data
@@ -214,11 +214,11 @@ classdef ComparisonST_WU < Comparison
             
             measure_code = c.getMeasureCode();
             
-            m.parameter_values = get_from_varargin( ...
+            c.parameter_values = get_from_varargin( ...
                 [], ...  % 1 dimension minimum
                 'ComparisonST.ParameterValues', ...
                 varargin{:});
-            parameter_values_length = max(1, length(m.parameter_values));
+            parameter_values_length = max(1, length(c.parameter_values));
             
             number_of_permutations = c.getSettings('ComparisonST.PermutationNumber');
             
