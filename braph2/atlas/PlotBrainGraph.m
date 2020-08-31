@@ -80,6 +80,18 @@ classdef PlotBrainGraph < PlotBrainAtlas
                 h = bg.edges.h(i, j);
             end
         end
+        function link_edge_on(bg, i, j)
+            % LINK_LIN_ON shows a line link
+            %
+            % LINK_LIN_ON(BG,I,J) shows the line link from the brain
+            %   region I to J.
+            %
+            % See also PlotBrainGraph.
+            
+            if ishandle(bg.edges.h(i, j))
+                set(bg.edges.h(i, j), 'Visible', 'on')
+            end
+        end
         function link_edges(bg, i_vec, j_vec, varargin)
             if nargin < 2 || isempty(i_vec) || isempty(j_vec)
                 for i = 1:1:bg.atlas.getBrainRegions().length()
@@ -97,6 +109,26 @@ classdef PlotBrainGraph < PlotBrainAtlas
                 
                 for m = 1:1:length(i_vec)
                     bg.link_edge(i_vec(m), j_vec(m), varargin{:})
+                end
+            end
+        end
+        function link_edges_on(bg, i_vec, j_vec)
+            if nargin<2 || isempty(i_vec) || isempty(j_vec)
+                for i = 1:1:bg.atlas.getBrainRegions().length()
+                    for j = 1:1:bg.atlas.getBrainRegions().length()
+                        bg.link_edge_on(i, j)
+                    end
+                end
+            else
+                if length(i_vec) == 1
+                    i_vec = i_vec * ones(size(j_vec));
+                end
+                if length(j_vec) == 1
+                    j_vec = j_vec * ones(size(i_vec));
+                end
+                
+                for m = 1:1:length(i_vec)
+                    bg.link_edge_on(i_vec(m), j_vec(m))
                 end
             end
         end

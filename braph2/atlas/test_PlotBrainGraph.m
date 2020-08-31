@@ -6,3 +6,4 @@ atlas = BrainAtlas.load_from_xls('File', atlas_file);
 %% Init 
 bg = PlotBrainGraph(atlas);
 bg.link_edges();
+bg.link_edges_on();
