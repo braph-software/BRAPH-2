@@ -45,7 +45,7 @@ for i = 1:1:numel(measures)
     p2 = comparison.getP2();  % p value double tailed
     confidence_interval_min = comparison.getConfidenceIntervalMin();  % min value of the 95% confidence interval
     confidence_interval_max = comparison.getConfidenceIntervalMax(); % max value of the 95% confidence interval
-    comparison_parameter_values = comparison.getParameterValues();
+    comparison_parameter_values = comparison.getMeasureParameterValues();
     comparison_parameter_values_length = max(1, length(comparison_parameter_values));
     
     assert(isequal(parameter_values_length, comparison_parameter_values_length),  ... 
@@ -302,7 +302,7 @@ for i = 1:1:numel(measures)
     comparison_p2 = comparison.getP2();
     comparison_confidence_interval_min = comparison.getConfidenceIntervalMin();
     comparison_confidence_interval_max = comparison.getConfidenceIntervalMax();
-    comparison_parameter_values = comparison.getParameterValues(); 
+    comparison_parameter_values = comparison.getMeasureParameterValues(); 
     
     assert(isequal(parameter_values, comparison_parameter_values),  ... 
     [BRAPH2.STR ':ComparisonST_BUD:' BRAPH2.BUG_FUNC], ...
