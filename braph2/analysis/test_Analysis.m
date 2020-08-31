@@ -85,8 +85,8 @@ for i = 1:1:length(analysis_class_list)
     
     % act
     measurements = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, 'Degree', group);
-    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', 'rc1 label', 'rc1 notes', atlas, 'Degree', group);
-    comparison = Comparison.getComparison(comparison_class, 'c1 id', 'c1 label', 'c1 notes', atlas, 'Degree', group, group);
+    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', 'rc1 label', 'rc1 notes', atlas, 'Degree', group, 'RandomComparisonST.ParameterValuesLength', 1);
+    comparison = Comparison.getComparison(comparison_class, 'c1 id', 'c1 label', 'c1 notes', atlas, 'Degree', group, group, 'ComparisonST.ParameterValuesLength', 1);
     analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {measurements}, {randomcomparison}, {comparison});
     
     % assert
@@ -114,8 +114,8 @@ for i = 1:1:length(analysis_class_list)
     measurement1 = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, 'Degree', group);
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2 id', 'm2 label', 'm2 notes', atlas, 'Degree', group);
     measurements = {measurement1, measurement2};
-    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', 'rc1 label', 'rc1 notes', atlas, 'Degree', group);
-    comparison = Comparison.getComparison(comparison_class, 'c1 id', 'c1 label', 'c1 notes', atlas, 'Degree', group, group);
+    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', 'rc1 label', 'rc1 notes', atlas, 'Degree', group, 'RandomComparisonST.ParameterValuesLength', 1);
+    comparison = Comparison.getComparison(comparison_class, 'c1 id', 'c1 label', 'c1 notes', atlas, 'Degree', group, group, 'ComparisonST.ParameterValuesLength', 1);
     analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, measurements, {randomcomparison}, {comparison});
     
     % assert
@@ -155,8 +155,8 @@ for i = 1:1:length(analysis_class_list)
     measurement2 = Measurement.getMeasurement(measurement_class, 'm2 id', 'm1 label', 'm1 notes', atlas, 'Degree', group);
     measurements = {measurement1, measurement2};
     measurement3 = Measurement.getMeasurement(measurement_class, 'm3 id', 'm1 label', 'm1 notes', atlas, 'Degree', group);
-    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', 'rc1 label', 'rc1 notes', atlas, 'Degree', group);  % will not pass rule to get default
-    comparison = Comparison.getComparison(comparison_class, 'c1', 'c1 label', 'c1 notes', atlas, 'Degree', group, group);
+    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1', 'rc1 label', 'rc1 notes', atlas, 'Degree', group, 'RandomComparisonST.ParameterValuesLength', 1);  % will not pass rule to get default
+    comparison = Comparison.getComparison(comparison_class, 'c1', 'c1 label', 'c1 notes', atlas, 'Degree', group, group, 'ComparisonST.ParameterValuesLength', 1);
     
     analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, measurements, {}, {});
     analysis.getMeasurements().add(measurement3.getID(), measurement3);
@@ -472,8 +472,8 @@ for i =1:1:length(analysis_class_list)
     random_comparison_class = Analysis.getRandomComparisonClass(analysis_class);
     comparison_class = Analysis.getComparisonClass(analysis_class);
     measurement = Measurement.getMeasurement(measurement_class, 'm1 id', 'm1 label', 'm1 notes', atlas, 'Degree', group1);
-    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1 id', 'rc1 label', 'rc1 notes', atlas, 'Degree', group1);
-    comparison = Comparison.getComparison(comparison_class, 'c1 id', 'cq label', 'c1 notes', atlas, 'Degree', group1, group2);
+    randomcomparison = RandomComparison.getRandomComparison(random_comparison_class, 'rc1 id', 'rc1 label', 'rc1 notes', atlas, 'Degree', group1, 'RandomComparisonST.ParameterValuesLength', 1);
+    comparison = Comparison.getComparison(comparison_class, 'c1 id', 'cq label', 'c1 notes', atlas, 'Degree', group1, group2, 'ComparisonST.ParameterValuesLength', 1);
     analysis = Analysis.getAnalysis(analysis_class, 'analysis id', 'analysis label', 'analysis notes', cohort, {measurement}, {randomcomparison}, {comparison});
     
     % act
