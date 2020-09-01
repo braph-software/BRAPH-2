@@ -17,8 +17,7 @@ classdef Measure < handle
     %                   GLOBAL values are SCALAR
     %                   NODAL values a COLUMN VECTOR whose length is equal to the number of nodes
     %                   BINODAL values are a SQUARE MATRIX whose dimensions are equal to the number of nodes
-    %                   If the measure is PARAMETRIC the third dimension of
-    %                   the value is used
+    %                   If the measure is PARAMETRIC, the third dimension of the value is used
     %   parameter       - measure parameter
     %
     % Measure methods (Access=protected):
