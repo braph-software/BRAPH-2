@@ -11,3 +11,4 @@ bg.view(PlotBrainSurf.VIEW_3D)
 bg.axis_equal()
 bg.link_edges();
 bg.link_edges_on();
+bg.link_edges_settings();
