@@ -1,5 +1,30 @@
 classdef PlotBrainGraph < PlotBrainAtlas
-    properties
+    % PlotBrainGraph Plot and manage edges of a graph
+    % PlotBrainGraph plots and manages the edges of a brain graph. The
+    % edges can be modified using the settings method.
+    % It is a subclass of PlotBrainAtlas.
+    %
+    % PlotBrainGraph plots and manages the edges of a brain graph. The
+    % edges can be modified using the settings method. PlotBrainGraph
+    % utiizes the surface and brain regions created in PlotBrainSurf and 
+    % PlotBrainAtlas.
+    %
+    % PlotBrainGraph basic methods:
+    %   PlotBrainGraph              - constructor
+    %   initEdgesProperties         - inits PlotBrainGraph properties
+    % 
+    % PlotBrainGraph edge methods:
+    %   link_edge                   - plots an edge as line with different properties
+    %   link_edge_on                - sets the edge visible
+    %   link_edge_off               - sets the edge invisible
+    %   link_edges                  - plots multiple edges as lines
+    %   link_edges_on               - sets multiple edges visible
+    %   link_edges_off              - sets multiple edges invisible
+    %   link_edges_settings         - panel to set edges properties
+    %
+    % See also PlotBrainAtlas, PlotBrainSurf.
+    
+    properties (Access = protected)
         edges  % structure of 2D cell arrays containing edge properties
         f_edges_settings  % edge settings figure handle
         
@@ -8,12 +33,23 @@ classdef PlotBrainGraph < PlotBrainAtlas
     end
     methods
         function bg = PlotBrainGraph(atlas)
+            % PLOTBRAINGRAPH constructs the brain graph plot
+            %
+            % BG = PLOTBRAINGRAPH(ATLAS) constructs the brain graph plot
+            % with an atlas.
+            % 
+            % See also PlotBrainAtlas, BrainAtlas.
+            
             bg = bg@PlotBrainAtlas(atlas);
             
             bg.initEdgesProperties(atlas)
         end
         function initEdgesProperties(bg, atlas)
-            % SETEDGESPROPERTIES initializes the edge property
+            % INITEDGESPROPERTIES initializes the edge property
+            %
+            % INITEDGESPROPERTIES initializes the edge property
+            %
+            % See also PlotbrainGraph.
             
             bg.edges.h = NaN(atlas.getBrainRegions().length());
             bg.edges.X1 = zeros(atlas.getBrainRegions().length(), 1);
@@ -26,6 +62,21 @@ classdef PlotBrainGraph < PlotBrainAtlas
     end
     methods  % edge methods
         function h = link_edge(bg, i, j, varargin)
+            % LINK_EDGE plots edge link as line
+            %
+            % LINK_EDGE(BG, I, J) plots the edge link from the brain regions
+            % I to J as a line, if not plotted.
+            %
+            % H = LINK_LIN(BG, I, J) returns the handle to the edge link 
+            % from the brain region I to J.
+            %
+            % LINK_LIN(BG, I, J, PROPERTY, VALUE, ...) sets the property
+            % of the edge link line PROPERTY to VALUE.
+            % All standard plot properties of plot3 can be used.
+            % The line properties can also be changed when hidden.
+            %
+            % See also PlotBrainGraph, plot3, link_edges.
+            
             if i == j  % removes diagonal
                 return;
             end
@@ -80,28 +131,66 @@ classdef PlotBrainGraph < PlotBrainAtlas
             bg.edges.Y2(i, j) = Y2;
             bg.edges.Z2(i, j) = Z2;
             
+            % sets properties
+            for n = 1:2:length(varargin)
+                switch lower(varargin{n})
+                    case 'linestyle'
+                        set(bg.edges.h(i, j),'LineStyle', varargin{n + 1});
+                    case 'linewidth'
+                        set(bg.edges.h(i, j),'LineWidth', varargin{n + 1});
+                    case 'color'
+                        set(bg.edges.h(i, j),'Color', varargin{n + 1});
+                    otherwise
+                        set(bg.edges.h(i, j),varargin{n}, varargin{n + 1});
+                end
+            end
+            
             if nargout>0
                 h = bg.edges.h(i, j);
             end
         end
         function link_edge_on(bg, i, j)
-            % LINK_LIN_ON shows a line link
+            % LINK_EDGE_ON shows a edge link
             %
-            % LINK_LIN_ON(BG,I,J) shows the line link from the brain
-            %   region I to J.
+            % LINK_EDGE_ON(BG, I, J) shows the edge link from the brain
+            % region I to J.
             %
-            % See also PlotBrainGraph.
+            % See also PlotBrainGraph, link_edge, link_edge_off.
             
             if ishandle(bg.edges.h(i, j))
                 set(bg.edges.h(i, j), 'Visible', 'on')
             end
         end
         function link_edge_off(bg, i, j)
+            % LINK_EDGE_OFF hides a edge link
+            %
+            % LINK_EDGE_OFF(BG, I, J) hides the edge link from the brain
+            % region I to J.
+            %
+            % See also PlotBrainGraph, link_edge, link_edge_on.
+            
             if ishandle(bg.edges.h(i, j))
                 set(bg.edges.h(i, j), 'Visible', 'off')
             end
         end
         function link_edges(bg, i_vec, j_vec, varargin)
+            % LINK_EDGES plots multiple edge links as lines
+            %
+            % LINK_EDGES(BG, I_VEC, J_VEC) plots the edge links from the
+            % brain regions specified in I_VEC to the ones specified in
+            % J_VEC, if not plotted. I_VEC and J_VEC need not be the same
+            % size.
+            %
+            % LINK_EDGES(BG, [], []) plots the edge links between all
+            % possible brain region combinations.
+            %
+            % LINK_LINS(BG, I_VEC, J_VEC, PROPERTY, RULE) sets the property
+            % of the multiple edge links' PROPERTY to RULE.
+            % All standard plot properties of plot3 can be used.
+            % The line properties can also be changed when hidden.
+            %
+            % See also PlotBrainGraph, plot3, link_edge.
+            
             if nargin < 2 || isempty(i_vec) || isempty(j_vec)
                 for i = 1:1:bg.atlas.getBrainRegions().length()
                     for j = 1:1:bg.atlas.getBrainRegions().length()
@@ -122,6 +211,13 @@ classdef PlotBrainGraph < PlotBrainAtlas
             end
         end
         function link_edges_on(bg, i_vec, j_vec)
+            % LINK_EDGES_ON shows multiple edge link
+            %
+            % LINK_EDGES_ON(BG, I, J) shows multiple edge link from the brain
+            % region I to J.
+            %
+            % See also PlotBrainGraph, link_edges, link_edges_off.
+            
             if nargin<2 || isempty(i_vec) || isempty(j_vec)
                 for i = 1:1:bg.atlas.getBrainRegions().length()
                     for j = 1:1:bg.atlas.getBrainRegions().length()
@@ -142,6 +238,13 @@ classdef PlotBrainGraph < PlotBrainAtlas
             end
         end
         function link_edges_off(bg, i_vec, j_vec)
+            % LINK_EDGES_OFF hides multiple edge links
+            %
+            % LINK_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
+            % region I to J.
+            %
+            % See also PlotBrainGraph, link_edge, link_edge_on.
+            
             if nargin<2 || isempty(i_vec) || isempty(j_vec)
                 for i = 1:1:bg.atlas.getBrainRegions().length()
                     for j = 1:1:bg.atlas.getBrainRegions().length()
@@ -162,6 +265,20 @@ classdef PlotBrainGraph < PlotBrainAtlas
             end
         end
         function link_edges_settings(bg, i_vec, j_vec, varargin)
+            % LINK_EDGES_SETTINGS sets edges' properties
+            %
+            % LINK_EDGES_SETTINGS(BG) allows the user to interractively
+            % change the edges settings via a graphical user interface.
+            %
+            % LINK_LINS_SETTINGS(BG, PROPERTY, VALUE, ...) sets the property
+            % of the GUI's PROPERTY to VALUES.
+            %   Admissible properties are:
+            %       FigPosition  -   position of the GUI on the screen
+            %       FigColor     -   background color of the GUI
+            %       FigName      -   name of the GUI
+            %
+            % See also PlotBrainGraph.
+            
             atlas_length = bg.atlas.getBrainRegions().length();
             data = cell(atlas_length, atlas_length);
             
