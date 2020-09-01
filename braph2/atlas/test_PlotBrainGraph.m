@@ -12,3 +12,6 @@ bg.axis_equal()
 bg.link_edges();
 bg.link_edges_on();
 bg.link_edges_settings();
+
+close(gcf)
+close(gcf)
