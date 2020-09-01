@@ -455,6 +455,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         getBinodalMeasurePlot(analysis, ui_prent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)
         getBinodalComparisonPlot(analysis, ui_prent_panel, ui_parent_axes, measure_code, group_1, group_2, brain_region_1, brain_region_2, varargin)
         getBinodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)
+        getBrainView(analysis, varargin)
     end
     methods (Static)  % getAnalysis
         function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>
