@@ -214,7 +214,7 @@ classdef Richness < Degree
             parametricity = Measure.PARAMETRIC;
         end
         function name = getParameterName()
-            % GETPARAMETERNAME returns the name of the richness' parameter
+            % GETPARAMETERNAME returns the name of the Richness' parameter
             %
             % NAME = GETPARAMETERNAME() returns the name (string) of 
             % the richness parameter.
@@ -254,10 +254,10 @@ classdef Richness < Degree
     end
     methods 
         function values = getParameterValues(m)
-            % GETPARAMETERVALUES returns the values of the richness' parameter
+            % GETPARAMETERVALUES returns the values of the Richness' parameter
             %
             % VALUES = GETPARAMETERVALUES() returns the values of
-            % the richness parameter.
+            % the richness' parameter.
             
             values = 1:1:m.getParameter();
         end

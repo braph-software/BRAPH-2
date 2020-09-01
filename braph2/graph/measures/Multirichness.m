@@ -203,7 +203,7 @@ classdef Multirichness < Richness
             parametricity = Measure.PARAMETRIC;
         end
         function name = getParameterName()
-            % GETPARAMETERNAME returns the name of the multrichness' parameter
+            % GETPARAMETERNAME returns the name of the Multirichness' parameter
             %
             % NAME = GETPARAMETERNAME() returns the name (string) of 
             % the multirichness' parameter.
@@ -239,7 +239,7 @@ classdef Multirichness < Richness
     end
     methods
         function values = getParameterValues(m)
-            % GETPARAMETERVALUES returns the values of the multirichness' parameter
+            % GETPARAMETERVALUES returns the values of the Multirichness' parameter
             %
             % VALUES = GETPARAMETERVALUES() returns the values of
             % the multirichness' parameter.

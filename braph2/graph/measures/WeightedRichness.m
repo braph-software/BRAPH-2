@@ -22,8 +22,12 @@ classdef WeightedRichness < Strength
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
     %   getMeasure                  - returns the degree class
+    %   getParameterName            - returns the name of richness measure's parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
+    %
+    % WeightedRichness methods 
+    %   getParameterValues          - returns the values of weighted richness measure's parameter
     %
     % See also Measure, Strength, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
     
@@ -37,13 +41,10 @@ classdef WeightedRichness < Strength
             % creates weighted richness measure and initializes the property 
             % WeightedRichnessThreshold with WEIGHTEDRICHNESSTHRESHOLD. 
             % Admissible THRESHOLD options are:
-            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
-            %                           is set to the maximum strength - 1.
-            %                           value - WEIGHTEDRICHNESS k threshold is 
-            %                           set to the specificied value if the
-            %                           value is positive. For negative
-            %                           values, k is set to the maximum
-            %                           strength - value
+            % WEIGHTEDRICHNESSTHRESHOLD = 1(default) - WEIGHTEDRICHNESS k   
+            %                           threshold is set to 1.
+            %                           value - WEIGHTEDRICHNESS k threshold 
+            %                           is set to the specificied value.
             % 
             % WEIGHTEDRICHNESS(G, 'VALUE', VALUE) creates weighted richness, and sets 
             % the value to VALUE. G is a graph (e.g, an instance of GraphWD, GraphWU,
@@ -106,28 +107,29 @@ classdef WeightedRichness < Strength
                     st = (in_strength{li} + out_strength{li})/2;
                 end
                 
-                weighted_richness_threshold = get_from_varargin(-1, 'WeightedRichnessThreshold', m.getSettings());
+                weighted_richness_threshold = get_from_varargin(1, 'WeightedRichnessThreshold', m.getSettings());
                 assert(isnumeric(weighted_richness_threshold) == 1, ...
                     [BRAPH2.STR ':WeightedRichness:' BRAPH2.WRONG_INPUT], ...
                     ['WeightedRichness threshold must be a positive number ' ...
                     'while it is ' tostring(weighted_richness_threshold)])
 
-                if weighted_richness_threshold > 0  % for positive threshold value, k = value
-                    k_level = weighted_richness_threshold;
-                else  % for negative threshold, k = max strength - threshold (default -1)
-                    k_level = max(st) - abs(weighted_richness_threshold);
-                end
-
-                low_rich_nodes = find(st <= k_level);  % get lower rich nodes with strength <= k
-                subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <=k of Aii
-                subAii(low_rich_nodes, :) = 0;  % remove rows
-                subAii(:, low_rich_nodes) = 0;  % remove columns
+                k_level = abs(weighted_richness_threshold);
+                m.setParameter(k_level)  % Set the parameter
                 
-                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                    weighted_richness(li) = {round(sum(subAii, 1), 6)'};  % strength of high rich nodes   
-                else
-                    weighted_richness(li) = {round((sum(subAii, 1)' + sum(subAii, 2)), 6)/2};  % strength of high rich nodes   
+                weighted_richness_layer = zeros(N(1), 1, k_level);
+                for k = 1:1:k_level
+                    low_rich_nodes = find(st <= k);  % get lower rich nodes with strength <= k
+                    subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <=k of Aii
+                    subAii(low_rich_nodes, :) = 0;  % remove rows
+                    subAii(:, low_rich_nodes) = 0;  % remove columns
+
+                    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+                        weighted_richness_layer(:, :, k) = {round(sum(subAii, 1), 6)'};  % strength of high rich nodes   
+                    else
+                        weighted_richness_layer(:, :, k) = {round((sum(subAii, 1)' + sum(subAii, 2)), 6)/2};  % strength of high rich nodes   
+                    end
                 end
+                weighted_richness(li) = {richness_layer};  % add richness of layer li
             end
         end
     end  
@@ -161,8 +163,7 @@ classdef WeightedRichness < Strength
             description = [ ...
                 'The weighted richness of a node is the sum of ' ...
                 'the weighted edges that connect nodes of strength k or higher within a layer. ' ...
-                'k is set by the user; the default value is equal to the ' ...
-                'maximum strength -1. ' ...
+                'k is set by the user; the default value is equal to 1 ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -170,16 +171,13 @@ classdef WeightedRichness < Strength
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to WeightedRichness.
-            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
-            %                           is set to the maximum strength - 1.
-            %                           value - WEIGHTEDRICHNESS k threshold is 
-            %                           set to the specificied value if the
-            %                           value is positive. For negative
-            %                           values, k is set to the maximum
-            %                           strength - value
+            % WEIGHTEDRICHNESSTHRESHOLD = 1 (default) - WEIGHTEDRICHNESS k   
+            %                           threshold is set to 1.
+            %                           value - WEIGHTEDRICHNESS k threshold 
+            %                           is set to the specificied value.
             
             available_settings = {
-                'WeightedRichnessThreshold', BRAPH2.NUMERIC, -1, {};
+                'WeightedRichnessThreshold', BRAPH2.NUMERIC, 1, {};
                 };
         end
         function measure_format = getMeasureFormat()
@@ -210,7 +208,15 @@ classdef WeightedRichness < Strength
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.NONPARAMETRIC;
+            parametricity = Measure.PARAMETRIC;
+        end
+        function name = getParameterName()
+            % GETPARAMETERNAME returns the name of WeightedRichness' parameter
+            %
+            % NAME = GETPARAMETERNAME() returns the name (string) of 
+            % the weighted richness' parameter.
+            
+            name = 'Richness threshold';
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with WeightedRichness 
@@ -237,6 +243,16 @@ classdef WeightedRichness < Strength
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('WeightedRichness');
+        end
+    end
+    methods
+        function values = getParameterValues(m)
+            % GETPARAMETERVALUES returns the values of the WeightedRichness' parameter
+            %
+            % VALUES = GETPARAMETERVALUES() returns the values of
+            % the weighted richness' parameter.
+            
+            values = 1:1:m.getParameter();
         end
     end
 end
