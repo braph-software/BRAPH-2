@@ -114,7 +114,6 @@ classdef Richness < Degree
                     ['Richness threshold must be an integer value ' ...
                     'while it is ' tostring(richness_threshold)])
 
-                
                 k_level = abs(richness_threshold);  
                 m.setParameter(k_level)  % Set the parameter
             
@@ -127,9 +126,9 @@ classdef Richness < Degree
                     subAii(:, low_rich_nodes) = 0;  % remove columns
                     
                     if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                        richness_layer(:, 1, k) = sum(subAii, 1)';  % degree of high rich nodes
+                        richness_layer(:, :, k) = sum(subAii, 1)';  % degree of high rich nodes
                     else
-                        richness_layer(:, 1, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
+                        richness_layer(:, :, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
                     end
 
                 end
@@ -167,10 +166,7 @@ classdef Richness < Degree
             description = [ ...
                 'The richness of a node is the sum of ' ...
                 'the edges that connect nodes of degree k or higher within a layer. ' ...
-                'k is set by the user; the default value is equal to the ' ...
-                'maximum degree - 1. For positive thresholds, k equals to the ' ...
-                'threshold value; while for negative thresholds, k equals to ' ...
-                'the maximum degree - threshold value.' ...
+                'k is set by the user; the default value is equal to 1. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
