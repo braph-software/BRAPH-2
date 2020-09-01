@@ -118,7 +118,7 @@ classdef Richness < Degree
                 k_level = abs(richness_threshold);  
                 m.setParameter(k_level)  % Set the parameter
             
-                richness_layer = zeros(N(1), 1, int32(k_level));
+                richness_layer = zeros(N(1), 1, k_level);
                 for k = 1:1:k_level
                     low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
                     Aii = binarize(Aii);  % binarizes the adjacency matrix
@@ -184,7 +184,7 @@ classdef Richness < Degree
             %                    specificied value.
             
             available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, 2, {};
+                'RichnessThreshold', BRAPH2.NUMERIC, 1, {};
                 };
         end
         function measure_format = getMeasureFormat()

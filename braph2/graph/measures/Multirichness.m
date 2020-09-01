@@ -80,7 +80,9 @@ classdef Multirichness < Richness
             else
                 richness = calculate@Richness(m);
             end
-
+            
+            k_level = size(richness{1}, 3);  % Get the richness threshold
+            m.setParameter(k_level)  % Set the multirichness' parameter (based on richness's parameter)
             N = g.nodenumber();
             L = g.layernumber();
             
@@ -96,17 +98,21 @@ classdef Multirichness < Richness
                     ['Multirichness coefficients must be between 0 and 1 ' ...
                     'while they are ' tostring(multirichness_coefficients)])
                 c = multirichness_coefficients;
+                
             else  % same relevance for each layer
                 c = ones(1, L)/L;
             end
             
-            multirichness = zeros(N(1), 1);
+            multirichness = zeros(N(1), 1, k_level);
             for li = 1:1:L
                 ri = richness{li};  % to fix when making this measure also parametric
-                if isempty(ri)
-                    multirichness = multirichness + c(li)*zeros(N(1), 1);  % to fix when making this measure also parametric
-                else
-                    multirichness = multirichness + c(li)*ri(:, 1, 1);  % to fix when making this measure also parametric
+                % loop over the 3rd dimension of richness (k_level)
+                for k = 1:1:k_level
+%                 if isempty(ri)
+%                     multirichness = multirichness + c(li)*zeros(N(1), 1);  % to fix when making this measure also parametric
+%                 else
+                    multirichness(:, :, k) = multirichness(:, :, k) + c(li)*ri(:, :, k);  % to fix when making this measure also parametric
+%                 end
                 end
             end
             multirichness = {multirichness};
@@ -198,7 +204,15 @@ classdef Multirichness < Richness
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.NONPARAMETRIC;
+            parametricity = Measure.PARAMETRIC;
+        end
+        function name = getParameterName()
+            % GETPARAMETERNAME returns the name of the multrichness' parameter
+            %
+            % NAME = GETPARAMETERNAME() returns the name (string) of 
+            % the multirichness' parameter.
+            
+            name = 'Multirichness threshold';
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Multirichness 
@@ -225,6 +239,16 @@ classdef Multirichness < Richness
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Multirichness');
+        end
+    end
+    methods
+        function values = getParameterValues(m)
+            % GETPARAMETERVALUES returns the values of the multirichness' parameter
+            %
+            % VALUES = GETPARAMETERVALUES() returns the values of
+            % the multirichness' parameter.
+            
+            values = 1:1:m.getParameter();
         end
     end
 end
