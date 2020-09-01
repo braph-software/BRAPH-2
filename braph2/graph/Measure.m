@@ -17,7 +17,9 @@ classdef Measure < handle
     %                   GLOBAL values are SCALAR
     %                   NODAL values a COLUMN VECTOR whose length is equal to the number of nodes
     %                   BINODAL values are a SQUARE MATRIX whose dimensions are equal to the number of nodes
-    % 
+    %                   If the measure is PARAMETRIC, the third dimension of the value is used
+    %   parameter       - measure parameter
+    %
     % Measure methods (Access=protected):
     %   Measure         - constructor
     %
@@ -28,20 +30,25 @@ classdef Measure < handle
     %   getSettings     - returns the settings of the measure
     %   is_value_calculated - boolean, checks if the measure has been calculated
     %   getValue        - returns the value of the measure
+    %   getParameter    - returns the parameter of the measure
+    %   getParameterValues - returns the values of the measure's parameter
     %   
     % Measure methods (Abstract, Access=protected):
     %   calculate       - abstract function
     %                   inheriting classes must implement this method
     %
     % Measure descriptive methods:
-    %   getMeasureFormat - returns de measure format
+    %   getMeasureFormat - returns the measure format
     %   is_global       - boolean, checks if the measure format is global
     %   is_nodal        - boolean, checks if the measure format is nodal
     %   is_binodal      - boolean, checks if the measure format if binodal
-    %   getMeasureScope - returns de measure scope
+    %   getMeasureScope - returns the measure scope
     %   is_superglobal  - boolean, checks if the measure scope is superglobal
     %   is_unilayer     - boolean, checks if the measure scope is unilayer
     %   is_bilayer      - boolean, checks if the measure scope is bilayer
+    %   getParametricity - returns the parametricity of the measure 
+    %   is_parametric   - boolean, checks if the measure is parametric
+    %   is_nonparametric - boolean, checks if the measure is non-parametric
     %
     % Measure inspection methods (Static)
     %   getList         - returns a list with subclasses of measure
@@ -50,6 +57,7 @@ classdef Measure < handle
     %   getDescription  - returns the description of the measure
     %   getAvailableSettings - returns the settings available to the class
     %   getMeasure      - returns the measure class
+    %   getParameterName - returns the name of a measure's parameter
     %   getCompatibleGraphList - returns a list of compatible graphs
     %   getCompatibleGraphNumber - returns the number of compatible graphs
     %
@@ -118,6 +126,29 @@ classdef Measure < handle
             Measure.BILAYER_DESCRIPTION
             }
         
+        % Parametricity
+        PARAMETRIC = 1
+        PARAMETRIC_NAME = 'Parametric'
+        PARAMETRIC_DESCRIPTION = ['Parametric measure consists of a measure ' ...
+            'that outputs the results based on a parameter.']
+        
+        NONPARAMETRIC = 2
+        NONPARAMETRIC_NAME = 'Non-parametric'
+        NONPARAMETRIC_DESCRIPTION = ['Non-parametric measure consists of a measure ' ...
+            'where the results are not based on a parameter.']
+        
+        PARAMETRICITY_NUMBER = 2
+        
+        PARAMETRICITY_NAME = {
+            Measure.PARAMETRIC_NAME
+            Measure.NONPARAMETRIC_NAME
+            }
+
+        PARAMETRICITY_DESCRIPTION = {
+            Measure.PARAMETRIC_DESCRIPTION
+            Measure.NONPARAMETRIC_DESCRIPTION
+            }
+        
     end
     properties (GetAccess=protected, SetAccess=protected)
         g  % graph
@@ -126,7 +157,8 @@ classdef Measure < handle
                % a CELL for SUPERGLOBAL measures containing GLOBAL, NODAL or BINODAL values
                % a CELL VECTOR for UNILAYER measures containing GLOBAL, NODAL or BINODAL values
                % a CELL MATRIX for BILAYER measures containing GLOBAL, NODAL or BINODAL values
-               % where GLOBAL values are SCALAR, NODAL values COLUMN VECTOR and BINODAL values SQUARE MATRIX               
+               % where GLOBAL values are SCALAR, NODAL values COLUMN VECTOR and BINODAL values SQUARE MATRIX 
+        parameter % measure parameter
     end
     methods (Access=protected)
         function m = Measure(g, varargin)
@@ -253,6 +285,47 @@ classdef Measure < handle
             
             value = m.value;
         end
+        function setParameter(m, parameter)
+            % SETPARAMETER sets the parameter of the measure
+            %
+            % PARAMETER = SETPARAMETER(M) sets the parameter of
+            % the concrete measure M.
+            %
+            % PARAMETER= SETPARAMETER(MEASURE_CLASS) sets the parameter
+            % of the measure whose class is MEASURE_CLASS.
+            
+            if Measure.is_parametric(m)
+                m.parameter = parameter;
+            else
+                m.parameter = 1;
+            end
+        end
+        function parameter = getParameter(m)
+            % GETPARAMETER returns the parameter of the measure 
+            %
+            % PARAMETER = GETPARAMETER(M) returns the parameter of
+            % the concrete measure M.
+            %
+            % PARAMETER= GETPARAMETER(MEASURE_CLASS) returns the parameter
+            % of the measure whose class is MEASURE_CLASS.
+            
+            parameter = m.parameter;
+        end
+        function values = getParameterValues(m)
+             % GETPARAMETERVALUES returns the values of the measure's parameter
+             %
+             % VALUES = GETPARAMETERVALUES(M) returns the values of
+             % the concrete measure M parameter.
+             %
+             % VALUES= GETPARAMETERVALUES(MEASURE_CLASS) returns the values
+             % of the parameter of the measure whose class is MEASURE_CLASS.
+             
+             if Measure.is_parametric(m)
+                 values = eval([Measure.getClass(m) '.getParameterValues()']);
+             else
+                 values = [];
+             end
+         end
     end
     methods (Abstract, Access=protected)
         calculate(m)  % calculates the value of the measure
@@ -365,6 +438,46 @@ classdef Measure < handle
             
             bool = Measure.getMeasureScope(m) == Measure.BILAYER;
         end
+        function parametricity = getParametricity(m)
+            % GETPARAMETRICITY returns the parametricity of the measure
+            %
+            % PARAMETRICITY = GETPARAMETRICITY(M) returns the
+            % parametricity of measure M (e.g., NONPARAMETRIC, PARAMETRIC).
+            %
+            % PARAMETRICITY = GETPARAMETRICITY(MEASURE_CLASS)
+            % returns the parametricity of the measure whose class is
+            % MEASURE_CLASS (e.g., NONPARAMETRIC, PARAMETRIC).
+            %
+            % See also is_nonparametric, is_parametric.
+            
+            parametricity = eval([Measure.getClass(m) '.getParametricity()']);
+        end
+        function bool = is_parametric(m)
+            % IS_PARAMETRIC checks if measure is parametric
+            %
+            % BOOL = IS_PARAMETRIC(M) returns true if the concrete measure M
+            % is parametric and false otherwise.
+            %
+            % BOOL = IS_PARAMETRIC(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is parametric and false otherwise.
+            %
+            % See also getParametricity, is_nonparametric.
+            
+            bool = Measure.getParametricity(m) == Measure.PARAMETRIC;
+        end
+        function bool = is_nonparametric(m)
+            % IS_NONPARAMETRIC checks if measure is non-parametric
+            %
+            % BOOL = IS_NONPARAMETRIC(M) returns true if the concrete measure M
+            % is non-parametric and false otherwise.
+            %
+            % BOOL = IS_NONPARAMETRIC(MEASURE_CLASS) returns true if the measure
+            % whose class is MEASURE_CLASS is non-parametric and false otherwise.
+            %
+            % See also getParametricity, is_parametric.
+            
+            bool = Measure.getParametricity(m) == Measure.NONPARAMETRIC;
+        end
     end
     methods (Static)  % Inspection methods
         function measure_list = getList()
@@ -446,6 +559,21 @@ classdef Measure < handle
             % See also getAvailableSettings, getList, getCompatibleGraphList, getCompatibleGraphNumber.
             
             m = eval([measure_code '(g, varargin{:})']);
+        end
+        function name = getParameterName(m)
+            % GETPARAMETERNAME returns the name of the measure's parameter
+            %
+            % NAME = GETPARAMETERNAME(M) returns the name (string) of 
+            % the concrete measure M parameter.
+            %
+            % NAME= GETPARAMETERNAME(MEASURE_CLASS) returns the name of
+            % the parameter of the measure whose class is MEASURE_CLASS.
+            
+            if Measure.is_parametric(m)  
+                name = eval([Measure.getClass(m) '.getParameterName()']);
+            else
+                name = '';
+            end
         end
         function list = getCompatibleGraphList(m)
             % GETCOMPATIBLEGRAPHLIST returns the list of graphs

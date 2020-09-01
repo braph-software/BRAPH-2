@@ -25,10 +25,12 @@ A = [
     0  1  0  0
     ];
 
-known_richness = {[1 1 0 0]'};
+rich(:, 1, 1) = [5/2 3 2 3/2]';
+rich(:, 1, 2) = [1 1 0 0]';
+known_richness = {rich};
 
 g = GraphBD(A);
-richness = Richness(g, 'RichnessThreshold', -1);
+richness = Richness(g, 'RichnessThreshold', 2);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
@@ -59,10 +61,12 @@ A = [
     0   .3  0  0
     ];
 
-known_richness = {[1 1 0 0]'};
+rich(:, 1, 1) = [5/2 3 2 3/2]';
+rich(:, 1, 2) = [1 1 0 0]';
+known_richness = {rich};
 
 g = GraphWD(A);
-richness = Richness(g);
+richness = Richness(g, 'RichnessThreshold', 2);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
@@ -121,9 +125,15 @@ A = {
     A21     A22
     };
 
+richness_l1(:, 1, 1) = [5/2 3 2 3/2]';
+richness_l1(:, 1, 2) = [1 1 0 0]';
+
+richness_l2(:, 1, 1) = [5/2 3 5/2 2]';
+richness_l2(:, 1, 2) = [2 2 2 0]';
+
 known_richness = {
-                 [1 1 0 0]'
-                 [2 2 2 0]'
+                 richness_l1
+                 richness_l2
                  };      
 
 g = MultiplexGraphBD(A);
@@ -185,10 +195,16 @@ A = {
     A21     A22
     };
 
+richness_l1(:, 1, 1) = [5/2 3 2 3/2]';
+richness_l1(:, 1, 2) = [1 1 0 0]';
+
+richness_l2(:, 1, 1) = [5/2 3 5/2 2]';
+richness_l2(:, 1, 2) = [2 2 2 0]';
+
 known_richness = {
-                 [1 1 0 0]'
-                 [2 2 2 0]'
-                 };      
+                 richness_l1
+                 richness_l2
+                 };  
 
 g = MultiplexGraphWD(A);
 richness = Richness(g, 'RichnessThreshold', 2);

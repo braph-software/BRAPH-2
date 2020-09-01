@@ -4,12 +4,10 @@ classdef Richness < Degree
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
     % graphs. 
     %
-    % It is calculated as the sum of the number of edges that connect nodes
-    % of degree k or higher within a layer. The value of k is set by the
-    % user (setting 'RichnessThreshold'), the default value is equal to the
-    % maximum degree - 1. For positive thresholds, k equals to the threshold
-    % value; while for negative thresholds, k equals to the maximum degree -
-    % absolute value of the richness threshold.
+    % It is a parametric measure, from i = 1 to the k level it calculates 
+    % the sum of the number of edges that connect nodes of degree i or higher 
+    % within a layer. The value of k is set by the user (setting 'RichnessThreshold'), 
+    % the default value is equal to 1.
     % 
     % Richness methods:
     %   Richness                    - constructor
@@ -19,11 +17,16 @@ classdef Richness < Degree
     %   getName                     - returns the name of richness measure
     %   getDescription              - returns the description of richness measure
     %   getAvailableSettings        - returns the settings available to the class
-    %   getMeasureFormat            - returns de measure format
-    %   getMeasureScope             - returns de measure scope    
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of richness measure
     %   getMeasure                  - returns the degree class
+    %   getParameterName            - returns the name of richness measure's parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
+    %
+    % Richness methods 
+    %   getParameterValues          - returns the values of richness measure's parameter
     %
     % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
@@ -37,12 +40,10 @@ classdef Richness < Degree
             % RICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
             % richness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
             % Admissible THRESHOLD options are:
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
+            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
+            %                    to 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - absolute value.
+            %                    specificied value.
             % 
             % RICHNESS(G, 'VALUE', VALUE) creates richness, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
@@ -66,9 +67,10 @@ classdef Richness < Degree
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
             L = g.layernumber();
+            N = g.nodenumber();
             
-            richness = cell(g.layernumber(), 1);
-            directionality_type =  g.getDirectionalityType(g.layernumber());
+            richness = cell(L, 1);
+            directionality_type =  g.getDirectionalityType(L);
             for li = 1:1:L
                 
                 if g.is_graph(g)
@@ -106,29 +108,32 @@ classdef Richness < Degree
                     deg = (in_degree{li} + out_degree{li})/2;
                 end
                 
-                richness_threshold = get_from_varargin(-1, 'RichnessThreshold', m.getSettings());
+                richness_threshold = get_from_varargin(1, 'RichnessThreshold', m.getSettings());
                 assert(mod(richness_threshold, 1) == 0, ...
                     [BRAPH2.STR ':Richness:' BRAPH2.WRONG_INPUT], ...
                     ['Richness threshold must be an integer value ' ...
                     'while it is ' tostring(richness_threshold)])
 
-                if richness_threshold > 0  % for positive threshold value, k = value
-                    k_level = richness_threshold;  
-                else  % for negative threshold, k = max degree - threshold (default -1)
-                    k_level = max(deg) - abs(richness_threshold);
-                end
-
-                low_rich_nodes = find(deg <= k_level);  % get lower rich nodes with degree <=k
-                Aii = binarize(Aii);  % binarizes the adjacency matrix
-                subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <=k of Aii
-                subAii(low_rich_nodes, :) = 0;  % remove rows
-                subAii(:, low_rich_nodes) = 0;  % remove columns
                 
-                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                    richness(li) = {sum(subAii, 1)'};  % degree of high rich nodes   
-                else
-                    richness(li) = {(sum(subAii, 1)' + sum(subAii, 2))/2};  % degree of high rich nodes   
+                k_level = abs(richness_threshold);  
+                m.setParameter(k_level)  % Set the parameter
+            
+                richness_layer = zeros(N(1), 1, int32(k_level));
+                for k = 1:1:k_level
+                    low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
+                    Aii = binarize(Aii);  % binarizes the adjacency matrix
+                    subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <= k of Aii
+                    subAii(low_rich_nodes, :) = 0;  % remove rows
+                    subAii(:, low_rich_nodes) = 0;  % remove columns
+                    
+                    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+                        richness_layer(:, 1, k) = sum(subAii, 1)';  % degree of high rich nodes
+                    else
+                        richness_layer(:, 1, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
+                    end
+
                 end
+                richness(li) = {richness_layer};  % add richness of layer li          
             end
         end
     end  
@@ -173,15 +178,13 @@ classdef Richness < Degree
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Richness.
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
+            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
+            %                    to 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - value.
+            %                    specificied value.
             
             available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, -1, {};
+                'RichnessThreshold', BRAPH2.NUMERIC, 2, {};
                 };
         end
         function measure_format = getMeasureFormat()
@@ -203,6 +206,24 @@ classdef Richness < Degree
             % See also getMeasureFormat.
             
             measure_scope = Measure.UNILAYER;
+        end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of Richness
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of richness measure (PARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.PARAMETRIC;
+        end
+        function name = getParameterName()
+            % GETPARAMETERNAME returns the name of the richness' parameter
+            %
+            % NAME = GETPARAMETERNAME() returns the name (string) of 
+            % the richness parameter.
+            
+            name = 'Richness threshold';
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Richness 
@@ -233,6 +254,16 @@ classdef Richness < Degree
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Richness');
+        end
+    end
+    methods 
+        function values = getParameterValues(m)
+            % GETPARAMETERVALUES returns the values of the richness' parameter
+            %
+            % VALUES = GETPARAMETERVALUES() returns the values of
+            % the richness parameter.
+            
+            values = 1:1:m.getParameter();
         end
     end
 end

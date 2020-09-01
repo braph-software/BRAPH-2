@@ -21,8 +21,9 @@ classdef MultiplexCorePeriphery < Multirichness
     %   getName                     - returns the name of multiplex core periphery measure
     %   getDescription              - returns the description of multiplex core periphery measure
     %   getAvailableSettings        - returns the settings available to the class
-    %   getMeasureFormat            - returns de measure format
-    %   getMeasureScope             - returns de measure scope    
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure   
     %   getMeasure                  - returns the degree class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
@@ -221,6 +222,16 @@ classdef MultiplexCorePeriphery < Multirichness
             % See also getMeasureFormat.
             
             measure_scope = Measure.SUPERGLOBAL;
+        end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of MultiplexCorePeriphery
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of multiplex core periphery measure (PARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with MultiplexCorePeriphery 

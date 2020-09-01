@@ -15,8 +15,9 @@ classdef OverlappingDegree < Degree
     %   getName                     - returns the name of overlapping degree measure
     %   getDescription              - returns the description of overlapping degree measure
     %   getAvailableSettings        - returns the settings available to the class
-    %   getMeasureFormat            - returns de measure format
-    %   getMeasureScope             - returns de measure scope    
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure 
     %   getMeasure                  - returns the degree class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
@@ -121,6 +122,16 @@ classdef OverlappingDegree < Degree
             % See also getMeasureFormat.
             
             measure_scope = Measure.SUPERGLOBAL;
+        end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of OverlappingDegree
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of overlapping degree measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with OverlappingDegree 

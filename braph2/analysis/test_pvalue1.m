@@ -114,3 +114,34 @@ P1 = pvalue1(observed_difference, random_differences);
 assert(all(all(cellfun(@(x) all(all(round(100 * x) == 0)), P1))), ...
     [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
     'Error in pvalue1 calculation')
+
+%% Test 5: Test vector with 3rd dimension input
+M = 1e+3;
+random_differences = cell(1, M);
+for i = 1:1:size(random_differences, 2)
+    random_differences{i} = 10 * ones(3, 1, 2) * (i - 1) / (M - 1) - 5;
+end
+
+observed_difference = 4 * ones(3, 1, 2) .* (2 * (randn(3, 1)>0) - 1);
+P1 = pvalue1(observed_difference, random_differences);
+assert(all(all(round(100 * P1) == 10)), ...
+    [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
+    'Error in pvalue1 calculation')
+
+observed_difference = 4 * ones(3, 1, 2) .* (2 * (randn(3, 1)>0) - 1);
+P1 = pvalue1({observed_difference}, random_differences);
+assert(all(all(round(100 * P1{1}) == 10)), ...
+    [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
+    'Error in pvalue1 calculation')
+
+observed_difference = 6 * ones(3, 1, 2) .* (2 * (randn(3, 1)>0) - 1);
+P1 = pvalue1(observed_difference, random_differences);
+assert(all(all(round(100 * P1) == 0)), ...
+    [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
+    'Error in pvalue1 calculation')
+
+observed_difference = 6 * ones(3, 1, 2) .* (2 * (randn(3, 1)>0) - 1);
+P1 = pvalue1({observed_difference}, random_differences);
+assert(all(all(round(100 * P1{1}) == 0)), ...
+    [BRAPH2.STR ':pvalue1:' BRAPH2.BUG_FUNC], ...
+    'Error in pvalue1 calculation')

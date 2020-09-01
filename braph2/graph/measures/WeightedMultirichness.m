@@ -19,8 +19,9 @@ classdef WeightedMultirichness < WeightedRichness
     %   getName                     - returns the name of weighted multirichness measure
     %   getDescription              - returns the description of weighted multirichness measure
     %   getAvailableSettings        - returns the settings available to the class
-    %   getMeasureFormat            - returns de measure format
-    %   getMeasureScope             - returns de measure scope    
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure   
     %   getMeasure                  - returns the degree class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
@@ -184,6 +185,16 @@ classdef WeightedMultirichness < WeightedRichness
             % See also getMeasureFormat.
             
             measure_scope = Measure.SUPERGLOBAL;
+        end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of WeightedMultirichness
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of weighted multirichness measure (PARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with WeightedMultirichness 

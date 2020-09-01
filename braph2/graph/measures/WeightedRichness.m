@@ -18,8 +18,9 @@ classdef WeightedRichness < Strength
     %   getName                     - returns the name of weighted richness measure
     %   getDescription              - returns the description of weighted richness measure
     %   getAvailableSettings        - returns the settings available to the class
-    %   getMeasureFormat            - returns de measure format
-    %   getMeasureScope             - returns de measure scope    
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure   
     %   getMeasure                  - returns the degree class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
@@ -200,6 +201,16 @@ classdef WeightedRichness < Strength
             % See also getMeasureFormat.
             
             measure_scope = Measure.UNILAYER;
+        end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of WeightedRichness
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of weighted richness measure (PARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with WeightedRichness 

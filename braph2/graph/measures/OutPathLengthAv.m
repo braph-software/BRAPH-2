@@ -16,8 +16,9 @@ classdef OutPathLengthAv < OutPathLength
     %   getName                     - returns the name of average out-path length measure
     %   getDescription              - returns the description of average out-path length measure
     %   getAvailableSettings        - returns the settings available to the class
-    %   getMeasureFormat            - returns de measure format
-    %   getMeasureScope             - returns de measure scope   
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure 
     %   getMeasure                  - returns the average path length class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
@@ -141,6 +142,16 @@ classdef OutPathLengthAv < OutPathLength
             % See also getMeasureFormat.
             
             measure_scope = Measure.UNILAYER;
+        end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of OutPathLengthAv
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of average out-path length measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs

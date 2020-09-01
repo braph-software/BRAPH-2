@@ -13,8 +13,9 @@ classdef OverlappingStrength < Strength
     %   getName                     - returns the name of overlapping strength measure
     %   getDescription              - returns the description of overlapping strength measure
     %   getAvailableSettings        - returns the settings available to the class
-    %   getMeasureFormat            - returns de measure format
-    %   getMeasureScope             - returns de measure scope    
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure  
     %   getMeasure                  - returns the degree class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
@@ -121,6 +122,16 @@ classdef OverlappingStrength < Strength
             % See also getMeasureFormat.
             
             measure_scope = Measure.SUPERGLOBAL;
+        end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of OverlappingStrength
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of overlapping strength measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with OverlappingStrength
