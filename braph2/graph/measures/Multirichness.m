@@ -6,8 +6,8 @@ classdef Multirichness < Richness
     %
     % It is calculated as the sum of the number of edges that connect nodes
     % of degree k or higher in all layers. The value of k is set by the
-    % user (setting 'RichnessThreshold'), the default value is equal to the
-    % maximum degree - 1. The relevance of each layer is controlled by the
+    % user (setting 'RichnessThreshold'), the default value is equal to 1.
+    % The relevance of each layer is controlled by the
     % coefficients c (setting 'MultirichnessCoefficients') that are between
     % 0 and 1, and add up to one; the default coefficients are
     % (1/layernumber).
@@ -24,8 +24,12 @@ classdef Multirichness < Richness
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
     %   getMeasure                  - returns the degree class
+    %   getParameterName            - returns the name of multirichness measure's parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
+    %
+    % Multirichness methods 
+    %   getParameterValues          - returns the values of multirichness measure's parameter
     %
     % See also Measure, Richness, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
@@ -41,12 +45,10 @@ classdef Multirichness < Richness
             % RichnessThreshold with RICHNESSTHRESHOLD and the property
             % MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS.
             % Admissible THRESHOLD and COEFFICIENTS options are:
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
+            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is 
+            %                    set to 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - absolute value.
+            %                    specificied value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
@@ -108,11 +110,7 @@ classdef Multirichness < Richness
                 ri = richness{li};  % to fix when making this measure also parametric
                 % loop over the 3rd dimension of richness (k_level)
                 for k = 1:1:k_level
-%                 if isempty(ri)
-%                     multirichness = multirichness + c(li)*zeros(N(1), 1);  % to fix when making this measure also parametric
-%                 else
                     multirichness(:, :, k) = multirichness(:, :, k) + c(li)*ri(:, :, k);  % to fix when making this measure also parametric
-%                 end
                 end
             end
             multirichness = {multirichness};
@@ -157,12 +155,10 @@ classdef Multirichness < Richness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Multirichness.
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
+            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is  
+            %                    set to 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - value.
+            %                    specificied value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients 
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
