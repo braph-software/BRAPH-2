@@ -11,7 +11,7 @@ A = [
 known_weighted_richness = {[1.1 1.1 2 0]'};
 
 g = GraphWU(A);
-weighted_richness = WeightedRichness(g, 'WeightedRichnessThreshold', -1);
+weighted_richness = WeightedRichness(g, 'WeightedRichnessThreshold', 1);
 
 assert(isequal(weighted_richness.getValue(), known_weighted_richness), ...
     [BRAPH2.STR ':WeightedRichness:' BRAPH2.BUG_ERR], ...
@@ -25,10 +25,12 @@ A = [
     0   .3  0  0
     ];
 
-known_weighted_richness = {[0 1 1 0]'};
+wrich(:, 1, 1) = [1.2 2.3 2 1.1]';
+wrich(:, 1, 2) = [0 0 0 0]';
+known_weighted_richness = {wrich};
 
 g = GraphWD(A);
-weighted_richness = WeightedRichness(g, 'WeightedRichnessThreshold', 1.8);
+weighted_richness = WeightedRichness(g, 'WeightedRichnessThreshold', 2); % option to make parameter vector of threshold values
 
 assert(isequal(weighted_richness.getValue(), known_weighted_richness), ...
     [BRAPH2.STR ':WeightedRichness:' BRAPH2.BUG_ERR], ...
