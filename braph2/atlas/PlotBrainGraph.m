@@ -22,6 +22,22 @@ classdef PlotBrainGraph < PlotBrainAtlas
     %   link_edges_off              - sets multiple edges invisible
     %   link_edges_settings         - panel to set edges properties
     %
+    %   arrow_edge                  - plots an edge as an arrow with different properties
+    %   arrow_edge_on               - sets the edge visible
+    %   arrow_edge_off              - sets the edge invisible
+    %   arrow_edges                 - plots multiple edges as lines
+    %   arrow_edges_on              - sets multiple edges visible
+    %   arrow_edges_off             - sets multiple edges invisible
+    %   arrow_edges_settings        - panel to set edges properties
+    %
+    %   cylinder_edge               - plots an edge as line with different properties
+    %   cylinder_edge_on            - sets the edge visible
+    %   cylinder_edge_off           - sets the edge invisible
+    %   cylinder_edges              - plots multiple edges as lines
+    %   cylinder_edges_on           - sets multiple edges visible
+    %   cylinder_edges_off          - sets multiple edges invisible
+    %   cylinder_edges_settings     - panel to set edges properties
+    %
     % See also PlotBrainAtlas, PlotBrainSurf.
     
     properties (Access = protected)

@@ -40,7 +40,7 @@ classdef AnalysisST_WU < Analysis
     % AnalysisST_WU Plot panel methods
     %  getGraphPanel                - creates a uipanel
     %  getGlobalPanel               - creates a global uipanel for GUIAnalysis
-    %  getNodalPanel                - creates a nodal uipanel for GUIAnalysis 
+    %  getNodalPanel                - creates a nodal uipanel for GUIAnalysis
     %  getGlobalMeasurePlot         - returns a global measurement plot
     %  getGlobalComparisonPlot      - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
@@ -191,8 +191,8 @@ classdef AnalysisST_WU < Analysis
             
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measurement_value = measure.getValue();
-            measurement_parameter_values = measure.getParameterValues();     
-
+            measurement_parameter_values = measure.getParameterValues();
+            
             measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
                 '', ...  % meaurement label
@@ -241,7 +241,7 @@ classdef AnalysisST_WU < Analysis
             measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});
             value_group = measurement_group.getMeasureValue();
             parameter_value_group = measurement_group.getMeasureParameterValues();
-
+            
             g = analysis.get_graph_for_subjects(group.getSubjects(), varargin{:});
             
             % Randomization
@@ -728,13 +728,13 @@ classdef AnalysisST_WU < Analysis
                     subjects = group.getSubjects();
                     A = analysis.get_weighted_correlation_matrix(subjects, varargin{:});
                     
-                    if get(ui_matrix_histogram_checkbox, 'Value')                        
-                        matrix_plot = Graph.hist(A, varargin{:}); 
-                    else         
+                    if get(ui_matrix_histogram_checkbox, 'Value')
+                        matrix_plot = Graph.hist(A, varargin{:});
+                    else
                         % get atlas labels
                         atlases = analysis.getCohort().getBrainAtlases();
                         atlas = atlases{1};
-                        br_labels = atlas.getBrainRegions().getKeys();                        
+                        br_labels = atlas.getBrainRegions().getKeys();
                         matrix_plot = GraphWU.plot(A, ...
                             graph_rule, graph_rule_value, ...
                             'Graph.PlotType', graph_type_value, ...
@@ -1186,7 +1186,7 @@ classdef AnalysisST_WU < Analysis
                 update_global_table()
             end
             function cb_global_remove(~, ~)
-               for i = 1:1:length(selected_brainmeasures)
+                for i = 1:1:length(selected_brainmeasures)
                     k = selected_brainmeasures(i);
                     analysis.getMeasurements().remove(k);
                 end
@@ -1232,7 +1232,7 @@ classdef AnalysisST_WU < Analysis
             
             % get brain regions list
             atlases = analysis.getCohort().getBrainAtlases();
-            atlas = atlases{1};  % change when multiatlases            
+            atlas = atlases{1};  % change when multiatlases
             br_list = atlas.getBrainRegions().getKeys();
             
             % declare variables
@@ -1246,14 +1246,14 @@ classdef AnalysisST_WU < Analysis
             ui_button_brainmeasures_remove = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
             ui_checkbox_brainmeasures_meas = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
-            ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');            
+            ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_popup_nodalmeasures_group1 = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_popup_nodalmeasures_group2 = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_selectedmeasure_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_selectedbr_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
             ui_plot_measure_axes = get_from_varargin([], 'UIAxesNodal', varargin{:});
-            ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');            
+            ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             init_nodal_panel()
             function init_nodal_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -1313,7 +1313,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
                 set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_nodal_rand})
-   
+                
                 set(ui_plot_hide_checkbox, 'Position', [.3 .01 .10 .04])
                 set(ui_plot_hide_checkbox, 'String', 'Show Plot')
                 set(ui_plot_hide_checkbox, 'Value', true)
@@ -1323,7 +1323,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_popup_nodalmeasures_group1, 'Position', [.02 .16 .15 .04])
                 set(ui_popup_nodalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_popup_nodalmeasures_group1, 'Callback', {@cb_nodal_table})
-
+                
                 set(ui_popup_nodalmeasures_group2, 'Position', [.02 .11 .15 .04])
                 set(ui_popup_nodalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_popup_nodalmeasures_group2, 'Callback', {@cb_nodal_table})
@@ -1400,10 +1400,10 @@ classdef AnalysisST_WU < Analysis
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
                     for j = 1:1:analysis.getComparisons().length()
                         comparison = analysis.getComparisons().getValue(j);
-                        [a, b] = comparison.getGroups();                        
+                        [a, b] = comparison.getGroups();
                         if ismember(comparison.getMeasureCode(), nodal_list) && (isequal(a, group_1) || isequal (b, group_2)) && isequal(selected_measure, comparison.getMeasureCode())
                             nodal_comparison{j} = comparison; %#ok<AGROW>
-                        end                        
+                        end
                     end
                     
                     if exist('nodal_comparison', 'var')
@@ -1446,10 +1446,10 @@ classdef AnalysisST_WU < Analysis
                     
                 elseif get(ui_checkbox_brainmeasures_rand, 'Value')
                     for j = 1:1:analysis.getRandomComparisons().length()
-                        randomcomparison = analysis.getRandomComparisons().getValue(j);                     
+                        randomcomparison = analysis.getRandomComparisons().getValue(j);
                         if ismember(randomcomparison.getMeasureCode(), nodal_list) && isequal(randomcomparison.getGroup(), group_1) && isequal(selected_measure, randomcomparison.getMeasureCode())
                             nodal_randomcomparison{j} = randomcomparison; %#ok<AGROW>
-                        end                        
+                        end
                     end
                     
                     if exist('nodal_randomcomparison', 'var')
@@ -1627,7 +1627,7 @@ classdef AnalysisST_WU < Analysis
             
             if nargout > 0
                 nodal_panel = ui_mainpanel;
-            end            
+            end
         end
         function binodal_panel = getBinodalPanel(analysis, varargin)
             % GETBINODALPANEL creates the binodal uipanel for GUIAnalysis
@@ -1661,7 +1661,7 @@ classdef AnalysisST_WU < Analysis
             
             % get brain regions list
             atlases = analysis.getCohort().getBrainAtlases();
-            atlas = atlases{1};  % change when multiatlases            
+            atlas = atlases{1};  % change when multiatlases
             br_list = atlas.getBrainRegions().getKeys();
             
             % declare variables
@@ -1675,15 +1675,15 @@ classdef AnalysisST_WU < Analysis
             ui_button_brainmeasures_remove = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
             ui_checkbox_brainmeasures_meas = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
-            ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');            
+            ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_popup_binodalmeasures_group1 = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_popup_binodalmeasures_group2 = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_selectedmeasure_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
-            ui_selectedbr1_popup = uicontrol(ui_mainpanel, 'Style', 'popup');            
+            ui_selectedbr1_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_selectedbr2_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
             ui_plot_measure_axes = get_from_varargin([], 'UIAxesBinodal', varargin{:});
-            ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');            
+            ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             init_binodal_panel()
             function init_binodal_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -1743,7 +1743,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
                 set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_binodal_rand})
-   
+                
                 set(ui_plot_hide_checkbox, 'Position', [.3 .01 .10 .04])
                 set(ui_plot_hide_checkbox, 'String', 'Show Plot')
                 set(ui_plot_hide_checkbox, 'Value', true)
@@ -1753,7 +1753,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_popup_binodalmeasures_group1, 'Position', [.02 .16 .15 .04])
                 set(ui_popup_binodalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_popup_binodalmeasures_group1, 'Callback', {@cb_binodal_table})
-
+                
                 set(ui_popup_binodalmeasures_group2, 'Position', [.02 .11 .15 .04])
                 set(ui_popup_binodalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_popup_binodalmeasures_group2, 'Callback', {@cb_binodal_table})
@@ -1835,10 +1835,10 @@ classdef AnalysisST_WU < Analysis
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
                     for j = 1:1:analysis.getComparisons().length()
                         comparison = analysis.getComparisons().getValue(j);
-                        [a, b] = comparison.getGroups();                        
+                        [a, b] = comparison.getGroups();
                         if ismember(comparison.getMeasureCode(), binodal_list) && (isequal(a, group_1) || isequal (b, group_2)) && isequal(selected_measure, comparison.getMeasureCode())
                             binodal_comparison{j} = comparison; %#ok<AGROW>
-                        end                        
+                        end
                     end
                     
                     if exist('binodal_comparison', 'var')
@@ -1881,10 +1881,10 @@ classdef AnalysisST_WU < Analysis
                     
                 elseif get(ui_checkbox_brainmeasures_rand, 'Value')
                     for j = 1:1:analysis.getRandomComparisons().length()
-                        randomcomparison = analysis.getRandomComparisons().getValue(j);                     
+                        randomcomparison = analysis.getRandomComparisons().getValue(j);
                         if ismember(randomcomparison.getMeasureCode(), binodal_list) && isequal(randomcomparison.getGroup(), group_1) && isequal(selected_measure, randomcomparison.getMeasureCode())
                             binodal_randomcomparison{j} = randomcomparison; %#ok<AGROW>
-                        end                        
+                        end
                     end
                     
                     if exist('binodal_randomcomparison', 'var')
@@ -2062,7 +2062,7 @@ classdef AnalysisST_WU < Analysis
             
             if nargout > 0
                 binodal_panel = ui_mainpanel;
-            end        
+            end
         end
         function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin) %#ok<INUSD>
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
@@ -2181,31 +2181,493 @@ classdef AnalysisST_WU < Analysis
                 
                 set(ui_brainview_edges_panel_button, 'Units', 'normalized')
                 set(ui_brainview_edges_panel_button, 'Position', [.22 .02 .2 .08])
-                set(ui_brainview_edges_panel_button, 'String', 'Edge Options')
-                set(ui_brainview_edges_panel_button, 'Callback', {@cb_bv_edges_panel})
+                set(ui_brainview_edges_panel_button, 'String', 'Brain Graph Options')
+                set(ui_brainview_edges_panel_button, 'Callback', {@cb_bv_bg_panel})
                 
                 set(ui_brainview_analysis_dictionaries_button, 'Units', 'normalized')
                 set(ui_brainview_analysis_dictionaries_button, 'Position', [.52 .02 .2 .08])
-                set(ui_brainview_analysis_dictionaries_button, 'String', 'Analysis iDicts Options')
-                set(ui_brainview_analysis_dictionaries_button, 'Callback', {@cb_bv_idict_panel})
-            end  
+                set(ui_brainview_analysis_dictionaries_button, 'String', 'Measurement Options')
+                set(ui_brainview_analysis_dictionaries_button, 'Tooltip', 'Manage the Measurement, Comparison and Randomcomparison.')
+                set(ui_brainview_analysis_dictionaries_button, 'Callback', {@cb_bv_meas_panel})
+            end
             function update_brain_graph()
-
+                
                 bg.set_axes(ui_brainview_axes);
                 axes(ui_brainview_axes)
                 bg.axis_equal()
                 bg.hold_on();
-                bg.view(PlotBrainSurf.VIEW_3D)   
+                bg.view(PlotBrainSurf.VIEW_3D)
                 bg.brain();
-                bg.link_edges();                
-                bg.link_edges_on();
+                bg.br_syms();
             end
-            function cb_bv_edges_panel(~, ~)
+            function cb_bv_bg_panel(~, ~)
+                analysis.getBrainGraphPanel(ui_brainview_axes, bg)
             end
-            function cb_bv_idict_panel(~, ~)
+            function cb_bv_meas_panel(~, ~)
             end
             
             update_brain_graph()
+        end
+        function brain_graph_panel = getBrainGraphPanel(analysis, brain_axes, brain_graph)
+            
+            NAME_GRAPH =  'Brain Graph Panel';
+            fig_graph = GUI.init_figure(NAME_GRAPH, .2, .5, 'west');
+            
+            % variables
+            ga = analysis;
+            bg = brain_graph;
+            br_axes = brain_axes; %#ok<NASGU>
+            
+            ui_text_graph_group = uicontrol(fig_graph, 'Style', 'text');
+            ui_popup_graph_group = uicontrol(fig_graph, 'Style', 'popup', 'String', {''});
+            ui_checkbox_graph_density = uicontrol(fig_graph, 'Style', 'checkbox');
+            ui_text_graph_density = uicontrol(fig_graph, 'Style', 'text');
+            ui_edit_graph_bs = uicontrol(fig_graph, 'Style', 'edit');
+            ui_slider_graph_bs = uicontrol(fig_graph, 'Style', 'slider');
+            ui_checkbox_graph_threshold = uicontrol(fig_graph, 'Style', 'checkbox');
+            ui_text_graph_threshold = uicontrol(fig_graph, 'Style', 'text');
+            ui_edit_graph_bt = uicontrol(fig_graph, 'Style', 'edit');
+            ui_slider_graph_bt = uicontrol(fig_graph, 'Style', 'slider');
+            ui_checkbox_graph_weighted = uicontrol(fig_graph, 'Style', 'checkbox');
+            ui_checkbox_graph_linecolor = uicontrol(fig_graph, 'Style',  'checkbox');
+            ui_popup_graph_initcolor = uicontrol(fig_graph, 'Style', 'popup', 'String', {''});
+            ui_popup_graph_fincolor = uicontrol(fig_graph, 'Style', 'popup', 'String', {''});
+            ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox');
+            ui_edit_graph_lineweight = uicontrol(fig_graph, 'Style', 'edit');
+            ui_button_graph_show = uicontrol(fig_graph, 'Style', 'pushbutton');
+            ui_button_graph_hide = uicontrol(fig_graph, 'Style', 'pushbutton');
+            ui_button_graph_color = uicontrol(fig_graph, 'Style', 'pushbutton');
+            ui_text_graph_thickness = uicontrol(fig_graph, 'Style', 'text');
+            ui_edit_graph_thickness = uicontrol(fig_graph, 'Style', 'edit');
+            
+            init_graph()
+            update_popups_grouplists()
+            update_graph()
+            
+            %% Make the GUI visible.
+            set(fig_graph, 'Visible', 'on');
+            
+            function init_graph()
+                
+                set(ui_text_graph_group, 'Units', 'normalized')
+                set(ui_text_graph_group, 'Position', [.05 .86 .20 .10])
+                set(ui_text_graph_group, 'String', 'Group  ')
+                set(ui_text_graph_group, 'HorizontalAlignment', 'left')
+                set(ui_text_graph_group, 'FontWeight', 'bold')
+                set(ui_text_graph_group, 'FontSize', 10)
+                
+                set(ui_popup_graph_group, 'Units', 'normalized')
+                set(ui_popup_graph_group, 'Position', [.33 .87 .40 .10])
+                set(ui_popup_graph_group, 'TooltipString', 'Select group');
+                set(ui_popup_graph_group, 'Callback', {@cb_popup_group})
+                
+                set(ui_checkbox_graph_density, 'Units', 'normalized')
+                set(ui_checkbox_graph_density, 'Position', [.05 .780 .40 .146])
+                set(ui_checkbox_graph_density, 'String', 'Fix density')
+                set(ui_checkbox_graph_density, 'TooltipString', 'Select density')
+                set(ui_checkbox_graph_density, 'FontWeight', 'bold')
+                set(ui_checkbox_graph_density, 'Callback', {@cb_checkbox_density})
+                
+                set(ui_text_graph_density, 'Units', 'normalized')
+                set(ui_text_graph_density, 'Position', [.05 .705 .20 .10])
+                set(ui_text_graph_density, 'String', 'Density  ')
+                set(ui_text_graph_density, 'HorizontalAlignment', 'left')
+                set(ui_text_graph_density, 'FontWeight', 'bold')
+                set(ui_text_graph_density, 'FontSize', 10)
+                
+                set(ui_edit_graph_bs, 'Units', 'normalized')
+                set(ui_edit_graph_bs, 'Position', [.760 .760 .20 .05])
+                set(ui_edit_graph_bs, 'String', '50.00');
+                set(ui_edit_graph_bs, 'TooltipString', 'Set density.');
+                set(ui_edit_graph_bs, 'FontWeight', 'bold')
+                set(ui_edit_graph_bs, 'Callback', {@cb_graph_edit_bs});
+                
+                set(ui_slider_graph_bs, 'Units', 'normalized')
+                set(ui_slider_graph_bs, 'Position', [.33 .760 .40 .05])
+                set(ui_slider_graph_bs, 'Min', 0, 'Max', 100, 'Value', 50)
+                set(ui_slider_graph_bs, 'TooltipString', 'Set density.')
+                set(ui_slider_graph_bs, 'Callback', {@cb_graph_slider_bs})
+                
+                set(ui_checkbox_graph_threshold, 'Units', 'normalized')
+                set(ui_checkbox_graph_threshold, 'Position', [.05 .60 .40 .15])
+                set(ui_checkbox_graph_threshold, 'String', 'Fix threshold')
+                set(ui_checkbox_graph_threshold, 'TooltipString', 'Select density')
+                set(ui_checkbox_graph_threshold, 'FontWeight', 'bold')
+                set(ui_checkbox_graph_threshold, 'Callback', {@cb_checkbox_threshold})
+                
+                set(ui_text_graph_threshold, 'Units', 'normalized')
+                set(ui_text_graph_threshold, 'Enable', 'off')
+                set(ui_text_graph_threshold, 'Position', [.05 .515 .25 .10])
+                set(ui_text_graph_threshold, 'String', 'Threshold  ')
+                set(ui_text_graph_threshold, 'HorizontalAlignment', 'left')
+                set(ui_text_graph_threshold, 'FontWeight', 'bold')
+                set(ui_text_graph_threshold, 'FontSize', 10)
+                
+                set(ui_edit_graph_bt, 'Units', 'normalized')
+                set(ui_edit_graph_bt, 'Enable', 'off')
+                set(ui_edit_graph_bt, 'Position', [.760 .570 .20 .05])
+                set(ui_edit_graph_bt, 'String', '0');
+                set(ui_edit_graph_bt, 'TooltipString', 'Set threshold.');
+                set(ui_edit_graph_bt, 'FontWeight', 'bold')
+                set(ui_edit_graph_bt, 'Callback', {@cb_graph_edit_bt});
+                
+                set(ui_slider_graph_bt, 'Units', 'normalized')
+                set(ui_slider_graph_bt, 'Enable', 'off')
+                set(ui_slider_graph_bt, 'Position', [.33 .570 .40 .05])
+                set(ui_slider_graph_bt, 'Min', -1, 'Max', 1, 'Value', 0)
+                set(ui_slider_graph_bt, 'TooltipString', 'Set threshold.')
+                set(ui_slider_graph_bt, 'Callback', {@cb_graph_slider_bt})
+                
+                set(ui_checkbox_graph_weighted, 'Units', 'normalized')
+                set(ui_checkbox_graph_weighted, 'Position', [.05 .40 .40 .15])
+                set(ui_checkbox_graph_weighted, 'String', 'Weighted graph')
+                set(ui_checkbox_graph_weighted, 'TooltipString', 'Select density')
+                set(ui_checkbox_graph_weighted, 'FontWeight', 'bold')
+                set(ui_checkbox_graph_weighted, 'Callback', {@cb_checkbox_weighted})
+                
+                set(ui_checkbox_graph_linecolor, 'Units', 'normalized')
+                set(ui_checkbox_graph_linecolor, 'Enable', 'off')
+                set(ui_checkbox_graph_linecolor, 'BackgroundColor', GUI.BKGCOLOR)
+                set(ui_checkbox_graph_linecolor, 'Position', [.10 .340 .23 .10])
+                set(ui_checkbox_graph_linecolor, 'String', ' Color ')
+                set(ui_checkbox_graph_linecolor, 'Value', false)
+                set(ui_checkbox_graph_linecolor, 'FontWeight', 'bold')
+                set(ui_checkbox_graph_linecolor, 'TooltipString', 'Shows brain regions by label')
+                set(ui_checkbox_graph_linecolor, 'Callback', {@cb_checkbox_linecolor})
+                
+                set(ui_popup_graph_initcolor, 'Units', 'normalized')
+                set(ui_popup_graph_initcolor, 'Enable', 'off')
+                set(ui_popup_graph_initcolor, 'BackgroundColor', GUI.BKGCOLOR)
+                set(ui_popup_graph_initcolor, 'Enable', 'off')
+                set(ui_popup_graph_initcolor, 'Position', [.355 .315 .155 .10])
+                set(ui_popup_graph_initcolor, 'String', {'R', 'G', 'B'})
+                set(ui_popup_graph_initcolor, 'Value', 3)
+                set(ui_popup_graph_initcolor, 'TooltipString', 'Select symbol');
+                set(ui_popup_graph_initcolor, 'Callback', {@cb_popup_initcolor})
+                
+                set(ui_popup_graph_fincolor, 'Units', 'normalized')
+                set(ui_popup_graph_fincolor, 'Enable', 'off')
+                set(ui_popup_graph_fincolor, 'BackgroundColor', GUI.BKGCOLOR)
+                set(ui_popup_graph_fincolor, 'Enable', 'off')
+                set(ui_popup_graph_fincolor, 'Position', [.575 .315 .155 .10])
+                set(ui_popup_graph_fincolor, 'String', {'R', 'G', 'B'})
+                set(ui_popup_graph_fincolor, 'Value', 1)
+                set(ui_popup_graph_fincolor, 'TooltipString', 'Select symbol');
+                set(ui_popup_graph_fincolor, 'Callback', {@cb_popup_fincolor})
+                
+                set(ui_checkbox_graph_lineweight, 'Units', 'normalized')
+                set(ui_checkbox_graph_lineweight, 'Enable', 'off')
+                set(ui_checkbox_graph_lineweight, 'BackgroundColor', GUI.BKGCOLOR)
+                set(ui_checkbox_graph_lineweight, 'Position', [.10 .270 .28 .10])
+                set(ui_checkbox_graph_lineweight, 'String', ' Thickness ')
+                set(ui_checkbox_graph_lineweight, 'Value', false)
+                set(ui_checkbox_graph_lineweight, 'FontWeight', 'bold')
+                set(ui_checkbox_graph_lineweight, 'TooltipString', 'Shows brain regions by label')
+                set(ui_checkbox_graph_lineweight, 'Callback', {@cb_checkbox_lineweight})
+                
+                set(ui_edit_graph_lineweight, 'Units', 'normalized')
+                set(ui_edit_graph_lineweight, 'Enable', 'off')
+                set(ui_edit_graph_lineweight, 'Position', [.35 .29 .38 .05])
+                set(ui_edit_graph_lineweight, 'String', '1');
+                set(ui_edit_graph_lineweight, 'TooltipString', 'Set line weight.');
+                set(ui_edit_graph_lineweight, 'FontWeight', 'bold')
+                set(ui_edit_graph_lineweight, 'Callback', {@cb_edit_lineweight});
+                
+                set(ui_button_graph_show, 'Units', 'normalized')
+                set(ui_button_graph_show, 'Position', [.05 .16 .20 .08])
+                set(ui_button_graph_show, 'String', ' Show ')
+                set(ui_button_graph_show, 'HorizontalAlignment', 'center')
+                set(ui_button_graph_show, 'FontWeight', 'bold')
+                set(ui_button_graph_show, 'FontSize', 10)
+                set(ui_button_graph_show, 'Callback', {@cb_graph_show})
+                
+                set(ui_button_graph_hide, 'Units', 'normalized')
+                set(ui_button_graph_hide, 'Position', [.405 .16 .20 .08])
+                set(ui_button_graph_hide, 'String', ' Hide ')
+                set(ui_button_graph_hide, 'HorizontalAlignment', 'center')
+                set(ui_button_graph_hide, 'FontWeight', 'bold')
+                set(ui_button_graph_hide, 'FontSize', 10)
+                set(ui_button_graph_hide, 'Callback', {@cb_graph_hide})
+                
+                set(ui_button_graph_color, 'Units', 'normalized')
+                set(ui_button_graph_color, 'Position', [.76 .16 .20 .08])
+                set(ui_button_graph_color, 'String', ' Color ')
+                set(ui_button_graph_color, 'HorizontalAlignment', 'center')
+                set(ui_button_graph_color, 'FontWeight', 'bold')
+                set(ui_button_graph_color, 'FontSize', 10)
+                set(ui_button_graph_color, 'Callback', {@cb_graph_color})
+                
+                set(ui_text_graph_thickness, 'Units', 'normalized')
+                set(ui_text_graph_thickness, 'Position', [.05 .0 .30 .10])
+                set(ui_text_graph_thickness, 'String', 'Set thickness  ')
+                set(ui_text_graph_thickness, 'HorizontalAlignment', 'left')
+                set(ui_text_graph_thickness, 'FontWeight', 'bold')
+                set(ui_text_graph_thickness, 'FontSize', 10)
+                
+                set(ui_edit_graph_thickness, 'Units', 'normalized')
+                set(ui_edit_graph_thickness, 'Position', [.405 .06 .20 .05])
+                set(ui_edit_graph_thickness, 'String', '1');
+                set(ui_edit_graph_thickness, 'TooltipString', 'Set density.');
+                set(ui_edit_graph_thickness, 'FontWeight', 'bold')
+                set(ui_edit_graph_thickness, 'Callback', {@cb_graph_thickness});
+                
+                if isequal(class(analysis), 'AnalysisST_BUT')                    
+                    set(ui_checkbox_graph_threshold, 'Value', true)
+                    set(ui_checkbox_graph_density, 'Value', false)
+                    set(ui_checkbox_graph_weighted, 'Value', false)
+                elseif isequal(class(analysis), 'AnalysisST_BUD')                    
+                    set(ui_checkbox_graph_threshold, 'Value', false)
+                    set(ui_checkbox_graph_density, 'Value', true)
+                    set(ui_checkbox_graph_weighted, 'Value', false)
+                else                    
+                    set(ui_checkbox_graph_threshold, 'Value', false)
+                    set(ui_checkbox_graph_density, 'Value', false)
+                    set(ui_checkbox_graph_weighted, 'Value', true)
+                end
+            end
+            function cb_checkbox_density(~, ~)  % (src, event)
+                if get(ui_checkbox_graph_density, 'Value')
+                    
+                    set(ui_slider_graph_bs, 'Enable', 'on')
+                    set(ui_text_graph_density, 'Enable', 'on')
+                    set(ui_edit_graph_bs, 'Enable', 'on')
+                    set(ui_edit_graph_thickness, 'enable', 'on')
+                    
+                    set(ui_checkbox_graph_threshold, 'Value', false)
+                    set(ui_slider_graph_bt, 'Enable', 'off')
+                    set(ui_text_graph_threshold, 'Enable', 'off')
+                    set(ui_edit_graph_bt, 'Enable', 'off')
+                    
+                    set(ui_checkbox_graph_weighted, 'Value', false)
+                    set(ui_checkbox_graph_linecolor, 'Enable', 'off')
+                    set(ui_checkbox_graph_linecolor, 'Value', false)
+                    set(ui_popup_graph_initcolor, 'Enable', 'off')
+                    set(ui_popup_graph_fincolor, 'Enable', 'off')
+                    set(ui_checkbox_graph_lineweight, 'Enable', 'off')
+                    set(ui_checkbox_graph_lineweight, 'Value', false)
+                    set(ui_edit_graph_lineweight, 'Enable', 'off')
+                    
+                    update_graph()
+                else
+                    set(ui_checkbox_graph_density, 'Value', true)
+                end
+            end
+            function cb_checkbox_threshold(~, ~)  % (src, event)
+                if get(ui_checkbox_graph_threshold, 'Value')
+                    
+                    set(ui_slider_graph_bt, 'Enable', 'on')
+                    set(ui_text_graph_threshold, 'Enable', 'on')
+                    set(ui_edit_graph_bt, 'Enable', 'on')
+                    set(ui_edit_graph_thickness, 'enable', 'on')
+                    
+                    set(ui_checkbox_graph_density, 'Value', false)
+                    set(ui_slider_graph_bs, 'Enable', 'off')
+                    set(ui_text_graph_density, 'Enable', 'off')
+                    set(ui_edit_graph_bs, 'Enable', 'off')
+                    
+                    set(ui_checkbox_graph_weighted, 'Value', false)
+                    set(ui_checkbox_graph_linecolor, 'Enable', 'off')
+                    set(ui_checkbox_graph_linecolor, 'Value', false)
+                    set(ui_popup_graph_initcolor, 'Enable', 'off')
+                    set(ui_popup_graph_fincolor, 'Enable', 'off')
+                    set(ui_checkbox_graph_lineweight, 'Enable', 'off')
+                    set(ui_checkbox_graph_lineweight, 'Value', false)
+                    set(ui_edit_graph_lineweight, 'Enable', 'off')
+                    
+                    update_graph()
+                else
+                    set(ui_checkbox_graph_threshold, 'Value', true)
+                end
+            end
+            function cb_checkbox_weighted(~, ~)  % (src, event)
+                if get(ui_checkbox_graph_weighted, 'Value')
+                    
+                    set(ui_checkbox_graph_linecolor, 'Enable', 'on')
+                    set(ui_checkbox_graph_lineweight, 'Enable', 'on')
+                    set(ui_edit_graph_thickness, 'enable', 'off')
+                    
+                    set(ui_checkbox_graph_threshold, 'Value', false)
+                    set(ui_text_graph_threshold, 'Enable', 'off')
+                    set(ui_slider_graph_bt, 'Enable', 'off')
+                    set(ui_edit_graph_bt, 'Enable', 'off')
+                    
+                    set(ui_checkbox_graph_density, 'Value', false)
+                    set(ui_slider_graph_bs, 'Enable', 'off')
+                    set(ui_text_graph_density, 'Enable', 'off')
+                    set(ui_edit_graph_bs, 'Enable', 'off')
+                else
+                    set(ui_checkbox_graph_weighted, 'Enable', 'on')
+                end
+            end
+            function cb_checkbox_linecolor(~, ~)  % (src, event)
+                if get(ui_checkbox_graph_linecolor, 'Value')
+                    set(ui_popup_graph_initcolor, 'Enable', 'on')
+                    set(ui_popup_graph_fincolor, 'Enable', 'on')
+                    update_graph()
+                else
+                    set(ui_popup_graph_initcolor, 'Enable', 'off')
+                    set(ui_popup_graph_fincolor, 'Enable', 'off')
+                    
+                    group_index = get(ui_popup_graph_group, 'Value');
+                    group = ga.getCohort().getValue(group_index);
+                    [~, subjects] = group.getGroupSubjects();
+                    subject = subjects{1};
+                    atlas = subject.getBrainAtlases();
+                    for indices = 1:1:numel(atlas)
+                        [row, column] = ind2sub(size(atlas),  indices);
+                        bg.link_edges(row, column, 'Color', [0 0 0])
+                    end
+                end
+            end
+            function cb_checkbox_lineweight(~, ~)  % (src, event)
+                if get(ui_checkbox_graph_lineweight, 'Value')
+                    set(ui_edit_graph_lineweight, 'Enable', 'on')
+                    update_graph()
+                else
+                    set(ui_edit_graph_lineweight, 'Enable', 'off')
+                    
+                    weight = str2double(get(ui_edit_graph_lineweight, 'String'));
+                    group_index = get(ui_popup_graph_group, 'Value');
+                    group = ga.getCohort().getValue(group_index);
+                    [~, subjects] = group.getGroupSubjects();
+                    subject = subjects{1};
+                    atlas = subject.getBrainAtlases();
+                    for indices = 1:1:numel(atlas)
+                        [row, column] = ind2sub(size(atlas),  indices);
+                        bg.link_edges(row, column, 'LineWidth', weight)
+                    end
+                end
+            end
+            function cb_graph_edit_bs(~, ~)  % (src, event)
+                density = real(str2double(get(ui_edit_graph_bs, 'String')));
+                if isnan(density) || density <= 0 || density > 100
+                    set(ui_edit_graph_bs, 'String', '50');
+                    set(ui_slider_graph_bs, 'Value', str2double(get(ui_edit_graph_bs, 'String')));
+                else
+                    set(ui_slider_graph_bs, 'Value', density);
+                end
+                update_graph()
+            end
+            function cb_graph_slider_bs(src, ~)  % (src, event)
+                set(ui_edit_graph_bs, 'String', get(src, 'Value'))
+                update_graph()
+            end
+            function cb_graph_edit_bt(~, ~)  % (src, event)
+                threshold = real(str2double(get(ui_edit_graph_bt, 'String')));
+                if isnan(threshold) || threshold < -1 || threshold > 1
+                    set(ui_edit_graph_bt, 'String', '0');
+                    set(ui_slider_graph_bt, 'Value', str2double(get(ui_edit_graph_bt, 'String')));
+                else
+                    set(ui_slider_graph_bt, 'Value', threshold);
+                end
+                update_graph()
+            end
+            function cb_graph_slider_bt(src, ~)  % (src, event)
+                set(ui_edit_graph_bt, 'String', get(src, 'Value'))
+                update_graph()
+            end
+            function cb_edit_lineweight(~, ~)  % (src, event)
+                weigth = real(str2double(get(ui_edit_graph_bs, 'String')));
+                if isnan(weigth) || weigth <= 0
+                    set(ui_edit_graph_lineweight, 'String', '5');
+                end
+                update_graph()
+            end
+            function cb_popup_initcolor(~, ~)  % (src, event)
+                update_graph()
+            end
+            function cb_popup_fincolor(~, ~)  % (src, event)
+                update_graph()
+            end
+            function cb_popup_group(~, ~)  % (src, event)
+                update_graph()
+            end
+            function cb_graph_show(~, ~)  % (src, event)
+                update_graph()
+            end
+            function cb_graph_hide(~, ~)  % (src, event)
+                bg.link_edges_off([], [])
+            end
+            function cb_graph_color(~, ~)  % (src, event)
+                color = uisetcolor();
+                atlases = ga.getCohort().getBrainAtlases();
+                atlas = atlases{1};
+                if length(color)==3
+                    for i = 1:1:atlas.getBrainRegions().length()
+                        for j = 1:1:atlas.getBrainRegions().length()
+                            bg.link_edge(i, j, 'Color', color)
+                        end
+                    end
+                end
+            end
+            function cb_graph_thickness(~, ~)  % (src, event)
+                thickness = real(str2double(get(ui_edit_graph_thickness, 'String')));
+                if isnan(thickness) || thickness <= 0
+                    set(ui_edit_graph_thickness, 'String', '1');
+                end
+                update_graph()
+            end
+            function update_graph()
+                group_index = get(ui_popup_graph_group, 'Value');
+                if get(ui_checkbox_graph_weighted, 'Value')
+                    
+                    if get(ui_checkbox_graph_linecolor, 'Value')
+                        val1 = get(ui_popup_graph_initcolor, 'Value');
+                        val2 = get(ui_popup_graph_fincolor, 'Value');
+                        
+                        bg.link_edges('Color', [val1 val2]);
+                    end
+                    
+                    if get(ui_checkbox_graph_lineweight, 'Value')
+                        
+                        weight = str2double(get(ui_edit_graph_lineweight, 'String'));
+                        for indices = 1:1:length(reshA)
+                            bg.link_edges( 'LineWidth', weight)
+                        end
+                    end
+                else
+                    if get(ui_checkbox_graph_density, 'Value')
+                        value = str2double(get(ui_edit_graph_bs, 'String'));
+                        rule = 'density';
+                    end
+                    if get(ui_checkbox_graph_threshold, 'Value')
+                        value = str2double(get(ui_edit_graph_bt, 'String'));
+                        rule = 'threshold';
+                    end
+                    
+                    group = analysis.getCohort().getGroups().getValue(group_index);
+                    subjects = group.getSubjects();
+                    if isequal(analysis.getGraphType, 'GraphWU')
+                        A = analysis.get_weighted_correlation_matrix(subjects);
+                    else
+                        A = analysis.get_graph_for_subjects(subjects, rule, value);
+                    end
+                    
+                    indices = find(A ~= 0);
+                    [row, column] = ind2sub(size(A),  indices);
+                    
+                    thickness = str2double(get(ui_edit_graph_thickness, 'String'));
+                    bg.link_edges_off([], [])
+                    bg.link_edges(row, column, 'LineWidth', thickness)
+                    bg.link_edges_on(row, column)
+                    
+                end
+            end
+            function cb_graph_links_settings(~, ~)  % (src, event)
+                bg.link_edges_settings([], []);
+            end
+            function update_popups_grouplists()
+                if ga.getCohort().getGroups().length() > 0
+                    % updates group lists of popups
+                    GroupList = {};
+                    for g = 1:1:ga.getCohort().getGroups().length()
+                        GroupList{g} = ga.getCohort().getGroups().getKey(g); %#ok<AGROW>
+                    end
+                else
+                    GroupList = {''};
+                end
+                set(ui_popup_graph_group, 'String', GroupList)
+            end
         end
     end
 end
