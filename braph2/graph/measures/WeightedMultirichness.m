@@ -4,9 +4,9 @@ classdef WeightedMultirichness < WeightedRichness
     % weighted undirected (WU) and weighted directed (WD) multiplexes. 
     %
     % It is calculated as the sum of the weighted edges that connect nodes
-    % of strength k or higher in all layers. The value of k is set by the
+    % of strength k or higher in all layers. The value of s is set by the
     % user (setting 'WeightedRichnessThreshold'), the default value is equal 
-    % to the maximum strength - 1. The relevance of each layer is controlled 
+    % to 1. The relevance of each layer is controlled 
     % by the coefficients c (setting 'MultirichnessCoefficients') that are 
     % between 0 and 1, and add up to one; the default coefficients are
     % (1/layernumber).
@@ -23,8 +23,12 @@ classdef WeightedMultirichness < WeightedRichness
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
     %   getMeasure                  - returns the degree class
+    %   getParameterName            - returns the name of weighted multirichness measure's parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
+    %
+    % WeightedMultirichness methods 
+    %   getParameterValues          - returns the values of weighted multirichness measure's parameter
     %
     % See also Measure, WeightedRichness, MultiplexGraphWU, MultiplexGraphWD.
     
@@ -40,13 +44,11 @@ classdef WeightedMultirichness < WeightedRichness
             % WeightedRichnessThreshold with WEIGHTEDRICHNESSTHRESHOLD and the property
             % WeightedMultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
             % Admissible THRESHOLD and COEFFICIENTS options are:
-            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
-            %                           is set to the maximum strength - 1.
-            %                           value - WEIGHTEDRICHNESS k threshold is 
-            %                           set to the specificied value if the
-            %                           value is positive. For negative
-            %                           values, k is set to the maximum
-            %                           strength - value
+            % WEIGHTEDRICHNESSTHRESHOLD = 1(default) - WEIGHTEDRICHNESS s   
+            %                           threshold is set to 1.
+            %                           value - WEIGHTEDRICHNESS s  
+            %                           threshold is set to the specificied 
+            %                           values (vector).
             % WEIGHTEDMULTIRICHNESSCOEFFICIENTS = 0 (default) - WEIGHTEDMULTIRICHNESS c coefficients
             %                                   will be set to (1/layernumber) per each layer.
             %                                   values - WEIGHTEDMULTIRICHNESS c coefficients
@@ -65,7 +67,7 @@ classdef WeightedMultirichness < WeightedRichness
         end
     end
     methods (Access=protected)
-        function multirichness = calculate(m)
+        function weighted_multirichness = calculate(m)
             % CALCULATE calculates the weighted multirichness value of a multiplex
             %
             % WEIGHTEDMULTIRICHNESS = CALCULATE(M) returns the value of the  
@@ -100,11 +102,19 @@ classdef WeightedMultirichness < WeightedRichness
                 c = ones(1, L)/L;
             end
             
-            multirichness = zeros(N(1), 1);
+            weighted_richness_threshold = get_from_varargin(1, 'WeightedRichnessThreshold', m.getSettings());
+            s_levels = abs(weighted_richness_threshold);
+            m.setParameter(s_levels)  % Set the parameter
+                            
+            weighted_multirichness = zeros(N(1), 1, length(s_levels));
             for li = 1:1:L
-                multirichness = multirichness + c(li)*weighted_richness{li};
+                wrich = weighted_richness{li};
+                % loop over the 3rd dimension of richness (k_level)
+                for s = 1:1:length(s_levels)
+                    weighted_multirichness(:, :, s) = weighted_multirichness(:, :, s) + c(li)*wrich(:, :, s);
+                end
             end
-            multirichness = {multirichness};
+            weighted_multirichness = {weighted_multirichness};
         end
     end  
     methods (Static)  % Descriptive methods
@@ -136,7 +146,7 @@ classdef WeightedMultirichness < WeightedRichness
             
             description = [ ...
                 'The weighted multirichness of a node is the sum of ' ...
-                'the weighted edges that connect nodes of strength k or higher in all layers. ' ...
+                'the weighted edges that connect nodes of strength s or higher in all layers. ' ...
                 'The relevance of each layer is controlled by the coefficients c ' ...
                 'that are between 0 and 1; the default coefficients are (1/layernumber). ' ...
                 ];
@@ -146,13 +156,11 @@ classdef WeightedMultirichness < WeightedRichness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to WeightedMultirichness.
-            % WEIGHTEDRICHNESSTHRESHOLD = -1 (default) - WEIGHTEDRICHNESS k threshold  
-            %                           is set to the maximum strength - 1.
-            %                           value - WEIGHTEDRICHNESS k threshold is 
-            %                           set to the specificied value if the
-            %                           value is positive. For negative
-            %                           values, k is set to the maximum
-            %                           strength - value
+            % WEIGHTEDRICHNESSTHRESHOLD = 1(default) - WEIGHTEDRICHNESS s   
+            %                           threshold is set to 1.
+            %                           value - WEIGHTEDRICHNESS s  
+            %                           threshold is set to the specificied 
+            %                           values (vector).
             % WEIGHTEDMULTIRICHNESSCOEFFICIENTS = 0 (default) - WEIGHTEDMULTIRICHNESS c coefficients
             %                                   will be set to (1/layernumber) per each layer.
             %                                   values - WEIGHTEDMULTIRICHNESS c coefficients
@@ -194,7 +202,15 @@ classdef WeightedMultirichness < WeightedRichness
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.NONPARAMETRIC;
+            parametricity = Measure.PARAMETRIC;
+        end
+        function name = getParameterName()
+            % GETPARAMETERNAME returns the name of the WeightedMultirichness' parameter
+            %
+            % NAME = GETPARAMETERNAME() returns the name (string) of 
+            % the weighted multirichness' parameter.
+            
+            name = 'Weighted multirichness thresholds';
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with WeightedMultirichness 
@@ -219,6 +235,16 @@ classdef WeightedMultirichness < WeightedRichness
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('WeightedMultirichness');
+        end
+    end
+    methods
+        function values = getParameterValues(m)
+            % GETPARAMETERVALUES returns the values of the WeightedMultirichness' parameter
+            %
+            % VALUES = GETPARAMETERVALUES() returns the values of
+            % the weighted multirichness' parameter.
+            
+            values = m.getParameter();
         end
     end
 end
