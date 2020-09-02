@@ -6,8 +6,8 @@ classdef Multirichness < Richness
     %
     % It is calculated as the sum of the number of edges that connect nodes
     % of degree k or higher in all layers. The value of k is set by the
-    % user (setting 'RichnessThreshold'), the default value is equal to the
-    % maximum degree - 1. The relevance of each layer is controlled by the
+    % user (setting 'RichnessThreshold'), the default value is equal to 1.
+    % The relevance of each layer is controlled by the
     % coefficients c (setting 'MultirichnessCoefficients') that are between
     % 0 and 1, and add up to one; the default coefficients are
     % (1/layernumber).
@@ -24,8 +24,12 @@ classdef Multirichness < Richness
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
     %   getMeasure                  - returns the degree class
+    %   getParameterName            - returns the name of multirichness measure's parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
+    %
+    % Multirichness methods 
+    %   getParameterValues          - returns the values of multirichness measure's parameter
     %
     % See also Measure, Richness, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
@@ -41,12 +45,10 @@ classdef Multirichness < Richness
             % RichnessThreshold with RICHNESSTHRESHOLD and the property
             % MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS.
             % Admissible THRESHOLD and COEFFICIENTS options are:
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
+            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is 
+            %                    set to 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - absolute value.
+            %                    specificied value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
@@ -80,7 +82,9 @@ classdef Multirichness < Richness
             else
                 richness = calculate@Richness(m);
             end
-
+            
+            k_level = size(richness{1}, 3);  % Get the richness threshold
+            m.setParameter(k_level)  % Set the multirichness' parameter (based on richness's parameter)
             N = g.nodenumber();
             L = g.layernumber();
             
@@ -96,17 +100,17 @@ classdef Multirichness < Richness
                     ['Multirichness coefficients must be between 0 and 1 ' ...
                     'while they are ' tostring(multirichness_coefficients)])
                 c = multirichness_coefficients;
+                
             else  % same relevance for each layer
                 c = ones(1, L)/L;
             end
             
-            multirichness = zeros(N(1), 1);
+            multirichness = zeros(N(1), 1, k_level);
             for li = 1:1:L
                 ri = richness{li};  % to fix when making this measure also parametric
-                if isempty(ri)
-                    multirichness = multirichness + c(li)*zeros(N(1), 1);  % to fix when making this measure also parametric
-                else
-                    multirichness = multirichness + c(li)*ri(:, 1, 1);  % to fix when making this measure also parametric
+                % loop over the 3rd dimension of richness (k_level)
+                for k = 1:1:k_level
+                    multirichness(:, :, k) = multirichness(:, :, k) + c(li)*ri(:, :, k);  % to fix when making this measure also parametric
                 end
             end
             multirichness = {multirichness};
@@ -151,12 +155,10 @@ classdef Multirichness < Richness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Multirichness.
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
+            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is  
+            %                    set to 1.
             %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - value.
+            %                    specificied value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients 
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
@@ -198,7 +200,15 @@ classdef Multirichness < Richness
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.NONPARAMETRIC;
+            parametricity = Measure.PARAMETRIC;
+        end
+        function name = getParameterName()
+            % GETPARAMETERNAME returns the name of the Multirichness' parameter
+            %
+            % NAME = GETPARAMETERNAME() returns the name (string) of 
+            % the multirichness' parameter.
+            
+            name = 'Multirichness threshold';
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Multirichness 
@@ -225,6 +235,16 @@ classdef Multirichness < Richness
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Multirichness');
+        end
+    end
+    methods
+        function values = getParameterValues(m)
+            % GETPARAMETERVALUES returns the values of the Multirichness' parameter
+            %
+            % VALUES = GETPARAMETERVALUES() returns the values of
+            % the multirichness' parameter.
+            
+            values = 1:1:m.getParameter();
         end
     end
 end

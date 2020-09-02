@@ -114,11 +114,10 @@ classdef Richness < Degree
                     ['Richness threshold must be an integer value ' ...
                     'while it is ' tostring(richness_threshold)])
 
-                
                 k_level = abs(richness_threshold);  
                 m.setParameter(k_level)  % Set the parameter
             
-                richness_layer = zeros(N(1), 1, int32(k_level));
+                richness_layer = zeros(N(1), 1, k_level);
                 for k = 1:1:k_level
                     low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
                     Aii = binarize(Aii);  % binarizes the adjacency matrix
@@ -127,9 +126,9 @@ classdef Richness < Degree
                     subAii(:, low_rich_nodes) = 0;  % remove columns
                     
                     if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                        richness_layer(:, 1, k) = sum(subAii, 1)';  % degree of high rich nodes
+                        richness_layer(:, :, k) = sum(subAii, 1)';  % degree of high rich nodes
                     else
-                        richness_layer(:, 1, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
+                        richness_layer(:, :, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
                     end
 
                 end
@@ -167,10 +166,7 @@ classdef Richness < Degree
             description = [ ...
                 'The richness of a node is the sum of ' ...
                 'the edges that connect nodes of degree k or higher within a layer. ' ...
-                'k is set by the user; the default value is equal to the ' ...
-                'maximum degree - 1. For positive thresholds, k equals to the ' ...
-                'threshold value; while for negative thresholds, k equals to ' ...
-                'the maximum degree - threshold value.' ...
+                'k is set by the user; the default value is equal to 1. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -184,7 +180,7 @@ classdef Richness < Degree
             %                    specificied value.
             
             available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, 2, {};
+                'RichnessThreshold', BRAPH2.NUMERIC, 1, {};
                 };
         end
         function measure_format = getMeasureFormat()
@@ -218,7 +214,7 @@ classdef Richness < Degree
             parametricity = Measure.PARAMETRIC;
         end
         function name = getParameterName()
-            % GETPARAMETERNAME returns the name of the richness' parameter
+            % GETPARAMETERNAME returns the name of the Richness' parameter
             %
             % NAME = GETPARAMETERNAME() returns the name (string) of 
             % the richness parameter.
@@ -258,10 +254,10 @@ classdef Richness < Degree
     end
     methods 
         function values = getParameterValues(m)
-            % GETPARAMETERVALUES returns the values of the richness' parameter
+            % GETPARAMETERVALUES returns the values of the Richness' parameter
             %
             % VALUES = GETPARAMETERVALUES() returns the values of
-            % the richness parameter.
+            % the richness' parameter.
             
             values = 1:1:m.getParameter();
         end
