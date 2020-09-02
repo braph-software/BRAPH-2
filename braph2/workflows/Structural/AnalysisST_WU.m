@@ -2201,12 +2201,16 @@ classdef AnalysisST_WU < Analysis
                 bg.br_syms();
             end
             function cb_bv_bg_panel(~, ~)
-                analysis.getBrainGraphPanel(ui_brainview_axes, bg)
+               bgp =  analysis.getBrainGraphPanel(ui_brainview_axes, bg);
             end
             function cb_bv_meas_panel(~, ~)
             end
             
             update_brain_graph()
+            
+            if nargout > 0
+                p = ui_brainview_panel;
+            end
         end
         function brain_graph_panel = getBrainGraphPanel(analysis, brain_axes, brain_graph)
             
@@ -2237,6 +2241,7 @@ classdef AnalysisST_WU < Analysis
             ui_button_graph_show = uicontrol(fig_graph, 'Style', 'pushbutton');
             ui_button_graph_hide = uicontrol(fig_graph, 'Style', 'pushbutton');
             ui_button_graph_color = uicontrol(fig_graph, 'Style', 'pushbutton');
+            ui_button_graph_edge_settings = uicontrol(fig_graph, 'Style', 'pushbutton');
             ui_text_graph_thickness = uicontrol(fig_graph, 'Style', 'text');
             ui_edit_graph_thickness = uicontrol(fig_graph, 'Style', 'edit');
             
@@ -2374,7 +2379,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_edit_graph_lineweight, 'Callback', {@cb_edit_lineweight});
                 
                 set(ui_button_graph_show, 'Units', 'normalized')
-                set(ui_button_graph_show, 'Position', [.05 .16 .20 .08])
+                set(ui_button_graph_show, 'Position', [.1 .20 .4 .06])
                 set(ui_button_graph_show, 'String', ' Show ')
                 set(ui_button_graph_show, 'HorizontalAlignment', 'center')
                 set(ui_button_graph_show, 'FontWeight', 'bold')
@@ -2382,7 +2387,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_button_graph_show, 'Callback', {@cb_graph_show})
                 
                 set(ui_button_graph_hide, 'Units', 'normalized')
-                set(ui_button_graph_hide, 'Position', [.405 .16 .20 .08])
+                set(ui_button_graph_hide, 'Position', [.1 .13 .4 .06])
                 set(ui_button_graph_hide, 'String', ' Hide ')
                 set(ui_button_graph_hide, 'HorizontalAlignment', 'center')
                 set(ui_button_graph_hide, 'FontWeight', 'bold')
@@ -2390,12 +2395,20 @@ classdef AnalysisST_WU < Analysis
                 set(ui_button_graph_hide, 'Callback', {@cb_graph_hide})
                 
                 set(ui_button_graph_color, 'Units', 'normalized')
-                set(ui_button_graph_color, 'Position', [.76 .16 .20 .08])
+                set(ui_button_graph_color, 'Position', [.52 .2 .4 .06])
                 set(ui_button_graph_color, 'String', ' Color ')
                 set(ui_button_graph_color, 'HorizontalAlignment', 'center')
                 set(ui_button_graph_color, 'FontWeight', 'bold')
                 set(ui_button_graph_color, 'FontSize', 10)
                 set(ui_button_graph_color, 'Callback', {@cb_graph_color})
+                
+                set(ui_button_graph_edge_settings, 'Units', 'normalized')
+                set(ui_button_graph_edge_settings, 'Position', [.52 .13 .4 .06])
+                set(ui_button_graph_edge_settings, 'String', 'Edge Settings')
+                set(ui_button_graph_edge_settings, 'HorizontalAlignment', 'center')
+                set(ui_button_graph_edge_settings, 'FontWeight', 'bold')
+                set(ui_button_graph_edge_settings, 'FontSize', 10)
+                set(ui_button_graph_edge_settings, 'Callback', {@cb_graph_links_settings})                
                 
                 set(ui_text_graph_thickness, 'Units', 'normalized')
                 set(ui_text_graph_thickness, 'Position', [.05 .0 .30 .10])
@@ -2411,90 +2424,93 @@ classdef AnalysisST_WU < Analysis
                 set(ui_edit_graph_thickness, 'FontWeight', 'bold')
                 set(ui_edit_graph_thickness, 'Callback', {@cb_graph_thickness});
                 
-                if isequal(class(analysis), 'AnalysisST_BUT')                    
-                    set(ui_checkbox_graph_threshold, 'Value', true)
-                    set(ui_checkbox_graph_density, 'Value', false)
-                    set(ui_checkbox_graph_weighted, 'Value', false)
-                elseif isequal(class(analysis), 'AnalysisST_BUD')                    
-                    set(ui_checkbox_graph_threshold, 'Value', false)
-                    set(ui_checkbox_graph_density, 'Value', true)
-                    set(ui_checkbox_graph_weighted, 'Value', false)
-                else                    
-                    set(ui_checkbox_graph_threshold, 'Value', false)
-                    set(ui_checkbox_graph_density, 'Value', false)
-                    set(ui_checkbox_graph_weighted, 'Value', true)
+                if isequal(class(analysis), 'AnalysisST_BUT')
+                    change_to_threshold()                    
+                elseif isequal(class(analysis), 'AnalysisST_BUD')
+                    change_to_density()
+                else
+                    change_to_weighted()
                 end
+            end
+            function change_to_density()
+                set(ui_checkbox_graph_density, 'Value', true)
+                set(ui_slider_graph_bs, 'Enable', 'on')
+                set(ui_text_graph_density, 'Enable', 'on')
+                set(ui_edit_graph_bs, 'Enable', 'on')
+                set(ui_edit_graph_thickness, 'enable', 'on')
+                
+                set(ui_checkbox_graph_threshold, 'Value', false)
+                set(ui_slider_graph_bt, 'Enable', 'off')
+                set(ui_text_graph_threshold, 'Enable', 'off')
+                set(ui_edit_graph_bt, 'Enable', 'off')
+                
+                set(ui_checkbox_graph_weighted, 'Value', false)
+                set(ui_checkbox_graph_linecolor, 'Enable', 'off')
+                set(ui_checkbox_graph_linecolor, 'Value', false)
+                set(ui_popup_graph_initcolor, 'Enable', 'off')
+                set(ui_popup_graph_fincolor, 'Enable', 'off')
+                set(ui_checkbox_graph_lineweight, 'Enable', 'off')
+                set(ui_checkbox_graph_lineweight, 'Value', false)
+                set(ui_edit_graph_lineweight, 'Enable', 'off')
+                
+                update_graph()
+            end
+            function change_to_threshold()
+                set(ui_checkbox_graph_threshold, 'Value', true)
+                set(ui_slider_graph_bt, 'Enable', 'on')
+                set(ui_text_graph_threshold, 'Enable', 'on')
+                set(ui_edit_graph_bt, 'Enable', 'on')
+                set(ui_edit_graph_thickness, 'enable', 'on')
+                
+                set(ui_checkbox_graph_density, 'Value', false)
+                set(ui_slider_graph_bs, 'Enable', 'off')
+                set(ui_text_graph_density, 'Enable', 'off')
+                set(ui_edit_graph_bs, 'Enable', 'off')
+                
+                set(ui_checkbox_graph_weighted, 'Value', false)
+                set(ui_checkbox_graph_linecolor, 'Enable', 'off')
+                set(ui_checkbox_graph_linecolor, 'Value', false)
+                set(ui_popup_graph_initcolor, 'Enable', 'off')
+                set(ui_popup_graph_fincolor, 'Enable', 'off')
+                set(ui_checkbox_graph_lineweight, 'Enable', 'off')
+                set(ui_checkbox_graph_lineweight, 'Value', false)
+                set(ui_edit_graph_lineweight, 'Enable', 'off')
+                
+                update_graph()
+            end
+            function  change_to_weighted()
+                set(ui_checkbox_graph_weighted, 'Value', true)
+                set(ui_checkbox_graph_linecolor, 'Enable', 'on')
+                set(ui_checkbox_graph_lineweight, 'Enable', 'on')
+                set(ui_edit_graph_thickness, 'enable', 'off')
+                
+                set(ui_checkbox_graph_threshold, 'Value', false)
+                set(ui_text_graph_threshold, 'Enable', 'off')
+                set(ui_slider_graph_bt, 'Enable', 'off')
+                set(ui_edit_graph_bt, 'Enable', 'off')
+                
+                set(ui_checkbox_graph_density, 'Value', false)
+                set(ui_slider_graph_bs, 'Enable', 'off')
+                set(ui_text_graph_density, 'Enable', 'off')
+                set(ui_edit_graph_bs, 'Enable', 'off')
             end
             function cb_checkbox_density(~, ~)  % (src, event)
                 if get(ui_checkbox_graph_density, 'Value')
-                    
-                    set(ui_slider_graph_bs, 'Enable', 'on')
-                    set(ui_text_graph_density, 'Enable', 'on')
-                    set(ui_edit_graph_bs, 'Enable', 'on')
-                    set(ui_edit_graph_thickness, 'enable', 'on')
-                    
-                    set(ui_checkbox_graph_threshold, 'Value', false)
-                    set(ui_slider_graph_bt, 'Enable', 'off')
-                    set(ui_text_graph_threshold, 'Enable', 'off')
-                    set(ui_edit_graph_bt, 'Enable', 'off')
-                    
-                    set(ui_checkbox_graph_weighted, 'Value', false)
-                    set(ui_checkbox_graph_linecolor, 'Enable', 'off')
-                    set(ui_checkbox_graph_linecolor, 'Value', false)
-                    set(ui_popup_graph_initcolor, 'Enable', 'off')
-                    set(ui_popup_graph_fincolor, 'Enable', 'off')
-                    set(ui_checkbox_graph_lineweight, 'Enable', 'off')
-                    set(ui_checkbox_graph_lineweight, 'Value', false)
-                    set(ui_edit_graph_lineweight, 'Enable', 'off')
-                    
-                    update_graph()
+                    change_to_density()
                 else
                     set(ui_checkbox_graph_density, 'Value', true)
                 end
             end
             function cb_checkbox_threshold(~, ~)  % (src, event)
                 if get(ui_checkbox_graph_threshold, 'Value')
-                    
-                    set(ui_slider_graph_bt, 'Enable', 'on')
-                    set(ui_text_graph_threshold, 'Enable', 'on')
-                    set(ui_edit_graph_bt, 'Enable', 'on')
-                    set(ui_edit_graph_thickness, 'enable', 'on')
-                    
-                    set(ui_checkbox_graph_density, 'Value', false)
-                    set(ui_slider_graph_bs, 'Enable', 'off')
-                    set(ui_text_graph_density, 'Enable', 'off')
-                    set(ui_edit_graph_bs, 'Enable', 'off')
-                    
-                    set(ui_checkbox_graph_weighted, 'Value', false)
-                    set(ui_checkbox_graph_linecolor, 'Enable', 'off')
-                    set(ui_checkbox_graph_linecolor, 'Value', false)
-                    set(ui_popup_graph_initcolor, 'Enable', 'off')
-                    set(ui_popup_graph_fincolor, 'Enable', 'off')
-                    set(ui_checkbox_graph_lineweight, 'Enable', 'off')
-                    set(ui_checkbox_graph_lineweight, 'Value', false)
-                    set(ui_edit_graph_lineweight, 'Enable', 'off')
-                    
-                    update_graph()
+                    change_to_threshold()                  
                 else
                     set(ui_checkbox_graph_threshold, 'Value', true)
                 end
             end
             function cb_checkbox_weighted(~, ~)  % (src, event)
-                if get(ui_checkbox_graph_weighted, 'Value')
-                    
-                    set(ui_checkbox_graph_linecolor, 'Enable', 'on')
-                    set(ui_checkbox_graph_lineweight, 'Enable', 'on')
-                    set(ui_edit_graph_thickness, 'enable', 'off')
-                    
-                    set(ui_checkbox_graph_threshold, 'Value', false)
-                    set(ui_text_graph_threshold, 'Enable', 'off')
-                    set(ui_slider_graph_bt, 'Enable', 'off')
-                    set(ui_edit_graph_bt, 'Enable', 'off')
-                    
-                    set(ui_checkbox_graph_density, 'Value', false)
-                    set(ui_slider_graph_bs, 'Enable', 'off')
-                    set(ui_text_graph_density, 'Enable', 'off')
-                    set(ui_edit_graph_bs, 'Enable', 'off')
+                if get(ui_checkbox_graph_weighted, 'Value')                    
+                    change_to_weighted()
                 else
                     set(ui_checkbox_graph_weighted, 'Enable', 'on')
                 end
@@ -2638,19 +2654,22 @@ classdef AnalysisST_WU < Analysis
                     group = analysis.getCohort().getGroups().getValue(group_index);
                     subjects = group.getSubjects();
                     if isequal(analysis.getGraphType, 'GraphWU')
-                        A = analysis.get_weighted_correlation_matrix(subjects);
+                        graph = analysis.get_weighted_correlation_matrix(subjects);
                     else
-                        A = analysis.get_graph_for_subjects(subjects, rule, value);
+                        graph = analysis.get_graph_for_subjects(subjects, rule, value);
                     end
-                    
-                    indices = find(A ~= 0);
-                    [row, column] = ind2sub(size(A),  indices);
-                    
+                    A = graph.getA();
                     thickness = str2double(get(ui_edit_graph_thickness, 'String'));
                     bg.link_edges_off([], [])
-                    bg.link_edges(row, column, 'LineWidth', thickness)
-                    bg.link_edges_on(row, column)
-                    
+                    for i = 1:1:size(A, 1)
+                        for j = 1:1:size(A, 2)                            
+                            if A(i, j) == 0
+                                continue;                                
+                            end
+                            bg.link_edge(i, j, 'LineWidth', thickness)
+                            bg.link_edge_on(i, j)
+                        end
+                    end                                        
                 end
             end
             function cb_graph_links_settings(~, ~)  % (src, event)
@@ -2667,6 +2686,10 @@ classdef AnalysisST_WU < Analysis
                     GroupList = {''};
                 end
                 set(ui_popup_graph_group, 'String', GroupList)
+            end
+            
+            if nargout > 0
+                brain_graph_panel = fig_graph;
             end
         end
     end
