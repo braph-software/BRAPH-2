@@ -49,13 +49,9 @@ hnode = hnode.*ones(size(x1));
 N = N.*ones(size(x1));
 
 % Check input
-Check.samesize('Error: All arrow coordiantes (x1,y1,z1,x2,y2,z2) must have the same size',x1,y1,z1,x2,y2,z2)
-Check.isreal('Error: All arrow coordiantes (x1,y1,z1,x2,y2,z2) must be real',x1,y1,z1,x2,y2,z2)
-Check.isreal('Error: The arrow parameters (stem width, head with and length and head stem intersection) must be positive real',swidth,'>',0)
-Check.isreal('Error: The arrow parameters (stem width, head with and length and head stem intersection) must be positive real',hlength,'>',0)
-Check.isreal('Error: The arrow parameters (stem width, head with and length and head stem intersection) must be positive real',hwidth,'>',0)
-Check.isreal('Error: The arrow parameters (stem width, head with and length and head stem intersection) must be positive real',hnode)
-Check.isinteger('Error: The arrow radial mesh (N) must be positive integer',N,'>',0)
+assert(isequal(size(x1), size(y1)) && isequal(size(x1), size(x2)) && isequal(size(x1), size(z1)) && isequal(size(x1), size(y2)) && isequal(size(x1), size(z2)))
+assert(isreal(x1) && isreal(x2) && isreal(z1) && isreal(y1) && isreal(y2) && isreal(z2))
+assert(isa(N, 'double'))
 
 % Prepares coordiantes in a standard format
 L = sqrt((x2-x1).^2+(y2-y1).^2+(z2-z1).^2); % length

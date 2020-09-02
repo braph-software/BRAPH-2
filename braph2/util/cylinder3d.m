@@ -34,10 +34,9 @@ R = R.*ones(size(x1));
 N = N.*ones(size(x1));
 
 % Check input
-Check.samesize('Error: All cylinder coordiantes (x1,y1,z1,x2,y2,z2) must have the same size',x1,y1,z1,x2,y2,z2)
-Check.isreal('Error: All cylinder coordiantes (x1,y1,z1,x2,y2,z2) must be real',x1,y1,z1,x2,y2,z2)
-Check.isreal('Error: The cylinder radius (R) must be positive real',R,'>',0)
-Check.isinteger('Error: The cylinder radial mesh (N) must be positive integer',N,'>',0)
+assert(isequal(size(x1), size(y1)) && isequal(size(x1), size(x2)) && isequal(size(x1), size(z1)) && isequal(size(x1), size(y2)) && isequal(size(x1), size(z2)))
+assert(isreal(x1) && isreal(x2) && isreal(z1) && isreal(y1) && isreal(y2) && isreal(z2) && isreal(R))
+assert(isa(N, 'double'))
 
 % Prepares coordinates in a standard format
 L = sqrt((x2-x1).^2+(y2-y1).^2+(z2-z1).^2);  % length
