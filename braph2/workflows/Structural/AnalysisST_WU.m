@@ -1682,7 +1682,7 @@ classdef AnalysisST_WU < Analysis
             ui_selectedbr1_popup = uicontrol(ui_mainpanel, 'Style', 'popup');            
             ui_selectedbr2_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
-            ui_plot_measure_axes = get_from_varargin([], 'UIAxesNodal', varargin{:});
+            ui_plot_measure_axes = get_from_varargin([], 'UIAxesBinodal', varargin{:});
             ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');            
             init_binodal_panel()
             function init_binodal_panel()
@@ -2162,6 +2162,50 @@ classdef AnalysisST_WU < Analysis
             % See also getGraphPanel, getGlobalPanel.
             
             p = [];
+        end
+        function p = getBrainView(analysis, varargin)
+            uiparent = get_from_varargin([], 'UIParent', varargin{:});
+            bg = get_from_varargin([], 'BrainGraph', varargin{:});
+            
+            ui_brainview_panel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 1]);
+            ui_brainview_axes = get_from_varargin([], 'UIAxesBrain', varargin{:});
+            ui_brainview_edges_panel_button = uicontrol(ui_brainview_panel);
+            ui_brainview_analysis_dictionaries_button = uicontrol(ui_brainview_panel);
+            init_brainview()
+            function init_brainview()
+                GUI.setUnits(ui_brainview_panel)
+                GUI.setBackgroundColor(ui_brainview_panel)
+                
+                set(ui_brainview_axes, 'Parent', ui_brainview_panel)
+                set(ui_brainview_axes, 'Position', [.12 .2 0.78 .78])
+                
+                set(ui_brainview_edges_panel_button, 'Units', 'normalized')
+                set(ui_brainview_edges_panel_button, 'Position', [.22 .02 .2 .08])
+                set(ui_brainview_edges_panel_button, 'String', 'Edge Options')
+                set(ui_brainview_edges_panel_button, 'Callback', {@cb_bv_edges_panel})
+                
+                set(ui_brainview_analysis_dictionaries_button, 'Units', 'normalized')
+                set(ui_brainview_analysis_dictionaries_button, 'Position', [.52 .02 .2 .08])
+                set(ui_brainview_analysis_dictionaries_button, 'String', 'Analysis iDicts Options')
+                set(ui_brainview_analysis_dictionaries_button, 'Callback', {@cb_bv_idict_panel})
+            end  
+            function update_brain_graph()
+
+                bg.set_axes(ui_brainview_axes);
+                axes(ui_brainview_axes)
+                bg.axis_equal()
+                bg.hold_on();
+                bg.view(PlotBrainSurf.VIEW_3D)   
+                bg.brain();
+                bg.link_edges();                
+                bg.link_edges_on();
+            end
+            function cb_bv_edges_panel(~, ~)
+            end
+            function cb_bv_idict_panel(~, ~)
+            end
+            
+            update_brain_graph()
         end
     end
 end
