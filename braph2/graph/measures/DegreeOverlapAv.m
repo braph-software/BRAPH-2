@@ -16,6 +16,7 @@ classdef DegreeOverlapAv < DegreeOverlap
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns de measure format
     %   getMeasureScope             - returns de measure scope    
+    %   getParametricity            - returns the parametricity of the measure
     %   getMeasure                  - returns the degree class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
@@ -113,6 +114,16 @@ classdef DegreeOverlapAv < DegreeOverlap
             % See also getMeasureFormat.
             
             measure_scope = Measure.SUPERGLOBAL;
+        end
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of DegreeOverlapAv
+            %
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of average degree overlap measure (NONPARAMETRIC).
+            %
+            % See also getMeasureFormat, getMeasureScope.
+            
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with DegreeOverlapAv 
