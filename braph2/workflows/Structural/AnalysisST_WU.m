@@ -949,21 +949,18 @@ classdef AnalysisST_WU < Analysis
                     end
                     
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
+                    group1_index = get( ui_popup_globalmeasures_group1, 'Value');
+                    group1 = analysis.getCohort().getGroups().getValue(group1_index);
+                    group2_index = get( ui_popup_globalmeasures_group2, 'Value');
+                    group2 = analysis.getCohort().getGroups().getValue(group2_index);
                     for j = 1:1:analysis.getComparisons().length()
                         comparison = analysis.getComparisons().getValue(j);
-                        [a, b] = comparison.getGroups();
-                        if isa(group, 'cell') && ismember(comparison.getMeasureCode(), global_list)
-                            for k =1:1:length(group)
-                                g = group{k};
-                                if isequal(a, g) || isequal (b, g) && isequal(selected_measure, comparison.getMeasureCode())
-                                    global_comparison{j} = comparison; %#ok<AGROW>
-                                end
-                            end
-                        else
-                            if ismember(comparison.getMeasureCode(), global_list) && (isequal(a, group) || isequal (b, group)) && isequal(selected_measure, comparison.getMeasureCode())
-                                global_comparison{j} = comparison;
-                            end
-                        end
+                        [a, b] = comparison.getGroups();                        
+                        if ismember(comparison.getMeasureCode(), global_list) ...
+                                && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1))) ...
+                                && isequal(selected_measure, comparison.getMeasureCode())
+                            global_comparison{j} = comparison; %#ok<AGROW>
+                        end                        
                     end
                     
                     if exist('global_comparison', 'var')
@@ -1401,7 +1398,7 @@ classdef AnalysisST_WU < Analysis
                     for j = 1:1:analysis.getComparisons().length()
                         comparison = analysis.getComparisons().getValue(j);
                         [a, b] = comparison.getGroups();
-                        if ismember(comparison.getMeasureCode(), nodal_list) && (isequal(a, group_1) || isequal (b, group_2)) && isequal(selected_measure, comparison.getMeasureCode())
+                        if ismember(comparison.getMeasureCode(), nodal_list) && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1))) && isequal(selected_measure, comparison.getMeasureCode())
                             nodal_comparison{j} = comparison; %#ok<AGROW>
                         end
                     end
@@ -1836,7 +1833,7 @@ classdef AnalysisST_WU < Analysis
                     for j = 1:1:analysis.getComparisons().length()
                         comparison = analysis.getComparisons().getValue(j);
                         [a, b] = comparison.getGroups();
-                        if ismember(comparison.getMeasureCode(), binodal_list) && (isequal(a, group_1) || isequal (b, group_2)) && isequal(selected_measure, comparison.getMeasureCode())
+                        if ismember(comparison.getMeasureCode(), binodal_list) && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1))) && isequal(selected_measure, comparison.getMeasureCode())
                             binodal_comparison{j} = comparison; %#ok<AGROW>
                         end
                     end
@@ -2765,7 +2762,7 @@ classdef AnalysisST_WU < Analysis
             init_measures_panel()     
             update_figure_panel()
             update_popup_grouplist()
-%             update_measure_data();
+            update_measure_data();
             
             set(f, 'Visible', 'on')
             
@@ -3130,7 +3127,7 @@ classdef AnalysisST_WU < Analysis
                 update_brain_meas_plot()
             end
             function cb_edit_meas_offset(~, ~)  %  (src, event)
-                offset = real(str2num(get(ui_edit_meas_offset, 'String')));
+                offset = real(str2double(get(ui_edit_meas_offset, 'String')));
                 if isempty(offset)
                     set(ui_edit_meas_offset, 'String', '100')
                 else
@@ -3139,8 +3136,8 @@ classdef AnalysisST_WU < Analysis
                 update_brain_meas_plot()
             end
             function cb_edit_meas_rescaling(~, ~)  %  (src, event)
-                rescaling = real(str2num(get(ui_edit_meas_rescaling, 'String')));
-                if isempty(rescaling) || isnan(rescaling) || rescaling<10^(-4) || rescaling>(10^+4)
+                rescaling = real(str2double(get(ui_edit_meas_rescaling, 'String')));
+                if isempty(rescaling) || isnan(rescaling) || rescaling < 10^(-4) || rescaling > (10^+4)
                     set(ui_edit_meas_rescaling, 'String', '10')
                 else
                     set(ui_edit_meas_rescaling, 'String', num2str(rescaling))
@@ -3164,8 +3161,8 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             function cb_edit_meas_fdr1(~, ~)  %  (src, event)
-                lim = real(str2num(get(ui_edit_meas_fdr1, 'String')));
-                if isempty(lim) || lim<=0 || lim>1
+                lim = real(str2double(get(ui_edit_meas_fdr1, 'String')));
+                if isempty(lim) || lim <= 0 || lim > 1
                     set(ui_edit_meas_fdr1, 'String', '0.05')
                 else
                     set(ui_edit_meas_fdr1, 'String', num2str(lim))
@@ -3190,8 +3187,8 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             function cb_edit_meas_fdr2(~, ~)  %  (src, event)
-                lim = real(str2num(get(ui_edit_meas_fdr2, 'String')));
-                if isempty(lim) || lim<=0 || lim>1
+                lim = real(str2double(get(ui_edit_meas_fdr2, 'String')));
+                if isempty(lim) || lim <= 0 || lim > 1
                     set(ui_edit_meas_fdr2, 'String', '0.05')
                 else
                     set(ui_edit_meas_fdr2, 'String', num2str(lim))
@@ -3224,7 +3221,7 @@ classdef AnalysisST_WU < Analysis
                     
                     update_brain_meas_plot()
                 else
-                    size = str2num(get(ui_edit_meas_symbolsize, 'String'));
+                    size = str2double(get(ui_edit_meas_symbolsize, 'String'));
                     size = 1 + size;
                     bg.br_syms([], 'Size', size);
                     
@@ -3233,7 +3230,7 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             function cb_edit_meas_symbolsize(~, ~)  %  (src, event)
-                size = real(str2num(get(ui_edit_meas_symbolsize, 'String')));
+                size = real(str2double(get(ui_edit_meas_symbolsize, 'String')));
                 if isempty(size) || size<=0
                     set(ui_edit_meas_symbolsize, 'String', '1')
                     size = 5;
@@ -3269,7 +3266,7 @@ classdef AnalysisST_WU < Analysis
                     
                     update_brain_meas_plot()
                 else
-                    R = str2num(get(ui_edit_meas_sphereradius, 'String'));
+                    R = str2double(get(ui_edit_meas_sphereradius, 'String'));
                     R = R + 1;
                     bg.br_sphs([], 'R', R);
                     
@@ -3278,7 +3275,7 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             function cb_edit_meas_sphereradius(~, ~)  %  (src, event)
-                R = real(str2num(get(ui_edit_meas_sphereradius, 'String')));
+                R = real(str2double(get(ui_edit_meas_sphereradius, 'String')));
                 if isempty(R) || R<=0
                     set(ui_edit_meas_sphereradius, 'String', '1')
                     R = 3;
@@ -3328,7 +3325,7 @@ classdef AnalysisST_WU < Analysis
                     
                     update_brain_meas_plot()
                 else
-                    size = str2num(get(ui_edit_meas_labelsize, 'String'));
+                    size = str2double(get(ui_edit_meas_labelsize, 'String'));
                     size = size + 1;
                     bg.br_labs([], 'FontSize', size);
                     
@@ -3337,7 +3334,7 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             function cb_edit_meas_labelsize(~, ~)  %  (src, event)
-                size = real(str2num(get(ui_edit_meas_labelsize, 'String')));
+                size = real(str2double(get(ui_edit_meas_labelsize, 'String')));
                 if isempty(size) || size<=0
                     set(ui_edit_meas_labelsize, 'String', '1')
                     size = 5;
@@ -3368,31 +3365,71 @@ classdef AnalysisST_WU < Analysis
             end
             function update_measure_data()
                 i = get(ui_list_gr, 'Value');
-                if isempty(i) || length(i)>1
-                    i = 1;
-                end
-                [measures, mi] = ga.getComparisons(mlist(get(ui_list_gr, 'Value')), get(ui_popup_grouplists1, 'Value'), get(ui_popup_grouplists2, 'Value'));
-                if isempty(measures)
-                    errordlg('The measure does not exist')
-                else
-                    meas = measures{1};
-                    measure_data = abs(meas.diff());
+                group1_index = get(ui_popup_grouplists1, 'Value');
+                group1 = ga.getCohort().getGroups().getValue(group1_index);
+                measure = mlist{i};
+                selected_case = [];
+                if get(ui_action_comparison_checkbox, 'Value')
+                    % i want to look in comprison
+                    group2_index = get(ui_popup_grouplists2, 'Value');
+                    group2 = ga.getCohort().getGroups().getValue(group2_index);
+                    comparisons_idict = ga.getComparisons();
                     
-                    fdr_lim = ones(1, length(ga.getBrainAtlas));
-                    p1 = measures{1}.getProp(MRIComparisonWU.PVALUE1);
-                    p2 = measures{1}.getProp(MRIComparisonWU.PVALUE2);
-                    for i = 1:1:length(ga.getBrainAtlas)
-                        if get(ui_checkbox_meas_fdr1, 'Value')
-                            if p1(i)>fdr(p1, str2num(get(ui_edit_meas_fdr1, 'String')))
-                                fdr_lim(i) = 0;
-                            end
-                        elseif get(ui_checkbox_meas_fdr2, 'Value')
-                            if p2(i)>fdr(p2, str2num(get(ui_edit_meas_fdr2, 'String')))
-                                fdr_lim(i) = 0;
-                            end
+                    for i = 1:1:comparisons_idict.lenth()
+                        comparison = comparisons_idict.getValue(i);
+                        [a, b] = comparison.getGroups();
+                        if isequal(comparison.getMeasureCode(), measure) && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1)))
+                            selected_case = comparison;
+                        end
+                    end
+                    
+                elseif get(ui_action_random_checkbox, 'Value')
+                    % i want to look in rcomprison
+                    randoms_idict = ga.getRandomComparisons();
+                    for i = 1:1:randoms_idict.lenth()
+                        r_comparison = randoms_idict.getValue(i);
+                        g = r_comparison.getGroup();
+                        if isequal(r_comparison.getMeasureCode(), measure) && isequal(g, group1) 
+                            selected_case = r_comparison;
+                        end
+                    end
+                else
+                    % i want to look in measurements
+                    randoms_idict = ga.getRandomComparisons();
+                    for i = 1:1:randoms_idict.lenth()
+                        r_comparison = randoms_idict.getValue(i);
+                        g = r_comparison.getGroup();
+                        if isequal(r_comparison.getMeasureCode(), measure) && isequal(g, group1)
+                            selected_case = r_comparison;
                         end
                     end
                 end
+                
+%                 if isempty(i) || length(i) > 1
+%                     i = 1;
+%                 end
+%                 [measures, mi] = ga.getComparisons(mlist(get(ui_list_gr, 'Value')), get(ui_popup_grouplists1, 'Value'), get(ui_popup_grouplists2, 'Value'));
+%                 if isempty(measures)
+%                     errordlg('The measure does not exist')
+%                 else
+%                     meas = measures{1};
+%                     measure_data = abs(meas.diff());
+%                     
+%                     fdr_lim = ones(1, length(ga.getBrainAtlas));
+%                     p1 = measures{1}.getProp(MRIComparisonWU.PVALUE1);
+%                     p2 = measures{1}.getProp(MRIComparisonWU.PVALUE2);
+%                     for i = 1:1:length(ga.getBrainAtlas)
+%                         if get(ui_checkbox_meas_fdr1, 'Value')
+%                             if p1(i)>fdr(p1, str2double(get(ui_edit_meas_fdr1, 'String')))
+%                                 fdr_lim(i) = 0;
+%                             end
+%                         elseif get(ui_checkbox_meas_fdr2, 'Value')
+%                             if p2(i)>fdr(p2, str2double(get(ui_edit_meas_fdr2, 'String')))
+%                                 fdr_lim(i) = 0;
+%                             end
+%                         end
+%                     end
+%                 end
                 
                 
             end
@@ -3401,9 +3438,9 @@ classdef AnalysisST_WU < Analysis
                 
                 if get(ui_checkbox_meas_symbolsize, 'Value')
                     
-                    size = str2num(get(ui_edit_meas_symbolsize, 'String'));
-                    offset = str2num(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2num(get(ui_edit_meas_rescaling, 'String'));
+                    size = str2double(get(ui_edit_meas_symbolsize, 'String'));
+                    offset = str2double(get(ui_edit_meas_offset, 'String'));
+                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                     
                     size = (1 + ((measure_data - offset)./rescaling)*size).*fdr_lim;
                     size(isnan(size)) = 0.1;
@@ -3413,8 +3450,8 @@ classdef AnalysisST_WU < Analysis
                 
                 if get(ui_checkbox_meas_symbolcolor, 'Value')
                     
-                    offset = str2num(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2num(get(ui_edit_meas_rescaling, 'String'));
+                    offset = str2double(get(ui_edit_meas_offset, 'String'));
+                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                     
                     colorValue = (measure_data - offset)./rescaling;
                     %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
@@ -3434,9 +3471,9 @@ classdef AnalysisST_WU < Analysis
                 
                 if get(ui_checkbox_meas_sphereradius, 'Value')
                     
-                    R = str2num(get(ui_edit_meas_sphereradius, 'String'));
-                    offset = str2num(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2num(get(ui_edit_meas_rescaling, 'String'));
+                    R = str2double(get(ui_edit_meas_sphereradius, 'String'));
+                    offset = str2double(get(ui_edit_meas_offset, 'String'));
+                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                     
                     R = (1 + ((measure_data - offset)./rescaling)*R).*fdr_lim;
                     R(isnan(R)) = 0.1;
@@ -3446,8 +3483,8 @@ classdef AnalysisST_WU < Analysis
                 
                 if get(ui_checkbox_meas_spherecolor, 'Value')
                     
-                    offset = str2num(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2num(get(ui_edit_meas_rescaling, 'String'));
+                    offset = str2double(get(ui_edit_meas_offset, 'String'));
+                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                     
                     colorValue = (measure_data - offset)./rescaling;
                     %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
@@ -3467,8 +3504,8 @@ classdef AnalysisST_WU < Analysis
                 if get(ui_checkbox_meas_spheretransparency, 'Value')
                     
                     alpha = get(ui_slider_meas_spheretransparency, 'Value');
-                    offset = str2num(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2num(get(ui_edit_meas_rescaling, 'String'));
+                    offset = str2double(get(ui_edit_meas_offset, 'String'));
+                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                     
                     alpha_vec = (((measure_data - offset)./rescaling).*alpha).*fdr_lim;
                     alpha_vec(isnan(alpha_vec)) = 0;
@@ -3479,9 +3516,9 @@ classdef AnalysisST_WU < Analysis
                 
                 if get(ui_checkbox_meas_labelsize, 'Value')
                     
-                    size = str2num(get(ui_edit_meas_labelsize, 'String'));
-                    offset = str2num(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2num(get(ui_edit_meas_rescaling, 'String'));
+                    size = str2double(get(ui_edit_meas_labelsize, 'String'));
+                    offset = str2double(get(ui_edit_meas_offset, 'String'));
+                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                     
                     size = (1 + ((measure_data - offset)./rescaling)*size).*fdr_lim;
                     size(isnan(size)) = 0.1;
@@ -3491,8 +3528,8 @@ classdef AnalysisST_WU < Analysis
                 
                 if get(ui_checkbox_meas_labelcolor, 'Value')
                     
-                    offset = str2num(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2num(get(ui_edit_meas_rescaling, 'String'));
+                    offset = str2double(get(ui_edit_meas_offset, 'String'));
+                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                     
                     colorValue = (measure_data - offset)./rescaling;
                     %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
