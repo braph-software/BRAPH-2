@@ -2187,6 +2187,39 @@ classdef AnalysisST_WU < Analysis
                 set(ui_brainview_analysis_dictionaries_button, 'Tooltip', 'Manage the Measurement, Comparison and Randomcomparison.')
                 set(ui_brainview_analysis_dictionaries_button, 'Callback', {@cb_bv_meas_panel})
             end
+            ui_contextmenu_figure_brainsurf = uicontextmenu();
+            ui_contextmenu_figure_brainsurf_settings = uimenu(ui_contextmenu_figure_brainsurf);
+            ui_contextmenu_figure_deselect = uicontextmenu();
+            ui_contextmenu_figure_symbol_settings = uimenu(ui_contextmenu_figure_deselect);
+            ui_contextmenu_figure_labels = uicontextmenu();
+            ui_contextmenu_figure_labels_settings = uimenu(ui_contextmenu_figure_labels);
+            init_contextmenus()
+            function init_contextmenus()
+                set(ui_contextmenu_figure_brainsurf_settings, 'Label', 'Brain Surface Settings')
+                set(ui_contextmenu_figure_brainsurf_settings, 'Callback', {@cb_figure_brainsurf})
+                
+                function cb_figure_brainsurf(~, ~)  % (src, event)
+                    bg.brain_settings();
+                end
+
+                set(ui_contextmenu_figure_symbol_settings, 'Label', 'Brain Region Settins')
+                set(ui_contextmenu_figure_symbol_settings, 'Callback', {@cb_figure_settingsbr})
+
+                function cb_figure_settingsbr(~, ~)  % (src, event)
+                    userdata = get(gco, 'UserData');
+                    i = userdata{2};
+                    bg.br_syms_settings(i)
+                end
+                
+                set(ui_contextmenu_figure_labels_settings, 'Label', 'Label Settings')
+                set(ui_contextmenu_figure_labels_settings, 'Callback', {@cb_figure_settingslab})
+                
+                function cb_figure_settingslab(~, ~)  % (src, event)
+                    userdata = get(gco, 'UserData');
+                    i = userdata{2};
+                    bg.br_labs_settings(i)
+                end
+            end
             function update_brain_graph()
                 
                 bg.set_axes(ui_brainview_axes);
@@ -2194,7 +2227,7 @@ classdef AnalysisST_WU < Analysis
                 bg.axis_equal()
                 bg.hold_on();
                 bg.view(PlotBrainSurf.VIEW_3D)
-                bg.brain();
+                bg.brain('UiContextMenu', ui_contextmenu_figure_brainsurf);
                 bg.br_syms();
             end
             function cb_bv_bg_panel(~, ~)
