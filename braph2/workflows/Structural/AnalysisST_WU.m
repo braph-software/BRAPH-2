@@ -2275,6 +2275,7 @@ classdef AnalysisST_WU < Analysis
             ui_button_graph_edge_settings = uicontrol(fig_graph, 'Style', 'pushbutton');
             ui_text_graph_thickness = uicontrol(fig_graph, 'Style', 'text');
             ui_edit_graph_thickness = uicontrol(fig_graph, 'Style', 'edit');
+            ui_link_type = uicontrol(fig_graph, 'Style', 'popup', 'String', {'line', 'arrow', 'cylinder'});
             
             init_graph()
             update_popups_grouplists()
@@ -2442,18 +2443,22 @@ classdef AnalysisST_WU < Analysis
                 set(ui_button_graph_edge_settings, 'Callback', {@cb_graph_links_settings})
                 
                 set(ui_text_graph_thickness, 'Units', 'normalized')
-                set(ui_text_graph_thickness, 'Position', [.05 .0 .30 .10])
+                set(ui_text_graph_thickness, 'Position', [.02 .05 .3 .05])
                 set(ui_text_graph_thickness, 'String', 'Set thickness  ')
-                set(ui_text_graph_thickness, 'HorizontalAlignment', 'left')
+                set(ui_text_graph_thickness, 'HorizontalAlignment', 'center')
                 set(ui_text_graph_thickness, 'FontWeight', 'bold')
-                set(ui_text_graph_thickness, 'FontSize', 10)
+                set(ui_text_graph_thickness, 'FontSize', 8)
                 
                 set(ui_edit_graph_thickness, 'Units', 'normalized')
-                set(ui_edit_graph_thickness, 'Position', [.405 .06 .20 .05])
+                set(ui_edit_graph_thickness, 'Position', [.34 .06 .2 .05])
                 set(ui_edit_graph_thickness, 'String', '1');
                 set(ui_edit_graph_thickness, 'TooltipString', 'Set density.');
                 set(ui_edit_graph_thickness, 'FontWeight', 'bold')
                 set(ui_edit_graph_thickness, 'Callback', {@cb_graph_thickness});
+                
+                set(ui_link_type, 'Units', 'normalized')
+                set(ui_link_type, 'Position', [.62 .06 .3 .05])
+                set(ui_link_type, 'Callback', {@cb_link_type});
                 
                 if isequal(class(analysis), 'AnalysisST_BUT')
                     change_to_threshold()
@@ -2509,7 +2514,7 @@ classdef AnalysisST_WU < Analysis
                 
                 update_graph()
             end
-            function  change_to_weighted()
+            function change_to_weighted()
                 set(ui_checkbox_graph_weighted, 'Value', true)
                 set(ui_checkbox_graph_linecolor, 'Enable', 'on')
                 set(ui_checkbox_graph_lineweight, 'Enable', 'on')
@@ -2633,7 +2638,14 @@ classdef AnalysisST_WU < Analysis
                 update_graph()
             end
             function cb_graph_hide(~, ~)  % (src, event)
-                bg.link_edges_off([], [])
+                link_style = get(ui_link_type, 'Value');
+                if  link_style == 1
+                    bg.link_edges_off([], [])
+                elseif link_style == 2
+                    bg.arrow_edges_off([],[])
+                else
+                    bg.cylinder_edges_off([],[])
+                end
             end
             function cb_graph_color(~, ~)  % (src, event)
                 color = uisetcolor();
@@ -2654,22 +2666,38 @@ classdef AnalysisST_WU < Analysis
                 end
                 update_graph()
             end
+            function cb_link_type(~, ~)
+                update_graph()
+            end
             function update_graph()
                 group_index = get(ui_popup_graph_group, 'Value');
+                link_style = get(ui_link_type, 'Value');
                 if get(ui_checkbox_graph_weighted, 'Value')
                     
                     if get(ui_checkbox_graph_linecolor, 'Value')
                         val1 = get(ui_popup_graph_initcolor, 'Value');
                         val2 = get(ui_popup_graph_fincolor, 'Value');
                         
-                        bg.link_edges('Color', [val1 val2]);
+                        if  link_style == 1
+                            bg.link_edges('Color', [val1 val2]);
+                        elseif link_style == 2
+                            bg.arrow_edges('Color', [val1 val2]);
+                        else
+                             bg.cylinder_edges('Color', [val1 val2]);
+                        end                        
                     end
                     
                     if get(ui_checkbox_graph_lineweight, 'Value')
                         
                         weight = str2double(get(ui_edit_graph_lineweight, 'String'));
                         for indices = 1:1:length(reshA)
-                            bg.link_edges( 'LineWidth', weight)
+                            if  link_style == 1
+                                bg.link_edges('LineWidth', weight)
+                            elseif link_style == 2
+                                bg.arrow_edges('LineWidth', weight);
+                            else
+                                bg.cylinder_edges('LineWidth', weight);
+                            end                           
                         end
                     end
                 else
@@ -2691,13 +2719,26 @@ classdef AnalysisST_WU < Analysis
                     end
                     A = graph.getA();
                     thickness = str2double(get(ui_edit_graph_thickness, 'String'));
-                    bg.link_edges_off([], [])
+                    if  link_style == 1
+                        bg.link_edges_off([], [])
+                    elseif link_style == 2
+                        bg.arrow_edges_off([],[])
+                    else
+                        bg.cylinder_edges_off([],[])
+                    end
+                    
                     for i = 1:1:size(A, 1)
                         for j = 1:1:size(A, 2)
                             if A(i, j) == 0
                                 continue;
                             end
-                            bg.link_edge(i, j, 'LineWidth', thickness)
+                            if  link_style == 1
+                                bg.link_edge(i, j, 'LineWidth', thickness);
+                            elseif link_style == 2
+                                bg.arrow_edge(i, j, 'LineWidth', thickness);
+                            else
+                                bg.cylinder_edge(i, j, 'LineWidth', thickness);
+                            end
                             bg.link_edge_on(i, j)
                         end
                     end
