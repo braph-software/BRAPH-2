@@ -3557,6 +3557,7 @@ classdef AnalysisST_WU < Analysis
                                     measure_data = selected_case.getDifference();
                                     p1 = selected_case.getP1();
                                     p2 = selected_case.getP2();
+                                    calculate_fdr_lim()
                                 otherwise
                                     atlases = ga.getCohort().getBrainAtlases();
                                     atlas = atlases{1};
@@ -3564,6 +3565,7 @@ classdef AnalysisST_WU < Analysis
                                     measure_data = selected_case.getDifference();
                                     p1 = selected_case.getP1();
                                     p2 = selected_case.getP2();
+                                    calculate_fdr_lim()
                             end
                         elseif isequal(analysis.getClass(), 'AnalysisST_BUT')
                             a = get(ui_list_threshold_or_density, 'String');
@@ -3595,6 +3597,7 @@ classdef AnalysisST_WU < Analysis
                                     measure_data = refined_case.getDifference()';
                                     p1 = refined_case.getP1();
                                     p2 = refined_case.getP2();
+                                    calculate_fdr_lim()
                                 otherwise
                                     r_comparisons = ga.getRandomComparisons().getValues();
                                     for i = 1:1:length(r_comparisons)
@@ -3610,6 +3613,7 @@ classdef AnalysisST_WU < Analysis
                                     measure_data = refined_case.getDifference()';
                                     p1 = refined_case.getP1();
                                     p2 = refined_case.getP2();
+                                    calculate_fdr_lim()
                             end
                         else  % density
                             a = get(ui_list_threshold_or_density, 'String');
@@ -3641,6 +3645,7 @@ classdef AnalysisST_WU < Analysis
                                     measure_data = refined_case.getDifference()';
                                     p1 = refined_case.getP1();
                                     p2 = refined_case.getP2();
+                                    calculate_fdr_lim()
                                 otherwise
                                     r_comparisons = ga.getRandomComparisons().getValues();
                                     for i = 1:1:length(r_comparisons)
@@ -3656,6 +3661,7 @@ classdef AnalysisST_WU < Analysis
                                     measure_data = refined_case.getDifference()';
                                     p1 = refined_case.getP1();
                                     p2 = refined_case.getP2();
+                                    calculate_fdr_lim()
                             end
                         end
                     end
@@ -3664,119 +3670,160 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             function update_brain_meas_plot()
-                calculate_fdr_lim()
-                if get(ui_checkbox_meas_symbolsize, 'Value')
+                if ~isempty(measure_data)
+                    if get(ui_checkbox_meas_symbolsize, 'Value') 
+                        
+                        size = str2double(get(ui_edit_meas_symbolsize, 'String'));
+                        offset = str2double(get(ui_edit_meas_offset, 'String'));
+                        rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
+                        
+                        if isempty(fdr_lim)
+                            size = 1 + ((measure_data - offset)./rescaling)*size;
+                        else
+                            size = (1 + ((measure_data - offset)./rescaling)*size).*fdr_lim;
+                        end
+                        
+                        size(isnan(size)) = 0.1;
+                        size(size<=0) = 0.1;
+                        bg.br_syms([], 'Size', size);
+                    end
                     
-                    size = str2double(get(ui_edit_meas_symbolsize, 'String'));
-                    offset = str2double(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
+                    if get(ui_checkbox_meas_symbolcolor, 'Value')
+                        
+                        offset = str2double(get(ui_edit_meas_offset, 'String'));
+                        rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
+                        
+                        colorValue = (measure_data - offset)./rescaling;
+                        %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
+                        colorValue(isnan(colorValue)) = 0;
+                        colorValue(colorValue<0) = 0;
+                        colorValue(colorValue>1) = 1;
+                        
+                        C = zeros(length(colorValue), 3);
+                        
+                        val1 = get(ui_popup_meas_initcolor, 'Value');
+                        val2 = get(ui_popup_meas_fincolor, 'Value');
+                        C(:, val1) = colorValue;
+                        C(:, val2) = 1 - colorValue;
+                        
+                        bg.br_syms([], 'Color', C);
+                    end
                     
-                    size = (1 + ((measure_data - offset)./rescaling)*size).*fdr_lim;
-                    size(isnan(size)) = 0.1;
-                    size(size<=0) = 0.1;
-                    bg.br_syms([], 'Size', size);
+                    if get(ui_checkbox_meas_sphereradius, 'Value')
+                        
+                        R = str2double(get(ui_edit_meas_sphereradius, 'String'));
+                        offset = str2double(get(ui_edit_meas_offset, 'String'));
+                        rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
+                        
+                        if isempty(fdr_lim)
+                           R = 1 + ((measure_data - offset)./rescaling)*R;
+                        else
+                            R = (1 + ((measure_data - offset)./rescaling)*R).*fdr_lim;
+                        end
+                        
+                        R(isnan(R)) = 0.1;
+                        R(R<=0) = 0.1;
+                        bg.br_sphs([], 'R', R);
+                    end
+                    
+                    if get(ui_checkbox_meas_spherecolor, 'Value')
+                        
+                        offset = str2double(get(ui_edit_meas_offset, 'String'));
+                        rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
+                        
+                        colorValue = (measure_data - offset)./rescaling;
+                        %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
+                        colorValue(isnan(colorValue)) = 0;
+                        colorValue(colorValue<0) = 0;
+                        colorValue(colorValue>1) = 1;
+                        
+                        C = zeros(length(colorValue), 3);
+                        
+                        val1 = get(ui_popup_meas_sphinitcolor, 'Value');
+                        val2 = get(ui_popup_meas_sphfincolor, 'Value');
+                        C(:, val1) = colorValue;
+                        C(:, val2) = 1 - colorValue;
+                        bg.br_sphs([], 'Color', C);
+                    end
+                    
+                    if get(ui_checkbox_meas_spheretransparency, 'Value')
+                        
+                        alpha = get(ui_slider_meas_spheretransparency, 'Value');
+                        offset = str2double(get(ui_edit_meas_offset, 'String'));
+                        rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
+                        
+                        if isempty(fdr_lim)
+                            alpha_vec = ((measure_data - offset)./rescaling).*alpha;
+                        else                        
+                            alpha_vec = (((measure_data - offset)./rescaling).*alpha).*fdr_lim;
+                        end
+                        alpha_vec(isnan(alpha_vec)) = 0;
+                        alpha_vec(alpha_vec<0) = 0;
+                        alpha_vec(alpha_vec>1) = 1;
+                        bg.br_sphs([], 'Alpha', alpha_vec);
+                    end
+                    
+                    if get(ui_checkbox_meas_labelsize, 'Value')
+                        
+                        size = str2double(get(ui_edit_meas_labelsize, 'String'));
+                        offset = str2double(get(ui_edit_meas_offset, 'String'));
+                        rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
+                        
+                        if isempty(fdr_lim)
+                            size = 1 + ((measure_data - offset)./rescaling)*size;
+                        else                        
+                            size = (1 + ((measure_data - offset)./rescaling)*size).*fdr_lim;
+                        end
+                        
+                        size(isnan(size)) = 0.1;
+                        size(size<=0) = 0.1;
+                        bg.br_labs([], 'FontSize', size);
+                    end
+                    
+                    if get(ui_checkbox_meas_labelcolor, 'Value')
+                        
+                        offset = str2double(get(ui_edit_meas_offset, 'String'));
+                        rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
+                        
+                        colorValue = (measure_data - offset)./rescaling;
+                        %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
+                        colorValue(isnan(colorValue)) = 0;
+                        colorValue(colorValue<0) = 0;
+                        colorValue(colorValue>1) = 1;
+                        
+                        C = zeros(length(colorValue), 3);
+                        
+                        val1 = get(ui_popup_meas_labelinitcolor, 'Value');
+                        val2 = get(ui_popup_meas_labelfincolor, 'Value');
+                        C(:, val1) = colorValue;
+                        C(:, val2) = 1 - colorValue;
+                        bg.br_labs([], 'Color', C);
+                    end
                 end
-                
-                if get(ui_checkbox_meas_symbolcolor, 'Value')
-                    
-                    offset = str2double(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                    
-                    colorValue = (measure_data - offset)./rescaling;
-                    %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
-                    colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue<0) = 0;
-                    colorValue(colorValue>1) = 1;
-                    
-                    C = zeros(length(colorValue), 3);
-                    
-                    val1 = get(ui_popup_meas_initcolor, 'Value');
-                    val2 = get(ui_popup_meas_fincolor, 'Value');
-                    C(:, val1) = colorValue;
-                    C(:, val2) = 1 - colorValue;
-                    
-                    bg.br_syms([], 'Color', C);
-                end
-                
-                if get(ui_checkbox_meas_sphereradius, 'Value')
-                    
-                    R = str2double(get(ui_edit_meas_sphereradius, 'String'));
-                    offset = str2double(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                    
-                    R = (1 + ((measure_data - offset)./rescaling)*R).*fdr_lim;
-                    R(isnan(R)) = 0.1;
-                    R(R<=0) = 0.1;
-                    bg.br_sphs([], 'R', R);
-                end
-                
-                if get(ui_checkbox_meas_spherecolor, 'Value')
-                    
-                    offset = str2double(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                    
-                    colorValue = (measure_data - offset)./rescaling;
-                    %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
-                    colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue<0) = 0;
-                    colorValue(colorValue>1) = 1;
-                    
-                    C = zeros(length(colorValue), 3);
-                    
-                    val1 = get(ui_popup_meas_sphinitcolor, 'Value');
-                    val2 = get(ui_popup_meas_sphfincolor, 'Value');
-                    C(:, val1) = colorValue;
-                    C(:, val2) = 1 - colorValue;
-                    bg.br_sphs([], 'Color', C);
-                end
-                
-                if get(ui_checkbox_meas_spheretransparency, 'Value')
-                    
-                    alpha = get(ui_slider_meas_spheretransparency, 'Value');
-                    offset = str2double(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                    
-                    alpha_vec = (((measure_data - offset)./rescaling).*alpha).*fdr_lim;
-                    alpha_vec(isnan(alpha_vec)) = 0;
-                    alpha_vec(alpha_vec<0) = 0;
-                    alpha_vec(alpha_vec>1) = 1;
-                    bg.br_sphs([], 'Alpha', alpha_vec);
-                end
-                
-                if get(ui_checkbox_meas_labelsize, 'Value')
-                    
-                    size = str2double(get(ui_edit_meas_labelsize, 'String'));
-                    offset = str2double(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                    
-                    size = (1 + ((measure_data - offset)./rescaling)*size).*fdr_lim;
-                    size(isnan(size)) = 0.1;
-                    size(size<=0) = 0.1;
-                    bg.br_labs([], 'FontSize', size);
-                end
-                
-                if get(ui_checkbox_meas_labelcolor, 'Value')
-                    
-                    offset = str2double(get(ui_edit_meas_offset, 'String'));
-                    rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                    
-                    colorValue = (measure_data - offset)./rescaling;
-                    %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
-                    colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue<0) = 0;
-                    colorValue(colorValue>1) = 1;
-                    
-                    C = zeros(length(colorValue), 3);
-                    
-                    val1 = get(ui_popup_meas_labelinitcolor, 'Value');
-                    val2 = get(ui_popup_meas_labelfincolor, 'Value');
-                    C(:, val1) = colorValue;
-                    C(:, val2) = 1 - colorValue;
-                    bg.br_labs([], 'Color', C);
-                end
-                
             end
             function calculate_fdr_lim()
+                i = get(ui_list_gr, 'Value');
+                m = mlist{i};
+                atlases = ga.getCohort().getBrainAtlases();
+                atlas = atlases{1};
+                if Measure.is_nodal(m)
+                    fdr_lim = ones(1, atlas.getBrainRegions().length());
+                    for i = 1:1:atlas.getBrainRegions().length()                       
+                        if get(ui_checkbox_meas_fdr1, 'Value')
+                            if p1(i) > fdr(p1, str2double(get(ui_edit_meas_fdr1, 'String')))
+                                fdr_lim(i) = 0;
+                            end
+                        elseif get(ui_checkbox_meas_fdr2, 'Value')
+                            if p2(i) > fdr(p2, str2double(get(ui_edit_meas_fdr2, 'String')))
+                                fdr_lim(i) = 0;
+                            end
+                        end
+                    end
+                elseif Measure.is_binodal(m)
+                    
+                else
+                    % do nothing
+                end
             end
         end
     end
