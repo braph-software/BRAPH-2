@@ -1,54 +1,55 @@
 classdef RichClubDegree < Degree
-    % RichClubDegree RichClubDegree measure
-    % RichClubDegree provides the richness of a node for binary undirected (BU),
+    % RichClubDegree Rich-club degree measure
+    % RichClubDegree provides the rich club degree of a node for binary undirected (BU),
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
     % graphs. 
     %
-    % It is a parametric measure, from i = 1 to the k level it calculates 
-    % the sum of the number of edges that connect nodes of degree i or higher 
-    % within a layer. The value of k is set by the user (setting 'RichnessThreshold'), 
+    % It is a parametric measure, at k level it calculates the sum of the
+    % number of edges that connect nodes of degree k or higher within a
+    % layer. The value of k is set by the user (setting 'RichnessThreshold'), 
     % the default value is equal to 1.
     % 
     % RichClubDegree methods:
-    %   RichClubDegree                    - constructor
+    %   RichClubDegree              - constructor
     %
     % RichClubDegree methods (Static)
-    %   getClass                    - returns the richness class
-    %   getName                     - returns the name of richness measure
-    %   getDescription              - returns the description of richness measure
+    %   getClass                    - returns the rich-club degree class
+    %   getName                     - returns the name of rich-club degree measure
+    %   getDescription              - returns the description of rich-club degree measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
-    %   getParametricity            - returns the parametricity of richness measure
+    %   getParametricity            - returns the parametricity of rich-club degree measure
     %   getMeasure                  - returns the degree class
-    %   getParameterName            - returns the name of richness measure's parameter
+    %   getParameterName            - returns the name of rich-club degree's parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % RichClubDegree methods 
-    %   getParameterValues          - returns the values of richness measure's parameter
+    %   getParameterValues          - returns the values of rich-club degree's parameter
     %
     % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
     methods
         function m = RichClubDegree(g, varargin)
-            % RICHNESS(G) creates richness with default properties.
+            % RICHCLUBDEGREE(G) creates rich-club degree with default properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
             % or MultiplexGraphWU). 
             %
-            % RICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
-            % richness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
+            % RICHCLUBDEGREE(G, 'RichClubThreshold', RICHCLUBTHRESHOLD) creates
+            % rich-club degree measure and initializes the property 
+            % RichClubThreshold with RICHCLUBTHRESHOLD. 
             % Admissible THRESHOLD options are:
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
-            %                    to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
+            % RICHCLUBTHRESHOLD = 1 (default) - RICHCLUBDEGREE k threshold 
+            %                    is set to 1.
+            %                    value - RICHCLUBDEGREE k threshold is set 
+            %                    to the specificied value.
             % 
-            % RICHNESS(G, 'VALUE', VALUE) creates richness, and sets the value
-            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
-            % or MultiplexGraphWU). 
+            % RICHCLUBDEGREE(G, 'VALUE', VALUE) creates rich-club degree, and 
+            % sets the value to VALUE. G is a graph (e.g, an instance of GraphBD, 
+            % GraphBU, GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, 
+            % MultiplexGraphWD or MultiplexGraphWU). 
             %
             % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
@@ -56,11 +57,11 @@ classdef RichClubDegree < Degree
         end
     end
     methods (Access=protected)
-        function richness = calculate(m)
-            % CALCULATE calculates the richness value of a graph
+        function rich_club_degree = calculate(m)
+            % CALCULATE calculates the rich-club degree value of a graph
             %
-            % RICHNESS = CALCULATE(M) returns the value of the richness
-            % of a graph.
+            % RICHCLUBDEGREE = CALCULATE(M) returns the value of the 
+            % rich-club degree of a graph.
             %
             % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
@@ -69,7 +70,7 @@ classdef RichClubDegree < Degree
             L = g.layernumber();
             N = g.nodenumber();
             
-            richness = cell(L, 1);
+            rich_club_degree = cell(L, 1);
             directionality_type =  g.getDirectionalityType(L);
             for li = 1:1:L
                 
@@ -108,16 +109,16 @@ classdef RichClubDegree < Degree
                     deg = (in_degree{li} + out_degree{li})/2;
                 end
                 
-                richness_threshold = get_from_varargin(1, 'RichnessThreshold', m.getSettings());
-                assert(mod(richness_threshold, 1) == 0, ...
-                    [BRAPH2.STR ':Richness:' BRAPH2.WRONG_INPUT], ...
-                    ['Richness threshold must be an integer value ' ...
-                    'while it is ' tostring(richness_threshold)])
+                richclub_threshold = get_from_varargin(1, 'RichClubThreshold', m.getSettings());
+                assert(mod(richclub_threshold, 1) == 0, ...
+                    [BRAPH2.STR ':RichClubDegree:' BRAPH2.WRONG_INPUT], ...
+                    ['RichClubDegree threshold must be an integer value ' ...
+                    'while it is ' tostring(richclub_threshold)])
 
-                k_level = abs(richness_threshold);  
+                k_level = abs(richclub_threshold);  
                 m.setParameter(k_level)  % Set the parameter
             
-                richness_layer = zeros(N(1), 1, k_level);
+                richclub_layer = zeros(N(1), 1, k_level);
                 for k = 1:1:k_level
                     low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
                     Aii = binarize(Aii);  % binarizes the adjacency matrix
@@ -126,13 +127,13 @@ classdef RichClubDegree < Degree
                     subAii(:, low_rich_nodes) = 0;  % remove columns
                     
                     if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                        richness_layer(:, :, k) = sum(subAii, 1)';  % degree of high rich nodes
+                        richclub_layer(:, :, k) = sum(subAii, 1)';  % degree of high rich nodes
                     else
-                        richness_layer(:, :, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
+                        richclub_layer(:, :, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
                     end
 
                 end
-                richness(li) = {richness_layer};  % add richness of layer li          
+                rich_club_degree(li) = {richclub_layer};  % add rich club degree of layer li          
             end
         end
     end  
@@ -140,7 +141,7 @@ classdef RichClubDegree < Degree
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the richness measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the rich-club degree measure.
             %
             % See also getName, getDescription. 
             
@@ -149,22 +150,22 @@ classdef RichClubDegree < Degree
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the richness measure.
+            % NAME = GETNAME() returns the name of the rich-club degree measure.
             %
             % See also getClass, getDescription. 
             
             name = 'Rich-club degree';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the richness description 
+            % GETDESCRIPTION returns the rich-club degree description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % richness measure.
+            % rich-club degree measure.
             %
             % See also getClass, getName.
             
             description = [ ...
-                'The richness of a node is the sum of ' ...
+                'The rich-club degree of a node at level k is the sum of ' ...
                 'the edges that connect nodes of degree k or higher within a layer. ' ...
                 'k is set by the user; the default value is equal to 1. ' ...
                 ];
@@ -174,20 +175,20 @@ classdef RichClubDegree < Degree
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to RichClubDegree.
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
-            %                    to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
+            % RICHCLUBTHRESHOLD = 1 (default) - RICHCLUBDEGREE k threshold 
+            %                    is set to 1.
+            %                    value - RICHCLUBDEGREE k threshold is set 
+            %                    to the specificied value.
             
             available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, 1, {};
+                'RichClubThreshold', BRAPH2.NUMERIC, 1, {};
                 };
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of RichClubDegree
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of richness measure (NODAL).
+            % of rich-club degree measure (NODAL).
             %
             % See also getMeasureScope.
             
@@ -197,7 +198,7 @@ classdef RichClubDegree < Degree
             % GETMEASURESCOPE returns the measure scope of RichClubDegree
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of richness measure (UNILAYER).
+            % measure scope of rich-club degree measure (UNILAYER).
             %
             % See also getMeasureFormat.
             
@@ -207,7 +208,7 @@ classdef RichClubDegree < Degree
             % GETPARAMETRICITY returns the parametricity of RichClubDegree
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of richness measure (PARAMETRIC).
+            % parametricity of rich-club degree measure (PARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
@@ -217,7 +218,7 @@ classdef RichClubDegree < Degree
             % GETPARAMETERNAME returns the name of the RichClubDegree' parameter
             %
             % NAME = GETPARAMETERNAME() returns the name (string) of 
-            % the richness parameter.
+            % the rich-club degree's parameter.
             
             name = 'Rich-club threshold';
         end
@@ -225,7 +226,7 @@ classdef RichClubDegree < Degree
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with RichClubDegree 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to richness. 
+            % of compatible graph classes to rich-club degree. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber. 
@@ -245,7 +246,7 @@ classdef RichClubDegree < Degree
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with RichClubDegree
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs with richness.
+            % compatible graphs with rich-club degree.
             % 
             % See also getCompatibleGraphList.
             
@@ -257,7 +258,7 @@ classdef RichClubDegree < Degree
             % GETPARAMETERVALUES returns the values of the RichClubDegree' parameter
             %
             % VALUES = GETPARAMETERVALUES() returns the values of
-            % the richness' parameter.
+            % the rich-club degree' parameter.
             
             values = 1:1:m.getParameter();
         end
