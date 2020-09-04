@@ -6,7 +6,7 @@ classdef RichClubDegree < Degree
     %
     % It is a parametric measure, at k level it calculates the sum of the
     % number of edges that connect nodes of degree k or higher within a
-    % layer. The value of k is set by the user (setting 'RichnessThreshold'), 
+    % layer. The value of k is set by the user (setting 'RichClubThreshold'), 
     % the default value is equal to 1.
     % 
     % RichClubDegree methods:
