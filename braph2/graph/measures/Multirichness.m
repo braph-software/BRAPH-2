@@ -5,8 +5,7 @@ classdef Multirichness < Richness2
     % multiplexes. 
     %
     % It is calculated as the sum of the number of edges that connect nodes
-    % of degree k or higher in all layers. The value of k is set by the
-    % user (setting 'RichnessThreshold'), the default value is equal to 1.
+    % of higher degree in all layers.
     % The relevance of each layer is controlled by the
     % coefficients c (setting 'MultirichnessCoefficients') that are between
     % 0 and 1, and add up to one; the default coefficients are
