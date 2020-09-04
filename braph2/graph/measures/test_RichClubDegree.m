@@ -1,4 +1,4 @@
-% test Richness
+% test RichClubDegree
 
 %% Test 1: GraphBU
 A = [
@@ -8,14 +8,14 @@ A = [
     0  1  0  0
     ];
 
-known_richness = {[2 2 2 0]'};
+known_richclubdegree = {[2 2 2 0]'};
 
 g = GraphBU(A);
-richness = Richness(g, 'RichnessThreshold', 1);
+richclubdegree = RichClubDegree(g);
 
-assert(isequal(richness.getValue(), known_richness), ...
-    [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for GraphBU.')
+assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
+    'RichClubDegree is not being calculated correctly for GraphBU.')
 
 %% Test 2: GraphBD
 A = [
@@ -27,14 +27,14 @@ A = [
 
 rich(:, 1, 1) = [5/2 3 2 3/2]';
 rich(:, 1, 2) = [1 1 0 0]';
-known_richness = {rich};
+known_richclubdegree = {rich};
 
 g = GraphBD(A);
-richness = Richness(g, 'RichnessThreshold', 2);
+richclubdegree = RichClubDegree(g, 'RichClubThreshold', 2);
 
-assert(isequal(richness.getValue(), known_richness), ...
-    [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for GraphBD.')
+assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
+    'RichClubDegree is not being calculated correctly for GraphBD.')
 
 %% Test 3: GraphWU
 A = [
@@ -44,14 +44,14 @@ A = [
     0   .8  0  0
     ];
 
-known_richness = {[2 2 2 0]'};
+known_richclubdegree = {[2 2 2 0]'};
 
 g = GraphWU(A);
-richness = Richness(g, 'RichnessThreshold', 1);
+richclubdegree = RichClubDegree(g, 'RichClubThreshold', 1);
 
-assert(isequal(richness.getValue(), known_richness), ...
-    [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for GraphWU.')
+assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
+    'RichClubDegree is not being calculated correctly for GraphWU.')
 
 %% Test 4: GraphWD
 A = [
@@ -63,14 +63,14 @@ A = [
 
 rich(:, 1, 1) = [5/2 3 2 3/2]';
 rich(:, 1, 2) = [1 1 0 0]';
-known_richness = {rich};
+known_richclubdegree = {rich};
 
 g = GraphWD(A);
-richness = Richness(g, 'RichnessThreshold', 2);
+richclubdegree = RichClubDegree(g, 'RichClubThreshold', 2);
 
-assert(isequal(richness.getValue(), known_richness), ...
-    [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for GraphWD.')
+assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
+    'RichClubDegree is not being calculated correctly for GraphWD.')
 
 
 %% Test 5: MultiplexGraphBU
@@ -93,17 +93,17 @@ A = {
     A21     A22
     };
 
-known_richness = {
+known_richclubdegree = {
                  [2 2 2 0]'
                  [3 3 2 2]'
                  };      
 
 g = MultiplexGraphBU(A);
-richness = Richness(g, 'RichnessThreshold', 1);
+richclubdegree = RichClubDegree(g, 'RichClubThreshold', 1);
 
-assert(isequal(richness.getValue(), known_richness), ...
-    [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for MultiplexGraphBU.')
+assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
+    'RichClubDegree is not being calculated correctly for MultiplexGraphBU.')
 
 %% Test 6: MultiplexGraphBD
 A11 = [
@@ -131,17 +131,17 @@ richness_l1(:, 1, 2) = [1 1 0 0]';
 richness_l2(:, 1, 1) = [5/2 3 5/2 2]';
 richness_l2(:, 1, 2) = [2 2 2 0]';
 
-known_richness = {
+known_richclubdegree = {
                  richness_l1
                  richness_l2
                  };      
 
 g = MultiplexGraphBD(A);
-richness = Richness(g, 'RichnessThreshold', 2);
+richclubdegree = RichClubDegree(g, 'RichClubThreshold', 2);
 
-assert(isequal(richness.getValue(), known_richness), ...
-    [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for MultiplexGraphBD.')
+assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
+    'RichClubDegree is not being calculated correctly for MultiplexGraphBD.')
 
 %% Test 7: MultiplexGraphWU
 A11 = [
@@ -163,17 +163,17 @@ A = {
     A21     A22
     };
 
-known_richness = {
+known_richclubdegree = {
                  [2 2 2 0]'
                  [3 3 2 2]'
                  };      
 
 g = MultiplexGraphWU(A);
-richness = Richness(g, 'RichnessThreshold', 1);
+richclubdegree = RichClubDegree(g, 'RichClubThreshold', 1);
 
-assert(isequal(richness.getValue(), known_richness), ...
-    [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for MultiplexGraphWU.')
+assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
+    'RichClubDegree is not being calculated correctly for MultiplexGraphWU.')
 
 %% Test 8: MultiplexGraphWD
 A11 = [
@@ -201,14 +201,14 @@ richness_l1(:, 1, 2) = [1 1 0 0]';
 richness_l2(:, 1, 1) = [5/2 3 5/2 2]';
 richness_l2(:, 1, 2) = [2 2 2 0]';
 
-known_richness = {
+known_richclubdegree = {
                  richness_l1
                  richness_l2
                  };  
 
 g = MultiplexGraphWD(A);
-richness = Richness(g, 'RichnessThreshold', 2);
+richclubdegree = RichClubDegree(g, 'RichClubThreshold', 2);
 
-assert(isequal(richness.getValue(), known_richness), ...
-    [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for MultiplexGraphWD.')
+assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
+    'RichClubDegree is not being calculated correctly for MultiplexGraphWD.')
