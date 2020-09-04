@@ -42,12 +42,10 @@ classdef MultiplexCorePeriphery < Multirichness
             % property RichnessThreshold with RICHNESSTHRESHOLD and the
             % property MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
             % Admissible THRESHOLD and COEFFICIENTS options are:
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - value.
+            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is  
+            %                    set to 1.
+            %                    value - RICHNESS k threshold is set to 
+            %                    the specificied value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
@@ -84,6 +82,8 @@ classdef MultiplexCorePeriphery < Multirichness
             
             N = g.nodenumber();
             L = g.layernumber();
+            k_level = size(multirichness{1}, 3);  % Get the richness threshold
+            m.setParameter(k_level)  % Set the multiplex cor-periphery's parameter (based on richness's parameter)
   
             multirichness_coefficients = get_from_varargin(0, 'MultirichnessCoefficients', m.getSettings());
             assert(length(multirichness_coefficients) == L || all(multirichness_coefficients == 0), ...
@@ -139,12 +139,17 @@ classdef MultiplexCorePeriphery < Multirichness
                 overlapping_degree_coefficients = overlapping_degree_coefficients + c(li)*deg;
             end
             
+            multiplex_core_periphery_layer = zeros(N(1), 1, k_level);
             [~, rankingInd] = sort(overlapping_degree_coefficients, 'descend');
             multirichness = multirichness{1};
-            [~, rankOfMaxMultirichness] = max(multirichness(rankingInd));
-            multiplex_core_periphery = zeros(N(1), 1);
-            multiplex_core_periphery(rankingInd(1:rankOfMaxMultirichness)) = 1;
-            multiplex_core_periphery = {multiplex_core_periphery};
+            for k = 1:1:k_level
+                multirich = multirichness();
+                [~, rankOfMaxMultirichness] = max(multirich(rankingInd));
+                multiplex_core_periphery_klevel = zeros(N(1), 1);
+                multiplex_core_periphery_klevel(rankingInd(1:rankOfMaxMultirichness)) = 1;
+                multiplex_core_periphery_layer(:, :, k) = multiplex_core_periphery_klevel;
+            end
+            multiplex_core_periphery = {multiplex_core_periphery_layer};
         end
     end  
     methods (Static)  % Descriptive methods
@@ -231,7 +236,7 @@ classdef MultiplexCorePeriphery < Multirichness
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.NONPARAMETRIC;
+            parametricity = Measure.PARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with MultiplexCorePeriphery 

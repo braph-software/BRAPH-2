@@ -48,11 +48,14 @@ A = {
     A11     A12
     A21     A22
     };
-        
-known_multiplex_core_periphery = {[0 1 0 0]'};     
+
+mcp(:, 1, 1) = [0 1 0 0]';
+mcp(:, 1, 2) = [0 1 0 0]';
+mcp(:, 1, 3) = [0 1 0 0]';
+known_multiplex_core_periphery = {mcp};  
 
 g = MultiplexGraphBD(A);
-multiplex_core_periphery = MultiplexCorePeriphery(g, 'RichnessThreshold', -1, 'MultirichnessCoefficients', [2/3, 1/3]);
+multiplex_core_periphery = MultiplexCorePeriphery(g, 'RichnessThreshold', 3, 'MultirichnessCoefficients', [2/3, 1/3]);
 
 assert(isequal(multiplex_core_periphery.getValue(), known_multiplex_core_periphery), ...
     [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.BUG_ERR], ...
