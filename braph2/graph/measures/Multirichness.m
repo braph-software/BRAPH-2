@@ -151,7 +151,7 @@ classdef Multirichness < Richness2
             %                    each layer if the length of values is
             %                    equal to the number of layers.
 
-            available_settings(end+1, :) = {
+            available_settings = {
                  'MultirichnessCoefficients', BRAPH2.NUMERIC, 0, {};
                 };
         end
