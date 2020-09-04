@@ -1,6 +1,6 @@
 classdef RichClubStrength < Strength
-    % WeightedRichClubDegree Weighted richness measure
-    % WeightedRichClubDegree provides the weighted richness of a node for weighted 
+    % RichClubStrength Rich-club strength measure
+    % RichClubStrength provides the rich-club strength of a node for weighted 
     % undirected (WU) and weighted directed (WD) graphs. 
     %
     % It is a parametric measure, at s level it calculates the sum of the
@@ -8,10 +8,10 @@ classdef RichClubStrength < Strength
     % layer. The values of s are set by the user (setting 'WeightedRichClubThreshold'), 
     % the default value is equal to 1.
     % 
-    % WeightedRichClubDegree methods:
-    %   WeightedRichClubDegree      - constructor
+    % RichClubStrength methods:
+    %   RichClubStrength            - constructor
     %
-    % WeightedRichClubDegree methods (Static)
+    % RichClubStrength methods (Static)
     %   getClass                    - returns the rich-club strength class
     %   getName                     - returns the name of rich-club strength measure
     %   getDescription              - returns the description of rich-club strength measure
@@ -24,7 +24,7 @@ classdef RichClubStrength < Strength
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % WeightedRichClubDegree methods 
+    % RichClubStrength methods 
     %   getParameterValues          - returns the values of rich-club strength measure's parameter
     %
     % See also Measure, Strength, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
