@@ -1,18 +1,16 @@
-classdef Richness2 < Degree
-    % Richclub Rich-club coefficient measure
-    % Richclub provides the rich-club coefficient of a node for binary undirected (BU),
+classdef Richness < Degree
+    % Richness Richness measure
+    % Richness provides the richness of a node for binary undirected (BU),
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
     % graphs. 
     %
-    % It is a parametric measure, from i = 1 to the k level it calculates 
-    % the sum of the number of edges that connect nodes of degree i or higher 
-    % within a layer. The value of k is set by the user (setting 'RichnessThreshold'), 
-    % the default value is equal to 1.
+    % It is calculated as the sum of the number of edges that connect nodes 
+    % of higher degree within a layer. 
     % 
-    % Richclub methods:
-    %   Richclub                    - constructor
+    % Richness methods:
+    %   Richness                    - constructor
     %
-    % Richclub methods (Static)
+    % Richness methods (Static)
     %   getClass                    - returns the richness class
     %   getName                     - returns the name of richness measure
     %   getDescription              - returns the description of richness measure
@@ -31,22 +29,9 @@ classdef Richness2 < Degree
     % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
     methods
-        function m = Richness2(g, varargin)
+        function m = Richness(g, varargin)
             % RICHNESS(G) creates richness with default properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
-            % or MultiplexGraphWU). 
-            %
-            % RICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
-            % richness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
-            % Admissible THRESHOLD options are:
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
-            %                    to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
-            % 
-            % RICHNESS(G, 'VALUE', VALUE) creates richness, and sets the value
-            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
             % or MultiplexGraphWU). 
             %
@@ -56,7 +41,7 @@ classdef Richness2 < Degree
         end
     end
     methods (Access=protected)
-        function richclub = calculate(m)
+        function richness = calculate(m)
             % CALCULATE calculates the richness value of a graph
             %
             % RICHNESS = CALCULATE(M) returns the value of the richness
@@ -69,7 +54,7 @@ classdef Richness2 < Degree
             L = g.layernumber();
             N = g.nodenumber();
             
-            richclub = cell(L, 1);
+            richness = cell(L, 1);
             directionality_type =  g.getDirectionalityType(L);
             for li = 1:1:L
                 
@@ -131,7 +116,7 @@ classdef Richness2 < Degree
                     kMinus(i) = kMinusForI(i);
                     kPlus(i) = kPlusForI(i);
                 end
-                richclub(li) = {kPlus};  % add richness of layer li          
+                richness(li) = {kPlus};  % add richness of layer li          
             end
         end
     end  
@@ -164,23 +149,18 @@ classdef Richness2 < Degree
             
             description = [ ...
                 'The richness of a node is the sum of ' ...
-                'the edges that connect nodes of degree k or higher within a layer. ' ...
-                'k is set by the user; the default value is equal to 1. ' ...
+                'the edges that connect nodes of higher degree within a layer. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
             % GETAVAILABLESETTINGS returns the setting available to Richness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to Richness.
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
-            %                    to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
+            % settings available to Richness. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList.
             
-            available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, 1, {};
-                };
+            available_settings = {};
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of Richness
@@ -206,19 +186,11 @@ classdef Richness2 < Degree
             % GETPARAMETRICITY returns the parametricity of Richness
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of richness measure (PARAMETRIC).
+            % parametricity of richness measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
             parametricity = Measure.NONPARAMETRIC;
-        end
-        function name = getParameterName()
-            % GETPARAMETERNAME returns the name of the Richness' parameter
-            %
-            % NAME = GETPARAMETERNAME() returns the name (string) of 
-            % the richness parameter.
-            
-            name = 'Richness threshold';
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Richness 
@@ -249,16 +221,6 @@ classdef Richness2 < Degree
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Richness');
-        end
-    end
-    methods 
-        function values = getParameterValues(m)
-            % GETPARAMETERVALUES returns the values of the Richness' parameter
-            %
-            % VALUES = GETPARAMETERVALUES() returns the values of
-            % the richness' parameter.
-            
-            values = 1:1:m.getParameter();
         end
     end
 end
