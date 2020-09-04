@@ -1,4 +1,4 @@
-classdef Multirichness2 < Richness2
+classdef Multirichness < Richness2
     % Multirichness Multirichness measure
     % Multirichness provides the multirichness of a node for binary undirected (BU),
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
@@ -34,21 +34,16 @@ classdef Multirichness2 < Richness2
     % See also Measure, Richness, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
     methods
-        function m = Multirichness2(g, varargin)
+        function m = Multirichness(g, varargin)
             % MULTIRICHNESS(G) creates multirichness with default properties.
             % G is a multiplex (e.g, an instance of MultiplexGraphBD,
             % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
             % 
-            % MULTIRICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD,
-            % 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS)  
-            % creates multirichness measure and initializes the property
-            % RichnessThreshold with RICHNESSTHRESHOLD and the property
-            % MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS.
-            % Admissible THRESHOLD and COEFFICIENTS options are:
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is 
-            %                    set to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
+            % MULTIRICHNESS(G, 'MultirichnessCoefficients',
+            % MULTIRICHNESSCOEFFICIENTS) creates multirichness measure 
+            % and initializes the property MultirichnessCoefficients
+            % with MULTIRICHNESSCOEFFICIENTS.
+            % Admissible COEFFICIENTS options are:
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
@@ -105,7 +100,7 @@ classdef Multirichness2 < Richness2
             
             multirichness = zeros(N(1), 1);
             for li = 1:1:L
-                multirichness = multirichness + c(li)*richness{li};  % to fix when making this measure also parametric
+                multirichness = multirichness + c(li)*richness{li};  
             end
             multirichness = {multirichness};
         end
@@ -149,18 +144,12 @@ classdef Multirichness2 < Richness2
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Multirichness.
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is  
-            %                    set to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients 
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
             %                    will be set to the values specified per
             %                    each layer if the length of values is
             %                    equal to the number of layers.
-            
-            available_settings = getAvailableSettings@Richness2();
 
             available_settings(end+1, :) = {
                  'MultirichnessCoefficients', BRAPH2.NUMERIC, 0, {};
@@ -190,11 +179,11 @@ classdef Multirichness2 < Richness2
             % GETPARAMETRICITY returns the parametricity of Multirichness
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of multirichness measure (PARAMETRIC).
+            % parametricity of multirichness measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.PARAMETRIC;
+            parametricity = Measure.NONPARAMETRIC;
         end
         function name = getParameterName()
             % GETPARAMETERNAME returns the name of the Multirichness' parameter
