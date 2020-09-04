@@ -1,6 +1,6 @@
-classdef Richness < Degree
-    % Richness Richness measure
-    % Richness provides the richness of a node for binary undirected (BU),
+classdef RichClubDegree < Degree
+    % RichClubDegree RichClubDegree measure
+    % RichClubDegree provides the richness of a node for binary undirected (BU),
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
     % graphs. 
     %
@@ -9,10 +9,10 @@ classdef Richness < Degree
     % within a layer. The value of k is set by the user (setting 'RichnessThreshold'), 
     % the default value is equal to 1.
     % 
-    % Richness methods:
-    %   Richness                    - constructor
+    % RichClubDegree methods:
+    %   RichClubDegree                    - constructor
     %
-    % Richness methods (Static)
+    % RichClubDegree methods (Static)
     %   getClass                    - returns the richness class
     %   getName                     - returns the name of richness measure
     %   getDescription              - returns the description of richness measure
@@ -25,13 +25,13 @@ classdef Richness < Degree
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % Richness methods 
+    % RichClubDegree methods 
     %   getParameterValues          - returns the values of richness measure's parameter
     %
     % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
     methods
-        function m = Richness(g, varargin)
+        function m = RichClubDegree(g, varargin)
             % RICHNESS(G) creates richness with default properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
@@ -144,7 +144,7 @@ classdef Richness < Degree
             %
             % See also getName, getDescription. 
             
-            measure_class = 'Richness';
+            measure_class = 'RichClubDegree';
         end
         function name = getName()
             % GETNAME returns the measure name
@@ -153,7 +153,7 @@ classdef Richness < Degree
             %
             % See also getClass, getDescription. 
             
-            name = 'Richness';
+            name = 'Rich-club degree';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the richness description 
@@ -170,10 +170,10 @@ classdef Richness < Degree
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to Richness
+            % GETAVAILABLESETTINGS returns the setting available to RichClubDegree
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to Richness.
+            % settings available to RichClubDegree.
             % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
             %                    to 1.
             %                    value - RICHNESS k threshold is set to the
@@ -184,7 +184,7 @@ classdef Richness < Degree
                 };
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of Richness
+            % GETMEASUREFORMAT returns the measure format of RichClubDegree
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of richness measure (NODAL).
@@ -194,7 +194,7 @@ classdef Richness < Degree
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of Richness
+            % GETMEASURESCOPE returns the measure scope of RichClubDegree
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
             % measure scope of richness measure (UNILAYER).
@@ -204,7 +204,7 @@ classdef Richness < Degree
             measure_scope = Measure.UNILAYER;
         end
         function parametricity = getParametricity()
-            % GETPARAMETRICITY returns the parametricity of Richness
+            % GETPARAMETRICITY returns the parametricity of RichClubDegree
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
             % parametricity of richness measure (PARAMETRIC).
@@ -214,15 +214,15 @@ classdef Richness < Degree
             parametricity = Measure.PARAMETRIC;
         end
         function name = getParameterName()
-            % GETPARAMETERNAME returns the name of the Richness' parameter
+            % GETPARAMETERNAME returns the name of the RichClubDegree' parameter
             %
             % NAME = GETPARAMETERNAME() returns the name (string) of 
             % the richness parameter.
             
-            name = 'Richness threshold';
+            name = 'Rich-club threshold';
         end
         function list = getCompatibleGraphList()  
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Richness 
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with RichClubDegree 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
             % of compatible graph classes to richness. 
@@ -242,19 +242,19 @@ classdef Richness < Degree
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with Richness
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with RichClubDegree
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs with richness.
             % 
             % See also getCompatibleGraphList.
             
-            n = Measure.getCompatibleGraphNumber('Richness');
+            n = Measure.getCompatibleGraphNumber('RichClubDegree');
         end
     end
     methods 
         function values = getParameterValues(m)
-            % GETPARAMETERVALUES returns the values of the Richness' parameter
+            % GETPARAMETERVALUES returns the values of the RichClubDegree' parameter
             %
             % VALUES = GETPARAMETERVALUES() returns the values of
             % the richness' parameter.
