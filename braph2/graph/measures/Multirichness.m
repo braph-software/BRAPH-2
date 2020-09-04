@@ -1,4 +1,4 @@
-classdef Multirichness < Richness2
+classdef Multirichness < Richness
     % Multirichness Multirichness measure
     % Multirichness provides the multirichness of a node for binary undirected (BU),
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
@@ -57,7 +57,7 @@ classdef Multirichness < Richness2
             %
             % See also Measure, Richness, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
-            m = m@Richness2(g, varargin{:});
+            m = m@Richness(g, varargin{:});
         end
     end
     methods (Access=protected)
@@ -71,10 +71,10 @@ classdef Multirichness < Richness2
             
             g = m.getGraph();  % graph from measure class
 
-            if g.is_measure_calculated('Richness2')
-                richness = g.getMeasureValue('Richness2');
+            if g.is_measure_calculated('Richness')
+                richness = g.getMeasureValue('Richness');
             else
-                richness = calculate@Richness2(m);
+                richness = calculate@Richness(m);
             end
             
             N = g.nodenumber();
