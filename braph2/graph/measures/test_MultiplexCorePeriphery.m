@@ -20,10 +20,10 @@ A = {
     A21     A22
     };
     
-known_multiplex_core_periphery = {[0 1 0 0]'};      
+known_multiplex_core_periphery = {[1 1 1 0]'};      
 
 g = MultiplexGraphBU(A);
-multiplex_core_periphery = MultiplexCorePeriphery(g, 'RichnessThreshold', 1);
+multiplex_core_periphery = MultiplexCorePeriphery(g);
 
 assert(isequal(multiplex_core_periphery.getValue(), known_multiplex_core_periphery), ...
     [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.BUG_ERR], ...
@@ -49,13 +49,10 @@ A = {
     A21     A22
     };
 
-mcp(:, 1, 1) = [0 1 0 0]';
-mcp(:, 1, 2) = [0 1 0 0]';
-mcp(:, 1, 3) = [0 1 0 0]';
-known_multiplex_core_periphery = {mcp};  
+known_multiplex_core_periphery = {[1 1 1 0]'};   
 
 g = MultiplexGraphBD(A);
-multiplex_core_periphery = MultiplexCorePeriphery(g, 'RichnessThreshold', 3, 'MultirichnessCoefficients', [2/3, 1/3]);
+multiplex_core_periphery = MultiplexCorePeriphery(g, 'MultirichnessCoefficients', [2/3, 1/3]);
 
 assert(isequal(multiplex_core_periphery.getValue(), known_multiplex_core_periphery), ...
     [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.BUG_ERR], ...
@@ -81,10 +78,10 @@ A = {
     A21     A22
     };   
    
-known_multiplex_core_periphery = {[0 1 0 0]'};    
+known_multiplex_core_periphery = {[1 1 1 0]'};    
 
 g = MultiplexGraphWU(A);
-multiplex_core_periphery = MultiplexCorePeriphery(g, 'RichnessThreshold', 1, 'MultirichnessCoefficients', [3/4, 1/4]);
+multiplex_core_periphery = MultiplexCorePeriphery(g, 'MultirichnessCoefficients', [3/4, 1/4]);
 
 assert(isequal(multiplex_core_periphery.getValue(), known_multiplex_core_periphery), ...
     [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.BUG_ERR], ...
@@ -110,7 +107,7 @@ A = {
     A21     A22
     };    
 
-known_multiplex_core_periphery = {[0 1 0 0]'};
+known_multiplex_core_periphery = {[1 1 1 0]'};   
 
 g = MultiplexGraphWD(A);
 multiplex_core_periphery = MultiplexCorePeriphery(g, 'MultirichnessCoefficients', [3/4, 1/4]);

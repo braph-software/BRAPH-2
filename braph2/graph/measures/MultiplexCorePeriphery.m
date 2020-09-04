@@ -5,10 +5,8 @@ classdef MultiplexCorePeriphery < Multirichness
     % (WU) and weighted directed (WD) multiplexes. 
     %
     % It is calculated as the value of the rank corresponding to the
-    % maximum multirichness with degree k or higher. It returns 1 for a
-    % node belonging to the core and zero otherwise. The value of k is set 
-    % by the user (setting 'RichnessThreshold'), the default value is equal
-    % to the maximum degree - 1. The relevance of each layer is controlled
+    % maximum multirichness nodes. It returns 1 for a node belonging 
+    % to the core and zero otherwise. The relevance of each layer is controlled
     % by the coefficients c (setting 'MultirichnessCoefficients') that are
     % between 0 and 1, and add up to one; the default coefficients are
     % (1/layernumber).
@@ -36,16 +34,11 @@ classdef MultiplexCorePeriphery < Multirichness
             % G is a multiplex (e.g, an instance of MultiplexGraphBD,
             % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
             %
-            % MULTIPLEXCOREPERIPHERY(G, 'RichnessThreshold', RICHNESSTHRESHOLD, 
-            % 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS) 
-            % creates multiplex core periphery, measure and initializes the 
-            % property RichnessThreshold with RICHNESSTHRESHOLD and the
-            % property MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS. 
-            % Admissible THRESHOLD and COEFFICIENTS options are:
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is  
-            %                    set to 1.
-            %                    value - RICHNESS k threshold is set to 
-            %                    the specificied value.
+            % MULTIPLEXCOREPERIPHERY(G, 'MultirichnessCoefficients', 
+            % MULTIRICHNESSCOEFFICIENTS) creates multiplex core periphery
+            % measure and initializes the property MultirichnessCoefficients
+            % with MULTIRICHNESSCOEFFICIENTS. 
+            % Admissible COEFFICIENTS options are:
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
@@ -82,8 +75,6 @@ classdef MultiplexCorePeriphery < Multirichness
             
             N = g.nodenumber();
             L = g.layernumber();
-            k_level = size(multirichness{1}, 3);  % Get the richness threshold
-            m.setParameter(k_level)  % Set the multiplex cor-periphery's parameter (based on richness's parameter)
   
             multirichness_coefficients = get_from_varargin(0, 'MultirichnessCoefficients', m.getSettings());
             assert(length(multirichness_coefficients) == L || all(multirichness_coefficients == 0), ...
@@ -139,19 +130,14 @@ classdef MultiplexCorePeriphery < Multirichness
                 overlapping_degree_coefficients = overlapping_degree_coefficients + c(li)*deg;
             end
             
-            multiplex_core_periphery_layer = zeros(N(1), 1, k_level);
             [~, rankingInd] = sort(overlapping_degree_coefficients, 'descend');
             multirichness = multirichness{1};
-            for k = 1:1:k_level
-                multirich = multirichness();
-                [~, rankOfMaxMultirichness] = max(multirich(rankingInd));
-                multiplex_core_periphery_klevel = zeros(N(1), 1);
-                multiplex_core_periphery_klevel(rankingInd(1:rankOfMaxMultirichness)) = 1;
-                multiplex_core_periphery_layer(:, :, k) = multiplex_core_periphery_klevel;
-            end
-            multiplex_core_periphery = {multiplex_core_periphery_layer};
+            [~, rankOfMaxMultirichness] = max(multirichness(rankingInd));
+            multiplex_core_periphery = zeros(N(1), 1);
+            multiplex_core_periphery(rankingInd(1:rankOfMaxMultirichness)) = 1;
+            multiplex_core_periphery = {multiplex_core_periphery};
         end
-    end  
+    end 
     methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
@@ -185,16 +171,10 @@ classdef MultiplexCorePeriphery < Multirichness
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to MultiplexCorePeriphery
+            % GETAVAILABLESETTINGS returns the setting available to Multirichness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to MultiplexCorePeriphery.
-            % RICHNESSTHRESHOLD = -1 (default) - RICHNESS k threshold is set 
-            %                    to the maximum degree - 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value if the value is positive.
-            %                    For negative values, k is set to the
-            %                    maximum degree - value.
+            % settings available to Multirichness.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients 
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
@@ -202,9 +182,7 @@ classdef MultiplexCorePeriphery < Multirichness
             %                    each layer if the length of values is
             %                    equal to the number of layers.
             
-            available_settings = getAvailableSettings@Richness();
-
-            available_settings(end+1, :) = {
+            available_settings = {
                  'MultirichnessCoefficients', BRAPH2.NUMERIC, 0, {};
                 };
         end
@@ -232,11 +210,11 @@ classdef MultiplexCorePeriphery < Multirichness
             % GETPARAMETRICITY returns the parametricity of MultiplexCorePeriphery
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of multiplex core periphery measure (PARAMETRIC).
+            % parametricity of multiplex core periphery measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.PARAMETRIC;
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with MultiplexCorePeriphery 
