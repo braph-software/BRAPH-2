@@ -955,12 +955,12 @@ classdef AnalysisST_WU < Analysis
                     group2 = analysis.getCohort().getGroups().getValue(group2_index);
                     for j = 1:1:analysis.getComparisons().length()
                         comparison = analysis.getComparisons().getValue(j);
-                        [a, b] = comparison.getGroups();                        
+                        [a, b] = comparison.getGroups();
                         if ismember(comparison.getMeasureCode(), global_list) ...
                                 && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1))) ...
                                 && isequal(selected_measure, comparison.getMeasureCode())
                             global_comparison{j} = comparison; %#ok<AGROW>
-                        end                        
+                        end
                     end
                     
                     if exist('global_comparison', 'var')
@@ -1555,7 +1555,7 @@ classdef AnalysisST_WU < Analysis
                         end
                 end
                 
-                update_global_table();
+                update_nodal_table();
             end
             function cb_nodal_meas(~, ~)  % (src,event)
                 set(ui_checkbox_brainmeasures_meas, 'Value', true)
@@ -2201,7 +2201,7 @@ classdef AnalysisST_WU < Analysis
                 bgp =  analysis.getBrainGraphPanel(ui_brainview_axes, bg); %#ok<NASGU>
             end
             function cb_bv_meas_panel(~, ~)
-               analysis.getMCRPanel(ui_brainview_axes, bg);
+                analysis.getMCRPanel(ui_brainview_axes, bg);
             end
             
             update_brain_graph()
@@ -2696,9 +2696,9 @@ classdef AnalysisST_WU < Analysis
             FigPosition = [.10 .30 .35 .50];
             FigColor = GUI.BKGCOLOR;
             
-            % create a figure     
+            % create a figure
             f = GUI.init_figure(APPNAME, .45, .6, 'west');
-%             fig_group = figure('Visible', 'off');            
+            %             fig_group = figure('Visible', 'off');
             
             set(f, 'Units', 'normalized')
             set(f, 'Position', FigPosition)
@@ -2708,24 +2708,27 @@ classdef AnalysisST_WU < Analysis
             set(f, 'Toolbar', 'none')
             set(f, 'NumberTitle', 'off')
             set(f, 'DockControls', 'off')
-           
+            
             measure_data = [];
             fdr_lim = [];
+            p1 = [];
+            p2 = [];
             ga = analysis;
+            axes = brain_axes;
             
             % get all measures
-            mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());  % list of nodal measures            
+            mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());  % list of nodal measures
             
             %% initialization
-            % groups, actions and measures            
+            % groups, actions and measures
             ui_action_measures_checkbox = uicontrol(f, 'Style', 'checkbox');
             ui_action_comparison_checkbox = uicontrol(f, 'Style', 'checkbox');
             ui_action_random_checkbox = uicontrol(f, 'Style', 'checkbox');
             ui_text_group1 = uicontrol(f, 'Style', 'text');
             ui_text_group2 = uicontrol(f, 'Style', 'text');
             ui_text_view_action = uicontrol(f, 'Style', 'text');
-            ui_popup_grouplists1 = uicontrol(f, 'Style', 'popup', 'String', {''});           
-            ui_popup_grouplists2 = uicontrol(f, 'Style', 'popup', 'String', {''});         
+            ui_popup_grouplists1 = uicontrol(f, 'Style', 'popup', 'String', {''});
+            ui_popup_grouplists2 = uicontrol(f, 'Style', 'popup', 'String', {''});
             ui_list_gr = uicontrol(f, 'Style',  'listbox');
             ui_list_threshold_or_density = uicontrol(f, 'Style', 'listbox');
             list_tittle = uicontrol(f, 'Style', 'text');
@@ -2742,7 +2745,7 @@ classdef AnalysisST_WU < Analysis
             ui_edit_meas_fdr2 = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
             ui_button_meas_automatic = uicontrol(ui_panel_meas_scaling, 'Style', 'pushbutton');
             
-            % mesure figure options            
+            % mesure figure options
             ui_checkbox_meas_symbolsize = uicontrol(f, 'Style',  'checkbox');
             ui_edit_meas_symbolsize = uicontrol(f, 'Style', 'edit');
             ui_checkbox_meas_symbolcolor = uicontrol(f, 'Style',  'checkbox');
@@ -2761,7 +2764,7 @@ classdef AnalysisST_WU < Analysis
             ui_popup_meas_labelinitcolor = uicontrol(f, 'Style', 'popup', 'String', {''});
             ui_popup_meas_labelfincolor = uicontrol(f, 'Style', 'popup', 'String', {''});
             
-            init_measures_panel()     
+            init_measures_panel()
             update_figure_panel()
             update_popup_grouplist()
             update_measure_data(1);
@@ -2814,7 +2817,7 @@ classdef AnalysisST_WU < Analysis
                 set(list_tittle, 'BackgroundColor', GUI.BKGCOLOR)
                 set(list_tittle, 'HorizontalAlignment', 'center')
                 set(list_tittle, 'FontWeight', 'bold')
-  
+                
                 % groups *******************************************
                 set(ui_popup_grouplists1, 'Units', 'normalized')
                 set(ui_popup_grouplists1, 'BackgroundColor', GUI.BKGCOLOR)
@@ -2828,8 +2831,8 @@ classdef AnalysisST_WU < Analysis
                 set(ui_popup_grouplists2, 'Position', [.02 .7575 .30 .04])
                 set(ui_popup_grouplists2, 'Value', 1)
                 set(ui_popup_grouplists2, 'TooltipString', 'Select group2');
-                set(ui_popup_grouplists2, 'Callback', {@cb_popup_grouplist})                
-              
+                set(ui_popup_grouplists2, 'Callback', {@cb_popup_grouplist})
+                
                 % lists ***************************************
                 set(ui_list_gr, 'Units', 'normalized')
                 set(ui_list_gr, 'BackgroundColor', GUI.BKGCOLOR)
@@ -3069,194 +3072,32 @@ classdef AnalysisST_WU < Analysis
             end
             function cb_action_measurement(~, ~)
                 value = true;
-                set(ui_action_measures_checkbox, 'Value', value) 
+                set(ui_action_measures_checkbox, 'Value', value)
                 set(ui_action_comparison_checkbox, 'Value', ~value)
                 set(ui_action_random_checkbox, 'Value', ~value)
                 update_figure_panel()
             end
             function cb_action_comparison(~, ~)
                 value = true;
-                set(ui_action_measures_checkbox, 'Value', ~value) 
+                set(ui_action_measures_checkbox, 'Value', ~value)
                 set(ui_action_comparison_checkbox, 'Value', value)
-                set(ui_action_random_checkbox, 'Value', ~value)                
+                set(ui_action_random_checkbox, 'Value', ~value)
                 update_figure_panel()
             end
             function cb_action_random(~, ~)
                 value = true;
-                set(ui_action_measures_checkbox, 'Value', ~value) 
+                set(ui_action_measures_checkbox, 'Value', ~value)
                 set(ui_action_comparison_checkbox, 'Value', ~value)
-                set(ui_action_random_checkbox, 'Value', value)                
+                set(ui_action_random_checkbox, 'Value', value)
                 update_figure_panel()
-            end
-            function update_figure_panel()
-                if isequal(ga.getClass(), 'AnalysisST_WU')
-                     set(ui_list_gr, 'Position', [.02 .02 .30 .68])
-                     set(ui_list_threshold_or_density, 'Position', [0 0 0 0])
-                else
-                    set(ui_list_gr, 'Position', [.02 .36 .3 .36])
-                    set(ui_list_threshold_or_density, 'Position', [.02 .02 .3 .3])
-                    set(list_tittle, 'Position', [.02 .32 .25 .04])
-                    if isequal(ga.getClass(), 'AnalysisST_BUT')
-                        set(list_tittle, 'String', 'Select Threshold')
-                    else  % desity
-                        set(list_tittle, 'String', 'Select Density')
-                    end                    
-                end
-                if get(ui_action_comparison_checkbox, 'Value')
-                    % generals
-                    set(ui_popup_grouplists2, 'Enable', 'on')
-                    set(ui_text_group2, 'Enable', 'on')
-                    set(ui_text_view_action, 'String', 'View difference')
-                    % mesure panel
-                    set(ui_checkbox_meas_fdr1, 'Enable', 'on')
-                    set(ui_checkbox_meas_fdr2, 'Enable', 'on')
-                    set(ui_edit_meas_fdr1, 'Enable', 'off')
-                    set(ui_edit_meas_fdr2, 'Enable', 'off')
-                elseif get(ui_action_random_checkbox, 'Value')
-                    set(ui_popup_grouplists2, 'Enable', 'off')
-                    set(ui_text_group2, 'Enable', 'off')
-                    set(ui_text_view_action, 'String', 'View measure')
-                    
-                    set(ui_checkbox_meas_fdr1, 'Enable', 'off')
-                    set(ui_checkbox_meas_fdr2, 'Enable', 'off')
-                    set(ui_edit_meas_fdr1, 'Enable', 'off')
-                    set(ui_edit_meas_fdr2, 'Enable', 'off')
-                else
-                    set(ui_popup_grouplists2, 'Enable', 'off')
-                    set(ui_text_group2, 'Enable', 'off')
-                    set(ui_text_view_action, 'String', 'View measure')
-                    
-                    set(ui_checkbox_meas_fdr1, 'Enable', 'off')
-                    set(ui_checkbox_meas_fdr2, 'Enable', 'off')
-                    set(ui_edit_meas_fdr1, 'Enable', 'off')
-                    set(ui_edit_meas_fdr2, 'Enable', 'off')
-                end
-            end
-            function update_popup_grouplist()
-                if ga.getCohort().getGroups().length() > 0
-                    % updates group lists of popups
-                    GroupList = ga.getCohort().getGroups().getKeys();
-%                     for g = 1:1:ga.getCohort().getGroups().length()
-%                         GroupList{g} = ga.getCohort().getGroups().getValue(g);
-%                     end
-                else
-                    GroupList = {''};
-                end
-                set(ui_popup_grouplists1, 'String', GroupList)
-                set(ui_popup_grouplists2, 'String', GroupList)
-            end
-            function update_measure_data(init_or_selection)
-                i = get(ui_list_gr, 'Value');
-                group1_index = get(ui_popup_grouplists1, 'Value');
-                group1 = ga.getCohort().getGroups().getValue(group1_index);
-                measure = mlist{i};
-                selected_case = [];
-                if get(ui_action_comparison_checkbox, 'Value')
-                    % i want to look in comprison
-                    group2_index = get(ui_popup_grouplists2, 'Value');
-                    group2 = ga.getCohort().getGroups().getValue(group2_index);
-                    comparisons_idict = ga.getComparisons();
-                    
-                    for i = 1:1:comparisons_idict.length()
-                        comparison = comparisons_idict.getValue(i);
-                        [a, b] = comparison.getGroups();
-                        if isequal(comparison.getMeasureCode(), measure) && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1)))
-                            selected_case = comparison;
-                            update_list_t_d(selected_case)
-                        end
-                    end
-                    selected_action = 'Comparison';
-                elseif get(ui_action_random_checkbox, 'Value')
-                    % i want to look in rcomprison
-                    randoms_idict = ga.getRandomComparisons();
-                    for i = 1:1:randoms_idict.length()
-                        r_comparison = randoms_idict.getValue(i);
-                        g = r_comparison.getGroup();
-                        if isequal(r_comparison.getMeasureCode(), measure) && isequal(g, group1) 
-                            selected_case = r_comparison;
-                            update_list_t_d(selected_case)
-                        end
-                    end
-                    selected_action = 'Random Comparison';
-                else
-                    % i want to look in measurements
-                    randoms_idict = ga.getRandomComparisons();
-                    for i = 1:1:randoms_idict.length()
-                        r_comparison = randoms_idict.getValue(i);
-                        g = r_comparison.getGroup();
-                        if isequal(r_comparison.getMeasureCode(), measure) && isequal(g, group1)
-                            selected_case = r_comparison;
-                            update_list_t_d(selected_case)
-                        end
-                    end
-                    selected_action = 'Measurement';
-                end
-                
-                if isempty(selected_case) && init_or_selection == 2
-                    errordlg(['The measure: ' measure ' for ' selected_action ' does not exist.'])
-                elseif isempty(selected_case) && init_or_selection == 1
-                    % nothing
-                else
-                    a = get(ui_list_threshold_or_density, 'String');
-                    b = a{get(ui_list_threshold_or_density, 'Value')};
-                    
-                    measure_data
-                    
-                end
-                
-%                 if isempty(i) || length(i) > 1
-%                     i = 1;
-%                 end
-%                 [measures, mi] = ga.getComparisons(mlist(get(ui_list_gr, 'Value')), get(ui_popup_grouplists1, 'Value'), get(ui_popup_grouplists2, 'Value'));
-%                 if isempty(measures)
-%                     errordlg('The measure does not exist')
-%                 else
-%                     meas = measures{1};
-%                     measure_data = abs(meas.diff());
-%                     
-%                     fdr_lim = ones(1, length(ga.getBrainAtlas));
-%                     p1 = measures{1}.getProp(MRIComparisonWU.PVALUE1);
-%                     p2 = measures{1}.getProp(MRIComparisonWU.PVALUE2);
-%                     for i = 1:1:length(ga.getBrainAtlas)
-%                         if get(ui_checkbox_meas_fdr1, 'Value')
-%                             if p1(i)>fdr(p1, str2double(get(ui_edit_meas_fdr1, 'String')))
-%                                 fdr_lim(i) = 0;
-%                             end
-%                         elseif get(ui_checkbox_meas_fdr2, 'Value')
-%                             if p2(i)>fdr(p2, str2double(get(ui_edit_meas_fdr2, 'String')))
-%                                 fdr_lim(i) = 0;
-%                             end
-%                         end
-%                     end
-%                 end
-                
-                
             end
             function cb_list_gr(~, ~)
                 update_measure_data(2)
                 update_brain_meas_plot()
             end
-            function update_list_t_d(selected_case)
-                if isequal(ga.getClass(), 'AnalysisST_BUT')
-                    if get(ui_action_comparison_checkbox, 'Value')
-                        [a, b] = selected_case.getGroups();
-                        set(ui_list_threshold_or_density, 'String', analysis.selectComparisons(selected_case.getMeasureCode(), a, b, '.getThreshold()'))
-                    elseif get(ui_action_random_checkbox, 'Value')
-                        set(ui_list_threshold_or_density, 'String', analysis.selectRandomComparisons(selected_case.getMeasureCode(), selected_case.getGroup(), '.getThreshold()'))
-                    else
-                        set(ui_list_threshold_or_density, 'String', analysis.selectMeasurements(selected_case.getMeasureCode(), selected_case.getGroup(), '.getThreshold()'))
-                    end
-                elseif isequal(ga.getClass(), 'AnalysisST_BUD')
-                    if get(ui_action_comparison_checkbox, 'Value')
-                        [a, b] = selected_case.getGroups();
-                        set(ui_list_threshold_or_density, 'String', analysis.selectComparisons(selected_case.getMeasureCode(), a, b, '.getDensity()'))
-                    elseif get(ui_action_random_checkbox, 'Value')
-                        set(ui_list_threshold_or_density, 'String', analysis.selectRandomComparisons(selected_case.getMeasureCode(), selected_case.getGroup(), '.getDensity()'))
-                    else
-                        set(ui_list_threshold_or_density, 'String', analysis.selectMeasurements(selected_case.getMeasureCode(), selected_case.getGroup(), '.getDensity()'))
-                    end
-                else
-                end
+            function cb_list_t_or_d(~, ~)
+                update_measure_data(2)
+                update_brain_meas_plot()
             end
             function cb_popup_grouplist(~, ~)  % (src, event)
                 update_measure_data(2)
@@ -3499,10 +3340,257 @@ classdef AnalysisST_WU < Analysis
             function cb_meas_labelfincolor(~, ~)  %  (src, event)
                 update_brain_meas_plot()
             end
-           
-           
+            function update_figure_panel()
+                if isequal(ga.getClass(), 'AnalysisST_WU')
+                    set(ui_list_gr, 'Position', [.02 .02 .30 .68])
+                    set(ui_list_threshold_or_density, 'Position', [0 0 0 0])
+                else
+                    set(ui_list_gr, 'Position', [.02 .36 .3 .36])
+                    set(ui_list_threshold_or_density, 'Position', [.02 .02 .3 .3])
+                    set(list_tittle, 'Position', [.02 .32 .25 .04])
+                    if isequal(ga.getClass(), 'AnalysisST_BUT')
+                        set(list_tittle, 'String', 'Select Threshold')
+                    else  % desity
+                        set(list_tittle, 'String', 'Select Density')
+                    end
+                end
+                if get(ui_action_comparison_checkbox, 'Value')
+                    % generals
+                    set(ui_popup_grouplists2, 'Enable', 'on')
+                    set(ui_text_group2, 'Enable', 'on')
+                    set(ui_text_view_action, 'String', 'View difference')
+                    % mesure panel
+                    set(ui_checkbox_meas_fdr1, 'Enable', 'on')
+                    set(ui_checkbox_meas_fdr2, 'Enable', 'on')
+                    set(ui_edit_meas_fdr1, 'Enable', 'off')
+                    set(ui_edit_meas_fdr2, 'Enable', 'off')
+                elseif get(ui_action_random_checkbox, 'Value')
+                    set(ui_popup_grouplists2, 'Enable', 'off')
+                    set(ui_text_group2, 'Enable', 'off')
+                    set(ui_text_view_action, 'String', 'View measure')
+                    
+                    set(ui_checkbox_meas_fdr1, 'Enable', 'off')
+                    set(ui_checkbox_meas_fdr2, 'Enable', 'off')
+                    set(ui_edit_meas_fdr1, 'Enable', 'off')
+                    set(ui_edit_meas_fdr2, 'Enable', 'off')
+                else
+                    set(ui_popup_grouplists2, 'Enable', 'off')
+                    set(ui_text_group2, 'Enable', 'off')
+                    set(ui_text_view_action, 'String', 'View measure')
+                    
+                    set(ui_checkbox_meas_fdr1, 'Enable', 'off')
+                    set(ui_checkbox_meas_fdr2, 'Enable', 'off')
+                    set(ui_edit_meas_fdr1, 'Enable', 'off')
+                    set(ui_edit_meas_fdr2, 'Enable', 'off')
+                end
+            end
+            function update_list_t_d(selected_case)
+                if isequal(ga.getClass(), 'AnalysisST_BUT')
+                    if get(ui_action_comparison_checkbox, 'Value')
+                        [a, b] = selected_case.getGroups();
+                        set(ui_list_threshold_or_density, 'String', analysis.selectComparisons(selected_case.getMeasureCode(), a, b, '.getThreshold()'))
+                    elseif get(ui_action_random_checkbox, 'Value')
+                        set(ui_list_threshold_or_density, 'String', analysis.selectRandomComparisons(selected_case.getMeasureCode(), selected_case.getGroup(), '.getThreshold()'))
+                    else
+                        set(ui_list_threshold_or_density, 'String', analysis.selectMeasurements(selected_case.getMeasureCode(), selected_case.getGroup(), '.getThreshold()'))
+                    end
+                elseif isequal(ga.getClass(), 'AnalysisST_BUD')
+                    if get(ui_action_comparison_checkbox, 'Value')
+                        [a, b] = selected_case.getGroups();
+                        set(ui_list_threshold_or_density, 'String', analysis.selectComparisons(selected_case.getMeasureCode(), a, b, '.getDensity()'))
+                    elseif get(ui_action_random_checkbox, 'Value')
+                        set(ui_list_threshold_or_density, 'String', analysis.selectRandomComparisons(selected_case.getMeasureCode(), selected_case.getGroup(), '.getDensity()'))
+                    else
+                        set(ui_list_threshold_or_density, 'String', analysis.selectMeasurements(selected_case.getMeasureCode(), selected_case.getGroup(), '.getDensity()'))
+                    end
+                else
+                end
+            end
+            function update_popup_grouplist()
+                if ga.getCohort().getGroups().length() > 0
+                    % updates group lists of popups
+                    GroupList = ga.getCohort().getGroups().getKeys();
+                    %                     for g = 1:1:ga.getCohort().getGroups().length()
+                    %                         GroupList{g} = ga.getCohort().getGroups().getValue(g);
+                    %                     end
+                else
+                    GroupList = {''};
+                end
+                set(ui_popup_grouplists1, 'String', GroupList)
+                set(ui_popup_grouplists2, 'String', GroupList)
+            end
+            function update_measure_data(init_or_selection)
+                if  init_or_selection == 2
+                    i = get(ui_list_gr, 'Value');
+                    group1_index = get(ui_popup_grouplists1, 'Value');
+                    group1 = ga.getCohort().getGroups().getValue(group1_index);
+                    measure = mlist{i};
+                    selected_case = [];
+                    if get(ui_action_comparison_checkbox, 'Value')
+                        % i want to look in comprison
+                        group2_index = get(ui_popup_grouplists2, 'Value');
+                        group2 = ga.getCohort().getGroups().getValue(group2_index);
+                        comparisons_idict = ga.getComparisons();
+                        
+                        for i = 1:1:comparisons_idict.length()
+                            comparison = comparisons_idict.getValue(i);
+                            [a, b] = comparison.getGroups();
+                            if isequal(comparison.getMeasureCode(), measure) && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1)))
+                                selected_case = comparison;
+                                update_list_t_d(selected_case)
+                                break;
+                            end
+                        end
+                        selected_action = 'Comparison';
+                    elseif get(ui_action_random_checkbox, 'Value')
+                        % i want to look in rcomprison
+                        randoms_idict = ga.getRandomComparisons();
+                        for i = 1:1:randoms_idict.length()
+                            r_comparison = randoms_idict.getValue(i);
+                            g = r_comparison.getGroup();
+                            if isequal(r_comparison.getMeasureCode(), measure) && isequal(g, group1)
+                                selected_case = r_comparison;
+                                update_list_t_d(selected_case)
+                                break;
+                            end
+                        end
+                        selected_action = 'Random Comparison';
+                    else
+                        % i want to look in measurements
+                        meas_idict = ga.getMeasurements();
+                        for i = 1:1:meas_idict.length()
+                            mesurements = meas_idict.getValue(i);
+                            g = mesurements.getGroup();
+                            if isequal(mesurements.getMeasureCode(), measure) && isequal(g, group1)
+                                selected_case = mesurements;
+                                update_list_t_d(selected_case)
+                                break;
+                            end
+                        end
+                        selected_action = 'Measurement';
+                    end
+                    if isempty(selected_case)
+                        errordlg(['The measure: ' measure ' for ' selected_action ' does not exist.'])
+                    else
+                        if isequal(analysis.getClass(), 'AnalysisST_WU')
+                            switch selected_action
+                                case 'Measurement'
+                                    measure_data = selected_case.getMeasureValue();
+                                case 'Comparison'
+                                    atlases = ga.getCohort().getBrainAtlases();
+                                    atlas = atlases{1};
+                                    fdr_lim = ones(1, atlas.getBrainRegions().length());
+                                    measure_data = selected_case.getDifference();
+                                    p1 = selected_case.getP1();
+                                    p2 = selected_case.getP2();
+                                otherwise
+                                    atlases = ga.getCohort().getBrainAtlases();
+                                    atlas = atlases{1};
+                                    fdr_lim = ones(1, atlas.getBrainRegions().length());
+                                    measure_data = selected_case.getDifference();
+                                    p1 = selected_case.getP1();
+                                    p2 = selected_case.getP2();
+                            end
+                        elseif isequal(analysis.getClass(), 'AnalysisST_BUT')
+                            a = get(ui_list_threshold_or_density, 'String');
+                            b = a{get(ui_list_threshold_or_density, 'Value')};
+                            
+                            switch selected_action
+                                case 'Measurement'
+                                    measurements = ga.getMeasurements().getValues();  % array
+                                    for i = 1:1:length(measurements)
+                                        m = measurements{i};
+                                        if isequal(m.getClass(), selected_case.getClass()) && isequal(round(m.getThreshold(), 4), round(str2double(b), 4))
+                                            refined_case = m;
+                                            break;
+                                        end
+                                    end
+                                    measure_data = refined_case.getMeasureValue();
+                                case 'Comparison'
+                                    comparisons = ga.getComparisons().getValues();
+                                    for i = 1:1:length(comparisons)
+                                        c = comparisons{i};
+                                        if isequal(c.getClass(), selected_case.getClass()) && isequal(round(c.getThreshold(), 4), round(str2double(b), 4))
+                                            refined_case = c;
+                                            break;
+                                        end
+                                    end
+                                    atlases = ga.getCohort().getBrainAtlases();
+                                    atlas = atlases{1};
+                                    fdr_lim = ones(1, atlas.getBrainregions().length());
+                                    measure_data = refined_case.getDifference()';
+                                    p1 = refined_case.getP1();
+                                    p2 = refined_case.getP2();
+                                otherwise
+                                    r_comparisons = ga.getRandomComparisons().getValues();
+                                    for i = 1:1:length(r_comparisons)
+                                        rc = r_comparisons{i};
+                                        if isequal(rc.getClass(), selected_case.getClass()) && isequal(round(rc.getThreshold(), 4), round(str2double(b), 4))
+                                            refined_case = rc;
+                                            break;
+                                        end
+                                    end
+                                    atlases = ga.getCohort().getBrainAtlases();
+                                    atlas = atlases{1};
+                                    fdr_lim = ones(1, atlas.getBrainregions().length());
+                                    measure_data = refined_case.getDifference()';
+                                    p1 = refined_case.getP1();
+                                    p2 = refined_case.getP2();
+                            end
+                        else  % density
+                            a = get(ui_list_threshold_or_density, 'String');
+                            b = a{get(ui_list_threshold_or_density, 'Value')};
+                            
+                            switch selected_action
+                                case 'Measurement'
+                                    measurements = ga.getMeasurements().getValues();  % array
+                                    for i = 1:1:length(measurements)
+                                        m = measurements{i};
+                                        if isequal(m.getClass(), selected_case.getClass()) && isequal(round(m.getDensity(), 4), round(str2double(b), 4))
+                                            refined_case = m;
+                                            break;
+                                        end
+                                    end
+                                    measure_data = refined_case.getMeasureValue();
+                                case 'Comparison'
+                                    comparisons = ga.getComparisons().getValues();
+                                    for i = 1:1:length(comparisons)
+                                        c = comparisons{i};
+                                        if isequal(c.getClass(), selected_case.getClass()) && isequal(round(c.getDensity(), 4), round(str2double(b), 4))
+                                            refined_case = c;
+                                            break;
+                                        end
+                                    end
+                                    atlases = ga.getCohort().getBrainAtlases();
+                                    atlas = atlases{1};
+                                    fdr_lim = ones(1, atlas.getBrainregions().length());
+                                    measure_data = refined_case.getDifference()';
+                                    p1 = refined_case.getP1();
+                                    p2 = refined_case.getP2();
+                                otherwise
+                                    r_comparisons = ga.getRandomComparisons().getValues();
+                                    for i = 1:1:length(r_comparisons)
+                                        rc = r_comparisons{i};
+                                        if isequal(rc.getClass(), selected_case.getClass()) && isequal(round(rc.getDensity(), 4), round(str2double(b), 4))
+                                            refined_case = rc;
+                                            break;
+                                        end
+                                    end
+                                    atlases = ga.getCohort().getBrainAtlases();
+                                    atlas = atlases{1};
+                                    fdr_lim = ones(1, atlas.getBrainregions().length());
+                                    measure_data = refined_case.getDifference()';
+                                    p1 = refined_case.getP1();
+                                    p2 = refined_case.getP2();
+                            end
+                        end
+                    end
+                else
+                    % nothing
+                end
+            end
             function update_brain_meas_plot()
-                
+                calculate_fdr_lim()
                 if get(ui_checkbox_meas_symbolsize, 'Value')
                     
                     size = str2double(get(ui_edit_meas_symbolsize, 'String'));
@@ -3613,6 +3701,8 @@ classdef AnalysisST_WU < Analysis
                     bg.br_labs([], 'Color', C);
                 end
                 
+            end
+            function calculate_fdr_lim()
             end
         end
     end
