@@ -118,9 +118,9 @@ classdef RichClub < Degree
                 k_level = abs(richclub_threshold);  
                 m.setParameter(k_level)  % Set the parameter
             
-                richclub_layer = zeros(1, k_level);
-                Nk = zeros(1,klevel);
-                Ek = zeros(1,klevel);
+                richclub_layer = zeros(1, 1, k_level);
+                Nk = zeros(1, k_level);
+                Ek = zeros(1, k_level);
                 for k = 1:1:k_level
                     low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
                     Aii = binarize(Aii);  % binarizes the adjacency matrix
@@ -129,7 +129,7 @@ classdef RichClub < Degree
                     subAii(:, low_rich_nodes) = 0;  % remove columns
                     Nk(k) = size(subAii, 2);  % number of nodes with degree > k
                     Ek(k) = sum(subAii(:));  % total number of connections in subgraph
-                    richclub_layer(k) = Ek(k)/(Nk(k)*(Nk(k)-1));  % unweighted rich-club coefficient
+                    richclub_layer(1, 1, k) = Ek(k)/(Nk(k)*(Nk(k)-1));  % unweighted rich-club coefficient
                 end
                 rich_club(li) = {richclub_layer};  % add rich club degree of layer li          
             end
@@ -187,11 +187,11 @@ classdef RichClub < Degree
             % GETMEASUREFORMAT returns the measure format of RichClub
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of rich-club measure (NODAL).
+            % of rich-club measure (GLOBAL).
             %
             % See also getMeasureScope.
             
-            measure_format = Measure.NODAL;
+            measure_format = Measure.GLOBAL;
         end
         function measure_scope = getMeasureScope()
             % GETMEASURESCOPE returns the measure scope of RichClub
