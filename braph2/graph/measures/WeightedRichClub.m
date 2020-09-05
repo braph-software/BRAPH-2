@@ -4,8 +4,8 @@ classdef WeightedRichClub < Strength
     % undirected (WU) and weighted directed (WD) graphs. 
     %
     % It is a parametric measure, at s level it calculates the fraction of 
-    % weighted edges that connect nodes of strength s or higher out of the  
-    % maximum number of edges that such nodes might share within a layer. 
+    % edges weights that connect nodes of strength s or higher out of the  
+    % maximum number of edges weights that such nodes might share within a layer. 
     % The valuea of s are set by the user (setting 'WeightedRichClubThreshold'), 
     % the default value is equal to 1.
     % 
@@ -55,7 +55,7 @@ classdef WeightedRichClub < Strength
         end
     end
     methods (Access=protected)
-        function rich_club_strength = calculate(m)
+        function weighted_rich_club = calculate(m)
             % CALCULATE calculates the weighted rich-club value of a graph
             %
             % WEIGHTEDRICHCLUB = CALCULATE(M) returns the value of the 
@@ -68,7 +68,7 @@ classdef WeightedRichClub < Strength
             L = g.layernumber();
             N = g.nodenumber();
             
-            rich_club_strength = cell(g.layernumber(), 1);
+            weighted_rich_club = cell(g.layernumber(), 1);
             directionality_type =  g.getDirectionalityType(g.layernumber());
             for li = 1:1:L
                 
@@ -116,22 +116,23 @@ classdef WeightedRichClub < Strength
                 s_levels = abs(weighted_rich_club_threshold);
                 m.setParameter(s_levels)  % Set the parameter
                 
-                rich_club_strength_layer = zeros(N(1), 1, length(s_levels));
+                weighted_rich_club_layer = zeros(N(1), 1, length(s_levels)); 
+                wrank = sort(Aii(:), 'descend');  % wrank contains the ranked weights of the network, with strongest connections on top
                 count = 1;
                 for s = s_levels
-                    low_rich_nodes = find(st <= s);  % get lower rich nodes with strength <= s
-                    subAii = Aii;  % extract subnetwork of nodes >s by removing nodes <=s of Aii
+                    low_rich_nodes = find(st < s);  % get lower rich nodes with strength < s
+                    subAii = Aii;  % extract subnetwork of nodes >=s by removing nodes < s of Aii
                     subAii(low_rich_nodes, :) = 0;  % remove rows
                     subAii(:, low_rich_nodes) = 0;  % remove columns
-
-                    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                        rich_club_strength_layer(:, :, count) = round(sum(subAii, 1), 6)';  % strength of high rich nodes   
-                    else
-                        rich_club_strength_layer(:, :, count) = round((sum(subAii, 1)' + sum(subAii, 2)), 6)/2;  % strength of high rich nodes   
-                    end
+                    
+                    Wr = sum(subAii(:));  % total weight of connections in subgraph > s
+                    Er = length(find(subAii~=0));  % total number of connections in subgraph
+                    wrank_r = wrank(1:1:Er);  % E>r number of connections with max weight in network
+                    % Calculate weighted rich-club coefficient
+                    weighted_rich_club_layer(1, 1, count) = Wr / sum(wrank_r); 
                     count = count + 1;
                 end
-                rich_club_strength(li) = {rich_club_strength_layer};  % add rich club strength of layer li
+                weighted_rich_club(li) = {weighted_rich_club_layer};  % add rich club strength of layer li
             end
         end
     end  
@@ -163,10 +164,11 @@ classdef WeightedRichClub < Strength
             % See also getClass, getName.
             
             description = [ ...
-                'The weighted rich-club of a node at level s is the sum of ' ...
-                'the weighted edges that connect nodes of strength s or higher within a layer. ' ...
-                's is set by the user and it can be a vector containting all the strength thresholds; ' ... 
-                'the default value is equal to 1 ' ...
+                'The weighted rich-club of a node at level s is the fraction of the' ...
+                'edges weights that connect nodes of strength s or higher out of the ' ... 
+                'maxium number of edges weights that such nodes might share within a layer. ' ...
+                's is set by the user and it can be a vector containting all the ' ...
+                'strength thresholds; the default value is equal to 1 ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
