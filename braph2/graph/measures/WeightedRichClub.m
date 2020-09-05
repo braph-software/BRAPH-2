@@ -116,7 +116,7 @@ classdef WeightedRichClub < Strength
                 s_levels = abs(weighted_rich_club_threshold);
                 m.setParameter(s_levels)  % Set the parameter
                 
-                weighted_rich_club_layer = zeros(N(1), 1, length(s_levels)); 
+                weighted_rich_club_layer = zeros(1, 1, length(s_levels)); 
                 wrank = sort(Aii(:), 'descend');  % wrank contains the ranked weights of the network, with strongest connections on top
                 count = 1;
                 for s = s_levels
@@ -132,6 +132,7 @@ classdef WeightedRichClub < Strength
                     weighted_rich_club_layer(1, 1, count) = Wr / sum(wrank_r); 
                     count = count + 1;
                 end
+                weighted_rich_club_layer(isnan(weighted_rich_club_layer)) = 0;  % Should return zeros, not NaN
                 weighted_rich_club(li) = {weighted_rich_club_layer};  % add rich club strength of layer li
             end
         end
@@ -189,11 +190,11 @@ classdef WeightedRichClub < Strength
             % GETMEASUREFORMAT returns the measure format of WeightedRichClub
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of weighted rich-club measure (NODAL).
+            % of weighted rich-club measure (GLOBAL).
             %
             % See also getMeasureScope.
             
-            measure_format = Measure.NODAL;
+            measure_format = Measure.GLOBAL;
         end
         function measure_scope = getMeasureScope()
             % GETMEASURESCOPE returns the measure scope of WeightedRichClub
