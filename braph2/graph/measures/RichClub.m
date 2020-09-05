@@ -131,6 +131,7 @@ classdef RichClub < Degree
                     Ek(k) = sum(subAii(:));  % total number of connections in subgraph
                     richclub_layer(1, 1, k) = Ek(k)/(Nk(k)*(Nk(k)-1));  % unweighted rich-club coefficient
                 end
+                richclub_layer(isnan(richclub_layer)) = 0;  % Should return zeros, not NaN
                 rich_club(li) = {richclub_layer};  % add rich club degree of layer li          
             end
         end
