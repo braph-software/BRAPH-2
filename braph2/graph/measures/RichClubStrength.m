@@ -36,7 +36,7 @@ classdef RichClubStrength < Strength
             % MultiplexGraphWD or MultiplexGraphWU). 
             %
             % RICHCLUBSTRENGTH(G, 'WeightedRichClubThreshold', WEIGHTEDRICHCLUBTHRESHOLD) 
-            % creates rich-club strength  measure and initializes the property 
+            % creates rich-club strength measure and initializes the property 
             % WeightedRichClubThreshold with WEIGHTEDRICHCLUBTHRESHOLD. 
             % Admissible THRESHOLD options are:
             % WEIGHTEDRICHCLUBTHRESHOLD = 1 (default) - RICHCLUBSTRENGTH s   
@@ -44,7 +44,7 @@ classdef RichClubStrength < Strength
             %                           value - RICHCLUBSTRENGTH s threshold 
             %                           is set to the specificied values (vector).
             % 
-            % RICHCLUBSTRENGTH(G, 'VALUE', VALUE) creates rich-club strength , and sets 
+            % RICHCLUBSTRENGTH(G, 'VALUE', VALUE) creates rich-club strength, and sets 
             % the value to VALUE. G is a graph (e.g, an instance of GraphWD, GraphWU,
             % MultiplexGraphWD or MultiplexGraphWU). 
             %
