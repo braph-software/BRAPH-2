@@ -758,7 +758,7 @@ classdef AnalysisST_WU < Analysis
             % creates a uipanel that contains information about global
             % measures in Measurement, RandomComparison and Comparison.
             %
-            % See also getGraphPanel, getMainPanelMeasurePlot.
+            % See also getGraphPanel, getMainPanelMeasurePlot, getBrainView
             
             uiparent = get_from_varargin([], 'UIParent', varargin{:});
             
@@ -1653,7 +1653,7 @@ classdef AnalysisST_WU < Analysis
             % creates a uipanel that contains information about binodal
             % measures in Measurement, RandomComparison and Comparison.
             %
-            % See also getGraphPanel, getMainPanelMeasurePlot, getGlobalPanel
+            % See also getGraphPanel, getMainPanelMeasurePlot, getGlobalPanel, getBrainView
             
             uiparent = get_from_varargin([], 'UIParent', varargin{:});
             
@@ -2191,6 +2191,14 @@ classdef AnalysisST_WU < Analysis
             p = [];
         end
         function p = getBrainView(analysis, varargin)
+            % GETBRAINVIEW creates a brain view panel for GUIAnalysis
+            % 
+            % P = GETBRAINVIEW(ANALYSIS, PROPERTY, RULE, ...) creates a
+            % brain view panel for GUIAnalysis.
+            %
+            % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
+            
+            
             uiparent = get_from_varargin([], 'UIParent', varargin{:});
             bg = get_from_varargin([], 'BrainGraph', varargin{:});
             
@@ -2274,6 +2282,13 @@ classdef AnalysisST_WU < Analysis
             end
         end
         function brain_graph_panel = getBrainGraphPanel(analysis, brain_axes, brain_graph)
+            % GETBRAINGRAPHPANEL creates a braingraph panel
+            %
+            % BRAIN_GRAPH_PANEL = GETBRAINGRAPHPANEL(ANAlYSIS, AXES, PLOTBRAINGRAPH)
+            % creates a brain graph panel to manage the type of
+            % PLOTBRAINGRAPH that the GUIAnalysis plots in the AXES.
+            %
+            % See also getBrainView, 
             
             NAME_GRAPH =  'Brain Graph Panel';
             fig_graph = GUI.init_figure(NAME_GRAPH, .2, .5, 'west');
@@ -2749,13 +2764,10 @@ classdef AnalysisST_WU < Analysis
                     end
                     A = graph.getA();
                     thickness = str2double(get(ui_edit_graph_thickness, 'String'));
-                    if  link_style == 1
-                        bg.link_edges_off([], [])
-                    elseif link_style == 2
-                        bg.arrow_edges_off([],[])
-                    else
-                        bg.cylinder_edges_off([],[])
-                    end
+                    
+                    bg.link_edges_off([], [])
+                    bg.arrow_edges_off([],[])
+                    bg.cylinder_edges_off([],[])
                     
                     for i = 1:1:size(A, 1)
                         for j = 1:1:size(A, 2)
@@ -2764,18 +2776,27 @@ classdef AnalysisST_WU < Analysis
                             end
                             if  link_style == 1
                                 bg.link_edge(i, j, 'LineWidth', thickness);
+                                bg.link_edge_on(i, j)
                             elseif link_style == 2
                                 bg.arrow_edge(i, j, 'LineWidth', thickness);
+                                bg.arrow_edge_on(i, j)
                             else
                                 bg.cylinder_edge(i, j, 'LineWidth', thickness);
-                            end
-                            bg.link_edge_on(i, j)
+                                bg.cylinder_edge_on(i, j)
+                            end                            
                         end
                     end
                 end
             end
-            function cb_graph_links_settings(~, ~)  % (src, event)
-                bg.link_edges_settings([], []);
+            function cb_graph_links_settings(~, ~)  % (src, event)                
+                link_style = get(ui_link_type, 'Value');
+                if link_style == 1
+                    bg.link_edges_settings([], []);
+                elseif link_style == 2
+                    bg.arrow_edges_settings([], []);
+                else
+                    bg.cylinder_edges_settings([], []);
+                end
             end
             function update_popups_grouplists()
                 if ga.getCohort().getGroups().length() > 0
