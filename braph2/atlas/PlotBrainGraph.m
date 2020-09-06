@@ -21,6 +21,7 @@ classdef PlotBrainGraph < PlotBrainAtlas
     %   link_edges_on               - sets multiple edges visible
     %   link_edges_off              - sets multiple edges invisible
     %   link_edges_settings         - panel to set edges properties
+    %   link_edges_is_on            - bool, checks if the link es on
     %
     %   arrow_edge                  - plots an edge as an arrow with different properties
     %   arrow_edge_on               - sets the edge visible
@@ -28,7 +29,8 @@ classdef PlotBrainGraph < PlotBrainAtlas
     %   arrow_edges                 - plots multiple edges as lines
     %   arrow_edges_on              - sets multiple edges visible
     %   arrow_edges_off             - sets multiple edges invisible
-    %   arrow_edges_settings        - panel to set edges properties
+    %   arrow_edges_settings        - panel to set edges properties    
+    %   arrow_edges_is_on           - bool, checks if the arrow link es on
     %
     %   cylinder_edge               - plots an edge as line with different properties
     %   cylinder_edge_on            - sets the edge visible
@@ -37,6 +39,7 @@ classdef PlotBrainGraph < PlotBrainAtlas
     %   cylinder_edges_on           - sets multiple edges visible
     %   cylinder_edges_off          - sets multiple edges invisible
     %   cylinder_edges_settings     - panel to set edges properties
+    %   cylinder_edges_is_on        - bool, checks if the cylinder link is on
     %
     % See also PlotBrainAtlas, PlotBrainSurf.
     
@@ -510,6 +513,39 @@ classdef PlotBrainGraph < PlotBrainAtlas
             end
             set(f, 'Visible', 'on')
         end
+        function bool = link_edge_is_on(bg, i, j)
+            % LINK_EDGE_IS_ON checks if line link is visible
+            %
+            % BOOL = LINK_EDGE_IS_ON(BG, I, J) returns true if the line link
+            % from the brain regions I to J is visible and false otherwise.
+            %
+            % See also PlotBrainGraph.
+            
+            bool = ishandle(bg.edges.h(i, j)) && strcmpi(get(bg.edges.h(i, j), 'Visible'), 'on');
+        end
+        function link_edge_text(bg, i, j , text, varargin)
+            if i == j  % removes diagonal
+                return;
+            end
+            
+            bg.set_axes();
+            br_1 = bg.atlas.getBrainRegions().getValue(i);
+            br_2 = bg.atlas.getBrainRegions().getValue(j);
+            % get coordinates
+            X1 = br_1.getX();
+            Y1 = br_1.getY();
+            Z1 = br_1.getZ();
+            
+            X2 = br_2.getX();
+            Y2 = br_2.getY();
+            Z2 = br_2.getZ();
+            
+            % equidistant point 
+            X3 = (X1 + X2) / 2;
+            Y3 = (Y1 + Y2) / 2;
+            Z3 = (Z1 + Z2) / 2;
+            text(X3, Y3, Z3, text);   
+        end
         
         % arrows
         function h = arrow_edge(bg, i, j, varargin)
@@ -910,6 +946,16 @@ classdef PlotBrainGraph < PlotBrainAtlas
             end
             set(f, 'Visible', 'on')
         end
+        function bool = arrow_edge_is_on(bg, i, j)
+            % ARROW_EDGE_IS_ON checks if line link is visible
+            %
+            % BOOL = ARROW_EDGE_IS_ON(BG, I, J) returns true if the line arrow link
+            % from the brain regions I to J is visible and false otherwise.
+            %
+            % See also PlotBrainGraph.
+            
+            bool = ishandle(bg.edges.arr(i, j)) && strcmpi(get(bg.edges.arr(i, j), 'Visible'), 'on');
+        end
         
         % cylinders
         function h = cylinder_edge(bg, i, j, varargin)
@@ -1300,6 +1346,16 @@ classdef PlotBrainGraph < PlotBrainAtlas
                 set(ui_table, 'Data', data)
             end
             set(f, 'Visible', 'on')
+        end
+        function bool = cylinder_edge_is_on(bg, i, j)
+            % CYLINDER_EDGE_IS_ON checks if cylinder link is visible
+            %
+            % BOOL = CYLINDER_EDGE_IS_ON(BG, I, J) returns true if the cylinder link
+            % from the brain regions I to J is visible and false otherwise.
+            %
+            % See also PlotBrainGraph.
+            
+            bool = ishandle(bg.edges.cyl(i, j)) && strcmpi(get(bg.edges.cyl(i, j), 'Visible'), 'on');
         end
     end
 end

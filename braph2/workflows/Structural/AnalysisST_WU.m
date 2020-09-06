@@ -2884,8 +2884,7 @@ classdef AnalysisST_WU < Analysis
             fdr_lim = [];
             p1 = [];
             p2 = [];
-            ga = analysis;
-            axes = brain_axes;
+            ga = analysis;            
             
             % get all measures
             mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());  % list of nodal measures
@@ -2914,26 +2913,32 @@ classdef AnalysisST_WU < Analysis
             ui_edit_meas_fdr1 = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
             ui_checkbox_meas_fdr2 = uicontrol(ui_panel_meas_scaling, 'Style',  'checkbox');
             ui_edit_meas_fdr2 = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
-            ui_button_meas_automatic = uicontrol(ui_panel_meas_scaling, 'Style', 'pushbutton');
+            ui_button_meas_automatic = uicontrol(ui_panel_meas_scaling, 'Style', 'pushbutton');            
             
-            % mesure figure options
-            ui_checkbox_meas_symbolsize = uicontrol(f, 'Style',  'checkbox');
-            ui_edit_meas_symbolsize = uicontrol(f, 'Style', 'edit');
-            ui_checkbox_meas_symbolcolor = uicontrol(f, 'Style',  'checkbox');
-            ui_popup_meas_initcolor = uicontrol(f, 'Style', 'popup', 'String', {''});
-            ui_popup_meas_fincolor = uicontrol(f, 'Style', 'popup', 'String', {''});
-            ui_checkbox_meas_sphereradius = uicontrol(f, 'Style',  'checkbox');
-            ui_edit_meas_sphereradius = uicontrol(f, 'Style', 'edit');
-            ui_checkbox_meas_spherecolor = uicontrol(f, 'Style',  'checkbox');
-            ui_popup_meas_sphinitcolor = uicontrol(f, 'Style', 'popup', 'String', {''});
-            ui_popup_meas_sphfincolor = uicontrol(f, 'Style', 'popup', 'String', {''});
-            ui_checkbox_meas_spheretransparency = uicontrol(f, 'Style',  'checkbox');
-            ui_slider_meas_spheretransparency = uicontrol(f, 'Style', 'slider');
-            ui_checkbox_meas_labelsize = uicontrol(f, 'Style',  'checkbox');
-            ui_edit_meas_labelsize = uicontrol(f, 'Style', 'edit');
-            ui_checkbox_meas_labelcolor = uicontrol(f, 'Style',  'checkbox');
-            ui_popup_meas_labelinitcolor = uicontrol(f, 'Style', 'popup', 'String', {''});
-            ui_popup_meas_labelfincolor = uicontrol(f, 'Style', 'popup', 'String', {''});
+            % measure container panel
+            ui_measure_container_panel = uipanel(f, 'Units', 'normalized');
+            
+            % nodal measure figure options
+            ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+            ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+            ui_checkbox_meas_symbolcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+            ui_popup_meas_initcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+            ui_popup_meas_fincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+            ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+            ui_edit_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+            ui_checkbox_meas_spherecolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+            ui_popup_meas_sphinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+            ui_popup_meas_sphfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+            ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+            ui_slider_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style', 'slider');
+            ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+            ui_edit_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+            ui_checkbox_meas_labelcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+            ui_popup_meas_labelinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+            ui_popup_meas_labelfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+            
+            % binodal measure figure options
+            ui_edge_value_show = uicontrol(f, 'Units', 'normalized', 'Style', 'checkbox');
             
             init_measures_panel()
             update_figure_panel()
@@ -3091,10 +3096,12 @@ classdef AnalysisST_WU < Analysis
                 set(ui_edit_meas_fdr2, 'FontWeight', 'bold')
                 set(ui_edit_meas_fdr2, 'Callback', {@cb_edit_meas_fdr2})
                 
-                % measure figure *******************************
+               % measure figure *******************************                
+                set(ui_measure_container_panel, 'Position', [.35 .01 .605 .64])
+                             
                 set(ui_checkbox_meas_symbolsize, 'Units', 'normalized')
                 set(ui_checkbox_meas_symbolsize, 'BackgroundColor', GUI.BKGCOLOR)
-                set(ui_checkbox_meas_symbolsize, 'Position', [.35 .6 .30 .04])
+                set(ui_checkbox_meas_symbolsize, 'Position', [.01 .9 .30 .08])
                 set(ui_checkbox_meas_symbolsize, 'String', ' Symbol Size ')
                 set(ui_checkbox_meas_symbolsize, 'Value', false)
                 set(ui_checkbox_meas_symbolsize, 'FontWeight', 'bold')
@@ -3104,14 +3111,14 @@ classdef AnalysisST_WU < Analysis
                 set(ui_edit_meas_symbolsize, 'Units', 'normalized')
                 set(ui_edit_meas_symbolsize, 'String', PlotBrainGraph.INIT_SYM_SIZE)
                 set(ui_edit_meas_symbolsize, 'Enable', 'off')
-                set(ui_edit_meas_symbolsize, 'Position', [.7050 .6 .25 .04])
+                set(ui_edit_meas_symbolsize, 'Position', [.31 .9 .6 .08])
                 set(ui_edit_meas_symbolsize, 'HorizontalAlignment', 'center')
                 set(ui_edit_meas_symbolsize, 'FontWeight', 'bold')
                 set(ui_edit_meas_symbolsize, 'Callback', {@cb_edit_meas_symbolsize})
                 
                 set(ui_checkbox_meas_symbolcolor, 'Units', 'normalized')
                 set(ui_checkbox_meas_symbolcolor, 'BackgroundColor', GUI.BKGCOLOR)
-                set(ui_checkbox_meas_symbolcolor, 'Position', [.35 .515 .23 .04])
+                set(ui_checkbox_meas_symbolcolor, 'Position', [.01 .8 .3 .08])
                 set(ui_checkbox_meas_symbolcolor, 'String', ' Symbol Color ')
                 set(ui_checkbox_meas_symbolcolor, 'Value', false)
                 set(ui_checkbox_meas_symbolcolor, 'FontWeight', 'bold')
@@ -3121,7 +3128,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_popup_meas_initcolor, 'Units', 'normalized')
                 set(ui_popup_meas_initcolor, 'BackgroundColor', GUI.BKGCOLOR)
                 set(ui_popup_meas_initcolor, 'Enable', 'off')
-                set(ui_popup_meas_initcolor, 'Position', [.7050 .52 .11 .04])
+                set(ui_popup_meas_initcolor, 'Position', [.31 .8 .3 .08])
                 set(ui_popup_meas_initcolor, 'String', {'R', 'G', 'B'})
                 set(ui_popup_meas_initcolor, 'Value', 3)
                 set(ui_popup_meas_initcolor, 'TooltipString', 'Select symbol');
@@ -3130,7 +3137,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_popup_meas_fincolor, 'Units', 'normalized')
                 set(ui_popup_meas_fincolor, 'BackgroundColor', GUI.BKGCOLOR)
                 set(ui_popup_meas_fincolor, 'Enable', 'off')
-                set(ui_popup_meas_fincolor, 'Position', [0.8450 .52 .11 .04])
+                set(ui_popup_meas_fincolor, 'Position', [0.61 .8 .3 .08])
                 set(ui_popup_meas_fincolor, 'String', {'R', 'G', 'B'})
                 set(ui_popup_meas_fincolor, 'Value', 1)
                 set(ui_popup_meas_fincolor, 'TooltipString', 'Select symbol');
@@ -3138,7 +3145,7 @@ classdef AnalysisST_WU < Analysis
                 
                 set(ui_checkbox_meas_sphereradius, 'Units', 'normalized')
                 set(ui_checkbox_meas_sphereradius, 'BackgroundColor', GUI.BKGCOLOR)
-                set(ui_checkbox_meas_sphereradius, 'Position', [.35 0.415 .30 .04])
+                set(ui_checkbox_meas_sphereradius, 'Position', [.01 0.7 .3 .08])
                 set(ui_checkbox_meas_sphereradius, 'String', ' Sphere Radius ')
                 set(ui_checkbox_meas_sphereradius, 'Value', false)
                 set(ui_checkbox_meas_sphereradius, 'FontWeight', 'bold')
@@ -3148,14 +3155,14 @@ classdef AnalysisST_WU < Analysis
                 set(ui_edit_meas_sphereradius, 'Units', 'normalized')
                 set(ui_edit_meas_sphereradius, 'String', PlotBrainGraph.INIT_SPH_R)
                 set(ui_edit_meas_sphereradius, 'Enable', 'off')
-                set(ui_edit_meas_sphereradius, 'Position', [.7050 0.42 .25 .04])
+                set(ui_edit_meas_sphereradius, 'Position', [.31 0.7 .6 .08])
                 set(ui_edit_meas_sphereradius, 'HorizontalAlignment', 'center')
                 set(ui_edit_meas_sphereradius, 'FontWeight', 'bold')
                 set(ui_edit_meas_sphereradius, 'Callback', {@cb_edit_meas_sphereradius})
                 
                 set(ui_checkbox_meas_spherecolor, 'Units', 'normalized')
                 set(ui_checkbox_meas_spherecolor, 'BackgroundColor', GUI.BKGCOLOR)
-                set(ui_checkbox_meas_spherecolor, 'Position', [.35 0.315 .45 .04])
+                set(ui_checkbox_meas_spherecolor, 'Position', [.01 0.6 .3 .08])
                 set(ui_checkbox_meas_spherecolor, 'String', ' Sphere Color ')
                 set(ui_checkbox_meas_spherecolor, 'Value', false)
                 set(ui_checkbox_meas_spherecolor, 'FontWeight', 'bold')
@@ -3165,7 +3172,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_popup_meas_sphinitcolor, 'Units', 'normalized')
                 set(ui_popup_meas_sphinitcolor, 'BackgroundColor', GUI.BKGCOLOR)
                 set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
-                set(ui_popup_meas_sphinitcolor, 'Position', [.7050 .32 .11 .04])
+                set(ui_popup_meas_sphinitcolor, 'Position', [.31 .6 .3 .08])
                 set(ui_popup_meas_sphinitcolor, 'String', {'R', 'G', 'B'})
                 set(ui_popup_meas_sphinitcolor, 'Value', 1)
                 set(ui_popup_meas_sphinitcolor, 'TooltipString', 'Select symbol');
@@ -3174,7 +3181,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_popup_meas_sphfincolor, 'Units', 'normalized')
                 set(ui_popup_meas_sphfincolor, 'BackgroundColor', GUI.BKGCOLOR)
                 set(ui_popup_meas_sphfincolor, 'Enable', 'off')
-                set(ui_popup_meas_sphfincolor, 'Position', [0.8450 .32 .11 .04])
+                set(ui_popup_meas_sphfincolor, 'Position', [0.61 .6 .3 .08])
                 set(ui_popup_meas_sphfincolor, 'String', {'R', 'G', 'B'})
                 set(ui_popup_meas_sphfincolor, 'Value', 3)
                 set(ui_popup_meas_sphfincolor, 'TooltipString', 'Select symbol');
@@ -3182,7 +3189,7 @@ classdef AnalysisST_WU < Analysis
                 
                 set(ui_checkbox_meas_spheretransparency, 'Units', 'normalized')
                 set(ui_checkbox_meas_spheretransparency, 'BackgroundColor', GUI.BKGCOLOR)
-                set(ui_checkbox_meas_spheretransparency, 'Position', [.35 0.215 .32 .04])
+                set(ui_checkbox_meas_spheretransparency, 'Position', [.01 0.5 .3 .08])
                 set(ui_checkbox_meas_spheretransparency, 'String', ' Sphere Transparency ')
                 set(ui_checkbox_meas_spheretransparency, 'Value', false)
                 set(ui_checkbox_meas_spheretransparency, 'FontWeight', 'bold')
@@ -3193,13 +3200,13 @@ classdef AnalysisST_WU < Analysis
                 set(ui_slider_meas_spheretransparency, 'BackgroundColor', GUI.BKGCOLOR)
                 set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainGraph.INIT_SPH_FACE_ALPHA);
                 set(ui_slider_meas_spheretransparency, 'Enable', 'off')
-                set(ui_slider_meas_spheretransparency, 'Position', [.7050 0.22 .25 .04])
+                set(ui_slider_meas_spheretransparency, 'Position', [.31 0.5 .6 .08])
                 set(ui_slider_meas_spheretransparency, 'TooltipString', 'Brain region transparency (applied both to faces and edges)')
                 set(ui_slider_meas_spheretransparency, 'Callback', {@cb_slider_meas_spheretransparency})
                 
                 set(ui_checkbox_meas_labelsize, 'Units', 'normalized')
                 set(ui_checkbox_meas_labelsize, 'BackgroundColor', GUI.BKGCOLOR)
-                set(ui_checkbox_meas_labelsize, 'Position', [.35 .115 .32 .04])
+                set(ui_checkbox_meas_labelsize, 'Position', [.01 .4 .3 .08])
                 set(ui_checkbox_meas_labelsize, 'String', ' Label Size ')
                 set(ui_checkbox_meas_labelsize, 'Value', false)
                 set(ui_checkbox_meas_labelsize, 'FontWeight', 'bold')
@@ -3209,14 +3216,14 @@ classdef AnalysisST_WU < Analysis
                 set(ui_edit_meas_labelsize, 'Units', 'normalized')
                 set(ui_edit_meas_labelsize, 'String', PlotBrainGraph.INIT_LAB_FONT_SIZE)
                 set(ui_edit_meas_labelsize, 'Enable', 'off')
-                set(ui_edit_meas_labelsize, 'Position', [.7050 .12 .25 .04])
+                set(ui_edit_meas_labelsize, 'Position', [.31 .4 .6 .08])
                 set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
                 set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
                 set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
                 
                 set(ui_checkbox_meas_labelcolor, 'Units', 'normalized')
                 set(ui_checkbox_meas_labelcolor, 'BackgroundColor', GUI.BKGCOLOR)
-                set(ui_checkbox_meas_labelcolor, 'Position', [.35 0.0150 .32 .04])
+                set(ui_checkbox_meas_labelcolor, 'Position', [.01 0.3 .3 .08])
                 set(ui_checkbox_meas_labelcolor, 'String', ' Label Color ')
                 set(ui_checkbox_meas_labelcolor, 'Value', false)
                 set(ui_checkbox_meas_labelcolor, 'FontWeight', 'bold')
@@ -3226,7 +3233,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_popup_meas_labelinitcolor, 'Units', 'normalized')
                 set(ui_popup_meas_labelinitcolor, 'BackgroundColor', GUI.BKGCOLOR)
                 set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
-                set(ui_popup_meas_labelinitcolor, 'Position', [.7050 .02 .11 .04])
+                set(ui_popup_meas_labelinitcolor, 'Position', [.31 .3 .3 .08])
                 set(ui_popup_meas_labelinitcolor, 'String', {'R', 'G', 'B'})
                 set(ui_popup_meas_labelinitcolor, 'Value', 1)
                 set(ui_popup_meas_labelinitcolor, 'TooltipString', 'Select symbol');
@@ -3235,11 +3242,18 @@ classdef AnalysisST_WU < Analysis
                 set(ui_popup_meas_labelfincolor, 'Units', 'normalized')
                 set(ui_popup_meas_labelfincolor, 'BackgroundColor', GUI.BKGCOLOR)
                 set(ui_popup_meas_labelfincolor, 'Enable', 'off')
-                set(ui_popup_meas_labelfincolor, 'Position', [0.8450 .02 .11 .04])
+                set(ui_popup_meas_labelfincolor, 'Position', [0.61 .3 .3 .08])
                 set(ui_popup_meas_labelfincolor, 'String', {'R', 'G', 'B'})
                 set(ui_popup_meas_labelfincolor, 'Value', 3)
                 set(ui_popup_meas_labelfincolor, 'TooltipString', 'Select symbol');
                 set(ui_popup_meas_labelfincolor, 'Callback', {@cb_meas_labelfincolor})
+                
+                set(ui_edge_value_show, 'Position', [0.4 0.3 0.4 0.2])
+                set(ui_edge_value_show, 'String', 'Show Binodal Measures as Labels')
+                set(ui_edge_value_show, 'Value', false)
+                set(ui_edge_value_show, 'Callback', {@cb_binodal_measure_show})
+                
+                update_measure_control_panel()
             end
             function cb_action_measurement(~, ~)
                 value = true;
@@ -3265,6 +3279,7 @@ classdef AnalysisST_WU < Analysis
             function cb_list_gr(~, ~)
                 update_measure_data(2)
                 update_brain_meas_plot()
+                update_measure_control_panel()
             end
             function cb_list_t_or_d(~, ~)
                 update_measure_data(2)
@@ -3347,14 +3362,14 @@ classdef AnalysisST_WU < Analysis
             function cb_meas_automatic(~, ~)  %  (src, event)
                 if ~isempty(measure_data)
                     measure_data_inner = [measure_data{:}];
-                    offset = min(measure_data_inner);
+                    offset = min(measure_data_inner(:));
                     if isnan(offset) || offset == 0 || ~isreal(offset)
                         set(ui_edit_meas_offset, 'String', '0');
                     else
                         set(ui_edit_meas_offset, 'String', num2str(offset))
                     end
                     
-                    rescaling = max(measure_data_inner) - offset;
+                    rescaling = max(measure_data_inner(:)) - offset;
                     if rescaling == 0 || isnan(rescaling) || ~isreal(rescaling)
                         set(ui_edit_meas_rescaling, 'String', '1');
                     else
@@ -3928,6 +3943,40 @@ classdef AnalysisST_WU < Analysis
                     
                 else
                     % do nothing
+                end
+            end
+            function update_measure_control_panel()
+                i = get(ui_list_gr, 'Value');
+                measure = mlist{i};
+                if (Measure.is_nodal(measure)) 
+                    set(ui_measure_container_panel, 'Visible', 'on')
+                    childs_visibility(ui_measure_container_panel, 'on')
+                    set(ui_edge_value_show, 'Enable', 'off')
+                    set(ui_edge_value_show, 'Visible', 'off')
+                else
+                    set(ui_measure_container_panel, 'Visible', 'off')
+                    childs_visibility(ui_measure_container_panel, 'off')                    
+                    set(ui_edge_value_show, 'Enable', 'on')
+                    set(ui_edge_value_show, 'Visible', 'on')
+                end
+            end
+            function childs_visibility(handle, rule)
+                childs = allchild(handle);
+                set(handle, 'visible', rule)
+                for i = 1:1:length(childs)
+                    set(childs(i), 'visible', rule)
+                end
+            end
+            function cb_binodal_measure_show(~, ~)
+                measure_data_inner = measure_data{1};
+                for i = 1:1:size(measure_data_inner, 1)
+                    for j = 1:1:size(measure_data_inner, 2)
+                        if bg.link_edge_is_on(i, j)
+                            bg.link_edge_text(i, j, string(measure_data_inner(i, j)))
+                        elseif bg.arrow_edge_is_on(i, j)
+                        elseif bg.cylinder_edge_is_on(i, j)
+                        end
+                    end
                 end
             end
         end
