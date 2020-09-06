@@ -2267,8 +2267,6 @@ classdef AnalysisST_WU < Analysis
 
                 function cb_figure_settingsbr(~, ~)  % (src, event)
                     i = bg.get_sym_i(gco);
-                    userdata = get(gco, 'UserData');
-                    i = userdata{2};
                     bg.br_syms_settings(i)
                 end
                 
@@ -2276,8 +2274,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_contextmenu_figure_labels_settings, 'Callback', {@cb_figure_settingslab})
                 
                 function cb_figure_settingslab(~, ~)  % (src, event)
-                    userdata = get(gco, 'UserData');
-                    i = userdata{2};
+                    i = bg.get_labs_i(gco);                    
                     bg.br_labs_settings(i)
                 end
             end
