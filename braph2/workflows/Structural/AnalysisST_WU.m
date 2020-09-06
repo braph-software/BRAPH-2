@@ -1074,7 +1074,8 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             function init_plot_measure_panel()
-                cla(ui_plot_measure_axes)
+                cla(ui_plot_measure_axes)                
+                deleteExtraChilds(ui_plot_measure_panel)
                 measures = get(ui_selectedmeasure_popup, 'String');
                 selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
@@ -1188,6 +1189,15 @@ classdef AnalysisST_WU < Analysis
                     analysis.getMeasurements().remove(k);
                 end
                 update_global_table()
+            end
+            function deleteExtraChilds(ui_control)
+                childs = findobj(ui_control, 'Style', 'checkbox');
+                for i = 1:1:length(childs)
+                    c = childs(i);
+                    if isequal(c.Style, 'checkbox')
+                        delete(c);
+                    end
+                end
             end
             
             update_global_table()
@@ -1398,7 +1408,7 @@ classdef AnalysisST_WU < Analysis
                     for j = 1:1:analysis.getComparisons().length()
                         comparison = analysis.getComparisons().getValue(j);
                         [a, b] = comparison.getGroups();
-                        if ismember(comparison.getMeasureCode(), nodal_list) && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1))) && isequal(selected_measure, comparison.getMeasureCode())
+                        if ismember(comparison.getMeasureCode(), nodal_list) && ((isequal(a, group_1) && isequal (b, group_2)) || (isequal(a, group_2) && isequal (b, group_1))) && isequal(selected_measure, comparison.getMeasureCode())
                             nodal_comparison{j} = comparison; %#ok<AGROW>
                         end
                     end
@@ -1504,6 +1514,7 @@ classdef AnalysisST_WU < Analysis
             end
             function init_plot_nodal_panel()
                 cla(ui_plot_measure_axes)
+                deleteExtraChilds(ui_plot_measure_panel)
                 measures = get(ui_selectedmeasure_popup, 'String');
                 selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
@@ -1617,6 +1628,15 @@ classdef AnalysisST_WU < Analysis
                     analysis.getMeasurements().remove(k);
                 end
                 update_nodal_table()
+            end
+            function deleteExtraChilds(ui_control)
+                childs = findobj(ui_control, 'Style', 'checkbox');
+                for i = 1:1:length(childs)
+                    c = childs(i);
+                    if isequal(c.Style, 'checkbox')
+                        delete(c);
+                    end
+                end
             end
             
             update_nodal_table()
@@ -1777,7 +1797,7 @@ classdef AnalysisST_WU < Analysis
                 selected_index_1 = get(ui_popup_binodalmeasures_group1, 'Value');
                 group_1 = analysis.getCohort().getGroups().getValue(selected_index_1);
                 
-                selected_index_2 = get(ui_popup_binodalmeasures_group1, 'Value');
+                selected_index_2 = get(ui_popup_binodalmeasures_group2, 'Value');
                 group_2 = analysis.getCohort().getGroups().getValue(selected_index_2);
                 
                 measures = get(ui_selectedmeasure_popup, 'String');
@@ -1833,7 +1853,7 @@ classdef AnalysisST_WU < Analysis
                     for j = 1:1:analysis.getComparisons().length()
                         comparison = analysis.getComparisons().getValue(j);
                         [a, b] = comparison.getGroups();
-                        if ismember(comparison.getMeasureCode(), binodal_list) && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1))) && isequal(selected_measure, comparison.getMeasureCode())
+                        if ismember(comparison.getMeasureCode(), binodal_list) && ((isequal(a, group_1) && isequal (b, group_2)) || (isequal(a, group_2) && isequal (b, group_1))) && isequal(selected_measure, comparison.getMeasureCode())
                             binodal_comparison{j} = comparison; %#ok<AGROW>
                         end
                     end
@@ -1939,6 +1959,7 @@ classdef AnalysisST_WU < Analysis
             end
             function init_plot_binodal_panel()
                 cla(ui_plot_measure_axes)
+                deleteExtraChilds(ui_plot_measure_panel)
                 measures = get(ui_selectedmeasure_popup, 'String');
                 selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
@@ -2052,6 +2073,15 @@ classdef AnalysisST_WU < Analysis
                     analysis.getMeasurements().remove(k);
                 end
                 update_binodal_table()
+            end
+            function deleteExtraChilds(ui_control)
+                childs = findobj(ui_control, 'Style', 'checkbox');
+                for i = 1:1:length(childs)
+                    c = childs(i);
+                    if isequal(c.Style, 'checkbox')
+                        delete(c);
+                    end
+                end
             end
             
             update_binodal_table()

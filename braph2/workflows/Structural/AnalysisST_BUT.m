@@ -874,7 +874,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             function cb_show_confidence_interval_min(src, ~)
                 if src.Value == true
                     
-                    y_confidence = analysis.selectRandomComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMin()');
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMin()');
                     for j = 1:1:length(y_confidence)
                         min_cell = y_confidence{j};
                         min_cell_values = min_cell{1};
@@ -900,7 +900,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
             function cb_show_confidence_interval_max(src, ~)
                 if src.Value == true
                     
-                    y_confidence = analysis.selectRandomComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMax()');
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMax()');
                     for j = 1:1:length(y_confidence)
                         max_cell = y_confidence{j};
                         max_cell_values = max_cell{1};
