@@ -2870,7 +2870,6 @@ classdef AnalysisST_WU < Analysis
             
             % create a figure
             f = GUI.init_figure(APPNAME, .45, .6, 'west');
-            %             fig_group = figure('Visible', 'off');
             
             set(f, 'Units', 'normalized')
             set(f, 'Position', FigPosition)
@@ -3347,14 +3346,15 @@ classdef AnalysisST_WU < Analysis
             end
             function cb_meas_automatic(~, ~)  %  (src, event)
                 if ~isempty(measure_data)
-                    offset = min(measure_data);
+                    measure_data_inner = [measure_data{:}];
+                    offset = min(measure_data_inner);
                     if isnan(offset) || offset == 0 || ~isreal(offset)
                         set(ui_edit_meas_offset, 'String', '0');
                     else
                         set(ui_edit_meas_offset, 'String', num2str(offset))
                     end
                     
-                    rescaling = max(measure_data) - offset;
+                    rescaling = max(measure_data_inner) - offset;
                     if rescaling == 0 || isnan(rescaling) || ~isreal(rescaling)
                         set(ui_edit_meas_rescaling, 'String', '1');
                     else
@@ -3769,21 +3769,28 @@ classdef AnalysisST_WU < Analysis
             end
             function update_brain_meas_plot()
                 if ~isempty(measure_data)
+                    if isequal(size(measure_data, 2), 1)  % nodal
+                        measure_data_inner = [measure_data{:}];
+                    elseif isequal(size(measure_data, 1), 1)  % global
+                        % do nothing
+                    else  % binodal
+                    end
+                    
                     if get(ui_checkbox_meas_symbolsize, 'Value') 
                         
-                        size = str2double(get(ui_edit_meas_symbolsize, 'String'));
+                        size_ = str2double(get(ui_edit_meas_symbolsize, 'String'));
                         offset = str2double(get(ui_edit_meas_offset, 'String'));
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
                         if isempty(fdr_lim)
-                            size = 1 + ((measure_data - offset)./rescaling) * size;
+                            size_ = 1 + ((measure_data_inner - offset)./rescaling) * size_;
                         else
-                            size = (1 + ((measure_data - offset)./rescaling) * size) .* fdr_lim;
+                            size_ = (1 + ((measure_data_inner - offset)./rescaling) * size_) .* fdr_lim;
                         end
                         
-                        size(isnan(size)) = 0.1;
-                        size(size<=0) = 0.1;
-                        bg.br_syms([], 'Size', size);
+                        size_(isnan(size_)) = 0.1;
+                        size_(size_<=0) = 0.1;
+                        bg.br_syms([], 'Size', size_);
                     end
                     
                     if get(ui_checkbox_meas_symbolcolor, 'Value')
@@ -3791,8 +3798,8 @@ classdef AnalysisST_WU < Analysis
                         offset = str2double(get(ui_edit_meas_offset, 'String'));
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
-                        colorValue = (measure_data - offset)./rescaling;
-                        %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
+                        colorValue = (measure_data_inner - offset)./rescaling;
+                        %colorValue = (measure_data_inner - min(measure_data_inner))./(max(measure_data_inner)-min(measure_data_inner));
                         colorValue(isnan(colorValue)) = 0;
                         colorValue(colorValue<0) = 0;
                         colorValue(colorValue>1) = 1;
@@ -3814,9 +3821,9 @@ classdef AnalysisST_WU < Analysis
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
                         if isempty(fdr_lim)
-                           R = 1 + ((measure_data - offset)./rescaling)*R;
+                           R = 1 + ((measure_data_inner - offset)./rescaling)*R;
                         else
-                            R = (1 + ((measure_data - offset)./rescaling)*R).*fdr_lim;
+                            R = (1 + ((measure_data_inner - offset)./rescaling)*R).*fdr_lim;
                         end
                         
                         R(isnan(R)) = 0.1;
@@ -3829,8 +3836,8 @@ classdef AnalysisST_WU < Analysis
                         offset = str2double(get(ui_edit_meas_offset, 'String'));
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
-                        colorValue = (measure_data - offset)./rescaling;
-                        %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
+                        colorValue = (measure_data_inner - offset)./rescaling;
+                        %colorValue = (measure_data_inner - min(measure_data_inner))./(max(measure_data_inner)-min(measure_data_inner));
                         colorValue(isnan(colorValue)) = 0;
                         colorValue(colorValue<0) = 0;
                         colorValue(colorValue>1) = 1;
@@ -3851,9 +3858,9 @@ classdef AnalysisST_WU < Analysis
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
                         if isempty(fdr_lim)
-                            alpha_vec = ((measure_data - offset)./rescaling).*alpha;
+                            alpha_vec = ((measure_data_inner - offset)./rescaling).*alpha;
                         else                        
-                            alpha_vec = (((measure_data - offset)./rescaling).*alpha).*fdr_lim;
+                            alpha_vec = (((measure_data_inner - offset)./rescaling).*alpha).*fdr_lim;
                         end
                         alpha_vec(isnan(alpha_vec)) = 0;
                         alpha_vec(alpha_vec<0) = 0;
@@ -3863,19 +3870,19 @@ classdef AnalysisST_WU < Analysis
                     
                     if get(ui_checkbox_meas_labelsize, 'Value')
                         
-                        size = str2double(get(ui_edit_meas_labelsize, 'String'));
+                        size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
                         offset = str2double(get(ui_edit_meas_offset, 'String'));
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
                         if isempty(fdr_lim)
-                            size = 1 + ((measure_data - offset)./rescaling)*size;
+                            size_ = 1 + ((measure_data_inner - offset)./rescaling)*size_;
                         else                        
-                            size = (1 + ((measure_data - offset)./rescaling)*size).*fdr_lim;
+                            size_ = (1 + ((measure_data_inner - offset)./rescaling)*size_).*fdr_lim;
                         end
                         
-                        size(isnan(size)) = 0.1;
-                        size(size<=0) = 0.1;
-                        bg.br_labs([], 'FontSize', size);
+                        size_(isnan(size_)) = 0.1;
+                        size_(size_<=0) = 0.1;
+                        bg.br_labs([], 'FontSize', size_);
                     end
                     
                     if get(ui_checkbox_meas_labelcolor, 'Value')
@@ -3883,8 +3890,8 @@ classdef AnalysisST_WU < Analysis
                         offset = str2double(get(ui_edit_meas_offset, 'String'));
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
-                        colorValue = (measure_data - offset)./rescaling;
-                        %colorValue = (measure_data - min(measure_data))./(max(measure_data)-min(measure_data));
+                        colorValue = (measure_data_inner - offset)./rescaling;
+                        %colorValue = (measure_data_inner - min(measure_data_inner))./(max(measure_data_inner)-min(measure_data_inner));
                         colorValue(isnan(colorValue)) = 0;
                         colorValue(colorValue<0) = 0;
                         colorValue(colorValue>1) = 1;
