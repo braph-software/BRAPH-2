@@ -8,10 +8,10 @@ A = [
     0  1  0  0
     ];
 
-known_richness = {[2 2 2 0]'};
+known_richness = {[1 0 1 1]'};
 
 g = GraphBU(A);
-richness = Richness(g, 'RichnessThreshold', 1);
+richness = Richness(g);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
@@ -25,12 +25,10 @@ A = [
     0  1  0  0
     ];
 
-rich(:, 1, 1) = [5/2 3 2 3/2]';
-rich(:, 1, 2) = [1 1 0 0]';
-known_richness = {rich};
+known_richness = {[1 0 2 3/2]'};
 
 g = GraphBD(A);
-richness = Richness(g, 'RichnessThreshold', 2);
+richness = Richness(g);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
@@ -44,10 +42,10 @@ A = [
     0   .8  0  0
     ];
 
-known_richness = {[2 2 2 0]'};
+known_richness = {[.1 0 1 .8]'};
 
 g = GraphWU(A);
-richness = Richness(g, 'RichnessThreshold', 1);
+richness = Richness(g);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
@@ -61,17 +59,14 @@ A = [
     0   .3  0  0
     ];
 
-rich(:, 1, 1) = [5/2 3 2 3/2]';
-rich(:, 1, 2) = [1 1 0 0]';
-known_richness = {rich};
+known_richness = {[.6 0 2 .7]'};
 
 g = GraphWD(A);
-richness = Richness(g, 'RichnessThreshold', 2);
-
-assert(isequal(richness.getValue(), known_richness), ...
+richness = Richness(g);
+r = richness.getValue();
+assert(isequal(round(r{1}, 10), round(known_richness{1}, 10)), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
     'Richness is not being calculated correctly for GraphWD.')
-
 
 %% Test 5: MultiplexGraphBU
 A11 = [
@@ -94,12 +89,12 @@ A = {
     };
 
 known_richness = {
-                 [2 2 2 0]'
-                 [3 3 2 2]'
+                 [1 0 1 1]'
+                 [0 0 2 2]'
                  };      
 
 g = MultiplexGraphBU(A);
-richness = Richness(g, 'RichnessThreshold', 1);
+richness = Richness(g);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
@@ -124,20 +119,14 @@ A = {
     A11     A12
     A21     A22
     };
-
-richness_l1(:, 1, 1) = [5/2 3 2 3/2]';
-richness_l1(:, 1, 2) = [1 1 0 0]';
-
-richness_l2(:, 1, 1) = [5/2 3 5/2 2]';
-richness_l2(:, 1, 2) = [2 2 2 0]';
-
+             
 known_richness = {
-                 richness_l1
-                 richness_l2
-                 };      
+                 [1 0 2 3/2]'
+                 [1 0 1 2]'
+                 };    
 
 g = MultiplexGraphBD(A);
-richness = Richness(g, 'RichnessThreshold', 2);
+richness = Richness(g);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
@@ -164,12 +153,12 @@ A = {
     };
 
 known_richness = {
-                 [2 2 2 0]'
-                 [3 3 2 2]'
+                 [.1 0 1 .8]'
+                 [0  0 2 1.8]'
                  };      
 
 g = MultiplexGraphWU(A);
-richness = Richness(g, 'RichnessThreshold', 1);
+richness = Richness(g);
 
 assert(isequal(richness.getValue(), known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
@@ -195,20 +184,16 @@ A = {
     A21     A22
     };
 
-richness_l1(:, 1, 1) = [5/2 3 2 3/2]';
-richness_l1(:, 1, 2) = [1 1 0 0]';
-
-richness_l2(:, 1, 1) = [5/2 3 5/2 2]';
-richness_l2(:, 1, 2) = [2 2 2 0]';
-
 known_richness = {
-                 richness_l1
-                 richness_l2
-                 };  
+                 [.6 0 2 .7]'
+                 [.6 0 1 21/20]'
+                 };   
 
 g = MultiplexGraphWD(A);
-richness = Richness(g, 'RichnessThreshold', 2);
+richness = Richness(g);
+richness = richness.getValue();
+richness = cellfun(@(s) round(s, 4), richness, 'UniformOutput', false);
 
-assert(isequal(richness.getValue(), known_richness), ...
+assert(isequal(richness, known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
     'Richness is not being calculated correctly for MultiplexGraphWD.')

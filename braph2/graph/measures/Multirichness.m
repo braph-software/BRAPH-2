@@ -5,8 +5,7 @@ classdef Multirichness < Richness
     % multiplexes. 
     %
     % It is calculated as the sum of the number of edges that connect nodes
-    % of degree k or higher in all layers. The value of k is set by the
-    % user (setting 'RichnessThreshold'), the default value is equal to 1.
+    % of higher degree in all layers.
     % The relevance of each layer is controlled by the
     % coefficients c (setting 'MultirichnessCoefficients') that are between
     % 0 and 1, and add up to one; the default coefficients are
@@ -39,16 +38,11 @@ classdef Multirichness < Richness
             % G is a multiplex (e.g, an instance of MultiplexGraphBD,
             % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
             % 
-            % MULTIRICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD,
-            % 'MultirichnessCoefficients', MULTIRICHNESSCOEFFICIENTS)  
-            % creates multirichness measure and initializes the property
-            % RichnessThreshold with RICHNESSTHRESHOLD and the property
-            % MultirichnessCoefficients with MULTIRICHNESSCOEFFICIENTS.
-            % Admissible THRESHOLD and COEFFICIENTS options are:
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is 
-            %                    set to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
+            % MULTIRICHNESS(G, 'MultirichnessCoefficients',
+            % MULTIRICHNESSCOEFFICIENTS) creates multirichness measure 
+            % and initializes the property MultirichnessCoefficients
+            % with MULTIRICHNESSCOEFFICIENTS.
+            % Admissible COEFFICIENTS options are:
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
@@ -83,8 +77,6 @@ classdef Multirichness < Richness
                 richness = calculate@Richness(m);
             end
             
-            k_level = size(richness{1}, 3);  % Get the richness threshold
-            m.setParameter(k_level)  % Set the multirichness' parameter (based on richness's parameter)
             N = g.nodenumber();
             L = g.layernumber();
             
@@ -105,13 +97,9 @@ classdef Multirichness < Richness
                 c = ones(1, L)/L;
             end
             
-            multirichness = zeros(N(1), 1, k_level);
+            multirichness = zeros(N(1), 1);
             for li = 1:1:L
-                ri = richness{li};  % to fix when making this measure also parametric
-                % loop over the 3rd dimension of richness (k_level)
-                for k = 1:1:k_level
-                    multirichness(:, :, k) = multirichness(:, :, k) + c(li)*ri(:, :, k);  % to fix when making this measure also parametric
-                end
+                multirichness = multirichness + c(li)*richness{li};  
             end
             multirichness = {multirichness};
         end
@@ -155,20 +143,14 @@ classdef Multirichness < Richness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Multirichness.
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is  
-            %                    set to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
             % MULTIRICHNESSCOEFFICIENTS = 0 (default) - MULTIRICHNESS c coefficients 
             %                    will be set to (1/layernumber) per each layer.
             %                    values - MULTIRICHNESS c coefficients
             %                    will be set to the values specified per
             %                    each layer if the length of values is
             %                    equal to the number of layers.
-            
-            available_settings = getAvailableSettings@Richness();
 
-            available_settings(end+1, :) = {
+            available_settings = {
                  'MultirichnessCoefficients', BRAPH2.NUMERIC, 0, {};
                 };
         end
@@ -196,11 +178,11 @@ classdef Multirichness < Richness
             % GETPARAMETRICITY returns the parametricity of Multirichness
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of multirichness measure (PARAMETRIC).
+            % parametricity of multirichness measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.PARAMETRIC;
+            parametricity = Measure.NONPARAMETRIC;
         end
         function name = getParameterName()
             % GETPARAMETERNAME returns the name of the Multirichness' parameter

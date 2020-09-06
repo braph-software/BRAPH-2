@@ -4,10 +4,8 @@ classdef Richness < Degree
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
     % graphs. 
     %
-    % It is a parametric measure, from i = 1 to the k level it calculates 
-    % the sum of the number of edges that connect nodes of degree i or higher 
-    % within a layer. The value of k is set by the user (setting 'RichnessThreshold'), 
-    % the default value is equal to 1.
+    % It is calculated as the sum of the number of edges that connect nodes 
+    % of higher degree within a layer. 
     % 
     % Richness methods:
     %   Richness                    - constructor
@@ -34,19 +32,6 @@ classdef Richness < Degree
         function m = Richness(g, varargin)
             % RICHNESS(G) creates richness with default properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
-            % or MultiplexGraphWU). 
-            %
-            % RICHNESS(G, 'RichnessThreshold', RICHNESSTHRESHOLD) creates
-            % richness measure and initializes the property RichnessThreshold with RICHNESSTHRESHOLD. 
-            % Admissible THRESHOLD options are:
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
-            %                    to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
-            % 
-            % RICHNESS(G, 'VALUE', VALUE) creates richness, and sets the value
-            % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
             % or MultiplexGraphWU). 
             %
@@ -89,7 +74,7 @@ classdef Richness < Degree
                         degree = calculate@Degree(m);
                     end
                     
-                    deg = degree{li};
+                    k = degree{li};
                     
                 else  % directed graphs
                     
@@ -105,34 +90,33 @@ classdef Richness < Degree
                         out_degree = OutDegree(g, g.getSettings()).getValue();
                     end
                     
-                    deg = (in_degree{li} + out_degree{li})/2;
+                    k = in_degree{li} + out_degree{li};
                 end
-                
-                richness_threshold = get_from_varargin(1, 'RichnessThreshold', m.getSettings());
-                assert(mod(richness_threshold, 1) == 0, ...
-                    [BRAPH2.STR ':Richness:' BRAPH2.WRONG_INPUT], ...
-                    ['Richness threshold must be an integer value ' ...
-                    'while it is ' tostring(richness_threshold)])
+                          
+                kMinus = zeros(size(k));
+                kPlus = zeros(size(k));
 
-                k_level = abs(richness_threshold);  
-                m.setParameter(k_level)  % Set the parameter
-            
-                richness_layer = zeros(N(1), 1, k_level);
-                for k = 1:1:k_level
-                    low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
-                    Aii = binarize(Aii);  % binarizes the adjacency matrix
-                    subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <= k of Aii
-                    subAii(low_rich_nodes, :) = 0;  % remove rows
-                    subAii(:, low_rich_nodes) = 0;  % remove columns
+                for i = 1:N(li)
+                    lrInd = k <= k(i); % Indices of nodes with Lower Richness (LR)
+                    hrInd = k > k(i); % Indices of nodes with Higher Richness (HR)                
+                    lrA = Aii; 
+                    lrA(i, hrInd) = 0; 
+                    lrA(hrInd, i) = 0;
+                    hrA = Aii; 
+                    hrA(i, lrInd) = 0; 
+                    hrA(lrInd, i) = 0;
                     
                     if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                        richness_layer(:, :, k) = sum(subAii, 1)';  % degree of high rich nodes
+                        kMinusForI = sum(lrA, 1)';
+                        kPlusForI = sum(hrA, 1)';
                     else
-                        richness_layer(:, :, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
-                    end
-
+                        kMinusForI = (sum(lrA, 1)' + sum(lrA, 2))/2;
+                        kPlusForI = (sum(hrA, 1)' + sum(hrA, 2))/2;
+                    end       
+                    kMinus(i) = kMinusForI(i);
+                    kPlus(i) = kPlusForI(i);
                 end
-                richness(li) = {richness_layer};  % add richness of layer li          
+                richness(li) = {kPlus};  % add richness of layer li          
             end
         end
     end  
@@ -165,23 +149,18 @@ classdef Richness < Degree
             
             description = [ ...
                 'The richness of a node is the sum of ' ...
-                'the edges that connect nodes of degree k or higher within a layer. ' ...
-                'k is set by the user; the default value is equal to 1. ' ...
+                'the edges that connect nodes of higher degree within a layer. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
             % GETAVAILABLESETTINGS returns the setting available to Richness
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to Richness.
-            % RICHNESSTHRESHOLD = 1 (default) - RICHNESS k threshold is set 
-            %                    to 1.
-            %                    value - RICHNESS k threshold is set to the
-            %                    specificied value.
+            % settings available to Richness. Empty Array in this case.
+            % 
+            % See also getCompatibleGraphList.
             
-            available_settings = {
-                'RichnessThreshold', BRAPH2.NUMERIC, 1, {};
-                };
+            available_settings = {};
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of Richness
@@ -207,19 +186,11 @@ classdef Richness < Degree
             % GETPARAMETRICITY returns the parametricity of Richness
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of richness measure (PARAMETRIC).
+            % parametricity of richness measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
-            parametricity = Measure.PARAMETRIC;
-        end
-        function name = getParameterName()
-            % GETPARAMETERNAME returns the name of the Richness' parameter
-            %
-            % NAME = GETPARAMETERNAME() returns the name (string) of 
-            % the richness parameter.
-            
-            name = 'Richness threshold';
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with Richness 
@@ -250,16 +221,6 @@ classdef Richness < Degree
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Richness');
-        end
-    end
-    methods 
-        function values = getParameterValues(m)
-            % GETPARAMETERVALUES returns the values of the Richness' parameter
-            %
-            % VALUES = GETPARAMETERVALUES() returns the values of
-            % the richness' parameter.
-            
-            values = 1:1:m.getParameter();
         end
     end
 end
