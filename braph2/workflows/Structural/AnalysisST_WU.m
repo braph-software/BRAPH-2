@@ -3678,9 +3678,9 @@ classdef AnalysisST_WU < Analysis
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
                         if isempty(fdr_lim)
-                            size = 1 + ((measure_data - offset)./rescaling)*size;
+                            size = 1 + ((measure_data - offset)./rescaling) * size;
                         else
-                            size = (1 + ((measure_data - offset)./rescaling)*size).*fdr_lim;
+                            size = (1 + ((measure_data - offset)./rescaling) * size) .* fdr_lim;
                         end
                         
                         size(isnan(size)) = 0.1;

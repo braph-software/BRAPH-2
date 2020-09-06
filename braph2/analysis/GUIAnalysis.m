@@ -4,7 +4,7 @@ function GUIAnalysis(ga, measure_rules)
 APPNAME = GUI.GA_NAME;
 BUILD = BRAPH2.BUILD;
 
-if nargin == 1
+if nargin == 1 || isempty(measure_rules)
     measure_rules = {'', ''};
 end
 
