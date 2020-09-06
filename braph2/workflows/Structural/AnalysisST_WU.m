@@ -2206,6 +2206,10 @@ classdef AnalysisST_WU < Analysis
             ui_brainview_axes = get_from_varargin([], 'UIAxesBrain', varargin{:});
             ui_brainview_edges_panel_button = uicontrol(ui_brainview_panel);
             ui_brainview_analysis_dictionaries_button = uicontrol(ui_brainview_panel);
+            ui_brain_view_show_checkbox = uicontrol(ui_brainview_panel, 'Style', 'checkbox');
+            ui_brain_view_syms_checkbox = uicontrol(ui_brainview_panel, 'Style', 'checkbox');
+            ui_brain_view_labs_checkbox = uicontrol(ui_brainview_panel, 'Style', 'checkbox');
+            
             init_brainview()
             function init_brainview()
                 GUI.setUnits(ui_brainview_panel)
@@ -2213,6 +2217,24 @@ classdef AnalysisST_WU < Analysis
                 
                 set(ui_brainview_axes, 'Parent', ui_brainview_panel)
                 set(ui_brainview_axes, 'Position', [.12 .2 0.78 .78])
+                
+                set(ui_brain_view_show_checkbox, 'Units', 'normalized')
+                set(ui_brain_view_show_checkbox, 'Position', [.02 .11 .15 .05])
+                set(ui_brain_view_show_checkbox, 'String', 'Show Brain Surface')
+                set(ui_brain_view_show_checkbox, 'Value', true)
+                set(ui_brain_view_show_checkbox, 'Callback', {@cb_show_surf})
+                
+                set(ui_brain_view_syms_checkbox, 'Units', 'normalized')
+                set(ui_brain_view_syms_checkbox, 'Position', [.02 .06 .15 .05])
+                set(ui_brain_view_syms_checkbox, 'String', 'Show Brain Regions')
+                set(ui_brain_view_syms_checkbox, 'Value', true)
+                set(ui_brain_view_syms_checkbox, 'Callback', {@cb_show_brs})
+                
+                set(ui_brain_view_labs_checkbox, 'Units', 'normalized')
+                set(ui_brain_view_labs_checkbox, 'Position', [.02 .01 .15 .05])
+                set(ui_brain_view_labs_checkbox, 'String', 'Show Brain Labels')
+                set(ui_brain_view_labs_checkbox, 'Value', true)
+                set(ui_brain_view_labs_checkbox, 'Callback', {@cb_show_labs})
                 
                 set(ui_brainview_edges_panel_button, 'Units', 'normalized')
                 set(ui_brainview_edges_panel_button, 'Position', [.22 .02 .2 .08])
@@ -2227,10 +2249,10 @@ classdef AnalysisST_WU < Analysis
             end
             ui_contextmenu_figure_brainsurf = uicontextmenu();
             ui_contextmenu_figure_brainsurf_settings = uimenu(ui_contextmenu_figure_brainsurf);
-            ui_contextmenu_figure_deselect = uicontextmenu();
-            ui_contextmenu_figure_symbol_settings = uimenu(ui_contextmenu_figure_deselect);
-            ui_contextmenu_figure_labels = uicontextmenu();
-            ui_contextmenu_figure_labels_settings = uimenu(ui_contextmenu_figure_labels);
+            ui_contextmenu_figure_syms = uicontextmenu();
+            ui_contextmenu_figure_symbol_settings = uimenu(ui_contextmenu_figure_syms);
+            ui_contextmenu_figure_labs = uicontextmenu();
+            ui_contextmenu_figure_labels_settings = uimenu(ui_contextmenu_figure_labs);
             init_contextmenus()
             function init_contextmenus()
                 set(ui_contextmenu_figure_brainsurf_settings, 'Label', 'Brain Surface Settings')
@@ -2244,6 +2266,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_contextmenu_figure_symbol_settings, 'Callback', {@cb_figure_settingsbr})
 
                 function cb_figure_settingsbr(~, ~)  % (src, event)
+                    i = bg.get_sym_i(gco);
                     userdata = get(gco, 'UserData');
                     i = userdata{2};
                     bg.br_syms_settings(i)
@@ -2258,15 +2281,33 @@ classdef AnalysisST_WU < Analysis
                     bg.br_labs_settings(i)
                 end
             end
-            function update_brain_graph()
-                
+            function create_figure()
                 bg.set_axes(ui_brainview_axes);
                 axes(ui_brainview_axes)
-                bg.axis_equal()
+                bg.axis_equal();
                 bg.hold_on();
-                bg.view(PlotBrainSurf.VIEW_3D)
-                bg.brain('UiContextMenu', ui_contextmenu_figure_brainsurf);
-                bg.br_syms();
+                bg.view(PlotBrainSurf.VIEW_3D);
+                bg.brain('UIContextMenu', ui_contextmenu_figure_brainsurf);
+                bg.br_syms([], 'UIContextMenu', ui_contextmenu_figure_syms);
+                bg.br_labs([], 'UIContextMenu', ui_contextmenu_figure_labs);
+                update_brain_graph();
+            end
+            function update_brain_graph()              
+                if get(ui_brain_view_show_checkbox, 'Value')
+                    bg.brain_on();
+                else
+                    bg.brain_off();
+                end
+                if get(ui_brain_view_syms_checkbox, 'Value')
+                    bg.br_syms_on();
+                else
+                    bg.br_syms_off();
+                end
+                if get(ui_brain_view_labs_checkbox, 'Value')
+                    bg.br_labs_on();
+                else
+                    bg.br_labs_off();
+                end               
             end
             function cb_bv_bg_panel(~, ~)
                 bgp =  analysis.getBrainGraphPanel(ui_brainview_axes, bg); %#ok<NASGU>
@@ -2274,8 +2315,17 @@ classdef AnalysisST_WU < Analysis
             function cb_bv_meas_panel(~, ~)
                 analysis.getMCRPanel(ui_brainview_axes, bg);
             end
+            function cb_show_surf(~, ~)
+               update_brain_graph()                   
+            end
+            function cb_show_brs(~, ~)                
+                update_brain_graph()    
+            end
+            function cb_show_labs(~, ~)
+                update_brain_graph()    
+            end
             
-            update_brain_graph()
+            create_figure()
             
             if nargout > 0
                 p = ui_brainview_panel;
