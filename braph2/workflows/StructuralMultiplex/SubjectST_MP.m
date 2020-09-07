@@ -256,7 +256,7 @@ classdef SubjectST_MP < Subject
             else  % tmp is an atlas
                 
                 % search for cohort info file
-                file_path = strsplit(file, filesep());
+                file_path = strsplit(file1, filesep());
                 file_cohort_path = '';
                 for i = 1:1:length(file_path)-1
                     file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
@@ -274,7 +274,7 @@ classdef SubjectST_MP < Subject
                 end
                 
                 % creates new cohort
-                subject_class = 'SubjectST';
+                subject_class = 'SubjectST_MP';
                 atlas = tmp;
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
             end          
@@ -300,7 +300,7 @@ classdef SubjectST_MP < Subject
              
             % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', {});
-            group_path = strsplit(file, filesep());
+            group_path = strsplit(file1, filesep());
             group_id = group_path{length(group_path)};            
             group_id = erase(group_id, '.xlsx');
             group_id = erase(group_id, '.xls');            
@@ -487,6 +487,7 @@ classdef SubjectST_MP < Subject
             assert(size(raw1, 1) == size(raw2, 1) && size(raw1, 2) == size(raw2, 2), ...
                 [BRAPH2.STR ':SubjectST_MP:' BRAPH2.WRONG_INPUT], ...
                 'The input txt files must have the same number of subjects with data from the same brain regions')
+            atlases = cohort.getBrainAtlases();
             
             % sneak peak to see if it is a subject
             sub_tmp = Subject.getSubject(subject_class, ...
@@ -501,7 +502,7 @@ classdef SubjectST_MP < Subject
      
             % creates group
             group = Group(subject_class, '', '', '', {});
-            group_path = strsplit(file, filesep());
+            group_path = strsplit(file1, filesep());
             group_id = group_path{length(group_path)};
             group_id = erase(group_id, '.txt');
             group.setID(group_id);
@@ -737,7 +738,7 @@ classdef SubjectST_MP < Subject
             
             % creates group
             group = Group(subject_class, '', '', '', {});
-            group_path = strsplit(file, filesep());
+            group_path = strsplit(file1, filesep());
             group_id = group_path{length(group_path)};            
             group_id = erase(group_id, '.json');
             group.setID(group_id);
