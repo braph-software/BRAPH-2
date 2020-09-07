@@ -1,11 +1,17 @@
-classdef SubjectMultiplexMRI < Subject
-    % SubjectMultiplexMRI A subject of type multiplex MRI.
-    % SubjectMultiplexMRI represents a subject of type multiplex MRI with 2 layers.
+classdef SubjectST_MP < Subject
+    % SubjectST_MP A subject of type Structural Multiplex.
+    % SubjectST_MP represents a subject of type Structural Multiplex with 2 layers.
+    % It is a subclass of Subject. It implements the methods initialize_datadict
+    % and update_brainatlases.
     %
-    % SubjectMultiplexMRI methods (Access=protected)
-    %   SubjectMultiplexMRI     - constructor
+    % SubjectST_MP methods (Access=protected)
+    %   SubjectST_MP            - Constructor
     %
-    % SubjectMultiplexMRI inspection methods (Static)
+    % SubjectST_MP methods (Access=protected):
+    %   initialize_datadict     - initializes the data dictionary DATADICT
+    %   update_brainatlases     - updates the brain atlases in DATADICT
+    %
+    % SubjectST_MP inspection methods (Static)
     %   getClass                - returns the class of SubjectMultiplexMRI
     %   getName                 - returns the name of  SubjectMultiplexMRI
     %   getDescription          - returns the description of SubjectMultiplexMRI
@@ -17,19 +23,30 @@ classdef SubjectMultiplexMRI < Subject
     %   getDataClass            - returns the class of the type of a data of SubjectMultiplexMRI
     %   getSubject              - returns a new instantiation of SubjectMultiplexMRI
     %
-    % See also Group, Cohort, Subject, SubjectMRI, SubjectfMRI, SubjectDTI.
+    % SubjectST_MP load and save methods (Static):
+    %   load_from_xls           - reads a '.xls' or '.xlsx' file, loads the data to a new subject
+    %   save_to_xls             - saves the subject data to a '.xls' or '.xlsx' file
+    %   load_from_txt           - reads a '.txt' file, loads the data to a new subject
+    %   save_to_txt             - saves the subject data to a '.txt' file
+    %   load_from_json          - reads a '.json' file, loads the data to a new subject
+    %   save_to_json            - saves the subject data to a '.json' file
+    %
+    % See also Group, Cohort, Subject, SubjectST, SubjectfMRI, SubjectDTI.
     
     methods  % Constructor
-        function sub = SubjectMultiplexMRI(id, label, notes, atlas, varargin)
-            % SUBJECTMULTIPLEXMRI(ATLAS) creates a subject of type multiplex MRI.
-            % ATLAS is the brain atlas that subject multiplex MRI will use (it can
-            % be either a BrainAtlas or a cell array with a single BrainAtlas).
+        function sub = SubjectST_MP(id, label, notes, atlas, varargin)
+            % SUBJECTST_MP(ATLAS) creates a subject of type Structural Multiplex
             %
-            % SUBJECTMULTIPLEXMRI(ATLASES, 'SubjectID', ID) creates a subject with
-            % subject id ID.
+            % SUBJECTST_MP(ID, LABEL, NOTES, ATLASES) creates a subject of 
+            % type Structural SUBJECTST_MP with ID, LABEL and NOTES.
+            % ATLAS is the brain atlas that subject Structural Multiplex
+            % will use (it can be either a BrainAtlas or a cell array with 
+            % a single BrainAtlas).
             %
-            % SUBJECTMULTIPLEXMRI(ATLASES, 'age', AGE, 'MRI1', MRI1, 'MRI2', MRI2) creates a subject
-            % with age AGE, mri first layer data MRI1 and mri second layer data MRI2.
+            % SUBJECTST_MP(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
+            % creates a Structural Multiplex subject with ubject ID, LABEL,
+            % NOTES and ATLASES. SubjectST_MP will be initialized by the 
+            % rules passed in the VARARGIN.
             %
             % See also See also Group, Cohort, SubjectfMRI, SubjectDTI, Subject.
             
@@ -37,44 +54,44 @@ classdef SubjectMultiplexMRI < Subject
                 atlases = {atlas};
             else
                 assert(iscell(atlas) && length(atlas)==1, ...
-                    [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':SubjectST_MP:' BRAPH2.WRONG_INPUT], ...
                     ['The input must be a BrainAtlas or a cell with one BrainAtlas']) %#ok<NBRAK>
                 atlases = atlas;
             end
-            
+                     
             sub = sub@Subject(id, label, notes, atlases, varargin{:});
         end
     end
-    methods (Access=protected)  % Utilifty functions
+    methods (Access=protected)  % Utility functions
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
-            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'MRI1', MRI1, 'MRI2', MRI2) 
+            % INITIALIZE_DATADICT(SUB, 'age', AGE, 'ST_MP1', DATA1, 'ST_MP2', DATA2) 
             % initializes the data ditionary with data type and data code of 
-            % subject multiplex MRI.
+            % subject structural multiplex.
             %
-            % See also update_brainatlases().
+            % See also update_brainatlases.
             
             atlases = sub.getBrainAtlases();
             atlas = atlases{1};
             
             age = get_from_varargin(0, 'age', varargin{:});
-            mri1 = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'MRI1', varargin{:});  % column vector with the same number of elements as the BrainAtlas
-            mri2 = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'MRI2', varargin{:});  % column vector with the same number of elements as the BrainAtlas
+            structural_multiplex1 = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'ST_MP1', varargin{:});  % column vector with the same number of elements as the BrainAtlas
+            structural_multiplex2 = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'ST_MP2', varargin{:});  % column vector with the same number of elements as the BrainAtlas
             
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
-            sub.datadict('MRI1') = DataStructural(atlas, mri1);
-            sub.datadict('MRI2') = DataStructural(atlas, mri2);
+            sub.datadict('ST_MP1') = DataStructural(atlas, structural_multiplex1);
+            sub.datadict('ST_MP2') = DataStructural(atlas, structural_multiplex2);
         end
         function update_brainatlases(sub, atlases)
-            % UPDATE_BRAINATLASES updates the atlases of the subject multiplex MRI
+            % UPDATE_BRAINATLASES updates the atlases of the subject Structural Multiplex 
             %
             % UPDATE_BRAINATLASES(SUB, ATLASES) updates the atlases of the
-            % subject multiplex MRI using the new values ATLASES. ATLASES must be a
+            % subject Structural Multiplex using the new values ATLASES. ATLASES must be a
             % cell array with a single BrainAtlas.
             %
-            % See also initialize_datadict().
+            % See also initialize_datadict.
             
             sub.atlases = atlases;
             atlas = atlases{1};
@@ -82,10 +99,10 @@ classdef SubjectMultiplexMRI < Subject
             d1 = sub.datadict('age');
             d1.setBrainAtlas(atlas)
             
-            d2 = sub.datadict('MRI1');
+            d2 = sub.datadict('ST_MP1');
             d2.setBrainAtlas(atlas);
             
-            d3 = sub.datadict('MRI2');
+            d3 = sub.datadict('ST_MP2');
             d3.setBrainAtlas(atlas);
         end
     end
@@ -93,31 +110,31 @@ classdef SubjectMultiplexMRI < Subject
         function subject_class = getClass()
             % GETCLASS returns the class of the subject
             %
-            % SUBJECT_CLASS = GETCLASS() returns the class SubjectMultiplexMRI.
+            % SUBJECT_CLASS = GETCLASS() returns the class SubjectST_MP.
             %
-            % See also getList(), getDescription(), getName()
+            % See also getList, getDescription, getName
             
-            subject_class = 'SubjectMultiplexMRI';
+            subject_class = 'SubjectST_MP';
         end
         function name = getName()
             % GETNAME returns the name of the subject
             %
-            % NAME = GETNAME() returns the name: Subject multiplex structural MRI.
+            % NAME = GETNAME() returns the name: Subject Structural Multiplex.
             %
-            % See also getList(), getClass(), getDescription().
+            % See also getList, getClass, getDescription.
             
-            name = 'Subject multiplex structural MRI';
+            name = 'Subject Structural Multiplex';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the subject
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of SubjectMultiplexMRI.
+            % of SubjectST_MP.
             %
-            % See also getList(), getName(), getClass().
+            % See also getList, getName, getClass.
             
             description = [ ...
-                'Subject with multiplex structural MRI data (2 layers), ' ...
+                'Subject with structural multiplex data (2 layers), ' ...
                 'such as cortical thickness for each brain region' ...
                 ];
         end
@@ -127,59 +144,59 @@ classdef SubjectMultiplexMRI < Subject
             % N = GETBRAINATLASNUMBER() returns the number of
             % brain atlases, in this case 1.
             %
-            % See also getList(), getDescription(), getName(), getClass().
+            % See also getList, getDescription, getName, getClass.
             
             atlas_number = 1;
         end
         function datalist = getDataList()
             % GETDATALIST returns the list of data
             %
-            % CELL ARRAY = GETDATALIST() returns a cell array of
-            % subject data. For Subject MRI, the data list is:
+            % CELL ARRAY = GETDATALIST() returns a cell array of subject
+            % data. For Subject Structural Multiplex, the data list is:
             %   age            -    DataScalar.
-            %   MRI1           -    DataStructural.
-            %   MRI2           -    DataStructural.
+            %   ST_MP1         -    DataStructural.
+            %   ST_MP2         -    DataStructural.
             %
-            % See also getList()
+            % See also getList
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
-            datalist('MRI1') = 'DataStructural';
-            datalist('MRI2') = 'DataStructural';
+            datalist('ST_MP1') = 'DataStructural';
+            datalist('ST_MP2') = 'DataStructural';
         end
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
             %
             % N = GETDATANUMBER() returns the number of data of subject 
-            % multiplex MRI.
+            % Structural Multiplex.
             %
-            % See also getDataList(), getBrainAtlasNumber().
+            % See also getDataList, getBrainAtlasNumber.
             
-            data_number = Subject.getDataNumber('SubjectMultiplexMRI');
+            data_number = Subject.getDataNumber('SubjectST_MP');
         end
         function data_codes = getDataCodes()
             % GETDATACODES returns the list of data keys
             %
             % CELL ARRAY = GETDATACODES(SUB) returns a cell array of
-            % subject multiplex MRI data keys.
+            % subject Structural Multiplex data keys.
             %
-            % See also getList()
+            % See also getList
             
-            data_codes = Subject.getDataCodes('SubjectMultiplexMRI');
+            data_codes = Subject.getDataCodes('SubjectST_MP');
         end
         function data_classes = getDataClasses()
             % GETDATACLASSES returns the list of data classes
             %
             % CELL ARRAY = GETDATACLASSES(SUB) returns a cell array of
-            % subject multiplex MRI data classes.
+            % subject Structural Multiplex data classes.
             %
             % CELL ARRAY = GETDATACLASSES(SUBJECT_CLASS) returns a
-            % cell array of subject multiplex MRI data classes to the 
-            % subject whose class is SUBJECT_CLASS.
+            % cell array of subject Structural Multiplex data classes to  
+            % the subject whose class is SUBJECT_CLASS.
             %
-            % See also getList(), getDataCodes(), getDataClass().
+            % See also getList, getDataCodes, getDataClass.
             
-            data_classes = Subject.getDataClasses('SubjectMultiplexMRI');
+            data_classes = Subject.getDataClasses('SubjectST_MP');
         end
         function data_class = getDataClass(data_code)
             % GETDATACLASS returns the class of a data.
@@ -187,9 +204,9 @@ classdef SubjectMultiplexMRI < Subject
             % DATA_CLASS = GETDATACLASS(SUB, DATACODE) returns the class of
             % data with code DATACODE
             %
-            % See also getList(), getDataClasses().
+            % See also getList, getDataClasses.
             
-            data_class = Subject.getDataNumber('SubjectMultiplexMRI', data_code);
+            data_class = Subject.getDataNumber('SubjectST_MP', data_code);
         end
     end
     methods (Static)  % Save/load functions
