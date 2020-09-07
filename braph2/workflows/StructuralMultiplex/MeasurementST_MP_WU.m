@@ -48,11 +48,11 @@ classdef MeasurementST_MP_WU < Measurement
             %
             % See also ComparisonST_MP_WU, RandomComparisonST_MP_WU, AnalysisST_MP_WU.
             
-            graph_type = AnalysisST_MP_WU.getGraphType();
-            measure_list = Graph.getCompatibleMeasureList(graph_type);
-            assert(ismember(measure_code, measure_list), ...
-                [BRAPH2.STR ':MeasurementST_MP_WU:' BRAPH2.BUG_FUNC], ...
-                'MeasurementST_MP_WU measure_code is not compatible with the permited Measures.');
+%             graph_type = AnalysisST_MP_WU.getGraphType();
+%             measure_list = Graph.getCompatibleMeasureList(graph_type);
+%             assert(ismember(measure_code, measure_list), ...
+%                 [BRAPH2.STR ':MeasurementST_MP_WU:' BRAPH2.BUG_FUNC], ...
+%                 'MeasurementST_MP_WU measure_code is not compatible with the permited Measures.');
 
             m = m@Measurement(id, label, notes, atlas, measure_code, group, varargin{:});
         end
