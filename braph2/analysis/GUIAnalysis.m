@@ -4,7 +4,7 @@ function GUIAnalysis(ga, measure_rules)
 APPNAME = GUI.GA_NAME;
 BUILD = BRAPH2.BUILD;
 
-if nargin == 1
+if nargin == 1 || isempty(measure_rules)
     measure_rules = {'', ''};
 end
 
@@ -53,7 +53,7 @@ cohort = ga.getCohort();
 selected_calc = [];
 selected_regionmeasures = [];
 selected_brainmeasures = [];
-selected_groups = [];
+bg = [];
 current_figure_axes = [];
 current_figure_name = [];
 
@@ -434,7 +434,6 @@ init_console()
         set(ui_console_brainview_button, 'String', CONSOLE_BRAINVIEW_CMD)
         set(ui_console_brainview_button, 'TooltipString', CONSOLE_GLOBAL_TP)
         set(ui_console_brainview_button, 'Callback', {@cb_console_brainview})
-        set(ui_console_brainview_button, 'enable', 'off')
     end
     function update_console_panel_visibility(console_panel_cmd)
         switch console_panel_cmd
@@ -443,44 +442,52 @@ init_console()
                 childs_visibility(ui_panel_global, 'on')
                 childs_visibility(ui_panel_nodal, 'off')
                 childs_visibility(ui_panel_binodal, 'off')
+                childs_visibility(ui_panel_brainview, 'off')
                 
                 set(ui_console_matrix_button, 'FontWeight', 'normal')
                 set(ui_console_global_button, 'FontWeight', 'bold')
                 set(ui_console_nodal_button, 'FontWeight', 'normal')  
                 set(ui_console_binodal_button, 'FontWeight', 'normal')
+                set(ui_console_brainview_button, 'FontWeight', 'normal')
 
             case CONSOLE_NODAL_CMD
                 childs_visibility(ui_panel_matrix, 'off')
                 childs_visibility(ui_panel_global, 'off')
                 childs_visibility(ui_panel_nodal, 'on')                
-                childs_visibility(ui_panel_binodal, 'off')
+                childs_visibility(ui_panel_binodal, 'off')                
+                childs_visibility(ui_panel_brainview, 'off')
                 
                 set(ui_console_matrix_button, 'FontWeight', 'normal')
                 set(ui_console_global_button, 'FontWeight', 'normal')
                 set(ui_console_nodal_button, 'FontWeight', 'bold')                
                 set(ui_console_binodal_button, 'FontWeight', 'normal')
+                set(ui_console_brainview_button, 'FontWeight', 'normal')
                 
             case CONSOLE_BINODAL_CMD
                 childs_visibility(ui_panel_matrix, 'off')
                 childs_visibility(ui_panel_global, 'off')
                 childs_visibility(ui_panel_nodal, 'off')
                 childs_visibility(ui_panel_binodal, 'on')
+                childs_visibility(ui_panel_brainview, 'off')
                 
                 set(ui_console_matrix_button, 'FontWeight', 'normal')
                 set(ui_console_global_button, 'FontWeight', 'normal')
                 set(ui_console_nodal_button, 'FontWeight', 'normal')  
                 set(ui_console_binodal_button, 'FontWeight', 'bold')
+                set(ui_console_brainview_button, 'FontWeight', 'normal')
                 
-%             case CONSOLE_BRAINVIEW_CMD
-%                 set(ui_panel_matrix,'Visible','off')
-%                 set(ui_panel_brainmeasures,'Visible','off')
-%                 set(ui_panel_regionmeasures,'Visible','off')
-%                 set(ui_panel_brainview,'Visible','on')
-%                 
-%                 set(ui_button_console_matrix,'FontWeight','normal')
-%                 set(ui_button_console_brainmeasures,'FontWeight','normal')
-%                 set(ui_button_console_regionmeasures,'FontWeight','normal')
-%                 set(ui_button_console_brainview,'FontWeight','bold')
+            case CONSOLE_BRAINVIEW_CMD
+                childs_visibility(ui_panel_matrix, 'off')
+                childs_visibility(ui_panel_global, 'off')
+                childs_visibility(ui_panel_nodal, 'off')
+                childs_visibility(ui_panel_binodal, 'off') 
+                childs_visibility(ui_panel_brainview, 'on')
+                
+                set(ui_console_matrix_button, 'FontWeight', 'normal')
+                set(ui_console_global_button, 'FontWeight', 'normal')
+                set(ui_console_nodal_button, 'FontWeight', 'normal')  
+                set(ui_console_binodal_button, 'FontWeight', 'normal')                  
+                set(ui_console_brainview_button, 'FontWeight', 'bold')
 %                 
 %                 set([ui_toolbar_zoomin ...
 %                     ui_toolbar_zoomout ...
@@ -509,12 +516,14 @@ init_console()
                 childs_visibility(ui_panel_matrix, 'on')
                 childs_visibility(ui_panel_global, 'off')
                 childs_visibility(ui_panel_nodal, 'off')
-                childs_visibility(ui_panel_binodal, 'off')
+                childs_visibility(ui_panel_binodal, 'off')                
+                childs_visibility(ui_panel_brainview, 'off')
                 
                 set(ui_console_matrix_button, 'FontWeight', 'bold')
                 set(ui_console_global_button, 'FontWeight', 'normal')
                 set(ui_console_nodal_button, 'FontWeight', 'normal')
                 set(ui_console_binodal_button, 'FontWeight', 'normal')
+                set(ui_console_brainview_button, 'FontWeight', 'normal')
         end
     end
     function update_console_panel()
@@ -526,6 +535,8 @@ init_console()
             update_nodal_panel()
         elseif strcmpi(get(ui_panel_binodal, 'Visible'), 'on')
             update_binodal_panel()
+        elseif strcmpi(get(ui_panel_brainview, 'Visible'), 'on')
+            update_brainview_panel()
         end        
     end
     function cb_console_matrix(~, ~)         
@@ -534,7 +545,7 @@ init_console()
     end
     function cb_console_global(~, ~)        
         update_console_panel_visibility(CONSOLE_GLOBAL_CMD)
-        update_global_panel()
+        update_console_panel()
     end
     function cb_console_nodal(~, ~)
         update_console_panel_visibility(CONSOLE_NODAL_CMD)
@@ -542,7 +553,11 @@ init_console()
     end
     function cb_console_binodal(~, ~)
         update_console_panel_visibility(CONSOLE_BINODAL_CMD)
-        update_binodal_panel()
+        update_console_panel()
+    end
+    function cb_console_brainview(~, ~)
+        update_console_panel_visibility(CONSOLE_BRAINVIEW_CMD)
+        update_console_panel()
     end
     function childs_visibility(handle, rule)
         childs = allchild(handle);
@@ -635,7 +650,27 @@ init_binodal()
     function update_binodal_panel()
         current_figure_axes = ui_panel_binodal_axes;
         current_figure_name = 'Nodal Measure Plot';
-        ga.getBinodalPanel('UIParent', ui_panel_binodal, 'UIAxesNodal', ui_panel_binodal_axes);
+        ga.getBinodalPanel('UIParent', ui_panel_binodal, 'UIAxesBinodal', ui_panel_binodal_axes);
+    end
+
+%% Panel BrainView
+PANEL_BRAINVIEW_TITLE = 'Brain View';
+ui_panel_brainview = uipanel();
+ui_panel_brainview_axes = axes();
+init_brainview()
+    function init_brainview()
+        GUI.setUnits(ui_panel_brainview)
+        GUI.setBackgroundColor(ui_panel_brainview)
+        
+        set(ui_panel_brainview, 'Position', MAINPANEL_POSITION)
+        set(ui_panel_brainview, 'Title', PANEL_BRAINVIEW_TITLE)
+        
+        set(ui_panel_brainview_axes, 'Position', [0 0 0 0])
+    end
+    function update_brainview_panel()
+        current_figure_axes = ui_panel_brainview_axes;
+        current_figure_name = 'Brain View';
+        ga.getBrainView('UIParent', ui_panel_brainview, 'UIAxesBrain', ui_panel_brainview_axes, 'BrainGraph', bg);
     end
 
 %% Menus
@@ -729,5 +764,10 @@ set(f, 'Visible', 'on');
         
         % setup data
         update_set_ga_id()
+        
+        % setup brainview
+        atlases = ga.getCohort().getBrainAtlases();
+        atlas = atlases{1};
+        bg = PlotBrainGraph(atlas);
     end
 end

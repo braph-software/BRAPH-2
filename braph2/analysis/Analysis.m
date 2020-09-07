@@ -395,12 +395,12 @@ classdef Analysis < handle & matlab.mixin.Copyable
             selected_comparisons = cell(size(all_comparisons));
             for i = 1:1:length(all_comparisons)
                 c = all_comparisons{i};
-                [g1, g2] = c.getGroups();
-                if isequal(g1, group1) && isequal(g2, group2) && isequal(measure_code, c.getMeasureCode())
+                [a, b] = c.getGroups();
+                if ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1))) && isequal(measure_code, c.getMeasureCode())
                     selected_comparisons{i} = c; 
                 end
             end
-            selected_comparisons(~cellfun(@isempty, selected_comparisons)) = [];
+            selected_comparisons = selected_comparisons(~cellfun(@isempty, selected_comparisons));
             
             if nargin == 5
                 list = cell(size(selected_comparisons));                
@@ -455,6 +455,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
         getBinodalMeasurePlot(analysis, ui_prent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)
         getBinodalComparisonPlot(analysis, ui_prent_panel, ui_parent_axes, measure_code, group_1, group_2, brain_region_1, brain_region_2, varargin)
         getBinodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)
+        getBrainView(analysis, varargin)
     end
     methods (Static)  % getAnalysis
         function analysis = getAnalysis(analysis_class, id, label, notes, cohort, varargin) %#ok<INUSD>

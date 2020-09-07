@@ -13,6 +13,8 @@
 %   <a href="matlab:help tostring               ">tostring</a>              (function) converts almost anything to string
 %   <a href="matlab:help subclasses             ">subclasses</a>            (function) gets subclasses of an object
 %   <a href="matlab:help convert_x3d_to_nv      ">convert_x3d_to_nv</a>     (function) converts x3d files to nv files
+%   <a href="matlab:help arrow3d                ">arrow3d</a>               (function) plot of an arrow
+%   <a href="matlab:help cylinder3d             ">cylinder3d</a>            (function) plot of an cylinder
 %
 % Graphical Interface tools:
 %   <a href="matlab:help GUI                    ">GUI</a>                  (static class) graphical user interface constants and auxiliary functions

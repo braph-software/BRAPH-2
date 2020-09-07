@@ -6,6 +6,7 @@
 % Plotting tools:
 % <a href="matlab:help PlotBrainSurf            ">PlotBrainSurf</a>        (class) plot of a brain surface
 % <a href="matlab:help PlotBrainAtlas           ">PlotBrainAtlas</a>       (class) plot of a brain atlas
+% <a href="matlab:help PlotBrainGraph           ">PlotBrainGraph</a>       (class) plot of a brain graph
 %
 % Graphical User Interface (GUI):
 % <a href="matlab:help GUIBrainAtlas            ">GUIBrainAtlas</a>        (GUI) brain atlas editor
@@ -13,7 +14,8 @@
 % Unit tests:
 % <a href="matlab:help test_BrainAtlas          ">test_BrainAtlas</a>
 % <a href="matlab:help test_Brainregion         ">test_BrainRegion</a>
-% <a href="matlab:help test_PlotBrainAtlas      ">test_PlotBrainAtlas</a> 
+% <a href="matlab:help test_PlotBrainAtlas      ">test_PlotBrainAtlas</a>
+% <a href="matlab:help test_PlotBrainGraph      ">test_PlotBrainGraph</a>
 % <a href="matlab:help test_PlotBrainRegion     ">test_PlotBrainRegion</a> 
 
 clc
