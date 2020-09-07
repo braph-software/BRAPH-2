@@ -88,6 +88,7 @@ classdef PlotBrainGraph < PlotBrainAtlas
             bg.edges.h = NaN(atlas.getBrainRegions().length());
             bg.edges.arr = NaN(atlas.getBrainRegions().length());
             bg.edges.cyl = NaN(atlas.getBrainRegions().length());
+            bg.edges.texts = NaN(atlas.getBrainRegions().length());
             bg.edges.X1 = zeros(atlas.getBrainRegions().length(), 1);
             bg.edges.Y1 = zeros(atlas.getBrainRegions().length(), 1);
             bg.edges.Z1 = zeros(atlas.getBrainRegions().length(), 1);
@@ -523,7 +524,9 @@ classdef PlotBrainGraph < PlotBrainAtlas
             
             bool = ishandle(bg.edges.h(i, j)) && strcmpi(get(bg.edges.h(i, j), 'Visible'), 'on');
         end
-        function link_edge_text(bg, graph_axes, i, j , text_value, varargin)
+        
+        % texts
+        function text_edge(bg, graph_axes, i, j , text_value, varargin)
             if i == j  % removes diagonal
                 return;
             end
@@ -540,11 +543,27 @@ classdef PlotBrainGraph < PlotBrainAtlas
             Y2 = br_2.getY();
             Z2 = br_2.getZ();
             
-            % equidistant point 
+            % equidistant point
             X3 = (X1 + X2) / 2;
             Y3 = (Y1 + Y2) / 2;
             Z3 = (Z1 + Z2) / 2;
-            text(graph_axes, X3, Y3, Z3, text_value);   
+            bg.edges.texts(i, j) =  text(graph_axes, X3, Y3, Z3, text_value);
+        end
+        function text_edge_on(bg, i, j)
+            if ishandle(bg.edges.texts(i, j))
+                set(bg.edges.texts(i, j), 'Visible', 'on')
+            end
+        end
+        function text_edge_off(bg, i, j)
+            if ishandle(bg.edges.texts(i, j))
+                set(bg.edges.texts(i, j), 'Visible', 'off')
+            end
+        end
+        function bool = text_edge_is_on(bg, i, j)
+             bool = ishandle(bg.edges.texts(i, j)) && strcmpi(get(bg.edges.texts(i, j), 'Visible'), 'on');
+        end
+        function bool = tex_edge_is_off(bg, i, j)
+             bool = ishandle(bg.edges.texts(i, j)) && strcmpi(get(bg.edges.texts(i, j), 'Visible'), 'off');
         end
         
         % arrows

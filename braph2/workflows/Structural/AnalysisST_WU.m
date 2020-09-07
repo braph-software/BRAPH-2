@@ -3969,12 +3969,24 @@ classdef AnalysisST_WU < Analysis
             end
             function cb_binodal_measure_show(~, ~)
                 measure_data_inner = measure_data{1};
-                for i = 1:1:size(measure_data_inner, 1)
-                    for j = 1:1:size(measure_data_inner, 2)
-                        if bg.link_edge_is_on(i, j)
-                            bg.link_edge_text(brain_axes, i, j, string(measure_data_inner(i, j)))
-                        elseif bg.arrow_edge_is_on(i, j)
-                        elseif bg.cylinder_edge_is_on(i, j)
+                if get(ui_edge_value_show, 'Value')
+                    for i = 1:1:size(measure_data_inner, 1)
+                        for j = 1:1:size(measure_data_inner, 2)
+                            if bg.link_edge_is_on(i, j) || bg.arrow_edge_is_on(i, j) || bg.cylinder_edge_is_on(i, j)
+                                if bg.tex_edge_is_off(i, j) 
+                                    bg.text_edge_on(i, j)
+                                else
+                                    bg.text_edge(brain_axes, i, j, string(measure_data_inner(i, j)))
+                                end                                
+                            end
+                        end
+                    end
+                else
+                    for i = 1:1:size(measure_data_inner, 1)
+                        for j = 1:1:size(measure_data_inner, 2)
+                            if bg.link_edge_is_on(i, j) || bg.arrow_edge_is_on(i, j) || bg.cylinder_edge_is_on(i, j)
+                                bg.text_edge_off(i, j);
+                            end
                         end
                     end
                 end
