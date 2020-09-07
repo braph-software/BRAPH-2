@@ -1353,7 +1353,7 @@ classdef AnalysisST_WU < Analysis
                 selected_index_1 = get(ui_popup_nodalmeasures_group1, 'Value');
                 group_1 = analysis.getCohort().getGroups().getValue(selected_index_1);
                 
-                selected_index_2 = get(ui_popup_nodalmeasures_group1, 'Value');
+                selected_index_2 = get(ui_popup_nodalmeasures_group2, 'Value');
                 group_2 = analysis.getCohort().getGroups().getValue(selected_index_2);
                 
                 measures = get(ui_selectedmeasure_popup, 'String');
@@ -2011,7 +2011,7 @@ classdef AnalysisST_WU < Analysis
                         end
                 end
                 
-                update_global_table();
+                update_binodal_table();
             end
             function cb_binodal_meas(~, ~)  % (src,event)
                 set(ui_checkbox_brainmeasures_meas, 'Value', true)
