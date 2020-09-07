@@ -210,7 +210,22 @@ classdef SubjectST_MP < Subject
         end
     end
     methods (Static)  % Save/load functions
-        function cohort = load_from_xls(subject_class, atlases, varargin)
+        function cohort = load_from_xls(tmp, varargin)
+            % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectST_MP
+            %
+            % COHORT = LOAD_FROM_XLS(TMP) opens a GUI to load a directory 
+            % where it reads '.xls' or '.xlsx' files. If TMP is a brain atlas 
+            % it will create a cohort of SubjectST_MP. If TMP is a cohort
+            % then it will load the file into the cohort.
+            %
+            % COHORT = LOAD_FROM_XLS(TMP, 'Directory', PATH) loads the directory
+            % in PATH where it reads '.xls' or '.xlsx' files. If TMP is a
+            % brain atlas the function whill create a cohort of SubjectST_MP 
+            % If TMP is a cohort then the function will load the file into
+            % the cohort.
+            % 
+            % See also save_to_xls, load_from_txt, load_from_json.
+            
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
@@ -234,57 +249,88 @@ classdef SubjectST_MP < Subject
                 end
             end
             
-            % search for cohort info file           
-            file_path = strsplit(file1, filesep());
-            file_cohort_path = '';
-            for i = 1:1:length(file_path)-1
-                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
-            end
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
-            file_cohort = file_cohort(2:end);
-            cohort_id = '';
-            cohort_label = '';
-            cohort_notes = '';
-            
-            if exist(file_cohort, 'file')
-                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                cohort_id = raw_cohort{1, 1};
-                cohort_label = raw_cohort{2, 1};
-                cohort_notes = raw_cohort{3, 1};
-            end       
-            
-            % creates cohort
-            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            % Set/create cohort
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+            else  % tmp is an atlas
+                
+                % search for cohort info file
+                file_path = strsplit(file, filesep());
+                file_cohort_path = '';
+                for i = 1:1:length(file_path)-1
+                    file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+                end
+                file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+                file_cohort = file_cohort(2:end);
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                if exist(file_cohort, 'file')
+                    raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                    cohort_id = raw_cohort{1, 1};
+                    cohort_label = raw_cohort{2, 1};
+                    cohort_notes = raw_cohort{3, 1};
+                end
+                
+                % creates new cohort
+                subject_class = 'SubjectST';
+                atlas = tmp;
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
+            end          
             
             [~, ~, raw1] = xlsread(file1);
-            [~, ~, raw2] = xlsread(file2);           
+            [~, ~, raw2] = xlsread(file2);            
             % Assert both files have the same size (they should contain
             % same number of regions and same number of subjects)
             assert(size(raw1, 1) == size(raw2, 1) && size(raw1, 2) == size(raw2, 2), ...
-                [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
+                [BRAPH2.STR ':SubjectST_MP:' BRAPH2.WRONG_INPUT], ...
                 'The input excel files must have the same number of subjects with data from the same brain regions')
+            atlas = cohort.getBrainAtlases();
+                        
+            % sneak peak to see if it is a subject
+            sub_tmp = Subject.getSubject(subject_class, ...
+                char(raw1{2, 1}), char(raw1{2, 2}), char(raw1{2, 3}), atlas, ...
+                'ST_MP1', cell2mat(raw1(2, 4:size(raw1, 2))'));
+            delete(sub_tmp);
+            sub_tmp2 = Subject.getSubject(subject_class, ...
+                char(raw2{2, 1}), char(raw2{2, 2}), char(raw2{2, 3}), atlas, ...
+                'ST_MP2', cell2mat(raw2(2, 4:size(raw2, 2))'));
+            delete(sub_tmp2);
+             
+            % load subjects to cohort & add them to the group
+            group = Group(subject_class,'', '', '', {});
+            group_path = strsplit(file, filesep());
+            group_id = group_path{length(group_path)};            
+            group_id = erase(group_id, '.xlsx');
+            group_id = erase(group_id, '.xls');            
+            group.setID(group_id);
+            cohort.getGroups().add(group.getID(), group); 
             
-            for i = 5:1:size(raw1, 1)
+            for i = 2:1:size(raw1, 1)
                 subject = Subject.getSubject(subject_class, ...
-                    char(raw1{i, 1}), char(raw1{i, 2}), char(raw1{i, 3}), atlases, ...
-                    'MRI1', cell2mat(raw1(i, 4:size(raw1, 2))'), ...
-                    'MRI2', cell2mat(raw2(i, 4:size(raw2, 2))'));
-                cohort.getSubjects().add(subject.getID(), subject, i);
-            end
-            
-            % creates group
-            group = Group(subject_class,'', '', '', cohort.getSubjects().getValues());
-            path1 = [fileparts(which(file1))]; %#ok<NBRAK>
-            file_name1 = erase(file1, path1);
-            file_name1 = erase(file_name1, filesep());
-            file_name1 = erase(file_name1, '.xlsx');
-            file_name1 = erase(file_name1, '.xls'); 
-            group.setID(file_name1);
-            group.setLabel(raw1{2, 1});  % set group info
-            group.setNotes(raw1{3, 1});
-            cohort.getGroups().add(group.getID(), group);
+                    char(raw1{i, 1}), char(raw1{i, 2}), char(raw1{i, 3}), atlas, ...
+                    'ST_MP1', cell2mat(raw1(i, 4:size(raw1, 2))'), ...
+                    'ST_MP2', cell2mat(raw2(i, 4:size(raw2, 2))'));
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+                group.addSubject(subject);
+            end   
         end
         function save_to_xls(cohort, varargin)
+            % SAVE_TO_XLS saves the cohort of SubjectST_MP to a '.xls' file
+            %
+            % SAVE_TO_XLS(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectST_MP will be saved in '.xls' or 'xlsx'
+            % format.
+            %
+            % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectST_MP in '.xls' or 'xlsx' format in the
+            % specified PATH.
+            % 
+            % See also load_from_xls, save_to_txt, save_to_json
+            
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
@@ -307,40 +353,20 @@ classdef SubjectST_MP < Subject
                     return
                 end
             end
-            
-            % cohort info           
-            file_path = strsplit(file1, filesep());
-            file_cohort_path = '';
-            for i = 1:1:length(file_path)-1
-                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
-            end
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
-            file_cohort = file_cohort(2:end);
-            cohort_info = cell(3, 1);
-            cohort_info{1, 1} = cohort.getID();
-            cohort_info{2, 1} = cohort.getLabel();
-            cohort_info{3, 1} = cohort.getNotes();
-            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
             
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
-            
-            % group info
-            group_info = cell(3, 1);
-            group_info{1, 1} = group.getID();
-            group_info{2, 1} = group.getLabel();
-            group_info{3, 1} = group.getNotes();
-            
+                        
             for j = 1:1:group.subjectnumber()
                 % get subject data
                 subject = subjects_list{j};
                 row_ids{j, 1} = subject.getID(); %#ok<AGROW>
                 row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
                 row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas1{j, 1} = subject.getData('MRI1').getValue(); %#ok<AGROW>
-                row_datas2{j, 1} = subject.getData('MRI2').getValue(); %#ok<AGROW>
+                row_datas1{j, 1} = subject.getData('ST_MP1').getValue(); %#ok<AGROW>
+                row_datas2{j, 1} = subject.getData('ST_MP2').getValue(); %#ok<AGROW>
             end
             tab1 = table(row_ids, row_labels, row_notes, row_datas1);
             tab2 = table(row_ids, row_labels, row_notes, row_datas2);
@@ -380,12 +406,25 @@ classdef SubjectST_MP < Subject
                 ];
             
             % save
-            writecell(group_info, file1);
-            writecell(group_info, file2);
-            writetable(tab1, file1, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
-            writetable(tab2, file2, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A4');
+            writetable(tab1, file1, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+            writetable(tab2, file2, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
         end
-        function cohort = load_from_txt(subject_class, atlases, varargin)
+        function cohort = load_from_txt(tmp, varargin)
+            % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectST_MP
+            %
+            % COHORT = LOAD_FROM_TXT(TMP) opens a GUI to load a directory 
+            % where it reads '.txt' files. If TMP is a brain atlas 
+            % it will create a cohort of SubjectST_MP. If TMP is a cohort
+            % then it will load the file into the cohort.
+            %
+            % COHORT = LOAD_FROM_TXT(TMP, 'Directory', PATH) loads the directory
+            % in PATH where it reads '.txt' files. If TMP is a
+            % brain atlas the function whill create a cohort of SubjectST_MP 
+            % If TMP is a cohort then the function will load the file into
+            % the cohort.
+            % 
+            % See also save_to_txt, load_from_xls, load_from_json
+            
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
@@ -409,73 +448,89 @@ classdef SubjectST_MP < Subject
                 end
             end
             
+            % supress warning
             warning_id = 'MATLAB:table:ModifiedAndSavedVarnames';
             warning('off', warning_id)
             
-            % search for cohort info file
-            file_path = strsplit(file1, filesep());
-            file_cohort_path = '';
-            for i = 1:1:length(file_path)-1
-                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
-            end
-            file_cohort_path = file_cohort_path(2:end); 
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];      
-            cohort_id = '';
-            cohort_label = '';
-            cohort_notes = '';
-
-            if exist(file_cohort, 'file')
-                raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                cohort_id = raw_cohort{1, 1};
-                cohort_label = raw_cohort{2, 1};
-                cohort_notes = raw_cohort{3, 1};
-            end
-            
-            % creates cohort
-            cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
-            
-            % get group info
-            file_group = [file_cohort_path filesep() 'group_info.txt'];
-            group_id = '';
-            group_label = '';
-            group_notes = '';
-            if exist(file_group, 'file')
-                raw_group = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                group_id = raw_group{1, 1};
-                group_label = raw_group{2, 1};
-                group_notes = raw_group{3, 1};
-            end
+            % Set/create cohort
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+            else
+                file_path = strsplit(file1, filesep());
+                file_cohort_path = '';
+                for i = 1:1:length(file_path)-1
+                    file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
+                end
+                file_cohort_path = file_cohort_path(2:end);
+                file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                subject_class = 'SubjectST_MP';
+                atlases = tmp;
+                
+                if exist(file_cohort, 'file')
+                    raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
+                    cohort_id = raw_cohort{1, 1};
+                    cohort_label = raw_cohort{2, 1};
+                    cohort_notes = raw_cohort{3, 1};
+                end                
+                
+                % creates cohort
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            end     
             
             % reads file
             raw1 = readtable(file1, 'Delimiter', '\t');
             raw2 = readtable(file2, 'Delimiter', '\t');
             assert(size(raw1, 1) == size(raw2, 1) && size(raw1, 2) == size(raw2, 2), ...
-                [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
+                [BRAPH2.STR ':SubjectST_MP:' BRAPH2.WRONG_INPUT], ...
                 'The input txt files must have the same number of subjects with data from the same brain regions')
             
+            % sneak peak to see if it is a subject
+            sub_tmp = Subject.getSubject(subject_class, ...
+                char(raw1{1, 1}), char(raw1{1, 2}), char(raw1{1, 3}), atlases, ...
+                'ST_MP1', raw1{1, 4:size(raw1, 2)}');
+            delete(sub_tmp);
+            % sneak peak to see if it is a subject
+            sub_tmp2 = Subject.getSubject(subject_class, ...
+                char(raw1{1, 1}), char(raw1{1, 2}), char(raw1{1, 3}), atlases, ...
+                'ST_MP2', raw1{1, 4:size(raw1, 2)}');
+            delete(sub_tmp2);
+     
+            % creates group
+            group = Group(subject_class, '', '', '', {});
+            group_path = strsplit(file, filesep());
+            group_id = group_path{length(group_path)};
+            group_id = erase(group_id, '.txt');
+            group.setID(group_id);
+            cohort.getGroups().add(group.getID(), group);
+          
             for i = 1:1:size(raw1, 1)  % first row is being read as table label
-                subject = Subject.getSubject(subject_class, ...                    
+                subject = Subject.getSubject(subject_class, ...
                     char(raw1{i, 1}), char(raw1{i, 2}), char(raw1{i, 3}), atlases, ...
-                    'MRI1', raw1{i, 4:size(raw1, 2)}', ...
-                    'MRI2', raw2{i, 4:size(raw2, 2)}');
-                cohort.getSubjects().add(subject.getID(), subject, i);
+                    'ST_MP1', raw1{i, 4:size(raw1, 2)}', ...
+                    'ST_MP2', raw2{i, 4:size(raw2, 2)}');
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+                group.addSubject(subject);
             end
-            
             % warning on
             warning('on', 'all')
-            
-            % creates group
-            group = Group(subject_class, group_id, group_label, group_notes, cohort.getSubjects().getValues());
-            path = [fileparts(which(file1))]; %#ok<NBRAK>
-            file_name = erase(file1, path);
-            file_name = erase(file_name, filesep());
-            file_name = erase(file_name, '.txt');
-            group.setID(file_name);
-            group.setLabel(group_label);
-            group.setNotes(group_notes);
-            cohort.getGroups().add(group.getID(), group);
         end
         function save_to_txt(cohort, varargin)
+            % SAVE_TO_TXT saves the cohort of SubjectST_MP to a '.txt' file
+            %
+            % SAVE_TO_TXT(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectST_MP will be saved in '.txt' format.
+            %
+            % SAVE_TO_TXT(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectST_MP in '.txt' format in the specified PATH.
+            % 
+            % See also load_from_txt, save_to_xls, save_to_json
+            
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
@@ -499,32 +554,10 @@ classdef SubjectST_MP < Subject
                 end
             end
             
-            % cohort info
-            file_path = strsplit(file1, filesep());
-            file_cohort_path = '';
-            for i = 1:1:length(file_path)-1
-                file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
-            end
-            file_cohort_path = file_cohort_path(2:end);
-            file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];            
-            cohort_info = cell(3, 1);
-            cohort_info{1, 1} = cohort.getID();
-            cohort_info{2, 1} = cohort.getLabel();
-            cohort_info{3, 1} = cohort.getNotes();
-            writecell(cohort_info, file_cohort, 'Delimiter', '\t');
-            
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
-            
-            % group info
-            file_group = [file_cohort_path filesep() 'group_info.txt'];
-            group_info = cell(3, 1);
-            group_info{1, 1} = group.getID();
-            group_info{2, 1} = group.getLabel();
-            group_info{3, 1} = group.getNotes();
-            writecell(group_info, file_group, 'Delimiter', '\t');
             
             for j = 1:1:group.subjectnumber()
                 % get subject data
@@ -532,19 +565,19 @@ classdef SubjectST_MP < Subject
                 row_ids{j, 1} = subject.getID(); %#ok<AGROW>
                 row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
                 row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas1{j, 1} = subject.getData('MRI1').getValue(); %#ok<AGROW>
-                row_datas2{j, 1} = subject.getData('MRI2').getValue(); %#ok<AGROW>
+                row_datas1{j, 1} = subject.getData('ST_MP1').getValue(); %#ok<AGROW>
+                row_datas2{j, 1} = subject.getData('ST_MP2').getValue(); %#ok<AGROW>
             end
             t1 = table(row_ids, row_labels, row_notes, row_datas1);
             t2 = table(row_ids, row_labels, row_notes, row_datas2);
-
+            
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
             
             for i = 1:1:atlas.getBrainRegions().length()
                 brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
             end
-            
+  
             row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
             row_id = 'ID';
             row_label = 'Label';
@@ -606,32 +639,47 @@ classdef SubjectST_MP < Subject
             fclose(fid);
             
             % remove quotation marks 2
-            fid = fopen(f_2);
-            C = textscan(fid, '%s', 'delimiter', '\t');
-            fclose(fid);
+            fid2 = fopen(f_2);
+            C = textscan(fid2, '%s', 'delimiter', '\t');
+            fclose(fid2);
             for k=1:numel(C{1, 1})
                 tmp = regexp(C{1, 1}(k),'"'); % find quotation marks
                 C{1,1}{k,1}(tmp{1, 1}) = ''; % substitute with empty spaces
             end
             % print new file2
             fName = file2;
-            fid = fopen(fName, 'w');            % Open the file
+            fid2 = fopen(fName, 'w');            % Open the file
             m = atlas.getBrainRegions().length() + 2;
             count = 0;
             
             for k = 1:numel(C{1, 1})
                 if count == m
-                    fprintf(fid, '%s\r\n', C{1, 1}{k, 1});
+                    fprintf(fid2, '%s\r\n', C{1, 1}{k, 1});
                     count = -1;
                 else
-                    fprintf(fid, '%s\t', C{1, 1}{k, 1});
+                    fprintf(fid2, '%s\t', C{1, 1}{k, 1});
                 end
                 count = count + 1;
             end
             delete(f_2);
-            fclose(fid);
+            fclose(fid2);
         end
-        function cohort = load_from_json(subject_class, atlases, varargin)
+        function cohort = load_from_json(tmp, varargin)
+            % LOAD_FROM_JSON loads a '.json' file to a Cohort with SubjectST_MP
+            %
+            % COHORT = LOAD_FROM_JSON(TMP) opens a GUI to load a directory 
+            % where it reads '.json' files. If TMP is a brain atlas 
+            % it will create a cohort of SubjectST_MP. If TMP is a cohort
+            % then it will load the file into the cohort.
+            %
+            % COHORT = LOAD_FROM_JSON(TMP, 'Directory', PATH) loads the directory
+            % in PATH where it reads '.json' files. If TMP is a
+            % brain atlas the function whill create a cohort of SubjectST_MP 
+            % If TMP is a cohort then the function will load the file into
+            % the cohort.
+            % 
+            % See also save_to_json, load_from_xls, load_from_txt
+            
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
@@ -655,22 +703,45 @@ classdef SubjectST_MP < Subject
                 end
             end
             
-            % creates cohort
-            cohort = Cohort('', '', '', subject_class, atlases, {});
-            
             raw1 = jsondecode(fileread(file1)); 
             raw2 = jsondecode(fileread(file2)); 
             assert(length(raw1.SubjectData) == length(raw2.SubjectData), ...
                 [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
                 'The input json files must have the same number of subjects with data from the same brain regions')
             
-            % get cohort and group info
-            cohort_id = raw1.CohortData.id;
-            cohort_label = raw1.CohortData.label;
-            cohort_notes = raw1.CohortData.notes;
-            group_id = raw1.GroupData.id;
-            group_label = raw1.GroupData.label;
-            group_notes = raw1.GroupData.notes;
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+                atlases = cohort.getBrainAtlases();
+            else
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                % creates cohort
+                subject_class = 'SubjectST_MP';
+                atlases = tmp;
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            end
+            
+            % sneak peak to see if it is a subject
+            sub_tmp = Subject.getSubject(subject_class, ...
+                raw1.SubjectData(1).id, raw1.SubjectData(1).label, raw1.SubjectData(1).notes, atlases, ...
+                'ST_MP1', raw1.SubjectData(1).data);
+            delete(sub_tmp);
+
+            % sneak peak to see if it is a subject
+            sub_tmp2 = Subject.getSubject(subject_class, ...
+                raw1.SubjectData(1).id, raw1.SubjectData(1).label, raw1.SubjectData(1).notes, atlases, ...
+                'ST_MP2', raw1.SubjectData(1).data);
+            delete(sub_tmp2);
+            
+            % creates group
+            group = Group(subject_class, '', '', '', {});
+            group_path = strsplit(file, filesep());
+            group_id = group_path{length(group_path)};            
+            group_id = erase(group_id, '.json');
+            group.setID(group_id);
+            cohort.getGroups().add(group.getID(), group);
 
             for i = 1:1:length(raw1.SubjectData)
                 id = raw1.SubjectData(i).id;
@@ -680,24 +751,24 @@ classdef SubjectST_MP < Subject
                 data2 = raw2.SubjectData(i).data;
                 subject = Subject.getSubject(subject_class, ...                   
                     id, label, notes, atlases, ...
-                    'MRI1', data1, 'MRI2', data2);
-                cohort.getSubjects().add(subject.getID(), subject, i);
-            end
-            
-            cohort.setID(cohort_id);
-            cohort.setLabel(cohort_label);
-            cohort.setNotes(cohort_notes);
-            
-            % creates group
-            group = Group(subject_class, group_id, group_label, group_notes, cohort.getSubjects().getValues());
-            path = [fileparts(which(file1))]; %#ok<NBRAK>
-            file_name = erase(file1, path);
-            file_name = erase(file_name, filesep());
-            file_name = erase(file_name, '.json');
-            group.setID(file_name);
-            cohort.getGroups().add(group.getID(), group);
+                    'ST_MP1', data1, 'ST_MP2', data2);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+                group.addSubject(subject);
+            end  
         end
         function save_to_json(cohort, varargin)
+            % SAVE_TO_JSON saves the cohort of SubjectST_MP to a '.json' file
+            %
+            % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
+            % cohort of SubjectST_MP will be saved in '.json' format.
+            %
+            % SAVE_TO_JSON(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % of SubjectST_MP in '.json' format in the specified PATH.
+            % 
+            % See also load_from_json, save_to_xls, save_to_txt
+             
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
             if isequal(file1, '')  % select file
@@ -732,8 +803,8 @@ classdef SubjectST_MP < Subject
                 row_ids{j, 1} = subject.getID(); %#ok<AGROW>
                 row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
                 row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas1{j, 1} = subject.getData('MRI1').getValue(); %#ok<AGROW>
-                row_datas2{j, 1} = subject.getData('MRI2').getValue(); %#ok<AGROW>
+                row_datas1{j, 1} = subject.getData('ST_MP1').getValue(); %#ok<AGROW>
+                row_datas2{j, 1} = subject.getData('ST_MP2').getValue(); %#ok<AGROW>
             end
             
             atlases = cohort.getBrainAtlases();
@@ -751,32 +822,17 @@ classdef SubjectST_MP < Subject
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainRegionsLabels', labels, ...
-                'CohortData', struct( ...
-                'id', cohort.getID(), ...
-                'label', cohort.getLabel(), ...
-                'notes', cohort.getNotes()), ...
-                'GroupData', struct( ...
-                'id', group.getID(), ...
-                'label', group.getLabel(), ...
-                'notes', group.getNotes()), ...
                 'SubjectData', struct( ...
                 'id', row_ids, ...
                 'label', row_labels, ...
                 'notes', row_notes, ...
                 'data', row_datas1) ...
                 );
+            
             structure_to_be_saved2 = struct( ...
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainRegionsLabels', labels, ...
-                'CohortData', struct( ...
-                'id', cohort.getID(), ...
-                'label', cohort.getLabel(), ...
-                'notes', cohort.getNotes()), ...
-                'GroupData', struct( ...
-                'id', group.getID(), ...
-                'label', group.getLabel(), ...
-                'notes', group.getNotes()), ...
                 'SubjectData', struct( ...
                 'id', row_ids, ...
                 'label', row_labels, ...
