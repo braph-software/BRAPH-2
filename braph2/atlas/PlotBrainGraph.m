@@ -523,7 +523,7 @@ classdef PlotBrainGraph < PlotBrainAtlas
             
             bool = ishandle(bg.edges.h(i, j)) && strcmpi(get(bg.edges.h(i, j), 'Visible'), 'on');
         end
-        function link_edge_text(bg, i, j , text, varargin)
+        function link_edge_text(bg, graph_axes, i, j , text_value, varargin)
             if i == j  % removes diagonal
                 return;
             end
@@ -544,7 +544,7 @@ classdef PlotBrainGraph < PlotBrainAtlas
             X3 = (X1 + X2) / 2;
             Y3 = (Y1 + Y2) / 2;
             Z3 = (Z1 + Z2) / 2;
-            text(X3, Y3, Z3, text);   
+            text(graph_axes, X3, Y3, Z3, text_value);   
         end
         
         % arrows

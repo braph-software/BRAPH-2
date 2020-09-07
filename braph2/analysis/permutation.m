@@ -29,7 +29,7 @@ else
 
     index_permutation_1 = sort(randperm(N, N_1));
 
-    index_permutation_2 = [1:1:N];
+    index_permutation_2 = [1:1:N]; %#ok<NBRAK>
     index_permutation_2(index_permutation_1) = 0;
     index_permutation_2 = index_permutation_2(index_permutation_2 > 0);
 
