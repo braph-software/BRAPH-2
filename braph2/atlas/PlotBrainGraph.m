@@ -41,7 +41,7 @@ classdef PlotBrainGraph < PlotBrainAtlas
     %   cylinder_edges_settings     - panel to set edges properties
     %   cylinder_edges_is_on        - bool, checks if the cylinder link is on
     %
-    %   text_edge                   - plots an edge text as line with different properties
+    %   text_edge                   - plots an edge text 
     %   text_edge_on                - sets the edge text visible
     %   text_edge_off               - sets the edge text invisible
     %   text_edges_is_on            - bool, checks if the text is on  
