@@ -242,6 +242,17 @@ classdef AnalysisST_MP_WU < Analysis
             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
             number_of_weights = get_from_varargin(1, 'NumberOfWeights', varargin{:});
             
+            if Measure.is_superglobal(measure_code)
+                rows = 1;
+                columns = 1;
+            elseif Measure.is_unilayer(measure_code)
+                rows = 2;
+                columns = 1;
+            elseif Measure.is_bilayer(measure_code)
+                rows = 2;
+                columns = 2;
+            end
+            
             % Measurements for the group
             measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});
             value_group = measurement_group.getMeasureValue();
@@ -252,7 +263,8 @@ classdef AnalysisST_MP_WU < Analysis
             % Randomization
             all_randomizations = cell(1, M);
             all_differences = cell(1, M);
-
+            %difference_all_permutations = cell(rows*columns, M);
+            
             start = tic;
             for i = 1:1:M
                 if verbose
@@ -263,8 +275,8 @@ classdef AnalysisST_MP_WU < Analysis
                 measure_random = g_random.getMeasure(measure_code);
                 value_randomization = measure_random.getValue();
                 
-                all_randomizations(1, i) = measure_random.getValue();
-                all_differences(1, i) = {value_group{1} - value_randomization{1}};
+                all_randomizations(i) = {value_randomization};
+                all_differences(i) = {cellfun(@(x, y) x - y, value_group, value_randomization, 'UniformOutput', false)};
                 
                 if interruptible
                     pause(interruptible)
@@ -274,21 +286,34 @@ classdef AnalysisST_MP_WU < Analysis
             % TODO rewrite following code more elegantly
             value_random = all_randomizations{1};
             for i = 2:1:M
-                value_random = value_random + all_randomizations{i};
+                for j=1:rows
+                    for t=1:columns
+                        % value_random = value_random + all_randomizations{i};
+                        value_random = cellfun(@(x, y) x - y, value_random, all_randomizations{i}, 'UniformOutput', false);
+                    end
+                end
             end
-            value_random = {value_random / M};
+            value_random = cellfun(@(x) x/M, value_random, 'UniformOutput', false);
+            difference = cellfun(@(x, y) x - y, value_group, value_random, 'UniformOutput', false);
             
-            difference = {value_group{1} - value_random{1}};
+            all_differences2 = cell(rows*columns, M);
+            p1 = cell(rows, columns);
+            p2 =  cell(rows, columns);
+            qtl = cell(rows, columns);
+            ci_lower = cell(rows, columns);
+            ci_upper =  cell(rows, columns);
             
-            % Statistical analysis
-            p1 = pvalue1(difference, all_differences);  % singe tail,
-            p2 = pvalue2(difference, all_differences);  % double tail
-            
-            % TODO: update with new version of quantiles once available (if needed)
-            % ci_lower = quantiles(difference_all_permutations, 40, {2, 40});
-            qtl = quantiles(all_differences, 40);
-            ci_lower = {cellfun(@(x) x(2), qtl)};
-            ci_upper = {cellfun(@(x) x(40), qtl)};
+            for i=1:rows
+                for j=1:columns
+                    all_differences2(i*j, :) = cellfun(@(x) x{i, j}, all_differences, 'UniformOutput', false);
+                    % Statistical analysis
+                    p1(i, j) = {pvalue1(difference{i, j}, all_differences2(i*j, :))};  % singe tail,
+                    p2(i, j) = {pvalue2(difference{i, j}, all_differences2(i*j, :))};  % double tail
+                    qtl(i, j) = {quantiles(all_differences2(i*j, :), 40)};
+                    ci_lower(i, j) = {cellfun(@(x) x(2), qtl{i, j})};
+                    ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})};              
+                end
+            end
             
             % create randomComparisonClass
             randomcomparison = RandomComparison.getRandomComparison(analysis.getRandomComparisonClass(), ...
@@ -304,7 +329,7 @@ classdef AnalysisST_MP_WU < Analysis
                 'RandomComparisonST_MP.value_group', value_group, ...
                 'RandomComparisonST_MP.value_random', value_random, ...
                 'RandomComparisonST_MP.difference', difference, ...
-                'RandomComparisonST_MP.all_differences', all_differences, ...
+                'RandomComparisonST_MP.all_differences', all_differences2, ...
                 'RandomComparisonST_MP.p1', p1, ...
                 'RandomComparisonST_MP.p2', p2, ....
                 'RandomComparisonST_MP.confidence_min', ci_lower, ...
@@ -360,7 +385,7 @@ classdef AnalysisST_MP_WU < Analysis
             measurements_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
             value_2 = measurements_2.getMeasureValue();
             
-            difference_mean = cellfun(@(x, y) y - x, value_2, value_1, 'UniformOutput', false);
+            difference_mean = cellfun(@(x, y) y - x, value_1, value_2, 'UniformOutput', false);
 
             subjects_1 = group_1.getSubjects();
             subjects_2 = group_2.getSubjects();
@@ -404,13 +429,14 @@ classdef AnalysisST_MP_WU < Analysis
                 for j=1:columns
                     difference_all_permutations(i*j, :) = cellfun(@(x, y) y{i, j} - x{i, j}, all_permutations_1, all_permutations_2, 'UniformOutput', false);
                     % Statistical analysis
-                    p1(i, j) = {pvalue1(difference_mean{1}, difference_all_permutations(i*j, :))};  % singe tail,
-                    p2(i, j) = {pvalue2(difference_mean{1}, difference_all_permutations(i*j, :))};  % double tail
-                    qtl(i, j) = {quantiles(difference_all_permutations(i, j), 40)};
+                    p1(i, j) = {pvalue1(difference_mean{i, j}, difference_all_permutations(i*j, :))};  % singe tail,
+                    p2(i, j) = {pvalue2(difference_mean{i, j}, difference_all_permutations(i*j, :))};  % double tail
+                    qtl(i, j) = {quantiles(difference_all_permutations(i*j, :), 40)};
                     ci_lower(i, j) = {cellfun(@(x) x(2), qtl{i, j})};
-                    ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})};              
+                    ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})}; % or 39?            
                 end
             end
+
             comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                 analysis.getComparisonID(measure_code, group_1, group_2, varargin{:}), ...
                 '', ...  % comparison label
