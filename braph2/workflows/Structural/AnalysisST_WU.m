@@ -343,7 +343,7 @@ classdef AnalysisST_WU < Analysis
             measurement_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
             value_2 = measurement_2.getMeasureValue();
             
-            difference_mean = cellfun(@(x, y) y - x, value_2, value_1, 'UniformOutput', false);
+            difference_mean = cellfun(@(x, y) y - x, value_1, value_2, 'UniformOutput', false);
             
             subjects_1 = group_1.getSubjects();
             subjects_2 = group_2.getSubjects();
