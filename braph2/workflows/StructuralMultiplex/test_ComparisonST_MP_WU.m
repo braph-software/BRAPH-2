@@ -17,8 +17,7 @@ sub5 = Subject.getSubject(subject_class, 'id5', 'label 5', 'notes 5', atlas);
 
 group = Group(subject_class, 'id', 'label', 'notes', {sub1, sub2, sub3, sub4, sub5});
 
-graph_type = 'MultiplexGraphWU';
-%graph_type = AnalysisST_MP_WU.getGraphType();
+graph_type = AnalysisST_MP_WU.getGraphType();
 measures = Graph.getCompatibleMeasureList(graph_type);
 
 %% Test 1: Instantiation
