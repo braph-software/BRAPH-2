@@ -7,16 +7,16 @@ br5 = BrainRegion('BR5', 'brain region 5', 'notes 5', 5, 5.5, 5.55);
 atlas = BrainAtlas('BA', 'brain atlas', 'notes', 'BrainMesh_ICBM152.nv', {br1, br2, br3, br4, br5});
 
 % first 10 subjects, 5 brain regions. abs value
-sub11 = SubjectST_MP('ID11', 'label 11', 'notes 11', atlas, 'age', 15, 'MRI1', [0.009254 0.015379 0.042376 0.001630 0.008111]', 'MRI2', [0.751324 0.283473 0.617762 0.248406 0.986245]');
-sub12 = SubjectST_MP('ID12', 'label 12', 'notes 12', atlas, 'age', 15, 'MRI1', [0.015502 0.004323 0.013206 0.006639 0.001157]', 'MRI2', [0.010598 0.171979 0.584338 0.380741 0.589159]');
-sub13 = SubjectST_MP('ID13', 'label 13', 'notes 13', atlas, 'age', 15, 'MRI1', [0.008979 0.115102 0.045353 0.001312 0.004045]', 'MRI2', [0.875963 0.618298 0.669873 0.925564 0.274040]');
-sub14 = SubjectST_MP('ID14', 'label 14', 'notes 14', atlas, 'age', 15, 'MRI1', [0.016894 0.218212 0.028700 0.007709 0.004460]', 'MRI2', [0.617379 0.879746 0.881440 0.168771 0.400157]');
+sub11 = SubjectST_MP('ID11', 'label 11', 'notes 11', atlas, 'age', 15, 'ST_MP1', [0.009254 0.015379 0.042376 0.001630 0.008111]', 'ST_MP2', [0.751324 0.283473 0.617762 0.248406 0.986245]');
+sub12 = SubjectST_MP('ID12', 'label 12', 'notes 12', atlas, 'age', 15, 'ST_MP1', [0.015502 0.004323 0.013206 0.006639 0.001157]', 'ST_MP2', [0.010598 0.171979 0.584338 0.380741 0.589159]');
+sub13 = SubjectST_MP('ID13', 'label 13', 'notes 13', atlas, 'age', 15, 'ST_MP1', [0.008979 0.115102 0.045353 0.001312 0.004045]', 'ST_MP2', [0.875963 0.618298 0.669873 0.925564 0.274040]');
+sub14 = SubjectST_MP('ID14', 'label 14', 'notes 14', atlas, 'age', 15, 'ST_MP1', [0.016894 0.218212 0.028700 0.007709 0.004460]', 'ST_MP2', [0.617379 0.879746 0.881440 0.168771 0.400157]');
 
 group1 = Group('SubjectST_MP', 'group 1 id', 'group 1 label', 'group 1 notes', {sub11, sub12, sub13, sub14}, 'GroupName', 'GroupTestST_MP1');
 
-sub21 = SubjectST_MP('ID21', 'label 21', 'notes 21', atlas, 'age', 15, 'MRI1', [0.014241 0.000357 0.010545 0.000858 0.005674]', 'MRI2', [0.604707 0.965733 0.332299 0.755957 0.125229]');
-sub22 = SubjectST_MP('ID22', 'label 22', 'notes 22', atlas, 'age', 15, 'MRI1', [0.026439 0.000055 0.020096 0.000803 0.000545]', 'MRI2', [0.015752 0.622754 0.428558 0.641286 0.128858]');
-sub23 = SubjectST_MP('ID23', 'label 23', 'notes 23', atlas, 'age', 15, 'MRI1', [0.011974 0.056372 0.010924 0.015115 0.012533]', 'MRI2', [0.268480 0.900563 0.724331 0.544446 0.368332]');
+sub21 = SubjectST_MP('ID21', 'label 21', 'notes 21', atlas, 'age', 15, 'ST_MP1', [0.014241 0.000357 0.010545 0.000858 0.005674]', 'ST_MP2', [0.604707 0.965733 0.332299 0.755957 0.125229]');
+sub22 = SubjectST_MP('ID22', 'label 22', 'notes 22', atlas, 'age', 15, 'ST_MP1', [0.026439 0.000055 0.020096 0.000803 0.000545]', 'ST_MP2', [0.015752 0.622754 0.428558 0.641286 0.128858]');
+sub23 = SubjectST_MP('ID23', 'label 23', 'notes 23', atlas, 'age', 15, 'ST_MP1', [0.011974 0.056372 0.010924 0.015115 0.012533]', 'ST_MP2', [0.268480 0.900563 0.724331 0.544446 0.368332]');
 
 group2 = Group('SubjectST_MP', 'group 2 id', 'group 2 label', 'group 2 notes', {sub21, sub22, sub23}, 'GroupName', 'GroupTestST_MP2');
 
@@ -401,22 +401,22 @@ for i = 1:1:numel(measures)
     comparison_p2 = comparison.getP2();
     comparison_confidence_interval_min = comparison.getConfidenceIntervalMin();
     comparison_confidence_interval_max = comparison.getConfidenceIntervalMax();
-    comparison_parameter_values = randomcomparison.getMeasureParameterValues();
+    comparison_parameter_values = comparison.getMeasureParameterValues();
     comparison_parameter_values_length = max(1, length(comparison_parameter_values));
       
     assert(isequal(parameter_values_length, comparison_parameter_values_length),  ... 
     [BRAPH2.STR ':AnalysisST_WU:' BRAPH2.BUG_FUNC], ...
     'AnalysisST_MP_WU.getComparison() does not initialize correctly the parameter of the measures')
 
-    if Measure.is_superglobal(measures{i})
+    if Measure.is_superglobal(measure)
         num_elements = 1;
-    elseif Measure.is_unilayer(measures{i})
+    elseif Measure.is_unilayer(measure)
         num_elements = 2;
-    elseif Measure.is_bilayer(measures{i})
+    elseif Measure.is_bilayer(measure)
         num_elements = 4;
     end
         
-    if Measure.is_global(measures{i})
+    if Measure.is_global(measure)
         assert(iscell(comparison_values_1) && ...
             isequal(numel(comparison_values_1), num_elements) && ...
             all(cellfun(@(x) isequal(size(x, 1), 1), comparison_values_1)) && ...
@@ -481,7 +481,7 @@ for i = 1:1:numel(measures)
             [BRAPH2.STR ':AnalysisST_MP_WU:' BRAPH2.WRONG_OUTPUT], ...
             'AnalysisST_MP_WU.getComparison() not working with global measures')
 
-    elseif Measure.is_nodal(measures{i})
+    elseif Measure.is_nodal(measure)
         assert(iscell(comparison_values_1) && ...
             isequal(numel(comparison_values_1), num_elements) && ...
             all(cellfun(@(x) isequal(size(x, 1), atlas.getBrainRegions().length()), comparison_values_1)) && ...
@@ -546,7 +546,7 @@ for i = 1:1:numel(measures)
             [BRAPH2.STR ':AnalysisST_MP_WU:' BRAPH2.WRONG_OUTPUT], ...
             'AnalysisST_MP_WU.getComparison() not working with nodal measures') 
         
-    elseif Measure.is_binodal(measures{i})
+    elseif Measure.is_binodal(measure)
         assert(iscell(comparison_values_1) && ...
             isequal(numel(comparison_values_1), num_elements) && ...
             all(cellfun(@(x) isequal(size(x, 1), atlas.getBrainRegions().length()), comparison_values_1)) && ...
