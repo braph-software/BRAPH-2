@@ -218,7 +218,7 @@ classdef RichClubStrength < Strength
             % NAME = GETPARAMETERNAME() returns the name (string) of 
             % the rich-club strength' parameter.
             
-            name = 'Rich-club strength thresholds';
+            name = 'WeightedRichClubThreshold';
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with RichClubStrength 

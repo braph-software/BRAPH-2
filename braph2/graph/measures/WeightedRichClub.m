@@ -222,7 +222,7 @@ classdef WeightedRichClub < Strength
             % NAME = GETPARAMETERNAME() returns the name (string) of 
             % the weighted rich-club' parameter.
             
-            name = 'Weighted rich-club thresholds';
+            name = 'WeightedRichClubThreshold';
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with WeightedRichClub 

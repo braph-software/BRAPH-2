@@ -220,7 +220,7 @@ classdef RichClub < Degree
             % NAME = GETPARAMETERNAME() returns the name (string) of 
             % the rich-club's parameter.
             
-            name = 'Rich-club threshold';
+            name = 'RichClubThreshold';
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with RichClub 
