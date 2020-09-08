@@ -184,8 +184,8 @@ for i = 1:1:min(cohort.getSubjects().length(), load_cohort_2.getSubjects().lengt
         'Problems saving or loading a cohort.')
 end
 
-delete(save_dir_path)
-delete(save_dir_path_2)
+delete(save_dir_path1)
+delete(save_dir_path2)
 
 %% Test 3.1: Save and Load cohort from TXT
 % setup
