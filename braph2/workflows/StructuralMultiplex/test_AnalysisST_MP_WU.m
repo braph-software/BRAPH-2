@@ -77,6 +77,8 @@ for i = 1:1:length(measures)
     for j = 1:1:numel(measurement_keys)
         calculated_measurement = analysis.getMeasurements().getValue(measurement_keys{j});
         calculated_value = calculated_measurement.getMeasureValue();
+        parameter_values = calculated_measurement.getMeasureParameterValues();
+        parameter_values_length = max(1, length(parameter_values));
         
         if Measure.is_superglobal(measures{i})
             num_elements = 1;
