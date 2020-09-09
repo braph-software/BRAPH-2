@@ -33,7 +33,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
             % with the data from GROUP, this data will have a fixed THRESHOLD.
             %
             % MeasurementST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % creates a measurement with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP, this data will have a fixed default threshold.
             %
             % See also ComparisonST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.

@@ -10,7 +10,7 @@ classdef MeasurementST_MP_BUD < MeasurementST_MP_WU
     %  MeasurementST_MP_BUD         - Constructor
     %
     % MeasurementST_MP_BUD get methods:
-    %  getThreshold                 - returns the density
+    %  getDensity                   - returns the density
     %
     % MeasurementST_MP_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the measurement
@@ -28,15 +28,15 @@ classdef MeasurementST_MP_BUD < MeasurementST_MP_WU
     end
     methods  % Constructor
         function m =  MeasurementST_MP_BUD(id, label, notes, atlas, measure_code, group, varargin)
-            % MEASUREMENTST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'density',  THRESHOLD)
+            % MEASUREMENTST_MP_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'density',  DENSITY)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
-            % with the data from GROUP, this data will have a fixed THRESHOLD.
+            % with the data from GROUP, this data will have a fixed DENSITY.
             %
-            % MEASUREMENTST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % MEASUREMENTST_MP_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
+            % creates a measurement with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP, this data will have a fixed default density.
             %
-            % See also ComparisonST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.
+            % See also ComparisonST_MP_BUD, RandomComparisonST_MP_BUD, AnalysisST_MP_BUD.
             
             m = m@MeasurementST_MP_WU(id, label, notes, atlas, measure_code, group, varargin{:});
             
@@ -46,10 +46,10 @@ classdef MeasurementST_MP_BUD < MeasurementST_MP_WU
     end
     methods (Access = protected) % Set functions
         function setDensity(m, density)
-            % SETDENSITY sets the measure fixed density of values
+            % SETDENSITY sets the fixed density of the data values
             %
-            % SETDENSITY(M, DENSITY) sets the measure fixed density of
-            % values.
+            % SETDENSITY(M, DENSITY) sets the fixed density of
+            % the data values.
             %
             % See also getDensity.
             
@@ -69,47 +69,47 @@ classdef MeasurementST_MP_BUD < MeasurementST_MP_WU
     end
     methods (Static)  % Descriptive functions
         function class = getClass()
-            % GETCLASS returns the class of structural measurement BUD
+            % GETCLASS returns the class of structural multiplex measurement BUD
             %
             % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
-            % measurement. In this case 'MeasurementST_BUD'.
+            % measurement. In this case 'MeasurementST_MP_BUD'.
             %
             % See also getList, getName, getDescription.
             
-            class = 'MeasurementST_BUD';
+            class = 'MeasurementST_MP_BUD';
         end
         function name = getName()
-            % GETNAME returns the name of structural measurement BUT
+            % GETNAME returns the name of structural multiplex measurement BUT
             %
-            % NAME = GETNAME() returns the name, Measurement ST BUT.
+            % NAME = GETNAME() returns the name, Measurement ST MP BUT.
             %
             % See also getList, getClass, getDescription.
             
-            name = 'Measurement ST BUD';
+            name = 'Measurement ST MP BUD';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the description of structural measurement
+            % GETDESCRIPTION returns the description of structural multiplex measurement
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of MeasurementST_BUD.
+            % of MeasurementST_MP_BUD.
             %
             % See also getList, getClass, getName
             
             description = [ ...
-                'ST measurement with structural data using binary graphs ' ...
-                'calculated at a fixed density. ' ...
-                'For example, it can use MRI or PET data.' ...
+                'ST MP measurement with structural multiplex data using binary ' ...
+                'graphs calculated at a fixed density. ' ...
+                'For example, it can use MRI or/and PET data.' ...
                 ];
         end
         function analysis_class = getAnalysisClass()
             % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % analysis the measurement is part of, 'AnalysisST_BUT'.
+            % analysis the measurement is part of, 'AnalysisST_MP_BUD'.
             %
             % See also getClass, getName, getDescription.
             
-            analysis_class = 'AnalysisST_BUD';
+            analysis_class = 'AnalysisST_MP_BUD';
         end
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
@@ -119,7 +119,7 @@ classdef MeasurementST_MP_BUD < MeasurementST_MP_WU
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
             % UIPanel. With density settings options.
             %
-            % See also MeasurementST_BUD.
+            % See also MeasurementST_MP_BUD.
             
             set(uiparent, 'Visible', 'on')
             ui_density_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');

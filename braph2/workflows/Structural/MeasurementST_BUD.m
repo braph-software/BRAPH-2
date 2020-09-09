@@ -10,7 +10,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
     %  MeasurementST_BUD            - Constructor
     %
     % MeasurementST_BUD get methods:
-    %  getThreshold                 - returns the density
+    %  getDensity                   - returns the density
     %
     % MeasurementST_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the measurement
@@ -28,15 +28,15 @@ classdef MeasurementST_BUD < MeasurementST_WU
     end
     methods  % Constructor
         function m =  MeasurementST_BUD(id, label, notes, atlas, measure_code, group, varargin)
-            % MEASUREMENTST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'density',  THRESHOLD)
+            % MEASUREMENTST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'density',  DENSITY)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
-            % with the data from GROUP, this data will have a fixed THRESHOLD.
+            % with the data from GROUP, this data will have a fixed DENSITY.
             %
             % MEASUREMENTST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % creates a measurement with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP, this data will have a fixed default density.
             %
-            % See also ComparisonST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.
+            % See also ComparisonST_BUD, RandomComparisonST_BUD, AnalysisST_BUD.
             
             m = m@MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin{:});
             
@@ -105,7 +105,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
             % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % analysis the measurement is part of, 'AnalysisST_BUT'.
+            % analysis the measurement is part of, 'AnalysisST_BUD'.
             %
             % See also getClass, getName, getDescription.
             
