@@ -1,33 +1,33 @@
-classdef MeasurementST_BUD < MeasurementST_WU
-    % MeasurementST_BUD A measurement of structural data with BU graphs at fixed density
-    % MeasurementST_BUD is a subclass of MeasurementST_WU.
+classdef MeasurementST_MP_BUD < MeasurementST_MP_WU
+    % MeasurementST_MP_BUD A measurement of structural multiplex data with BU graphs at fixed density
+    % MeasurementST_MP_BUD is a subclass of MeasurementST_MP_WU.
     %
-    % MeasurementST_BUD stores a measurement of structural data with BU
-    % graphs at fixed density, for this it inherits the MeasurementST_WU
-    % initialization of data. Structural data can be for example MRI or PET data.
+    % MeasurementST_MP_BUD stores a measurement of structural multiplex data with 
+    % BU graphs at fixed density, for this it inherits the MeasurementST_MP_WU
+    % initialization of data. Structural multiplex data can be for example MRI or/and PET data.
     %
-    % MeasurementST_BUD constructor methods:
-    %  MeasurementST_BUD            - Constructor
+    % MeasurementST_MP_BUD constructor methods:
+    %  MeasurementST_MP_BUD         - Constructor
     %
-    % MeasurementST_BUD get methods:
+    % MeasurementST_MP_BUD get methods:
     %  getThreshold                 - returns the density
     %
-    % MeasurementST_BUD descriptive methods (Static):
+    % MeasurementST_MP_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the measurement
     %  getName                      - returns the name of the measurement
     %  getDescription               - returns the description of the measurement
     %  getAnalysisClass             - returns the class of the analysis    
     %
-    % MeasurementST_BUD plot methods (Static):
+    % MeasurementST_MP_BUD plot methods (Static):
     %  getMeasurementSettingsPanel  - returns a UIPanel
     %
-    % See also Measurement, AnalysisST_BUD, ComparisonST_BUD, RandomComparisonST_BUD.
+    % See also Measurement, AnalysisST_MP_BUD, ComparisonST_MP_BUD, RandomComparisonST_MP_BUD.
     
     properties (Access = protected)
         density  % density of the values
     end
     methods  % Constructor
-        function m =  MeasurementST_BUD(id, label, notes, atlas, measure_code, group, varargin)
+        function m =  MeasurementST_MP_BUD(id, label, notes, atlas, measure_code, group, varargin)
             % MEASUREMENTST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'density',  THRESHOLD)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
             % with the data from GROUP, this data will have a fixed THRESHOLD.
@@ -38,7 +38,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
             %
             % See also ComparisonST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.
             
-            m = m@MeasurementST_WU(id, label, notes, atlas, measure_code, group, varargin{:});
+            m = m@MeasurementST_MP_WU(id, label, notes, atlas, measure_code, group, varargin{:});
             
             density = get_from_varargin(0, 'density', varargin{:});
             m.setDensity(density)

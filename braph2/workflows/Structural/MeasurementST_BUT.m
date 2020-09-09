@@ -3,7 +3,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
     % MeasurementST_BUT is a subclass of MeasurementST_WU.
     %
     % MeasurementST_BUT stores a measurement of structural data with BU
-    % graphs at fixes threshold, for this it implements MeasurementST_WU
+    % graphs at fixed threshold, for this it implements MeasurementST_WU
     % initialization of data. Structural data can be for example MRI or PET data.
     %
     % MeasurementST_BUT constructor methods:
