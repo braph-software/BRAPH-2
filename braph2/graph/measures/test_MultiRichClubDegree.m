@@ -54,7 +54,7 @@ mrich(:, 1, 2) = [4/3 4/3 2/3 0]';
 known_multi_rich_club_degree = {mrich};
 
 g = MultiplexGraphBD(A);
-multi_rich_club_degree = MultiRichClubDegree(g, 'RichClubThreshold', 2, 'MultiRichClubCoefficients', [2/3, 1/3]);
+multi_rich_club_degree = MultiRichClubDegree(g, 'RichClubDegree.Parameter', 2, 'MultiRichClubCoefficients', [2/3, 1/3]);
 multi_rich_club_degree = multi_rich_club_degree.getValue();
 
 assert(isequal(round(multi_rich_club_degree{1}, 10), round(known_multi_rich_club_degree{1}, 10)), ...
@@ -115,7 +115,7 @@ mrich(:, 1, 2) = [5/4 5/4 1/2 0]';
 known_multi_rich_club_degree = {mrich};
 
 g = MultiplexGraphWD(A);
-multi_rich_club_degree = MultiRichClubDegree(g, 'RichClubThreshold', 2, 'MultiRichClubCoefficients', [3/4, 1/4]);
+multi_rich_club_degree = MultiRichClubDegree(g, 'RichClubDegree.Parameter', 2, 'MultiRichClubCoefficients', [3/4, 1/4]);
 
 assert(isequal(multi_rich_club_degree.getValue(), known_multi_rich_club_degree), ...
     [BRAPH2.STR ':MultiRichClubDegree:' BRAPH2.BUG_ERR], ...

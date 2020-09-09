@@ -23,7 +23,7 @@ A = {
 known_multi_rich_club_strength = {[5.4/4 5.2/4 2 1.8/4]'};      
 
 g = MultiplexGraphWU(A);
-multi_rich_club_strength = MultiRichClubStrength(g, 'WeightedRichClubThreshold', 1, 'WeightedMultiRichClubCoefficients', [3/4, 1/4]);
+multi_rich_club_strength = MultiRichClubStrength(g, 'RichClubStrength.Parameter', 1, 'WeightedMultiRichClubCoefficients', [3/4, 1/4]);
 
 assert(isequal(multi_rich_club_strength.getValue(), known_multi_rich_club_strength), ...
     [BRAPH2.STR ':MultiRichClubStrength:' BRAPH2.BUG_ERR], ...
@@ -54,7 +54,7 @@ wmultirich(:, 1, 2) = [0 .5 .5 0]';
 known_multi_rich_club_strength = {wmultirich};
 
 g = MultiplexGraphWD(A);
-multi_rich_club_strength = MultiRichClubStrength(g, 'WeightedRichClubThreshold', [1.5, 2]);
+multi_rich_club_strength = MultiRichClubStrength(g, 'RichClubStrength.Parameter', [1.5, 2]);
 
 assert(isequal(multi_rich_club_strength.getValue(), known_multi_rich_club_strength), ...
     [BRAPH2.STR ':MultiRichClubStrength:' BRAPH2.BUG_ERR], ...
