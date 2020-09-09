@@ -35,7 +35,7 @@ CLOSE_SC = GUI.CLOSE_SC;
 FIGURE_CMD = GUI.FIGURE_CMD;
 FIGURE_SC = GUI.FIGURE_SC;
 
-CLOSE_TP = ['Close ' APPNAME '. Shortcut: ' GUI.ACCELERATOR '+' CLOSE_SC];
+CLOSE_TP = ['Close ' APPNAME '. Shortcut: ' GUI.ACCELERATOR '+' CLOSE_SC]; %#ok<NASGU>
 
 initial_number_childs = 0;
 maesures_rules = [];
@@ -617,7 +617,7 @@ init_matrix()
 
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
-MENU_FIGURE = 'Figure';
+MENU_FIGURE = 'Figure'; %#ok<NASGU>
 
 ui_menu_file = uimenu(f, 'Label', MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
@@ -650,7 +650,7 @@ init_menu()
         set(ui_menu_plotview_figure, 'Callback', {@cb_menu_figure})
         
     end
-[ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME);
+[ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME); %#ok<ASGLU>
     function cb_menu_figure(~, ~)  % (src, event)
         h = figure('Name', ['Correlation Matrix - ' ga.getName()]);
         set(gcf, 'Color', 'w')

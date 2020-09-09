@@ -21,6 +21,7 @@ classdef RichClubStrength < Strength
     %   getParametricity            - returns the parametricity of the measure   
     %   getMeasure                  - returns the rich-club strength class
     %   getParameterName            - returns the name of rich-club strength measure's parameter
+    %   getParameterHandle          - returns the handle of the parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
@@ -106,7 +107,7 @@ classdef RichClubStrength < Strength
                     st = (in_strength{li} + out_strength{li})/2;
                 end
                 
-                weighted_rich_club_threshold = get_from_varargin(1, 'WeightedRichClubThreshold', m.getSettings());
+                weighted_rich_club_threshold = m.getParameter();
                 assert(isnumeric(weighted_rich_club_threshold) == 1, ...
                     [BRAPH2.STR ':RichClubStrength:' BRAPH2.WRONG_INPUT], ...
                     ['RichClubStrength threshold must be a positive number ' ...
@@ -178,9 +179,7 @@ classdef RichClubStrength < Strength
             %                           value - RICHCLUBSTRENGTH s threshold 
             %                           is set to the specificied values (vector).
             
-            available_settings = {
-                'WeightedRichClubThreshold', BRAPH2.NUMERIC, 1, {};
-                };
+            available_settings = {};
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of RichClubStrength
@@ -218,7 +217,17 @@ classdef RichClubStrength < Strength
             % NAME = GETPARAMETERNAME() returns the name (string) of 
             % the rich-club strength' parameter.
             
-            name = 'WeightedRichClubThreshold';
+            name = 'Rich-club strength thresholds';
+        end
+        function h = getParameterHandle()
+            % GETPARAMETERHANDLE returns the measures's parameter handle
+            %
+            % H = GETPARAMETERHANDLE(MEASURE)returns the measure's
+            % parameter handle.
+            %
+            % See also getParameterName, getParameter
+            
+            h = {'RichClubStrength.Parameter', 1};
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with RichClubStrength 
