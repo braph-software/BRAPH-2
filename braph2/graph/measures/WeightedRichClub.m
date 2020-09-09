@@ -231,7 +231,7 @@ classdef WeightedRichClub < Strength
             %
             % See also getParameterName, getParameter
             
-            h = {'WeightedRichClub.Parameter', 1};
+            h = {'WeightedRichClub.Parameter', 1, BRAPH2.NUMERIC};
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with WeightedRichClub 

@@ -229,7 +229,7 @@ classdef RichClub < Degree
             %
             % See also getParameterName, getParameter
             
-            h = {'RichClub.Parameter', 1};
+            h = {'RichClub.Parameter', 1, BRAPH2.NUMERIC};
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with RichClub 
