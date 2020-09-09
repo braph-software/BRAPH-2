@@ -10,7 +10,7 @@ classdef ComparisonST_BUD < ComparisonST_WU
     %  ComparisonST_BUD              - Constructor
     %
     % ComparisonST_BUD get methods:
-    %  getThreshold                 - returns the density
+    %  getDensity                   - returns the density
     %
     % ComparisonST_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
@@ -21,24 +21,24 @@ classdef ComparisonST_BUD < ComparisonST_WU
     % ComparisonST_BUD plot methods (Static):
     %  getComparisonSettingsPanel   - returns a UIPanel
     % 
-    % See also Comparison, AnalysisST_BUT, MeasurementST_BUT, RandomComparisonST_BUT.
+    % See also Comparison, AnalysisST_BUD, MeasurementST_BUD, RandomComparisonST_BUD.
     
     properties (Access = protected)
         density  % density of the values
     end
     methods  % Constructor
         function c =  ComparisonST_BUD(id, label, notes, atlas, measure_code, group_1, group_2, varargin)
-            % ComparisonST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, 'density', THRESHOLD)
+            % COMPARISONST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, 'density', DENSITY)
             % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE
             % between the data from GROUP_1 and GROUP_2. The data will have
-            % a fixed THRESHOLD.
+            % a fixed DENSITY.
             %
-            % ComparisonST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2)
+            % COMPARISONST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2)
             % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE
             % between the data from GROUP_1 and GROUP_2. The data will have
-            % a fixed default THRESHOLD.
+            % a fixed default DENSITY.
             %
-            % See also MeasurementST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.
+            % See also MeasurementST_BUD, RandomComparisonST_BUD, AnalysisST_BUD.
             
             c = c@ComparisonST_WU(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:});
             density = get_from_varargin(0, 'density', varargin{:});
@@ -86,7 +86,7 @@ classdef ComparisonST_BUD < ComparisonST_WU
             %
             % See also getList, getClass, getDescription.
             
-            name = 'Comparison Structural BUT';
+            name = 'Comparison Structural BUD';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of structural comparison
@@ -106,11 +106,11 @@ classdef ComparisonST_BUD < ComparisonST_WU
             % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % analysis the comparison is part of, 'AnalysisST_BUT'.
+            % analysis the comparison is part of, 'AnalysisST_BUD'.
             %
             % See also getList, getClass, getName.
             
-            analysis_class = 'AnalysisST_BUT';
+            analysis_class = 'AnalysisST_BUD';
         end
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
