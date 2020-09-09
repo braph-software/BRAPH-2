@@ -1,7 +1,7 @@
 classdef WeightedMultiplexParticipation < Strength
-    % WeightedMultiplexParticipation Multiplex participation measure
-    % WeightedMultiplexParticipation provides the multiplex participation of a node for binary 
-    % undirected (BU) and weighted undirected (WU) multiplexes. 
+    % WeightedMultiplexParticipation Weighted multiplex participation measure
+    % WeightedMultiplexParticipation provides the w eightedmultiplex participation 
+    % of a node for weighted undirected (WU) multiplexes. 
     %
     % It is the heterogenerity of the number of neighbours of a node across the layers.
     % It is calcualted as:
@@ -156,7 +156,7 @@ classdef WeightedMultiplexParticipation < Strength
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with MultiplexParticipation
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with WeightedMultiplexParticipation
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to weighted multiplex participation.
