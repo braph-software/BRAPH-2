@@ -97,11 +97,11 @@ classdef WeightedMultiplexParticipationAv < WeightedMultiplexParticipation
             % GETMEASUREFORMAT returns the measure format of WeightedMultiplexParticipationAv
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of average weighted multiplex participation measure (NODAL).
+            % of average weighted multiplex participation measure (GLOBAL).
             %
             % See also getMeasureScope.
             
-            measure_format = Measure.NODAL;
+            measure_format = Measure.GLOBAL;
         end
         function measure_scope = getMeasureScope()
             % GETMEASURESCOPE returns the measure scope of WeightedMultiplexParticipationAv
