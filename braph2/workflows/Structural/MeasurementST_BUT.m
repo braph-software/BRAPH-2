@@ -2,7 +2,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
     % MeasurementST_BUT A measurement of structural data with BU graphs at fixed threshold
     % MeasurementST_BUT is a subclass of MeasurementST_WU.
     %
-    % MeasurementST_BUT store a measurement of structural data with BU
+    % MeasurementST_BUT stores a measurement of structural data with BU
     % graphs at fixes threshold, for this it implements MeasurementST_WU
     % initialization of data. Structural data can be for example MRI or PET data.
     %
@@ -21,7 +21,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
     % MeasurementST_BUT plot methods (Static):
     %  getMeasurementSettingsPanel  - returns a UIPanel
     %
-    % See also Comparison, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT.
+    % See also Measurement, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT.
     
     properties (Access = protected)
         threshold  % threshold of the values

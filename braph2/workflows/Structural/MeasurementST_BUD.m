@@ -2,8 +2,8 @@ classdef MeasurementST_BUD < MeasurementST_WU
     % MeasurementST_BUD A measurement of structural data with BU graphs at fixed density
     % MeasurementST_BUD is a subclass of MeasurementST_WU.
     %
-    % MeasurementST_BUD store a measurement of structural data with BU
-    % graphs at fixes density, for this it inherit the MeasurementST_WU
+    % MeasurementST_BUD stores a measurement of structural data with BU
+    % graphs at fixes density, for this it inherits the MeasurementST_WU
     % initialization of data. Structural data can be for example MRI or PET data.
     %
     % MeasurementST_BUD constructor methods:
@@ -21,7 +21,7 @@ classdef MeasurementST_BUD < MeasurementST_WU
     % MeasurementST_BUD plot methods (Static):
     %  getMeasurementSettingsPanel  - returns a UIPanel
     %
-    % See also Comparison, AnalysisST_BUD, ComparisonST_BUD, RandomComparisonST_BUD.
+    % See also Measurement, AnalysisST_BUD, ComparisonST_BUD, RandomComparisonST_BUD.
     
     properties (Access = protected)
         density  % density of the values

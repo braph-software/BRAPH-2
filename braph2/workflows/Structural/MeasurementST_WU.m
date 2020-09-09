@@ -33,7 +33,7 @@ classdef MeasurementST_WU < Measurement
     % MeasurementST_WU plot methods (Static):
     %  getMeasurementSettingsPanel  - returns a UIPanel
     %
-    % See also Comparison, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU.
+    % See also Measurement, AnalysisST_WU, ComparisonST_WU, RandomComparisonST_WU.
     
     properties
         value  % value of the measure for the group
