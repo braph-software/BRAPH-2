@@ -258,15 +258,29 @@ classdef SubjectST < Subject
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
             end            
             
-            [~, ~, raw] = xlsread(file);
+            raw = readtable(file, 'PreserveVariableNames', true, 'Format', 'auto');
             atlas = cohort.getBrainAtlases();
             
             % sneak peak to see if it is a subject
-            sub_tmp = Subject.getSubject(subject_class, ...
-                char(raw{2, 1}), char(raw{2, 2}), char(raw{2, 3}), atlas, ...
-                'ST', cell2mat(raw(2, 4:size(raw, 2))'));
-            delete(sub_tmp);
+            id_tmp = raw{1, 1};
+            labl_tmp = raw{1, 2};
+            notes_tmp = raw{1, 3};
+            data_tmp = raw{1, 4:size(raw, 2)};
+            if iscell(id_tmp)
+                id_tmp = id_tmp{1};
+            end
+            if iscell(labl_tmp)
+                labl_tmp = labl_tmp{1};
+            end
+            if  iscell(notes_tmp)
+                notes_tmp = notes_tmp{1};
+            end
             
+            sub_tmp = Subject.getSubject(subject_class, ...
+                num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlas, ...
+                'ST', data_tmp');
+            delete(sub_tmp);
+                        
             % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', {});
             group_path = strsplit(file, filesep());
@@ -276,10 +290,23 @@ classdef SubjectST < Subject
             group.setID(group_id);
             cohort.getGroups().add(group.getID(), group);   
             
-            for i = 2:1:size(raw, 1)
-                subject = Subject.getSubject(subject_class, ...                    
-                    char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlas, ...
-                    'ST', cell2mat(raw(i, 4:size(raw, 2))'));
+            for i = 1:1:size(raw, 1)
+                id_tmp = raw{i, 1};
+                labl_tmp = raw{i, 2};
+                notes_tmp = raw{i, 3};
+                data_tmp = raw{i, 4:size(raw, 2)};
+                if iscell(id_tmp)
+                    id_tmp = id_tmp{1};
+                end
+                if iscell(labl_tmp)
+                    labl_tmp = labl_tmp{1};
+                end
+                if  iscell(notes_tmp)
+                    notes_tmp = notes_tmp{1};
+                end
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlas, ...
+                    'ST', data_tmp');
                 if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end

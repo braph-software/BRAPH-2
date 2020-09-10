@@ -279,8 +279,8 @@ classdef SubjectST_MP < Subject
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
             end          
             
-            [~, ~, raw1] = xlsread(file1);
-            [~, ~, raw2] = xlsread(file2);            
+            raw1 = readtable(file1, 'PreserveVariableNames', true, 'Format', 'auto');
+            raw2 = readtable(file2, 'PreserveVariableNames', true, 'Format', 'auto');
             % Assert both files have the same size (they should contain
             % same number of regions and same number of subjects)
             assert(size(raw1, 1) == size(raw2, 1) && size(raw1, 2) == size(raw2, 2), ...
@@ -289,14 +289,30 @@ classdef SubjectST_MP < Subject
             atlas = cohort.getBrainAtlases();
                         
             % sneak peak to see if it is a subject
+            id_tmp1 = raw1{1, 1};
+            labl_tmp1 = raw1{1, 2};
+            notes_tmp1 = raw1{1, 3};
+            data_tmp1 = raw1{1, 4:size(raw1, 2)};
+            if iscell(id_tmp1)
+                id_tmp1 = id_tmp1{1};
+            end
+            if iscell(labl_tmp1)
+                labl_tmp1 = labl_tmp1{1};
+            end
+            if  iscell(notes_tmp1)
+                notes_tmp1 = notes_tmp1{1};
+            end
+            data_tmp2 = raw2{1, 4:size(raw2, 2)};
+            
             sub_tmp = Subject.getSubject(subject_class, ...
-                char(raw1{2, 1}), char(raw1{2, 2}), char(raw1{2, 3}), atlas, ...
-                'ST_MP1', cell2mat(raw1(2, 4:size(raw1, 2))'));
+                num2str(id_tmp1), num2str(labl_tmp1), num2str(notes_tmp1), atlas, ...
+                'ST_MP1', data_tmp1', ...
+                'ST_MP2', data_tmp2');
             delete(sub_tmp);
-            sub_tmp2 = Subject.getSubject(subject_class, ...
-                char(raw2{2, 1}), char(raw2{2, 2}), char(raw2{2, 3}), atlas, ...
-                'ST_MP2', cell2mat(raw2(2, 4:size(raw2, 2))'));
-            delete(sub_tmp2);
+%             sub_tmp2 = Subject.getSubject(subject_class, ...
+%                 num2str(id_tmp2), num2str(labl_tmp2), num2str(notes_tmp2), atlas, ...
+%                 'ST_MP2', data_tmp2');
+%             delete(sub_tmp2);
              
             % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', {});
@@ -307,11 +323,26 @@ classdef SubjectST_MP < Subject
             group.setID(group_id);
             cohort.getGroups().add(group.getID(), group); 
             
-            for i = 2:1:size(raw1, 1)
+            for i = 1:1:size(raw1, 1)
+                id_tmp = raw1{i, 1};
+                labl_tmp = raw1{i, 2};
+                notes_tmp = raw1{i, 3};
+                data_tmp1 = raw1{i, 4:size(raw1, 2)};
+                if iscell(id_tmp)
+                    id_tmp = id_tmp{1};
+                end
+                if iscell(labl_tmp)
+                    labl_tmp = labl_tmp{1};
+                end
+                if  iscell(notes_tmp)
+                    notes_tmp = notes_tmp{1};
+                end
+                data_tmp2 = raw2{i, 4:size(raw2, 2)};
+                
                 subject = Subject.getSubject(subject_class, ...
-                    char(raw1{i, 1}), char(raw1{i, 2}), char(raw1{i, 3}), atlas, ...
-                    'ST_MP1', cell2mat(raw1(i, 4:size(raw1, 2))'), ...
-                    'ST_MP2', cell2mat(raw2(i, 4:size(raw2, 2))'));
+                    num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlas, ...
+                    'ST_MP1', data_tmp1', ...
+                    'ST_MP2', data_tmp2');
                 if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
