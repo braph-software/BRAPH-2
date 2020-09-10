@@ -1029,13 +1029,14 @@ classdef AnalysisST_WU < Analysis
                     
                     if exist('global_randomcomparison', 'var')
                         global_randomcomparison =  global_randomcomparison(~cellfun(@isempty, global_randomcomparison));
-                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
-                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes ', ' fdr '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
                         set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false])
                         
-                        data = cell(length(global_randomcomparison), 8);
+                        data = cell(length(global_randomcomparison), 9);
                         for i = 1:1:length(global_randomcomparison)
                             randomcomparison = global_randomcomparison{i};
+                            p_values = randomcomparison.getP1();
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
@@ -1050,6 +1051,7 @@ classdef AnalysisST_WU < Analysis
                             data{i, 6} = randomcomparison.getID();
                             data{i, 7} = randomcomparison.getLabel();
                             data{i, 8} = randomcomparison.getNotes();
+                            data{i, 9} = fdr([p_values{:}], str2double(fdr_t));
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_global_tbl, 'Data', data)
@@ -1292,6 +1294,7 @@ classdef AnalysisST_WU < Analysis
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
             ui_plot_measure_axes = get_from_varargin([], 'UIAxesNodal', varargin{:});
             ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            fdr_threshold_edit = uicontrol(ui_mainpanel, 'style', 'edit');
             init_nodal_panel()
             function init_nodal_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -1332,6 +1335,12 @@ classdef AnalysisST_WU < Analysis
                 set(ui_button_brainmeasures_remove, 'String', REMOVE_MEAS_CMD)
                 set(ui_button_brainmeasures_remove, 'TooltipString', REMOVE_MEAS_TP)
                 set(ui_button_brainmeasures_remove, 'Callback', {@cb_nodal_remove})
+                
+                set(fdr_threshold_edit, 'Position', [.19 .02 .1 .03])
+                set(fdr_threshold_edit, 'String', '0.05')
+                set(fdr_threshold_edit, 'TooltipString', 'Input the desired FDR threshold parameter')
+                set(fdr_threshold_edit, 'Callback', {@cb_nodal_fdr})   
+                set(fdr_threshold_edit, 'Visible', 'off')
                 
                 set(ui_checkbox_brainmeasures_meas, 'Position', [.3 .16 .10 .04])
                 set(ui_checkbox_brainmeasures_meas, 'String', 'measure')
@@ -1392,6 +1401,8 @@ classdef AnalysisST_WU < Analysis
                 
                 selected_br = get(ui_selectedbr_popup, 'Value');
                 
+                fdr_t = get(fdr_threshold_edit, 'String');
+                
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
                     for j = 1:1:analysis.getMeasurements().length()
                         measurement = analysis.getMeasurements().getValue(j);
@@ -1446,13 +1457,14 @@ classdef AnalysisST_WU < Analysis
                     
                     if exist('nodal_comparison', 'var')
                         nodal_comparison =  nodal_comparison(~cellfun(@isempty, nodal_comparison));
-                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
-                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
-                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', ' fdr '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false false])
                         
-                        data = cell(length(nodal_comparison), 7);
+                        data = cell(length(nodal_comparison), 10);
                         for i = 1:1:length(nodal_comparison)
                             comparison = nodal_comparison{i};
+                            p_values = comparison.getP1();
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
@@ -1470,14 +1482,15 @@ classdef AnalysisST_WU < Analysis
                             data{i, 7} = comparison.getID();
                             data{i, 8} = comparison.getLabel();
                             data{i, 9} = comparison.getNotes();
+                            data{i, 10} = fdr([p_values{:}], str2double(fdr_t));
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_nodal_tbl, 'Data', data)
                         set(ui_nodal_tbl, 'RowName', RowName)
                     else
-                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
-                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
-                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', ' fdr '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false false])
                         set(ui_nodal_tbl, 'Data', [])
                         set(ui_nodal_tbl, 'RowName', [])
                     end
@@ -1492,13 +1505,14 @@ classdef AnalysisST_WU < Analysis
                     
                     if exist('nodal_randomcomparison', 'var')
                         nodal_randomcomparison =  nodal_randomcomparison(~cellfun(@isempty, nodal_randomcomparison));
-                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
-                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
-                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false])
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes ', ' fdr '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false])
                         
-                        data = cell(length(nodal_randomcomparison), 7);
+                        data = cell(length(nodal_randomcomparison), 9);
                         for i = 1:1:length(nodal_randomcomparison)
                             randomcomparison = nodal_randomcomparison{i};
+                            p_values = randomcomparison.getP1();
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
@@ -1515,14 +1529,15 @@ classdef AnalysisST_WU < Analysis
                             data{i, 6} = randomcomparison.getID();
                             data{i, 7} = randomcomparison.getLabel();
                             data{i, 8} = randomcomparison.getNotes();
+                            data{i, 9} = fdr([p_values{:}], str2double(fdr_t));
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_nodal_tbl, 'Data', data)
                         set(ui_nodal_tbl, 'RowName', RowName)
                     else
-                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
-                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
-                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false])
+                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes ', ' fdr '})
+                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false])
                         set(ui_nodal_tbl, 'Data', [])
                         set(ui_nodal_tbl, 'RowName', [])
                     end
@@ -1535,12 +1550,19 @@ classdef AnalysisST_WU < Analysis
                     
                     set(ui_popup_nodalmeasures_group2, 'Enable', 'on')
                     set(ui_popup_nodalmeasures_group2, 'Visible', 'on')
+                    set(fdr_threshold_edit, 'Visible', 'on')
                 else
                     set(ui_popup_nodalmeasures_group1, 'Enable', 'on')
                     set(ui_popup_nodalmeasures_group1, 'Visible', 'on')
                     
                     set(ui_popup_nodalmeasures_group2, 'Enable', 'off')
                     set(ui_popup_nodalmeasures_group2, 'Visible', 'off')
+                    
+                    if get(ui_checkbox_brainmeasures_meas, 'Value')
+                        set(fdr_threshold_edit, 'Visible', 'off')
+                    else
+                        set(fdr_threshold_edit, 'Visible', 'on')
+                    end
                 end
             end
             function init_plot_nodal_panel()
@@ -1669,6 +1691,9 @@ classdef AnalysisST_WU < Analysis
                 update_nodal_table()
                 init_plot_nodal_panel()
             end
+            function cb_nodal_fdr(~, ~)
+                update_nodal_table()
+            end
             function deleteExtraChilds(ui_control)
                 childs = findobj(ui_control, 'Style', 'checkbox');
                 for i = 1:1:length(childs)
@@ -1741,6 +1766,7 @@ classdef AnalysisST_WU < Analysis
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
             ui_plot_measure_axes = get_from_varargin([], 'UIAxesBinodal', varargin{:});
             ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            fdr_threshold_edit = uicontrol(ui_mainpanel, 'style', 'edit');
             init_binodal_panel()
             function init_binodal_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -1781,6 +1807,12 @@ classdef AnalysisST_WU < Analysis
                 set(ui_button_brainmeasures_remove, 'String', REMOVE_MEAS_CMD)
                 set(ui_button_brainmeasures_remove, 'TooltipString', REMOVE_MEAS_TP)
                 set(ui_button_brainmeasures_remove, 'Callback', {@cb_binodal_remove})
+                
+                set(fdr_threshold_edit, 'Position', [.19 .02 .1 .03])
+                set(fdr_threshold_edit, 'String', '0.05')
+                set(fdr_threshold_edit, 'TooltipString', 'Input the desired FDR threshold parameter')
+                set(fdr_threshold_edit, 'Callback', {@cb_binodal_fdr})
+                set(fdr_threshold_edit, 'Visible', 'off')
                 
                 set(ui_checkbox_brainmeasures_meas, 'Position', [.3 .16 .10 .04])
                 set(ui_checkbox_brainmeasures_meas, 'String', 'measure')
@@ -1846,6 +1878,8 @@ classdef AnalysisST_WU < Analysis
                 selected_br1 = get(ui_selectedbr1_popup, 'Value');
                 selected_br2 = get(ui_selectedbr2_popup, 'Value');
                 
+                fdr_t = get(fdr_threshold_edit, 'String');
+                
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
                     for j = 1:1:analysis.getMeasurements().length()
                         measurement = analysis.getMeasurements().getValue(j);
@@ -1900,13 +1934,14 @@ classdef AnalysisST_WU < Analysis
                     
                     if exist('binodal_comparison', 'var')
                         binodal_comparison =  binodal_comparison(~cellfun(@isempty, binodal_comparison));
-                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
-                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
-                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', ' fdr '})
+                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false false false])
                         
-                        data = cell(length(binodal_comparison), 7);
+                        data = cell(length(binodal_comparison), 10);
                         for i = 1:1:length(binodal_comparison)
                             comparison = binodal_comparison{i};
+                            p_values = comparison.getP1();
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
@@ -1924,14 +1959,15 @@ classdef AnalysisST_WU < Analysis
                             data{i, 7} = comparison.getID();
                             data{i, 8} = comparison.getLabel();
                             data{i, 9} = comparison.getNotes();
+                            data{i, 10} = fdr([p_values{:}], str2double(fdr_t));
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_binodal_tbl, 'Data', data)
                         set(ui_binodal_tbl, 'RowName', RowName)
                     else
-                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
-                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
-                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', ' fdr '})
+                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false false false])
                         set(ui_binodal_tbl, 'Data', [])
                         set(ui_binodal_tbl, 'RowName', [])
                     end
@@ -1946,13 +1982,14 @@ classdef AnalysisST_WU < Analysis
                     
                     if exist('binodal_randomcomparison', 'var')
                         binodal_randomcomparison =  binodal_randomcomparison(~cellfun(@isempty, binodal_randomcomparison));
-                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
-                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
-                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false])
+                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes ', ' fdr '})
+                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false false])
                         
                         data = cell(length(binodal_randomcomparison), 7);
                         for i = 1:1:length(binodal_randomcomparison)
                             randomcomparison = binodal_randomcomparison{i};
+                            p_values = randomcomparison.getP1();
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
@@ -1969,6 +2006,7 @@ classdef AnalysisST_WU < Analysis
                             data{i, 6} = randomcomparison.getID();
                             data{i, 7} = randomcomparison.getLabel();
                             data{i, 8} = randomcomparison.getNotes();
+                            data{i, 9} = fdr([p_values{:}], str2double(fdr_t));
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_binodal_tbl, 'Data', data)
@@ -1989,12 +2027,19 @@ classdef AnalysisST_WU < Analysis
                     
                     set(ui_popup_binodalmeasures_group2, 'Enable', 'on')
                     set(ui_popup_binodalmeasures_group2, 'Visible', 'on')
+                    
+                    set(fdr_threshold_edit, 'Visible', 'on')
                 else
                     set(ui_popup_binodalmeasures_group1, 'Enable', 'on')
                     set(ui_popup_binodalmeasures_group1, 'Visible', 'on')
                     
                     set(ui_popup_binodalmeasures_group2, 'Enable', 'off')
                     set(ui_popup_binodalmeasures_group2, 'Visible', 'off')
+                    if get(ui_checkbox_brainmeasures_meas, 'Value')
+                        set(fdr_threshold_edit, 'Visible', 'off')
+                    else
+                        set(fdr_threshold_edit, 'Visible', 'on')
+                    end
                 end
             end
             function init_plot_binodal_panel()
@@ -2122,6 +2167,9 @@ classdef AnalysisST_WU < Analysis
                 selected_brainmeasures = [];
                 update_binodal_table()
                 init_plot_binodal_panel()
+            end
+            function cb_binodal_fdr(~, ~)
+                update_binodal_table()
             end
             function deleteExtraChilds(ui_control)
                 childs = findobj(ui_control, 'Style', 'checkbox');
