@@ -1,13 +1,13 @@
 classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
-    % AnalysisST_MP_BUD An analysis of structural data of fixed density binary undirected graphs
+    % AnalysisST_MP_BUD An analysis of structural multiplex data of fixed density binary undirected graphs
     % AnalysisST_MP_BUD is a subclass of AnalysisST_MP_WU and inherits the methods
-    % needed for structural analysis.
+    % needed for structural multiplex analysis.
     %
     % AnalysisST_MP_BUD inhertis AnalysisST_MP_WU calculating methods
-    % to obtain a structural data of fixed density binary undirected graphs
-    % measurement, a random comprison or a comparison. AnalysisST_BUD
+    % to obtain a structural multiplex data of fixed density binary undirected 
+    % graphs measurement, a random comparison or a comparison. AnalysisST_BUD
     % overrides the ID methods of its superclass.
-    % Structural data can be for example MRI or PET data.
+    % Structural multiplex data can be for example MRI or/and PET data.
     %
     % AnalysisST_MP_BUD constructor methods:
     %  AnalysisST_MP_BUD            - Constructor
@@ -57,44 +57,50 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
             % GETMEASUREMENTID returns a measurement ID
             %
-            % MEASUREMENT_ID = GETMEASUREMENTID(ANALYSIS, MEASURE_CODE, GROUP, 'density', DENSITY)
+            % MEASUREMENT_ID = GETMEASUREMENTID(ANALYSIS, MEASURE_CODE, GROUP,
+            % 'density1', DENSITY1, 'density2', DENSITY2)
             % creates a measurement ID with the ANALYSIS class, the
-            % MEASURE_CODE, the GROUP and the DENSITY.
+            % MEASURE_CODE, the GROUP, DENSITY1 and the DENSITY2.
             %
             % See also getRandomComparisonID, getComparisonID.
             
             measurement_id = getMeasurementID@AnalysisST_MP_WU(analysis, measure_code, group, varargin{:});
             
-            density = get_from_varargin(0, 'density', varargin{:});
-            measurement_id = [measurement_id ' density=' num2str(density)];
+            density1 = get_from_varargin(0, 'density1', varargin{:});
+            density2 = get_from_varargin(0, 'density2', varargin{:});
+            measurement_id = [measurement_id ' density1=' num2str(density1) ' density2=' num2str(density2)];
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             % GETRANDOMCOMPARISONID returns a random comparison ID
             %
-            % RANDOMCOMPARISON_ID = GETRANDOMCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP, 'density', DENSITY)
+            % RANDOMCOMPARISON_ID = GETRANDOMCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP,
+            % 'density1', DENSITY1, 'density2', DENSITY2)
             % creates a random comparison ID with the ANALYSIS class, the
-            % MEASURE_CODE, the GROUP and the DENSITY.
+            % MEASURE_CODE, the GROUP, DENSITY1 and the DENSITY2.
             %
             % See also getMeasurementID, getComparisonID.
             
             randomcomparison_id = getRandomComparisonID@AnalysisST_MP_WU(analysis, measure_code, group, varargin{:});
             
-            density = get_from_varargin(0, 'density', varargin{:});
-            randomcomparison_id = [randomcomparison_id ' density=' num2str(density)];
+            density1 = get_from_varargin(0, 'density1', varargin{:});
+            density2 = get_from_varargin(0, 'density2', varargin{:});
+            randomcomparison_id = [randomcomparison_id ' density1=' num2str(density1) ' density2=' num2str(density2)];
         end
         function comparison_id = getComparisonID(analysis, measure_code, group_1, group_2, varargin)
             % GETCOMPARISONID returns a comparison ID
             %
-            % COMPARISON_ID = GETCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2, 'density', DENSITY)
+            % COMPARISON_ID = GETCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2,
+            % 'density1', DENSITY1, 'density2', DENSITY2)
             % creates a random comparison ID with the ANALYSIS class, the
-            % MEASURE_CODE, GROUP_1 and GROUP_2, and the DENSITY.
+            % MEASURE_CODE, GROUP_1 and GROUP_2, DENSITY1 and the DENSITY2.
             %
             % See also getMeasurementID, getRandomComparisonID.
             
             comparison_id = getComparisonID@AnalysisST_MP_WU(analysis, measure_code, group_1, group_2, varargin{:});
             
-            density = get_from_varargin(0, 'density', varargin{:});
-            comparison_id = [comparison_id ' density=' num2str(density)];
+            density1 = get_from_varargin(0, 'density1', varargin{:});
+            density2 = get_from_varargin(0, 'density2', varargin{:});
+            comparison_id = [comparison_id ' density1=' num2str(density1) ' density2=' num2str(density2)];
         end
     end
     methods (Access = protected)  % graph methods
@@ -110,11 +116,12 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             
             A = analysis.get_weighted_correlation_matrix(subjects, varargin{:});
             
-            density = get_from_varargin(0, 'density', varargin{:});
+            density1 = get_from_varargin(0, 'density1', varargin{:});
+            density2 = get_from_varargin(0, 'density2', varargin{:});
             L1 = A{1, 1};
             L2 = A{2, 2};
-            L1 = binarize(L1, 'density', density, varargin{:});
-            L2 = binarize(L2, 'density', density, varargin{:});
+            L1 = binarize(L1, 'density', density1, varargin{:});
+            L2 = binarize(L2, 'density', density2, varargin{:});
             A(1, 1) = {L1};
             A(2, 2) = {L2};
             
