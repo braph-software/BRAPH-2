@@ -429,8 +429,8 @@ classdef IndexedDictionary < handle & matlab.mixin.Copyable
                 index = idict.getKeyIndex(pointer);
             elseif isa(pointer, 'numeric')  % pointer is an index
                 index = pointer;
-            elseif isa(pointer.getClass(), idict.getValueClass())  % pointer is a value
-                index = idict.getValueIndex(pointer);
+            elseif isequal(pointer.getClass(), idict.getValueClass())  % pointer is a value
+                index = idict.getIndex(pointer);
             end
             
             for j = index:1:idict.length()-1

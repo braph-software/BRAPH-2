@@ -343,7 +343,7 @@ classdef AnalysisST_WU < Analysis
             measurement_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
             value_2 = measurement_2.getMeasureValue();
             
-            difference_mean = cellfun(@(x, y) y - x, value_2, value_1, 'UniformOutput', false);
+            difference_mean = cellfun(@(x, y) y - x, value_1, value_2, 'UniformOutput', false);
             
             subjects_1 = group_1.getSubjects();
             subjects_2 = group_2.getSubjects();
@@ -800,6 +800,7 @@ classdef AnalysisST_WU < Analysis
             ui_plot_measure_axes = get_from_varargin([], 'UIAxesGlobal', varargin{:});
             ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_selectedmeasure_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
+            fdr_threshold_edit = uicontrol(ui_mainpanel, 'style', 'edit');
             init_global_panel()
             function init_global_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -840,6 +841,12 @@ classdef AnalysisST_WU < Analysis
                 set(ui_button_brainmeasures_remove, 'String', REMOVE_MEAS_CMD)
                 set(ui_button_brainmeasures_remove, 'TooltipString', REMOVE_MEAS_TP)
                 set(ui_button_brainmeasures_remove, 'Callback', {@cb_global_remove})
+                
+                set(fdr_threshold_edit, 'Position', [.19 .02 .1 .03])
+                set(fdr_threshold_edit, 'String', '0.05')
+                set(fdr_threshold_edit, 'TooltipString', 'Input the desired FDR threshold parameter')
+                set(fdr_threshold_edit, 'Callback', {@cb_global_fdr})   
+                set(fdr_threshold_edit, 'Visible', 'off')
                 
                 set(ui_checkbox_brainmeasures_meas, 'Position', [.3 .14 .10 .03])
                 set(ui_checkbox_brainmeasures_meas, 'String', 'measure')
@@ -885,8 +892,8 @@ classdef AnalysisST_WU < Analysis
                 
                 set(ui_selectedmeasure_popup, 'Position', [.02 .01 .15 .05])
                 set(ui_selectedmeasure_popup, 'String', global_list)
-                set(ui_selectedmeasure_popup, 'Callback', {@cb_global_table})
-                
+                set(ui_selectedmeasure_popup, 'Callback', {@cb_global_table})               
+       
             end
             function update_global_table()
                 data = {}; %#ok<NASGU>
@@ -897,6 +904,8 @@ classdef AnalysisST_WU < Analysis
                 
                 measures = get(ui_selectedmeasure_popup, 'String');
                 selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
+                
+                fdr_t = get(fdr_threshold_edit, 'String');
                 
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
                     for j = 1:1:analysis.getMeasurements().length()
@@ -943,7 +952,7 @@ classdef AnalysisST_WU < Analysis
                     else
                         set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
                         set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
-                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false])
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false ])
                         set(ui_global_tbl, 'Data', [])
                         set(ui_global_tbl, 'RowName', [])
                     end
@@ -965,13 +974,14 @@ classdef AnalysisST_WU < Analysis
                     
                     if exist('global_comparison', 'var')
                         global_comparison =  global_comparison(~cellfun(@isempty, global_comparison));
-                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
-                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
-                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', 'fdr'})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false false])
                         
-                        data = cell(length(global_comparison), 7);
+                        data = cell(length(global_comparison), 10);
                         for i = 1:1:length(global_comparison)
                             comparison = global_comparison{i};
+                            p_values = comparison.getP1();
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
@@ -987,6 +997,7 @@ classdef AnalysisST_WU < Analysis
                             data{i, 7} = comparison.getID();
                             data{i, 8} = comparison.getLabel();
                             data{i, 9} = comparison.getNotes();
+                            data{i, 10} = fdr([p_values{:}], str2double(fdr_t));
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_global_tbl, 'Data', data)
@@ -1022,7 +1033,7 @@ classdef AnalysisST_WU < Analysis
                         set(ui_global_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
                         set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false])
                         
-                        data = cell(length(global_randomcomparison), 7);
+                        data = cell(length(global_randomcomparison), 8);
                         for i = 1:1:length(global_randomcomparison)
                             randomcomparison = global_randomcomparison{i};
                             if any(selected_brainmeasures == i)
@@ -1061,7 +1072,9 @@ classdef AnalysisST_WU < Analysis
                     set(ui_popup_globalmeasures_group2, 'Visible', 'on')
                     
                     set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'off')
-                    set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'off')
+                    set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'off')                    
+                    
+                    set(fdr_threshold_edit, 'Visible', 'on')
                 else
                     set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
                     set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'on')
@@ -1070,7 +1083,13 @@ classdef AnalysisST_WU < Analysis
                     set(ui_popup_globalmeasures_group1, 'Visible', 'off')
                     
                     set(ui_popup_globalmeasures_group2, 'Enable', 'off')
-                    set(ui_popup_globalmeasures_group2, 'Visible', 'off')
+                    set(ui_popup_globalmeasures_group2, 'Visible', 'off') 
+                    
+                    if get(ui_checkbox_brainmeasures_meas, 'Value')
+                        set(fdr_threshold_edit, 'Visible', 'off')
+                    else
+                        set(fdr_threshold_edit, 'Visible', 'on')
+                    end
                 end
             end
             function init_plot_measure_panel()
@@ -1184,10 +1203,22 @@ classdef AnalysisST_WU < Analysis
                 update_global_table()
             end
             function cb_global_remove(~, ~)
+                selected_index = get(ui_listbox_brainmeasures_comp_groups, 'Value');
+                group = analysis.getCohort().getGroups().getValue(selected_index);
+                measures_array = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures_array{get(ui_selectedmeasure_popup, 'Value')};
+                measures = analysis.selectMeasurements(selected_measure, group);
+               
                 for i = 1:1:length(selected_brainmeasures)
                     k = selected_brainmeasures(i);
-                    analysis.getMeasurements().remove(k);
+                    m = measures{k};
+                    analysis.getMeasurements().remove(m);
                 end
+                selected_brainmeasures = [];
+                update_global_table()
+                init_plot_measure_panel()
+            end
+            function cb_global_fdr(~, ~)
                 update_global_table()
             end
             function deleteExtraChilds(ui_control)
@@ -1623,11 +1654,20 @@ classdef AnalysisST_WU < Analysis
                 update_nodal_table()
             end
             function cb_nodal_remove(~, ~)
+                selected_index = get(ui_popup_nodalmeasures_group1, 'Value');
+                group = analysis.getCohort().getGroups().getValue(selected_index);
+                measures_array = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures_array{get(ui_selectedmeasure_popup, 'Value')};
+                measures = analysis.selectMeasurements(selected_measure, group);
+                
                 for i = 1:1:length(selected_brainmeasures)
                     k = selected_brainmeasures(i);
-                    analysis.getMeasurements().remove(k);
+                    m = measures{k};
+                    analysis.getMeasurements().remove(m);
                 end
+                selected_brainmeasures = [];
                 update_nodal_table()
+                init_plot_nodal_panel()
             end
             function deleteExtraChilds(ui_control)
                 childs = findobj(ui_control, 'Style', 'checkbox');
@@ -2068,11 +2108,20 @@ classdef AnalysisST_WU < Analysis
                 update_binodal_table()
             end
             function cb_binodal_remove(~, ~)
+                selected_index = get(ui_popup_binodalmeasures_group1, 'Value');
+                group = analysis.getCohort().getGroups().getValue(selected_index);
+                measures_array = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures_array{get(ui_selectedmeasure_popup, 'Value')};
+                measures = analysis.selectMeasurements(selected_measure, group);
+                
                 for i = 1:1:length(selected_brainmeasures)
                     k = selected_brainmeasures(i);
-                    analysis.getMeasurements().remove(k);
+                    m = measures{k};
+                    analysis.getMeasurements().remove(m);
                 end
+                selected_brainmeasures = [];
                 update_binodal_table()
+                init_plot_binodal_panel()
             end
             function deleteExtraChilds(ui_control)
                 childs = findobj(ui_control, 'Style', 'checkbox');
