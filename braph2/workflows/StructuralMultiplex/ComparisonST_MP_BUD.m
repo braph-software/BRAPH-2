@@ -3,14 +3,15 @@ classdef ComparisonST_MP_BUD < ComparisonST_MP_WU
     % ComparisonST_MP_BUD is a subclass of Comparison.
     %
     % ComparisonST_MP_BUD stores a comparison between two groups.
-    % The data from the groups it compares have a fixed density.
+    % The data from the groups it compares have a fixed density for each layer.
     % Structural multiplex data can be for example MRI or/and PET data.
     %
     % ComparisonST_MP_BUD constructor methods:
     %  ComparisonST_MP_BUD          - Constructor
     %
     % ComparisonST_MP_BUD get methods:
-    %  getDensity                   - returns the density
+    %  getDensity1                  - returns the density of the first layer
+    %  getDensity2                  - returns the density of the second layer
     %
     % ComparisonST_MP_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
@@ -24,48 +25,74 @@ classdef ComparisonST_MP_BUD < ComparisonST_MP_WU
     % See also Comparison, AnalysisST_MP_BUD, MeasurementST_MP_BUD, RandomComparisonST_MP_BUD.
     
     properties (Access = protected)
-        density  % density of the values
+        density1  % density of the values of the first layer
+        density2  % density of the values of the second layer   
     end
     methods  % Constructor
         function c =  ComparisonST_MP_BUD(id, label, notes, atlas, measure_code, group_1, group_2, varargin)
-            % COMPARISONST_MP_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, 'density', DENSITY)
+            % COMPARISONST_MP_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, 'density1', DENSITY1, 'density2', DENSITY2)
             % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE
             % between the data from GROUP_1 and GROUP_2. The data will have
-            % a fixed DENSITY.
+            % a fixed DENSITY1 for the first layer and a fixed DENSITY2 for 
+            % the second layer.
             %
             % COMPARISONST_MP_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2)
             % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE
             % between the data from GROUP_1 and GROUP_2. The data will have
-            % a fixed default DENSITY.
+            % a fixed default DENSITY1 for the first layer and a fixed default 
+            % DENSITY2 for the second layer.
             %
             % See also MeasurementST_MP_BUD, RandomComparisonST_MP_BUD, AnalysisST_MP_BUD.
             
             c = c@ComparisonST_MP_WU(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:});
-            density = get_from_varargin(0, 'density', varargin{:});
-            c.setDensity(density)
+            density1 = get_from_varargin(0, 'density1', varargin{:});
+            density2 = get_from_varargin(0, 'density2', varargin{:});
+            c.setDensity1(density1)
+            c.setDensity2(density2)
         end
     end
     methods (Access = protected) % Set functions
-        function setDensity(c, density)
-            % SETDENSITY sets the fixed density of the values
+        function setDensity1(c, density1)
+            % SETDENSITY1 sets the fixed density of the values of the first layer
             %
-            % SETDENSITY(C, DENSITY) sets the fixed density of the values.
+            % SETDENSITY1(C, DENSITY) sets the fixed density of the values
+            % of the first layer.
             %
-            % See also getDensity.
+            % See also getDensity1, setDensity2.
             
-            c.density = density;
+            c.density1 = density1;
+        end
+        function setDensity2(c, density2)
+            % SETDENSITY2 sets the fixed density of the values of the second layer
+            %
+            % SETDENSITY2(C, DENSITY) sets the fixed density of the values
+            % of the second layer.
+            %
+            % See also getDensity2, setDensity1.
+            
+            c.density2 = density2;
         end
     end
     methods  % Get functions
-        function density = getDensity(c)
-            % GETDENSITY returns the fixed density of the data values
+        function density1 = getDensity1(c)
+            % GETDENSITY1 returns the fixed density of the data values of the first layer
             %
-            % DENSITY = GETDENSITY(C) returns the fixed density of the
-            % data values.
+            % DENSITY1 = GETDENSITY1(C) returns the fixed density of the
+            % data values of the first layer.
             %
-            % See also getMeasureValue, setDensity.
+            % See also getMeasureValue, setDensity1, getDensity2.
             
-            density = c.density;
+            density1 = c.density1;
+        end
+        function density2 = getDensity2(c)
+            % GETDENSITY2 returns the fixed density of the data values of the second layer
+            %
+            % DENSITY2 = GETDENSITY2(C) returns the fixed density of the
+            % data values of the second layer.
+            %
+            % See also getMeasureValue, setDensity2, getDensity1.
+            
+            density2 = c.density2;
         end
     end
     methods (Static)  % Descriptive functions
