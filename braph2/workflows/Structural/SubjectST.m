@@ -447,10 +447,23 @@ classdef SubjectST < Subject
             atlases = cohort.getBrainAtlases();
             
             % sneak peak to see if it is a subject
-            sub_tmp = Subject.getSubject(subject_class, ...
-                char(raw{1, 1}), char(raw{1, 2}), char(raw{1, 3}), atlases, ...
-                'ST', raw{1, 4:size(raw, 2)}');
+            id_tmp = raw{1, 1};
+            labl_tmp = raw{1, 2};
+            notes_tmp = raw{1, 3};
+            data_tmp = raw{1, 4:size(raw, 2)};
+            if iscell(id_tmp)
+                id_tmp = id_tmp{1};
+            end
+            if iscell(labl_tmp)
+                labl_tmp = labl_tmp{1};
+            end
+            if  iscell(notes_tmp)
+                notes_tmp = notes_tmp{1};
+            end
             
+            sub_tmp = Subject.getSubject(subject_class, ...
+                num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlases, ...
+                'ST', data_tmp');  
             delete(sub_tmp);
             
             % creates group
@@ -462,9 +475,22 @@ classdef SubjectST < Subject
             cohort.getGroups().add(group.getID(), group);
             
             for i = 1:1:size(raw, 1)  % first row is being read as table label
-                subject = Subject.getSubject(subject_class, ...                    
-                    char(raw{i, 1}), char(raw{i, 2}), char(raw{i, 3}), atlases, ...
-                    'ST', raw{i, 4:size(raw, 2)}');
+                id_tmp = raw{i, 1};
+                labl_tmp = raw{i, 2};
+                notes_tmp = raw{i, 3};
+                data_tmp = raw{i, 4:size(raw, 2)};
+                if iscell(id_tmp)
+                    id_tmp = id_tmp{1};
+                end
+                if iscell(labl_tmp)
+                    labl_tmp = labl_tmp{1};
+                end
+                if  iscell(notes_tmp)
+                    notes_tmp = notes_tmp{1};
+                end
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlases, ...
+                    'ST', data_tmp');
                 if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
@@ -609,10 +635,11 @@ classdef SubjectST < Subject
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             end           
             
-            % sneak peak            
-            subject = Subject.getSubject(subject_class, ...
-                raw.SubjectData(1).id, raw.SubjectData(1).label, raw.SubjectData(1).notes, atlases, ...
+            % sneak peak
+            subject_tmp = Subject.getSubject(subject_class, ...
+                num2str(raw.SubjectData(1).id), num2str(raw.SubjectData(1).label), num2str(raw.SubjectData(1).notes), atlases, ...
                 'ST', raw.SubjectData(1).data);
+            delete(subject_tmp)
             
             % creates group
             group = Group(subject_class, '', '', '', {});
@@ -623,9 +650,9 @@ classdef SubjectST < Subject
             cohort.getGroups().add(group.getID(), group);
 
             for i = 1:1:length(raw.SubjectData)
-                id = raw.SubjectData(i).id;
-                label = raw.SubjectData(i).label;
-                notes = raw.SubjectData(i).notes;
+                id = num2str(raw.SubjectData(i).id);
+                label = num2str(raw.SubjectData(i).label);
+                notes = num2str(raw.SubjectData(i).notes);
                 data = raw.SubjectData(i).data;
                 subject = Subject.getSubject(subject_class, ...                   
                     id, label, notes, atlases, ...

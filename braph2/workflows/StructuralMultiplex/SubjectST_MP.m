@@ -309,10 +309,6 @@ classdef SubjectST_MP < Subject
                 'ST_MP1', data_tmp1', ...
                 'ST_MP2', data_tmp2');
             delete(sub_tmp);
-%             sub_tmp2 = Subject.getSubject(subject_class, ...
-%                 num2str(id_tmp2), num2str(labl_tmp2), num2str(notes_tmp2), atlas, ...
-%                 'ST_MP2', data_tmp2');
-%             delete(sub_tmp2);
              
             % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', {});
@@ -521,15 +517,26 @@ classdef SubjectST_MP < Subject
             atlases = cohort.getBrainAtlases();
             
             % sneak peak to see if it is a subject
+            id_tmp = raw1{1, 1};
+            labl_tmp = raw1{1, 2};
+            notes_tmp = raw1{1, 3};
+            data_tmp1 = raw1{1, 4:size(raw1, 2)};
+            if iscell(id_tmp)
+                id_tmp = id_tmp{1};
+            end
+            if iscell(labl_tmp)
+                labl_tmp = labl_tmp{1};
+            end
+            if  iscell(notes_tmp)
+                notes_tmp = notes_tmp{1};
+            end
+            data_tmp2 = raw2{1, 4:size(raw2, 2)};
+            
             sub_tmp = Subject.getSubject(subject_class, ...
-                char(raw1{1, 1}), char(raw1{1, 2}), char(raw1{1, 3}), atlases, ...
-                'ST_MP1', raw1{1, 4:size(raw1, 2)}');
+                num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlases, ...
+                'ST_MP1', data_tmp1', ...
+                'ST_MP2', data_tmp2');
             delete(sub_tmp);
-            % sneak peak to see if it is a subject
-            sub_tmp2 = Subject.getSubject(subject_class, ...
-                char(raw1{1, 1}), char(raw1{1, 2}), char(raw1{1, 3}), atlases, ...
-                'ST_MP2', raw1{1, 4:size(raw1, 2)}');
-            delete(sub_tmp2);
      
             % creates group
             group = Group(subject_class, '', '', '', {});
@@ -540,10 +547,25 @@ classdef SubjectST_MP < Subject
             cohort.getGroups().add(group.getID(), group);
           
             for i = 1:1:size(raw1, 1)  % first row is being read as table label
+                id_tmp = raw1{i, 1};
+                labl_tmp = raw1{i, 2};
+                notes_tmp = raw1{i, 3};
+                data_tmp1 = raw1{i, 4:size(raw1, 2)};
+                if iscell(id_tmp)
+                    id_tmp = id_tmp{1};
+                end
+                if iscell(labl_tmp)
+                    labl_tmp = labl_tmp{1};
+                end
+                if  iscell(notes_tmp)
+                    notes_tmp = notes_tmp{1};
+                end
+                data_tmp2 = raw2{i, 4:size(raw2, 2)};
+                
                 subject = Subject.getSubject(subject_class, ...
-                    char(raw1{i, 1}), char(raw1{i, 2}), char(raw1{i, 3}), atlases, ...
-                    'ST_MP1', raw1{i, 4:size(raw1, 2)}', ...
-                    'ST_MP2', raw2{i, 4:size(raw2, 2)}');
+                    num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlases, ...
+                    'ST_MP1', data_tmp1', ...
+                    'ST_MP2', data_tmp2');
                 if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
@@ -757,15 +779,10 @@ classdef SubjectST_MP < Subject
             
             % sneak peak to see if it is a subject
             sub_tmp = Subject.getSubject(subject_class, ...
-                raw1.SubjectData(1).id, raw1.SubjectData(1).label, raw1.SubjectData(1).notes, atlases, ...
-                'ST_MP1', raw1.SubjectData(1).data);
+                num2str(raw1.SubjectData(1).id), num2str(raw1.SubjectData(1).label), num2str(raw1.SubjectData(1).notes), atlases, ...
+                'ST_MP1', raw1.SubjectData(1).data, ...
+                'ST_MP2', raw2.SubjectData(1).data);
             delete(sub_tmp);
-
-            % sneak peak to see if it is a subject
-            sub_tmp2 = Subject.getSubject(subject_class, ...
-                raw1.SubjectData(1).id, raw1.SubjectData(1).label, raw1.SubjectData(1).notes, atlases, ...
-                'ST_MP2', raw1.SubjectData(1).data);
-            delete(sub_tmp2);
             
             % creates group
             group = Group(subject_class, '', '', '', {});
@@ -776,9 +793,9 @@ classdef SubjectST_MP < Subject
             cohort.getGroups().add(group.getID(), group);
 
             for i = 1:1:length(raw1.SubjectData)
-                id = raw1.SubjectData(i).id;
-                label = raw1.SubjectData(i).label;
-                notes = raw1.SubjectData(i).notes;
+                id = num2str(raw1.SubjectData(i).id);
+                label = num2str(raw1.SubjectData(i).label);
+                notes = num2str(raw1.SubjectData(i).notes);
                 data1 = raw1.SubjectData(i).data;
                 data2 = raw2.SubjectData(i).data;
                 subject = Subject.getSubject(subject_class, ...                   
