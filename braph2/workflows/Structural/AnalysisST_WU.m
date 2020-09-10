@@ -1482,7 +1482,7 @@ classdef AnalysisST_WU < Analysis
                             data{i, 7} = comparison.getID();
                             data{i, 8} = comparison.getLabel();
                             data{i, 9} = comparison.getNotes();
-                            data{i, 10} = fdr([p_values{:}], str2double(fdr_t));
+                            data{i, 10} = fdr([p_values{:}]', str2double(fdr_t));
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_nodal_tbl, 'Data', data)
@@ -1529,7 +1529,7 @@ classdef AnalysisST_WU < Analysis
                             data{i, 6} = randomcomparison.getID();
                             data{i, 7} = randomcomparison.getLabel();
                             data{i, 8} = randomcomparison.getNotes();
-                            data{i, 9} = fdr([p_values{:}], str2double(fdr_t));
+                            data{i, 9} = fdr([p_values{:}]', str2double(fdr_t));
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_nodal_tbl, 'Data', data)
