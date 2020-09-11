@@ -630,29 +630,9 @@ classdef ComparisonST_MP_WU < Comparison
             % Permutation.
             %
             % See also ComparisonST_MP_WU.
-            
-            set(uiparent, 'Visible', 'on')
-             
-            ui_permutation_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_permutation_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
-            init_child_panel()
-            function init_child_panel()
-                                
-                set(ui_permutation_text, 'String', 'Permutation Number')
-                set(ui_permutation_text, 'Position', [.01 .8 .47 .14])
-                set(ui_permutation_text, 'Fontweight', 'bold')
-                
-                set(ui_permutation_edit, 'String', 1000)
-                set(ui_permutation_edit, 'Position', [.5 .87 .45 .08])
-                set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
-            end
-           
-            function cb_comparison_permutation(~, ~)
-                setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
-            end
+
             handle.variables = [];            
-            handle.permutation = ui_permutation_edit;
-            setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
+            handle.permutation = [];
         end
     end
 end

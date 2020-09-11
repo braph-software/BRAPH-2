@@ -149,79 +149,12 @@ classdef ComparisonST_MP_BUD < ComparisonST_MP_WU
             % Permutation and Density.
             %
             % See also ComparisonST_BUD.
-            
-            set(uiparent, 'Visible', 'on')
-            ui_density_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_density_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
-            ui_density_min_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_density_min_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
-            ui_density_max_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_density_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
-            ui_permutation_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_permutation_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
-            init_child_panel()
-            function init_child_panel()
-                set(ui_density_text, 'String', 'Density')
-                set(ui_density_text, 'Position', [.01 .65 .47 .08])
-                set(ui_density_text, 'Fontweight', 'bold')
-                
-                set(ui_density_edit, 'String', 1)
-                set(ui_density_edit, 'Position', [.5 .67 .45 .08])
-                set(ui_density_edit, 'Callback', {@cb_comparison_density})
-                
-                set(ui_density_min_text, 'String', 'Min')
-                set(ui_density_min_text, 'Position', [.01 .75 .47 .08])
-                set(ui_density_min_text, 'Fontweight', 'bold')
-                
-                set(ui_density_min_edit, 'String', 0)
-                set(ui_density_min_edit, 'Position', [.5 .77 .45 .08])
-                set(ui_density_min_edit, 'Callback', {@cb_comparison_min})
-                
-                set(ui_density_max_text, 'String', 'Max')
-                set(ui_density_max_text, 'Position', [.01 .55 .47 .08])
-                set(ui_density_max_text, 'Fontweight', 'bold')
-                
-                set(ui_density_max_edit, 'String', 100)
-                set(ui_density_max_edit, 'Position', [.5 .57 .45 .08])
-                set(ui_density_max_edit, 'Callback', {@cb_comparison_max})
-                
-                set(ui_permutation_text, 'String', 'Perumtation Number')
-                set(ui_permutation_text, 'Position', [.01 .85 .47 .08])
-                set(ui_permutation_text, 'Fontweight', 'bold')
-                
-                set(ui_permutation_edit, 'String', 1000)
-                set(ui_permutation_edit, 'Position', [.5 .87 .45 .08])
-                set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
-                
-            end
-            function cb_comparison_density(~,~)
-                setappdata(uiparent, 'density', ...
-                    str2double(get(ui_density_min_edit, 'String')) : ...
-                    str2double(get(ui_density_edit, 'String')) : ...
-                    str2double(get(ui_density_max_edit, 'String')))
-            end
-            function cb_comparison_min(src, ~)
-                newdata = get(src, 'String');
-                set(ui_density_min_edit, 'String', newdata);
-            end
-            function cb_comparison_max(src, ~)
-                newdata = get(src, 'String');
-                set(ui_density_max_edit, 'String', newdata);
-            end
-            function cb_comparison_permutation(~, ~)
-                setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
-            end
-            
-            handle.variables = {'density'};
-            handle.step = ui_density_edit;
-            handle.min = ui_density_min_edit;
-            handle.max = ui_density_max_edit; 
-            handle.permutation = ui_permutation_edit;
-            setappdata(uiparent, 'density', ...
-                str2double(get(ui_density_min_edit, 'String')) : ...
-                str2double(get(ui_density_edit, 'String')) : ...
-                str2double(get(ui_density_max_edit, 'String')))
-            setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
+
+            handle.variables = {'density1', 'density2'};
+            handle.step = [];
+            handle.min = [];
+            handle.max = [];
+            handle.permutation = [];
         end
     end
 end
