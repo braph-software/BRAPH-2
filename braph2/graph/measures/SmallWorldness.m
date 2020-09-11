@@ -73,30 +73,27 @@ classdef SmallWorldness < PathLengthAv
             else
                 path_length_av = PathLengthAv(g, g.getSettings()).getValue();
             end
-                       
-            clustering_av_random = zeros(1,M);
-            path_length_av_random = zeros(1,M);        
+            
+            M = 100;  % number of random graphs
+            clustering_av_random = cell(1,M);
+            path_length_av_random = cell(1,M);        
             for m = 1:1:M
                 g_random = g.randomize();
 
                 if g_random.is_measure_calculated('ClusteringAv')
-                    clustering_av_random(m) = g_random.getMeasure('ClusteringAv').getValue();
+                    clustering_av_random(m) = {g_random.getMeasure('ClusteringAv').getValue()};
                 else
-                    clustering_av_random(m) = ClusteringAv(g_random, g_random.getSettings()).getValue();
+                    clustering_av_random(m) = {ClusteringAv(g_random, g_random.getSettings()).getValue()};
                 end
 
                 if g_random.is_measure_calculated('PathLengthAv')
-                    path_length_av_random(m) = g_random.getMeasure('PathLengthAv').getValue();
+                    path_length_av_random(m) = {g_random.getMeasure('PathLengthAv').getValue()};
                 else
-                    path_length_av_random(m) = PathLengthAv(g_random, g_random.getSettings()).getValue();
+                    path_length_av_random(m) = {PathLengthAv(g_random, g_random.getSettings()).getValue()};
                 end
-            end
-            
-            if L>1
-                path_length_av_random = cellfun(@(x) cell2mat(x), path_length_av_random, 'UniformOutput', false);
-                clustering_av_random = cellfun(@(x) cell2mat(x), clustering_av_random, 'UniformOutput', false);
-            end
-            
+            end        
+            path_length_av_random = cellfun(@(x) cell2mat(x), path_length_av_random, 'UniformOutput', false);
+            clustering_av_random = cellfun(@(x) cell2mat(x), clustering_av_random, 'UniformOutput', false);
             path_length_av_random = cell2mat(path_length_av_random);
             clustering_av_random = cell2mat(clustering_av_random);
             path_length_av_random = mean(path_length_av_random, 2);
