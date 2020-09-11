@@ -211,7 +211,7 @@ classdef MultiRichClubDegree < RichClubDegree
             % the multi rich-club degree' parameter.
             
             name = 'Multi rich-club degree threshold';
-        end
+        end       
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with MultiRichClubDegree 
             %

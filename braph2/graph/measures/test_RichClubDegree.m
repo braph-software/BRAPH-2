@@ -30,7 +30,7 @@ rich(:, 1, 2) = [1 1 0 0]';
 known_richclubdegree = {rich};
 
 g = GraphBD(A);
-richclubdegree = RichClubDegree(g, 'RichClubThreshold', 2);
+richclubdegree = RichClubDegree(g, 'RichClubDegree.Parameter', 2);
 
 assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
     [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
@@ -47,7 +47,7 @@ A = [
 known_richclubdegree = {[2 2 2 0]'};
 
 g = GraphWU(A);
-richclubdegree = RichClubDegree(g, 'RichClubThreshold', 1);
+richclubdegree = RichClubDegree(g, 'RichClubDegree.Parameter', 1);
 
 assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
     [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
@@ -66,7 +66,7 @@ rich(:, 1, 2) = [1 1 0 0]';
 known_richclubdegree = {rich};
 
 g = GraphWD(A);
-richclubdegree = RichClubDegree(g, 'RichClubThreshold', 2);
+richclubdegree = RichClubDegree(g, 'RichClubDegree.Parameter', 2);
 
 assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
     [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
@@ -99,7 +99,7 @@ known_richclubdegree = {
                  };      
 
 g = MultiplexGraphBU(A);
-richclubdegree = RichClubDegree(g, 'RichClubThreshold', 1);
+richclubdegree = RichClubDegree(g, 'RichClubDegree.Parameter', 1);
 
 assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
     [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
@@ -137,7 +137,7 @@ known_richclubdegree = {
                  };      
 
 g = MultiplexGraphBD(A);
-richclubdegree = RichClubDegree(g, 'RichClubThreshold', 2);
+richclubdegree = RichClubDegree(g, 'RichClubDegree.Parameter', 2);
 
 assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
     [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
@@ -169,7 +169,7 @@ known_richclubdegree = {
                  };      
 
 g = MultiplexGraphWU(A);
-richclubdegree = RichClubDegree(g, 'RichClubThreshold', 1);
+richclubdegree = RichClubDegree(g, 'RichClubDegree.Parameter', 1);
 
 assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
     [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
@@ -207,7 +207,7 @@ known_richclubdegree = {
                  };  
 
 g = MultiplexGraphWD(A);
-richclubdegree = RichClubDegree(g, 'RichClubThreshold', 2);
+richclubdegree = RichClubDegree(g, 'RichClubDegree.Parameter', 2);
 
 assert(isequal(richclubdegree.getValue(), known_richclubdegree), ...
     [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...

@@ -35,7 +35,7 @@ CLOSE_SC = GUI.CLOSE_SC;
 FIGURE_CMD = GUI.FIGURE_CMD;
 FIGURE_SC = GUI.FIGURE_SC;
 
-CLOSE_TP = ['Close ' APPNAME '. Shortcut: ' GUI.ACCELERATOR '+' CLOSE_SC];
+CLOSE_TP = ['Close ' APPNAME '. Shortcut: ' GUI.ACCELERATOR '+' CLOSE_SC]; %#ok<NASGU>
 
 initial_number_childs = 0;
 maesures_rules = [];
@@ -444,12 +444,13 @@ init_measures_table_panel()
     function update_measure_settings_panel()
         mlist = measurelist();
         if ~isempty(selected_measure)
+            cleanUpChilds(ui_measures_settings_panel);
             measure = mlist{selected_measure};
             measure_settings = Measure.getAvailableSettings(measure);
             
-            if isempty(measure_settings)
-                set(ui_measures_settings_panel, 'Visible', 'off')
-            else
+            if isempty(measure_settings) && Measure.is_nonparametric(measure)
+                set(ui_measures_settings_panel, 'Visible', 'off')            
+            elseif ~isempty(measure_settings)  && Measure.is_nonparametric(measure)
                 set(ui_measures_settings_panel, 'Visible', 'on')
                 measure_labels = zeros(size(measure_settings, 1), 1);
                 measure_fields =  zeros(size(measure_settings, 1), 1);
@@ -486,18 +487,95 @@ init_measures_table_panel()
                         set(measure_fields(j, 1), 'String', {'true', 'false'})
                         set(measure_fields(j, 1), 'Callback', {@cb_measure_settings})
                     end
-                end 
+                end
+            elseif ~isempty(measure_settings) && Measure.is_parametric(measure)
+                parameter_name = Measure.getParameterName(measure);
+                set(ui_measures_settings_panel, 'Visible', 'on')
+                measure_labels = zeros(size(measure_settings, 1) + 1, 1);
+                measure_fields = zeros(size(measure_settings, 1) + 1, 1);
+                inner_measure_panel_height = 1 / (length(measure_settings) + 1);                
+                y_correction = 0.1;
+                
+                for j = 1:1:size(measure_settings, 1)
+                    if size(measure_settings, 1) == 1
+                        ms = measure_settings;
+                    else
+                        ms = measure_settings{j};
+                    end
+                    
+                    inner_panel_y = 1 - j * inner_measure_panel_height + y_correction;
+                    
+                    measure_labels(j, 1) = uicontrol('Parent', ui_measures_settings_panel, 'Style', 'text', ...
+                        'Units', 'normalized', 'FontSize', 10, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y-0.2 0.50 0.2], 'String', ms{1,1});
+                    
+                    measure_fields(j, 1) = uicontrol('Parent', ui_measures_settings_panel,  ...
+                        'Units', 'normalized', 'Position', [0.58 inner_panel_y 0.40 0.08] );
+                    
+                    if isequal(ms{1, 2}, 1) % string
+                        set(measure_fields(j, 1), 'Style', 'popup');
+                        set(measure_fields(j, 1), 'String', ms{1, 4})
+                        set(measure_fields(j, 1), 'HorizontalAlignment', 'left')
+                        set(measure_fields(j, 1), 'FontWeight', 'bold')
+                        set(measure_fields(j, 1), 'Callback', {@cb_measure_settings})
+                    elseif isequal(ms{1, 2}, 2) % numerical
+                        set(measure_fields(j, 1), 'Style', 'edit');
+                        set(measure_fields(j, 1), 'Position', [0.58 inner_panel_y-0.1 0.40 0.1]);
+                        set(measure_fields(j, 1), 'String', ms{1, 3})  % put default
+                        set(measure_fields(j, 1), 'Callback', {@cb_measure_settings})
+                    else % logical
+                        set(measure_fields(j, 1), 'Style', 'popup');
+                        set(measure_fields(j, 1), 'String', {'true', 'false'})
+                        set(measure_fields(j, 1), 'Callback', {@cb_measure_settings})
+                    end
+                end
+                
+                inner_panel_y = 1 - size(measure_labels, 1) * inner_measure_panel_height + y_correction;
+                measure_labels(end, 1) = uicontrol('Parent', ui_measures_settings_panel, 'Style', 'text', ...
+                    'Units', 'normalized', 'FontSize', 10, 'HorizontalAlignment', 'left', 'Position', [0.01 inner_panel_y-0.2 0.50 0.2], 'String', parameter_name); %#ok<NASGU>
+                measure_fields(end, 1) = uicontrol('Parent', ui_measures_settings_panel,  ...
+                    'Units', 'normalized', 'Position', [0.58 inner_panel_y-0.1 0.40 0.1] );
+                
+                set(measure_fields(end, 1), 'Style', 'edit');
+                set(measure_fields(end, 1), 'String', '0')  % put default
+                set(measure_fields(end, 1), 'Callback', {@cb_parametric_settings})
+            else                
+                parameter_name = Measure.getParameterName(measure);
+                set(ui_measures_settings_panel, 'Visible', 'on')
+                
+                parameter_label = uicontrol('Parent', ui_measures_settings_panel, 'Style', 'text', ...
+                    'Units', 'normalized', 'FontSize', 10, 'HorizontalAlignment', 'left', ...
+                    'Position', [0.01 0.7 0.50 0.2], 'String', parameter_name); %#ok<NASGU>
+                parameter_edit = uicontrol('Parent', ui_measures_settings_panel,  ...
+                    'Units', 'normalized', 'Position', [0.58 0.8 0.40 0.1], ...
+                    'Style', 'edit', 'String', '0', 'Callback', {@cb_parametric_settings}); %#ok<NASGU>
+                
             end
         end
         function cb_measure_settings(src, ~)
             measure = mlist{selected_measure};
             measure_settings = Measure.getAvailableSettings(measure);
-            if isequal(src.Style, 'popupmenu')
+            if isequal(src.Style, 'popupmenu') 
                 selection = src.String{src.Value};
-                maesures_rules{end+1} = measure_settings{1,1}; 
-                maesures_rules{end+1} = selection;
-                
+                maesures_rules{end + 1} = measure_settings{1, 1}; 
+                maesures_rules{end + 1} = selection;
+            elseif  isequal(src.Style, 'edit')
+                maesures_rules{end + 1} = measure_settings{1, 1};
+                maesures_rules{end + 1} = src.Value;
             end
+        end
+        function cb_parametric_settings(src, ~)
+            measure = mlist{selected_measure};
+            parameter_name = Measure.getParameterName(measure);
+            if isequal(src.Style, 'edit')
+                maesures_rules{end + 1} = parameter_name;
+                maesures_rules{end + 1} = src.Value;
+            end
+        end
+    end
+    function cleanUpChilds(ui_object)
+        childs = allchild(ui_object);        
+        for i = 1:1:length(childs)
+            set(childs(i), 'visible', 'off')
         end
     end
 
@@ -539,7 +617,7 @@ init_matrix()
 
 %% Menus
 MENU_FILE = GUI.MENU_FILE;
-MENU_FIGURE = 'Figure';
+MENU_FIGURE = 'Figure'; %#ok<NASGU>
 
 ui_menu_file = uimenu(f, 'Label', MENU_FILE);
 ui_menu_file_open = uimenu(ui_menu_file);
@@ -572,7 +650,7 @@ init_menu()
         set(ui_menu_plotview_figure, 'Callback', {@cb_menu_figure})
         
     end
-[ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME);
+[ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME); %#ok<ASGLU>
     function cb_menu_figure(~, ~)  % (src, event)
         h = figure('Name', ['Correlation Matrix - ' ga.getName()]);
         set(gcf, 'Color', 'w')

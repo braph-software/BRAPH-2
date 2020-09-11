@@ -101,7 +101,7 @@ classdef MultiRichClubStrength < RichClubStrength
                 c = ones(1, L)/L;
             end
             
-            weighted_rich_club_threshold = get_from_varargin(1, 'WeightedRichClubThreshold', m.getSettings());
+            weighted_rich_club_threshold = m.getParameter();
             s_levels = abs(weighted_rich_club_threshold);
             m.setParameter(s_levels)  % Set the parameter
                             

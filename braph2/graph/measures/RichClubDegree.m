@@ -22,6 +22,7 @@ classdef RichClubDegree < Degree
     %   getParametricity            - returns the parametricity of rich-club degree measure
     %   getMeasure                  - returns the degree class
     %   getParameterName            - returns the name of rich-club degree's parameter
+    %   getParameterHandle          - returns the handle of the parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
@@ -109,7 +110,7 @@ classdef RichClubDegree < Degree
                     deg = (in_degree{li} + out_degree{li})/2;
                 end
                 
-                richclub_threshold = get_from_varargin(1, 'RichClubThreshold', m.getSettings());
+                richclub_threshold = m.getParameter();
                 assert(mod(richclub_threshold, 1) == 0, ...
                     [BRAPH2.STR ':RichClubDegree:' BRAPH2.WRONG_INPUT], ...
                     ['RichClubDegree threshold must be an integer value ' ...
@@ -180,9 +181,7 @@ classdef RichClubDegree < Degree
             %                    value - RICHCLUBDEGREE k threshold is set 
             %                    to the specificied value.
             
-            available_settings = {
-                'RichClubThreshold', BRAPH2.NUMERIC, 1, {};
-                };
+            available_settings = {};
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of RichClubDegree
@@ -221,6 +220,16 @@ classdef RichClubDegree < Degree
             % the rich-club degree's parameter.
             
             name = 'Rich-club threshold';
+        end
+        function h = getParameterHandle()
+            % GETPARAMETERHANDLE returns the measures's parameter handle
+            %
+            % H = GETPARAMETERHANDLE(MEASURE)returns the measure's
+            % parameter handle.
+            %
+            % See also getParameterName, getParameter
+            
+            h = {'RichClubDegree.Parameter', 1, BRAPH2.NUMERIC};
         end
         function list = getCompatibleGraphList()  
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with RichClubDegree 
