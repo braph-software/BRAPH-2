@@ -2201,6 +2201,8 @@ classdef AnalysisST_WU < Analysis
             
             uiparent = get_from_varargin([], 'UIParent', varargin{:});
             bg = get_from_varargin([], 'BrainGraph', varargin{:});
+            bgp = [];
+            mrc = [];
             
             ui_brainview_panel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 1]);
             ui_brainview_axes = get_from_varargin([], 'UIAxesBrain', varargin{:});
@@ -2307,10 +2309,18 @@ classdef AnalysisST_WU < Analysis
                 end               
             end
             function cb_bv_bg_panel(~, ~)
-                bgp =  analysis.getBrainGraphPanel(ui_brainview_axes, bg); %#ok<NASGU>
+                if isempty(bgp)
+                    bgp =  analysis.getBrainGraphPanel(ui_brainview_axes, bg);
+                else
+                    figure(bgp);
+                end
             end
             function cb_bv_meas_panel(~, ~)
-                analysis.getMCRPanel(ui_brainview_axes, bg);
+                if isempty(mrc)
+                    mrc = analysis.getMCRPanel(ui_brainview_axes, bg);
+                else
+                    figure(mrc)
+                end
             end
             function cb_show_surf(~, ~)
                update_brain_graph()                   
@@ -2862,7 +2872,7 @@ classdef AnalysisST_WU < Analysis
                 brain_graph_panel = fig_graph;
             end
         end
-        function getMCRPanel(analysis, brain_axes, bg)
+        function h = getMCRPanel(analysis, brain_axes, bg)
             % sets position of figure
             APPNAME = 'Analysis Property Panel';
             FigPosition = [.10 .30 .35 .50];
@@ -3990,6 +4000,10 @@ classdef AnalysisST_WU < Analysis
                         end
                     end
                 end
+            end
+            
+            if nargout > 0 
+                h = f;
             end
         end
     end
