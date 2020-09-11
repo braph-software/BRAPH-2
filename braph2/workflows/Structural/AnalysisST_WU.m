@@ -2197,8 +2197,7 @@ classdef AnalysisST_WU < Analysis
             % brain view panel for GUIAnalysis.
             %
             % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
-            
-            
+
             uiparent = get_from_varargin([], 'UIParent', varargin{:});
             bg = get_from_varargin([], 'BrainGraph', varargin{:});
             
@@ -2262,7 +2261,7 @@ classdef AnalysisST_WU < Analysis
                     bg.brain_settings();
                 end
 
-                set(ui_contextmenu_figure_symbol_settings, 'Label', 'Brain Region Settins')
+                set(ui_contextmenu_figure_symbol_settings, 'Label', 'Brain Region Settings')
                 set(ui_contextmenu_figure_symbol_settings, 'Callback', {@cb_figure_settingsbr})
 
                 function cb_figure_settingsbr(~, ~)  % (src, event)

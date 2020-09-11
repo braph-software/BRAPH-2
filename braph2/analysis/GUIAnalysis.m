@@ -54,6 +54,7 @@ selected_calc = [];
 selected_regionmeasures = [];
 selected_brainmeasures = [];
 bg = [];
+brain_panel = [];
 current_figure_axes = [];
 current_figure_name = [];
 
@@ -670,7 +671,7 @@ init_brainview()
     function update_brainview_panel()
         current_figure_axes = ui_panel_brainview_axes;
         current_figure_name = 'Brain View';
-        ga.getBrainView('UIParent', ui_panel_brainview, 'UIAxesBrain', ui_panel_brainview_axes, 'BrainGraph', bg);
+        brain_panel = ga.getBrainView('UIParent', ui_panel_brainview, 'UIAxesBrain', ui_panel_brainview_axes, 'BrainGraph', bg);
     end
 
 %% Menus
@@ -718,25 +719,44 @@ init_menu()
     end
 
 %% Toolbar
+FIG_BRAIN_CMD = 'Show brain';
+FIG_AXIS_CMD = 'Show axis';
+FIG_GRID_CMD = 'Show grid';
+FIG_LABELS_CMD = 'Show labels';
+FIG_BR_CMD = 'Show brain regions';
+
+FIG_VIEW_3D_CMD = PlotBrainAtlas.VIEW_3D_CMD;
+FIG_VIEW_SR_CMD = PlotBrainAtlas.VIEW_SR_CMD;
+FIG_VIEW_SL_CMD = PlotBrainAtlas.VIEW_SL_CMD;
+FIG_VIEW_AD_CMD = PlotBrainAtlas.VIEW_AD_CMD;
+FIG_VIEW_AV_CMD = PlotBrainAtlas.VIEW_AV_CMD;
+FIG_VIEW_CA_CMD = PlotBrainAtlas.VIEW_CA_CMD;
+FIG_VIEW_CP_CMD = PlotBrainAtlas.VIEW_CP_CMD;
+
 set(f,  'Toolbar', 'figure')
 ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
 ui_toolbar_open = findall(ui_toolbar, 'Tag', 'Standard.FileOpen');
 ui_toolbar_save = findall(ui_toolbar, 'Tag', 'Standard.SaveFigure');
+ui_toolbar_3D = uipushtool(ui_toolbar);
+ui_toolbar_SL = uipushtool(ui_toolbar);
+ui_toolbar_SR = uipushtool(ui_toolbar);
+ui_toolbar_AD = uipushtool(ui_toolbar);
+ui_toolbar_AV = uipushtool(ui_toolbar);
+ui_toolbar_CA = uipushtool(ui_toolbar);
+ui_toolbar_CP = uipushtool(ui_toolbar);
+ui_toolbar_brain = uitoggletool(ui_toolbar);
+ui_toolbar_axis = uitoggletool(ui_toolbar);
+ui_toolbar_grid = uitoggletool(ui_toolbar);
+ui_toolbar_br = uitoggletool(ui_toolbar);
+ui_toolbar_label = uitoggletool(ui_toolbar);
 init_toolbar()
     function init_toolbar()
         delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-        % delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-        % delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-        %delete(findall(ui_toolbar, 'Tag', 'Exploration.ZoomIn'))
-        %delete(findall(ui_toolbar, 'Tag', 'Exploration.ZoomOut'))
-        %delete(findall(ui_toolbar, 'Tag', 'Exploration.Pan'))
         delete(findall(ui_toolbar, 'Tag', 'Exploration.Rotate'))
-        %delete(findall(ui_toolbar, 'Tag', 'Exploration.DataCursor'))
         delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
         delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-        %delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
         delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
@@ -745,6 +765,161 @@ init_toolbar()
         set(ui_toolbar_open, 'ClickedCallback', {@cb_open})
         set(ui_toolbar_save, 'TooltipString', SAVE_TP);
         set(ui_toolbar_save, 'ClickedCallback', {@cb_save})
+        
+        set(ui_toolbar_3D, 'Separator', 'on');
+        
+        set(ui_toolbar_3D, 'TooltipString', FIG_VIEW_3D_CMD);
+        set(ui_toolbar_3D, 'CData', imread('icon_view_3d.png'));
+        set(ui_toolbar_3D, 'ClickedCallback', {@cb_toolbar_3D})
+        function cb_toolbar_3D(~, ~)  % (src, event)
+            bg.view(PlotBrainAtlas.VIEW_3D)
+        end
+        
+        set(ui_toolbar_SL, 'TooltipString', FIG_VIEW_SL_CMD);
+        set(ui_toolbar_SL, 'CData', imread('icon_view_sl.png'));
+        set(ui_toolbar_SL, 'ClickedCallback', {@cb_toolbar_SL})
+        function cb_toolbar_SL(~, ~)  % (src, event)
+            bg.view(PlotBrainAtlas.VIEW_SL)
+        end
+        
+        set(ui_toolbar_SR, 'TooltipString', FIG_VIEW_SR_CMD);
+        set(ui_toolbar_SR, 'CData', imread('icon_view_sr.png'));
+        set(ui_toolbar_SR, 'ClickedCallback', {@cb_toolbar_SR})
+        function cb_toolbar_SR(~, ~)  % (src, event)
+            bg.view(PlotBrainAtlas.VIEW_SR)
+        end
+        
+        set(ui_toolbar_AD, 'TooltipString', FIG_VIEW_AD_CMD);
+        set(ui_toolbar_AD, 'CData', imread('icon_view_ad.png'));
+        set(ui_toolbar_AD, 'ClickedCallback', {@cb_toolbar_AD})
+        function cb_toolbar_AD(~, ~)  % (src, event)
+            bg.view(PlotBrainAtlas.VIEW_AD)
+        end
+        
+        set(ui_toolbar_AV, 'TooltipString', FIG_VIEW_AV_CMD);
+        set(ui_toolbar_AV, 'CData', imread('icon_view_av.png'));
+        set(ui_toolbar_AV, 'ClickedCallback', {@cb_toolbar_AV})
+        function cb_toolbar_AV(~, ~)  % (src, event)
+            bg.view(PlotBrainAtlas.VIEW_AV)
+        end
+        
+        set(ui_toolbar_CA, 'TooltipString', FIG_VIEW_CA_CMD);
+        set(ui_toolbar_CA, 'CData', imread('icon_view_ca.png'));
+        set(ui_toolbar_CA, 'ClickedCallback', {@cb_toolbar_CA})
+        function cb_toolbar_CA(~, ~)  % (src, event)
+            bg.view(PlotBrainAtlas.VIEW_CA)
+        end
+        
+        set(ui_toolbar_CP, 'TooltipString', FIG_VIEW_CP_CMD);
+        set(ui_toolbar_CP, 'CData', imread('icon_view_cp.png'));
+        set(ui_toolbar_CP, 'ClickedCallback', {@cb_toolbar_CP})
+        function cb_toolbar_CP(~, ~)  % (src, event)
+            bg.view(PlotBrainAtlas.VIEW_CP)
+        end
+        
+        set(ui_toolbar_brain, 'Separator', 'on');
+        
+        set(ui_toolbar_brain, 'TooltipString', FIG_BRAIN_CMD);
+        set(ui_toolbar_brain, 'State', 'on');
+        set(ui_toolbar_brain, 'CData', imread('icon_brain.png'));
+        set(ui_toolbar_brain, 'OnCallback', {@cb_toolbar_brain_on})
+        set(ui_toolbar_brain, 'OffCallback', {@cb_toolbar_brain_off})
+        function cb_toolbar_brain_on(~, ~)  % (src, event)
+            checkboxs_brain  = findobj(brain_panel, 'Style', 'checkbox'); %findobj(ui_control, 'Style', 'checkbox');
+            for i = 1:1:length(checkboxs_brain)
+                current_children = checkboxs_brain(i);
+                if isequal(current_children.String, 'Show Brain Surface')
+                    set(current_children, 'Value', true)
+                end
+            end
+            bg.brain_on();
+        end
+        function cb_toolbar_brain_off(~, ~)  % (src, event)
+            checkboxs_brain  = findobj(brain_panel, 'Style', 'checkbox'); %findobj(ui_control, 'Style', 'checkbox');
+            for i = 1:1:length(checkboxs_brain)
+                current_children = checkboxs_brain(i);
+                if isequal(current_children.String, 'Show Brain Surface')
+                    set(current_children, 'Value', false)
+                end
+            end
+            bg.brain_off();
+        end
+        
+        set(ui_toolbar_axis, 'TooltipString', FIG_AXIS_CMD);
+        set(ui_toolbar_axis, 'State', 'on');
+        set(ui_toolbar_axis, 'CData', imread('icon_axis.png'));
+        set(ui_toolbar_axis, 'OnCallback', {@cb_toolbar_axis_on})
+        set(ui_toolbar_axis, 'OffCallback', {@cb_toolbar_axis_off})
+        function cb_toolbar_axis_on(~, ~)  % (src, event)
+            bg.axis_on()
+        end
+        function cb_toolbar_axis_off(~, ~)  % (src, event)
+            bg.axis_off()
+        end
+        
+        set(ui_toolbar_grid, 'TooltipString', FIG_GRID_CMD);
+        set(ui_toolbar_grid, 'State', 'on');
+        set(ui_toolbar_grid, 'CData', imread('icon_grid.png'));
+        set(ui_toolbar_grid, 'OnCallback', {@cb_toolbar_grid_on})
+        set(ui_toolbar_grid, 'OffCallback', {@cb_toolbar_grid_off})
+        function cb_toolbar_grid_on(~, ~)  % (src, event)
+            bg.grid_on()
+        end
+        function cb_toolbar_grid_off(~, ~)  % (src, event)
+            bg.grid_off()
+        end
+        
+        set(ui_toolbar_br, 'TooltipString', FIG_BR_CMD);
+        set(ui_toolbar_br, 'State', 'on');
+        set(ui_toolbar_br, 'CData', imread('icon_br.png'));
+        set(ui_toolbar_br, 'OnCallback', {@cb_toolbar_br_on})
+        set(ui_toolbar_br, 'OffCallback', {@cb_toolbar_br_off})
+        function cb_toolbar_br_on(~, ~)  % (src, event)
+            checkboxs_brain  = findobj(brain_panel, 'Style', 'checkbox'); %findobj(ui_control, 'Style', 'checkbox');
+            for i = 1:1:length(checkboxs_brain)
+                current_children = checkboxs_brain(i);
+                if isequal(current_children.String, 'Show Brain Regions')
+                    set(current_children, 'Value', true)
+                end
+            end
+            bg.br_syms_on();
+        end
+        function cb_toolbar_br_off(~, ~)  % (src, event)
+            checkboxs_brain  = findobj(brain_panel, 'Style', 'checkbox'); %findobj(ui_control, 'Style', 'checkbox');
+            for i = 1:1:length(checkboxs_brain)
+                current_children = checkboxs_brain(i);
+                if isequal(current_children.String, 'Show Brain Regions')
+                    set(current_children, 'Value', false)
+                end
+            end
+            bg.br_syms_off();
+        end
+        
+        set(ui_toolbar_label, 'TooltipString', FIG_LABELS_CMD);
+        set(ui_toolbar_label, 'State', 'on');
+        set(ui_toolbar_label, 'CData', imread('icon_label.png'));
+        set(ui_toolbar_label, 'OnCallback', {@cb_toolbar_label_on})
+        set(ui_toolbar_label, 'OffCallback', {@cb_toolbar_label_off})
+        function cb_toolbar_label_on(~, ~)  % (src, event)
+            checkboxs_brain  = findobj(brain_panel, 'Style', 'checkbox'); %findobj(ui_control, 'Style', 'checkbox');
+            for i = 1:1:length(checkboxs_brain)
+                current_children = checkboxs_brain(i);
+                if isequal(current_children.String, 'Show Brain Labels')
+                    set(current_children, 'Value', true)
+                end
+            end
+            bg.br_labs_on();
+        end
+        function cb_toolbar_label_off(~, ~)  % (src, event)
+            checkboxs_brain  = findobj(brain_panel, 'Style', 'checkbox'); %findobj(ui_control, 'Style', 'checkbox');
+            for i = 1:1:length(checkboxs_brain)
+                current_children = checkboxs_brain(i);
+                if isequal(current_children.String, 'Show Brain Labels')
+                    set(current_children, 'Value', false)
+                end
+            end
+            bg.br_labs_off();
+        end
     end
 
 %% Make the GUI visible.
