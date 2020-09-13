@@ -1,6 +1,6 @@
 classdef ComparisonST_MP_BUT < ComparisonST_MP_WU
     % ComparisonST_MP_BUT A comparison of structural multiplex data with BU graphs at fixed threshold
-    % ComparisonST_MP_BUT is a subclass of Comparison.
+    % ComparisonST_MP_BUT is a subclass of ComparisonST_MP_WU.
     %
     % ComparisonST_MP_BUT stores a comparison between two groups.
     % The data from the groups it compares have a fixed threshold for each layer.
