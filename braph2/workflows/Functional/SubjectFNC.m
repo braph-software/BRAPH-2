@@ -263,7 +263,8 @@ classdef SubjectFNC < Subject
                 % load subjects
                 for i = 1:1:length(files)
                     % read file
-                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
+                    
+                    raw = readmatrix(fullfile(path, files(i).name));
                     atlases = cohort.getBrainAtlases();
                     % get age
                     
@@ -271,22 +272,15 @@ classdef SubjectFNC < Subject
                     sub_id = erase(files(i).name, '.xlsx');
                     sub_id = erase(sub_id, '.xls');
                     subject = Subject.getSubject(subject_class, ...
-                        sub_id, char(raw{1, 1}), char(raw{2, 1}), atlases, ...
-                        'FNC', num);
+                        sub_id, '', '', atlases, ...
+                        'FNC', raw);
                     
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
                 end
                 
-                % retrieve group information
-                file_group = [directory filesep() sub_folders(j).name filesep() 'group_info.txt'];
-                group_raw = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                group_id = group_raw{1, 1};
-                group_label = group_raw{2, 1};
-                group_notes = group_raw{3, 1};
-                
                 % creates a group per subfolder
-                group = Group(subject_class, group_id, group_label, group_notes, subjects);
+                group = Group(subject_class, ['Group: ' i], '', '', subjects);
                 cohort.getGroups().add(group.getID(), group, j);
             end
         end
@@ -338,9 +332,9 @@ classdef SubjectFNC < Subject
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.xlsx'];
-                    writematrix(string(label), file, 'Sheet', 1, 'Range', 'A1');
-                    writematrix(string(notes), file, 'Sheet', 1, 'Range', 'A2');
-                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A3');
+%                     writematrix(string(label), file, 'Sheet', 1, 'Range', 'A1');
+%                     writematrix(string(notes), file, 'Sheet', 1, 'Range', 'A2');
+                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
                 end
             end
         end
@@ -427,16 +421,12 @@ classdef SubjectFNC < Subject
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
-            % retrieve group information
-            file_group = [directory filesep() 'group_info.txt'];
-            group_raw = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-            group_label = group_raw{2, 1};
-            group_notes = group_raw{3, 1};
+           
             
             % creates group
             if i == length(files)
                 [~, groupname] = fileparts(directory);
-                group = Group(subject_class, groupname, group_label, group_notes,  cohort.getSubjects().getValues());
+                group = Group(subject_class, groupname, '', '',  cohort.getSubjects().getValues());
                 cohort.getGroups().add(group.getID(), group);
             end
         end

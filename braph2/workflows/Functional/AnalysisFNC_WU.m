@@ -112,9 +112,9 @@ classdef AnalysisFNC_WU < Analysis
             
             % will return an array of graphs
             subjects = group.getSubjects();
-            subject_number = numel(subjects);             
+            subject_number = numel(subjects);
             graphs = cell(1, subject_number);
-  
+            
             for i = 1:1:subject_number
                 subject = subjects{i};
                 data = subject.getData('FNC').getValue();
@@ -323,14 +323,14 @@ classdef AnalysisFNC_WU < Analysis
                 all_permutations_1(1, i) = {mean_permutated_1};
                 all_permutations_2(1, i) = {mean_permutated_2};
                 
-                difference_all_permutations{1, i} = mean_permutated_1 - mean_permutated_2; %#ok<AGROW>
+                difference_all_permutations{1, i} = mean_permutated_2 - mean_permutated_1; %#ok<AGROW>
                 if interruptible
                     pause(interruptible)
                 end
             end
             
             difference_mean = {res_2{1} - res_1{1}};  % difference of the mean values of the non permutated groups
-            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 1 - permutated group 2
+            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 2 - permutated group 1
             
             % Statistical analysis
             p1 = {pvalue1(difference_mean{1}, difference_all_permutations)};  % singe tail,
@@ -461,6 +461,174 @@ classdef AnalysisFNC_WU < Analysis
                 {'AnalysisFNC.AttemptsPerEdge', BRAPH2.NUMERIC, 1, {}}, ...
                 {'AnalysisFNC.NumberOfWeights', BRAPH2.NUMERIC, 1, {}} ...
                 };
+        end
+    end
+    methods
+        function graph_panel = getGraphPanel(analysis, varargin)
+            % GETGRAPHPANEL creates a matrix uipanel
+            %
+            % GRAPH_PANEL = GETGRAPHPANEL(ANALYSIS, PROPERTY, RULE, ...)
+            % creates a uipanel with group selection uicontrol, weighted
+            % plot uicontrol, density uicontorol, and threshold uicontrol.
+            %
+            % See also getClass, getSubjectClass, getGraphType.
+            
+          graph_panel = [];
+        end
+        function global_panel = getGlobalPanel(analysis, varargin)
+            % GETGLOBALPANEL creates the global uipanel for GUIAnalysis
+            %
+            % GLOBAL_PANEL = GETGLOBALPANEL(ANALYSIS, PROPERTY, VALUE, ...)
+            % creates a uipanel that contains information about global
+            % measures in Measurement, RandomComparison and Comparison.
+            %
+            % See also getGraphPanel, getMainPanelMeasurePlot, getBrainView
+            
+           global_panel = [];
+        end
+        function nodal_panel = getNodalPanel(analysis, varargin)
+            % GETNODALPANEL creates the nodal uipanel for GUIAnalysis
+            %
+            % NODAL_PANEL = GETNODALPANEL(ANALYSIS, PROPERTY, VALUE, ...)
+            % creates a uipanel that contains information about nodal
+            % measures in Measurement, RandomComparison and Comparison.
+            %
+            % See also getGraphPanel, getMainPanelMeasurePlot, getGlobalPanel
+            
+           nodal_panel = [];
+        end
+        function binodal_panel = getBinodalPanel(analysis, varargin)
+            % GETBINODALPANEL creates the binodal uipanel for GUIAnalysis
+            %
+            % BINODAL_PANEL = GETBINODALPANEL(ANALYSIS, PROPERTY, VALUE, ...)
+            % creates a uipanel that contains information about binodal
+            % measures in Measurement, RandomComparison and Comparison.
+            %
+            % See also getGraphPanel, getMainPanelMeasurePlot, getGlobalPanel, getBrainView
+            
+           binodal_panel = [];
+        end
+        function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin) %#ok<INUSD>
+            % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETGLOBALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, varargin) %#ok<INUSD>
+            % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group, varargin) %#ok<INUSD>
+            % GETGLOBALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETGLOBALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the global
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getNodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region, varargin) %#ok<INUSD>
+            % GETNODALMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, BRAINREGION, PROPERTY, VLAUE)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getNodalPanel.
+            
+            p = [];
+        end
+        function p = getNodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, brain_region, varargin) %#ok<INUSD>
+            % GETNODALCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, BRAIN_REGION, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getNodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region, varargin) %#ok<INUSD>
+            % GETNODALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2,  BRAINREGION, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getBinodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin) %#ok<INUSD>
+            % GETBINODALMEASUREPLOT creates a uipanel to contain a plot
+            %
+            % P = GETBINODALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP,  BRAINREGION1,  BRAINREGION2, PROPERTY, VLAUE)
+            % creates a uipanel to contain the plot displayed in the nodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getBinodalPanel.
+            
+            p = [];
+        end
+        function p = getBinodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, group_1, group_2, brain_region_1, brain_region_2, varargin) %#ok<INUSD>
+            % GETNODALCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, BRAINREGION1,  BRAINREGION2, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the binodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getBinodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin) %#ok<INUSD>
+            % GETNODALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
+            %
+            % P = GETNODALRANDOMCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, BRAINREGION1,  BRAINREGION2, PROPERTY, VALUE, ...)
+            % creates a uipanel to contain the plot displayed in the binodal
+            % measure panel for GUIAnalysis.
+            %
+            % See also getGraphPanel, getGlobalPanel.
+            
+            p = [];
+        end
+        function p = getBrainView(analysis, varargin)
+            % GETBRAINVIEW creates a brain view panel for GUIAnalysis
+            %
+            % P = GETBRAINVIEW(ANALYSIS, PROPERTY, RULE, ...) creates a
+            % brain view panel for GUIAnalysis.
+            %
+            % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
+            p = [];
+        end
+        function brain_graph_panel = getBrainGraphPanel(analysis, brain_axes, brain_graph)
+            % GETBRAINGRAPHPANEL creates a braingraph panel
+            %
+            % BRAIN_GRAPH_PANEL = GETBRAINGRAPHPANEL(ANAlYSIS, AXES, PLOTBRAINGRAPH)
+            % creates a brain graph panel to manage the type of
+            % PLOTBRAINGRAPH that the GUIAnalysis plots in the AXES.
+            %
+            % See also getBrainView,
+            brain_graph_panel = [];
+        end
+        function h = getMCRPanel(analysis, brain_axes, bg)
+            % sets position of figure
+            h = [];
         end
     end
 end
