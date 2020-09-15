@@ -703,5 +703,31 @@ classdef AnalysisST_MP_WU < Analysis
             
             p = [];
         end
+        function p = getBrainView(analysis, varargin)
+            % GETBRAINVIEW creates a brain view panel for GUIAnalysis
+            % 
+            % P = GETBRAINVIEW(ANALYSIS, PROPERTY, RULE, ...) creates a
+            % brain view panel for GUIAnalysis.
+            %
+            % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
+
+            p = [];
+        end
+        function brain_graph_panel = getBrainGraphPanel(analysis, brain_axes, brain_graph)
+            % GETBRAINGRAPHPANEL creates a braingraph panel
+            %
+            % BRAIN_GRAPH_PANEL = GETBRAINGRAPHPANEL(ANAlYSIS, AXES, PLOTBRAINGRAPH)
+            % creates a brain graph panel to manage the type of
+            % PLOTBRAINGRAPH that the GUIAnalysis plots in the AXES.
+            %
+            % See also getBrainView, 
+            
+            brain_graph_panel = [];
+        end
+        function h = getMCRPanel(analysis, brain_axes, bg)
+            % sets position of figure
+   
+            h = [];
+        end
     end
 end
