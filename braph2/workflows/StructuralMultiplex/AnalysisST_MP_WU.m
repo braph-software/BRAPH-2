@@ -192,7 +192,7 @@ classdef AnalysisST_MP_WU < Analysis
             
             subjects = group.getSubjects();
 
-            g = get_graph_for_subjects(analysis, subjects);
+            g = analysis.get_graph_for_subjects(subjects, varargin{:});
             
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measurement_value = measure.getValue();
@@ -401,11 +401,11 @@ classdef AnalysisST_MP_WU < Analysis
                 
                 [permutation_subjects_1, permutation_subjects_2] = permutation(subjects_1, subjects_2, is_longitudinal);
                 
-                graph_permutated_1 = get_graph_for_subjects(analysis, permutation_subjects_1);
+                graph_permutated_1 = analysis.get_graph_for_subjects(permutation_subjects_1, varargin{:});
                 measure_permutated_1 = Measure.getMeasure(measure_code, graph_permutated_1, varargin{:});
                 measure_permutated_value_1 = measure_permutated_1.getValue();
-
-                graph_permutated_2 = get_graph_for_subjects(analysis, permutation_subjects_2);
+                
+                graph_permutated_2 = analysis.get_graph_for_subjects(permutation_subjects_2, varargin{:});
                 measure_permutated_2 = Measure.getMeasure(measure_code, graph_permutated_2, varargin{:});
                 measure_permutated_value_2 = measure_permutated_2.getValue();
                 
