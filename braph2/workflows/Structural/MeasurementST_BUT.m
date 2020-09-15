@@ -2,8 +2,8 @@ classdef MeasurementST_BUT < MeasurementST_WU
     % MeasurementST_BUT A measurement of structural data with BU graphs at fixed threshold
     % MeasurementST_BUT is a subclass of MeasurementST_WU.
     %
-    % MeasurementST_BUT store a measurement of structural data with BU
-    % graphs at fixes threshold, for this it implements MeasurementST_WU
+    % MeasurementST_BUT stores a measurement of structural data with BU
+    % graphs at fixed threshold, for this it implements MeasurementST_WU
     % initialization of data. Structural data can be for example MRI or PET data.
     %
     % MeasurementST_BUT constructor methods:
@@ -21,7 +21,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
     % MeasurementST_BUT plot methods (Static):
     %  getMeasurementSettingsPanel  - returns a UIPanel
     %
-    % See also Comparison, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT.
+    % See also Measurement, AnalysisST_BUT, ComparisonST_BUT, RandomComparisonST_BUT.
     
     properties (Access = protected)
         threshold  % threshold of the values
@@ -33,7 +33,7 @@ classdef MeasurementST_BUT < MeasurementST_WU
             % with the data from GROUP, this data will have a fixed THRESHOLD.
             %
             % MeasurementST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % creates a measurement with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP, this data will have a fixed default threshold.
             %
             % See also ComparisonST_BUT, RandomComparisonST_BUT, AnalysisST_BUT.

@@ -44,11 +44,11 @@ classdef AnalysisST_WU < Analysis
     %  getGlobalMeasurePlot         - returns a global measurement plot
     %  getGlobalComparisonPlot      - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
-    %  getNodalMeasurePlot          - returns a nodal mesure plot
-    %  getNodalComparisonPlot       - returns a nodal comprison plot
+    %  getNodalMeasurePlot          - returns a nodal measure plot
+    %  getNodalComparisonPlot       - returns a nodal comparison plot
     %  getNodalRandomComparisonPlot - returns a nodal randomcomparison plot
-    %  getBinodalMeasurePlot      - returns a binodal mesure plot
-    %  getBinodalComparisonPlot   - returns a binodal comprison plot
+    %  getBinodalMeasurePlot      - returns a binodal measure plot
+    %  getBinodalComparisonPlot   - returns a binodal comparison plot
     %  getBinodalRandomComparisonPlot - returns a binodal randomcomparison plot
     %
     % See also Analysis, MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU
@@ -303,7 +303,6 @@ classdef AnalysisST_WU < Analysis
                 'RandomComparisonST.p2', p2, ....
                 'RandomComparisonST.confidence_min', ci_lower, ...
                 'RandomComparisonST.confidence_max', ci_upper, ...
-                'RandomComparisonST.ParameterValues', parameter_value_group, ...
                 varargin{:} ...
                 );
         end
@@ -321,7 +320,7 @@ classdef AnalysisST_WU < Analysis
             % from GROUP_1 subject and GROUP_2 data. It will compare the measures
             % obtained and will return a comparison. The function
             % will utilize VALUE settings.
-            % Available POPERTIES are:
+            % Available PROPERTIES are:
             %  Verbose             - true to display info about the
             %                        randomization cycle, false by default
             %  Interruptible       - true if randomization cycle can be
@@ -343,7 +342,7 @@ classdef AnalysisST_WU < Analysis
             measurement_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
             value_2 = measurement_2.getMeasureValue();
             
-            difference_mean = cellfun(@(x, y) y - x, value_2, value_1, 'UniformOutput', false);
+            difference_mean = cellfun(@(x, y) y - x, value_1, value_2, 'UniformOutput', false);
             
             subjects_1 = group_1.getSubjects();
             subjects_2 = group_2.getSubjects();

@@ -2,7 +2,7 @@ classdef RandomComparisonST_BUD < RandomComparisonST_WU
     % RandomComparisonST_BUD A random comparison of structural data with BU graphs at fixed density
     % RandomComparisonST_BUD is a subclass of RandomComparisonST_WU.
     %
-    % RandomComparisonST_BUD store a comparison between a group and a randomly
+    % RandomComparisonST_BUD stores a comparison between a group and a randomly
     % generated group. The data from the groups it compares have a
     % density. Structural data can be for example MRI or PET data.
     %
@@ -10,7 +10,7 @@ classdef RandomComparisonST_BUD < RandomComparisonST_WU
     %  RandomComparisonST_BUD       - Constructor
     %
     % RandomComparisonST_BUD get methods:
-    %  getThreshold                 - returns the density
+    %  getDensity                   - returns the density
     %
     % RandomComparisonST_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
@@ -21,24 +21,24 @@ classdef RandomComparisonST_BUD < RandomComparisonST_WU
     % RandomComparisonST_BUD plot methods (Static):
     %  getRandomComparisonSettingsPanel - returns a UIPanel
     %
-    % See also Comparison, AnalysisST_BUT, MeasurementST_BUT, ComparisonST_BUT.
+    % See also RandomComparison, AnalysisST_BUD, MeasurementST_BUD, ComparisonST_BUD.
     
     properties (Access = protected)
         density  % density of the values
     end
     methods  % Constructor
         function rc =  RandomComparisonST_BUD(id, label, notes, atlas, measure_code, group, varargin)
-            % RandomComparisonST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'density', DENSITY)
-            % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE,
+            % RANDOMCOMPARISONST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'density', DENSITY)
+            % creates a random comparison with ID, LABEL, ATLAS and MEASURE_CODE,
             % between the data from GROUP and a random group. The data will
             % have a fixed DENSITY.
             %
-            % RandomComparisonST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE,
+            % RANDOMCOMPARISONST_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
+            % creates a random comparison with ID, LABEL, ATLAS and MEASURE_CODE,
             % between the data from GROUP and a random group. The data will
             % have a fixed default DENSITY.
             %
-            % See also MeasurementST_BUT, ComparisonST_BUT, AnalysisST_BUT.
+            % See also MeasurementST_BUD, ComparisonST_BUD, AnalysisST_BUD.
             
             rc = rc@RandomComparisonST_WU(id, label, notes, atlas, measure_code, group, varargin{:});
             density = get_from_varargin(0, 'density', varargin{:});
@@ -59,9 +59,9 @@ classdef RandomComparisonST_BUD < RandomComparisonST_WU
     end
     methods  % Get functions
         function density = getDensity(rc)
-            % GETDENSITY returns thefixed density of the data values
+            % GETDENSITY returns the fixed density of the data values
             %
-            % DENSITY = GETDENSITY(RC) returns thefixed density of the
+            % DENSITY = GETDENSITY(RC) returns the fixed density of the
             % data values.
             %
             % See also getMeasureValue, setDensity.
@@ -71,7 +71,7 @@ classdef RandomComparisonST_BUD < RandomComparisonST_WU
     end
     methods (Static)  % Descriptive functions
         function measurement_class = getClass() %#ok<*INUSD>
-            % GETCLASS returns the class of structural random comparison BUT
+            % GETCLASS returns the class of structural random comparison BUD
             %
             % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
             % random comparison. In this case 'RandomComparisonST_BUD'.
@@ -81,16 +81,16 @@ classdef RandomComparisonST_BUD < RandomComparisonST_WU
             measurement_class = 'RandomComparisonST_BUD';
         end
         function name = getName()
-            % GETNAME returns the name of structural random comparison BUT
+            % GETNAME returns the name of structural random comparison BUD
             %
-            % NAME = GETNAME() returns the name, RandomComparison ST BUT.
+            % NAME = GETNAME() returns the name, RandomComparison ST BUD.
             %
             % See also getList, getClass, getDescription.
             
-            name = 'RandomComparison ST BUT';
+            name = 'RandomComparison ST BUD';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the description of structural random comparison BUT
+            % GETDESCRIPTION returns the description of structural random comparison BUD
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
             % of RandomComparisonST_BUD.
@@ -108,11 +108,11 @@ classdef RandomComparisonST_BUD < RandomComparisonST_WU
             % GETANALYSISCLASS returns the class of the analysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % analysis the random comparison is part of, 'AnalysisST_BUT'.
+            % analysis the random comparison is part of, 'AnalysisST_BUD'.
             %
             % See also getList, getClass, getName.
             
-            analysis_class = 'AnalysisST_BUT';
+            analysis_class = 'AnalysisST_BUD';
         end
     end
     methods (Static)  % Plot ComparisonGUI Child Panel

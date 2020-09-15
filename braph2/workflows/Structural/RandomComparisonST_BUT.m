@@ -21,19 +21,19 @@ classdef RandomComparisonST_BUT < RandomComparisonST_WU
     % RandomComparisonST_BUT plot methods (Static):
     %  getRandomComparisonSettingsPanel - returns a UIPanel
     % 
-    % See also Comparison, AnalysisST_BUT, MeasurementST_BUT, ComparisonST_BUT.
+    % See also RandomComparison, AnalysisST_BUT, MeasurementST_BUT, ComparisonST_BUT.
     
     properties (Access = protected)
         threshold  % threshold of the values
     end
     methods  % Constructor
         function rc =  RandomComparisonST_BUT(id, label, notes, atlas, measure_code, group, varargin)
-            % RandomComparisonST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'threshold', THRESHOLD)
+            % RANDOMCOMPARISONST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'threshold', THRESHOLD)
             % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE,
             % between the data from GROUP and a random group. The data will
             % have a fixed THRESHOLD.
             %
-            % RandomComparisonST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
+            % RANDOMCOMPARISONST_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE,
             % between the data from GROUP and a random group. The data will
             % have a fixed default THRESHOLD.
