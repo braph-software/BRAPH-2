@@ -28,7 +28,7 @@ end
 
 x = [1:1:length(pvalues)] / length(pvalues); %#ok<NBRAK>
 pvalues = sort(pvalues);
-index = max(find(pvalues <= x * q)); %#ok<MXFND>
+index = max(find(pvalues <= (x * q))); %#ok<MXFND>
 
 if index
     r = pvalues(index);
