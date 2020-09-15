@@ -405,7 +405,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
             if nargin == 5
                 list = cell(size(selected_comparisons));                
                 for i = 1:1:length(selected_comparisons)
-                    c = all_comparisons{i}; %#ok<NASGU>
+                    c = selected_comparisons{i}; %#ok<NASGU>
                     list{i} = eval(['c' method]);
                 end
             else

@@ -15,7 +15,7 @@ r(1, 1, 3) = 0;
 known_richclub = {r};  
              
 g = GraphBU(A);
-richclub = RichClub(g, 'RichClubThreshold', 3);
+richclub = RichClub(g, 'RichClub.Parameter', 3);
 
 assert(isequal(richclub.getValue(), known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...
@@ -36,7 +36,7 @@ r(1, 1, 3) = 0;
 known_richclub = {r};  
 
 g = GraphBD(A);
-richclub = RichClub(g, 'RichClubThreshold', 3);
+richclub = RichClub(g, 'RichClub.Parameter', 3);
 
 assert(isequal(richclub.getValue(), known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...
@@ -57,7 +57,7 @@ r(1, 1, 3) = 0;
 known_richclub = {r};  
 
 g = GraphWU(A);
-richclub = RichClub(g, 'RichClubThreshold', 3);
+richclub = RichClub(g, 'RichClub.Parameter', 3);
 
 assert(isequal(richclub.getValue(), known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...
@@ -78,7 +78,7 @@ r(1, 1, 3) = 0;
 known_richclub = {r}; 
 
 g = GraphWD(A);
-richclub = RichClub(g, 'RichClubThreshold', 3);
+richclub = RichClub(g, 'RichClub.Parameter', 3);
 
 assert(isequal(richclub.getValue(), known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...
@@ -110,7 +110,7 @@ known_richclub = {
                  };      
              
 g = MultiplexGraphBU(A);
-richclub = RichClub(g, 'RichClubThreshold', 1);
+richclub = RichClub(g, 'RichClub.Parameter', 1);
 
 assert(isequal(richclub.getValue(), known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...
@@ -148,7 +148,7 @@ known_richclub = {
                  };      
 
 g = MultiplexGraphBD(A);
-richclub = RichClub(g, 'RichClubThreshold', 2);
+richclub = RichClub(g, 'RichClub.Parameter', 2);
 
 assert(isequal(richclub.getValue(), known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...
@@ -180,7 +180,7 @@ known_richclub = {
                  };     
 
 g = MultiplexGraphWU(A);
-richclub = RichClub(g, 'RichClubThreshold', 1);
+richclub = RichClub(g, 'RichClub.Parameter', 1);
 
 assert(isequal(richclub.getValue(), known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...
@@ -218,7 +218,7 @@ known_richclub = {
                  };  
 
 g = MultiplexGraphWD(A);
-richclub = RichClub(g, 'RichClubThreshold', 2);
+richclub = RichClub(g, 'RichClub.Parameter', 2);
 
 assert(isequal(richclub.getValue(), known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...

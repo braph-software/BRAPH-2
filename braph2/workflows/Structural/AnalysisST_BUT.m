@@ -5,7 +5,7 @@ classdef AnalysisST_BUT < AnalysisST_WU
     %
     % AnalysisST_BUT implements AnalysisST_WU calculating methods
     % to obtain a structural data of fixed threshold binary undirected graphs
-    % measurement, a random comprison or a comparison. AnalysisST_BUT
+    % measurement, a random comparison or a comparison. AnalysisST_BUT
     % overrides the ID methods of its superclass.
     % Structural data can be for example MRI or PET data.
     %
@@ -38,17 +38,17 @@ classdef AnalysisST_BUT < AnalysisST_WU
     
     methods
         function analysis = AnalysisST_BUT(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
-            % AnalysisST_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
+            % ANALYSISST_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
             % creates a structural analysis of fixed threshold with ID, LABEL,
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISST_WU with default settings.
             %
-            % AnalysisST_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
+            % ANALYSISST_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
             % creates a structural analysis of fixed threshold with ID, LABEL,
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISST_WU with specified settings VALUES.
             %
-            % See also MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU.
+            % See also MeasurementST_BUT, RandomComparisonST_BUT, ComparisonST_BUT.
             
             analysis = analysis@AnalysisST_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end

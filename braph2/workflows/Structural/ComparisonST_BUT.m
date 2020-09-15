@@ -2,7 +2,7 @@ classdef ComparisonST_BUT < ComparisonST_WU
     % ComparisonST_BUT A comparison of structural data with BU graphs at fixed threshold
     % ComparisonST_BUT is a subclass of Comparison.
     %
-    % ComparisonST_BUT store a comparison between two groups.
+    % ComparisonST_BUT stores a comparison between two groups.
     % The data from the groups it compares have a threshold.
     % Structural data can be for example MRI or PET data.
     %

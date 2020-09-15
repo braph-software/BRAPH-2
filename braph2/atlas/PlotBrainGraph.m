@@ -29,7 +29,7 @@ classdef PlotBrainGraph < PlotBrainAtlas
     %   arrow_edges                 - plots multiple edges as lines
     %   arrow_edges_on              - sets multiple edges visible
     %   arrow_edges_off             - sets multiple edges invisible
-    %   arrow_edges_settings        - panel to set edges properties    
+    %   arrow_edges_settings        - panel to set edges properties
     %   arrow_edges_is_on           - bool, checks if the arrow link es on
     %
     %   cylinder_edge               - plots an edge as line with different properties
@@ -40,6 +40,12 @@ classdef PlotBrainGraph < PlotBrainAtlas
     %   cylinder_edges_off          - sets multiple edges invisible
     %   cylinder_edges_settings     - panel to set edges properties
     %   cylinder_edges_is_on        - bool, checks if the cylinder link is on
+    %
+    %   text_edge                   - plots an edge text 
+    %   text_edge_on                - sets the edge text visible
+    %   text_edge_off               - sets the edge text invisible
+    %   text_edges_is_on            - bool, checks if the text is on  
+    %   text_edges_is_off           - bool, checks if the text is off 
     %
     % See also PlotBrainAtlas, PlotBrainSurf.
     
@@ -112,7 +118,7 @@ classdef PlotBrainGraph < PlotBrainAtlas
             % All standard plot properties of plot3 can be used.
             % The line properties can also be changed when hidden.
             %
-            % See also PlotBrainGraph, plot3, link_edges.
+            % See also PlotBrainGraph, plot3, link_edges, text_edge.
             
             if i == j  % removes diagonal
                 return;
@@ -524,48 +530,7 @@ classdef PlotBrainGraph < PlotBrainAtlas
             
             bool = ishandle(bg.edges.h(i, j)) && strcmpi(get(bg.edges.h(i, j), 'Visible'), 'on');
         end
-        
-        % texts
-        function text_edge(bg, graph_axes, i, j , text_value, varargin)
-            if i == j  % removes diagonal
-                return;
-            end
-            
-            bg.set_axes();
-            br_1 = bg.atlas.getBrainRegions().getValue(i);
-            br_2 = bg.atlas.getBrainRegions().getValue(j);
-            % get coordinates
-            X1 = br_1.getX();
-            Y1 = br_1.getY();
-            Z1 = br_1.getZ();
-            
-            X2 = br_2.getX();
-            Y2 = br_2.getY();
-            Z2 = br_2.getZ();
-            
-            % equidistant point
-            X3 = (X1 + X2) / 2;
-            Y3 = (Y1 + Y2) / 2;
-            Z3 = (Z1 + Z2) / 2;
-            bg.edges.texts(i, j) =  text(graph_axes, X3, Y3, Z3, text_value);
-        end
-        function text_edge_on(bg, i, j)
-            if ishandle(bg.edges.texts(i, j))
-                set(bg.edges.texts(i, j), 'Visible', 'on')
-            end
-        end
-        function text_edge_off(bg, i, j)
-            if ishandle(bg.edges.texts(i, j))
-                set(bg.edges.texts(i, j), 'Visible', 'off')
-            end
-        end
-        function bool = text_edge_is_on(bg, i, j)
-             bool = ishandle(bg.edges.texts(i, j)) && strcmpi(get(bg.edges.texts(i, j), 'Visible'), 'on');
-        end
-        function bool = tex_edge_is_off(bg, i, j)
-             bool = ishandle(bg.edges.texts(i, j)) && strcmpi(get(bg.edges.texts(i, j), 'Visible'), 'off');
-        end
-        
+
         % arrows
         function h = arrow_edge(bg, i, j, varargin)
             % ARROW_EDGE plots edge link as an arrow
@@ -1375,6 +1340,88 @@ classdef PlotBrainGraph < PlotBrainAtlas
             % See also PlotBrainGraph.
             
             bool = ishandle(bg.edges.cyl(i, j)) && strcmpi(get(bg.edges.cyl(i, j), 'Visible'), 'on');
+        end
+        
+        % texts
+        function h = text_edge(bg, graph_axes, i, j , text_value, varargin)
+            % TEXT_EDGE plots the edge value as a text
+            %
+            % TEXT_EDGE(BG, I, J) plots the edge value as a text.
+            %
+            % H = TEXT_EDGE(BG, I, J) returns the handle to the edge value
+            % from the brain region I to J.
+            %
+            % See also link_edge, arrow_edge, cylinder_edge.
+            
+            if i == j  % removes diagonal
+                return;
+            end
+            
+            bg.set_axes();
+            br_1 = bg.atlas.getBrainRegions().getValue(i);
+            br_2 = bg.atlas.getBrainRegions().getValue(j);
+            % get coordinates
+            X1 = br_1.getX();
+            Y1 = br_1.getY();
+            Z1 = br_1.getZ();
+            
+            X2 = br_2.getX();
+            Y2 = br_2.getY();
+            Z2 = br_2.getZ();
+            
+            % equidistant point
+            X3 = (X1 + X2) / 2;
+            Y3 = (Y1 + Y2) / 2;
+            Z3 = (Z1 + Z2) / 2;
+            bg.edges.texts(i, j) =  text(graph_axes, X3, Y3, Z3, text_value);
+            
+            if nargout > 0
+                h = bg.edges.texts(i, j);
+            end
+        end
+        function text_edge_on(bg, i, j)
+            % TEXT_EDGE_ON shows a edge text
+            %
+            % TEXT_EDGE_ON(BG, I, J) shows the edge text from the brain
+            % region I to J.
+            %
+            % See also PlotBrainGraph, text_edge, text_edge_off.
+            
+            if ishandle(bg.edges.texts(i, j))
+                set(bg.edges.texts(i, j), 'Visible', 'on')
+            end
+        end
+        function text_edge_off(bg, i, j)
+            % TEXT_EDGE_OFF hides a edge text
+            %
+            % TEXT_EDGE_OFF(BG, I, J) hides the edge text from the brain
+            % region I to J.
+            %
+            % See also PlotBrainGraph, text_edge, text_edge_on.
+            
+            if ishandle(bg.edges.texts(i, j))
+                set(bg.edges.texts(i, j), 'Visible', 'off')
+            end
+        end
+        function bool = text_edge_is_on(bg, i, j)
+            % TEXT_EDGE_IS_ON checks if the edge text is visible
+            %
+            % BOOL = TEXT_EDGE_IS_ON(BG, I, J) returns true if the edge text
+            % from the brain regions I to J is visible and false otherwise.
+            %
+            % See also PlotBrainGraph, text_edge, tex_edge_is_off.
+            
+            bool = ishandle(bg.edges.texts(i, j)) && strcmpi(get(bg.edges.texts(i, j), 'Visible'), 'on');
+        end
+        function bool = tex_edge_is_off(bg, i, j)
+            % TEXT_EDGE_IS_Off checks if the edge text is not visible
+            %
+            % BOOL = TEXT_EDGE_IS_Off(BG, I, J) returns true if the edge text
+            % from the brain regions I to J is not visible and false otherwise.
+            %
+            % See also PlotBrainGraph, text_edge, tex_edge_is_off.
+            
+            bool = ishandle(bg.edges.texts(i, j)) && strcmpi(get(bg.edges.texts(i, j), 'Visible'), 'off');
         end
     end
 end

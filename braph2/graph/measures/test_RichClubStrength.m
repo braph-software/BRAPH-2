@@ -11,7 +11,7 @@ A = [
 known_rich_club_strength = {[1.1 1.1 2 0]'};
 
 g = GraphWU(A);
-rich_club_strength = RichClubStrength(g, 'WeightedRichClubThreshold', 1);
+rich_club_strength = RichClubStrength(g, 'RichClubStrength.Parameter', 1);
 
 assert(isequal(rich_club_strength.getValue(), known_rich_club_strength), ...
     [BRAPH2.STR ':RichClubStrength:' BRAPH2.BUG_ERR], ...
@@ -30,7 +30,7 @@ wrich(:, 1, 2) = [0 0 0 0]';
 known_rich_club_strength = {wrich};
 
 g = GraphWD(A);
-rich_club_strength = RichClubStrength(g, 'WeightedRichClubThreshold', [1.5, 2]); 
+rich_club_strength = RichClubStrength(g, 'RichClubStrength.Parameter', [1.5, 2]); 
 
 assert(isequal(rich_club_strength.getValue(), known_rich_club_strength), ...
     [BRAPH2.STR ':RichClubStrength:' BRAPH2.BUG_ERR], ...
@@ -100,7 +100,7 @@ known_rich_club_strength = {
                  };            
 
 g = MultiplexGraphWD(A);
-rich_club_strength = RichClubStrength(g, 'WeightedRichClubThreshold', [1.5, 2]);
+rich_club_strength = RichClubStrength(g, 'RichClubStrength.Parameter', [1.5, 2]);
 
 assert(isequal(rich_club_strength.getValue(), known_rich_club_strength), ...
     [BRAPH2.STR ':RichClubStrength:' BRAPH2.BUG_ERR], ...

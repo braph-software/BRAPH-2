@@ -44,11 +44,11 @@ classdef AnalysisST_WU < Analysis
     %  getGlobalMeasurePlot         - returns a global measurement plot
     %  getGlobalComparisonPlot      - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
-    %  getNodalMeasurePlot          - returns a nodal mesure plot
-    %  getNodalComparisonPlot       - returns a nodal comprison plot
+    %  getNodalMeasurePlot          - returns a nodal measure plot
+    %  getNodalComparisonPlot       - returns a nodal comparison plot
     %  getNodalRandomComparisonPlot - returns a nodal randomcomparison plot
-    %  getBinodalMeasurePlot      - returns a binodal mesure plot
-    %  getBinodalComparisonPlot   - returns a binodal comprison plot
+    %  getBinodalMeasurePlot      - returns a binodal measure plot
+    %  getBinodalComparisonPlot   - returns a binodal comparison plot
     %  getBinodalRandomComparisonPlot - returns a binodal randomcomparison plot
     %
     % See also Analysis, MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU
@@ -303,7 +303,6 @@ classdef AnalysisST_WU < Analysis
                 'RandomComparisonST.p2', p2, ....
                 'RandomComparisonST.confidence_min', ci_lower, ...
                 'RandomComparisonST.confidence_max', ci_upper, ...
-                'RandomComparisonST.ParameterValues', parameter_value_group, ...
                 varargin{:} ...
                 );
         end
@@ -321,7 +320,7 @@ classdef AnalysisST_WU < Analysis
             % from GROUP_1 subject and GROUP_2 data. It will compare the measures
             % obtained and will return a comparison. The function
             % will utilize VALUE settings.
-            % Available POPERTIES are:
+            % Available PROPERTIES are:
             %  Verbose             - true to display info about the
             %                        randomization cycle, false by default
             %  Interruptible       - true if randomization cycle can be
@@ -343,7 +342,7 @@ classdef AnalysisST_WU < Analysis
             measurement_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
             value_2 = measurement_2.getMeasureValue();
             
-            difference_mean = cellfun(@(x, y) y - x, value_2, value_1, 'UniformOutput', false);
+            difference_mean = cellfun(@(x, y) y - x, value_1, value_2, 'UniformOutput', false);
             
             subjects_1 = group_1.getSubjects();
             subjects_2 = group_2.getSubjects();
@@ -2197,10 +2196,11 @@ classdef AnalysisST_WU < Analysis
             % brain view panel for GUIAnalysis.
             %
             % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
-            
-            
+
             uiparent = get_from_varargin([], 'UIParent', varargin{:});
             bg = get_from_varargin([], 'BrainGraph', varargin{:});
+            bgp = [];
+            mrc = [];
             
             ui_brainview_panel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 1]);
             ui_brainview_axes = get_from_varargin([], 'UIAxesBrain', varargin{:});
@@ -2262,7 +2262,7 @@ classdef AnalysisST_WU < Analysis
                     bg.brain_settings();
                 end
 
-                set(ui_contextmenu_figure_symbol_settings, 'Label', 'Brain Region Settins')
+                set(ui_contextmenu_figure_symbol_settings, 'Label', 'Brain Region Settings')
                 set(ui_contextmenu_figure_symbol_settings, 'Callback', {@cb_figure_settingsbr})
 
                 function cb_figure_settingsbr(~, ~)  % (src, event)
@@ -2307,10 +2307,18 @@ classdef AnalysisST_WU < Analysis
                 end               
             end
             function cb_bv_bg_panel(~, ~)
-                bgp =  analysis.getBrainGraphPanel(ui_brainview_axes, bg); %#ok<NASGU>
+                if isempty(bgp)
+                    bgp =  analysis.getBrainGraphPanel(ui_brainview_axes, bg);
+                else
+                    figure(bgp);
+                end
             end
             function cb_bv_meas_panel(~, ~)
-                analysis.getMCRPanel(ui_brainview_axes, bg);
+                if isempty(mrc)
+                    mrc = analysis.getMCRPanel(ui_brainview_axes, bg);
+                else
+                    figure(mrc)
+                end
             end
             function cb_show_surf(~, ~)
                update_brain_graph()                   
@@ -2862,7 +2870,7 @@ classdef AnalysisST_WU < Analysis
                 brain_graph_panel = fig_graph;
             end
         end
-        function getMCRPanel(analysis, brain_axes, bg)
+        function h = getMCRPanel(analysis, brain_axes, bg)
             % sets position of figure
             APPNAME = 'Analysis Property Panel';
             FigPosition = [.10 .30 .35 .50];
@@ -3990,6 +3998,10 @@ classdef AnalysisST_WU < Analysis
                         end
                     end
                 end
+            end
+            
+            if nargout > 0 
+                h = f;
             end
         end
     end

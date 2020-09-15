@@ -3,7 +3,7 @@
 atlas_file = [fileparts(which('example_workflow_ST_WU.m')) filesep() 'example data ST (MRI)' filesep() 'desikan_atlas.xlsx'];
 atlas = BrainAtlas.load_from_xls('File', atlas_file);
 
-%% Init edges liness
+%% Init edges lines
 bg = PlotBrainGraph(atlas);
 figure
 bg.hold_on()
@@ -16,8 +16,8 @@ bg.link_edges_settings();
 close(gcf)
 close(gcf)
 
-%% Edges arrows
-
+% %% Edges arrows
+% 
 % bg = PlotBrainGraph(atlas);
 % figure
 % bg.hold_on()

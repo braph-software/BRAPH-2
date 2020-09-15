@@ -58,6 +58,7 @@ classdef Measure < handle
     %   getAvailableSettings - returns the settings available to the class
     %   getMeasure      - returns the measure class
     %   getParameterName - returns the name of a measure's parameter
+    %   getParameterHandle - returns the handle of a measure
     %   getCompatibleGraphList - returns a list of compatible graphs
     %   getCompatibleGraphNumber - returns the number of compatible graphs
     %
@@ -202,6 +203,11 @@ classdef Measure < handle
                 settings{2 * i} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
             end
             m.settings = settings;  % initialize the property settings
+            
+            if Measure.is_parametric(class(m))
+                param_handle = Measure.getParameterHandle(class(m));
+                m.parameter = get_from_varargin(param_handle{2}, param_handle{1}, varargin{:});
+            end
         end
     end
     methods  % Basic methods
@@ -568,11 +574,27 @@ classdef Measure < handle
             %
             % NAME= GETPARAMETERNAME(MEASURE_CLASS) returns the name of
             % the parameter of the measure whose class is MEASURE_CLASS.
+            % 
+            % See also getParameterHandle.
             
             if Measure.is_parametric(m)  
                 name = eval([Measure.getClass(m) '.getParameterName()']);
             else
                 name = '';
+            end
+        end
+        function h = getParameterHandle(m)
+            % GETPARAMETERHANDLE returns the measures's parameter handle
+            %
+            % H = GETPARAMETERHANDLE(MEASURE)returns the measure's
+            % parameter handle.
+            %
+            % See also getParameterName, getParameter
+            
+            if Measure.is_parametric(m)  
+                h = eval([Measure.getClass(m) '.getParameterHandle()']);
+            else
+                h = '';
             end
         end
         function list = getCompatibleGraphList(m)

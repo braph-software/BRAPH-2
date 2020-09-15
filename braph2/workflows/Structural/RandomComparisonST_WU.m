@@ -11,7 +11,7 @@ classdef RandomComparisonST_WU < RandomComparison
     %  RandomComparisonST_WU        - Constructor
     %
     % RandomComparisonST_WU basic methods:
-    %  disp                         - displays the comparison
+    %  disp                         - displays the random comparison
     %
     % RandomComparisonST_WU get methods:
     %  getGroupValue                - returns the group measurement value
@@ -28,9 +28,9 @@ classdef RandomComparisonST_WU < RandomComparison
     %  initialize_data              - initializes and checks the data
     %
     % RandomComparisonST_WU descriptive methods (Static):
-    %  getClass                     - returns the class of the comparison
-    %  getName                      - returns the name of the comparison
-    %  getDescription               - returns the description of the comparison
+    %  getClass                     - returns the class of the random comparison
+    %  getName                      - returns the name of the random comparison
+    %  getDescription               - returns the description of the random comparison
     %  getBrainAtlasNumber          - returns the number of brain atlases
     %  getAnalysisClass             - returns the class of the analysis
     %  getSubjectClass              - returns the class of the subject
@@ -56,12 +56,12 @@ classdef RandomComparisonST_WU < RandomComparison
     methods  % Constructor
         function rc =  RandomComparisonST_WU(id, label, notes, atlas, measure_code, group, varargin)
             % RANDOMCOMPARISONST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
-            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % creates a random comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP_1 and a random group. It initializes the
             % RANDOMCOMPARISONST_WU with default settings.
             %
             % RANDOMCOMPARISONST_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...) 
-            % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
+            % creates a random comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP_1 and a random group. It initializes the
             % RANDOMCOMPARISONST_WU with VALUE settings.
             %
@@ -178,7 +178,7 @@ classdef RandomComparisonST_WU < RandomComparison
             % GETMEASUREPARAMETERVALUES returns the values of the measure's parameter 
             %
             % PARAMETER_VALUES = GETMEASUREPARAMETERVALUES(RC) returns the values
-            % of the measure parameter of the random comparison.
+            % of the measure's parameter of the random comparison.
             %
             % See also getGroupValue, getGroupValues, getDifference, getAllDifferences.
             
@@ -205,6 +205,7 @@ classdef RandomComparisonST_WU < RandomComparison
             %  'RandomComparisonST.p2'              - double tail p-value
             %  'RandomComparisonST.confidence_min'  - min value in confidence interval
             %  'RandomComparisonST.confidence_max'  - max value in confidence interval
+            %  'RandomComparisonST.ParameterValues' - parameter values of the measure
             %
             % See also AnalysisST_WU.
             
@@ -652,7 +653,7 @@ classdef RandomComparisonST_WU < RandomComparison
                 };
         end
         function sub = getRandomComparison(random_comparison_class, id, label, notes, atlas, measure_code, group, varargin)
-            % GETRANDOMCOMPARISON returns a new comparison
+            % GETRANDOMCOMPARISON returns a new random comparison
             %
             % SUB = GETRANDOMCOMPARISON(RANDOMCOMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2)
             % returns a new RandomComparisonST_WU object with RANDOMCOMPARISON_CLASS,

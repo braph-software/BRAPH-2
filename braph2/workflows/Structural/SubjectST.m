@@ -275,11 +275,12 @@ classdef SubjectST < Subject
             if  iscell(notes_tmp)
                 notes_tmp = notes_tmp{1};
             end
+            
             sub_tmp = Subject.getSubject(subject_class, ...
                 num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlas, ...
                 'ST', data_tmp');
             delete(sub_tmp);
-            
+                        
             % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', {});
             group_path = strsplit(file, filesep());
@@ -459,9 +460,10 @@ classdef SubjectST < Subject
             if  iscell(notes_tmp)
                 notes_tmp = notes_tmp{1};
             end
+            
             sub_tmp = Subject.getSubject(subject_class, ...
                 num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlases, ...
-                'ST', data_tmp');
+                'ST', data_tmp');  
             delete(sub_tmp);
             
             % creates group

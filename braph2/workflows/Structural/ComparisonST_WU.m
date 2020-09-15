@@ -210,6 +210,7 @@ classdef ComparisonST_WU < Comparison
             %  'ComparisonST.p2'                 - double tail p-value
             %  'ComparisonST.confidence_min'     - min value in confidence interval
             %  'ComparisonST.confidence_max'     - max value in confidence interval
+            %  'ComparisonST.ParameterValues'    - parameter values of the measure
             %
             % See also AnalysisST_WU.
             
