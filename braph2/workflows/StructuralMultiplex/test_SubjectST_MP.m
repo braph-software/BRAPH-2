@@ -186,6 +186,8 @@ end
 
 delete(save_dir_path1)
 delete(save_dir_path2)
+delete(save_dir_path3)
+delete(save_dir_path4)
 
 %% Test 3.1: Save and Load cohort from TXT
 % setup
