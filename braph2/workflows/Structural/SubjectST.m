@@ -32,17 +32,17 @@ classdef SubjectST < Subject
     %   save_to_json            - saves the subject data to a '.json' file
     %
     % See also Group, Cohort, SubjectDTI, SubjectST, Subject.
- 
+    
     methods  % Constructor
         function sub = SubjectST(id, label, notes, atlas, varargin)
             % SUBJECTST creates a subject of type Structural
             %
             % SUBJECTST(ID, LABEL, NOTES, ATLASES) creates a subject of type Structural
-            % with with ID, LABEL, NOTES. ATLAS is the brain atlas that 
+            % with with ID, LABEL, NOTES. ATLAS is the brain atlas that
             % subject Structural will use (it can be either a BrainAtlas or a
             % cell array with a single BrainAtlas).
             %
-            % SUBJECTST(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...) 
+            % SUBJECTST(ID, LABEL, NOTES, ATLASES, 'PROPERTYRULE1, 'VALUE1, ...)
             % creates a Structural subject with ubject ID, LABEL NOTES and ATLASES.
             % SubjectST will be initialized by the rules passed in the
             % VARARGIN.
@@ -63,7 +63,7 @@ classdef SubjectST < Subject
     end
     methods (Access=protected)  % Utilifty functions
         function initialize_datadict(sub, varargin)
-           % INITIALIZE_DATADICT initializes the data dictionary
+            % INITIALIZE_DATADICT initializes the data dictionary
             %
             % INITIALIZE_DATADICT(SUB, 'age', AGE, 'ST', DATA) initializes the data
             % ditionary with data type and data code of subject structural.
@@ -203,17 +203,17 @@ classdef SubjectST < Subject
         function cohort = load_from_xls(tmp, varargin)
             % LOAD_FROM_XLS loads a '.xls' file to a Cohort with SubjectST
             %
-            % COHORT = LOAD_FROM_XLS(TMP) opens a GUI to load a directory 
-            % where it reads '.xls' or '.xlsx' files. If TMP is a brain atlas 
+            % COHORT = LOAD_FROM_XLS(TMP) opens a GUI to load a directory
+            % where it reads '.xls' or '.xlsx' files. If TMP is a brain atlas
             % it will create a cohort of SubjectST. If TMP is a cohort
             % then it will load the file into the cohort.
             %
             % COHORT = LOAD_FROM_XLS(TMP, 'Directory', PATH) loads the directory
             % in PATH where it reads '.xls' or '.xlsx' files. If TMP is a
-            % brain atlas the function whill create a cohort of SubjectST 
+            % brain atlas the function whill create a cohort of SubjectST
             % If TMP is a cohort then the function will load the file into
             % the cohort.
-            % 
+            %
             % See also save_to_xls, load_from_txt, load_from_json.
             
             % file (fullpath)
@@ -255,8 +255,8 @@ classdef SubjectST < Subject
                 % creates new cohort
                 subject_class = 'SubjectST';
                 atlas = tmp;
-                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
-            end            
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});
+            end
             
             raw = readtable(file, 'PreserveVariableNames', true, 'Format', 'auto');
             atlas = cohort.getBrainAtlases();
@@ -284,11 +284,11 @@ classdef SubjectST < Subject
             % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', {});
             group_path = strsplit(file, filesep());
-            group_id = group_path{length(group_path)};            
+            group_id = group_path{length(group_path)};
             group_id = erase(group_id, '.xlsx');
-            group_id = erase(group_id, '.xls');            
+            group_id = erase(group_id, '.xls');
             group.setID(group_id);
-            cohort.getGroups().add(group.getID(), group);   
+            cohort.getGroups().add(group.getID(), group);
             
             for i = 1:1:size(raw, 1)
                 id_tmp = raw{i, 1};
@@ -311,7 +311,7 @@ classdef SubjectST < Subject
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
                 group.addSubject(subject);
-            end              
+            end
         end
         function save_to_xls(cohort, varargin)
             % SAVE_TO_XLS saves the cohort of SubjectST to a '.xls' file
@@ -320,10 +320,10 @@ classdef SubjectST < Subject
             % cohort of SubjectST will be saved in '.xls' or 'xlsx'
             % format.
             %
-            % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort
             % of SubjectST in '.xls' or 'xlsx' format in the
             % specified PATH.
-            % 
+            %
             % See also load_from_xls, save_to_txt, save_to_json
             
             % file (fullpath)
@@ -337,12 +337,12 @@ classdef SubjectST < Subject
                     return
                 end
             end
-          
+            
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
-                        
+            
             for j = 1:1:group.subjectnumber()
                 % get subject data
                 subject = subjects_list{j};
@@ -383,17 +383,17 @@ classdef SubjectST < Subject
         function cohort = load_from_txt(tmp, varargin)
             % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectST
             %
-            % COHORT = LOAD_FROM_TXT(TMP) opens a GUI to load a directory 
-            % where it reads '.txt' files. If TMP is a brain atlas 
+            % COHORT = LOAD_FROM_TXT(TMP) opens a GUI to load a directory
+            % where it reads '.txt' files. If TMP is a brain atlas
             % it will create a cohort of SubjectST. If TMP is a cohort
             % then it will load the file into the cohort.
             %
             % COHORT = LOAD_FROM_TXT(TMP, 'Directory', PATH) loads the directory
             % in PATH where it reads '.txt' files. If TMP is a
-            % brain atlas the function whill create a cohort of SubjectST 
+            % brain atlas the function whill create a cohort of SubjectST
             % If TMP is a cohort then the function will load the file into
             % the cohort.
-            % 
+            %
             % See also save_to_txt, load_from_xls, load_from_json
             
             % file (fullpath)
@@ -417,7 +417,7 @@ classdef SubjectST < Subject
                 cohort = tmp;
                 subject_class = cohort.getSubjectClass();
             else
-                 % search for cohort info file
+                % search for cohort info file
                 file_path = strsplit(file, filesep());
                 file_cohort_path = '';
                 for i = 1:1:length(file_path)-1
@@ -436,11 +436,11 @@ classdef SubjectST < Subject
                     cohort_id = raw_cohort{1, 1};
                     cohort_label = raw_cohort{2, 1};
                     cohort_notes = raw_cohort{3, 1};
-                end                
+                end
                 
                 % creates cohort
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
-            end     
+            end
             
             % reads file
             raw = readtable(file, 'Delimiter', '\t');
@@ -505,9 +505,9 @@ classdef SubjectST < Subject
             % SAVE_TO_TXT(COHORT) opens a GUI to choose the path where the
             % cohort of SubjectST will be saved in '.txt' format.
             %
-            % SAVE_TO_TXT(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % SAVE_TO_TXT(COHORT, 'RootDirectory', PATH) saves the cohort
             % of SubjectST in '.txt' format in the specified PATH.
-            % 
+            %
             % See also load_from_txt, save_to_xls, save_to_json
             
             % file (fullpath)
@@ -521,12 +521,12 @@ classdef SubjectST < Subject
                     return
                 end
             end
-     
+            
             % get info
             groups = cohort.getGroups().getValues();
             group = groups{1};  % must change
             subjects_list = group.getSubjects();
-                        
+            
             for j = 1:1:group.subjectnumber()
                 % get subject data
                 subject = subjects_list{j};
@@ -536,7 +536,7 @@ classdef SubjectST < Subject
                 row_datas{j, 1} = subject.getData('ST').getValue(); %#ok<AGROW>
             end
             t = table(row_ids, row_labels, row_notes, row_datas);
-
+            
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
             
@@ -594,17 +594,17 @@ classdef SubjectST < Subject
         function cohort = load_from_json(tmp, varargin)
             % LOAD_FROM_JSON loads a '.json' file to a Cohort with SubjectST
             %
-            % COHORT = LOAD_FROM_JSON(TMP) opens a GUI to load a directory 
-            % where it reads '.json' files. If TMP is a brain atlas 
+            % COHORT = LOAD_FROM_JSON(TMP) opens a GUI to load a directory
+            % where it reads '.json' files. If TMP is a brain atlas
             % it will create a cohort of SubjectST. If TMP is a cohort
             % then it will load the file into the cohort.
             %
             % COHORT = LOAD_FROM_JSON(TMP, 'Directory', PATH) loads the directory
             % in PATH where it reads '.json' files. If TMP is a
-            % brain atlas the function whill create a cohort of SubjectST 
+            % brain atlas the function whill create a cohort of SubjectST
             % If TMP is a cohort then the function will load the file into
             % the cohort.
-            % 
+            %
             % See also save_to_json, load_from_xls, load_from_txt
             
             % file (fullpath)
@@ -619,7 +619,7 @@ classdef SubjectST < Subject
                 end
             end
             
-            raw = jsondecode(fileread(file)); 
+            raw = jsondecode(fileread(file));
             
             if isa(tmp, 'Cohort')
                 cohort = tmp;
@@ -633,7 +633,7 @@ classdef SubjectST < Subject
                 subject_class = 'SubjectST';
                 atlases = tmp;
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
-            end           
+            end
             
             % sneak peak
             subject_tmp = Subject.getSubject(subject_class, ...
@@ -644,20 +644,20 @@ classdef SubjectST < Subject
             % creates group
             group = Group(subject_class, '', '', '', {});
             group_path = strsplit(file, filesep());
-            group_id = group_path{length(group_path)};            
+            group_id = group_path{length(group_path)};
             group_id = erase(group_id, '.json');
             group.setID(group_id);
             cohort.getGroups().add(group.getID(), group);
-
+            
             for i = 1:1:length(raw.SubjectData)
                 id = num2str(raw.SubjectData(i).id);
                 label = num2str(raw.SubjectData(i).label);
                 notes = num2str(raw.SubjectData(i).notes);
                 data = raw.SubjectData(i).data;
-                subject = Subject.getSubject(subject_class, ...                   
+                subject = Subject.getSubject(subject_class, ...
                     id, label, notes, atlases, ...
                     'ST', data);
-                 if ~cohort.getSubjects().contains(subject.getID())
+                if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
                 group.addSubject(subject);
@@ -669,9 +669,9 @@ classdef SubjectST < Subject
             % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
             % cohort of SubjectST will be saved in '.json' format.
             %
-            % SAVE_TO_JSON(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % SAVE_TO_JSON(COHORT, 'RootDirectory', PATH) saves the cohort
             % of SubjectST in '.json' format in the specified PATH.
-            % 
+            %
             % See also load_from_json, save_to_xls, save_to_txt
             
             % file (fullpath)
@@ -694,7 +694,7 @@ classdef SubjectST < Subject
             for j = 1:1:group.subjectnumber()
                 % get subject data
                 subject = subjects_list{j};
-               
+                
                 row_ids{j, 1} = subject.getID(); %#ok<AGROW>
                 row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
                 row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
@@ -707,7 +707,7 @@ classdef SubjectST < Subject
             % labels
             for i = 1:1:atlas.getBrainRegions().length()
                 brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
-            end            
+            end
             row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
             labels = row_data;
             
@@ -724,7 +724,7 @@ classdef SubjectST < Subject
                 );
             
             % save
-            json_structure = jsonencode(structure_to_be_saved);      
+            json_structure = jsonencode(structure_to_be_saved);
             fid = fopen(file, 'w');
             if fid == -1, error('Cannot create JSON file'); end
             fwrite(fid, json_structure, 'char');
