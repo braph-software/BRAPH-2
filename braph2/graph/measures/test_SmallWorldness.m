@@ -71,3 +71,15 @@ smallworldness = cellfun(@(s) round(s, 1), smallworldness, 'UniformOutput', fals
 assert(isequal(smallworldness, known_smallworldness), ...
     [BRAPH2.STR ':SmallWorldness:' BRAPH2.BUG_ERR], ...
     'SmallWorldness is not being calculated correctly for MultiplexGraphWU.')
+
+%% Test 5: GraphBU subgraphs
+A = rand(20);
+
+known_smallworldness = {1};
+
+g = GraphBU(A);
+smallworldness = SmallWorldness(g,'PathLengthRule', 'subgraphs');
+
+assert(isequal(smallworldness.getValue(), known_smallworldness), ...
+    [BRAPH2.STR ':SmallWorldness:' BRAPH2.BUG_ERR], ...
+    'SmallWorldness is not being calculated correctly for GraphBU.')
