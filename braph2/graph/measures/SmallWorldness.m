@@ -69,29 +69,29 @@ classdef SmallWorldness < PathLengthAv
             end
             
             if g.is_measure_calculated('PathLengthAv')
-                path_length_av = g.getMeasure('PathLengthAv').getValue();
+                path_length_av = g.getMeasureValue('PathLengthAv');
             else
-                path_length_av = PathLengthAv(g, g.getSettings()).getValue();
+                path_length_av = calculate@PathLengthAv(m);
             end
             
             M = 100;  % number of random graphs
             clustering_av_random = cell(1,M);
             path_length_av_random = cell(1,M);        
-            for m = 1:1:M
+            for r = 1:1:M
                 g_random = g.randomize();
-
+                
                 if g_random.is_measure_calculated('ClusteringAv')
-                    clustering_av_random(m) = {g_random.getMeasure('ClusteringAv').getValue()};
+                    clustering_av_random(r) = {g_random.getMeasure('ClusteringAv').getValue()};
                 else
-                    clustering_av_random(m) = {ClusteringAv(g_random, g_random.getSettings()).getValue()};
+                    clustering_av_random(r) = {ClusteringAv(g_random, g_random.getSettings()).getValue()};
                 end
-
+                
                 if g_random.is_measure_calculated('PathLengthAv')
-                    path_length_av_random(m) = {g_random.getMeasure('PathLengthAv').getValue()};
+                    path_length_av_random(r) = {g_random.getMeasureValue('PathLengthAv')};
                 else
-                    path_length_av_random(m) = {PathLengthAv(g_random, g_random.getSettings()).getValue()};
+                    path_length_av_random(r) = {calculate@PathLengthAv(m)};
                 end
-            end        
+            end
             path_length_av_random = cellfun(@(x) cell2mat(x), path_length_av_random, 'UniformOutput', false);
             clustering_av_random = cellfun(@(x) cell2mat(x), clustering_av_random, 'UniformOutput', false);
             path_length_av_random = cell2mat(path_length_av_random);
