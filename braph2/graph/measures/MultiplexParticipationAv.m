@@ -36,36 +36,23 @@ classdef MultiplexParticipationAv < MultiplexParticipation
         end
     end
     methods (Access=protected)
-        function multiplex_participation = calculate(m)
+        function multiplex_participation_av = calculate(m)
             % CALCULATE calculates the average multiplex participation value of a multiplex
             %
-            % MULTIPLEXPARTICIPATION = CALCULATE(M) returns the value of the 
+            % MULTIPLEXPARTICIPATIONAV = CALCULATE(M) returns the value of the 
             % average multiplex participation of a multiplex.
             %
             % See also Measure, MultiplexParticipation, Degree, OverlappingDegree, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             
-            if g.is_measure_calculated('Degree')
-                degree = g.getMeasureValue('Degree');
+            if g.is_measure_calculated('MultiplexParticipation')
+                multiplex_participation = g.getMeasureValue('MultiplexParticipation');
             else
-                degree = calculate@Degree(m);
+                multiplex_participation = calculate@MultiplexParticipation(m);
             end
             
-            if g.is_measure_calculated('OverlappingDegree')
-                overlapping_degree = g.getMeasureValue('OverlappingDegree');
-            else
-                overlapping_degree = OverlappingDegree(g, g.getSettings()).getValue();
-            end
-            
-            N = g.nodenumber();
-            L = g.layernumber();
-            
-            multiplex_participation = zeros(N(1), 1);
-            for li = 1:1:L
-                multiplex_participation = multiplex_participation + (degree{li}./overlapping_degree{1}).^2;
-            end
-            multiplex_participation = {L / (L - 1) * (1 - multiplex_participation)};
+            multiplex_participation_av = {mean(multiplex_participation{1})}; 
         end
     end  
     methods (Static)  % Descriptive methods
