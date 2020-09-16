@@ -134,7 +134,7 @@ classdef AnalysisFNC_WU < Analysis
                 
                 correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
                 negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
-                A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+                A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule);  % correlation is a column based operation
                 
                 graph_type = analysis.getGraphType();
                 g = Graph.getGraph(graph_type, A);
@@ -682,7 +682,7 @@ classdef AnalysisFNC_WU < Analysis
                     g_As = cellfun(@(x) x.getA(), graphs, 'UniformOutput', false);
                     A = zeros(atlas.getBrainRegions().length());
                     
-                    for i = 1:1:atlas.getBrainRegions().length()
+                    for i = 1:1:length(graphs)
                         A = A+g_As{i};
                     end
                     A = A/length(graphs);
