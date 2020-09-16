@@ -1321,9 +1321,11 @@ init_menu()
         analysis_list = reshape(analysis_list', [1 numel(analysis_list)]);
         for i = 1:1:length(analysis_list)
             analysis = analysis_list{i};
-            cohort_analysis_menu = uimenu(ui_menu_analysis);
-            set(cohort_analysis_menu, 'Label', [Analysis.getName(analysis) ' ...'])
-            set(cohort_analysis_menu, 'Callback', {@cb_menu_analysis})            
+            if isequal(cohort.getSubjectClass(), analysis.getSubjectClass())
+                cohort_analysis_menu = uimenu(ui_menu_analysis);
+                set(cohort_analysis_menu, 'Label', [Analysis.getName(analysis) ' ...'])
+                set(cohort_analysis_menu, 'Callback', {@cb_menu_analysis})
+            end
         end
         
         function cb_menu_analysis(src, ~)

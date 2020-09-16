@@ -280,7 +280,7 @@ classdef SubjectFNC < Subject
                 end
                 
                 % creates a group per subfolder
-                group = Group(subject_class, ['Group: ' i], '', '', subjects);
+                group = Group(subject_class, ['Group_' num2str(j)], '', '', subjects);
                 cohort.getGroups().add(group.getID(), group, j);
             end
         end
@@ -406,19 +406,20 @@ classdef SubjectFNC < Subject
                 
                 % create subject
                 sub_id = erase(files(i).name, '.txt');
-                label = raw{1, 1};
-                notes = raw{2, 1};
-                B = raw(3:end, 1);
+                label = '';
+                notes = '';
+                B = raw(1:end, 1);
                 number_columns = length(B) / atlases.getBrainRegions().length();
                 B = reshape(B, [number_columns atlases.getBrainRegions().length()]);
                 B = B';
                 C = cellfun(@(x) str2double(x), B);
                 
                 subject = Subject.getSubject(subject_class, ...
-                    sub_id, char(label), char(notes), atlases, ...
+                    sub_id, num2str(label), num2str(notes), atlases, ...
                     'FNC', C);
                 
                 cohort.getSubjects().add(subject.getID(), subject, i);
+                subjects{i} = subject; %#ok<AGROW>
             end
             
            
@@ -426,7 +427,7 @@ classdef SubjectFNC < Subject
             % creates group
             if i == length(files)
                 [~, groupname] = fileparts(directory);
-                group = Group(subject_class, groupname, '', '',  cohort.getSubjects().getValues());
+                group = Group(subject_class, groupname, '', '',  subjects);
                 cohort.getGroups().add(group.getID(), group);
             end
         end
@@ -539,6 +540,7 @@ classdef SubjectFNC < Subject
                     'FNC', raw.SubjectData.data);
                 
                 cohort.getSubjects().add(subject.getID(), subject, i);
+                subjects{i} = subject; %#ok<AGROW>
             end
             
             cohort.setID(cohort_id);
@@ -548,7 +550,7 @@ classdef SubjectFNC < Subject
             % creates group
             if i == length(files)
                 [~, groupname] = fileparts(directory);
-                group = Group(subject_class, groupname, group_label, group_notes, cohort.getSubjects().getValues());
+                group = Group(subject_class, groupname, group_label, group_notes, subjects);
                 cohort.getGroups().add(group.getID(), group);
             end
         end
