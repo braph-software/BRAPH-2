@@ -195,8 +195,8 @@ classdef AnalysisFNC_WU < Analysis
             % See also calculate_measurement, calculate_comparison.
             
             % rules
-            attempts_per_edge = analysis.getSettings('AnalysisFNC.AttemptsPerEdge');
-            number_of_weights = analysis.getSettings('AnalysisFNC.NumberOfWeights');
+            attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
+            number_of_weights = get_from_varargin(1, 'NumberOfWeights', varargin{:});
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             M = get_from_varargin(1e+3, 'RandomComparisonFNC.RandomizationNumber', varargin{:});
@@ -457,9 +457,7 @@ classdef AnalysisFNC_WU < Analysis
             available_settings = {
                 {'AnalysisFNC.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
                 {'AnalysisFNC.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
-                {'AnalysisFNC.Longitudinal', BRAPH2.LOGICAL, false, {false, true}}, ...
-                {'AnalysisFNC.AttemptsPerEdge', BRAPH2.NUMERIC, 1, {}}, ...
-                {'AnalysisFNC.NumberOfWeights', BRAPH2.NUMERIC, 1, {}} ...
+                {'AnalysisFNC.Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...
                 };
         end
     end
@@ -681,10 +679,11 @@ classdef AnalysisFNC_WU < Analysis
                     atlas = atlases{1};
                     group = analysis.getCohort().getGroups().getValue(selected_group);
                     graphs = analysis.get_graphs_for_group(group, varargin{:});
+                    g_As = cellfun(@(x) x.getA(), graphs, 'UniformOutput', false);
                     A = zeros(atlas.getBrainRegions().length());
                     
                     for i = 1:1:atlas.getBrainRegions().length()
-                        A = A+graphs(i);
+                        A = A+g_As{i};
                     end
                     A = A/length(graphs);
                     
