@@ -279,8 +279,12 @@ classdef SubjectST_MP < Subject
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
             end          
             
-            raw1 = readtable(file1, 'PreserveVariableNames', true, 'Format', 'auto');
-            raw2 = readtable(file2, 'PreserveVariableNames', true, 'Format', 'auto');
+            % supress warning
+            warning_id = 'MATLAB:table:ModifiedAndSavedVarnames';
+            warning('off', warning_id)
+            
+            raw1 = readtable(file1);
+            raw2 = readtable(file2);
             % Assert both files have the same size (they should contain
             % same number of regions and same number of subjects)
             assert(size(raw1, 1) == size(raw2, 1) && size(raw1, 2) == size(raw2, 2), ...
@@ -343,6 +347,8 @@ classdef SubjectST_MP < Subject
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
                 group.addSubject(subject);
+                % warning on
+                warning('on', 'all')
             end   
         end
         function save_to_xls(cohort, varargin)

@@ -258,7 +258,11 @@ classdef SubjectST < Subject
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});
             end
             
-            raw = readtable(file, 'PreserveVariableNames', true, 'Format', 'auto');
+            % supress warning
+            warning_id = 'MATLAB:table:ModifiedAndSavedVarnames';
+            warning('off', warning_id)
+            
+            raw = readtable(file);
             atlas = cohort.getBrainAtlases();
             
             % sneak peak to see if it is a subject
@@ -312,6 +316,8 @@ classdef SubjectST < Subject
                 end
                 group.addSubject(subject);
             end
+             % warning on
+            warning('on', 'all')
         end
         function save_to_xls(cohort, varargin)
             % SAVE_TO_XLS saves the cohort of SubjectST to a '.xls' file
