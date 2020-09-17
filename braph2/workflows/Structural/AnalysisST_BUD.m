@@ -33,6 +33,12 @@ classdef AnalysisST_BUD < AnalysisST_WU
     %  getGlobalMeasurePlot         - returns a global measurement plot
     %  getGlobalComparisonPlot      - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
+    %  getNodalMeasurePlot         - returns a global measurement plot
+    %  getNodalComparisonPlot      - returns a global comparison plot
+    %  getNodalRandomComparisonPlot - returns a global randomcomparison plot
+    %  getBiNodalMeasurePlot         - returns a global measurement plot
+    %  getBiNodalComparisonPlot      - returns a global comparison plot
+    %  getBiNodalRandomComparisonPlot - returns a global randomcomparison plot
     %
     % See also Analysis, MeasurementST_BUD, RandomComparisonST_BUD, ComparisonST_BUD
     

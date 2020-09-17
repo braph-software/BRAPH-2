@@ -27,6 +27,17 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
     %  getComparisonClass           - returns the class of the comparison
     %  getAvailbleSettings          - returns the available settings
     %
+    % AnalysisFNC_BUD Plot UIPanels
+    %  getGlobalMeasurePlot         - returns a global measurement plot
+    %  getGlobalComparisonPlot      - returns a global comparison plot
+    %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
+    %  getNodalMeasurePlot         - returns a global measurement plot
+    %  getNodalComparisonPlot      - returns a global comparison plot
+    %  getNodalRandomComparisonPlot - returns a global randomcomparison plot
+    %  getBiNodalMeasurePlot         - returns a global measurement plot
+    %  getBiNodalComparisonPlot      - returns a global comparison plot
+    %  getBiNodalRandomComparisonPlot - returns a global randomcomparison plot
+    %
     % See also Analysis, MeasurementFNC_BUD, RandomComparisonFNC_BUD, ComparisonFNC_BUD
     
     methods

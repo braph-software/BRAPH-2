@@ -13,7 +13,7 @@ close(gcf)
 
 %% Init FNC
 
-analysis_file = [fileparts(which('example_workflow_FNC_WU.m')) filesep() 'example data FNC (fMRI)' filesep() 'analysis_example_FNC_WU.analysis'];
+analysis_file = [fileparts(which('example_workflow_FNC_WU.m')) filesep() 'example data FNC (fMRI)' filesep() 'analysis_example_FNC_BUT.analysis'];
 temp = load(analysis_file, '-mat', 'ga', 'BUILD');
 ga = temp.ga;
 
