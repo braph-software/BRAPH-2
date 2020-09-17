@@ -99,11 +99,11 @@ classdef MultiplexParticipationAv < MultiplexParticipation
             % GETMEASUREFORMAT returns the measure format of MultiplexParticipationAv
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of average multiplex participation measure (NODAL).
+            % of average multiplex participation measure (GLOBAL).
             %
             % See also getMeasureScope.
             
-            measure_format = Measure.NODAL;
+            measure_format = Measure.GLOBAL;
         end
         function measure_scope = getMeasureScope()
             % GETMEASURESCOPE returns the measure scope of MultiplexParticipationAv
