@@ -38,6 +38,7 @@ classdef MeasurementFNC_WU < Measurement
     properties
         values  % array with the values of the measure for each subject
         average_value  % average value of the group
+        parameter_values
     end
     methods  % Constructor
         function m =  MeasurementFNC_WU(id, label, notes, atlas, measure_code, group, varargin)
@@ -78,6 +79,16 @@ classdef MeasurementFNC_WU < Measurement
             
             average_value = m.average_value;
         end
+        function parameter_values = getMeasureParameterValues(m)
+            % GETMEASUREPARAMETERVALUES returns the values of the measure's parameter
+            %
+            % PARAMETER_VALUES = GETMEASUREPARAMETERVALUES(M) returns the values 
+            % of the measure parameter.
+            % 
+            % See also getClass, getName, getDescription.
+            
+            parameter_values = m.parameter_values;
+        end
     end
     methods (Access=protected)
         function initialize_data(m, varargin)
@@ -97,6 +108,11 @@ classdef MeasurementFNC_WU < Measurement
             
             measure_code = m.getMeasureCode();
             
+            m.parameter_values = get_from_varargin( ...
+                [], ...  % 1 dimension minimum
+                'MeasurementFNC.ParameterValues', ...
+                varargin{:});
+
             if Measure.is_global(measure_code)  % global measure
                 m.values = get_from_varargin( ...
                     repmat({0}, 1, m.getGroup().subjectnumber()), ...
