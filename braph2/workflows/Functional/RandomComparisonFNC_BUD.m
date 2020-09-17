@@ -18,6 +18,9 @@ classdef RandomComparisonFNC_BUD < RandomComparisonFNC_WU
     %  getDescription               - returns the description of the comparison
     %  getAnalysisClass             - returns the class of the analysis
     %
+    % RandomComparisonFNC_BUD plot methods (Static):
+    %  getRandomComparisonSettingsPanel - returns a UIPanel
+    %
     % See also Comparison, AnalysisFNC_BUT, MeasurementFNC_BUT, ComparisonFNC_BUT.
     
     properties (Access = protected)
@@ -46,11 +49,11 @@ classdef RandomComparisonFNC_BUD < RandomComparisonFNC_WU
         function setDensity(rc, density)
             % SETDENSITY sets the measure fixed density of values
             %
-            % SETDENSITY(RC, DENSITY) sets the measure fixed density of 
+            % SETDENSITY(RC, DENSITY) sets the measure fixed density of
             % values.
             %
             % See also getDensity.
-
+            
             rc.density = density;
         end
     end
@@ -110,6 +113,117 @@ classdef RandomComparisonFNC_BUD < RandomComparisonFNC_WU
             % See also getList, getClass, getName.
             
             analysis_class = 'AnalysisFNC_BUT';
+        end
+    end
+    methods (Static)  % Plot ComparisonGUI Child Panel
+        function handle = getRandomComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. Modificable settings are: Verbose, Interruptible,
+            % Randomization and Density.
+            %
+            % See also RandomComparisonST_BUD.
+            
+            set(uiparent, 'Visible', 'on')
+            
+            ui_density_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_density_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_density_min_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_density_min_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_density_max_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_density_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_randomization_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_randomization_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_attempts_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_attempts_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_weights_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_weights_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            init_child_panel()
+            function init_child_panel()
+                set(ui_density_text, 'String', 'Density')
+                set(ui_density_text, 'Position', [.01 .46 .47 .08])
+                set(ui_density_text, 'Fontweight', 'bold')
+                
+                set(ui_density_edit, 'String', 1)
+                set(ui_density_edit, 'Position', [.5 .47 .45 .08])
+                set(ui_density_edit, 'Callback', {@cb_randomcomparison_density})
+                
+                set(ui_density_min_text, 'String', 'Min')
+                set(ui_density_min_text, 'Position', [.01 .56 .47 .08])
+                set(ui_density_min_text, 'Fontweight', 'bold')
+                
+                set(ui_density_min_edit, 'String', 0)
+                set(ui_density_min_edit, 'Position', [.5 .57 .45 .08])
+                set(ui_density_min_edit, 'Callback', {@cb_randomcomparison_min})
+                
+                set(ui_density_max_text, 'String', 'Max')
+                set(ui_density_max_text, 'Position', [.01 .36 .47 .08])
+                set(ui_density_max_text, 'Fontweight', 'bold')
+                
+                set(ui_density_max_edit, 'String', 100)
+                set(ui_density_max_edit, 'Position', [.5 .37 .45 .08])
+                set(ui_density_max_edit, 'Callback', {@cb_randomcomparison_max})
+                
+                set(ui_randomization_text, 'String', 'Randomization Number')
+                set(ui_randomization_text, 'Position', [.01 .86 .47 .08])
+                set(ui_randomization_text, 'Fontweight', 'bold')
+                
+                set(ui_randomization_edit, 'String', 1000)
+                set(ui_randomization_edit, 'Position', [.5 .87 .45 .08])
+                set(ui_randomization_edit, 'Callback', {@cb_randomcomparison_permutation})
+                
+                set(ui_attempts_text, 'String', 'Attempts per Edge')
+                set(ui_attempts_text, 'Position',  [.01 .76 .47 .08])
+                set(ui_attempts_text, 'Fontweight', 'bold')
+                
+                set(ui_attempts_edit, 'String', 5)
+                set(ui_attempts_edit, 'Position', [.5 .77 .45 .08])
+                set(ui_attempts_edit, 'Callback', {@cb_randomcomparison_attempts})
+                
+                set(ui_weights_text, 'String', 'Number of Weights')
+                set(ui_weights_text, 'Position',  [.01 .66 .47 .08])
+                set(ui_weights_text, 'Fontweight', 'bold')
+                
+                set(ui_weights_edit, 'String', 1)
+                set(ui_weights_edit, 'Position', [.5 .67 .45 .08])
+                set(ui_weights_edit, 'Callback', {@cb_randomcomparison_weights})
+            end
+            function cb_randomcomparison_density(~,~)
+                setappdata(uiparent, 'density', ...
+                    str2double(get(ui_density_min_edit, 'String')) : ...
+                    str2double(get(ui_density_edit, 'String')) : ...
+                    str2double(get(ui_density_max_edit, 'String')))
+            end
+            function cb_randomcomparison_min(src, ~)
+                newdata = get(src, 'String');
+                set(ui_density_min_edit, 'String', newdata);
+            end
+            function cb_randomcomparison_max(src, ~)
+                newdata = get(src, 'String');
+                set(ui_density_max_edit, 'String', newdata);
+            end
+            function cb_randomcomparison_permutation(~, ~)
+                setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
+            end
+            function cb_randomcomparison_attempts(~, ~)
+                setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
+            end
+            function cb_randomcomparison_weights(~, ~)
+                setappdata(uiparent, 'numberweigths', str2double(get(ui_weights_edit, 'String')))
+            end
+            handle.variables = {'density'};
+            handle.step = ui_density_edit;
+            handle.min = ui_density_min_edit;
+            handle.max = ui_density_max_edit;
+            handle.randomization = ui_randomization_edit;
+            setappdata(uiparent, 'density', ...
+                str2double(get(ui_density_min_edit, 'String')) : ...
+                str2double(get(ui_density_edit, 'String')) : ...
+                str2double(get(ui_density_max_edit, 'String')))
+            setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
+            setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
+            setappdata(uiparent, 'numberweigths', str2double(get(ui_weights_edit, 'String')))
         end
     end
 end

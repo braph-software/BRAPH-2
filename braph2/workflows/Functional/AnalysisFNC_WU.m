@@ -718,7 +718,485 @@ classdef AnalysisFNC_WU < Analysis
             %
             % See also getGraphPanel, getMainPanelMeasurePlot, getBrainView
             
-           global_panel = [];
+            uiparent = get_from_varargin([], 'UIParent', varargin{:});
+            
+            % declare constans
+            SELECTALL_MEAS_CMD = GUI.SELECTALL_CMD;
+            SELECTALL_MEAS_TP = 'Select all measures';
+            
+            CLEARSELECTION_MEAS_CMD = GUI.CLEARSELECTION_CMD;
+            CLEARSELECTION_MEAS_TP = 'Clear measure selection';
+            
+            REMOVE_MEAS_CMD = GUI.REMOVE_CMD;
+            REMOVE_MEAS_TP = 'Remove selected measures';
+            
+            % get global measures list
+            mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());
+            for mi = 1:1:length(mlist)
+                if Measure.is_global(mlist{mi})
+                    g_list{mi} = mlist{mi}; %#ok<AGROW>
+                end
+            end
+            global_list = g_list(~cellfun(@isempty, g_list));
+            
+            % declare variables
+            selected_brainmeasures = [];
+            
+            % declare the uicontrols
+            ui_mainpanel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 1]);
+            ui_global_tbl = uitable(ui_mainpanel);
+            ui_button_brainmeasures_selectall = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
+            ui_button_brainmeasures_clearselection = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
+            ui_button_brainmeasures_remove = uicontrol(ui_mainpanel, 'Style', 'pushbutton');
+            ui_checkbox_brainmeasures_meas = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            ui_listbox_brainmeasures_comp_groups = uicontrol(ui_mainpanel, 'Style', 'listbox');
+            ui_popup_globalmeasures_group1 = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_popup_globalmeasures_group2 = uicontrol(ui_mainpanel, 'Style', 'popup');
+            ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
+            ui_plot_measure_axes = get_from_varargin([], 'UIAxesGlobal', varargin{:});
+            ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
+            ui_selectedmeasure_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
+            fdr_threshold_edit = uicontrol(ui_mainpanel, 'style', 'edit');
+            init_global_panel()
+            function init_global_panel()
+                GUI.setUnits(ui_mainpanel)
+                
+                set(ui_global_tbl, 'BackgroundColor', GUI.TABBKGCOLOR)
+                if isequal(analysis.getMeasurementClass(), 'MeasurementST_WU')
+                    set(ui_global_tbl, 'Position', [.02 .19 .96 .79])
+                    GUI.setUnits(ui_plot_measure_panel)
+                    GUI.setBackgroundColor(ui_plot_measure_panel)
+                    
+                    set(ui_plot_measure_panel, 'Position', [.0 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Parent', ui_plot_measure_panel)
+                    set(ui_plot_measure_axes, 'Position', [.00 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Visible', 'off')
+                else
+                    set(ui_global_tbl, 'Position', [.02 .19 .4 .79])
+                    GUI.setUnits(ui_plot_measure_panel)
+                    GUI.setBackgroundColor(ui_plot_measure_panel)
+                    set(ui_plot_measure_panel, 'Position', [.42 .00 .58 .98])
+                    
+                    set(ui_plot_measure_axes, 'Parent', ui_plot_measure_panel)
+                    set(ui_plot_measure_axes, 'Position', [.1 .2 .8 .79])
+                end
+                set(ui_global_tbl, 'CellEditCallback', {@cb_global_table_edit})
+                
+                set(ui_global_tbl, 'Units', 'normalized')
+                set(ui_button_brainmeasures_selectall, 'Position', [.19 .14 .10 .03])
+                set(ui_button_brainmeasures_selectall, 'String', SELECTALL_MEAS_CMD)
+                set(ui_button_brainmeasures_selectall, 'TooltipString', SELECTALL_MEAS_TP)
+                set(ui_button_brainmeasures_selectall, 'Callback', {@cb_global_selectall})
+                
+                set(ui_button_brainmeasures_clearselection, 'Position', [.19 .10 .10 .03])
+                set(ui_button_brainmeasures_clearselection, 'String', CLEARSELECTION_MEAS_CMD)
+                set(ui_button_brainmeasures_clearselection, 'TooltipString', CLEARSELECTION_MEAS_TP)
+                set(ui_button_brainmeasures_clearselection, 'Callback', {@cb_global_clearselection})
+                
+                set(ui_button_brainmeasures_remove, 'Position', [.19 .06 .10 .03])
+                set(ui_button_brainmeasures_remove, 'String', REMOVE_MEAS_CMD)
+                set(ui_button_brainmeasures_remove, 'TooltipString', REMOVE_MEAS_TP)
+                set(ui_button_brainmeasures_remove, 'Callback', {@cb_global_remove})
+                
+                set(fdr_threshold_edit, 'Position', [.19 .02 .1 .03])
+                set(fdr_threshold_edit, 'String', '0.05')
+                set(fdr_threshold_edit, 'TooltipString', 'Input the desired FDR threshold parameter')
+                set(fdr_threshold_edit, 'Callback', {@cb_global_fdr})   
+                set(fdr_threshold_edit, 'Visible', 'off')
+                
+                set(ui_checkbox_brainmeasures_meas, 'Position', [.3 .14 .10 .03])
+                set(ui_checkbox_brainmeasures_meas, 'String', 'measure')
+                set(ui_checkbox_brainmeasures_meas, 'Value', true)
+                set(ui_checkbox_brainmeasures_meas, 'TooltipString', 'Select measure')
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'bold')
+                set(ui_checkbox_brainmeasures_meas, 'Callback', {@cb_global_meas})
+                
+                set(ui_checkbox_brainmeasures_comp, 'Position',[.3 .10 .10 .03])
+                set(ui_checkbox_brainmeasures_comp, 'String', 'comparison')
+                set(ui_checkbox_brainmeasures_comp, 'Value', false)
+                set(ui_checkbox_brainmeasures_comp, 'TooltipString', 'Select comparison')
+                set(ui_checkbox_brainmeasures_comp, 'Callback', {@cb_global_comp})
+                
+                set(ui_checkbox_brainmeasures_rand, 'Position', [.3 .06 .15 .03])
+                set(ui_checkbox_brainmeasures_rand, 'String', 'random comparison')
+                set(ui_checkbox_brainmeasures_rand, 'Value', false)
+                set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
+                set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_global_rand})
+                
+                set(ui_popup_globalmeasures_group1, 'Position', [.02 .11 .15 .05])
+                set(ui_popup_globalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_globalmeasures_group1, 'Callback', {@cb_global_table})
+                set(ui_popup_globalmeasures_group1, 'Enable', 'off')
+                set(ui_popup_globalmeasures_group1, 'Visible', 'off')
+                
+                set(ui_popup_globalmeasures_group2, 'Position', [.02 .06 .15 .05])
+                set(ui_popup_globalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_globalmeasures_group2, 'Callback', {@cb_global_table})
+                set(ui_popup_globalmeasures_group2, 'Enable', 'off')
+                set(ui_popup_globalmeasures_group2, 'Visible', 'off')
+                
+                set(ui_listbox_brainmeasures_comp_groups, 'Position',[.02 .07 .15 .1])
+                set(ui_listbox_brainmeasures_comp_groups, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_listbox_brainmeasures_comp_groups, 'TooltipString', 'Select group 1');
+                set(ui_listbox_brainmeasures_comp_groups, 'Callback', {@cb_global_table})
+                
+                set(ui_plot_hide_checkbox, 'Position', [.3 .02 .10 .03])
+                set(ui_plot_hide_checkbox, 'String', 'Show Plot')
+                set(ui_plot_hide_checkbox, 'Value', true)
+                set(ui_plot_hide_checkbox, 'TooltipString', 'Show/Hide Plot')
+                set(ui_plot_hide_checkbox, 'Callback', {@cb_show_plot})
+                
+                set(ui_selectedmeasure_popup, 'Position', [.02 .01 .15 .05])
+                set(ui_selectedmeasure_popup, 'String', global_list)
+                set(ui_selectedmeasure_popup, 'Callback', {@cb_global_table})               
+       
+            end
+            function update_global_table()
+                data = {}; %#ok<NASGU>
+                RowName = [];
+                
+                selected_index = get(ui_listbox_brainmeasures_comp_groups, 'Value');
+                group = analysis.getCohort().getGroups().getValue(selected_index);
+                
+                measures = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
+                
+                fdr_t = get(fdr_threshold_edit, 'String');
+                
+                if get(ui_checkbox_brainmeasures_meas, 'Value')
+                    for j = 1:1:analysis.getMeasurements().length()
+                        measurement = analysis.getMeasurements().getValue(j);
+                        if isa(group, 'cell') && ismember(measurement.getMeasureCode(), global_list)
+                            for k =1:1:length(group)
+                                g = group{k};
+                                if isequal(measurement.getGroup(), g) && isequal(selected_measure, measurement.getMeasureCode())
+                                    global_measurements{j} = measurement; %#ok<AGROW>
+                                end
+                            end
+                        else
+                            if ismember(measurement.getMeasureCode(), global_list) && isequal(measurement.getGroup(), group) && isequal(selected_measure, measurement.getMeasureCode())
+                                global_measurements{j} = measurement;
+                            end
+                        end
+                    end
+                    
+                    if exist('global_measurements', 'var')
+                        global_measurements =  global_measurements(~cellfun(@isempty, global_measurements));
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false])
+                        
+                        data = cell(length(global_measurements), 7);
+                        for i = 1:1:length(global_measurements)
+                            measurement = global_measurements{i};
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end
+                            global_value = measurement.getMeasureValue();
+                            data{i, 2} = measurement.getMeasureCode();
+                            data{i, 3} = measurement.getGroup().getID();
+                            data{i, 4} = global_value{1};
+                            data{i, 5} = measurement.getID();
+                            data{i, 6} = measurement.getLabel();
+                            data{i, 7} = measurement.getNotes();
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_global_tbl, 'Data', data)
+                        set(ui_global_tbl, 'RowName', RowName)
+                    else
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false ])
+                        set(ui_global_tbl, 'Data', [])
+                        set(ui_global_tbl, 'RowName', [])
+                    end
+                    
+                elseif get(ui_checkbox_brainmeasures_comp, 'Value')
+                    group1_index = get( ui_popup_globalmeasures_group1, 'Value');
+                    group1 = analysis.getCohort().getGroups().getValue(group1_index);
+                    group2_index = get( ui_popup_globalmeasures_group2, 'Value');
+                    group2 = analysis.getCohort().getGroups().getValue(group2_index);
+                    for j = 1:1:analysis.getComparisons().length()
+                        comparison = analysis.getComparisons().getValue(j);
+                        [a, b] = comparison.getGroups();
+                        if ismember(comparison.getMeasureCode(), global_list) ...
+                                && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1))) ...
+                                && isequal(selected_measure, comparison.getMeasureCode())
+                            global_comparison{j} = comparison; %#ok<AGROW>
+                        end
+                    end
+                    
+                    if exist('global_comparison', 'var')
+                        global_comparison =  global_comparison(~cellfun(@isempty, global_comparison));
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', 'fdr'})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false false])
+                        
+                        data = cell(length(global_comparison), 10);
+                        for i = 1:1:length(global_comparison)
+                            comparison = global_comparison{i};
+                            p_values = comparison.getP1();
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end
+                            [val_1, val_2]  = comparison.getGroupValues();
+                            [group_1, group_2] = comparison.getGroups();
+                            data{i, 2} = comparison.getMeasureCode();
+                            data{i, 3} = group_1.getID();
+                            data{i, 4} = group_2.getID();
+                            data{i, 5} = val_1{1};
+                            data{i, 6} = val_2{1};
+                            data{i, 7} = comparison.getID();
+                            data{i, 8} = comparison.getLabel();
+                            data{i, 9} = comparison.getNotes();
+                            data{i, 10} = fdr([p_values{:}], str2double(fdr_t));
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_global_tbl, 'Data', data)
+                        set(ui_global_tbl, 'RowName', RowName)
+                    else
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false])
+                        set(ui_global_tbl, 'Data', [])
+                        set(ui_global_tbl, 'RowName', [])
+                    end
+                    
+                elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                    for j = 1:1:analysis.getRandomComparisons().length()
+                        randomcomparison = analysis.getRandomComparisons().getValue(j);
+                        if isa(group, 'cell') && ismember(randomcomparison.getMeasureCode(), global_list)
+                            for k =1:1:length(group)
+                                g = group{k};
+                                if isequal(randomcomparison.getGroup(), g) && isequal(selected_measure, randomcomparison.getMeasureCode())
+                                    global_randomcomparison{j} = randomcomparison; %#ok<AGROW>
+                                end
+                            end
+                        else
+                            if ismember(randomcomparison.getMeasureCode(), global_list) && isequal(randomcomparison.getGroup(), group) && isequal(selected_measure, randomcomparison.getMeasureCode())
+                                global_randomcomparison{j} = randomcomparison;
+                            end
+                        end
+                    end
+                    
+                    if exist('global_randomcomparison', 'var')
+                        global_randomcomparison =  global_randomcomparison(~cellfun(@isempty, global_randomcomparison));
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes ', ' fdr '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false])
+                        
+                        data = cell(length(global_randomcomparison), 9);
+                        for i = 1:1:length(global_randomcomparison)
+                            randomcomparison = global_randomcomparison{i};
+                            p_values = randomcomparison.getP1();
+                            if any(selected_brainmeasures == i)
+                                data{i, 1} = true;
+                            else
+                                data{i, 1} = false;
+                            end
+                            group_val =  randomcomparison.getGroupValue();
+                            random_val = randomcomparison.getRandomValue();
+                            data{i, 2} = randomcomparison.getMeasureCode();
+                            data{i, 3} = randomcomparison.getGroup().getID();
+                            data{i, 4} = group_val{1};
+                            data{i, 5} = random_val{1};
+                            data{i, 6} = randomcomparison.getID();
+                            data{i, 7} = randomcomparison.getLabel();
+                            data{i, 8} = randomcomparison.getNotes();
+                            data{i, 9} = fdr([p_values{:}], str2double(fdr_t));
+                            RowName(i) = i; %#ok<AGROW>
+                        end
+                        set(ui_global_tbl, 'Data', data)
+                        set(ui_global_tbl, 'RowName', RowName)
+                    else
+                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group ', ' value group ', 'value random ', ' name ', ' label ', ' notes '})
+                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char',  'char',  'numeric', 'numeric', 'char', 'char', 'char'})
+                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false])
+                        set(ui_global_tbl, 'Data', [])
+                        set(ui_global_tbl, 'RowName', [])
+                    end
+                end
+            end
+            function update_popup_or_listbox()
+                if get(ui_checkbox_brainmeasures_comp, 'Value')
+                    set(ui_popup_globalmeasures_group1, 'Enable', 'on')
+                    set(ui_popup_globalmeasures_group1, 'Visible', 'on')
+                    
+                    set(ui_popup_globalmeasures_group2, 'Enable', 'on')
+                    set(ui_popup_globalmeasures_group2, 'Visible', 'on')
+                    
+                    set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'off')
+                    set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'off')                    
+                    
+                    set(fdr_threshold_edit, 'Visible', 'on')
+                else
+                    set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
+                    set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'on')
+                    
+                    set(ui_popup_globalmeasures_group1, 'Enable', 'off')
+                    set(ui_popup_globalmeasures_group1, 'Visible', 'off')
+                    
+                    set(ui_popup_globalmeasures_group2, 'Enable', 'off')
+                    set(ui_popup_globalmeasures_group2, 'Visible', 'off') 
+                    
+                    if get(ui_checkbox_brainmeasures_meas, 'Value')
+                        set(fdr_threshold_edit, 'Visible', 'off')
+                    else
+                        set(fdr_threshold_edit, 'Visible', 'on')
+                    end
+                end
+            end
+            function init_plot_measure_panel()
+                cla(ui_plot_measure_axes)                
+                deleteExtraChilds(ui_plot_measure_panel)
+                measures = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
+                if get(ui_checkbox_brainmeasures_meas, 'Value')
+                    analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                        analysis.getCohort().getGroups().getValue(get(ui_listbox_brainmeasures_comp_groups, 'Value')));
+                elseif get(ui_checkbox_brainmeasures_comp, 'Value')
+                    analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group1, 'Value')), ...
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group2, 'Value')));
+                elseif get(ui_checkbox_brainmeasures_rand, 'Value')
+                    analysis.getGlobalRandomComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                        analysis.getCohort().getGroups().getValue(get(ui_listbox_brainmeasures_comp_groups, 'Value')));
+                end
+            end
+            function cb_show_plot(~, ~)
+                if isequal(get(ui_plot_hide_checkbox, 'Value'), 0)
+                    set(ui_global_tbl, 'Position', [.02 .19 .96 .79])
+                    
+                    set(ui_plot_measure_panel, 'Position', [.0 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Position', [.00 .00 .0 .0])
+                    set(ui_plot_measure_axes, 'Visible', 'off')
+                else
+                    set(ui_global_tbl, 'Position', [.02 .19 .4 .79])
+                    set(ui_plot_measure_panel, 'Position', [.42 .00 .58 .98])
+                    
+                    set(ui_plot_measure_axes, 'Position', [.1 .2 .8 .79])
+                    set(ui_plot_measure_axes, 'Visible', 'on')
+                end
+            end
+            function cb_global_table(~, ~)
+                update_global_table()
+                init_plot_measure_panel()
+            end
+            function cb_global_table_edit(~, event)  % (src,event)
+                g = event.Indices(1);
+                col = event.Indices(2);
+                newdata = event.NewData;
+                switch col
+                    case 1
+                        if newdata == 1
+                            if ~ismember(g, selected_brainmeasures)
+                                selected_brainmeasures = [selected_brainmeasures g];
+                            end
+                        else
+                            selected_brainmeasures = selected_brainmeasures(selected_brainmeasures ~= g);
+                        end
+                end
+                
+                update_global_table();
+            end
+            function cb_global_meas(~, ~)  % (src,event)
+                set(ui_checkbox_brainmeasures_meas, 'Value', true)
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'bold')
+                set(ui_checkbox_brainmeasures_comp, 'Value', false)
+                set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_rand, 'Value', false)
+                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
+                set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
+                
+                update_global_table()
+                update_popup_or_listbox()
+                init_plot_measure_panel()
+            end
+            function cb_global_comp(~, ~)  % (src,event)
+                set(ui_checkbox_brainmeasures_meas, 'Value', false)
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_comp, 'Value', true)
+                set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'bold')
+                set(ui_checkbox_brainmeasures_rand, 'Value', false)
+                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
+                set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
+                
+                update_global_table()
+                update_popup_or_listbox()
+                init_plot_measure_panel()
+            end
+            function cb_global_rand(~, ~)  % (src,event)
+                set(ui_checkbox_brainmeasures_meas, 'Value', false)
+                set(ui_checkbox_brainmeasures_meas, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_comp, 'Value', false)
+                set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
+                set(ui_checkbox_brainmeasures_rand, 'Value', true)
+                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'bold')
+                set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
+                
+                update_global_table()
+                update_popup_or_listbox()
+                init_plot_measure_panel()
+            end
+            function cb_global_selectall(~, ~)  % (src,event)
+                for j = 1:1:analysis.getMeasurements().length()
+                    measurement = analysis.getMeasurements().getValue(j);
+                    if ismember(measurement.getMeasureCode(), global_list)
+                        global_measurements{j} = measurement;                             %#ok<AGROW>
+                    end
+                end
+                
+                for r = 1:1:length(global_measurements)
+                    selected_brainmeasures = sort(unique([selected_brainmeasures(:); r]));
+                end
+                
+                update_global_table()
+            end
+            function cb_global_clearselection(~,~)  % (src,event)
+                selected_brainmeasures  = [];
+                update_global_table()
+            end
+            function cb_global_remove(~, ~)
+                selected_index = get(ui_listbox_brainmeasures_comp_groups, 'Value');
+                group = analysis.getCohort().getGroups().getValue(selected_index);
+                measures_array = get(ui_selectedmeasure_popup, 'String');
+                selected_measure = measures_array{get(ui_selectedmeasure_popup, 'Value')};
+                measures = analysis.selectMeasurements(selected_measure, group);
+               
+                for i = 1:1:length(selected_brainmeasures)
+                    k = selected_brainmeasures(i);
+                    m = measures{k};
+                    analysis.getMeasurements().remove(m);
+                end
+                selected_brainmeasures = [];
+                update_global_table()
+                init_plot_measure_panel()
+            end
+            function cb_global_fdr(~, ~)
+                update_global_table()
+            end
+            function deleteExtraChilds(ui_control)
+                childs = findobj(ui_control, 'Style', 'checkbox');
+                for i = 1:1:length(childs)
+                    c = childs(i);
+                    if isequal(c.Style, 'checkbox')
+                        delete(c);
+                    end
+                end
+            end
+            
+            update_global_table()
+            init_plot_measure_panel()
+            
+            if nargout > 0
+                global_panel = ui_mainpanel;
+            end
         end
         function nodal_panel = getNodalPanel(analysis, varargin)
             % GETNODALPANEL creates the nodal uipanel for GUIAnalysis
