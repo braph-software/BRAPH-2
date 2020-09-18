@@ -176,8 +176,8 @@ classdef AnalysisFNC_WU < Analysis
                 group,  ...
                 'MeasurementFNC.values', measures, ...
                 'MeasurementFNC.average_value', measure_average, ...
-                'MeasurementFNC.ParameterValues', measurement_parameter_values ...
-                );
+                'MeasurementFNC.ParameterValues', measurement_parameter_values, ...
+                varargin{:});
         end
         function randomcomparison = calculate_random_comparison(analysis, measure_code, group, varargin)
             % CALCULATE_RANDOM_COMPARISON returns a random comparison
@@ -201,7 +201,7 @@ classdef AnalysisFNC_WU < Analysis
             number_of_weights = get_from_varargin(1, 'NumberOfWeights', varargin{:});
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
-            M = get_from_varargin(1e+3, 'RandomComparisonFNC.RandomizationNumber', varargin{:});
+            M = get_from_varargin(1e+3, 'RandomizationNumber', varargin{:});
             
             % Measurements for the group
             measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});
@@ -299,7 +299,7 @@ classdef AnalysisFNC_WU < Analysis
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             
             is_longitudinal = analysis.getSettings('AnalysisFNC.Longitudinal');
-            M = get_from_varargin(1e+3, 'ComparisonFNC.PermutationNumber', varargin{:});
+            M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
             
             % Measurements for groups 1 and 2, and their difference
             measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
@@ -362,8 +362,8 @@ classdef AnalysisFNC_WU < Analysis
                 'ComparisonFNC.p1', p1, ...
                 'ComparisonFNC.p2', p2, ...
                 'ComparisonFNC.confidence_min', ci_lower, ...
-                'ComparisonFNC.confidence_max', ci_upper ...
-                );
+                'ComparisonFNC.confidence_max', ci_upper, ...
+                varargin{:});
         end
     end
     methods (Static)  % Descriptive functions
@@ -951,6 +951,7 @@ classdef AnalysisFNC_WU < Analysis
                                 data{i, 1} = false;
                             end
                             [val_1, val_2]  = comparison.getGroupAverageValues();
+                            diff = comparison.getDifference();
                             [group_1, group_2] = comparison.getGroups();
                             data{i, 2} = comparison.getMeasureCode();
                             data{i, 3} = group_1.getID();
@@ -1010,7 +1011,7 @@ classdef AnalysisFNC_WU < Analysis
                             data{i, 2} = randomcomparison.getMeasureCode();
                             data{i, 3} = randomcomparison.getGroup().getID();
                             data{i, 4} = group_val{1};
-                            data{i, 5} = '';
+                            data{i, 5} = random_val{1};
                             data{i, 6} = randomcomparison.getID();
                             data{i, 7} = randomcomparison.getLabel();
                             data{i, 8} = randomcomparison.getNotes();

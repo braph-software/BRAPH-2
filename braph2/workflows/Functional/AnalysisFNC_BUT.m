@@ -135,7 +135,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
                 end
                 correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
                 negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
-                A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+                A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule);
                 
                 threshold = get_from_varargin(0, 'threshold', varargin{:});
                 A = binarize(A, 'treshold', threshold, varargin{:});
@@ -254,7 +254,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             end
             
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, measure_code)
+            ylabel(ui_parent_axes, [measure_code ' Group Average'])
             
         end
         function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
@@ -288,7 +288,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             
             hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, measure_code)
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
             ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -381,7 +381,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             
             hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, measure_code)
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
             ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -453,10 +453,10 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             % See also getGraphPanel, getGlobalPanel.
             
             X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');
-            Y = analysis.selectMeasurements(measure_code, group, '.getMeasureValue()');
+            Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
             for i = 1:1:length(Y)
                 y_unique_cell = Y{i};
-                y_nodal_values = y_unique_cell{1};
+                y_nodal_values = y_unique_cell;
                 y_brain_region{i} = y_nodal_values(brain_region); %#ok<AGROW>
             end
             
@@ -478,7 +478,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             end
             
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, measure_code)
+            ylabel(ui_parent_axes, [measure_code ' Group Average'])
         end
         function p = getNodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, brain_region, varargin)
             % GETNODALCOMPARISONPLOT creates a uipanel to contain a plot
@@ -517,7 +517,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             
             hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, measure_code)
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
             ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -626,7 +626,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             
             hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, measure_code)
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
             ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -708,7 +708,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             % See also getGraphPanel, getBinodalPanel.
             
             X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');
-            Y = analysis.selectMeasurements(measure_code, group, '.getMeasureValue()');
+            Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
             for i = 1:1:length(Y)
                 y_unique_cell = Y{i};
                 y_nodal_values = y_unique_cell{1};
@@ -733,7 +733,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             end
             
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, measure_code)
+            ylabel(ui_parent_axes, [measure_code ' Group Average'])
         end
         function p = getBinodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, brain_region_1, brain_region_2, varargin)
             % GETNODALCOMPARISONPLOT creates a uipanel to contain a plot
@@ -772,7 +772,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             
             hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, measure_code)
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
             ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -881,7 +881,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             
             hold(ui_parent_axes, 'on')
             xlabel(ui_parent_axes, 'Threshold')
-            ylabel(ui_parent_axes, measure_code)
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
             ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
