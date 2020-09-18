@@ -2405,14 +2405,14 @@ classdef AnalysisST_WU < Analysis
                 end               
             end
             function cb_bv_bg_panel(~, ~)
-                if isempty(bgp)
+                if isempty(bgp) || ~isvalid(bgp)
                     bgp =  analysis.getBrainGraphPanel(ui_brainview_axes, bg);
                 else
                     figure(bgp);
                 end
             end
             function cb_bv_meas_panel(~, ~)
-                if isempty(mrc)
+                if isempty(mrc) || ~isvalid(mrc)
                     mrc = analysis.getMCRPanel(ui_brainview_axes, bg);
                 else
                     figure(mrc)

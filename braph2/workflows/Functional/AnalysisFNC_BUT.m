@@ -711,7 +711,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
             for i = 1:1:length(Y)
                 y_unique_cell = Y{i};
-                y_nodal_values = y_unique_cell{1};
+                y_nodal_values = y_unique_cell;
                 y_brain_region{i} = y_nodal_values(brain_region_1, brain_region_2); %#ok<AGROW>
             end
             
