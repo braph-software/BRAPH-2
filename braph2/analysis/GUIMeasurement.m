@@ -328,7 +328,14 @@ set(f, 'Visible', 'on');
                             m = analysis.getMeasurement(mlist{mi}, gr, rule, value_step, measure_rules{:}); %#ok<NASGU>
                         end
                     else
-                        m = analysis.getMeasurement(mlist{mi}, gr, rule, value, measure_rules{:}); %#ok<NASGU>
+                        if length(value) > 1
+                            for vals = 1:1:length(value)
+                                value_step = value(vals);
+                                m = analysis.getMeasurement(mlist{mi}, group, rule, value_step, measure_rules{:}); %#ok<NASGU>
+                            end
+                        else
+                            m = analysis.getMeasurement(mlist{mi}, group, rule, value, measure_rules{:}); %#ok<NASGU>
+                        end
                     end
                     msg = ['time = ' int2str(toc(start)) '.'  int2str(mod(toc(start)*10, 10)) 's - group = ' gr.tostring() ' - ' mlist{mi}];
                     
