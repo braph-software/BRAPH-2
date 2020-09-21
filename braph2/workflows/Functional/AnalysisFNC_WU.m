@@ -115,15 +115,18 @@ classdef AnalysisFNC_WU < Analysis
             subjects = group.getSubjects();
             subject_number = numel(subjects);
             graphs = cell(1, subject_number);
-            T = analysis.getSettings('AnalysisFNC.FrecuencyRule');
+            T = analysis.getSettings('AnalysisFNC.Repetition');
+            fmin = analysis.getSettings('AnalysisFNC.FrecuencyRuleMin');
+            fmax = analysis.getSettings('AnalysisFNC.FrecuencyRuleMax');
+            T = str2double(T);
+            fmin = str2double(fmin);
+            fmax = str2double(fmax);
             
             for i = 1:1:subject_number
                 subject = subjects{i};
                 data = subject.getData('FNC').getValue();
                 
                 % filter data
-                fmin = 0;  % values from braph 1
-                fmax = Inf;
                 fs = 1 / T;
                 if fmax > fmin && T > 0
                     NFFT = 2 * ceil(size(data, 1) / 2);
@@ -152,12 +155,14 @@ classdef AnalysisFNC_WU < Analysis
             %
             % See also calculate_measurement.
             
-            T = analysis.getSettings('AnalysisFNC.FrecuencyRule');
+            T = analysis.getSettings('AnalysisFNC.Repetition');
+            fmin = analysis.getSettings('AnalysisFNC.FrecuencyRuleMin');
+            fmax = analysis.getSettings('AnalysisFNC.FrecuencyRuleMax');
             data = subject.getData('FNC').getValue();
-            
+            T = str2double(T);
+            fmin = str2double(fmin);
+            fmax = str2double(fmax);
             % filter data
-            fmin = 0;  % values from braph 1
-            fmax = Inf;
             fs = 1 / T;
             if fmax > fmin && T > 0
                 NFFT = 2 * ceil(size(data, 1) / 2);
@@ -495,7 +500,9 @@ classdef AnalysisFNC_WU < Analysis
                 {'AnalysisFNC.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
                 {'AnalysisFNC.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
                 {'AnalysisFNC.Longitudinal', BRAPH2.LOGICAL, false, {false, true}}, ...
-                {'AnalysisFNC.FrecuencyRule', BRAPH2.NUMERIC, 1, {}} ...
+                {'AnalysisFNC.FrecuencyRuleMin', BRAPH2.NUMERIC, 0, {}}, ...
+                {'AnalysisFNC.FrecuencyRuleMax', BRAPH2.NUMERIC, Inf, {}}, ...
+                {'AnalysisFNC.Repetition', BRAPH2.NUMERIC, 1, {}}...
                 };
         end
     end

@@ -21,7 +21,7 @@ cohort_file = [fileparts(which('example_workflow_FNC_WU.m')) filesep() 'example 
 temp = load(cohort_file, '-mat', 'cohort', 'selected_group', 'selected_subjects', 'BUILD');
 cohort = temp.cohort;
 
-GUIAnalysisSettings(cohort, 'AnalysisFNC_BUD')
+GUIAnalysisSettings(cohort, 'AnalysisFNC_WU')
 
-set(gcf, 'CloseRequestFcn', 'closereq')
-close(gcf)
+% set(gcf, 'CloseRequestFcn', 'closereq')
+% close(gcf)

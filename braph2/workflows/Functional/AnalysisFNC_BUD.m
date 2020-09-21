@@ -115,14 +115,18 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
                        
             subjects = group.getSubjects();
             subject_number = numel(subjects);            
-            T = analysis.getSettings('AnalysisFNC.FrecuencyRule');
+            T = analysis.getSettings('AnalysisFNC.Repetition');
+            fmin = analysis.getSettings('AnalysisFNC.FrecuencyRuleMin');
+            fmax = analysis.getSettings('AnalysisFNC.FrecuencyRuleMax');
+            T = str2double(T);
+            fmin = str2double(fmin);
+            fmax = str2double(fmax);
+            
             
             for i = 1:1:subject_number
                 subject = subjects{i};
                 data = subject.getData('FNC').getValue();  % st data
                 % filter data
-                fmin = 0;  % values from braph 1
-                fmax = Inf;
                 fs = 1 / T;
                 if fmax > fmin && T > 0
                     NFFT = 2 * ceil(size(data, 1) / 2);
@@ -153,12 +157,15 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
             %
             % See also calculate_measurement.
             
-            T = analysis.getSettings('AnalysisFNC.FrecuencyRule');
+            T = analysis.getSettings('AnalysisFNC.Repetition');
+            fmin = analysis.getSettings('AnalysisFNC.FrecuencyRuleMin');
+            fmax = analysis.getSettings('AnalysisFNC.FrecuencyRuleMax');
             data = subject.getData('FNC').getValue();
+            T = str2double(T);
+            fmin = str2double(fmin);
+            fmax = str2double(fmax);
             
             % filter data
-            fmin = 0;  % values from braph 1
-            fmax = Inf;
             fs = 1 / T;
             if fmax > fmin && T > 0
                 NFFT = 2 * ceil(size(data, 1) / 2);
