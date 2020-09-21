@@ -5,7 +5,7 @@ classdef OverlappingInDegreeAv < OverlappingInDegree
     %
     % It is calculated as the average of the sum of the number of inward edges 
     % connected to the node in all layers, i.e., it is the sum of the 
-    % in-degrees of a node in all layers.
+    % in-degree of a node in all layers.
     % 
     % OverlappingInDegreeAv methods:
     %   OverlappingInDegreeAv       - constructor
@@ -84,7 +84,7 @@ classdef OverlappingInDegreeAv < OverlappingInDegree
             
             description = [ ...
                 'The average overlapping in-degree of a network is the average ' ...
-                'of the sum of the in ward edges connected to the node in all layers. ' ...
+                'of the sum of the inward edges connected to the node in all layers. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
         end
