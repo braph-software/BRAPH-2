@@ -19,5 +19,5 @@ ga = temp.ga;
 
 GUIAnalysis(ga)
 
-% set(gcf, 'CloseRequestFcn', 'closereq')
-% close(gcf)
+set(gcf, 'CloseRequestFcn', 'closereq')
+close(gcf)
