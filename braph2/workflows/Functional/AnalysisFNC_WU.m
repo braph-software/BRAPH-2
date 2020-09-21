@@ -820,6 +820,8 @@ classdef AnalysisFNC_WU < Analysis
             
             % declare variables
             selected_brainmeasures = [];
+            selected_subject_index = 1;
+            sub = [];
             
             % declare the uicontrols
             ui_mainpanel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 1]);
@@ -830,7 +832,6 @@ classdef AnalysisFNC_WU < Analysis
             ui_checkbox_brainmeasures_meas = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_comp = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_checkbox_brainmeasures_rand = uicontrol(ui_mainpanel, 'Style', 'checkbox');
-            ui_listbox_brainmeasures_comp_groups = uicontrol(ui_mainpanel, 'Style', 'listbox');
             ui_popup_globalmeasures_group1 = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_popup_globalmeasures_group2 = uicontrol(ui_mainpanel, 'Style', 'popup');
             ui_plot_measure_panel = uipanel('Parent', ui_mainpanel);
@@ -838,6 +839,7 @@ classdef AnalysisFNC_WU < Analysis
             ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             ui_selectedmeasure_popup = uicontrol(ui_mainpanel, 'Style', 'popup');
             fdr_threshold_edit = uicontrol(ui_mainpanel, 'style', 'edit');
+            ui_selected_subject = uicontrol(ui_mainpanel, 'Style', 'popup');
             init_global_panel()
             function init_global_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -903,31 +905,28 @@ classdef AnalysisFNC_WU < Analysis
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
                 set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_global_rand})
-                
-                set(ui_popup_globalmeasures_group1, 'Position', [.02 .11 .15 .05])
-                set(ui_popup_globalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
-                set(ui_popup_globalmeasures_group1, 'Callback', {@cb_global_table})
-                set(ui_popup_globalmeasures_group1, 'Enable', 'off')
-                set(ui_popup_globalmeasures_group1, 'Visible', 'off')
-                
-                set(ui_popup_globalmeasures_group2, 'Position', [.02 .06 .15 .05])
-                set(ui_popup_globalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
-                set(ui_popup_globalmeasures_group2, 'Callback', {@cb_global_table})
-                set(ui_popup_globalmeasures_group2, 'Enable', 'off')
-                set(ui_popup_globalmeasures_group2, 'Visible', 'off')
-                
-                set(ui_listbox_brainmeasures_comp_groups, 'Position',[.02 .07 .15 .1])
-                set(ui_listbox_brainmeasures_comp_groups, 'String', analysis.getCohort().getGroups().getKeys())
-                set(ui_listbox_brainmeasures_comp_groups, 'TooltipString', 'Select group 1');
-                set(ui_listbox_brainmeasures_comp_groups, 'Callback', {@cb_global_table})
-                
+
                 set(ui_plot_hide_checkbox, 'Position', [.3 .02 .10 .03])
                 set(ui_plot_hide_checkbox, 'String', 'Show Plot')
                 set(ui_plot_hide_checkbox, 'Value', true)
                 set(ui_plot_hide_checkbox, 'TooltipString', 'Show/Hide Plot')
                 set(ui_plot_hide_checkbox, 'Callback', {@cb_show_plot})
                 
-                set(ui_selectedmeasure_popup, 'Position', [.02 .01 .15 .05])
+                set(ui_popup_globalmeasures_group1, 'Position', [.02 .13 .15 .04])
+                set(ui_popup_globalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_globalmeasures_group1, 'Callback', {@cb_global_table})
+                
+                set(ui_popup_globalmeasures_group2, 'Position', [.02 .09 .15 .04])
+                set(ui_popup_globalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
+                set(ui_popup_globalmeasures_group2, 'Callback', {@cb_global_table})
+                set(ui_popup_globalmeasures_group2, 'Enable', 'off')
+                set(ui_popup_globalmeasures_group2, 'Visible', 'off')
+                
+                set(ui_selected_subject, 'Position', [.02 .05 .15 .04])
+                set(ui_selected_subject, 'String', {''})
+                set(ui_selected_subject, 'Callback', {@cb_select_subject})
+                
+                set(ui_selectedmeasure_popup, 'Position', [.02 .01 .15 .04])
                 set(ui_selectedmeasure_popup, 'String', global_list)
                 set(ui_selectedmeasure_popup, 'Callback', {@cb_global_table})
                 
@@ -936,11 +935,19 @@ classdef AnalysisFNC_WU < Analysis
                 data = {}; %#ok<NASGU>
                 RowName = [];
                 
-                selected_index = get(ui_listbox_brainmeasures_comp_groups, 'Value');
+                selected_index = get(ui_popup_globalmeasures_group1, 'Value');
                 group = analysis.getCohort().getGroups().getValue(selected_index);
                 
                 measures = get(ui_selectedmeasure_popup, 'String');
                 selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
+                
+                subject = selected_subject_index; 
+                if subject > 1
+                    [~, subjects] = analysis.getCohort().getGroupSubjects(selected_index);
+                    sub = subjects{subject-1};
+                else
+                    sub = [];
+                end
                 
                 fdr_t = get(fdr_threshold_edit, 'String');
                 
@@ -963,7 +970,11 @@ classdef AnalysisFNC_WU < Analysis
                     
                     if exist('global_measurements', 'var')
                         global_measurements =  global_measurements(~cellfun(@isempty, global_measurements));
-                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group', ' group value ', ' name ', ' label ', ' notes '})
+                        if subject == 1                            
+                            set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group ', ' group value ', ' name ', ' label ', ' notes '})
+                        else
+                            set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' subject ', ' subject value ', ' name ', ' label ', ' notes '})
+                        end
                         set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
                         set(ui_global_tbl, 'ColumnEditable', [true false false false false false false])
                         
@@ -975,11 +986,18 @@ classdef AnalysisFNC_WU < Analysis
                             else
                                 data{i, 1} = false;
                             end
-                            global_values = measurement.getMeasureValues();
-                            group_avg_value = measurement.getGroupAverageValue();
+                            if subject == 1
+                                output_value = measurement.getGroupAverageValue();
+                                output_id = measurement.getGroup().getID();
+                            else
+                                global_values = measurement.getMeasureValues();
+                                output_value = global_values{subject-1};                                
+                                output_id = sub.getID();
+                            end
+
                             data{i, 2} = measurement.getMeasureCode();
-                            data{i, 3} = measurement.getGroup().getID();
-                            data{i, 4} = group_avg_value;
+                            data{i, 3} = output_id;
+                            data{i, 4} = output_value;
                             data{i, 5} = measurement.getID();
                             data{i, 6} = measurement.getLabel();
                             data{i, 7} = measurement.getNotes();
@@ -1112,22 +1130,24 @@ classdef AnalysisFNC_WU < Analysis
                     set(ui_popup_globalmeasures_group2, 'Enable', 'on')
                     set(ui_popup_globalmeasures_group2, 'Visible', 'on')
                     
-                    set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'off')
-                    set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'off')
+                    set(ui_selected_subject, 'Enable', 'off')
+                    set(ui_selected_subject, 'Visible', 'off')
                     
                     set(fdr_threshold_edit, 'Visible', 'on')
-                else
-                    set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
-                    set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'on')
-                    
-                    set(ui_popup_globalmeasures_group1, 'Enable', 'off')
-                    set(ui_popup_globalmeasures_group1, 'Visible', 'off')
+                else                    
+                    set(ui_popup_globalmeasures_group1, 'Enable', 'on')
+                    set(ui_popup_globalmeasures_group1, 'Visible', 'on')
                     
                     set(ui_popup_globalmeasures_group2, 'Enable', 'off')
                     set(ui_popup_globalmeasures_group2, 'Visible', 'off')
                     
+                    set(ui_selected_subject, 'Enable', 'off')
+                    set(ui_selected_subject, 'Visible', 'off')
+                    
                     if get(ui_checkbox_brainmeasures_meas, 'Value')
                         set(fdr_threshold_edit, 'Visible', 'off')
+                        set(ui_selected_subject, 'Enable', 'on')
+                        set(ui_selected_subject, 'Visible', 'on')
                     else
                         set(fdr_threshold_edit, 'Visible', 'on')
                     end
@@ -1140,14 +1160,14 @@ classdef AnalysisFNC_WU < Analysis
                 selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
                     analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
-                        analysis.getCohort().getGroups().getValue(get(ui_listbox_brainmeasures_comp_groups, 'Value')));
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group1, 'Value')), selected_subject_index);
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
                     analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
                         analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group1, 'Value')), ...
-                        analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group2, 'Value')));
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group2, 'Value')), selected_subject_index);
                 elseif get(ui_checkbox_brainmeasures_rand, 'Value')
                     analysis.getGlobalRandomComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
-                        analysis.getCohort().getGroups().getValue(get(ui_listbox_brainmeasures_comp_groups, 'Value')));
+                        analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group1, 'Value')), selected_subject_index);
                 end
             end
             function cb_show_plot(~, ~)
@@ -1166,8 +1186,9 @@ classdef AnalysisFNC_WU < Analysis
                 end
             end
             function cb_global_table(~, ~)
+                update_subjects()
                 update_global_table()
-                init_plot_measure_panel()
+                init_plot_measure_panel()                
             end
             function cb_global_table_edit(~, event)  % (src,event)
                 g = event.Indices(1);
@@ -1193,7 +1214,6 @@ classdef AnalysisFNC_WU < Analysis
                 set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
-                set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
                 
                 update_global_table()
                 update_popup_or_listbox()
@@ -1206,7 +1226,6 @@ classdef AnalysisFNC_WU < Analysis
                 set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'bold')
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'normal')
-                set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
                 
                 update_global_table()
                 update_popup_or_listbox()
@@ -1218,8 +1237,6 @@ classdef AnalysisFNC_WU < Analysis
                 set(ui_checkbox_brainmeasures_comp, 'Value', false)
                 set(ui_checkbox_brainmeasures_comp, 'FontWeight', 'normal')
                 set(ui_checkbox_brainmeasures_rand, 'Value', true)
-                set(ui_checkbox_brainmeasures_rand, 'FontWeight', 'bold')
-                set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'on')
                 
                 update_global_table()
                 update_popup_or_listbox()
@@ -1271,9 +1288,22 @@ classdef AnalysisFNC_WU < Analysis
                     end
                 end
             end
+            function cb_select_subject(~, ~)
+                selected_subject_index = get(ui_selected_subject, 'value');
+                update_global_table();
+                init_plot_measure_panel();                
+            end
+            function update_subjects()
+                selected_group = get(ui_popup_globalmeasures_group1, 'Value');
+                [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
+                subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
+                subject_labels = ['All Subjects' subject_labels_inner];
+                set(ui_selected_subject, 'String', subject_labels)                
+            end
             
             update_global_table()
             init_plot_measure_panel()
+            update_subjects()
             
             if nargout > 0
                 global_panel = ui_mainpanel;

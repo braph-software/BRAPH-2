@@ -255,7 +255,7 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
         end
     end
     methods  % plot methods
-        function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin) %#ok<INUSL>
+        function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, subject, varargin) %#ok<INUSL>
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
@@ -265,11 +265,16 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
             % See also getGraphPanel, getGlobalPanel.
             
             X = analysis.selectMeasurements(measure_code, group, '.getDensity()');
-            Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
+             if subject == 1
+                Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
+            else 
+                measurements = analysis.selectMeasurements(measure_code, group, '.getMeasureValues()');
+                Y = cellfun(@(x) x(subject-1), measurements);
+            end
             
             if ~isempty(X) && ~isempty(Y)
                 x_ = cell2mat(X);
-                y_ = cell2mat([Y{:}]);
+                y_ = cell2mat(Y);
                 p = plot(ui_parent_axes, ...
                     x_, ...
                     y_, ...
@@ -474,7 +479,7 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
                 end
             end
         end
-        function p = getNodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_regions, varargin) %#ok<INUSL>
+        function p = getNodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_regions, subject, varargin) %#ok<INUSL>
             % GETNODALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETNODALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
@@ -487,7 +492,7 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
             Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
             for i = 1:1:length(Y)
                 y_unique_cell = Y{i};
-                y_nodal_values = y_unique_cell{1};
+                y_nodal_values = y_unique_cell;
                 y_brain_region{i} = y_nodal_values(brain_regions); %#ok<AGROW>
             end
             
@@ -729,7 +734,7 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
                 end
             end
         end
-        function p = getBinodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)  %#ok<INUSL>
+        function p = getBinodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, subject, varargin)  %#ok<INUSL>
             % GETBINODALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETBINODALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP,  BRAINREGION1,  BRAINREGION2, PROPERTY, VLAUE)
@@ -739,10 +744,10 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
             % See also getGraphPanel, getBinodalPanel.
             
             X = analysis.selectMeasurements(measure_code, group, '.getDensity()');
-            Y = analysis.selectMeasurements(measure_code, group, '.getMeasureValue()');
+            Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
             for i = 1:1:length(Y)
                 y_unique_cell = Y{i};
-                y_nodal_values = y_unique_cell{1};
+                y_nodal_values = y_unique_cell;
                 y_brain_region{i} = y_nodal_values(brain_region_1, brain_region_2); %#ok<AGROW>
             end
             

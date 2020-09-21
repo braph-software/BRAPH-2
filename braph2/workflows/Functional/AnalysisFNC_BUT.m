@@ -255,7 +255,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
         end
     end
     methods  % plot methods
-        function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin) %#ok<INUSL>
+        function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, subject, varargin) %#ok<INUSL>
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
@@ -264,8 +264,13 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');
-            Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
+            X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');            
+            if subject == 1
+                Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
+            else 
+                measurements = analysis.selectMeasurements(measure_code, group, '.getMeasureValues()');
+                Y = cellfun(@(x) x(subject-1), measurements);
+            end
             
             if ~isempty(X) && ~isempty(Y)
                 x_ = cell2mat(X);
@@ -474,7 +479,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
                 end
             end
         end
-        function p = getNodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region, varargin) %#ok<INUSL>
+        function p = getNodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region, subject, varargin) %#ok<INUSL>
             % GETNODALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETNODALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP, PROPERTY, VLAUE)
@@ -729,7 +734,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
                 end
             end
         end
-        function p = getBinodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)  %#ok<INUSL>
+        function p = getBinodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, subject, varargin)  %#ok<INUSL>
             % GETBINODALMEASUREPLOT creates a uipanel to contain a plot
             %
             % P = GETBINODALMEASUREPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP,  BRAINREGION1,  BRAINREGION2, PROPERTY, VLAUE)
