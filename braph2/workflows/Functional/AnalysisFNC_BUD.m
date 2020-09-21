@@ -13,7 +13,8 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
     %  AnalysisFNC_BUD              - Constructor
     %
     % AnalysisFNC_BUD calcultion methods (Access = protected):
-    %  get_graph_for_subjects       - returns the graph of the correlated matrix
+    %  get_graph_for_group          - returns the graph of the correlated matrix
+    %  get_graph_for_subject        - returns the graph of the correlated matrix
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
@@ -102,36 +103,78 @@ classdef AnalysisFNC_BUD < AnalysisFNC_WU
         end
     end
     methods (Access = protected)
-        function g = get_graph_for_subjects(analysis, subjects, varargin)
-            % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
+        function graphs = get_graphs_for_group(analysis, group, varargin)
+            % GET_GRAPH_FOR_GROUP returns the graph created with the correlation matrix
             %
-            % G = GET_GRAPH_FOR_SUBJECTS(ANALYSIS, SUBJECTS, PROPERY, VALUE, ...) creates a
+            % G = GET_GRAPH_FOR_GROUP(ANALYSIS, GROUP, PROPERY, VALUE, ...) creates a
+            % graph with the correlation matrix made of the data of the
+            % subjects of GROUP. It will binarize the matrix depending on the
+            % PROPERTY and VALUE.
+            %
+            % See also calculate_measurement.
+                       
+            subjects = group.getSubjects();
+            subject_number = numel(subjects);            
+            T = analysis.getSettings('AnalysisFNC.FrecuencyRule');
+            
+            for i = 1:1:subject_number
+                subject = subjects{i};
+                data = subject.getData('FNC').getValue();  % st data
+                % filter data
+                fmin = 0;  % values from braph 1
+                fmax = Inf;
+                fs = 1 / T;
+                if fmax > fmin && T > 0
+                    NFFT = 2 * ceil(size(data, 1) / 2);
+                    ft = fft(data, NFFT);  % Fourier transform
+                    f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+                    ft(f < fmin | f > fmax, :) = 0;
+                    data = ifft(ft, NFFT);
+                end
+                correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
+                negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
+                A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule);
+                
+                density = get_from_varargin(0, 'density', varargin{:});
+                A = binarize(A, 'density', density, varargin{:});                
+                
+                graph_type = AnalysisFNC_WU.getGraphType();
+                g = Graph.getGraph(graph_type, A);
+                graphs{i} = g; %#ok<AGROW>
+            end
+        end
+        function graph = get_graph_for_subject(analysis, subject, varargin)  
+            % GET_GRAPH_FOR_SUBJECT returns the graph created with the correlation matrix
+            %
+            % G = GET_GRAPH_FOR_SUBJECT(ANALYSIS, SUBJECT, PROPERY, VALUE, ...) creates a
             % graph with the correlation matrix made of the data of
-            % subjects. It will binarize the matrix depending on the
+            % subject. It will binarize the matrix depending on the
             % PROPERTY and VALUE.
             %
             % See also calculate_measurement.
             
-            atlases = analysis.cohort.getBrainAtlases();
-            atlas = atlases{1};
+            T = analysis.getSettings('AnalysisFNC.FrecuencyRule');
+            data = subject.getData('FNC').getValue();
             
-            subject_number = numel(subjects);
-            
-            data = zeros(subject_number, atlas.getBrainRegions().length());
-            for i = 1:1:subject_number
-                subject = subjects{i};
-                data(i, :) = subject.getData('FNC').getValue();  % st data
+            % filter data
+            fmin = 0;  % values from braph 1
+            fmax = Inf;
+            fs = 1 / T;
+            if fmax > fmin && T > 0
+                NFFT = 2 * ceil(size(data, 1) / 2);
+                ft = fft(data, NFFT);  % Fourier transform
+                f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+                ft(f < fmin | f > fmax, :) = 0;
+                data = ifft(ft, NFFT);
             end
             
             correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
             negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
-            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
-            
+            A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule);  % correlation is a column based operation
             density = get_from_varargin(0, 'density', varargin{:});
             A = binarize(A, 'density', density, varargin{:});
-            
-            graph_type = AnalysisFNC_WU.getGraphType();
-            g = Graph.getGraph(graph_type, A);
+            graph_type = analysis.getGraphType();
+            graph = Graph.getGraph(graph_type, A);
         end
     end
     methods (Static)  % Descriptive functions

@@ -18,7 +18,8 @@ classdef AnalysisFNC_WU < Analysis
     %  getComparisonID              - returns the comparison ID
     %
     % AnalysisFNC_WU calcultion methods (Access = protected):
-    %  get_graph_for_subjects       - returns the graph of the correlated matrix
+    %  get_graph_for_group          - returns the graph of the correlated matrix
+    %  get_graph_for_subject        - returns the graph of the correlated matrix
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
@@ -141,7 +142,16 @@ classdef AnalysisFNC_WU < Analysis
                 graphs{i} = g;
             end
         end
-        function graph = get_graph_for_subject(analysis, subject, varargin)            
+        function graph = get_graph_for_subject(analysis, subject, varargin) 
+            % GET_GRAPH_FOR_SUBJECT returns the graph created with the correlation matrix
+            %
+            % G = GET_GRAPH_FOR_SUBJECT(ANALYSIS, SUBJECT, PROPERY, VALUE, ...) creates a
+            % graph with the correlation matrix made of the data of
+            % subject. It will binarize the matrix depending on the
+            % PROPERTY and VALUE.
+            %
+            % See also calculate_measurement.
+            
             T = analysis.getSettings('AnalysisFNC.FrecuencyRule');
             data = subject.getData('FNC').getValue();
             
