@@ -4,7 +4,7 @@ classdef OverlappingInDegreeAv < OverlappingInDegree
     % for binary directed (BD) and weighted directed (WD) multiplexes. 
     %
     % It is calculated as the average of the sum of the number of inward edges 
-    % connected to the node in all layers, i.e., it is the sum of the 
+    % connected to the node in all layers, i.e., it is the average of the sum of the 
     % in-degree of a node in all layers.
     % 
     % OverlappingInDegreeAv methods:
@@ -26,7 +26,7 @@ classdef OverlappingInDegreeAv < OverlappingInDegree
     
     methods
         function m = OverlappingInDegreeAv(g, varargin)
-            % OVERLAPPINGINDEGREE(G) creates average overlapping in-degree with default properties.
+            % OVERLAPPINGINDEGREEAV(G) creates average overlapping in-degree with default properties.
             % G is a directed multiplex (i.e., an instance of
             % MultiplexGraphBD or MultiplexGraphWD).
             %
@@ -39,10 +39,10 @@ classdef OverlappingInDegreeAv < OverlappingInDegree
         function overlapping_in_degree_av = calculate(m)
             % CALCULATE calculates the average overlapping in-degree value of a multiplex
             %
-            % OVERLAPPINGin-degree = CALCULATE(M) returns the value of the average overlapping
+            % OVERLAPPINGINDEGREEAV = CALCULATE(M) returns the value of the average overlapping
             % in-degree of a multiplex.
             %
-            % See also Measure, Overlappingin-degree, in-degree, MultiplexGraphBU, MultiplexGraphWU.
+            % See also Measure, OverlappingInDegree, InDegree, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             
@@ -92,7 +92,7 @@ classdef OverlappingInDegreeAv < OverlappingInDegree
             % GETAVAILABLESETTINGS returns the setting available to OverlappingInDegreeAv
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to OverlappingInDegree. Empty Array in this case.
+            % settings available to OverlappingInDegreeAv. Empty Array in this case.
             
             available_settings = {};
         end
