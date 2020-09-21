@@ -614,7 +614,9 @@ classdef AnalysisFNC_WU < Analysis
             set(ui_matrix_histogram_checkbox, 'Callback', {@cb_matrix_histogram_checkbox})
             
             function cb_group_popup(~, ~)
-                selected_group = get(ui_matrix_groups_popup, 'value');
+                selected_group = get(ui_matrix_groups_popup, 'value');                
+                selected_subject = 1;
+                set(ui_matrix_subjects_popup, 'Value', selected_subject)
                 update_subjects();
                 update_matrix();
             end
@@ -784,7 +786,7 @@ classdef AnalysisFNC_WU < Analysis
             function update_subjects()
                 [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
                 subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
-                subject_labels = ['All Subjects' subject_labels_inner];
+                subject_labels = ['Group Average' subject_labels_inner];
                 set(ui_matrix_subjects_popup, 'String', subject_labels)
             end
                         
