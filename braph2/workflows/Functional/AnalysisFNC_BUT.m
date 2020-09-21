@@ -496,7 +496,12 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             % See also getGraphPanel, getGlobalPanel.
             
             X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');
-            Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
+           if subject == 1
+                Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
+            else 
+                measurements = analysis.selectMeasurements(measure_code, group, '.getMeasureValues()');
+                Y = cellfun(@(x) x(subject-1), measurements);
+            end
             for i = 1:1:length(Y)
                 y_unique_cell = Y{i};
                 y_nodal_values = y_unique_cell;

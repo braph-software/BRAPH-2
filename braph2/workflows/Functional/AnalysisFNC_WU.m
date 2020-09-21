@@ -1355,6 +1355,8 @@ classdef AnalysisFNC_WU < Analysis
             
             % declare variables
             selected_brainmeasures = [];
+            selected_subject_index = 1;
+            sub = [];
             
             % declare the uicontrols
             ui_mainpanel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 1]);
@@ -1373,6 +1375,7 @@ classdef AnalysisFNC_WU < Analysis
             ui_plot_measure_axes = get_from_varargin([], 'UIAxesNodal', varargin{:});
             ui_plot_hide_checkbox = uicontrol(ui_mainpanel, 'Style', 'checkbox');
             fdr_threshold_edit = uicontrol(ui_mainpanel, 'style', 'edit');
+            ui_selected_subject = uicontrol(ui_mainpanel, 'Style', 'popup');
             init_nodal_panel()
             function init_nodal_panel()
                 GUI.setUnits(ui_mainpanel)
@@ -1445,21 +1448,25 @@ classdef AnalysisFNC_WU < Analysis
                 set(ui_plot_hide_checkbox, 'TooltipString', 'Show/Hide Plot')
                 set(ui_plot_hide_checkbox, 'Callback', {@cb_show_plot})
                 
-                set(ui_popup_nodalmeasures_group1, 'Position', [.02 .16 .15 .04])
+                set(ui_popup_nodalmeasures_group1, 'Position', [.02 .16 .15 .03])
                 set(ui_popup_nodalmeasures_group1, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_popup_nodalmeasures_group1, 'Callback', {@cb_nodal_table})
                 
-                set(ui_popup_nodalmeasures_group2, 'Position', [.02 .11 .15 .04])
+                set(ui_popup_nodalmeasures_group2, 'Position', [.02 .12 .15 .03])
                 set(ui_popup_nodalmeasures_group2, 'String', analysis.getCohort().getGroups().getKeys())
                 set(ui_popup_nodalmeasures_group2, 'Callback', {@cb_nodal_table})
                 set(ui_popup_nodalmeasures_group2, 'Enable', 'off')
                 set(ui_popup_nodalmeasures_group2, 'Visible', 'off')
                 
-                set(ui_selectedmeasure_popup, 'Position', [.02 .06 .15 .04])
+                set(ui_selected_subject, 'Position', [.02 .09 .15 .03])
+                set(ui_selected_subject, 'String', {''})
+                set(ui_selected_subject, 'Callback', {@cb_select_subject})
+                
+                set(ui_selectedmeasure_popup, 'Position', [.02 .05 .15 .03])
                 set(ui_selectedmeasure_popup, 'String', nodal_list)
                 set(ui_selectedmeasure_popup, 'Callback', {@cb_nodal_table})
                 
-                set(ui_selectedbr_popup, 'Position', [.02 .01 .15 .04])
+                set(ui_selectedbr_popup, 'Position', [.02 .01 .15 .03])
                 set(ui_selectedbr_popup, 'String', br_list)
                 set(ui_selectedbr_popup, 'Callback', {@cb_nodal_table})
                 
@@ -1479,6 +1486,14 @@ classdef AnalysisFNC_WU < Analysis
                 
                 selected_br = get(ui_selectedbr_popup, 'Value');
                 
+                subject = selected_subject_index; 
+                if subject > 1
+                    [~, subjects] = analysis.getCohort().getGroupSubjects(selected_index_1);
+                    sub = subjects{subject-1};
+                else
+                    sub = [];
+                end
+                
                 fdr_t = get(fdr_threshold_edit, 'String');
                 
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
@@ -1491,7 +1506,11 @@ classdef AnalysisFNC_WU < Analysis
                     
                     if exist('nodal_measurements', 'var')
                         nodal_measurements =  nodal_measurements(~cellfun(@isempty, nodal_measurements));
-                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group', ' value ', ' name ', ' label ', ' notes '})
+                        if subject == 1                            
+                            set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' group value ', ' name ', ' label ', ' notes '})
+                        else
+                            set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' subject ', ' subject value ', ' name ', ' label ', ' notes '})
+                        end
                         set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'char', 'char', 'char'})
                         set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false])
                         
@@ -1503,13 +1522,19 @@ classdef AnalysisFNC_WU < Analysis
                             else
                                 data{i, 1} = false;
                             end
-                            %nodal_values_cell = measurement.getMeasureValue();
-                            group_avg_value = measurement.getGroupAverageValue();
-                            %                             nodal_values = nodal_values_cell{1};
-                            selected_nodal_value = group_avg_value(selected_br);
+                             if subject == 1
+                                tmp = measurement.getGroupAverageValue();
+                                output_value = tmp(selected_br);
+                                output_id = measurement.getGroup().getID();
+                            else
+                                global_values = measurement.getMeasureValues();
+                                tmp = global_values{subject-1}; 
+                                output_value = tmp(selected_br);                              
+                                output_id = sub.getID();
+                             end
                             data{i, 2} = measurement.getMeasureCode();
-                            data{i, 3} = measurement.getGroup().getID();
-                            data{i, 4} = selected_nodal_value;
+                            data{i, 3} = output_id;
+                            data{i, 4} = output_value;
                             data{i, 5} = measurement.getID();
                             data{i, 6} = measurement.getLabel();
                             data{i, 7} = measurement.getNotes();
@@ -1627,6 +1652,9 @@ classdef AnalysisFNC_WU < Analysis
                     set(ui_popup_nodalmeasures_group1, 'Enable', 'on')
                     set(ui_popup_nodalmeasures_group1, 'Visible', 'on')
                     
+                    set(ui_selected_subject, 'Enable', 'off')
+                    set(ui_selected_subject, 'Visible', 'off')
+                    
                     set(ui_popup_nodalmeasures_group2, 'Enable', 'on')
                     set(ui_popup_nodalmeasures_group2, 'Visible', 'on')
                     set(fdr_threshold_edit, 'Visible', 'on')
@@ -1637,8 +1665,13 @@ classdef AnalysisFNC_WU < Analysis
                     set(ui_popup_nodalmeasures_group2, 'Enable', 'off')
                     set(ui_popup_nodalmeasures_group2, 'Visible', 'off')
                     
+                    set(ui_selected_subject, 'Enable', 'off')
+                    set(ui_selected_subject, 'Visible', 'off')
+                    
                     if get(ui_checkbox_brainmeasures_meas, 'Value')
                         set(fdr_threshold_edit, 'Visible', 'off')
+                        set(ui_selected_subject, 'Enable', 'on')
+                        set(ui_selected_subject, 'Visible', 'on')
                     else
                         set(fdr_threshold_edit, 'Visible', 'on')
                     end
@@ -1652,7 +1685,7 @@ classdef AnalysisFNC_WU < Analysis
                 if get(ui_checkbox_brainmeasures_meas, 'Value')
                     analysis.getNodalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
                         analysis.getCohort().getGroups().getValue(get(ui_popup_nodalmeasures_group1, 'Value')), ...
-                        get(ui_selectedbr_popup, 'Value'));
+                        get(ui_selectedbr_popup, 'Value'), selected_subject_index);
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
                     analysis.getNodalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
                         analysis.getCohort().getGroups().getValue(get(ui_popup_nodalmeasures_group1, 'Value')), ...
@@ -1680,6 +1713,7 @@ classdef AnalysisFNC_WU < Analysis
                 end
             end
             function cb_nodal_table(~, ~)
+                update_subjects()
                 update_nodal_table()
                 init_plot_nodal_panel()
             end
@@ -1782,9 +1816,22 @@ classdef AnalysisFNC_WU < Analysis
                     end
                 end
             end
+            function cb_select_subject(~, ~)
+                selected_subject_index = get(ui_selected_subject, 'value');
+                update_nodal_table();
+                init_plot_nodal_panel();                
+            end
+            function update_subjects()
+                selected_group = get(ui_popup_nodalmeasures_group1, 'Value');
+                [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
+                subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
+                subject_labels = ['All Subjects' subject_labels_inner];
+                set(ui_selected_subject, 'String', subject_labels)                
+            end
             
             update_nodal_table()
             init_plot_nodal_panel()
+            update_subjects()
             
             if nargout > 0
                 nodal_panel = ui_mainpanel;
