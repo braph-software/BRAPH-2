@@ -277,7 +277,7 @@ init_graph_settings()
         
         for j = 1:1:length(available_settings)
             as = available_settings{j};
-            y_correction = 0.2;
+            y_correction = 0.05;
             inner_panel_y = 1 - j * inner_panel_height + y_correction; 
 
             texts(j, 1) = uicontrol('Parent', ui_graph_setttings_inner_panel, 'Style', 'text', ...
@@ -294,11 +294,13 @@ init_graph_settings()
                 set(fields(j, 1), 'Callback', {@cb_analysis_settings_popup})
             elseif isequal(as{1, 2}, 2) % numerical
                 set(fields(j, 1), 'Style', 'edit');
+                set(fields(j, 1), 'Position', [0.58 inner_panel_y+0.03 0.40 0.04]);
                 set(fields(j, 1), 'String', as{1, 3})  % put default
                 set(fields(j, 1), 'Callback', {@cb_analysis_settings_popup})
             else % logical                
                 set(fields(j, 1), 'Style', 'popup');
                 set(fields(j, 1), 'String', {'true', 'false'}) 
+                set(fields(j, 1), 'FontWeight', 'bold')
                 set(fields(j, 1), 'Callback', {@cb_analysis_settings_popup})
             end
         end
@@ -339,7 +341,11 @@ init_graph_settings()
             if rem(j, 2) == 0
                 correlation_rules_array{k} = ['Analysis' dc{1} '.' childs(j).String];
             else
-                correlation_rules_array{k} = childs(j).String{childs(j).Value};
+                if childs(j).Value >= 1
+                    correlation_rules_array{k} = childs(j).String{childs(j).Value};
+                else
+                    correlation_rules_array{k} = childs(j).String;
+                end
             end            
         end
         analysis = ga.getClass();
@@ -608,7 +614,11 @@ init_matrix()
             if rem(j, 2) == 0
                 correlation_rules_array{k} = ['Analysis' dc{1} '.' childs(j).String];
             else
-                correlation_rules_array{k} = childs(j).String{childs(j).Value};
+                if childs(j).Value >= 1
+                    correlation_rules_array{k} = childs(j).String{childs(j).Value};
+                else
+                    correlation_rules_array{k} = childs(j).String;
+                end
             end            
         end
         

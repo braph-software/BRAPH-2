@@ -23,5 +23,5 @@ cohort = temp.cohort;
 
 GUIAnalysisSettings(cohort, 'AnalysisFNC_BUD')
 
-set(gcf, 'CloseRequestFcn', 'closereq')
-close(gcf)
+% set(gcf, 'CloseRequestFcn', 'closereq')
+% close(gcf)

@@ -114,6 +114,7 @@ classdef AnalysisFNC_WU < Analysis
             subjects = group.getSubjects();
             subject_number = numel(subjects);
             graphs = cell(1, subject_number);
+            T = analysis.getSettings('AnalysisFNC.FrecuencyRule');
             
             for i = 1:1:subject_number
                 subject = subjects{i};
@@ -122,7 +123,6 @@ classdef AnalysisFNC_WU < Analysis
                 % filter data
                 fmin = 0;  % values from braph 1
                 fmax = Inf;
-                T = 1;
                 fs = 1 / T;
                 if fmax > fmin && T > 0
                     NFFT = 2 * ceil(size(data, 1) / 2);
@@ -140,6 +140,29 @@ classdef AnalysisFNC_WU < Analysis
                 g = Graph.getGraph(graph_type, A);
                 graphs{i} = g;
             end
+        end
+        function graph = get_graph_for_subject(analysis, subject, varargin)            
+            T = analysis.getSettings('AnalysisFNC.FrecuencyRule');
+            data = subject.getData('FNC').getValue();
+            
+            % filter data
+            fmin = 0;  % values from braph 1
+            fmax = Inf;
+            fs = 1 / T;
+            if fmax > fmin && T > 0
+                NFFT = 2 * ceil(size(data, 1) / 2);
+                ft = fft(data, NFFT);  % Fourier transform
+                f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+                ft(f < fmin | f > fmax, :) = 0;
+                data = ifft(ft, NFFT);
+            end
+            
+            correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
+            negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
+            A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule);  % correlation is a column based operation
+            
+            graph_type = analysis.getGraphType();
+            graph = Graph.getGraph(graph_type, A);
         end
         function measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
             % CALCULATE_MEASUREMENT returns a measurement
@@ -461,7 +484,8 @@ classdef AnalysisFNC_WU < Analysis
             available_settings = {
                 {'AnalysisFNC.CorrelationRule', BRAPH2.STRING, 'pearson', Correlation.CORRELATION_RULE_LIST}, ...
                 {'AnalysisFNC.NegativeWeightRule', BRAPH2.STRING, 'zero', Correlation.NEGATIVE_WEIGHT_RULE_LIST}, ...
-                {'AnalysisFNC.Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...
+                {'AnalysisFNC.Longitudinal', BRAPH2.LOGICAL, false, {false, true}}, ...
+                {'AnalysisFNC.FrecuencyRule', BRAPH2.NUMERIC, 1, {}} ...
                 };
         end
     end
@@ -484,9 +508,12 @@ classdef AnalysisFNC_WU < Analysis
                 groups_labels = analysis.getCohort().getGroups().getKeys();
             else
                 groups_labels = 'No groups';
-            end
+            end   
             
+            subject_labels = {''};
+
             selected_group = 1;
+            selected_subject = 1;
             matrix_plot = [];
             
             cla(ui_parent_axes)
@@ -500,9 +527,15 @@ classdef AnalysisFNC_WU < Analysis
             set(ui_matrix_groups_popup, 'String', groups_labels)
             set(ui_matrix_groups_popup, 'Callback', {@cb_group_popup})
             
+            ui_matrix_subjects_popup = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'popup');
+            set(ui_matrix_subjects_popup, 'Position', [.70 .80 .28 .05])
+            set(ui_matrix_subjects_popup, 'TooltipString', 'Select Group')
+            set(ui_matrix_subjects_popup, 'String', subject_labels)
+            set(ui_matrix_subjects_popup, 'Callback', {@cb_group_subjects})
+            
             % weighted
             ui_matrix_weighted_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
-            set(ui_matrix_weighted_checkbox, 'Position', [.70 .82 .28 .05])
+            set(ui_matrix_weighted_checkbox, 'Position', [.70 .70 .28 .05])
             set(ui_matrix_weighted_checkbox, 'String', 'weighted correlation matrix')
             set(ui_matrix_weighted_checkbox, 'Value', true)
             set(ui_matrix_weighted_checkbox, 'TooltipString', 'Select weighted matrix')
@@ -511,14 +544,14 @@ classdef AnalysisFNC_WU < Analysis
             
             % density
             ui_matrix_density_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
-            set(ui_matrix_density_checkbox, 'Position', [.70 .70 .28 .05])
+            set(ui_matrix_density_checkbox, 'Position', [.70 .64 .28 .05])
             set(ui_matrix_density_checkbox, 'String', 'binary correlation matrix (set density)')
             set(ui_matrix_density_checkbox, 'Value', false)
             set(ui_matrix_density_checkbox, 'TooltipString', 'Select binary correlation matrix with a set density')
             set(ui_matrix_density_checkbox, 'Callback', {@cb_matrix_density_checkbox})
             
             ui_matrix_density_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
-            set(ui_matrix_density_edit, 'Position', [.70 .675 .05 .025])
+            set(ui_matrix_density_edit, 'Position', [.70 .615 .05 .025])
             set(ui_matrix_density_edit, 'String', '50.00');
             set(ui_matrix_density_edit, 'TooltipString', 'Set density.');
             set(ui_matrix_density_edit, 'FontWeight', 'bold')
@@ -526,7 +559,7 @@ classdef AnalysisFNC_WU < Analysis
             set(ui_matrix_density_edit, 'Callback', {@cb_matrix_density_edit});
             
             ui_matrix_density_slider = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'slider');
-            set(ui_matrix_density_slider, 'Position', [.75 .675 .23 .025])
+            set(ui_matrix_density_slider, 'Position', [.75 .615 .23 .025])
             set(ui_matrix_density_slider, 'Min', 0, 'Max', 100, 'Value', 50)
             set(ui_matrix_density_slider, 'TooltipString', 'Set density.')
             set(ui_matrix_density_slider, 'Enable', 'off')
@@ -534,14 +567,14 @@ classdef AnalysisFNC_WU < Analysis
             
             % threshold
             ui_matrix_threshold_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
-            set(ui_matrix_threshold_checkbox, 'Position', [.70 .60 .28 .05])
+            set(ui_matrix_threshold_checkbox, 'Position', [.70 .54 .28 .05])
             set(ui_matrix_threshold_checkbox, 'String', 'binary correlation matrix (set threshold)')
             set(ui_matrix_threshold_checkbox, 'Value', false)
             set(ui_matrix_threshold_checkbox, 'TooltipString', 'Select binary correlation matrix with a set threshold')
             set(ui_matrix_threshold_checkbox, 'Callback', {@cb_matrix_threshold_checkbox})
             
             ui_matrix_threshold_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
-            set(ui_matrix_threshold_edit, 'Position', [.70 .575 .05 .025])
+            set(ui_matrix_threshold_edit, 'Position', [.70 .515 .05 .025])
             set(ui_matrix_threshold_edit, 'String', '0.50');
             set(ui_matrix_threshold_edit, 'TooltipString', 'Set threshold.');
             set(ui_matrix_threshold_edit, 'FontWeight', 'bold')
@@ -549,7 +582,7 @@ classdef AnalysisFNC_WU < Analysis
             set(ui_matrix_threshold_edit, 'Callback', {@cb_matrix_threshold_edit});
             
             ui_matrix_threshold_slider = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'slider');
-            set(ui_matrix_threshold_slider, 'Position', [.75 .575 .23 .025])
+            set(ui_matrix_threshold_slider, 'Position', [.75 .515 .23 .025])
             set(ui_matrix_threshold_slider, 'Min', -1, 'Max', 1, 'Value', .50)
             set(ui_matrix_threshold_slider, 'TooltipString', 'Set threshold.')
             set(ui_matrix_threshold_slider, 'Enable', 'off')
@@ -557,7 +590,7 @@ classdef AnalysisFNC_WU < Analysis
             
             % histogram
             ui_matrix_histogram_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
-            set(ui_matrix_histogram_checkbox, 'Position', [.70 .76 .28 .05])
+            set(ui_matrix_histogram_checkbox, 'Position', [.70 .44 .28 .05])
             set(ui_matrix_histogram_checkbox, 'String', 'histogram')
             set(ui_matrix_histogram_checkbox, 'Value', false)
             set(ui_matrix_histogram_checkbox, 'TooltipString', 'Select histogram of correlation coefficients')
@@ -565,6 +598,11 @@ classdef AnalysisFNC_WU < Analysis
             
             function cb_group_popup(~, ~)
                 selected_group = get(ui_matrix_groups_popup, 'value');
+                update_subjects();
+                update_matrix();
+            end
+            function cb_group_subjects(~, ~)
+                selected_subject = get(ui_matrix_subjects_popup, 'value');
                 update_matrix();
             end
             function cb_matrix_weighted_checkbox(~, ~)
@@ -682,32 +720,59 @@ classdef AnalysisFNC_WU < Analysis
                     atlases = analysis.getCohort().getBrainAtlases();
                     atlas = atlases{1};
                     group = analysis.getCohort().getGroups().getValue(selected_group);
-                    graphs = analysis.get_graphs_for_group(group, varargin{:});
-                    g_As = cellfun(@(x) x.getA(), graphs, 'UniformOutput', false);
-                    A = zeros(atlas.getBrainRegions().length());
-                    
-                    for i = 1:1:length(graphs)
-                        A = A+g_As{i};
-                    end
-                    A = A/length(graphs);
-                    
-                    if get(ui_matrix_histogram_checkbox, 'Value')
-                        matrix_plot = Graph.hist(A, varargin{:});
-                    else
-                        % get atlas labels
+                    if selected_subject == 1
+                        graphs = analysis.get_graphs_for_group(group, varargin{:});
+                        g_As = cellfun(@(x) x.getA(), graphs, 'UniformOutput', false);
+                        A = zeros(atlas.getBrainRegions().length());
                         
-                        br_labels = atlas.getBrainRegions().getKeys();
-                        matrix_plot = GraphWU.plot(A, ...
-                            graph_rule, graph_rule_value, ...
-                            'Graph.PlotType', graph_type_value, ...
-                            'xlabels', br_labels, ...
-                            'ylabels', br_labels, ...
-                            varargin{:});
+                        for i = 1:1:length(graphs)
+                            A = A+g_As{i};
+                        end
+                        A = A/length(graphs);
+                        
+                        if get(ui_matrix_histogram_checkbox, 'Value')
+                            matrix_plot = Graph.hist(A, varargin{:});
+                        else
+                            % get atlas labels
+                            
+                            br_labels = atlas.getBrainRegions().getKeys();
+                            matrix_plot = GraphWU.plot(A, ...
+                                graph_rule, graph_rule_value, ...
+                                'Graph.PlotType', graph_type_value, ...
+                                'xlabels', br_labels, ...
+                                'ylabels', br_labels, ...
+                                varargin{:});
+                        end
+                    else
+                        [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
+                        subject = subjects{selected_subject-1};  % remove first index
+                        graph = analysis.get_graph_for_subject(subject, varargin{:});
+                        A = graph.getA();
+                        if get(ui_matrix_histogram_checkbox, 'Value')
+                            matrix_plot = Graph.hist(A, varargin{:});
+                        else
+                            % get atlas labels
+                            
+                            br_labels = atlas.getBrainRegions().getKeys();
+                            matrix_plot = GraphWU.plot(A, ...
+                                graph_rule, graph_rule_value, ...
+                                'Graph.PlotType', graph_type_value, ...
+                                'xlabels', br_labels, ...
+                                'ylabels', br_labels, ...
+                                varargin{:});
+                        end
                     end
                 end
             end
-            
+            function update_subjects()
+                [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
+                subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
+                subject_labels = ['All Subjects' subject_labels_inner];
+                set(ui_matrix_subjects_popup, 'String', subject_labels)
+            end
+                        
             update_matrix()
+            update_subjects()
             
             if nargout > 0
                 graph_panel = matrix_plot;

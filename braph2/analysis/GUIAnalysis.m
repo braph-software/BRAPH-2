@@ -307,7 +307,7 @@ init_calc()
         
         for j = 1:1:length(available_settings)
             as = available_settings{j};
-            y_correction = 0.2;
+            y_correction = 0.05;
             inner_panel_y = 1 - j * inner_panel_height + y_correction;
             
             texts(j, 1) = uicontrol('Parent', ui_calc_settings_panel, 'Style', 'text', ...
