@@ -130,7 +130,7 @@ for i = 1:1:numel(measures)
     measure = measures{i};
     analysis = AnalysisFNC_WU('id', 'label', 'notes', cohort, {}, {}, {});
     number_of_randomizations = 10;
-    calculate_comparison = analysis.getRandomComparison(measure, group1, 'RandomComparisonFNC.RandomizationNumber', number_of_randomizations);
+    calculate_comparison = analysis.getRandomComparison(measure, group1, 'RandomizationNumber', number_of_randomizations);
     
     assert(~isempty(calculate_comparison), ...
         [BRAPH2.STR ':AnalysisFNC_WU:calculateComparison'], ...
@@ -294,7 +294,7 @@ for i = 1:1:numel(measures)
     measure = measures{i};
     analysis = AnalysisFNC_WU('id', 'label', 'notes', cohort, {}, {}, {});
     number_of_permutations = 10;
-    calculate_comparison = analysis.getComparison(measure, group1, group2, 'ComparisonFNC.PermutationNumber', number_of_permutations);
+    calculate_comparison = analysis.getComparison(measure, group1, group2, 'PermutationNumber', number_of_permutations);
     
     assert(~isempty(calculate_comparison), ...
         [BRAPH2.STR ':AnalysisFNC_WU:calculateComparison'], ...
