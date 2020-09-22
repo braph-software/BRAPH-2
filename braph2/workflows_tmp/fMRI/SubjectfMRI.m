@@ -254,9 +254,25 @@ classdef SubjectfMRI < Subject
                 % load subjects
                 for i = 1:1:length(files)
                     % read file
-                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
+                    [num, ~, raw] = readtable(fullfile(path, files(i).name), 'PreserveVariableNames', true, 'Format', 'auto');
                     
-                    % get age
+                    % sneak peak to see if it is a subject
+                    id_tmp = raw{1, 1};
+                    labl_tmp = raw{1, 2};
+                    notes_tmp = raw{1, 3};                    
+                    if iscell(id_tmp)
+                        id_tmp = id_tmp{1};
+                    end
+                    if iscell(labl_tmp)
+                        labl_tmp = labl_tmp{1};
+                    end
+                    if  iscell(notes_tmp)
+                        notes_tmp = notes_tmp{1};
+                    end
+                    sub_tmp = Subject.getSubject(subject_class, ...
+                        num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlas, ...
+                        'fMRI', num);
+                    delete(sub_tmp);
                     
                     % create subject
                     sub_id = erase(files(i).name, '.xlsx');
@@ -268,15 +284,9 @@ classdef SubjectfMRI < Subject
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
                 end
-                
-                 % retrieve group information
-                file_group = [directory filesep() sub_folders(j).name filesep() 'group_info.txt'];
-                group_raw = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                group_id = group_raw{1, 1};
-                group_label = group_raw{2, 1};
-                group_notes = group_raw{3, 1};
+
                  % creates a group per subfolder
-                group = Group(subject_class, group_id, group_label, group_notes, subjects);
+                group = Group(subject_class, ['Group: ' i], '', '', subjects);
                 cohort.getGroups().add(group.getID(), group, j);      
             end
         end
@@ -317,14 +327,14 @@ classdef SubjectfMRI < Subject
                     writecell(cohort_info, file_info_cohort, 'Delimiter', '\t');
                 end
                 
-                % group info
-                group = cohort.getGroups().getValue(i);
-                group_info = cell(3, 1);
-                group_info{1, 1} = group.getID();
-                group_info{2, 1} = group.getLabel();
-                group_info{3, 1} = group.getNotes();
-                writecell(group_info, [root_directory filesep() group.getID() filesep() 'group_info.txt'], 'Delimiter', '\t');
-                
+%                 % group info
+%                 group = cohort.getGroups().getValue(i);
+%                 group_info = cell(3, 1);
+%                 group_info{1, 1} = group.getID();
+%                 group_info{2, 1} = group.getLabel();
+%                 group_info{3, 1} = group.getNotes();
+%                 writecell(group_info, [root_directory filesep() group.getID() filesep() 'group_info.txt'], 'Delimiter', '\t');
+%                 
                 % get subject info                
                 subjects_list = group.getSubjects();
                 for j = 1:1:group.subjectnumber()
@@ -340,8 +350,8 @@ classdef SubjectfMRI < Subject
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.xlsx'];
-                    writematrix(string(label), file, 'Sheet', 1, 'Range', 'A1');
-                    writematrix(string(notes), file, 'Sheet', 1, 'Range', 'A2');
+%                     writematrix(string(label), file, 'Sheet', 1, 'Range', 'A1');
+%                     writematrix(string(notes), file, 'Sheet', 1, 'Range', 'A2');
                     writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A3');
                 end
             end
