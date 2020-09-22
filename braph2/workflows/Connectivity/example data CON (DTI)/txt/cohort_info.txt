@@ -1,3 +1,0 @@
-trial_cohort
-label1
-notes1
