@@ -22,7 +22,7 @@ classdef OverlappingOutDegreeAv < OverlappingOutDegree
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, OverlappingInDegree, InDegree, MultiplexGraphBD, MultiplexGraphWD.
+    % See also Measure, OverlappingOutDegree, OutDegree, MultiplexGraphBD, MultiplexGraphWD.
     
     methods
         function m = OverlappingOutDegreeAv(g, varargin)
