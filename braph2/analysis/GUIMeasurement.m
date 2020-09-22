@@ -1,4 +1,3 @@
-
 function GUIMeasurement(measurement_class, analysis, measure_rules)
 % GUIMEASUREMENT creates a UI figure to specify Measurement settings
 %

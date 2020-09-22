@@ -44,7 +44,7 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
         function analysis = AnalysisCON_BUT(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
             % AnalysisCON_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
             % creates a connectivity analysis of fixed threshold with ID, LABEL,
-            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It 
+            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISST_WU with default settings.
             %
             % AnalysisCON_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
@@ -53,7 +53,7 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             % initializes the ANALYSISST_WU with specified settings VALUES.
             %
             % See also MeasurementCON_WU, RandomComparisonCON_WU, ComparisonCON_WU.
-                 
+            
             analysis = analysis@AnalysisCON_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
@@ -65,12 +65,12 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             % creates a measurement ID with the ANALYSIS class, the
             % MEASURE_CODE, the GROUP and the THRESHOLD.
             %
-            % See also getRandomComparisonID, getComparisonID.            
+            % See also getRandomComparisonID, getComparisonID.
             
             measurement_id = getMeasurementID@AnalysisCON_WU(analysis, measure_code, group, varargin{:});
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
-            measurement_id = [measurement_id ' threshold=' num2str(threshold)];          
+            measurement_id = [measurement_id ' threshold=' num2str(threshold)];
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             % GETRANDOMCOMPARISONID returns a random comparison ID
@@ -79,8 +79,8 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             % creates a random comparison ID with the ANALYSIS class, the
             % MEASURE_CODE, the GROUP and the THRESHOLD.
             %
-            % See also getMeasurementID, getComparisonID.            
-         
+            % See also getMeasurementID, getComparisonID.
+            
             randomcomparison_id = getRandomComparisonID@AnalysisCON_WU(analysis, measure_code, group, varargin{:});
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
@@ -142,7 +142,7 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             
             graph_type = analysis.getGraphType();
             graph = Graph.getGraph(graph_type, A);
-        end  
+        end
     end
     methods (Static)  % Descriptive functions
         function analysis_class = getClass()
@@ -182,7 +182,7 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
         function graph_type = getGraphType()
             % GETGRAPHTYPE returns the compatible type of graph
             %
-            % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of 
+            % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of
             % graph 'GraphBU'.
             %
             % See also getSubjectClass.
@@ -221,7 +221,7 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             comparison_class = 'ComparisonCON_BUT';
         end
     end
-     methods  % plot methods
+    methods  % plot methods
         function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, subject, varargin) %#ok<INUSL>
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
             %
@@ -231,10 +231,10 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');            
+            X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');
             if subject == 1
                 Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
-            else 
+            else
                 measurements = analysis.selectMeasurements(measure_code, group, '.getMeasureValues()');
                 Y = cellfun(@(x) x(subject-1), measurements);
             end

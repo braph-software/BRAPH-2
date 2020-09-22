@@ -21,8 +21,8 @@ classdef MeasurementCON_BUT < MeasurementCON_WU
     % MeasurementCON_BUT plot methods (Static):
     %  getMeasurementSettingsPanel  - returns a UIPanel
     %
-    % See also Comparison, AnalysisCON_BUT, ComparisonCON_BUT, RandomComparisonCON_BUT. 
-   
+    % See also Comparison, AnalysisCON_BUT, ComparisonCON_BUT, RandomComparisonCON_BUT.
+    
     properties (Access = protected)
         threshold  % threshold of the values
     end
@@ -30,16 +30,16 @@ classdef MeasurementCON_BUT < MeasurementCON_WU
         function m =  MeasurementCON_BUT(id, label, notes, atlas, measure_code, group, varargin)
             % MEASUREMENTCON_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'threshold',  THRESHOLD)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
-            % with the data from GROUP, this data will have a fixed THRESHOLD. 
+            % with the data from GROUP, this data will have a fixed THRESHOLD.
             %
-            % MeasurementCON_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP) 
+            % MeasurementCON_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP, this data will have a fixed default threshold.
             %
             % See also ComparisonCON_BUT, RandomComparisonCON_BUT, AnalysisCON_BUT.
             
             m = m@MeasurementCON_WU(id, label, notes, atlas, measure_code, group, varargin{:});
-
+            
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             m.setThreshold(threshold)
         end
@@ -48,9 +48,9 @@ classdef MeasurementCON_BUT < MeasurementCON_WU
         function setThreshold(m, threshold)
             % SETTHRESHOLD sets the measure value of the group
             %
-            % SETTHRESHOLD(M, THRESHOLD) sets the measure value of 
+            % SETTHRESHOLD(M, THRESHOLD) sets the measure value of
             % the group.
-            % 
+            %
             % See also getThreshold.
             
             m.threshold = threshold;
@@ -71,7 +71,7 @@ classdef MeasurementCON_BUT < MeasurementCON_WU
         function class = getClass()
             % GETCLASS returns the class of connectivity measurement BUT
             %
-            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
+            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
             % measurement. In this case 'MeasurementCON_BUT'.
             %
             % See also getList, getName, getDescription.
@@ -102,7 +102,7 @@ classdef MeasurementCON_BUT < MeasurementCON_WU
                 ];
         end
         function analysis_class = getAnalysisClass()
-            % GETANALYSISCLASS returns the class of the analsysis 
+            % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
             % analysis the measurement is part of, 'AnalysisCON_BUT'.
@@ -110,9 +110,9 @@ classdef MeasurementCON_BUT < MeasurementCON_WU
             % See also getClass, getName, getDescription.
             
             analysis_class = 'AnalysisCON_BUT';
-        end     
+        end
     end
-     methods (Static)  % Plot functions
+    methods (Static)  % Plot functions
         function handle = getMeasurementSettingsPanel(analysis, uiparent) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
@@ -179,4 +179,4 @@ classdef MeasurementCON_BUT < MeasurementCON_WU
                 str2double(get(ui_threshold_max_edit, 'String')))
         end
     end
-end 
+end
