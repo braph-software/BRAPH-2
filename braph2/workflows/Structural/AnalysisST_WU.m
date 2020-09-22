@@ -494,7 +494,7 @@ classdef AnalysisST_WU < Analysis
             
             comparison_class = 'ComparisonST_WU';
         end
-        function available_settings = getAvailableSettings(m) %#ok<INUSD>
+        function available_settings = getAvailableSettings()
             % GETAVAILABLESETTINGS returns the available settings of structural analysis
             %
             % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(M) returns the
