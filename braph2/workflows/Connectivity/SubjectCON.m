@@ -406,7 +406,7 @@ classdef SubjectCON < Subject
                 sub_id = erase(files(i).name, '.txt');
                 label = raw{1, 1};
                 notes = raw{2, 1};
-                B = raw(3:end, 1);
+                B = raw(1:end, 1);
                 B = reshape(B, [atlases.getBrainRegions().length() atlases.getBrainRegions().length()]);
                 B = B';
                 C = cellfun(@(x) str2double(x), B);
@@ -418,16 +418,11 @@ classdef SubjectCON < Subject
                 cohort.getSubjects().add(subject.getID(), subject, i);
             end
             
-            % retrieve group information
-                file_group = [directory filesep() 'group_info.txt'];
-                group_raw = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                group_label = group_raw{2, 1};
-                group_notes = group_raw{3, 1};
             
             % creates group
             if i == length(files)
                 [~, groupname] = fileparts(directory);
-                group = Group(subject_class, groupname, group_label, group_notes,  cohort.getSubjects().getValues());
+                group = Group(subject_class, groupname, '', '',  cohort.getSubjects().getValues());
                 cohort.getGroups().add(group.getID(), group);
             end
         end
