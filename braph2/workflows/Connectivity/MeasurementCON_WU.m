@@ -29,6 +29,9 @@ classdef MeasurementCON_WU < Measurement
     %  getAvailbleSettings          - returns the available settings
     %  getMeasurement               - returns a new measurement
     %
+    % MeasurementCON_WU plot methods (Static):
+    %  getMeasurementSettingsPanel  - returns a UIPanel
+    %
     % See also Comparison, AnalysisCON_WU, ComparisonCON_WU, RandomComparisonCON_WU. 
     
     % single group of dti subjects
@@ -240,6 +243,19 @@ classdef MeasurementCON_WU < Measurement
             % See also getClass, getName, getDescription.
             
             m = eval([measurement_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
+        end
+    end
+    methods (Static)  % Plot methods
+        function handle = getMeasurementSettingsPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. For WU in empty.
+            %
+            % See also MeasurementST_WU.
+            
+            set(uiparent, 'Visible', 'off')
+            handle.variables = [];
         end
     end
 end

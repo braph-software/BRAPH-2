@@ -36,6 +36,9 @@ classdef ComparisonCON_WU < Comparison
     %  getAvailbleSettings          - returns the available settings
     %  getComparison                - returns a new comparison
     %
+    % ComparisonCON_WU plot methods (Static):
+    %  getComparisonSettingsPanel   - returns a UIPanel
+    %
     % See also Comparison, AnalysisCON_WU, MeasurementCON_WU, RandomComparisonCON_WU.
     
     properties
@@ -614,6 +617,40 @@ classdef ComparisonCON_WU < Comparison
             % See also getClass, getName, getDescription.
             
             sub = eval([comparisonClass '(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:})']);
+        end
+    end
+     methods (Static)  % Plot ComparisonGUI Child Panel
+        function handle = getComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. Modificable settings are: Verbose, Interruptible and
+            % Permutation.
+            %
+            % See also ComparisonST_WU.
+            
+            set(uiparent, 'Visible', 'on')
+            
+            ui_permutation_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_permutation_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            init_child_panel()
+            function init_child_panel()
+                
+                set(ui_permutation_text, 'String', 'Permutation Number')
+                set(ui_permutation_text, 'Position', [.01 .8 .47 .14])
+                set(ui_permutation_text, 'Fontweight', 'bold')
+                
+                set(ui_permutation_edit, 'String', 1000)
+                set(ui_permutation_edit, 'Position', [.5 .87 .45 .08])
+                set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
+            end
+            
+            function cb_comparison_permutation(~, ~)
+                setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
+            end
+            handle.variables = [];
+            handle.permutation = ui_permutation_edit;
+            setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
         end
     end
 end

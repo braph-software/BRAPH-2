@@ -207,7 +207,7 @@ classdef AnalysisCON_WU < Analysis
             number_of_weights = analysis.getSettings('AnalysisCON.NumberOfWeights');
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
-            M = get_from_varargin(1e+3, 'RandomComparisonCON.RandomizationNumber', varargin{:});
+            M = get_from_varargin(1e+3, 'RandomizationNumber', varargin{:});
             
             % Measurements for the group
             measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});

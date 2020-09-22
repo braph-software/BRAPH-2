@@ -18,6 +18,9 @@ classdef RandomComparisonCON_BUT < RandomComparisonCON_WU
     %  getDescription               - returns the description of the comparison
     %  getAnalysisClass             - returns the class of the analysis
     %
+    % RandomComparisonCON_BUT plot methods (Static):
+    %  getRandomComparisonSettingsPanel - returns a UIPanel
+    %
     % See also Comparison, AnalysisCON_BUT, MeasurementCON_BUT, ComparisonCON_BUT.
     
     properties (Access = protected)
@@ -109,6 +112,117 @@ classdef RandomComparisonCON_BUT < RandomComparisonCON_WU
             % See also getList, getClass, getName.
             
             analysis_class = 'AnalysisCON_BUT';
+        end
+    end
+    methods (Static)  % Plot ComparisonGUI Child Panel
+        function handle = getRandomComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. Modificable settings are: Verbose, Interruptible,
+            % Randomization and Threshold.
+            %
+            % See also RandomComparisonST_BUT.
+            
+            set(uiparent, 'Visible', 'on')
+            
+            ui_threshold_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_threshold_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_threshold_min_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_threshold_min_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_threshold_max_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_threshold_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_randomization_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_randomization_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_attempts_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_attempts_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_weights_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_weights_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            init_child_panel()
+            function init_child_panel()
+                set(ui_threshold_text, 'String', 'Threshold')
+                set(ui_threshold_text, 'Position', [.01 .46 .47 .08])
+                set(ui_threshold_text, 'Fontweight', 'bold')
+                
+                set(ui_threshold_edit, 'String', 0.1)
+                set(ui_threshold_edit, 'Position', [.5 .47 .45 .08])
+                set(ui_threshold_edit, 'Callback', {@cb_randomcomparison_threshold})
+                
+                set(ui_threshold_min_text, 'String', 'Min')
+                set(ui_threshold_min_text, 'Position', [.01 .56 .47 .08])
+                set(ui_threshold_min_text, 'Fontweight', 'bold')
+                
+                set(ui_threshold_min_edit, 'String', -1)
+                set(ui_threshold_min_edit, 'Position', [.5 .57 .45 .08])
+                set(ui_threshold_min_edit, 'Callback', {@cb_randomcomparison_min})
+                
+                set(ui_threshold_max_text, 'String', 'Max')
+                set(ui_threshold_max_text, 'Position', [.01 .36 .47 .08])
+                set(ui_threshold_max_text, 'Fontweight', 'bold')
+                
+                set(ui_threshold_max_edit, 'String', 1)
+                set(ui_threshold_max_edit, 'Position', [.5 .37 .45 .08])
+                set(ui_threshold_max_edit, 'Callback', {@cb_randomcomparison_max})
+                
+                set(ui_randomization_text, 'String', 'Randomization Number')
+                set(ui_randomization_text, 'Position', [.01 .86 .47 .08])
+                set(ui_randomization_text, 'Fontweight', 'bold')
+                
+                set(ui_randomization_edit, 'String', 1000)
+                set(ui_randomization_edit, 'Position', [.5 .87 .45 .08])
+                set(ui_randomization_edit, 'Callback', {@cb_randomcomparison_randomization})
+                
+                set(ui_attempts_text, 'String', 'Attempts per Edge')
+                set(ui_attempts_text, 'Position', [.01 .76 .47 .08])
+                set(ui_attempts_text, 'Fontweight', 'bold')
+                
+                set(ui_attempts_edit, 'String', 5)
+                set(ui_attempts_edit, 'Position', [.5 .77 .45 .08])
+                set(ui_attempts_edit, 'Callback', {@cb_randomcomparison_attempts})
+                
+                set(ui_weights_text, 'String', 'Number of Weights')
+                set(ui_weights_text, 'Position', [.01 .66 .47 .08])
+                set(ui_weights_text, 'Fontweight', 'bold')
+                
+                set(ui_weights_edit, 'String', 1)
+                set(ui_weights_edit, 'Position', [.5 .67 .45 .08])
+                set(ui_weights_edit, 'Callback', {@cb_randomcomparison_weights})
+            end
+            function cb_randomcomparison_threshold(~,~)
+                setappdata(uiparent, 'threshold', ...
+                    str2double(get(ui_threshold_min_edit, 'String')) : ...
+                    str2double(get(ui_threshold_edit, 'String')) : ...
+                    str2double(get(ui_threshold_max_edit, 'String')))
+            end
+            function cb_randomcomparison_min(src, ~)
+                newdata = get(src, 'String');
+                set(ui_threshold_min_edit, 'String', newdata);
+            end
+            function cb_randomcomparison_max(src, ~)
+                newdata = get(src, 'String');
+                set(ui_threshold_max_edit, 'String', newdata);
+            end
+            function cb_randomcomparison_randomization(~, ~)
+                setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
+            end
+            function cb_randomcomparison_attempts(~, ~)
+                setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
+            end
+            function cb_randomcomparison_weights(~, ~)
+                setappdata(uiparent, 'numberweigths', str2double(get(ui_weights_edit, 'String')))
+            end
+            handle.variables = {'threshold'};
+            handle.step = ui_threshold_edit;
+            handle.min = ui_threshold_min_edit;
+            handle.max = ui_threshold_max_edit;
+            handle.randomization = ui_randomization_edit;
+            setappdata(uiparent, 'threshold', ...
+                str2double(get(ui_threshold_min_edit, 'String')) : ...
+                str2double(get(ui_threshold_edit, 'String')) : ...
+                str2double(get(ui_threshold_max_edit, 'String')))
+            setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
+            setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
+            setappdata(uiparent, 'numberweigths', str2double(get(ui_weights_edit, 'String')))
         end
     end
 end
