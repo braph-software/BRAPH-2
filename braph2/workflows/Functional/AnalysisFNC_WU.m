@@ -35,6 +35,20 @@ classdef AnalysisFNC_WU < Analysis
     %  getComparisonClass           - returns the class of the comparison
     %  getAvailbleSettings          - returns the available settings
     %
+    % AnalysisFNC_WU Plot panel methods
+    %  getGraphPanel                - creates a uipanel
+    %  getGlobalPanel               - creates a global uipanel for GUIAnalysis
+    %  getNodalPanel                - creates a nodal uipanel for GUIAnalysis
+    %  getGlobalMeasurePlot         - returns a global measurement plot
+    %  getGlobalComparisonPlot      - returns a global comparison plot
+    %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
+    %  getNodalMeasurePlot          - returns a nodal measure plot
+    %  getNodalComparisonPlot       - returns a nodal comparison plot
+    %  getNodalRandomComparisonPlot - returns a nodal randomcomparison plot
+    %  getBinodalMeasurePlot      - returns a binodal measure plot
+    %  getBinodalComparisonPlot   - returns a binodal comparison plot
+    %  getBinodalRandomComparisonPlot - returns a binodal randomcomparison plot
+    %
     % See also Analysis, MeasurementCON_WU, RandomComparisonCON_WU, ComparisonCON_WU
     
     methods  % Constructor
