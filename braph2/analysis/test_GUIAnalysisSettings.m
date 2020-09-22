@@ -25,3 +25,13 @@ GUIAnalysisSettings(cohort, 'AnalysisFNC_BUD')
 
 set(gcf, 'CloseRequestFcn', 'closereq')
 close(gcf)
+
+%% Pass a CON cohort
+cohort_file = [fileparts(which('example_workflow_CON_WU.m')) filesep() 'example data CON (DTI)' filesep() 'cohort_example.cohort'];
+temp = load(cohort_file, '-mat', 'cohort', 'selected_group', 'selected_subjects', 'BUILD');
+cohort = temp.cohort;
+
+GUIAnalysisSettings(cohort, 'AnalysisCON_WU')
+
+% set(gcf, 'CloseRequestFcn', 'closereq')
+% close(gcf)

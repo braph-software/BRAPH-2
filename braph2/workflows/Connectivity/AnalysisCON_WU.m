@@ -18,7 +18,8 @@ classdef AnalysisCON_WU < Analysis
     %  getComparisonID              - returns the comparison ID
     %
     % AnalysisCON_WU calcultion methods (Access = protected):
-    %  get_graph_for_subjects       - returns the graph of the correlated matrix
+    %  get_graph_for_group          - returns the graph of the correlated matrix
+    %  get_graph_for_subject        - returns the graph of the correlated matrix
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
@@ -133,6 +134,20 @@ classdef AnalysisCON_WU < Analysis
                 A = subject.getData('CON').getValue();  % CON matrix
                 graphs{i} = Graph.getGraph(graph_type, A);
             end
+        end
+        function graph = get_graph_for_subject(analysis, subject, varargin)
+            % GET_GRAPH_FOR_SUBJECT returns the graph created with the correlation matrix
+            %
+            % G = GET_GRAPH_FOR_SUBJECT(ANALYSIS, SUBJECT, PROPERY, VALUE, ...) creates a
+            % graph with the correlation matrix made of the data of
+            % subject. It will binarize the matrix depending on the
+            % PROPERTY and VALUE.
+            %
+            % See also calculate_measurement.
+            
+            data = subject.getData('CON').getValue();
+            graph_type = analysis.getGraphType();
+            graph = Graph.getGraph(graph_type, data);
         end
         function measurement = calculate_measurement(analysis, measure_code, group, varargin) %#ok<*INUSL>
             % CALCULATE_MEASUREMENT returns a measurement
@@ -802,7 +817,7 @@ classdef AnalysisCON_WU < Analysis
                 GUI.setUnits(ui_mainpanel)
                 
                 set(ui_global_tbl, 'BackgroundColor', GUI.TABBKGCOLOR)
-                if isequal(analysis.getMeasurementClass(), 'MeasurementFNC_WU')
+                if isequal(analysis.getMeasurementClass(), 'MeasurementCON_WU')
                     set(ui_global_tbl, 'Position', [.02 .19 .96 .79])
                     GUI.setUnits(ui_plot_measure_panel)
                     GUI.setBackgroundColor(ui_plot_measure_panel)
@@ -1329,7 +1344,7 @@ classdef AnalysisCON_WU < Analysis
                 GUI.setUnits(ui_mainpanel)
                 
                 set(ui_nodal_tbl, 'BackgroundColor', GUI.TABBKGCOLOR)
-                if isequal(analysis.getMeasurementClass(), 'MeasurementFNC_WU')
+                if isequal(analysis.getMeasurementClass(), 'MeasurementCON_WU')
                     set(ui_nodal_tbl, 'Position', [.02 .21 .96 .77])
                     GUI.setUnits(ui_plot_measure_panel)
                     GUI.setBackgroundColor(ui_plot_measure_panel)
@@ -1849,7 +1864,7 @@ classdef AnalysisCON_WU < Analysis
                 GUI.setUnits(ui_mainpanel)
                 
                 set(ui_binodal_tbl, 'BackgroundColor', GUI.TABBKGCOLOR)
-                if isequal(analysis.getMeasurementClass(), 'MeasurementFNC_WU')
+                if isequal(analysis.getMeasurementClass(), 'MeasurementCON_WU')
                     set(ui_binodal_tbl, 'Position', [.02 .21 .96 .77])
                     GUI.setUnits(ui_plot_measure_panel)
                     GUI.setBackgroundColor(ui_plot_measure_panel)
@@ -2778,9 +2793,9 @@ classdef AnalysisCON_WU < Analysis
                 set(ui_link_type, 'Position', [.62 .06 .3 .05])
                 set(ui_link_type, 'Callback', {@cb_link_type});
                 
-                if isequal(class(analysis), 'AnalysisFNC_BUT')
+                if isequal(class(analysis), 'AnalysisCON_BUT')
                     change_to_threshold()
-                elseif isequal(class(analysis), 'AnalysisFNC_BUD')
+                elseif isequal(class(analysis), 'AnalysisCON_BUD')
                     change_to_density()
                 else
                     change_to_weighted()
@@ -3767,14 +3782,14 @@ classdef AnalysisCON_WU < Analysis
                 update_brain_meas_plot()
             end
             function update_figure_panel()
-                if isequal(ga.getClass(), 'AnalysisFNC_WU')
+                if isequal(ga.getClass(), 'AnalysisCON_WU')
                     set(ui_list_gr, 'Position', [.02 .02 .30 .68])
                     set(ui_list_threshold_or_density, 'Position', [0 0 0 0])
                 else
                     set(ui_list_gr, 'Position', [.02 .36 .3 .36])
                     set(ui_list_threshold_or_density, 'Position', [.02 .02 .3 .3])
                     set(list_tittle, 'Position', [.02 .32 .25 .04])
-                    if isequal(ga.getClass(), 'AnalysisFNC_BUT')
+                    if isequal(ga.getClass(), 'AnalysisCON_BUT')
                         set(list_tittle, 'String', 'Select Threshold')
                     else  % desity
                         set(list_tittle, 'String', 'Select Density')
@@ -3811,7 +3826,7 @@ classdef AnalysisCON_WU < Analysis
                 end
             end
             function update_list_t_d(selected_case)
-                if isequal(ga.getClass(), 'AnalysisFNC_BUT')
+                if isequal(ga.getClass(), 'AnalysisCON_BUT')
                     if get(ui_action_comparison_checkbox, 'Value')
                         [a, b] = selected_case.getGroups();
                         set(ui_list_threshold_or_density, 'String', analysis.selectComparisons(selected_case.getMeasureCode(), a, b, '.getThreshold()'))
@@ -3820,7 +3835,7 @@ classdef AnalysisCON_WU < Analysis
                     else
                         set(ui_list_threshold_or_density, 'String', analysis.selectMeasurements(selected_case.getMeasureCode(), selected_case.getGroup(), '.getThreshold()'))
                     end
-                elseif isequal(ga.getClass(), 'AnalysisFNC_BUD')
+                elseif isequal(ga.getClass(), 'AnalysisCON_BUD')
                     if get(ui_action_comparison_checkbox, 'Value')
                         [a, b] = selected_case.getGroups();
                         set(ui_list_threshold_or_density, 'String', analysis.selectComparisons(selected_case.getMeasureCode(), a, b, '.getDensity()'))
@@ -3898,7 +3913,7 @@ classdef AnalysisCON_WU < Analysis
                     if isempty(selected_case)
                         errordlg(['The measure: ' measure ' for ' selected_action ' does not exist.'])
                     else
-                        if isequal(analysis.getClass(), 'AnalysisFNC_WU')
+                        if isequal(analysis.getClass(), 'AnalysisCON_WU')
                             switch selected_action
                                 case 'Measurement'
                                     measure_data = selected_case.getGroupAverageValue();
@@ -3919,7 +3934,7 @@ classdef AnalysisCON_WU < Analysis
                                     p2 = selected_case.getP2();
                                     calculate_fdr_lim()
                             end
-                        elseif isequal(analysis.getClass(), 'AnalysisFNC_BUT')
+                        elseif isequal(analysis.getClass(), 'AnalysisCON_BUT')
                             a = get(ui_list_threshold_or_density, 'String');
                             b = a{get(ui_list_threshold_or_density, 'Value')};
                             

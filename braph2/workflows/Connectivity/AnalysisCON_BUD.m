@@ -38,22 +38,22 @@ classdef AnalysisCON_BUD < AnalysisCON_WU
     %  getBiNodalComparisonPlot      - returns a global comparison plot
     %  getBiNodalRandomComparisonPlot - returns a global randomcomparison plot
     %
-    % See also Analysis, MeasurementST_BUD, RandomComparisonST_BUD, ComparisonST_BUD
+    % See also Analysis, MeasurementCON_BUD, RandomComparisonCON_BUD, ComparisonCON_BUD
     
     methods
         function analysis = AnalysisCON_BUD(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
             % AnalysisCON_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
             % creates a connectivity analysis of fixed density with ID, LABEL,
-            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It 
-            % initializes the ANALYSISST_WU with default settings.
+            % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
+            % initializes the ANALYSISCON_WU with default settings.
             %
             % AnalysisCON_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
             % creates a connectivity analysis of fixed density with ID, LABEL,
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
-            % initializes the ANALYSISST_WU with specified settings VALUES.
+            % initializes the ANALYSISCON_WU with specified settings VALUES.
             %
-            % See also MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU.
-                 
+            % See also MeasurementCON_WU, RandomComparisonCON_WU, ComparisonCON_WU.
+            
             analysis = analysis@AnalysisCON_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
@@ -65,12 +65,12 @@ classdef AnalysisCON_BUD < AnalysisCON_WU
             % creates a measurement ID with the ANALYSIS class, the
             % MEASURE_CODE, the GROUP and the DENSITY.
             %
-            % See also getRandomComparisonID, getComparisonID.            
+            % See also getRandomComparisonID, getComparisonID.
             
             measurement_id = getMeasurementID@AnalysisCON_WU(analysis, measure_code, group, varargin{:});
             
             density = get_from_varargin(0, 'density', varargin{:});
-            measurement_id = [measurement_id ' density=' num2str(density)];          
+            measurement_id = [measurement_id ' density=' num2str(density)];
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             % GETRANDOMCOMPARISONID returns a random comparison ID
@@ -79,8 +79,8 @@ classdef AnalysisCON_BUD < AnalysisCON_WU
             % creates a random comparison ID with the ANALYSIS class, the
             % MEASURE_CODE, the GROUP and the DENSITY.
             %
-            % See also getMeasurementID, getComparisonID.            
-         
+            % See also getMeasurementID, getComparisonID.
+            
             randomcomparison_id = getRandomComparisonID@AnalysisCON_WU(analysis, measure_code, group, varargin{:});
             
             density = get_from_varargin(0, 'density', varargin{:});
@@ -102,36 +102,46 @@ classdef AnalysisCON_BUD < AnalysisCON_WU
         end
     end
     methods (Access = protected)
-        function g = get_graph_for_subjects(analysis, subjects, varargin)
-            % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
+        function graphs = get_graphs_for_group(analysis, group, varargin)
+            % GET_GRAPH_FOR_GROUP returns the graph created with the group data
             %
-            % G = GET_GRAPH_FOR_SUBJECTS(ANALYSIS, SUBJECTS, PROPERY, VALUE, ...) creates a
+            % G = GET_GRAPH_FOR_GROUP(ANALYSIS, GROUP) creates a
             % graph with the correlation matrix made of the data of
-            % subjects. It will binarize the matrix depending on the
+            % subjects of the group
+            %
+            % See also calculate_measurement.
+            
+            graph_type = analysis.getGraphType();
+            subjects = group.getSubjects();
+            graphs = cell(1, group.subjectnumber());
+            
+            for i = 1:1:group.subjectnumber()
+                subject = subjects{i};
+                A = subject.getData('CON').getValue();  % CON matrix
+                
+                density = get_from_varargin(0, 'density', varargin{:});
+                A = binarize(A, 'density', density, varargin{:});
+                
+                graphs{i} = Graph.getGraph(graph_type, A);
+            end
+        end
+        function graph = get_graph_for_subject(analysis, subject, varargin)
+            % GET_GRAPH_FOR_SUBJECT returns the graph created with the correlation matrix
+            %
+            % G = GET_GRAPH_FOR_SUBJECT(ANALYSIS, SUBJECT, PROPERY, VALUE, ...) creates a
+            % graph with the correlation matrix made of the data of
+            % subject. It will binarize the matrix depending on the
             % PROPERTY and VALUE.
             %
             % See also calculate_measurement.
             
-            atlases = analysis.cohort.getBrainAtlases();
-            atlas = atlases{1};
-            
-            subject_number = numel(subjects);
-            
-            data = zeros(subject_number, atlas.getBrainRegions().length());
-            for i = 1:1:subject_number
-                subject = subjects{i};
-                data(i, :) = subject.getData('CON').getValue();  % st data
-            end
-            
-            correlation_rule = analysis.getSettings('AnalysisCON.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisCON.NegativeWeightRule');
-            A = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule);
+            data = subject.getData('CON').getValue();
             
             density = get_from_varargin(0, 'density', varargin{:});
-            A = binarize(A, 'density', density, varargin{:});
+            A = binarize(data, 'density', density, varargin{:});
             
-            graph_type = AnalysisCON_WU.getGraphType();
-            g = Graph.getGraph(graph_type, A);
+            graph_type = analysis.getGraphType();
+            graph = Graph.getGraph(graph_type, A);
         end
     end
     methods (Static)  % Descriptive functions
@@ -172,7 +182,7 @@ classdef AnalysisCON_BUD < AnalysisCON_WU
         function graph_type = getGraphType()
             % GETGRAPHTYPE returns the compatible type of graph
             %
-            % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of 
+            % GRAPH_TYPE = GETGRAPHTYPE() returns the compatible type of
             % graph 'GraphBU'.
             %
             % See also getSubjectClass.
@@ -222,9 +232,9 @@ classdef AnalysisCON_BUD < AnalysisCON_WU
             % See also getGraphPanel, getGlobalPanel.
             
             X = analysis.selectMeasurements(measure_code, group, '.getDensity()');
-             if subject == 1
+            if subject == 1
                 Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
-            else 
+            else
                 measurements = analysis.selectMeasurements(measure_code, group, '.getMeasureValues()');
                 Y = cellfun(@(x) x(subject-1), measurements);
             end
