@@ -243,7 +243,7 @@ classdef SubjectFNC < Subject
                     cohort_notes = raw_cohort{3, 1};
                 end
                 
-                % creates cohor
+                % creates cohort
                 atlases = tmp;
                 subject_class = 'SubjectFNC';
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});

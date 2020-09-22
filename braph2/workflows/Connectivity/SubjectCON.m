@@ -262,7 +262,7 @@ classdef SubjectCON < Subject
                 % load subjects
                 for i = 1:1:length(files)
                     % read file
-                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
+                    raw = readmatrix(fullfile(path, files(i).name));
                     atlases = cohort.getBrainAtlases();
                     % get age
                     
@@ -270,22 +270,15 @@ classdef SubjectCON < Subject
                     sub_id = erase(files(i).name, '.xlsx');
                     sub_id = erase(sub_id, '.xls');
                     subject = Subject.getSubject(subject_class, ...
-                        sub_id, char(raw{1, 1}), char(raw{2, 1}), atlases, ...                     
-                        'CON', num);
+                        sub_id, '', '', atlases, ...                     
+                        'CON', raw);
                     
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
-                end
-                
-                % retrieve group information
-                file_group = [directory filesep() sub_folders(j).name filesep() 'group_info.txt'];
-                group_raw = textread(file_group, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
-                group_id = group_raw{1, 1};
-                group_label = group_raw{2, 1};
-                group_notes = group_raw{3, 1};
+                end                
                 
                 % creates a group per subfolder
-                group = Group(subject_class, group_id, group_label, group_notes, subjects);
+                group = Group(subject_class, ['Group_' num2str(j)], '', '', subjects);
                 cohort.getGroups().add(group.getID(), group, j);                
             end
         end
@@ -319,24 +312,9 @@ classdef SubjectCON < Subject
                     mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 end
                 
-                % cohort info
-                file_info_cohort = [root_directory filesep() 'cohort_info.txt'];
-                if ~isfile(file_info_cohort)
-                    cohort_info = cell(3, 1);
-                    cohort_info{1, 1} = cohort.getID();
-                    cohort_info{2, 1} = cohort.getLabel();
-                    cohort_info{3, 1} = cohort.getNotes();
-                    writecell(cohort_info, file_info_cohort, 'Delimiter', '\t');
-                end
-                
                 % group info
                 group = cohort.getGroups().getValue(i);
-                group_info = cell(3, 1);
-                group_info{1, 1} = group.getID();
-                group_info{2, 1} = group.getLabel();
-                group_info{3, 1} = group.getNotes();
-                writecell(group_info, [root_directory filesep() group.getID() filesep() 'group_info.txt'], 'Delimiter', '\t');
-                
+
                 % get subject info                
                 subjects_list = group.getSubjects();
                 for j = 1:1:group.subjectnumber()
@@ -352,9 +330,9 @@ classdef SubjectCON < Subject
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.xlsx'];
-                    writematrix(string(label), file, 'Sheet', 1, 'Range', 'A1');
-                    writematrix(string(notes), file, 'Sheet', 1, 'Range', 'A2');
-                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A3');
+%                     writematrix(string(label), file, 'Sheet', 1, 'Range', 'A1');
+%                     writematrix(string(notes), file, 'Sheet', 1, 'Range', 'A2');
+                    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
                 end
             end
         end
@@ -476,24 +454,6 @@ classdef SubjectCON < Subject
             for i=1:1:cohort.getGroups().length()
                 mkdir(root_directory, cohort.getGroups().getValue(i).getID());
                 
-                 % cohort info
-                file_info_cohort = [root_directory filesep() 'cohort_info.txt'];
-                if ~isfile(file_info_cohort)
-                    cohort_info = cell(3, 1);
-                    cohort_info{1, 1} = cohort.getID();
-                    cohort_info{2, 1} = cohort.getLabel();
-                    cohort_info{3, 1} = cohort.getNotes();
-                    writecell(cohort_info, file_info_cohort, 'Delimiter', '\t');
-                end
-                
-                % group info
-                group = cohort.getGroups().getValue(i);
-                group_info = cell(3, 1);
-                group_info{1, 1} = group.getID();
-                group_info{2, 1} = group.getLabel();
-                group_info{3, 1} = group.getNotes();
-                writecell(group_info, [root_directory filesep() group.getID() filesep() 'group_info.txt'], 'Delimiter', '\t');
-                
                 % get info
                 group = cohort.getGroups().getValue(i);
                 subjects_list = group.getSubjects();
@@ -501,18 +461,10 @@ classdef SubjectCON < Subject
                     % get subject data
                     subject = subjects_list{j};
                     id = subject.getID();
-                    label = subject.getLabel();
-                    notes = subject.getNotes();
                     data = subject.getData('CON').getValue();
                     
                     % create table
-                    extra_info = cell(2, size(data, 1));
-                    extra_info{1, 1} = label;
-                    extra_info{2, 1} = notes;
-                    tab = [
-                        extra_info;
-                        num2cell(data)
-                        ];
+                    tab = num2cell(data);
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.txt'];

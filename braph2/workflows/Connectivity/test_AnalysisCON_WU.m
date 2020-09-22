@@ -142,7 +142,7 @@ measure = measures{i};
     group = group1;
       
     number_of_randomizations = 10;
-    calculated_randomcomparison = analysis.getRandomComparison(measure, group, 'RandomComparisonCON.RandomizationNumber', number_of_randomizations);
+    calculated_randomcomparison = analysis.getRandomComparison(measure, group, 'RandomizationNumber', number_of_randomizations);
     
     assert(~isempty(calculated_randomcomparison), ...
         [BRAPH2.STR ':AnalysisCON_WU:' BRAPH2.BUG_FUNC], ...
