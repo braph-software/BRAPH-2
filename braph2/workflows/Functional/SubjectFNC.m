@@ -461,18 +461,10 @@ classdef SubjectFNC < Subject
                     % get subject data
                     subject = subjects_list{j};
                     id = subject.getID();
-                    label = subject.getLabel();
-                    notes = subject.getNotes();
                     data = subject.getData('FNC').getValue();
                     
                     % create table
-                    extra_info = cell(2, size(data, 2));
-                    extra_info{1, 1} = label;
-                    extra_info{2, 1} = notes;
-                    tab = [
-                        extra_info;
-                        num2cell(data)
-                        ];
+                    tab = num2cell(data);
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.txt'];
