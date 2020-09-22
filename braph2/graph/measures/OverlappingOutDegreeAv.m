@@ -4,11 +4,11 @@ classdef OverlappingOutDegreeAv < OverlappingOutDegree
     % for binary directed (BD) and weighted directed (WD) multiplexes. 
     %
     % It is calculated as the average of the sum of the number of outward edges 
-    % connected to the node in all layers, i.e., it is the sum of the 
+    % connected to the node in all layers, i.e., it is the average of the sum of the 
     % out-degree of a node in all layers.
     % 
     % OverlappingOutDegreeAv methods:
-    %   OverlappingOutDegreeAv       - constructor
+    %   OverlappingOutDegreeAv      - constructor
     %
     % OverlappingOutDegreeAv methods (Static)
     %   getClass                    - returns the average overlapping out-degree class
@@ -26,11 +26,11 @@ classdef OverlappingOutDegreeAv < OverlappingOutDegree
     
     methods
         function m = OverlappingOutDegreeAv(g, varargin)
-            % OVERLAPPINGINDEGREE(G) creates average overlapping out-degree with default properties.
+            % OVERLAPPINGOUTDEGREEAV(G) creates average overlapping out-degree with default properties.
             % G is a directed multiplex (i.e., an instance of
             % MultiplexGraphBD or MultiplexGraphWD).
             %
-            % See also Measure, OverlappingInDegree, InDegree, MultiplexGraphBD, MultiplexGraphWD.
+            % See also Measure, OverlappingOutDegree, OutDegree, MultiplexGraphBD, MultiplexGraphWD.
             
             m = m@OverlappingOutDegree(g, varargin{:});
         end
@@ -39,14 +39,14 @@ classdef OverlappingOutDegreeAv < OverlappingOutDegree
         function overlapping_out_degree_av = calculate(m)
             % CALCULATE calculates the average overlapping out-degree value of a multiplex
             %
-            % OVERLAPPINGout-degree = CALCULATE(M) returns the value of the average overlapping
+            % OVERLAPPINGOUTDEGREEAV = CALCULATE(M) returns the value of the average overlapping
             % out-degree of a multiplex.
             %
-            % See also Measure, Overlappingout-degree, out-degree, MultiplexGraphBU, MultiplexGraphWU.
+            % See also Measure, OverlappingOutDegree, OutDegree, MultiplexGraphBD, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
             
-            if g.is_measure_calculated('OverlappingInDegree')
+            if g.is_measure_calculated('OverlappingOutDegree')
                 overlapping_out_degree = g.getMeasureValue('OverlappingOutDegree');
             else
                 overlapping_out_degree = calculate@OverlappingOutDegree(m);
@@ -92,7 +92,7 @@ classdef OverlappingOutDegreeAv < OverlappingOutDegree
             % GETAVAILABLESETTINGS returns the setting available to OverlappingOutDegreeAv
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to OverlappingInDegree. Empty Array in this case.
+            % settings available to OverlappingOutDegreeAv. Empty Array in this case.
             
             available_settings = {};
         end
