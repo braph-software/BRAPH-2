@@ -390,16 +390,16 @@ for i = 1:1:numel(measures)
         [BRAPH2.STR ':AnalysisST_WU:' BRAPH2.BUG_FUNC], ...
         'AnalysisST_WU.getComparison() not working')
     
-    randomcomparison = analysis.getComparisons().getValue(1);
-    comparison_values_1 = randomcomparison.getGroupValue(1);
-    comparison_values_2 = randomcomparison.getGroupValue(2);
-    comparison_difference = randomcomparison.getDifference();
-    comparison_all_differences = randomcomparison.getAllDifferences();
-    comparison_p1 = randomcomparison.getP1();
-    comparison_p2 = randomcomparison.getP2();
-    comparison_confidence_interval_min = randomcomparison.getConfidenceIntervalMin();
-    comparison_confidence_interval_max = randomcomparison.getConfidenceIntervalMax();
-    comparison_parameter_values = randomcomparison.getMeasureParameterValues(); 
+    comparison = analysis.getComparisons().getValue(1);
+    comparison_values_1 = comparison.getGroupValue(1);
+    comparison_values_2 = comparison.getGroupValue(2);
+    comparison_difference = comparison.getDifference();
+    comparison_all_differences = comparison.getAllDifferences();
+    comparison_p1 = comparison.getP1();
+    comparison_p2 = comparison.getP2();
+    comparison_confidence_interval_min = comparison.getConfidenceIntervalMin();
+    comparison_confidence_interval_max = comparison.getConfidenceIntervalMax();
+    comparison_parameter_values = comparison.getMeasureParameterValues(); 
     comparison_parameter_values_length = max(1, length(comparison_parameter_values));
     
     assert(isequal(parameter_values_length, comparison_parameter_values_length),  ... 

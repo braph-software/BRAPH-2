@@ -44,17 +44,17 @@ classdef AnalysisST_BUD < AnalysisST_WU
     
     methods
         function analysis = AnalysisST_BUD(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
-            % AnalysisST_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
+            % ANALYSISST_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
             % creates a structural analysis of fixed density with ID, LABEL,
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISST_WU with default settings.
             %
-            % AnalysisST_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
+            % ANALYSISST_BUD(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
             % creates a structural analysis of fixed density with ID, LABEL,
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISST_WU with specified settings VALUES.
             %
-            % See also MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU.
+            % See also MeasurementST_BUD, RandomComparisonST_BUD, ComparisonST_BUD.
             
             analysis = analysis@AnalysisST_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end

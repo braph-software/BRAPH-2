@@ -16,8 +16,8 @@ bg.link_edges_settings();
 close(gcf)
 close(gcf)
 
-%% Edges arrows
-
+% %% Edges arrows
+% 
 % bg = PlotBrainGraph(atlas);
 % figure
 % bg.hold_on()

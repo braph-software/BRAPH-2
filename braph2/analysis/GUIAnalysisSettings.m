@@ -577,6 +577,20 @@ init_measures_table_panel()
                 maesures_rules{end + 1} = src.Value;
             end
         end
+        function cb_parametric_settings(src, ~)
+            measure = mlist{selected_measure};
+            parameter_name = Measure.getParameterName(measure);
+            if isequal(src.Style, 'edit')
+                maesures_rules{end + 1} = parameter_name;
+                maesures_rules{end + 1} = src.Value;
+            end
+        end
+    end
+    function cleanUpChilds(ui_object)
+        childs = allchild(ui_object);        
+        for i = 1:1:length(childs)
+            set(childs(i), 'visible', 'off')
+        end
     end
     function cleanUpChilds(ui_object)
         childs = allchild(ui_object);        
