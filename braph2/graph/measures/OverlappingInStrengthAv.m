@@ -25,8 +25,7 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
     methods
         function m = OverlappingInStrengthAv(g, varargin)
             % OVERLAPPINGINSTRENGTHAV(G) creates average overlapping in-strength with default properties.
-            % G is a directed multiplex (i.e., an instance of
-            % MultiplexGraphBD or MultiplexGraphWD).
+            % G is a weighted directed multiplex (i.e., an instance of MultiplexGraphWD).
             %
             % See also Measure, OverlappingInStrength, InStrength, MultiplexGraphWD.
             
@@ -82,7 +81,9 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
             
             description = [ ...
                 'The average overlapping in-strength of a network is the average ' ...
-                'of the sum of the in-strengths of a node in all layers. ' ...
+                'of the sum of the inward weighted edges connected to the node in all layers. ' ...
+                'It is calculated as the average of the sum of the in-strengths of a node ' ...
+                'in all layers.' ...
                 ];
         end
         function available_settings = getAvailableSettings()
