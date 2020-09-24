@@ -3,9 +3,7 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
     % OverlappingInStrengthAv provides the average overlapping in-strength of a graph
     % for binary directed (BD) and weighted directed (WD) multiplexes. 
     %
-    % It is calculated as the average of the sum of the number of inward edges 
-    % connected to the node in all layers, i.e., it is the average of the sum of the 
-    % in-strength of a node in all layers.
+    % It is calculated as the average of the sum of the in-strengths of a node in all layers.
     % 
     % OverlappingInStrengthAv methods:
     %   OverlappingInStrengthAv     - constructor
@@ -26,7 +24,7 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
     
     methods
         function m = OverlappingInStrengthAv(g, varargin)
-            % OVERLAPPINGINStrengthAV(G) creates average overlapping in-strength with default properties.
+            % OVERLAPPINGINSTRENGTHAV(G) creates average overlapping in-strength with default properties.
             % G is a directed multiplex (i.e., an instance of
             % MultiplexGraphBD or MultiplexGraphWD).
             %
@@ -39,7 +37,7 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
         function overlapping_in_strength_av = calculate(m)
             % CALCULATE calculates the average overlapping in-strength value of a multiplex
             %
-            % OVERLAPPINGINStrengthAV = CALCULATE(M) returns the value of the average overlapping
+            % OVERLAPPINGINSTRENGTHAV = CALCULATE(M) returns the value of the average overlapping
             % in-strength of a multiplex.
             %
             % See also Measure, OverlappingInStrength, InStrength, MultiplexGraphBU, MultiplexGraphWU.
@@ -84,7 +82,7 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
             
             description = [ ...
                 'The average overlapping in-strength of a network is the average ' ...
-                'of the sum of the inward edges connected to the node in all layers. ' ...
+                'of the sum of the in-strengths of a node in all layers. ' ...
                 'Connection weights are ignored in calculations.' ...
                 ];
         end
