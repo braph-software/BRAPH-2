@@ -3,7 +3,7 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
     % OverlappingInStrengthAv provides the average overlapping in-strength of a graph
     % for weighted directed (WD) multiplexes. 
     %
-    % It is calculated as the average of the sum of the in-strengths of a node in all layers.
+    % It is calculated as the average of the sum of the in-strength of a node in all layers.
     % 
     % OverlappingInStrengthAv methods:
     %   OverlappingInStrengthAv     - constructor
@@ -39,7 +39,7 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
             % OVERLAPPINGINSTRENGTHAV = CALCULATE(M) returns the value of the average overlapping
             % in-strength of a multiplex.
             %
-            % See also Measure, OverlappingInStrength, InStrength, MultiplexGraphBU, MultiplexGraphWU.
+            % See also Measure, OverlappingInStrength, InStrength, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             

@@ -3,7 +3,7 @@ classdef OverlappingOutStrengthAv < OverlappingOutStrength
     % OverlappingOutStrengthAv provides the average overlapping out-strength of a graph
     % for weighted directed (WD) multiplexes. 
     %
-    % It is calculated as the average of the sum of the out-strengths of a node in all layers.
+    % It is calculated as the average of the sum of the out-strength of a node in all layers.
     % 
     % OverlappingOutStrengthAv methods:
     %   OverlappingOutStrengthAv    - constructor
