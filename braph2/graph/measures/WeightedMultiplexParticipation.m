@@ -69,7 +69,9 @@ classdef WeightedMultiplexParticipation < Strength
             for li = 1:1:L
                 weighted_multiplex_participation = weighted_multiplex_participation + (strength{li}./overlapping_strength{1}).^2;
             end
-            weighted_multiplex_participation = {L / (L - 1) * (1 - weighted_multiplex_participation)};
+            weighted_multiplex_participation = L / (L - 1) * (1 - weighted_multiplex_participation);
+            weighted_multiplex_participation(isnan(weighted_multiplex_participation)) = 0;  % Should return zeros, not NaN
+            weighted_multiplex_participation = {weighted_multiplex_participation};
         end
     end  
     methods (Static)  % Descriptive methods
