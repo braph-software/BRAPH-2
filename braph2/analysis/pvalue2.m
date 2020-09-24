@@ -56,11 +56,15 @@ end
                 for t = 1:1:d_number
                     current_observed_difference = observed_difference(i, j, t);
                     current_random_differences = cellfun(@(x) x(i, j, t), random_differences);
-
-                    P2(i, j, t) =  ...
-                        (length(find(abs(current_random_differences) > abs(current_observed_difference))) + 1) ...
-                        / ...
-                        (length(current_random_differences) + 1); %#ok<AGROW>
+                    
+                    if current_observed_difference == 0 && length(current_random_differences) > 0  %#ok<ISMT>
+                        P2(i, j, t) = 0.05; %#ok<AGROW>
+                    else
+                        P2(i, j, t) =  ...
+                            (length(find(abs(current_random_differences) > abs(current_observed_difference)))) ...
+                            / ...
+                            (length(current_random_differences)); %#ok<AGROW>
+                    end
                 end
             end
         end 
