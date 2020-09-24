@@ -1,7 +1,7 @@
 classdef OverlappingInStrengthAv < OverlappingInStrength
     % OverlappingInStrengthAv Average overlapping in-strength measure
     % OverlappingInStrengthAv provides the average overlapping in-strength of a graph
-    % for binary directed (BD) and weighted directed (WD) multiplexes. 
+    % for weighted directed (WD) multiplexes. 
     %
     % It is calculated as the average of the sum of the in-strengths of a node in all layers.
     % 
@@ -20,7 +20,7 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, OverlappingInStrength, InStrength, MultiplexGraphBD, MultiplexGraphWD.
+    % See also Measure, OverlappingInStrength, InStrength, MultiplexGraphWD.
     
     methods
         function m = OverlappingInStrengthAv(g, varargin)
@@ -28,7 +28,7 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
             % G is a directed multiplex (i.e., an instance of
             % MultiplexGraphBD or MultiplexGraphWD).
             %
-            % See also Measure, OverlappingInStrength, InStrength, MultiplexGraphBD, MultiplexGraphWD.
+            % See also Measure, OverlappingInStrength, InStrength, MultiplexGraphWD.
             
             m = m@OverlappingInStrength(g, varargin{:});
         end
@@ -83,7 +83,6 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
             description = [ ...
                 'The average overlapping in-strength of a network is the average ' ...
                 'of the sum of the in-strengths of a node in all layers. ' ...
-                'Connection weights are ignored in calculations.' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -134,7 +133,6 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
             % See also getCompatibleGraphNumber. 
             
             list = { ...
-                'MultiplexGraphBD', ...
                 'MultiplexGraphWD' ...
                 };
         end
