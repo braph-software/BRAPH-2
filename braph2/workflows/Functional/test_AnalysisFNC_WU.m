@@ -452,3 +452,24 @@ for i = 1:1:numel(measures)
             'AnalysisFNC_WU.getComparison() not working with binodal measures') 
     end
 end
+
+%% GUIAnalysisSettings Pass a FNC cohort
+cohort_file = [fileparts(which('example_workflow_FNC_WU.m')) filesep() 'example data FNC (fMRI)' filesep() 'cohort_example.cohort'];
+temp = load(cohort_file, '-mat', 'cohort', 'selected_group', 'selected_subjects', 'BUILD');
+cohort = temp.cohort;
+
+GUIAnalysisSettings(cohort, 'AnalysisFNC_WU')
+
+set(gcf, 'CloseRequestFcn', 'closereq')
+close(gcf)
+
+%% GUIAnalysis Init FNC
+
+analysis_file = [fileparts(which('example_workflow_FNC_WU.m')) filesep() 'example data FNC (fMRI)' filesep() 'analysis_example_FNC_BUT.analysis'];
+temp = load(analysis_file, '-mat', 'ga', 'BUILD');
+ga = temp.ga;
+
+GUIAnalysis(ga)
+
+set(gcf, 'CloseRequestFcn', 'closereq')
+close(gcf)
