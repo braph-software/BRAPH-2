@@ -69,7 +69,9 @@ classdef MultiplexParticipation < Degree
             for li = 1:1:L
                 multiplex_participation = multiplex_participation + (degree{li}./overlapping_degree{1}).^2;
             end
-            multiplex_participation = {L / (L - 1) * (1 - multiplex_participation)};
+            multiplex_participation = L / (L - 1) * (1 - multiplex_participation);
+            multiplex_participation(isnan(multiplex_participation)) = 0;  % Should return zeros, not NaN 
+            multiplex_participation = {multiplex_participation};
         end
     end  
     methods (Static)  % Descriptive methods
