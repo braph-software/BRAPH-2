@@ -643,31 +643,25 @@ classdef SubjectST < Subject
             
             % sneak peak
             subject_tmp = Subject.getSubject(subject_class, ...
-                num2str(raw.SubjectData(1).id), num2str(raw.SubjectData(1).label), num2str(raw.SubjectData(1).notes), atlases, ...
-                'ST', raw.SubjectData(1).data);
+                num2str(raw.Groups(1).SubjectData(1).id), num2str(raw.Groups(1).SubjectData(1).label), num2str(raw.Groups(1).SubjectData(1).notes), atlases, ...
+                'ST', raw.Groups(1).SubjectData(1).data);
             delete(subject_tmp)
             
             % creates group
-            group = Group(subject_class, '', '', '', {});
-            group_path = strsplit(file, filesep());
-            group_id = group_path{length(group_path)};
-            group_id = erase(group_id, '.json');
-            group.setID(group_id);
-            cohort.getGroups().add(group.getID(), group);
-            
-            for i = 1:1:length(raw.SubjectData)
-                id = num2str(raw.SubjectData(i).id);
-                label = num2str(raw.SubjectData(i).label);
-                notes = num2str(raw.SubjectData(i).notes);
-                data = raw.SubjectData(i).data;
-                subject = Subject.getSubject(subject_class, ...
-                    id, label, notes, atlases, ...
-                    'ST', data);
-                if ~cohort.getSubjects().contains(subject.getID())
-                    cohort.getSubjects().add(subject.getID(), subject, i);
+            for i = 1:1:length(raw.Groups)
+                group = Group(subject_class, raw.Groups(i).ID, raw.Groups.Label, raw.Groups.Notes, {});
+                cohort.getGroups().add(group.getID(), group);
+                subject_data = raw.Groups(i).SubjectData;                
+                for j = 1:1:length(subject_data)
+                    subject = Subject.getSubject(subject_class, ...
+                        num2str(subject_data(j).id), num2str(subject_data(j).label), num2str(subject_data(j).notes), atlases, ...
+                        'ST', subject_data(j).data);
+                    if ~cohort.getSubjects().contains(subject.getID())
+                        cohort.getSubjects().add(subject.getID(), subject, j);
+                    end
+                    group.addSubject(subject);
                 end
-                group.addSubject(subject);
-            end
+            end   
         end
         function save_to_json(cohort, varargin)
             % SAVE_TO_JSON saves the cohort of SubjectST to a '.json' file
@@ -692,24 +686,10 @@ classdef SubjectST < Subject
                 end
             end
             
-            % get info
-            groups = cohort.getGroups().getValues();
-            group = groups{1};  % must change
-            subjects_list = group.getSubjects();
-            
-            for j = 1:1:group.subjectnumber()
-                % get subject data
-                subject = subjects_list{j};
-                
-                row_ids{j, 1} = subject.getID(); %#ok<AGROW>
-                row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
-                row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas{j, 1} = subject.getData('ST').getValue(); %#ok<AGROW>
-            end
-            
+            % get info            
+            groups = cohort.getGroups().getValues(); 
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
-            
             % labels
             for i = 1:1:atlas.getBrainRegions().length()
                 brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
@@ -717,16 +697,34 @@ classdef SubjectST < Subject
             row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
             labels = row_data;
             
+            Group_structure = struct;
+            Subject_Structure = struct;
+            for i =1:1:length(groups)
+                group = groups{i};
+                subjects_list = group.getSubjects();
+                
+                for j = 1:1:group.subjectnumber()
+                    % get subject data
+                    subject = subjects_list{j};
+                    
+                    Subject_Structure(j).id = subject.getID();
+                    Subject_Structure(j).label = subject.getLabel(); 
+                    Subject_Structure(j).notes = subject.getNotes();
+                    Subject_Structure(j).data = subject.getData('ST').getValue();
+                end
+
+                Group_structure(i).ID = group.getID(); 
+                Group_structure(i).Label = group.getLabel(); 
+                Group_structure(i).Notes = group.getNotes(); 
+                Group_structure(i).SubjectData = Subject_Structure;
+            end
+
             % create structure to be save
             structure_to_be_saved = struct( ...
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainRegionsLabels', labels, ...
-                'SubjectData', struct( ...
-                'id', row_ids, ...
-                'label', row_labels, ...
-                'notes', row_notes, ...
-                'data', row_datas) ...
+                'Groups', Group_structure ...
                 );
             
             % save

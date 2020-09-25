@@ -567,3 +567,24 @@ for i = 1:1:numel(measures)
             'AnalysisCON_WU.getComparison() not working with binodal measures') 
     end    
 end
+
+%% GUIAnalysisSettings Pass a CON cohort
+cohort_file = [fileparts(which('example_workflow_CON_WU.m')) filesep() 'example data CON (DTI)' filesep() 'cohort_example.cohort'];
+temp = load(cohort_file, '-mat', 'cohort', 'selected_group', 'selected_subjects', 'BUILD');
+cohort = temp.cohort;
+
+GUIAnalysisSettings(cohort, 'AnalysisCON_WU')
+
+set(gcf, 'CloseRequestFcn', 'closereq')
+close(gcf)
+
+%% GUIAnalysis INIT CON
+
+analysis_file = [fileparts(which('example_workflow_CON_WU.m')) filesep() 'example data CON (DTI)' filesep() 'analysis_example_CON_BUT.analysis'];
+temp = load(analysis_file, '-mat', 'ga', 'BUILD');
+ga = temp.ga;
+
+GUIAnalysis(ga)
+
+set(gcf, 'CloseRequestFcn', 'closereq')
+close(gcf)
