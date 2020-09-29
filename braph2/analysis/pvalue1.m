@@ -51,23 +51,27 @@ end
         d_number = size(random_differences{1}, 3);  % add the 3rd dimension 
         
         Q = cell(row_number, column_number, d_number); %#ok<NASGU>
-
+        P1 = zeros(row_number, column_number, d_number);
         for i = 1:1:row_number
             for j = 1:1:column_number
-                for t = 1:1:d_number
-                    current_observed_difference = observed_difference(i, j, t);
-                    current_random_differences = cellfun(@(x) x(i, j, t), random_differences);
+                for k = 1:1:d_number
+                    current_observed_difference = observed_difference(i, j, k);
+                    current_random_differences = cellfun(@(x) x(i, j, k), random_differences);
 
                     if current_observed_difference > 0
-                        P1(i, j, t) =  ...
-                            (length(find(current_random_differences > current_observed_difference)) + 1) ...
+                        P1(i, j, k) =  ...
+                            length(find(current_random_differences > current_observed_difference)) ...
                             / ...
-                            (length(current_random_differences) + 1); %#ok<AGROW>
+                            length(current_random_differences);
                     else  % current_observed_difference <= 0
-                        P1(i, j, t) =  ...
-                            (length(find(current_random_differences < current_observed_difference)) + 1) ...
+                        P1(i, j, k) =  ...
+                            length(find(current_random_differences < current_observed_difference)) ...
                             / ...
-                            (length(current_random_differences) + 1); %#ok<AGROW>
+                            length(current_random_differences);
+                    end
+                    
+                    if P1(i, j, k) == 0
+                        P1(i, j, k) = .5 * length(current_random_differences)^-1;
                     end
                 end
             end
