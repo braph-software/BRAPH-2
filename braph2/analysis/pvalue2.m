@@ -51,17 +51,27 @@ end
         d_number = size(random_differences{1}, 3);  % add the 3rd dimension 
            
         Q = cell(row_number, column_number); %#ok<NASGU>
+        P2 = zeros(row_number, column_number, d_number);
         for i = 1:1:row_number
             for j = 1:1:column_number
-                for t = 1:1:d_number
-                    current_observed_difference = observed_difference(i, j, t);
-                    current_random_differences = cellfun(@(x) x(i, j, t), random_differences);
+                for k = 1:1:d_number
+                    current_observed_difference = observed_difference(i, j, k);
+                    current_random_differences = cellfun(@(x) x(i, j, k), random_differences);
 
-                    P2(i, j, t) =  ...
-                        (length(find(abs(current_random_differences) > abs(current_observed_difference))) + 1) ...
+                    P2(i, j, k) =  ...
+                        length(find(abs(current_random_differences) > abs(current_observed_difference))) ...
                         / ...
-                        (length(current_random_differences) + 1); %#ok<AGROW>
-                end
+                        length(current_random_differences);
+                    
+                    if P2(i, j, k) == 0
+                        P2(i, j, k) = .5 * length(current_random_differences)^-1;
+                    end
+                    
+                    % deals with case without differences
+                    if current_observed_difference == mean(current_random_differences)
+                        P2(i, j, k) = 1;
+                    end
+               end
             end
         end 
     end
