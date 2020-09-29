@@ -73,6 +73,11 @@ end
                     if P1(i, j, k) == 0
                         P1(i, j, k) = .5 * length(current_random_differences)^-1;
                     end
+                    
+                    % deals with case without differences
+                    if current_observed_difference == mean(current_random_differences)
+                        P1(i, j, k) = 1;
+                    end
                 end
             end
         end
