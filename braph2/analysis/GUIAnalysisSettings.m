@@ -663,10 +663,11 @@ init_menu()
 [ui_menu_about, ui_menu_about_about] = GUI.setMenuAbout(f, APPNAME); %#ok<ASGLU>
     function cb_menu_figure(~, ~)  % (src, event)
         h = figure('Name', ['Correlation Matrix - ' ga.getName()]);
-        set(gcf, 'Color', 'w')
+        set(gcf, 'Color', 'w')        
         copyobj(ui_matrix_axes, h)
         set(gca, 'Units', 'normalized')
-        set(gca, 'OuterPosition', [0 0 1 1])
+        set(gca, 'OuterPosition', [0 0 1 1])        
+        colormap jet
     end
 
 %% Toolbar

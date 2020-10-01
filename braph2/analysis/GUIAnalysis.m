@@ -716,6 +716,9 @@ init_menu()
         copyobj(current_figure_axes, h)
         set(gca, 'Units', 'normalized')
         set(gca, 'OuterPosition', [0 0 1 1])
+        if get(ui_panel_matrix, 'Visible')
+            colormap jet
+            end
     end
 
 %% Toolbar

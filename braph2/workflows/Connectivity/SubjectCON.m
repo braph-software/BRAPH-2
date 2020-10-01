@@ -116,7 +116,7 @@ classdef SubjectCON < Subject
             %
             % See also getClass, getDescription.
             
-            name = 'Subject CON';
+            name = 'Subject Connectivity';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the subject
