@@ -17,7 +17,7 @@ input_rule1 = 'ST_MP1';
 input_rule2 = 'ST_MP2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
 input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File1';
+save_dir_rule = 'File1';
 save_dir_rule2 = 'File2';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
 save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.xlsx'];
@@ -30,9 +30,9 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectST_MP.save_to_xls(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_xls(cohort, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
 
-load_cohort = SubjectST_MP.load_from_xls(atlas, sub_class, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+load_cohort = SubjectST_MP.load_from_xls(atlas, sub_class, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -66,7 +66,7 @@ input_rule1 = 'ST_MP1';
 input_rule2 = 'ST_MP2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
 input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File1';
+save_dir_rule = 'File1';
 save_dir_rule2 = 'File2';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
 save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.xlsx'];
@@ -88,12 +88,12 @@ cohort_2 = Cohort('cohorttest2', 'label2', 'notes2', sub_class, atlas, {sub4, su
 cohort_2.getGroups().add(group2.getID(), group2);
 
 % act
-SubjectST_MP.save_to_xls(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
-SubjectST_MP.save_to_xls(cohort_2, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
-load_cohort = SubjectST_MP.load_from_xls(atlas, sub_class, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_xls(cohort, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_xls(cohort_2, save_dir_rule, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort = SubjectST_MP.load_from_xls(atlas, sub_class, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % load
-load_cohort_2 = SubjectST_MP.load_from_xls(load_cohort, sub_class, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort_2 = SubjectST_MP.load_from_xls(load_cohort, sub_class, save_dir_rule, save_dir_path3, save_dir_rule2, save_dir_path4);
 
 % assert
 assert(isequal(cohort.getSubjects().length() + cohort_2.getSubjects().length(), load_cohort_2.getSubjects().length()), ...
@@ -132,7 +132,7 @@ input_rule1 = 'ST_MP1';
 input_rule2 = 'ST_MP2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
 input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File1';
+save_dir_rule = 'File1';
 save_dir_rule2 = 'File2';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
 save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.xlsx'];
@@ -152,12 +152,12 @@ cohort_2 = Cohort('cohorttest2', 'label2', 'notes2', sub_class, atlas, {sub1, su
 cohort_2.getGroups().add(group2.getID(), group2);
 
 % act
-SubjectST_MP.save_to_xls(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
-SubjectST_MP.save_to_xls(cohort_2, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
-load_cohort = SubjectST_MP.load_from_xls(atlas, sub_class, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_xls(cohort, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_xls(cohort_2, save_dir_rule, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort = SubjectST_MP.load_from_xls(atlas, sub_class, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % load
-load_cohort_2 = SubjectST_MP.load_from_xls(load_cohort, sub_class, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort_2 = SubjectST_MP.load_from_xls(load_cohort, sub_class, save_dir_rule, save_dir_path3, save_dir_rule2, save_dir_path4);
 
 % assert
 assert(isequal(4, load_cohort_2.getSubjects().length()), ...
@@ -196,7 +196,7 @@ input_rule1 = 'ST_MP1';
 input_rule2 = 'ST_MP2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
 input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File1';
+save_dir_rule = 'File1';
 save_dir_rule2 = 'File2';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
 save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.txt'];
@@ -209,9 +209,9 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectST_MP.save_to_txt(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_txt(cohort, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
 
-load_cohort = SubjectST_MP.load_from_txt(atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+load_cohort = SubjectST_MP.load_from_txt(atlas, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -245,7 +245,7 @@ input_rule1 = 'ST_MP1';
 input_rule2 = 'ST_MP2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
 input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File1';
+save_dir_rule = 'File1';
 save_dir_rule2 = 'File2';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
 save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.txt'];
@@ -266,12 +266,12 @@ cohort_2 = Cohort('cohorttest2', 'label2', 'notes2', sub_class, atlas, {sub4, su
 cohort_2.getGroups().add(group2.getID(), group2);
 
 % act
-SubjectST_MP.save_to_txt(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
-SubjectST_MP.save_to_txt(cohort_2, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
-load_cohort = SubjectST_MP.load_from_txt(atlas, sub_class, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_txt(cohort, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_txt(cohort_2, save_dir_rule, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort = SubjectST_MP.load_from_txt(atlas, sub_class, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % load
-load_cohort_2 = SubjectST_MP.load_from_txt(load_cohort, sub_class, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort_2 = SubjectST_MP.load_from_txt(load_cohort, sub_class, save_dir_rule, save_dir_path3, save_dir_rule2, save_dir_path4);
 
 % assert
 assert(isequal(cohort.getSubjects().length() + cohort_2.getSubjects().length(), load_cohort_2.getSubjects().length()), ...
@@ -310,7 +310,7 @@ input_rule1 = 'ST_MP1';
 input_rule2 = 'ST_MP2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
 input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File1';
+save_dir_rule = 'File1';
 save_dir_rule2 = 'File2';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.txt'];
 save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.txt'];
@@ -329,12 +329,12 @@ cohort_2 = Cohort('cohorttest2', 'label2', 'notes2', sub_class, atlas, {sub1, su
 cohort_2.getGroups().add(group2.getID(), group2);
 
 % act
-SubjectST_MP.save_to_txt(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
-SubjectST_MP.save_to_txt(cohort_2, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
-load_cohort = SubjectST_MP.load_from_txt(atlas, sub_class, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_txt(cohort, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_txt(cohort_2, save_dir_rule, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort = SubjectST_MP.load_from_txt(atlas, sub_class, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 % load
-load_cohort_2 = SubjectST_MP.load_from_txt(load_cohort, sub_class, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort_2 = SubjectST_MP.load_from_txt(load_cohort, sub_class, save_dir_rule, save_dir_path3, save_dir_rule2, save_dir_path4);
 
 % assert
 assert(isequal(4, load_cohort_2.getSubjects().length()), ...
@@ -373,10 +373,8 @@ input_rule1 = 'ST_MP1';
 input_rule2 = 'ST_MP2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
 input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File1';
-save_dir_rule2 = 'File2';
+save_dir_rule = 'File';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.json'];
-save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.json'];
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule1, input_data1, input_rule2, input_data2);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule1, input_data1, input_rule2, input_data2);
 sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule1, input_data1, input_rule2, input_data2);
@@ -386,9 +384,9 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectST_MP.save_to_json(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_json(cohort, save_dir_rule, save_dir_path1);
 
-load_cohort = SubjectST_MP.load_from_json(atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+load_cohort = SubjectST_MP.load_from_json(atlas, save_dir_rule, save_dir_path1);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
@@ -413,7 +411,6 @@ for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length(
 end
 
 delete(save_dir_path1)
-delete(save_dir_path2)
 
 %% Test 4.2: Save and Load to the same cohort from JSON
 % setup
@@ -422,12 +419,9 @@ input_rule1 = 'ST_MP1';
 input_rule2 = 'ST_MP2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
 input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File1';
-save_dir_rule2 = 'File2';
+save_dir_rule = 'File';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.json'];
 save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.json'];
-save_dir_path3 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased3.json'];
-save_dir_path4 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased4.json'];
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule1, input_data1, input_rule2, input_data2);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule1, input_data1, input_rule2, input_data2);
 sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule1, input_data1, input_rule2, input_data2);
@@ -445,11 +439,11 @@ cohort2 = Cohort('cohorttest2', 'label2', 'notes2', sub_class, atlas, {sub4, sub
 cohort2.getGroups().add(group2.getID(), group2);
 
 % act
-SubjectST_MP.save_to_json(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
-SubjectST_MP.save_to_json(cohort2, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
-load_cohort = SubjectST_MP.load_from_json(atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_json(cohort, save_dir_rule, save_dir_path1);
+SubjectST_MP.save_to_json(cohort2, save_dir_rule, save_dir_path2);
 
-load_cohort_2 = SubjectST_MP.load_from_json(load_cohort, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort = SubjectST_MP.load_from_json(atlas, save_dir_rule, save_dir_path1);
+load_cohort_2 = SubjectST_MP.load_from_json(load_cohort, save_dir_rule, save_dir_path2);
 
 % assert
 assert(isequal(cohort.getSubjects().length() + cohort2.getSubjects().length(), load_cohort_2.getSubjects().length()), ...
@@ -478,8 +472,6 @@ end
 
 delete(save_dir_path1)
 delete(save_dir_path2)
-delete(save_dir_path3)
-delete(save_dir_path4)
 
 %% Test 4.3: Save and Load to the same cohort from JSON
 % setup
@@ -488,12 +480,9 @@ input_rule1 = 'ST_MP1';
 input_rule2 = 'ST_MP2';
 input_data1 = rand(atlas.getBrainRegions().length(), 1);
 input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule1 = 'File1';
-save_dir_rule2 = 'File2';
+save_dir_rule = 'File';
 save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.json'];
 save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.json'];
-save_dir_path3 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased3.json'];
-save_dir_path4 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased4.json'];
 sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule1, input_data1, input_rule2, input_data2);
 sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule1, input_data1, input_rule2, input_data2);
 sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule1, input_data1, input_rule2, input_data2);
@@ -509,11 +498,11 @@ cohort2 = Cohort('cohorttest2', 'label2', 'notes2', sub_class, atlas, {sub1, sub
 cohort2.getGroups().add(group2.getID(), group2);
 
 % act
-SubjectST_MP.save_to_json(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
-SubjectST_MP.save_to_json(cohort2, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
-load_cohort = SubjectST_MP.load_from_json(atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_json(cohort, save_dir_rule, save_dir_path1);
+SubjectST_MP.save_to_json(cohort2, save_dir_rule, save_dir_path2);
 
-load_cohort_2 = SubjectST_MP.load_from_json(load_cohort, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
+load_cohort = SubjectST_MP.load_from_json(atlas, save_dir_rule, save_dir_path1);
+load_cohort_2 = SubjectST_MP.load_from_json(load_cohort, save_dir_rule, save_dir_path2);
 
 % assert
 assert(isequal(4, load_cohort_2.getSubjects().length()), ...
@@ -542,5 +531,3 @@ end
 
 delete(save_dir_path1)
 delete(save_dir_path2)
-delete(save_dir_path3)
-delete(save_dir_path4)
