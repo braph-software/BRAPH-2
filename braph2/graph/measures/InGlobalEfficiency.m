@@ -57,7 +57,7 @@ classdef InGlobalEfficiency < Measure
                 inverse_distance = distance{li}.^-1;  % inverse distance
                 inverse_distance(1:N(li)+1:end) = 0;
                 in_global_efficiency_layer = (sum(inverse_distance, 1) / (N(li)-1))';
-                in_global_efficiency_layer(isnan(in_global_efficiency_layer)) = 0;  % Should return zeros, not NaN
+%                 in_global_efficiency_layer(isnan(in_global_efficiency_layer)) = 0;  % Should return zeros, not NaN
                 in_global_efficiency(li) = {in_global_efficiency_layer};   
             end
         end

@@ -118,6 +118,19 @@ assert(isequal(round(mean(out_global_efficiency), 4), round(out_global_efficienc
     [BRAPH2.STR ':OutGlobalEfficiency:' BRAPH2.BUG_ERR], ...
     'OutGlobalEfficiency is not being calculated correctly for BCT.')
 
+%% Test 5: GraphBU with NAN
+A = NaN(5);
+
+known_global_efficiency = {[0;0;0;0;0]};
+
+g = GraphWD(A);
+global_efficiency = OutGlobalEfficiency(g);
+
+assert(isequal(global_efficiency.getValue(), known_global_efficiency), ...
+    [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'GlobalEfficiencyAv is not being calculated correctly for GraphBU.')
+
+
 
 function E = efficiency_wei(W, local)
 %EFFICIENCY_WEI     Global efficiency, local efficiency.
@@ -225,7 +238,7 @@ else
     E = sum(di(:)) ./ (n^2 - n);                         	% global efficiency
 end
 
-E(isnan(E)) = 0;
+% E(isnan(E)) = 0;
     function D=distance_inv_wei(W_)
         
         n_=length(W_);

@@ -95,7 +95,7 @@ classdef InPathLength < Measure
                             in_path_length_layer(u) = mean(Du(Du~=0));
                         end
                 end  
-                in_path_length_layer(isnan(in_path_length_layer)) = 0;  % Should return zeros, not NaN
+%                 in_path_length_layer(isnan(in_path_length_layer)) = 0;  % Should return zeros, not NaN
                 in_path_length(li) = {in_path_length_layer};
             end
         end

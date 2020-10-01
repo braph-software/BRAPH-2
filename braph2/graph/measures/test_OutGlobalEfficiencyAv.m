@@ -177,7 +177,7 @@ else                                        %global efficiency
     E=sum(e(:))./(n^2-n);
 end
 
-E(isnan(E)) = 0;
+% E(isnan(E)) = 0;
     function D=distance_inv(A_)
         l=1;                                        %path length
         Lpath=A_;                                   %matrix of paths l
