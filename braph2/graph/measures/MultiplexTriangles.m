@@ -1,27 +1,26 @@
 classdef MultiplexTriangles < Measure
     % MultiplexTriangles Multiplex Triangles measure
-    % MultiplexTriangles provides the number of triangles of a node for binary
-    % undirected (BU), binary directed (BD), weighted undirected (WU) and 
-    % weighted directed (WD) graphs. 
+    % MultiplexTriangles provides the number of multiplex triangles of a node for 
+    % binary undirected (BU) and weighted undirected (WU) multiplexes. 
     %
     % It is calculated as the number of a node's neighbor pairs that are   
-    % connected to each other within two layers. In weighted graphs, the triangles are 
+    % connected to each other between two layers. 
+    % In weighted graphs, the triangles are 
     % calculated as geometric mean of the weights of the edges forming
-    % the triangle. For directed graphs the user can set the rule to
-    % calculate the triangles (setting 'DirectedTrianglesRule').
+    % the triangle.
     % 
     % MultiplexTriangles methods:
     %   MultiplexTriangles          - constructor
     %
     % MultiplexTriangles methods (Static)
-    %   getClass                    - returns the triangles class
-    %   getName                     - returns the name of triangles measure
-    %   getDescription              - returns the description of triangles measure
+    %   getClass                    - returns the multiplex triangles class
+    %   getName                     - returns the name of multiplex triangles measure
+    %   getDescription              - returns the description of multiplex triangles measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure
-    %   getMeasure                  - returns the triangles class
+    %   getMeasure                  - returns the multiplex triangles class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
@@ -29,40 +28,37 @@ classdef MultiplexTriangles < Measure
     
     methods
         function m = MultiplexTriangles(g, varargin)  
-            % MULTIPLEXTRIANGLES(G) creates triangles with default properties.
-            % G is a graph (e.g, an instance of MultiplexGraphBD,
-            % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU).  
+            % MULTIPLEXTRIANGLES(G) creates multiplex triangles with default properties.
+            % G is an undirected multiplex (e.g, an instance of 
+            % MultiplexGraphBU or MultiplexGraphWU).  
             %
-            % MULTIPLEXTRIANGLES(G, 'DirectedTrianglesRule', DIRECTEDTRIANGLESRULE) creates triangles             
-            % measure and initializes the property DirectedTrianglesRule with DIRECTEDTRIANGLESRULE. 
+            % MULTIPLEXTRIANGLES(G, 'MultiplexTrianglesLayers', DIRECTEDTRIANGLESRULE) creates multiplex triangles             
+            % measure and initializes the property MultiplexTrianglesLayers with DIRECTEDTRIANGLESRULE. 
             % Admissible RULE options are:
-            % DIRECTEDTRIANGLESRULE = 'cycle' (default) - calculates TRIANGLES of a node using the cycle rule for directed graphs.
-            %                    'all' - calculates TRIANGLES of a node
-            %                    using the all rule for directed graphs.
-            %                    'middleman' - calculates TRIANGLES of a
-            %                    node using the middleman rule for directed graphs.
-            %                    'in' - calculates TRIANGLES of a node
-            %                    using the in rule for directed graphs.
-            %                    'out' - calculates TRIANGLES of a node
-            %                    using the out rule for directed graphs.
+            % MULTIRPLEXTRIANGLESLAYERS = [1, 2] (default) - MULTIPLEXTRIANGLES  
+            %                    layers' indexes will be set to 1 and 2.
+            %                    values - MULTIPLEXTRIANGLES layers' indexes 
+            %                    will be set to the values specified if the 
+            %                    values are integers between 1 and the
+            %                    number of layers.
             %           
-            % MULTIPLEXTRIANGLES(G, 'VALUE', VALUE) creates triangles, and sets the value
-            % to VALUE. G is a graph (e.g, an instance of MultiplexGraphBD,
-            % MultiplexGraphBU, MultiplexGraphWD or MultiplexGraphWU). 
+            % MULTIPLEXTRIANGLES(G, 'VALUE', VALUE) creates multiplex triangles, and sets
+            % the value to VALUE. G is an undirected multiplex (e.g, an instance of
+            % MultiplexGraphBU or MultiplexGraphWU). 
             %   
-            % See also Measure, Graph, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
+            % See also Measure, Graph, MultiplexGraphBU, MultiplexGraphWU.
             
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
         function multiplex_triangles = calculate(m)
-            % CALCULATE calculates the number of triangles of a node
+            % CALCULATE calculates the number of multiplex triangles of a node
             %
-            % TRIANGLES = CALCULATE(M) returns the triangles 
+            % MULTIPLEXTRIANGLES = CALCULATE(M) returns the multiplex triangles 
             % of a node.
             %
-            % See also Measure, Graph, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
+            % See also Measure, Graph, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix of the graph
@@ -103,7 +99,7 @@ classdef MultiplexTriangles < Measure
             name = 'Multiplex triangles';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the triangles description 
+            % GETDESCRIPTION returns the multiplex triangles description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % multiplex triangles measure.
@@ -140,7 +136,7 @@ classdef MultiplexTriangles < Measure
             % GETMEASUREFORMAT returns the measure format of MultiplexTriangles
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of triangles measure (NODAL).
+            % of multiplex triangles measure (NODAL).
             %
             % See also getMeasureScope.
             
