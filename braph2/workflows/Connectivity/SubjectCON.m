@@ -295,7 +295,6 @@ classdef SubjectCON < Subject
             %
             % See also load_from_xls, save_to_txt, save_to_json
             
-            
             % get Root Directory
             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
             if isequal(root_directory, '')  % no path, open gui

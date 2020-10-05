@@ -4259,4 +4259,143 @@ classdef AnalysisCON_WU < Analysis
             end
         end
     end
+    methods (Static)
+        function analysis = load_from_xls(tmp, varargin)
+        end
+        function save_to_xls(analysis, varargin)
+            % save to folders separting by type of analysis
+            
+            % get saving info
+            % get Root Directory
+            root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+            if isequal(root_directory, '')  % no path, open gui
+                msg = get_from_varargin(BRAPH2.MSG_PUTDIR, 'MSG', varargin{:});
+                root_directory = uigetdir(msg);
+            end
+            
+            analyses = {'measurements', 'comparisons', 'randomcomparisons'}; 
+            for i = 1:1:3
+                type_of_analysis = analyses{i};
+                if ~exist([root_directory filesep() type_of_analysis], 'dir')
+                    mkdir(root_directory, type_of_analysis);
+                end
+            end
+            
+            % ideas
+%             saving_by_measure = get_from_varargin('all', 'SaveMeasurementsRule', varargin{:});
+            
+            
+            % get analysis info
+             cohort = analysis.getCohort();
+             measurements = analysis.getMeasurements();
+             comparisons = analysis.getComparisons();
+             random_comparisons = analysis.getRandomComparisons();
+             
+            % save analysis main file id, label, notes.           
+            analysis_main_file = [root_directory filesep() analysis.getID() '.xlsx'];
+            basic_info = {
+                'Analysis ID:', analysis.getID();
+                'Analysis Label:',  analysis.getLabel(); 
+                'Analysis Notes:', analysis.getNotes();
+                'Cohort:',  cohort.getID();
+                'Number of Measurements:', measurements.length();
+                'Number of Comparisons:', comparisons.length();
+                'Number of Random Comparisons:' random_comparisons.length();
+                };
+            
+           writecell(basic_info, analysis_main_file, 'Sheet', 1);
+           
+           % measurements
+           for i = 1:1:measurements.length()
+               m = measurements.getValue(i);
+               file_measurement = [root_directory filesep() 'measurements' filesep() m.getID() '.xlsx'];
+               measurement_data = {
+                    'Measurement ID:', m.getID();
+                    'Measurement Label:', m.getLabel();
+                    'Measurement Notes:', m.getNotes();
+                    'Values (Sheet 2):', size(m.getMeasureValues);
+                    'Group Average (Sheet 3):', size(m.getGroupAverageValue());
+                    };
+               
+               writecell(measurement_data, file_measurement, 'Sheet', 1);
+               writematrix([m.getMeasureValues{:}], file_measurement, 'Sheet', 2);
+               writematrix(m.getGroupAverageValue, file_measurement, 'Sheet', 3);
+           end
+           
+           % comparisons
+           for i = 1:1:comparisons.length()
+               c = comparisons.getValue(i);
+               Values1 = c.getGroupValue(1);
+               Values2 = c.getGroupValue(2);
+               Avg_1 = c.getGroupAverageValue(1);
+               Avg_2 = c.getGroupAverageValue(2);
+               file_comparisons = [root_directory filesep() 'comparisons' filesep() c.getID() '.xlsx'];
+               comparisons_data = {
+                    'Comparison ID:', c.getID();
+                    'Comparison Label:', c.getLabel();
+                    'Comparison Notes:', c.getNotes();
+                    'Values Group 1 (Sheet 2):', size(Values1);                    
+                    'Values Group 2 (Sheet 3):', size(Values2);
+                    'Group 1 Average Value (Sheet 4):', size(Avg_1);
+                    'Group 2 Average Value (Sheet 5):', size(Avg_2);
+                    'Difference (Sheet 6):', size(c.getDifference());
+                    'All Differences (Sheet 7):', size(c.getAllDifferences());
+                    'P1 (Sheet 8):', size(c.getP1());
+                    'P2 (Sheet 9):', size(c.getP2());
+                    'Minimum Confidence Interval (Sheet 10):', size(c.getConfidenceIntervalMin());
+                    'Maximum Confidence Interval (Sheet 11):', size(c.getConfidenceIntervalMax());
+                    };
+               
+               writecell(comparisons_data, file_comparisons, 'Sheet', 1);
+               writematrix([Values1{:}], file_comparisons, 'Sheet', 2);
+               writematrix([Values2{:}], file_comparisons, 'Sheet', 3);
+               writematrix(Avg_1, file_comparisons, 'Sheet', 4)
+               writematrix(Avg_2, file_comparisons, 'Sheet', 5)
+               writematrix([c.getDifference{:}], file_comparisons, 'Sheet', 6)
+               writematrix([c.getAllDifferences{:}], file_comparisons, 'Sheet', 7)
+               writematrix([c.getP1{:}], file_comparisons, 'Sheet', 8)
+               writematrix([c.getP2{:}], file_comparisons, 'Sheet', 9)
+               writematrix([c.getConfidenceIntervalMin{:}], file_comparisons, 'Sheet', 10)
+               writematrix([c.getConfidenceIntervalMax{:}], file_comparisons, 'Sheet', 11)
+           end
+           
+           % random comparisons
+           for i = 1:1:random_comparisons.length()
+               rc = random_comparisons.getValue(i);
+               Values1 = c.getGroupValue();
+               Values2 = c.getRandomValue();
+               Avg_1 = c.getAverageValue();
+               Avg_2 = c.getAverageRandomValue();
+               file_random_comparisons = [root_directory filesep() 'randomcomparisons' filesep() rc.getID() '.xlsx'];
+               random_comparisons_data = {
+                    'Random Comparison ID:', rc.getID();
+                    'Random Comparison Label:', rc.getLabel();
+                    'Random Comparison Notes:', rc.getNotes();
+                    'Values Group 1 (Sheet 2):', size(Values1);                    
+                    'Values Random Group (Sheet 3):', size(Values2);
+                    'Group 1 Average Value (Sheet 4):', size(Avg_1);
+                    'Random Group Average Value (Sheet 5):', size(Avg_2);
+                    'Difference (Sheet 6):', size(rc.getDifference());
+                    'All Differences (Sheet 7):', size(rc.getAllDifferences());
+                    'P1 (Sheet 8):', size(rc.getP1());
+                    'P2 (Sheet 9):', size(rc.getP2());
+                    'Minimum Confidence Interval (Sheet 10):', size(rc.getConfidenceIntervalMin());
+                    'Maximum Confidence Interval (Sheet 11):', size(rc.getConfidenceIntervalMax());
+                    };
+               
+               writecell(random_comparisons_data, file_random_comparisons, 'Sheet', 1);
+               writematrix(rc.getGroupValue(), file_random_comparisons, 'Sheet', 2);
+               writematrix(rc.getRandomValue(), file_random_comparisons, 'Sheet', 3);
+               writematrix(rc.getAverageValue(), file_random_comparisons, 'Sheet', 4)
+               writematrix(rc.getAverageRandomValue(), file_random_comparisons, 'Sheet', 5)
+               writematrix(rc.getDifference(), file_random_comparisons, 'Sheet', 6)
+               writematrix(rc.getAllDifferences(), file_random_comparisons, 'Sheet', 7)
+               writematrix(rc.getP1(), file_random_comparisons, 'Sheet', 8)
+               writematrix(rc.getP2(), file_random_comparisons, 'Sheet', 9)
+               writematrix(rc.getConfidenceIntervalMin(), file_random_comparisons, 'Sheet', 10)
+               writematrix(rc.getConfidenceIntervalMax(), file_random_comparisons, 'Sheet', 11)
+           end
+            
+        end
+    end
 end
