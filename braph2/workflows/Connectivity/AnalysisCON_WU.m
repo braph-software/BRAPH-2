@@ -4259,7 +4259,7 @@ classdef AnalysisCON_WU < Analysis
             end
         end
     end
-    methods (Static)
+    methods (Static)  % Save and load functions
         function analysis = load_from_xls(tmp, varargin)
             % directory
             directory = get_from_varargin('', 'RootDirectory', varargin{:});
@@ -4275,7 +4275,7 @@ classdef AnalysisCON_WU < Analysis
             
             if isa(tmp, 'Analysis')
                 analysis = tmp;
-                subject_class = analysis.getSubjectClass();
+                subject_class = analysis.getCohort().getSubjectClass();
             else
                 % analysis information
                 file_analysis = [directory filesep() 'analysis_info.xlsx'];
@@ -4290,9 +4290,9 @@ classdef AnalysisCON_WU < Analysis
                     analysis_notes = raw_analysis{3, 2};
                     type_of_analysis = raw_analysis{4, 2};
                     cohort_id = raw_analysis{5, 2};
-                    n_measurements = raw_analysis{6, 2};
-                    n_comparisons = raw_analysis{7, 2};
-                    n_rcomparisons = raw_analysis{8, 2};
+%                     n_measurements = raw_analysis{6, 2};
+%                     n_comparisons = raw_analysis{7, 2}; do i need this?
+%                     n_rcomparisons = raw_analysis{8, 2};
                 end
                 
                 cohort = tmp;
@@ -4307,6 +4307,52 @@ classdef AnalysisCON_WU < Analysis
                     errordlg('Type of Analysis does not exist.');
                 end
                 
+                % load analyses
+                for i = 1:1:length(sub_folders)
+                    path = [directory filesep() sub_folders(i).name];
+                    
+                    % find all xls or xlsx files per sub folder
+                    files = dir(fullfile(path, '*.xlsx'));
+                    files2 = dir(fullfile(path, '*.xls'));
+                    len = length(files);
+                    for j = 1:1:length(files2)
+                        files(len + j, 1) = files2(j, 1);
+                    end
+                    
+                    % measurements
+                    if isequal(sub_folders(i).name, 'measurements')
+                        measurement_idict = analysis.getMeasurements();
+                        for k = 1:1:length(files)
+                            % get info main
+                            raw_main = readcell(fullfile(path, files));
+                            meas_id = raw_main{1, 2};
+                            meas_lab = raw_main{2, 2};
+                            meas_notes = raw_main{3, 2};
+                            measure_code = raw_main{4, 2};
+                            
+                            % get values
+                            raw_values = readmatrix(fullfile(path, files), 'Sheet', 2);
+                            raw_avgs = readmatrix(fullfile(path, files), 'Sheet', 3);
+                            
+                            % create measurement
+                            measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
+                                meas_id, ...
+                                meas_lab, ...  % meaurement label
+                                meas_notes, ...  % meaurement notes
+                                analysis.getCohort().getBrainAtlases(), ...
+                                measure_code, ...
+                                group,  ...
+                                'MeasurementCON.values', raw_values, ...
+                                'MeasurementCON.average_value', raw_avgs, ...
+                                varargin{:});
+                            measurement_idict.add(measurement, k);
+                        end 
+                    elseif isequal(sub_folders(i).name, 'comparisons')
+                    elseif isequal(sub_folders(i).name, 'randomcomparisons')
+                    else
+                        continue;                        
+                    end
+                end   
             end
         end
         function save_to_xls(analysis, varargin)
@@ -4360,6 +4406,7 @@ classdef AnalysisCON_WU < Analysis
                     'Measurement ID:', m.getID();
                     'Measurement Label:', m.getLabel();
                     'Measurement Notes:', m.getNotes();
+                    'Measure:', m.getMeasureCode();
                     'Values (Sheet 2):', size(m.getMeasureValues);
                     'Group Average (Sheet 3):', size(m.getGroupAverageValue());
                     };
