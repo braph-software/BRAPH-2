@@ -571,15 +571,18 @@ end
 %% Save to xls 
 % setup
 save_dir_rule = 'RootDirectory';
-save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_analysis_to_be_erased'];
 analysis = AnalysisCON_WU('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
+save_dir_path = [fileparts(which('test_braph2')) filesep analysis.getID()];
 calculated_measurement = analysis.getMeasurement('Degree', group1);
 calculated_comparison = analysis.getComparison('Degree', group1, group2);
 calculated_random_comparison = analysis.getRandomComparison('Degree', group1);
 
 % act
 AnalysisCON_WU.save_to_xls(analysis, save_dir_rule, save_dir_path);
+analysis = AnalysisCON_WU.load_from_xls(cohort, save_dir_rule, save_dir_path);
 % assert
+
+rmdir(save_dir_path, 's')
 
 %% GUIAnalysisSettings Pass a CON cohort
 cohort_file = [fileparts(which('example_workflow_CON_WU.m')) filesep() 'example data CON (DTI)' filesep() 'cohort_example.cohort'];
