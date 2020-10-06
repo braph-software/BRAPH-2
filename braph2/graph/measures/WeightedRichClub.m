@@ -133,7 +133,8 @@ classdef WeightedRichClub < Strength
                     weighted_rich_club_layer(1, 1, count) = Wr / sum(wrank_r); 
                     count = count + 1;
                 end
-                weighted_rich_club_layer(isnan(weighted_rich_club_layer)) = 0;  % Should return zeros, not NaN
+                % Don't need to control for NaN since when Er is = 0, sum(wrank_r) will
+                % be Inf and the weighted rich club will be zero
                 weighted_rich_club(li) = {weighted_rich_club_layer};  % add rich club strength of layer li
             end
         end
