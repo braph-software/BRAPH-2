@@ -4349,8 +4349,8 @@ classdef AnalysisCON_WU < Analysis
                writecell(comparisons_data, file_comparisons, 'Sheet', 1);
                writematrix([Values1{:}], file_comparisons, 'Sheet', 2);
                writematrix([Values2{:}], file_comparisons, 'Sheet', 3);
-               writematrix(Avg_1, file_comparisons, 'Sheet', 4)
-               writematrix(Avg_2, file_comparisons, 'Sheet', 5)
+               writematrix([Avg_1{:}], file_comparisons, 'Sheet', 4)
+               writematrix([Avg_2{:}], file_comparisons, 'Sheet', 5)
                writematrix([c.getDifference{:}], file_comparisons, 'Sheet', 6)
                writematrix([c.getAllDifferences{:}], file_comparisons, 'Sheet', 7)
                writematrix([c.getP1{:}], file_comparisons, 'Sheet', 8)
@@ -4362,10 +4362,10 @@ classdef AnalysisCON_WU < Analysis
            % random comparisons
            for i = 1:1:random_comparisons.length()
                rc = random_comparisons.getValue(i);
-               Values1 = c.getGroupValue();
-               Values2 = c.getRandomValue();
-               Avg_1 = c.getAverageValue();
-               Avg_2 = c.getAverageRandomValue();
+               Values1 = rc.getGroupValue();
+               Values2 = rc.getRandomValue();
+               Avg_1 = rc.getAverageValue();
+               Avg_2 = rc.getAverageRandomValue();
                file_random_comparisons = [root_directory filesep() 'randomcomparisons' filesep() rc.getID() '.xlsx'];
                random_comparisons_data = {
                     'Random Comparison ID:', rc.getID();
@@ -4384,18 +4384,17 @@ classdef AnalysisCON_WU < Analysis
                     };
                
                writecell(random_comparisons_data, file_random_comparisons, 'Sheet', 1);
-               writematrix(rc.getGroupValue(), file_random_comparisons, 'Sheet', 2);
-               writematrix(rc.getRandomValue(), file_random_comparisons, 'Sheet', 3);
-               writematrix(rc.getAverageValue(), file_random_comparisons, 'Sheet', 4)
-               writematrix(rc.getAverageRandomValue(), file_random_comparisons, 'Sheet', 5)
-               writematrix(rc.getDifference(), file_random_comparisons, 'Sheet', 6)
-               writematrix(rc.getAllDifferences(), file_random_comparisons, 'Sheet', 7)
-               writematrix(rc.getP1(), file_random_comparisons, 'Sheet', 8)
-               writematrix(rc.getP2(), file_random_comparisons, 'Sheet', 9)
-               writematrix(rc.getConfidenceIntervalMin(), file_random_comparisons, 'Sheet', 10)
-               writematrix(rc.getConfidenceIntervalMax(), file_random_comparisons, 'Sheet', 11)
-           end
-            
+               writematrix([rc.getGroupValue{:}], file_random_comparisons, 'Sheet', 2);
+               writematrix([rc.getRandomValue{:}], file_random_comparisons, 'Sheet', 3);
+               writematrix([rc.getAverageValue{:}], file_random_comparisons, 'Sheet', 4)
+               writematrix([rc.getAverageRandomValue{:}], file_random_comparisons, 'Sheet', 5)
+               writematrix([rc.getDifference{:}], file_random_comparisons, 'Sheet', 6)
+               writematrix([rc.getAllDifferences{:}], file_random_comparisons, 'Sheet', 7)
+               writematrix([rc.getP1{:}], file_random_comparisons, 'Sheet', 8)
+               writematrix([rc.getP2{:}], file_random_comparisons, 'Sheet', 9)
+               writematrix([rc.getConfidenceIntervalMin{:}], file_random_comparisons, 'Sheet', 10)
+               writematrix([rc.getConfidenceIntervalMax{:}], file_random_comparisons, 'Sheet', 11)
+           end  
         end
     end
 end
