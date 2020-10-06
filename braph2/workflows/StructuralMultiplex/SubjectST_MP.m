@@ -741,34 +741,19 @@ classdef SubjectST_MP < Subject
             % See also save_to_json, load_from_xls, load_from_txt
             
             % file1 (fullpath)
-            file1 = get_from_varargin('', 'File1', varargin{:});
-            if isequal(file1, '')  % select file
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
                 msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
                 [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file1 = [filepath1 filename1];
+                file = [filepath1 filename1];
                 
                 if ~filterindex1
                     return
                 end
             end
-            % file2 (fullpath)
-            file2 = get_from_varargin('', 'File2', varargin{:});
-            if isequal(file2, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename2, filepath2, filterindex2] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file2 = [filepath2 filename2];
-                
-                if ~filterindex2
-                    return
-                end
-            end
-            
-            raw1 = jsondecode(fileread(file1)); 
-            raw2 = jsondecode(fileread(file2)); 
-            assert(length(raw1.SubjectData) == length(raw2.SubjectData), ...
-                [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
-                'The input json files must have the same number of subjects with data from the same brain regions')
-            
+
+            raw = jsondecode(fileread(file)); 
+     
             if isa(tmp, 'Cohort')
                 cohort = tmp;
                 subject_class = cohort.getSubjectClass();
@@ -785,32 +770,25 @@ classdef SubjectST_MP < Subject
             
             % sneak peak to see if it is a subject
             sub_tmp = Subject.getSubject(subject_class, ...
-                num2str(raw1.SubjectData(1).id), num2str(raw1.SubjectData(1).label), num2str(raw1.SubjectData(1).notes), atlases, ...
-                'ST_MP1', raw1.SubjectData(1).data, ...
-                'ST_MP2', raw2.SubjectData(1).data);
+                num2str(raw.Groups(1).SubjectData(1).id), num2str(raw.Groups(1).SubjectData(1).label), num2str(raw.Groups(1).SubjectData(1).notes), atlases, ...
+                'ST_MP1', raw.Groups(1).SubjectData(1).data1, ...
+                'ST_MP2', raw.Groups(1).SubjectData(1).data2);
             delete(sub_tmp);
             
-            % creates group
-            group = Group(subject_class, '', '', '', {});
-            group_path = strsplit(file1, filesep());
-            group_id = group_path{length(group_path)};            
-            group_id = erase(group_id, '.json');
-            group.setID(group_id);
-            cohort.getGroups().add(group.getID(), group);
-
-            for i = 1:1:length(raw1.SubjectData)
-                id = num2str(raw1.SubjectData(i).id);
-                label = num2str(raw1.SubjectData(i).label);
-                notes = num2str(raw1.SubjectData(i).notes);
-                data1 = raw1.SubjectData(i).data;
-                data2 = raw2.SubjectData(i).data;
-                subject = Subject.getSubject(subject_class, ...                   
-                    id, label, notes, atlases, ...
-                    'ST_MP1', data1, 'ST_MP2', data2);
-                if ~cohort.getSubjects().contains(subject.getID())
-                    cohort.getSubjects().add(subject.getID(), subject, i);
+            % creates groups
+            for i = 1:1:length(raw.Groups)
+                group = Group(subject_class, raw.Groups(i).ID, raw.Groups.Label, raw.Groups.Notes, {});
+                cohort.getGroups().add(group.getID(), group);
+                subject_data = raw.Groups(i).SubjectData;
+                for j = 1:1:length(subject_data)
+                    subject = Subject.getSubject(subject_class, ...
+                        num2str(subject_data(j).id), num2str(subject_data(j).label), num2str(subject_data(j).notes), atlases, ...
+                        'ST_MP1', subject_data(j).data1, 'ST_MP2', subject_data(j).data2);
+                    if ~cohort.getSubjects().contains(subject.getID())
+                        cohort.getSubjects().add(subject.getID(), subject, j);
+                    end
+                    group.addSubject(subject);
                 end
-                group.addSubject(subject);
             end  
         end
         function save_to_json(cohort, varargin)
@@ -825,43 +803,19 @@ classdef SubjectST_MP < Subject
             % See also load_from_json, save_to_xls, save_to_txt
              
             % file1 (fullpath)
-            file1 = get_from_varargin('', 'File1', varargin{:});
-            if isequal(file1, '')  % select file
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
                 msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
                 [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file1 = [filepath1 filename1];
+                file = [filepath1 filename1];
                 
                 if ~filterindex1
                     return
                 end
             end
-            % file2 (fullpath)
-            file2 = get_from_varargin('', 'File2', varargin{:});
-            if isequal(file2, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename2, filepath2, filterindex2] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file2 = [filepath2 filename2];
-                
-                if ~filterindex2
-                    return
-                end
-            end
-            
+
             % get info
             groups = cohort.getGroups().getValues();
-            group = groups{1};  % must change
-            subjects_list = group.getSubjects();
-            
-            for j = 1:1:group.subjectnumber()
-                % get subject data
-                subject = subjects_list{j};
-                row_ids{j, 1} = subject.getID(); %#ok<AGROW>
-                row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
-                row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas1{j, 1} = subject.getData('ST_MP1').getValue(); %#ok<AGROW>
-                row_datas2{j, 1} = subject.getData('ST_MP2').getValue(); %#ok<AGROW>
-            end
-            
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
             
@@ -872,41 +826,46 @@ classdef SubjectST_MP < Subject
             row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
             labels = row_data;
             
+            
+            Group_structure = struct;
+            Subject_Structure = struct;            
+            
+            for j = 1:1:length(groups)
+                group = groups{j};
+                subjects_list = group.getSubjects();
+                
+                for k = 1:1:group.subjectnumber()
+                    % get subject data
+                    subject = subjects_list{k};
+                    
+                    Subject_Structure(k).id = subject.getID();
+                    Subject_Structure(k).label = subject.getLabel();
+                    Subject_Structure(k).notes = subject.getNotes();
+                    Subject_Structure(k).data1 = subject.getData('ST_MP1').getValue();
+                    Subject_Structure(k).data2 = subject.getData('ST_MP2').getValue();
+                end
+                
+                Group_structure(j).ID = group.getID();
+                Group_structure(j).Label = group.getLabel();
+                Group_structure(j).Notes = group.getNotes();
+                Group_structure(j).SubjectData = Subject_Structure;
+            end
+            
             % create structure to be save
-            structure_to_be_saved1 = struct( ...
+            structure_to_be_saved = struct( ...
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainRegionsLabels', labels, ...
-                'SubjectData', struct( ...
-                'id', row_ids, ...
-                'label', row_labels, ...
-                'notes', row_notes, ...
-                'data', row_datas1) ...
+                'Groups', Group_structure ...
                 );
-            
-            structure_to_be_saved2 = struct( ...
-                'Braph', BRAPH2.NAME, ...
-                'Build', BRAPH2.BUILD, ...
-                'BrainRegionsLabels', labels, ...
-                'SubjectData', struct( ...
-                'id', row_ids, ...
-                'label', row_labels, ...
-                'notes', row_notes, ...
-                'data', row_datas2) ...
-                );
-            
-            % save json 1
-            json_structure1 = jsonencode(structure_to_be_saved1);      
-            fid = fopen(file1, 'w');
+
+            % save json 
+            json_structure = jsonencode(structure_to_be_saved);      
+            fid = fopen(file, 'w');
             if fid == -1, error('Cannot create JSON file'); end
-            fwrite(fid, json_structure1, 'char');
+            fwrite(fid, json_structure, 'char');
             fclose(fid);
-            % save json 2
-            json_structure2 = jsonencode(structure_to_be_saved2); 
-            fid = fopen(file2, 'w');
-            if fid == -1, error('Cannot create JSON file'); end
-            fwrite(fid, json_structure2, 'char');
-            fclose(fid);
+
         end
     end
 end
