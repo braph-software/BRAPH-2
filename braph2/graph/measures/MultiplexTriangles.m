@@ -32,8 +32,9 @@ classdef MultiplexTriangles < Measure
             % G is an undirected multiplex (e.g, an instance of 
             % MultiplexGraphBU or MultiplexGraphWU).  
             %
-            % MULTIPLEXTRIANGLES(G, 'MultiplexTrianglesLayers', DIRECTEDTRIANGLESRULE) creates multiplex triangles             
-            % measure and initializes the property MultiplexTrianglesLayers with DIRECTEDTRIANGLESRULE. 
+            % MULTIPLEXTRIANGLES(G, 'MultiplexTrianglesLayers', MULTIPLEXTRIANGLESLAYERS)
+            % creates multiplex triangles measure and initializes the property 
+            % MultiplexTrianglesLayers with MULTIPLEXTRIANGLESLAYERS. 
             % Admissible RULE options are:
             % MULTIRPLEXTRIANGLESLAYERS = [1, 2] (default) - MULTIPLEXTRIANGLES  
             %                    layers' indexes will be set to 1 and 2.
