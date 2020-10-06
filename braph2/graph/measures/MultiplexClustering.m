@@ -87,9 +87,9 @@ classdef MultiplexClustering < MultiplexTriangles
             end
             
             clustering_layer_l1 = 2 * multiplex_triangles{li} ./ (L-1)*(degree{multiplex_triangles_layers(1)} .* (degree{multiplex_triangles_layers(1)} - 1));
-            clustering_layer_l2 = 2 * multiplex_triangles{li} ./ (L-1)*(degree{multiplex_triangles_layers(2)} .* (degree_l2{multiplex_triangles_layers(2)} - 1));
+            % clustering_layer_l2 = 2 * multiplex_triangles{li} ./ (L-1)*(degree{multiplex_triangles_layers(2)} .* (degree{multiplex_triangles_layers(2)} - 1));
             clustering_layer_l1(isnan(clustering_layer_l1)) = 0;  % Should return zeros, not NaN
-            clustering_layer_l2(isnan(clustering_layer_l2)) = 0;  % Should return zeros, not NaN
+            % clustering_layer_l2(isnan(clustering_layer_l2)) = 0;  % Should return zeros, not NaN
             multiplex_clustering(li) = {clustering_layer_l1}; % cl1 or cl2
         end
     end  
