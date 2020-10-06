@@ -86,12 +86,8 @@ classdef MultiplexClustering < MultiplexTriangles
                 degree = Degree(g, g.getSettings()).getValue();
             end
             
-            degree_l1 = degree{multiplex_triangles_layers(1)};
-            degree_l2 = degree{multiplex_triangles_layers(2)};
-            multiplex_triangles = {diag(A11.^(1/3)*A22.^(1/3)*A11.^(1/3)) + diag(A22.^(1/3)*A11.^(1/3)*A22.^(1/3))};
-            
-            clustering_layer_l1 = 2 * multiplex_triangles{li} ./ (L-1)*(degree_l1{li} .* (degree_l1{li} - 1));
-            clustering_layer_l2 = 2 * multiplex_triangles{li} ./ (L-1)*(degree_l2{li} .* (degree_l2{li} - 1));
+            clustering_layer_l1 = 2 * multiplex_triangles{li} ./ (L-1)*(degree{multiplex_triangles_layers(1)} .* (degree{multiplex_triangles_layers(1)} - 1));
+            clustering_layer_l2 = 2 * multiplex_triangles{li} ./ (L-1)*(degree{multiplex_triangles_layers(2)} .* (degree_l2{multiplex_triangles_layers(2)} - 1));
             clustering_layer_l1(isnan(clustering_layer_l1)) = 0;  % Should return zeros, not NaN
             clustering_layer_l2(isnan(clustering_layer_l2)) = 0;  % Should return zeros, not NaN
             multiplex_clustering(li) = {clustering_layer_l1}; % cl1 or cl2
