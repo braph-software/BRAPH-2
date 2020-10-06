@@ -4324,15 +4324,15 @@ classdef AnalysisCON_WU < Analysis
                         measurement_idict = analysis.getMeasurements();
                         for k = 1:1:length(files)
                             % get info main
-                            raw_main = readcell(fullfile(path, files));
+                            raw_main = readcell(fullfile(path, files(k).name));
                             meas_id = raw_main{1, 2};
                             meas_lab = raw_main{2, 2};
                             meas_notes = raw_main{3, 2};
                             measure_code = raw_main{4, 2};
                             
                             % get values
-                            raw_values = readmatrix(fullfile(path, files), 'Sheet', 2);
-                            raw_avgs = readmatrix(fullfile(path, files), 'Sheet', 3);
+                            raw_values = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
+                            raw_avgs = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
                             
                             % create measurement
                             measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
@@ -4407,6 +4407,7 @@ classdef AnalysisCON_WU < Analysis
                     'Measurement Label:', m.getLabel();
                     'Measurement Notes:', m.getNotes();
                     'Measure:', m.getMeasureCode();
+                    'Group:', m.getGroup();
                     'Values (Sheet 2):', size(m.getMeasureValues);
                     'Group Average (Sheet 3):', size(m.getGroupAverageValue());
                     };
@@ -4423,11 +4424,14 @@ classdef AnalysisCON_WU < Analysis
                 Values2 = c.getGroupValue(2);
                 Avg_1 = c.getGroupAverageValue(1);
                 Avg_2 = c.getGroupAverageValue(2);
+                [g1, g2] = c.getGroups();
                 file_comparisons = [root_directory filesep() 'comparisons' filesep() c.getID() '.xlsx'];
                 comparisons_data = {
                     'Comparison ID:', c.getID();
                     'Comparison Label:', c.getLabel();
                     'Comparison Notes:', c.getNotes();
+                    'Group 1:', g1;
+                    'Group 2:', g2;
                     'Values Group 1 (Sheet 2):', size(Values1);
                     'Values Group 2 (Sheet 3):', size(Values2);
                     'Group 1 Average Value (Sheet 4):', size(Avg_1);
@@ -4460,6 +4464,7 @@ classdef AnalysisCON_WU < Analysis
                 Values2 = rc.getRandomValue();
                 Avg_1 = rc.getAverageValue();
                 Avg_2 = rc.getAverageRandomValue();
+                group = rc.getGroups();
                 file_random_comparisons = [root_directory filesep() 'randomcomparisons' filesep() rc.getID() '.xlsx'];
                 random_comparisons_data = {
                     'Random Comparison ID:', rc.getID();
@@ -4489,6 +4494,10 @@ classdef AnalysisCON_WU < Analysis
                 writematrix([rc.getConfidenceIntervalMin{:}], file_random_comparisons, 'Sheet', 10)
                 writematrix([rc.getConfidenceIntervalMax{:}], file_random_comparisons, 'Sheet', 11)
             end
+        end
+        function analysis = load_from_json(tmp, varargin)
+        end
+        function save_to_json(analysis, varargin)
         end
     end
 end

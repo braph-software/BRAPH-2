@@ -4102,4 +4102,14 @@ classdef AnalysisST_WU < Analysis
             end
         end
     end
+    methods (Static)  % Save and load functions
+        function analysis = load_from_xls(tmp, varargin)
+        end
+        function save_to_xls(analysis, varargin)
+        end
+        function analysis = load_from_json(tmp, varargin)
+        end
+        function save_to_json(analysis, varargin)
+        end
+    end
 end

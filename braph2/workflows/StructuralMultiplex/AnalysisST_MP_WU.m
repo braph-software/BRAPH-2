@@ -40,7 +40,7 @@ classdef AnalysisST_MP_WU < Analysis
     % AnalysisST_MP_WU Plot panel methods
     %  getGraphPanel                - creates a uipanel
     %  getGlobalPanel               - creates a global uipanel for GUIAnalysis
-    %  getNodalPanel                - creates a nodal uipanel for GUIAnalysis 
+    %  getNodalPanel                - creates a nodal uipanel for GUIAnalysis
     %  getGlobalMeasurePlot         - returns a global measurement plot
     %  getGlobalComparisonPlot      - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
@@ -52,7 +52,7 @@ classdef AnalysisST_MP_WU < Analysis
     %  getBinodalRandomComparisonPlot - returns a binodal randomcomparison plot
     %
     % See also Analysis, MeasurementST_MP_WU, RandomComparisonST_MP_WU, ComparisonST_MP_WU
-        
+    
     methods  % Constructor
         function analysis = AnalysisST_MP_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
             % ANALYSISST_MP_WU(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
@@ -66,7 +66,7 @@ classdef AnalysisST_MP_WU < Analysis
             % ANALYSISST_MP_WU with specified settings VALUES.
             %
             % See also MeasurementST_WU, RandomComparisonST_WU, ComparisonST_WU.
-                        
+            
             analysis = analysis@Analysis(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
@@ -118,7 +118,7 @@ classdef AnalysisST_MP_WU < Analysis
                 ];
         end
     end
-        methods (Access = protected)  % graph methods
+    methods (Access = protected)  % graph methods
         function A = get_weighted_correlation_matrix(analysis, subjects, varargin)
             % GET_WEIGHTED_CORRELATION_MATRIX creates a correlated matrix
             %
@@ -173,7 +173,7 @@ classdef AnalysisST_MP_WU < Analysis
             g = Graph.getGraph(graph_type, A);
         end
     end
-    methods (Access = protected)  % Calculation functions     
+    methods (Access = protected)  % Calculation functions
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
             % CALCULATE_MEASUREMENT returns a measurement
             %
@@ -191,13 +191,13 @@ classdef AnalysisST_MP_WU < Analysis
             % See also calculate_random_comparison, calculate_comparison.
             
             subjects = group.getSubjects();
-
+            
             g = analysis.get_graph_for_subjects(subjects, varargin{:});
             
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measurement_value = measure.getValue();
-            measurement_parameter_values = measure.getParameterValues();    
-
+            measurement_parameter_values = measure.getParameterValues();
+            
             measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
                 '', ...  % meaurement label
@@ -234,7 +234,7 @@ classdef AnalysisST_MP_WU < Analysis
             %  NumberOfWeigths     - number of weigths sorted at the same time during randomization
             %
             % See also calculate_measurement, calculate_comparison.
-         
+            
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             
@@ -257,7 +257,7 @@ classdef AnalysisST_MP_WU < Analysis
             measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});
             value_group = measurement_group.getMeasureValue();
             parameter_value_group = measurement_group.getMeasureParameterValues();
-
+            
             g = analysis.get_graph_for_subjects(group.getSubjects(), varargin{:});
             
             % Randomization
@@ -311,7 +311,7 @@ classdef AnalysisST_MP_WU < Analysis
                     p2(i, j) = {pvalue2(difference{i, j}, all_differences2(i*j, :))};  % double tail
                     qtl(i, j) = {quantiles(all_differences2(i*j, :), 40)};
                     ci_lower(i, j) = {cellfun(@(x) x(2), qtl{i, j})};
-                    ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})};              
+                    ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})};
                 end
             end
             
@@ -365,7 +365,7 @@ classdef AnalysisST_MP_WU < Analysis
             
             is_longitudinal = analysis.getSettings('AnalysisST_MP.Longitudinal');
             M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
-
+            
             if Measure.is_superglobal(measure_code)
                 rows = 1;
                 columns = 1;
@@ -376,7 +376,7 @@ classdef AnalysisST_MP_WU < Analysis
                 rows = 2;
                 columns = 2;
             end
-    
+            
             % Measurements for groups 1 and 2, and their difference
             measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
             value_1 = measurements_1.getMeasureValue();
@@ -385,14 +385,14 @@ classdef AnalysisST_MP_WU < Analysis
             value_2 = measurements_2.getMeasureValue();
             
             difference_mean = cellfun(@(x, y) y - x, value_1, value_2, 'UniformOutput', false);
-
+            
             subjects_1 = group_1.getSubjects();
             subjects_2 = group_2.getSubjects();
             
             % Permutations
             all_permutations_1 = cell(1, M);
             all_permutations_2 = cell(1, M);
-
+            
             start = tic;
             for i = 1:1:M
                 if verbose
@@ -432,14 +432,14 @@ classdef AnalysisST_MP_WU < Analysis
                     p2(i, j) = {pvalue2(difference_mean{i, j}, difference_all_permutations(i*j, :))};  % double tail
                     qtl(i, j) = {quantiles(difference_all_permutations(i*j, :), 40)};
                     ci_lower(i, j) = {cellfun(@(x) x(2), qtl{i, j})};
-                    ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})}; % or 39?            
+                    ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})}; % or 39?
                 end
             end
-
+            
             comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                 analysis.getComparisonID(measure_code, group_1, group_2, varargin{:}), ...
                 '', ...  % comparison label
-                '', ...  % comparison notes                
+                '', ...  % comparison notes
                 analysis.getCohort().getBrainAtlases(), ...
                 measure_code, ...
                 group_1, ...
@@ -455,7 +455,7 @@ classdef AnalysisST_MP_WU < Analysis
                 'ComparisonST_MP.confidence_max', ci_upper, ...
                 varargin{:} ...
                 );
-       end
+        end
     end
     methods (Static)  % Descriptive functions
         function analysis_class = getClass()
@@ -578,9 +578,9 @@ classdef AnalysisST_MP_WU < Analysis
             % measures in Measurement, RandomComparison and Comparison.
             %
             % See also getGraphPanel, getMainPanelMeasurePlot.
-     
+            
             global_panel = [];
-
+            
         end
         function nodal_panel = getNodalPanel(analysis, varargin)
             % GETNODALPANEL creates the nodal uipanel for GUIAnalysis
@@ -602,7 +602,7 @@ classdef AnalysisST_MP_WU < Analysis
             % See also getGraphPanel, getMainPanelMeasurePlot, getGlobalPanel
             
             binodal_panel = ui_mainpanel;
-    
+            
         end
         function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin) %#ok<INUSD>
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
@@ -705,12 +705,12 @@ classdef AnalysisST_MP_WU < Analysis
         end
         function p = getBrainView(analysis, varargin)
             % GETBRAINVIEW creates a brain view panel for GUIAnalysis
-            % 
+            %
             % P = GETBRAINVIEW(ANALYSIS, PROPERTY, RULE, ...) creates a
             % brain view panel for GUIAnalysis.
             %
             % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
-
+            
             p = [];
         end
         function brain_graph_panel = getBrainGraphPanel(analysis, brain_axes, brain_graph)
@@ -720,14 +720,24 @@ classdef AnalysisST_MP_WU < Analysis
             % creates a brain graph panel to manage the type of
             % PLOTBRAINGRAPH that the GUIAnalysis plots in the AXES.
             %
-            % See also getBrainView, 
+            % See also getBrainView,
             
             brain_graph_panel = [];
         end
         function h = getMCRPanel(analysis, brain_axes, bg)
             % sets position of figure
-   
+            
             h = [];
+        end
+    end
+    methods (Static)  % Save and load functions
+        function analysis = load_from_xls(tmp, varargin)
+        end
+        function save_to_xls(analysis, varargin)
+        end
+        function analysis = load_from_json(tmp, varargin)
+        end
+        function save_to_json(analysis, varargin)
         end
     end
 end

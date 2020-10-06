@@ -580,6 +580,7 @@ calculated_random_comparison = analysis.getRandomComparison('Degree', group1);
 % act
 AnalysisCON_WU.save_to_xls(analysis, save_dir_rule, save_dir_path);
 analysis = AnalysisCON_WU.load_from_xls(cohort, save_dir_rule, save_dir_path);
+
 % assert
 
 rmdir(save_dir_path, 's')
