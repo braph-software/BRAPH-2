@@ -386,7 +386,11 @@ cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2,
 cohort.getGroups().add(group.getID(), group);
 
 % act
-SubjectST_MP.save_to_json(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+
+[a, b] = SubjectST_MP.save_to_json(cohort); 
+JSON.Serialize(a, 'File', save_dir_path1);
+JSON.Serialize(b, 'File', save_dir_path2);
+
 
 load_cohort = SubjectST_MP.load_from_json(atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
@@ -509,8 +513,8 @@ cohort2 = Cohort('cohorttest2', 'label2', 'notes2', sub_class, atlas, {sub1, sub
 cohort2.getGroups().add(group2.getID(), group2);
 
 % act
-SubjectST_MP.save_to_json(cohort, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
-SubjectST_MP.save_to_json(cohort2, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
+JSON.Serialize(SubjectST_MP.save_to_json(cohort), save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
+JSON.Serialize(SubjectST_MP.save_to_json(cohort2), save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);
 load_cohort = SubjectST_MP.load_from_json(atlas, save_dir_rule1, save_dir_path1, save_dir_rule2, save_dir_path2);
 
 load_cohort_2 = SubjectST_MP.load_from_json(load_cohort, save_dir_rule1, save_dir_path3, save_dir_rule2, save_dir_path4);

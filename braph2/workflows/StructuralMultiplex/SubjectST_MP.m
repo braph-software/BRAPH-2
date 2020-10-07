@@ -796,7 +796,7 @@ classdef SubjectST_MP < Subject
                 group.addSubject(subject);
             end  
         end
-        function save_to_json(cohort, varargin)
+        function [structure1, structure2] = save_to_json(cohort, varargin)
             % SAVE_TO_JSON saves the cohort of SubjectST_MP to a '.json' file
             %
             % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
@@ -862,17 +862,62 @@ classdef SubjectST_MP < Subject
                 );
             
             % save json 1
-            json_structure1 = jsonencode(structure_to_be_saved1);      
-            fid = fopen(file1, 'w');
-            if fid == -1, error('Cannot create JSON file'); end
-            fwrite(fid, json_structure1, 'char');
-            fclose(fid);
-            % save json 2
-            json_structure2 = jsonencode(structure_to_be_saved2); 
-            fid = fopen(file2, 'w');
-            if fid == -1, error('Cannot create JSON file'); end
-            fwrite(fid, json_structure2, 'char');
-            fclose(fid);
+            structure1 = structure_to_be_saved1;
+            structure2 = structure_to_be_saved2;
+        end
+        function cohort = load_from_struct(tmp, varargin)
+            % file1 (fullpath)
+            raw1 = get_from_varargin([], 'SubjectStructure1', varargin{:});          
+            % file2 (fullpath)
+            raw2 = get_from_varargin([], 'SubjectStructure2', varargin{:});            
+       
+            assert(length(raw1.SubjectData) == length(raw2.SubjectData), ...
+                [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
+                'The input json files must have the same number of subjects with data from the same brain regions')
+            
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+                atlases = cohort.getBrainAtlases();
+            else
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                % creates cohort
+                subject_class = 'SubjectST_MP';
+                atlases = tmp;
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            end
+            
+            % sneak peak to see if it is a subject
+            sub_tmp = Subject.getSubject(subject_class, ...
+                num2str(raw1.SubjectData(1).id), num2str(raw1.SubjectData(1).label), num2str(raw1.SubjectData(1).notes), atlases, ...
+                'ST_MP1', raw1.SubjectData(1).data, ...
+                'ST_MP2', raw2.SubjectData(1).data);
+            delete(sub_tmp);
+            
+            % creates group
+            group = Group(subject_class, '', '', '', {});
+            group_path = strsplit(file1, filesep());
+            group_id = group_path{length(group_path)};            
+            group_id = erase(group_id, '.json');
+            group.setID(group_id);
+            cohort.getGroups().add(group.getID(), group);
+
+            for i = 1:1:length(raw1.SubjectData)
+                id = num2str(raw1.SubjectData(i).id);
+                label = num2str(raw1.SubjectData(i).label);
+                notes = num2str(raw1.SubjectData(i).notes);
+                data1 = raw1.SubjectData(i).data;
+                data2 = raw2.SubjectData(i).data;
+                subject = Subject.getSubject(subject_class, ...                   
+                    id, label, notes, atlases, ...
+                    'ST_MP1', data1, 'ST_MP2', data2);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+                group.addSubject(subject);
+            end  
         end
     end
 end
