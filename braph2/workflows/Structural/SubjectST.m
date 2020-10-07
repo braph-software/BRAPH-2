@@ -625,7 +625,7 @@ classdef SubjectST < Subject
                 end
             end
             
-            raw = jsondecode(fileread(file));
+            raw = JSON.Deserialize(file);
             
             if isa(tmp, 'Cohort')
                 cohort = tmp;
@@ -728,11 +728,7 @@ classdef SubjectST < Subject
                 );
             
             % save
-            json_structure = jsonencode(structure_to_be_saved);
-            fid = fopen(file, 'w');
-            if fid == -1, error('Cannot create JSON file'); end
-            fwrite(fid, json_structure, 'char');
-            fclose(fid);
+            JSON.Serialize(structure_to_be_saved, varargin{:});            
         end
     end
 end

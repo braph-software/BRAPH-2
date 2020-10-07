@@ -532,22 +532,8 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % file with message MSG.
             %
             % See also BrainAtlas, uigetfile, jsondecode
-            
-            
-            
-            % file (fullpath)
-            file = get_from_varargin('', 'File', varargin{:});
-            if isequal(file, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file = [filepath filename];
-                
-                if ~filterindex
-                    return
-                end
-            end
-            
-            raw =  jsondecode(fileread(file));
+             
+            raw =  JSON.Deserialize(varargin{:});
             
             atlas_id =  fieldnames(raw);
             brain_atlas = atlas_id{3};  % 1: BRAPH, 2:Version, 3:Name           
@@ -575,7 +561,7 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 atlas.getBrainRegions().add(br.getID(), br);
             end
         end
-        function save_to_json(atlas, varargin)
+        function structure =  save_to_json(atlas, varargin)
             % SAVE_TO_JSON saves brain atlas to JSON file
             %
             % SAVE_TO_JSON('File', FILE) saves the brain atlas ATLAS into
@@ -588,18 +574,6 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % FILE with message MSG.
             %
             % See also BrainAtlas, uigetfile, jsonencode, table.
-            
-            % file (fullpath)
-            file = get_from_varargin('', 'File', varargin{:});
-            if isequal(file, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_PUTFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uiputfile(BRAPH2.JSON_EXTENSION, msg);
-                file = [filepath filename];
-                
-                if ~filterindex
-                    return
-                end
-            end
             
             % gets brain region data
             for i = 1:1:atlas.getBrainRegions().length()
@@ -616,20 +590,16 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainAtlas', struct( ...
-                    'id', atlas.getID(), ...
-                    'label', atlas.getLabel(), ...
-                    'notes', atlas.getNotes(), ...
-                    'ba_surf', atlas.getBrainSurfFile(), ...
-                    'br_idict', table(id, label, x, y, z, notes) ...
-                    ) ...
+                'id', atlas.getID(), ...
+                'label', atlas.getLabel(), ...
+                'notes', atlas.getNotes(), ...
+                'ba_surf', atlas.getBrainSurfFile(), ...
+                'br_idict', table(id, label, x, y, z, notes) ...
+                ) ...
                 );
             
             % save
-            Json_structure= jsonencode(structure_to_be_saved);
-            fid = fopen(file, 'w');
-            if fid == -1, error('Cannot create JSON file'); end
-            fwrite(fid, Json_structure, 'char');
-            fclose(fid);
+            structure = structure_to_be_saved;
         end
     end
 end

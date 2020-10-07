@@ -184,7 +184,7 @@ atlas  = BrainAtlas('TestToSaveCoolName1', 'Brain Atlas', 'Brain atlas notes', '
 
 file = [fileparts(which('test_braph2')) filesep 'trial_atlas_to_be_erased.json'];
 
-BrainAtlas.save_to_json(atlas, 'File', file);
+JSON.Serialize(BrainAtlas.save_to_json(atlas), 'File', file);
 
 atlas_loaded = BrainAtlas.load_from_json('File', file);
 

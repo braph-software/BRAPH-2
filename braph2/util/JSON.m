@@ -21,8 +21,17 @@ classdef JSON
             % a .json file to PATH.
             %
             % See also Deserialize.
-
-            file = get_from_varargin('', 'JsonPath', varargin{:});
+            
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(BRAPH2.JSON_MSG_PUTFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uiputfile(BRAPH2.JSON_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
             
             json_structure = jsonencode(struct);
             fid = fopen(file, 'w');
@@ -30,14 +39,27 @@ classdef JSON
             fwrite(fid, json_structure, 'char');
             fclose(fid);            
         end
-        function struct = Deserialize(path, varargin) 
-            % DESERIALIZE converts a struct to a .JSON file.
+        function struct = Deserialize(varargin) 
+            % DESERIALIZE converts a .JSON file to a MATLAB struct.
             % 
-            % STRUCT = DESERIALIZE(STRUCT, JSONPATH, PATH) converts a MATLAB struct to
-            % a .json file to PATH.
+            % STRUCT = DESERIALIZE(PATH) converts a .JSON file to a MATLAB
+            % struct.
             %
             % See also Deserialize.
-            struct = jsondecode(fileread(path));
+            
+             % file (fullpath)
+            file = get_from_varargin('', 'File', varargin{:});
+            if isequal(file, '')  % select file
+                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
+                [filename, filepath, filterindex] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
+                file = [filepath filename];
+                
+                if ~filterindex
+                    return
+                end
+            end
+            
+            struct = jsondecode(fileread(file));
         end
     end
 end
