@@ -97,7 +97,7 @@ classdef MultiplexTriangles < Measure
             % MultiplexTriangles
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to MultiplexTriangles.  Empty array in this case.
+            % settings available to MultiplexTriangles. Empty array in this case.
             % 
             % See also getCompatibleGraphList.
             
