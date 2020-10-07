@@ -631,9 +631,20 @@ classdef SubjectST < Subject
             
             % sneak peak
             subject_tmp = Subject.getSubject(subject_class, ...
-                num2str(raw.Groups(1).SubjectData(1).id), num2str(raw.Groups(1).SubjectData(1).label), num2str(raw.Groups(1).SubjectData(1).notes), atlases, ...
-                'ST', raw.Groups(1).SubjectData(1).data);
+                num2str(raw.Subjects(1).id), num2str(raw.Subjects(1).label), num2str(raw.Subjects(1).notes), atlases, ...
+                'ST', raw.Subjects(1).data);
             delete(subject_tmp)
+            
+            % creates subjects idict
+            for i = 1:1:length(raw.Subjects)
+                subject_data = raw.Subjects(i);
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(subject_data(i).id), num2str(subject_data(i).label), num2str(subject_data(i).notes), atlases, ...
+                    'ST', subject_data(i).data);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+            end
             
             % creates group
             for i = 1:1:length(raw.Groups)
@@ -664,35 +675,27 @@ classdef SubjectST < Subject
                        
             % get info            
             groups = cohort.getGroups().getValues(); 
+            subjects = cohort.getSubjects().getValues();
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
-            % labels
-            for i = 1:1:atlas.getBrainRegions().length()
-                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
-            end
-            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
-            labels = row_data;
-            
+                      
             Group_structure = struct;
             Subject_Structure = struct;
-            for i =1:1:length(groups)
+            
+            for i = 1:1:length(subjects)
+                subject = subjects{i};                    
+                Subject_Structure(i).id = subject.getID();
+                Subject_Structure(i).label = subject.getLabel();
+                Subject_Structure(i).notes = subject.getNotes();
+                Subject_Structure(i).data = subject.getData('ST').getValue();
+            end
+            
+            for i = 1:1:length(groups)
                 group = groups{i};
-                subjects_list = group.getSubjects();
-                
-                for j = 1:1:group.subjectnumber()
-                    % get subject data
-                    subject = subjects_list{j};
-                    
-                    Subject_Structure(j).id = subject.getID();
-                    Subject_Structure(j).label = subject.getLabel(); 
-                    Subject_Structure(j).notes = subject.getNotes();
-                    Subject_Structure(j).data = subject.getData('ST').getValue();
-                end
-
                 Group_structure(i).ID = group.getID(); 
                 Group_structure(i).Label = group.getLabel(); 
                 Group_structure(i).Notes = group.getNotes(); 
-                Group_structure(i).SubjectData = Subject_Structure;
+                Group_structure(i).SubjectData = cellfun(@(x) x.getID(), group.getSubjects(), 'UniformOutput', false);
             end
 
             % create structure to be save
@@ -700,6 +703,7 @@ classdef SubjectST < Subject
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainAtlas', BrainAtlas.save_to_json(atlas), ...
+                'Subjects', Subject_structure, ...
                 'Groups', Group_structure ...
                 );
             
