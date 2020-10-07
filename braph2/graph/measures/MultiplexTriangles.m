@@ -53,7 +53,7 @@ classdef MultiplexTriangles < Measure
                 A11 = A{i, i};
                 for j=i+1:1:L
                     A22 = A{j, j};
-                    multiplex_triangles = multiplex_triangles + diag(A11.^(1/3)*A22.^(1/3)*A11.^(1/3)) + diag(A22.^(1/3)*A11.^(1/3)*A22.^(1/3));
+                    multiplex_triangles = multiplex_triangles + diag(A11.^(1/3)*A22.^(1/3)*A11.^(1/3) + A22.^(1/3)*A11.^(1/3)*A22.^(1/3));
                 end
             end
             multiplex_triangles = {multiplex_triangles};
