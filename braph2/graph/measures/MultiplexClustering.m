@@ -68,6 +68,7 @@ classdef MultiplexClustering < MultiplexTriangles
                     multiplex_clustering = multiplex_clustering + (multiplex_triangles{1} ./(k1 .* (k1 - 1) + k2 .* (k2 - 1)));
                 end
             end
+            multiplex_clustering(isnan(multiplex_clustering)) = 0;  % Should return zeros, not NaN
             multiplex_clustering = {multiplex_clustering/(L-1)}; 
         end
     end  
