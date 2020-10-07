@@ -502,7 +502,7 @@ classdef SubjectCON < Subject
             delete(subject_tmp)
             
             % creates group
-            k = 0; l = 1;
+            k = 0; l = 0;
             for i = 1:1:length(raw.Groups)
                 group = Group(subject_class, raw.Groups(i).ID, raw.Groups(i).Label, raw.Groups(i).Notes, {});
                 cohort.getGroups().add(group.getID(), group);
@@ -515,10 +515,9 @@ classdef SubjectCON < Subject
                         cohort.getSubjects().add(subject.getID(), subject, j + k);
                     end
                     group.addSubject(subject);
-                    
+                    l = l + 1;
                 end
-                k = j * l;
-                l = l + 1;
+                k = l;
             end
         end
         function structure = save_to_json(cohort, varargin)
