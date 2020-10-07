@@ -741,17 +741,10 @@ classdef SubjectST_MP < Subject
             % See also save_to_json, load_from_xls, load_from_txt
             
             % file1 (fullpath)
-            file1 = get_from_varargin('', 'File1', varargin{:});          
-            % file2 (fullpath)
-            file2 = get_from_varargin('', 'File2', varargin{:});            
+            file = get_from_varargin('', 'File', varargin{:});           
             
-            raw1 = JSON.Deserialize('File', file1); 
-            raw2 = JSON.Deserialize('File', file2); 
-            
-            assert(length(raw1.SubjectData) == length(raw2.SubjectData), ...
-                [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
-                'The input json files must have the same number of subjects with data from the same brain regions')
-            
+            raw = JSON.Deserialize('File', file); 
+
             if isa(tmp, 'Cohort')
                 cohort = tmp;
                 subject_class = cohort.getSubjectClass();
@@ -789,7 +782,7 @@ classdef SubjectST_MP < Subject
                 end
             end  
         end
-        function [structure1, structure2] = save_to_json(cohort, varargin)
+        function structure = save_to_json(cohort, varargin)
             % SAVE_TO_JSON saves the cohort of SubjectST_MP to a '.json' file
             %
             % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
@@ -800,18 +793,6 @@ classdef SubjectST_MP < Subject
             % 
             % See also load_from_json, save_to_xls, save_to_txt
              
-            % file1 (fullpath)
-            file = get_from_varargin('', 'File', varargin{:});
-            if isequal(file, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file = [filepath1 filename1];
-                
-                if ~filterindex1
-                    return
-                end
-            end
-
             % get info
             groups = cohort.getGroups().getValues();
             atlases = cohort.getBrainAtlases();
@@ -823,7 +804,6 @@ classdef SubjectST_MP < Subject
             end            
             row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
             labels = row_data;
-            
             
             Group_structure = struct;
             Subject_Structure = struct;            
@@ -853,17 +833,12 @@ classdef SubjectST_MP < Subject
             structure_to_be_saved = struct( ...
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
-                'BrainRegionsLabels', labels, ...
+                'BrainAtlas', BrainAtlas.save_to_json(atlas), ...
                 'Groups', Group_structure ...
                 );
 
             % save json 
-            json_structure = jsonencode(structure_to_be_saved);      
-            fid = fopen(file, 'w');
-            if fid == -1, error('Cannot create JSON file'); end
-            fwrite(fid, json_structure, 'char');
-            fclose(fid);
-
+            structure = structure_to_be_saved;
         end
     end
 end
