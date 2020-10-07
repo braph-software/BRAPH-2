@@ -741,30 +741,13 @@ classdef SubjectST_MP < Subject
             % See also save_to_json, load_from_xls, load_from_txt
             
             % file1 (fullpath)
-            file1 = get_from_varargin('', 'File1', varargin{:});
-            if isequal(file1, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file1 = [filepath1 filename1];
-                
-                if ~filterindex1
-                    return
-                end
-            end
+            file1 = get_from_varargin('', 'File1', varargin{:});          
             % file2 (fullpath)
-            file2 = get_from_varargin('', 'File2', varargin{:});
-            if isequal(file2, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename2, filepath2, filterindex2] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file2 = [filepath2 filename2];
-                
-                if ~filterindex2
-                    return
-                end
-            end
+            file2 = get_from_varargin('', 'File2', varargin{:});            
             
-            raw1 = jsondecode(fileread(file1)); 
-            raw2 = jsondecode(fileread(file2)); 
+            raw1 = JSON.Deserialize('File', file1); 
+            raw2 = JSON.Deserialize('File', file2); 
+            
             assert(length(raw1.SubjectData) == length(raw2.SubjectData), ...
                 [BRAPH2.STR ':SubjectMultiplexMRI:' BRAPH2.WRONG_INPUT], ...
                 'The input json files must have the same number of subjects with data from the same brain regions')
@@ -826,26 +809,9 @@ classdef SubjectST_MP < Subject
              
             % file1 (fullpath)
             file1 = get_from_varargin('', 'File1', varargin{:});
-            if isequal(file1, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file1 = [filepath1 filename1];
-                
-                if ~filterindex1
-                    return
-                end
-            end
+           
             % file2 (fullpath)
             file2 = get_from_varargin('', 'File2', varargin{:});
-            if isequal(file2, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename2, filepath2, filterindex2] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file2 = [filepath2 filename2];
-                
-                if ~filterindex2
-                    return
-                end
-            end
             
             % get info
             groups = cohort.getGroups().getValues();

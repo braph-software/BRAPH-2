@@ -485,18 +485,7 @@ classdef SubjectFNC < Subject
             %
             % See also save_to_json, load_from_xls, load_from_txt
             
-            % directory
-            file = get_from_varargin('', 'File', varargin{:});
-            if isequal(file, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file = [filepath filename];
-                
-                if ~filterindex
-                    return
-                end
-            end
-            raw = jsondecode(fileread(file));
+            raw = JSON.Deserialize(varargin{:});
             
             if isa(tmp, 'Cohort')
                 cohort = tmp;
@@ -539,7 +528,7 @@ classdef SubjectFNC < Subject
             end 
 
         end
-        function save_to_json(cohort, varargin)
+        function structure = save_to_json(cohort, varargin)
             % SAVE_TO_JSON saves the cohort of SubjectsCON to '.json' files
             %
             % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
@@ -549,19 +538,6 @@ classdef SubjectFNC < Subject
             % of SubjectFNC in '.json' format in the specified PATH.
             %
             % See also load_from_json, save_to_xls, save_to_txt
-            
-            % get Root Directory
-            file = get_from_varargin('', 'File', varargin{:});
-            if isequal(file, '')  % no path, open gui
-                msg = get_from_varargin(BRAPH2.JSON_MSG_PUTFILE, 'MSG', varargin{:});
-               [filename, filepath, filterindex] = uiputfile(BRAPH2.JSON_EXTENSION, msg);
-                file = [filepath filename];
-                
-                if ~filterindex
-                    return
-                end
-                
-            end
             
             % get info
             groups = cohort.getGroups().getValues();
@@ -605,12 +581,53 @@ classdef SubjectFNC < Subject
                 );
             
             % save
-            json_structure = jsonencode(structure_to_be_saved);
-            fid = fopen(file, 'w');
-            if fid == -1, error('Cannot create JSON file'); end
-            fwrite(fid, json_structure, 'char');
-            fclose(fid);
+           structure = structure_to_be_saved;
             
+        end
+        function cohort = load_from_struct(tmp, varargin)
+                      
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+                atlases = cohort.getBrainAtlases();
+            else
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                % creates cohort
+                subject_class = 'SubjectFNC';
+                atlases = tmp;
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            end
+            
+            raw = get_from_varargin([], 'SubjectStructure', varargin{:});
+            
+            % sneak peak
+            subject_tmp = Subject.getSubject(subject_class, ...
+                num2str(raw.Groups(1).SubjectData(1).id), num2str(raw.Groups(1).SubjectData(1).label), num2str(raw.Groups(1).SubjectData(1).notes), atlases, ...
+                'FNC', raw.Groups(1).SubjectData(1).data);
+            delete(subject_tmp)
+            
+            % creates group
+            k = 0; l = 1;            
+            for i = 1:1:length(raw.Groups)
+                group = Group(subject_class, raw.Groups(i).ID, raw.Groups(i).Label, raw.Groups(i).Notes, {});
+                cohort.getGroups().add(group.getID(), group);
+                subject_data = raw.Groups(i).SubjectData;                
+                for j = 1:1:length(subject_data)
+                    subject = Subject.getSubject(subject_class, ...
+                        num2str(subject_data(j).id), num2str(subject_data(j).label), num2str(subject_data(j).notes), atlases, ...
+                        'FNC', subject_data(j).data);
+                    if ~cohort.getSubjects().contains(subject.getID())
+                        cohort.getSubjects().add(subject.getID(), subject, j + k);
+                    end
+                    group.addSubject(subject);
+                    
+                end
+                k = j * l;
+                l = l + 1;
+            end 
+
         end
     end
 end

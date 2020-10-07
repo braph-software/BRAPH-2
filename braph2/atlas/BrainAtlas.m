@@ -601,5 +601,33 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             % save
             structure = structure_to_be_saved;
         end
+        function atlas = load_from_struct(varargin)
+            raw = get_from_varargin([], 'AtlasStructure', varargin{:});
+            
+            atlas_id =  fieldnames(raw);
+            brain_atlas = atlas_id{3};  % 1: BRAPH, 2:Version, 3:Name           
+            brain_atlas_structure = eval(['raw.' brain_atlas]);
+            atlas_surf = brain_atlas_structure.ba_surf;
+            % Creates empty BrainAtlas
+            atlas = BrainAtlas('', '', '', atlas_surf, {});
+            atlas.setID(brain_atlas_structure.id);  
+            atlas.setLabel(brain_atlas_structure.label);
+            atlas.setNotes(brain_atlas_structure.notes);
+            intern_structure = fieldnames(brain_atlas_structure);
+            idict = intern_structure{5};  % 1:name, 2:label, 3:notes, 4:surf, 5:idict
+            brain_atlas_intern_structure = eval(['brain_atlas_structure.' idict]);
+            
+            for i = 1:1:numel(brain_atlas_intern_structure)
+                intern_fields = brain_atlas_intern_structure(i);
+                br_label = char(intern_fields.label);
+                br_id = char(intern_fields.id);
+                br_notes = char(intern_fields.notes);
+                br_x = intern_fields.x;
+                br_y = intern_fields.y;
+                br_z = intern_fields.z;
+                br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
+                atlas.getBrainRegions().add(br.getID(), br);
+            end
+        end
     end
 end
