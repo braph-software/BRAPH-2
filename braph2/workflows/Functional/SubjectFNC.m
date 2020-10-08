@@ -519,7 +519,7 @@ classdef SubjectFNC < Subject
             % creates group
             subjects = cohort.getSubjects().getValues();
             for i = 1:1:length(raw.Groups)
-                group = Group(subject_class, raw.Groups(i).ID, raw.Groups.Label, raw.Groups.Notes, {});
+                group = Group(subject_class, raw.Groups(i).ID, raw.Groups(i).Label, raw.Groups(i).Notes, {});
                 if ~cohort.getGroups().contains(group.getID())
                     cohort.getGroups().add(group.getID(), group);
                 end
@@ -619,7 +619,7 @@ classdef SubjectFNC < Subject
             % creates group
             subjects = cohort.getSubjects().getValues();
             for i = 1:1:length(raw.Groups)
-                group = Group(subject_class, raw.Groups(i).ID, raw.Groups.Label, raw.Groups.Notes, {});
+                 group = Group(subject_class, raw.Groups(i).ID, raw.Groups(i).Label, raw.Groups(i).Notes, {});
                 if ~cohort.getGroups().contains(group.getID())
                     cohort.getGroups().add(group.getID(), group);
                 end

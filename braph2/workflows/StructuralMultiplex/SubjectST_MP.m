@@ -760,25 +760,35 @@ classdef SubjectST_MP < Subject
             end
             
             % sneak peak to see if it is a subject
-            sub_tmp = Subject.getSubject(subject_class, ...
-                num2str(raw.Groups(1).SubjectData(1).id), num2str(raw.Groups(1).SubjectData(1).label), num2str(raw.Groups(1).SubjectData(1).notes), atlases, ...
-                'ST_MP1', raw.Groups(1).SubjectData(1).data1, ...
-                'ST_MP2', raw.Groups(1).SubjectData(1).data2);
-            delete(sub_tmp);
+            subject_tmp = Subject.getSubject(subject_class, ...
+                num2str(raw.Subjects(1).id), num2str(raw.Subjects(1).label), num2str(raw.Subjects(1).notes), atlases, ...
+                'ST_MP1', raw.Subjects(1).data1, 'ST_MP2', raw.Subjects(1).data2);
+            delete(subject_tmp);
             
-            % creates groups
+            % creates subjects idict
+            for i = 1:1:length(raw.Subjects)
+                subject_data = raw.Subjects(i);
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(subject_data.id), num2str(subject_data.label), num2str(subject_data.notes), atlases, ...
+                    'ST_MP1', raw.Subjects(1).data1, 'ST_MP2', raw.Subjects(1).data2);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+            end
+            
+            subjects = cohort.getSubjects().getValues();
+            % creates group
             for i = 1:1:length(raw.Groups)
-                group = Group(subject_class, raw.Groups(i).ID, raw.Groups.Label, raw.Groups.Notes, {});
-                cohort.getGroups().add(group.getID(), group);
-                subject_data = raw.Groups(i).SubjectData;
-                for j = 1:1:length(subject_data)
-                    subject = Subject.getSubject(subject_class, ...
-                        num2str(subject_data(j).id), num2str(subject_data(j).label), num2str(subject_data(j).notes), atlases, ...
-                        'ST_MP1', subject_data(j).data1, 'ST_MP2', subject_data(j).data2);
-                    if ~cohort.getSubjects().contains(subject.getID())
-                        cohort.getSubjects().add(subject.getID(), subject, j);
+                group = Group(subject_class, raw.Groups(i).ID, raw.Groups(i).Label, raw.Groups(i).Notes, {});
+                if ~cohort.getGroups().contains(group.getID())
+                     cohort.getGroups().add(group.getID(), group);
+                end               
+                subject_data = raw.Groups(i).SubjectData; 
+                for j = 1:1:length(subjects)
+                    sub = subjects{j};
+                    if ismember(sub.getID(), subject_data)
+                        group.addSubject(sub);
                     end
-                    group.addSubject(subject);
                 end
             end  
         end
@@ -795,45 +805,35 @@ classdef SubjectST_MP < Subject
              
             % get info
             groups = cohort.getGroups().getValues();
+            subjects = cohort.getSubjects().getValues();
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
             
-            % labels
-            for i = 1:1:atlas.getBrainRegions().length()
-                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
-            end            
-            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
-            labels = row_data;
-            
             Group_structure = struct;
-            Subject_Structure = struct;            
+            Subject_Structure = struct;   
             
-            for j = 1:1:length(groups)
-                group = groups{j};
-                subjects_list = group.getSubjects();
-                
-                for k = 1:1:group.subjectnumber()
-                    % get subject data
-                    subject = subjects_list{k};
-                    
-                    Subject_Structure(k).id = subject.getID();
-                    Subject_Structure(k).label = subject.getLabel();
-                    Subject_Structure(k).notes = subject.getNotes();
-                    Subject_Structure(k).data1 = subject.getData('ST_MP1').getValue();
-                    Subject_Structure(k).data2 = subject.getData('ST_MP2').getValue();
-                end
-                
-                Group_structure(j).ID = group.getID();
-                Group_structure(j).Label = group.getLabel();
-                Group_structure(j).Notes = group.getNotes();
-                Group_structure(j).SubjectData = Subject_Structure;
+            for i = 1:1:length(subjects)
+                subject = subjects{i};                    
+                Subject_Structure(i).id = subject.getID();
+                Subject_Structure(i).label = subject.getLabel();
+                Subject_Structure(i).notes = subject.getNotes();
+                Subject_Structure(i).data1 = subject.getData('ST_MP1').getValue();
+                Subject_Structure(i).data2 = subject.getData('ST_MP2').getValue();
             end
             
+            for i = 1:1:length(groups)
+                group = groups{i};
+                Group_structure(i).ID = group.getID(); 
+                Group_structure(i).Label = group.getLabel(); 
+                Group_structure(i).Notes = group.getNotes(); 
+                Group_structure(i).SubjectData = cellfun(@(x) x.getID(), group.getSubjects(), 'UniformOutput', false);
+            end
             % create structure to be save
             structure_to_be_saved = struct( ...
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainAtlas', BrainAtlas.save_to_json(atlas), ...
+                'Subjects', Subject_Structure, ...
                 'Groups', Group_structure ...
                 );
 
