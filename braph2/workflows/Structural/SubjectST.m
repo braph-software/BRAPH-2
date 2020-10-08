@@ -639,26 +639,26 @@ classdef SubjectST < Subject
             for i = 1:1:length(raw.Subjects)
                 subject_data = raw.Subjects(i);
                 subject = Subject.getSubject(subject_class, ...
-                    num2str(subject_data(i).id), num2str(subject_data(i).label), num2str(subject_data(i).notes), atlases, ...
-                    'ST', subject_data(i).data);
+                    num2str(subject_data.id), num2str(subject_data.label), num2str(subject_data.notes), atlases, ...
+                    'ST', subject_data.data);
                 if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
             end
             
+            subjects = cohort.getSubjects().getValues();
             % creates group
             for i = 1:1:length(raw.Groups)
                 group = Group(subject_class, raw.Groups(i).ID, raw.Groups.Label, raw.Groups.Notes, {});
-                cohort.getGroups().add(group.getID(), group);
-                subject_data = raw.Groups(i).SubjectData;                
-                for j = 1:1:length(subject_data)
-                    subject = Subject.getSubject(subject_class, ...
-                        num2str(subject_data(j).id), num2str(subject_data(j).label), num2str(subject_data(j).notes), atlases, ...
-                        'ST', subject_data(j).data);
-                    if ~cohort.getSubjects().contains(subject.getID())
-                        cohort.getSubjects().add(subject.getID(), subject, j);
+                if ~cohort.getGroups().contains(group.getID())
+                     cohort.getGroups().add(group.getID(), group);
+                end               
+                subject_data = raw.Groups(i).SubjectData; 
+                for j = 1:1:length(subjects)
+                    sub = subjects{j};
+                    if ismember(sub.getID(), subject_data)
+                        group.addSubject(sub);
                     end
-                    group.addSubject(subject);
                 end
             end   
         end
@@ -703,7 +703,7 @@ classdef SubjectST < Subject
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainAtlas', BrainAtlas.save_to_json(atlas), ...
-                'Subjects', Subject_structure, ...
+                'Subjects', Subject_Structure, ...
                 'Groups', Group_structure ...
                 );
             
@@ -726,27 +726,38 @@ classdef SubjectST < Subject
             end
             
             raw = get_from_varargin([], 'SubjectStructure', varargin{:});
-            % sneak peak
+                % sneak peak
             subject_tmp = Subject.getSubject(subject_class, ...
-                num2str(raw.Groups(1).SubjectData(1).id), num2str(raw.Groups(1).SubjectData(1).label), num2str(raw.Groups(1).SubjectData(1).notes), atlases, ...
-                'ST', raw.Groups(1).SubjectData(1).data);
+                num2str(raw.Subjects(1).id), num2str(raw.Subjects(1).label), num2str(raw.Subjects(1).notes), atlases, ...
+                'ST', raw.Subjects(1).data);
             delete(subject_tmp)
             
+            % creates subjects idict
+            for i = 1:1:length(raw.Subjects)
+                subject_data = raw.Subjects(i);
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(subject_data.id), num2str(subject_data.label), num2str(subject_data.notes), atlases, ...
+                    'ST', subject_data.data);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+            end
+            
+            subjects = cohort.getSubjects().getValues();
             % creates group
             for i = 1:1:length(raw.Groups)
                 group = Group(subject_class, raw.Groups(i).ID, raw.Groups.Label, raw.Groups.Notes, {});
-                cohort.getGroups().add(group.getID(), group);
-                subject_data = raw.Groups(i).SubjectData;                
-                for j = 1:1:length(subject_data)
-                    subject = Subject.getSubject(subject_class, ...
-                        num2str(subject_data(j).id), num2str(subject_data(j).label), num2str(subject_data(j).notes), atlases, ...
-                        'ST', subject_data(j).data);
-                    if ~cohort.getSubjects().contains(subject.getID())
-                        cohort.getSubjects().add(subject.getID(), subject, j);
+                if ~cohort.getGroups().contains(group.getID())
+                     cohort.getGroups().add(group.getID(), group);
+                end               
+                subject_data = raw.Groups(i).SubjectData; 
+                for j = 1:1:length(subjects)
+                    sub = subjects{j};
+                    if ismember(sub.getID(), subject_data)
+                        group.addSubject(sub);
                     end
-                    group.addSubject(subject);
                 end
-            end   
+            end    
         end
     end
 end

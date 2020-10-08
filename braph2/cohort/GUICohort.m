@@ -200,7 +200,7 @@ selected_subjects = [];
         eval([cohort.getSubjectClass() '.save_to_xls(cohort)']);
     end
     function cb_export_json(~, ~)  % (src, event)
-        eval([cohort.getSubjectClass() '.save_to_json(cohort)']);
+        eval(['JSON.Serialize(' cohort.getSubjectClass() '.save_to_json(cohort))']);
     end
 
 %% GUI Initialization
