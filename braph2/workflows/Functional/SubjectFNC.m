@@ -500,30 +500,37 @@ classdef SubjectFNC < Subject
             end
             
             % sneak peak
-            subject_tmp = Subject.getSubject(subject_class, ...
-                num2str(raw.Groups(1).SubjectData(1).id), num2str(raw.Groups(1).SubjectData(1).label), num2str(raw.Groups(1).SubjectData(1).notes), atlases, ...
-                'FNC', raw.Groups(1).SubjectData(1).data);
+             subject_tmp = Subject.getSubject(subject_class, ...
+                num2str(raw.Subjects(1).id), num2str(raw.Subjects(1).label), num2str(raw.Subjects(1).notes), atlases, ...
+                'FNC', raw.Subjects(1).data);
             delete(subject_tmp)
             
-            % creates group
-            k = 0; l = 0;            
-            for i = 1:1:length(raw.Groups)
-                group = Group(subject_class, raw.Groups(i).ID, raw.Groups(i).Label, raw.Groups(i).Notes, {});
-                cohort.getGroups().add(group.getID(), group);
-                subject_data = raw.Groups(i).SubjectData;                
-                for j = 1:1:length(subject_data)
-                    subject = Subject.getSubject(subject_class, ...
-                        num2str(subject_data(j).id), num2str(subject_data(j).label), num2str(subject_data(j).notes), atlases, ...
-                        'FNC', subject_data(j).data);
-                    if ~cohort.getSubjects().contains(subject.getID())
-                        cohort.getSubjects().add(subject.getID(), subject, j + k);
-                    end
-                    group.addSubject(subject);
-                    l = l + 1;
+            % subjects idict
+            for i = 1:1:length(raw.Subjects)
+                subject_data = raw.Subjects(i);
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(subject_data.id), num2str(subject_data.label), num2str(subject_data.notes), atlases, ...
+                    'FNC', subject_data.data);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
                 end
-                k = l;                
-            end 
-
+            end
+            
+            % creates group
+            subjects = cohort.getSubjects().getValues();
+            for i = 1:1:length(raw.Groups)
+                group = Group(subject_class, raw.Groups(i).ID, raw.Groups.Label, raw.Groups.Notes, {});
+                if ~cohort.getGroups().contains(group.getID())
+                    cohort.getGroups().add(group.getID(), group);
+                end
+                subject_data = raw.Groups(i).SubjectData;
+                for j = 1:1:length(subjects)
+                    sub = subjects{j};
+                    if ismember(sub.getID(), subject_data)
+                        group.addSubject(sub);
+                    end
+                end
+            end
         end
         function structure = save_to_json(cohort, varargin)
             % SAVE_TO_JSON saves the cohort of SubjectsCON to '.json' files
@@ -538,35 +545,27 @@ classdef SubjectFNC < Subject
             
             % get info
             groups = cohort.getGroups().getValues();
+            subjects = cohort.getSubjects().getValues();
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
-            % labels
-            for i = 1:1:atlas.getBrainRegions().length()
-                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
-            end
-            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
-            labels = row_data;
             
             Group_structure = struct;
             Subject_Structure = struct;
+            
+             for i = 1:1:length(subjects)
+                subject = subjects{i};                    
+                Subject_Structure(i).id = subject.getID();
+                Subject_Structure(i).label = subject.getLabel();
+                Subject_Structure(i).notes = subject.getNotes();
+                Subject_Structure(i).data = subject.getData('FNC').getValue();
+            end
+            
             for i =1:1:length(groups)
                 group = groups{i};
-                subjects_list = group.getSubjects();
-                
-                for j = 1:1:group.subjectnumber()
-                    % get subject data
-                    subject = subjects_list{j};
-                    
-                    Subject_Structure(j).id = subject.getID();
-                    Subject_Structure(j).label = subject.getLabel();
-                    Subject_Structure(j).notes = subject.getNotes();
-                    Subject_Structure(j).data = subject.getData('FNC').getValue();
-                end
-                
                 Group_structure(i).ID = group.getID();
                 Group_structure(i).Label = group.getLabel();
                 Group_structure(i).Notes = group.getNotes();
-                Group_structure(i).SubjectData = Subject_Structure;
+                Group_structure(i).SubjectData = cellfun(@(x) x.getID(), group.getSubjects(), 'UniformOutput', false);
             end
             
             % create structure to be save
@@ -574,6 +573,7 @@ classdef SubjectFNC < Subject
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'BrainAtlas', BrainAtlas.save_to_json(atlas), ...
+                'Subjects', Subject_Structure, ...
                 'Groups', Group_structure ...
                 );
             
@@ -599,32 +599,38 @@ classdef SubjectFNC < Subject
             
             raw = get_from_varargin([], 'SubjectStructure', varargin{:});
             
-            % sneak peak
-            subject_tmp = Subject.getSubject(subject_class, ...
-                num2str(raw.Groups(1).SubjectData(1).id), num2str(raw.Groups(1).SubjectData(1).label), num2str(raw.Groups(1).SubjectData(1).notes), atlases, ...
-                'FNC', raw.Groups(1).SubjectData(1).data);
+           % sneak peak
+             subject_tmp = Subject.getSubject(subject_class, ...
+                num2str(raw.Subjects(1).id), num2str(raw.Subjects(1).label), num2str(raw.Subjects(1).notes), atlases, ...
+                'FNC', raw.Subjects(1).data);
             delete(subject_tmp)
             
-            % creates group
-            k = 0; l = 1;            
-            for i = 1:1:length(raw.Groups)
-                group = Group(subject_class, raw.Groups(i).ID, raw.Groups(i).Label, raw.Groups(i).Notes, {});
-                cohort.getGroups().add(group.getID(), group);
-                subject_data = raw.Groups(i).SubjectData;                
-                for j = 1:1:length(subject_data)
-                    subject = Subject.getSubject(subject_class, ...
-                        num2str(subject_data(j).id), num2str(subject_data(j).label), num2str(subject_data(j).notes), atlases, ...
-                        'FNC', subject_data(j).data);
-                    if ~cohort.getSubjects().contains(subject.getID())
-                        cohort.getSubjects().add(subject.getID(), subject, j + k);
-                    end
-                    group.addSubject(subject);
-                    
+            % subjects idict
+            for i = 1:1:length(raw.Subjects)
+                subject_data = raw.Subjects(i);
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(subject_data.id), num2str(subject_data.label), num2str(subject_data.notes), atlases, ...
+                    'FNC', subject_data.data);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
                 end
-                k = j * l;
-                l = l + 1;
-            end 
-
+            end
+            
+            % creates group
+            subjects = cohort.getSubjects().getValues();
+            for i = 1:1:length(raw.Groups)
+                group = Group(subject_class, raw.Groups(i).ID, raw.Groups.Label, raw.Groups.Notes, {});
+                if ~cohort.getGroups().contains(group.getID())
+                    cohort.getGroups().add(group.getID(), group);
+                end
+                subject_data = raw.Groups(i).SubjectData;
+                for j = 1:1:length(subjects)
+                    sub = subjects{j};
+                    if ismember(sub.getID(), subject_data)
+                        group.addSubject(sub);
+                    end
+                end
+            end
         end
     end
 end
