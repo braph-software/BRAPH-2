@@ -45,7 +45,6 @@ classdef MultiplexClustering < MultiplexTriangles
             % See also Measure, MultiplexTriangles, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
-            % A = g.getA();  % adjacency matrix of the graph
             L = g.layernumber();
             N = g.nodenumber();
             
@@ -60,16 +59,17 @@ classdef MultiplexClustering < MultiplexTriangles
                 degree = Degree(g, g.getSettings()).getValue();
             end
                 
-            multiplex_clustering = zeros(N(1), 1);
+            multiplex_clustering_degree = zeros(N(1), 1);
             for i=1:1:L-1
                 k1 = degree{i};
                 for j=i+1:1:L
                     k2 = degree{j};
-                    multiplex_clustering = multiplex_clustering + (multiplex_triangles{1} ./(k1 .* (k1 - 1) + k2 .* (k2 - 1)));
+                    multiplex_clustering_degree = multiplex_clustering_degree + (k1 .* (k1 - 1) + k2 .* (k2 - 1));
                 end
             end
+            multiplex_clustering = multiplex_triangles{1}./ ((L-1)*multiplex_clustering_degree);
             multiplex_clustering(isnan(multiplex_clustering)) = 0;  % Should return zeros, not NaN
-            multiplex_clustering = {multiplex_clustering/(L-1)}; 
+            multiplex_clustering = {multiplex_clustering}; 
         end
     end  
     methods (Static)
