@@ -1,4 +1,26 @@
 classdef MultilayerCommunityStructure < Measure
+    % MultilayerCommunityStructure Multilayer community structure measure
+    % MultilayerCommunityStructure provides the  Louvain-like multilayer 
+    % community structure of a node for binary undirected (BU) and
+    % weighted undirected (WU) multiplex and multilayer graphs. 
+    % 
+    % MultilayerCommunityStructure methods:
+    %   MultilayerCommunityStructure - constructor
+    %
+    % MultilayerCommunityStructure methods (Static)
+    %   getClass                    - returns the multilayer community structure class
+    %   getName                     - returns the name of multilayer community structure measure
+    %   getDescription              - returns the description of multilayer community structure measure
+    %   getAvailableSettings        - returns the settings available to the class
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure
+    %   getMeasure                  - returns the multilayer community structure class
+    %   getCompatibleGraphList      - returns a list of compatible graphs
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs
+    %
+    % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
+
     methods
         function m  = MultilayerCommunityStructure(g, varargin)
             % MULTILAYERCOMMUNITYSTRUCTURE(G) creates multilayer community structure with default measure properties.
@@ -14,7 +36,7 @@ classdef MultilayerCommunityStructure < Measure
         function multilayer_community_structure = calculate(m)
             % CALCULATE calculates the multilayer community structure value of a multiplex
             %
-            % MULTIPLEXPARTICIPATION = CALCULATE(M) returns the value of the 
+            % MULTILAYERCOMMUNITYSTRUCTURE = CALCULATE(M) returns the value of the 
             % multilayer community structure of a multilayer graph.
             %
             % See also Measure,  MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
