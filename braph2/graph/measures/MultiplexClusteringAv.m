@@ -51,10 +51,7 @@ classdef MultiplexClusteringAv < MultiplexClustering
                 multiplex_clustering = calculate@MultiplexClustering(m);
             end
             
-            multiplex_clustering_av = cell(g.layernumber(), 1);
-            for li = 1:1:length(multiplex_clustering_av)
-                multiplex_clustering_av(li) = {mean(multiplex_clustering{li})};
-            end
+            multiplex_clustering_av = {mean(multiplex_clustering{1})};
         end
     end  
     methods (Static)
