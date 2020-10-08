@@ -46,12 +46,42 @@ classdef MultilayerCommunityStructure < Measure
             N = g.nodenumber();  % number of nodes in each layer
             L = g.layernumber();  % number of layers
                
-            limit = get_from_varargin(1000, 'MultilayerCommunityStructureLGLimit', m.getSettings());
-            verbose = get_from_varargin(1, 'MultilayerCommunityStructureLGVerbose', m.getSettings());
-            randord = get_from_varargin(1, 'MultilayerCommunityStructureLGRandord', m.getSettings());
-            randmove = get_from_varargin(1, 'MultilayerCommunityStructureLGRandmove', m.getSettings());
+            limit = get_from_varargin(10000, 'MultilayerCommunityStructureLGLimit', m.getSettings());  % set default for maximum size of modularity matrix
+            verbose = get_from_varargin(1, 'MultilayerCommunityStructureLGVerbose', m.getSettings());  % set level of reported/displayed text output
+            randord = get_from_varargin(1, 'MultilayerCommunityStructureLGRandord', m.getSettings());  % set randperm
+            randmove = get_from_varargin(1, 'MultilayerCommunityStructureLGRandmove', m.getSettings());  % set move function
             gamma = get_from_varargin(1, 'MultilayerCommunityStructureLGGamma', m.getSettings());
             omega = get_from_varargin(1, 'MultilayerCommunityStructureLGOmega', m.getSettings());
+            S0 = get_from_varargin([], 'MultilayerCommunityStructureLGS0', m.getSettings());
+            
+            if verbose
+                mydisp = @(s) disp(s);
+            else
+                mydisp = @(s) [];
+            end
+            
+            % set randperm- v. index-ordered
+            if randord
+                myord = @(n) randperm(n);
+            else
+                myord = @(n) 1:n;
+            end
+            
+            % set move function (maximal (original Louvain) or random improvement)
+            if randmove
+                if ischar(randmove)
+                    if any(strcmp(randmove,{'move','moverand','moverandw'}))
+                        movefunction = randmove;
+                    else
+                        error('unknown value for ''randmove''');
+                    end
+                else
+                    % backwards compatibility: randmove=true
+                    movefunction = 'moverand';
+                end
+            else
+                movefunction = 'move';
+            end
             
             if g.is_multiplex || g.is_multilayer
                 if g.is_undirected
@@ -67,7 +97,164 @@ classdef MultilayerCommunityStructure < Measure
                 end
             end
                 
-            multilayer_community_structure = 0;
+            % initialise variables and do symmetry check
+            if isa(B,'function_handle')
+                n = length(B(1));
+                S = (1:n)';
+                
+                if isempty(S0)
+                    S0 = (1:n)';
+                else
+                    if numel(S0) == n
+                        group_handler('assign', S0);
+                        S0 = group_handler('return'); % tidy config
+                    else
+                        error([BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.WRONG_INPUT], ...
+                            ['Initial partition size for the modularity matrix should be equal to %i,' ...
+                            ' while it is ' tostring(numel(S0))], n)
+                    end
+                end
+                
+                % symmetry check (only checks symmetry of a small part of the matrix)
+                M = B;
+                it(:,1) = M(1);
+                ii = find(it(2:end)>0,3) + 1;
+                ii = [1,ii'];
+                for i=2:length(ii)
+                    it(:,i)=M(ii(i));
+                end
+                it = it(ii,:);
+                if norm(full(it-it')) > 2*eps
+                    error([BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.WRONG_INPUT], ...
+                        'Function handle does not correspond to a symmetric matrix. Deviation: %i', norm(full(it-it')))
+                end
+            else
+                n = length(B);
+                S = (1:n)';
+                if isempty(S0)
+                    S0 = (1:n)';
+                else
+                    if numel(S0)==n
+                        % clean input partition
+                        group_handler('assign', S0);
+                        S0 = group_handler('return');
+                    else
+                        error([BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.WRONG_INPUT], ...
+                            ['Initial partition size for the modularity matrix should be equal to %i,' ...
+                            ' while it is ' tostring(numel(S0))], n)
+                    end
+                end
+                %symmetry check and fix if not symmetric
+                if nnz(B-B')
+                    B = (B+B')/2; 
+                    disp('WARNING: Forced symmetric B matrix')
+                end
+                M = B;
+            end
+            
+            dtot = eps;  % keeps track of total change in modularity
+            y = S0;
+            % Run using function handle, if provided
+            while (isa(M,'function_handle'))  % loop around each "pass" (in language of Blondel et al) with B function handle
+                clocktime = clock;
+                mydisp(['Merging ',num2str(length(y)),' communities  ',datestr(clocktime)]);
+                Sb = S;
+                yb = [];
+                while ~isequal(yb,y)
+                    dstep = 1;  % keeps track of change in modularity in pass
+                    yb = [];
+                    while (~isequal(yb,y)) && (dstep/dtot>2*eps) && (dstep>10*eps)  % This is the loop around Blondel et al's "first phase"
+                        yb = y;
+                        dstep = 0;
+                        group_handler('assign',y);
+                        for i = myord(length(M(1)))
+                            di = group_handler(movefunction, i, M(i));
+                            dstep = dstep + di;
+                        end
+                        
+                        dtot = dtot + dstep;
+                        y = group_handler('return');
+                        mydisp([num2str(max(y)),' change: ', num2str(dstep),...
+                            ' total: ',num2str(dtot),' relative: ', num2str(dstep/dtot)]);
+                    end
+                    yb = y;
+                end
+                
+                % update partition
+                S = y(S);  % group_handler implements tidyconfig
+                y = unique(y);  % unique also puts elements in ascending order
+                
+                % calculate modularity and return if converged
+                if isequal(Sb,S)
+                    Q = 0;
+                    P = sparse(y,1:length(y),1);
+                    for i=1:length(M(1))
+                        Q = Q + (P*M(i))'*P(:,i);
+                    end
+                    Q = full(Q);
+                    clear('group_handler');
+                    clear('metanetwork_reduce');
+                    return
+                end
+                
+                % check wether #groups < limit
+                t = length(unique(S));
+                if (t > limit)
+                    metanetwork_reduce('assign', S);  % inputs group information to metanetwork_reduce
+                    M = @(i) m.metanetwork_i(B,i);  % use function handle if #groups > limit
+                else
+                    metanetwork_reduce('assign', S);
+                    J = zeros(t);  % convert to matrix if #groups small enough
+                    for c=1:t
+                        J(:,c) = m.metanetwork_i(B,c);
+                    end
+                    B = J;
+                    M = B;
+                end
+            end
+            
+            % Run using matrix B
+            S2 = (1:length(B))';
+            Sb = [];
+            while ~isequal(Sb, S2)  % loop around each "pass" (in language of Blondel et al) with B matrix
+                clocktime = clock;
+                mydisp(['Merging ',num2str(max(y)),' communities  ', datestr(clocktime)]);
+                
+                Sb = S2;
+                yb = [];
+                while ~isequal(yb,y)
+                    dstep = 1;
+                    while (~isequal(yb,y)) && (dstep/dtot > 2*eps) && (dstep > 10*eps)  % This is the loop around Blondel et al's "first phase"
+                        yb = y;
+                        dstep = 0;
+                        group_handler('assign',y);
+                        for i = myord(length(M))
+                            di = group_handler(movefunction,i,M(:,i));
+                            dstep = dstep+di;
+                        end
+                        dtot = dtot + dstep;
+                        y = group_handler('return');
+                        
+                        mydisp([num2str(max(y)), ' change: ', num2str(dstep),...
+                            ' total: ',num2str(dtot), ' relative: ', num2str(dstep/dtot)]);
+                    end
+                    yb = y;
+                end
+                
+                % update partition
+                S = y(S);
+                S2 = y(S2);
+                
+                if isequal(Sb,S2)
+                    P = sparse(y,1:length(y),1);
+                    Q = full(sum(sum((P*M).*P)));
+                    return
+                end
+                
+                M = m.metanetwork(B, S2);
+                y = unique(S2);  % unique also puts elements in ascending order
+            end
+            multilayer_community_structure = S;
         end
         function [B, twom] = multiord_undirected(A, gamma, omega, N, T)
             % MULTIORDUNDIRECTED returns the multilayer modularity matrix for ordered undirected networks
@@ -170,7 +357,6 @@ classdef MultilayerCommunityStructure < Measure
             AA = AA + omega*spdiags(ones(N*T,2),[-N,N],N*T,N*T);
             B = @(i) AA(:,i) - gamma(ceil(i/(N+eps)))*K(:,ceil(i/(N+eps)))*kvec(i);
             twom = twom + 2*N*(T-1)*omega;
-            
         end
         function [B, twom] = multiord_directed(A, gamma, omega, N, T)
             % MULTIORDDIRECTED returns the multilayer modularity matrix for ordered directed networks
@@ -259,7 +445,6 @@ classdef MultilayerCommunityStructure < Measure
             A = A + omega*spdiags(ones(N*T,2), [-N,N], N*T, N*T);
             
             B = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps)))+kin(i).*koutmat(:,ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps))));
-            
             twom = sum(m) + omega*2*N*(T-1);
         end
         function [B, twom] = multicat_undirected(A, gamma, omega, N, T)
@@ -440,7 +625,28 @@ classdef MultilayerCommunityStructure < Measure
             B = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps))) + kin(i).*koutmat(:, ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps)))); 
             twom = sum(m) + omega*2*N*(T-1);
         end
-    end    
+        function M = metanetwork(J, S)
+            % METANETWORK returns the new aggregated network (communities --> nodes)
+            %
+            % [B, twom] = METANETWORK(J, S) returns the new aggregated
+            % network (communities --> nodes)
+            
+            PP = sparse(1:length(S), S, 1);
+            M = PP'*J*PP;
+        end
+        function Mi = metanetwork_i(J, i)
+            % METANETWORKI returns the ith column of the metanetwork
+            %
+            % [B, twom] = METANETWORKI(J, S) returns the ith column of 
+            % the metanetwork. J is a function handle
+            
+            ind = metanetwork_reduce('nodes',i);
+            for j=ind(:)'
+                metanetwork_reduce('reduce',J(j));
+            end
+            Mi = metanetwork_reduce('return');
+        end 
+    end
     methods (Static)
         function measure_class = getClass()
             % GETCLASS returns the measure class
@@ -487,10 +693,11 @@ classdef MultilayerCommunityStructure < Measure
 %                 'MultilayerCommunityStructureLBCTB', BRAPH2.STRING, 'modularity', {'modularity', 'potts', 'negative_sym', 'negative_asym'}; ...
                 'MultilayerCommunityStructureLGGamma', BRAPH2.NUMERIC, 1, {}; ...
                 'MultilayerCommunityStructureLGOmega', BRAPH2.NUMERIC, 1, {}; ...
-                'MultilayerCommunityStructureLGLimit', BRAPH2.NUMERIC, 1000, {}; ...
+                'MultilayerCommunityStructureLGLimit', BRAPH2.NUMERIC, 10000, {}; ...
                 'MultilayerCommunityStructureLGVerbose', BRAPH2.LOGICAL, 1, {1, 0}; ...
                 'MultilayerCommunityStructureLGRandord', BRAPH2.LOGICAL, 1, {1, 0}; ...
                 'MultilayerCommunityStructureLGRandmove', BRAPH2.LOGICAL, 1, {1, 0}; ...
+                'MultilayerCommunityStructureLGS0', BRAPH2.NUMERIC, [], {}; ...
                 };
         end
         function measure_format = getMeasureFormat()
@@ -507,7 +714,8 @@ classdef MultilayerCommunityStructure < Measure
             % GETMEASURESCOPE returns the measure scope of MultilayerCommunityStructure
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of multilayer community structure measure (BILAYER).
+            % measure scope of multilayer community structure measure
+            % (BILAYER). not sure yet which scope
             %
             % See also getMeasureFormat.
            
