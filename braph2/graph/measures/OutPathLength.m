@@ -95,7 +95,7 @@ classdef OutPathLength < Measure
                             out_path_length_layer(u) = mean(Du(Du~=0));
                         end
                 end  
-                out_path_length_layer(isnan(out_path_length_layer)) = 0;  % Should return zeros, not NaN
+%                 out_path_length_layer(isnan(out_path_length_layer)) = 0;  % Should return zeros, not NaN
                 out_path_length(li) = {out_path_length_layer};
             end
         end
