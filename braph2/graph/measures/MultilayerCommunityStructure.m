@@ -46,13 +46,14 @@ classdef MultilayerCommunityStructure < Measure
             N = g.nodenumber();  % number of nodes in each layer
             L = g.layernumber();  % number of layers
                
-            limit = get_from_varargin(10000, 'MultilayerCommunityStructureLGLimit', m.getSettings());  % set default for maximum size of modularity matrix
-            verbose = get_from_varargin(1, 'MultilayerCommunityStructureLGVerbose', m.getSettings());  % set level of reported/displayed text output
-            randord = get_from_varargin(1, 'MultilayerCommunityStructureLGRandord', m.getSettings());  % set randperm
-            randmove = get_from_varargin(1, 'MultilayerCommunityStructureLGRandmove', m.getSettings());  % set move function
-            gamma = get_from_varargin(1, 'MultilayerCommunityStructureLGGamma', m.getSettings());
-            omega = get_from_varargin(1, 'MultilayerCommunityStructureLGOmega', m.getSettings());
-            S0 = get_from_varargin([], 'MultilayerCommunityStructureLGS0', m.getSettings());
+            limit = get_from_varargin(10000, 'MultilayerCommunityStructureLimit', m.getSettings());  % set default for maximum size of modularity matrix
+            verbose = get_from_varargin(1, 'MultilayerCommunityStructureVerbose', m.getSettings());  % set level of reported/displayed text output
+            randord = get_from_varargin(1, 'MultilayerCommunityStructureRandord', m.getSettings());  % set randperm
+            randmove = get_from_varargin(1, 'MultilayerCommunityStructureRandmove', m.getSettings());  % set move function
+            gamma = get_from_varargin(1, 'MultilayerCommunityStructureGamma', m.getSettings());
+            omega = get_from_varargin(1, 'MultilayerCommunityStructureOmega', m.getSettings());
+            S0 = get_from_varargin([], 'MultilayerCommunityStructureS0', m.getSettings());
+            B = get_from_varargin([], 'MultilayerCommunityStructureB', m.getSettings());
             
             if verbose
                 mydisp = @(s) disp(s);
@@ -83,17 +84,19 @@ classdef MultilayerCommunityStructure < Measure
                 movefunction = 'move';
             end
             
-            if g.is_multiplex || g.is_multilayer
-                if g.is_undirected
-                    [B, twom] = multicat_undirected(A, gamma, omega, N(1), L);
-                else
-                    [B, twom] = multicat_directed(A, gamma, omega, N(1), L);
-                end
-            elseif g.is_ordered_multiplex || g.is_ordered_multilayer
-                if g.is_undirected
-                    [B, twom] = multiord_undirected(A, gamma, omega, N(1), L);
-                else
-                    [B, twom] = multiord_directed(A, gamma, omega, N(1), L);
+            if ~isempty(B)
+                if g.is_multiplex || g.is_multilayer
+                    if g.is_undirected
+                        [B, twom] = multicat_undirected(A, gamma, omega, N(1), L);
+                    else
+                        [B, twom] = multicat_directed(A, gamma, omega, N(1), L);
+                    end
+                elseif g.is_ordered_multiplex || g.is_ordered_multilayer
+                    if g.is_undirected
+                        [B, twom] = multiord_undirected(A, gamma, omega, N(1), L);
+                    else
+                        [B, twom] = multiord_directed(A, gamma, omega, N(1), L);
+                    end
                 end
             end
                 
@@ -691,13 +694,14 @@ classdef MultilayerCommunityStructure < Measure
             available_settings = {
 %                 'CommunityStructureAlgorithm', BRAPH2.STRING, 'louvain_bct', {'louvain_bct', 'louvain_general'}; ...
 %                 'MultilayerCommunityStructureLBCTB', BRAPH2.STRING, 'modularity', {'modularity', 'potts', 'negative_sym', 'negative_asym'}; ...
-                'MultilayerCommunityStructureLGGamma', BRAPH2.NUMERIC, 1, {}; ...
-                'MultilayerCommunityStructureLGOmega', BRAPH2.NUMERIC, 1, {}; ...
-                'MultilayerCommunityStructureLGLimit', BRAPH2.NUMERIC, 10000, {}; ...
-                'MultilayerCommunityStructureLGVerbose', BRAPH2.LOGICAL, 1, {1, 0}; ...
-                'MultilayerCommunityStructureLGRandord', BRAPH2.LOGICAL, 1, {1, 0}; ...
-                'MultilayerCommunityStructureLGRandmove', BRAPH2.LOGICAL, 1, {1, 0}; ...
-                'MultilayerCommunityStructureLGS0', BRAPH2.NUMERIC, [], {}; ...
+                'MultilayerCommunityStructureGamma', BRAPH2.NUMERIC, 1, {}; ...
+                'MultilayerCommunityStructureOmega', BRAPH2.NUMERIC, 1, {}; ...
+                'MultilayerCommunityStructureLimit', BRAPH2.NUMERIC, 10000, {}; ...
+                'MultilayerCommunityStructureVerbose', BRAPH2.LOGICAL, 1, {1, 0}; ...
+                'MultilayerCommunityStructureRandord', BRAPH2.LOGICAL, 1, {1, 0}; ...
+                'MultilayerCommunityStructureRandmove', BRAPH2.LOGICAL, 1, {1, 0}; ...
+                'MultilayerCommunityStructureS0', BRAPH2.NUMERIC, [], {}; ...
+                'MultilayerCommunityStructureB', BRAPH2.NUMERIC, [], {}; ...
                 };
         end
         function measure_format = getMeasureFormat()
