@@ -22,113 +22,242 @@ classdef MultilayerCommunityStructure < Measure
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % 2D-cell array 
             N = g.nodenumber();  % number of nodes in each layer
-            N = N(1);  %  same number of nodes in all layers
             L = g.layernumber();  % number of layers
-            T = L;
                
             limit = get_from_varargin(1000, 'MultilayerCommunityStructureLGLimit', m.getSettings());
             verbose = get_from_varargin(1, 'MultilayerCommunityStructureLGVerbose', m.getSettings());
             randord = get_from_varargin(1, 'MultilayerCommunityStructureLGRandord', m.getSettings());
             randmove = get_from_varargin(1, 'MultilayerCommunityStructureLGRandmove', m.getSettings());
+            gamma = get_from_varargin(1, 'MultilayerCommunityStructureLGGamma', m.getSettings());
+            omega = get_from_varargin(1, 'MultilayerCommunityStructureLGOmega', m.getSettings());
             
             if g.is_multiplex || g.is_multilayer
-                [B, ~] = multicat(A, gamma, omega);
+                if g.is_undirected
+                    [B, twom] = multicat_undirected(A, gamma, omega, N(1), L);
+                else
+                    [B, twom] = multicat_directed(A, gamma, omega, N(1), L);
+                end
             elseif g.is_ordered_multiplex || g.is_ordered_multilayer
-                [B, ~] = multiord(A, gamma, omega);
+                if g.is_undirected
+                    [B, twom] = multiord_undirected(A, gamma, omega, N(1), L);
+                else
+                    [B, twom] = multiord_directed(A, gamma, omega, N(1), L);
+                end
             end
-           
                 
             multilayer_community_structure = 0;
         end
-        function [B,twom] = multiord(A,gamma,omega)
-            % MULTIORD  returns multilayer Newman-Girvan modularity matrix for ordered layers, matrix version
-            % Works for directed or undirected networks
+        function [B, twom] = multiord_undirected(A, gamma, omega, N, T)
+            % MULTIORDUNDIRECTED returns the multilayer modularity matrix for ordered undirected networks
             %
-            % Version: 2.2.0
-            % Date: Thu 11 Jul 2019 12:25:42 CEST
+            % [B, twom] = MULTIORDUNDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer 
+            % Newman-Girvan modularity matrix for ordered undirected networks.
             %
             %   Input: A: Cell array of NxN adjacency matrices for each layer of an
-            %          ordered multilayer (directed or undirected) network
+            %          ordered undirected multilayer network
             %          gamma: intralayer resolution parameter
             %          omega: interlayer coupling strength
             %
-            %   Output: B: [NxT]x[NxT] flattened modularity tensor for the
+            %   Output: B: function handle where B(i) returns the ith column of
+            %          [NxT]x[NxT] flattened modularity tensor for the
             %           multilayer network with uniform ordinal coupling (T is
             %           the number of layers of the network)
-            %           mm: normalisation constant
+            %           twom: normalisation constant
             %
-            %   Example of usage: [B,mm]=multiord(A,gamma,omega);
+            %   Example of usage: [B,twom]=multiord_f(A,gamma,omega);
             %          [S,Q]= genlouvain(B); % see iterated_genlouvain.m and
-            %          postprocess_temporal_multilayer.m for how to improve output
+            %          postprocess_ordinal_multilayer.m for how to improve output
             %          multilayer partition
-            %          Q=Q/mm;
+            %          Q=Q/twom;
             %          S=reshape(S,N,T);
             %
-            %   [B,mm] = MULTIORD(A,GAMMA, OMEGA) with A a cell array of square
-            %   (symmetric or assymetric) matrices of equal size each representing a
-            %   directed or undirected network "layer" computes the Newman Girvan multilayer
-            %   modularity matrix using the quality function described in Mucha et al.
-            %   2010, with intralayer resolution parameter GAMMA, and with interlayer
-            %   coupling OMEGA connecting nearest-neighbor ordered layers.  The null
-            %   model used for the quality function is the Newman-Girvan null model
-            %   (see e.g. Bazzi et al. for other possible null models). Once the
-            %   mulilayer modularity matrix is computed, optimization can be performed
-            %   by the generalized Louvain code GENLOUVAIN or ITERATED_GENLOUVAIN. The
-            %   sparse output matrix B can be used with other heuristics, provided the
-            %   same mapping is used to go from the multilayer tensor to the multilayer
-            %   flattened matrix. That is, the node-layer tuple (i,s) is mapped to
-            %   i + (s-1)*N. [Note that we can define a mapping between a multilayer
-            %   partition S_m stored as an N by T matrix and the corresponding flattened
-            %   partition S stored as an NT by 1 vector. In particular S_m = reshape(S,N,T)
-            %   and S = S_m(:).]
- 
-            if nargin<2
-                gamma=1;
+            %   [B,twom] = MULTIORD_F(A,GAMMA, OMEGA) with A a cell array of square
+            %   symmetric matrices of equal size each representing an undirected network
+            %   "layer" computes the multilayer Newman-Girvan modularity matrix using
+            %   the quality function described in Mucha et al. 2010, with intralayer
+            %   resolution parameter GAMMA, and with interlayer coupling OMEGA connecting
+            %   nearest-neighbor ordered layers.  The null model used for the quality
+            %   function is the Newman-Girvan null model (see e.g. Bazzi et al. for other
+            %   possible null models). Once the mulilayer modularity matrix is computed,
+            %   optimization can be performed by the generalized Louvain code GENLOUVAIN
+            %   or ITERATED_GENLOUVAIN. The output B can be used with other heuristics,
+            %   provided the same mapping is used to go from the multilayer tensor to
+            %   the multilayer flattened matrix. That is, the node-layer tuple (i,s)
+            %   is mapped to i + (s-1)*N. [Note that we can define a mapping between a
+            %   multilayer partition S_m stored as an N by T matrix and the corresponding
+            %   flattened partition S stored as an NT by 1 vector. In particular
+            %   S_m = reshape(S,N,T) and S = S_m(:).]
+            %
+            %
+            %   See also
+            %       genlouvain heuristics:      GENLOUVAIN, ITERATED_GENLOUVAIN
+            %       multilayer wrappers:        MULTICAT, MULTICATF, MULTIORD
+            %       other heuristics:           SPECTRAL23
+            %       Kernighan-Lin improvement:  KLNB
+            %
+            %   Notes:
+            %     The matrices in the cell array A are assumed to be square,
+            %     symmetric, and of equal size.  These assumptions are not checked here.
+            %
+            %     For smaller systems, it is potentially more efficient (and easier) to
+            %     directly use the sparse quality/modularity matrix B in MULTIORD. For
+            %     large systems with directed layer networks, use MULTIORDDIR_F.
+            %
+            %     This code serves as a template and can be modified for situations
+            %     with other wrinkles (e.g., different intralayer null models,
+            %     different numbers of nodes from layer-to-layer, or systems which are
+            %     both multiplex and longitudinal).  That is, this code is only a
+            %     starting point; it is by no means exhaustive.
+            %
+            %     By using this code, the user implicitly acknowledges that the authors
+            %     accept no liability associated with that use.  (What are you doing
+            %     with it anyway that might cause there to be a potential liability?!?)
+
+            if nargin < 2 || isempty(gamma)
+                gamma = 1;
             end
             
-            if nargin<3
-                omega=1;
+            if nargin < 3
+                omega = 1;
             end
             
-            N = g.nodenumber();  % number of nodes in each layer
-            N = N(1);  %  same number of nodes in all layers
-            L = g.layernumber();  % number of layers
-            T = L;
-            
-            if length(gamma)==1
+            if length(gamma) == 1
                 gamma = repmat(gamma, T, 1);
             end
             
-            B = spalloc(N*T, N*T, N*N*T+2*N*T);
+            ii=[]; jj=[]; vv=[];
+            ki=[]; kj=[]; kv=[];
             twom = 0;
             for s=1:T
-                kout = sum(A{s},1);
-                kin = sum(A{s},2);
-                mm = sum(kout);
-                twom = twom+mm;
-                indx = [1:N]+(s-1)*N;
-                B(indx,indx) = (A{s}+A{s}')/2-gamma(s)/2.*((kin*kout+kout'*kin')/mm);
+                indx = (1:N)' + (s-1)*N;
+                [i, j, v] = find(A{s});
+                ii = [ii; indx(i)]; 
+                jj = [jj; indx(j)]; 
+                vv = [vv; v];
+                k = sum(A{s});
+                mm = sum(k);
+                twom = twom + mm;
+                ki = [ki; indx];
+                kj = [kj; ones(N,1)*s];
+                kv = [kv; k(:)./mm];
             end
-            B = B + omega*spdiags(ones(N*T,2),[-N,N],N*T,N*T);
+            AA = sparse(ii, jj, vv, N*T, N*T);
+            K = sparse(ki, kj, kv, N*T, T);
+            clear ii jj vv ki kj kv
+            kvec = full(sum(AA));
+            AA = AA + omega*spdiags(ones(N*T,2),[-N,N],N*T,N*T);
+            B = @(i) AA(:,i) - gamma(ceil(i/(N+eps)))*K(:,ceil(i/(N+eps)))*kvec(i);
             twom = twom + 2*N*(T-1)*omega;
-        end  
-        function [B,twom] = multicat(A,gamma,omega)
-            % MULTICAT  returns multilayer Newman-Girvan modularity matrix for unordered layers, matrix version
+            
+        end
+        function [B, twom] = multiord_directed(A, gamma, omega, N, T)
+            % MULTIORDDIRECTED returns the multilayer modularity matrix for ordered directed networks
             %
-            % Version: 2.2.0
-            % Date: Thu 11 Jul 2019 12:25:42 CEST
+            % [B, twom] = MULTIORDDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer 
+            % Leicht-Newman modularity matrix for ordered directed networks.
+            %
+            %   Input: A: Cell array of NxN adjacency matrices for each layer of an
+            %          ordered directed multilayer network
+            %          gamma: intralayer resolution parameter
+            %          omega: interlayer coupling strength
+            %
+            %   Output: B: function handle where B(i) returns the ith column of
+            %          [NxT]x[NxT] flattened modularity tensor for the
+            %           multilayer network with uniform ordinal coupling (T is
+            %           the number of layers of the network)
+            %           twom: normalisation constant
+            %
+            %   Example of usage: [B,twom]=multiorddir_f(A,gamma,omega);
+            %          [S,Q]= genlouvain(B); % see iterated_genlouvain.m and
+            %          postprocess_ordinal_multilayer.m for how to improve output
+            %          multilayer partition
+            %          Q=Q/twom;
+            %          S=reshape(S,N,T);
+            %
+            %   [B,twom] = MULTIORDDIR_F(A,GAMMA, OMEGA) with A a cell array of square
+            %   matrices of equal size each representing an directed network "layer"
+            %   computes the Leicht-Newman multilayer modularity matrix Susing the
+            %   quality function described in Mucha et al. 2010, with intralayer
+            %   resolution parameter GAMMA, and with interlayer coupling OMEGA
+            %   connecting nearest-neighbor ordered layers. Once the mulilayer modularity
+            %   matrix is computed, optimization can be performed by the generalized
+            %   Louvain code GENLOUVAIN or ITERATED_GENLOUVAIN. The output B can be used
+            %   with other heuristics, provided the same mapping is used to go from the
+            %   multilayer tensor to the multilayer flattened matrix. That is, the
+            %   node-layer tuple (i,s) is mapped to i + (s-1)*N. [Note that we can
+            %   define a mapping between a multilayer partition S_m stored as an N by T
+            %   matrix and the corresponding flattened partition S stored as an NT by 1
+            %   vector. In particular S_m = reshape(S,N,T) and S = S_m(:).]
+            %
+            %   See also
+            %       genlouvain heuristics:      GENLOUVAIN, ITERATED_GENLOUVAIN
+            %       multilayer wrappers:        MULTICAT, MULTICATF, MULTIORD
+            %       other heuristics:           SPECTRAL23
+            %       Kernighan-Lin improvement:  KLNB
+            %
+            %   Notes:
+            %     The matrices in the cell array A are assumed to be square,
+            %     and of equal size.  These assumptions are not checked here.
+            %
+            %     For smaller systems, it is potentially more efficient (and easier) to
+            %     directly use the sparse quality/modularity matrix B in MULTIORD. For
+            %     large systems with undirected layer networks, use MULTIORD_F.
+            %
+            %     This code serves as a template and can be modified for situations
+            %     with other wrinkles (e.g., different intralayer null models,
+            %     different numbers of nodes from layer-to-layer, or systems which are
+            %     both multiplex and longitudinal).  That is, this code is only a
+            %     starting point; it is by no means exhaustive.
+            %
+            %     By using this code, the user implicitly acknowledges that the authors
+            %     accept no liability associated with that use.  (What are you doing
+            %     with it anyway that might cause there to be a potential liability?!?)        
+            
+            if nargin < 2 || isempty(gamma)
+                gamma = 1;
+            end
+            
+            if nargin < 3 || isempty(omega)
+                omega = 1;
+            end
+
+            if length(gamma) == 1
+                gamma = repmat(gamma,T,1);
+            end
+            m = zeros(T,1);
+            for i=1:T
+                m(i) = sum(A{i}(:));
+            end
+            A = blkdiag(A{:});
+            kout = sum(A,1);
+            koutmat = sparse(1:(N*T), kron(1:T, ones(1,N)), kout);
+            kin = sum(A,2);
+            kinmat = sparse(1:(N*T), kron(1:T, ones(1,N)), kin);
+            A = (A+A')./2;
+            A = A + omega*spdiags(ones(N*T,2), [-N,N], N*T, N*T);
+            
+            B = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps)))+kin(i).*koutmat(:,ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps))));
+            
+            twom = sum(m) + omega*2*N*(T-1);
+        end
+        function [B, twom] = multicat_undirected(A, gamma, omega, N, T)
+            % MULTICATUNDIRECTED returns the multilayer modularity matrix for unordered undirected networks
+            %
+            % [B, twom] = MULTICATUNDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer 
+            % Newman-Girvan modularity matrix for unordered undirected networks.
             %
             %   Input: A: Cell array of NxN adjacency matrices for each layer of an
             %          unordered multilayer undirected network
             %          gamma: intralayer resolution parameter
             %          omega: interlayer coupling strength
             %
-            %   Output: B: [NxT]x[NxT] flattened modularity tensor for the
+            %   Output: B: [NxT]x[NxT] function handle where B(i) returns the ith column
+            %           of the flattened modularity tensor for the
             %           multilayer network with uniform categorical coupling (T is
             %           the number of layers of the network)
             %           twom: normalisation constant
             %
-            %   Example of usage: [B,twom]=multicat(A,gamma,omega);
+            %   Example of usage: [B,twom]=multicat_f(A,gamma,omega);
             %          [S,Q]= genlouvain(B); % see iterated_genlouvain.m and
             %          postprocess_categorical_multilayer.m for how to improve output
             %          multilayer partition
@@ -142,44 +271,152 @@ classdef MultilayerCommunityStructure < Measure
             %   parameter GAMMA, and with interlayer coupling OMEGA connecting
             %   all-to-all categorical layers. Once the mulilayer modularity matrix is
             %   computed, optimization can be performed by the generalized Louvain code
-            %   GENLOUVAIN or ITERATED_GENLOUVAIN. The sparse output matrix B can be used
+            %   GENLOUVAIN or ITERATED_GENLOUVAIN. The output B can be used with other
+            %   heuristics, provided the same mapping is used to go from the multilayer
+            %   tensor to the multilayer flattened matrix. That is, the node-layer tuple
+            %   (i,s) is mapped to i + (s-1)*N. [Note that we can define a mapping between
+            %   a multilayer partition S_m stored as an N by T matrix and the corresponding
+            %   flattened partition S stored as an NT by 1 vector. In particular
+            %   S_m = reshape(S,N,T) and S = S_m(:).]    
+            %
+            %   Notes:
+            %     The matrices in the cell array A are assumed to be symmetric, square,
+            %     and of equal size.  These assumptions are not checked here.
+            %
+            %     For smaller systems, it is potentially more efficient (and easier) to
+            %     directly use the sparse quality/modularity matrix B, as in MULTICAT.
+            %
+            %     This code serves as a template and can be modified for situations
+            %     with other wrinkles (e.g., different intralayer null models,
+            %     different numbers of nodes from layer-to-layer, or systems which are
+            %     both multiplex and longitudinal).  That is, this code is only a
+            %     starting point; it is by no means exhaustive.
+            %
+            %     By using this code, the user implicitly acknowledges that the authors
+            %     accept no liability associated with that use.  (What are you doing
+            %     with it anyway that might cause there to be a potential liability?!?)       
+            
+            if nargin < 2 || isempty(gamma)
+                gamma = 1;
+            end
+            
+            if nargin < 3 || isempty(omega)
+                omega = 1;
+            end
+            
+            if length(gamma) == 1
+                gamma = repmat(gamma, T, 1);
+            end
+            
+            ii = []; jj = []; vv = [];
+            ki = []; kj = []; kv = [];
+            twom = 0;
+            for s=1:T
+                indx = [1:N]' + (s-1)*N;
+                [i, j, v] = find(A{s});
+                ii = [ii; indx(i)]; 
+                jj = [jj; indx(j)]; 
+                vv = [vv; v];
+                k = sum(A{s});
+                mm = sum(k);
+                ki = [ki; indx];
+                kj = [kj; ones(N,1)*s];
+                kv = [kv; k(:)./mm];
+                twom = twom + sum(k);
+            end
+            AA = sparse(ii,jj,vv,N*T,N*T);
+            K=sparse(ki,kj,kv,N*T,T);
+            clear ii jj vv ki kj kv
+            kvec = full(sum(AA));
+            all2all = N*[(-T+1):-1,1:(T-1)];
+            AA = AA + omega*spdiags(ones(N*T, 2*T-2), all2all, N*T, N*T);
+            B = @(i) AA(:,i) - gamma(ceil(i/(N+eps)))*K(:, ceil(i/(N+eps)))*kvec(i);
+            twom = twom + 2*N*(T-1)*T*omega;
+        end
+        function [B, twom] = multicat_directed(A, gamma, omega, N, T)
+            % MULTICATDIRECTED returns the multilayer modularity matrix for unordered directed networks
+            %
+            % [B, twom] = MULTICATDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer 
+            % Leicht-Newman modularity matrix for unordered directed networks.
+            %
+            %   Input: A: Cell array of NxN adjacency matrices for each layer of a
+            %          categorical directed multilayer network
+            %          gamma: intralayer resolution parameter
+            %          omega: interlayer coupling strength
+            %
+            %   Output: B: function handle where B(i) returns the ith column of
+            %          [NxT]x[NxT] flattened modularity tensor for the
+            %           multilayer network with uniform ordinal coupling (T is
+            %           the number of layers of the network)
+            %           twom: normalisation constant
+            %
+            %   Example of usage: [B,twom]=multicatdir_f(A,gamma,omega);
+            %          [S,Q]= genlouvain(B); % see iterated_genlouvain.m and
+            %          postprocess_categorical_multilayer.m for how to improve output
+            %          multilayer partition
+            %          Q=Q/twom;
+            %          S=reshape(S,N,T);
+            %
+            %   [B,twom] = MULTICATDIR_F(A,GAMMA, OMEGA) with A a cell array of square
+            %   matrices of equal size each representing an directed network "layer"
+            %   computes the Leicht-Newman multilayer modularity matrix B using the
+            %   quality function described in Mucha et al. 2010, with intralayer
+            %   resolution parameter GAMMA, and with interlayer coupling OMEGA
+            %   connecting all-to-all categorical layers. Once the mulilayer modularity
+            %   matrix is computed, optimization can be performed by the generalized
+            %   Louvain code GENLOUVAIN or ITERATED_GENLOUVAIN. The output B can be used
             %   with other heuristics, provided the same mapping is used to go from the
             %   multilayer tensor to the multilayer flattened matrix. That is, the
-            %   node-layer tuple (i,s) is mapped to i + (s-1)*N. [Note that we can define
-            %   a mapping between a multilayer partition S_m stored as an N by T matrix
-            %   and the corresponding flattened partition S stored as an NT by 1 vector.
-            %   In particular S_m = reshape(S,N,T) and S = S_m(:).]       
-            
-            if nargin<2||isempty(gamma)
-                gamma=1;
+            %   node-layer tuple (i,s) is mapped to i + (s-1)*N. [Note that we can
+            %   define a mapping between a multilayer partition S_m stored as an N by T
+            %   matrix and the corresponding flattened partition S stored as an NT by 1
+            %   vector. In particular S_m = reshape(S,N,T) and S = S_m(:).]
+            %
+            %   Notes:
+            %     The matrices in the cell array A are assumed to be square,
+            %     and of equal size.  These assumptions are not checked here.
+            %
+            %     For smaller systems, it is potentially more efficient (and easier) to
+            %     directly use the sparse quality/modularity matrix B in MULTICAT. For
+            %     large systems with undirected layer networks, use MULTICAT_F.
+            %
+            %     This code serves as a template and can be modified for situations
+            %     with other wrinkles (e.g., different intralayer null models,
+            %     different numbers of nodes from layer-to-layer, or systems which are
+            %     both multiplex and longitudinal).  That is, this code is only a
+            %     starting point; it is by no means exhaustive.
+            %
+            %     By using this code, the user implicitly acknowledges that the authors
+            %     accept no liability associated with that use.  (What are you doing
+            %     with it anyway that might cause there to be a potential liability?!?)
+                     
+            if nargin < 2 || isempty(gamma)
+                gamma = 1;
             end
             
-            if nargin<3
-                omega=1;
+            if nargin < 3 || isempty(omega)
+                omega = 1;
             end
             
-            N = g.nodenumber();  % number of nodes in each layer
-            N = N(1);  %  same number of nodes in all layers
-            L = g.layernumber();  % number of layers
-            T = L;
-            
-            if length(gamma)==1
-                gamma=repmat(gamma,T,1);
+            if length(gamma) == 1
+                gamma = repmat(gamma, T, 1);
             end
             
-            B = spalloc(N*T, N*T, N*N*T+2*N*T);
-            twom = 0;
-            for s = 1:T
-                kout = sum(A{s},1);
-                kin = sum(A{s},2);
-                mm = sum(kout);
-                twom = twom+mm;
-                indx = [1:N]+(s-1)*N;
-                B(indx,indx) = (A{s}+A{s}')/2-gamma(s)/2.*((kin*kout+kout'*kin')/mm);
+            m = zeros(T, 1);
+            for i=1:T
+                m(i) = sum(A{i}(:));
             end
+            A = blkdiag(A{:});
+            kout = sum(A,1);
+            koutmat = sparse(1:(N*T), kron(1:T, ones(1,N)), kout);
+            kin = sum(A,2);
+            kinmat = sparse(1:(N*T), kron(1:T, ones(1,N)), kin);
+            A = (A+A')./2;
             all2all = N*[(-T+1):-1,1:(T-1)];
-            B = B + omega*spdiags(ones(N*T,2*T-2),all2all,N*T,N*T);
-            twom = twom + (N*T*(T-1)*omega);
+            A = A + omega*spdiags(ones(N*T, 2*T-2), all2all, N*T, N*T);
+            
+            B = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps))) + kin(i).*koutmat(:, ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps)))); 
+            twom = sum(m) + omega*2*N*(T-1);
         end
     end    
     methods (Static)
@@ -225,9 +462,9 @@ classdef MultilayerCommunityStructure < Measure
             
             available_settings = {
 %                 'CommunityStructureAlgorithm', BRAPH2.STRING, 'louvain_bct', {'louvain_bct', 'louvain_general'}; ...
-                'MultilayerCommunityStructureLBCTGamma', BRAPH2.NUMERIC, 1, {}; ...
-                'MultilayerCommunityStructureLBCTM0', BRAPH2.NUMERIC, 0, {}; ...
-                'MultilayerCommunityStructureLBCTB', BRAPH2.STRING, 'modularity', {'modularity', 'potts', 'negative_sym', 'negative_asym'}; ...
+%                 'MultilayerCommunityStructureLBCTB', BRAPH2.STRING, 'modularity', {'modularity', 'potts', 'negative_sym', 'negative_asym'}; ...
+                'MultilayerCommunityStructureLGGamma', BRAPH2.NUMERIC, 1, {}; ...
+                'MultilayerCommunityStructureLGOmega', BRAPH2.NUMERIC, 1, {}; ...
                 'MultilayerCommunityStructureLGLimit', BRAPH2.NUMERIC, 1000, {}; ...
                 'MultilayerCommunityStructureLGVerbose', BRAPH2.LOGICAL, 1, {1, 0}; ...
                 'MultilayerCommunityStructureLGRandord', BRAPH2.LOGICAL, 1, {1, 0}; ...
