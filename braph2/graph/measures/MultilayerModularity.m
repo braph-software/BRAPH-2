@@ -44,7 +44,7 @@ classdef MultilayerModularity < MultilayerCommunityStructure
             g = m.getGraph();  % graph from measure class
             
             if ~g.is_measure_calculated('MultilayerCommunityStructure')
-                multilayer_community_structure_value = calculate@MultilayerCommunityStructure(m);
+               multilayer_community_structure_value = calculate@MultilayerCommunityStructure(m);
             end  
             
             multilayer_community_structure = g.getMeasure('MultilayerCommunityStructure');
