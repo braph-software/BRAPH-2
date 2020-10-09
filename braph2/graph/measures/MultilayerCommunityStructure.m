@@ -1,8 +1,9 @@
 classdef MultilayerCommunityStructure < Measure
     % MultilayerCommunityStructure Multilayer community structure measure
     % MultilayerCommunityStructure provides the  Louvain-like multilayer 
-    % community structure of a node for binary undirected (BU) and
-    % weighted undirected (WU) multiplex and multilayer graphs. 
+    % community structure of a node for binary undirected (BU), binary
+    % directed (BD), weighted undirected (WU), and weighted directed (WD) 
+    % multiplex and multilayer graphs. 
     % 
     % MultilayerCommunityStructure methods:
     %   MultilayerCommunityStructure - constructor
@@ -20,7 +21,10 @@ classdef MultilayerCommunityStructure < Measure
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
-
+    
+    properties (GetAccess=protected, SetAccess=protected)
+        quality_function  % normalized quality function
+    end
     methods
         function m  = MultilayerCommunityStructure(g, varargin)
             % MULTILAYERCOMMUNITYSTRUCTURE(G) creates multilayer community structure with default measure properties.
@@ -34,12 +38,12 @@ classdef MultilayerCommunityStructure < Measure
     end
     methods (Access=protected)
         function multilayer_community_structure = calculate(m)
-            % CALCULATE calculates the multilayer community structure value of a multiplex
+            % CALCULATE calculates the  Louvain-like multilayer community structure value of a multiplex
             %
             % MULTILAYERCOMMUNITYSTRUCTURE = CALCULATE(M) returns the value of the 
-            % multilayer community structure of a multilayer graph.
+            %  Louvain-like multilayer community structure of a multilayer graph.
             %
-            % See also Measure,  MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
+            % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
     
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % 2D-cell array 
@@ -257,7 +261,9 @@ classdef MultilayerCommunityStructure < Measure
                 M = m.metanetwork(B, S2);
                 y = unique(S2);  % unique also puts elements in ascending order
             end
-            multilayer_community_structure = S;
+            
+            m.quality_function = Q/twom;  % save normalized quality function
+            multilayer_community_structure = {S};  % assign partition to the result
         end
         function [B, twom] = multiord_undirected(A, gamma, omega, N, T)
             % MULTIORDUNDIRECTED returns the multilayer modularity matrix for ordered undirected networks
@@ -692,8 +698,6 @@ classdef MultilayerCommunityStructure < Measure
             % settings available to MultilayerCommunityStructure. Empty Array in this case.
             
             available_settings = {
-%                 'CommunityStructureAlgorithm', BRAPH2.STRING, 'louvain_bct', {'louvain_bct', 'louvain_general'}; ...
-%                 'MultilayerCommunityStructureLBCTB', BRAPH2.STRING, 'modularity', {'modularity', 'potts', 'negative_sym', 'negative_asym'}; ...
                 'MultilayerCommunityStructureGamma', BRAPH2.NUMERIC, 1, {}; ...
                 'MultilayerCommunityStructureOmega', BRAPH2.NUMERIC, 1, {}; ...
                 'MultilayerCommunityStructureLimit', BRAPH2.NUMERIC, 10000, {}; ...
