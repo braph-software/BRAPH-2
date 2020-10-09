@@ -346,10 +346,10 @@ classdef SubjectST_MP < Subject
                 if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
-                group.addSubject(subject);
-                % warning on
-                warning('on', 'all')
+                group.addSubject(subject);                
             end   
+            % warning on
+            warning('on', 'all')
         end
         function save_to_xls(cohort, varargin)
             % SAVE_TO_XLS saves the cohort of SubjectST_MP to a '.xls' file

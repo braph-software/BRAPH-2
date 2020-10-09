@@ -4275,7 +4275,7 @@ classdef AnalysisCON_WU < Analysis
             
             if isa(tmp, 'Analysis')
                 analysis = tmp;
-                subject_class = analysis.getCohort().getSubjectClass();
+                subject_class = analysis.getCohort().getSubjectClass(); %#ok<NASGU>
             else
                 % analysis information
                 file_analysis = [directory filesep() 'analysis_info.xlsx'];
@@ -4307,7 +4307,7 @@ classdef AnalysisCON_WU < Analysis
                     errordlg('Type of Analysis does not exist.');
                 end
                 
-                % load analyses
+                % load analysis
                 for i = 1:1:length(sub_folders)
                     path = [directory filesep() sub_folders(i).name];
                     
@@ -4329,6 +4329,17 @@ classdef AnalysisCON_WU < Analysis
                             meas_lab = raw_main{2, 2};
                             meas_notes = raw_main{3, 2};
                             measure_code = raw_main{4, 2};
+                            raw_group = raw_main{5, 2};
+                            
+                            if ismissing(meas_lab)
+                                meas_lab = '';
+                            end
+                            if ismissing(meas_notes)
+                                meas_notes = '';
+                            end
+                            
+                            % get group
+                            group = analysis.getCohort().getGroups().getValue(raw_group);
                             
                             % get values
                             raw_values = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
@@ -4342,13 +4353,123 @@ classdef AnalysisCON_WU < Analysis
                                 analysis.getCohort().getBrainAtlases(), ...
                                 measure_code, ...
                                 group,  ...
-                                'MeasurementCON.values', raw_values, ...
+                                'MeasurementCON.values', num2cell(raw_values, 1), ...
                                 'MeasurementCON.average_value', raw_avgs, ...
                                 varargin{:});
-                            measurement_idict.add(measurement, k);
+                            measurement_idict.add(measurement.getID(), measurement, k);
                         end 
                     elseif isequal(sub_folders(i).name, 'comparisons')
+                        comparison_idict = analysis.getComparisons();
+                        for k = 1:1:length(files)
+                            % get info main
+                            raw_main = readcell(fullfile(path, files(k).name));
+                            comp_id = raw_main{1, 2};
+                            comp_lab = raw_main{2, 2};
+                            comp_notes = raw_main{3, 2};
+                            measure_code = raw_main{4, 2};
+                            raw_group1 = raw_main{5, 2};
+                            raw_group2 = raw_main{6, 2};
+                            
+                            if ismissing(comp_lab)
+                                comp_lab = '';
+                            end
+                            if ismissing(comp_notes)
+                                comp_notes = '';
+                            end
+                            
+                            % get groups
+                            group1 = analysis.getCohort().getGroups().getValue(raw_group1);
+                            group2 = analysis.getCohort().getGroups().getValue(raw_group2);
+                            
+                            % get values
+                            raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
+                            raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
+                            raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
+                            raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
+                            raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
+                            raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
+                            raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
+                            raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
+                            raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
+                            raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
+                            
+                            
+                            comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
+                                comp_id, ...
+                                comp_lab, ...  % comparison label
+                                comp_notes, ...  % comparison notes
+                                analysis.getCohort().getBrainAtlases(), ...
+                                measure_code, ...
+                                group1, ...
+                                group2, ...
+                                'ComparisonCON.values_1', num2cell(raw_values_g1, 1), ...
+                                'ComparisonCON.average_values_1', num2cell(raw_avgs_g1, 1), ...
+                                'ComparisonCON.values_2', num2cell(raw_values_g2, 1), ...
+                                'ComparisonCON.average_values_2', num2cell(raw_avgs_g2, 1), ...
+                                'ComparisonCON.difference', {raw_difference}, ...
+                                'ComparisonCON.all_differences', num2cell(raw_all_difference, 1), ...
+                                'ComparisonCON.p1', {raw_p1}, ...
+                                'ComparisonCON.p2', {raw_p2}, ...
+                                'ComparisonCON.confidence_min', {raw_cimin}, ...
+                                'ComparisonCON.confidence_max', {raw_cimx}, ...
+                                varargin{:});
+                            
+                            comparison_idict.add(comparison.getID(), comparison, k);
+                        end 
                     elseif isequal(sub_folders(i).name, 'randomcomparisons')
+                        random_comparison_idict = analysis.getRandomComparisons();
+                        for k = 1:1:length(files)
+                            % get info main
+                            raw_main = readcell(fullfile(path, files(k).name));
+                            ran_comp_id = raw_main{1, 2};
+                            ran_comp_lab = raw_main{2, 2};
+                            ran_comp_notes = raw_main{3, 2};
+                            measure_code = raw_main{4, 2};
+                            raw_group = raw_main{5, 2};
+                            
+                            if ismissing(ran_comp_lab)
+                                ran_comp_lab = '';
+                            end
+                            if ismissing(ran_comp_notes)
+                                ran_comp_notes = '';
+                            end
+                            
+                            % get groups
+                            group = analysis.getCohort().getGroups().getValue(raw_group);
+                            
+                            % get values
+                            raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
+                            raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
+                            raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
+                            raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
+                            raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
+                            raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
+                            raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
+                            raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
+                            raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
+                            raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
+                            
+                            random_comparison = RandomComparison.getRandomComparison(analysis.getRandomComparisonClass(), ...
+                                ran_comp_id, ...
+                                ran_comp_lab, ...  % comparison label
+                                ran_comp_notes, ...  % comparison notes
+                                analysis.getCohort().getBrainAtlases(), ...
+                                measure_code, ...
+                                group, ...
+                                'RandomComparisonCON.value_group', raw_values_g1, ...
+                                'RandomComparisonCON.value_random', raw_values_g2, ...
+                                'RandomComparisonCON.average_value_group', {raw_avgs_g1}, ...
+                                'RandomComparisonCON.average_value_random', raw_avgs_g2, ...
+                                'RandomComparisonCON.difference', raw_difference, ...
+                                'RandomComparisonCON.all_differences', raw_all_difference, ...
+                                'RandomComparisonCON.p1', raw_p1, ...
+                                'RandomComparisonCON.p2', raw_p2, ....
+                                'RandomComparisonCON.confidence_min', raw_cimin, ...
+                                'RandomComparisonCON.confidence_max', raw_cimx, ...
+                                varargin{:});
+                            
+                            random_comparison_idict.add(random_comparison.getID(), random_comparison, k);
+                        end 
                     else
                         continue;                        
                     end
@@ -4395,9 +4516,9 @@ classdef AnalysisCON_WU < Analysis
             
             writecell(basic_info, analysis_main_file, 'Sheet', 1);
             
-%             % save cohort  could ask if the user wants to save
-%             SubjectCON.save_to_xls(cohort, 'Directory', root_directory);
-            
+            % warning xls sheets off
+            warning( 'off', 'MATLAB:xlswrite:AddSheet' ) ;
+             
             % measurements could ask for just certain measures 
             for i = 1:1:measurements.length()
                 m = measurements.getValue(i);
@@ -4407,7 +4528,7 @@ classdef AnalysisCON_WU < Analysis
                     'Measurement Label:', m.getLabel();
                     'Measurement Notes:', m.getNotes();
                     'Measure:', m.getMeasureCode();
-                    'Group:', m.getGroup();
+                    'Group:', m.getGroup().getID(); 
                     'Values (Sheet 2):', size(m.getMeasureValues);
                     'Group Average (Sheet 3):', size(m.getGroupAverageValue());
                     };
@@ -4430,8 +4551,9 @@ classdef AnalysisCON_WU < Analysis
                     'Comparison ID:', c.getID();
                     'Comparison Label:', c.getLabel();
                     'Comparison Notes:', c.getNotes();
-                    'Group 1:', g1;
-                    'Group 2:', g2;
+                    'Measure:', c.getMeasureCode();
+                    'Group 1:', g1.getID();
+                    'Group 2:', g2.getID();
                     'Values Group 1 (Sheet 2):', size(Values1);
                     'Values Group 2 (Sheet 3):', size(Values2);
                     'Group 1 Average Value (Sheet 4):', size(Avg_1);
@@ -4464,12 +4586,13 @@ classdef AnalysisCON_WU < Analysis
                 Values2 = rc.getRandomValue();
                 Avg_1 = rc.getAverageValue();
                 Avg_2 = rc.getAverageRandomValue();
-                group = rc.getGroups();
                 file_random_comparisons = [root_directory filesep() 'randomcomparisons' filesep() rc.getID() '.xlsx'];
                 random_comparisons_data = {
                     'Random Comparison ID:', rc.getID();
                     'Random Comparison Label:', rc.getLabel();
                     'Random Comparison Notes:', rc.getNotes();
+                    'Measure:', c.getMeasureCode();
+                    'Groups:', rc.getGroup().getID();
                     'Values Group 1 (Sheet 2):', size(Values1);
                     'Values Random Group (Sheet 3):', size(Values2);
                     'Group 1 Average Value (Sheet 4):', size(Avg_1);
@@ -4494,6 +4617,9 @@ classdef AnalysisCON_WU < Analysis
                 writematrix([rc.getConfidenceIntervalMin{:}], file_random_comparisons, 'Sheet', 10)
                 writematrix([rc.getConfidenceIntervalMax{:}], file_random_comparisons, 'Sheet', 11)
             end
+            
+            % warning on
+            warning('on', 'all')
         end
         function analysis = load_from_json(tmp, varargin)
         end
