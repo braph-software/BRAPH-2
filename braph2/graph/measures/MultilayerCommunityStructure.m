@@ -38,10 +38,10 @@ classdef MultilayerCommunityStructure < Measure
     end
     methods (Access=protected)
         function multilayer_community_structure = calculate(m)
-            % CALCULATE calculates the  Louvain-like multilayer community structure value of a multiplex
+            % CALCULATE calculates the Louvain-like multilayer community structure value of a multiplex
             %
             % MULTILAYERCOMMUNITYSTRUCTURE = CALCULATE(M) returns the value of the 
-            %  Louvain-like multilayer community structure of a multilayer graph.
+            % Louvain-like multilayer community structure of a multilayer graph.
             %
             % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
     
@@ -263,7 +263,11 @@ classdef MultilayerCommunityStructure < Measure
             end
             
             m.quality_function = Q/twom;  % save normalized quality function
-            multilayer_community_structure = {S};  % assign partition to the result
+            S = reshape(S, N, T);
+            multilayer_community_structure = cell(T, 1);
+            for li = 1:1:T
+                multilayer_community_structure(li) = {S(:, li)};
+            end
         end
         function [B, twom] = multiord_undirected(A, gamma, omega, N, T)
             % MULTIORDUNDIRECTED returns the multilayer modularity matrix for ordered undirected networks
@@ -722,12 +726,11 @@ classdef MultilayerCommunityStructure < Measure
             % GETMEASURESCOPE returns the measure scope of MultilayerCommunityStructure
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of multilayer community structure measure
-            % (BILAYER). not sure yet which scope
+            % measure scope of multilayer community structure measure (UNILAYER).
             %
             % See also getMeasureFormat.
            
-            measure_scope = Measure.BILAYER;
+            measure_scope = Measure.UNILAYER;
         end
         function parametricity = getParametricity()
             % GETPARAMETRICITY returns the parametricity of MultilayerCommunityStructure

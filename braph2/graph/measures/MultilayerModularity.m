@@ -23,7 +23,7 @@ classdef MultilayerModularity < MultilayerCommunityStructure
     
     methods
         function m  = MultilayerModularity(g, varargin)
-            % MULTILAYERCOMMUNITYSTRUCTURE(G) creates multilayer modularity with default measure properties.
+            % MULTILAYERMODULARITY(G) creates multilayer modularity with default measure properties.
             % G is a multilayer (i.e., an instance of MultiplexGraphBD,
             % MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU). 
             %
@@ -33,30 +33,23 @@ classdef MultilayerModularity < MultilayerCommunityStructure
         end
     end
     methods (Access=protected)
-        function multilayer_community_structure = calculate(m)
-            % CALCULATE calculates the  Louvain-like multilayer community structure value of a multiplex
+        function multilayer_modularity = calculate(m)
+            % CALCULATE calculates the multilayer modularity value of a multiplex or multilayer graph
             %
-            % MULTILAYERCOMMUNITYSTRUCTURE = CALCULATE(M) returns the value of the 
-            %  Louvain-like multilayer community structure of a multilayer graph.
+            % MULTILAYERMODULARITY = CALCULATE(M) returns the value of the 
+            % multilayer modularity of a multiplex or multilayer graph.
             %
             % See also Measure, MultilayerCommunityStructure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
     
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % 2D-cell array 
-            N = g.nodenumber();  % number of nodes in each layer
-            L = g.layernumber();  % number of layers
-               
-            limit = get_from_varargin(10000, 'MultilayerCommunityStructureLimit', m.getSettings());  % set default for maximum size of modularity matrix
-            verbose = get_from_varargin(1, 'MultilayerCommunityStructureVerbose', m.getSettings());  % set level of reported/displayed text output
-            randord = get_from_varargin(1, 'MultilayerCommunityStructureRandord', m.getSettings());  % set randperm
-            randmove = get_from_varargin(1, 'MultilayerCommunityStructureRandmove', m.getSettings());  % set move function
-            gamma = get_from_varargin(1, 'MultilayerCommunityStructureGamma', m.getSettings());
-            omega = get_from_varargin(1, 'MultilayerCommunityStructureOmega', m.getSettings());
-            S0 = get_from_varargin([], 'MultilayerCommunityStructureS0', m.getSettings());
-            B = get_from_varargin([], 'MultilayerCommunityStructureB', m.getSettings());
             
-          
-            multilayer_community_structure = {S};  % assign partition to the result
+            if ~g.is_measure_calculated('MultilayerCommunityStructure')
+                multilayer_community_structure_value = calculate@MultilayerCommunityStructure(m);
+            end  
+            
+            multilayer_community_structure = g.getMeasure('MultilayerCommunityStructure');
+            Q = multilayer_community_structure.quality_function; 
+            multilayer_modularity = {Q};  % assign normalized quality function
         end
     end
     methods (Static)
