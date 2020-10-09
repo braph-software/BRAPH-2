@@ -1,12 +1,16 @@
 classdef MultiplexClustering < MultiplexTriangles
     % MultiplexClustering Multiplex clustering measure
-    % MultiplexClustering provides the multiplex clustering coefficient of a node 
-    % for binary undirected (BU) and weighted undirected (WU) multiplexes.
+    % MultiplexClustering provides the two multiplex clustering coefficient 
+    % of a node for binary undirected (BU) and weighted undirected (WU) multiplex
+    % and multilayer graphs.
     %
-    % It is calculated as the ratio between the number of multiplex triangles 
-    % present around a node and the maximum number of multiplex triangles 
-    % that could possibly be formed around that node between each pair of layers.
-    % 
+    % For each node i, it is calculated as the ratio between the number of 
+    % two-multiplex triangles (triangles which use edges from two different layers)
+    % with a vertex in node i and the number of one-triads centered in i. 
+    % In formula:
+    %
+    % $$C_{i} = \frac{\sum_{\alpha} \sum_{\alpha' \neq \alpha}\sum_{j\neq i,m\neq i}(a_{ij}^{[\alpha]}a_{jm}^{[\alpha']}a_{mi}^{[\alpha]})}{(M-1)\sum_{\alpha} k_{i}^{[\alpha]}(k_{i}^{[\alpha]} - 1)}$$
+    %
     % MultiplexClustering methods:
     %   MultiplexClustering         - constructor 
     % 
