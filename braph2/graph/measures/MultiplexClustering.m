@@ -7,9 +7,17 @@ classdef MultiplexClustering < MultiplexTriangles
     % For each node i, it is calculated as the ratio between the number of 
     % two-multiplex triangles (triangles which use edges from two different layers)
     % with a vertex in node i and the number of one-triads centered in i. 
-    % In formula:
+    % Defined in Battiston et al. (2014) in formula:
+    % C_i = 
+    % sum_{alpha} sum_{alpha'~=alpha} sum_{j~=i, m~=i} w_ij^\alpha w_jm^\alpha' w_mi^\alpha
+    % / 
+    % (M-1) \sum_alpha k_i^\alpha (k_i^\alpha - 1)
     %
-    % $$C_{i} = \frac{\sum_{\alpha} \sum_{\alpha' \neq \alpha}\sum_{j\neq i,m\neq i}(a_{ij}^{[\alpha]}a_{jm}^{[\alpha']}a_{mi}^{[\alpha]})}{(M-1)\sum_{\alpha} k_{i}^{[\alpha]}(k_{i}^{[\alpha]} - 1)}$$
+    % where M is the number of layers, (k_i^\alpha is the degree of node i
+    % in layer alpha, w_ij^\alpha is the link weight between node i and j in
+    % layer alpha, w_jm^\alpha' is the link weight between node j and m in
+    % layer alpha' and w_mi^\alpha is the link weight between node m and i
+    % in layer alpha.
     %
     % MultiplexClustering methods:
     %   MultiplexClustering         - constructor 
