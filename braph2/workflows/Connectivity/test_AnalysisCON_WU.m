@@ -606,7 +606,7 @@ assert( ~isempty(analysis_load), ...
     ['BRAPH:AnalysisCON_WU:save_to_json'], ...
     ['AnalysisCON_WU.save_to_json() not working properly'])
 
-rmdir(save_dir_path, 's')
+delete(save_dir_path)
 
 
 %% GUIAnalysisSettings Pass a CON cohort
