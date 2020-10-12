@@ -4623,7 +4623,83 @@ classdef AnalysisCON_WU < Analysis
         end
         function analysis = load_from_json(tmp, varargin)
         end
-        function save_to_json(analysis, varargin)
+        function structure = save_to_json(analysis, varargin)
+            
+            % get info
+            cohort = analysis.getCohort();
+            atlases = cohort.getBrainAtlases();
+            atlas = atlases{1};
+            analysis_class = analysis.getClass();
+            measurements = analysis.getMeasurements().getValues();
+            comparisons = analysis.getComparisons().getValues();
+            random_comparisons = analysis.getRandomComparisons().getValues();
+            
+            % create structs
+            Measurements_structure = struct;
+            Comparisons_structure = struct;
+            RandomComparisons_structure = struct;
+            
+            % fill info into structures
+            for i = 1:1:length(measurements)
+                meas = measurements{i};
+                Measurements_structure(i).id = meas.getID();
+                Measurements_structure(i).label = meas.getLabel();
+                Measurements_structure(i).notes = meas.getNotes();
+                Measurements_structure(i).measure = meas.getMeasureCode();
+                Measurements_structure(i).group = meas.getGroup().getID();               
+                Measurements_structure(i).value = meas.getMeasureValues();                                
+                Measurements_structure(i).avgvalue = meas.getGroupAverageValue();
+            end
+            for i = 1:1:length(comparisons)
+                comp = comparisons{i};
+                [g1, g2] = comp.getGroups();
+                Comparisons_structure(i).id = comp.getID();
+                Comparisons_structure(i).label = comp.getLabel();
+                Comparisons_structure(i).notes = comp.getNotes();
+                Comparisons_structure(i).measure = comp.getMeasureCode();
+                Comparisons_structure(i).group1 = g1.getID();  
+                Comparisons_structure(i).group2 = g2.getID();
+                Comparisons_structure(i).value1 = comp.getGroupValue(1);                
+                Comparisons_structure(i).value2 = comp.getGroupValue(2); 
+                Comparisons_structure(i).avgvalue1 = comp.getGroupAverageValue(1);
+                Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2); 
+                Comparisons_structure(i).difference = comp.getDifference();
+                Comparisons_structure(i).alldifferences = comp.getAllDifferences();
+                Comparisons_structure(i).p1 = comp.p1();
+                Comparisons_structure(i).p2 = comp.p2();                
+                Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
+                Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
+            end
+            for i = 1:1:length(random_comparisons)
+                ran_comp = random_comparisons{i};
+                RandomComparisons_structure(i).id = ran_comp.getID();
+                RandomComparisons_structure(i).label = ran_comp.getLabel();
+                RandomComparisons_structure(i).notes = ran_comp.getNotes();
+                RandomComparisons_structure(i).measure = ran_comp.getMeasureCode();
+                RandomComparisons_structure(i).group = ran_comp.getGroup().getID();
+                RandomComparisons_structure(i).value = ran_comp.getGroupValue();                
+                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue(); 
+                RandomComparisons_structure(i).avgvalue = ran_comp.getAverageValue();
+                RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue(); 
+                RandomComparisons_structure(i).difference = ran_comp.getDifference();
+                RandomComparisons_structure(i).alldifferences = ran_comp.getAllDifferences();
+                RandomComparisons_structure(i).p1 = ran_comp.p1();
+                RandomComparisons_structure(i).p2 = ran_comp.p2();                
+                RandomComparisons_structure(i).confidencemin = ran_comp.getConfidenceIntervalMin();
+                RandomComparisons_structure(i).confidencemax = ran_comp.getConfidenceIntervalMax();
+            end
+            
+            %create analysis structure
+             structure = struct( ...
+                'Braph', BRAPH2.NAME, ...
+                'Build', BRAPH2.BUILD, ...
+                'Analysis', analysis_class, ...
+                'BrainAtlas', BrainAtlas.save_to_json(atlas), ...
+                'Cohort', SubjectCON.save_to_json(cohort), ...
+                'Measurements', Measurements_structure, ...
+                'Comparisons', Comparisons_structure, ...
+                'RandomComparisons', RandomComparisons_structure ...
+                ); 
         end
     end
 end
