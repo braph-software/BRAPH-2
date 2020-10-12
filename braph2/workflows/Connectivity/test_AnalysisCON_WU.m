@@ -584,7 +584,7 @@ analysis_load = AnalysisCON_WU.load_from_xls(cohort, save_dir_rule, save_dir_pat
 % assert
 assert( ~isempty(analysis_load), ...
     ['BRAPH:AnalysisCON_WU:save_to_xls'], ...
-    ['AnalysisCON_WU.getRandomComparisonID() not creating an ID'])
+    ['AnalysisCON_WU.save_to_xls() not working properly'])
 
 rmdir(save_dir_path, 's')
 
@@ -603,8 +603,8 @@ analysis_load = AnalysisCON_WU.load_from_json(cohort, save_dir_rule, save_dir_pa
 
 % assert
 assert( ~isempty(analysis_load), ...
-    ['BRAPH:AnalysisCON_WU:save_to_xls'], ...
-    ['AnalysisCON_WU.getRandomComparisonID() not creating an ID'])
+    ['BRAPH:AnalysisCON_WU:save_to_json'], ...
+    ['AnalysisCON_WU.save_to_json() not working properly'])
 
 rmdir(save_dir_path, 's')
 
