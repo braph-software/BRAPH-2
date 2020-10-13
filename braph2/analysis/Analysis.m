@@ -634,4 +634,10 @@ classdef Analysis < handle & matlab.mixin.Copyable
             end
         end
     end
+    methods (Abstract, Static)
+        analysis = load_from_xls(tmp, varargin)
+        save_to_xls(analysis, varargin)
+        analysis = load_from_json(tmp, varargin)
+        save_to_json(analysis, varargin)
+    end
 end

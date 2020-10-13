@@ -185,7 +185,7 @@ ba = [];
         BrainAtlas.save_to_xls(atlas);
     end
     function cb_export_json(~, ~)  % (src, event)
-        BrainAtlas.save_to_json(atlas);
+        JSON.Serialize(BrainAtlas.save_to_json(atlas));
     end
 
 %% GUI inizialization

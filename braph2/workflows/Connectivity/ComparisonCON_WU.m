@@ -619,7 +619,7 @@ classdef ComparisonCON_WU < Comparison
             sub = eval([comparisonClass '(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:})']);
         end
     end
-     methods (Static)  % Plot ComparisonGUI Child Panel
+    methods (Static)  % Plot ComparisonGUI Child Panel
         function handle = getComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %

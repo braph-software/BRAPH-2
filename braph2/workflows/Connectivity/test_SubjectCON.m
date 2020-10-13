@@ -118,9 +118,9 @@ cohort.getGroups().add(group.getID(), group);
 cohort.getGroups().add(group_2.getID(), group_2);
 
 % act
-SubjectCON.save_to_json(cohort, save_dir_rule, save_dir_path);
+JSON.Serialize(SubjectCON.save_to_json(cohort), save_dir_rule, save_dir_path);
 
-load_cohort = SubjectCON.load_from_json(atlas, 'File', save_dir_path);
+load_cohort = SubjectCON.load_from_json(atlas, save_dir_rule, save_dir_path);
 
 % assert
 assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
