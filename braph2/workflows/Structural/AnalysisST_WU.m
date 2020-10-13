@@ -844,7 +844,7 @@ classdef AnalysisST_WU < Analysis
                 set(fdr_threshold_edit, 'Position', [.19 .02 .1 .03])
                 set(fdr_threshold_edit, 'String', '0.05')
                 set(fdr_threshold_edit, 'TooltipString', 'Input the desired FDR threshold parameter')
-                set(fdr_threshold_edit, 'Callback', {@cb_global_fdr})   
+                set(fdr_threshold_edit, 'Callback', {@cb_global_fdr})
                 set(fdr_threshold_edit, 'Visible', 'off')
                 
                 set(ui_checkbox_brainmeasures_meas, 'Position', [.3 .14 .10 .03])
@@ -891,8 +891,8 @@ classdef AnalysisST_WU < Analysis
                 
                 set(ui_selectedmeasure_popup, 'Position', [.02 .01 .15 .05])
                 set(ui_selectedmeasure_popup, 'String', global_list)
-                set(ui_selectedmeasure_popup, 'Callback', {@cb_global_table})               
-       
+                set(ui_selectedmeasure_popup, 'Callback', {@cb_global_table})
+                
             end
             function update_global_table()
                 data = {}; %#ok<NASGU>
@@ -1073,7 +1073,7 @@ classdef AnalysisST_WU < Analysis
                     set(ui_popup_globalmeasures_group2, 'Visible', 'on')
                     
                     set(ui_listbox_brainmeasures_comp_groups, 'Enable', 'off')
-                    set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'off')                    
+                    set(ui_listbox_brainmeasures_comp_groups, 'Visible', 'off')
                     
                     set(fdr_threshold_edit, 'Visible', 'on')
                 else
@@ -1084,7 +1084,7 @@ classdef AnalysisST_WU < Analysis
                     set(ui_popup_globalmeasures_group1, 'Visible', 'off')
                     
                     set(ui_popup_globalmeasures_group2, 'Enable', 'off')
-                    set(ui_popup_globalmeasures_group2, 'Visible', 'off') 
+                    set(ui_popup_globalmeasures_group2, 'Visible', 'off')
                     
                     if get(ui_checkbox_brainmeasures_meas, 'Value')
                         set(fdr_threshold_edit, 'Visible', 'off')
@@ -1094,7 +1094,7 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             function init_plot_measure_panel()
-                cla(ui_plot_measure_axes)                
+                cla(ui_plot_measure_axes)
                 deleteExtraChilds(ui_plot_measure_panel)
                 measures = get(ui_selectedmeasure_popup, 'String');
                 selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
@@ -1209,7 +1209,7 @@ classdef AnalysisST_WU < Analysis
                 measures_array = get(ui_selectedmeasure_popup, 'String');
                 selected_measure = measures_array{get(ui_selectedmeasure_popup, 'Value')};
                 measures = analysis.selectMeasurements(selected_measure, group);
-               
+                
                 for i = 1:1:length(selected_brainmeasures)
                     k = selected_brainmeasures(i);
                     m = measures{k};
@@ -1338,7 +1338,7 @@ classdef AnalysisST_WU < Analysis
                 set(fdr_threshold_edit, 'Position', [.19 .02 .1 .03])
                 set(fdr_threshold_edit, 'String', '0.05')
                 set(fdr_threshold_edit, 'TooltipString', 'Input the desired FDR threshold parameter')
-                set(fdr_threshold_edit, 'Callback', {@cb_nodal_fdr})   
+                set(fdr_threshold_edit, 'Callback', {@cb_nodal_fdr})
                 set(fdr_threshold_edit, 'Visible', 'off')
                 
                 set(ui_checkbox_brainmeasures_meas, 'Position', [.3 .16 .10 .04])
@@ -2288,12 +2288,12 @@ classdef AnalysisST_WU < Analysis
         end
         function p = getBrainView(analysis, varargin)
             % GETBRAINVIEW creates a brain view panel for GUIAnalysis
-            % 
+            %
             % P = GETBRAINVIEW(ANALYSIS, PROPERTY, RULE, ...) creates a
             % brain view panel for GUIAnalysis.
             %
             % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
-
+            
             uiparent = get_from_varargin([], 'UIParent', varargin{:});
             bg = get_from_varargin([], 'BrainGraph', varargin{:});
             bgp = [];
@@ -2358,10 +2358,10 @@ classdef AnalysisST_WU < Analysis
                 function cb_figure_brainsurf(~, ~)  % (src, event)
                     bg.brain_settings();
                 end
-
+                
                 set(ui_contextmenu_figure_symbol_settings, 'Label', 'Brain Region Settings')
                 set(ui_contextmenu_figure_symbol_settings, 'Callback', {@cb_figure_settingsbr})
-
+                
                 function cb_figure_settingsbr(~, ~)  % (src, event)
                     i = bg.get_sym_i(gco);
                     bg.br_syms_settings(i)
@@ -2371,7 +2371,7 @@ classdef AnalysisST_WU < Analysis
                 set(ui_contextmenu_figure_labels_settings, 'Callback', {@cb_figure_settingslab})
                 
                 function cb_figure_settingslab(~, ~)  % (src, event)
-                    i = bg.get_labs_i(gco);                    
+                    i = bg.get_labs_i(gco);
                     bg.br_labs_settings(i)
                 end
             end
@@ -2386,7 +2386,7 @@ classdef AnalysisST_WU < Analysis
                 bg.br_labs([], 'UIContextMenu', ui_contextmenu_figure_labs);
                 update_brain_graph();
             end
-            function update_brain_graph()              
+            function update_brain_graph()
                 if get(ui_brain_view_show_checkbox, 'Value')
                     bg.brain_on();
                 else
@@ -2401,7 +2401,7 @@ classdef AnalysisST_WU < Analysis
                     bg.br_labs_on();
                 else
                     bg.br_labs_off();
-                end               
+                end
             end
             function cb_bv_bg_panel(~, ~)
                 if isempty(bgp) || ~isvalid(bgp)
@@ -2418,13 +2418,13 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             function cb_show_surf(~, ~)
-               update_brain_graph()                   
+                update_brain_graph()
             end
-            function cb_show_brs(~, ~)                
-                update_brain_graph()    
+            function cb_show_brs(~, ~)
+                update_brain_graph()
             end
             function cb_show_labs(~, ~)
-                update_brain_graph()    
+                update_brain_graph()
             end
             
             create_figure()
@@ -2440,7 +2440,7 @@ classdef AnalysisST_WU < Analysis
             % creates a brain graph panel to manage the type of
             % PLOTBRAINGRAPH that the GUIAnalysis plots in the AXES.
             %
-            % See also getBrainView, 
+            % See also getBrainView,
             
             NAME_GRAPH =  'Brain Graph Panel';
             fig_graph = GUI.init_figure(NAME_GRAPH, .2, .5, 'west');
@@ -2880,8 +2880,8 @@ classdef AnalysisST_WU < Analysis
                         elseif link_style == 2
                             bg.arrow_edges('Color', [val1 val2]);
                         else
-                             bg.cylinder_edges('Color', [val1 val2]);
-                        end                        
+                            bg.cylinder_edges('Color', [val1 val2]);
+                        end
                     end
                     
                     if get(ui_checkbox_graph_lineweight, 'Value')
@@ -2894,7 +2894,7 @@ classdef AnalysisST_WU < Analysis
                                 bg.arrow_edges('LineWidth', weight);
                             else
                                 bg.cylinder_edges('LineWidth', weight);
-                            end                           
+                            end
                         end
                     end
                 else
@@ -2935,12 +2935,12 @@ classdef AnalysisST_WU < Analysis
                             else
                                 bg.cylinder_edge(i, j, 'LineWidth', thickness);
                                 bg.cylinder_edge_on(i, j)
-                            end                            
+                            end
                         end
                     end
                 end
             end
-            function cb_graph_links_settings(~, ~)  % (src, event)                
+            function cb_graph_links_settings(~, ~)  % (src, event)
                 link_style = get(ui_link_type, 'Value');
                 if link_style == 1
                     bg.link_edges_settings([], []);
@@ -2989,7 +2989,7 @@ classdef AnalysisST_WU < Analysis
             fdr_lim = [];
             p1 = [];
             p2 = [];
-            ga = analysis;            
+            ga = analysis;
             
             % get all measures
             mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());  % list of nodal measures
@@ -3018,7 +3018,7 @@ classdef AnalysisST_WU < Analysis
             ui_edit_meas_fdr1 = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
             ui_checkbox_meas_fdr2 = uicontrol(ui_panel_meas_scaling, 'Style',  'checkbox');
             ui_edit_meas_fdr2 = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
-            ui_button_meas_automatic = uicontrol(ui_panel_meas_scaling, 'Style', 'pushbutton');            
+            ui_button_meas_automatic = uicontrol(ui_panel_meas_scaling, 'Style', 'pushbutton');
             
             % measure container panel
             ui_measure_container_panel = uipanel(f, 'Units', 'normalized');
@@ -3201,9 +3201,9 @@ classdef AnalysisST_WU < Analysis
                 set(ui_edit_meas_fdr2, 'FontWeight', 'bold')
                 set(ui_edit_meas_fdr2, 'Callback', {@cb_edit_meas_fdr2})
                 
-               % measure figure *******************************                
+                % measure figure *******************************
                 set(ui_measure_container_panel, 'Position', [.35 .01 .605 .64])
-                             
+                
                 set(ui_checkbox_meas_symbolsize, 'Units', 'normalized')
                 set(ui_checkbox_meas_symbolsize, 'BackgroundColor', GUI.BKGCOLOR)
                 set(ui_checkbox_meas_symbolsize, 'Position', [.01 .9 .30 .08])
@@ -3896,7 +3896,7 @@ classdef AnalysisST_WU < Analysis
                     else  % binodal
                     end
                     
-                    if get(ui_checkbox_meas_symbolsize, 'Value') 
+                    if get(ui_checkbox_meas_symbolsize, 'Value')
                         
                         size_ = str2double(get(ui_edit_meas_symbolsize, 'String'));
                         offset = str2double(get(ui_edit_meas_offset, 'String'));
@@ -3941,7 +3941,7 @@ classdef AnalysisST_WU < Analysis
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
                         if isempty(fdr_lim)
-                           R = 1 + ((measure_data_inner - offset)./rescaling)*R;
+                            R = 1 + ((measure_data_inner - offset)./rescaling)*R;
                         else
                             R = (1 + ((measure_data_inner - offset)./rescaling)*R).*fdr_lim;
                         end
@@ -3979,7 +3979,7 @@ classdef AnalysisST_WU < Analysis
                         
                         if isempty(fdr_lim)
                             alpha_vec = ((measure_data_inner - offset)./rescaling).*alpha;
-                        else                        
+                        else
                             alpha_vec = (((measure_data_inner - offset)./rescaling).*alpha).*fdr_lim;
                         end
                         alpha_vec(isnan(alpha_vec)) = 0;
@@ -3996,7 +3996,7 @@ classdef AnalysisST_WU < Analysis
                         
                         if isempty(fdr_lim)
                             size_ = 1 + ((measure_data_inner - offset)./rescaling)*size_;
-                        else                        
+                        else
                             size_ = (1 + ((measure_data_inner - offset)./rescaling)*size_).*fdr_lim;
                         end
                         
@@ -4033,7 +4033,7 @@ classdef AnalysisST_WU < Analysis
                 atlas = atlases{1};
                 if Measure.is_nodal(m)
                     fdr_lim = ones(1, atlas.getBrainRegions().length());
-                    for i = 1:1:atlas.getBrainRegions().length()                       
+                    for i = 1:1:atlas.getBrainRegions().length()
                         if get(ui_checkbox_meas_fdr1, 'Value')
                             if p1(i) > fdr(p1, str2double(get(ui_edit_meas_fdr1, 'String')))
                                 fdr_lim(i) = 0;
@@ -4053,14 +4053,14 @@ classdef AnalysisST_WU < Analysis
             function update_measure_control_panel()
                 i = get(ui_list_gr, 'Value');
                 measure = mlist{i};
-                if (Measure.is_nodal(measure)) 
+                if (Measure.is_nodal(measure))
                     set(ui_measure_container_panel, 'Visible', 'on')
                     childs_visibility(ui_measure_container_panel, 'on')
                     set(ui_edge_value_show, 'Enable', 'off')
                     set(ui_edge_value_show, 'Visible', 'off')
                 else
                     set(ui_measure_container_panel, 'Visible', 'off')
-                    childs_visibility(ui_measure_container_panel, 'off')                    
+                    childs_visibility(ui_measure_container_panel, 'off')
                     set(ui_edge_value_show, 'Enable', 'on')
                     set(ui_edge_value_show, 'Visible', 'on')
                 end
@@ -4078,11 +4078,11 @@ classdef AnalysisST_WU < Analysis
                     for i = 1:1:size(measure_data_inner, 1)
                         for j = 1:1:size(measure_data_inner, 2)
                             if bg.link_edge_is_on(i, j) || bg.arrow_edge_is_on(i, j) || bg.cylinder_edge_is_on(i, j)
-                                if bg.tex_edge_is_off(i, j) 
+                                if bg.tex_edge_is_off(i, j)
                                     bg.text_edge_on(i, j)
                                 else
                                     bg.text_edge(brain_axes, i, j, string(measure_data_inner(i, j)))
-                                end                                
+                                end
                             end
                         end
                     end
@@ -4097,7 +4097,7 @@ classdef AnalysisST_WU < Analysis
                 end
             end
             
-            if nargout > 0 
+            if nargout > 0
                 h = f;
             end
         end
@@ -4108,8 +4108,164 @@ classdef AnalysisST_WU < Analysis
         function save_to_xls(analysis, varargin)
         end
         function analysis = load_from_json(tmp, varargin)
+            raw = JSON.Deserialize(varargin{:});
+            
+            if isa(tmp, 'Analysis')
+                analysis = tmp;
+                subject_class = analysis.getCohort().getSubjectClass(); %#ok<NASGU>
+            else
+                cohort = tmp;
+                analysis_id = raw.ID;
+                analysis_label = raw.Label;
+                analysis_notes = raw.Notes;
+                type_of_analysis = raw.Analysis;
+                
+                if isequal(type_of_analysis, 'AnalysisST_WU')
+                    analysis = AnalysisST_WU(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                elseif isequal(type_of_analysis, 'AnalysisST_BUT')
+                    analysis = AnalysisST_BUT(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                elseif isequal(type_of_analysis, 'AnalysisST_BUD')
+                    analysis = AnalysisST_BUD(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                else
+                    errordlg('Type of Analysis does not exist.');
+                end
+            end
+            measurements_idict = analysis.getMeasurements();
+            comparisons_idict = analysis.getComparisons();
+            random_comp_idict = analysis.getRandomComparisons();
+            
+            % measurements idict
+            for i = 1:1:length(raw.Measurements)
+                group =  cohort.getGroups().getValue(raw.Measurements(i).group);
+                measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
+                    raw.Measurements(i).id, ...
+                    raw.Measurements(i).label, ...  % meaurement label
+                    raw.Measurements(i).notes, ...  % meaurement notes
+                    analysis.getCohort().getBrainAtlases(), ...
+                    raw.Measurements(i).measure, ...
+                    group,  ...
+                    'MeasurementST.Value', num2cell(raw.Measurements(i).value', 1), ...
+                    varargin{:});
+                measurements_idict.add(measurement.getID(), measurement, i);
+            end
+            % comparison idict
+            for i = 1:1:length(raw.Comparisons)
+                comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
+                    raw.Comparisons(i).id, ...
+                    raw.Comparisons(i).label, ...  % comparison label
+                    raw.Comparisons(i).notes, ...  % comparison notes
+                    analysis.getCohort().getBrainAtlases(), ...
+                    raw.Comparisons(i).measure, ...
+                    cohort.getGroups().getValue(raw.Comparisons(i).group1), ...
+                    cohort.getGroups().getValue(raw.Comparisons(i).group2), ...
+                    'ComparisonST.value_1', num2cell(raw.Comparisons(i).value1', 1), ...
+                    'ComparisonST.value_2', num2cell(raw.Comparisons(i).value2', 1), ...
+                    'ComparisonST.difference', {raw.Comparisons(i).difference'}, ...
+                    'ComparisonST.all_differences', num2cell(raw.Comparisons(i).alldifferences', 1), ...
+                    'ComparisonST.p1', {raw.Comparisons(i).p1'}, ...
+                    'ComparisonST.p2', {raw.Comparisons(i).p2'}, ...
+                    'ComparisonST.confidence_min', {raw.Comparisons(i).confidencemin'}, ...
+                    'ComparisonST.confidence_max', {raw.Comparisons(i).confidencemax'}, ...
+                    varargin{:});
+                
+                comparisons_idict.add(comparison.getID(), comparison, i);
+            end
+            % randomcomparisons idict
+            for i = 1:1:length(raw.RandomComparisons)
+                random_comparison = RandomComparison.getRandomComparison(analysis.getRandomComparisonClass(), ...
+                    raw.RandomComparisons(i).id, ...
+                    raw.RandomComparisons(i).label, ...  % comparison label
+                    raw.RandomComparisons(i).notes, ...  % comparison notes
+                    analysis.getCohort().getBrainAtlases(), ...
+                    raw.RandomComparisons(i).measure, ...
+                    cohort.getGroups().getValue(raw.RandomComparisons(i).group), ...
+                    'RandomComparisonST.value_group', num2cell(raw.RandomComparisons(i).value', 1), ...
+                    'RandomComparisonST.value_random', num2cell(raw.RandomComparisons(i).ranvalue', 1), ...
+                    'RandomComparisonST.difference', {raw.RandomComparisons(i).difference'}, ...
+                    'RandomComparisonST.all_differences', num2cell(raw.RandomComparisons(i).alldifferences', 1), ...
+                    'RandomComparisonST.p1', {raw.RandomComparisons(i).p1'}, ...
+                    'RandomComparisonST.p2', {raw.RandomComparisons(i).p2'}, ....
+                    'RandomComparisonST.confidence_min', {raw.RandomComparisons(i).confidencemin'}, ...
+                    'RandomComparisonST.confidence_max', {raw.RandomComparisons(i).confidencemax'}, ...
+                    varargin{:});
+                
+                random_comp_idict.add(random_comparison.getID(), random_comparison, i);
+            end
         end
-        function save_to_json(analysis, varargin)
+        function structure = save_to_json(analysis, varargin)
+            % get info
+            cohort = analysis.getCohort();
+            atlases = cohort.getBrainAtlases();
+            atlas = atlases{1};
+            analysis_class = analysis.getClass();
+            measurements = analysis.getMeasurements().getValues();
+            comparisons = analysis.getComparisons().getValues();
+            random_comparisons = analysis.getRandomComparisons().getValues();
+            
+            % create structs
+            Measurements_structure = struct;
+            Comparisons_structure = struct;
+            RandomComparisons_structure = struct;
+            
+            % fill info into structures
+            for i = 1:1:length(measurements)
+                meas = measurements{i};
+                Measurements_structure(i).id = meas.getID();
+                Measurements_structure(i).label = meas.getLabel();
+                Measurements_structure(i).notes = meas.getNotes();
+                Measurements_structure(i).measure = meas.getMeasureCode();
+                Measurements_structure(i).group = meas.getGroup().getID();
+                Measurements_structure(i).value = meas.getMeasureValue();
+            end
+            for i = 1:1:length(comparisons)
+                comp = comparisons{i};
+                [g1, g2] = comp.getGroups();
+                Comparisons_structure(i).id = comp.getID();
+                Comparisons_structure(i).label = comp.getLabel();
+                Comparisons_structure(i).notes = comp.getNotes();
+                Comparisons_structure(i).measure = comp.getMeasureCode();
+                Comparisons_structure(i).group1 = g1.getID();
+                Comparisons_structure(i).group2 = g2.getID();
+                Comparisons_structure(i).value1 = comp.getGroupValue(1);
+                Comparisons_structure(i).value2 = comp.getGroupValue(2);
+                Comparisons_structure(i).difference = comp.getDifference();
+                Comparisons_structure(i).alldifferences = comp.getAllDifferences();
+                Comparisons_structure(i).p1 = comp.p1();
+                Comparisons_structure(i).p2 = comp.p2();
+                Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
+                Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
+            end
+            for i = 1:1:length(random_comparisons)
+                ran_comp = random_comparisons{i};
+                RandomComparisons_structure(i).id = ran_comp.getID();
+                RandomComparisons_structure(i).label = ran_comp.getLabel();
+                RandomComparisons_structure(i).notes = ran_comp.getNotes();
+                RandomComparisons_structure(i).measure = ran_comp.getMeasureCode();
+                RandomComparisons_structure(i).group = ran_comp.getGroup().getID();
+                RandomComparisons_structure(i).value = ran_comp.getGroupValue();
+                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue();
+                RandomComparisons_structure(i).difference = ran_comp.getDifference();
+                RandomComparisons_structure(i).alldifferences = ran_comp.getAllDifferences();
+                RandomComparisons_structure(i).p1 = ran_comp.p1();
+                RandomComparisons_structure(i).p2 = ran_comp.p2();
+                RandomComparisons_structure(i).confidencemin = ran_comp.getConfidenceIntervalMin();
+                RandomComparisons_structure(i).confidencemax = ran_comp.getConfidenceIntervalMax();
+            end
+            
+            %create analysis structure
+            structure = struct( ...
+                'Braph', BRAPH2.NAME, ...
+                'Build', BRAPH2.BUILD, ...
+                'Analysis', analysis_class, ...
+                'ID', analysis.getID(), ...
+                'Label', analysis.getLabel(), ...
+                'Notes', analysis.getNotes(), ...
+                'Cohort', SubjectST.save_to_json(cohort), ...
+                'Measurements', Measurements_structure, ...
+                'Comparisons', Comparisons_structure, ...
+                'RandomComparisons', RandomComparisons_structure ...
+                );
+            
         end
     end
 end
