@@ -588,7 +588,7 @@ assert( ~isempty(analysis_load), ...
 
 rmdir(save_dir_path, 's')
 
-%% save to json
+%% Save to json
 % setup
 save_dir_rule = 'File';
 analysis = AnalysisCON_WU('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});

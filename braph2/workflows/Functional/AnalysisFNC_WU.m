@@ -4316,8 +4316,175 @@ classdef AnalysisFNC_WU < Analysis
         function save_to_xls(analysis, varargin)
         end
         function analysis = load_from_json(tmp, varargin)
+             raw = JSON.Deserialize(varargin{:});
+            
+            if isa(tmp, 'Analysis')
+                analysis = tmp;
+                subject_class = analysis.getCohort().getSubjectClass(); %#ok<NASGU>
+            else      
+                cohort = tmp;
+                analysis_id = raw.ID;
+                analysis_label = raw.Label;
+                analysis_notes = raw.Notes; 
+                type_of_analysis = raw.Analysis;
+                
+                if isequal(type_of_analysis, 'AnalysisFNC_WU')
+                    analysis = AnalysisFNC_WU(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                elseif isequal(type_of_analysis, 'AnalysisFNC_BUT')
+                    analysis = AnalysisFNC_BUT(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                elseif isequal(type_of_analysis, 'AnalysisFNC_BUD')
+                    analysis = AnalysisFNC_BUD(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                else
+                    errordlg('Type of Analysis does not exist.');
+                end                
+            end
+            
+            measurements_idict = analysis.getMeasurements();
+            comparisons_idict = analysis.getComparisons();
+            random_comp_idict = analysis.getRandomComparisons();
+            
+            % measurements idict
+            for i = 1:1:length(raw.Measurements)
+                group =  cohort.getGroups().getValue(raw.Measurements(i).group);
+                measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
+                    raw.Measurements(i).id, ...
+                    raw.Measurements(i).label, ...  % meaurement label
+                    raw.Measurements(i).notes, ...  % meaurement notes
+                    analysis.getCohort().getBrainAtlases(), ...
+                    raw.Measurements(i).measure, ...
+                    group,  ...
+                    'MeasurementFNC.values', num2cell(raw.Measurements(i).value', 1), ...
+                    'MeasurementFNC.average_value', raw.Measurements(i).avgvalue, ...
+                    varargin{:});
+                measurements_idict.add(measurement.getID(), measurement, i);                
+            end
+            % comparison idict 
+            for i = 1:1:length(raw.Comparisons)                
+                comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
+                    raw.Comparisons(i).id, ...
+                    raw.Comparisons(i).label, ...  % comparison label
+                    raw.Comparisons(i).notes, ...  % comparison notes
+                    analysis.getCohort().getBrainAtlases(), ...
+                    raw.Comparisons(i).measure, ...
+                    cohort.getGroups().getValue(raw.Comparisons(i).group1), ...
+                    cohort.getGroups().getValue(raw.Comparisons(i).group2), ...
+                    'ComparisonFNC.values_1', num2cell(raw.Comparisons(i).value1', 1), ...
+                    'ComparisonFNC.average_values_1', num2cell(raw.Comparisons(i).avgvalue1', 1), ...
+                    'ComparisonFNC.values_2', num2cell(raw.Comparisons(i).value2', 1), ...
+                    'ComparisonFNC.average_values_2', num2cell(raw.Comparisons(i).avgvalue2', 1), ...
+                    'ComparisonFNC.difference', {raw.Comparisons(i).difference'}, ...
+                    'ComparisonFNC.all_differences', num2cell(raw.Comparisons(i).alldifferences', 1), ...
+                    'ComparisonFNC.p1', {raw.Comparisons(i).p1'}, ...
+                    'ComparisonFNC.p2', {raw.Comparisons(i).p2'}, ...
+                    'ComparisonFNC.confidence_min', {raw.Comparisons(i).confidencemin'}, ...
+                    'ComparisonFNC.confidence_max', {raw.Comparisons(i).confidencemax'}, ...
+                    varargin{:});
+                
+                comparisons_idict.add(comparison.getID(), comparison, i);
+            end
+            % randomcomparisons idict
+            for i = 1:1:length(raw.RandomComparisons)
+                random_comparison = RandomComparison.getRandomComparison(analysis.getRandomComparisonClass(), ...
+                    raw.RandomComparisons(i).id, ...
+                    raw.RandomComparisons(i).label, ...  % comparison label
+                    raw.RandomComparisons(i).notes, ...  % comparison notes
+                    analysis.getCohort().getBrainAtlases(), ...
+                    raw.RandomComparisons(i).measure, ...
+                    cohort.getGroups().getValue(raw.RandomComparisons(i).group), ...
+                    'RandomComparisonFNC.value_group', num2cell(raw.RandomComparisons(i).value', 1), ...
+                    'RandomComparisonFNC.value_random', num2cell(raw.RandomComparisons(i).ranvalue', 1), ...
+                    'RandomComparisonFNC.average_value_group', num2cell(raw.RandomComparisons(i).avgvalue', 1), ...
+                    'RandomComparisonFNC.average_value_random', num2cell(raw.RandomComparisons(i).ranavgvalue', 1), ...
+                    'RandomComparisonFNC.difference', {raw.RandomComparisons(i).difference'}, ...
+                    'RandomComparisonFNC.all_differences', num2cell(raw.RandomComparisons(i).alldifferences', 1), ...
+                    'RandomComparisonFNC.p1', {raw.RandomComparisons(i).p1'}, ...
+                    'RandomComparisonFNC.p2', {raw.RandomComparisons(i).p2'}, ....
+                    'RandomComparisonFNC.confidence_min', {raw.RandomComparisons(i).confidencemin'}, ...
+                    'RandomComparisonFNC.confidence_max', {raw.RandomComparisons(i).confidencemax'}, ...
+                    varargin{:});
+                
+                random_comp_idict.add(random_comparison.getID(), random_comparison, i);
+            end
+            
         end
-        function save_to_json(analysis, varargin)
+        function structure = save_to_json(analysis, varargin)
+            % get info
+            cohort = analysis.getCohort();
+            atlases = cohort.getBrainAtlases();
+            atlas = atlases{1}; %#ok<NASGU>
+            analysis_class = analysis.getClass();
+            measurements = analysis.getMeasurements().getValues();
+            comparisons = analysis.getComparisons().getValues();
+            random_comparisons = analysis.getRandomComparisons().getValues();
+            
+            % create structs
+            Measurements_structure = struct;
+            Comparisons_structure = struct;
+            RandomComparisons_structure = struct;
+            
+            % fill info into structures
+            for i = 1:1:length(measurements)
+                meas = measurements{i};
+                Measurements_structure(i).id = meas.getID();
+                Measurements_structure(i).label = meas.getLabel();
+                Measurements_structure(i).notes = meas.getNotes();
+                Measurements_structure(i).measure = meas.getMeasureCode();
+                Measurements_structure(i).group = meas.getGroup().getID();               
+                Measurements_structure(i).value = meas.getMeasureValues();                                
+                Measurements_structure(i).avgvalue = meas.getGroupAverageValue();
+            end
+            for i = 1:1:length(comparisons)
+                comp = comparisons{i};
+                [g1, g2] = comp.getGroups();
+                Comparisons_structure(i).id = comp.getID();
+                Comparisons_structure(i).label = comp.getLabel();
+                Comparisons_structure(i).notes = comp.getNotes();
+                Comparisons_structure(i).measure = comp.getMeasureCode();
+                Comparisons_structure(i).group1 = g1.getID();  
+                Comparisons_structure(i).group2 = g2.getID();
+                Comparisons_structure(i).value1 = comp.getGroupValue(1);                
+                Comparisons_structure(i).value2 = comp.getGroupValue(2); 
+                Comparisons_structure(i).avgvalue1 = comp.getGroupAverageValue(1);
+                Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2); 
+                Comparisons_structure(i).difference = comp.getDifference();
+                Comparisons_structure(i).alldifferences = comp.getAllDifferences();
+                Comparisons_structure(i).p1 = comp.p1();
+                Comparisons_structure(i).p2 = comp.p2();                
+                Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
+                Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
+            end
+            for i = 1:1:length(random_comparisons)
+                ran_comp = random_comparisons{i};
+                RandomComparisons_structure(i).id = ran_comp.getID();
+                RandomComparisons_structure(i).label = ran_comp.getLabel();
+                RandomComparisons_structure(i).notes = ran_comp.getNotes();
+                RandomComparisons_structure(i).measure = ran_comp.getMeasureCode();
+                RandomComparisons_structure(i).group = ran_comp.getGroup().getID();
+                RandomComparisons_structure(i).value = ran_comp.getGroupValue();                
+                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue(); 
+                RandomComparisons_structure(i).avgvalue = ran_comp.getAverageValue();
+                RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue(); 
+                RandomComparisons_structure(i).difference = ran_comp.getDifference();
+                RandomComparisons_structure(i).alldifferences = ran_comp.getAllDifferences();
+                RandomComparisons_structure(i).p1 = ran_comp.p1();
+                RandomComparisons_structure(i).p2 = ran_comp.p2();                
+                RandomComparisons_structure(i).confidencemin = ran_comp.getConfidenceIntervalMin();
+                RandomComparisons_structure(i).confidencemax = ran_comp.getConfidenceIntervalMax();
+            end
+            
+            %create analysis structure
+             structure = struct( ...
+                'Braph', BRAPH2.NAME, ...
+                'Build', BRAPH2.BUILD, ...
+                'Analysis', analysis_class, ...
+                'ID', analysis.getID(), ...
+                'Label', analysis.getLabel(), ...
+                'Notes', analysis.getNotes(), ...
+                'Cohort', SubjectFNC.save_to_json(cohort), ...
+                'Measurements', Measurements_structure, ...
+                'Comparisons', Comparisons_structure, ...
+                'RandomComparisons', RandomComparisons_structure ...
+                ); 
         end
     end
 end

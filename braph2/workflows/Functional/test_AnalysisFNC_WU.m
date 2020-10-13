@@ -453,6 +453,26 @@ for i = 1:1:numel(measures)
     end
 end
 
+%% Save to json
+% setup
+save_dir_rule = 'File';
+analysis = AnalysisFNC_WU('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
+save_dir_path = [fileparts(which('test_braph2')) filesep analysis.getID() '.json'];
+calculated_measurement = analysis.getMeasurement('Degree', group1);
+calculated_comparison = analysis.getComparison('Degree', group1, group2);
+calculated_random_comparison = analysis.getRandomComparison('Degree', group1);
+
+% act
+JSON.Serialize(AnalysisFNC_WU.save_to_json(analysis), save_dir_rule, save_dir_path);
+analysis_load = AnalysisFNC_WU.load_from_json(cohort, save_dir_rule, save_dir_path);
+
+% assert
+assert( ~isempty(analysis_load), ...
+    ['BRAPH:AnalysisFNC_WU:save_to_json'], ...
+    ['AnalysisFNC_WU.save_to_json() not working properly'])
+
+delete(save_dir_path)
+
 %% GUIAnalysisSettings Pass a FNC cohort
 cohort_file = [fileparts(which('example_workflow_FNC_WU.m')) filesep() 'example data FNC (fMRI)' filesep() 'cohort_example.cohort'];
 temp = load(cohort_file, '-mat', 'cohort', 'selected_group', 'selected_subjects', 'BUILD');
