@@ -83,7 +83,7 @@ classdef InPathLength < Measure
                             Du = distance_layer(:, u);
                             in_path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));                        
                         end
-                         in_path_length_layer(isnan(in_path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
+                        in_path_length_layer(isnan(in_path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
                     case {'harmonic'}
                         for u = 1:1:N
                             Du = distance_layer(:, u);
@@ -95,7 +95,6 @@ classdef InPathLength < Measure
                             in_path_length_layer(u) = mean(Du(Du~=0));
                         end
                 end  
-%                 in_path_length_layer(isnan(in_path_length_layer)) = 0;  % Should return zeros, not NaN
                 in_path_length(li) = {in_path_length_layer};
             end
         end
