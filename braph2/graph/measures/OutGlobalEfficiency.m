@@ -57,7 +57,6 @@ classdef OutGlobalEfficiency < Measure
                 inverse_distance = distance{li}.^-1;  % inverse distance
                 inverse_distance(1:N(li)+1:end) = 0;
                 out_global_efficiency_layer = (sum(inverse_distance, 2) / (N(li)-1));
-%                 out_global_efficiency_layer(isnan(out_global_efficiency_layer)) = 0;  % Should return zeros, not NaN
                 out_global_efficiency(li) = {out_global_efficiency_layer};   
             end
         end
