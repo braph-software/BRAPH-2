@@ -113,8 +113,9 @@ g = GraphWD(A);
 out_global_efficiency = OutGlobalEfficiency(g).getValue();
 out_global_efficiency = out_global_efficiency{1};
 out_global_efficiency_bct = efficiency_wei(g.getA());
-
-assert(isequal(round(mean(out_global_efficiency), 4), round(out_global_efficiency_bct, 4)), ...
+a = round(mean(out_global_efficiency), 4); 
+b =  round(out_global_efficiency_bct, 4);
+assert(isequal(a, b) || (isnan(a) && isnan(b)), ...
     [BRAPH2.STR ':OutGlobalEfficiency:' BRAPH2.BUG_ERR], ...
     'OutGlobalEfficiency is not being calculated correctly for BCT.')
 
@@ -127,8 +128,8 @@ g = GraphWD(A);
 global_efficiency = OutGlobalEfficiency(g);
 
 assert(isequal(global_efficiency.getValue(), known_global_efficiency), ...
-    [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
-    'GlobalEfficiencyAv is not being calculated correctly for GraphBU.')
+    [BRAPH2.STR ':OutGlobalEfficiency:' BRAPH2.BUG_ERR], ...
+    'OutGlobalEfficiency is not being calculated correctly for GraphBU.')
 
 
 
