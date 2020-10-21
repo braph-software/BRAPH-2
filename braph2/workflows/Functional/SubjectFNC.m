@@ -263,8 +263,8 @@ classdef SubjectFNC < Subject
                 % load subjects
                 for i = 1:1:length(files)
                     % read file
-                    
-                    raw = readmatrix(fullfile(path, files(i).name));
+                     % raw = readmatrix(fullfile(path, files(i).name));  % readmatrix avaiable from 2019a 
+                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
                     atlases = cohort.getBrainAtlases();
                     % get age
                     
@@ -272,8 +272,8 @@ classdef SubjectFNC < Subject
                     sub_id = erase(files(i).name, '.xlsx');
                     sub_id = erase(sub_id, '.xls');
                     subject = Subject.getSubject(subject_class, ...
-                        sub_id, '', '', atlases, ...
-                        'FNC', raw);
+                        sub_id, char(raw{1, 1}), char(raw{2, 1}), atlases, ...
+                        'FNC', num);
                     
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
@@ -466,7 +466,10 @@ classdef SubjectFNC < Subject
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.txt'];
-                    writecell(tab, file, 'Delimiter', '\t');
+                    % writecell(tab, file, 'Delimiter', '\t');  % writecell not available from 2019a 
+                    % Convert cell to a table and use first row as variable names
+                    T = cell2table(tab);
+                    writetable(T, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
                 end
             end
         end
