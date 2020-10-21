@@ -4514,7 +4514,8 @@ classdef AnalysisCON_WU < Analysis
                 'Number of Random Comparisons:' random_comparisons.length();
                 };
             
-            writecell(basic_info, analysis_main_file, 'Sheet', 1);
+            % writecell(basic_info, analysis_main_file, 'Sheet', 1);
+            writetable(cell2table(basic_info), analysis_main_file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
             
             % warning xls sheets off
             warning( 'off', 'MATLAB:xlswrite:AddSheet' ) ;
@@ -4533,9 +4534,12 @@ classdef AnalysisCON_WU < Analysis
                     'Group Average (Sheet 3):', size(m.getGroupAverageValue());
                     };
                 
-                writecell(measurement_data, file_measurement, 'Sheet', 1);
-                writematrix([m.getMeasureValues{:}], file_measurement, 'Sheet', 2);
-                writematrix(m.getGroupAverageValue, file_measurement, 'Sheet', 3);
+                % writecell(measurement_data, file_measurement, 'Sheet', 1);
+                writetable(cell2table(measurement_data), file_measurement, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                % writematrix([m.getMeasureValues{:}], file_measurement, 'Sheet', 2);
+                writetable(array2table([m.getMeasureValues{:}]), file_measurement, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
+                % writematrix(m.getGroupAverageValue, file_measurement, 'Sheet', 3);
+                writetable(array2table(m.getGroupAverageValue), file_measurement, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
             end
             
             % comparisons
@@ -4566,17 +4570,17 @@ classdef AnalysisCON_WU < Analysis
                     'Maximum Confidence Interval (Sheet 11):', size(c.getConfidenceIntervalMax());
                     };
                 
-                writecell(comparisons_data, file_comparisons, 'Sheet', 1);
-                writematrix([Values1{:}], file_comparisons, 'Sheet', 2);
-                writematrix([Values2{:}], file_comparisons, 'Sheet', 3);
-                writematrix([Avg_1{:}], file_comparisons, 'Sheet', 4)
-                writematrix([Avg_2{:}], file_comparisons, 'Sheet', 5)
-                writematrix([c.getDifference{:}], file_comparisons, 'Sheet', 6)
-                writematrix([c.getAllDifferences{:}], file_comparisons, 'Sheet', 7)
-                writematrix([c.getP1{:}], file_comparisons, 'Sheet', 8)
-                writematrix([c.getP2{:}], file_comparisons, 'Sheet', 9)
-                writematrix([c.getConfidenceIntervalMin{:}], file_comparisons, 'Sheet', 10)
-                writematrix([c.getConfidenceIntervalMax{:}], file_comparisons, 'Sheet', 11)
+                writetable(cell2table(comparisons_data), file_comparisons, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Values1{:}]), file_comparisons, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Values2{:}]), file_comparisons, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Avg_1{:}]), file_comparisons, 'Sheet', 4, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Avg_2{:}]), file_comparisons, 'Sheet', 5, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getDifference{:}]), file_comparisons, 'Sheet', 6, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getAllDifferences{:}]), file_comparisons, 'Sheet', 7, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getP1{:}]), file_comparisons, 'Sheet', 8, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getP2{:}]), file_comparisons, 'Sheet', 9, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getConfidenceIntervalMin{:}]), file_comparisons, 'Sheet', 10, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getConfidenceIntervalMax{:}]), file_comparisons, 'Sheet', 11, 'WriteVariableNames', 0, 'Range', 'A1');
             end
             
             % random comparisons
@@ -4605,17 +4609,17 @@ classdef AnalysisCON_WU < Analysis
                     'Maximum Confidence Interval (Sheet 11):', size(rc.getConfidenceIntervalMax());
                     };
                 
-                writecell(random_comparisons_data, file_random_comparisons, 'Sheet', 1);
-                writematrix([rc.getGroupValue{:}], file_random_comparisons, 'Sheet', 2);
-                writematrix([rc.getRandomValue{:}], file_random_comparisons, 'Sheet', 3);
-                writematrix([rc.getAverageValue{:}], file_random_comparisons, 'Sheet', 4)
-                writematrix([rc.getAverageRandomValue{:}], file_random_comparisons, 'Sheet', 5)
-                writematrix([rc.getDifference{:}], file_random_comparisons, 'Sheet', 6)
-                writematrix([rc.getAllDifferences{:}], file_random_comparisons, 'Sheet', 7)
-                writematrix([rc.getP1{:}], file_random_comparisons, 'Sheet', 8)
-                writematrix([rc.getP2{:}], file_random_comparisons, 'Sheet', 9)
-                writematrix([rc.getConfidenceIntervalMin{:}], file_random_comparisons, 'Sheet', 10)
-                writematrix([rc.getConfidenceIntervalMax{:}], file_random_comparisons, 'Sheet', 11)
+                writetable(cell2table(random_comparisons_data), file_random_comparisons, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getGroupValue{:}]), file_random_comparisons, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getRandomValue{:}]), file_random_comparisons, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getAverageValue{:}]), file_random_comparisons, 'Sheet', 4, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getAverageRandomValue{:}]), file_random_comparisons, 'Sheet', 5, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getDifference{:}]), file_random_comparisons, 'Sheet', 6, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getAllDifferences{:}]), file_random_comparisons, 'Sheet', 7, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getP1{:}]), file_random_comparisons, 'Sheet', 8, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getP2{:}]), file_random_comparisons, 'Sheet', 9, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getConfidenceIntervalMin{:}]), file_random_comparisons, 'Sheet', 10, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getConfidenceIntervalMax{:}]), file_random_comparisons, 'Sheet', 11, 'WriteVariableNames', 0, 'Range', 'A1');
             end
             
             % warning on
