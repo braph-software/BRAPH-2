@@ -5,7 +5,8 @@ classdef Distance < Measure
     % graphs. 
     %
     % It is calculated as the shortest path between all pairs of
-    % nodes within a layer. 
+    % nodes within a layer. It returns Infinity for nodes that cannot be
+    % reached.
     % 
     % Distance methods:
     %   Distance                    - constructor

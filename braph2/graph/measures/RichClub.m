@@ -126,13 +126,13 @@ classdef RichClub < Degree
                     low_rich_nodes = find(deg <= k);  % get lower rich nodes with degree <= k
                     Aii = binarize(Aii);  % binarizes the adjacency matrix
                     subAii = Aii;  % extract subnetwork of nodes >k by removing nodes <= k of Aii
-                    subAii(low_rich_nodes, :) = 0;  % remove rows
-                    subAii(:, low_rich_nodes) = 0;  % remove columns
+                    subAii(low_rich_nodes, :) = [];  % remove rows
+                    subAii(:, low_rich_nodes) = [];  % remove columns
                     Nk(k) = size(subAii, 2);  % number of nodes with degree > k
                     Ek(k) = sum(subAii(:));  % total number of connections in subgraph
                     richclub_layer(1, 1, k) = Ek(k)/(Nk(k)*(Nk(k)-1));  % unweighted rich-club coefficient
                 end
-                richclub_layer(isnan(richclub_layer)) = 0;  % Should return zeros, not NaN
+                richclub_layer(isnan(richclub_layer)) = 0;  % Should return zeros, since NaN happens when subAii has zero nodes with degree > k
                 rich_club(li) = {richclub_layer};  % add rich club degree of layer li          
             end
         end

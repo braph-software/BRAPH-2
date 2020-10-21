@@ -70,7 +70,7 @@ classdef WeightedMultiplexParticipation < Strength
                 weighted_multiplex_participation = weighted_multiplex_participation + (strength{li}./overlapping_strength{1}).^2;
             end
             weighted_multiplex_participation = L / (L - 1) * (1 - weighted_multiplex_participation);
-            weighted_multiplex_participation(isnan(weighted_multiplex_participation)) = 0;  % Should return zeros, not NaN
+            weighted_multiplex_participation(isnan(weighted_multiplex_participation)) = 0;  % Should return zeros, since NaN happens when strength = 0 and overlapping strength = 0 for all regions
             weighted_multiplex_participation = {weighted_multiplex_participation};
         end
     end  

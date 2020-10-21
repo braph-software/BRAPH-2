@@ -119,3 +119,15 @@ path_length_av = PathLengthAv(g, 'PathLengthRule', 'subgraphs');
 assert(isequal(path_length_av.getValue(), known_path_length_av), ...
     [BRAPH2.STR ':PathLengthAv:' BRAPH2.BUG_ERR], ...
     'PathLengthAv is not being calculated correctly for MultiplexGraphWU.')
+
+%% Test 5 NaN
+A = NaN(4);
+
+known_path_length_av = {Inf};
+
+g = GraphBU(A);
+path_length_av = PathLengthAv(g);
+
+assert(isequal(path_length_av.getValue(), known_path_length_av), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.BUG_ERR], ...
+    'PathLengthAv is not being calculated correctly for GraphBU.')
