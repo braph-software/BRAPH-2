@@ -467,9 +467,7 @@ classdef SubjectFNC < Subject
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.txt'];
                     % writecell(tab, file, 'Delimiter', '\t');  % writecell not available from 2019a 
-                    % Convert cell to a table and use first row as variable names
-                    T = cell2table(tab);
-                    writetable(T, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
+                    writetable(cell2table(tab), file, 'Delimiter', '\t', 'WriteVariableNames', 0);
                 end
             end
         end
