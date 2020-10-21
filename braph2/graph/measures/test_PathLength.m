@@ -204,7 +204,7 @@ Dv = D(~isnan(D));                  % get non-NaN indices of D
 % Modified version in order to get the first vector Emiliano Gomez, Anna Canal
 n = length(D);
 lambda     = mean(Dv(1:n-1));  % 1:3 since function is ignoring diagonal and inf in this case
-% lambda(isnan(lambda)) = 0;
+lambda(isnan(lambda)) = 0;
 
 % Efficiency: mean of inverse entries of D(G)
 efficiency = mean(1./Dv);
