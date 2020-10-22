@@ -262,7 +262,7 @@ classdef SubjectCON < Subject
                 % load subjects
                 for i = 1:1:length(files)
                     % read file
-                    raw = readmatrix(fullfile(path, files(i).name));
+                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
                     atlases = cohort.getBrainAtlases();
                     % get age
                     
@@ -270,8 +270,8 @@ classdef SubjectCON < Subject
                     sub_id = erase(files(i).name, '.xlsx');
                     sub_id = erase(sub_id, '.xls');
                     subject = Subject.getSubject(subject_class, ...
-                        sub_id, '', '', atlases, ...
-                        'CON', raw);
+                        sub_id, char(raw{1, 1}), char(raw{2, 1}), atlases, ...                     
+                        'CON', num);
                     
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
@@ -462,7 +462,7 @@ classdef SubjectCON < Subject
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.txt'];
-                    writecell(tab, file, 'Delimiter', '\t');
+                    writetable(cell2table(tab), file, 'Delimiter', '\t', 'WriteVariableNames', 0);
                 end
             end
         end

@@ -113,8 +113,9 @@ g = GraphBU(A);
 global_efficiency = GlobalEfficiency(g).getValue();
 global_efficiency = global_efficiency{1};
 global_efficiency_bct = efficiency_bin(g.getA());
-
-assert(isequal(mean(round(global_efficiency, 4)), global_efficiency_bct), ...
+a = round(mean(global_efficiency), 4); 
+b =  round(global_efficiency_bct, 4);
+assert(isequal(a, b) || (isnan(a) && isnan(b)), ...
     [BRAPH2.STR ':GlobalEfficiency:' BRAPH2.BUG_ERR], ...
     'GlobalEfficiency is not being calculated correctly for BCT.')
 

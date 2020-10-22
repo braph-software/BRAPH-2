@@ -4284,7 +4284,9 @@ classdef AnalysisCON_WU < Analysis
                 analysis_notes = '';
                 
                 if exist(file_analysis, 'file')
-                    raw_analysis = readcell(file_analysis);
+                    % raw_analysis = readcell(file_analysis);
+                    raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0); 
+                    raw_analysis = table2cell(raw_analysis);
                     analysis_id = raw_analysis{1, 2};
                     analysis_label = raw_analysis{2, 2};
                     analysis_notes = raw_analysis{3, 2};
@@ -4324,7 +4326,8 @@ classdef AnalysisCON_WU < Analysis
                         measurement_idict = analysis.getMeasurements();
                         for k = 1:1:length(files)
                             % get info main
-                            raw_main = readcell(fullfile(path, files(k).name));
+                            raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
+                            raw_main = table2cell(raw_main);
                             meas_id = raw_main{1, 2};
                             meas_lab = raw_main{2, 2};
                             meas_notes = raw_main{3, 2};
@@ -4342,9 +4345,11 @@ classdef AnalysisCON_WU < Analysis
                             group = analysis.getCohort().getGroups().getValue(raw_group);
                             
                             % get values
-                            raw_values = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
-                            raw_avgs = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
-                            
+%                             raw_values = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
+%                             raw_avgs = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
+                            raw_values = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
+                            raw_avgs = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
+
                             % create measurement
                             measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
                                 meas_id, ...
@@ -4362,7 +4367,8 @@ classdef AnalysisCON_WU < Analysis
                         comparison_idict = analysis.getComparisons();
                         for k = 1:1:length(files)
                             % get info main
-                            raw_main = readcell(fullfile(path, files(k).name));
+                            raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
+                            raw_main = table2cell(raw_main);
                             comp_id = raw_main{1, 2};
                             comp_lab = raw_main{2, 2};
                             comp_notes = raw_main{3, 2};
@@ -4382,17 +4388,26 @@ classdef AnalysisCON_WU < Analysis
                             group2 = analysis.getCohort().getGroups().getValue(raw_group2);
                             
                             % get values
-                            raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
-                            raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
-                            raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
-                            raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
-                            raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
-                            raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
-                            raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
-                            raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
-                            raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
-                            raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
-                            
+                            %raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
+                            %raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
+                            %raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
+                            %raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
+                            %raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
+                            %raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
+                            %raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
+                            %raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
+                            %raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
+                            %raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
+                            raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
+                            raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
+                            raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
+                            raw_avgs_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
+                            raw_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
+                            raw_all_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 7, 'ReadVariableNames', 0));
+                            raw_p1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 8, 'ReadVariableNames', 0));
+                            raw_p2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 9, 'ReadVariableNames', 0));
+                            raw_cimin = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 10, 'ReadVariableNames', 0));
+                            raw_cimax = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 11, 'ReadVariableNames', 0));
                             
                             comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                                 comp_id, ...
@@ -4411,7 +4426,7 @@ classdef AnalysisCON_WU < Analysis
                                 'ComparisonCON.p1', {raw_p1}, ...
                                 'ComparisonCON.p2', {raw_p2}, ...
                                 'ComparisonCON.confidence_min', {raw_cimin}, ...
-                                'ComparisonCON.confidence_max', {raw_cimx}, ...
+                                'ComparisonCON.confidence_max', {raw_cimax}, ...
                                 varargin{:});
                             
                             comparison_idict.add(comparison.getID(), comparison, k);
@@ -4420,7 +4435,8 @@ classdef AnalysisCON_WU < Analysis
                         random_comparison_idict = analysis.getRandomComparisons();
                         for k = 1:1:length(files)
                             % get info main
-                            raw_main = readcell(fullfile(path, files(k).name));
+                            raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
+                            raw_main = table2cell(raw_main);
                             ran_comp_id = raw_main{1, 2};
                             ran_comp_lab = raw_main{2, 2};
                             ran_comp_notes = raw_main{3, 2};
@@ -4438,16 +4454,27 @@ classdef AnalysisCON_WU < Analysis
                             group = analysis.getCohort().getGroups().getValue(raw_group);
                             
                             % get values
-                            raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
-                            raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
-                            raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
-                            raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
-                            raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
-                            raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
-                            raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
-                            raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
-                            raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
-                            raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
+%                             raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
+%                             raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
+%                             raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
+%                             raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
+%                             raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
+%                             raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
+%                             raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
+%                             raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
+%                             raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
+%                             raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
+                            
+                            raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
+                            raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
+                            raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
+                            raw_avgs_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
+                            raw_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
+                            raw_all_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 7, 'ReadVariableNames', 0));
+                            raw_p1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 8, 'ReadVariableNames', 0));
+                            raw_p2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 9, 'ReadVariableNames', 0));
+                            raw_cimin = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 10, 'ReadVariableNames', 0));
+                            raw_cimax = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 11, 'ReadVariableNames', 0));
                             
                             random_comparison = RandomComparison.getRandomComparison(analysis.getRandomComparisonClass(), ...
                                 ran_comp_id, ...
@@ -4465,7 +4492,7 @@ classdef AnalysisCON_WU < Analysis
                                 'RandomComparisonCON.p1', {raw_p1}, ...
                                 'RandomComparisonCON.p2', {raw_p2}, ....
                                 'RandomComparisonCON.confidence_min', {raw_cimin}, ...
-                                'RandomComparisonCON.confidence_max', {raw_cimx}, ...
+                                'RandomComparisonCON.confidence_max', {raw_cimax}, ...
                                 varargin{:});
                             
                             random_comparison_idict.add(random_comparison.getID(), random_comparison, k);
@@ -4514,7 +4541,8 @@ classdef AnalysisCON_WU < Analysis
                 'Number of Random Comparisons:' random_comparisons.length();
                 };
             
-            writecell(basic_info, analysis_main_file, 'Sheet', 1);
+            % writecell(basic_info, analysis_main_file, 'Sheet', 1);
+            writetable(cell2table(basic_info), analysis_main_file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
             
             % warning xls sheets off
             warning( 'off', 'MATLAB:xlswrite:AddSheet' ) ;
@@ -4533,9 +4561,12 @@ classdef AnalysisCON_WU < Analysis
                     'Group Average (Sheet 3):', size(m.getGroupAverageValue());
                     };
                 
-                writecell(measurement_data, file_measurement, 'Sheet', 1);
-                writematrix([m.getMeasureValues{:}], file_measurement, 'Sheet', 2);
-                writematrix(m.getGroupAverageValue, file_measurement, 'Sheet', 3);
+                % writecell(measurement_data, file_measurement, 'Sheet', 1);
+                writetable(cell2table(measurement_data), file_measurement, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                % writematrix([m.getMeasureValues{:}], file_measurement, 'Sheet', 2);
+                writetable(array2table([m.getMeasureValues{:}]), file_measurement, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
+                % writematrix(m.getGroupAverageValue, file_measurement, 'Sheet', 3);
+                writetable(array2table(m.getGroupAverageValue), file_measurement, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
             end
             
             % comparisons
@@ -4566,17 +4597,17 @@ classdef AnalysisCON_WU < Analysis
                     'Maximum Confidence Interval (Sheet 11):', size(c.getConfidenceIntervalMax());
                     };
                 
-                writecell(comparisons_data, file_comparisons, 'Sheet', 1);
-                writematrix([Values1{:}], file_comparisons, 'Sheet', 2);
-                writematrix([Values2{:}], file_comparisons, 'Sheet', 3);
-                writematrix([Avg_1{:}], file_comparisons, 'Sheet', 4)
-                writematrix([Avg_2{:}], file_comparisons, 'Sheet', 5)
-                writematrix([c.getDifference{:}], file_comparisons, 'Sheet', 6)
-                writematrix([c.getAllDifferences{:}], file_comparisons, 'Sheet', 7)
-                writematrix([c.getP1{:}], file_comparisons, 'Sheet', 8)
-                writematrix([c.getP2{:}], file_comparisons, 'Sheet', 9)
-                writematrix([c.getConfidenceIntervalMin{:}], file_comparisons, 'Sheet', 10)
-                writematrix([c.getConfidenceIntervalMax{:}], file_comparisons, 'Sheet', 11)
+                writetable(cell2table(comparisons_data), file_comparisons, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Values1{:}]), file_comparisons, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Values2{:}]), file_comparisons, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Avg_1{:}]), file_comparisons, 'Sheet', 4, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Avg_2{:}]), file_comparisons, 'Sheet', 5, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getDifference{:}]), file_comparisons, 'Sheet', 6, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getAllDifferences{:}]), file_comparisons, 'Sheet', 7, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getP1{:}]), file_comparisons, 'Sheet', 8, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getP2{:}]), file_comparisons, 'Sheet', 9, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getConfidenceIntervalMin{:}]), file_comparisons, 'Sheet', 10, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getConfidenceIntervalMax{:}]), file_comparisons, 'Sheet', 11, 'WriteVariableNames', 0, 'Range', 'A1');
             end
             
             % random comparisons
@@ -4605,17 +4636,17 @@ classdef AnalysisCON_WU < Analysis
                     'Maximum Confidence Interval (Sheet 11):', size(rc.getConfidenceIntervalMax());
                     };
                 
-                writecell(random_comparisons_data, file_random_comparisons, 'Sheet', 1);
-                writematrix([rc.getGroupValue{:}], file_random_comparisons, 'Sheet', 2);
-                writematrix([rc.getRandomValue{:}], file_random_comparisons, 'Sheet', 3);
-                writematrix([rc.getAverageValue{:}], file_random_comparisons, 'Sheet', 4)
-                writematrix([rc.getAverageRandomValue{:}], file_random_comparisons, 'Sheet', 5)
-                writematrix([rc.getDifference{:}], file_random_comparisons, 'Sheet', 6)
-                writematrix([rc.getAllDifferences{:}], file_random_comparisons, 'Sheet', 7)
-                writematrix([rc.getP1{:}], file_random_comparisons, 'Sheet', 8)
-                writematrix([rc.getP2{:}], file_random_comparisons, 'Sheet', 9)
-                writematrix([rc.getConfidenceIntervalMin{:}], file_random_comparisons, 'Sheet', 10)
-                writematrix([rc.getConfidenceIntervalMax{:}], file_random_comparisons, 'Sheet', 11)
+                writetable(cell2table(random_comparisons_data), file_random_comparisons, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getGroupValue{:}]), file_random_comparisons, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getRandomValue{:}]), file_random_comparisons, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getAverageValue{:}]), file_random_comparisons, 'Sheet', 4, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getAverageRandomValue{:}]), file_random_comparisons, 'Sheet', 5, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getDifference{:}]), file_random_comparisons, 'Sheet', 6, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getAllDifferences{:}]), file_random_comparisons, 'Sheet', 7, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getP1{:}]), file_random_comparisons, 'Sheet', 8, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getP2{:}]), file_random_comparisons, 'Sheet', 9, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getConfidenceIntervalMin{:}]), file_random_comparisons, 'Sheet', 10, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getConfidenceIntervalMax{:}]), file_random_comparisons, 'Sheet', 11, 'WriteVariableNames', 0, 'Range', 'A1');
             end
             
             % warning on
