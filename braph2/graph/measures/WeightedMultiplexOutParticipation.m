@@ -1,13 +1,13 @@
-classdef WeightedMultiplexOutParticipation < Strength
-    % WeightedMultiplexOutParticipation Weighted multiplex out participation measure
-    % WeightedMultiplexOutParticipation provides the weightedmultiplex participation 
+classdef WeightedMultiplexOutParticipation < OutStrength
+    % WeightedMultiplexOutParticipation Weighted multiplex out out-participation measure
+    % WeightedMultiplexOutParticipation provides the weightedmultiplex out-participation 
     % of a node for weighted directed (WD) multiplexes. 
     %
     % It is the heterogenerity of the number of neighbours of a node across the layers.
     % It is calcualted as:
     % Pi = L/(L - 1) [1 - sum_{l=1}^{L} (si(l)/oi)^2]
     % where L is the number of layers, si(l) is the strength in the l-th
-    % layer and oi is the overlapping strength of the node.
+    % layer and oi is the overlapping out-strength of the node.
     % Pi = 1 when the strength is the same in all layers and Pi = 0 when a
     % node has non-zero strength in only one layer.
     % 
@@ -15,9 +15,9 @@ classdef WeightedMultiplexOutParticipation < Strength
     %   WeightedMultiplexOutParticipation - constructor
     %
     % WeightedMultiplexOutParticipation methods (Static)
-    %   getClass                    - returns the weighted multiplex participation class
-    %   getName                     - returns the name of weighted multiplex participation measure
-    %   getDescription              - returns the description of weighted multiplex participation measure
+    %   getClass                    - returns the weighted multiplex out-participation class
+    %   getName                     - returns the name of weighted multiplex out-participation measure
+    %   getDescription              - returns the description of weighted multiplex out-participation measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
@@ -26,59 +26,59 @@ classdef WeightedMultiplexOutParticipation < Strength
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Strength, OverlappingStrength, MultiplexGraphWU.
+    % See also Measure, Strength, OverlappingOutStrength, MultiplexGraphWD.
     
     methods
         function m = WeightedMultiplexOutParticipation(g, varargin)
-            % WeightedMultiplexOutParticipation(G) creates weighted multiplex participation with default properties.
-            % G is a weighted undirected multiplex (i.e., an instance of
-            % MultiplexGraphWU).
+            % WeightedMultiplexOutParticipation(G) creates weighted multiplex out-participation with default properties.
+            % G is a weighted directed multiplex (i.e., an instance of
+            % MultiplexGraphWD).
             %
-            % See also Measure, Strength, OverlappingStrength, MultiplexGraphWU.
+            % See also Measure, Strength, OverlappingOutStrength, MultiplexGraphWD.
             
-            m = m@Strength(g, varargin{:});
+            m = m@OutStrength(g, varargin{:});
         end
     end
     methods (Access=protected)
-        function weighted_multiplex_participation = calculate(m)
-            % CALCULATE calculates the weighted multiplex participation value of a multiplex
+        function weighted_multiplex_out_participation = calculate(m)
+            % CALCULATE calculates the weighted multiplex out-participation value of a multiplex
             %
             % WeightedMultiplexOutParticipation = CALCULATE(M) returns the value
-            % of the weighted multiplex participation of a multiplex.
+            % of the weighted multiplex out-participation of a multiplex.
             %
-            % See also Measure, Strength, OverlappingStrength, MultiplexGraphWU.
+            % See also Measure, Strength, OverlappingOutStrength, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
             
-            if g.is_measure_calculated('Strength')
-                strength = g.getMeasureValue('Strength');
+            if g.is_measure_calculated('OutStrength')
+                out_strength = g.getMeasureValue('OutStrength');
             else
-                strength = calculate@Strength(m);
+                out_strength = calculate@OutStrength(m);
             end
             
-            if g.is_measure_calculated('OverlappingStrength')
-                overlapping_strength = g.getMeasureValue('OverlappingStrength');
+            if g.is_measure_calculated('OverlappingOutStrength')
+                overlapping_out_strength = g.getMeasureValue('OverlappingOutStrength');
             else
-                overlapping_strength = OverlappingStrength(g, g.getSettings()).getValue();
+                overlapping_out_strength = OverlappingOutStrength(g, g.getSettings()).getValue();
             end
             
             N = g.nodenumber();
             L = g.layernumber();
             
-            weighted_multiplex_participation = zeros(N(1), 1);
+            weighted_multiplex_out_participation = zeros(N(1), 1);
             for li = 1:1:L
-                weighted_multiplex_participation = weighted_multiplex_participation + (strength{li}./overlapping_strength{1}).^2;
+                weighted_multiplex_out_participation = weighted_multiplex_out_participation + (out_strength{li}./overlapping_out_strength{1}).^2;
             end
-            weighted_multiplex_participation = L / (L - 1) * (1 - weighted_multiplex_participation);
-            weighted_multiplex_participation(isnan(weighted_multiplex_participation)) = 0;  % Should return zeros, since NaN happens when strength = 0 and overlapping strength = 0 for all regions
-            weighted_multiplex_participation = {weighted_multiplex_participation};
+            weighted_multiplex_out_participation = L / (L - 1) * (1 - weighted_multiplex_out_participation);
+            weighted_multiplex_out_participation(isnan(weighted_multiplex_out_participation)) = 0;  % Should return zeros, since NaN happens when out_strength = 0 and overlapping_ouot_strength = 0 for all regions
+            weighted_multiplex_out_participation = {weighted_multiplex_out_participation};
         end
     end  
     methods (Static)  % Descriptive methods
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the multiplex participation measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the multiplex out-participation measure.
             %
             % See also getName, getDescription. 
             
@@ -87,22 +87,22 @@ classdef WeightedMultiplexOutParticipation < Strength
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the weighted multiplex participation measure.
+            % NAME = GETNAME() returns the name of the weighted multiplex out-participation measure.
             %
             % See also getClass, getDescription. 
             
-            name = 'Weighted multiplex participation';
+            name = 'Weighted multiplex out-participation';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the weighted multiplex participation description 
+            % GETDESCRIPTION returns the weighted multiplex out-participation description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % weighted multiplex participation measure.
+            % weighted multiplex out-participation measure.
             %
             % See also getClass, getName.
             
             description = [ ...
-                'The weighted multiplex participation of a node is the heterogeneity ' ...
+                'The weighted multiplex out-participation of a node is the heterogeneity ' ...
                 'of its number of neighbours across the layers. ' ...
                 ];
         end
@@ -118,7 +118,7 @@ classdef WeightedMultiplexOutParticipation < Strength
             % GETMEASUREFORMAT returns the measure format of WeightedMultiplexOutParticipation
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of weighted multiplex participation measure (NODAL).
+            % of weighted multiplex out-participation measure (NODAL).
             %
             % See also getMeasureScope.
             
@@ -128,7 +128,7 @@ classdef WeightedMultiplexOutParticipation < Strength
             % GETMEASURESCOPE returns the measure scope of WeightedMultiplexOutParticipation
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of weighted multiplex participation measure (SUPERGLOBAL).
+            % measure scope of weighted multiplex out-participation measure (SUPERGLOBAL).
             %
             % See also getMeasureFormat.
             
@@ -138,7 +138,7 @@ classdef WeightedMultiplexOutParticipation < Strength
             % GETPARAMETRICITY returns the parametricity of WeightedMultiplexOutParticipation
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of weighted multiplex participation measure (NONPARAMETRIC).
+            % parametricity of weighted multiplex out-participation measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
@@ -148,20 +148,20 @@ classdef WeightedMultiplexOutParticipation < Strength
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with WeightedMultiplexOutParticipation 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to weighted multiplex participation. 
+            % of compatible graph classes to weighted multiplex out-participation. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber. 
             
             list = { ...
-                'MultiplexGraphWU' ...
+                'MultiplexGraphWD' ...
                 };
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with WeightedMultiplexOutParticipation
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to weighted multiplex participation.
+            % compatible graphs to weighted multiplex out-participation.
             % 
             % See also getCompatibleGraphList.
             
