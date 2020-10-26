@@ -26,7 +26,7 @@ classdef WeightedMultiplexInParticipation < InStrength
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, OutStrength, OverlappingOutStrength, MultiplexGraphWD.
+    % See also Measure, InStrength, OverlappingInStrength, MultiplexGraphWD.
     
     methods
         function m = WeightedMultiplexInParticipation(g, varargin)
@@ -46,7 +46,7 @@ classdef WeightedMultiplexInParticipation < InStrength
             % WeightedMultiplexInParticipation = CALCULATE(M) returns the value
             % of the weighted multiplex in-participation of a multiplex.
             %
-            % See also Measure, OutStrength, OverlappingOutStrength, MultiplexGraphWD.
+            % See also Measure, InStrength, OverlappingInStrength, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
             
@@ -70,7 +70,7 @@ classdef WeightedMultiplexInParticipation < InStrength
                 weighted_multiplex_in_participation = weighted_multiplex_in_participation + (in_strength{li}./overlapping_in_strength{1}).^2;
             end
             weighted_multiplex_in_participation = L / (L - 1) * (1 - weighted_multiplex_in_participation);
-            weighted_multiplex_in_participation(isnan(weighted_multiplex_in_participation)) = 0;  % Should return zeros, since NaN happens when out_strength = 0 and overlapping_ouot_strength = 0 for all regions
+            weighted_multiplex_in_participation(isnan(weighted_multiplex_in_participation)) = 0;  % Should return zeros, since NaN happens when in_strength = 0 and overlapping_in_strength = 0 for all regions
             weighted_multiplex_in_participation = {weighted_multiplex_in_participation};
         end
     end  
