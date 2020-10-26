@@ -9,7 +9,7 @@ classdef WeightedMultiplexOutParticipation < OutStrength
     % where L is the number of layers, si(l) is the out-strength in the l-th
     % layer and oi is the overlapping out-strength of the node.
     % Pi = 1 when the strength is the same in all layers and Pi = 0 when a
-    % node has non-zero strength in only one layer.
+    % node has non-zero out-strength in only one layer.
     % 
     % WeightedMultiplexOutParticipation methods:
     %   WeightedMultiplexOutParticipation - constructor

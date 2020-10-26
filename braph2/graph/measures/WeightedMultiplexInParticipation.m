@@ -9,7 +9,7 @@ classdef WeightedMultiplexInParticipation < InStrength
     % where L is the number of layers, si(l) is the in-strength in the l-th
     % layer and oi is the overlapping in-strength of the node.
     % Pi = 1 when the strength is the same in all layers and Pi = 0 when a
-    % node has non-zero strength in only one layer.
+    % node has non-zero in-strength in only one layer.
     % 
     % WeightedMultiplexInParticipation methods:
     %   WeightedMultiplexInParticipation - constructor
@@ -103,7 +103,7 @@ classdef WeightedMultiplexInParticipation < InStrength
             
             description = [ ...
                 'The weighted multiplex in-participation of a node is the heterogeneity ' ...
-                'of its number of out-neighbours across the layers. ' ...
+                'of its number of in-neighbours across the layers. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
