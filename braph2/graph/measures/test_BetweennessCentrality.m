@@ -191,6 +191,8 @@ g = GraphBU(A);
 betweenness_centrality = BetweennessCentrality(g).getValue();
 betweenness_centrality = betweenness_centrality{1};
 betweenness_centrality_bct = betweenness_binary_standard(g.getA());
+betweenness_centrality(isnan(betweenness_centrality)) = 0;
+betweenness_centrality_bct(isnan(betweenness_centrality_bct)) = 0;
 
 assert(isequal(betweenness_centrality, betweenness_centrality_bct), ...
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
@@ -201,6 +203,8 @@ g = GraphBD(A);
 betweenness_centrality = BetweennessCentrality(g).getValue();
 betweenness_centrality = betweenness_centrality{1};
 betweenness_centrality_bct = betweenness_binary_standard(g.getA());
+betweenness_centrality(isnan(betweenness_centrality)) = 0;
+betweenness_centrality_bct(isnan(betweenness_centrality_bct)) = 0;
 
 assert(isequal(betweenness_centrality, betweenness_centrality_bct), ...
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
@@ -211,6 +215,8 @@ g = GraphWU(A);
 betweenness_centrality = BetweennessCentrality(g).getValue();
 betweenness_centrality = betweenness_centrality{1};
 betweenness_centrality_bct = betweenness_weighted_standard(g.getA());
+betweenness_centrality(isnan(betweenness_centrality)) = 0;
+betweenness_centrality_bct(isnan(betweenness_centrality_bct)) = 0;
 
 assert(isequal(betweenness_centrality, betweenness_centrality_bct), ...
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
@@ -221,6 +227,8 @@ g = GraphWD(A);
 betweenness_centrality = BetweennessCentrality(g).getValue();
 betweenness_centrality = betweenness_centrality{1};
 betweenness_centrality_bct = betweenness_weighted_standard(g.getA());
+betweenness_centrality(isnan(betweenness_centrality)) = 0;
+betweenness_centrality_bct(isnan(betweenness_centrality_bct)) = 0;
 
 assert(isequal(betweenness_centrality, betweenness_centrality_bct), ...
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
@@ -262,7 +270,6 @@ end
 bc_standard_B=sum(DP,1);               %compute betweenness
 bc_standard_B = bc_standard_B';
 bc_standard_B = bc_standard_B / ((n-1)*(n-2)); % normalization
-bc_standard_B(isnan(bc_standard_B)) = 0; % Should return zeros, not NaN
 end
 
 % Function for directed graphs
@@ -317,5 +324,4 @@ for u=1:n
     end
 end
 bc_standard_W = bc_standard_W / ((n-1)*(n-2)); % normalization
-bc_standard_W(isnan(bc_standard_W)) = 0; % Should return zeros, not NaN
 end

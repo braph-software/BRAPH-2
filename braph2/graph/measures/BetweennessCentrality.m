@@ -63,11 +63,9 @@ classdef BetweennessCentrality < Measure
                 
                 if connectivity_layer == Graph.WEIGHTED  % weighted graphs
                     betweenness_centrality_layer = m.getWeightedCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized betweenness centrality
-                    betweenness_centrality_layer(isnan(betweenness_centrality_layer)) = 0; % Should return zeros, not NaN
                     betweenness_centrality(li) = {betweenness_centrality_layer};
                 else  % binary graphs
                     betweenness_centrality_layer = m.getBinaryCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized betweenness centrality
-                    betweenness_centrality_layer(isnan(betweenness_centrality_layer)) = 0; % Should return zeros, not NaN
                     betweenness_centrality(li) = {betweenness_centrality_layer};
                 end
             end               
