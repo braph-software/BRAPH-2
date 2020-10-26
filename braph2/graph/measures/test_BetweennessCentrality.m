@@ -7,7 +7,7 @@ A = [
     1 0 0
     ];
 
-known_betweenness_centrality = {[1, 0, 0]'};
+known_betweenness_centrality = {[1 0 0]'};
 
 g = GraphBU(A);
 betweenness_centrality = BetweennessCentrality(g);
@@ -16,7 +16,23 @@ assert(isequal(betweenness_centrality.getValue(), known_betweenness_centrality),
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
     'BetweennessCentrality is not being calculated correctly for GraphBU.')
 
-%% Test 2: GraphWU
+%% Test 2: GraphBD
+A = [
+    0 1 0; 
+    1 0 0; 
+    1 0 0
+    ];
+
+known_betweenness_centrality = {[1/2 0 0]'};
+
+g = GraphBD(A);
+betweenness_centrality = BetweennessCentrality(g);
+
+assert(isequal(betweenness_centrality.getValue(), known_betweenness_centrality), ...
+    [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'BetweennessCentrality is not being calculated correctly for GraphBD.')
+
+%% Test 3: GraphWU
 A = [
     0 1 4
     1 0 0
@@ -32,7 +48,23 @@ assert(isequal(betweenness_centrality.getValue(), known_betweenness_centrality),
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
     'BetweennessCentrality is not being calculated correctly for GraphWU')
 
-%% Test 3: MultiplexGraphBU
+%% Test 4: GraphWD
+A = [
+    0 1 0
+    1 0 0
+    4 0 0
+    ];
+
+known_betweenness_centrality = {[1/2 0 0]'};
+
+g = GraphWD(A);
+betweenness_centrality = BetweennessCentrality(g);
+
+assert(isequal(betweenness_centrality.getValue(), known_betweenness_centrality), ...
+    [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'BetweennessCentrality is not being calculated correctly for GraphWD')
+
+%% Test 5: MultiplexGraphBU
 A11 = [
     0   1   1
     1   0   0
@@ -62,7 +94,37 @@ assert(isequal(betweenness_centrality.getValue(), known_betweenness_centrality),
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
     'BetweennessCentrality is not being calculated correctly for MultiplexGraphBU.')
 
-%% Test 4: MultiplexGraphWU
+%% Test 6: MultiplexGraphBD
+A11 = [
+    0   1   0
+    1   0   0
+    1   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   0
+    0   1   0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_betweenness_centrality = {
+    [1/2 0   0]'
+    [0   1/2 0]'
+    };
+
+g = MultiplexGraphBD(A);
+betweenness_centrality = BetweennessCentrality(g);
+
+assert(isequal(betweenness_centrality.getValue(), known_betweenness_centrality), ...
+    [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'BetweennessCentrality is not being calculated correctly for MultiplexGraphBD.')
+
+%% Test 7: MultiplexGraphWU
 A11 = [
     0   1   4
     1   0   0
@@ -92,7 +154,37 @@ assert(isequal(betweenness_centrality.getValue(), known_betweenness_centrality),
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
     'BetweennessCentrality is not being calculated correctly for MultiplexGraphWU.')
 
-%% Test 5: Calculation vs BCT
+%% Test 7: MultiplexGraphWD
+A11 = [
+    0   1   0
+    1   0   0
+    4   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   0
+    0   4   0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
+
+known_betweenness_centrality = {
+    [1/2 0   0]'
+    [0   1/2 0]'
+    };
+
+g = MultiplexGraphWD(A);
+betweenness_centrality = BetweennessCentrality(g);
+
+assert(isequal(betweenness_centrality.getValue(), known_betweenness_centrality), ...
+    [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'BetweennessCentrality is not being calculated correctly for MultiplexGraphWD.')
+
+%% Test 9: Calculation vs BCT
 A = rand(randi(5));
 g = GraphBU(A); 
 
