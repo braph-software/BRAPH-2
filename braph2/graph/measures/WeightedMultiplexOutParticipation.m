@@ -4,7 +4,7 @@ classdef WeightedMultiplexOutParticipation < OutStrength
     % of a node for weighted directed (WD) multiplexes. 
     %
     % It is the heterogenerity of the number of neighbours of a node across the layers.
-    % It is calcualted as:
+    % It is calculated as:
     % Pi = L/(L - 1) [1 - sum_{l=1}^{L} (si(l)/oi)^2]
     % where L is the number of layers, si(l) is the out-strength in the l-th
     % layer and oi is the overlapping out-strength of the node.
