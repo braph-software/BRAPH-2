@@ -1,12 +1,12 @@
 classdef WeightedMultiplexOutParticipation < OutStrength
-    % WeightedMultiplexOutParticipation Weighted multiplex out out-participation measure
-    % WeightedMultiplexOutParticipation provides the weightedmultiplex out-participation 
+    % WeightedMultiplexOutParticipation Weighted multiplex out-participation measure
+    % WeightedMultiplexOutParticipation provides the weighted multiplex out-participation 
     % of a node for weighted directed (WD) multiplexes. 
     %
     % It is the heterogenerity of the number of neighbours of a node across the layers.
     % It is calcualted as:
     % Pi = L/(L - 1) [1 - sum_{l=1}^{L} (si(l)/oi)^2]
-    % where L is the number of layers, si(l) is the strength in the l-th
+    % where L is the number of layers, si(l) is the out-strength in the l-th
     % layer and oi is the overlapping out-strength of the node.
     % Pi = 1 when the strength is the same in all layers and Pi = 0 when a
     % node has non-zero strength in only one layer.
@@ -22,11 +22,11 @@ classdef WeightedMultiplexOutParticipation < OutStrength
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
-    %   getMeasure                  - returns the degree class
+    %   getMeasure                  - returns the weighted multiplex out-participation class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Strength, OverlappingOutStrength, MultiplexGraphWD.
+    % See also Measure, OutStrength, OverlappingOutStrength, MultiplexGraphWD.
     
     methods
         function m = WeightedMultiplexOutParticipation(g, varargin)
@@ -34,7 +34,7 @@ classdef WeightedMultiplexOutParticipation < OutStrength
             % G is a weighted directed multiplex (i.e., an instance of
             % MultiplexGraphWD).
             %
-            % See also Measure, Strength, OverlappingOutStrength, MultiplexGraphWD.
+            % See also Measure, OutStrength, OverlappingOutStrength, MultiplexGraphWD.
             
             m = m@OutStrength(g, varargin{:});
         end
@@ -46,7 +46,7 @@ classdef WeightedMultiplexOutParticipation < OutStrength
             % WeightedMultiplexOutParticipation = CALCULATE(M) returns the value
             % of the weighted multiplex out-participation of a multiplex.
             %
-            % See also Measure, Strength, OverlappingOutStrength, MultiplexGraphWD.
+            % See also Measure, OutStrength, OverlappingOutStrength, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
             
@@ -103,7 +103,7 @@ classdef WeightedMultiplexOutParticipation < OutStrength
             
             description = [ ...
                 'The weighted multiplex out-participation of a node is the heterogeneity ' ...
-                'of its number of neighbours across the layers. ' ...
+                'of its number of out-neighbours across the layers. ' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -127,8 +127,8 @@ classdef WeightedMultiplexOutParticipation < OutStrength
         function measure_scope = getMeasureScope()
             % GETMEASURESCOPE returns the measure scope of WeightedMultiplexOutParticipation
             %
-            % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of weighted multiplex out-participation measure (SUPERGLOBAL).
+            % MEASURE_SCOPE = GETMEASURESCOPE() returns the measure scope
+            % of weighted multiplex out-participation measure (SUPERGLOBAL).
             %
             % See also getMeasureFormat.
             
@@ -137,8 +137,8 @@ classdef WeightedMultiplexOutParticipation < OutStrength
         function parametricity = getParametricity()
             % GETPARAMETRICITY returns the parametricity of WeightedMultiplexOutParticipation
             %
-            % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of weighted multiplex out-participation measure (NONPARAMETRIC).
+            % PARAMETRICITY = GETPARAMETRICITY() returns the parametricity
+            % of weighted multiplex out-participation measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
