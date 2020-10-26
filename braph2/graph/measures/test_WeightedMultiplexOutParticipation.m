@@ -18,11 +18,11 @@ A = {
     A21     A22
     };
 
-known_weighted_multiplex_participation = {[8/9 3/4 0]'};
+known_weighted_multiplex_out_participation = {[8/9 3/4 0]'};
 
 g = MultiplexGraphWD(A);           
 weighted_multiplex_out_participation = WeightedMultiplexOutParticipation(g);
 
-assert(isequal(weighted_multiplex_out_participation.getValue(), known_weighted_multiplex_participation), ...
+assert(isequal(weighted_multiplex_out_participation.getValue(), known_weighted_multiplex_out_participation), ...
     [BRAPH2.STR ':WeightedMultiplexOutParticipation:' BRAPH2.BUG_ERR], ...
     'WeightedMultiplexOutParticipation is not being calculated correctly for MultiplexGraphWD.')
