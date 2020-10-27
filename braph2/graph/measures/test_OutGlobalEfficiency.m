@@ -114,7 +114,7 @@ out_global_efficiency = OutGlobalEfficiency(g).getValue();
 out_global_efficiency = out_global_efficiency{1};
 out_global_efficiency_bct = efficiency_wei(g.getA());
 a = round(mean(out_global_efficiency), 4); 
-b =  round(out_global_efficiency_bct, 4);
+b = round(out_global_efficiency_bct, 4);
 assert(isequal(a, b) || (isnan(a) && isnan(b)), ...
     [BRAPH2.STR ':OutGlobalEfficiency:' BRAPH2.BUG_ERR], ...
     'OutGlobalEfficiency is not being calculated correctly for BCT.')
