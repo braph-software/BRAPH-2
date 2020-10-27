@@ -88,18 +88,20 @@ classdef MultilayerCommunityStructure < Measure
                 movefunction = 'move';
             end
             
-            if ~isempty(B)
-                if g.is_multiplex || g.is_multilayer
-                    if g.is_undirected
-                        [B, twom] = multicat_undirected(A, gamma, omega, N(1), L);
-                    else
-                        [B, twom] = multicat_directed(A, gamma, omega, N(1), L);
+            if isempty(B)
+                directionality_type =  g.getDirectionalityType(g.layernumber());
+                directionality_firstlayer = directionality_type(1, 1);
+                if g.is_multiplex(g) || g.is_multilayer(g)
+                    if directionality_firstlayer == Graph.UNDIRECTED  % undirected 
+                        [B, twom] = m.multicat_undirected(A, gamma, omega, N(1), L);
+                    else  % directed 
+                        [B, twom] = m.multicat_directed(A, gamma, omega, N(1), L);
                     end
-                elseif g.is_ordered_multiplex || g.is_ordered_multilayer
-                    if g.is_undirected
-                        [B, twom] = multiord_undirected(A, gamma, omega, N(1), L);
-                    else
-                        [B, twom] = multiord_directed(A, gamma, omega, N(1), L);
+                elseif g.is_ordered_multiplex(g) || g.is_ordered_multilayer(g)
+                    if directionality_firstlayer == Graph.UNDIRECTED  % undirected 
+                        [B, twom] = m.multiord_undirected(A, gamma, omega, N(1), L);
+                    else  % directed 
+                        [B, twom] = m.multiord_directed(A, gamma, omega, N(1), L);
                     end
                 end
             end
@@ -255,21 +257,20 @@ classdef MultilayerCommunityStructure < Measure
                 if isequal(Sb,S2)
                     P = sparse(y,1:length(y),1);
                     Q = full(sum(sum((P*M).*P)));
-                    return
+                    %return
                 end
                 
                 M = m.metanetwork(B, S2);
                 y = unique(S2);  % unique also puts elements in ascending order
-            end
-            
+            end           
             m.quality_function = Q/twom;  % save normalized quality function
-            S = reshape(S, N, T);
-            multilayer_community_structure = cell(T, 1);
-            for li = 1:1:T
+            S = reshape(S, N(1), L);
+            multilayer_community_structure = cell(L, 1);
+            for li = 1:1:L
                 multilayer_community_structure(li) = {S(:, li)};
             end
         end
-        function [B, twom] = multiord_undirected(A, gamma, omega, N, T)
+        function [B, twom] = multiord_undirected(m, A, gamma, omega, N, T)
             % MULTIORDUNDIRECTED returns the multilayer modularity matrix for ordered undirected networks
             %
             % [B, twom] = MULTIORDUNDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer 
@@ -371,7 +372,7 @@ classdef MultilayerCommunityStructure < Measure
             B = @(i) AA(:,i) - gamma(ceil(i/(N+eps)))*K(:,ceil(i/(N+eps)))*kvec(i);
             twom = twom + 2*N*(T-1)*omega;
         end
-        function [B, twom] = multiord_directed(A, gamma, omega, N, T)
+        function [B, twom] = multiord_directed(m, A, gamma, omega, N, T)
             % MULTIORDDIRECTED returns the multilayer modularity matrix for ordered directed networks
             %
             % [B, twom] = MULTIORDDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer 
@@ -460,7 +461,7 @@ classdef MultilayerCommunityStructure < Measure
             B = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps)))+kin(i).*koutmat(:,ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps))));
             twom = sum(m) + omega*2*N*(T-1);
         end
-        function [B, twom] = multicat_undirected(A, gamma, omega, N, T)
+        function [B, twom] = multicat_undirected(m, A, gamma, omega, N, T)
             % MULTICATUNDIRECTED returns the multilayer modularity matrix for unordered undirected networks
             %
             % [B, twom] = MULTICATUNDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer 
@@ -542,7 +543,7 @@ classdef MultilayerCommunityStructure < Measure
                 ki = [ki; indx];
                 kj = [kj; ones(N,1)*s];
                 kv = [kv; k(:)./mm];
-                twom = twom + sum(k);
+                twom = twom + sum(k);  
             end
             AA = sparse(ii,jj,vv,N*T,N*T);
             K=sparse(ki,kj,kv,N*T,T);
@@ -553,7 +554,7 @@ classdef MultilayerCommunityStructure < Measure
             B = @(i) AA(:,i) - gamma(ceil(i/(N+eps)))*K(:, ceil(i/(N+eps)))*kvec(i);
             twom = twom + 2*N*(T-1)*T*omega;
         end
-        function [B, twom] = multicat_directed(A, gamma, omega, N, T)
+        function [B, twom] = multicat_directed(m, A, gamma, omega, N, T)
             % MULTICATDIRECTED returns the multilayer modularity matrix for unordered directed networks
             %
             % [B, twom] = MULTICATDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer 
@@ -638,7 +639,7 @@ classdef MultilayerCommunityStructure < Measure
             B = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps))) + kin(i).*koutmat(:, ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps)))); 
             twom = sum(m) + omega*2*N*(T-1);
         end
-        function M = metanetwork(J, S)
+        function M = metanetwork(m, J, S)
             % METANETWORK returns the new aggregated network (communities --> nodes)
             %
             % [B, twom] = METANETWORK(J, S) returns the new aggregated
@@ -647,7 +648,7 @@ classdef MultilayerCommunityStructure < Measure
             PP = sparse(1:length(S), S, 1);
             M = PP'*J*PP;
         end
-        function Mi = metanetwork_i(J, i)
+        function Mi = metanetwork_i(m, J, i)
             % METANETWORKI returns the ith column of the metanetwork
             %
             % [B, twom] = METANETWORKI(J, S) returns the ith column of 
@@ -713,7 +714,7 @@ classdef MultilayerCommunityStructure < Measure
                 };
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of MultilayerCommunityStructure
+            % GETMEASUREFORMAT returns the measure format of 
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of multilayer community structure measure (NODAL).
