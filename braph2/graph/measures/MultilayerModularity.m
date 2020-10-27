@@ -48,6 +48,7 @@ classdef MultilayerModularity < MultilayerCommunityStructure
             end  
             
             multilayer_community_structure = g.getMeasure('MultilayerCommunityStructure');
+            multilayer_community_structure.getValue();
             Q = multilayer_community_structure.quality_function; 
             multilayer_modularity = {Q};  % assign normalized quality function
         end
