@@ -770,4 +770,14 @@ classdef MultilayerCommunityStructure < Measure
             n = Measure.getCompatibleGraphNumber('MultilayerCommunityStructure');
         end
     end
+    methods
+        function quality_function = getQualityFunction(m)
+            % GETQUALITYFUNCTION returns the quality function value 
+            %
+            % VALUES = GETQUALITYFUNCTION() returns the quality function
+            % value.
+            
+            quality_function = m.quality_function;
+        end
+    end
 end

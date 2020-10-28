@@ -42,14 +42,10 @@ classdef MultilayerModularity < MultilayerCommunityStructure
             % See also Measure, MultilayerCommunityStructure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
     
             g = m.getGraph();  % graph from measure class
-            
-            if ~g.is_measure_calculated('MultilayerCommunityStructure')
-               multilayer_community_structure_value = calculate@MultilayerCommunityStructure(m);
-            end  
-            
+                       
             multilayer_community_structure = g.getMeasure('MultilayerCommunityStructure');
             multilayer_community_structure.getValue();
-            Q = multilayer_community_structure.quality_function; 
+            Q = multilayer_community_structure.getQualityFunction(); 
             multilayer_modularity = {Q};  % assign normalized quality function
         end
     end
