@@ -92,10 +92,14 @@ classdef MultilayerCommunityStructure < Measure
                 directionality_type =  g.getDirectionalityType(g.layernumber());
                 directionality_firstlayer = directionality_type(1, 1);
                 if g.is_multiplex(g) || g.is_multilayer(g)
+                    C = cell(L, 1);
+                    for i=1:L
+                        C(i) = {g.getA(i)};
+                    end
                     if directionality_firstlayer == Graph.UNDIRECTED  % undirected 
                         [B, twom] = m.multicat_undirected(A, gamma, omega, N(1), L);
                     else  % directed 
-                        [B, twom] = m.multicat_directed(A, gamma, omega, N(1), L);
+                        [B, twom] = m.multicat_directed(C, gamma, omega, N(1), L);
                     end
                 elseif g.is_ordered_multiplex(g) || g.is_ordered_multilayer(g)
                     if directionality_firstlayer == Graph.UNDIRECTED  % undirected 
