@@ -46,7 +46,6 @@ classdef MultilayerCommunityStructure < Measure
             % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
     
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % 2D-cell array 
             N = g.nodenumber();  % number of nodes in each layer
             L = g.layernumber();  % number of layers
                
@@ -92,16 +91,17 @@ classdef MultilayerCommunityStructure < Measure
                 directionality_type =  g.getDirectionalityType(g.layernumber());
                 directionality_firstlayer = directionality_type(1, 1);
                 if g.is_multiplex(g) || g.is_multilayer(g)
-                    C = cell(L, 1);
+                    A = cell(L, 1);
                     for i=1:L
-                        C(i) = {g.getA(i)};
+                        A(i) = {g.getA(i)};
                     end
                     if directionality_firstlayer == Graph.UNDIRECTED  % undirected 
-                        [B, twom] = m.multicat_undirected(C, gamma, omega, N(1), L);
+                        [B, twom] = m.multicat_undirected(A, gamma, omega, N(1), L);
                     else  % directed 
-                        [B, twom] = m.multicat_directed(C, gamma, omega, N(1), L);
+                        [B, twom] = m.multicat_directed(A, gamma, omega, N(1), L);
                     end
                 elseif g.is_ordered_multiplex(g) || g.is_ordered_multilayer(g)
+                    A = g.getA();  % 2D-cell array 
                     if directionality_firstlayer == Graph.UNDIRECTED  % undirected 
                         [B, twom] = m.multiord_undirected(A, gamma, omega, N(1), L);
                     else  % directed 
