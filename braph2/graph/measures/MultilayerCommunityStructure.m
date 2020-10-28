@@ -97,7 +97,7 @@ classdef MultilayerCommunityStructure < Measure
                         C(i) = {g.getA(i)};
                     end
                     if directionality_firstlayer == Graph.UNDIRECTED  % undirected 
-                        [B, twom] = m.multicat_undirected(A, gamma, omega, N(1), L);
+                        [B, twom] = m.multicat_undirected(C, gamma, omega, N(1), L);
                     else  % directed 
                         [B, twom] = m.multicat_directed(C, gamma, omega, N(1), L);
                     end
