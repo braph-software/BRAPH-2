@@ -113,8 +113,9 @@ g = GraphBD(A);
 out_global_efficiency_av = OutGlobalEfficiencyAv(g).getValue();
 out_global_efficiency_av = out_global_efficiency_av{1};
 out_global_efficiency_av_bct = efficiency_bin(g.getA());
-
-assert(isequal(round(out_global_efficiency_av, 4), out_global_efficiency_av_bct), ...
+a = round(out_global_efficiency_av, 4); 
+b = round(out_global_efficiency_av_bct, 4);
+assert(isequal(a, b) || (isnan(a) && isnan(b)), ...
     [BRAPH2.STR ':OutGlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
     'OutGlobalEfficiencyAv is not being calculated correctly for BCT.')
 
@@ -177,7 +178,7 @@ else                                        %global efficiency
     E=sum(e(:))./(n^2-n);
 end
 
-E(isnan(E)) = 0;
+% E(isnan(E)) = 0;
     function D=distance_inv(A_)
         l=1;                                        %path length
         Lpath=A_;                                   %matrix of paths l

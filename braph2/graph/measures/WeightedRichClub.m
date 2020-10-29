@@ -123,8 +123,8 @@ classdef WeightedRichClub < Strength
                 for s = s_levels
                     low_rich_nodes = find(st < s);  % get lower rich nodes with strength < s
                     subAii = Aii;  % extract subnetwork of nodes >=s by removing nodes < s of Aii
-                    subAii(low_rich_nodes, :) = 0;  % remove rows
-                    subAii(:, low_rich_nodes) = 0;  % remove columns
+                    subAii(low_rich_nodes, :) = [];  % remove rows
+                    subAii(:, low_rich_nodes) = [];  % remove columns
                     
                     Wr = sum(subAii(:));  % total weight of connections in subgraph > s
                     Er = length(find(subAii~=0));  % total number of connections in subgraph
@@ -133,7 +133,7 @@ classdef WeightedRichClub < Strength
                     weighted_rich_club_layer(1, 1, count) = Wr / sum(wrank_r); 
                     count = count + 1;
                 end
-                weighted_rich_club_layer(isnan(weighted_rich_club_layer)) = 0;  % Should return zeros, not NaN
+                weighted_rich_club_layer(isnan(weighted_rich_club_layer)) = 0;  % Should return zeros, since NaN happens when subAii has zero nodes with strength > s
                 weighted_rich_club(li) = {weighted_rich_club_layer};  % add rich club strength of layer li
             end
         end

@@ -113,10 +113,23 @@ g = GraphBU(A);
 global_efficiency_av = GlobalEfficiencyAv(g).getValue();
 global_efficiency_av = global_efficiency_av{1};
 global_efficiency_av_bct = efficiency_bin(g.getA());
-
-assert(isequal(round(global_efficiency_av, 4), global_efficiency_av_bct), ...
+a = round(mean(global_efficiency_av), 4); 
+b =  round(global_efficiency_av_bct, 4);
+assert(isequal(a, b) || (isnan(a) && isnan(b)), ...
     [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
     'GlobalEfficiencyAv is not being calculated correctly for BCT.')
+
+%% Test 5: GraphBU with NAN
+A = NaN(5);
+
+known_global_efficiency_av = {0};
+
+g = GraphBU(A);
+global_efficiency_av = GlobalEfficiencyAv(g);
+
+assert(isequal(global_efficiency_av.getValue(), known_global_efficiency_av), ...
+    [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'GlobalEfficiencyAv is not being calculated correctly for GraphBU.')
 
 function E = efficiency_bin(A,local)
 %EFFICIENCY_BIN     Global efficiency, local efficiency.
@@ -177,7 +190,7 @@ else                                        %global efficiency
     E=sum(e(:))./(n^2-n);
 end
 
-E(isnan(E)) = 0;
+% E(isnan(E)) = 0;
     function D=distance_inv(A_)
         l=1;                                        %path length
         Lpath=A_;                                   %matrix of paths l

@@ -263,8 +263,8 @@ classdef SubjectFNC < Subject
                 % load subjects
                 for i = 1:1:length(files)
                     % read file
-                    
-                    raw = readmatrix(fullfile(path, files(i).name));
+                     % raw = readmatrix(fullfile(path, files(i).name));  % readmatrix avaiable from 2019a 
+                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
                     atlases = cohort.getBrainAtlases();
                     % get age
                     
@@ -272,8 +272,8 @@ classdef SubjectFNC < Subject
                     sub_id = erase(files(i).name, '.xlsx');
                     sub_id = erase(sub_id, '.xls');
                     subject = Subject.getSubject(subject_class, ...
-                        sub_id, '', '', atlases, ...
-                        'FNC', raw);
+                        sub_id, char(raw{1, 1}), char(raw{2, 1}), atlases, ...
+                        'FNC', num);
                     
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
@@ -466,7 +466,8 @@ classdef SubjectFNC < Subject
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.txt'];
-                    writecell(tab, file, 'Delimiter', '\t');
+                    % writecell(tab, file, 'Delimiter', '\t');  % writecell not available from 2019a 
+                    writetable(cell2table(tab), file, 'Delimiter', '\t', 'WriteVariableNames', 0);
                 end
             end
         end
@@ -483,18 +484,7 @@ classdef SubjectFNC < Subject
             %
             % See also save_to_json, load_from_xls, load_from_txt
             
-            % directory
-            file = get_from_varargin('', 'File', varargin{:});
-            if isequal(file, '')  % select file
-                msg = get_from_varargin(BRAPH2.JSON_MSG_GETFILE, 'MSG', varargin{:});
-                [filename, filepath, filterindex] = uigetfile(BRAPH2.JSON_EXTENSION, msg);
-                file = [filepath filename];
-                
-                if ~filterindex
-                    return
-                end
-            end
-            raw = jsondecode(fileread(file));
+            raw = JSON.Deserialize(varargin{:});
             
             if isa(tmp, 'Cohort')
                 cohort = tmp;
@@ -511,32 +501,39 @@ classdef SubjectFNC < Subject
             end
             
             % sneak peak
-            subject_tmp = Subject.getSubject(subject_class, ...
-                num2str(raw.Groups(1).SubjectData(1).id), num2str(raw.Groups(1).SubjectData(1).label), num2str(raw.Groups(1).SubjectData(1).notes), atlases, ...
-                'FNC', raw.Groups(1).SubjectData(1).data);
+             subject_tmp = Subject.getSubject(subject_class, ...
+                num2str(raw.Subjects(1).id), num2str(raw.Subjects(1).label), num2str(raw.Subjects(1).notes), atlases, ...
+                'FNC', raw.Subjects(1).data);
             delete(subject_tmp)
             
+            % subjects idict
+            for i = 1:1:length(raw.Subjects)
+                subject_data = raw.Subjects(i);
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(subject_data.id), num2str(subject_data.label), num2str(subject_data.notes), atlases, ...
+                    'FNC', subject_data.data);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+            end
+            
             % creates group
-            k = 0; l = 0;            
+            subjects = cohort.getSubjects().getValues();
             for i = 1:1:length(raw.Groups)
                 group = Group(subject_class, raw.Groups(i).ID, raw.Groups(i).Label, raw.Groups(i).Notes, {});
-                cohort.getGroups().add(group.getID(), group);
-                subject_data = raw.Groups(i).SubjectData;                
-                for j = 1:1:length(subject_data)
-                    subject = Subject.getSubject(subject_class, ...
-                        num2str(subject_data(j).id), num2str(subject_data(j).label), num2str(subject_data(j).notes), atlases, ...
-                        'FNC', subject_data(j).data);
-                    if ~cohort.getSubjects().contains(subject.getID())
-                        cohort.getSubjects().add(subject.getID(), subject, j + k);
-                    end
-                    group.addSubject(subject);
-                    l = l + 1;
+                if ~cohort.getGroups().contains(group.getID())
+                    cohort.getGroups().add(group.getID(), group);
                 end
-                k = l;                
-            end 
-
+                subject_data = raw.Groups(i).SubjectData;
+                for j = 1:1:length(subjects)
+                    sub = subjects{j};
+                    if ismember(sub.getID(), subject_data)
+                        group.addSubject(sub);
+                    end
+                end
+            end
         end
-        function save_to_json(cohort, varargin)
+        function structure = save_to_json(cohort, varargin)
             % SAVE_TO_JSON saves the cohort of SubjectsCON to '.json' files
             %
             % SAVE_TO_JSON(COHORT) opens a GUI to choose the path where the
@@ -547,67 +544,94 @@ classdef SubjectFNC < Subject
             %
             % See also load_from_json, save_to_xls, save_to_txt
             
-            % get Root Directory
-            file = get_from_varargin('', 'File', varargin{:});
-            if isequal(file, '')  % no path, open gui
-                msg = get_from_varargin(BRAPH2.JSON_MSG_PUTFILE, 'MSG', varargin{:});
-               [filename, filepath, filterindex] = uiputfile(BRAPH2.JSON_EXTENSION, msg);
-                file = [filepath filename];
-                
-                if ~filterindex
-                    return
-                end
-                
-            end
-            
             % get info
             groups = cohort.getGroups().getValues();
+            subjects = cohort.getSubjects().getValues();
             atlases = cohort.getBrainAtlases();
             atlas = atlases{1};  % must change
-            % labels
-            for i = 1:1:atlas.getBrainRegions().length()
-                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
-            end
-            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
-            labels = row_data;
             
             Group_structure = struct;
             Subject_Structure = struct;
+            
+             for i = 1:1:length(subjects)
+                subject = subjects{i};                    
+                Subject_Structure(i).id = subject.getID();
+                Subject_Structure(i).label = subject.getLabel();
+                Subject_Structure(i).notes = subject.getNotes();
+                Subject_Structure(i).data = subject.getData('FNC').getValue();
+            end
+            
             for i =1:1:length(groups)
                 group = groups{i};
-                subjects_list = group.getSubjects();
-                
-                for j = 1:1:group.subjectnumber()
-                    % get subject data
-                    subject = subjects_list{j};
-                    
-                    Subject_Structure(j).id = subject.getID();
-                    Subject_Structure(j).label = subject.getLabel();
-                    Subject_Structure(j).notes = subject.getNotes();
-                    Subject_Structure(j).data = subject.getData('FNC').getValue();
-                end
-                
                 Group_structure(i).ID = group.getID();
                 Group_structure(i).Label = group.getLabel();
                 Group_structure(i).Notes = group.getNotes();
-                Group_structure(i).SubjectData = Subject_Structure;
+                Group_structure(i).SubjectData = cellfun(@(x) x.getID(), group.getSubjects(), 'UniformOutput', false);
             end
             
             % create structure to be save
             structure_to_be_saved = struct( ...
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
-                'BrainRegionsLabels', labels, ...
+                'BrainAtlas', BrainAtlas.save_to_json(atlas), ...
+                'Subjects', Subject_Structure, ...
                 'Groups', Group_structure ...
                 );
             
             % save
-            json_structure = jsonencode(structure_to_be_saved);
-            fid = fopen(file, 'w');
-            if fid == -1, error('Cannot create JSON file'); end
-            fwrite(fid, json_structure, 'char');
-            fclose(fid);
+           structure = structure_to_be_saved;
             
+        end
+        function cohort = load_from_struct(tmp, varargin)
+                      
+            if isa(tmp, 'Cohort')
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+                atlases = cohort.getBrainAtlases();
+            else
+                cohort_id = '';
+                cohort_label = '';
+                cohort_notes = '';
+                % creates cohort
+                subject_class = 'SubjectFNC';
+                atlases = tmp;
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
+            end
+            
+            raw = get_from_varargin([], 'SubjectStructure', varargin{:});
+            
+           % sneak peak
+             subject_tmp = Subject.getSubject(subject_class, ...
+                num2str(raw.Subjects(1).id), num2str(raw.Subjects(1).label), num2str(raw.Subjects(1).notes), atlases, ...
+                'FNC', raw.Subjects(1).data);
+            delete(subject_tmp)
+            
+            % subjects idict
+            for i = 1:1:length(raw.Subjects)
+                subject_data = raw.Subjects(i);
+                subject = Subject.getSubject(subject_class, ...
+                    num2str(subject_data.id), num2str(subject_data.label), num2str(subject_data.notes), atlases, ...
+                    'FNC', subject_data.data);
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+            end
+            
+            % creates group
+            subjects = cohort.getSubjects().getValues();
+            for i = 1:1:length(raw.Groups)
+                 group = Group(subject_class, raw.Groups(i).ID, raw.Groups(i).Label, raw.Groups(i).Notes, {});
+                if ~cohort.getGroups().contains(group.getID())
+                    cohort.getGroups().add(group.getID(), group);
+                end
+                subject_data = raw.Groups(i).SubjectData;
+                for j = 1:1:length(subjects)
+                    sub = subjects{j};
+                    if ismember(sub.getID(), subject_data)
+                        group.addSubject(sub);
+                    end
+                end
+            end
         end
     end
 end

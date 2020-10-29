@@ -488,10 +488,10 @@ classdef AnalysisCON_WU < Analysis
                 groups_labels = analysis.getCohort().getGroups().getKeys();
             else
                 groups_labels = 'No groups';
-            end   
+            end
             
             subject_labels = {''};
-
+            
             selected_group = 1;
             selected_subject = 1;
             matrix_plot = [];
@@ -577,7 +577,7 @@ classdef AnalysisCON_WU < Analysis
             set(ui_matrix_histogram_checkbox, 'Callback', {@cb_matrix_histogram_checkbox})
             
             function cb_group_popup(~, ~)
-                selected_group = get(ui_matrix_groups_popup, 'value');                
+                selected_group = get(ui_matrix_groups_popup, 'value');
                 selected_subject = 1;
                 set(ui_matrix_subjects_popup, 'Value', selected_subject)
                 update_subjects();
@@ -752,7 +752,7 @@ classdef AnalysisCON_WU < Analysis
                 subject_labels = ['Group Average' subject_labels_inner];
                 set(ui_matrix_subjects_popup, 'String', subject_labels)
             end
-                        
+            
             update_matrix()
             update_subjects()
             
@@ -877,7 +877,7 @@ classdef AnalysisCON_WU < Analysis
                 set(ui_checkbox_brainmeasures_rand, 'Value', false)
                 set(ui_checkbox_brainmeasures_rand, 'TooltipString', 'Select random comparison')
                 set(ui_checkbox_brainmeasures_rand, 'Callback', {@cb_global_rand})
-
+                
                 set(ui_plot_hide_checkbox, 'Position', [.3 .02 .10 .03])
                 set(ui_plot_hide_checkbox, 'String', 'Show Plot')
                 set(ui_plot_hide_checkbox, 'Value', true)
@@ -913,7 +913,7 @@ classdef AnalysisCON_WU < Analysis
                 measures = get(ui_selectedmeasure_popup, 'String');
                 selected_measure = measures{get(ui_selectedmeasure_popup, 'Value')};
                 
-                subject = selected_subject_index; 
+                subject = selected_subject_index;
                 if subject > 1
                     [~, subjects] = analysis.getCohort().getGroupSubjects(selected_index);
                     sub = subjects{subject-1};
@@ -942,7 +942,7 @@ classdef AnalysisCON_WU < Analysis
                     
                     if exist('global_measurements', 'var')
                         global_measurements =  global_measurements(~cellfun(@isempty, global_measurements));
-                        if subject == 1                            
+                        if subject == 1
                             set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group ', ' group value ', ' name ', ' label ', ' notes '})
                         else
                             set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' subject ', ' subject value ', ' name ', ' label ', ' notes '})
@@ -963,10 +963,10 @@ classdef AnalysisCON_WU < Analysis
                                 output_id = measurement.getGroup().getID();
                             else
                                 global_values = measurement.getMeasureValues();
-                                output_value = global_values{subject-1};                                
+                                output_value = global_values{subject-1};
                                 output_id = sub.getID();
                             end
-
+                            
                             data{i, 2} = measurement.getMeasureCode();
                             data{i, 3} = output_id;
                             data{i, 4} = output_value;
@@ -1106,7 +1106,7 @@ classdef AnalysisCON_WU < Analysis
                     set(ui_selected_subject, 'Visible', 'off')
                     
                     set(fdr_threshold_edit, 'Visible', 'on')
-                else                    
+                else
                     set(ui_popup_globalmeasures_group1, 'Enable', 'on')
                     set(ui_popup_globalmeasures_group1, 'Visible', 'on')
                     
@@ -1160,7 +1160,7 @@ classdef AnalysisCON_WU < Analysis
             function cb_global_table(~, ~)
                 update_subjects()
                 update_global_table()
-                init_plot_measure_panel()                
+                init_plot_measure_panel()
             end
             function cb_global_table_edit(~, event)  % (src,event)
                 g = event.Indices(1);
@@ -1263,14 +1263,14 @@ classdef AnalysisCON_WU < Analysis
             function cb_select_subject(~, ~)
                 selected_subject_index = get(ui_selected_subject, 'value');
                 update_global_table();
-                init_plot_measure_panel();                
+                init_plot_measure_panel();
             end
             function update_subjects()
                 selected_group = get(ui_popup_globalmeasures_group1, 'Value');
                 [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
                 subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
                 subject_labels = ['All Subjects' subject_labels_inner];
-                set(ui_selected_subject, 'String', subject_labels)                
+                set(ui_selected_subject, 'String', subject_labels)
             end
             
             update_global_table()
@@ -1449,7 +1449,7 @@ classdef AnalysisCON_WU < Analysis
                 
                 selected_br = get(ui_selectedbr_popup, 'Value');
                 
-                subject = selected_subject_index; 
+                subject = selected_subject_index;
                 if subject > 1
                     [~, subjects] = analysis.getCohort().getGroupSubjects(selected_index_1);
                     sub = subjects{subject-1};
@@ -1469,7 +1469,7 @@ classdef AnalysisCON_WU < Analysis
                     
                     if exist('nodal_measurements', 'var')
                         nodal_measurements =  nodal_measurements(~cellfun(@isempty, nodal_measurements));
-                        if subject == 1                            
+                        if subject == 1
                             set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' group value ', ' name ', ' label ', ' notes '})
                         else
                             set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' subject ', ' subject value ', ' name ', ' label ', ' notes '})
@@ -1485,16 +1485,16 @@ classdef AnalysisCON_WU < Analysis
                             else
                                 data{i, 1} = false;
                             end
-                             if subject == 1
+                            if subject == 1
                                 tmp = measurement.getGroupAverageValue();
                                 output_value = tmp(selected_br);
                                 output_id = measurement.getGroup().getID();
                             else
                                 global_values = measurement.getMeasureValues();
-                                tmp = global_values{subject-1}; 
-                                output_value = tmp(selected_br);                              
+                                tmp = global_values{subject-1};
+                                output_value = tmp(selected_br);
                                 output_id = sub.getID();
-                             end
+                            end
                             data{i, 2} = measurement.getMeasureCode();
                             data{i, 3} = output_id;
                             data{i, 4} = output_value;
@@ -1782,14 +1782,14 @@ classdef AnalysisCON_WU < Analysis
             function cb_select_subject(~, ~)
                 selected_subject_index = get(ui_selected_subject, 'value');
                 update_nodal_table();
-                init_plot_nodal_panel();                
+                init_plot_nodal_panel();
             end
             function update_subjects()
                 selected_group = get(ui_popup_nodalmeasures_group1, 'Value');
                 [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
                 subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
                 subject_labels = ['All Subjects' subject_labels_inner];
-                set(ui_selected_subject, 'String', subject_labels)                
+                set(ui_selected_subject, 'String', subject_labels)
             end
             
             update_nodal_table()
@@ -1974,7 +1974,7 @@ classdef AnalysisCON_WU < Analysis
                 selected_br1 = get(ui_selectedbr1_popup, 'Value');
                 selected_br2 = get(ui_selectedbr2_popup, 'Value');
                 
-                subject = selected_subject_index; 
+                subject = selected_subject_index;
                 if subject > 1
                     [~, subjects] = analysis.getCohort().getGroupSubjects(selected_index_1);
                     sub = subjects{subject-1};
@@ -1994,7 +1994,7 @@ classdef AnalysisCON_WU < Analysis
                     
                     if exist('binodal_measurements', 'var')
                         binodal_measurements =  binodal_measurements(~cellfun(@isempty, binodal_measurements));
-                        if subject == 1                            
+                        if subject == 1
                             set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group ', ' group value ', ' name ', ' label ', ' notes '})
                         else
                             set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' subject ', ' subject value ', ' name ', ' label ', ' notes '})
@@ -2010,16 +2010,16 @@ classdef AnalysisCON_WU < Analysis
                             else
                                 data{i, 1} = false;
                             end
-                           if subject == 1
+                            if subject == 1
                                 tmp = measurement.getGroupAverageValue();
                                 output_value = tmp(selected_br1, selected_br2);
                                 output_id = measurement.getGroup().getID();
                             else
                                 global_values = measurement.getMeasureValues();
-                                tmp = global_values{subject-1}; 
-                                output_value = tmp(selected_br1, selected_br2);                              
+                                tmp = global_values{subject-1};
+                                output_value = tmp(selected_br1, selected_br2);
                                 output_id = sub.getID();
-                           end
+                            end
                             data{i, 2} = measurement.getMeasureCode();
                             data{i, 3} = output_id;
                             data{i, 4} = output_value;
@@ -2307,14 +2307,14 @@ classdef AnalysisCON_WU < Analysis
             function cb_select_subject(~, ~)
                 selected_subject_index = get(ui_selected_subject, 'value');
                 update_binodal_table();
-                init_plot_binodal_panel();                
+                init_plot_binodal_panel();
             end
             function update_subjects()
                 selected_group = get(ui_popup_binodalmeasures_group1, 'Value');
                 [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
                 subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
                 subject_labels = ['All Subjects' subject_labels_inner];
-                set(ui_selected_subject, 'String', subject_labels)                
+                set(ui_selected_subject, 'String', subject_labels)
             end
             
             update_binodal_table()
@@ -3047,11 +3047,11 @@ classdef AnalysisCON_WU < Analysis
                     atlases = analysis.getCohort().getBrainAtlases();
                     atlas = atlases{1};
                     
-%                     if isequal(analysis.getGraphType, 'GraphWU')
+                    %                     if isequal(analysis.getGraphType, 'GraphWU')
                     graphs = analysis.get_graphs_for_group(group);
-%                     else
-%                         graphs = analysis.get_graphs_for_group(group, rule, value);
-%                     end
+                    %                     else
+                    %                         graphs = analysis.get_graphs_for_group(group, rule, value);
+                    %                     end
                     g_As = cellfun(@(x) x.getA(), graphs, 'UniformOutput', false);
                     A = zeros(atlas.getBrainRegions().length());
                     
@@ -3134,7 +3134,7 @@ classdef AnalysisCON_WU < Analysis
             fdr_lim = [];
             p1 = [];
             p2 = [];
-            ga = analysis;            
+            ga = analysis;
             
             % get all measures
             mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());  % list of nodal measures
@@ -3163,7 +3163,7 @@ classdef AnalysisCON_WU < Analysis
             ui_edit_meas_fdr1 = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
             ui_checkbox_meas_fdr2 = uicontrol(ui_panel_meas_scaling, 'Style',  'checkbox');
             ui_edit_meas_fdr2 = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
-            ui_button_meas_automatic = uicontrol(ui_panel_meas_scaling, 'Style', 'pushbutton');            
+            ui_button_meas_automatic = uicontrol(ui_panel_meas_scaling, 'Style', 'pushbutton');
             
             % measure container panel
             ui_measure_container_panel = uipanel(f, 'Units', 'normalized');
@@ -3346,9 +3346,9 @@ classdef AnalysisCON_WU < Analysis
                 set(ui_edit_meas_fdr2, 'FontWeight', 'bold')
                 set(ui_edit_meas_fdr2, 'Callback', {@cb_edit_meas_fdr2})
                 
-               % measure figure *******************************                
+                % measure figure *******************************
                 set(ui_measure_container_panel, 'Position', [.35 .01 .605 .64])
-                             
+                
                 set(ui_checkbox_meas_symbolsize, 'Units', 'normalized')
                 set(ui_checkbox_meas_symbolsize, 'BackgroundColor', GUI.BKGCOLOR)
                 set(ui_checkbox_meas_symbolsize, 'Position', [.01 .9 .30 .08])
@@ -4049,7 +4049,7 @@ classdef AnalysisCON_WU < Analysis
                     else  % binodal
                     end
                     
-                    if get(ui_checkbox_meas_symbolsize, 'Value') 
+                    if get(ui_checkbox_meas_symbolsize, 'Value')
                         
                         size_ = str2double(get(ui_edit_meas_symbolsize, 'String'));
                         offset = str2double(get(ui_edit_meas_offset, 'String'));
@@ -4094,7 +4094,7 @@ classdef AnalysisCON_WU < Analysis
                         rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
                         
                         if isempty(fdr_lim)
-                           R = 1 + ((measure_data_inner - offset)./rescaling)*R;
+                            R = 1 + ((measure_data_inner - offset)./rescaling)*R;
                         else
                             R = (1 + ((measure_data_inner - offset)./rescaling)*R).*fdr_lim;
                         end
@@ -4132,7 +4132,7 @@ classdef AnalysisCON_WU < Analysis
                         
                         if isempty(fdr_lim)
                             alpha_vec = ((measure_data_inner - offset)./rescaling).*alpha;
-                        else                        
+                        else
                             alpha_vec = (((measure_data_inner - offset)./rescaling).*alpha).*fdr_lim;
                         end
                         alpha_vec(isnan(alpha_vec)) = 0;
@@ -4149,7 +4149,7 @@ classdef AnalysisCON_WU < Analysis
                         
                         if isempty(fdr_lim)
                             size_ = 1 + ((measure_data_inner - offset)./rescaling)*size_;
-                        else                        
+                        else
                             size_ = (1 + ((measure_data_inner - offset)./rescaling)*size_).*fdr_lim;
                         end
                         
@@ -4186,7 +4186,7 @@ classdef AnalysisCON_WU < Analysis
                 atlas = atlases{1};
                 if Measure.is_nodal(m)
                     fdr_lim = ones(1, atlas.getBrainRegions().length());
-                    for i = 1:1:atlas.getBrainRegions().length()                       
+                    for i = 1:1:atlas.getBrainRegions().length()
                         if get(ui_checkbox_meas_fdr1, 'Value')
                             if p1(i) > fdr(p1, str2double(get(ui_edit_meas_fdr1, 'String')))
                                 fdr_lim(i) = 0;
@@ -4206,14 +4206,14 @@ classdef AnalysisCON_WU < Analysis
             function update_measure_control_panel()
                 i = get(ui_list_gr, 'Value');
                 measure = mlist{i};
-                if (Measure.is_nodal(measure)) 
+                if (Measure.is_nodal(measure))
                     set(ui_measure_container_panel, 'Visible', 'on')
                     childs_visibility(ui_measure_container_panel, 'on')
                     set(ui_edge_value_show, 'Enable', 'off')
                     set(ui_edge_value_show, 'Visible', 'off')
                 else
                     set(ui_measure_container_panel, 'Visible', 'off')
-                    childs_visibility(ui_measure_container_panel, 'off')                    
+                    childs_visibility(ui_measure_container_panel, 'off')
                     set(ui_edge_value_show, 'Enable', 'on')
                     set(ui_edge_value_show, 'Visible', 'on')
                 end
@@ -4235,11 +4235,11 @@ classdef AnalysisCON_WU < Analysis
                     for i = 1:1:size(measure_data_inner, 1)
                         for j = 1:1:size(measure_data_inner, 2)
                             if bg.link_edge_is_on(i, j) || bg.arrow_edge_is_on(i, j) || bg.cylinder_edge_is_on(i, j)
-                                if bg.tex_edge_is_off(i, j) 
+                                if bg.tex_edge_is_off(i, j)
                                     bg.text_edge_on(i, j)
                                 else
                                     bg.text_edge(brain_axes, i, j, string(measure_data_inner(i, j)))
-                                end                                
+                                end
                             end
                         end
                     end
@@ -4254,9 +4254,593 @@ classdef AnalysisCON_WU < Analysis
                 end
             end
             
-            if nargout > 0 
+            if nargout > 0
                 h = f;
             end
+        end
+    end
+    methods (Static)  % Save and load functions
+        function analysis = load_from_xls(tmp, varargin)
+            % directory
+            directory = get_from_varargin('', 'RootDirectory', varargin{:});
+            if isequal(directory, '')  % no path, open gui
+                msg = get_from_varargin(BRAPH2.MSG_GETDIR, 'MSG', varargin{:});
+                directory = uigetdir(msg);
+            end
+            
+            % find all subfolders
+            sub_folders = dir(directory);
+            sub_folders = sub_folders([sub_folders(:).isdir] == 1);
+            sub_folders = sub_folders(~ismember({sub_folders(:).name}, {'.', '..'}));
+            
+            if isa(tmp, 'Analysis')
+                analysis = tmp;
+                subject_class = analysis.getCohort().getSubjectClass(); %#ok<NASGU>
+            else
+                % analysis information
+                file_analysis = [directory filesep() 'analysis_info.xlsx'];
+                analysis_id = '';
+                analysis_label = '';
+                analysis_notes = '';
+                
+                if exist(file_analysis, 'file')
+                    v = ver('MATLAB');  % read version matlab
+                    if v.Release >= "(R2020a)"
+                        raw_analysis = readcell(file_analysis);
+                    else
+                        raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0); 
+                        raw_analysis = table2cell(raw_analysis);
+                    end
+                    analysis_id = raw_analysis{1, 2};
+                    analysis_label = raw_analysis{2, 2};
+                    analysis_notes = raw_analysis{3, 2};
+                    type_of_analysis = raw_analysis{4, 2};
+                    cohort_id = raw_analysis{5, 2};
+%                     n_measurements = raw_analysis{6, 2};
+%                     n_comparisons = raw_analysis{7, 2}; do i need this?
+%                     n_rcomparisons = raw_analysis{8, 2};
+                end
+                
+                cohort = tmp;
+                subject_class = cohort.getSubjectClass();
+                if isequal(type_of_analysis, 'AnalysisCON_WU')
+                    analysis = AnalysisCON_WU(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                elseif isequal(type_of_analysis, 'AnalysisCON_BUT')
+                    analysis = AnalysisCON_BUT(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                elseif isequal(type_of_analysis, 'AnalysisCON_BUD')
+                    analysis = AnalysisCON_BUD(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                else
+                    errordlg('Type of Analysis does not exist.');
+                end
+                
+                % load analysis
+                for i = 1:1:length(sub_folders)
+                    path = [directory filesep() sub_folders(i).name];
+                    
+                    % find all xls or xlsx files per sub folder
+                    files = dir(fullfile(path, '*.xlsx'));
+                    files2 = dir(fullfile(path, '*.xls'));
+                    len = length(files);
+                    for j = 1:1:length(files2)
+                        files(len + j, 1) = files2(j, 1);
+                    end
+                    
+                    % measurements
+                    if isequal(sub_folders(i).name, 'measurements')
+                        measurement_idict = analysis.getMeasurements();
+                        for k = 1:1:length(files)
+                            % get info main
+                            v = ver('MATLAB');  % read version matlab
+                            if v.Release >= "(R2020a)"
+                                raw_main = readcell(fullfile(path, files(k).name));
+                            else
+                                raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
+                                raw_main = table2cell(raw_main);
+                            end
+                            meas_id = raw_main{1, 2};
+                            meas_lab = raw_main{2, 2};
+                            meas_notes = raw_main{3, 2};
+                            measure_code = raw_main{4, 2};
+                            raw_group = raw_main{5, 2};
+                            
+                            if ismissing(meas_lab)
+                                meas_lab = '';
+                            end
+                            if ismissing(meas_notes)
+                                meas_notes = '';
+                            end
+                            
+                            % get group
+                            group = analysis.getCohort().getGroups().getValue(raw_group);
+                            
+                            % get values
+%                             raw_values = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
+%                             raw_avgs = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
+                            raw_values = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
+                            raw_avgs = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
+
+                            % create measurement
+                            measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
+                                meas_id, ...
+                                meas_lab, ...  % meaurement label
+                                meas_notes, ...  % meaurement notes
+                                analysis.getCohort().getBrainAtlases(), ...
+                                measure_code, ...
+                                group,  ...
+                                'MeasurementCON.values', num2cell(raw_values, 1), ...
+                                'MeasurementCON.average_value', raw_avgs, ...
+                                varargin{:});
+                            measurement_idict.add(measurement.getID(), measurement, k);
+                        end 
+                    elseif isequal(sub_folders(i).name, 'comparisons')
+                        comparison_idict = analysis.getComparisons();
+                        for k = 1:1:length(files)
+                            % get info main
+                            v = ver('MATLAB');  % read version matlab
+                            if v.Release >= "(R2020a)"
+                                raw_main = readcell(fullfile(path, files(k).name));
+                            else
+                                raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
+                                raw_main = table2cell(raw_main);
+                            end
+                            comp_id = raw_main{1, 2};
+                            comp_lab = raw_main{2, 2};
+                            comp_notes = raw_main{3, 2};
+                            measure_code = raw_main{4, 2};
+                            raw_group1 = raw_main{5, 2};
+                            raw_group2 = raw_main{6, 2};
+                            
+                            if ismissing(comp_lab)
+                                comp_lab = '';
+                            end
+                            if ismissing(comp_notes)
+                                comp_notes = '';
+                            end
+                            
+                            % get groups
+                            group1 = analysis.getCohort().getGroups().getValue(raw_group1);
+                            group2 = analysis.getCohort().getGroups().getValue(raw_group2);
+                            
+                            % get values
+                            %raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
+                            %raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
+                            %raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
+                            %raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
+                            %raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
+                            %raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
+                            %raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
+                            %raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
+                            %raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
+                            %raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
+                            raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
+                            raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
+                            raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
+                            raw_avgs_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
+                            raw_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
+                            raw_all_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 7, 'ReadVariableNames', 0));
+                            raw_p1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 8, 'ReadVariableNames', 0));
+                            raw_p2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 9, 'ReadVariableNames', 0));
+                            raw_cimin = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 10, 'ReadVariableNames', 0));
+                            raw_cimax = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 11, 'ReadVariableNames', 0));
+                            
+                            comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
+                                comp_id, ...
+                                comp_lab, ...  % comparison label
+                                comp_notes, ...  % comparison notes
+                                analysis.getCohort().getBrainAtlases(), ...
+                                measure_code, ...
+                                group1, ...
+                                group2, ...
+                                'ComparisonCON.values_1', num2cell(raw_values_g1, 1), ...
+                                'ComparisonCON.average_values_1', num2cell(raw_avgs_g1, 1), ...
+                                'ComparisonCON.values_2', num2cell(raw_values_g2, 1), ...
+                                'ComparisonCON.average_values_2', num2cell(raw_avgs_g2, 1), ...
+                                'ComparisonCON.difference', {raw_difference}, ...
+                                'ComparisonCON.all_differences', num2cell(raw_all_difference, 1), ...
+                                'ComparisonCON.p1', {raw_p1}, ...
+                                'ComparisonCON.p2', {raw_p2}, ...
+                                'ComparisonCON.confidence_min', {raw_cimin}, ...
+                                'ComparisonCON.confidence_max', {raw_cimax}, ...
+                                varargin{:});
+                            
+                            comparison_idict.add(comparison.getID(), comparison, k);
+                        end 
+                    elseif isequal(sub_folders(i).name, 'randomcomparisons')
+                        random_comparison_idict = analysis.getRandomComparisons();
+                        for k = 1:1:length(files)
+                            % get info main
+                            v = ver('MATLAB');  % read version matlab
+                            if v.Release >= "(R2020a)"
+                                raw_main = readcell(fullfile(path, files(k).name));
+                            else
+                                raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
+                                raw_main = table2cell(raw_main);
+                            end
+                            ran_comp_id = raw_main{1, 2};
+                            ran_comp_lab = raw_main{2, 2};
+                            ran_comp_notes = raw_main{3, 2};
+                            measure_code = raw_main{4, 2};
+                            raw_group = raw_main{5, 2};
+                            
+                            if ismissing(ran_comp_lab)
+                                ran_comp_lab = '';
+                            end
+                            if ismissing(ran_comp_notes)
+                                ran_comp_notes = '';
+                            end
+                            
+                            % get groups
+                            group = analysis.getCohort().getGroups().getValue(raw_group);
+                            
+                            % get values
+%                             raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
+%                             raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
+%                             raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
+%                             raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
+%                             raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
+%                             raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
+%                             raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
+%                             raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
+%                             raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
+%                             raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
+                            
+                            raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
+                            raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
+                            raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
+                            raw_avgs_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
+                            raw_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
+                            raw_all_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 7, 'ReadVariableNames', 0));
+                            raw_p1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 8, 'ReadVariableNames', 0));
+                            raw_p2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 9, 'ReadVariableNames', 0));
+                            raw_cimin = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 10, 'ReadVariableNames', 0));
+                            raw_cimax = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 11, 'ReadVariableNames', 0));
+                            
+                            random_comparison = RandomComparison.getRandomComparison(analysis.getRandomComparisonClass(), ...
+                                ran_comp_id, ...
+                                ran_comp_lab, ...  % comparison label
+                                ran_comp_notes, ...  % comparison notes
+                                analysis.getCohort().getBrainAtlases(), ...
+                                measure_code, ...
+                                group, ...
+                                'RandomComparisonCON.value_group', num2cell(raw_values_g1, 1), ...
+                                'RandomComparisonCON.value_random', num2cell(raw_values_g2, 1), ...
+                                'RandomComparisonCON.average_value_group', num2cell(raw_avgs_g1, 1), ...
+                                'RandomComparisonCON.average_value_random', num2cell(raw_avgs_g2, 1), ...
+                                'RandomComparisonCON.difference', {raw_difference}, ...
+                                'RandomComparisonCON.all_differences', num2cell(raw_all_difference, 1), ...
+                                'RandomComparisonCON.p1', {raw_p1}, ...
+                                'RandomComparisonCON.p2', {raw_p2}, ....
+                                'RandomComparisonCON.confidence_min', {raw_cimin}, ...
+                                'RandomComparisonCON.confidence_max', {raw_cimax}, ...
+                                varargin{:});
+                            
+                            random_comparison_idict.add(random_comparison.getID(), random_comparison, k);
+                        end 
+                    else
+                        continue;                        
+                    end
+                end   
+            end
+        end
+        function save_to_xls(analysis, varargin)
+            % save to folders separting by type of analysis
+            
+            % get saving info
+            % get Root Directory
+            root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+            if isequal(root_directory, '')  % no path, open gui
+                msg = get_from_varargin(BRAPH2.MSG_PUTDIR, 'MSG', varargin{:});
+                root_directory = uigetdir(msg);
+            end
+            
+            analyses = {'measurements', 'comparisons', 'randomcomparisons'};
+            for i = 1:1:3
+                type_of_analysis = analyses{i};
+                if ~exist([root_directory filesep() type_of_analysis], 'dir')
+                    mkdir(root_directory, type_of_analysis);
+                end
+            end
+            
+            % get analysis info
+            cohort = analysis.getCohort();
+            measurements = analysis.getMeasurements();
+            comparisons = analysis.getComparisons();
+            random_comparisons = analysis.getRandomComparisons();
+            
+            % save analysis main file id, label, notes.
+            analysis_main_file = [root_directory filesep() 'analysis_info.xlsx'];
+            basic_info = {
+                'Analysis ID:', analysis.getID();
+                'Analysis Label:',  analysis.getLabel();
+                'Analysis Notes:', analysis.getNotes();
+                'Type of Analysis:', analysis.getClass();
+                'Cohort:',  cohort.getID();
+                'Number of Measurements:', measurements.length();
+                'Number of Comparisons:', comparisons.length();
+                'Number of Random Comparisons:' random_comparisons.length();
+                };
+            
+            % writecell(basic_info, analysis_main_file, 'Sheet', 1);
+            writetable(cell2table(basic_info), analysis_main_file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+            
+            % warning xls sheets off
+            warning( 'off', 'MATLAB:xlswrite:AddSheet' ) ;
+             
+            % measurements could ask for just certain measures 
+            for i = 1:1:measurements.length()
+                m = measurements.getValue(i);
+                file_measurement = [root_directory filesep() 'measurements' filesep() m.getID() '.xlsx'];
+                measurement_data = {
+                    'Measurement ID:', m.getID();
+                    'Measurement Label:', m.getLabel();
+                    'Measurement Notes:', m.getNotes();
+                    'Measure:', m.getMeasureCode();
+                    'Group:', m.getGroup().getID(); 
+                    'Values (Sheet 2):', size(m.getMeasureValues);
+                    'Group Average (Sheet 3):', size(m.getGroupAverageValue());
+                    };
+                
+                % writecell(measurement_data, file_measurement, 'Sheet', 1);
+                writetable(cell2table(measurement_data), file_measurement, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                % writematrix([m.getMeasureValues{:}], file_measurement, 'Sheet', 2);
+                writetable(array2table([m.getMeasureValues{:}]), file_measurement, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
+                % writematrix(m.getGroupAverageValue, file_measurement, 'Sheet', 3);
+                writetable(array2table(m.getGroupAverageValue), file_measurement, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
+            end
+            
+            % comparisons
+            for i = 1:1:comparisons.length()
+                c = comparisons.getValue(i);
+                Values1 = c.getGroupValue(1);
+                Values2 = c.getGroupValue(2);
+                Avg_1 = c.getGroupAverageValue(1);
+                Avg_2 = c.getGroupAverageValue(2);
+                [g1, g2] = c.getGroups();
+                file_comparisons = [root_directory filesep() 'comparisons' filesep() c.getID() '.xlsx'];
+                comparisons_data = {
+                    'Comparison ID:', c.getID();
+                    'Comparison Label:', c.getLabel();
+                    'Comparison Notes:', c.getNotes();
+                    'Measure:', c.getMeasureCode();
+                    'Group 1:', g1.getID();
+                    'Group 2:', g2.getID();
+                    'Values Group 1 (Sheet 2):', size(Values1);
+                    'Values Group 2 (Sheet 3):', size(Values2);
+                    'Group 1 Average Value (Sheet 4):', size(Avg_1);
+                    'Group 2 Average Value (Sheet 5):', size(Avg_2);
+                    'Difference (Sheet 6):', size(c.getDifference());
+                    'All Differences (Sheet 7):', size(c.getAllDifferences());
+                    'P1 (Sheet 8):', size(c.getP1());
+                    'P2 (Sheet 9):', size(c.getP2());
+                    'Minimum Confidence Interval (Sheet 10):', size(c.getConfidenceIntervalMin());
+                    'Maximum Confidence Interval (Sheet 11):', size(c.getConfidenceIntervalMax());
+                    };
+                
+                writetable(cell2table(comparisons_data), file_comparisons, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Values1{:}]), file_comparisons, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Values2{:}]), file_comparisons, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Avg_1{:}]), file_comparisons, 'Sheet', 4, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([Avg_2{:}]), file_comparisons, 'Sheet', 5, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getDifference{:}]), file_comparisons, 'Sheet', 6, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getAllDifferences{:}]), file_comparisons, 'Sheet', 7, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getP1{:}]), file_comparisons, 'Sheet', 8, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getP2{:}]), file_comparisons, 'Sheet', 9, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getConfidenceIntervalMin{:}]), file_comparisons, 'Sheet', 10, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([c.getConfidenceIntervalMax{:}]), file_comparisons, 'Sheet', 11, 'WriteVariableNames', 0, 'Range', 'A1');
+            end
+            
+            % random comparisons
+            for i = 1:1:random_comparisons.length()
+                rc = random_comparisons.getValue(i);
+                Values1 = rc.getGroupValue();
+                Values2 = rc.getRandomValue();
+                Avg_1 = rc.getAverageValue();
+                Avg_2 = rc.getAverageRandomValue();
+                file_random_comparisons = [root_directory filesep() 'randomcomparisons' filesep() rc.getID() '.xlsx'];
+                random_comparisons_data = {
+                    'Random Comparison ID:', rc.getID();
+                    'Random Comparison Label:', rc.getLabel();
+                    'Random Comparison Notes:', rc.getNotes();
+                    'Measure:', c.getMeasureCode();
+                    'Groups:', rc.getGroup().getID();
+                    'Values Group 1 (Sheet 2):', size(Values1);
+                    'Values Random Group (Sheet 3):', size(Values2);
+                    'Group 1 Average Value (Sheet 4):', size(Avg_1);
+                    'Random Group Average Value (Sheet 5):', size(Avg_2);
+                    'Difference (Sheet 6):', size(rc.getDifference());
+                    'All Differences (Sheet 7):', size(rc.getAllDifferences());
+                    'P1 (Sheet 8):', size(rc.getP1());
+                    'P2 (Sheet 9):', size(rc.getP2());
+                    'Minimum Confidence Interval (Sheet 10):', size(rc.getConfidenceIntervalMin());
+                    'Maximum Confidence Interval (Sheet 11):', size(rc.getConfidenceIntervalMax());
+                    };
+                
+                writetable(cell2table(random_comparisons_data), file_random_comparisons, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getGroupValue{:}]), file_random_comparisons, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getRandomValue{:}]), file_random_comparisons, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getAverageValue{:}]), file_random_comparisons, 'Sheet', 4, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getAverageRandomValue{:}]), file_random_comparisons, 'Sheet', 5, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getDifference{:}]), file_random_comparisons, 'Sheet', 6, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getAllDifferences{:}]), file_random_comparisons, 'Sheet', 7, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getP1{:}]), file_random_comparisons, 'Sheet', 8, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getP2{:}]), file_random_comparisons, 'Sheet', 9, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getConfidenceIntervalMin{:}]), file_random_comparisons, 'Sheet', 10, 'WriteVariableNames', 0, 'Range', 'A1');
+                writetable(array2table([rc.getConfidenceIntervalMax{:}]), file_random_comparisons, 'Sheet', 11, 'WriteVariableNames', 0, 'Range', 'A1');
+            end
+            
+            % warning on
+            warning('on', 'all')
+        end
+        function analysis = load_from_json(tmp, varargin)
+            raw = JSON.Deserialize(varargin{:});
+            
+            if isa(tmp, 'Analysis')
+                analysis = tmp;
+                subject_class = analysis.getCohort().getSubjectClass(); %#ok<NASGU>
+            else      
+                cohort = tmp;
+                analysis_id = raw.ID;
+                analysis_label = raw.Label;
+                analysis_notes = raw.Notes; 
+                type_of_analysis = raw.Analysis;
+                
+                if isequal(type_of_analysis, 'AnalysisCON_WU')
+                    analysis = AnalysisCON_WU(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                elseif isequal(type_of_analysis, 'AnalysisCON_BUT')
+                    analysis = AnalysisCON_BUT(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                elseif isequal(type_of_analysis, 'AnalysisCON_BUD')
+                    analysis = AnalysisCON_BUD(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
+                else
+                    errordlg('Type of Analysis does not exist.');
+                end                
+            end
+            
+            measurements_idict = analysis.getMeasurements();
+            comparisons_idict = analysis.getComparisons();
+            random_comp_idict = analysis.getRandomComparisons();
+            
+            % measurements idict
+            for i = 1:1:length(raw.Measurements)
+                group =  cohort.getGroups().getValue(raw.Measurements(i).group);
+                measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
+                    raw.Measurements(i).id, ...
+                    raw.Measurements(i).label, ...  % meaurement label
+                    raw.Measurements(i).notes, ...  % meaurement notes
+                    analysis.getCohort().getBrainAtlases(), ...
+                    raw.Measurements(i).measure, ...
+                    group,  ...
+                    'MeasurementCON.values', num2cell(raw.Measurements(i).value', 1), ...
+                    'MeasurementCON.average_value', raw.Measurements(i).avgvalue, ...
+                    varargin{:});
+                measurements_idict.add(measurement.getID(), measurement, i);                
+            end
+            % comparison idict 
+            for i = 1:1:length(raw.Comparisons)                
+                comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
+                    raw.Comparisons(i).id, ...
+                    raw.Comparisons(i).label, ...  % comparison label
+                    raw.Comparisons(i).notes, ...  % comparison notes
+                    analysis.getCohort().getBrainAtlases(), ...
+                    raw.Comparisons(i).measure, ...
+                    cohort.getGroups().getValue(raw.Comparisons(i).group1), ...
+                    cohort.getGroups().getValue(raw.Comparisons(i).group2), ...
+                    'ComparisonCON.values_1', num2cell(raw.Comparisons(i).value1', 1), ...
+                    'ComparisonCON.average_values_1', num2cell(raw.Comparisons(i).avgvalue1', 1), ...
+                    'ComparisonCON.values_2', num2cell(raw.Comparisons(i).value2', 1), ...
+                    'ComparisonCON.average_values_2', num2cell(raw.Comparisons(i).avgvalue2', 1), ...
+                    'ComparisonCON.difference', {raw.Comparisons(i).difference'}, ...
+                    'ComparisonCON.all_differences', num2cell(raw.Comparisons(i).alldifferences', 1), ...
+                    'ComparisonCON.p1', {raw.Comparisons(i).p1'}, ...
+                    'ComparisonCON.p2', {raw.Comparisons(i).p2'}, ...
+                    'ComparisonCON.confidence_min', {raw.Comparisons(i).confidencemin'}, ...
+                    'ComparisonCON.confidence_max', {raw.Comparisons(i).confidencemax'}, ...
+                    varargin{:});
+                
+                comparisons_idict.add(comparison.getID(), comparison, i);
+            end
+            % randomcomparisons idict
+            for i = 1:1:length(raw.RandomComparisons)
+                random_comparison = RandomComparison.getRandomComparison(analysis.getRandomComparisonClass(), ...
+                    raw.RandomComparisons(i).id, ...
+                    raw.RandomComparisons(i).label, ...  % comparison label
+                    raw.RandomComparisons(i).notes, ...  % comparison notes
+                    analysis.getCohort().getBrainAtlases(), ...
+                    raw.RandomComparisons(i).measure, ...
+                    cohort.getGroups().getValue(raw.RandomComparisons(i).group), ...
+                    'RandomComparisonCON.value_group', num2cell(raw.RandomComparisons(i).value', 1), ...
+                    'RandomComparisonCON.value_random', num2cell(raw.RandomComparisons(i).ranvalue', 1), ...
+                    'RandomComparisonCON.average_value_group', num2cell(raw.RandomComparisons(i).avgvalue', 1), ...
+                    'RandomComparisonCON.average_value_random', num2cell(raw.RandomComparisons(i).ranavgvalue', 1), ...
+                    'RandomComparisonCON.difference', {raw.RandomComparisons(i).difference'}, ...
+                    'RandomComparisonCON.all_differences', num2cell(raw.RandomComparisons(i).alldifferences', 1), ...
+                    'RandomComparisonCON.p1', {raw.RandomComparisons(i).p1'}, ...
+                    'RandomComparisonCON.p2', {raw.RandomComparisons(i).p2'}, ....
+                    'RandomComparisonCON.confidence_min', {raw.RandomComparisons(i).confidencemin'}, ...
+                    'RandomComparisonCON.confidence_max', {raw.RandomComparisons(i).confidencemax'}, ...
+                    varargin{:});
+                
+                random_comp_idict.add(random_comparison.getID(), random_comparison, i);
+            end
+        end
+        function structure = save_to_json(analysis, varargin)
+            
+            % get info
+            cohort = analysis.getCohort();
+            atlases = cohort.getBrainAtlases();
+            atlas = atlases{1};
+            analysis_class = analysis.getClass();
+            measurements = analysis.getMeasurements().getValues();
+            comparisons = analysis.getComparisons().getValues();
+            random_comparisons = analysis.getRandomComparisons().getValues();
+            
+            % create structs
+            Measurements_structure = struct;
+            Comparisons_structure = struct;
+            RandomComparisons_structure = struct;
+            
+            % fill info into structures
+            for i = 1:1:length(measurements)
+                meas = measurements{i};
+                Measurements_structure(i).id = meas.getID();
+                Measurements_structure(i).label = meas.getLabel();
+                Measurements_structure(i).notes = meas.getNotes();
+                Measurements_structure(i).measure = meas.getMeasureCode();
+                Measurements_structure(i).group = meas.getGroup().getID();               
+                Measurements_structure(i).value = meas.getMeasureValues();                                
+                Measurements_structure(i).avgvalue = meas.getGroupAverageValue();
+            end
+            for i = 1:1:length(comparisons)
+                comp = comparisons{i};
+                [g1, g2] = comp.getGroups();
+                Comparisons_structure(i).id = comp.getID();
+                Comparisons_structure(i).label = comp.getLabel();
+                Comparisons_structure(i).notes = comp.getNotes();
+                Comparisons_structure(i).measure = comp.getMeasureCode();
+                Comparisons_structure(i).group1 = g1.getID();  
+                Comparisons_structure(i).group2 = g2.getID();
+                Comparisons_structure(i).value1 = comp.getGroupValue(1);                
+                Comparisons_structure(i).value2 = comp.getGroupValue(2); 
+                Comparisons_structure(i).avgvalue1 = comp.getGroupAverageValue(1);
+                Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2); 
+                Comparisons_structure(i).difference = comp.getDifference();
+                Comparisons_structure(i).alldifferences = comp.getAllDifferences();
+                Comparisons_structure(i).p1 = comp.p1();
+                Comparisons_structure(i).p2 = comp.p2();                
+                Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
+                Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
+            end
+            for i = 1:1:length(random_comparisons)
+                ran_comp = random_comparisons{i};
+                RandomComparisons_structure(i).id = ran_comp.getID();
+                RandomComparisons_structure(i).label = ran_comp.getLabel();
+                RandomComparisons_structure(i).notes = ran_comp.getNotes();
+                RandomComparisons_structure(i).measure = ran_comp.getMeasureCode();
+                RandomComparisons_structure(i).group = ran_comp.getGroup().getID();
+                RandomComparisons_structure(i).value = ran_comp.getGroupValue();                
+                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue(); 
+                RandomComparisons_structure(i).avgvalue = ran_comp.getAverageValue();
+                RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue(); 
+                RandomComparisons_structure(i).difference = ran_comp.getDifference();
+                RandomComparisons_structure(i).alldifferences = ran_comp.getAllDifferences();
+                RandomComparisons_structure(i).p1 = ran_comp.p1();
+                RandomComparisons_structure(i).p2 = ran_comp.p2();                
+                RandomComparisons_structure(i).confidencemin = ran_comp.getConfidenceIntervalMin();
+                RandomComparisons_structure(i).confidencemax = ran_comp.getConfidenceIntervalMax();
+            end
+            
+            %create analysis structure
+             structure = struct( ...
+                'Braph', BRAPH2.NAME, ...
+                'Build', BRAPH2.BUILD, ...
+                'Analysis', analysis_class, ...
+                'ID', analysis.getID(), ...
+                'Label', analysis.getLabel(), ...
+                'Notes', analysis.getNotes(), ...
+                'Cohort', SubjectCON.save_to_json(cohort), ...
+                'Measurements', Measurements_structure, ...
+                'Comparisons', Comparisons_structure, ...
+                'RandomComparisons', RandomComparisons_structure ...
+                ); 
         end
     end
 end

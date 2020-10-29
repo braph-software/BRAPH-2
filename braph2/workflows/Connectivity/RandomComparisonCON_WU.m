@@ -60,7 +60,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             % with the data from GROUP_1 and a random group. It initializes the
             % RANDOMCOMPARISONCON_WU with default settings.
             %
-            % RANDOMCOMPARISONCON_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...) 
+            % RANDOMCOMPARISONCON_WU(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, PROPERTY, VALUE, ...)
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP_1 and a random group. It initializes the
             % RANDOMCOMPARISONCON_WU with VALUE settings.
@@ -68,7 +68,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             % See also MeasurementCON_WU, ComparisonCON_WU, AnalysisCON_WU.
             
             graph_type = AnalysisCON_WU.getGraphType();
-            measure_list = Graph.getCompatibleMeasureList(graph_type);            
+            measure_list = Graph.getCompatibleMeasureList(graph_type);
             assert(ismember(measure_code, measure_list), ...
                 [BRAPH2.STR ':RandomComparisonCON_WU:' BRAPH2.BUG_FUNC], ...
                 'RandomComparisonCON_WU measure_code is not compatible with the permited Measures.');
@@ -82,7 +82,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             %
             % DISP(M) overrides RandomComparison disp and displays additional
             % information about the difference of the RandomComparisonCON_WU.
-            % 
+            %
             % See also Comparison
             
             rc.disp@RandomComparison()
@@ -102,7 +102,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             % GETGROUPVALUE returns the measure value of the group
             %
             % VALUE = GETGROUPVALUE(RC) returns the measure value of the group.
-            % 
+            %
             % See also getRandomValue, getDifference, getAllDifferences.
             
             value = rc.value_group;
@@ -112,7 +112,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             %
             % RANDOM_VALUE = GETRANDOMVALUE(RC) returns the measure value
             % of the random group.
-            % 
+            %
             % See also getGroupValue, getDifference, getAllDifferences.
             
             random_value = rc.value_random;
@@ -126,10 +126,10 @@ classdef RandomComparisonCON_WU < RandomComparison
         function difference = getDifference(rc)
             % GETDIFFERENCE returns the difference between measure values
             %
-            % DIFFERENCE = GETDIFFERENCE(C) returns the difference between 
+            % DIFFERENCE = GETDIFFERENCE(C) returns the difference between
             % measure values of both groups. This difference is the mean of
             % all differences.
-            % 
+            %
             % See also getGroupValue, getGroupValues, getAllDifferences.
             
             difference = rc.difference;
@@ -137,9 +137,9 @@ classdef RandomComparisonCON_WU < RandomComparison
         function all_differences = getAllDifferences(rc)
             % GETALLDIFFERENCES returns the all differences between measure values
             %
-            % ALL_DIFFERENCES = GETALLDIFFERENCE(RC) returns all differences between 
+            % ALL_DIFFERENCES = GETALLDIFFERENCE(RC) returns all differences between
             % measure values of both groups.
-            % 
+            %
             % See also getGroupValue, getGroupValues, getDifference.
             
             all_differences = rc.all_differences;
@@ -148,7 +148,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             % GETP1 returns the single tail p-value of the random comparison
             %
             % P1 = GETP1(C) returns the single tail p-value of the random comparison
-            % 
+            %
             % See also getP2, getConfidenceIntervalMin, getConfidenceIntervalMax.
             
             p1 = rc.p1;
@@ -157,7 +157,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             % GETP2 returns the double tail p-value of the random comparison
             %
             % P2 = GETP2(C) returns the double tail p-value of the random comparison
-            % 
+            %
             % See also getP1, getConfidenceIntervalMin, getConfidenceIntervalMax.
             
             p2 = rc.p2;
@@ -165,9 +165,9 @@ classdef RandomComparisonCON_WU < RandomComparison
         function confidence_interval_min = getConfidenceIntervalMin(rc)
             % GETCONFIDENCEINTERVALMIN returns minimum value of the confidence interval
             %
-            % CONFIDENCE_INTERVAL_MIN = GETCONFIDENCEINTERVALMIN(C) 
+            % CONFIDENCE_INTERVAL_MIN = GETCONFIDENCEINTERVALMIN(C)
             % returns minimum value of the confidence interval
-            % 
+            %
             % See also getP1, getP2, getConfidenceIntervalMax.
             
             confidence_interval_min = rc.confidence_interval_min;
@@ -175,9 +175,9 @@ classdef RandomComparisonCON_WU < RandomComparison
         function confidence_interval_max = getConfidenceIntervalMax(rc)
             % GETCONFIDENCEINTERVALMAX returns maximum value of the confidence interval
             %
-            % CONFIDENCE_INTERVAL_MAX = GETCONFIDENCEINTERVALMAX(C) 
+            % CONFIDENCE_INTERVAL_MAX = GETCONFIDENCEINTERVALMAX(C)
             % returns maximum value of the confidence interval
-            % 
+            %
             % See also getP1, getP2, getConfidenceIntervalMin.
             
             confidence_interval_max = rc.confidence_interval_max;
@@ -190,8 +190,8 @@ classdef RandomComparisonCON_WU < RandomComparison
             % INITIALIZE_DATA(C) initialize and check the data for the
             % random comparison. It initializes with default settings.
             %
-            % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and 
-            % check the data for the random comparison. It initializes 
+            % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and
+            % check the data for the random comparison. It initializes
             % with VALUE settings.
             % Admissible rules are:
             %  'RandomComparisonCON.RandomizationNumber'  - number of randomizations
@@ -211,7 +211,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             atlases = rc.getBrainAtlases();
             atlas = atlases{1};
             
-            group = rc.getGroup();            
+            group = rc.getGroup();
             measure_code = rc.getMeasureCode();
             
             number_of_randomizations = rc.getSettings('RandomComparisonCON.RandomizationNumber');
@@ -240,22 +240,22 @@ classdef RandomComparisonCON_WU < RandomComparison
                 rc.average_value_group = get_from_varargin( ...
                     {0}, ...
                     'RandomComparisonCON.average_value_group', ...
-                    varargin{:});                
+                    varargin{:});
                 assert(iscell(rc.getAverageValue()) && ...
                     isequal(size(rc.getAverageValue()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [1, 1]), rc.getAverageValue())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
-                    ['Data not compatible with: ' class(rc)])                
+                    ['Data not compatible with: ' class(rc)])
                 
                 rc.average_value_random = get_from_varargin( ...
                     {0}, ...
                     'RandomComparisonCON.average_value_random', ...
-                    varargin{:});                
+                    varargin{:});
                 assert(iscell(rc.getAverageRandomValue()) && ...
                     isequal(size(rc.getAverageRandomValue()), [1, 1])&& ...
                     all(cellfun(@(x) isequal(size(x), [1, 1]), rc.getAverageRandomValue())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
-                    ['Data not compatible with: ' class(rc)])     
+                    ['Data not compatible with: ' class(rc)])
                 
                 rc.difference = get_from_varargin( ...
                     {0}, ...
@@ -356,7 +356,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     isequal(size(rc.getAverageRandomValue()), [1, 1]) && ...
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), 1]), rc.getAverageRandomValue())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
-                    ['Data not compatible with: ' class(rc)])               
+                    ['Data not compatible with: ' class(rc)])
                 
                 rc.difference = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length(), 1)}, ...
@@ -377,7 +377,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), 1]), rc.getAllDifferences())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-                    
+                
                 rc.p1 = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length(), 1)}, ...
                     'RandomComparisonCON.p1', ...
@@ -387,7 +387,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), 1]), rc.getP1())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-
+                
                 rc.p2 = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length(), 1)}, ...
                     'RandomComparisonCON.p2', ...
@@ -397,7 +397,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), 1]), rc.getP2())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-
+                
                 rc.confidence_interval_min = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length(), 1)}, ...
                     'RandomComparisonCON.confidence_min', ...
@@ -407,7 +407,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), 1]), rc.getConfidenceIntervalMin())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-
+                
                 rc.confidence_interval_max = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length(), 1)}, ...
                     'RandomComparisonCON.confidence_max', ...
@@ -428,7 +428,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), rc.getGroupValue())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-
+                
                 rc.value_random = get_from_varargin( ...
                     repmat({zeros(atlas.getBrainRegions().length())}, 1, group.subjectnumber()), ...
                     'RandomComparisonCON.value_random', ...
@@ -468,7 +468,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), rc.getDifference())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-
+                
                 rc.all_differences = get_from_varargin( ...
                     repmat({zeros(atlas.getBrainRegions().length())}, 1, number_of_randomizations), ...
                     'RandomComparisonCON.all_differences', ...
@@ -478,7 +478,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), rc.getAllDifferences())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-
+                
                 rc.p1 = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length())}, ...
                     'RandomComparisonCON.p1', ...
@@ -488,7 +488,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), rc.getP1())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-
+                
                 rc.p2 = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length())}, ...
                     'RandomComparisonCON.p2', ...
@@ -498,7 +498,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), rc.getP2())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-
+                
                 rc.confidence_interval_min = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length())}, ...
                     'RandomComparisonCON.confidence_min', ...
@@ -508,7 +508,7 @@ classdef RandomComparisonCON_WU < RandomComparison
                     all(cellfun(@(x) isequal(size(x), [atlas.getBrainRegions().length(), atlas.getBrainRegions().length()]), rc.getConfidenceIntervalMin())), ...
                     [BRAPH2.STR ':' class(rc) ':' BRAPH2.WRONG_INPUT], ...
                     ['Data not compatible with: ' class(rc)])
-
+                
                 rc.confidence_interval_max = get_from_varargin( ...
                     {zeros(atlas.getBrainRegions().length())}, ...
                     'RandomComparisonCON.confidence_max', ...
@@ -526,7 +526,7 @@ classdef RandomComparisonCON_WU < RandomComparison
         function measurement_class = getClass() %#ok<*INUSD>
             % GETCLASS returns the class of connectivity random comparison
             %
-            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of 
+            % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
             % random comparison. In this case 'RandomComparisonCON_WU'.
             %
             % See also getList, getName, getDescription.
@@ -543,7 +543,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             name = 'RandomComparison CON WU';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the description of connectivity random comparison 
+            % GETDESCRIPTION returns the description of connectivity random comparison
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
             % of RandomComparisonCON_WU.
@@ -554,7 +554,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             description = 'CON random comparison with weighted graphs.';
         end
         function atlas_number = getBrainAtlasNumber()
-            % GETBRAINATLASNUMBER returns the number of brain atlases 
+            % GETBRAINATLASNUMBER returns the number of brain atlases
             %
             % ATLAS_NUMBER = GETBRAINATLASNUMBER() returns the number of
             % brain atlases.
@@ -564,7 +564,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             atlas_number =  1;
         end
         function analysis_class = getAnalysisClass()
-            % GETANALYSISCLASS returns the class of the analsysis 
+            % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
             % analysis the random comparison is part of, 'RandomComparisonCON_WU'.
@@ -586,7 +586,7 @@ classdef RandomComparisonCON_WU < RandomComparison
         function available_settings = getAvailableSettings()
             % GETAVAILABLESETTINGS returns the available settings of connectivity random comparison
             %
-            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the 
+            % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS() returns the
             % available settings of RandomComparisonCON_WU.
             %
             % See also getClass, getName, getDescription
@@ -604,7 +604,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             % returns a new RandomComparisonCON_WU object with RANDOMCOMPARISON_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
             % it will initialize with default settings.
-            % 
+            %
             % SUB = GETRANDOMCOMPARISON(RANDOMCOMPARISON_CLASS, ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, PROPERTY, VALUE, ...)
             % returns a new RandomComparisonCON_WU object with RANDOMCOMPARISON_CLASS,
             % ID, LABEL, NOTES, ATLAS. The measure will be MEASURE_CODE and
@@ -615,7 +615,7 @@ classdef RandomComparisonCON_WU < RandomComparison
             sub = eval([random_comparison_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
         end
     end
-     methods (Static)  % Plot ComparisonGUI Child Panel
+    methods (Static)  % Plot ComparisonGUI Child Panel
         function handle = getRandomComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %

@@ -70,7 +70,7 @@ classdef MultiplexOutParticipation < OutDegree
                 multiplex_out_participation = multiplex_out_participation + (out_degree{li}./overlapping_out_degree{1}).^2;
             end
             multiplex_out_participation = L / (L - 1) * (1 - multiplex_out_participation);
-            multiplex_out_participation(isnan(multiplex_out_participation)) = 0;  % Should return zeros, not NaN
+            multiplex_out_participation(isnan(multiplex_out_participation)) = 0;  % Should return zeros, since NaN happens when out-degree = 0 and overlapping out-degree = 0 for all regions
             multiplex_out_participation = {multiplex_out_participation};
         end
     end  

@@ -5,7 +5,8 @@ classdef SmallWorldness < PathLengthAv
     %
     % It is calculated as the fraction of the clustering coefficient and 
     % average path length of the graph and the clustering coefficient and
-    % average path length of 100 random graphs.
+    % average path length of 100 random graphs. It returns Infinity or NaN
+    % when the clustering or average path length are zero.
     % 
     % SmallWorldness methods:
     %   SmallWorldness              - constructor 
@@ -102,7 +103,6 @@ classdef SmallWorldness < PathLengthAv
             small_worldness = cell(L, 1);
             for li = 1:1:L
                 small_worldness_layer = (clustering_av{li}/clustering_av_random(li)) / (path_length_av{li}/path_length_av_random(li));
-                small_worldness_layer(isnan(small_worldness_layer)) = 0;  % Should return zeros, not NaN
                 small_worldness(li) = {small_worldness_layer};
             end
         end

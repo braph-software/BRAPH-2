@@ -70,7 +70,7 @@ classdef MultiplexParticipation < Degree
                 multiplex_participation = multiplex_participation + (degree{li}./overlapping_degree{1}).^2;
             end
             multiplex_participation = L / (L - 1) * (1 - multiplex_participation);
-            multiplex_participation(isnan(multiplex_participation)) = 0;  % Should return zeros, not NaN 
+            multiplex_participation(isnan(multiplex_participation)) = 0;  % Should return zeros, since NaN happens when degree = 0 and overlapping degree = 0 for all regions
             multiplex_participation = {multiplex_participation};
         end
     end  

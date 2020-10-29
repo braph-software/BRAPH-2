@@ -113,10 +113,23 @@ g = GraphWD(A);
 in_global_efficiency = InGlobalEfficiency(g).getValue();
 in_global_efficiency = in_global_efficiency{1};
 in_global_efficiency_bct = efficiency_wei(g.getA());
-
-assert(isequal(round(mean(in_global_efficiency), 4), round(in_global_efficiency_bct, 4)), ...
+a = round(mean(in_global_efficiency), 4); 
+b =  round(in_global_efficiency_bct, 4);
+assert(isequal(a, b) || (isnan(a) && isnan(b)), ...
     [BRAPH2.STR ':InGlobalEfficiency:' BRAPH2.BUG_ERR], ...
     'InGlobalEfficiency is not being calculated correctly for BCT.')
+
+%% Test 5: GraphBU with NAN
+A = NaN(5);
+
+known_global_efficiency = {[0;0;0;0;0]};
+
+g = GraphWD(A);
+global_efficiency = InGlobalEfficiency(g);
+
+assert(isequal(global_efficiency.getValue(), known_global_efficiency), ...
+    [BRAPH2.STR ':GlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'GlobalEfficiencyAv is not being calculated correctly for GraphBU.')
 
 
 function E = efficiency_wei(W, local)
@@ -225,7 +238,7 @@ else
     E = sum(di(:)) ./ (n^2 - n);                         	% global efficiency
 end
 
-E(isnan(E)) = 0;
+% E(isnan(E)) = 0;
     function D=distance_inv_wei(W_)
         
         n_=length(W_);
