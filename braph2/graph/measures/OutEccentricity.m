@@ -1,54 +1,54 @@
-classdef InEccentricity < Measure
-    % InEccentricity In-eccentricity measure
-    % InEccentricity provides the in-eccentricity of a node for binary directed
-    % (BD) and weighted directed (WD) graphs.
-    % 
-    % It is calculated as the maximal shortest in-path length between a node
+classdef OutEccentricity < Measure
+    % OutEccentricity Out-eccentricity measure
+    % OutEccentricity provides the out-eccentricity of a node for binary directed
+    % (BD) and weighted directed (WD) graphs. 
+    %
+    % It is calculated as the maximal shortest out-path length between a node
     % and any other node within a layer.
     % 
-    % InEccentricity methods:
-    %   InEccentricity              - constructor
+    % OutEccentricity methods:
+    %   OutEccentricity             - constructor 
     % 
-    % InEccentricity descriptive methods (Static)
-    %   getClass                    - returns the in-eccentricity class
-    %   getName                     - returns the name of in-eccentricity measure
-    %   getDescription              - returns the description of in-eccentricity measure
+    % OutEccentricity methods (Static)
+    %   getClass                    - returns the out-eccentricity class
+    %   getName                     - returns the name of out-eccentricity measure
+    %   getDescription              - returns the description of out-eccentricity measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure  
-    %   getMeasure                  - returns the in-eccentricity class
+    %   getMeasure                  - returns the out-eccentricity class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, Eccentricity, Distance, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
     
     methods
-        function m = InEccentricity(g, varargin)
-            % INECCENTRICITY(G) creates in-eccentricity with default measure properties.
+        function m = OutEccentricity(g, varargin)
+            % OUTECCENTRICITY(G) creates out-eccentricity with default measure properties.
             % G is a graph (e.g, an instance of GraphBD, GraphWD,
             % MultiplexGraphBD, MultiplexGraphWD). 
             %   
-            % INECCENTRICITY(G, 'EccentricityRule', ECCENTRICITYRULE) creates in-eccentricity             
+            % OUTECCENTRICITY(G, 'EccentricityRule', ECCENTRICITIRULE) creates out-eccentricity 
             % measure and initializes the property EccentricityRule with ECCENTRICITYRULE. 
             % Admissible RULE options are:
-            % ECCENTRICITYRULE = 'default' (default) - calculates INECCENTRICITY of global graph.
-            %                      'subgraphs' - calculates INECCENTRICITY within connected subgraphs.
+            % ECCENTRICITYRULE = 'default' (default) - calculates OUTECCENTRICITY of global graph.
+            %                       'subgraphs' - calculates OUTECCENTRICITY within connected subgraphs.
             %
-            % INECCENTRICITY(G, 'VALUE', VALUE) creates in-eccentricity, and sets the value
+            % OUTECCENTRICITY(G, 'VALUE', VALUE) creates out-eccentricity, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphWD,
             % MultiplexGraphBD, MultiplexGraphWD). 
             %   
-            % See also Measure, Eccentricity, Distance, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.        
-           
+            % See also Measure, Eccentricity, Distance, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
+            
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access = protected)
-        function in_eccentricity = calculate(m)
-            % CALCULATE calculates the in-eccentricity value of a node
+        function out_eccentricity = calculate(m)
+            % CALCULATE calculates the out-eccentricity value of a node
             %
-            % in-eccentricity = CALCULATE(M) returns the value of the in-eccentricity of a
+            % out-eccentricity = CALCULATE(M) returns the value of the out-eccentricity of a
             % node.
             %
             % See also Measure, Eccentricity, Distance, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
@@ -63,13 +63,13 @@ classdef InEccentricity < Measure
             end
             
             ecc_rule = get_from_varargin('default', 'EccentricityRule', m.getSettings());
-            in_eccentricity = cell(L, 1);
+            out_eccentricity = cell(L, 1);
             for li = 1:1:L
                 switch(ecc_rule)
                     case {'subgraphs'}
-                        in_eccentricity(li)  = {max(D{li}.*(D{li}~=Inf), [], 1)'}; 
+                        out_eccentricity(li)  = {max(D{li}.*(D{li}~=Inf), [], 2)}; 
                     otherwise  % {'default'}
-                        in_eccentricity(li)  = {max(D{li}, [], 1)'};
+                        out_eccentricity(li)  = {max(D{li}, [], 2)};
                 end    
             end
         end
@@ -78,42 +78,41 @@ classdef InEccentricity < Measure
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the in-eccentricity measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the out-eccentricity measure.
             %
             % See also getName(), getDescription(). 
-            
-            measure_class = 'InEccentricity';
+            measure_class = 'OutEccentricity';
         end
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the in-eccentricity measure.
+            % NAME = GETNAME() returns the name of the out-eccentricity measure.
             %
             % See also getClass(), getDescription().
             
-            name = 'In-eccentricity';
+            name = 'Out-eccentricity';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the in-eccentricity description 
+            % GETDESCRIPTION returns the out-eccentricity description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % in-eccentricity measure.
+            % out-eccentricity measure.
             %
             % See also getList(), getCompatibleGraphList().
             
             description = [ ...
-                'The in-eccentricity of a node is ' ...
-                'the maximal shortest in-path length between a ' ...
+                'The out-eccentricity of a node is ' ...
+                'the maximal shortest out-path length between a ' ...
                 'node and any other node within a layer.' ...
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to InEccentricity
+            % GETAVAILABLESETTINGS returns the setting available to OutEccentricity
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to InEccentricity.
-            % ECCENTRICITYRULE = 'default' (default) - calculates INECCENTRICITY of global graph.
-            %                    'subgraphs' - calculates INECCENTRICITY within connected subgraphs.
+            % settings available to OutEccentricityRule. 
+            % ECCENTRICITYRULE = 'default' (default) - calculates OUTECCENTRICITY of global graph.
+            %                       'subgraphs' - calculates OUTECCENTRICITY within connected subgraphs.
             % 
             % See also getCompatibleGraphList()
             
@@ -122,30 +121,30 @@ classdef InEccentricity < Measure
                 };
         end
        function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of InEccentricity
+            % GETMEASUREFORMAT returns the measure format of OutEccentricity
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of in-eccentricity measure (NODAL).
+            % of out-eccentricity measure (NODAL).
             %
             % See also getMeasureScope.
             
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of InEccentricity
+            % GETMEASURESCOPE returns the measure scope of OutEccentricity
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of in-eccentricity measure (UNILAYER).
+            % measure scope of out-eccentricity measure (UNILAYER).
             %
             % See also getMeasureFormat.
             
             measure_scope = Measure.UNILAYER;
         end
         function parametricity = getParametricity()
-            % GETPARAMETRICITY returns the parametricity of InEccentricity
+            % GETPARAMETRICITY returns the parametricity of OutEccentricity
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of in-eccentricity measure (NONPARAMETRIC).
+            % parametricity of out-eccentricity measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
@@ -153,10 +152,10 @@ classdef InEccentricity < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % with InEccentricity
+            % with OutEccentricity
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to in-eccentricity. 
+            % of compatible graph classes to out-eccentricity. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -170,14 +169,14 @@ classdef InEccentricity < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs with InEccentricity
+            % graphs with OutEccentricity
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to in-eccentricity.
+            % compatible graphs to out-eccentricity.
             % 
             % See also getCompatibleGraphList().
             
-            n = Measure.getCompatibleGraphNumber('InEccentricity');
+            n = Measure.getCompatibleGraphNumber('OutEccentricity');
         end
     end
 end
