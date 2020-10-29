@@ -197,6 +197,12 @@ classdef MultilayerCommunityStructure < Measure
                     Q = full(Q);
                     clear('group_handler');
                     clear('metanetwork_reduce');
+                    m.quality_function = Q/twom;  % save normalized quality function
+                    S = reshape(S, N(1), L);
+                    multilayer_community_structure = cell(L, 1);
+                    for li = 1:1:L
+                        multilayer_community_structure(li) = {S(:, li)};
+                    end
                     return
                 end
                 
@@ -245,7 +251,13 @@ classdef MultilayerCommunityStructure < Measure
                 if isequal(Sb,S2)
                     P = sparse(y,1:length(y),1);
                     Q = full(sum(sum((P*M).*P)));
-                    %return
+                    m.quality_function = Q/twom;  % save normalized quality function
+                    S = reshape(S, N(1), L);
+                    multilayer_community_structure = cell(L, 1);
+                    for li = 1:1:L
+                        multilayer_community_structure(li) = {S(:, li)};
+                    end
+                    return
                 end
                 
                 M = m.metanetwork(B, S2);
