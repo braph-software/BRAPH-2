@@ -1194,7 +1194,7 @@ classdef Graph < handle & matlab.mixin.Copyable
             %
             % See also disp.
             
-            str = [Graph.getClass(g) ': ' int2str(g.layernumber(g)) ' layers with ' int2str(g.nodenumber(g)) ' nodes'];
+            str = [Graph.getClass(g) ': ' int2str(g.layernumber()) ' layers with ' int2str(g.nodenumber()) ' nodes'];
         end
         function disp(g)
             % DISP displays information about the graph
