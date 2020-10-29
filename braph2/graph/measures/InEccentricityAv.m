@@ -115,30 +115,30 @@ classdef InEccentricityAv < InEccentricity
             available_settings = getAvailableSettings@InEccentricity();
         end
        function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of InEccentricity
+            % GETMEASUREFORMAT returns the measure format of InEccentricityAv
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of in-eccentricity measure (GLOBAL).
+            % of average in-eccentricity measure (GLOBAL).
             %
             % See also getMeasureScope.
             
             measure_format = Measure.GLOBAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of InEccentricity
+            % GETMEASURESCOPE returns the measure scope of InEccentricityAv
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of in-eccentricity measure (UNILAYER).
+            % measure scope of average in-eccentricity measure (UNILAYER).
             %
             % See also getMeasureFormat.
             
             measure_scope = Measure.UNILAYER;
         end
         function parametricity = getParametricity()
-            % GETPARAMETRICITY returns the parametricity of InEccentricity
+            % GETPARAMETRICITY returns the parametricity of InEccentricityAv
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of in-eccentricity measure (NONPARAMETRIC).
+            % parametricity of average in-eccentricity measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             

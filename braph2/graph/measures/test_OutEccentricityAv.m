@@ -1,4 +1,4 @@
-% test OutEccentricity
+% test OutEccentricityAv
 
 %% Test 1: GraphBD
 A = [
@@ -9,22 +9,22 @@ A = [
     0    0  0   0   0
     ];
     
-known_out_eccentricity_subgraphs = {[1 1 1 1 0]'};
+known_out_eccentricity_av_subgraphs = {mean([1 1 1 1 0])};
 
 g = GraphBD(A);
-out_eccentricity = OutEccentricity(g, 'EccentricityRule', 'subgraphs');
+out_eccentricity_av = OutEccentricityAv(g, 'EccentricityRule', 'subgraphs');
 
-assert(isequal(out_eccentricity.getValue(), known_out_eccentricity_subgraphs), ...
-    [BRAPH2.STR ':OutEccentricity:' BRAPH2.BUG_ERR], ...
-    'OutEccentricity is not being calculated correctly for GraphBD.')
+assert(isequal(out_eccentricity_av.getValue(), known_out_eccentricity_av_subgraphs), ...
+    [BRAPH2.STR ':OutEccentricityAv:' BRAPH2.BUG_ERR], ...
+    'OutEccentricityAv is not being calculated correctly for GraphBD.')
 
-known_out_eccentricity_default = {[Inf Inf Inf Inf Inf]'};
+known_out_eccentricity_default = {mean([Inf Inf Inf Inf Inf])};
 
-out_eccentricity = OutEccentricity(g);
+out_eccentricity_av = OutEccentricityAv(g);
 
-assert(isequal(out_eccentricity.getValue(), known_out_eccentricity_default), ...
-    [BRAPH2.STR ':OutEccentricity:' BRAPH2.BUG_ERR], ...
-    'OutEccentricity is not being calculated correctly for GraphBD.')
+assert(isequal(out_eccentricity_av.getValue(), known_out_eccentricity_default), ...
+    [BRAPH2.STR ':OutEccentricityAv:' BRAPH2.BUG_ERR], ...
+    'OutEccentricityAv is not being calculated correctly for GraphBD.')
 
 %% Test 2: GraphWD
 A = [
@@ -35,22 +35,22 @@ A = [
     0    0  0   0   0
     ];
     
-known_out_eccentricity_subgraphs = {[10 5 5 10 0]'};
+known_out_eccentricity_av_subgraphs = {mean([10 5 5 10 0])};
 
 g = GraphWD(A);
-out_eccentricity = OutEccentricity(g, 'EccentricityRule', 'subgraphs');
+out_eccentricity_av = OutEccentricityAv(g, 'EccentricityRule', 'subgraphs');
 
-assert(isequal(out_eccentricity.getValue(), known_out_eccentricity_subgraphs), ...
-    [BRAPH2.STR ':OutEccentricity:' BRAPH2.BUG_ERR], ...
-    'OutEccentricity is not being calculated correctly for GraphWD.')
+assert(isequal(out_eccentricity_av.getValue(), known_out_eccentricity_av_subgraphs), ...
+    [BRAPH2.STR ':OutEccentricityAv:' BRAPH2.BUG_ERR], ...
+    'OutEccentricityAv is not being calculated correctly for GraphWD.')
 
-known_out_eccentricity_default = {[Inf Inf Inf Inf Inf]'};
+known_out_eccentricity_default = {mean([Inf Inf Inf Inf Inf])};
 
-out_eccentricity = OutEccentricity(g);
+out_eccentricity_av = OutEccentricityAv(g);
 
-assert(isequal(out_eccentricity.getValue(), known_out_eccentricity_default), ...
-    [BRAPH2.STR ':OutEccentricity:' BRAPH2.BUG_ERR], ...
-    'OutEccentricity is not being calculated correctly for GraphWD.')
+assert(isequal(out_eccentricity_av.getValue(), known_out_eccentricity_default), ...
+    [BRAPH2.STR ':OutEccentricityAv:' BRAPH2.BUG_ERR], ...
+    'OutEccentricityAv is not being calculated correctly for GraphWD.')
 
 %% Test 3: MultiplexGraphBD
 A11 = [
@@ -75,28 +75,28 @@ A = {
     A21     A22
     };
 
-known_out_eccentricity_subgraphs = {
-                                [1 1 1 1 0]'
-                                [1 1 1 1 0]'
+known_out_eccentricity_av_subgraphs = {
+                                mean([1 1 1 1 0])
+                                mean([1 1 1 1 0])
                                 };
 
 g = MultiplexGraphBD(A);
-out_eccentricity = OutEccentricity(g, 'EccentricityRule', 'subgraphs');
+out_eccentricity_av = OutEccentricityAv(g, 'EccentricityRule', 'subgraphs');
 
-assert(isequal(out_eccentricity.getValue(), known_out_eccentricity_subgraphs), ...
-    [BRAPH2.STR ':OutEccentricity:' BRAPH2.BUG_ERR], ...
-    'OutEccentricity is not being calculated correctly for MultiplexGraphBD.')
+assert(isequal(out_eccentricity_av.getValue(), known_out_eccentricity_av_subgraphs), ...
+    [BRAPH2.STR ':OutEccentricityAv:' BRAPH2.BUG_ERR], ...
+    'OutEccentricityAv is not being calculated correctly for MultiplexGraphBD.')
 
 known_out_eccentricity_default = {
-                              [Inf Inf Inf Inf Inf]'
-                              [Inf Inf Inf Inf Inf]'
+                              mean([Inf Inf Inf Inf Inf])
+                              mean([Inf Inf Inf Inf Inf])
                               };
 
-out_eccentricity = OutEccentricity(g);
+out_eccentricity_av = OutEccentricityAv(g);
 
-assert(isequal(out_eccentricity.getValue(), known_out_eccentricity_default), ...
-    [BRAPH2.STR ':OutEccentricity:' BRAPH2.BUG_ERR], ...
-    'OutEccentricity is not being calculated correctly for MultiplexGraphBD.')
+assert(isequal(out_eccentricity_av.getValue(), known_out_eccentricity_default), ...
+    [BRAPH2.STR ':OutEccentricityAv:' BRAPH2.BUG_ERR], ...
+    'OutEccentricityAv is not being calculated correctly for MultiplexGraphBD.')
 
 %% Test 4: MultiplexGraphWD
 A11 = [
@@ -121,28 +121,28 @@ A = {
     A21     A22
     };
 
-known_out_eccentricity_subgraphs = {
-                                [10 5 5 10 0]'
-                                [10 5 5 10 0]'
+known_out_eccentricity_av_subgraphs = {
+                                mean([10 5 5 10 0])
+                                mean([10 5 5 10 0])
                                 };
 
 g = MultiplexGraphWD(A);
-out_eccentricity = OutEccentricity(g, 'EccentricityRule', 'subgraphs');
+out_eccentricity_av = OutEccentricityAv(g, 'EccentricityRule', 'subgraphs');
 
-assert(isequal(out_eccentricity.getValue(), known_out_eccentricity_subgraphs), ...
-    [BRAPH2.STR ':OutEccentricity:' BRAPH2.BUG_ERR], ...
-    'OutEccentricity is not being calculated correctly for MultiplexGraphWD.')
+assert(isequal(out_eccentricity_av.getValue(), known_out_eccentricity_av_subgraphs), ...
+    [BRAPH2.STR ':OutEccentricityAv:' BRAPH2.BUG_ERR], ...
+    'OutEccentricityAv is not being calculated correctly for MultiplexGraphWD.')
 
 known_out_eccentricity_default = {
-                              [Inf Inf Inf Inf Inf]'
-                              [Inf Inf Inf Inf Inf]'
+                              mean([Inf Inf Inf Inf Inf])
+                              mean([Inf Inf Inf Inf Inf])
                               };
 
-out_eccentricity = OutEccentricity(g);
+out_eccentricity_av = OutEccentricityAv(g);
 
-assert(isequal(out_eccentricity.getValue(), known_out_eccentricity_default), ...
-    [BRAPH2.STR ':OutEccentricity:' BRAPH2.BUG_ERR], ...
-    'OutEccentricity is not being calculated correctly for MultiplexGraphWD.')
+assert(isequal(out_eccentricity_av.getValue(), known_out_eccentricity_default), ...
+    [BRAPH2.STR ':OutEccentricityAv:' BRAPH2.BUG_ERR], ...
+    'OutEccentricityAv is not being calculated correctly for MultiplexGraphWD.')
 
 %% Test 5: Calculation WD subgraphs vs BCT
 A = [
@@ -154,15 +154,15 @@ A = [
     ];
 
 g = GraphWD(A);
-out_eccentricity = OutEccentricity(g, 'EccentricityRule', 'subgraphs').getValue();
+out_eccentricity_av = OutEccentricityAv(g, 'EccentricityRule', 'subgraphs').getValue();
 
 distance = Distance(g).getValue();
-[~, ~, out_eccentricity_bct, ~, ~]= charpath(distance{1});
-out_eccentricity = out_eccentricity{1};
+[~, ~, out_eccentricity_av_bct, ~, ~]= charpath(distance{1});
+out_eccentricity_av = out_eccentricity_av{1};
 
-assert(isequal(out_eccentricity(1), out_eccentricity_bct), ...
-        [BRAPH2.STR ':OutEccentricity:' BRAPH2.BUG_ERR], ...
-        'OutEccentricity is not being calculated correctly for BCT.')
+assert(isequal(round(out_eccentricity_av(1), 3), round(mean(out_eccentricity_av_bct), 3)), ...
+        [BRAPH2.STR ':OutEccentricityAv:' BRAPH2.BUG_ERR], ...
+        'OutEccentricityAv is not being calculated correctly for BCT.')
 
 %% Functions to calculate Eccentricity from 2019_03_03_BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
@@ -236,8 +236,9 @@ lambda     = mean(Dv);
 efficiency = mean(1./Dv);
 
 % Eccentricity for each vertex
-% Modified by Emiliano Gomez to get nodal eccentricity.
-ecc        = nanmax(D(1,2:2),[],2);
+% Modified by Emiliano Gomez to get average global eccentricity.
+D(isnan(D)) = 0;
+ecc        = max(D.*(D~=Inf), [], 2);
 
 % Radius of graph
 radius     = min(ecc);

@@ -9,7 +9,7 @@ classdef OutEccentricity < Measure
     % OutEccentricity methods:
     %   OutEccentricity             - constructor 
     % 
-    % OutEccentricity methods (Static)
+    % OutEccentricity descriptive methods (Static)
     %   getClass                    - returns the out-eccentricity class
     %   getName                     - returns the name of out-eccentricity measure
     %   getDescription              - returns the description of out-eccentricity measure
