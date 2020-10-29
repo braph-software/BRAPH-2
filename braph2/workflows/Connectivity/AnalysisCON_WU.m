@@ -4284,13 +4284,9 @@ classdef AnalysisCON_WU < Analysis
                 analysis_notes = '';
                 
                 if exist(file_analysis, 'file')
-                    v = ver('MATLAB');  % read version matlab
-                    if v.Release >= "(R2020a)"
-                        raw_analysis = readcell(file_analysis);
-                    else
-                        raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0); 
-                        raw_analysis = table2cell(raw_analysis);
-                    end
+                    % raw_analysis = readcell(file_analysis);
+                    raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0); 
+                    raw_analysis = table2cell(raw_analysis);
                     analysis_id = raw_analysis{1, 2};
                     analysis_label = raw_analysis{2, 2};
                     analysis_notes = raw_analysis{3, 2};
@@ -4330,13 +4326,8 @@ classdef AnalysisCON_WU < Analysis
                         measurement_idict = analysis.getMeasurements();
                         for k = 1:1:length(files)
                             % get info main
-                            v = ver('MATLAB');  % read version matlab
-                            if v.Release >= "(R2020a)"
-                                raw_main = readcell(fullfile(path, files(k).name));
-                            else
-                                raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
-                                raw_main = table2cell(raw_main);
-                            end
+                            raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
+                            raw_main = table2cell(raw_main);
                             meas_id = raw_main{1, 2};
                             meas_lab = raw_main{2, 2};
                             meas_notes = raw_main{3, 2};
@@ -4376,13 +4367,8 @@ classdef AnalysisCON_WU < Analysis
                         comparison_idict = analysis.getComparisons();
                         for k = 1:1:length(files)
                             % get info main
-                            v = ver('MATLAB');  % read version matlab
-                            if v.Release >= "(R2020a)"
-                                raw_main = readcell(fullfile(path, files(k).name));
-                            else
-                                raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
-                                raw_main = table2cell(raw_main);
-                            end
+                            raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
+                            raw_main = table2cell(raw_main);
                             comp_id = raw_main{1, 2};
                             comp_lab = raw_main{2, 2};
                             comp_notes = raw_main{3, 2};
@@ -4449,13 +4435,8 @@ classdef AnalysisCON_WU < Analysis
                         random_comparison_idict = analysis.getRandomComparisons();
                         for k = 1:1:length(files)
                             % get info main
-                            v = ver('MATLAB');  % read version matlab
-                            if v.Release >= "(R2020a)"
-                                raw_main = readcell(fullfile(path, files(k).name));
-                            else
-                                raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
-                                raw_main = table2cell(raw_main);
-                            end
+                            raw_main = readtable(fullfile(path, files(k).name), 'ReadVariableNames', 0);
+                            raw_main = table2cell(raw_main);
                             ran_comp_id = raw_main{1, 2};
                             ran_comp_lab = raw_main{2, 2};
                             ran_comp_notes = raw_main{3, 2};

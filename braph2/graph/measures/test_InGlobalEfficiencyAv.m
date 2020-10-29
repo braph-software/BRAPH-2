@@ -113,9 +113,8 @@ g = GraphBD(A);
 in_global_efficiency_av = InGlobalEfficiencyAv(g).getValue();
 in_global_efficiency_av = in_global_efficiency_av{1};
 in_global_efficiency_av_bct = efficiency_bin(g.getA());
-a = round(in_global_efficiency_av, 4); 
-b = round(in_global_efficiency_av_bct, 4);
-assert(isequal(a, b) || (isnan(a) && isnan(b)), ...
+
+assert(isequal(round(in_global_efficiency_av, 4), in_global_efficiency_av_bct), ...
     [BRAPH2.STR ':InGlobalEfficiencyAv:' BRAPH2.BUG_ERR], ...
     'InGlobalEfficiencyAv is not being calculated correctly for BCT.')
 
