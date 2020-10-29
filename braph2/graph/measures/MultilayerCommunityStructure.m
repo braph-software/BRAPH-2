@@ -56,13 +56,7 @@ classdef MultilayerCommunityStructure < Measure
             gamma = get_from_varargin(1, 'MultilayerCommunityStructureGamma', m.getSettings());
             omega = get_from_varargin(1, 'MultilayerCommunityStructureOmega', m.getSettings());
             S0 = get_from_varargin([], 'MultilayerCommunityStructureS0', m.getSettings());
-            B = get_from_varargin([], 'MultilayerCommunityStructureB', m.getSettings());
-            
-            if verbose
-                mydisp = @(s) disp(s);
-            else
-                mydisp = @(s) [];
-            end
+            B = get_from_varargin([], 'MultilayerCommunityStructureB', m.getSettings());           
             
             % set randperm- v. index-ordered
             if randord
@@ -160,7 +154,7 @@ classdef MultilayerCommunityStructure < Measure
                 %symmetry check and fix if not symmetric
                 if nnz(B-B')
                     B = (B+B')/2; 
-                    disp('WARNING: Forced symmetric B matrix')
+%                     disp('WARNING: Forced symmetric B matrix')
                 end
                 M = B;
             end
@@ -169,8 +163,6 @@ classdef MultilayerCommunityStructure < Measure
             y = S0;
             % Run using function handle, if provided
             while (isa(M,'function_handle'))  % loop around each "pass" (in language of Blondel et al) with B function handle
-                clocktime = clock;
-                mydisp(['Merging ',num2str(length(y)),' communities  ',datestr(clocktime)]);
                 Sb = S;
                 yb = [];
                 while ~isequal(yb,y)
@@ -187,8 +179,6 @@ classdef MultilayerCommunityStructure < Measure
                         
                         dtot = dtot + dstep;
                         y = group_handler('return');
-                        mydisp([num2str(max(y)),' change: ', num2str(dstep),...
-                            ' total: ',num2str(dtot),' relative: ', num2str(dstep/dtot)]);
                     end
                     yb = y;
                 end
@@ -230,9 +220,6 @@ classdef MultilayerCommunityStructure < Measure
             S2 = (1:length(B))';
             Sb = [];
             while ~isequal(Sb, S2)  % loop around each "pass" (in language of Blondel et al) with B matrix
-                clocktime = clock;
-                mydisp(['Merging ',num2str(max(y)),' communities  ', datestr(clocktime)]);
-                
                 Sb = S2;
                 yb = [];
                 while ~isequal(yb,y)
@@ -246,10 +233,7 @@ classdef MultilayerCommunityStructure < Measure
                             dstep = dstep+di;
                         end
                         dtot = dtot + dstep;
-                        y = group_handler('return');
-                        
-                        mydisp([num2str(max(y)), ' change: ', num2str(dstep),...
-                            ' total: ',num2str(dtot), ' relative: ', num2str(dstep/dtot)]);
+                        y = group_handler('return');                    
                     end
                     yb = y;
                 end
