@@ -24,7 +24,6 @@ classdef EdgeBetweennessCentrality < Measure
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU. 
-    
     methods
         function m = EdgeBetweennessCentrality(g, varargin)          
             % EDGEBETWEENNESSCENTRALITY(G) creates edge betweenness centrality with default measure properties.
@@ -57,7 +56,6 @@ classdef EdgeBetweennessCentrality < Measure
             edge_betweenness_centrality = cell(g.layernumber(), 1);
             connectivity_type =  g.getConnectivityType(g.layernumber());
             for li = 1:1:g.layernumber()
-                
                 if g.is_graph(g)
                     Aii = A;
                     connectivity_layer = connectivity_type;
@@ -74,99 +72,97 @@ classdef EdgeBetweennessCentrality < Measure
                 edge_betweenness_centrality(li) = {edge_betweenness_centrality_layer};
             end   
         end
-        function binary_edge_betweenness_centrality = getBinaryCalculation(m, A)      
-                for u=1:n
-                    D = false(1, n); D(u) = 1;  % distance from u
-                    NP = zeros(1, n); NP(u) = 1;  % number of paths from u
-                    P = false(n);  % predecessors
-                    Q = zeros(1, n); q = n;  % order of non-increasing distance
-                    Gu = A;
-                    V = u;
-                    while V
-                        Gu(:, V) = 0;  % remove remaining in-edges
-                        for v = V
-                            Q(q) = v; q = q-1;
-                            W = find(Gu(v, :));  % neighbours of v
-                            for w = W
-                                if D(w)
-                                    NP(w) = NP(w) + NP(v);  % NP(u->w) sum of old and new
-                                    P(w, v) = 1;  % v is a predecessor
-                                else
-                                    D(w) = 1;
-                                    NP(w) = NP(v);  % NP(u->w) = NP of new path
-                                    P(w, v) = 1;  % v is a predecessor
-                                end
+        function binary_edge_betweenness_centrality = getBinaryCalculation(A)      
+            n = length(A);
+            for u=1:n
+                D = false(1, n); D(u) = 1;  % distance from u
+                NP = zeros(1, n); NP(u) = 1;  % number of paths from u
+                P = false(n);  % predecessors
+                Q = zeros(1, n); q = n;  % order of non-increasing distance
+                Gu = A;
+                V = u;
+                while V
+                    Gu(:, V) = 0;  % remove remaining in-edges
+                    for v = V
+                        Q(q) = v; q = q-1;
+                        W = find(Gu(v, :));  % neighbours of v
+                        for w = W
+                            if D(w)
+                                NP(w) = NP(w) + NP(v);  % NP(u->w) sum of old and new
+                                P(w, v) = 1;  % v is a predecessor
+                            else
+                                D(w) = 1;
+                                NP(w) = NP(v);  % NP(u->w) = NP of new path
+                                P(w, v) = 1;  % v is a predecessor
                             end
                         end
-                        V = find(any(Gu(V, :), 1));
                     end
-                    if ~all(D)  % if some vertices unreachable,
-                        Q(1:q) = find(~D);  % ...these are first-in-line
-                    end
-                    
-                    DP = zeros(n, 1);  % dependency
-                    for w=Q(1:n-1)
-                        BC(w) = BC(w) + DP(w);
-                        for v = find(P(w, :))
-                            DPvw = (1+DP(w)).*NP(v)./NP(w);
-                            DP(v) = DP(v) + DPvw;
-                            EBC(v, w) = EBC(v, w) + DPvw;
-                        end
+                    V = find(any(Gu(V, :), 1));
+                end
+                if ~all(D)  % if some vertices unreachable,
+                    Q(1:q) = find(~D);  % ...these are first-in-line
+                end
+                DP = zeros(n, 1);  % dependency
+                for w=Q(1:n-1)
+                    BC(w) = BC(w) + DP(w);
+                    for v = find(P(w, :))
+                        DPvw = (1+DP(w)).*NP(v)./NP(w);
+                        DP(v) = DP(v) + DPvw;
+                        EBC(v, w) = EBC(v, w) + DPvw;
                     end
                 end
-                binary_edge_betweenness_centrality = EBC;                
-                % Weighted graphs WU and WD
+            end
+            binary_edge_betweenness_centrality = EBC;
+            binary_edge_betweenness_centrality(isnan(binary_edge_betweenness_centrality)) = 0;  % Should return zeros, not NaN
         end
         function weighted_edge_betweenness_centrality = getWeightedCalculation(m, A)
-                for u=1:n
-                    D = inf(1, n); D(u) = 0;  % distance from u
-                    NP = zeros(1, n); NP(u) = 1;  % number of paths from u
-                    S = true(1, n);  % distance permanence (true is temporary)
-                    P = false(n);  % predecessors
-                    Q = zeros(1, n); q = n;  % order of non-increasing distance
-                    
-                    G1 = A;
-                    V = u;
-                    while 1
-                        S(V) = 0;  % distance u->V is now permanent
-                        G1(:, V) = 0;  % no in-edges as already shortest
-                        for v = V
-                            Q(q) = v; q = q-1;
-                            W = find(G1(v, :));  % neighbours of v
-                            for w = W
-                                Duw = D(v) + G1(v, w);  % path length to be tested
-                                if Duw < D(w)  % if new u->w shorter than old
-                                    D(w) = Duw;
-                                    NP(w) = NP(v);  % NP(u->w) = NP of new path
-                                    P(w,: ) = 0;
-                                    P(w, v) = 1;  % v is the only predecessor
-                                elseif Duw == D(w)  % if new u->w equal to old
-                                    NP(w) = NP(w) + NP(v);  % NP(u->w) sum of old and new
-                                    P(w, v) = 1;  % v is also a predecessor
-                                end
+            n = length(A);    
+            for u=1:n
+                D = inf(1, n); D(u) = 0;  % distance from u
+                NP = zeros(1, n); NP(u) = 1;  % number of paths from u
+                S = true(1, n);  % distance permanence (true is temporary)
+                P = false(n);  % predecessors
+                Q = zeros(1, n); q = n;  % order of non-increasing distance
+                G1 = A;
+                V = u;
+                while 1
+                    S(V) = 0;  % distance u->V is now permanent
+                    G1(:, V) = 0;  % no in-edges as already shortest
+                    for v = V
+                        Q(q) = v; q = q-1;
+                        W = find(G1(v, :));  % neighbours of v
+                        for w = W
+                            Duw = D(v) + G1(v, w);  % path length to be tested
+                            if Duw < D(w)  % if new u->w shorter than old
+                                D(w) = Duw;
+                                NP(w) = NP(v);  % NP(u->w) = NP of new path
+                                P(w,: ) = 0;
+                                P(w, v) = 1;  % v is the only predecessor
+                            elseif Duw == D(w)  % if new u->w equal to old
+                                NP(w) = NP(w) + NP(v);  % NP(u->w) sum of old and new
+                                P(w, v) = 1;  % v is also a predecessor
                             end
                         end
-                        
-                        minD = min(D(S));
-                        if isempty(minD), break  % all nodes reached, or
-                        elseif isinf(minD)  % ...some cannot be reached:
-                            Q(1:q) = find(isinf(D)); break	 % ...these are first-in-line
-                        end
-                        V = find(D == minD);
                     end
-                    
-                    DP=zeros(n, 1);  % dependency
-                    for w = Q(1:n-1)
-                        BC(w) = BC(w) + DP(w);
-                        for v = find(P(w,:))
-                            DPvw = (1+DP(w)).*NP(v)./NP(w);
-                            DP(v) = DP(v) + DPvw;
-                            EBC(v, w) = EBC(v, w) + DPvw;
-                        end
+                    minD = min(D(S));
+                    if isempty(minD), break  % all nodes reached, or
+                    elseif isinf(minD)  % ...some cannot be reached:
+                        Q(1:q) = find(isinf(D)); break	 % ...these are first-in-line
+                    end
+                    V = find(D == minD);
+                end
+                DP=zeros(n, 1);  % dependency
+                for w = Q(1:n-1)
+                    BC(w) = BC(w) + DP(w);
+                    for v = find(P(w,:))
+                        DPvw = (1+DP(w)).*NP(v)./NP(w);
+                        DP(v) = DP(v) + DPvw;
+                        EBC(v, w) = EBC(v, w) + DPvw;
                     end
                 end
-                weighted_edge_betweenness_centrality = EBC;
-                weighted_edge_betweenness_centrality(isnan(weighted_edge_betweenness_centrality)) = 0;  % Should return zeros, not NaN
+            end
+            weighted_edge_betweenness_centrality = EBC;
+            weighted_edge_betweenness_centrality(isnan(weighted_edge_betweenness_centrality)) = 0;  % Should return zeros, not NaN
         end
     end
     methods (Static)
