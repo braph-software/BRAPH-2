@@ -47,18 +47,34 @@ classdef EdgeBetweennessCentrality < Measure
             % CALCULATE calculates the edge betweenness centrality value of a
             % graph.
             %
-            % EDGEBETWEENNESSCENTRALITY = CALCULATE(M) returns the value of 
-            % the edge betweenness centrality of a graph.
+            % EDGEBETWEENNESSCENTRALITY = CALCULATE(M) returns the value of the edge betweenness centrality 
+            % of a graph.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjency matrix of the graph
-            n=length(A);
-            BC=zeros(n,1);  % vertex betweenness
-            EBC = zeros(n);  % edge betweenness
+            N = g.nodenumber(); 
             
-            %BCT code  Mika Rubinov, UNSW/U Cambridge, 2007-2012
-            
-            if isa(g, 'GraphBD') || isa(g, 'GraphBU')         
+            edge_betweenness_centrality = cell(g.layernumber(), 1);
+            connectivity_type =  g.getConnectivityType(g.layernumber());
+            for li = 1:1:g.layernumber()
+                
+                if g.is_graph(g)
+                    Aii = A;
+                    connectivity_layer = connectivity_type;
+                else
+                    Aii = A{li, li};
+                    connectivity_layer = connectivity_type(li, li);
+                end
+                
+                if connectivity_layer == Graph.WEIGHTED  % weighted graphs
+                    edge_betweenness_centrality_layer = m.getWeightedCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized edge betweenness centrality
+                else  % binary graphs
+                    edge_betweenness_centrality_layer = m.getBinaryCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized edge betweenness centrality
+                end
+                edge_betweenness_centrality(li) = {edge_betweenness_centrality_layer};
+            end   
+        end
+        function binary_edge_betweenness_centrality = getBinaryCalculation(m, A)      
                 for u=1:n
                     D = false(1, n); D(u) = 1;  % distance from u
                     NP = zeros(1, n); NP(u) = 1;  % number of paths from u
@@ -98,9 +114,10 @@ classdef EdgeBetweennessCentrality < Measure
                         end
                     end
                 end
-                edge_betweenness_centrality = EBC;                
+                binary_edge_betweenness_centrality = EBC;                
                 % Weighted graphs WU and WD
-            elseif isa(g, 'GraphWU') || isa(g, 'GraphWD')
+        end
+        function weighted_edge_betweenness_centrality = getWeightedCalculation(m, A)
                 for u=1:n
                     D = inf(1, n); D(u) = 0;  % distance from u
                     NP = zeros(1, n); NP(u) = 1;  % number of paths from u
@@ -148,9 +165,8 @@ classdef EdgeBetweennessCentrality < Measure
                         end
                     end
                 end
-                edge_betweenness_centrality = EBC;
-            end
-            edge_betweenness_centrality(isnan(edge_betweenness_centrality)) = 0;  % Should return zeros, not NaN
+                weighted_edge_betweenness_centrality = EBC;
+                weighted_edge_betweenness_centrality(isnan(weighted_edge_betweenness_centrality)) = 0;  % Should return zeros, not NaN
         end
     end
     methods (Static)
