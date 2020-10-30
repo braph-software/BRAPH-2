@@ -11,34 +11,33 @@ classdef EdgeBetweennessCentrality < Measure
     % EdgeBetweennessCentrality methods:
     %   EdgeBetweennessCentrality   - constructor
     %
-    % EdgeBetweennessCentrality methods (Access=protected):
-    %   calculate                   - calculates the edge betweenness centrality of a graph.
-    % 
     % EdgeBetweennessCentrality methods (Static)
-    %   getClass                    - returns the edge betweenness centrality class.
-    %   getName                     - returns the name of edge betweenness centrality measure.
-    %   getDescription              - returns the description of edge betweenness centrality measure.
-    %   getAvailableSettings        - returns the settings available to the class.
-    %   is_global                   - boolean, checks if edge betweenness centrality measure is global.
-    %   is_nodal                    - boolean, checks if edge betweenness centrality measure is nodal.
-    %   is_binodal                  - boolean, checks if edge betweenness centrality measure if binodal.
-    %   getMeasure                  - returns the edge betweenness centrality class.
-    %   getCompatibleGraphList      - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
+    %   getClass                    - returns the edge betweenness centrality class
+    %   getName                     - returns the name of edge betweenness centrality measure
+    %   getDescription              - returns the description of edge betweenness centrality measure
+    %   getAvailableSettings        - returns the settings available to the class
+    %   getMeasureFormat            - returns the measure format
+    %   getMeasureScope             - returns the measure scope
+    %   getParametricity            - returns the parametricity of the measure
+    %   getMeasure                  - returns the edge betweenness centrality class
+    %   getCompatibleGraphList      - returns a list of compatible graphs
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Graph, Degree, Strength, BetweennessCentrality.
+    % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU. 
     
     methods
         function m = EdgeBetweennessCentrality(g, varargin)          
             % EDGEBETWEENNESSCENTRALITY(G) creates edge betweenness centrality with default measure properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU). 
+            % GraphWD, Graph WU, MultiplexGraphBU, MultiplexGraphBD,
+            % MultiplexGraphBD or MultiplexGraphBU). 
             %
             % EDGEBETWEENNESSCENTRALITY(G, 'VALUE', VALUE) creates edge betweenness centrality, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU).
+            % GraphWD, Graph WU, MultiplexGraphBU, MultiplexGraphBD,
+            % MultiplexGraphBD or MultiplexGraphBU).
             %   
-            % See also Measure, Graph, Degree, Strength, BetweennessCentrality. 
+            % See also Measure, Graph, GraphBD, GraphBU, GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
             
             m = m@Measure(g, varargin{:});
         end
