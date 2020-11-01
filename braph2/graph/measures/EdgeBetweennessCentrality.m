@@ -72,8 +72,15 @@ classdef EdgeBetweennessCentrality < Measure
                 edge_betweenness_centrality(li) = {edge_betweenness_centrality_layer};
             end   
         end
-        function binary_edge_betweenness_centrality = getBinaryCalculation(A)      
+        function binary_edge_betweenness_centrality = getBinaryCalculation(m, A)      
+            % GETBINARYCALCULATION calculates the edge betweenness centrality value of a binary adjacency matrix
+            %
+            % BINARY_EDGE_BETWEENNESS_CENTRALITY = GETBINARYCALCULATION(A) returns the value
+            % of the edge betweenness centrality of a binary adjacency matrix A.
+
             n = length(A);
+            BC=zeros(n,1);  % vertex betweenness
+            EBC = zeros(n);  % edge betweenness
             for u=1:n
                 D = false(1, n); D(u) = 1;  % distance from u
                 NP = zeros(1, n); NP(u) = 1;  % number of paths from u
@@ -116,7 +123,15 @@ classdef EdgeBetweennessCentrality < Measure
             binary_edge_betweenness_centrality(isnan(binary_edge_betweenness_centrality)) = 0;  % Should return zeros, not NaN
         end
         function weighted_edge_betweenness_centrality = getWeightedCalculation(m, A)
-            n = length(A);    
+            % GETWEIGHTEDCALCULATION calculates the edge betweenness centrality value of a weighted adjacency matrix
+            %
+            % WEIGHTED_EDGE_BETWEENNESS_CENTRALITY  = GETWEIGHTEDCALCULATION(m, A)
+            % returns the value of the edge betweenness centrality of a weighted 
+            % adjacency matrix A.
+            
+            n = length(A);   
+            BC=zeros(n,1);  % vertex betweenness
+            EBC = zeros(n);  % edge betweenness 
             for u=1:n
                 D = inf(1, n); D(u) = 0;  % distance from u
                 NP = zeros(1, n); NP(u) = 1;  % number of paths from u
@@ -210,32 +225,35 @@ classdef EdgeBetweennessCentrality < Measure
             
             available_settings = {};
         end
-        function bool = is_global()
-            % IS_GLOBAL checks if edge betweenness centrality measure is global (false)
+        function measure_format = getMeasureFormat()
+            % GETMEASUREFORMAT returns the measure format of EdgeBetweennessCentrality
             %
-            % BOOL = IS_GLOBAL() returns false.
+            % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
+            % of edge betweenness centrality measure (NODAL).
             %
-            % See also is_nodal, is_binodal.
+            % See also getMeasureScope.
             
-            bool = false;
+            measure_format = Measure.BINODAL;
         end
-        function bool = is_nodal()
-            % IS_NODAL checks if edge betweenness centrality measure is nodal (false)
+        function measure_scope = getMeasureScope()
+            % GETMEASURESCOPE returns the measure scope of EdgeBetweennessCentrality
             %
-            % BOOL = IS_NODAL() returns false.
+            % MEASURE_SCOPE = GETMEASURESCOPE() returns the
+            % measure scope of edge betweenness centrality measure (UNILAYER).
             %
-            % See also is_global, is_binodal. 
+            % See also getMeasureFormat.
             
-            bool = false;
+            measure_scope = Measure.UNILAYER;
         end
-        function bool = is_binodal()
-            % IS_BINODAL checks if edge betweenness centrality measure is binodal (true)
+        function parametricity = getParametricity()
+            % GETPARAMETRICITY returns the parametricity of BetweennessCentrality
             %
-            % BOOL = IS_BINODAL() returns true.
+            % PARAMETRICITY = GETPARAMETRICITY() returns the
+            % parametricity of betweenness centrality measure (NONPARAMETRIC).
             %
-            % See also is_global, is_nodal.
+            % See also getMeasureFormat, getMeasureScope.
             
-            bool = true;
+            parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
@@ -252,6 +270,10 @@ classdef EdgeBetweennessCentrality < Measure
                 'GraphBU', ...
                 'GraphWD', ...
                 'GraphWU' ...
+                'MultiplexGraphBD', ...
+                'MultiplexGraphBU', ...
+                'MultiplexGraphWD', ...
+                'MultiplexGraphWU' ...
                 };
         end
         function n = getCompatibleGraphNumber()
