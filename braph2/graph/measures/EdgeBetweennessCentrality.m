@@ -65,9 +65,11 @@ classdef EdgeBetweennessCentrality < Measure
                 end
                 
                 if connectivity_layer == Graph.WEIGHTED  % weighted graphs
-                    edge_betweenness_centrality_layer = m.getWeightedCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized edge betweenness centrality
+                    %edge_betweenness_centrality_layer = m.getWeightedCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized edge betweenness centrality
+                    edge_betweenness_centrality_layer = m.getWeightedCalculation(Aii);
                 else  % binary graphs
-                    edge_betweenness_centrality_layer = m.getBinaryCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized edge betweenness centrality
+                    %edge_betweenness_centrality_layer = m.getBinaryCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized edge betweenness centrality
+                    edge_betweenness_centrality_layer = m.getBinaryCalculation(Aii);
                 end
                 edge_betweenness_centrality(li) = {edge_betweenness_centrality_layer};
             end   
@@ -79,7 +81,7 @@ classdef EdgeBetweennessCentrality < Measure
             % of the edge betweenness centrality of a binary adjacency matrix A.
 
             n = length(A);
-            BC=zeros(n,1);  % vertex betweenness
+            BC = zeros(n,1);  % vertex betweenness
             EBC = zeros(n);  % edge betweenness
             for u=1:n
                 D = false(1, n); D(u) = 1;  % distance from u
@@ -130,7 +132,7 @@ classdef EdgeBetweennessCentrality < Measure
             % adjacency matrix A.
             
             n = length(A);   
-            BC=zeros(n,1);  % vertex betweenness
+            BC = zeros(n,1);  % vertex betweenness
             EBC = zeros(n);  % edge betweenness 
             for u=1:n
                 D = inf(1, n); D(u) = 0;  % distance from u
