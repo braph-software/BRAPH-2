@@ -10,7 +10,7 @@ A = [
 known_edge_betweenness_centrality = {[
                                 0 2 2;
                                 2 0 0;
-                                2 0 0;
+                                2 0 0
                                 ]};
 g = GraphBU(A);
 edge_betweenness_centrality = EdgeBetweennessCentrality(g);
@@ -29,7 +29,7 @@ A = [
 known_edge_betweenness_centrality = {[
                                 0 2 0;
                                 1 0 0;
-                                2 0 0;
+                                2 0 0
                                 ]};
 g = GraphBD(A);
 edge_betweenness_centrality = EdgeBetweennessCentrality(g);
@@ -44,10 +44,11 @@ A = [
     1 0 0
     4 0 0
     ];
+
 known_edge_betweenness_centrality = {[
                                 0 2 2;
                                 2 0 0;
-                                2 0 0;
+                                2 0 0
                                 ]};
 g = GraphWU(A);
 edge_betweenness_centrality = EdgeBetweennessCentrality(g);
@@ -66,10 +67,9 @@ A = [
 known_edge_betweenness_centrality = {[
                                 0 2 0;
                                 1 0 0;
-                                2 0 0;
+                                2 0 0
                                 ]};
 g = GraphWD(A);
-reference = edge_betweenness_wei(A) 
 edge_betweenness_centrality = EdgeBetweennessCentrality(g);
 
 assert(isequal(edge_betweenness_centrality.getValue(), known_edge_betweenness_centrality), ...
@@ -94,12 +94,16 @@ A = {
     A21     A22
     };
 
-known_edge_betweenness_centrality = {[0 2 2;
+known_edge_betweenness_centrality = {[
+                                      0 2 2;
                                       2 0 0;
-                                      2 0 0;]
-                                     [0 2 0;
+                                      2 0 0
+                                     ]
+                                     [
+                                      0 2 0;
                                       2 0 2;
-                                      0 2 0;]};
+                                      0 2 0
+                                     ]};
 g = MultiplexGraphBU(A);
 edge_betweenness_centrality = EdgeBetweennessCentrality(g);
 
@@ -107,93 +111,157 @@ assert(isequal(edge_betweenness_centrality.getValue(), known_edge_betweenness_ce
     [BRAPH2.STR ':EdgeBetweennessCentrality:' BRAPH2.BUG_ERR], ...
     'EdgeBetweennessCentrality is not being calculated correctly for MultiplexGraphBU.')
 
+%% Test 6: MultiplexGraphBD
+A11 = [
+    0   1   0
+    1   0   0
+    1   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   0
+    0   1   0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
+known_edge_betweenness_centrality = {[
+                                      0 2 0;
+                                      1 0 0;
+                                      2 0 0
+                                     ]
+                                     [
+                                      0 1 0;
+                                      2 0 0;
+                                      0 2 0
+                                     ]};
+g = MultiplexGraphBD(A);
+edge_betweenness_centrality = EdgeBetweennessCentrality(g);
+assert(isequal(edge_betweenness_centrality.getValue(), known_edge_betweenness_centrality), ...
+    [BRAPH2.STR ':EdgeBetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'EdgeBetweennessCentrality is not being calculated correctly for MultiplexGraphBD.')
 
-% % test Edge Betweenness Centrality
-% A = [
-%     0   .1  0   0   0
-%     .2   0  0   0   0
-%     0    0  0  .2   0
-%     0    0 .1   0   0
-%     0    0  0   0   0
-%     ];
-% graph_class_list = {'GraphWU', 'GraphBU'};
-% 
-% %% Test 1: Comparison vs known solution
-% for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     g = Graph.getGraph(graph_class, A);
-%     ebc_1 = EdgeBetweennessCentrality(g).getValue();
-%     
-%     switch (graph_class)
-%         case 'GraphWU'
-%             ebc_2 =[
-%                 0  1  0   0   0
-%                 1  0  0   0   0
-%                 0  0  0   1   0
-%                 0  0  1   0   0
-%                 0  0  0   0   0
-%                 ];
-%         case 'GraphBU'
-%             ebc_2 =[
-%                 0  1  0   0   0
-%                 1  0  0   0   0
-%                 0  0  0   1   0
-%                 0  0  1   0   0
-%                 0  0  0   0   0
-%                 ];
-%     end    
-%     
-%     assert(isequal(ebc_1, ebc_2), ...
-%         'BRAPH:EdgeBetweennessCentrality:Bug', ...
-%         ['Edge Betweenness Centrality is not being calculated correctly for ' graph_class])
-% end
-% 
-% 
-% %% Test 2: Calculation vs BCT
-% for i = 1:1:length(graph_class_list)
-%     graph_class = graph_class_list{i};
-%     g = Graph.getGraph(graph_class, A);
-%     ebc_1 = EdgeBetweennessCentrality(g).getValue();
-%     
-%     switch (graph_class)
-%         case 'GraphWU'
-%             ebc_2 = edge_betweenness_wei(A);
-%         case 'GraphBU'
-%             ebc_2 = edge_betweenness_bin(A);
-%     end    
-%     
-%     assert(isequal(ebc_1, ebc_2), ...
-%         'BRAPH:EdgeBetweennessCentrality:Bug', ...
-%         ['Edge Betweenness Centrality is not being calculated correctly for ' graph_class])
-% end
+%% Test 7: MultiplexGraphWU
+A11 = [
+    0   1   4
+    1   0   0
+    4   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   4
+    0   4   0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
+known_edge_betweenness_centrality = {[
+                                      0 2 2;
+                                      2 0 0;
+                                      2 0 0
+                                     ]
+                                     [
+                                      0 2 0;
+                                      2 0 2;
+                                      0 2 0
+                                     ]};
+g = MultiplexGraphWU(A);
+edge_betweenness_centrality = EdgeBetweennessCentrality(g);
+assert(isequal(edge_betweenness_centrality.getValue(), known_edge_betweenness_centrality), ...
+    [BRAPH2.STR ':EdgeBetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'EdgeBetweennessCentrality is not being calculated correctly for MultiplexGraphWU.')
 
+%% Test 8: MultiplexGraphWD
+A11 = [
+    0   1   0
+    1   0   0
+    4   0   0
+    ];
+A12 = eye(3);
+A21 = eye(3);
+A22 = [
+    0   1   0
+    1   0   0
+    0   4   0
+    ];
+A = {
+    A11     A12
+    A21     A22
+    };
+known_edge_betweenness_centrality = {[
+                                      0 2 0;
+                                      1 0 0;
+                                      2 0 0
+                                     ]
+                                     [
+                                      0 1 0;
+                                      2 0 0;
+                                      0 2 0
+                                     ]};
+g = MultiplexGraphWD(A);
+edge_betweenness_centrality = EdgeBetweennessCentrality(g);
+assert(isequal(edge_betweenness_centrality.getValue(), known_edge_betweenness_centrality), ...
+    [BRAPH2.STR ':EdgeBetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'EdgeBetweennessCentrality is not being calculated correctly for MultiplexGraphWD.')
+
+%% Test 9: Calculation vs BCT
+A = rand(randi(5));
+g = GraphBU(A); 
+
+edge_betweenness_centrality = EdgeBetweennessCentrality(g).getValue();
+edge_betweenness_centrality = edge_betweenness_centrality{1};
+edge_betweenness_centrality_bct = edge_betweenness_binary_standard(g.getA());
+edge_betweenness_centrality(isnan(edge_betweenness_centrality)) = 0;
+edge_betweenness_centrality_bct(isnan(edge_betweenness_centrality_bct)) = 0;
+
+assert(isequal(edge_betweenness_centrality, edge_betweenness_centrality_bct), ...
+    [BRAPH2.STR ':EdgeBetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'EdgeBetweennessCentrality is not being calculated correctly for GraphBU BCT.')
+
+g = GraphBD(A);
+
+edge_betweenness_centrality = EdgeBetweennessCentrality(g).getValue();
+edge_betweenness_centrality = edge_betweenness_centrality{1};
+edge_betweenness_centrality_bct = edge_betweenness_binary_standard(g.getA());
+edge_betweenness_centrality(isnan(edge_betweenness_centrality)) = 0;
+edge_betweenness_centrality_bct(isnan(edge_betweenness_centrality_bct)) = 0;
+
+assert(isequal(edge_betweenness_centrality, edge_betweenness_centrality_bct), ...
+    [BRAPH2.STR ':EdgeBetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'EdgeBetweennessCentrality is not being calculated correctly for GraphBD BCT.')
+
+g = GraphWU(A);
+
+edge_betweenness_centrality = EdgeBetweennessCentrality(g).getValue();
+edge_betweenness_centrality = edge_betweenness_centrality{1};
+edge_betweenness_centrality_bct = edge_betweenness_weighted_standard(g.getA());
+edge_betweenness_centrality(isnan(edge_betweenness_centrality)) = 0;
+edge_betweenness_centrality_bct(isnan(edge_betweenness_centrality_bct)) = 0;
+
+assert(isequal(edge_betweenness_centrality, edge_betweenness_centrality_bct), ...
+    [BRAPH2.STR ':EdgeBetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'EdgeBetweennessCentrality is not being calculated correctly for GraphWU BCT.')
+
+g = GraphWD(A);
+
+edge_betweenness_centrality = EdgeBetweennessCentrality(g).getValue();
+edge_betweenness_centrality = edge_betweenness_centrality{1};
+edge_betweenness_centrality_bct = edge_betweenness_weighted_standard(g.getA());
+edge_betweenness_centrality(isnan(edge_betweenness_centrality)) = 0;
+edge_betweenness_centrality_bct(isnan(edge_betweenness_centrality_bct)) = 0;
+
+assert(isequal(edge_betweenness_centrality, edge_betweenness_centrality_bct), ...
+    [BRAPH2.STR ':EdgeBetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'EdgeBetweennessCentrality is not being calculated correctly for GraphWD BCT.')
 
 %% Functions to calculate Edge Betweenness Centrality from 2019_03_03_BCT
-
-function [EBC,BC]=edge_betweenness_bin(G)
-%EDGE_BETWEENNESS_BIN    Edge betweenness centrality
-%
-%   EBC = edge_betweenness_bin(A);
-%   [EBC BC] = edge_betweenness_bin(A);
-%
-%   Edge betweenness centrality is the fraction of all shortest paths in
-%   the network that contain a given edge. Edges with high values of
-%   betweenness centrality participate in a large number of shortest paths.
-%
-%   Input:      A,      binary (directed/undirected) connection matrix.
-%
-%   Output:     EBC,    edge betweenness centrality matrix.
-%               BC,     node betweenness centrality vector.
-%
-%   Note: Betweenness centrality may be normalised to the range [0,1] as
-%   BC/[(N-1)(N-2)], where N is the number of nodes in the network.
-%
-%   Reference: Brandes (2001) J Math Sociol 25:163-177.
-%
-%
-%   Mika Rubinov, UNSW/U Cambridge, 2007-2012
-
-
+function [EBC,BC]=edge_betweenness_binary_standard(G)
 n=length(G);
 BC=zeros(n,1);                  %vertex betweenness
 EBC=zeros(n);                   %edge betweenness
@@ -240,36 +308,7 @@ for u=1:n
 end
 end
 
-function [EBC,BC]=edge_betweenness_wei(G)
-%EDGE_BETWEENNESS_WEI    Edge betweenness centrality
-%
-%   EBC = edge_betweenness_wei(L);
-%   [EBC BC] = edge_betweenness_wei(L);
-%
-%   Edge betweenness centrality is the fraction of all shortest paths in
-%   the network that contain a given edge. Edges with high values of
-%   betweenness centrality participate in a large number of shortest paths.
-%
-%   Input:      L,      Directed/undirected connection-length matrix.
-%
-%   Output:     EBC,    edge betweenness centrality matrix.
-%               BC,     nodal betweenness centrality vector.
-%
-%   Notes:
-%       The input matrix must be a connection-length matrix, typically
-%   obtained via a mapping from weight to length. For instance, in a
-%   weighted correlation network higher correlations are more naturally
-%   interpreted as shorter distances and the input matrix should
-%   consequently be some inverse of the connectivity matrix.
-%       Betweenness centrality may be normalised to the range [0,1] as
-%   BC/[(N-1)(N-2)], where N is the number of nodes in the network.
-%
-%   Reference: Brandes (2001) J Math Sociol 25:163-177.
-%
-%
-%   Mika Rubinov, UNSW/U Cambridge, 2007-2012
-
-
+function [EBC,BC]=edge_betweenness_weighted_standard(G)
 n=length(G);
 % E=find(G); G(E)=1./G(E);        %invert weights
 BC=zeros(n,1);                  %vertex betweenness
