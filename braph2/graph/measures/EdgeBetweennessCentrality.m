@@ -65,10 +65,8 @@ classdef EdgeBetweennessCentrality < Measure
                 end
                 
                 if connectivity_layer == Graph.WEIGHTED  % weighted graphs
-                    %edge_betweenness_centrality_layer = m.getWeightedCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized edge betweenness centrality
                     edge_betweenness_centrality_layer = m.getWeightedCalculation(Aii);
                 else  % binary graphs
-                    %edge_betweenness_centrality_layer = m.getBinaryCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized edge betweenness centrality
                     edge_betweenness_centrality_layer = m.getBinaryCalculation(Aii);
                 end
                 edge_betweenness_centrality(li) = {edge_betweenness_centrality_layer};
@@ -77,7 +75,7 @@ classdef EdgeBetweennessCentrality < Measure
         function binary_edge_betweenness_centrality = getBinaryCalculation(m, A)      
             % GETBINARYCALCULATION calculates the edge betweenness centrality value of a binary adjacency matrix
             %
-            % BINARY_EDGE_BETWEENNESS_CENTRALITY = GETBINARYCALCULATION(A) returns the value
+            % BINARY_EDGE_BETWEENNESS_CENTRALITY = GETBINARYCALCULATION(m, A) returns the value
             % of the edge betweenness centrality of a binary adjacency matrix A.
 
             n = length(A);
