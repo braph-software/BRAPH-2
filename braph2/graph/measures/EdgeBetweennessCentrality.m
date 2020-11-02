@@ -260,7 +260,7 @@ classdef EdgeBetweennessCentrality < Measure
             % with EdgeBetweennessCentrality 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to EdgeBetweennessCentrality. 
+            % of compatible graph classes to edge betweenness centrality. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
