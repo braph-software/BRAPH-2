@@ -257,7 +257,7 @@ classdef EdgeBetweennessCentrality < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % to EdgeBetweennessCentrality 
+            % with EdgeBetweennessCentrality 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
             % of compatible graph classes to EdgeBetweennessCentrality. 
