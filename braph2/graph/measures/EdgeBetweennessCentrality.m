@@ -249,7 +249,7 @@ classdef EdgeBetweennessCentrality < Measure
             % GETPARAMETRICITY returns the parametricity of BetweennessCentrality
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of betweenness centrality measure (NONPARAMETRIC).
+            % parametricity of edge betweenness centrality measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
