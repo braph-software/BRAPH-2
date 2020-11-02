@@ -28,8 +28,8 @@ classdef EdgeBetweennessCentrality < Measure
         function m = EdgeBetweennessCentrality(g, varargin)          
             % EDGEBETWEENNESSCENTRALITY(G) creates edge betweenness centrality with default measure properties.
             % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU, MultiplexGraphBU, MultiplexGraphBD,
-            % MultiplexGraphBD or MultiplexGraphBU). 
+            % GraphWD, GraphWU, MultiplexGraphBU, MultiplexGraphBD,
+            % MultiplexGraphWU or MultiplexGraphWD). 
             %
             % EDGEBETWEENNESSCENTRALITY(G, 'VALUE', VALUE) creates edge betweenness centrality, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
