@@ -278,7 +278,7 @@ classdef EdgeBetweennessCentrality < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs to EdgeBetweennessCentrality 
+            % graphs with EdgeBetweennessCentrality 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to EdgeBetweennessCentrality.
