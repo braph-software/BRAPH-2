@@ -246,7 +246,7 @@ classdef EdgeBetweennessCentrality < Measure
             measure_scope = Measure.UNILAYER;
         end
         function parametricity = getParametricity()
-            % GETPARAMETRICITY returns the parametricity of BetweennessCentrality
+            % GETPARAMETRICITY returns the parametricity of EdgeBetweennessCentrality
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
             % parametricity of edge betweenness centrality measure (NONPARAMETRIC).
