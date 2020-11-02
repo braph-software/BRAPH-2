@@ -33,8 +33,8 @@ classdef EdgeBetweennessCentrality < Measure
             %
             % EDGEBETWEENNESSCENTRALITY(G, 'VALUE', VALUE) creates edge betweenness centrality, and sets the value
             % to VALUE. G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, Graph WU, MultiplexGraphBU, MultiplexGraphBD,
-            % MultiplexGraphBD or MultiplexGraphBU).
+            % GraphWD, GraphWU, MultiplexGraphBU, MultiplexGraphBD,
+            % MultiplexGraphWU or MultiplexGraphWD).
             %   
             % See also Measure, Graph, GraphBD, GraphBU, GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
             
