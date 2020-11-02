@@ -5,7 +5,7 @@ classdef EdgeBetweennessCentrality < Measure
     % and weighted directed (WD) graphs. 
     %
     % It is calculated as the fraction of all shortest paths in the graph
-    % that pass through a given node with a layer. Edges with high values of betweenness
+    % that pass through a given node within a layer. Edges with high values of betweenness
     % centrality participate in a large number of shortest paths. 
     % 
     % EdgeBetweennessCentrality methods:
