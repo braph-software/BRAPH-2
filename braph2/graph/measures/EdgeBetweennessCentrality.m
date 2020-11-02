@@ -229,7 +229,7 @@ classdef EdgeBetweennessCentrality < Measure
             % GETMEASUREFORMAT returns the measure format of EdgeBetweennessCentrality
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of edge betweenness centrality measure (NODAL).
+            % of edge betweenness centrality measure (BINODAL).
             %
             % See also getMeasureScope.
             
