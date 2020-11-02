@@ -197,7 +197,7 @@ classdef EdgeBetweennessCentrality < Measure
             %
             % See also getClass(), getDescription(). 
             
-            name = 'Edge Betweenness-Centrality';
+            name = 'Edge Betweenness Centrality';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the edge betweenness centrality description 
