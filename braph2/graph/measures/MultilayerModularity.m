@@ -7,7 +7,7 @@ classdef MultilayerModularity < MultilayerCommunityStructure
     % MultilayerModularity methods:
     %   MultilayerModularity        - constructor
     %
-    % MultilayerModularity methods (Static)
+    % MultilayerModularity descriptive methods (Static)
     %   getClass                    - returns the multilayer modularity class
     %   getName                     - returns the name of multilayer modularity measure
     %   getDescription              - returns the description of multilayer modularity measure
