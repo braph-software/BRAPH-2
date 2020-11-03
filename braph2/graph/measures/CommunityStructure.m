@@ -57,8 +57,8 @@ classdef CommunityStructure < Measure
                         A = A(n_perm, n_perm);  % DB: use permuted matrix for subsequent analysis
                         Ki = sum(A, 1);  % in-degree
                         Ko = sum(A, 2);  % out-degree
-                        m = sum(Ki);  % number of edges
-                        b = A - gamma*(Ko*Ki).'/m;
+                        mo = sum(Ki);  % number of edges
+                        b = A - gamma*(Ko*Ki).'/mo;
                         B = b+b.';  % directed modularity matrix
                         Ci = ones(N,1);  % community indices
                         cn = 1;  % number of communities
@@ -112,21 +112,21 @@ classdef CommunityStructure < Measure
                         end
                         
                         s = Ci(:, ones(1, N));  % compute modularity
-                        Q =~ (s-s.').*B/(2*m);
+                        Q =~ (s-s.').*B/(2*mo);
                         Q = sum(Q(:));
                         Ci_corrected = zeros(N, 1);  % initialize Ci_corrected
                         Ci_corrected(n_perm) = Ci;  % return order of nodes to the order used at the input stage.
                         Ci = Ci_corrected;  % output corrected community assignments
 
-                        m.quality_function = Q;  % save normalized quality function/modularity
+                        mo.quality_function = Q;  % save normalized quality function/modularity
                         community_structure = Ci;
                         
                     else  % directed graphs
                         n_perm = randperm(N);  % randomly permute order of nodes
                         A = A(n_perm, n_perm);  % DB: use permuted matrix for subsequent analysis
                         K = sum(A);  % degree
-                        m = sum(K);  % number of edges (each undirected edge is counted twice)
-                        B = A - gamma*(K.'*K)/m;  % modularity matrix
+                        mo = sum(K);  % number of edges (each undirected edge is counted twice)
+                        B = A - gamma*(K.'*K)/mo;  % modularity matrix
                         Ci = ones(N, 1);  % community indices
                         cn = 1;  % number of communities
                         U = [1 0];  % array of unexamined communites
@@ -180,13 +180,13 @@ classdef CommunityStructure < Measure
                         end
                         
                         s = Ci(:,ones(1, N));  % compute modularity
-                        Q =~ (s-s.').*B/m;
+                        Q =~ (s-s.').*B/mo;
                         Q = sum(Q(:));
                         Ci_corrected = zeros(N, 1);  % initialize Ci_corrected
                         Ci_corrected(n_perm) = Ci;  % return order of nodes to the order used at the input stage.
                         Ci = Ci_corrected;  % output corrected community assignments
                         
-                        m.quality_function = Q;  % save normalized quality function/modularity
+                        mo.quality_function = Q;  % save normalized quality function/modularity
                         community_structure = Ci;
                     end
 
@@ -232,8 +232,8 @@ classdef CommunityStructure < Measure
                     
                     B = (B+B.')/2;  % symmetrize modularity matrix
                     Hnm = zeros(N, N);  % node-to-module degree
-                    for m = 1:max(Mb)  % loop over modules
-                        Hnm(:, m) = sum(B(:, Mb== m), 2);
+                    for mo = 1:max(Mb)  % loop over modules
+                        Hnm(:, mo) = sum(B(:, Mb== mo), 2);
                     end
                     H = sum(Hnm, 2);  % node degree
                     Hm = sum(Hnm, 1);  % module degree 
