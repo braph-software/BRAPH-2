@@ -1,14 +1,14 @@
-classdef MultilayerCommunityStructure < Measure
-    % MultilayerCommunityStructure Multilayer community structure measure
-    % MultilayerCommunityStructure provides the Louvain-like multilayer 
+classdef CommunityStructure < Measure
+    % CommunityStructure Community structure measure
+    % CommunityStructure provides the Louvain-like multilayer 
     % community structure of a node for binary undirected (BU), binary
     % directed (BD), weighted undirected (WU), and weighted directed (WD) 
     % multiplex and multilayer graphs. 
     % 
-    % MultilayerCommunityStructure methods:
-    %   MultilayerCommunityStructure - constructor
+    % CommunityStructure methods:
+    %   CommunityStructure          - constructor
     %
-    % MultilayerCommunityStructure methods (Static)
+    % CommunityStructure methods (Static)
     %   getClass                    - returns the multilayer community structure class
     %   getName                     - returns the name of multilayer community structure measure
     %   getDescription              - returns the description of multilayer community structure measure
@@ -20,30 +20,30 @@ classdef MultilayerCommunityStructure < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
+    % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
     
     properties (GetAccess=protected, SetAccess=protected)
         quality_function  % normalized quality function
     end
     methods
-        function m  = MultilayerCommunityStructure(g, varargin)
-            % MULTILAYERCOMMUNITYSTRUCTURE(G) creates multilayer community structure with default measure properties.
-            % G is a multilayer (i.e., an instance of MultiplexGraphBD,
-            % MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU). 
+        function m  = CommunityStructure(g, varargin)
+            % COMMUNITYSTRUCTURE(G) creates community structure with default measure properties.
+            % G is a graph (i.e., an instance of GraphBD,
+            % GraphBU, GraphWD, GraphWU). 
             %
-            % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
+            % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
             
             m = m@Measure(g,  varargin{:});
         end
     end
     methods (Access=protected)
-        function multilayer_community_structure = calculate(m)
-            % CALCULATE calculates the Louvain-like multilayer community structure value of a multiplex
+        function community_structure = calculate(m)
+            % CALCULATE calculates the Louvain-like community structure value of a multiplex
             %
-            % MULTILAYERCOMMUNITYSTRUCTURE = CALCULATE(M) returns the value of the 
-            % Louvain-like multilayer community structure of a multilayer graph.
+            % COMMUNITYSTRUCTURE = CALCULATE(M) returns the value of the 
+            % Louvain-like community structure of a multilayer graph.
             %
-            % See also Measure, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
+            % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU.
     
             g = m.getGraph();  % graph from measure class
             N = g.nodenumber();  % number of nodes in each layer
@@ -199,9 +199,9 @@ classdef MultilayerCommunityStructure < Measure
                     clear('metanetwork_reduce');
                     m.quality_function = Q/twom;  % save normalized quality function
                     S = reshape(S, N(1), L);
-                    multilayer_community_structure = cell(L, 1);
+                    community_structure = cell(L, 1);
                     for li = 1:1:L
-                        multilayer_community_structure(li) = {S(:, li)};
+                        community_structure(li) = {S(:, li)};
                     end
                     return
                 end
@@ -253,9 +253,9 @@ classdef MultilayerCommunityStructure < Measure
                     Q = full(sum(sum((P*M).*P)));
                     m.quality_function = Q/twom;  % save normalized quality function
                     S = reshape(S, N(1), L);
-                    multilayer_community_structure = cell(L, 1);
+                    community_structure = cell(L, 1);
                     for li = 1:1:L
-                        multilayer_community_structure(li) = {S(:, li)};
+                        community_structure(li) = {S(:, li)};
                     end
                     return
                 end
@@ -265,9 +265,9 @@ classdef MultilayerCommunityStructure < Measure
             end           
             m.quality_function = Q/twom;  % save normalized quality function
             S = reshape(S, N(1), L);
-            multilayer_community_structure = cell(L, 1);
+            community_structure = cell(L, 1);
             for li = 1:1:L
-                multilayer_community_structure(li) = {S(:, li)};
+                community_structure(li) = {S(:, li)};
             end
         end
         function [B, twom] = multiord_undirected(m, A, gamma, omega, N, T)
@@ -674,22 +674,22 @@ classdef MultilayerCommunityStructure < Measure
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the multilayer community structure measure.
+            % NAME = GETNAME() returns the name of the community structure measure.
             %
             % See also getClass, getDescription. 
             
             name = 'Multilayer Community Structure';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the multilayer community structure description
+            % GETDESCRIPTION returns the community structure description
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % multilayer community structure measure.
+            % community structure measure.
             %
             % See also getClass, getName.
         
             description = [ ...
-                'The multilayer community structure of a multilayer graph is a' ...
+                'The community structure of a graph is a' ...
                 'subdivision of the network into non-overlapping' ...
                 'groups of nodes which maximizes the number' ...
                 'of whitin group edges, and minimizes the number' ...
@@ -697,10 +697,10 @@ classdef MultilayerCommunityStructure < Measure
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to MultilayerCommunityStructure
+            % GETAVAILABLESETTINGS returns the setting available to CommunityStructure
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to MultilayerCommunityStructure. Empty Array in this case.
+            % settings available to CommunityStructure. Empty Array in this case.
             
             available_settings = {
                 'MultilayerCommunityStructureGamma', BRAPH2.NUMERIC, 1, {}; ...
@@ -714,60 +714,60 @@ classdef MultilayerCommunityStructure < Measure
                 };
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of MultilayerCommunityStructure
+            % GETMEASUREFORMAT returns the measure format of CommunityStructure
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of multilayer community structure measure (NODAL).
+            % of community structure measure (NODAL).
             %
             % See also getMeasureScope.
             
             measure_format = Measure.NODAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of MultilayerCommunityStructure
+            % GETMEASURESCOPE returns the measure scope of CommunityStructure
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of multilayer community structure measure (UNILAYER).
+            % measure scope of community structure measure (UNILAYER).
             %
             % See also getMeasureFormat.
            
             measure_scope = Measure.UNILAYER;
         end
         function parametricity = getParametricity()
-            % GETPARAMETRICITY returns the parametricity of MultilayerCommunityStructure
+            % GETPARAMETRICITY returns the parametricity of CommunityStructure
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the parametricity
-            % of multilayer community structure measure (NONPARAMETRIC).
+            % of community structure measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
             parametricity = Measure.NONPARAMETRIC;
         end
         function list = getCompatibleGraphList()
-            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with MultilayerCommunityStructure
+            % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs with CommunityStructure
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to multilayer community structure. 
+            % of compatible graph classes to community structure. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber. 
    
             list = { ...
-                'MultiplexGraphBU', ...
-                'MultiplexGraphBD', ...
-                'MultiplexGraphWU', ...
-                'MultiplexGraphWD' ...
+                'GraphBU', ...
+                'GraphBD', ...
+                'GraphWU', ...
+                'GraphWD' ...
                 };
         end
         function n = getCompatibleGraphNumber()
-            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with MultilayerCommunityStructure
+            % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs with CommunityStructure
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to multilayer community structure.
+            % compatible graphs to community structure.
             % 
             % See also getCompatibleGraphList.
             
-            n = Measure.getCompatibleGraphNumber('MultilayerCommunityStructure');
+            n = Measure.getCompatibleGraphNumber('CommunityStructure');
         end
     end
     methods
