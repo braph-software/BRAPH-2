@@ -1,7 +1,7 @@
 classdef CommunityStructure < Measure
     % CommunityStructure Community structure measure
-    % CommunityStructure provides the Louvain or Newman multilayer 
-    % community structure of a node for binary undirected (BU), binary
+    % CommunityStructure provides the Louvain or Newman community 
+    % structure of a node for binary undirected (BU), binary
     % directed (BD), weighted undirected (WU), and weighted directed (WD) 
     % graphs. 
     % 
