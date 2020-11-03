@@ -86,7 +86,7 @@ classdef Modularity < CommunityStructure
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Modularity. Empty Array in this case.
             
-            available_settings = getAvailableSettings@MCommunityStructure();
+            available_settings = getAvailableSettings@CommunityStructure();
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of Modularity

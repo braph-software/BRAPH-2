@@ -49,11 +49,6 @@ classdef CommunityStructure < Measure
             A = g.getA();  % adjacency matrix
             N = g.nodenumber();  % number of nodes in each layer
             
-            gamma = get_from_varargin(1, 'CommunityStructureGamma', m.getSettings());  % resolution parameter
-            M0 = get_from_varargin([], 'CommunityStructureM0', m.getSettings());  % initial community affiliation vector
-            B = get_from_varargin([], 'CommunityStructureB', m.getSettings());  % custom objective matrix
-            type_B = get_from_varargin('modularity', 'CommunityStructureBtype', m.getSettings());  % objective-function type
-            
             community_structure_algorithm = get_from_varargin('Louvain', 'CommunityStructureAlgorithm', m.getSettings());
             switch lower(community_structure_algorithm)
                 case {'Newman'}  % Newman algorithm
@@ -124,7 +119,7 @@ classdef CommunityStructure < Measure
                         Ci = Ci_corrected;  % output corrected community assignments
 
                         m.quality_function = Q;  % save normalized quality function/modularity
-                        community_structure = Ci';
+                        community_structure = Ci;
                         
                     else  % directed graphs
                         n_perm = randperm(N);  % randomly permute order of nodes
@@ -192,10 +187,15 @@ classdef CommunityStructure < Measure
                         Ci = Ci_corrected;  % output corrected community assignments
                         
                         m.quality_function = Q;  % save normalized quality function/modularity
-                        community_structure = Ci';
+                        community_structure = Ci;
                     end
 
                 otherwise  % {'Louvain'}  % Louvain algorithm  
+                    
+                    gamma = get_from_varargin(1, 'CommunityStructureGamma', m.getSettings());  % resolution parameter
+                    M0 = get_from_varargin([], 'CommunityStructureM0', m.getSettings());  % initial community affiliation vector
+                    B = get_from_varargin([], 'CommunityStructureB', m.getSettings());  % custom objective matrix
+                    type_B = get_from_varargin('modularity', 'CommunityStructureBtype', m.getSettings());  % objective-function type
                     W = double(A);  % convert to double format
                     s = sum(sum(W));  % get sum of edges
                     
@@ -241,11 +241,12 @@ classdef CommunityStructure < Measure
                     Q0 = -inf;
                     Q = sum(B(bsxfun(@eq, M0, M0.')))/s;  % compute modularity
                     first_iteration = true;
+                    n = N;
                     while Q-Q0 > 1e-10
                         flag = true;  % flag for within-hierarchy search
                         while flag
                             flag = false;
-                            for u = randperm(N)  % loop over all nodes in random order
+                            for u = randperm(n)  % loop over all nodes in random order
                                 ma = Mb(u);  % current module of u
                                 dQ = Hnm(u, :)- Hnm(u,ma) + B(u, u);
                                 dQ(ma) = 0;  % (line above) algorithm condition
@@ -269,7 +270,7 @@ classdef CommunityStructure < Measure
                             M = Mb;
                             first_iteration = false;
                         else
-                            for u = 1:N  % loop through initial module assignments
+                            for u = 1:n  % loop through initial module assignments
                                 M(M0==u) = Mb(u);  % assign new modules
                             end
                         end
@@ -294,7 +295,7 @@ classdef CommunityStructure < Measure
                         Q = trace(B)/s;  % compute modularity
                     end
                     m.quality_function = Q;  % save normalized quality function/modularity
-                    community_structure = M';
+                    community_structure = M;
             end
         end
     end
