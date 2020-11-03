@@ -22,7 +22,7 @@ classdef Multirichness < Richness
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
-    %   getMeasure                  - returns the degree class
+    %   getMeasure                  - returns the multirichness class
     %   getParameterName            - returns the name of multirichness measure's parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs

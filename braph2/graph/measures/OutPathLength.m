@@ -19,7 +19,7 @@ classdef OutPathLength < Measure
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
-    %   getMeasure                  - returns the path length class
+    %   getMeasure                  - returns the out-path length class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
