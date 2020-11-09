@@ -119,7 +119,7 @@ classdef CommunityStructure < Measure
                         Ci = Ci_corrected;  % output corrected community assignments
 
                         mo.quality_function = Q;  % save normalized quality function/modularity
-                        community_structure = Ci;
+                        community_structure = {Ci};
                         
                     else  % directed graphs
                         n_perm = randperm(N);  % randomly permute order of nodes
@@ -187,7 +187,7 @@ classdef CommunityStructure < Measure
                         Ci = Ci_corrected;  % output corrected community assignments
                         
                         mo.quality_function = Q;  % save normalized quality function/modularity
-                        community_structure = Ci;
+                        community_structure = {Ci};
                     end
 
                 otherwise  % {'Louvain'}  % Louvain algorithm  
@@ -295,7 +295,7 @@ classdef CommunityStructure < Measure
                         Q = trace(B)/s;  % compute modularity
                     end
                     m.quality_function = Q;  % save normalized quality function/modularity
-                    community_structure = M;
+                    community_structure = {M};
             end
         end
     end
