@@ -64,7 +64,7 @@ classdef RichClubStrength < Strength
             % See also Measure, Strength, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
+            A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
             L = g.layernumber();
             N = g.nodenumber();
             

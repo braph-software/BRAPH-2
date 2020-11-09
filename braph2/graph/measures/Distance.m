@@ -50,7 +50,7 @@ classdef Distance < Measure
             % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
+            A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
             
             distance = cell(g.layernumber(), 1);
             connectivity_type =  g.getConnectivityType(g.layernumber());

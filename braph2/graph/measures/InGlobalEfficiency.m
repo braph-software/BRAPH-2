@@ -16,7 +16,7 @@ classdef InGlobalEfficiency < Measure
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
-    %   getMeasure                  - returns the global efficiency class
+    %   getMeasure                  - returns the in-global efficiency class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
