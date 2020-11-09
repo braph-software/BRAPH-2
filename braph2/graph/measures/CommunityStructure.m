@@ -49,9 +49,11 @@ classdef CommunityStructure < Measure
             A = g.getA();  % adjacency matrix
             N = g.nodenumber();  % number of nodes in each layer
             
+            gamma = get_from_varargin(1, 'CommunityStructureGamma', m.getSettings());  % resolution parameter
+            
             community_structure_algorithm = get_from_varargin('Louvain', 'CommunityStructureAlgorithm', m.getSettings());
             switch lower(community_structure_algorithm)
-                case {'Newman'}  % Newman algorithm
+                case {'newman'}  % Newman algorithm
                     if g.is_directed(g)  % directed graphs
                         n_perm = randperm(N);  % randomly permute order of nodes
                         A = A(n_perm, n_perm);  % DB: use permuted matrix for subsequent analysis
@@ -191,8 +193,7 @@ classdef CommunityStructure < Measure
                     end
 
                 otherwise  % {'Louvain'}  % Louvain algorithm  
-                    
-                    gamma = get_from_varargin(1, 'CommunityStructureGamma', m.getSettings());  % resolution parameter
+
                     M0 = get_from_varargin([], 'CommunityStructureM0', m.getSettings());  % initial community affiliation vector
                     B = get_from_varargin([], 'CommunityStructureB', m.getSettings());  % custom objective matrix
                     type_B = get_from_varargin('modularity', 'CommunityStructureBtype', m.getSettings());  % objective-function type
