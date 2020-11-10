@@ -4230,8 +4230,8 @@ classdef AnalysisST_WU < Analysis
                 Comparisons_structure(i).value2 = comp.getGroupValue(2);
                 Comparisons_structure(i).difference = comp.getDifference();
                 Comparisons_structure(i).alldifferences = comp.getAllDifferences();
-                Comparisons_structure(i).p1 = comp.p1();
-                Comparisons_structure(i).p2 = comp.p2();
+                Comparisons_structure(i).p1 = comp.p1;
+                Comparisons_structure(i).p2 = comp.p2;
                 Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
                 Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
             end
@@ -4246,8 +4246,8 @@ classdef AnalysisST_WU < Analysis
                 RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue();
                 RandomComparisons_structure(i).difference = ran_comp.getDifference();
                 RandomComparisons_structure(i).alldifferences = ran_comp.getAllDifferences();
-                RandomComparisons_structure(i).p1 = ran_comp.p1();
-                RandomComparisons_structure(i).p2 = ran_comp.p2();
+                RandomComparisons_structure(i).p1 = ran_comp.p1;
+                RandomComparisons_structure(i).p2 = ran_comp.p2;
                 RandomComparisons_structure(i).confidencemin = ran_comp.getConfidenceIntervalMin();
                 RandomComparisons_structure(i).confidencemax = ran_comp.getConfidenceIntervalMax();
             end
