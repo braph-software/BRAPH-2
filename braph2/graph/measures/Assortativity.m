@@ -49,11 +49,8 @@ classdef Assortativity < Measure
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
             L = g.layernumber();
-            [i, j] = find(triu(A) ~= 0);  % nodes [i, j] 
-            M = length(i);  % Number of edges  
+            N = g.nodenumber();
             assortativity = cell(L, 1);
-            k_i = zeros(L, 1);
-            k_j = zeros(L, 1);
             connectivity_type =  g.getConnectivityType(g.layernumber());
             for li = 1:1:L
                 
@@ -65,6 +62,11 @@ classdef Assortativity < Measure
                     connectivity_layer = connectivity_type(li, li);
                 end
                 
+                [i, j] = find(triu(Aii) ~= 0);  % nodes [i, j]
+                M = length(i);  % Number of edges
+                k_i = zeros(M, L);
+                k_j = zeros(length(j), L);
+            
                 if connectivity_layer == Graph.WEIGHTED  % weighted graphs
                     
                     if g.is_measure_calculated('Strength')
@@ -85,11 +87,11 @@ classdef Assortativity < Measure
                     d = degree{li};
                     
                 end
-                k_i(li) = d(i);  % degree/strength node i
-                k_j(li) = d(j);  % degree/strength node j
+                k_i(:, li) = d(i);  % degree/strength node i
+                k_j(:, li) = d(j);  % degree/strength node j
                 % compute assortativity
-                assortativity_layer = (sum(k_i(li) .* k_j(li)) / M - (sum(0.5 * (k_i(li) + k_j(li))) / M)^2)...
-                    / (sum(0.5 * (k_i(li).^2 + k_j(li).^2)) / M - (sum(0.5 * (k_i(li) + k_j(li))) / M)^2);
+                assortativity_layer = (sum(k_i(:, li) .* k_j(:, li)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2)...
+                    / (sum(0.5 * (k_i(:, li).^2 + k_j(:, li).^2)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2);
                 assortativity_layer(isnan(assortativity_layer)) = 0;  % Should return zeros, not NaN    
                 assortativity(li) = {assortativity_layer};  
             end  
