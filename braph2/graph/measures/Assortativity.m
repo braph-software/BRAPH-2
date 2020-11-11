@@ -4,9 +4,10 @@ classdef Assortativity < Measure
     % binary undirected (BU) and weighted undirected (WU) graphs. 
     %
     % It is calculated as the correlation coefficient between the
-    % degrees/strengths of all nodes on two opposite ends of an edge. The
-    % corresponding coefficient for directed and weighted networks is
-    % calculated by using the weighted and directed variants of degree/strength.
+    % degrees/strengths of all nodes on two opposite ends of an edge 
+    % within a layer. The corresponding coefficient for directed and
+    % weighted networks is calculated by using the weighted and directed
+    % variants of degree/strength.
     % 
     % Assortativity methods:
     %   Assortativity               - constructor 
@@ -23,7 +24,7 @@ classdef Assortativity < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
+    % See also Measure, Degree, Strength, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
     
     methods
         function m = Assortativity(g, varargin)           
@@ -31,7 +32,7 @@ classdef Assortativity < Measure
             % G is a graph (e.g, an instance of GraphBU, GraphWU,
             % MultiplexGraphBU, MultiplexGraphWU). 
             %   
-            % See also Measure, Graph, Degree, Strength, Distance. 
+            % See also Measure, Degree, Strength, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU. 
               
             m = m@Measure(g, varargin{:});
         end
@@ -42,6 +43,8 @@ classdef Assortativity < Measure
             %
             % ASSORTATIVITY = CALCULATE(M) returns the value of the assortativity of a
             % graph.
+            %
+            % See also Measure, Degree, Strength, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU. 
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
