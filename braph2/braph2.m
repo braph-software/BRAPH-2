@@ -35,4 +35,11 @@ for i = 1:1:length(workflows_directories)
     addpath([directory filesep 'workflows' filesep workflows_directories(i).name])
 end
 
+% compile mex part, it compiles only in first use or when private folder is
+% not present
+
+if ~exist([fileparts(which('Measure')) filesep 'measures' filesep 'private'], 'dir')
+    compile_mex
+end
+
 clear directory workflows_directories i
