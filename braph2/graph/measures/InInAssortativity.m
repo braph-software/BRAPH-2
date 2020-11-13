@@ -1,5 +1,5 @@
 classdef InInAssortativity < Measure
-    % InInAssortativity In-In-Assortativity  measure
+    % InInAssortativity In-In-Assortativity measure
     % InInAssortativity provides the in-in-assortativity coefficient of a 
     % graph for binary undirected (BU) and weighted undirected (WU) graphs. 
     %
@@ -62,7 +62,7 @@ classdef InInAssortativity < Measure
                     connectivity_layer = connectivity_type(li, li);
                 end
                 
-                [i, j] = find(triu(Aii) ~= 0);  % nodes [i, j]
+                [i, j] = find(Aii ~= 0);  % nodes [i, j]
                 M = length(i);  % Number of edges
                 k_i = zeros(M, L);
                 k_j = zeros(length(j), L);
