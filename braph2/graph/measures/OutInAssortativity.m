@@ -1,6 +1,6 @@
-classdef InOutAssortativity < Measure
-    % InOutAssortativity In-Out-Assortativity measure
-    % InOutAssortativity provides the in-out-assortativity coefficient of a 
+classdef OutInAssortativity < Measure
+    % OutInAssortativity Out-In-Assortativity measure
+    % OutInAssortativity provides the out-in-assortativity coefficient of a 
     % graph for binary directed (BD) and weighted directed (WD) graphs. 
     %
     % It is calculated as the correlation coefficient between the
@@ -9,26 +9,26 @@ classdef InOutAssortativity < Measure
     % weighted networks is calculated by using the weighted and directed
     % variants of in-out-degree/in-out-strength.
     % 
-    % InOutAssortativity methods:
-    %   InOutAssortativity          - constructor 
+    % OutInAssortativity methods:
+    %   OutInAssortativity          - constructor 
     % 
-    % InOutAssortativity descriptive methods (Static)
-    %   getClass                    - returns the in-out-assortativity class
-    %   getName                     - returns the name of in-out-assortativity measure
-    %   getDescription              - returns the description of in-out-assortativity measure
+    % OutInAssortativity descriptive methods (Static)
+    %   getClass                    - returns the out-in-assortativity class
+    %   getName                     - returns the name of out-in-assortativity measure
+    %   getDescription              - returns the description of out-in-assortativity measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
-    %   getMeasure                  - returns the in-out-assortativity class
+    %   getMeasure                  - returns the out-in-assortativity class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, InDegree, OutDegree, InStrength, OutStrength, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
     
     methods
-        function m = InOutAssortativity(g, varargin)           
-            % INOUTASSORTATIVITY(G) creates in-out-assortativity with default measure properties.
+        function m = OutInAssortativity(g, varargin)           
+            % OUTINASSORTATIVITY(G) creates out-in-assortativity with default measure properties.
             % G is a graph (e.g, an instance of GraphBU, GraphWU,
             % MultiplexGraphBU, MultiplexGraphWU). 
             %   
@@ -38,10 +38,10 @@ classdef InOutAssortativity < Measure
         end
     end
     methods (Access=protected)
-        function in_out_assortativity = calculate(m)
-            % CALCULATE calculates the in-out-assortativity value of a graph
+        function out_in_assortativity = calculate(m)
+            % CALCULATE calculates the out-in-assortativity value of a graph
             %
-            % INOUTASSORTATIVITY = CALCULATE(M) returns the value of the in-out-assortativity 
+            % OUTINASSORTATIVITY = CALCULATE(M) returns the value of the out-in-assortativity 
             % of a graph.
             %
             % See also Measure, InDegree, OutDegree, InStrength, OutStrength, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
@@ -50,7 +50,7 @@ classdef InOutAssortativity < Measure
             A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
             L = g.layernumber();
 
-            in_out_assortativity = cell(L, 1);
+            out_in_assortativity = cell(L, 1);
             connectivity_type =  g.getConnectivityType(g.layernumber());
             for li = 1:1:L
                 
@@ -101,13 +101,13 @@ classdef InOutAssortativity < Measure
                     d_out = out_degree{li};
                     
                 end
-                k_i(:, li) = d_in(i);  % in-degree/in-strength node i
-                k_j(:, li) = d_out(j);  % out-degree/out-strength node j
+                k_i(:, li) = d_out(j);  % out-degree/out-strength node i
+                k_j(:, li) = d_in(i);  % in-degree/in-strength node j
                 % compute assortativity
                 assortativity_layer = (sum(k_i(:, li) .* k_j(:, li)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2)...
                     / (sum(0.5 * (k_i(:, li).^2 + k_j(:, li).^2)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2);           
                 assortativity_layer(isnan(assortativity_layer)) = 0;  % Should return zeros, not NaN    
-                in_out_assortativity(li) = {assortativity_layer};  
+                out_in_assortativity(li) = {assortativity_layer};  
             end  
         end
     end
@@ -115,31 +115,31 @@ classdef InOutAssortativity < Measure
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the in-out-assortativity measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the out-in-assortativity measure.
             %
             % See also getName(), getDescription(). 
             
-            measure_class = 'InOutAssortativity';
+            measure_class = 'OutInAssortativity';
         end
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the in-out-assortativity measure.
+            % NAME = GETNAME() returns the name of the out-in-assortativity measure.
             %
             % See also getClass(), getDescription(). 
             
-            name = 'In-Out-Assortativity';
+            name = 'Out-In-Assortativity';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the in-out-assortativity description 
+            % GETDESCRIPTION returns the out-in-assortativity description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % in-out-assortativity measure.
+            % out-in-assortativity measure.
             %
             % See also getList(), getCompatibleGraphList().
             
             description = [ ...
-                'The in-out-assortativity coefficient of a graph is ' ...
+                'The out-in-assortativity coefficient of a graph is ' ...
                 'the correlation coefficient between the degrees/strengths ' ...
                 'of all nodes on two opposite ends of an edge within a layer.' ...
                 'The corresponding coefficient for directed and '...
@@ -148,40 +148,40 @@ classdef InOutAssortativity < Measure
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to InOutAssortativity
+            % GETAVAILABLESETTINGS returns the setting available to OutInAssortativity
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to InOutAssortativity. Empty Array in this case.
+            % settings available to OutInAssortativity. Empty Array in this case.
             % 
             % See also getCompatibleGraphList()
             
             available_settings = {};
         end
        function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of InOutAssortativity
+            % GETMEASUREFORMAT returns the measure format of OutInAssortativity
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of in-out-assortativity measure (GLOBAL).
+            % of out-in-assortativity measure (GLOBAL).
             %
             % See also getMeasureScope.
             
             measure_format = Measure.GLOBAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of InOutAssortativity
+            % GETMEASURESCOPE returns the measure scope of OutInAssortativity
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of in-out-assortativity measure (UNILAYER).
+            % measure scope of out-in-assortativity measure (UNILAYER).
             %
             % See also getMeasureFormat.
             
             measure_scope = Measure.UNILAYER;
         end
                 function parametricity = getParametricity()
-            % GETPARAMETRICITY returns the parametricity of InOutAssortativity
+            % GETPARAMETRICITY returns the parametricity of OutInAssortativity
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of in-out-assortativity measure (NONPARAMETRIC).
+            % parametricity of out-in-assortativity measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
@@ -189,10 +189,10 @@ classdef InOutAssortativity < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % with InOutAssortativity 
+            % with OutInAssortativity 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to in-out-assortativity. 
+            % of compatible graph classes to out-in-assortativity. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
@@ -206,14 +206,14 @@ classdef InOutAssortativity < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs with InOutAssortativity 
+            % graphs with OutInAssortativity 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to in-out-assortativity.
+            % compatible graphs to out-in-assortativity.
             % 
             % See also getCompatibleGraphList().
             
-            n = Measure.getCompatibleGraphNumber('InOutAssortativity');
+            n = Measure.getCompatibleGraphNumber('OutInAssortativity');
         end
     end
 end

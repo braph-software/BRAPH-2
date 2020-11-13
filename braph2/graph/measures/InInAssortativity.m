@@ -1,7 +1,7 @@
 classdef InInAssortativity < Measure
     % InInAssortativity In-In-Assortativity measure
     % InInAssortativity provides the in-in-assortativity coefficient of a 
-    % graph for binary undirected (BU) and weighted undirected (WU) graphs. 
+    % graph for binary directed (BD) and weighted directed (WD) graphs.  
     %
     % It is calculated as the correlation coefficient between the
     % degrees/strengths of all nodes on two opposite ends of an edge 
