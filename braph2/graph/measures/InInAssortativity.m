@@ -192,7 +192,7 @@ classdef InInAssortativity < Measure
         end
         function n = getCompatibleGraphNumber()
             % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible
-            % graphs with Assortativity 
+            % graphs with InInAssortativity 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to in-in-assortativity.
