@@ -1,56 +1,56 @@
-classdef Assortativity < Measure
-    % Assortativity Assortativity measure
-    % Assortativity provides the assortativity coefficient of a graph for 
-    % binary undirected (BU) and weighted undirected (WU) graphs. 
+classdef InInAssortativity < Measure
+    % InInAssortativity In-In-Assortativity  measure
+    % InInAssortativity provides the in-in-assortativity coefficient of a 
+    % graph for binary undirected (BU) and weighted undirected (WU) graphs. 
     %
     % It is calculated as the correlation coefficient between the
     % degrees/strengths of all nodes on two opposite ends of an edge 
     % within a layer. The corresponding coefficient for directed and
     % weighted networks is calculated by using the weighted and directed
-    % variants of degree/strength.
+    % variants of in-degree/in-strength.
     % 
-    % Assortativity methods:
-    %   Assortativity               - constructor 
+    % InInAssortativity methods:
+    %   InInAssortativity           - constructor 
     % 
-    % Assortativity descriptive methods (Static)
-    %   getClass                    - returns the assortativity class
-    %   getName                     - returns the name of assortativity measure
-    %   getDescription              - returns the description of assortativity measure
+    % InInAssortativity descriptive methods (Static)
+    %   getClass                    - returns the in-in-assortativity class
+    %   getName                     - returns the name of in-in-assortativity measure
+    %   getDescription              - returns the description of in-in-assortativity measure
     %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
-    %   getMeasure                  - returns the assortativity class
+    %   getMeasure                  - returns the in-in-assortativity class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Degree, Strength, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
+    % See also Measure, InDegree, InStrength, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
     
     methods
-        function m = Assortativity(g, varargin)           
-            % ASSORTATIVITY(G) creates assortativity with default measure properties.
+        function m = InInAssortativity(g, varargin)           
+            % ININASSORTATIVITY(G) creates in-in-assortativity with default measure properties.
             % G is a graph (e.g, an instance of GraphBU, GraphWU,
             % MultiplexGraphBU, MultiplexGraphWU). 
             %   
-            % See also Measure, Degree, Strength, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU. 
+            % See also Measure, InDegree, InStrength, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
               
             m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
-        function assortativity = calculate(m)
-            % CALCULATE calculates the assortativity value of a graph
+        function in_in_assortativity = calculate(m)
+            % CALCULATE calculates the in-in-assortativity value of a graph
             %
-            % ASSORTATIVITY = CALCULATE(M) returns the value of the assortativity of a
-            % graph.
+            % ININASSORTATIVITY = CALCULATE(M) returns the value of the in-in-assortativity 
+            % of a graph.
             %
-            % See also Measure, Degree, Strength, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU. 
+            % See also Measure, InDegree, InStrength, GraphBD, GraphWD, MultiplexGraphBD, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
             L = g.layernumber();
-       
-            assortativity = cell(L, 1);
+
+            in_in_assortativity = cell(L, 1);
             connectivity_type =  g.getConnectivityType(g.layernumber());
             for li = 1:1:L
                 
@@ -69,31 +69,31 @@ classdef Assortativity < Measure
             
                 if connectivity_layer == Graph.WEIGHTED  % weighted graphs
                     
-                    if g.is_measure_calculated('Strength')
-                        strength = g.getMeasureValue('Strength');
+                    if g.is_measure_calculated('InStrength')
+                        in_strength = g.getMeasureValue('InStrength');
                     else
-                        strength = Strength(g, g.getSettings()).getValue();
+                        in_strength = InStrength(g, g.getSettings()).getValue();
                     end                   
-                    d = strength{li};
+                    d = in_strength{li};
 
 
                 else  % binary graphs
                     
-                    if g.is_measure_calculated('Degree')
-                        degree = g.getMeasureValue('Degree');
+                    if g.is_measure_calculated('InDegree')
+                        in_degree = g.getMeasureValue('InDegree');
                     else
-                        degree = Degree(g, g.getSettings()).getValue();
+                        in_degree = InDegree(g, g.getSettings()).getValue();
                     end
-                    d = degree{li};
+                    d = in_degree{li};
                     
                 end
-                k_i(:, li) = d(i);  % degree/strength node i
-                k_j(:, li) = d(j);  % degree/strength node j
+                k_i(:, li) = d(i);  % in-degree/in-strength node i
+                k_j(:, li) = d(j);  % in-degree/in-strength node j
                 % compute assortativity
                 assortativity_layer = (sum(k_i(:, li) .* k_j(:, li)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2)...
-                    / (sum(0.5 * (k_i(:, li).^2 + k_j(:, li).^2)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2);
+                    / (sum(0.5 * (k_i(:, li).^2 + k_j(:, li).^2)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2);           
                 assortativity_layer(isnan(assortativity_layer)) = 0;  % Should return zeros, not NaN    
-                assortativity(li) = {assortativity_layer};  
+                in_in_assortativity(li) = {assortativity_layer};  
             end  
         end
     end
@@ -101,73 +101,73 @@ classdef Assortativity < Measure
         function measure_class = getClass()
             % GETCLASS returns the measure class 
             %            
-            % MEASURE_CLASS = GETCLASS() returns the class of the assortativity measure.
+            % MEASURE_CLASS = GETCLASS() returns the class of the in-in-assortativity measure.
             %
             % See also getName(), getDescription(). 
             
-            measure_class = 'Assortativity';
+            measure_class = 'InInAssortativity';
         end
         function name = getName()
             % GETNAME returns the measure name
             %
-            % NAME = GETNAME() returns the name of the assortativity measure.
+            % NAME = GETNAME() returns the name of the in-in-assortativity measure.
             %
             % See also getClass(), getDescription(). 
             
-            name = 'Assortativity';
+            name = 'In-In-Assortativity';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the assortativity description 
+            % GETDESCRIPTION returns the in-in-assortativity description 
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
-            % assortativity measure.
+            % in-in-assortativity measure.
             %
             % See also getList(), getCompatibleGraphList().
             
             description = [ ...
-                'The assortativity coefficient of a graph is ' ...
+                'The in-in-assortativity coefficient of a graph is ' ...
                 'the correlation coefficient between the degrees/strengths ' ...
                 'of all nodes on two opposite ends of an edge within a layer.' ...
                 'The corresponding coefficient for directed and '...
                 'weighted networks is calculated by using the weighted '...
-                'and directed variants of degree/strength.'...
+                'and directed variants of in-degree/in-strength.'...
                 ];
         end
         function available_settings = getAvailableSettings()
-            % GETAVAILABLESETTINGS returns the setting available to Assortativity
+            % GETAVAILABLESETTINGS returns the setting available to InInAssortativity
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to Assortativity. Empty Array in this case.
+            % settings available to InInAssortativity. Empty Array in this case.
             % 
             % See also getCompatibleGraphList()
             
             available_settings = {};
         end
        function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of Assortativity
+            % GETMEASUREFORMAT returns the measure format of InInAssortativity
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of assortativity measure (GLOBAL).
+            % of in-in-assortativity measure (GLOBAL).
             %
             % See also getMeasureScope.
             
             measure_format = Measure.GLOBAL;
         end
         function measure_scope = getMeasureScope()
-            % GETMEASURESCOPE returns the measure scope of Assortativity
+            % GETMEASURESCOPE returns the measure scope of InInAssortativity
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of assortativity measure (UNILAYER).
+            % measure scope of in-in-assortativity measure (UNILAYER).
             %
             % See also getMeasureFormat.
             
             measure_scope = Measure.UNILAYER;
         end
                 function parametricity = getParametricity()
-            % GETPARAMETRICITY returns the parametricity of Assortativity
+            % GETPARAMETRICITY returns the parametricity of InInAssortativity
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the
-            % parametricity of assortativity measure (NONPARAMETRIC).
+            % parametricity of in-in-assortativity measure (NONPARAMETRIC).
             %
             % See also getMeasureFormat, getMeasureScope.
             
@@ -175,19 +175,19 @@ classdef Assortativity < Measure
         end
         function list = getCompatibleGraphList()
             % GETCOMPATIBLEGRAPHLIST returns the list of compatible graphs
-            % with Assortativity 
+            % with InInAssortativity 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to assortativity. 
+            % of compatible graph classes to in-in-assortativity. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber(). 
             
             list = { ...
-                'GraphBU', ...
-                'GraphWU', ...
-                'MultiplexGraphBU', ...
-                'MultiplexGraphWU' ...
+                'GraphBD', ...
+                'GraphWD', ...
+                'MultiplexGraphBD', ...
+                'MultiplexGraphWD' ...
                 };
         end
         function n = getCompatibleGraphNumber()
@@ -195,11 +195,11 @@ classdef Assortativity < Measure
             % graphs with Assortativity 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to assortativity.
+            % compatible graphs to in-in-assortativity.
             % 
             % See also getCompatibleGraphList().
             
-            n = Measure.getCompatibleGraphNumber('Assortativity');
+            n = Measure.getCompatibleGraphNumber('InInAssortativity');
         end
     end
 end
