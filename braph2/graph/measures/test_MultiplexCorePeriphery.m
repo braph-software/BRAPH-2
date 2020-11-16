@@ -78,7 +78,7 @@ A = {
     A21     A22
     };   
    
-known_multiplex_core_periphery = {[1 1 1 0]'};    
+known_multiplex_core_periphery = {[0 0 1 0]'};    
 
 g = MultiplexGraphWU(A);
 multiplex_core_periphery = MultiplexCorePeriphery(g, 'MultirichnessCoefficients', [3/4, 1/4]);
@@ -107,7 +107,7 @@ A = {
     A21     A22
     };    
 
-known_multiplex_core_periphery = {[1 1 1 0]'};   
+known_multiplex_core_periphery = {[0 1 1 0]'};   
 
 g = MultiplexGraphWD(A);
 multiplex_core_periphery = MultiplexCorePeriphery(g, 'MultirichnessCoefficients', [3/4, 1/4]);
