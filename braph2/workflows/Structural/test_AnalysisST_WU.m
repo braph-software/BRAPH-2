@@ -603,6 +603,26 @@ for i = 1:1:numel(measures)
     end
 end
 
+%% Save to xls 
+% setup
+save_dir_rule = 'RootDirectory';
+analysis = AnalysisST_WU('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
+save_dir_path = [fileparts(which('test_braph2')) filesep analysis.getID()];
+calculated_measurement = analysis.getMeasurement('Degree', group1);
+calculated_comparison = analysis.getComparison('Degree', group1, group2);
+calculated_random_comparison = analysis.getRandomComparison('Degree', group1);
+
+% act
+AnalysisST_WU.save_to_xls(analysis, save_dir_rule, save_dir_path);
+analysis_load = AnalysisST_WU.load_from_xls(cohort, save_dir_rule, save_dir_path);
+
+% assert
+assert( ~isempty(analysis_load), ...
+    ['BRAPH:AnalysisST_WU:save_to_xls'], ...
+    ['AnalysisST_WU.save_to_xls() not working properly'])
+
+rmdir(save_dir_path, 's')
+
 %% Test 6 : Save to Json
 % setup
 save_dir_rule = 'File';
