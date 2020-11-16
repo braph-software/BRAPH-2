@@ -58,7 +58,7 @@ classdef Diameter < Measure
             
             diameter = cell(L, 1);
             for li = 1:1:L
-                diameter(li) = {max(eccentricity(li))};
+                diameter(li) = {max(eccentricity{li})};
             end
         end
     end  
@@ -102,7 +102,9 @@ classdef Diameter < Measure
             % 
             % See also getCompatibleGraphList()
             
-            available_settings = {};
+            available_settings = {
+                'EccentricityRule', BRAPH2.STRING, 'default', {'default', 'subgraphs'};
+                };
         end
         function measure_format = getMeasureFormat()
             % GETMEASUREFORMAT returns the measure format of Diameter
