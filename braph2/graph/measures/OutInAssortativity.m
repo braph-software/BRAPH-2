@@ -101,8 +101,8 @@ classdef OutInAssortativity < Measure
                     d_out = out_degree{li};
                     
                 end
-                k_i(:, li) = d_out(j);  % out-degree/out-strength node i
-                k_j(:, li) = d_in(i);  % in-degree/in-strength node j
+                k_i(:, li) = d_out(i);  % out-degree/out-strength node i
+                k_j(:, li) = d_in(j);  % in-degree/in-strength node j
                 % compute assortativity
                 assortativity_layer = (sum(k_i(:, li) .* k_j(:, li)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2)...
                     / (sum(0.5 * (k_i(:, li).^2 + k_j(:, li).^2)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2);           

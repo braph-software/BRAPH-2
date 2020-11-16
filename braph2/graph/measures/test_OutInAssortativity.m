@@ -129,8 +129,8 @@ function stdvalue_BD = assortativity_standard_BD(A)
 [id,od] = degrees_dir(A);
 [i,j] = find(A>0);
 K = length(i);
-degi = id(i);
-degj = od(j);
+degi = od(i);
+degj = id(j);
 % compute assortativity
 stdvalue_BD = ( sum(degi.*degj)/K - (sum(0.5*(degi+degj))/K)^2 ) / ...
     ( sum(0.5*(degi.^2+degj.^2))/K - (sum(0.5*(degi+degj))/K)^2 );
@@ -142,8 +142,8 @@ function stdvalue_WD = assortativity_standard_WD(A)
 [is,os] = strengths_dir(A);
 [i,j] = find(A>0);
 K = length(i);
-stri = is(i);
-strj = os(j);
+stri = os(i);
+strj = is(j);
 % compute assortativity
 stdvalue_WD = ( sum(stri.*strj)/K - (sum(0.5*(stri+strj))/K)^2 ) / ...
     ( sum(0.5*(stri.^2+strj.^2))/K - (sum(0.5*(stri+strj))/K)^2 );
