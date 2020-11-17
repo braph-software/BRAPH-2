@@ -64,7 +64,7 @@ classdef SubjectST < Subject
             sub = sub@Subject(id, label, notes, atlases, varargin{:});
         end
     end
-    methods (Access=protected)  % Utilifty functions
+    methods (Access=protected)  % Utility functions
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
@@ -86,6 +86,8 @@ classdef SubjectST < Subject
             sub.datadict('ST') = DataStructural(atlas, structural);
             sub.datadict('gender') = DataGender(atlas, gender);
             sub.datadict('education') = DataEducation(atlas, education);
+            
+            init_internal_datalist(sub);
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject Structural
@@ -104,6 +106,13 @@ classdef SubjectST < Subject
             
             d2 = sub.datadict('ST');
             d2.setBrainAtlas(atlas);
+        end
+        function init_internal_datalist(sub)
+            sub.datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
+            sub.datalist('age') = 'DataScalar';
+            sub.datalist('ST') = 'DataStructural';
+            sub.datalist('gender') = 'DataGender';
+            sub.datalist('education') = 'DataEducation'; 
         end
     end
     methods (Static)  % Inspection functions
@@ -156,18 +165,14 @@ classdef SubjectST < Subject
             %   age                   -    DataScalar.
             %   Structural            -    DataStructural.
             %
-            % See also getList
-            if isempty(sub.datalist)
-                sub.datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
-                sub.datalist('age') = 'DataScalar';
-                sub.datalist('ST') = 'DataStructural';
-                sub.datalist('gender') = 'DataGender';
-                sub.datalist('education') = 'DataEducation';
-            end
-            
-            datalist = sub.datalist;
-        end
-       
+            % See also getList                     
+            datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
+            datalist('age') = 'DataScalar';
+            datalist('ST') = 'DataStructural';
+            datalist('gender') = 'DataGender';
+            datalist('education') = 'DataEducation'; 
+
+        end       
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
             %

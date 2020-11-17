@@ -62,14 +62,18 @@ classdef DataEducation < Data
             %
             % See also setValue.            
             
-            h_panel = uitable('Parent', ui_parent);
-            
-            h_panel.Items = {'bachelor', 'master', 'phd', 'other', 'none'};
-            h_panel.Value = d.value;
-            
+            h_panel = uicontrol('Parent', ui_parent, 'Units', 'normalized', ...
+                'Position', [0 .65 .2 .3 ]); 
+            education =  {'bachelor', 'master', 'phd', 'none', 'other'};
+            index = find(ismember(education, d.value));
+            set(h_panel, 'Style', 'popup')
+            set(h_panel, 'String', education)
+            set(h_panel, 'Value', index)
+            set(h_panel, 'Callback', {@cb_data_dropdown}) 
             
             function cb_data_dropdown(~, ~)                
-                d.value = h_panel.value;
+                
+                d.value = education{h_panel.Value};
             end
             
             if nargout > 0

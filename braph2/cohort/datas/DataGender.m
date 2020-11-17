@@ -62,11 +62,14 @@ classdef DataGender < Data
             %
             % See also setValue.            
             
-            h_panel = uidropdown('Parent', ui_parent, 'ValueChangedFcn', {@cb_data_dropdown});
-            
-            h_panel.Items = {'female', 'male', 'other'};
-            h_panel.Value = d.value;
-            
+            h_panel = uicontrol('Parent', ui_parent, 'Units', 'normalized', ...
+                'Position', [0 .65 .2 .3 ]);
+            gender = {'female', 'male', 'other'};            
+            index = find(ismember(gender, d.value));
+            set(h_panel, 'Style', 'popup')
+            set(h_panel, 'String', gender)
+            set(h_panel, 'Value', index)
+            set(h_panel, 'Callback', {@cb_data_dropdown})            
             
             function cb_data_dropdown(~, ~)                
                 d.value = h_panel.value;
