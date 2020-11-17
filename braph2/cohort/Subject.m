@@ -360,8 +360,12 @@ classdef Subject < handle & matlab.mixin.Copyable
             % See also getList, getDataNumber, getDataCodes, getDataClasses
             
             % list of subject data keys
-            
+%             datalist = sub.getDataList();
             datalist = eval([Subject.getClass(sub) '.getDataList()']);
+        end
+         function addItemToDataList(sub, key, value)
+             % comments missing
+            sub.datalist(key) = value;
         end
         function data_number = getDataNumber(sub)
             % GETDATANUMBER returns the number of data

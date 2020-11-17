@@ -728,7 +728,7 @@ init_console()
         update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
     end
 
-%% Groups Subject demographic data
+%% Groups data
 TAB_GROUPS_SELECTED_COL = 1;
 TAB_GROUPS_SUBID_COL = 2;
 TAB_GROUPS_SUBLABEL_COL = 3;

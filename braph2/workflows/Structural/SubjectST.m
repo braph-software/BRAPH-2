@@ -33,6 +33,9 @@ classdef SubjectST < Subject
     %
     % See also Group, Cohort, Subject, SubjectST, SubjectCON, SubjectFNC.
  
+    properties
+        datalist
+    end
     methods  % Constructor
         function sub = SubjectST(id, label, notes, atlas, varargin)
             % SUBJECTST creates a subject of type Structural
@@ -74,11 +77,15 @@ classdef SubjectST < Subject
             atlas = atlases{1};
             
             age = get_from_varargin(0, 'age', varargin{:});
+            gender = get_from_varargin('other', 'gender', varargin{:});
+            education = get_from_varargin('other', 'education', varargin{:});
             structural = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'ST', varargin{:});  % column vector with the same number of elements as the BrainAtlas
             
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
             sub.datadict('ST') = DataStructural(atlas, structural);
+            sub.datadict('gender') = DataGender(atlas, gender);
+            sub.datadict('education') = DataEducation(atlas, education);
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject Structural
@@ -141,20 +148,26 @@ classdef SubjectST < Subject
             
             atlas_number = 1;
         end
-        function datalist = getDataList()
+        function datalist = getDataList(sub)
             % GETDATALIST returns the list of data
             %
             % CELL ARRAY = GETDATALIST() returns a cell array of
             % subject data. For Subject Structural, the data list is:
-            %   age            -    DataScalar.
+            %   age                   -    DataScalar.
             %   Structural            -    DataStructural.
             %
             % See also getList
+            if isempty(sub.datalist)
+                sub.datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
+                sub.datalist('age') = 'DataScalar';
+                sub.datalist('ST') = 'DataStructural';
+                sub.datalist('gender') = 'DataGender';
+                sub.datalist('education') = 'DataEducation';
+            end
             
-            datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
-            datalist('age') = 'DataScalar';
-            datalist('ST') = 'DataStructural';
+            datalist = sub.datalist;
         end
+       
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
             %
