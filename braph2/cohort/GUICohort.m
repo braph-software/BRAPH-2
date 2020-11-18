@@ -1043,6 +1043,7 @@ init_groups()
     end
 
 %% Panel 2 - Subjects
+new_subject_data = []; %#ok<SETNU>
 ui_panel_subjects = uipanel();
 ui_tablepanel_subjects = uipanel(ui_panel_subjects);
 ui_label_subtab_id_text = uicontrol(ui_panel_subjects, 'Style', 'text');
@@ -1052,6 +1053,7 @@ ui_edit_subtab_subjectid = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_edit_subtab_subjectlabel = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_edit_subtab_subjectnotes = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_list_subjects = uicontrol(ui_panel_subjects, 'Style', 'listbox');
+ui_add_subject_data_button = uicontrol(ui_panel_subjects, 'Style', 'pushbutton');
 init_subjects()
     function init_subjects()
         GUI.setUnits(ui_panel_subjects)
@@ -1102,12 +1104,17 @@ init_subjects()
         set(ui_edit_subtab_subjectnotes, 'FontWeight', 'bold')
         set(ui_edit_subtab_subjectnotes, 'Callback', {@cb_subtab_subjectnotes})
 
-        set(ui_list_subjects, 'Position', [.03 .02 .2 .97])
+        set(ui_list_subjects, 'Position', [.03 .02 .2 .9])
         set(ui_list_subjects, 'String', '')
         set(ui_list_subjects, 'TooltipString', 'Select subject');
         set(ui_list_subjects, 'Value', 1)
         set(ui_list_subjects, 'Max', -1, 'Min', 0)
         set(ui_list_subjects, 'Callback', {@cb_subjects_list});
+        
+        set(ui_add_subject_data_button, 'Position', [.01 .01 .18 .03])
+        set(ui_add_subject_data_button, 'String', 'ADD DATA')
+        set(ui_add_subject_data_button, 'TooltipString', 'ADD NEW TYPE OF DATA');
+        set(ui_add_subject_data_button, 'Callback', {@cb_subject_add_new_data})
     end
     function update_subjects()
         update_subjects_list()
@@ -1190,6 +1197,23 @@ init_subjects()
         set(ui_edit_subtab_subjectid, 'String', subject.getID())
         set(ui_edit_subtab_subjectlabel, 'String', subject.getLabel())
         set(ui_edit_subtab_subjectnotes, 'String', subject.getNotes())
+    end
+    function cb_subject_add_new_data(~, ~)
+        new_window = uifigure('Name', 'Add New Data');
+        new_window.Position = [100 100 200 300];
+        
+        type_edit = uidropdown(new_window, 'Position', [11 165 100 22], 'Items', subclasses('Data'));
+        key_edit = uieditfield(new_window, 'Text', 'Position', [11 130 100 22], 'Value','Add Data Key');
+        value_edit = uieditfield(new_window, 'Text', 'Position', [11 100 100 22], 'Value', 'Add Data Value');
+        add_data = uibutton(new_window, 'Position', [11 40 30 22], 'Text', 'Add', 'ButtonPushedFcn', {@addButtonPushed});
+        close_data = uibutton(new_window, 'Position', [40 40 30 22], 'Text', 'Close', 'ButtonPushedFcn', {@closeButtonPushed});
+        
+        function addButtonPushed(~, ~)
+            new_subject_data = {type_edit.Value, key_edit.Value, value_edit.Value};
+        end
+        function closeButtonPushed(~, ~)
+            delete(new_window)
+        end
     end
 
 %% Menus
