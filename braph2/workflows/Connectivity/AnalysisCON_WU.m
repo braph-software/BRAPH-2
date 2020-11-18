@@ -4354,8 +4354,6 @@ classdef AnalysisCON_WU < Analysis
                             group = analysis.getCohort().getGroups().getValue(raw_group);
                             
                             % get values
-%                             raw_values = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
-%                             raw_avgs = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
                             raw_values = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
                             raw_avgs = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
 
@@ -4402,16 +4400,7 @@ classdef AnalysisCON_WU < Analysis
                             group2 = analysis.getCohort().getGroups().getValue(raw_group2);
                             
                             % get values
-                            %raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
-                            %raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
-                            %raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
-                            %raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
-                            %raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
-                            %raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
-                            %raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
-                            %raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
-                            %raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
-                            %raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
+                          
                             raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
                             raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
                             raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
@@ -4473,17 +4462,6 @@ classdef AnalysisCON_WU < Analysis
                             group = analysis.getCohort().getGroups().getValue(raw_group);
                             
                             % get values
-%                             raw_values_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 2);
-%                             raw_values_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 3);
-%                             raw_avgs_g1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 4);
-%                             raw_avgs_g2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 5);
-%                             raw_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 6);
-%                             raw_all_difference = readmatrix(fullfile(path, files(k).name), 'Sheet', 7);
-%                             raw_p1 = readmatrix(fullfile(path, files(k).name), 'Sheet', 8);
-%                             raw_p2 = readmatrix(fullfile(path, files(k).name), 'Sheet', 9);
-%                             raw_cimin = readmatrix(fullfile(path, files(k).name), 'Sheet', 10);
-%                             raw_cimx = readmatrix(fullfile(path, files(k).name), 'Sheet', 11);
-                            
                             raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
                             raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
                             raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
@@ -4803,9 +4781,9 @@ classdef AnalysisCON_WU < Analysis
                 Comparisons_structure(i).avgvalue1 = comp.getGroupAverageValue(1);
                 Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2); 
                 Comparisons_structure(i).difference = comp.getDifference();
-                Comparisons_structure(i).alldifferences = comp.getAllDifferences();
-                Comparisons_structure(i).p1 = comp.p1();
-                Comparisons_structure(i).p2 = comp.p2();                
+                Comparisons_structure(i).alldifferences = comp.getAllDifferences();   
+                Comparisons_structure(i).p1 = comp.p1;                
+                Comparisons_structure(i).p2 = comp.p2;                
                 Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
                 Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
             end
@@ -4822,8 +4800,8 @@ classdef AnalysisCON_WU < Analysis
                 RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue(); 
                 RandomComparisons_structure(i).difference = ran_comp.getDifference();
                 RandomComparisons_structure(i).alldifferences = ran_comp.getAllDifferences();
-                RandomComparisons_structure(i).p1 = ran_comp.p1();
-                RandomComparisons_structure(i).p2 = ran_comp.p2();                
+                RandomComparisons_structure(i).p1 = ran_comp.p1;
+                RandomComparisons_structure(i).p2 = ran_comp.p2;                
                 RandomComparisons_structure(i).confidencemin = ran_comp.getConfidenceIntervalMin();
                 RandomComparisons_structure(i).confidencemax = ran_comp.getConfidenceIntervalMax();
             end

@@ -123,7 +123,7 @@ classdef DegreeAv < Degree
             
             measure_scope = Measure.UNILAYER;
         end
-                function parametricity = getParametricity()
+        function parametricity = getParametricity()
             % GETPARAMETRICITY returns the parametricity of DegreeAv
             %
             % PARAMETRICITY = GETPARAMETRICITY() returns the

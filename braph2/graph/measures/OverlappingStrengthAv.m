@@ -18,7 +18,7 @@ classdef OverlappingStrengthAv < OverlappingStrength
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
-    %   getMeasure                  - returns the degree class
+    %   getMeasure                  - returns the average overlapping strength class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %

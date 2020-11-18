@@ -18,7 +18,7 @@ classdef OutDegree < Measure
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure  
-    %   getMeasure                  - returns the degree class
+    %   getMeasure                  - returns the out-degree class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
@@ -46,7 +46,7 @@ classdef OutDegree < Measure
             
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
+            A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
             
             out_degree = cell(g.layernumber(), 1);
             for li = 1:1:g.layernumber()

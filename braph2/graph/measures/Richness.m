@@ -18,7 +18,7 @@ classdef Richness < Degree
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of richness measure
-    %   getMeasure                  - returns the degree class
+    %   getMeasure                  - returns the richness class
     %   getParameterName            - returns the name of richness measure's parameter
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
@@ -50,7 +50,7 @@ classdef Richness < Degree
             % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix (for graph) or 2D-cell array (for multiplex)
+            A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
             L = g.layernumber();
             N = g.nodenumber();
             

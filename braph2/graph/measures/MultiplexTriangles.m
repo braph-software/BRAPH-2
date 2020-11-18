@@ -44,7 +44,7 @@ classdef MultiplexTriangles < Measure
             % See also Measure, Graph, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix of the graph
+            A = g.getA();  % adjacency matrix of the graph
             L = g.layernumber();
             N = g.nodenumber();
             

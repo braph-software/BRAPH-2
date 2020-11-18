@@ -1,6 +1,6 @@
 classdef MultilayerCommunityStructure < Measure
     % MultilayerCommunityStructure Multilayer community structure measure
-    % MultilayerCommunityStructure provides the  Louvain-like multilayer 
+    % MultilayerCommunityStructure provides the Louvain-like multilayer 
     % community structure of a node for binary undirected (BU), binary
     % directed (BD), weighted undirected (WU), and weighted directed (WD) 
     % multiplex and multilayer graphs. 
@@ -8,7 +8,7 @@ classdef MultilayerCommunityStructure < Measure
     % MultilayerCommunityStructure methods:
     %   MultilayerCommunityStructure - constructor
     %
-    % MultilayerCommunityStructure methods (Static)
+    % MultilayerCommunityStructure descriptive methods (Static)
     %   getClass                    - returns the multilayer community structure class
     %   getName                     - returns the name of multilayer community structure measure
     %   getDescription              - returns the description of multilayer community structure measure
@@ -268,7 +268,7 @@ classdef MultilayerCommunityStructure < Measure
             multilayer_community_structure = cell(L, 1);
             for li = 1:1:L
                 multilayer_community_structure(li) = {S(:, li)};
-            end
+           end
         end
         function [B, twom] = multiord_undirected(m, A, gamma, omega, N, T)
             % MULTIORDUNDIRECTED returns the multilayer modularity matrix for ordered undirected networks
@@ -714,7 +714,7 @@ classdef MultilayerCommunityStructure < Measure
                 };
         end
         function measure_format = getMeasureFormat()
-            % GETMEASUREFORMAT returns the measure format of 
+            % GETMEASUREFORMAT returns the measure format of MultilayerCommunityStructure
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
             % of multilayer community structure measure (NODAL).

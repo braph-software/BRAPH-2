@@ -46,7 +46,7 @@ classdef BetweennessCentrality < Measure
             % of a node.
             
             g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjency matrix of the graph
+            A = g.getA();  % adjacency matrix of the graph
             N = g.nodenumber(); 
             
             betweenness_centrality = cell(g.layernumber(), 1);

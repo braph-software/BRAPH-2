@@ -22,7 +22,7 @@ classdef MultiplexCorePeriphery < Multirichness
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure   
-    %   getMeasure                  - returns the degree class
+    %   getMeasure                  - returns the multiplex core periphery class
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
@@ -92,45 +92,78 @@ classdef MultiplexCorePeriphery < Multirichness
                 c = ones(1, L)/L;
             end
             
-            directionality_type =  g.getDirectionalityType(g.layernumber());
-            overlapping_degree_coefficients = zeros(N(1), 1);
+            directionality_type =  g.getDirectionalityType(L);
+            connectivity_type =  g.getConnectivityType(L);
+            overlapping_coefficients = zeros(N(1), 1);
             for li = 1:1:L
                 if g.is_graph(g)
                     directionality_layer = directionality_type;
+                    connectivity_layer = connectivity_type;
                 else
                     directionality_layer = directionality_type(li, li);
+                    connectivity_layer = connectivity_type(li, li);
                 end
                 
-                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                    
-                    if g.is_measure_calculated('Degree')
-                        degree = g.getMeasureValue('Degree');
-                    else
-                        degree = Degree(g, g.getSettings()).getValue();
+                if connectivity_layer == Graph.WEIGHTED  % weighted graphs
+                    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+
+                        if g.is_measure_calculated('Strength')
+                            strength = g.getMeasureValue('Strength');
+                        else
+                            strength = Strength(g, g.getSettings()).getValue();
+                        end
+
+                        deg = strength{li};
+
+                    else  % directed graphs
+
+                        if g.is_measure_calculated('InStrength')
+                            in_strength = g.getMeasureValue('InStrength');
+                        else
+                            in_strength = InStrength(g, g.getSettings()).getValue();
+                        end
+
+                        if g.is_measure_calculated('OutStrength')
+                            out_strength = g.getMeasureValue('OutStrength');
+                        else
+                            out_strength = OutStrength(g, g.getSettings()).getValue();
+                        end
+
+                        deg = (in_strength{li} + out_strength{li})/2;
                     end
                     
-                    deg = degree{li};
-                    
-                else  % directed graphs
-                    
-                    if g.is_measure_calculated('InDegree')
-                        in_degree = g.getMeasureValue('InDegree');
-                    else
-                        in_degree = InDegree(g, g.getSettings()).getValue();
+                else  % binary graphs
+                    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+
+                        if g.is_measure_calculated('Degree')
+                            degree = g.getMeasureValue('Degree');
+                        else
+                            degree = Degree(g, g.getSettings()).getValue();
+                        end
+
+                        deg = degree{li};
+
+                    else  % directed graphs
+
+                        if g.is_measure_calculated('InDegree')
+                            in_degree = g.getMeasureValue('InDegree');
+                        else
+                            in_degree = InDegree(g, g.getSettings()).getValue();
+                        end
+
+                        if g.is_measure_calculated('OutDegree')
+                            out_degree = g.getMeasureValue('OutDegree');
+                        else
+                            out_degree = OutDegree(g, g.getSettings()).getValue();
+                        end
+
+                        deg = (in_degree{li} + out_degree{li})/2;
                     end
-                    
-                    if g.is_measure_calculated('OutDegree')
-                        out_degree = g.getMeasureValue('OutDegree');
-                    else
-                        out_degree = OutDegree(g, g.getSettings()).getValue();
-                    end
-                    
-                    deg = (in_degree{li} + out_degree{li})/2;
                 end
-                overlapping_degree_coefficients = overlapping_degree_coefficients + c(li)*deg;
+                overlapping_coefficients = overlapping_coefficients + c(li)*deg;
             end
             
-            [~, rankingInd] = sort(overlapping_degree_coefficients, 'descend');
+            [~, rankingInd] = sort(overlapping_coefficients, 'descend');
             multirichness = multirichness{1};
             [~, rankOfMaxMultirichness] = max(multirichness(rankingInd));
             multiplex_core_periphery = zeros(N(1), 1);
