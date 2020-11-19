@@ -157,8 +157,7 @@ diameter = Diameter(g, 'EccentricityRule', 'subgraphs').getValue();
 
 distance = Distance(g).getValue();
 [~, ~, ~, ~, diameter_bct]= charpath(distance{1});
-round(cell2mat(diameter), 3)
-round(diameter_bct, 3)
+
 assert(isequal(round(cell2mat(diameter), 3), round(diameter_bct, 3)), ...
         [BRAPH2.STR ':Diameter:' BRAPH2.BUG_ERR], ...
         'Diameter is not being calculated correctly for BCT.')
