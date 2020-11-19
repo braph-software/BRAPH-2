@@ -76,9 +76,9 @@ A = {
     };
 
 known_radius_subgraphs = {
-                                [0]
-                                [0]
-                                };
+                          [0]
+                          [0]
+                         };
 
 g = MultiplexGraphBU(A);
 radius = Radius(g, 'EccentricityRule', 'subgraphs');
@@ -88,9 +88,9 @@ assert(isequal(radius.getValue(), known_radius_subgraphs), ...
     'Radius is not being calculated correctly for MultiplexGraphBU.')
 
 known_radius_default = {
-                          [Inf]
-                          [Inf]
-                         };
+                        [Inf]
+                        [Inf]
+                       };
 
 radius = Radius(g);
 
@@ -122,9 +122,9 @@ A = {
     };
 
 known_radius_subgraphs = {
-                            [0]
-                            [0]
-                           };
+                          [0]
+                          [0]
+                         };
 
 g = MultiplexGraphWU(A);
 radius = Radius(g, 'EccentricityRule', 'subgraphs');
@@ -134,9 +134,9 @@ assert(isequal(radius.getValue(), known_radius_subgraphs), ...
     'Radius is not being calculated correctly for MultiplexGraphWU.')
 
 known_radius_default = {
-                          [Inf]
-                          [Inf]
-                         };
+                        [Inf]
+                        [Inf]
+                       };
 
 radius = Radius(g);
 
