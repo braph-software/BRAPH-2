@@ -124,7 +124,7 @@ classdef Diameter < Measure
             %
             % See also getMeasureFormat.
             
-            measure_scope = Measure.SUPERGLOBAL;
+            measure_scope = Measure.UNILAYER;
         end
         function parametricity = getParametricity()
             % GETPARAMETRICITY returns the parametricity of Diameter
