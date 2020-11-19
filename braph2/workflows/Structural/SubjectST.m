@@ -113,6 +113,28 @@ classdef SubjectST < Subject
             sub.datalist('ST') = 'DataStructural';
             sub.datalist('gender') = 'DataGender';
             sub.datalist('education') = 'DataEducation'; 
+        end        
+    end
+    methods
+        function add_data_to_datadict(sub, info)
+            atlases = sub.getBrainAtlases();
+            atlas = atlases{1};
+            data_structure = Data.getDataStructure(info{1});
+            if isequal(data_structure, 'char')
+            elseif isequal(data_structure, 'numeric')
+                info{3} = str2double(info{3});
+            else
+                info{3} = [];
+            end
+            sub.datalist(info{2}) = info{1};
+            sub.datadict(info{2}) = Data.getData(info{1}, atlas, info{3});
+        end
+        function datalist = get_internal_datalist(sub)
+            datalist = sub.datalist;
+        end
+        function datacodes = get_internal_datacodes(sub)
+            datalist = sub.get_internal_datalist(); %#ok<PROP>
+            datacodes = keys(datalist); %#ok<PROP>
         end
     end
     methods (Static)  % Inspection functions
@@ -157,7 +179,7 @@ classdef SubjectST < Subject
             
             atlas_number = 1;
         end
-        function datalist = getDataList(sub)
+        function datalist = getDataList()
             % GETDATALIST returns the list of data
             %
             % CELL ARRAY = GETDATALIST() returns a cell array of
@@ -171,7 +193,6 @@ classdef SubjectST < Subject
             datalist('ST') = 'DataStructural';
             datalist('gender') = 'DataGender';
             datalist('education') = 'DataEducation'; 
-
         end       
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.

@@ -189,6 +189,9 @@ classdef Data < handle & matlab.mixin.Copyable
             
             available_settings = eval([Data.getClass(d) '.getAvailableSettings()']);        
         end
+        function data_structure = getDataStructure(d)
+            data_structure = eval([Data.getClass(d) '.getDataStructure()']);
+        end
     end
     methods (Access=protected)  % shallow copy
         function d_copy = copyElement(d)

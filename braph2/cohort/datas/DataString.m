@@ -1,4 +1,4 @@
-classdef DataGender < Data
+classdef DataString < Data
     % DataConnectivity A data connectivity matrix
     % DataConnectivity implements Data and serves as a container for matrix
     % type data.
@@ -22,14 +22,14 @@ classdef DataGender < Data
     % See also Data, DataFunctional, DataScalar, DataStructural.
     
     methods
-        function d = DataGender(atlas, value, varargin)
+        function d = DataString(atlas, value, varargin)
             % DATACONNECTIVITY(ATLAS, VALUE) creates DataConnectivity
             % object and calls for the superclass.
             %
             % See also Data, DataFunctional, DataScalar, DataStructural.
             
             if nargin < 2
-                value = 'other';
+                value = '';
             end
             
             d = d@Data(atlas, value, varargin{:});
@@ -45,10 +45,10 @@ classdef DataGender < Data
             % See also getValue, getDataPanel.
             
            
-            assert(ischar(value) && (isequal(value, 'male') || isequal(value, 'female') || isequal(value, 'other')), ...
-                [BRAPH2.STR ':DataGender:' BRAPH2.WRONG_INPUT], ...
+            assert(ischar(value), ...
+                [BRAPH2.STR ':DataString:' BRAPH2.WRONG_INPUT], ...
                 [ ...
-                'The value of DataGender must be a string ' ...
+                'The value of DataString must be a string ' ...
                 'with value male, female or other. ' ...
                 ])
             
@@ -63,16 +63,14 @@ classdef DataGender < Data
             % See also setValue.            
             
             h_panel = uicontrol('Parent', ui_parent, 'Units', 'normalized', ...
-                'Position', [0 .65 .2 .3 ]);
-            gender = {'female', 'male', 'other'};            
-            index = find(ismember(gender, d.value));
-            set(h_panel, 'Style', 'popup')
-            set(h_panel, 'String', gender)
-            set(h_panel, 'Value', index)
-            set(h_panel, 'Callback', {@cb_data_dropdown})            
+                'Position', [0.01 0.8 0.5 0.2]);                      
+            set(h_panel, 'Style', 'edit')
+            set(h_panel, 'String', '')
+            set(h_panel, 'Callback', {@cb_data_string})            
             
-            function cb_data_dropdown(~, ~)                
-                d.value = h_panel.value;
+            function cb_data_string(~, ~) 
+                newdata = get(h_panel, 'String');
+                d.value = newdata;
             end
             
             if nargout > 0
@@ -88,7 +86,7 @@ classdef DataGender < Data
             %
             % See also  getName, getDescription, getAvailableSettings.
             
-            data_class = 'DataGender';
+            data_class = 'DataString';
         end
         function name = getName()
             % GETNAME returns the name of the data
@@ -97,7 +95,7 @@ classdef DataGender < Data
             %
             % See also getClass, getDescription, getAvailableSettings.
             
-            name = 'Gender';
+            name = 'String';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the data
@@ -108,7 +106,7 @@ classdef DataGender < Data
             % See also getClass, getName, getAvailableSettings.
             
             description = [ ...
-                'Gender.' ...
+                'String.' ...
                 ]; %#ok<NBRAK>
         end
         function available_settings = getAvailableSettings(d) %#ok<INUSD>
@@ -122,7 +120,7 @@ classdef DataGender < Data
             available_settings = {};
         end
         function data_structure = getDataStructure()
-            data_structure = 'list';
+            data_structure = 'char';
         end
-    end 
+    end    
 end

@@ -122,6 +122,8 @@ classdef DataEducation < Data
             
             available_settings = {};
         end
-    end
-    
+        function data_structure = getDataStructure()
+            data_structure = 'list';
+        end
+    end 
 end

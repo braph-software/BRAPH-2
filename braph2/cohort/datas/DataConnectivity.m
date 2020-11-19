@@ -135,5 +135,8 @@ classdef DataConnectivity < Data
             
             available_settings = {};
         end
+        function data_structure = getDataStructure()
+            data_structure = 'matrix';
+        end
     end  
 end

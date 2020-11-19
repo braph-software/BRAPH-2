@@ -234,7 +234,7 @@ classdef Subject < handle & matlab.mixin.Copyable
         end
     end
     methods  % Plot functions
-        function h = getDataPanel(sub, ui_parent)
+        function h = getDataPanel(sub, ui_parent, new_data)
             % GETDATAPANEL returns a panel handle with data ui content
             %
             % H = GETDATAPANEL(SUB, PARENT) creates a uipanel handle and
@@ -244,8 +244,14 @@ classdef Subject < handle & matlab.mixin.Copyable
             %
             % See also getData, getBrainAtlases, getDataCodes, getDataList.
             
-            data_codes = sub.getDataCodes();
-            data_list = sub.getDataList(); 
+            if new_data
+                data_codes = sub.get_internal_datacodes();
+                data_list = sub.get_internal_datalist();
+            else
+                data_codes = sub.getDataCodes();
+                data_list = sub.getDataList();
+            end
+            
             atlas = sub.atlases{1};           
             
             sub.h_panel = uipanel('Parent', ui_parent);

@@ -56,7 +56,7 @@ classdef DataScalar < Data
             h_panel = uicontrol('Parent', ui_parent);
             set(h_panel, 'Style', 'edit')
             set(h_panel, 'Units', 'normalized')
-            set(h_panel, 'Position', [0.01 0.9 0.5 0.1])
+            set(h_panel, 'Position', [0.01 0.8 0.5 0.2])
             set(h_panel, 'String', value_holder)
             set(h_panel, 'Callback', {@cb_edit_scalar})
             
@@ -110,6 +110,9 @@ classdef DataScalar < Data
             % See also getClass, getName, getDescription.
             
             available_settings = {};
+        end
+        function data_structure = getDataStructure()
+            data_structure = 'numeric';
         end
     end  
 end

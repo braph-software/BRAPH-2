@@ -715,7 +715,7 @@ init_console()
             update_groups()
         end
         if strcmpi(get(ui_panel_subjects, 'Visible'), 'on')            
-            update_subjects()
+            update_subjects(1)
         end
     end
     function cb_console_groups(~, ~)  % (src,event)
@@ -723,7 +723,7 @@ init_console()
         update_console_panel_visibility(CONSOLE_GROUPS_CMD)
     end
     function cb_console_subjects(~, ~)  % (src,event)        
-        update_subjects()
+        update_subjects(1)
         update_subtab_subjectinfo()
         update_console_panel_visibility(CONSOLE_SUBJECTS_CMD)
     end
@@ -1104,33 +1104,39 @@ init_subjects()
         set(ui_edit_subtab_subjectnotes, 'FontWeight', 'bold')
         set(ui_edit_subtab_subjectnotes, 'Callback', {@cb_subtab_subjectnotes})
 
-        set(ui_list_subjects, 'Position', [.03 .02 .2 .9])
+        set(ui_list_subjects, 'Position', [.01 .08 .21 .9])
         set(ui_list_subjects, 'String', '')
         set(ui_list_subjects, 'TooltipString', 'Select subject');
         set(ui_list_subjects, 'Value', 1)
         set(ui_list_subjects, 'Max', -1, 'Min', 0)
         set(ui_list_subjects, 'Callback', {@cb_subjects_list});
         
-        set(ui_add_subject_data_button, 'Position', [.01 .01 .18 .03])
+        set(ui_add_subject_data_button, 'Position', [.01 .01 .1 .04])
         set(ui_add_subject_data_button, 'String', 'ADD DATA')
         set(ui_add_subject_data_button, 'TooltipString', 'ADD NEW TYPE OF DATA');
         set(ui_add_subject_data_button, 'Callback', {@cb_subject_add_new_data})
     end
-    function update_subjects()
-        update_subjects_list()
+    function update_subjects(action)
+        update_subjects_list(action)
         update_subjects_table()
     end
-    function update_subjects_list()
+    function update_subjects_list(action)
         if isempty(selected_group) && ~isempty(cohort)
             subjects = cohort.getSubjects().getValues();
             if length(subjects) < 1
                 set(ui_list_subjects, 'Value', 1)
                 set(ui_list_subjects, 'String', 'empty')
             else
+                if isequal(action, 2) && ~isempty(new_subject_data)
+                    for i = 1:1:length(subjects)
+                        sub = subjects{i};
+                        sub.add_data_to_datadict(new_subject_data);
+                    end
+                end                
                 for i = 1:1:length(subjects)
                     sub = subjects{i};
                     subjects_ids{i} = sub.getID(); %#ok<AGROW>
-                end
+                end                
                 set(ui_list_subjects, 'String', subjects_ids)
             end
         elseif ~isempty(selected_group)
@@ -1154,12 +1160,16 @@ init_subjects()
     end
     function update_subjects_table()
         value = get(ui_list_subjects, 'Value');         
-        subject = cohort.getSubjects().getValue(value);        
+        subject = cohort.getSubjects().getValue(value);
+        added_data = false;
+        if ~isempty(new_subject_data)
+            added_data = true;        
+        end
         if ~isempty(subject)
-            subject.getDataPanel(ui_tablepanel_subjects);
+            subject.getDataPanel(ui_tablepanel_subjects, added_data);
         else 
             
-        end             
+        end  
     end 
     function cb_subjects_list(~, ~)  % (src,event)
         update_subjects_table()
@@ -1205,11 +1215,12 @@ init_subjects()
         type_edit = uidropdown(new_window, 'Position', [11 165 100 22], 'Items', subclasses('Data'));
         key_edit = uieditfield(new_window, 'Text', 'Position', [11 130 100 22], 'Value','Add Data Key');
         value_edit = uieditfield(new_window, 'Text', 'Position', [11 100 100 22], 'Value', 'Add Data Value');
-        add_data = uibutton(new_window, 'Position', [11 40 30 22], 'Text', 'Add', 'ButtonPushedFcn', {@addButtonPushed});
-        close_data = uibutton(new_window, 'Position', [40 40 30 22], 'Text', 'Close', 'ButtonPushedFcn', {@closeButtonPushed});
+        add_data = uibutton(new_window, 'Position', [11 40 40 22], 'Text', 'Add', 'ButtonPushedFcn', {@addButtonPushed});
+        close_data = uibutton(new_window, 'Position', [60 40 40 22], 'Text', 'Close', 'ButtonPushedFcn', {@closeButtonPushed});
         
         function addButtonPushed(~, ~)
             new_subject_data = {type_edit.Value, key_edit.Value, value_edit.Value};
+            update_subjects(2);
         end
         function closeButtonPushed(~, ~)
             delete(new_window)
