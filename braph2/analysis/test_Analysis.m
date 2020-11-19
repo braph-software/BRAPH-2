@@ -519,7 +519,7 @@ for i =1:1:length(analysis_class_list)
             assert(sub.getData(data_code) ~= sub_copy.getData(data_code), ... % different objects
                 [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
                 [analysis_class '.copy() does not work'])
-            assert(sub.getData(data_code).getBrainAtlas() ~= sub_copy.getData(data_code).getBrainAtlas(), ... % different objects
+            assert(isequal(sub.getData(data_code).getBrainAtlas() , sub_copy.getData(data_code).getBrainAtlas()), ... % different objects
                 [BRAPH2.STR ':' analysis_class ':' BRAPH2.BUG_COPY], ...
                 [analysis_class '.copy() does not work'])
         end
