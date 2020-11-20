@@ -50,7 +50,7 @@ classdef Diameter < Measure
             L = g.layernumber();
             
             if g.is_measure_calculated('Eccentricity')
-                eccentricity = g.getMeasure('Eccentricity').getValue();
+                eccentricity = g.getMeasureValue('Eccentricity');
             else
                 eccentricity_rule = get_from_varargin('default', 'EccentricityRule', m.getSettings());
                 eccentricity = Eccentricity(g, 'EccentricityRule', eccentricity_rule).getValue();
