@@ -9,7 +9,7 @@ A = [
     0     0   0   0    0
     ];
     
-known_diameter_subgraphs = {[1]};
+known_diameter_subgraphs = {1};
 
 g = GraphBU(A);
 diameter = Diameter(g, 'EccentricityRule', 'subgraphs');
@@ -18,7 +18,7 @@ assert(isequal(diameter.getValue(), known_diameter_subgraphs), ...
     [BRAPH2.STR ':Diameter:' BRAPH2.BUG_ERR], ...
     'Diameter is not being calculated correctly for GraphBU.')
 
-known_diameter_default = {[Inf]'};
+known_diameter_default = {Inf};
 
 diameter = Diameter(g, 'EccentricityRule', 'default');
 
@@ -35,7 +35,7 @@ A = [
     0     0   0   0    0
     ];
     
-known_diameter_subgraphs = {[5]};
+known_diameter_subgraphs = {5};
 
 g = GraphWU(A);
 diameter = Diameter(g, 'EccentricityRule', 'subgraphs');
@@ -44,7 +44,7 @@ assert(isequal(diameter.getValue(), known_diameter_subgraphs), ...
     [BRAPH2.STR ':Diameter:' BRAPH2.BUG_ERR], ...
     'Diameter is not being calculated correctly for GraphWU.')
 
-known_diameter_default = {[Inf]};
+known_diameter_default = {Inf};
 
 diameter = Diameter(g, 'EccentricityRule', 'default');
 
@@ -76,9 +76,9 @@ A = {
     };
 
 known_diameter_subgraphs = {
-                                [1]
-                                [1]
-                                };
+                            1
+                            1
+                            };
 
 g = MultiplexGraphBU(A);
 diameter = Diameter(g, 'EccentricityRule', 'subgraphs');
@@ -88,9 +88,9 @@ assert(isequal(diameter.getValue(), known_diameter_subgraphs), ...
     'Diameter is not being calculated correctly for MultiplexGraphBU.')
 
 known_diameter_default = {
-                          [Inf]
-                          [Inf]
-                         };
+                            Inf
+                            Inf
+                            };
 
 diameter = Diameter(g);
 
@@ -122,9 +122,9 @@ A = {
     };
 
 known_diameter_subgraphs = {
-                            [5]
-                            [5]
-                           };
+                            5
+                            5
+                            };
 
 g = MultiplexGraphWU(A);
 diameter = Diameter(g, 'EccentricityRule', 'subgraphs');
@@ -134,9 +134,9 @@ assert(isequal(diameter.getValue(), known_diameter_subgraphs), ...
     'Diameter is not being calculated correctly for MultiplexGraphWU.')
 
 known_diameter_default = {
-                          [Inf]
-                          [Inf]
-                         };
+                            Inf
+                            Inf
+                            };
 
 diameter = Diameter(g);
 
