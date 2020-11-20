@@ -99,7 +99,7 @@ classdef Diameter < Measure
             % GETAVAILABLESETTINGS returns the setting available to Diameter
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to Diameter. Empty Array in this case.
+            % settings available to Diameter. 
             % 
             % See also getCompatibleGraphList.
             
