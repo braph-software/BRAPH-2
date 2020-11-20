@@ -9,16 +9,16 @@ classdef Diameter < Measure
     %   Diameter                    - constructor
     %
     % Diameter descriptive methods (Static)
-    %   getClass                    - returns the diameter class.
-    %   getName                     - returns the name of diameter measure.
-    %   getDescription              - returns the description of diameter measure.
-    %   getAvailableSettings        - returns the settings available to the class.
+    %   getClass                    - returns the diameter class
+    %   getName                     - returns the name of diameter measure
+    %   getDescription              - returns the description of diameter measure
+    %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure  
-    %   getMeasure                  - returns the diameter class.
-    %   getCompatibleGraphList      - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
+    %   getMeasure                  - returns the diameter class
+    %   getCompatibleGraphList      - returns a list of compatible graphs
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, Eccentricity, Radius, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
     
