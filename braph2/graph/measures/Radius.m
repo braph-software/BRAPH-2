@@ -100,7 +100,7 @@ classdef Radius < Measure
             % GETAVAILABLESETTINGS returns the setting available to Radius
             %
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
-            % settings available to Radius. Empty Array in this case.
+            % settings available to Radius.
             % 
             % See also getCompatibleGraphList.
             
@@ -143,7 +143,7 @@ classdef Radius < Measure
             % with Radius 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to Radius. 
+            % of compatible graph classes to radius. 
             % The measure will not work if the graph is not compatible. 
             %
             % See also getCompatibleGraphNumber. 
@@ -160,7 +160,7 @@ classdef Radius < Measure
             % graphs with Radius 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to Radius.
+            % compatible graphs to radius.
             % 
             % See also getCompatibleGraphList.
             
