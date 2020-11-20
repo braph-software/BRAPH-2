@@ -3,7 +3,8 @@ classdef Diameter < Measure
     % Diameter provides the diameter of a graph for 
     % binary undirected (BU) and weighted undirected (WU) graphs. 
     %
-    % It is calculated as the maximum eccentricity among the vertice within a layer
+    % It is calculated as the maximum eccentricity among the vertice within
+    % a layer.
     % 
     % Diameter methods:
     %   Diameter                    - constructor
@@ -68,7 +69,7 @@ classdef Diameter < Measure
             %            
             % MEASURE_CLASS = GETCLASS() returns the class of the diameter measure.
             %
-            % See also getName(), getDescription(). 
+            % See also getName, getDescription. 
             
             measure_class = 'Diameter';
         end
@@ -77,7 +78,7 @@ classdef Diameter < Measure
             %
             % NAME = GETNAME() returns the name of the diameter measure.
             %
-            % See also getClass(), getDescription(). 
+            % See also getClass, getDescription. 
           
             name = 'Diameter';
         end
@@ -87,11 +88,11 @@ classdef Diameter < Measure
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % diameter measure.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getClass, getName.
             
             description = [ ...
                 'The diameter is the maximum eccentricity ' ...
-                'among the vertice within a layer'
+                'among the vertice within a layer' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -100,7 +101,7 @@ classdef Diameter < Measure
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Diameter. Empty Array in this case.
             % 
-            % See also getCompatibleGraphList()
+            % See also getCompatibleGraphList.
             
             available_settings = {
                 'EccentricityRule', BRAPH2.STRING, 'default', {'default', 'subgraphs'};
@@ -141,10 +142,10 @@ classdef Diameter < Measure
             % with Diameter 
             %
             % LIST = GETCOMPATIBLEGRAPHLIST() returns a cell array 
-            % of compatible graph classes to Diameter. 
+            % of compatible graph classes to diameter. 
             % The measure will not work if the graph is not compatible. 
             %
-            % See also getCompatibleGraphNumber(). 
+            % See also getCompatibleGraphNumber. 
             
             list = { ...
                 'GraphBU', ...
@@ -158,9 +159,9 @@ classdef Diameter < Measure
             % graphs with Diameter 
             %
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
-            % compatible graphs to Diameter.
+            % compatible graphs to diameter.
             % 
-            % See also getCompatibleGraphList().
+            % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Diameter');
         end
