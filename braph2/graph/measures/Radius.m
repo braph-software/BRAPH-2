@@ -3,24 +3,26 @@ classdef Radius < Measure
     % Radius provides the radius of a graph for 
     % binary undirected (BU) and weighted undirected (WU) graphs. 
     %
-    % It is calculated as the minimum eccentricity among the vertice within a layer
+    % It is calculated as the minimum eccentricity among the vertice within
+    % a layer.
     % 
     % Radius methods:
     %   Radius                      - constructor
     %
     % Radius descriptive methods (Static)
-    %   getClass                    - returns the radius class.
-    %   getName                     - returns the name of radius measure.
-    %   getDescription              - returns the description of radius measure.
-    %   getAvailableSettings        - returns the settings available to the class.
+    %   getClass                    - returns the radius class
+    %   getName                     - returns the name of radius measure
+    %   getDescription              - returns the description of radius measure
+    %   getAvailableSettings        - returns the settings available to the class
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure  
-    %   getMeasure                  - returns the radius class.
-    %   getCompatibleGraphList      - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
+    %   getMeasure                  - returns the radius class
+    %   getCompatibleGraphList      - returns a list of compatible graphs
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Eccentricity, Diameter, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
+    % See also Measure, Eccentricity, Diameter, GraphBU, GraphWU,
+    % MultiplexGraphBU, MultiplexGraphWU.
     
     methods
         function m = Radius(g, varargin)
@@ -68,7 +70,7 @@ classdef Radius < Measure
             %            
             % MEASURE_CLASS = GETCLASS() returns the class of the radius measure.
             %
-            % See also getName(), getDescription(). 
+            % See also getName, getDescription. 
             
             measure_class = 'Radius';
         end
@@ -77,7 +79,7 @@ classdef Radius < Measure
             %
             % NAME = GETNAME() returns the name of the radius measure.
             %
-            % See also getClass(), getDescription(). 
+            % See also getClass, getDescription. 
           
             name = 'Radius';
         end
@@ -87,11 +89,11 @@ classdef Radius < Measure
             % DESCRIPTION = GETDESCRIPTION() returns the description of the
             % radius measure.
             %
-            % See also getList(), getCompatibleGraphList().
+            % See also getClass, getName.
             
             description = [ ...
                 'The radius is the minimum eccentricity ' ...
-                'among the vertice within a layer'
+                'among the vertice within a layer' ...
                 ];
         end
         function available_settings = getAvailableSettings()
@@ -100,7 +102,7 @@ classdef Radius < Measure
             % AVAILABLESETTINGS = GETAVAILABLESETTINGS() returns the
             % settings available to Radius. Empty Array in this case.
             % 
-            % See also getCompatibleGraphList()
+            % See also getCompatibleGraphList.
             
             available_settings = {
                 'EccentricityRule', BRAPH2.STRING, 'default', {'default', 'subgraphs'};
@@ -144,7 +146,7 @@ classdef Radius < Measure
             % of compatible graph classes to Radius. 
             % The measure will not work if the graph is not compatible. 
             %
-            % See also getCompatibleGraphNumber(). 
+            % See also getCompatibleGraphNumber. 
             
             list = { ...
                 'GraphBU', ...
@@ -160,7 +162,7 @@ classdef Radius < Measure
             % N = GETCOMPATIBLEGRAPHNUMBER() returns the number of
             % compatible graphs to Radius.
             % 
-            % See also getCompatibleGraphList().
+            % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Radius');
         end
