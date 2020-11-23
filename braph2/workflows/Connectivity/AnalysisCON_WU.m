@@ -297,13 +297,10 @@ classdef AnalysisCON_WU < Analysis
             % obtained and will return a comparison. The function
             % will utilize VALUE settings.
             %
-            % See also calculate_random_comparison, calculate_measurement.
+            % See also calculate_random_comparison, calculate_measurement.            
             
-            verbose = get_from_varargin(false, 'Verbose', varargin{:});
-            interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
-            
-            is_longitudinal = analysis.getSettings('AnalysisCON.Longitudinal');
-            M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
+            % get type of statistic test
+            statistical_type = get_from_varargin('PermutationTest', 'StatisticalTest', varargin{:});
             
             % Measurements for groups 1 and 2, and their difference
             measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
@@ -314,39 +311,20 @@ classdef AnalysisCON_WU < Analysis
             values_2 = measurements_2.getMeasureValues();
             res_2 =  {mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group_2.subjectnumber()]), 3)};
             
-            all_permutations_1 = cell(1, M);
-            all_permutations_2 = cell(1, M);
+            statistic = Statistics.getStatistic(statistical_type);
+            statistic_dict = statistic.getStatistics('CallingClass', analysis.getComparisonClass(), ...
+                'Val1', values_1, 'Val2', values_2 , ...
+                'Res1', res_1, 'Res2', res_2, varargin{:});
             
-            start = tic;
-            for i = 1:1:M
-                if verbose
-                    disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
-                end
-                
-                [permutation_1, permutation_2] = permutation(values_1, values_2, is_longitudinal);
-                
-                mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group_1.subjectnumber()]), 3);
-                mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), group_2.subjectnumber()]), 3);
-                
-                all_permutations_1(1, i) = {mean_permutated_1};
-                all_permutations_2(1, i) = {mean_permutated_2};
-                
-                difference_all_permutations{1, i} = mean_permutated_1 - mean_permutated_2; %#ok<AGROW>
-                if interruptible
-                    pause(interruptible)
-                end
+            keys = statistic_dict('stat_keys');
+            
+            statistic_results = cell(1, length(keys));
+            for i = 1:1:length(keys)
+                key = keys{i};
+                result = statistic_dict(key);
+                statistic_results{2 * i - 1} = key;
+                statistic_results{2 * i} = result;
             end
-            
-            difference_mean = {res_2{1} - res_1{1}};  % difference of the mean values of the non permutated groups
-            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 1 - permutated group 2
-            
-            % Statistical analysis
-            p1 = {pvalue1(difference_mean{1}, difference_all_permutations)};  % singe tail,
-            p2 = {pvalue2(difference_mean{1}, difference_all_permutations)};  % double tail
-            
-            qtl = quantiles(difference_all_permutations, 40);
-            ci_lower = {cellfun(@(x) x(2), qtl)};
-            ci_upper = {cellfun(@(x) x(40), qtl)};
             
             comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                 analysis.getComparisonID(measure_code, group_1, group_2, varargin{:}), ...
@@ -356,17 +334,7 @@ classdef AnalysisCON_WU < Analysis
                 measure_code, ...
                 group_1, ...
                 group_2, ...
-                'ComparisonCON.PermutationNumber', M, ...
-                'ComparisonCON.values_1', values_1, ...
-                'ComparisonCON.average_values_1', res_1, ...
-                'ComparisonCON.values_2', values_2, ...
-                'ComparisonCON.average_values_2', res_2, ...
-                'ComparisonCON.difference', difference_mean, ...
-                'ComparisonCON.all_differences', difference_all_permutations, ...
-                'ComparisonCON.p1', p1, ...
-                'ComparisonCON.p2', p2, ...
-                'ComparisonCON.confidence_min', ci_lower, ...
-                'ComparisonCON.confidence_max', ci_upper, ...
+                statistic_results, ...
                 varargin{:});
         end
     end

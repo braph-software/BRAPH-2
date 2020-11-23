@@ -107,6 +107,9 @@ classdef PermutationTest < Statistics
         end
     end
     methods (Static)
+        function measure_class = getClass()  
+            measure_class = 'PermutationTest';
+        end
         function name = getName()
             name = 'Permutation Test';
         end
@@ -121,8 +124,13 @@ classdef PermutationTest < Statistics
         end
         function available_settings = getAvailableSettings()
             available_settings = {
-                {'Longitudinal', BRAPH2.LOGICAL, false, {false, true}} ...                
+                {'Longitudinal', BRAPH2.LOGICAL, false, {false, true}}, ... 
+                {'number_groups', BRAPH2.NUMERIC, 2, {}} ...
                 };
+        end
+        function list = getCompatibleAnalysis()
+            all_analysis = Analysis.getList();
+            list = reshape(all_analysis, [1, numel(all_analysis)]);
         end
     end
 end

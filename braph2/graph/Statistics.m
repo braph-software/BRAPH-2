@@ -11,16 +11,17 @@ classdef Statistics < handle & matlab.mixin.Copyable
             end
             
             available_settings = Statistics.getAvailableSettings(class(s));
-            settings = cell(1, size(available_settings, 1));
+            settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
             number_groups = 1;
-            for i = 1:1:size(available_settings, 1)
-                available_setting_code = available_settings{i, 1};
-                available_setting_default = available_settings{i, 3};
-                settings{2 * i - 1} = available_setting_code;
-                settings{2 * i} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
+            for i = 1:1:size(available_settings, 2)
+                as = available_settings{i};
+                available_setting_code = as{1, 1};
+                available_setting_default = as{1, 3};
+                settings{i, 1} = available_setting_code;
+                settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
                 
                 if isequal(available_setting_code, 'number_groups')
-                    number_groups = settings{2 * i};
+                    number_groups = settings{i, 2};
                 end
             end
             s.settings = settings;
@@ -69,7 +70,7 @@ classdef Statistics < handle & matlab.mixin.Copyable
                 );
         end
         function statistic_class = getClass(s)
-            if isa(g, 'Statistics')
+            if isa(s, 'Statistics')
                 statistic_class = class(s);
             else % g should be a string with the graph code
                 statistic_class = s;
