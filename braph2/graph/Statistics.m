@@ -47,7 +47,7 @@ classdef Statistics < handle & matlab.mixin.Copyable
         end
         function stat_dict = getStatistics(s, varargin)
             % check for defaults, this may need to be recalculated every
-            % time its a new defaul, for example for perm test M and
+            % time its a new default, for example for perm test M and
             % verbose vary.
             if ~s.is_dict_init()
                 s.stat_dict = s.init_data_dict(varargin{:});
@@ -57,6 +57,9 @@ classdef Statistics < handle & matlab.mixin.Copyable
     end
     methods (Abstract, Access = protected)
         init_data_dict(s)
+    end
+    methods (Abstract)  % plot
+        getStatisticPanel(s, ui_parent)  % returns a panel with settings
     end
     methods (Static)
         function statistic_class_list = getList()

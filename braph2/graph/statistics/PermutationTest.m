@@ -86,6 +86,26 @@ classdef PermutationTest < Statistics
             
         end
     end
+    methods  % plot
+        function h = getStatisticPanel(s, ui_parent) %#ok<INUSL>
+            
+            h_panel = uicontrol('Parent', ui_parent, 'Units', 'normalized', ...
+                'Position', [0 .65 .2 .3 ]);
+            
+            set(h_panel, 'Style', 'popup')
+            set(h_panel, 'String', {true, false})
+            set(h_panel, 'Value', index)
+            set(h_panel, 'Callback', {@cb_perm_test_setting_dropdown})
+            
+            function cb_perm_test_setting_dropdown(~, ~)                
+                setappdata(ui_parent, 'Longitudinal', h_panel.String{h_panel.Value})
+            end
+            
+            if nargout > 0
+                h = h_panel;
+            end
+        end
+    end
     methods (Static)
         function name = getName()
             name = 'Permutation Test';
