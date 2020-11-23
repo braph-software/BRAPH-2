@@ -1,35 +1,35 @@
-classdef DataStructural < Data
-    % DataStructurral A data column vector
-    % DataStructurral implements Data and serves as a container for column
+classdef DataEducation < Data
+    % DataEducation A data connectivity matrix
+    % DataEducation implements Data and serves as a container for matrix
     % type data.
     % It is a subclass of Data.
     %
-    % DataStructurral implements Data and serves as a container for column
+    % DataConnectivity implements Data and serves as a container for matrix
     % type data. It checks if the value of the data being saved is numeric
-    % and has the same number of elements as the Brain Atlas.
+    % and has the same dimensions as the Brain Atlas.
     %
-    % DataStructurral methods:
-    %   DataStructurral         - Constructor
+    % DataConnectivity methods:
+    %   DataConnectivity        - Constructor
     %   setValue                - set value
     %   getDataPanel            - returns data panel
     %
-    % DataStructurral static mehtods
+    % DataConnectivity static mehtods
     %   getClass                - returns the class
     %   getName                 - returns the name of the class
     %   getDescription          - returns the description of the class
     %   getAvailableSettings    - returns the available settings
     %
-    % See also Data, DataFunctional, DataScalar, DataConnectivity.
+    % See also Data, DataFunctional, DataScalar, DataStructural.
     
     methods
-        function d = DataStructural(atlas, value, varargin)
-            % DATASTRUCTURAL(ATLAS, VALUE) creates DataStructurral object
-            % and calls for the superclass.
+        function d = DataEducation(atlas, value, varargin)
+            % DATACONNECTIVITY(ATLAS, VALUE) creates DataConnectivity
+            % object and calls for the superclass.
             %
-            % See also Data, DataFunctional, DataScalar, DataConnectivity.
+            % See also Data, DataFunctional, DataScalar, DataStructural.
             
             if nargin < 2
-                value = zeros(atlas.getBrainRegions().length(), 1);
+                value = 'other';
             end
             
             d = d@Data(atlas, value, varargin{:});
@@ -44,15 +44,14 @@ classdef DataStructural < Data
             %
             % See also getValue, getDataPanel.
             
-            regionnumber = d.getBrainAtlas().getBrainRegions().length();
-            assert(isnumeric(value) && isequal(size(value), [regionnumber, 1]), ...
-                [BRAPH2.STR ':DataStructural:' BRAPH2.WRONG_INPUT], ...
+            edulist = {'bachelor', 'master', 'phd', 'none', 'other'};
+            assert(ischar(value) && (ismember(value, edulist)), ...
+                [BRAPH2.STR ':DataEducation:' BRAPH2.WRONG_INPUT], ...
                 [ ...
-                'The value of DataStructural must be a column vector ' ...
-                'with the same number of element as the BrainAtlas, ' ...
-                'in this case ' int2str(regionnumber) ' elements' ...
+                'The value of DataEducation must be a string ' ...
+                'with educational values. ' ...
                 ])
-
+            
             d.value = value;
         end
         function h = getDataPanel(d, ui_parent)
@@ -61,83 +60,70 @@ classdef DataStructural < Data
             % GETDATAPANEL(D, UIPARENT) creates a uitable with D values and
             % sets the uitable to the UIPARENT.
             %
-            % See also setValue.
+            % See also setValue.            
             
-                value_holder = d.value;
-                h_panel = uitable('Parent', ui_parent);
+            h_panel = uicontrol('Parent', ui_parent, 'Units', 'normalized', ...
+                'Position', [0 .65 .2 .3 ]); 
+            education =  {'bachelor', 'master', 'phd', 'none', 'other'};
+            index = find(ismember(education, d.value));
+            set(h_panel, 'Style', 'popup')
+            set(h_panel, 'String', education)
+            set(h_panel, 'Value', index)
+            set(h_panel, 'Callback', {@cb_data_dropdown}) 
+            
+            function cb_data_dropdown(~, ~)                
                 
-                % rownames
-                atlas = d.atlas;
-                brs = atlas.getBrainRegions().getValues();
-                for j = 1:1:length(brs)
-                    br = brs{j};
-                    RowName{j} = br.getID(); %#ok<AGROW>
-                end
-                
-                set(h_panel, 'Units', 'normalized')
-                set(h_panel, 'Position', [0 0 1 1])
-                set(h_panel, 'ColumnFormat', {'numeric'})
-                set(h_panel, 'ColumnEditable', true)
-                set(h_panel, 'RowName', RowName)
-                set(h_panel, 'Data', value_holder)
-                set(h_panel, 'CellEditCallback', {@cb_data_table})
-
-            function cb_data_table(~, event)
-                m = event.Indices(1);
-                col = event.Indices(2);
-                newdata = event.NewData;
-                d.value(m, col) = newdata;
+                d.value = education{h_panel.Value};
             end
             
             if nargout > 0
                 h = h_panel;
-            end   
+            end
         end
     end
     methods (Static)
         function data_class = getClass()
-            % GETCLASS returns the class of the data 
+            % GETCLASS returns the class of the data
             %
             % DATA_CLASS = GETCLASS() returns the class of the data.
             %
             % See also  getName, getDescription, getAvailableSettings.
             
-            data_class = 'DataStructural';
+            data_class = 'DataEducation';
         end
         function name = getName()
             % GETNAME returns the name of the data
             %
             % NAME = GETNAME(D) returns the name of the data.
-            % 
+            %
             % See also getClass, getDescription, getAvailableSettings.
             
-            name = 'Structural Brain Data';
+            name = 'Education';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of the data
             %
             % DESCRIPTION = GETDESCRIPTION(D) returns the description of
             % the data.
-            % 
+            %
             % See also getClass, getName, getAvailableSettings.
             
             description = [ ...
-                'A series of structural data corresponding ' ...
-                'to one scalar value per brain region.' ...
-                ];
+                'Education.' ...
+                ]; %#ok<NBRAK>
         end
-         function available_settings = getAvailableSettings(d) %#ok<INUSD>
+        function available_settings = getAvailableSettings(d) %#ok<INUSD>
             % GETAVAILABLESETTINGS returns the available settings of the data
             %
             % AVAILABLE_SETTINGS = GETAVAILABLESETTINGS(D) returns the
             % available settings of the data.
-            % 
+            %
             % See also getClass, getName, getDescription.
             
             available_settings = {};
-         end
-        function data_structure = getDataStructure()
-            data_structure = 'matrix';
         end
-    end  
+        function data_structure = getDataStructure()
+            data_structure = 'list';
+        end
+    end 
 end
