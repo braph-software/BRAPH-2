@@ -28,9 +28,8 @@ classdef Statistics < handle & matlab.mixin.Copyable
             
             groups = cell(1, number_groups);
             for i = 1:1:number_groups
-                group_key = ['Group_' i];
-                groups{2 * i -1} = group_key;
-                groups{2 * i} = get_from_varargin([], group_key, varargin{:});
+                group_key = ['Group_' num2str(i)];
+                groups{i} = get_from_varargin([], group_key, varargin{:});
             end
             s.groups = groups;
         end
@@ -43,10 +42,14 @@ classdef Statistics < handle & matlab.mixin.Copyable
             if nargin < 2
                 res = s.settings;
             else
-                res = get_from_varargin([], setting_code, s.settings{:});
+                for i = 1:1:length(s.settings)
+                    if isequal(s.settings{i, 1}, setting_code)
+                        res = get_from_varargin([], setting_code, s.settings{i, :});
+                    end
+                end
             end
         end
-         function bool = is_dict_init(s)
+        function bool = is_dict_init(s)
             % IS_VALUE_CALCULATED checks if values is calculated
             %
             % BOOL = IS_VALUE_CALCULATED(M) returns true  if value has been

@@ -16,10 +16,12 @@ classdef PermutationTest < Statistics
             values_2 = get_from_varargin([], 'Val2', varargin{:});
             res_1 = get_from_varargin([], 'Res1', varargin{:});
             res_2 = get_from_varargin([], 'Res2', varargin{:});
+            group_1 = get_from_varargin([], 'Group_1', varargin{:});
+            group_2 = get_from_varargin([], 'Group_2', varargin{:});
             
             % settings
             is_longitudinal = s.getSettings('Longitudinal');
-            
+
             % Operation
             all_permutations_1 = cell(1, M);
             all_permutations_2 = cell(1, M);
@@ -82,7 +84,7 @@ classdef PermutationTest < Statistics
             data_dict([calling_class '.confidence_min']) = ci_lower;
             data_dict([calling_class '.confidence_max']) = ci_upper;
             
-            s.data_dict = data_dict;
+            s.stat_dict = data_dict;
             
         end
     end

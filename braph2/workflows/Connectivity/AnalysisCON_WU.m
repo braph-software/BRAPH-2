@@ -313,6 +313,7 @@ classdef AnalysisCON_WU < Analysis
             
             statistic = Statistics.getStatistic(statistical_type);
             statistic_dict = statistic.getStatistics('CallingClass', analysis.getComparisonClass(), ...
+                'Group_1', group_1, 'Group_2', group_2, ...
                 'Val1', values_1, 'Val2', values_2 , ...
                 'Res1', res_1, 'Res2', res_2, varargin{:});
             
@@ -320,10 +321,8 @@ classdef AnalysisCON_WU < Analysis
             
             statistic_results = cell(1, length(keys));
             for i = 1:1:length(keys)
-                key = keys{i};
-                result = statistic_dict(key);
-                statistic_results{2 * i - 1} = key;
-                statistic_results{2 * i} = result;
+                statistic_results{2 * i - 1} = keys{i};
+                statistic_results{2 * i} = statistic_dict(keys{i});
             end
             
             comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
