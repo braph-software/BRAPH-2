@@ -46,12 +46,22 @@ classdef Statistics < handle & matlab.mixin.Copyable
                 res = get_from_varargin([], setting_code, s.settings{:});
             end
         end
+         function bool = is_dict_init(s)
+            % IS_VALUE_CALCULATED checks if values is calculated
+            %
+            % BOOL = IS_VALUE_CALCULATED(M) returns true  if value has been
+            % already calculated.
+            %
+            % See also getValue.
+            
+            bool = ~isempty(s.stat_dict);
+        end
         function stat_dict = getStatistics(s, varargin)
             % check for defaults, this may need to be recalculated every
             % time its a new default, for example for perm test M and
             % verbose vary.
             if ~s.is_dict_init()
-                s.stat_dict = s.init_data_dict(varargin{:});
+                s.init_data_dict(varargin{:});
             end
             stat_dict = s.stat_dict;
         end

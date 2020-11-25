@@ -13,7 +13,7 @@ classdef PermutationTest < Statistics
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             values_1 = get_from_varargin([], 'Val1', varargin{:});
-            values_2 = get_from_varargin([], ' Val2', varargin{:});
+            values_2 = get_from_varargin([], 'Val2', varargin{:});
             res_1 = get_from_varargin([], 'Res1', varargin{:});
             res_2 = get_from_varargin([], 'Res2', varargin{:});
             
