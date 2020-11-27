@@ -90,24 +90,46 @@ classdef PermutationTest < Statistics
             
         end
     end
-    methods  % plot
-        function h = getStatisticPanel(s, ui_parent) %#ok<INUSL>
+    methods (Static) % plot
+        function handle = getStatisticPanel(ui_parent, varargin)
             
-            h_panel = uicontrol('Parent', ui_parent, 'Units', 'normalized', ...
-                'Position', [0 .65 .2 .3 ]);
+            ui_permutation_text = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'text');
+            ui_permutation_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
+            ui_longitudinal_text = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'text');
+            ui_longitudinal_popup = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'popup') ;   
             
-            set(h_panel, 'Style', 'popup')
-            set(h_panel, 'String', {true, false})
-            set(h_panel, 'Value', index)
-            set(h_panel, 'Callback', {@cb_perm_test_setting_dropdown})
+            init_child_panel()
+            
+            function init_child_panel()
+                
+                set(ui_permutation_text, 'String', 'Permutation Number')
+                set(ui_permutation_text, 'Position', [.01 .8 .47 .14])
+                set(ui_permutation_text, 'Fontweight', 'bold')
+                
+                set(ui_permutation_edit, 'String', 1000)
+                set(ui_permutation_edit, 'Position', [.5 .87 .45 .08])
+                set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
+                
+                set(ui_longitudinal_text, 'String', 'Longitudinal')
+                set(ui_longitudinal_text, 'Position', [.01 .65 .4 .14])
+                set(ui_longitudinal_text, 'Fontweight', 'bold')
+                
+                set(ui_longitudinal_popup, 'Position', [.5 .65 .4 .15]);
+                set(ui_longitudinal_popup, 'String', {'true', 'false'})
+                set(ui_longitudinal_popup, 'Callback', {@cb_perm_test_setting_dropdown})
+            end
+            
+            function cb_comparison_permutation(~, ~)
+                setappdata(ui_parent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
+            end
+            handle.variables = [];
+            handle.permutation = ui_permutation_edit;
+            setappdata(ui_parent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
             
             function cb_perm_test_setting_dropdown(~, ~)                
-                setappdata(ui_parent, 'Longitudinal', h_panel.String{h_panel.Value})
+                setappdata(ui_parent, 'Longitudinal', ui_longitudinal_popup.String{ui_longitudinal_popup.Value})
             end
             
-            if nargout > 0
-                h = h_panel;
-            end
         end
     end
     methods (Static)

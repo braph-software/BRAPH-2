@@ -620,7 +620,7 @@ classdef ComparisonCON_WU < Comparison
         end
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
-        function handle = getComparisonSettingsPanel(analysis, uiparent, varargin) %#ok<INUSL>
+        function handle = getComparisonSettingsPanel(analysis, uiparent, varargin) 
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
@@ -631,28 +631,14 @@ classdef ComparisonCON_WU < Comparison
             
             statistic_type = get_from_varargin('PermutationTest', 'StatisticsType', varargin{:});
             
+            init_Statistic_Panel()
+            
             set(uiparent, 'Visible', 'on')
             
-            ui_permutation_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_permutation_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
-            init_child_panel()
-            function init_child_panel()
-                
-                set(ui_permutation_text, 'String', 'Permutation Number')
-                set(ui_permutation_text, 'Position', [.01 .8 .47 .14])
-                set(ui_permutation_text, 'Fontweight', 'bold')
-                
-                set(ui_permutation_edit, 'String', 1000)
-                set(ui_permutation_edit, 'Position', [.5 .87 .45 .08])
-                set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
-            end
+            function init_Statistic_Panel()
+                handle = Statistics.getStatisticPanel(statistic_type, analysis, uiparent, varargin);
+            end           
             
-            function cb_comparison_permutation(~, ~)
-                setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
-            end
-            handle.variables = [];
-            handle.permutation = ui_permutation_edit;
-            setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
         end
     end
 end

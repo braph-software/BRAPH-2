@@ -72,8 +72,10 @@ classdef Statistics < handle & matlab.mixin.Copyable
     methods (Abstract, Access = protected)
         init_data_dict(s)
     end
-    methods (Abstract)  % plot
-        getStatisticPanel(s, ui_parent)  % returns a panel with settings
+    methods (Static)  % plot
+        function handle = getStatisticPanel(s, analysis, ui_parent, varargin)  %#ok<INUSD> % returns a panel with settings
+            handle = eval([s '.getStatisticPanel(ui_parent, varargin{:})']);
+        end
     end
     methods (Static)
         function statistic_class_list = getList()
