@@ -311,7 +311,7 @@ classdef AnalysisCON_WU < Analysis
             values_2 = measurements_2.getMeasureValues();
             res_2 =  {mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group_2.subjectnumber()]), 3)};
             
-            statistic = Statistics.getStatistic(statistical_type);
+            statistic = Statistics.getStatistic(statistical_type, varargin{:});
             statistic_dict = statistic.getStatistics('CallingClass', analysis.getComparisonClass(), ...
                 'Group_1', group_1, 'Group_2', group_2, ...
                 'Val1', values_1, 'Val2', values_2 , ...
@@ -429,8 +429,7 @@ classdef AnalysisCON_WU < Analysis
             %
             % See also getClass, getName, getDescription
             
-            available_settings = {
-                {'AnalysisCON.Longitudinal', BRAPH2.LOGICAL, false, {false, true}}, ...
+            available_settings = { ...
                 {'AnalysisCON.AttemptsPerEdge', BRAPH2.NUMERIC, 1, {}}, ...
                 {'AnalysisCON.NumberOfWeights', BRAPH2.NUMERIC, 1, {}} ...
                 };
@@ -714,10 +713,12 @@ classdef AnalysisCON_WU < Analysis
                 end
             end
             function update_subjects()
-                [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
-                subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
-                subject_labels = ['Group Average' subject_labels_inner];
-                set(ui_matrix_subjects_popup, 'String', subject_labels)
+                if ~isempty(groups)
+                    [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
+                    subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
+                    subject_labels = ['Group Average' subject_labels_inner];
+                    set(ui_matrix_subjects_popup, 'String', subject_labels)
+                end
             end
             
             update_matrix()

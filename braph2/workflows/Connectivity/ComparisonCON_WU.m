@@ -620,7 +620,7 @@ classdef ComparisonCON_WU < Comparison
         end
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
-        function handle = getComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getComparisonSettingsPanel(analysis, uiparent, varargin) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
@@ -628,6 +628,8 @@ classdef ComparisonCON_WU < Comparison
             % Permutation.
             %
             % See also ComparisonST_WU.
+            
+            statistic_type = get_from_varargin('PermutationTest', 'StatisticsType', varargin{:});
             
             set(uiparent, 'Visible', 'on')
             

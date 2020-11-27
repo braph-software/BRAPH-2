@@ -102,7 +102,19 @@ classdef Statistics < handle & matlab.mixin.Copyable
             s = eval([stat_code '(varargin{:})']);
         end
         function list = getCompatibleAnalysis(s)
-            list = eval([Statistics.getClass(s) '.getCompatibleGraphList()']);
+            list = eval([Statistics.getClass(s) '.getCompatibleAnalysis()']);
+        end
+        function list = getCompatibleStatisticFromAnalysis(analysis)
+            statistic_class_list = Statistics.getList();
+            list = cell(1, length(statistic_class_list));
+            for i = 1:1:length(statistic_class_list)
+                statistic_class = statistic_class_list{i};
+                compatible_analysis_list = Statistics.getCompatibleAnalysis(statistic_class);
+                if any(strcmp(compatible_analysis_list, analysis))
+                    list{i} = statistic_class;
+                end                
+            end
+            list(cellfun('isempty', list)) = [];
         end
     end
 end

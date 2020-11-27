@@ -64,6 +64,7 @@ ui_calc_binodal_button = uicontrol(ui_panel, 'Style', 'pushbutton');
 
 ui_popup_group_1 = uicontrol(ui_panel, 'Style', 'popup', 'String', {''});
 ui_popup_group_2 = uicontrol(ui_panel, 'Style', 'popup', 'String', {''});
+ui_popup_statistic_test_type = uicontrol(ui_panel, 'Style', 'popup', 'String', {''});
 ui_edit_info = uicontrol(ui_panel, 'Style', 'edit');
 ui_button_stop = uicontrol(ui_panel, 'Style', 'pushbutton');
 ui_button_resume = uicontrol(ui_panel, 'Style', 'pushbutton');
@@ -71,8 +72,9 @@ ui_button_resume = uicontrol(ui_panel, 'Style', 'pushbutton');
 ui_child_panel = uipanel(ui_panel);  % child panel
 
 init_calculate()
-init_child_panel()
 update_popups_grouplists()
+updata_popup_statisticlist()
+init_child_panel()
 update_tab()
 
 % Menu
@@ -128,6 +130,10 @@ set(f, 'Visible', 'on');
         set(ui_popup_group_2, 'Position', [.01 .3 .44 .1])
         set(ui_popup_group_2, 'TooltipString', 'Select group 1');
         
+        set(ui_popup_statistic_test_type, 'Position', [.01 .2 .44 .1]);
+        set(ui_popup_statistic_test_type, 'TooltipString', 'Select type of statistical analysis');
+        set(ui_popup_statistic_test_type, 'Callback', {@cb_statistics_type});        
+        
         set(ui_edit_info, 'BackgroundColor', [1 1 1])
         set(ui_edit_info, 'Position', [.01 .08 .98 .15])
         set(ui_edit_info, 'Max',2)
@@ -148,7 +154,9 @@ set(f, 'Visible', 'on');
         
     end
     function init_child_panel()
-        handle_child_panel = Comparison.getComparisonSettingsPanel(comparison_class, analysis, ui_child_panel);
+        statistics_list = get(ui_popup_statistic_test_type, 'String');
+        statistics = statistics_list{get(ui_popup_statistic_test_type, 'Value')};
+        handle_child_panel = Comparison.getComparisonSettingsPanel(comparison_class, analysis, ui_child_panel, 'StatisticsType', statistics);
     end
     function deactivate_components()
         set(ui_calc_table, 'Enable', 'off')
@@ -288,6 +296,9 @@ set(f, 'Visible', 'on');
         end
         update_tab()
     end
+    function cb_statistics_type(~, ~)
+        init_child_panel()
+    end
 
 % Auxilary functions
     function update_popups_grouplists()
@@ -303,6 +314,10 @@ set(f, 'Visible', 'on');
         end
         set(ui_popup_group_1, 'String', GroupList)
         set(ui_popup_group_2, 'String', GroupList)
+    end
+    function updata_popup_statisticlist()
+        statistics_values = Statistics.getCompatibleStatisticFromAnalysis(analysis.getClass());
+        set(ui_popup_statistic_test_type, 'String', statistics_values)
     end
     function calculate(analysis, mlist, g_1, g_2)
         L = 100;
