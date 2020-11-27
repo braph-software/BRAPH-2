@@ -21,28 +21,7 @@ assert(isequal(path_transitivity.getValue(), known_path_transitivity), ...
     [BRAPH2.STR ':PathTransitivity:' BRAPH2.BUG_ERR], ...
     'PathTransitivity is not being calculated correctly for GraphBU.')
 
-% %% Test 2: GraphWU
-% A = [
-%     0   .1  0   0
-%     .2  0   .1  0
-%     0   .1  0   .2
-%     0   0   .1  0
-%     ];
-% 
-% known_path_transitivity = {[
-%     0   0   2/5 0
-%     0   0   0   2/5
-%     2/5 0   0   0
-%     0   2/5 0   0]};
-% 
-% g = GraphWU(A);
-% path_transitivity = PathTransitivity(g).getValue();
-% 
-% assert(isequal(round(path_transitivity{1},4), known_path_transitivity{1}), ...
-%     [BRAPH2.STR ':PathTransitivity:' BRAPH2.BUG_ERR], ...
-%     'PathTransitivity is not being calculated correctly for GraphWU.')
-
-%% Test 3: MultiplexGraphBU
+%% Test 2: MultiplexGraphBU
 A11 = [
     0 1 1 1; 
     1 0 1 0; 
@@ -79,44 +58,7 @@ assert(isequal(path_transitivity.getValue(), known_path_transitivity), ...
     [BRAPH2.STR ':PathTransitivity:' BRAPH2.BUG_ERR], ...
     'PathTransitivity is not being calculated correctly for MultiplexGraphBU.')
 
-% %% Test 4: MultiplexGraphWU
-% A11 = [
-%       0   .1  0   0
-%       .2  0   .1  0
-%       0   .1  0   .2
-%       0   0   .1  0
-%       ];
-% A12 = eye(4);
-% A21 = eye(4);
-% A22 = [
-%       0   .1  0   0
-%       .2  0   .1  0
-%       0   .1  0   .2
-%       0   0   .1  0
-%       ];
-% A = {
-%     A11     A12
-%     A21     A22
-%     };
-% 
-% known_path_transitivity = {
-%     [0   0   2/5 0
-%     0   0   0   2/5
-%     2/5 0   0   0
-%     0   2/5 0   0]
-%     [0   0   2/5 0
-%     0   0   0   2/5
-%     2/5 0   0   0
-%     0   2/5 0   0]};
-% 
-% g = MultiplexGraphWU(A);
-% path_transitivity = PathTransitivity(g);
-% 
-% % assert(isequal(path_transitivity.getValue(), known_path_transitivity), ...
-% %     [BRAPH2.STR ':PathTransitivity:' BRAPH2.BUG_ERR], ...
-% %     'PathTransitivity is not being calculated correctly for MultiplexGraphWU.')
-
-%% Test 5: Calculation GraphBU vs BCT
+%% Test 3: Calculation GraphBU vs BCT
 g = GraphBU(rand(3));
 A = g.getA();
 
@@ -124,11 +66,11 @@ path_transitivity = PathTransitivity(g);
 path_transitivity_value = path_transitivity.getValue();
 path_transitivity_value = path_transitivity_value{1};
 
-bct_path_transitivity = path_transitivity_standard_BU(g.getA);
+bct_path_transitivity = path_transitivity_standard_BU(A);
 
 assert( isequal(path_transitivity_value, bct_path_transitivity), ...
-    [BRAPH2.STR ':PathLength:' BRAPH2.BUG_ERR], ...
-    'PathLength is not working for GraphWU: modified BCT comparision.')
+    [BRAPH2.STR ':PathTransitivity:' BRAPH2.BUG_ERR], ...
+    'PathTransitivity is not working for GraphWU: modified BCT comparision.')
 
 %% Functions to calculate path transitivity adapted from 2019_03_03_BCT
 
