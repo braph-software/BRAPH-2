@@ -1,7 +1,7 @@
 classdef PathTransitivity < Measure
     % PathTransitivity Path transitivity measure
     % PathTransitivity provides the density of triangles that are
-    % available along the shortest-paths between pairs of nodes. 
+    % available along the shortest-paths between pairs of nodes for binary undirected (BU) graph. 
     % 
     % PathTransitivity methods:
     %   PathTransitivity            - constructor
@@ -36,7 +36,7 @@ classdef PathTransitivity < Measure
             % CALCULATE calculates the path transitivity pairwise matrix of
             % graph
             %
-            % PATH_TRANSITIVITY = CALCULATE(M) returns the value of the path transitivity pairwise matrix
+            % PATHTRANSITIVITY = CALCULATE(M) returns the value of the path transitivity pairwise matrix
             % of a binary undirected (BU) graph or multiplex.
             %
             % See also Measure, GraphBU, MultiplexGraphBU.
@@ -213,6 +213,7 @@ classdef PathTransitivity < Measure
             
             list = { ...
                 'GraphBU', ...
+                'GraphWU', ...
                 'MultiplexGraphBU', ...
                 };
         end
