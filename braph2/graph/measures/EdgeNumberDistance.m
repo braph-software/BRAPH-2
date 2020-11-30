@@ -1,5 +1,5 @@
 classdef EdgeNumberDistance < Distance
-    % EdgeNumberDistance EdgeNumberDistance measure
+    % EdgeNumberDistance Edge number distance measure
     % EdgeNumberDistance provides the edge number distance of a graph for 
     % weighted undirected (WU) and weighted directed (WD) graphs.
     % It is calculated as the number of edges in the shortest weighted path
@@ -43,26 +43,10 @@ classdef EdgeNumberDistance < Distance
             %
             % See also Measure, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
             
-            g = m.getGraph();  % graph from measure class
-            A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
-            
-            edge_number_distance = cell(g.layernumber(), 1);
-            connectivity_type =  g.getConnectivityType(g.layernumber());
-            for li = 1:1:g.layernumber()
-                if g.is_graph(g)
-                    Aii = A;
-                    connectivity_layer = connectivity_type;
-                else
-                    Aii = A{li, li};
-                    connectivity_layer = connectivity_type(li, li);
-                end
-                
-                if isempty(m.B)
-                    d =  calculate@Distance(m);
-                end
-                
-                edge_number_distance(li) = m.B;
+            if isempty(m.B)
+                calculate@Distance(m);
             end       
+            edge_number_distance = m.B;
         end
     end
     methods (Static)  % Descriptive methods
