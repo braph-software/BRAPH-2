@@ -32,7 +32,9 @@ classdef SubjectCON < Subject
     %   save_to_json            - saves the subject data to a '.json' file
     %
     % See also Group, Cohort, SubjectMRI, SubjectfMRI, Subject.
-    
+    properties
+        datalist
+    end
     methods
         function sub = SubjectCON(id, label, notes, atlas, varargin)
             % SUBJECTCON creates a subject of type CON
@@ -75,10 +77,16 @@ classdef SubjectCON < Subject
             
             age = get_from_varargin(0, 'age', varargin{:});
             CON = get_from_varargin(zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length()), 'CON', varargin{:});
+            gender = get_from_varargin('other', 'gender', varargin{:});
+            education = get_from_varargin('other', 'education', varargin{:});
             
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
             sub.datadict('CON') = DataConnectivity(atlas, CON);
+            sub.datadict('gender') = DataGender(atlas, gender);
+            sub.datadict('education') = DataEducation(atlas, education);
+            
+            init_internal_datalist(sub);
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject CON
@@ -97,6 +105,35 @@ classdef SubjectCON < Subject
             
             d2 = sub.datadict('CON');
             d2.setBrainAtlas(atlas);
+        end
+        function init_internal_datalist(sub)
+            sub.datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
+            sub.datalist('age') = 'DataScalar';
+            sub.datalist('CON') = 'DataConnectivity';
+            sub.datalist('gender') = 'DataGender';
+            sub.datalist('education') = 'DataEducation'; 
+        end 
+    end
+    methods
+        function add_data_to_datadict(sub, info)
+            atlases = sub.getBrainAtlases();
+            atlas = atlases{1};
+            data_structure = Data.getDataStructure(info{1});
+            if isequal(data_structure, 'char')
+            elseif isequal(data_structure, 'numeric')
+                info{3} = str2double(info{3});
+            else
+                info{3} = [];
+            end
+            sub.datalist(info{2}) = info{1};
+            sub.datadict(info{2}) = Data.getData(info{1}, atlas, info{3});
+        end
+        function datalist = get_internal_datalist(sub)
+            datalist = sub.datalist;
+        end
+        function datacodes = get_internal_datacodes(sub)
+            datalist = sub.get_internal_datalist(); %#ok<PROP>
+            datacodes = keys(datalist); %#ok<PROP>
         end
     end
     methods (Static)  % Inspection functions
@@ -154,6 +191,8 @@ classdef SubjectCON < Subject
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
             datalist('CON') = 'DataConnectivity';
+            datalist('gender') = 'DataGender';
+            datalist('education') = 'DataEducation'; 
         end
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.

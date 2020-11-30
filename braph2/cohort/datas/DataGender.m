@@ -63,7 +63,7 @@ classdef DataGender < Data
             % See also setValue.            
             
             h_panel = uicontrol('Parent', ui_parent, 'Units', 'normalized', ...
-                'Position', [0 .65 .2 .3 ]);
+                'Position', [0.1 .65 .2 .3 ]);
             gender = {'female', 'male', 'other'};            
             index = find(ismember(gender, d.value));
             set(h_panel, 'Style', 'popup')
