@@ -361,9 +361,9 @@ classdef BrainAtlas < handle & matlab.mixin.Copyable
             for i = 5:1:size(raw, 1)
                 br_id = raw{i, 1};
                 br_label = raw{i, 2};                
-                br_x = raw{i, 3};
-                br_y = raw{i, 4};
-                br_z = raw{i, 5};
+                br_x = str2double(raw{i, 3});
+                br_y = str2double(raw{i, 4});
+                br_z = str2double(raw{i, 5});
                 br_notes = raw{i, 6};
                 br = BrainRegion(br_id, br_label, br_notes, br_x, br_y, br_z);
                 atlas.getBrainRegions().add(br.getID(), br);
