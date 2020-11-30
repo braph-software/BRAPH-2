@@ -51,7 +51,6 @@ classdef Distance < Measure
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
-            
             distance = cell(g.layernumber(), 1);
             connectivity_type =  g.getConnectivityType(g.layernumber());
             for li = 1:1:g.layernumber()
@@ -109,7 +108,7 @@ classdef Distance < Measure
                     V = find(D(u,:)==minD);
                 end
             end
-            m.B = B;  %#ok<PROPLC>
+            m.B{end+1} = B;  %#ok<PROPLC>
             weighted_distance = D;
         end
         function binary_distance = getBinaryCalculation(m, A)
