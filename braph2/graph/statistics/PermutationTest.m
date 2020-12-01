@@ -158,5 +158,9 @@ classdef PermutationTest < Statistics
             all_analysis = Analysis.getList();
             list = reshape(all_analysis, [1, numel(all_analysis)]);
         end
+%         function keys = getKeys()
+%             keys = {'.values_1', '.average_values_1', '.values_2', '.average_values_2', '.difference', '.all_differences', '.p1', ...
+%                   '.p2', '.confidence_min', '.confidence_max'};
+%         end
     end
 end

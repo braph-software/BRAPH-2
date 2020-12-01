@@ -118,5 +118,8 @@ classdef Statistics < handle & matlab.mixin.Copyable
             end
             list(cellfun('isempty', list)) = [];
         end
+%         function keys = getKeys(s)
+%             keys = eval([Statistics.getClass(s) '.getKeys()']);
+%         end
     end
 end

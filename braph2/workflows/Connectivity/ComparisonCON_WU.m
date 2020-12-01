@@ -42,6 +42,7 @@ classdef ComparisonCON_WU < Comparison
     % See also Comparison, AnalysisCON_WU, MeasurementCON_WU, RandomComparisonCON_WU.
     
     properties
+        % I want to remove this properties and just a dict
         values_1  % array with the values_1 of the measure for each subject of group 1
         values_2  % array with the values_1 of the measure for each subject of group 1
         average_value_1  % average value of group 1
@@ -52,6 +53,10 @@ classdef ComparisonCON_WU < Comparison
         p2  % p value double tailed
         confidence_interval_min  % min value of the 95% confidence interval
         confidence_interval_max  % max value of the 95% confidence interval
+        
+        % this is the dict
+        comparison_dict
+        
     end
     methods  % Constructor
         function c =  ComparisonCON_WU(id, label, notes, atlas, measure_code, group_1, group_2, varargin)
@@ -217,7 +222,7 @@ classdef ComparisonCON_WU < Comparison
             
             measure_code = c.getMeasureCode();
             
-            number_of_permutations = c.getSettings('ComparisonCON.PermutationNumber');
+            number_of_permutations = get_from_varargin(1000,'ComparisonCON.PermutationNumber', varargin{:});  %c.getSettings('ComparisonCON.PermutationNumber');
             
             if Measure.is_global(measure_code)  % global measure
                 % values
@@ -597,9 +602,9 @@ classdef ComparisonCON_WU < Comparison
             %
             % See also getClass, getName, getDescription
             
-            available_settings = {
-                'ComparisonCON.PermutationNumber', BRAPH2.NUMERIC, 1000, {};
-                };
+            available_settings = { };
+%                 'ComparisonCON.PermutationNumber', BRAPH2.NUMERIC, 1000, {};
+%                 };
         end
         function sub = getComparison(comparisonClass, id, label, notes, atlas, measure_code, group_1, group_2, varargin) %#ok<INUSD>
             % GETCOMPARISON returns a new comparison
