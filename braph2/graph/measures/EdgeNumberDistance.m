@@ -43,10 +43,10 @@ classdef EdgeNumberDistance < Distance
             %
             % See also Measure, Distance, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
             
-            if isempty(m.B)
-                calculate@Distance(m);
-            end       
-            edge_number_distance = m.B;
+            g = m.getGraph();  % graph from measure class
+            distance = Distance(g);
+            distance.getValue();
+            edge_number_distance = distance.getB();
         end
     end
     methods (Static)  % Descriptive methods
