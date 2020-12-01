@@ -25,7 +25,10 @@ classdef Participation < Measure
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
-    
+  
+    properties (GetAccess=protected, SetAccess=protected)
+        Ci  % given community structure 
+    end
     methods
         function m = Participation(g, varargin)
             % PARTICIPATION(G) creates participation with default properties.
@@ -54,68 +57,106 @@ classdef Participation < Measure
             
             participation = cell(L, 1);        
             directionality_type =  g.getDirectionalityType(L);
+            connectivity_type =  g.getConnectivityType(L);
             for li = 1:1:L
                 
                 if g.is_graph(g)
                     Aii = A;
                     directionality_layer = directionality_type;
+                    connectivity_layer = connectivity_type;
                     
                     if g.is_measure_calculated('CommunityStructure')
-                        Ci = g.getMeasureValue('CommunityStructure');
+                        S = g.getMeasureValue('CommunityStructure');
                     else
-                        Ci = CommunityStructure(g, g.getSettings()).getValue();
+                        S = CommunityStructure(g, g.getSettings()).getValue();
                     end
+                    m.Ci = S;
                 
                 else
                     Aii = A{li, li};
                     directionality_layer = directionality_type(li, li);
-                    if g.is_measure_calculated('MultilayerCommunityStructure')
-                        Ci = g.getMeasureValue('MultilayerCommunityStructure');
-                    else
-                        Ci = MultilayerCommunityStructure(g, g.getSettings()).getValue();
-                    end
-                end
-                
-                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-
-                    if g.is_measure_calculated('Degree')
-                        degree = g.getMeasureValue('Degree');                    
-                    else
-                        degree = Degree(g, g.getSettings()).getValue();
-                    end
-
-                else  % directed graphs
+                    connectivity_layer = connectivity_type(li, li);
                     
-                    directed_participation_rule = get_from_varargin('out', 'DirectedParticipationRule', m.getSettings());
-                    switch lower(directed_participation_rule)
-                        case {'in'}  % in-degree rule
-                            
-                            if g.is_measure_calculated('InDegree')
-                                degree = g.getMeasureValue('InDegree');
-                            else
-                                degree = InDegree(g, g.getSettings()).getValue();
-                            end
-
-                        otherwise  % {'out'}  % out-degree rule
-                            
-                            if g.is_measure_calculated('OutDegree')
-                                degree = g.getMeasureValue('OutDegree');
-                            else
-                                degree = OutDegree(g, g.getSettings()).getValue();
-                            end
+                    if g.is_measure_calculated('MultilayerCommunityStructure')
+                        S = g.getMeasureValue('MultilayerCommunityStructure');
+                    else
+                        S = MultilayerCommunityStructure(g, g.getSettings()).getValue();
                     end
-
+                    m.Ci = S;
+                end
+                if connectivity_layer == Graph.WEIGHTED  % weighted graphs
+                    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+                        
+                        if g.is_measure_calculated('Strength')
+                            ko = g.getMeasureValue('Strength');
+                        else
+                            ko = Strength(g, g.getSettings()).getValue();
+                        end
+                        
+                    else  % directed graphs
+                        
+                        directed_participation_rule = get_from_varargin('out', 'DirectedParticipationRule', m.getSettings());
+                        switch lower(directed_participation_rule)
+                            case {'in'}  % in-degree rule
+                                
+                                if g.is_measure_calculated('InStrength')
+                                    ko = g.getMeasureValue('InStrength');
+                                else
+                                    ko = InStrength(g, g.getSettings()).getValue();
+                                end
+                                
+                            otherwise  % {'out'}  % out-degree rule
+                                
+                                if g.is_measure_calculated('OutStrength')
+                                    ko = g.getMeasureValue('OutStrength');
+                                else
+                                    ko = OutStrength(g, g.getSettings()).getValue();
+                                end
+                        end
+                        
+                    end
+                else  % binary graphs
+                    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+                        
+                        if g.is_measure_calculated('Degree')
+                            ko = g.getMeasureValue('Degree');
+                        else
+                            ko = Degree(g, g.getSettings()).getValue();
+                        end
+                        
+                    else  % directed graphs
+                        
+                        directed_participation_rule = get_from_varargin('out', 'DirectedParticipationRule', m.getSettings());
+                        switch lower(directed_participation_rule)
+                            case {'in'}  % in-degree rule
+                                
+                                if g.is_measure_calculated('InDegree')
+                                    ko = g.getMeasureValue('InDegree');
+                                else
+                                    ko = InDegree(g, g.getSettings()).getValue();
+                                end
+                                
+                            otherwise  % {'out'}  % out-degree rule
+                                
+                                if g.is_measure_calculated('OutDegree')
+                                    ko = g.getMeasureValue('OutDegree');
+                                else
+                                    ko = OutDegree(g, g.getSettings()).getValue();
+                                end
+                        end
+                        
+                    end
                 end
                 
-                Gc = (Aii~=0)*diag(Ci{li});  % neighbor community affiliation
+                Gc = (Aii~=0)*diag(S{li});  % neighbor community affiliation
                 Kc2 = zeros(N(1), 1);  % community-specific neighbors
                 
-                for i=1:max(Ci{li})
+                for i=1:max(S{li})
                     Kc2 = Kc2 + (sum(Aii.*(Gc==i), 2).^2);
                 end
                 
-                participation_layer = ones(N(1), 1) - Kc2./(degree{li}.^2);
-                participation_layer(~degree{li}) = 0;  % participation = 0 if for nodes with no (out)neighbors
+                participation_layer = ones(N(1), 1) - Kc2./(ko{li}.^2);
+                participation_layer(~ko{li}) = 0;  % participation = 0 if for nodes with no (out)neighbors
                 participation(li) = {participation_layer};
             end
         end
@@ -230,6 +271,15 @@ classdef Participation < Measure
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Participation');
+        end
+    end
+    methods
+        function ci = getCi(m)
+            % GETCI returns the given community structure
+            %
+            % CI = GETCI() returns the community structure used (Ci).
+            
+            ci = m.Ci;
         end
     end
 end
