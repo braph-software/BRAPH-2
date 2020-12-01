@@ -1,4 +1,4 @@
-% test Distance
+% test EdgeNumberDistance
 
 %% Test 1: GraphWU
 A = [
