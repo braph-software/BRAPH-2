@@ -74,15 +74,15 @@ classdef PermutationTest < Statistics
                 [calling_class '.confidence_min'], ...
                 [calling_class '.confidence_max'] ...
                 };
-            data_dict('plot_keys') = { ...
+            data_dict('table_keys') = { ...
                 [calling_class '.average_values_1'], ...
-                [calling_class '.average_values_2']};
+                [calling_class '.average_values_2']};            
             data_dict([calling_class '.PermutationNumber']) = M;
             data_dict([calling_class '.values_1']) = values_1;
             data_dict([calling_class '.average_values_1']) = res_1;
             data_dict([calling_class '.values_2']) = values_2;
             data_dict([calling_class '.average_values_2']) = res_2;
-            data_dict([calling_class '.difference']) = difference_mean;
+            data_dict([calling_class '.difference']) = difference_mean;  % plot
             data_dict([calling_class '.all_differences']) = difference_all_permutations;
             data_dict([calling_class '.p1']) = p1;
             data_dict([calling_class '.p2']) = p2;
@@ -133,6 +133,9 @@ classdef PermutationTest < Statistics
                 setappdata(ui_parent, 'Longitudinal', ui_longitudinal_popup.String{ui_longitudinal_popup.Value})
             end
             
+        end
+        function property = getPlotProperty()
+            property = 'difference';
         end
     end
     methods (Static)

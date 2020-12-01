@@ -76,6 +76,9 @@ classdef Statistics < handle & matlab.mixin.Copyable
         function handle = getStatisticPanel(s, analysis, ui_parent, varargin)  %#ok<INUSD> % returns a panel with settings
             handle = eval([s '.getStatisticPanel(ui_parent, varargin{:})']);
         end
+        function property = getPlotProperty(s)
+            property = eval([s '.getPlotProperty()']);
+        end
     end
     methods (Static)
         function statistic_class_list = getList()
@@ -118,6 +121,7 @@ classdef Statistics < handle & matlab.mixin.Copyable
             end
             list(cellfun('isempty', list)) = [];
         end
+        
 %         function keys = getKeys(s)
 %             keys = eval([Statistics.getClass(s) '.getKeys()']);
 %         end

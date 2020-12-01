@@ -754,6 +754,7 @@ classdef AnalysisCON_WU < Analysis
             % declare variables
             selected_brainmeasures = [];
             selected_subject_index = 1;
+            selected_statistic = 'PermutationTest';
             sub = [];
             
             % declare the uicontrols
@@ -965,7 +966,7 @@ classdef AnalysisCON_WU < Analysis
                         global_comparison =  global_comparison(~cellfun(@isempty, global_comparison));
                         holder_keys = global_comparison{1};
                         cell_1 = {'', ' measure ', ' group 1 ', ' group 2 ',};
-                        cell_2 = holder_keys.getComparisonProperties('plot_keys');
+                        cell_2 = holder_keys.getComparisonProperties('table_keys');
                         cell_3 = {' name ', ' label ', ' notes ', 'fdr'};
                         cell_f = [cell_1, cell_2, cell_3];
                         cell_f = cellfun(@(x) erase(x, 'ComparisonCON.'), cell_f, 'UniformOutput', false);
@@ -1119,7 +1120,7 @@ classdef AnalysisCON_WU < Analysis
                     analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
                         analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group1, 'Value')), selected_subject_index);
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
-                    analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                    analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, selected_statistic, ...
                         analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group1, 'Value')), ...
                         analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group2, 'Value')), selected_subject_index);
                 elseif get(ui_checkbox_brainmeasures_rand, 'Value')
@@ -1509,32 +1510,57 @@ classdef AnalysisCON_WU < Analysis
                     
                     if exist('nodal_comparison', 'var')
                         nodal_comparison =  nodal_comparison(~cellfun(@isempty, nodal_comparison));
-                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', ' fdr '})
-                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
-                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false false])
+                        holder_keys = nodal_comparison{1};
+                        cell_1 = {'', ' measure ', ' group 1 ', ' group 2 ',};
+                        cell_2 = holder_keys.getComparisonProperties('table_keys');
+                        cell_3 = {' name ', ' label ', ' notes ', 'fdr'};
+                        cell_f = [cell_1, cell_2, cell_3];
+                        format_cell =  cell(1, numel(cell_f)-1);
+                        format_cell(1, :) = {'char'};
+                        cell_f = cellfun(@(x) erase(x, 'ComparisonCON.'), cell_f, 'UniformOutput', false);
+                        set(ui_nodal_tbl, 'ColumnName', cell_f)
+                        set(ui_nodal_tbl, 'ColumnFormat', ['logical', format_cell])
+                        set(ui_nodal_tbl, 'ColumnEditable', [true(1) false(1, numel(cell_f))])
                         
-                        data = cell(length(nodal_comparison), 10);
+                        data = cell(length(nodal_comparison), numel(cell_f));
                         for i = 1:1:length(nodal_comparison)
                             comparison = nodal_comparison{i};
-                            p_values = comparison.getP1();
+                            
+                            is_p_value = false;
+                            if ismember('ComparisonCON.p1', comparison.getComparisonPropertiesKeys())
+                                p_values = comparison.getComparisonProperties('ComparisonCON.p1');
+                                is_p_value = true;
+                            end
+                            
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
                                 data{i, 1} = false;
                             end
-                            [val_1, val_2]  = comparison.getGroupAverageValues();
+                            
                             [group_1, group_2] = comparison.getGroups();
-                            nodal_values_1 = val_1{1};
-                            nodal_values_2 = val_2{1};
+                            
                             data{i, 2} = comparison.getMeasureCode();
                             data{i, 3} = group_1.getID();
                             data{i, 4} = group_2.getID();
-                            data{i, 5} = nodal_values_1(selected_br);
-                            data{i, 6} = nodal_values_2(selected_br);
-                            data{i, 7} = comparison.getID();
-                            data{i, 8} = comparison.getLabel();
-                            data{i, 9} = comparison.getNotes();
-                            data{i, 10} = fdr([p_values{:}]', str2double(fdr_t));
+                            for j = 1:1:numel(cell_2)
+                                holder = comparison.getComparisonProperties(cell_2{j});
+                                if iscell(holder)
+                                    h =  holder{1};
+                                    data{i, j + 4} = h(selected_br);
+                                else
+                                    data{i, j + 4} = holder(selected_br);
+                                end                                
+                            end
+                            
+                            data{i, numel(cell_f)-3} = comparison.getID();
+                            data{i, numel(cell_f)-2} = comparison.getLabel();
+                            data{i, numel(cell_f)-1} = comparison.getNotes();
+                            if is_p_value
+                                data{i, numel(cell_f)} = fdr([p_values{:}]', str2double(fdr_t));
+                            else
+                                data{i, numel(cell_f)} = 'not calculated';
+                            end
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_nodal_tbl, 'Data', data)
@@ -2034,32 +2060,56 @@ classdef AnalysisCON_WU < Analysis
                     
                     if exist('binodal_comparison', 'var')
                         binodal_comparison =  binodal_comparison(~cellfun(@isempty, binodal_comparison));
-                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', ' fdr '})
-                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
-                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false false false])
+                        holder_keys = binodal_comparison{1};
+                        cell_1 = {'', ' measure ', ' group 1 ', ' group 2 ',};
+                        cell_2 = holder_keys.getComparisonProperties('table_keys');
+                        cell_3 = {' name ', ' label ', ' notes ', 'fdr'};
+                        cell_f = [cell_1, cell_2, cell_3];
+                        cell_f = cellfun(@(x) erase(x, 'ComparisonCON.'), cell_f, 'UniformOutput', false);
+                        format_cell =  cell(1, numel(cell_f)-1);
+                        format_cell(1, :) = {'char'};
+                        set(ui_binodal_tbl, 'ColumnName', cell_f)
+                        set(ui_binodal_tbl, 'ColumnFormat', ['logical', format_cell])
+                        set(ui_binodal_tbl, 'ColumnEditable', [true(1) false(1, numel(cell_f))])
                         
-                        data = cell(length(binodal_comparison), 10);
+                        data = cell(length(binodal_comparison), numel(cell_f));
                         for i = 1:1:length(binodal_comparison)
                             comparison = binodal_comparison{i};
-                            p_values = comparison.getP1();
+                            is_p_value = false;
+                            if ismember('ComparisonCON.p1', comparison.getComparisonPropertiesKeys())
+                                p_values = comparison.getComparisonProperties('ComparisonCON.p1');
+                                is_p_value = true;
+                            end
+                            
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
                                 data{i, 1} = false;
                             end
-                            [val_1, val_2]  = comparison.getGroupAverageValues();
+                            
                             [group_1, group_2] = comparison.getGroups();
-                            binodal_values_1 = val_1{1};
-                            binodal_values_2 = val_2{1};
+                           
                             data{i, 2} = comparison.getMeasureCode();
                             data{i, 3} = group_1.getID();
                             data{i, 4} = group_2.getID();
-                            data{i, 5} = binodal_values_1(selected_br1, selected_br2);
-                            data{i, 6} = binodal_values_2(selected_br1, selected_br2);
-                            data{i, 7} = comparison.getID();
-                            data{i, 8} = comparison.getLabel();
-                            data{i, 9} = comparison.getNotes();
-                            data{i, 10} = fdr([p_values{:}], str2double(fdr_t));
+                            for j = 1:1:numel(cell_2)
+                                holder = comparison.getComparisonProperties(cell_2{j});
+                                if iscell(holder)
+                                    h = holder{1};
+                                    data{i, j + 4} = h(selected_br1, selected_br2);
+                                else
+                                    data{i, j + 4} =  h(selected_br1, selected_br2);
+                                end                                
+                            end
+
+                            data{i, numel(cell_f)-3} = comparison.getID();
+                            data{i, numel(cell_f)-2} = comparison.getLabel();
+                            data{i, numel(cell_f)-1} = comparison.getNotes();
+                            if is_p_value
+                                 data{i, numel(cell_f)} = fdr([p_values{:}], str2double(fdr_t));
+                            else
+                                data{i, numel(cell_f)} = 'not calculated';
+                            end
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_binodal_tbl, 'Data', data)
