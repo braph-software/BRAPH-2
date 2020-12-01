@@ -75,7 +75,7 @@ classdef ComparisonCON_WU < Comparison
     methods  % Get functions
         function data = getComparisonProperties(c, key)
             % returns a dict
-            if nargin < 1
+            if nargin < 2
                 data = c.comparison_dict;
             else  % or returns specified key
                 data = c.comparison_dict(key);
@@ -124,7 +124,7 @@ classdef ComparisonCON_WU < Comparison
             measure_code = c.getMeasureCode();
             
             if isequal(c.statistic, 'PermutationTest')  % default one
-                number_of_permutations =  c.getComparisonProperties('ComparisonCON.PermutationTest'); %c.getSettings('ComparisonCON.PermutationNumber');
+                number_of_permutations =  c.getComparisonProperties('ComparisonCON.PermutationNumber'); %c.getSettings('ComparisonCON.PermutationNumber');
                 
                 if Measure.is_global(measure_code)  % global measure
                     % values

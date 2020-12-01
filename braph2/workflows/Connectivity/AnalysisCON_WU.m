@@ -317,14 +317,6 @@ classdef AnalysisCON_WU < Analysis
                 'Val1', values_1, 'Val2', values_2 , ...
                 'Res1', res_1, 'Res2', res_2, varargin{:});
             
-%             keys = statistic_dict('stat_keys');
-%             
-%             statistic_results = cell(1, length(keys));
-%             for i = 1:1:length(keys)
-%                 statistic_results{2 * i - 1} = keys{i};
-%                 statistic_results{2 * i} = statistic_dict(keys{i});
-%             end
-            
             comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                 analysis.getComparisonID(measure_code, group_1, group_2, varargin{:}), ...
                 '', ...  % comparison label
