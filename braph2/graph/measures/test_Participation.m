@@ -99,6 +99,20 @@ assert(isequal(participation, {participation_bct}), ...
     [BRAPH2.STR ':Participation:' BRAPH2.BUG_ERR], ...
     'Participation is not being calculated correctly for BCT.')
 
+%% Test 5: GraphWD: Comparison with standard method 
+A = randn(randi(10));
+g = GraphWD(A); 
+
+p = Participation(g);
+participation = p.getValue();
+Ci_used = p.getCi();
+
+participation_bct = participation_coef(g.getA(), Ci_used{1});
+
+assert(isequal(participation, {participation_bct}), ...
+    [BRAPH2.STR ':Participation:' BRAPH2.BUG_ERR], ...
+    'Participation is not being calculated correctly for BCT.')
+
 %% Function to calculate participation from 2019_03_03_BCT
 
 function P = participation_coef(W,Ci,flag)
