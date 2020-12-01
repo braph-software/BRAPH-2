@@ -29,7 +29,7 @@ classdef EdgeNumberDistance < Distance
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
             % or MultiplexGraphWU). 
             %
-            % See also Measure, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
+            % See also Measure, Distance, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
           
             m = m@Distance(g, varargin{:});
         end
@@ -41,7 +41,7 @@ classdef EdgeNumberDistance < Distance
             % EDGENUMBERDISTANCE = CALCULATE(M) returns the value of the 
             % edge number distance distance of a graph or multiplex.
             %
-            % See also Measure, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
+            % See also Measure, Distance, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
             
             if isempty(m.B)
                 calculate@Distance(m);
