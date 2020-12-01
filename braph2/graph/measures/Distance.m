@@ -239,4 +239,13 @@ classdef Distance < Measure
             n = Measure.getCompatibleGraphNumber('Distance');
         end
     end
+    methods
+        function b = getB(m)
+            % GETCI returns the given community structure
+            %
+            % CI = GETCI() returns the community structure used (Ci).
+
+            b = m.B;
+        end
+    end
 end
