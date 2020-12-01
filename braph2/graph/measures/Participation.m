@@ -48,7 +48,7 @@ classdef Participation < Measure
             % PARTICIPATION = CALCULATE(M) returns the value of the participation of a
             % binary undirected (BU) or weighted undirected (WU) graph or multiplex.
             %
-            % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD..
+            % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
