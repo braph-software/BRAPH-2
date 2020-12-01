@@ -963,31 +963,55 @@ classdef AnalysisCON_WU < Analysis
                     
                     if exist('global_comparison', 'var')
                         global_comparison =  global_comparison(~cellfun(@isempty, global_comparison));
-                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' group value 1 ', ' group value 2', ' name ', ' label ', ' notes ', 'fdr'})
-                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
-                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false false])
+                        holder_keys = global_comparison{1};
+                        cell_1 = {'', ' measure ', ' group 1 ', ' group 2 ',};
+                        cell_2 = holder_keys.getComparisonProperties('plot_keys');
+                        cell_3 = {' name ', ' label ', ' notes ', 'fdr'};
+                        cell_f = [cell_1, cell_2, cell_3];
+                        cell_f = cellfun(@(x) erase(x, 'ComparisonCON.'), cell_f, 'UniformOutput', false);
+                        format_cell =  cell(1, numel(cell_f)-1);
+                        format_cell(1, :) = {'char'};
+                        set(ui_global_tbl, 'ColumnName', cell_f)
+                        set(ui_global_tbl, 'ColumnFormat', ['logical', format_cell])
+                        set(ui_global_tbl, 'ColumnEditable', [true(1) false(1, numel(cell_f))])
                         
-                        data = cell(length(global_comparison), 10);
-                        for i = 1:1:length(global_comparison)
+                        data = cell(length(global_comparison), numel(cell_f));
+                        for i = 1:1:length(global_comparison)                            
+                           
                             comparison = global_comparison{i};
-                            p_values = comparison.getP1();
+                            is_p_value = false;
+                            if ismember('ComparisonCON.p1', comparison.getComparisonPropertiesKeys())
+                                p_values = comparison.getComparisonProperties('ComparisonCON.p1');
+                                is_p_value = true;
+                            end
+                            
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
                                 data{i, 1} = false;
-                            end
-                            [val_1, val_2]  = comparison.getGroupAverageValues();
-                            diff = comparison.getDifference();
+                            end                            
                             [group_1, group_2] = comparison.getGroups();
                             data{i, 2} = comparison.getMeasureCode();
                             data{i, 3} = group_1.getID();
                             data{i, 4} = group_2.getID();
-                            data{i, 5} = val_1{1};
-                            data{i, 6} = val_2{1};
-                            data{i, 7} = comparison.getID();
-                            data{i, 8} = comparison.getLabel();
-                            data{i, 9} = comparison.getNotes();
-                            data{i, 10} = fdr([p_values{:}], str2double(fdr_t));
+                            for j = 1:1:numel(cell_2)
+                                holder = comparison.getComparisonProperties(cell_2{j});
+                                if iscell(holder)
+                                    data{i, j+4} = holder{:};
+                                else
+                                    data{i, j+4} = holder;
+                                end                                
+                            end
+                            
+                            data{i, numel(cell_f)-3} = comparison.getID();
+                            data{i, numel(cell_f)-2} = comparison.getLabel();
+                            data{i, numel(cell_f)-1} = comparison.getNotes();
+                            if is_p_value
+                                 data{i, numel(cell_f)} = fdr([p_values{:}], str2double(fdr_t));
+                            else
+                                data{i, numel(cell_f)} = 'not calculated';
+                            end
+                       
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_global_tbl, 'Data', data)

@@ -114,7 +114,6 @@ classdef ComparisonCON_WU < Comparison
             c.comparison_dict = get_from_varargin([], 'StatisticalDict', varargin{:});
             c.Check()
         end
-        
         function Check(c)
             % this will have to be modified with each addition of statistic
             atlases = c.getBrainAtlases();
