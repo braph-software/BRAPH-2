@@ -109,7 +109,7 @@ classdef Distance < Measure
                 end
             end
             m.B{end+1} = B;  %#ok<PROPLC>
-            m.B = m.B';
+            m.B = reshape(m.B, [length(m.B) 1]);
             weighted_distance = D;
         end
         function binary_distance = getBinaryCalculation(m, A)
