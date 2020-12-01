@@ -59,9 +59,21 @@ classdef Participation < Measure
                 if g.is_graph(g)
                     Aii = A;
                     directionality_layer = directionality_type;
+                    
+                    if g.is_measure_calculated('CommunityStructure')
+                        Ci = g.getMeasureValue('CommunityStructure');
+                    else
+                        Ci = CommunityStructure(g, g.getSettings()).getValue();
+                    end
+                
                 else
                     Aii = A{li, li};
                     directionality_layer = directionality_type(li, li);
+                    if g.is_measure_calculated('MultilayerCommunityStructure')
+                        Ci = g.getMeasureValue('MultilayerCommunityStructure');
+                    else
+                        Ci = MultilayerCommunityStructure(g, g.getSettings()).getValue();
+                    end
                 end
                 
                 if directionality_layer == Graph.UNDIRECTED  % undirected graphs
@@ -95,20 +107,14 @@ classdef Participation < Measure
 
                 end
                 
-                if g.is_measure_calculated('CommunityStructure')
-                    Ci = g.getMeasureValue('CommunityStructure');
-                else
-                    Ci = CommunityStructure(g, g.getSettings()).getValue();
-                end
-                
                 Gc = (Aii~=0)*diag(Ci{li});  % neighbor community affiliation
-                Kc2 = zeros(N, 1);  % community-specific neighbors
+                Kc2 = zeros(N(1), 1);  % community-specific neighbors
                 
                 for i=1:max(Ci{li})
                     Kc2 = Kc2 + (sum(Aii.*(Gc==i), 2).^2);
                 end
                 
-                participation_layer = ones(N, 1) - Kc2./(degree{li}.^2);
+                participation_layer = ones(N(1), 1) - Kc2./(degree{li}.^2);
                 participation_layer(~degree{li}) = 0;  % participation = 0 if for nodes with no (out)neighbors
                 participation(li) = {participation_layer};
             end
