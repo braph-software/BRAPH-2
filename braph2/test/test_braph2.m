@@ -29,7 +29,6 @@ clear directory workflows_directories i
 
 %% Runs tests
 tic
-%results = runtests(directories_to_test);
 results = runtests(directories_to_test,'UseParallel',true);
 toc
 %% Shows test results
