@@ -9,10 +9,11 @@ A = [
     ];
 
 known_path_transitivity = {[
-    0   2/3 2/3 0
-    2/3 0   1   4/9
-    2/3 1   0   4/9
-    0   4/9 4/9 0]};
+    0    2/3  2/3  0
+    2/3  0    1    4/9
+    2/3  1    0    4/9
+    0    4/9  4/9  0
+    ]};
 
 g = GraphBU(A);
 path_transitivity = PathTransitivity(g);
@@ -41,15 +42,18 @@ A = {
     A21     A22
     };
 
-known_path_transitivity = {
-    [0   2/3 2/3 0
-    2/3 0   1   4/9
-    2/3 1   0   4/9
-    0   4/9 4/9 0]
-    [0   2/3 2/3 0
-    2/3 0   1   4/9
-    2/3 1   0   4/9
-    0   4/9 4/9 0]};
+known_path_transitivity = {[
+    0    2/3  2/3  0
+    2/3  0    1    4/9
+    2/3  1    0    4/9
+    0    4/9  4/9  0
+    ]
+    [
+    0    2/3  2/3  0
+    2/3  0    1    4/9
+    2/3  1    0    4/9
+    0    4/9  4/9  0
+    ]};
 
 g = MultiplexGraphBU(A);
 path_transitivity = PathTransitivity(g);
