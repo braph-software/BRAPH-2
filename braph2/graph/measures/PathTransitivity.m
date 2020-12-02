@@ -26,8 +26,7 @@ classdef PathTransitivity < Measure
     methods
         function m = PathTransitivity(g, varargin)
             % PATHTRANSITIVITY(G) creates path transitivity with default properties.
-            % G is a graph (e.g, an instance of GraphBU, GraphWU,
-            % MultiplexGraphBU or MultiplexGraphBU). 
+            % G is a graph (e.g, an instance of GraphBU, MultiplexGraphBU). 
             %  
             % See also Measure, GraphBU, MultiplexGraphBU.
             
