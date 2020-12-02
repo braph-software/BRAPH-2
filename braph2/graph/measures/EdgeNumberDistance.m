@@ -2,8 +2,9 @@ classdef EdgeNumberDistance < Distance
     % EdgeNumberDistance Edge number distance measure
     % EdgeNumberDistance provides the edge number distance of a graph for 
     % weighted undirected (WU) and weighted directed (WD) graphs.
+    %
     % It is calculated as the number of edges in the shortest weighted path
-    % between two nodes.
+    % between two nodes within the same layer.
     %
     % EdgeNumberDistance methods:
     %   EdgeNumberDistance          - constructor
