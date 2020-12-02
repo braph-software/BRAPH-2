@@ -3,6 +3,9 @@ classdef PathTransitivity < Measure
     % PathTransitivity provides the density of triangles that are
     % available along the shortest-paths between pairs of nodes for binary undirected (BU) graph. 
     % 
+    % It is calculated as the density of triangles that are available along the
+    % shortest-paths between all pairs of nodes within a layer.
+    %
     % PathTransitivity methods:
     %   PathTransitivity            - constructor
     % 
