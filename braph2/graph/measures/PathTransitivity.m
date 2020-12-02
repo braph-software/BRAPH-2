@@ -35,8 +35,7 @@ classdef PathTransitivity < Measure
     end
     methods (Access=protected)
         function path_transitivity = calculate(m)
-            % CALCULATE calculates the path transitivity pairwise matrix of
-            % graph
+            % CALCULATE calculates the path transitivity pairwise matrix of graph
             %
             % PATHTRANSITIVITY = CALCULATE(M) returns the value of the path transitivity pairwise matrix
             % of a binary undirected (BU) graph or multiplex.
