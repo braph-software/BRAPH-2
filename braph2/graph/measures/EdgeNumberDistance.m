@@ -4,7 +4,7 @@ classdef EdgeNumberDistance < Distance
     % weighted undirected (WU) and weighted directed (WD) graphs.
     %
     % It is calculated as the number of edges in the shortest weighted path
-    % between two nodes within the same layer.
+    % between two nodes within a layer.
     %
     % EdgeNumberDistance methods:
     %   EdgeNumberDistance          - constructor
