@@ -26,9 +26,7 @@ classdef EdgeNumberDistance < Distance
     methods
         function m = EdgeNumberDistance(g, varargin)
             % EDGENUMBERDISTANCE(G) creates edge number distance with default properties.
-            % G is a graph (e.g, an instance of GraphBD, GraphBU,
-            % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD
-            % or MultiplexGraphWU). 
+            % G is a graph (e.g, an instance of GraphWD, GraphWU, MultiplexGraphWD or MultiplexGraphWU). 
             %
             % See also Measure, Distance, GraphWU, GraphWD, MultiplexGraphWU, MultiplexGraphWD.
           
