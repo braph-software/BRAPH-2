@@ -128,6 +128,11 @@ classdef SubjectCON < Subject
             sub.datalist(info{2}) = info{1};
             sub.datadict(info{2}) = Data.getData(info{1}, atlas, info{3});
         end
+        function delete_data_from_datadict(sub, info)
+            if ismember(info, keys(sub.datalist))
+                remove(sub.datalist, info)
+            end            
+        end
         function datalist = get_internal_datalist(sub)
             datalist = sub.datalist;
         end

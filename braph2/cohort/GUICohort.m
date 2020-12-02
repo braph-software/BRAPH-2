@@ -1043,7 +1043,8 @@ init_groups()
     end
 
 %% Panel 2 - Subjects
-new_subject_data = []; %#ok<SETNU>
+new_subject_data = []; 
+delete_subject_data = [];
 ui_panel_subjects = uipanel();
 ui_tablepanel_subjects = uipanel(ui_panel_subjects);
 ui_label_subtab_id_text = uicontrol(ui_panel_subjects, 'Style', 'text');
@@ -1054,6 +1055,7 @@ ui_edit_subtab_subjectlabel = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_edit_subtab_subjectnotes = uicontrol(ui_panel_subjects, 'Style', 'edit');
 ui_list_subjects = uicontrol(ui_panel_subjects, 'Style', 'listbox');
 ui_add_subject_data_button = uicontrol(ui_panel_subjects, 'Style', 'pushbutton');
+ui_delete_subject_data_button = uicontrol(ui_panel_subjects, 'Style', 'pushbutton');
 init_subjects()
     function init_subjects()
         GUI.setUnits(ui_panel_subjects)
@@ -1115,6 +1117,11 @@ init_subjects()
         set(ui_add_subject_data_button, 'String', 'ADD DATA')
         set(ui_add_subject_data_button, 'TooltipString', 'ADD NEW TYPE OF DATA');
         set(ui_add_subject_data_button, 'Callback', {@cb_subject_add_new_data})
+        
+        set(ui_delete_subject_data_button, 'Position', [.11 .01 .1 .04])
+        set(ui_delete_subject_data_button, 'String', 'DELETE DATA')
+        set(ui_delete_subject_data_button, 'TooltipString', 'DELETE TYPE OF DATA');
+        set(ui_delete_subject_data_button, 'Callback', {@cb_subject_delete_data})
     end
     function update_subjects(action)
         update_subjects_list(action)
@@ -1132,6 +1139,11 @@ init_subjects()
                         sub = subjects{i};
                         sub.add_data_to_datadict(new_subject_data);
                     end
+                elseif isequal(action, 2) && ~isempty(delete_subject_data)
+                    for i = 1:1:length(subjects)
+                        sub = subjects{i};
+                        sub.delete_data_from_datadict(delete_subject_data);
+                    end
                 end                
                 for i = 1:1:length(subjects)
                     sub = subjects{i};
@@ -1145,7 +1157,18 @@ init_subjects()
             if length(subjects) < 1
                 set(ui_list_subjects, 'Value', 1)
                 set(ui_list_subjects, 'String', 'empty')
-            else                
+            else
+                if isequal(action, 2) && ~isempty(new_subject_data)
+                    for i = 1:1:length(subjects)
+                        sub = subjects{i};
+                        sub.add_data_to_datadict(new_subject_data);
+                    end
+                elseif isequal(action, 2) && ~isempty(delete_subject_data)
+                    for i = 1:1:length(subjects)
+                        sub = subjects{i};
+                        sub.delete_data_from_datadict(delete_subject_data);
+                    end
+                end
                 for i = 1:1:length(subjects)
                     sub = subjects{i};
                     subjects_ids{i} = sub.getID(); %#ok<AGROW>
@@ -1225,6 +1248,24 @@ init_subjects()
         function closeButtonPushed(~, ~)
             delete(new_window)
         end
+    end
+    function cb_subject_delete_data(~, ~)
+        new_window = uifigure('Name', 'Delete Data');
+        new_window.Position = [100 100 200 300];        
+        
+        key_edit = uieditfield(new_window, 'Text', 'Position', [11 130 100 22], 'Value', 'Data Key');
+        delete_data = uibutton(new_window, 'Position', [11 40 40 22], 'Text', 'Delete', 'ButtonPushedFcn', {@deleteButtonPushed});
+        close_data = uibutton(new_window, 'Position', [60 40 40 22], 'Text', 'Close', 'ButtonPushedFcn', {@closeButtonPushed});
+        
+        function addButtonPushed(~, ~)
+            delete_subject_data = key_edit.Value;
+            update_subjects(2);
+        end
+        
+        function closeButtonPushed(~, ~)
+            delete(new_window)
+        end
+        
     end
 
 %% Menus
