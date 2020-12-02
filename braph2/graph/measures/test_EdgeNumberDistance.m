@@ -18,7 +18,7 @@ known_value = {[
                 ]};
 
 g = GraphWU(A);
-edge_number_distance = EdgeNumberDistance(g);;
+edge_number_distance = EdgeNumberDistance(g);
 
 assert(isequal(edge_number_distance.getValue(), known_value), ...
     [BRAPH2.STR ':EdgeNumberDistance:' BRAPH2.BUG_ERR], ...
@@ -42,7 +42,7 @@ known_value = {[
                 ]};
 
 g = GraphWD(A);
-edge_number_distance = EdgeNumberDistance(g);;
+edge_number_distance = EdgeNumberDistance(g);
 
 assert(isequal(edge_number_distance.getValue(), known_value), ...
     [BRAPH2.STR ':EdgeNumberDistance:' BRAPH2.BUG_ERR], ...
@@ -86,7 +86,7 @@ known_value = {[
                ]};
 
 g = MultiplexGraphWU(A);
-edge_number_distance = EdgeNumberDistance(g);;
+edge_number_distance = EdgeNumberDistance(g);
 
 assert(isequal(edge_number_distance.getValue(), known_value), ...
     [BRAPH2.STR ':EdgeNumberDistance:' BRAPH2.BUG_ERR], ...
@@ -130,7 +130,7 @@ known_value = {[
                ]};
 
 g = MultiplexGraphWD(A);
-edge_number_distance = EdgeNumberDistance(g);;
+edge_number_distance = EdgeNumberDistance(g);
 
 assert(isequal(edge_number_distance.getValue(), known_value), ...
     [BRAPH2.STR ':EdgeNumberDistance:' BRAPH2.BUG_ERR], ...
