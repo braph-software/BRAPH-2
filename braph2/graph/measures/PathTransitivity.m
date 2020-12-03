@@ -48,7 +48,7 @@ classdef PathTransitivity < Measure
             L = g.layernumber();
             path_transitivity = cell(L, 1);
             for li = 1:1:L        
-                path_transitivity_single = zeros(N(li),N(li));
+                path_transitivity_single = zeros(N(li), N(li));
                 if(g.getConnectivityType() == Graph.BINARY) % calculate only in case of binary, otherwise return 0
                     if g.is_graph(g)
                         Aii = A;
@@ -56,12 +56,12 @@ classdef PathTransitivity < Measure
                         Aii = A{li, li};
                     end
                     m = zeros(N(li),N(li));
-                    for i=1:N(li)-1
+                    for i = 1:N(li)-1
                         for j=i+1:N(li)
-                            x=0;
-                            y=0;
-                            z=0;
-                            for k=1:N(li)
+                            x = 0;
+                            y = 0;
+                            z = 0;
+                            for k = 1:N(li)
                                 if Aii(i, k)~=0 && Aii(j, k)~=0 && k~=i && k~=j
                                     x = x + Aii(i, k) + Aii(j, k);
                                 end
@@ -91,37 +91,37 @@ classdef PathTransitivity < Measure
                     Pmat(path) = Pmat(i,k);
                     SPL = min(SPL, i2k_k2j);
                     end
-                    hops(eye(n)>0)=0;
-                    Pmat(eye(n)>0)=0;
+                    hops(eye(n)>0) = 0;
+                    Pmat(eye(n)>0) = 0;
                     % Calculate path transitivity 
                     n = length(Aii);
-                    for i=1:n-1
-                    for j=i+1:n
-                        x=0;
-                        % Retrieve shortest path
-                        s = i;
-                        t = j;
-                        path_length = hops(s,t);
-                        if path_length ~= 0
-                            path = nan(path_length+1,1);
-                            path(1) = s;
-                            for ind = 2:length(path)
-                                s = Pmat(s,j);
-                                path(ind) = t;
+                    for i = 1:n-1
+                        for j = i+1:n
+                            x = 0;
+                            % Retrieve shortest path
+                            s = i;
+                            t = j;
+                            path_length = hops(s,t);
+                            if path_length ~= 0
+                                path = nan(path_length+1,1);
+                                path(1) = s;
+                                for ind = 2:length(path)
+                                    s = Pmat(s,j);
+                                    path(ind) = t;
+                                end
+                            else
+                                path = [];
                             end
-                        else
-                            path = [];
-                        end
-
-                        K=length(path);
-
-                        for t=1:K-1
-                            for l=t+1:K
-                                x=x+m(path(t),path(l));
+                            
+                            K = length(path);
+                            
+                            for t = 1:K-1
+                                for l = t+1:K
+                                    x = x+m(path(t), path(l));
+                                end
                             end
+                            path_transitivity_single(i,j)= 2*x/(K*(K-1));
                         end
-                        path_transitivity_single(i,j)=2*x/(K*(K-1));
-                    end
                     end
                     path_transitivity_single = path_transitivity_single + path_transitivity_single';
                     path_transitivity_single(isnan(path_transitivity_single)) = 0; % Should return zeros, not NaN
