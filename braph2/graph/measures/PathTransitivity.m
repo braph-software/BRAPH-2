@@ -47,55 +47,55 @@ classdef PathTransitivity < Measure
             N = g.nodenumber();
             L = g.layernumber();
             path_transitivity = cell(L, 1);
-            for li = 1:1:L
-                if g.is_graph(g)
-                    Aii = A;
-                else
-                    Aii = A{li, li};
-                end
-                m = zeros(N(li),N(li));
+            for li = 1:1:L        
                 path_transitivity_single = zeros(N(li),N(li));
-                for i=1:N(li)-1
-                    for j=i+1:N(li)
-                        x=0;
-                        y=0;
-                        z=0;
-                        for k=1:N(li)
-                            if Aii(i, k)~=0 && Aii(j, k)~=0 && k~=i && k~=j
-                                x = x + Aii(i, k) + Aii(j, k);
-                            end
-                            if k~=j
-                                y = y + Aii(i, k);
-                            end
-                            if k~=i
-                                z = z + Aii(j, k);
-                            end
-                        end
-                        m(i,j) = x/(y+z);
+                if(g.getConnectivityType() == Graph.BINARY)
+                    if g.is_graph(g)
+                        Aii = A;
+                    else
+                        Aii = A{li, li};
                     end
-                end
-                m = m+m';
-                % Calculate hops and Pmat
-                SPL = Aii;  % Unweighted/Weighted shortest path-length matrix.
-                SPL(SPL == 0) = inf;
-                n = size(Aii,2);    
-                hops = double(Aii ~= 0);  % Number of edges in the shortest path matrix. 
-                Pmat = 1:n;  % Elements {i,j} of this matrix indicate the next node in the hortest path between i and j. 
-                Pmat = Pmat(ones(n,1),:);
-                for k = 1:n
+                    m = zeros(N(li),N(li));
+                    for i=1:N(li)-1
+                        for j=i+1:N(li)
+                            x=0;
+                            y=0;
+                            z=0;
+                            for k=1:N(li)
+                                if Aii(i, k)~=0 && Aii(j, k)~=0 && k~=i && k~=j
+                                    x = x + Aii(i, k) + Aii(j, k);
+                                end
+                                if k~=j
+                                    y = y + Aii(i, k);
+                                end
+                                if k~=i
+                                    z = z + Aii(j, k);
+                                end
+                            end
+                            m(i,j) = x/(y+z);
+                        end
+                    end
+                    m = m+m';
+                    % Calculate hops and Pmat
+                    SPL = Aii;  % Unweighted/Weighted shortest path-length matrix.
+                    SPL(SPL == 0) = inf;
+                    n = size(Aii,2);    
+                    hops = double(Aii ~= 0);  % Number of edges in the shortest path matrix. 
+                    Pmat = 1:n;  % Elements {i,j} of this matrix indicate the next node in the hortest path between i and j. 
+                    Pmat = Pmat(ones(n,1),:);
+                    for k = 1:n
                     i2k_k2j = bsxfun(@plus, SPL(:,k), SPL(k,:));
                     path = bsxfun(@gt, SPL, i2k_k2j);
                     [i,j] = find(path);
                     hops(path) = hops(i,k) + hops(k,j)';
                     Pmat(path) = Pmat(i,k);
                     SPL = min(SPL, i2k_k2j);
-                end
-
-                hops(eye(n)>0)=0;
-                Pmat(eye(n)>0)=0;
-                % Calculate path transitivity 
-                n = length(Aii);
-                for i=1:n-1
+                    end
+                    hops(eye(n)>0)=0;
+                    Pmat(eye(n)>0)=0;
+                    % Calculate path transitivity 
+                    n = length(Aii);
+                    for i=1:n-1
                     for j=i+1:n
                         x=0;
                         % Retrieve shortest path
@@ -122,10 +122,13 @@ classdef PathTransitivity < Measure
                         end
                         path_transitivity_single(i,j)=2*x/(K*(K-1));
                     end
+                    end
+                    path_transitivity_single = path_transitivity_single + path_transitivity_single';
+                    path_transitivity_single(isnan(path_transitivity_single)) = 0; % Should return zeros, not NaN
+                    path_transitivity(li) = {path_transitivity_single};
+                else
+                    path_transitivity(li) = {path_transitivity_single};
                 end
-                path_transitivity_single = path_transitivity_single + path_transitivity_single';
-                path_transitivity_single(isnan(path_transitivity_single)) = 0; % Should return zeros, not NaN
-                path_transitivity(li) = {path_transitivity_single};
             end
         end
     end  
