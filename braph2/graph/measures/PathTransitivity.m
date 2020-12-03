@@ -49,7 +49,7 @@ classdef PathTransitivity < Measure
             path_transitivity = cell(L, 1);
             for li = 1:1:L        
                 path_transitivity_single = zeros(N(li),N(li));
-                if(g.getConnectivityType() == Graph.BINARY)
+                if(g.getConnectivityType() == Graph.BINARY) % calculate only in case of binary, otherwise return 0
                     if g.is_graph(g)
                         Aii = A;
                     else
