@@ -4446,6 +4446,7 @@ classdef AnalysisCON_WU < Analysis
                             measure_code = raw_main{4, 2};
                             raw_group1 = raw_main{5, 2};
                             raw_group2 = raw_main{6, 2};
+                            statistic = raw_main{7, 2};
                             
                             if ismissing(comp_lab)
                                 comp_lab = '';
@@ -4453,23 +4454,31 @@ classdef AnalysisCON_WU < Analysis
                             if ismissing(comp_notes)
                                 comp_notes = '';
                             end
+                            if ismissing(statistic)
+                                statistic = 'PermutationTest';
+                            end
                             
                             % get groups
                             group1 = analysis.getCohort().getGroups().getValue(raw_group1);
                             group2 = analysis.getCohort().getGroups().getValue(raw_group2);
                             
-                            % get values
+                            % get keys 
+                            keys = cell(1, length(raw_main) - 7);
+                            calling_class = 'ComparisonCON';
+                            for j = 8:1:length(raw_main)
+                                raw_key = raw_main{j, 1};
+                                h = split(raw_key, ' ');
+                                keys{j - 7} =  [calling_class '.' h{1}];
+                            end
                             
-                            raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
-                            raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
-                            raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
-                            raw_avgs_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
-                            raw_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
-                            raw_all_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 7, 'ReadVariableNames', 0));
-                            raw_p1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 8, 'ReadVariableNames', 0));
-                            raw_p2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 9, 'ReadVariableNames', 0));
-                            raw_cimin = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 10, 'ReadVariableNames', 0));
-                            raw_cimax = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 11, 'ReadVariableNames', 0));
+                            % get values
+                            comp_dict  = containers.Map;
+                            comp_dict('stat_keys') = keys;
+                            
+                            for j = 1:1:length(keys)
+                                comp_dict(keys{j}) = num2cell(table2array(readtable(fullfile(path, files(k).name), 'Sheet', j+1, 'ReadVariableNames', 0)), 1);
+                            end
+                            
                             
                             comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                                 comp_id, ...
@@ -4479,16 +4488,8 @@ classdef AnalysisCON_WU < Analysis
                                 measure_code, ...
                                 group1, ...
                                 group2, ...
-                                'ComparisonCON.values_1', num2cell(raw_values_g1, 1), ...
-                                'ComparisonCON.average_values_1', num2cell(raw_avgs_g1, 1), ...
-                                'ComparisonCON.values_2', num2cell(raw_values_g2, 1), ...
-                                'ComparisonCON.average_values_2', num2cell(raw_avgs_g2, 1), ...
-                                'ComparisonCON.difference', {raw_difference}, ...
-                                'ComparisonCON.all_differences', num2cell(raw_all_difference, 1), ...
-                                'ComparisonCON.p1', {raw_p1}, ...
-                                'ComparisonCON.p2', {raw_p2}, ...
-                                'ComparisonCON.confidence_min', {raw_cimin}, ...
-                                'ComparisonCON.confidence_max', {raw_cimax}, ...
+                                'StatisticalTest', statistic, ...
+                                'StatisticalDict', comp_dict, ...
                                 varargin{:});
                             
                             comparison_idict.add(comparison.getID(), comparison, k);
@@ -4628,42 +4629,42 @@ classdef AnalysisCON_WU < Analysis
             % comparisons
             for i = 1:1:comparisons.length()
                 c = comparisons.getValue(i);
-                Values1 = c.getGroupValue(1);
-                Values2 = c.getGroupValue(2);
-                Avg_1 = c.getGroupAverageValue(1);
-                Avg_2 = c.getGroupAverageValue(2);
+                
                 [g1, g2] = c.getGroups();
                 file_comparisons = [root_directory filesep() 'comparisons' filesep() c.getID() '.xlsx'];
-                comparisons_data = {
+                            
+                key_entries = c.getComparisonProperties('stat_keys');               
+  
+                comparisons_data_basic = {
                     'Comparison ID:', c.getID();
                     'Comparison Label:', c.getLabel();
                     'Comparison Notes:', c.getNotes();
                     'Measure:', c.getMeasureCode();
                     'Group 1:', g1.getID();
                     'Group 2:', g2.getID();
-                    'Values Group 1 (Sheet 2):', size(Values1);
-                    'Values Group 2 (Sheet 3):', size(Values2);
-                    'Group 1 Average Value (Sheet 4):', size(Avg_1);
-                    'Group 2 Average Value (Sheet 5):', size(Avg_2);
-                    'Difference (Sheet 6):', size(c.getDifference());
-                    'All Differences (Sheet 7):', size(c.getAllDifferences());
-                    'P1 (Sheet 8):', size(c.getP1());
-                    'P2 (Sheet 9):', size(c.getP2());
-                    'Minimum Confidence Interval (Sheet 10):', size(c.getConfidenceIntervalMin());
-                    'Maximum Confidence Interval (Sheet 11):', size(c.getConfidenceIntervalMax());
+                    'Statistic:', c.getStatisticType();
                     };
                 
+                for j = 1:1:length(key_entries)
+                    h = split(key_entries{j}, '.');
+                    comparison_dynamic_data{(2 * j) - 1} = [h{2} ' Sheet(' num2str(j + 1) ')']; %#ok<AGROW>
+                    comparison_dynamic_data{2 * j} = size(c.getComparisonProperties(key_entries{j}), 2); %#ok<AGROW>
+                end
+                
+                h = length(comparison_dynamic_data);
+                comparisons_data = [comparisons_data_basic; reshape(comparison_dynamic_data, [2 h/2])';];
+                
+                
                 writetable(cell2table(comparisons_data), file_comparisons, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([Values1{:}]), file_comparisons, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([Values2{:}]), file_comparisons, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([Avg_1{:}]), file_comparisons, 'Sheet', 4, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([Avg_2{:}]), file_comparisons, 'Sheet', 5, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getDifference{:}]), file_comparisons, 'Sheet', 6, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getAllDifferences{:}]), file_comparisons, 'Sheet', 7, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getP1{:}]), file_comparisons, 'Sheet', 8, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getP2{:}]), file_comparisons, 'Sheet', 9, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getConfidenceIntervalMin{:}]), file_comparisons, 'Sheet', 10, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getConfidenceIntervalMax{:}]), file_comparisons, 'Sheet', 11, 'WriteVariableNames', 0, 'Range', 'A1');
+                
+                % dynamic
+                for j = 1:1:length(key_entries)
+                    h = c.getComparisonProperties(key_entries{j});
+                    if ~iscell(h)
+                        h = {h};
+                    end
+                    writetable(array2table([h{:}]), file_comparisons, 'Sheet', 1 + j, 'WriteVariableNames', 0, 'Range', 'A1');
+                end
             end
             
             % random comparisons

@@ -73,10 +73,7 @@ classdef PermutationTest < Statistics
                 [calling_class '.p2'], ...
                 [calling_class '.confidence_min'], ...
                 [calling_class '.confidence_max'] ...
-                };
-            data_dict('table_keys') = { ...
-                [calling_class '.average_values_1'], ...
-                [calling_class '.average_values_2']};            
+                };           
             data_dict([calling_class '.PermutationNumber']) = M;
             data_dict([calling_class '.values_1']) = values_1;
             data_dict([calling_class '.average_values_1']) = res_1;
@@ -136,6 +133,9 @@ classdef PermutationTest < Statistics
         end
         function property = getPlotProperty()
             property = 'difference';
+        end
+        function properties = getTableProperties()
+            properties = {'average_values_1', 'average_values_2'};
         end
     end
     methods (Static)
