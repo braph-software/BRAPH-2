@@ -297,7 +297,7 @@ classdef AnalysisCON_WU < Analysis
             % obtained and will return a comparison. The function
             % will utilize VALUE settings.
             %
-            % See also calculate_random_comparison, calculate_measurement.            
+            % See also calculate_random_comparison, calculate_measurement.
             
             % get type of statistic test
             statistical_type = get_from_varargin('PermutationTest', 'StatisticalTest', varargin{:});
@@ -977,8 +977,8 @@ classdef AnalysisCON_WU < Analysis
                         set(ui_global_tbl, 'ColumnEditable', [true(1) false(1, numel(cell_f))])
                         
                         data = cell(length(global_comparison), numel(cell_f));
-                        for i = 1:1:length(global_comparison)                            
-                           
+                        for i = 1:1:length(global_comparison)
+                            
                             comparison = global_comparison{i};
                             is_p_value = false;
                             if ismember('ComparisonCON.p1', comparison.getComparisonPropertiesKeys())
@@ -990,7 +990,7 @@ classdef AnalysisCON_WU < Analysis
                                 data{i, 1} = true;
                             else
                                 data{i, 1} = false;
-                            end                            
+                            end
                             [group_1, group_2] = comparison.getGroups();
                             data{i, 2} = comparison.getMeasureCode();
                             data{i, 3} = group_1.getID();
@@ -1001,18 +1001,18 @@ classdef AnalysisCON_WU < Analysis
                                     data{i, j+4} = holder{:};
                                 else
                                     data{i, j+4} = holder;
-                                end                                
+                                end
                             end
                             
                             data{i, numel(cell_f)-3} = comparison.getID();
                             data{i, numel(cell_f)-2} = comparison.getLabel();
                             data{i, numel(cell_f)-1} = comparison.getNotes();
                             if is_p_value
-                                 data{i, numel(cell_f)} = fdr([p_values{:}], str2double(fdr_t));
+                                data{i, numel(cell_f)} = fdr([p_values{:}], str2double(fdr_t));
                             else
                                 data{i, numel(cell_f)} = 'not calculated';
                             end
-                       
+                            
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_global_tbl, 'Data', data)
@@ -1550,7 +1550,7 @@ classdef AnalysisCON_WU < Analysis
                                     data{i, j + 4} = h(selected_br);
                                 else
                                     data{i, j + 4} = holder(selected_br);
-                                end                                
+                                end
                             end
                             
                             data{i, numel(cell_f)-3} = comparison.getID();
@@ -2088,7 +2088,7 @@ classdef AnalysisCON_WU < Analysis
                             end
                             
                             [group_1, group_2] = comparison.getGroups();
-                           
+                            
                             data{i, 2} = comparison.getMeasureCode();
                             data{i, 3} = group_1.getID();
                             data{i, 4} = group_2.getID();
@@ -2099,14 +2099,14 @@ classdef AnalysisCON_WU < Analysis
                                     data{i, j + 4} = h(selected_br1, selected_br2);
                                 else
                                     data{i, j + 4} =  h(selected_br1, selected_br2);
-                                end                                
+                                end
                             end
-
+                            
                             data{i, numel(cell_f)-3} = comparison.getID();
                             data{i, numel(cell_f)-2} = comparison.getLabel();
                             data{i, numel(cell_f)-1} = comparison.getNotes();
                             if is_p_value
-                                 data{i, numel(cell_f)} = fdr([p_values{:}], str2double(fdr_t));
+                                data{i, numel(cell_f)} = fdr([p_values{:}], str2double(fdr_t));
                             else
                                 data{i, numel(cell_f)} = 'not calculated';
                             end
@@ -2649,7 +2649,7 @@ classdef AnalysisCON_WU < Analysis
             update_popups_grouplists()
             update_graph()
             
-            %% Make the GUI visible.
+            % Make the GUI visible.
             set(fig_graph, 'Visible', 'on');
             
             function init_graph()
@@ -3174,7 +3174,7 @@ classdef AnalysisCON_WU < Analysis
             % get all measures
             mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());  % list of nodal measures
             
-            %% initialization
+            % initialization
             % groups, actions and measures
             ui_action_measures_checkbox = uicontrol(f, 'Style', 'checkbox');
             ui_action_comparison_checkbox = uicontrol(f, 'Style', 'checkbox');
@@ -3232,7 +3232,7 @@ classdef AnalysisCON_WU < Analysis
             
             set(f, 'Visible', 'on')
             
-            %% Callback functions
+            % Callback functions
             function init_measures_panel()
                 % actions ****************************************
                 set(ui_action_measures_checkbox, 'Units', 'normalized')
@@ -3953,12 +3953,19 @@ classdef AnalysisCON_WU < Analysis
                                 case 'Measurement'
                                     measure_data = selected_case.getGroupAverageValue();
                                 case 'Comparison'
+                                    calling_class = analysis.getComparisonClass();
+                                    calling_class_cell_hold = split(calling_class, '_');
+                                    calling_class = calling_class_cell_hold{1};
+                                    statistic = selected_case.getStatisticType();
+                                    plot_property = Statistics.getPlotProperty(statistic);
+                                    plot_property = [calling_class '.' plot_property];
+                                    
                                     atlases = ga.getCohort().getBrainAtlases();
                                     atlas = atlases{1};
                                     fdr_lim = ones(1, atlas.getBrainRegions().length());
-                                    measure_data = selected_case.getDifference();
-                                    p1 = selected_case.getP1();
-                                    p2 = selected_case.getP2();
+                                    measure_data = selected_case.getComparisonProperties(plot_property);
+                                    p1 = selected_case.getComparisonProperties([calling_class '.p1']);
+                                    p2 = selected_case.getComparisonProperties([calling_class '.p2']);
                                     calculate_fdr_lim()
                                 otherwise
                                     atlases = ga.getCohort().getBrainAtlases();
@@ -3985,6 +3992,7 @@ classdef AnalysisCON_WU < Analysis
                                     end
                                     measure_data = refined_case.getGroupAverageValue();
                                 case 'Comparison'
+                                    
                                     comparisons = ga.getComparisons().getValues();
                                     for i = 1:1:length(comparisons)
                                         c = comparisons{i};
@@ -3996,9 +4004,17 @@ classdef AnalysisCON_WU < Analysis
                                     atlases = ga.getCohort().getBrainAtlases();
                                     atlas = atlases{1};
                                     fdr_lim = ones(1, atlas.getBrainregions().length());
-                                    measure_data = refined_case.getDifference()';
-                                    p1 = refined_case.getP1();
-                                    p2 = refined_case.getP2();
+                                    
+                                    calling_class = analysis.getComparisonClass();
+                                    calling_class_cell_hold = split(calling_class, '_');
+                                    calling_class = calling_class_cell_hold{1};
+                                    statistic = refined_case.getStatisticType();
+                                    plot_property = Statistics.getPlotProperty(statistic);
+                                    plot_property = [calling_class '.' plot_property];
+                                    
+                                    measure_data = refined_case.getComparisonProperties(plot_property);
+                                    p1 = refined_case.getComparisonProperties([calling_class '.p1']);
+                                    p2 = refined_case.getComparisonProperties([calling_class '.p2']);
                                     calculate_fdr_lim()
                                 otherwise
                                     r_comparisons = ga.getRandomComparisons().getValues();
@@ -4044,9 +4060,17 @@ classdef AnalysisCON_WU < Analysis
                                     atlases = ga.getCohort().getBrainAtlases();
                                     atlas = atlases{1};
                                     fdr_lim = ones(1, atlas.getBrainregions().length());
-                                    measure_data = refined_case.getDifference()';
-                                    p1 = refined_case.getP1();
-                                    p2 = refined_case.getP2();
+                                    
+                                    calling_class = analysis.getComparisonClass();
+                                    calling_class_cell_hold = split(calling_class, '_');
+                                    calling_class = calling_class_cell_hold{1};
+                                    statistic = refined_case.getStatisticType();
+                                    plot_property = Statistics.getPlotProperty(statistic);
+                                    plot_property = [calling_class '.' plot_property];
+                                    
+                                    measure_data = refined_case.getComparisonProperties(plot_property);
+                                    p1 = refined_case.getComparisonProperties([calling_class '.p1']);
+                                    p2 = refined_case.getComparisonProperties([calling_class '.p2']);
                                     calculate_fdr_lim()
                                 otherwise
                                     r_comparisons = ga.getRandomComparisons().getValues();
@@ -4323,7 +4347,7 @@ classdef AnalysisCON_WU < Analysis
                     if v.Release >= "(R2020a)"
                         raw_analysis = readcell(file_analysis);
                     else
-                        raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0); 
+                        raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0);
                         raw_analysis = table2cell(raw_analysis);
                     end
                     analysis_id = raw_analysis{1, 2};
@@ -4331,9 +4355,9 @@ classdef AnalysisCON_WU < Analysis
                     analysis_notes = raw_analysis{3, 2};
                     type_of_analysis = raw_analysis{4, 2};
                     cohort_id = raw_analysis{5, 2};
-%                     n_measurements = raw_analysis{6, 2};
-%                     n_comparisons = raw_analysis{7, 2}; do i need this?
-%                     n_rcomparisons = raw_analysis{8, 2};
+                    %                     n_measurements = raw_analysis{6, 2};
+                    %                     n_comparisons = raw_analysis{7, 2}; do i need this?
+                    %                     n_rcomparisons = raw_analysis{8, 2};
                 end
                 
                 cohort = tmp;
@@ -4391,7 +4415,7 @@ classdef AnalysisCON_WU < Analysis
                             % get values
                             raw_values = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
                             raw_avgs = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
-
+                            
                             % create measurement
                             measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
                                 meas_id, ...
@@ -4404,7 +4428,7 @@ classdef AnalysisCON_WU < Analysis
                                 'MeasurementCON.average_value', raw_avgs, ...
                                 varargin{:});
                             measurement_idict.add(measurement.getID(), measurement, k);
-                        end 
+                        end
                     elseif isequal(sub_folders(i).name, 'comparisons')
                         comparison_idict = analysis.getComparisons();
                         for k = 1:1:length(files)
@@ -4435,7 +4459,7 @@ classdef AnalysisCON_WU < Analysis
                             group2 = analysis.getCohort().getGroups().getValue(raw_group2);
                             
                             % get values
-                          
+                            
                             raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
                             raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
                             raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
@@ -4468,7 +4492,7 @@ classdef AnalysisCON_WU < Analysis
                                 varargin{:});
                             
                             comparison_idict.add(comparison.getID(), comparison, k);
-                        end 
+                        end
                     elseif isequal(sub_folders(i).name, 'randomcomparisons')
                         random_comparison_idict = analysis.getRandomComparisons();
                         for k = 1:1:length(files)
@@ -4528,11 +4552,11 @@ classdef AnalysisCON_WU < Analysis
                                 varargin{:});
                             
                             random_comparison_idict.add(random_comparison.getID(), random_comparison, k);
-                        end 
+                        end
                     else
-                        continue;                        
+                        continue;
                     end
-                end   
+                end
             end
         end
         function save_to_xls(analysis, varargin)
@@ -4578,8 +4602,8 @@ classdef AnalysisCON_WU < Analysis
             
             % warning xls sheets off
             warning( 'off', 'MATLAB:xlswrite:AddSheet' ) ;
-             
-            % measurements could ask for just certain measures 
+            
+            % measurements could ask for just certain measures
             for i = 1:1:measurements.length()
                 m = measurements.getValue(i);
                 file_measurement = [root_directory filesep() 'measurements' filesep() m.getID() '.xlsx'];
@@ -4588,7 +4612,7 @@ classdef AnalysisCON_WU < Analysis
                     'Measurement Label:', m.getLabel();
                     'Measurement Notes:', m.getNotes();
                     'Measure:', m.getMeasureCode();
-                    'Group:', m.getGroup().getID(); 
+                    'Group:', m.getGroup().getID();
                     'Values (Sheet 2):', size(m.getMeasureValues);
                     'Group Average (Sheet 3):', size(m.getGroupAverageValue());
                     };
@@ -4690,11 +4714,11 @@ classdef AnalysisCON_WU < Analysis
             if isa(tmp, 'Analysis')
                 analysis = tmp;
                 subject_class = analysis.getCohort().getSubjectClass(); %#ok<NASGU>
-            else      
+            else
                 cohort = tmp;
                 analysis_id = raw.ID;
                 analysis_label = raw.Label;
-                analysis_notes = raw.Notes; 
+                analysis_notes = raw.Notes;
                 type_of_analysis = raw.Analysis;
                 
                 if isequal(type_of_analysis, 'AnalysisCON_WU')
@@ -4705,7 +4729,7 @@ classdef AnalysisCON_WU < Analysis
                     analysis = AnalysisCON_BUD(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
                 else
                     errordlg('Type of Analysis does not exist.');
-                end                
+                end
             end
             
             measurements_idict = analysis.getMeasurements();
@@ -4725,10 +4749,10 @@ classdef AnalysisCON_WU < Analysis
                     'MeasurementCON.values', num2cell(raw.Measurements(i).value', 1), ...
                     'MeasurementCON.average_value', raw.Measurements(i).avgvalue, ...
                     varargin{:});
-                measurements_idict.add(measurement.getID(), measurement, i);                
+                measurements_idict.add(measurement.getID(), measurement, i);
             end
-            % comparison idict 
-            for i = 1:1:length(raw.Comparisons)                
+            % comparison idict
+            for i = 1:1:length(raw.Comparisons)
                 comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                     raw.Comparisons(i).id, ...
                     raw.Comparisons(i).label, ...  % comparison label
@@ -4798,8 +4822,8 @@ classdef AnalysisCON_WU < Analysis
                 Measurements_structure(i).label = meas.getLabel();
                 Measurements_structure(i).notes = meas.getNotes();
                 Measurements_structure(i).measure = meas.getMeasureCode();
-                Measurements_structure(i).group = meas.getGroup().getID();               
-                Measurements_structure(i).value = meas.getMeasureValues();                                
+                Measurements_structure(i).group = meas.getGroup().getID();
+                Measurements_structure(i).value = meas.getMeasureValues();
                 Measurements_structure(i).avgvalue = meas.getGroupAverageValue();
             end
             for i = 1:1:length(comparisons)
@@ -4809,16 +4833,16 @@ classdef AnalysisCON_WU < Analysis
                 Comparisons_structure(i).label = comp.getLabel();
                 Comparisons_structure(i).notes = comp.getNotes();
                 Comparisons_structure(i).measure = comp.getMeasureCode();
-                Comparisons_structure(i).group1 = g1.getID();  
+                Comparisons_structure(i).group1 = g1.getID();
                 Comparisons_structure(i).group2 = g2.getID();
-                Comparisons_structure(i).value1 = comp.getGroupValue(1);                
-                Comparisons_structure(i).value2 = comp.getGroupValue(2); 
+                Comparisons_structure(i).value1 = comp.getGroupValue(1);
+                Comparisons_structure(i).value2 = comp.getGroupValue(2);
                 Comparisons_structure(i).avgvalue1 = comp.getGroupAverageValue(1);
-                Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2); 
+                Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2);
                 Comparisons_structure(i).difference = comp.getDifference();
-                Comparisons_structure(i).alldifferences = comp.getAllDifferences();   
-                Comparisons_structure(i).p1 = comp.p1;                
-                Comparisons_structure(i).p2 = comp.p2;                
+                Comparisons_structure(i).alldifferences = comp.getAllDifferences();
+                Comparisons_structure(i).p1 = comp.p1;
+                Comparisons_structure(i).p2 = comp.p2;
                 Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
                 Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
             end
@@ -4829,20 +4853,20 @@ classdef AnalysisCON_WU < Analysis
                 RandomComparisons_structure(i).notes = ran_comp.getNotes();
                 RandomComparisons_structure(i).measure = ran_comp.getMeasureCode();
                 RandomComparisons_structure(i).group = ran_comp.getGroup().getID();
-                RandomComparisons_structure(i).value = ran_comp.getGroupValue();                
-                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue(); 
+                RandomComparisons_structure(i).value = ran_comp.getGroupValue();
+                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue();
                 RandomComparisons_structure(i).avgvalue = ran_comp.getAverageValue();
-                RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue(); 
+                RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue();
                 RandomComparisons_structure(i).difference = ran_comp.getDifference();
                 RandomComparisons_structure(i).alldifferences = ran_comp.getAllDifferences();
                 RandomComparisons_structure(i).p1 = ran_comp.p1;
-                RandomComparisons_structure(i).p2 = ran_comp.p2;                
+                RandomComparisons_structure(i).p2 = ran_comp.p2;
                 RandomComparisons_structure(i).confidencemin = ran_comp.getConfidenceIntervalMin();
                 RandomComparisons_structure(i).confidencemax = ran_comp.getConfidenceIntervalMax();
             end
             
             %create analysis structure
-             structure = struct( ...
+            structure = struct( ...
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'Analysis', analysis_class, ...
@@ -4853,7 +4877,7 @@ classdef AnalysisCON_WU < Analysis
                 'Measurements', Measurements_structure, ...
                 'Comparisons', Comparisons_structure, ...
                 'RandomComparisons', RandomComparisons_structure ...
-                ); 
+                );
         end
     end
 end

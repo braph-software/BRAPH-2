@@ -85,6 +85,9 @@ classdef ComparisonCON_WU < Comparison
             data = c.comparison_dict;
             keys_list = keys(data);
         end
+        function type = getStatisticType(c)
+            type = c.statistic;
+        end
     end
     methods (Access=protected)  % Initialize data
         function initialize_data(c, varargin)

@@ -269,8 +269,11 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
+            calling_class = analysis.getComparisonClass();
+            calling_class_cell_hold = split(calling_class, '_');
+            calling_class = calling_class_cell_hold{1};
             plot_property = Statistics.getPlotProperty(statistic);
-            plot_property = [analysis.getComparisonClass() plot_property];
+            plot_property = [calling_class '.' plot_property];
             X = analysis.selectComparisons(measure_code, group_1, group_2, '.getThreshold()');
             Y = analysis.selectComparisons(measure_code, group_1, group_2, plot_property);
             
