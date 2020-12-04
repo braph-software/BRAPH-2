@@ -4753,6 +4753,27 @@ classdef AnalysisCON_WU < Analysis
             end
             % comparison idict
             for i = 1:1:length(raw.Comparisons)
+                statistic = raw.Comparisons(i).statistic;                
+                calling_class = analysis.getComparisonClass();
+                calling_class_cell_hold = split(calling_class, '_');
+                calling_class = calling_class_cell_hold{1};  
+                
+                field_entries = fieldnames(raw.Comparisons)';
+                basic_entries  = {'id', 'label', 'notes', 'measure', 'statistic', 'group1', 'group2'};
+                complete_key_entries = field_entries;
+                complete_key_entries(ismember(complete_key_entries, basic_entries)) = [];
+                
+                comparison_info = containers.Map;
+                comparison_info('stat_keys') = cellfun(@(x) [calling_class '.' x], complete_key_entries, 'UniformOutput', 0);
+                % dynamic part
+                for j = 1:1:length(complete_key_entries)                    
+                    if isnumeric(raw.Comparisons(i).(complete_key_entries{j}))
+                        comparison_info([calling_class '.' complete_key_entries{j}]) = num2cell(raw.Comparisons(i).(complete_key_entries{j})', 1);
+                    else
+                        comparison_info([calling_class '.' complete_key_entries{j}]) = {raw.Comparisons(i).(complete_key_entries{j})'};
+                    end
+                end
+                
                 comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                     raw.Comparisons(i).id, ...
                     raw.Comparisons(i).label, ...  % comparison label
@@ -4761,16 +4782,8 @@ classdef AnalysisCON_WU < Analysis
                     raw.Comparisons(i).measure, ...
                     cohort.getGroups().getValue(raw.Comparisons(i).group1), ...
                     cohort.getGroups().getValue(raw.Comparisons(i).group2), ...
-                    'ComparisonCON.values_1', num2cell(raw.Comparisons(i).value1', 1), ...
-                    'ComparisonCON.average_values_1', num2cell(raw.Comparisons(i).avgvalue1', 1), ...
-                    'ComparisonCON.values_2', num2cell(raw.Comparisons(i).value2', 1), ...
-                    'ComparisonCON.average_values_2', num2cell(raw.Comparisons(i).avgvalue2', 1), ...
-                    'ComparisonCON.difference', {raw.Comparisons(i).difference'}, ...
-                    'ComparisonCON.all_differences', num2cell(raw.Comparisons(i).alldifferences', 1), ...
-                    'ComparisonCON.p1', {raw.Comparisons(i).p1'}, ...
-                    'ComparisonCON.p2', {raw.Comparisons(i).p2'}, ...
-                    'ComparisonCON.confidence_min', {raw.Comparisons(i).confidencemin'}, ...
-                    'ComparisonCON.confidence_max', {raw.Comparisons(i).confidencemax'}, ...
+                    'StatisticalTest', statistic, ...
+                    'StatisticalDict', comparison_info, ...
                     varargin{:});
                 
                 comparisons_idict.add(comparison.getID(), comparison, i);
@@ -4812,7 +4825,7 @@ classdef AnalysisCON_WU < Analysis
             
             % create structs
             Measurements_structure = struct;
-            Comparisons_structure = struct;
+%             Comparisons_structure = struct;
             RandomComparisons_structure = struct;
             
             % fill info into structures
@@ -4828,23 +4841,33 @@ classdef AnalysisCON_WU < Analysis
             end
             for i = 1:1:length(comparisons)
                 comp = comparisons{i};
+                
+                statistic = comp.getStatisticType();                
+                calling_class = analysis.getComparisonClass();
+                calling_class_cell_hold = split(calling_class, '_');
+                calling_class = calling_class_cell_hold{1};
+                
+                key_entries = comp.getComparisonProperties('stat_keys');
+                basic_entries  = {'id', 'label', 'notes', 'measure', 'statistic', 'group1', 'group2'};
+                complete_key_entries = [basic_entries key_entries];
+                
+                labels = cellfun(@(x) erase(x, [calling_class '.']), complete_key_entries, 'UniformOutput', 0);
+                
+                Comparisons_structure(i) = cell2struct(cell(1, length(labels)), labels, 2); %#ok<AGROW>
+                
                 [g1, g2] = comp.getGroups();
-                Comparisons_structure(i).id = comp.getID();
-                Comparisons_structure(i).label = comp.getLabel();
-                Comparisons_structure(i).notes = comp.getNotes();
-                Comparisons_structure(i).measure = comp.getMeasureCode();
-                Comparisons_structure(i).group1 = g1.getID();
-                Comparisons_structure(i).group2 = g2.getID();
-                Comparisons_structure(i).value1 = comp.getGroupValue(1);
-                Comparisons_structure(i).value2 = comp.getGroupValue(2);
-                Comparisons_structure(i).avgvalue1 = comp.getGroupAverageValue(1);
-                Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2);
-                Comparisons_structure(i).difference = comp.getDifference();
-                Comparisons_structure(i).alldifferences = comp.getAllDifferences();
-                Comparisons_structure(i).p1 = comp.p1;
-                Comparisons_structure(i).p2 = comp.p2;
-                Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
-                Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
+                Comparisons_structure(i).id = comp.getID(); %#ok<AGROW>
+                Comparisons_structure(i).label = comp.getLabel(); %#ok<AGROW>
+                Comparisons_structure(i).notes = comp.getNotes(); %#ok<AGROW>
+                Comparisons_structure(i).measure = comp.getMeasureCode();    %#ok<AGROW>    
+                Comparisons_structure(i).statistic = statistic; %#ok<AGROW> 
+                Comparisons_structure(i).group1 = g1.getID(); %#ok<AGROW>
+                Comparisons_structure(i).group2 = g2.getID(); %#ok<AGROW>
+                
+                % dynamic part
+                for j = 8:1:length(complete_key_entries)
+                    Comparisons_structure(i).(labels{j}) = comp.getComparisonProperties(complete_key_entries{j});
+                end
             end
             for i = 1:1:length(random_comparisons)
                 ran_comp = random_comparisons{i};

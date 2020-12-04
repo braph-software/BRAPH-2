@@ -77,7 +77,7 @@ classdef ComparisonCON_WU < Comparison
             % returns a dict
             if nargin < 2
                 data = c.comparison_dict;
-            else  % or returns specified key
+            else  % or returns specified key                
                 data = c.comparison_dict(key);
             end
         end
@@ -127,6 +127,10 @@ classdef ComparisonCON_WU < Comparison
             
             if isequal(c.statistic, 'PermutationTest')  % default one
                 number_of_permutations =  c.getComparisonProperties('ComparisonCON.PermutationNumber'); %c.getSettings('ComparisonCON.PermutationNumber');
+                
+                if iscell(number_of_permutations)
+                    number_of_permutations = number_of_permutations{:};
+                end
                 
                 if Measure.is_global(measure_code)  % global measure
                     % values
