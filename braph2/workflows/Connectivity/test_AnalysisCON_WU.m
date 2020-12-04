@@ -356,6 +356,7 @@ end
 for i = 1:1:numel(measures)
     measure = measures{i};
     analysis = AnalysisCON_WU('analysis id', 'analysis label', 'analysis notes', cohort, {}, {}, {});
+    statistic = 'PermutationTest';
       
     number_of_permutations = 10;
     calculated_comparison = analysis.getComparison(measure, group1, group2, 'PermutationNumber', number_of_permutations);
@@ -369,16 +370,16 @@ for i = 1:1:numel(measures)
         'AnalysisCON_WU.getComparison() not working')
     
     comparison = analysis.getComparisons().getValue(1);
-    comparison_values_1 = comparison.getGroupValue(1);
-    comparison_values_2 = comparison.getGroupValue(2);
-    comparison_average_1 = comparison.getGroupAverageValue(1);
-    comparison_average_2 = comparison.getGroupAverageValue(2);
-    comparison_difference = comparison.getDifference();
-    comparison_all_differences = comparison.getAllDifferences();
-    comparison_p1 = comparison.getP1();
-    comparison_p2 = comparison.getP2();
-    comparison_confidence_interval_min = comparison.getConfidenceIntervalMin();
-    comparison_confidence_interval_max = comparison.getConfidenceIntervalMax();
+    comparison_values_1 = comparison.getComparisonProperties('ComparisonCON.values_1');
+    comparison_values_2 = comparison.getComparisonProperties('ComparisonCON.values_2');
+    comparison_average_1 = comparison.getComparisonProperties('ComparisonCON.average_values_1');
+    comparison_average_2 = comparison.getComparisonProperties('ComparisonCON.average_values_2');
+    comparison_difference = comparison.getComparisonProperties('ComparisonCON.difference');
+    comparison_all_differences = comparison.getComparisonProperties('ComparisonCON.all_differences');
+    comparison_p1 = comparison.getComparisonProperties('ComparisonCON.p1');
+    comparison_p2 = comparison.getComparisonProperties('ComparisonCON.p2');
+    comparison_confidence_interval_min = comparison.getComparisonProperties('ComparisonCON.confidence_min');
+    comparison_confidence_interval_max = comparison.getComparisonProperties('ComparisonCON.confidence_max');
     
     if Measure.is_global(measures{i})
    

@@ -125,7 +125,7 @@ classdef ComparisonCON_WU < Comparison
           
             measure_code = c.getMeasureCode();
             
-            if isequal(c.statistic, 'PermutationTest')  % default one
+            if isequal(c.statistic, 'PermutationTest')  && ~isempty(c.comparison_dict)  % default one
                 number_of_permutations =  c.getComparisonProperties('ComparisonCON.PermutationNumber'); %c.getSettings('ComparisonCON.PermutationNumber');
                 
                 if iscell(number_of_permutations)
