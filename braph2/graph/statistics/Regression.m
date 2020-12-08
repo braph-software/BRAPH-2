@@ -27,39 +27,27 @@ classdef Regression < Statistics
             
             CTR_reg = [age_group_1 gender_group_1];
                         
-            % expected outcome p vals and differences 
-            % this is missing
-            P_SINGLE = cell(1, no_delays);
-            P_DOUBLE = cell(1, no_delays);
-            DIFF = cell(1, no_delays);
-            MiDDLE = cell(1, no_delays);
-            CI5low = cell(1, no_delays);
-            CI5high = cell(1, no_delays);
+            % algorithm
+            Y = [values_1; values_2];
+            % create the full covariates matrix (merge CTR and PDcomb values + add ones)
+            no1 = length(CTR_reg) + length(PD_reg);
+            X_temp = [CTR_reg; PD_reg];
+            X = [ones(no1,1) X_temp];
+            % write the model Y = XB + E and find the LS estimate of B by using  b=(X'X)^{-1}X'y
+            B = inv(X'*X) *X' *Y; %#ok<MINV>
+            % find the residual values
+            Y_res = Y - X*B;
+            % create the 2 new groups consisting of residuals values
+            value_gr1_res = Y_res(1:1:length(value_gr1));
+            value_gr2_res = Y_res(length(value_gr1)+1:1:no1);
             
-            for i = 1:1:no_delays
-                % algorithm
-                Y = [values_1; values_2];
-                % create the full covariates matrix (merge CTR and PDcomb values + add ones)
-                no1 = length(CTR_reg) + length(PD_reg);
-                X_temp = [CTR_reg; PD_reg];
-                X = [ones(no1,1) X_temp];
-                % write the model Y = XB + E and find the LS estimate of B by using  b=(X'X)^{-1}X'y
-                B = inv(X'*X) *X' *Y; %#ok<MINV>
-                % find the residual values
-                Y_res = Y - X*B;
-                % create the 2 new groups consisting of residuals values
-                value_gr1_res = Y_res(1:1:length(value_gr1));
-                value_gr2_res = Y_res(length(value_gr1)+1:1:no1);
-                
-                % run permutation test on the residuals
-                p_t = PermutationTest('CallingClass', analysis.getComparisonClass(), ...
-                    'Group_1', group_1, 'Group_2', group_2, ...
-                    'Val1', value_gr1_res, 'Val2', value_gr2_res , ...
-                    'Res1', res_1, 'Res2', res_2,  ...
-                    'PermutationNumber', 10000);
-            
-            end
-            
+            % run permutation test on the residuals
+            p_t = PermutationTest('CallingClass', analysis.getComparisonClass(), ...
+                'Group_1', group_1, 'Group_2', group_2, ...
+                'Val1', value_gr1_res, 'Val2', value_gr2_res , ...
+                'Res1', res_1, 'Res2', res_2,  ...
+                'PermutationNumber', 10000);
+
 
              % init data_dict
             data_dict = containers.Map;
