@@ -22,7 +22,7 @@ classdef Correlation
         NEGATIVE_WEIGHT_RULE_LIST = {'zero', 'abs', 'none'};
     end
     methods (Static)
-        function [A, P] = getAdjacencyMatrix(data, correlation_rule, negative_weight_rule)
+        function [A, P] = getAdjacencyMatrix(data, correlation_rule, negative_weight_rule, covariates)
             % GETADJACENCYMATRIX returns an adjacency matrix
             %
             % [A, P] = GETADJACENCYMATRIX(DATA) returns an adjacency matrix
@@ -50,15 +50,28 @@ classdef Correlation
             %
             % See also Analysis, Measurement, corr, corrcoef, partialcorr.
             
+            if nargin < 4
+                covariates = {};
+            end
+            
             switch lower(correlation_rule)
-                case 'spearman'
+                case 'spearman'                   
                     [A, P] = corr(data, 'Type', 'Spearman');
                 case 'kendall'
-                    [A, P] = corr(data,'Type','Kendall');
+                    [A, P] = corr(data, 'Type', 'Kendall');
                 case 'partial pearson'
-                    [A, P] = partialcorr(data,'Type','Pearson');
+                     if isempty(covariates)
+                         [A, P] = partialcorr(data, 'Type', 'Pearson');
+                     else 
+                         [A, P] = partialcorr(data, covariates, 'Type', 'Pearson');
+                     end                    
                 case 'partial spearman'
-                    [A, P] = partialcorr(data,'Type','Spearman');
+                    if isempty(covariates)
+                         [A, P] = partialcorr(data, 'Type', 'Spearman');
+                     else 
+                         [A, P] = partialcorr(data, covariates, 'Type', 'Spearman');
+                     end                    
+                    
                 otherwise  % 'Pearson' default
                     [A, P] = corrcoef(data);
             end
