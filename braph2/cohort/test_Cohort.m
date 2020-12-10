@@ -382,13 +382,12 @@ for i = 1:1:length(sub_class_list)
             assert(sub.getData(data_code) ~= sub_copy.getData(data_code), ... % different objects
                 [BRAPH2.STR ':Cohort:' BRAPH2.BUG_COPY], ...
                 'Cohort.copy() does not work')
-            assert(sub.getData(data_code).getBrainAtlas() ~= sub_copy.getData(data_code).getBrainAtlas(), ... % different objects
+            assert(isequal(sub.getData(data_code).getBrainAtlas(), sub_copy.getData(data_code).getBrainAtlas()), ... % different objects
                 [BRAPH2.STR ':Cohort:' BRAPH2.BUG_COPY], ...
                 'Cohort.copy() does not work')
         end
     end
-    
-    
+
     for k = 1:1:cohort.getGroups().length()
         group = cohort.getGroups().getValue(k);
         group_copy = cohort_copy.getGroups().getValue(k);

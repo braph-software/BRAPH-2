@@ -77,7 +77,16 @@ for i = 1:1:length(data_class_list)
         [BRAPH2.STR ':' data_class ':' BRAPH2.BUG_COPY], ...
         [data_class '.copy() does not work.'])
     
-    d_copy.setValue(ones(size(d_copy.getValue())))
+    if isequal(d.getDataStructure(), 'matrix')
+        d_copy.setValue(ones(size(d_copy.getValue())))
+    elseif isequal(d.getDataStructure(), 'list')
+        d_copy.setValue('other')
+    elseif isequal(d.getDataStructure(), 'numeric')
+        d_copy.setValue(ones(size(d_copy.getValue())))
+    else
+        d_copy.setValue('')
+    end        
+    
     d_copy = d.copy();
     assert(d ~= d_copy, ... % different objects and values
         [BRAPH2.STR ':' data_class ':' BRAPH2.BUG_COPY], ...

@@ -56,13 +56,32 @@ classdef DataScalar < Data
             h_panel = uicontrol('Parent', ui_parent);
             set(h_panel, 'Style', 'edit')
             set(h_panel, 'Units', 'normalized')
-            set(h_panel, 'Position', [0.01 0.9 0.5 0.1])
+            set(h_panel, 'Position', [0.01 0.8 0.5 0.2])
             set(h_panel, 'String', value_holder)
             set(h_panel, 'Callback', {@cb_edit_scalar})
             
             function cb_edit_scalar(~, ~)
                 newdata = get(h_panel, 'String');
-                d.value = newdata;
+                
+                if rules(newdata)
+                    d.value = newdata;  
+                end
+            end
+            function bool =  rules(input)
+                % modify rules acording to personal use.
+                if ui_parent.Title == 'gender'  %#ok<BDSCA> % only 2 genders
+                    if str2double(input) > 1
+                        bool = false;
+                        giveWarning('Value can only be 0 or 1')
+                    else
+                        bool = true;
+                    end
+                else
+                    bool = true;
+                end
+            end
+            function giveWarning(msg)
+                errordlg(msg);
             end
             
              if nargout > 0
@@ -110,6 +129,9 @@ classdef DataScalar < Data
             % See also getClass, getName, getDescription.
             
             available_settings = {};
+        end
+        function data_structure = getDataStructure()
+            data_structure = 'numeric';
         end
     end  
 end

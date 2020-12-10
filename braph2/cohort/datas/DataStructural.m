@@ -135,6 +135,9 @@ classdef DataStructural < Data
             % See also getClass, getName, getDescription.
             
             available_settings = {};
+         end
+        function data_structure = getDataStructure()
+            data_structure = 'matrix';
         end
     end  
 end

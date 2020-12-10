@@ -33,6 +33,9 @@ classdef SubjectST < Subject
     %
     % See also Group, Cohort, Subject, SubjectST, SubjectCON, SubjectFNC.
  
+    properties
+        datalist
+    end
     methods  % Constructor
         function sub = SubjectST(id, label, notes, atlas, varargin)
             % SUBJECTST creates a subject of type Structural
@@ -61,7 +64,7 @@ classdef SubjectST < Subject
             sub = sub@Subject(id, label, notes, atlases, varargin{:});
         end
     end
-    methods (Access=protected)  % Utilifty functions
+    methods (Access=protected)  % Utility functions
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
@@ -74,11 +77,17 @@ classdef SubjectST < Subject
             atlas = atlases{1};
             
             age = get_from_varargin(0, 'age', varargin{:});
+            gender = get_from_varargin(0, 'gender', varargin{:});
+            education = get_from_varargin(0, 'education', varargin{:});
             structural = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'ST', varargin{:});  % column vector with the same number of elements as the BrainAtlas
             
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
             sub.datadict('ST') = DataStructural(atlas, structural);
+            sub.datadict('gender') = DataScalar(atlas, gender);
+            sub.datadict('education') = DataScalar(atlas, education);
+            
+            init_internal_datalist(sub);
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject Structural
@@ -97,6 +106,41 @@ classdef SubjectST < Subject
             
             d2 = sub.datadict('ST');
             d2.setBrainAtlas(atlas);
+            
+            d3 = sub.datadict('gender');
+            d3.setBrainAtlas(atlas);
+            
+            d4 = sub.datadict('education');
+            d4.setBrainAtlas(atlas);
+        end
+        function init_internal_datalist(sub)
+            sub.datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
+            sub.datalist('age') = 'DataScalar';
+            sub.datalist('ST') = 'DataStructural';
+            sub.datalist('gender') = 'DataScalar';
+            sub.datalist('education') = 'DataScalar'; 
+        end        
+    end
+    methods
+        function add_data_to_datadict(sub, info)
+            atlases = sub.getBrainAtlases();
+            atlas = atlases{1};
+            data_structure = Data.getDataStructure(info{1});
+            if isequal(data_structure, 'char')
+            elseif isequal(data_structure, 'numeric')
+                info{3} = str2double(info{3});
+            else
+                info{3} = [];
+            end
+            sub.datalist(info{2}) = info{1};
+            sub.datadict(info{2}) = Data.getData(info{1}, atlas, info{3});
+        end
+        function datalist = get_internal_datalist(sub)
+            datalist = sub.datalist;
+        end
+        function datacodes = get_internal_datacodes(sub)
+            datalist = sub.get_internal_datalist(); %#ok<PROP>
+            datacodes = keys(datalist); %#ok<PROP>
         end
     end
     methods (Static)  % Inspection functions
@@ -146,15 +190,16 @@ classdef SubjectST < Subject
             %
             % CELL ARRAY = GETDATALIST() returns a cell array of
             % subject data. For Subject Structural, the data list is:
-            %   age            -    DataScalar.
+            %   age                   -    DataScalar.
             %   Structural            -    DataStructural.
             %
-            % See also getList
-            
+            % See also getList                     
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
             datalist('ST') = 'DataStructural';
-        end
+            datalist('gender') = 'DataScalar';
+            datalist('education') = 'DataScalar'; 
+        end       
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
             %
