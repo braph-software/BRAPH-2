@@ -101,17 +101,11 @@ classdef SubjectST < Subject
             sub.atlases = atlases;
             atlas = atlases{1};
             
-            d1 = sub.datadict('age');
-            d1.setBrainAtlas(atlas)
-            
-            d2 = sub.datadict('ST');
-            d2.setBrainAtlas(atlas);
-            
-            d3 = sub.datadict('gender');
-            d3.setBrainAtlas(atlas);
-            
-            d4 = sub.datadict('education');
-            d4.setBrainAtlas(atlas);
+            data_codes = sub.get_internal_datacodes();
+            for i = 1:1:length(data_codes)
+                d = sub.datadict(data_codes{i});
+                d.setBrainAtlas(atlas)
+            end
         end
         function init_internal_datalist(sub)
             sub.datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');

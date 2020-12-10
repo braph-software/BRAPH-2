@@ -34,6 +34,7 @@ classdef SubjectFNC_MP < Subject
     % See also Group, Cohort, Subject, SubjectST, SubjectfMRI, SubjectDTI.
     properties
         layers
+        datalist
     end
     methods  % Constructor
         function sub = SubjectFNC_MP(id, label, notes, atlas, varargin)
@@ -78,19 +79,24 @@ classdef SubjectFNC_MP < Subject
             atlas = atlases{1};
             
             age = get_from_varargin(0, 'age', varargin{:});
+            gender = get_from_varargin(0, 'gender', varargin{:});
+            education = get_from_varargin(0, 'education', varargin{:});
             sub.layers = get_from_varargin(2, 'FNC_Layers', varargin{:});            
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
-            if isempty(sub.layers)  % finds info
+            sub.datadict('gender') = DataScalar(atlas, gender);
+            sub.datadict('education') = DataScalar(atlas, education);
+            if ~isempty(sub.layers)  % finds info
                 for i = 1:1:sub.layers
                     id = ['FNC_MP_' num2str(i)];
                     functional_multiplex_N = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), id, varargin{:});
                     sub.datadict(id) = DataFunctional(atlas, functional_multiplex_N);
                 end
             else  % default behaviour
-                sub.datadict() = DataFunctional(atlas, );
-                sub.datadict() = DataFunctional(atlas, );
-            end           
+                sub.datadict('FNC_MP_1') = DataFunctional(atlas, zeros(atlas.getBrainRegions().length(), 1));
+                sub.datadict('FNC_MP_2') = DataFunctional(atlas, zeros(atlas.getBrainRegions().length(), 1));
+            end  
+            sub.init_internal_datalist();
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject Functional Multiplex 
@@ -104,25 +110,57 @@ classdef SubjectFNC_MP < Subject
             sub.atlases = atlases;
             atlas = atlases{1};
             
-            d1 = sub.datadict('age');
-            d1.setBrainAtlas(atlas)
-            
-            for i = 1:1:sub.layers
-                id = ['FNC_MP_' num2str(i)];
-                d = sub.datadict(id);
-                d.setBrainAtlas(atlas);
-            end 
+            data_codes = sub.get_internal_datacodes();
+            for i = 1:1:length(data_codes)
+                d = sub.datadict(data_codes{i});
+                d.setBrainAtlas(atlas)
+            end
         end
+        function init_internal_datalist(sub)
+            sub.datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
+            sub.datalist('age') = 'DataScalar';            
+            sub.datalist('gender') = 'DataScalar';
+            sub.datalist('education') = 'DataScalar'; 
+            if ~isempty(sub.layers)  % finds info
+                for i = 1:1:sub.layers
+                    id = ['FNC_MP_' num2str(i)];
+                    sub.datalist(id) = 'DataFunctional';
+                end
+            else  % default behaviour
+                sub.datalist('FNC_MP_1') = 'DataFunctional';
+                sub.datalist('FNC_MP_2') = 'DataFunctional';
+            end
+        end 
     end
     methods  % extra because n is variable
+        function add_data_to_datadict(sub, info)
+            atlases = sub.getBrainAtlases();
+            atlas = atlases{1};
+            data_structure = Data.getDataStructure(info{1});
+            if isequal(data_structure, 'char')
+            elseif isequal(data_structure, 'numeric')
+                info{3} = str2double(info{3});
+            else
+                info{3} = [];
+            end
+            sub.datalist(info{2}) = info{1};
+            sub.datadict(info{2}) = Data.getData(info{1}, atlas, info{3});
+        end
+        function delete_data_from_datadict(sub, info)
+            if ismember(info, keys(sub.datalist))
+                remove(sub.datadict, info)
+                remove(sub.datalist, info)
+            end            
+        end
+        function datalist = get_internal_datalist(sub)
+            datalist = sub.datalist;
+        end
+        function datacodes = get_internal_datacodes(sub)
+            data_list = sub.get_internal_datalist();
+            datacodes = keys(data_list);
+        end
         function dict_number = getDataDictLength(sub)
             dict_number = length(sub.datadict);
-        end
-        function ids = getDataDictKeys(sub)
-            ids = keys(sub.datadict);
-        end
-        function data = getDataDict(sub)
-            data = sub.datadict;
         end
         function layers_n = getNumberOfLayers(sub)
             layers_n = sub.layers;
@@ -304,13 +342,14 @@ classdef SubjectFNC_MP < Subject
                     atlases = cohort.getBrainAtlases();
                     subject_keys_layers = cell(2, length(files));
                     for k = 1:1:length(files)
-                        [num, ~, ~] = xlsread(fullfile(path, files(k).name));
+                        [num, ~, ~] = xlsread(fullfile(subjects_paths, files(k).name));
                         subject_keys_layers{1, k} = ['FNC_MP_' num2str(k)];
                         subject_keys_layers{2, k} = num;                         
                         
                         if k == 1
                             sub_id = erase(files(i).name, '.xlsx');
-                            sub_id = erase(sub_id, '.xls');  % quitarle el _1
+                            sub_id = erase(sub_id, '.xls');
+                            sub_id = erase(sub_id, '_1');% quitarle el _1
                             sub_lab = '';
                             sub_not = '';
                             
@@ -385,6 +424,29 @@ classdef SubjectFNC_MP < Subject
                         % save
                         file = [subject_directory filesep() id '_' num2str(k) '.xlsx'];
                         writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                        
+                        % save covariates only in first layer
+                        if k == 1
+                            % search for all keys that are covariates
+                            data_codes = subject.get_internal_datacodes();
+                            for l = 1:1:length(data_codes)
+                                d = data_codes{l};
+                                if ~contains(d, 'FNC_MP_')  
+                                    cov_keys{l} = d; %#ok<AGROW>
+                                    cov_vals{l} = subject.getData(d).getValue(); %#ok<AGROW>
+                                end
+                            end
+                            
+                            cov_keys(cellfun('isempty', cov_keys)) = [];
+                            cov_vals(cellfun('isempty', cov_vals)) = [];
+                            
+                            % create table with covariates values
+                            t = cell2table(cov_vals);
+                            t.Properties.VariableNames = cov_keys;
+                            
+                            writetable(t, file, 'Sheet', 2, 'WriteVariableNames', 1, 'Range', 'A1');
+                            clearvars  t cov_keys cov_vals;
+                        end
                     end
                 end
             end 

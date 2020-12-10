@@ -61,7 +61,7 @@ classdef SubjectFNC < Subject
             sub = sub@Subject(id, label, notes, atlases, varargin{:});
         end
     end
-    methods (Access=protected)  % Utilifty functions
+    methods (Access=protected)  % Utility functions
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
