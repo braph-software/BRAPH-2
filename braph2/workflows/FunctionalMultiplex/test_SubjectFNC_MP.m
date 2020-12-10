@@ -48,8 +48,8 @@ assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), .
 for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length())
     sub = cohort.getSubjects().getValue(i);
     sub_loaded = load_cohort.getSubjects().getValue(i);
-    data = sub.getData(input_rule);
-    data_loaded = sub_loaded.getData(input_rule);
+    data = sub.getData('FNC_MP_1');
+    data_loaded = sub_loaded.getData('FNC_MP_1');
     assert( ...
         isequal(sub.getID(), sub_loaded.getID()) & ...
         isequal(data.getValue(), data_loaded.getValue()), ...

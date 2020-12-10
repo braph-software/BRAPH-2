@@ -347,24 +347,30 @@ classdef SubjectFNC_MP < Subject
                         subject_keys_layers{2, k} = num;                         
                         
                         if k == 1
-                            sub_id = erase(files(i).name, '.xlsx');
+                            sub_id = erase(files(k).name, '.xlsx');
                             sub_id = erase(sub_id, '.xls');
-                            sub_id = erase(sub_id, '_1');% quitarle el _1
+                            sub_id = erase(sub_id, '_1'); % quitarle el _1
                             sub_lab = '';
                             sub_not = '';
                             
-                            % covariate data could be in another sheet of
-                            % first layer. or could come in another xls. i
-                            % vote first option.
-                            % raw = xlsread(fullfile(path, fikes(k).name, 'Sheet2');
-                           
+                            covariates = readtable(fullfile(subjects_paths, files(k).name), 'Sheet', 2, 'ReadVariableNames', 1);
                         end
                     end
+                    
+                    % transform covariates table to useful arrays
+                    cov_keys = covariates.Properties.VariableNames;
+                    cov_vals = table2array(covariates);
+                    
+                    for k = 1:1:length(cov_vals)
+                        covs{1, k} = cov_keys{k}; %#ok<AGROW>
+                        covs{2, k} = cov_vals(k); %#ok<AGROW>
+                    end
+
                     
                     % create subject
                     subject = Subject.getSubject(subject_class, ...
                         sub_id, sub_lab, sub_not, atlases, ...
-                        'FNC_Layers', length(files), ...
+                        'FNC_Layers', length(files), covs{:}, ...
                         subject_keys_layers{:});
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{j} = subject;                    %#ok<AGROW>
@@ -382,16 +388,19 @@ classdef SubjectFNC_MP < Subject
             % cohort of SubjectFNC_MP will be saved in '.xls' or 'xlsx'
             % format.
             %
-            % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort 
+            % SAVE_TO_XLS(COHORT, 'RootDirectory', PATH) saves the cohort
             % of SubjectFNC_MP in '.xls' or 'xlsx' format in the
             % specified PATH.
-            % 
+            %
             % See also load_from_xls, save_to_txt, save_to_json
-             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+            root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
             if isequal(root_directory, '')  % no path, open gui
                 msg = get_from_varargin(BRAPH2.MSG_PUTDIR, 'MSG', varargin{:});
-                root_directory = uigetdir(msg);                
+                root_directory = uigetdir(msg);
             end
+            
+            % warning xls sheets off
+            warning( 'off', 'MATLAB:xlswrite:AddSheet' ) ;
             
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
@@ -431,7 +440,7 @@ classdef SubjectFNC_MP < Subject
                             data_codes = subject.get_internal_datacodes();
                             for l = 1:1:length(data_codes)
                                 d = data_codes{l};
-                                if ~contains(d, 'FNC_MP_')  
+                                if ~contains(d, 'FNC_MP_')
                                     cov_keys{l} = d; %#ok<AGROW>
                                     cov_vals{l} = subject.getData(d).getValue(); %#ok<AGROW>
                                 end
@@ -449,7 +458,10 @@ classdef SubjectFNC_MP < Subject
                         end
                     end
                 end
-            end 
+            end
+            
+            % warning on
+            warning('on', 'all')
         end
         function cohort = load_from_txt(tmp, varargin)
             % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectFNC_MP
