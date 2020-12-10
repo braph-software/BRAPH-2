@@ -77,14 +77,14 @@ classdef SubjectCON < Subject
             
             age = get_from_varargin(0, 'age', varargin{:});
             CON = get_from_varargin(zeros(atlas.getBrainRegions().length(), atlas.getBrainRegions().length()), 'CON', varargin{:});
-            gender = get_from_varargin('other', 'gender', varargin{:});
-            education = get_from_varargin('other', 'education', varargin{:});
+            gender = get_from_varargin(0, 'gender', varargin{:});
+            education = get_from_varargin(0, 'education', varargin{:});
             
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
             sub.datadict('CON') = DataConnectivity(atlas, CON);
-            sub.datadict('gender') = DataGender(atlas, gender);
-            sub.datadict('education') = DataEducation(atlas, education);
+            sub.datadict('gender') = DataScalar(atlas, gender);
+            sub.datadict('education') = DataScalar(atlas, education);
             
             init_internal_datalist(sub);
         end
@@ -100,18 +100,18 @@ classdef SubjectCON < Subject
             sub.atlases = atlases;
             atlas = atlases{1};
             
-            d1 = sub.datadict('age');
-            d1.setBrainAtlas(atlas)
-            
-            d2 = sub.datadict('CON');
-            d2.setBrainAtlas(atlas);
+            data_codes = sub.get_internal_datacodes();
+            for i = 1:1:length(data_codes)
+                d = sub.datadict(data_codes{i});
+                d.setBrainAtlas(atlas)
+            end
         end
         function init_internal_datalist(sub)
             sub.datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             sub.datalist('age') = 'DataScalar';
             sub.datalist('CON') = 'DataConnectivity';
-            sub.datalist('gender') = 'DataGender';
-            sub.datalist('education') = 'DataEducation'; 
+            sub.datalist('gender') = 'DataScalar';
+            sub.datalist('education') = 'DataScalar'; 
         end 
     end
     methods
@@ -196,8 +196,8 @@ classdef SubjectCON < Subject
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
             datalist('CON') = 'DataConnectivity';
-            datalist('gender') = 'DataGender';
-            datalist('education') = 'DataEducation'; 
+            datalist('gender') = 'DataScalar';
+            datalist('education') = 'DataScalar'; 
         end
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
