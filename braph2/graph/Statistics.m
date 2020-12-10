@@ -11,20 +11,22 @@ classdef Statistics < handle & matlab.mixin.Copyable
             end
             
             available_settings = Statistics.getAvailableSettings(class(s));
-            settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
+%             settings = cell(length(available_settings), length(available_settings{1, 1}) - 2);
             number_groups = 1;
             for i = 1:1:size(available_settings, 2)
                 as = available_settings{i};
                 available_setting_code = as{1, 1};
                 available_setting_default = as{1, 3};
-                settings{i, 1} = available_setting_code;
-                settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:});
+                settings{i, 1} = available_setting_code; %#ok<AGROW>
+                settings{i, 2} = get_from_varargin(available_setting_default, available_setting_code, varargin{:}); %#ok<AGROW>
                 
                 if isequal(available_setting_code, 'number_groups')
                     number_groups = settings{i, 2};
                 end
             end
-            s.settings = settings;
+            if exist('settings', 'var')
+                s.settings = settings;
+            end
             
             groups = cell(1, number_groups);
             for i = 1:1:number_groups
