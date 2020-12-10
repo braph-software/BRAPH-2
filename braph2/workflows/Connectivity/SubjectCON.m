@@ -63,7 +63,7 @@ classdef SubjectCON < Subject
             sub = sub@Subject(id, label, notes, atlases, varargin{:});
         end
     end
-    methods (Access=protected)  % Utilifty functions
+    methods (Access=protected)  % Utility functions
         function initialize_datadict(sub, varargin)
             % INITIALIZE_DATADICT initializes the data dictionary
             %
@@ -115,7 +115,7 @@ classdef SubjectCON < Subject
         end 
     end
     methods
-        function add_data_to_datadict(sub, info)
+        function add_data_to_datadict(sub, info)  % data, titulo, info
             atlases = sub.getBrainAtlases();
             atlas = atlases{1};
             data_structure = Data.getDataStructure(info{1});
@@ -669,4 +669,4 @@ classdef SubjectCON < Subject
             end
         end
     end
-endå
+end
