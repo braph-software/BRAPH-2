@@ -142,16 +142,16 @@ classdef AnalysisFNC_MP_WU < Analysis
                 layers = subject.getNumberOfLayers();
                 
                 for j = 1:1:layers
-                    id = ['FNC_MP_' num2str(j)];                    
+                    id = ['FNC_MP_' num2str(j)];
                     data = subject.getData(id).getValue();
                     
                     covariates_rule = false;
-                   
+                    
                     for k = 1:1:length(covariates_keys)
                         covs = subject.getData(covariates_keys{k}).getValue();
                         covariates = [covs{:}];  % comma or ;
                         covariates_rule = true;
-                    end                    
+                    end
                     
                     % filter data
                     fs = 1 / T;
@@ -169,7 +169,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                 end
                 
                 A(cellfun('isempty', A)) = eye(length(A(1,1)));
-               
+                
                 graph_type = analysis.getGraphType();
                 g = Graph.getGraph(graph_type, A);
                 graphs{i} = g;
@@ -188,23 +188,41 @@ classdef AnalysisFNC_MP_WU < Analysis
             T = analysis.getSettings('AnalysisFNC.Repetition');
             fmin = analysis.getSettings('AnalysisFNC.FrecuencyRuleMin');
             fmax = analysis.getSettings('AnalysisFNC.FrecuencyRuleMax');
-            data = subject.getData('FNC').getValue();
+            layers = subject.getNumberOfLayers();            
+            covariates_keys = get_from_varargin({}, 'FNC_MP_Covariates', varargin{:});
+            
             T = str2double(T);
             fmin = str2double(fmin);
             fmax = str2double(fmax);
-            % filter data
-            fs = 1 / T;
-            if fmax > fmin && T > 0
-                NFFT = 2 * ceil(size(data, 1) / 2);
-                ft = fft(data, NFFT);  % Fourier transform
-                f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-                ft(f < fmin | f > fmax, :) = 0;
-                data = ifft(ft, NFFT);
+            
+            for j = 1:1:layers
+                id = ['FNC_MP_' num2str(j)];
+                data = subject.getData(id).getValue();
+                
+                covariates_rule = false;
+                
+                for k = 1:1:length(covariates_keys)
+                    covs = subject.getData(covariates_keys{k}).getValue();
+                    covariates = [covs{:}];  % comma or ;
+                    covariates_rule = true;
+                end
+                
+                % filter data
+                fs = 1 / T;
+                if fmax > fmin && T > 0
+                    NFFT = 2 * ceil(size(data, 1) / 2);
+                    ft = fft(data, NFFT);  % Fourier transform
+                    f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+                    ft(f < fmin | f > fmax, :) = 0;
+                    data = ifft(ft, NFFT);
+                end
+                
+                correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
+                negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
+                A{j, j} = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule, covariates_rule, covariates);  %#ok<AGROW> % correlation is a column based operation
             end
             
-            correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
-            A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule);  % correlation is a column based operation
+            A(cellfun('isempty', A)) = eye(length(A(1,1)));
             
             graph_type = analysis.getGraphType();
             graph = Graph.getGraph(graph_type, A);
@@ -242,9 +260,9 @@ classdef AnalysisFNC_MP_WU < Analysis
                 analysis.getCohort().getBrainAtlases(), ...
                 measure_code, ...
                 group,  ...
-                'MeasurementFNC.values', measures, ...
-                'MeasurementFNC.average_value', measure_average, ...
-                'MeasurementFNC.ParameterValues', measurement_parameter_values, ...
+                'MeasurementFNC_MP.values', measures, ...
+                'MeasurementFNC_MP.average_value', measure_average, ...
+                'MeasurementFNC_MP.ParameterValues', measurement_parameter_values, ...
                 varargin{:});
         end
         function randomcomparison = calculate_random_comparison(analysis, measure_code, group, varargin)
@@ -270,6 +288,17 @@ classdef AnalysisFNC_MP_WU < Analysis
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             M = get_from_varargin(1e+3, 'RandomizationNumber', varargin{:});
+            
+            if Measure.is_superglobal(measure_code)
+                rows = 1;
+                columns = 1;
+            elseif Measure.is_unilayer(measure_code)
+                rows = 2;
+                columns = 1;
+            elseif Measure.is_bilayer(measure_code)
+                rows = 2;
+                columns = 2;
+            end
             
             % Measurements for the group
             measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});
@@ -363,75 +392,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also calculate_random_comparison, calculate_measurement.
             
-            verbose = get_from_varargin(false, 'Verbose', varargin{:});
-            interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
-            
-            is_longitudinal = analysis.getSettings('AnalysisFNC.Longitudinal');
-            M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
-            
-            % Measurements for groups 1 and 2, and their difference
-            measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
-            values_1 = measurements_1.getMeasureValues();
-            res_1 = {mean(reshape(cell2mat(values_1), [size(values_1{1}, 1), size(values_1{1}, 2), group_1.subjectnumber()]), 3)};
-            
-            measurements_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
-            values_2 = measurements_2.getMeasureValues();
-            res_2 =  {mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group_2.subjectnumber()]), 3)};
-            
-            all_permutations_1 = cell(1, M);
-            all_permutations_2 = cell(1, M);
-            
-            start = tic;
-            for i = 1:1:M
-                if verbose
-                    disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
-                end
-                
-                [permutation_1, permutation_2] = permutation(values_1, values_2, is_longitudinal);
-                
-                mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group_1.subjectnumber()]), 3);
-                mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), group_2.subjectnumber()]), 3);
-                
-                all_permutations_1(1, i) = {mean_permutated_1};
-                all_permutations_2(1, i) = {mean_permutated_2};
-                
-                difference_all_permutations{1, i} = mean_permutated_2 - mean_permutated_1; %#ok<AGROW>
-                if interruptible
-                    pause(interruptible)
-                end
-            end
-            
-            difference_mean = {res_2{1} - res_1{1}};  % difference of the mean values of the non permutated groups
-            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 2 - permutated group 1
-            
-            % Statistical analysis
-            p1 = {pvalue1(difference_mean{1}, difference_all_permutations)};  % singe tail,
-            p2 = {pvalue2(difference_mean{1}, difference_all_permutations)};  % double tail
-            
-            qtl = quantiles(difference_all_permutations, 40);
-            ci_lower = {cellfun(@(x) x(2), qtl)};
-            ci_upper = {cellfun(@(x) x(40), qtl)};
-            
-            comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
-                analysis.getComparisonID(measure_code, group_1, group_2, varargin{:}), ...
-                '', ...  % comparison label
-                '', ...  % comparison notes
-                analysis.getCohort().getBrainAtlases(), ...
-                measure_code, ...
-                group_1, ...
-                group_2, ...
-                'ComparisonFNC.PermutationNumber', M, ...
-                'ComparisonFNC.values_1', values_1, ...
-                'ComparisonFNC.average_values_1', res_1, ...
-                'ComparisonFNC.values_2', values_2, ...
-                'ComparisonFNC.average_values_2', res_2, ...
-                'ComparisonFNC.difference', difference_mean, ...
-                'ComparisonFNC.all_differences', difference_all_permutations, ...
-                'ComparisonFNC.p1', p1, ...
-                'ComparisonFNC.p2', p2, ...
-                'ComparisonFNC.confidence_min', ci_lower, ...
-                'ComparisonFNC.confidence_max', ci_upper, ...
-                varargin{:});
+            comparison = [];
         end
     end
     methods (Static)  % Descriptive functions
@@ -451,7 +412,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also getList, getClass, getDescription.
             
-            name = 'Analysis Functional WU';
+            name = 'Analysis Functional Multiplex WU';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of functional analysis
@@ -462,7 +423,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             % See also getList, getClass, getName.
             
             description = [ ...
-                'Analysis using FNC functional matrix, ' ...
+                'Analysis using FNC functional multiplex matrix, ' ...
                 'e.g. activation timeseries for each brain region. ' ...
                 'It provides a graph for each subject.' ...
                 ];
@@ -475,7 +436,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also getSubjectClass.
             
-            graph_type = 'GraphWU';
+            graph_type = 'MultiplexGraphWU';
         end
         function subject_class = getSubjectClass()
             % GETSUBJETCLASS returns the class of functional analysis subject
@@ -485,7 +446,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also getList, getClass, getName, getDescription.
             
-            subject_class = 'SubjectFNC';
+            subject_class = 'SubjectFNC_MP';
         end
         function measurement_class = getMeasurementClass()
             % GETMEASUREMENTCLASS returns the class of functional analysis measurement
@@ -495,7 +456,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also getRandomComparisonClass, getComparisonClass.
             
-            measurement_class =  'MeasurementFNC_WU';
+            measurement_class =  'MeasurementFNC_MP_WU';
         end
         function randomcomparison_class = getRandomComparisonClass()
             % GETRANDOMCOMPARISONCLASS returns the class of functional analysis randomcomparison
@@ -506,7 +467,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also getMeasurementClass, getComparisonClass.
             
-            randomcomparison_class = 'RandomComparisonFNC_WU';
+            randomcomparison_class = 'RandomComparisonFNC_MP_WU';
         end
         function comparison_class = getComparisonClass()
             % GETCOMPARISONCLASS returns the class of functional analysis comparison
@@ -516,7 +477,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also getMeasurementClass, getRandomComparisonClass.
             
-            comparison_class = 'ComparisonFNC_WU';
+            comparison_class = 'ComparisonFNC_MP_WU';
         end
         function available_settings = getAvailableSettings()
             % GETAVAILABLESETTINGS returns the available settings of functional analysis
@@ -557,7 +518,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also getGraphPanel, getMainPanelMeasurePlot, getBrainView
             
-           
+            
         end
         function nodal_panel = getNodalPanel(analysis, varargin)
             % GETNODALPANEL creates the nodal uipanel for GUIAnalysis
@@ -567,7 +528,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             % measures in Measurement, RandomComparison and Comparison.
             %
             % See also getGraphPanel, getMainPanelMeasurePlot, getGlobalPanel
-          
+            
         end
         function binodal_panel = getBinodalPanel(analysis, varargin)
             % GETBINODALPANEL creates the binodal uipanel for GUIAnalysis
@@ -578,7 +539,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also getGraphPanel, getMainPanelMeasurePlot, getGlobalPanel, getBrainView
             
-           
+            
         end
         function p = getGlobalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin) %#ok<INUSD>
             % GETGLOBALMEASUREPLOT creates a uipanel to contain a plot
@@ -686,7 +647,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             % brain view panel for GUIAnalysis.
             %
             % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
-           
+            
         end
         function brain_graph_panel = getBrainGraphPanel(analysis, brain_axes, brain_graph)
             % GETBRAINGRAPHPANEL creates a braingraph panel
@@ -705,7 +666,7 @@ classdef AnalysisFNC_MP_WU < Analysis
     end
     methods (Static)  % Save and load functions
         function analysis = load_from_xls(tmp, varargin)
-             % directory
+            % directory
             directory = get_from_varargin('', 'RootDirectory', varargin{:});
             if isequal(directory, '')  % no path, open gui
                 msg = get_from_varargin(BRAPH2.MSG_GETDIR, 'MSG', varargin{:});
@@ -732,7 +693,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                     if v.Release >= "(R2020a)"
                         raw_analysis = readcell(file_analysis);
                     else
-                        raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0); 
+                        raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0);
                         raw_analysis = table2cell(raw_analysis);
                     end
                     analysis_id = raw_analysis{1, 2};
@@ -797,7 +758,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                             % get values
                             raw_values = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
                             raw_avgs = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
-
+                            
                             % create measurement
                             measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
                                 meas_id, ...
@@ -810,7 +771,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                                 'MeasurementCON.average_value', raw_avgs, ...
                                 varargin{:});
                             measurement_idict.add(measurement.getID(), measurement, k);
-                        end 
+                        end
                     elseif isequal(sub_folders(i).name, 'comparisons')
                         comparison_idict = analysis.getComparisons();
                         for k = 1:1:length(files)
@@ -841,7 +802,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                             group2 = analysis.getCohort().getGroups().getValue(raw_group2);
                             
                             % get values
-                          
+                            
                             raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
                             raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
                             raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
@@ -874,7 +835,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                                 varargin{:});
                             
                             comparison_idict.add(comparison.getID(), comparison, k);
-                        end 
+                        end
                     elseif isequal(sub_folders(i).name, 'randomcomparisons')
                         random_comparison_idict = analysis.getRandomComparisons();
                         for k = 1:1:length(files)
@@ -934,15 +895,15 @@ classdef AnalysisFNC_MP_WU < Analysis
                                 varargin{:});
                             
                             random_comparison_idict.add(random_comparison.getID(), random_comparison, k);
-                        end 
+                        end
                     else
-                        continue;                        
+                        continue;
                     end
-                end   
+                end
             end
         end
         function save_to_xls(analysis, varargin)
-             % save to folders separting by type of analysis
+            % save to folders separting by type of analysis
             
             % get saving info
             % get Root Directory
@@ -984,8 +945,8 @@ classdef AnalysisFNC_MP_WU < Analysis
             
             % warning xls sheets off
             warning( 'off', 'MATLAB:xlswrite:AddSheet' ) ;
-             
-            % measurements could ask for just certain measures 
+            
+            % measurements could ask for just certain measures
             for i = 1:1:measurements.length()
                 m = measurements.getValue(i);
                 file_measurement = [root_directory filesep() 'measurements' filesep() m.getID() '.xlsx'];
@@ -994,7 +955,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                     'Measurement Label:', m.getLabel();
                     'Measurement Notes:', m.getNotes();
                     'Measure:', m.getMeasureCode();
-                    'Group:', m.getGroup().getID(); 
+                    'Group:', m.getGroup().getID();
                     'Values (Sheet 2):', size(m.getMeasureValues);
                     'Group Average (Sheet 3):', size(m.getGroupAverageValue());
                     };
@@ -1091,16 +1052,16 @@ classdef AnalysisFNC_MP_WU < Analysis
             warning('on', 'all')
         end
         function analysis = load_from_json(tmp, varargin)
-             raw = JSON.Deserialize(varargin{:});
+            raw = JSON.Deserialize(varargin{:});
             
             if isa(tmp, 'Analysis')
                 analysis = tmp;
                 subject_class = analysis.getCohort().getSubjectClass(); %#ok<NASGU>
-            else      
+            else
                 cohort = tmp;
                 analysis_id = raw.ID;
                 analysis_label = raw.Label;
-                analysis_notes = raw.Notes; 
+                analysis_notes = raw.Notes;
                 type_of_analysis = raw.Analysis;
                 
                 if isequal(type_of_analysis, 'AnalysisFNC_MP_WU')
@@ -1111,7 +1072,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                     analysis = AnalysisFNC_BUD(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
                 else
                     errordlg('Type of Analysis does not exist.');
-                end                
+                end
             end
             
             measurements_idict = analysis.getMeasurements();
@@ -1131,10 +1092,10 @@ classdef AnalysisFNC_MP_WU < Analysis
                     'MeasurementFNC.values', num2cell(raw.Measurements(i).value', 1), ...
                     'MeasurementFNC.average_value', raw.Measurements(i).avgvalue, ...
                     varargin{:});
-                measurements_idict.add(measurement.getID(), measurement, i);                
+                measurements_idict.add(measurement.getID(), measurement, i);
             end
-            % comparison idict 
-            for i = 1:1:length(raw.Comparisons)                
+            % comparison idict
+            for i = 1:1:length(raw.Comparisons)
                 comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                     raw.Comparisons(i).id, ...
                     raw.Comparisons(i).label, ...  % comparison label
@@ -1204,8 +1165,8 @@ classdef AnalysisFNC_MP_WU < Analysis
                 Measurements_structure(i).label = meas.getLabel();
                 Measurements_structure(i).notes = meas.getNotes();
                 Measurements_structure(i).measure = meas.getMeasureCode();
-                Measurements_structure(i).group = meas.getGroup().getID();               
-                Measurements_structure(i).value = meas.getMeasureValues();                                
+                Measurements_structure(i).group = meas.getGroup().getID();
+                Measurements_structure(i).value = meas.getMeasureValues();
                 Measurements_structure(i).avgvalue = meas.getGroupAverageValue();
             end
             for i = 1:1:length(comparisons)
@@ -1215,16 +1176,16 @@ classdef AnalysisFNC_MP_WU < Analysis
                 Comparisons_structure(i).label = comp.getLabel();
                 Comparisons_structure(i).notes = comp.getNotes();
                 Comparisons_structure(i).measure = comp.getMeasureCode();
-                Comparisons_structure(i).group1 = g1.getID();  
+                Comparisons_structure(i).group1 = g1.getID();
                 Comparisons_structure(i).group2 = g2.getID();
-                Comparisons_structure(i).value1 = comp.getGroupValue(1);                
-                Comparisons_structure(i).value2 = comp.getGroupValue(2); 
+                Comparisons_structure(i).value1 = comp.getGroupValue(1);
+                Comparisons_structure(i).value2 = comp.getGroupValue(2);
                 Comparisons_structure(i).avgvalue1 = comp.getGroupAverageValue(1);
-                Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2); 
+                Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2);
                 Comparisons_structure(i).difference = comp.getDifference();
                 Comparisons_structure(i).alldifferences = comp.getAllDifferences();
                 Comparisons_structure(i).p1 = comp.p1;
-                Comparisons_structure(i).p2 = comp.p2;                
+                Comparisons_structure(i).p2 = comp.p2;
                 Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
                 Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
             end
@@ -1235,20 +1196,20 @@ classdef AnalysisFNC_MP_WU < Analysis
                 RandomComparisons_structure(i).notes = ran_comp.getNotes();
                 RandomComparisons_structure(i).measure = ran_comp.getMeasureCode();
                 RandomComparisons_structure(i).group = ran_comp.getGroup().getID();
-                RandomComparisons_structure(i).value = ran_comp.getGroupValue();                
-                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue(); 
+                RandomComparisons_structure(i).value = ran_comp.getGroupValue();
+                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue();
                 RandomComparisons_structure(i).avgvalue = ran_comp.getAverageValue();
-                RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue(); 
+                RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue();
                 RandomComparisons_structure(i).difference = ran_comp.getDifference();
                 RandomComparisons_structure(i).alldifferences = ran_comp.getAllDifferences();
                 RandomComparisons_structure(i).p1 = ran_comp.p1;
-                RandomComparisons_structure(i).p2 = ran_comp.p2;                
+                RandomComparisons_structure(i).p2 = ran_comp.p2;
                 RandomComparisons_structure(i).confidencemin = ran_comp.getConfidenceIntervalMin();
                 RandomComparisons_structure(i).confidencemax = ran_comp.getConfidenceIntervalMax();
             end
             
             %create analysis structure
-             structure = struct( ...
+            structure = struct( ...
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'Analysis', analysis_class, ...
@@ -1259,7 +1220,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                 'Measurements', Measurements_structure, ...
                 'Comparisons', Comparisons_structure, ...
                 'RandomComparisons', RandomComparisons_structure ...
-                ); 
+                );
         end
     end
 end
