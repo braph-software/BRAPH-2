@@ -341,8 +341,46 @@ classdef SubjectFNC_MP < Subject
             % specified PATH.
             % 
             % See also load_from_xls, save_to_txt, save_to_json
+             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+            if isequal(root_directory, '')  % no path, open gui
+                msg = get_from_varargin(BRAPH2.MSG_PUTDIR, 'MSG', varargin{:});
+                root_directory = uigetdir(msg);                
+            end
             
-            
+            % creates groups folders
+            for i=1:1:cohort.getGroups().length()
+                if ~exist([root_directory filesep() cohort.getGroups().getValue(i).getID()], 'dir')
+                    mkdir(root_directory, cohort.getGroups().getValue(i).getID());
+                end
+                
+                % group info
+                group = cohort.getGroups().getValue(i);
+                group_directory = [root_directory filesep() cohort.getGroups().getValue(i).getID()];
+                
+                % get subject info
+                subjects_list = group.getSubjects();
+                for j = 1:1:group.subjectnumber()
+                    % get subject data
+                    subject = subjects_list{j};
+                    id = subject.getID();
+                    if ~exist([group_directory filesep() id], 'dir')
+                        mkdir(group_directory, id);
+                    end
+                    subject_directory = [group_directory filesep() id];
+                    layers = subject.getNumberOfLayers();
+                    for k = 1:1:layers
+                        id_layer = ['FNC_MP_' num2str(k)];
+                        data = subject.getData(id_layer);
+                        
+                        % create table
+                        tab = table(data.getValue());
+                        
+                        % save
+                        file = [subject_directory filesep() id '_' num2str(k) '.xlsx'];
+                        writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                    end
+                end
+            end 
         end
         function cohort = load_from_txt(tmp, varargin)
             % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectFNC_MP
