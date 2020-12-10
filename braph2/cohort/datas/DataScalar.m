@@ -62,7 +62,26 @@ classdef DataScalar < Data
             
             function cb_edit_scalar(~, ~)
                 newdata = get(h_panel, 'String');
-                d.value = newdata;
+                
+                if rules(newdata)
+                    d.value = newdata;  
+                end
+            end
+            function bool =  rules(input)
+                % modify rules acording to personal use.
+                if ui_parent.Title == 'gender'  %#ok<BDSCA> % only 2 genders
+                    if str2double(input) > 1
+                        bool = false;
+                        giveWarning('Value can only be 0 or 1')
+                    else
+                        bool = true;
+                    end
+                else
+                    bool = true;
+                end
+            end
+            function giveWarning(msg)
+                errordlg(msg);
             end
             
              if nargout > 0
