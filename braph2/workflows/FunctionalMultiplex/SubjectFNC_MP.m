@@ -81,11 +81,16 @@ classdef SubjectFNC_MP < Subject
             sub.layers = get_from_varargin(2, 'FNC_Layers', varargin{:});            
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
-            for i = 1:1:sub.layers
-                id = ['FNC_MP_' num2stri(i)];
-                functional_multiplex_N = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), id, varargin{:});
-                sub.datadict(id) = DataFunctional(atlas, functional_multiplex_N);
-            end
+            if isempty(sub.layers)  % finds info
+                for i = 1:1:sub.layers
+                    id = ['FNC_MP_' num2str(i)];
+                    functional_multiplex_N = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), id, varargin{:});
+                    sub.datadict(id) = DataFunctional(atlas, functional_multiplex_N);
+                end
+            else  % default behaviour
+                sub.datadict() = DataFunctional(atlas, );
+                sub.datadict() = DataFunctional(atlas, );
+            end           
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject Functional Multiplex 
@@ -178,7 +183,8 @@ classdef SubjectFNC_MP < Subject
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
-            datalist('FNC_MP') = 'DataFunctional';
+            datalist('FNC_MP_1') = 'DataFunctional';
+            datalist('FNC_MP_2') = 'DataFunctional';
         end
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
@@ -304,14 +310,15 @@ classdef SubjectFNC_MP < Subject
                         
                         if k == 1
                             sub_id = erase(files(i).name, '.xlsx');
-                            sub_id = erase(sub_id, '.xls');
+                            sub_id = erase(sub_id, '.xls');  % quitarle el _1
                             sub_lab = '';
                             sub_not = '';
                             
-                            % categorical data could be in another sheet of
+                            % covariate data could be in another sheet of
                             % first layer. or could come in another xls. i
                             % vote first option.
                             % raw = xlsread(fullfile(path, fikes(k).name, 'Sheet2');
+                           
                         end
                     end
                     
