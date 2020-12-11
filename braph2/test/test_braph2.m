@@ -28,7 +28,9 @@ end
 clear directory workflows_directories i
 
 %% Runs tests
-results = runtests(directories_to_test);
+tic
+results = runtests(directories_to_test, 'UseParallel', true);
+toc
 
 %% Shows test results
 results_table = table(results) %#ok<NOPTS>

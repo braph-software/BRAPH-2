@@ -260,7 +260,7 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             ylabel(ui_parent_axes, [measure_code ' Group Average'])
             
         end
-        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
+        function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, statistic, group_1, group_2, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
             %
             % P = GETGLOBALCOMPARISONPLOT(ANALYSIS, UIPARENTPANEL, UIPARENTAXES, GROUP 1, GROUP 2, PROPERTY, VALUE, ...)
@@ -269,8 +269,13 @@ classdef AnalysisCON_BUT < AnalysisCON_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
+            calling_class = analysis.getComparisonClass();
+            calling_class_cell_hold = split(calling_class, '_');
+            calling_class = calling_class_cell_hold{1};
+            plot_property = Statistics.getPlotProperty(statistic);
+            plot_property = [calling_class '.' plot_property];
             X = analysis.selectComparisons(measure_code, group_1, group_2, '.getThreshold()');
-            Y = analysis.selectComparisons(measure_code, group_1, group_2, '.getDifference()');
+            Y = analysis.selectComparisons(measure_code, group_1, group_2, plot_property);
             
             if ~isempty(X) && ~isempty(Y)
                 x_ = cell2mat(X);

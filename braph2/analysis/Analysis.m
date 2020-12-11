@@ -406,7 +406,7 @@ classdef Analysis < handle & matlab.mixin.Copyable
                 list = cell(size(selected_comparisons));                
                 for i = 1:1:length(selected_comparisons)
                     c = selected_comparisons{i}; %#ok<NASGU>
-                    list{i} = eval(['c' method]);
+                    list{i} = eval(['c.getComparisonProperties(' method ')']);
                 end
             else
                 list = selected_comparisons;

@@ -299,11 +299,8 @@ classdef AnalysisCON_WU < Analysis
             %
             % See also calculate_random_comparison, calculate_measurement.
             
-            verbose = get_from_varargin(false, 'Verbose', varargin{:});
-            interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
-            
-            is_longitudinal = analysis.getSettings('AnalysisCON.Longitudinal');
-            M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
+            % get type of statistic test
+            statistical_type = get_from_varargin('PermutationTest', 'StatisticalTest', varargin{:});
             
             % Measurements for groups 1 and 2, and their difference
             measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
@@ -314,39 +311,11 @@ classdef AnalysisCON_WU < Analysis
             values_2 = measurements_2.getMeasureValues();
             res_2 =  {mean(reshape(cell2mat(values_2), [size(values_2{1}, 1), size(values_2{1}, 2), group_2.subjectnumber()]), 3)};
             
-            all_permutations_1 = cell(1, M);
-            all_permutations_2 = cell(1, M);
-            
-            start = tic;
-            for i = 1:1:M
-                if verbose
-                    disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
-                end
-                
-                [permutation_1, permutation_2] = permutation(values_1, values_2, is_longitudinal);
-                
-                mean_permutated_1 = mean(reshape(cell2mat(permutation_1), [size(permutation_1{1}, 1), size(permutation_1{1}, 2), group_1.subjectnumber()]), 3);
-                mean_permutated_2 = mean(reshape(cell2mat(permutation_2), [size(permutation_2{1}, 1), size(permutation_2{1}, 2), group_2.subjectnumber()]), 3);
-                
-                all_permutations_1(1, i) = {mean_permutated_1};
-                all_permutations_2(1, i) = {mean_permutated_2};
-                
-                difference_all_permutations{1, i} = mean_permutated_1 - mean_permutated_2; %#ok<AGROW>
-                if interruptible
-                    pause(interruptible)
-                end
-            end
-            
-            difference_mean = {res_2{1} - res_1{1}};  % difference of the mean values of the non permutated groups
-            difference_all_permutations = cellfun(@(x) [x], difference_all_permutations, 'UniformOutput', false);  %#ok<NBRAK> % permutated group 1 - permutated group 2
-            
-            % Statistical analysis
-            p1 = {pvalue1(difference_mean{1}, difference_all_permutations)};  % singe tail,
-            p2 = {pvalue2(difference_mean{1}, difference_all_permutations)};  % double tail
-            
-            qtl = quantiles(difference_all_permutations, 40);
-            ci_lower = {cellfun(@(x) x(2), qtl)};
-            ci_upper = {cellfun(@(x) x(40), qtl)};
+            statistic = Statistics.getStatistic(statistical_type, varargin{:});
+            statistic_dict = statistic.getStatistics('CallingClass', analysis.getComparisonClass(), ...
+                'Group_1', group_1, 'Group_2', group_2, ...
+                'Val1', values_1, 'Val2', values_2 , ...
+                'Res1', res_1, 'Res2', res_2, varargin{:});
             
             comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                 analysis.getComparisonID(measure_code, group_1, group_2, varargin{:}), ...
@@ -356,17 +325,8 @@ classdef AnalysisCON_WU < Analysis
                 measure_code, ...
                 group_1, ...
                 group_2, ...
-                'ComparisonCON.PermutationNumber', M, ...
-                'ComparisonCON.values_1', values_1, ...
-                'ComparisonCON.average_values_1', res_1, ...
-                'ComparisonCON.values_2', values_2, ...
-                'ComparisonCON.average_values_2', res_2, ...
-                'ComparisonCON.difference', difference_mean, ...
-                'ComparisonCON.all_differences', difference_all_permutations, ...
-                'ComparisonCON.p1', p1, ...
-                'ComparisonCON.p2', p2, ...
-                'ComparisonCON.confidence_min', ci_lower, ...
-                'ComparisonCON.confidence_max', ci_upper, ...
+                'StatisticalTest', statistical_type, ...
+                'StatisticalDict', statistic_dict, ...
                 varargin{:});
         end
     end
@@ -462,8 +422,7 @@ classdef AnalysisCON_WU < Analysis
             %
             % See also getClass, getName, getDescription
             
-            available_settings = {
-                {'AnalysisCON.Longitudinal', BRAPH2.LOGICAL, false, {false, true}}, ...
+            available_settings = { ...
                 {'AnalysisCON.AttemptsPerEdge', BRAPH2.NUMERIC, 1, {}}, ...
                 {'AnalysisCON.NumberOfWeights', BRAPH2.NUMERIC, 1, {}} ...
                 };
@@ -747,10 +706,12 @@ classdef AnalysisCON_WU < Analysis
                 end
             end
             function update_subjects()
-                [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
-                subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
-                subject_labels = ['Group Average' subject_labels_inner];
-                set(ui_matrix_subjects_popup, 'String', subject_labels)
+                if ~isempty(groups)
+                    [~, subjects] = analysis.getCohort().getGroupSubjects(selected_group);
+                    subject_labels_inner = cellfun(@(x) x.getID(), subjects, 'UniformOutput', false);
+                    subject_labels = ['Group Average' subject_labels_inner];
+                    set(ui_matrix_subjects_popup, 'String', subject_labels)
+                end
             end
             
             update_matrix()
@@ -793,6 +754,7 @@ classdef AnalysisCON_WU < Analysis
             % declare variables
             selected_brainmeasures = [];
             selected_subject_index = 1;
+            selected_statistic = 'PermutationTest';
             sub = [];
             
             % declare the uicontrols
@@ -1002,31 +964,55 @@ classdef AnalysisCON_WU < Analysis
                     
                     if exist('global_comparison', 'var')
                         global_comparison =  global_comparison(~cellfun(@isempty, global_comparison));
-                        set(ui_global_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' group value 1 ', ' group value 2', ' name ', ' label ', ' notes ', 'fdr'})
-                        set(ui_global_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
-                        set(ui_global_tbl, 'ColumnEditable', [true false false false false false false false false false])
+                        holder_keys = global_comparison{1};
+                        cell_1 = {'', ' measure ', ' group 1 ', ' group 2 ',};
+                        cell_2 = holder_keys.getComparisonProperties('table_keys');
+                        cell_3 = {' name ', ' label ', ' notes ', 'fdr'};
+                        cell_f = [cell_1, cell_2, cell_3];
+                        cell_f = cellfun(@(x) erase(x, 'ComparisonCON.'), cell_f, 'UniformOutput', false);
+                        format_cell =  cell(1, numel(cell_f)-1);
+                        format_cell(1, :) = {'char'};
+                        set(ui_global_tbl, 'ColumnName', cell_f)
+                        set(ui_global_tbl, 'ColumnFormat', ['logical', format_cell])
+                        set(ui_global_tbl, 'ColumnEditable', [true(1) false(1, numel(cell_f))])
                         
-                        data = cell(length(global_comparison), 10);
+                        data = cell(length(global_comparison), numel(cell_f));
                         for i = 1:1:length(global_comparison)
+                            
                             comparison = global_comparison{i};
-                            p_values = comparison.getP1();
+                            is_p_value = false;
+                            if ismember('ComparisonCON.p1', comparison.getComparisonPropertiesKeys())
+                                p_values = comparison.getComparisonProperties('ComparisonCON.p1');
+                                is_p_value = true;
+                            end
+                            
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
                                 data{i, 1} = false;
                             end
-                            [val_1, val_2]  = comparison.getGroupAverageValues();
-                            diff = comparison.getDifference();
                             [group_1, group_2] = comparison.getGroups();
                             data{i, 2} = comparison.getMeasureCode();
                             data{i, 3} = group_1.getID();
                             data{i, 4} = group_2.getID();
-                            data{i, 5} = val_1{1};
-                            data{i, 6} = val_2{1};
-                            data{i, 7} = comparison.getID();
-                            data{i, 8} = comparison.getLabel();
-                            data{i, 9} = comparison.getNotes();
-                            data{i, 10} = fdr([p_values{:}], str2double(fdr_t));
+                            for j = 1:1:numel(cell_2)
+                                holder = comparison.getComparisonProperties(cell_2{j});
+                                if iscell(holder)
+                                    data{i, j+4} = holder{:};
+                                else
+                                    data{i, j+4} = holder;
+                                end
+                            end
+                            
+                            data{i, numel(cell_f)-3} = comparison.getID();
+                            data{i, numel(cell_f)-2} = comparison.getLabel();
+                            data{i, numel(cell_f)-1} = comparison.getNotes();
+                            if is_p_value
+                                data{i, numel(cell_f)} = fdr([p_values{:}], str2double(fdr_t));
+                            else
+                                data{i, numel(cell_f)} = 'not calculated';
+                            end
+                            
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_global_tbl, 'Data', data)
@@ -1134,7 +1120,7 @@ classdef AnalysisCON_WU < Analysis
                     analysis.getGlobalMeasurePlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
                         analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group1, 'Value')), selected_subject_index);
                 elseif get(ui_checkbox_brainmeasures_comp, 'Value')
-                    analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, ...
+                    analysis.getGlobalComparisonPlot(ui_plot_measure_panel, ui_plot_measure_axes, selected_measure, selected_statistic, ...
                         analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group1, 'Value')), ...
                         analysis.getCohort().getGroups().getValue(get(ui_popup_globalmeasures_group2, 'Value')), selected_subject_index);
                 elseif get(ui_checkbox_brainmeasures_rand, 'Value')
@@ -1524,32 +1510,57 @@ classdef AnalysisCON_WU < Analysis
                     
                     if exist('nodal_comparison', 'var')
                         nodal_comparison =  nodal_comparison(~cellfun(@isempty, nodal_comparison));
-                        set(ui_nodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', ' fdr '})
-                        set(ui_nodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
-                        set(ui_nodal_tbl, 'ColumnEditable', [true false false false false false false false false false])
+                        holder_keys = nodal_comparison{1};
+                        cell_1 = {'', ' measure ', ' group 1 ', ' group 2 ',};
+                        cell_2 = holder_keys.getComparisonProperties('table_keys');
+                        cell_3 = {' name ', ' label ', ' notes ', 'fdr'};
+                        cell_f = [cell_1, cell_2, cell_3];
+                        format_cell =  cell(1, numel(cell_f)-1);
+                        format_cell(1, :) = {'char'};
+                        cell_f = cellfun(@(x) erase(x, 'ComparisonCON.'), cell_f, 'UniformOutput', false);
+                        set(ui_nodal_tbl, 'ColumnName', cell_f)
+                        set(ui_nodal_tbl, 'ColumnFormat', ['logical', format_cell])
+                        set(ui_nodal_tbl, 'ColumnEditable', [true(1) false(1, numel(cell_f))])
                         
-                        data = cell(length(nodal_comparison), 10);
+                        data = cell(length(nodal_comparison), numel(cell_f));
                         for i = 1:1:length(nodal_comparison)
                             comparison = nodal_comparison{i};
-                            p_values = comparison.getP1();
+                            
+                            is_p_value = false;
+                            if ismember('ComparisonCON.p1', comparison.getComparisonPropertiesKeys())
+                                p_values = comparison.getComparisonProperties('ComparisonCON.p1');
+                                is_p_value = true;
+                            end
+                            
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
                                 data{i, 1} = false;
                             end
-                            [val_1, val_2]  = comparison.getGroupAverageValues();
+                            
                             [group_1, group_2] = comparison.getGroups();
-                            nodal_values_1 = val_1{1};
-                            nodal_values_2 = val_2{1};
+                            
                             data{i, 2} = comparison.getMeasureCode();
                             data{i, 3} = group_1.getID();
                             data{i, 4} = group_2.getID();
-                            data{i, 5} = nodal_values_1(selected_br);
-                            data{i, 6} = nodal_values_2(selected_br);
-                            data{i, 7} = comparison.getID();
-                            data{i, 8} = comparison.getLabel();
-                            data{i, 9} = comparison.getNotes();
-                            data{i, 10} = fdr([p_values{:}]', str2double(fdr_t));
+                            for j = 1:1:numel(cell_2)
+                                holder = comparison.getComparisonProperties(cell_2{j});
+                                if iscell(holder)
+                                    h =  holder{1};
+                                    data{i, j + 4} = h(selected_br);
+                                else
+                                    data{i, j + 4} = holder(selected_br);
+                                end
+                            end
+                            
+                            data{i, numel(cell_f)-3} = comparison.getID();
+                            data{i, numel(cell_f)-2} = comparison.getLabel();
+                            data{i, numel(cell_f)-1} = comparison.getNotes();
+                            if is_p_value
+                                data{i, numel(cell_f)} = fdr([p_values{:}]', str2double(fdr_t));
+                            else
+                                data{i, numel(cell_f)} = 'not calculated';
+                            end
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_nodal_tbl, 'Data', data)
@@ -2049,32 +2060,56 @@ classdef AnalysisCON_WU < Analysis
                     
                     if exist('binodal_comparison', 'var')
                         binodal_comparison =  binodal_comparison(~cellfun(@isempty, binodal_comparison));
-                        set(ui_binodal_tbl, 'ColumnName', {'', ' measure ', ' group 1 ', ' group 2 ', ' value 1 ', 'value 2', ' name ', ' label ', ' notes ', ' fdr '})
-                        set(ui_binodal_tbl, 'ColumnFormat', {'logical', 'char', 'char', 'char',  'numeric', 'numeric', 'char', 'char', 'char', 'char'})
-                        set(ui_binodal_tbl, 'ColumnEditable', [true false false false false false false false false false])
+                        holder_keys = binodal_comparison{1};
+                        cell_1 = {'', ' measure ', ' group 1 ', ' group 2 ',};
+                        cell_2 = holder_keys.getComparisonProperties('table_keys');
+                        cell_3 = {' name ', ' label ', ' notes ', 'fdr'};
+                        cell_f = [cell_1, cell_2, cell_3];
+                        cell_f = cellfun(@(x) erase(x, 'ComparisonCON.'), cell_f, 'UniformOutput', false);
+                        format_cell =  cell(1, numel(cell_f)-1);
+                        format_cell(1, :) = {'char'};
+                        set(ui_binodal_tbl, 'ColumnName', cell_f)
+                        set(ui_binodal_tbl, 'ColumnFormat', ['logical', format_cell])
+                        set(ui_binodal_tbl, 'ColumnEditable', [true(1) false(1, numel(cell_f))])
                         
-                        data = cell(length(binodal_comparison), 10);
+                        data = cell(length(binodal_comparison), numel(cell_f));
                         for i = 1:1:length(binodal_comparison)
                             comparison = binodal_comparison{i};
-                            p_values = comparison.getP1();
+                            is_p_value = false;
+                            if ismember('ComparisonCON.p1', comparison.getComparisonPropertiesKeys())
+                                p_values = comparison.getComparisonProperties('ComparisonCON.p1');
+                                is_p_value = true;
+                            end
+                            
                             if any(selected_brainmeasures == i)
                                 data{i, 1} = true;
                             else
                                 data{i, 1} = false;
                             end
-                            [val_1, val_2]  = comparison.getGroupAverageValues();
+                            
                             [group_1, group_2] = comparison.getGroups();
-                            binodal_values_1 = val_1{1};
-                            binodal_values_2 = val_2{1};
+                            
                             data{i, 2} = comparison.getMeasureCode();
                             data{i, 3} = group_1.getID();
                             data{i, 4} = group_2.getID();
-                            data{i, 5} = binodal_values_1(selected_br1, selected_br2);
-                            data{i, 6} = binodal_values_2(selected_br1, selected_br2);
-                            data{i, 7} = comparison.getID();
-                            data{i, 8} = comparison.getLabel();
-                            data{i, 9} = comparison.getNotes();
-                            data{i, 10} = fdr([p_values{:}], str2double(fdr_t));
+                            for j = 1:1:numel(cell_2)
+                                holder = comparison.getComparisonProperties(cell_2{j});
+                                if iscell(holder)
+                                    h = holder{1};
+                                    data{i, j + 4} = h(selected_br1, selected_br2);
+                                else
+                                    data{i, j + 4} =  h(selected_br1, selected_br2);
+                                end
+                            end
+                            
+                            data{i, numel(cell_f)-3} = comparison.getID();
+                            data{i, numel(cell_f)-2} = comparison.getLabel();
+                            data{i, numel(cell_f)-1} = comparison.getNotes();
+                            if is_p_value
+                                data{i, numel(cell_f)} = fdr([p_values{:}], str2double(fdr_t));
+                            else
+                                data{i, numel(cell_f)} = 'not calculated';
+                            end
                             RowName(i) = i; %#ok<AGROW>
                         end
                         set(ui_binodal_tbl, 'Data', data)
@@ -2614,7 +2649,7 @@ classdef AnalysisCON_WU < Analysis
             update_popups_grouplists()
             update_graph()
             
-            %% Make the GUI visible.
+            % Make the GUI visible.
             set(fig_graph, 'Visible', 'on');
             
             function init_graph()
@@ -3139,7 +3174,7 @@ classdef AnalysisCON_WU < Analysis
             % get all measures
             mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());  % list of nodal measures
             
-            %% initialization
+            % initialization
             % groups, actions and measures
             ui_action_measures_checkbox = uicontrol(f, 'Style', 'checkbox');
             ui_action_comparison_checkbox = uicontrol(f, 'Style', 'checkbox');
@@ -3197,7 +3232,7 @@ classdef AnalysisCON_WU < Analysis
             
             set(f, 'Visible', 'on')
             
-            %% Callback functions
+            % Callback functions
             function init_measures_panel()
                 % actions ****************************************
                 set(ui_action_measures_checkbox, 'Units', 'normalized')
@@ -3918,12 +3953,19 @@ classdef AnalysisCON_WU < Analysis
                                 case 'Measurement'
                                     measure_data = selected_case.getGroupAverageValue();
                                 case 'Comparison'
+                                    calling_class = analysis.getComparisonClass();
+                                    calling_class_cell_hold = split(calling_class, '_');
+                                    calling_class = calling_class_cell_hold{1};
+                                    statistic = selected_case.getStatisticType();
+                                    plot_property = Statistics.getPlotProperty(statistic);
+                                    plot_property = [calling_class '.' plot_property];
+                                    
                                     atlases = ga.getCohort().getBrainAtlases();
                                     atlas = atlases{1};
                                     fdr_lim = ones(1, atlas.getBrainRegions().length());
-                                    measure_data = selected_case.getDifference();
-                                    p1 = selected_case.getP1();
-                                    p2 = selected_case.getP2();
+                                    measure_data = selected_case.getComparisonProperties(plot_property);
+                                    p1 = selected_case.getComparisonProperties([calling_class '.p1']);
+                                    p2 = selected_case.getComparisonProperties([calling_class '.p2']);
                                     calculate_fdr_lim()
                                 otherwise
                                     atlases = ga.getCohort().getBrainAtlases();
@@ -3950,6 +3992,7 @@ classdef AnalysisCON_WU < Analysis
                                     end
                                     measure_data = refined_case.getGroupAverageValue();
                                 case 'Comparison'
+                                    
                                     comparisons = ga.getComparisons().getValues();
                                     for i = 1:1:length(comparisons)
                                         c = comparisons{i};
@@ -3961,9 +4004,17 @@ classdef AnalysisCON_WU < Analysis
                                     atlases = ga.getCohort().getBrainAtlases();
                                     atlas = atlases{1};
                                     fdr_lim = ones(1, atlas.getBrainregions().length());
-                                    measure_data = refined_case.getDifference()';
-                                    p1 = refined_case.getP1();
-                                    p2 = refined_case.getP2();
+                                    
+                                    calling_class = analysis.getComparisonClass();
+                                    calling_class_cell_hold = split(calling_class, '_');
+                                    calling_class = calling_class_cell_hold{1};
+                                    statistic = refined_case.getStatisticType();
+                                    plot_property = Statistics.getPlotProperty(statistic);
+                                    plot_property = [calling_class '.' plot_property];
+                                    
+                                    measure_data = refined_case.getComparisonProperties(plot_property);
+                                    p1 = refined_case.getComparisonProperties([calling_class '.p1']);
+                                    p2 = refined_case.getComparisonProperties([calling_class '.p2']);
                                     calculate_fdr_lim()
                                 otherwise
                                     r_comparisons = ga.getRandomComparisons().getValues();
@@ -4009,9 +4060,17 @@ classdef AnalysisCON_WU < Analysis
                                     atlases = ga.getCohort().getBrainAtlases();
                                     atlas = atlases{1};
                                     fdr_lim = ones(1, atlas.getBrainregions().length());
-                                    measure_data = refined_case.getDifference()';
-                                    p1 = refined_case.getP1();
-                                    p2 = refined_case.getP2();
+                                    
+                                    calling_class = analysis.getComparisonClass();
+                                    calling_class_cell_hold = split(calling_class, '_');
+                                    calling_class = calling_class_cell_hold{1};
+                                    statistic = refined_case.getStatisticType();
+                                    plot_property = Statistics.getPlotProperty(statistic);
+                                    plot_property = [calling_class '.' plot_property];
+                                    
+                                    measure_data = refined_case.getComparisonProperties(plot_property);
+                                    p1 = refined_case.getComparisonProperties([calling_class '.p1']);
+                                    p2 = refined_case.getComparisonProperties([calling_class '.p2']);
                                     calculate_fdr_lim()
                                 otherwise
                                     r_comparisons = ga.getRandomComparisons().getValues();
@@ -4288,7 +4347,7 @@ classdef AnalysisCON_WU < Analysis
                     if v.Release >= "(R2020a)"
                         raw_analysis = readcell(file_analysis);
                     else
-                        raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0); 
+                        raw_analysis = readtable(file_analysis, 'ReadVariableNames', 0);
                         raw_analysis = table2cell(raw_analysis);
                     end
                     analysis_id = raw_analysis{1, 2};
@@ -4296,9 +4355,9 @@ classdef AnalysisCON_WU < Analysis
                     analysis_notes = raw_analysis{3, 2};
                     type_of_analysis = raw_analysis{4, 2};
                     cohort_id = raw_analysis{5, 2};
-%                     n_measurements = raw_analysis{6, 2};
-%                     n_comparisons = raw_analysis{7, 2}; do i need this?
-%                     n_rcomparisons = raw_analysis{8, 2};
+                    %                     n_measurements = raw_analysis{6, 2};
+                    %                     n_comparisons = raw_analysis{7, 2}; do i need this?
+                    %                     n_rcomparisons = raw_analysis{8, 2};
                 end
                 
                 cohort = tmp;
@@ -4356,7 +4415,7 @@ classdef AnalysisCON_WU < Analysis
                             % get values
                             raw_values = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
                             raw_avgs = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
-
+                            
                             % create measurement
                             measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
                                 meas_id, ...
@@ -4369,7 +4428,7 @@ classdef AnalysisCON_WU < Analysis
                                 'MeasurementCON.average_value', raw_avgs, ...
                                 varargin{:});
                             measurement_idict.add(measurement.getID(), measurement, k);
-                        end 
+                        end
                     elseif isequal(sub_folders(i).name, 'comparisons')
                         comparison_idict = analysis.getComparisons();
                         for k = 1:1:length(files)
@@ -4387,6 +4446,7 @@ classdef AnalysisCON_WU < Analysis
                             measure_code = raw_main{4, 2};
                             raw_group1 = raw_main{5, 2};
                             raw_group2 = raw_main{6, 2};
+                            statistic = raw_main{7, 2};
                             
                             if ismissing(comp_lab)
                                 comp_lab = '';
@@ -4394,23 +4454,31 @@ classdef AnalysisCON_WU < Analysis
                             if ismissing(comp_notes)
                                 comp_notes = '';
                             end
+                            if ismissing(statistic)
+                                statistic = 'PermutationTest';
+                            end
                             
                             % get groups
                             group1 = analysis.getCohort().getGroups().getValue(raw_group1);
                             group2 = analysis.getCohort().getGroups().getValue(raw_group2);
                             
+                            % get keys 
+                            keys = cell(1, length(raw_main) - 7);
+                            calling_class = 'ComparisonCON';
+                            for j = 8:1:length(raw_main)
+                                raw_key = raw_main{j, 1};
+                                h = split(raw_key, ' ');
+                                keys{j - 7} =  [calling_class '.' h{1}];
+                            end
+                            
                             % get values
-                          
-                            raw_values_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 0));
-                            raw_values_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 3, 'ReadVariableNames', 0));
-                            raw_avgs_g1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 4, 'ReadVariableNames', 0));
-                            raw_avgs_g2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
-                            raw_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 5, 'ReadVariableNames', 0));
-                            raw_all_difference = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 7, 'ReadVariableNames', 0));
-                            raw_p1 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 8, 'ReadVariableNames', 0));
-                            raw_p2 = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 9, 'ReadVariableNames', 0));
-                            raw_cimin = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 10, 'ReadVariableNames', 0));
-                            raw_cimax = table2array(readtable(fullfile(path, files(k).name), 'Sheet', 11, 'ReadVariableNames', 0));
+                            comp_dict  = containers.Map;
+                            comp_dict('stat_keys') = keys;
+                            
+                            for j = 1:1:length(keys)
+                                comp_dict(keys{j}) = num2cell(table2array(readtable(fullfile(path, files(k).name), 'Sheet', j+1, 'ReadVariableNames', 0)), 1);
+                            end
+                            
                             
                             comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                                 comp_id, ...
@@ -4420,20 +4488,12 @@ classdef AnalysisCON_WU < Analysis
                                 measure_code, ...
                                 group1, ...
                                 group2, ...
-                                'ComparisonCON.values_1', num2cell(raw_values_g1, 1), ...
-                                'ComparisonCON.average_values_1', num2cell(raw_avgs_g1, 1), ...
-                                'ComparisonCON.values_2', num2cell(raw_values_g2, 1), ...
-                                'ComparisonCON.average_values_2', num2cell(raw_avgs_g2, 1), ...
-                                'ComparisonCON.difference', {raw_difference}, ...
-                                'ComparisonCON.all_differences', num2cell(raw_all_difference, 1), ...
-                                'ComparisonCON.p1', {raw_p1}, ...
-                                'ComparisonCON.p2', {raw_p2}, ...
-                                'ComparisonCON.confidence_min', {raw_cimin}, ...
-                                'ComparisonCON.confidence_max', {raw_cimax}, ...
+                                'StatisticalTest', statistic, ...
+                                'StatisticalDict', comp_dict, ...
                                 varargin{:});
                             
                             comparison_idict.add(comparison.getID(), comparison, k);
-                        end 
+                        end
                     elseif isequal(sub_folders(i).name, 'randomcomparisons')
                         random_comparison_idict = analysis.getRandomComparisons();
                         for k = 1:1:length(files)
@@ -4493,11 +4553,11 @@ classdef AnalysisCON_WU < Analysis
                                 varargin{:});
                             
                             random_comparison_idict.add(random_comparison.getID(), random_comparison, k);
-                        end 
+                        end
                     else
-                        continue;                        
+                        continue;
                     end
-                end   
+                end
             end
         end
         function save_to_xls(analysis, varargin)
@@ -4543,8 +4603,8 @@ classdef AnalysisCON_WU < Analysis
             
             % warning xls sheets off
             warning( 'off', 'MATLAB:xlswrite:AddSheet' ) ;
-             
-            % measurements could ask for just certain measures 
+            
+            % measurements could ask for just certain measures
             for i = 1:1:measurements.length()
                 m = measurements.getValue(i);
                 file_measurement = [root_directory filesep() 'measurements' filesep() m.getID() '.xlsx'];
@@ -4553,7 +4613,7 @@ classdef AnalysisCON_WU < Analysis
                     'Measurement Label:', m.getLabel();
                     'Measurement Notes:', m.getNotes();
                     'Measure:', m.getMeasureCode();
-                    'Group:', m.getGroup().getID(); 
+                    'Group:', m.getGroup().getID();
                     'Values (Sheet 2):', size(m.getMeasureValues);
                     'Group Average (Sheet 3):', size(m.getGroupAverageValue());
                     };
@@ -4569,42 +4629,42 @@ classdef AnalysisCON_WU < Analysis
             % comparisons
             for i = 1:1:comparisons.length()
                 c = comparisons.getValue(i);
-                Values1 = c.getGroupValue(1);
-                Values2 = c.getGroupValue(2);
-                Avg_1 = c.getGroupAverageValue(1);
-                Avg_2 = c.getGroupAverageValue(2);
+                
                 [g1, g2] = c.getGroups();
                 file_comparisons = [root_directory filesep() 'comparisons' filesep() c.getID() '.xlsx'];
-                comparisons_data = {
+                            
+                key_entries = c.getComparisonProperties('stat_keys');               
+  
+                comparisons_data_basic = {
                     'Comparison ID:', c.getID();
                     'Comparison Label:', c.getLabel();
                     'Comparison Notes:', c.getNotes();
                     'Measure:', c.getMeasureCode();
                     'Group 1:', g1.getID();
                     'Group 2:', g2.getID();
-                    'Values Group 1 (Sheet 2):', size(Values1);
-                    'Values Group 2 (Sheet 3):', size(Values2);
-                    'Group 1 Average Value (Sheet 4):', size(Avg_1);
-                    'Group 2 Average Value (Sheet 5):', size(Avg_2);
-                    'Difference (Sheet 6):', size(c.getDifference());
-                    'All Differences (Sheet 7):', size(c.getAllDifferences());
-                    'P1 (Sheet 8):', size(c.getP1());
-                    'P2 (Sheet 9):', size(c.getP2());
-                    'Minimum Confidence Interval (Sheet 10):', size(c.getConfidenceIntervalMin());
-                    'Maximum Confidence Interval (Sheet 11):', size(c.getConfidenceIntervalMax());
+                    'Statistic:', c.getStatisticType();
                     };
                 
+                for j = 1:1:length(key_entries)
+                    h = split(key_entries{j}, '.');
+                    comparison_dynamic_data{(2 * j) - 1} = [h{2} ' Sheet(' num2str(j + 1) ')']; %#ok<AGROW>
+                    comparison_dynamic_data{2 * j} = size(c.getComparisonProperties(key_entries{j}), 2); %#ok<AGROW>
+                end
+                
+                h = length(comparison_dynamic_data);
+                comparisons_data = [comparisons_data_basic; reshape(comparison_dynamic_data, [2 h/2])';];
+                
+                
                 writetable(cell2table(comparisons_data), file_comparisons, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([Values1{:}]), file_comparisons, 'Sheet', 2, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([Values2{:}]), file_comparisons, 'Sheet', 3, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([Avg_1{:}]), file_comparisons, 'Sheet', 4, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([Avg_2{:}]), file_comparisons, 'Sheet', 5, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getDifference{:}]), file_comparisons, 'Sheet', 6, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getAllDifferences{:}]), file_comparisons, 'Sheet', 7, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getP1{:}]), file_comparisons, 'Sheet', 8, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getP2{:}]), file_comparisons, 'Sheet', 9, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getConfidenceIntervalMin{:}]), file_comparisons, 'Sheet', 10, 'WriteVariableNames', 0, 'Range', 'A1');
-                writetable(array2table([c.getConfidenceIntervalMax{:}]), file_comparisons, 'Sheet', 11, 'WriteVariableNames', 0, 'Range', 'A1');
+                
+                % dynamic
+                for j = 1:1:length(key_entries)
+                    h = c.getComparisonProperties(key_entries{j});
+                    if ~iscell(h)
+                        h = {h};
+                    end
+                    writetable(array2table([h{:}]), file_comparisons, 'Sheet', 1 + j, 'WriteVariableNames', 0, 'Range', 'A1');
+                end
             end
             
             % random comparisons
@@ -4655,11 +4715,11 @@ classdef AnalysisCON_WU < Analysis
             if isa(tmp, 'Analysis')
                 analysis = tmp;
                 subject_class = analysis.getCohort().getSubjectClass(); %#ok<NASGU>
-            else      
+            else
                 cohort = tmp;
                 analysis_id = raw.ID;
                 analysis_label = raw.Label;
-                analysis_notes = raw.Notes; 
+                analysis_notes = raw.Notes;
                 type_of_analysis = raw.Analysis;
                 
                 if isequal(type_of_analysis, 'AnalysisCON_WU')
@@ -4670,7 +4730,7 @@ classdef AnalysisCON_WU < Analysis
                     analysis = AnalysisCON_BUD(analysis_id, analysis_label, analysis_notes, cohort, {}, {}, {});
                 else
                     errordlg('Type of Analysis does not exist.');
-                end                
+                end
             end
             
             measurements_idict = analysis.getMeasurements();
@@ -4690,10 +4750,31 @@ classdef AnalysisCON_WU < Analysis
                     'MeasurementCON.values', num2cell(raw.Measurements(i).value', 1), ...
                     'MeasurementCON.average_value', raw.Measurements(i).avgvalue, ...
                     varargin{:});
-                measurements_idict.add(measurement.getID(), measurement, i);                
+                measurements_idict.add(measurement.getID(), measurement, i);
             end
-            % comparison idict 
-            for i = 1:1:length(raw.Comparisons)                
+            % comparison idict
+            for i = 1:1:length(raw.Comparisons)
+                statistic = raw.Comparisons(i).statistic;                
+                calling_class = analysis.getComparisonClass();
+                calling_class_cell_hold = split(calling_class, '_');
+                calling_class = calling_class_cell_hold{1};  
+                
+                field_entries = fieldnames(raw.Comparisons)';
+                basic_entries  = {'id', 'label', 'notes', 'measure', 'statistic', 'group1', 'group2'};
+                complete_key_entries = field_entries;
+                complete_key_entries(ismember(complete_key_entries, basic_entries)) = [];
+                
+                comparison_info = containers.Map;
+                comparison_info('stat_keys') = cellfun(@(x) [calling_class '.' x], complete_key_entries, 'UniformOutput', 0);
+                % dynamic part
+                for j = 1:1:length(complete_key_entries)                    
+                    if isnumeric(raw.Comparisons(i).(complete_key_entries{j}))
+                        comparison_info([calling_class '.' complete_key_entries{j}]) = num2cell(raw.Comparisons(i).(complete_key_entries{j})', 1);
+                    else
+                        comparison_info([calling_class '.' complete_key_entries{j}]) = {raw.Comparisons(i).(complete_key_entries{j})'};
+                    end
+                end
+                
                 comparison = Comparison.getComparison(analysis.getComparisonClass(), ...
                     raw.Comparisons(i).id, ...
                     raw.Comparisons(i).label, ...  % comparison label
@@ -4702,16 +4783,8 @@ classdef AnalysisCON_WU < Analysis
                     raw.Comparisons(i).measure, ...
                     cohort.getGroups().getValue(raw.Comparisons(i).group1), ...
                     cohort.getGroups().getValue(raw.Comparisons(i).group2), ...
-                    'ComparisonCON.values_1', num2cell(raw.Comparisons(i).value1', 1), ...
-                    'ComparisonCON.average_values_1', num2cell(raw.Comparisons(i).avgvalue1', 1), ...
-                    'ComparisonCON.values_2', num2cell(raw.Comparisons(i).value2', 1), ...
-                    'ComparisonCON.average_values_2', num2cell(raw.Comparisons(i).avgvalue2', 1), ...
-                    'ComparisonCON.difference', {raw.Comparisons(i).difference'}, ...
-                    'ComparisonCON.all_differences', num2cell(raw.Comparisons(i).alldifferences', 1), ...
-                    'ComparisonCON.p1', {raw.Comparisons(i).p1'}, ...
-                    'ComparisonCON.p2', {raw.Comparisons(i).p2'}, ...
-                    'ComparisonCON.confidence_min', {raw.Comparisons(i).confidencemin'}, ...
-                    'ComparisonCON.confidence_max', {raw.Comparisons(i).confidencemax'}, ...
+                    'StatisticalTest', statistic, ...
+                    'StatisticalDict', comparison_info, ...
                     varargin{:});
                 
                 comparisons_idict.add(comparison.getID(), comparison, i);
@@ -4753,7 +4826,7 @@ classdef AnalysisCON_WU < Analysis
             
             % create structs
             Measurements_structure = struct;
-            Comparisons_structure = struct;
+%             Comparisons_structure = struct;
             RandomComparisons_structure = struct;
             
             % fill info into structures
@@ -4763,29 +4836,39 @@ classdef AnalysisCON_WU < Analysis
                 Measurements_structure(i).label = meas.getLabel();
                 Measurements_structure(i).notes = meas.getNotes();
                 Measurements_structure(i).measure = meas.getMeasureCode();
-                Measurements_structure(i).group = meas.getGroup().getID();               
-                Measurements_structure(i).value = meas.getMeasureValues();                                
+                Measurements_structure(i).group = meas.getGroup().getID();
+                Measurements_structure(i).value = meas.getMeasureValues();
                 Measurements_structure(i).avgvalue = meas.getGroupAverageValue();
             end
             for i = 1:1:length(comparisons)
                 comp = comparisons{i};
+                
+                statistic = comp.getStatisticType();                
+                calling_class = analysis.getComparisonClass();
+                calling_class_cell_hold = split(calling_class, '_');
+                calling_class = calling_class_cell_hold{1};
+                
+                key_entries = comp.getComparisonProperties('stat_keys');
+                basic_entries  = {'id', 'label', 'notes', 'measure', 'statistic', 'group1', 'group2'};
+                complete_key_entries = [basic_entries key_entries];
+                
+                labels = cellfun(@(x) erase(x, [calling_class '.']), complete_key_entries, 'UniformOutput', 0);
+                
+                Comparisons_structure(i) = cell2struct(cell(1, length(labels)), labels, 2); %#ok<AGROW>
+                
                 [g1, g2] = comp.getGroups();
-                Comparisons_structure(i).id = comp.getID();
-                Comparisons_structure(i).label = comp.getLabel();
-                Comparisons_structure(i).notes = comp.getNotes();
-                Comparisons_structure(i).measure = comp.getMeasureCode();
-                Comparisons_structure(i).group1 = g1.getID();  
-                Comparisons_structure(i).group2 = g2.getID();
-                Comparisons_structure(i).value1 = comp.getGroupValue(1);                
-                Comparisons_structure(i).value2 = comp.getGroupValue(2); 
-                Comparisons_structure(i).avgvalue1 = comp.getGroupAverageValue(1);
-                Comparisons_structure(i).avgvalue2 = comp.getGroupAverageValue(2); 
-                Comparisons_structure(i).difference = comp.getDifference();
-                Comparisons_structure(i).alldifferences = comp.getAllDifferences();   
-                Comparisons_structure(i).p1 = comp.p1;                
-                Comparisons_structure(i).p2 = comp.p2;                
-                Comparisons_structure(i).confidencemin = comp.getConfidenceIntervalMin();
-                Comparisons_structure(i).confidencemax = comp.getConfidenceIntervalMax();
+                Comparisons_structure(i).id = comp.getID(); %#ok<AGROW>
+                Comparisons_structure(i).label = comp.getLabel(); %#ok<AGROW>
+                Comparisons_structure(i).notes = comp.getNotes(); %#ok<AGROW>
+                Comparisons_structure(i).measure = comp.getMeasureCode();    %#ok<AGROW>    
+                Comparisons_structure(i).statistic = statistic; %#ok<AGROW> 
+                Comparisons_structure(i).group1 = g1.getID(); %#ok<AGROW>
+                Comparisons_structure(i).group2 = g2.getID(); %#ok<AGROW>
+                
+                % dynamic part
+                for j = 8:1:length(complete_key_entries)
+                    Comparisons_structure(i).(labels{j}) = comp.getComparisonProperties(complete_key_entries{j});
+                end
             end
             for i = 1:1:length(random_comparisons)
                 ran_comp = random_comparisons{i};
@@ -4794,20 +4877,20 @@ classdef AnalysisCON_WU < Analysis
                 RandomComparisons_structure(i).notes = ran_comp.getNotes();
                 RandomComparisons_structure(i).measure = ran_comp.getMeasureCode();
                 RandomComparisons_structure(i).group = ran_comp.getGroup().getID();
-                RandomComparisons_structure(i).value = ran_comp.getGroupValue();                
-                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue(); 
+                RandomComparisons_structure(i).value = ran_comp.getGroupValue();
+                RandomComparisons_structure(i).ranvalue = ran_comp.getRandomValue();
                 RandomComparisons_structure(i).avgvalue = ran_comp.getAverageValue();
-                RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue(); 
+                RandomComparisons_structure(i).ranavgvalue = ran_comp.getAverageRandomValue();
                 RandomComparisons_structure(i).difference = ran_comp.getDifference();
                 RandomComparisons_structure(i).alldifferences = ran_comp.getAllDifferences();
                 RandomComparisons_structure(i).p1 = ran_comp.p1;
-                RandomComparisons_structure(i).p2 = ran_comp.p2;                
+                RandomComparisons_structure(i).p2 = ran_comp.p2;
                 RandomComparisons_structure(i).confidencemin = ran_comp.getConfidenceIntervalMin();
                 RandomComparisons_structure(i).confidencemax = ran_comp.getConfidenceIntervalMax();
             end
             
             %create analysis structure
-             structure = struct( ...
+            structure = struct( ...
                 'Braph', BRAPH2.NAME, ...
                 'Build', BRAPH2.BUILD, ...
                 'Analysis', analysis_class, ...
@@ -4818,7 +4901,7 @@ classdef AnalysisCON_WU < Analysis
                 'Measurements', Measurements_structure, ...
                 'Comparisons', Comparisons_structure, ...
                 'RandomComparisons', RandomComparisons_structure ...
-                ); 
+                );
         end
     end
 end
