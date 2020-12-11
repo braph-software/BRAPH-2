@@ -244,7 +244,9 @@ classdef Subject < handle & matlab.mixin.Copyable
             %
             % See also getData, getBrainAtlases, getDataCodes, getDataList.
             
-            if new_data
+            non_subs = {'SubjectST', 'SubjectST_MP'};
+            
+            if ~ismember(sub.getClass(), non_subs)
                 data_codes = sub.get_internal_datacodes();
                 data_list = sub.get_internal_datalist();
             else
