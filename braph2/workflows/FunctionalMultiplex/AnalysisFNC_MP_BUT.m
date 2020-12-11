@@ -1,25 +1,25 @@
-classdef AnalysisFNC_BUT < AnalysisFNC_WU
-    % AnalysisFNC_BUT An analysis of functional data of fixed threshold binary undirected graphs
-    % AnalysisFNC_BUT is a subclass of AnalysisFNC_WU and implements the methods
-    % needed for functional analysis.
+classdef AnalysisFNC_MP_BUT < AnalysisFNC_MP_WU
+    % AnalysisFNC_MP_BUT An analysis of functional multiplex data of fixed threshold binary undirected graphs
+    % AnalysisFNC_MP_BUT is a subclass of AnalysisFNC_MP_WU and implements the methods
+    % needed for functional multiplex analysis.
     %
-    % AnalysisFNC_BUT implements AnalysisFNC_WU calculating methods
-    % to obtain a functional data of fixed threshold binary undirected graphs
-    % measurement, a random comprison or a comparison. AnalysisFNC_BUT
+    % AnalysisFNC_MP_BUT implements AnalysisFNC_MP_WU calculating methods
+    % to obtain a functional multiplex data of fixed threshold binary undirected graphs
+    % measurement, a random comprison or a comparison. AnalysisFNC_MP_BUT
     % overrides the ID methods of its superclass.
     % Functional data can be for example fMRI data.
     %
-    % AnalysisFNC_BUT constructor methods:
-    %  AnalysisFNC_BUT              - Constructor
+    % AnalysisFNC_MP_BUT constructor methods:
+    %  AnalysisFNC_MP_BUT              - Constructor
     %
-    % AnalysisFNC_BUT calcultion methods (Access = protected):
+    % AnalysisFNC_MP_BUT calcultion methods (Access = protected):
     %  get_graph_for_group          - returns the graph of the correlated matrix
     %  get_graph_for_subject        - returns the graph of the correlated matrix
     %  calculate_measurement        - returns the measurement
     %  calculate_random_comparison  - returns the random comparison
     %  calculate_comparison         - returns the comparison
     %
-    % AnalysisFNC_BUT descriptive methods (Static):
+    % AnalysisFNC_MP_BUT descriptive methods (Static):
     %  getClass                     - returns the class of the analysis
     %  getName                      - returns the name of the analysis
     %  getDescription               - returns the description of the analysis
@@ -28,7 +28,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
     %  getComparisonClass           - returns the class of the comparison
     %  getAvailbleSettings          - returns the available settings
     %
-    % AnalysisFNC_BUT Plot UIPanels
+    % AnalysisFNC_MP_BUT Plot UIPanels
     %  getGlobalMeasurePlot         - returns a global measurement plot
     %  getGlobalComparisonPlot      - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
@@ -42,20 +42,20 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
     % See also Analysis, MeasurementFNC_BUT, RandomComparisonFNC_BUT, ComparisonFNC_BUT
     
     methods
-        function analysis = AnalysisFNC_BUT(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
-            % AnalysisFNC_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
-            % creates a functional analysis of fixed threshold with ID, LABEL,
+        function analysis = AnalysisFNC_MP_BUT(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
+            % AnalysisFNC_MP_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS)
+            % creates a functional multiplex analysis of fixed threshold with ID, LABEL,
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISFNC_WU with default settings.
             %
-            % AnalysisFNC_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
-            % creates a functional analysis of fixed threshold with ID, LABEL,
+            % AnalysisFNC_MP_BUT(ID, LABEL, NOTES, COHORT, MEASUREMENTS, RANDOMCOMPARISON, COMPARISONS, PROPERTY, VALUE, ...)
+            % creates a functional multiplex analysis of fixed threshold with ID, LABEL,
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISFNC_WU with specified settings VALUES.
             %
             % See also MeasurementFNC_WU, RandomComparisonFNC_WU, ComparisonFNC_WU.
             
-            analysis = analysis@AnalysisFNC_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
+            analysis = analysis@AnalysisFNC_MP_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
     end
     methods  % ID functions
@@ -68,7 +68,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             %
             % See also getRandomComparisonID, getComparisonID.
             
-            measurement_id = getMeasurementID@AnalysisFNC_WU(analysis, measure_code, group, varargin{:});
+            measurement_id = getMeasurementID@AnalysisFNC_MP_WU(analysis, measure_code, group, varargin{:});
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             measurement_id = [measurement_id ' threshold=' num2str(threshold)];
@@ -82,7 +82,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             %
             % See also getMeasurementID, getComparisonID.
             
-            randomcomparison_id = getRandomComparisonID@AnalysisFNC_WU(analysis, measure_code, group, varargin{:});
+            randomcomparison_id = getRandomComparisonID@AnalysisFNC_MP_WU(analysis, measure_code, group, varargin{:});
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             randomcomparison_id = [randomcomparison_id ' threshold=' num2str(threshold)];
@@ -96,7 +96,7 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             %
             % See also getMeasurementID, getRandomComparisonID.
             
-            comparison_id = getComparisonID@AnalysisFNC_WU(analysis, measure_code, group_1, group_2, varargin{:});
+            comparison_id = getComparisonID@AnalysisFNC_MP_WU(analysis, measure_code, group_1, group_2, varargin{:});
             
             threshold = get_from_varargin(0, 'threshold', varargin{:});
             comparison_id = [comparison_id ' threshold=' num2str(threshold)];
@@ -118,6 +118,9 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             T = analysis.getSettings('AnalysisFNC.Repetition');
             fmin = analysis.getSettings('AnalysisFNC.FrecuencyRuleMin');
             fmax = analysis.getSettings('AnalysisFNC.FrecuencyRuleMax');
+            covariates_keys = get_from_varargin({}, 'FNC_MP_Covariates', varargin{:});
+            
+            threshold = get_from_varargin(0, 'threshold', varargin{:});
             
             T = str2double(T);
             fmin = str2double(fmin);
@@ -125,24 +128,34 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
            
             for i = 1:1:subject_number
                 subject = subjects{i};
-                data = subject.getData('FNC').getValue();  % st data
-                % filter data
-                fs = 1 / T;
-                if fmax > fmin && T > 0
-                    NFFT = 2 * ceil(size(data, 1) / 2);
-                    ft = fft(data, NFFT);  % Fourier transform
-                    f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-                    ft(f < fmin | f > fmax, :) = 0;
-                    data = ifft(ft, NFFT);
+                layers = subject.getNumberOfLayers();
+                
+                for j = 1:1:layers
+                    id = ['FNC_MP_' num2str(j)];
+                    data = subject.getData(id).getValue();
+                    for k = 1:1:length(covariates_keys)
+                        covs = subject.getData(covariates_keys{k}).getValue();
+                        covariates = [covs{:}];  % comma or ;
+                    end
+                    % filter data
+                    fs = 1 / T;
+                    if fmax > fmin && T > 0
+                        NFFT = 2 * ceil(size(data, 1) / 2);
+                        ft = fft(data, NFFT);  % Fourier transform
+                        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+                        ft(f < fmin | f > fmax, :) = 0;
+                        data = ifft(ft, NFFT);
+                    end
+                    correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
+                    negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
+                    A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule, covariates);
+                    A = binarize(A, 'treshold', threshold, varargin{:});
+                    A{j, j} = A;
                 end
-                correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
-                negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
-                A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule);
                 
-                threshold = get_from_varargin(0, 'threshold', varargin{:});
-                A = binarize(A, 'threshold', threshold, varargin{:});
+                A(cellfun('isempty', A)) = eye(length(A(1,1)));
                 
-                graph_type = AnalysisFNC_WU.getGraphType();
+                graph_type = analysis.getGraphType();
                 g = Graph.getGraph(graph_type, A);
                 graphs{i} = g; %#ok<AGROW>
             end         
@@ -160,60 +173,77 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             T = analysis.getSettings('AnalysisFNC.Repetition');
             fmin = analysis.getSettings('AnalysisFNC.FrecuencyRuleMin');
             fmax = analysis.getSettings('AnalysisFNC.FrecuencyRuleMax');
-            data = subject.getData('FNC').getValue();
+            layers = subject.getNumberOfLayers();            
+            covariates_keys = get_from_varargin({}, 'FNC_MP_Covariates', varargin{:});
+            threshold = get_from_varargin(0, 'threshold', varargin{:});
+            
+            correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
+            negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
             
             T = str2double(T);
             fmin = str2double(fmin);
             fmax = str2double(fmax);
-            % filter data
-            fs = 1 / T;
-            if fmax > fmin && T > 0
-                NFFT = 2 * ceil(size(data, 1) / 2);
-                ft = fft(data, NFFT);  % Fourier transform
-                f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-                ft(f < fmin | f > fmax, :) = 0;
-                data = ifft(ft, NFFT);
+            
+            for j = 1:1:layers
+                id = ['FNC_MP_' num2str(j)];
+                data = subject.getData(id).getValue();
+
+                for k = 1:1:length(covariates_keys)
+                    covs = subject.getData(covariates_keys{k}).getValue();
+                    covariates = [covs{:}];  % comma or ;
+                end
+                
+                % filter data
+                fs = 1 / T;
+                if fmax > fmin && T > 0
+                    NFFT = 2 * ceil(size(data, 1) / 2);
+                    ft = fft(data, NFFT);  % Fourier transform
+                    f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+                    ft(f < fmin | f > fmax, :) = 0;
+                    data = ifft(ft, NFFT);
+                end
+                A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule, covariates);  % correlation is a column based operation
+                
+                A = binarize(A, 'treshold', threshold, varargin{:});
+                A{j, j} = A;
             end
             
-            correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
-            negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
-            A = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule);  % correlation is a column based operation
-            threshold = get_from_varargin(0, 'threshold', varargin{:});
-            A = binarize(A, 'threshold', threshold, varargin{:});
+            A(cellfun('isempty', A)) = eye(length(A(1,1)));
+            
             graph_type = analysis.getGraphType();
             graph = Graph.getGraph(graph_type, A);
         end
     end
     methods (Static)  % Descriptive functions
         function analysis_class = getClass()
-            % GETCLASS returns the class of functional analysis
+            % GETCLASS returns the class of functional multiplex analysis
             %
             % ANALYSIS_CLASS = GETCLASS(ANALYSIS) returns the class of
-            % analysis. In this case AnalysisFNC_BUT.
+            % analysis. In this case AnalysisFNC_MP_BUT.
             %
             % See also getList, getName, getDescription.
             
-            analysis_class = 'AnalysisFNC_BUT';
+            analysis_class = 'AnalysisFNC_MP_BUT';
         end
         function name = getName()
-            % GETNAME returns the name of functional analysis
+            % GETNAME returns the name of functional multiplex analysis
             %
             % NAME = GETNAME() returns the name of the analysis.
             %
             % See also getList, getClass, getDescription.
             
-            name = 'Analysis Functional BUT';
+            name = 'Analysis Functional Multiplex BUT';
         end
         function description = getDescription()
-            % GETDESCRIPTION returns the description of functional analysis
+            % GETDESCRIPTION returns the description of functional multiplex analysis
             %
             % DESCRIPTION = GETDESCRIPTION() returns the description
-            % of AnalysisFNC_BUT.
+            % of AnalysisFNC_MP_BUT.
             %
             % See also getList, getClass, getName.
             
             description = [ ...
-                'Analysis based on functional data of fixed threshold using ' ...
+                'Analysis based on functional multiplex data of fixed threshold using ' ...
                 'weighted graphs e.g. cortical thickness for each brain region. ' ...
                 'It provides a single graph for each subject group. ' ...
                 'Functional data can be for example fMRI data.' ...
@@ -227,38 +257,38 @@ classdef AnalysisFNC_BUT < AnalysisFNC_WU
             %
             % See also getSubjectClass.
             
-            graph_type = 'GraphBU';
+            graph_type = 'MultiplexGraphBU';
         end
         function measurement_class = getMeasurementClass()
-            % GETMEASUREMENTCLASS returns the class of functional analysis measurement
+            % GETMEASUREMENTCLASS returns the class of functional multiplex analysis measurement
             %
             % MEASUREMENT_CLASS = GETMEASUREMENT_CLASS() returns the
-            % class of AnalysisFNC_BUT measurement, 'MeasurementFNC_BUT'.
+            % class of AnalysisFNC_MP_BUT measurement, 'MeasurementFNC_BUT'.
             %
             % See also getRandomComparisonClass, getComparisonClass.
             
-            measurement_class =  'MeasurementFNC_BUT';
+            measurement_class =  'MeasurementFNC_MP_BUT';
         end
         function randomcomparison_class = getRandomComparisonClass()
-            % GETRANDOMCOMPARISONCLASS returns the class of functional analysis randomcomparison
+            % GETRANDOMCOMPARISONCLASS returns the class of functional multiplex analysis randomcomparison
             %
             % RANDOMCOMPARISON_CLASS = GETRANDOMCOMPARISONCLASS()
-            % returns the class of AnalysisFNC_BUT randomcomparison,
+            % returns the class of AnalysisFNC_MP_BUT randomcomparison,
             % 'RandomComparisonFNC_BUT'.
             %
             % See also getMeasurementClass, getComparisonClass.
             
-            randomcomparison_class = 'RandomComparisonFNC_BUT';
+            randomcomparison_class = 'RandomComparisonFNC_MP_BUT';
         end
         function comparison_class = getComparisonClass()
-            % GETCOMPARISONCLASS returns the class of functional analysis comparison
+            % GETCOMPARISONCLASS returns the class of functional multiplex analysis comparison
             %
             % COMPARISON_CLASS = GETCOMPARISONCLASS() returns the
-            % class of AnalysisFNC_BUT comparison, 'ComparisonFNC_BUT'.
+            % class of AnalysisFNC_MP_BUT comparison, 'ComparisonFNC_BUT'.
             %
             % See also getMeasurementClass, getRandomComparisonClass.
             
-            comparison_class = 'ComparisonFNC_BUT';
+            comparison_class = 'ComparisonFNC_MP_BUT';
         end
     end
     methods  % plot methods

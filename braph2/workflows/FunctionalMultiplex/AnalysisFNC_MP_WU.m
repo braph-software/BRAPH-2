@@ -145,12 +145,9 @@ classdef AnalysisFNC_MP_WU < Analysis
                     id = ['FNC_MP_' num2str(j)];
                     data = subject.getData(id).getValue();
                     
-                    covariates_rule = false;
-                    
                     for k = 1:1:length(covariates_keys)
                         covs = subject.getData(covariates_keys{k}).getValue();
                         covariates = [covs{:}];  % comma or ;
-                        covariates_rule = true;
                     end
                     
                     % filter data
@@ -165,7 +162,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                     
                     correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
                     negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
-                    A{j, j} = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule, covariates_rule, covariates);  %#ok<AGROW> % correlation is a column based operation
+                    A{j, j} = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule, covariates);  %#ok<AGROW> % correlation is a column based operation
                 end
                 
                 A(cellfun('isempty', A)) = eye(length(A(1,1)));
@@ -191,6 +188,9 @@ classdef AnalysisFNC_MP_WU < Analysis
             layers = subject.getNumberOfLayers();            
             covariates_keys = get_from_varargin({}, 'FNC_MP_Covariates', varargin{:});
             
+            correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
+            negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
+            
             T = str2double(T);
             fmin = str2double(fmin);
             fmax = str2double(fmax);
@@ -199,12 +199,9 @@ classdef AnalysisFNC_MP_WU < Analysis
                 id = ['FNC_MP_' num2str(j)];
                 data = subject.getData(id).getValue();
                 
-                covariates_rule = false;
-                
                 for k = 1:1:length(covariates_keys)
                     covs = subject.getData(covariates_keys{k}).getValue();
                     covariates = [covs{:}];  % comma or ;
-                    covariates_rule = true;
                 end
                 
                 % filter data
@@ -217,8 +214,6 @@ classdef AnalysisFNC_MP_WU < Analysis
                     data = ifft(ft, NFFT);
                 end
                 
-                correlation_rule = analysis.getSettings('AnalysisFNC.CorrelationRule');
-                negative_weight_rule = analysis.getSettings('AnalysisFNC.NegativeWeightRule');
                 A{j, j} = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule, covariates_rule, covariates);  %#ok<AGROW> % correlation is a column based operation
             end
             
