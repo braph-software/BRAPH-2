@@ -401,7 +401,7 @@ set(f, 'Visible', 'on');
         if isfield(handle_child_panel, 'permutation') 
             s = {'StatisticalTest', 'PermutationTest', 'PermutationNumber', getappdata(ui_child_panel, 'permutation')};
         elseif isfield(handle_child_panel, 'regression') 
-            s = {'StatisticalTest', 'Regression'};
+            s = {'StatisticalTest', 'Regression', 'RegressionCovariates', getappdata(ui_child_panel, 'regression')};
         end
     end
 

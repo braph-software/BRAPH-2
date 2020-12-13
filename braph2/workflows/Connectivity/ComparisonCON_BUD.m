@@ -125,6 +125,12 @@ classdef ComparisonCON_BUD < ComparisonCON_WU
             
             statistic_type = get_from_varargin('PermutationTest', 'StatisticsType', varargin{:});
             
+            % get covariates
+            subs = analysis.getCohort().getSubjects().getValues();
+            sub = subs{1};
+            data_codes = sub.get_internal_datacodes();
+            data_codes(cellfun(@(x) isequal(x, 'CON'), data_codes)) = [];
+            
             set(uiparent, 'Visible', 'on')
             ui_density_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_density_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
@@ -160,7 +166,7 @@ classdef ComparisonCON_BUD < ComparisonCON_WU
                 set(ui_density_max_edit, 'Callback', {@cb_comparison_max})                
             end
             function init_Statistic_Panel()
-                handle = Statistics.getStatisticPanel(statistic_type, analysis, uiparent, varargin);
+                handle = Statistics.getStatisticPanel(statistic_type, analysis, uiparent, 'Covariates', data_codes, varargin);
             end
             function cb_comparison_density(~,~)
                 setappdata(uiparent, 'density', ...

@@ -12,7 +12,7 @@ classdef Regression < Statistics
             calling_class = calling_class_cell_hold{1};           
            
             % this has to be an array with the dict cat data ids choosen
-            covariates_data = get_from_vararagin('', 'RegressionCovariates', varargin{:});
+            covariates_data = get_from_varargin('', 'RegressionCovariates', varargin{:});
             
             values_1 = get_from_varargin([], 'Val1', varargin{:});
             values_2 = get_from_varargin([], 'Val2', varargin{:});
@@ -110,18 +110,35 @@ classdef Regression < Statistics
     end
     methods (Static) % plot
         function handle = getStatisticPanel(ui_parent, varargin)
-            
-            ui_regression_text = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'text');            
+                                   
+            covariates = get_from_varargin('', 'Covariates', varargin{:});
+            choosen_covariates = {};
             
             init_child_panel()            
             function init_child_panel()
-                
-                set(ui_regression_text, 'String', 'Regression')
-                set(ui_regression_text, 'Position', [.01 .8 .47 .14])
-                set(ui_regression_text, 'Fontweight', 'bold')
+                fields = zeros(length(covariates), 1);
+                hold = .01;
+                for i = 1:1:length(covariates) 
+                    height = .9 - hold;                    
+                    fields(i, 1) = uicontrol('Parent', ui_parent, 'Style', 'checkbox', ...
+                        'Units', 'normalized', 'FontSize', 8, 'Position', [.3 height .4 .08], ...
+                        'String', covariates{i}, 'Callback', {@checkbox_cov});
+                    hold = hold + .1;
+                end                
+            end
+            
+            function checkbox_cov(~, ~)
+                childs = allchild(ui_parent);
+                choosen_covariates = [];
+                for i = 1:1:length(childs)
+                    if ismember(childs(i).String, covariates) & isequal(childs(i).Value , 1)
+                        choosen_covariates{end+1} = childs(i).String; %#ok<AGROW>
+                    end
+                end
+                setappdata(ui_parent, 'regression', choosen_covariates)
             end
             handle.variables = [];
-            handle.regression = [];
+            handle.regression = choosen_covariates;
         end
         function property = getPlotProperty()
             property = '';
