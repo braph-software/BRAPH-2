@@ -307,15 +307,32 @@ classdef SubjectCON < Subject
                 for i = 1:1:length(files)
                     % read file
                     [num, ~, raw] = xlsread(fullfile(path, files(i).name));
+                    covariates = readtable(fullfile(path, files(i).name), 'Sheet', 2, 'ReadVariableNames', 1);
                     atlases = cohort.getBrainAtlases();
-                    % get age
+                    
+                    % transform covariates table to useful arrays
+                    cov_keys = covariates.Properties.VariableNames;
+                    cov_vals = table2array(covariates);
+                    
+                    for k = 1:1:length(cov_vals)
+                        covs{1, k} = cov_keys{k}; %#ok<AGROW>
+                        covs{2, k} = cov_vals(k); %#ok<AGROW>
+                    end
                     
                     % create subject
                     sub_id = erase(files(i).name, '.xlsx');
                     sub_id = erase(sub_id, '.xls');
                     subject = Subject.getSubject(subject_class, ...
                         sub_id, char(raw{1, 1}), char(raw{2, 1}), atlases, ...                     
-                        'CON', num);
+                        'CON', num, covs{:});
+                    
+                    % checks if all covs have been added
+                    data_codes = subject.get_internal_datacodes();
+                    for k = 1:1:length(cov_keys)
+                        if ~ismember(cov_keys{k}, data_codes)
+                            subject.add_data_to_datadict({'DataScalar', cov_keys{k}, cov_vals{k}});
+                        end                        
+                    end
                     
                     cohort.getSubjects().add(subject.getID(), subject);
                     subjects{i} = subject; %#ok<AGROW>
@@ -368,14 +385,32 @@ classdef SubjectCON < Subject
                     notes = subject.getNotes(); %#ok<NASGU>
                     data = subject.getData('CON');
                     
+                    % covariates 
+                    data_codes = subject.get_internal_datacodes();
+                    
+                    for l = 1:1:length(data_codes)
+                        d = data_codes{l};
+                        if ~isequal(d, 'CON')
+                            cov_keys{l} = d; %#ok<AGROW>
+                            cov_vals{l} = subject.getData(d).getValue(); %#ok<AGROW>
+                        end
+                    end
+                    
+                    cov_keys(cellfun('isempty', cov_keys)) = [];
+                    cov_vals(cellfun('isempty', cov_vals)) = [];
+                    
+                    % create table with covariates values
+                    t = cell2table(cov_vals);
+                    t.Properties.VariableNames = cov_keys;
+                    
                     % create table
                     tab = table(data.getValue());
                     
                     % save
                     file = [root_directory filesep() cohort.getGroups().getValue(i).getID() filesep() id '.xlsx'];
-                    %                     writematrix(string(label), file, 'Sheet', 1, 'Range', 'A1');
-                    %                     writematrix(string(notes), file, 'Sheet', 1, 'Range', 'A2');
                     writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+                    writetable(t, file, 'Sheet', 2, 'WriteVariableNames', 1, 'Range', 'A1');
+                    clearvars  t cov_keys cov_vals;
                 end
             end
         end
