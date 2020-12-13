@@ -9,8 +9,11 @@ classdef Regression < Statistics
             % varargin
             calling_class = get_from_varargin([], 'CallingClass', varargin{:});
             calling_class_cell_hold = split(calling_class, '_');
-            calling_class = calling_class_cell_hold{1};            
-            no_delays = get_from_varargin(10, 'Delays', varargin{:});
+            calling_class = calling_class_cell_hold{1};           
+           
+            % this has to be an array with the dict cat data ids choosen
+            covariates_data = get_from_vararagin('', 'RegressionCovariates', varargin{:});
+            
             values_1 = get_from_varargin([], 'Val1', varargin{:});
             values_2 = get_from_varargin([], 'Val2', varargin{:});
             res_1 = get_from_varargin([], 'Res1', varargin{:});
@@ -19,19 +22,37 @@ classdef Regression < Statistics
             group_2 = get_from_varargin([], 'Group_2', varargin{:});
             
             % get categorical data
-            age_group_1 = cell(1, group_1.subjectnumber());
-            gender_group_1 = cell(1, group_1.subjectnumber());
+            for i = 1:1:length(covariates_data)
+                c = covariates_data{i};
+                
+                % get cov data for subjs in group 1
+                subs1 = group_1.getSubjects();
+                for j = 1:1:length(subs1)
+                    s = subs1{j};
+                    cov1{i, j} = s.getData(c);  %#ok<AGROW>
+                end
+                
+                % get cov data for subjs in group 1
+                subs2 = group_2.getSubjects();
+                for j = 1:1:length(subs2)
+                    s = subs2{j};
+                    cov2{i, j} = s.getData(c);  %#ok<AGROW>
+                end
+            end
             
-            age_group_2 = cell(1, group_2.subjectnumber());
-            gender_group_2 = cell(1, group_2.subjectnumber());
-            
-            CTR_reg = [age_group_1 gender_group_1];
-                        
+            cov1_f = '';
+            cov2_f = '';
+            % arrange info
+            for i = 1:1:length(covariates_data)
+                cov1_f = [cov1_f cov1{i, :}]; %#ok<AGROW>
+                cov2_f = [cov2_f cov2{i, :}]; %#ok<AGROW>
+            end
+      
             % algorithm
             Y = [values_1; values_2];
             % create the full covariates matrix (merge CTR and PDcomb values + add ones)
-            no1 = length(CTR_reg) + length(PD_reg);
-            X_temp = [CTR_reg; PD_reg];
+            no1 = length(cov1_f) + length(cov2_f);
+            X_temp = [cov1_f; cov2_f];
             X = [ones(no1,1) X_temp];
             % write the model Y = XB + E and find the LS estimate of B by using  b=(X'X)^{-1}X'y
             B = inv(X'*X) *X' *Y; %#ok<MINV>
@@ -42,15 +63,27 @@ classdef Regression < Statistics
             value_gr2_res = Y_res(length(value_gr1)+1:1:no1);
             
             % run permutation test on the residuals
-            p_t = PermutationTest('CallingClass', analysis.getComparisonClass(), ...
-                'Group_1', group_1, 'Group_2', group_2, ...
-                'Val1', value_gr1_res, 'Val2', value_gr2_res , ...
-                'Res1', res_1, 'Res2', res_2,  ...
-                'PermutationNumber', 10000);
-
+            
+            statistic = Statistics.getStatistic('PermutationTest', varargin{:});
+            pt_dict = statistic.getStatistics('CallingClass', analysis.getComparisonClass(), ...                
+                varargin{:});
 
              % init data_dict
+             
             data_dict = containers.Map;
+            data_dict('stat_keys') = { ...
+                [calling_class '.values_1'], ...
+                [calling_class '.average_values_1'], ...
+                [calling_class '.values_2'], ...
+                [calling_class '.average_values_2'], ...
+                [calling_class '.difference'], ...
+                [calling_class '.p1'], ...
+                [calling_class '.p2'], ...
+                [calling_class '.confidence_min'], ...
+                [calling_class '.confidence_max'] ...
+                };
+            
+            % what should i return?
             
         end
     end
@@ -78,43 +111,17 @@ classdef Regression < Statistics
     methods (Static) % plot
         function handle = getStatisticPanel(ui_parent, varargin)
             
-            ui_permutation_text = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'text');
-            ui_permutation_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
-            ui_longitudinal_text = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'text');
-            ui_longitudinal_popup = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'popup') ;
+            ui_regression_text = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'text');            
             
-            init_child_panel()
-            
+            init_child_panel()            
             function init_child_panel()
                 
-                set(ui_permutation_text, 'String', 'Permutation Number')
-                set(ui_permutation_text, 'Position', [.01 .8 .47 .14])
-                set(ui_permutation_text, 'Fontweight', 'bold')
-                
-                set(ui_permutation_edit, 'String', 1000)
-                set(ui_permutation_edit, 'Position', [.5 .87 .45 .08])
-                set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
-                
-                set(ui_longitudinal_text, 'String', 'Longitudinal')
-                set(ui_longitudinal_text, 'Position', [.01 .65 .4 .14])
-                set(ui_longitudinal_text, 'Fontweight', 'bold')
-                
-                set(ui_longitudinal_popup, 'Position', [.5 .65 .4 .15]);
-                set(ui_longitudinal_popup, 'String', {'true', 'false'})
-                set(ui_longitudinal_popup, 'Callback', {@cb_perm_test_setting_dropdown})
-            end
-            
-            function cb_comparison_permutation(~, ~)
-                setappdata(ui_parent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
+                set(ui_regression_text, 'String', 'Regression')
+                set(ui_regression_text, 'Position', [.01 .8 .47 .14])
+                set(ui_regression_text, 'Fontweight', 'bold')
             end
             handle.variables = [];
-            handle.permutation = ui_permutation_edit;
-            setappdata(ui_parent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
-            
-            function cb_perm_test_setting_dropdown(~, ~)
-                setappdata(ui_parent, 'Longitudinal', ui_longitudinal_popup.String{ui_longitudinal_popup.Value})
-            end
-            
+            handle.regression = [];
         end
         function property = getPlotProperty()
             property = '';
