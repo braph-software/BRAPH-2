@@ -11,7 +11,7 @@ classdef PermutationTest < Statistics
             calling_class = get_from_varargin([], 'CallingClass', varargin{:});
             calling_class_cell_hold = split(calling_class, '_');
             calling_class = calling_class_cell_hold{1};
-            M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
+            M = get_from_varargin(1, 'PermutationNumber', varargin{:});
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             values_1 = get_from_varargin([], 'Val1', varargin{:});

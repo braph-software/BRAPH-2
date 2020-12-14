@@ -297,7 +297,14 @@ set(f, 'Visible', 'on');
         update_tab()
     end
     function cb_statistics_type(~, ~)
+        clean_child_panel()
         init_child_panel()
+    end
+    function clean_child_panel()
+        childs = allchild(ui_child_panel);        
+        for i = 1:1:length(childs)
+            set(childs(i), 'visible', 'off')
+        end
     end
 
 % Auxilary functions
@@ -337,6 +344,8 @@ set(f, 'Visible', 'on');
             end
         end
         
+        statistics = getStatistics(); 
+        
         disable_child_panel()
         
         group_1 = analysis.getCohort().getGroups().getValue(g_1);
@@ -347,11 +356,11 @@ set(f, 'Visible', 'on');
                 for vals = 1:1:length(value)
                     value_step = value(vals);
                     m = analysis.getComparison(mlist{mi}, group_1, group_2, rule, value_step, ...
-                        'PermutationNumber', getappdata(ui_child_panel, 'permutation'), measure_rules{:});
+                        statistics{:}, measure_rules{:}); %#ok<NASGU>
                 end
             else
                 m = analysis.getComparison(mlist{mi}, group_1, group_2, rule, value, ...
-                    'PermutationNumber', getappdata(ui_child_panel, 'permutation'), measure_rules{:});
+                    statistics{:}, measure_rules{:}); %#ok<NASGU>
             end
             msg = ['time = ' int2str(toc(start)) '.' int2str(mod(toc(start)*10, 10)) 's - group = ' int2str(g_1) ' - ' mlist{mi}];
             
@@ -379,11 +388,20 @@ set(f, 'Visible', 'on');
         end
     end
     function disable_child_panel()
-        set(handle_child_panel.permutation, 'enable', 'off')
+        if isfield(handle_child_panel, 'permutation')            
+            set(handle_child_panel.permutation, 'enable', 'off')
+        end
         if ~isempty(handle_child_panel.variables)
             set(handle_child_panel.step, 'enable', 'off')
             set(handle_child_panel.min, 'enable', 'off')
             set(handle_child_panel.max, 'enable', 'off')
+        end
+    end
+    function s = getStatistics()
+        if isfield(handle_child_panel, 'permutation') 
+            s = {'StatisticalTest', 'PermutationTest', 'PermutationNumber', getappdata(ui_child_panel, 'permutation')};
+        elseif isfield(handle_child_panel, 'regression') 
+            s = {'StatisticalTest', 'Regression', 'RegressionCovariates', getappdata(ui_child_panel, 'regression')};
         end
     end
 

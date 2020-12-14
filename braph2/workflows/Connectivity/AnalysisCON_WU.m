@@ -4355,9 +4355,6 @@ classdef AnalysisCON_WU < Analysis
                     analysis_notes = raw_analysis{3, 2};
                     type_of_analysis = raw_analysis{4, 2};
                     cohort_id = raw_analysis{5, 2};
-                    %                     n_measurements = raw_analysis{6, 2};
-                    %                     n_comparisons = raw_analysis{7, 2}; do i need this?
-                    %                     n_rcomparisons = raw_analysis{8, 2};
                 end
                 
                 cohort = tmp;

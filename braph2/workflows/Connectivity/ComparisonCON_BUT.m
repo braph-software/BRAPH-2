@@ -114,7 +114,7 @@ classdef ComparisonCON_BUT < ComparisonCON_WU
         end
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
-        function handle = getComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getComparisonSettingsPanel(analysis, uiparent, varargin)
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
@@ -123,6 +123,8 @@ classdef ComparisonCON_BUT < ComparisonCON_WU
             %
             % See also ComparisonST_BUT.
             
+            statistic_type = get_from_varargin('PermutationTest', 'StatisticsType', varargin{:});
+                        
             set(uiparent, 'Visible', 'on')
             ui_threshold_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_threshold_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
@@ -130,42 +132,37 @@ classdef ComparisonCON_BUT < ComparisonCON_WU
             ui_threshold_min_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             ui_threshold_max_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_threshold_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
-            ui_permutation_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
-            ui_permutation_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             init_child_panel()
+            init_Statistic_Panel()
             function init_child_panel()
                 set(ui_threshold_text, 'String', 'Threshold')
-                set(ui_threshold_text, 'Position', [.01 .65 .47 .08])
+                set(ui_threshold_text, 'Position', [.01 .55 .47 .08])
                 set(ui_threshold_text, 'Fontweight', 'bold')
                 
                 set(ui_threshold_edit, 'String', 0.1)
-                set(ui_threshold_edit, 'Position', [.5 .67 .45 .08])
+                set(ui_threshold_edit, 'Position', [.5 .57 .45 .08])
                 set(ui_threshold_edit, 'Callback', {@cb_comparison_threshold})
                 
                 set(ui_threshold_min_text, 'String', 'Min')
-                set(ui_threshold_min_text, 'Position', [.01 .75 .47 .08])
+                set(ui_threshold_min_text, 'Position', [.01 .45 .47 .08])
                 set(ui_threshold_min_text, 'Fontweight', 'bold')
                 
                 set(ui_threshold_min_edit, 'String', -1)
-                set(ui_threshold_min_edit, 'Position', [.5 .77 .45 .08])
+                set(ui_threshold_min_edit, 'Position', [.5 .47 .45 .08])
                 set(ui_threshold_min_edit, 'Callback', {@cb_comparison_min})
                 
                 set(ui_threshold_max_text, 'String', 'Max')
-                set(ui_threshold_max_text, 'Position', [.01 .55 .47 .08])
+                set(ui_threshold_max_text, 'Position', [.01 .35 .47 .08])
                 set(ui_threshold_max_text, 'Fontweight', 'bold')
                 
                 set(ui_threshold_max_edit, 'String', 1)
-                set(ui_threshold_max_edit, 'Position', [.5 .57 .45 .08])
-                set(ui_threshold_max_edit, 'Callback', {@cb_comparison_max})
+                set(ui_threshold_max_edit, 'Position', [.5 .37 .45 .08])
+                set(ui_threshold_max_edit, 'Callback', {@cb_comparison_max})               
+               
                 
-                set(ui_permutation_text, 'String', 'Perumtation Number')
-                set(ui_permutation_text, 'Position', [.01 .85 .47 .08])
-                set(ui_permutation_text, 'Fontweight', 'bold')
-                
-                set(ui_permutation_edit, 'String', 1000)
-                set(ui_permutation_edit, 'Position', [.5 .87 .45 .08])
-                set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
-                
+            end
+            function init_Statistic_Panel()
+                handle = Statistics.getStatisticPanel(statistic_type, analysis, uiparent, varargin);
             end
             function cb_comparison_threshold(~,~)
                 setappdata(uiparent, 'threshold', ...
@@ -181,20 +178,16 @@ classdef ComparisonCON_BUT < ComparisonCON_WU
                 newdata = get(src, 'String');
                 set(ui_threshold_max_edit, 'String', newdata);
             end
-            function cb_comparison_permutation(~, ~)
-                setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
-            end
+            
             
             handle.variables = {'threshold'};
             handle.step = ui_threshold_edit;
             handle.min = ui_threshold_min_edit;
             handle.max = ui_threshold_max_edit;
-            handle.permutation = ui_permutation_edit;
             setappdata(uiparent, 'threshold', ...
                 str2double(get(ui_threshold_min_edit, 'String')) : ...
                 str2double(get(ui_threshold_edit, 'String')) : ...
                 str2double(get(ui_threshold_max_edit, 'String')))
-            setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
         end
     end
 end

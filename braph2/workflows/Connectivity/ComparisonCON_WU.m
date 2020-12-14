@@ -445,7 +445,7 @@ classdef ComparisonCON_WU < Comparison
             % See also ComparisonST_WU.
             
             statistic_type = get_from_varargin('PermutationTest', 'StatisticsType', varargin{:});
-            
+
             init_Statistic_Panel()
             
             set(uiparent, 'Visible', 'on')
