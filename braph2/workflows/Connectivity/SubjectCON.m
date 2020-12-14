@@ -121,7 +121,7 @@ classdef SubjectCON < Subject
             data_structure = Data.getDataStructure(info{1});
             if isequal(data_structure, 'char')
             elseif isequal(data_structure, 'numeric')
-                info{3} = str2double(info{3});
+                info{3} = str2double(num2str(info{3}));
             else
                 info{3} = [];
             end
@@ -325,7 +325,12 @@ classdef SubjectCON < Subject
                         cov_vals = table2array(covariates);
                         for k = 1:1:length(cov_vals)
                             covs{1, k} = cov_keys{k}; %#ok<AGROW>
-                            covs{2, k} = str2double(cov_vals{k}); %#ok<AGROW>
+                            if ischar(cov_vals{k})
+                                covs{2, k} = str2double(cov_vals{k}); %#ok<AGROW>
+                            else
+                                covs{2, k} = cov_vals{k}; %#ok<AGROW>
+                            end
+                            
                         end
                     end
                     
@@ -340,8 +345,8 @@ classdef SubjectCON < Subject
                     data_codes = subject.get_internal_datacodes();
                     if sheetValid
                         for k = 1:1:length(cov_keys)
-                            if ~ismember(cov_keys{k}, data_codes)
-                                subject.add_data_to_datadict({'DataScalar', cov_keys{k}, cov_vals{k}});
+                            if ~ismember(cov_keys{k}, data_codes)                               
+                                subject.add_data_to_datadict({'DataScalar', cov_keys{k}, covs{2, k}});
                             end
                         end
                     end
