@@ -69,7 +69,7 @@ classdef DataScalar < Data
             end
             function bool =  rules(input)
                 % modify rules acording to personal use.
-                if ui_parent.Title == 'gender'  %#ok<BDSCA> % only 2 genders
+                if isequal(ui_parent.Title, 'gender')  % only 2 genders
                     if str2double(input) > 1
                         bool = false;
                         giveWarning('Value can only be 0 or 1')

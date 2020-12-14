@@ -292,7 +292,7 @@ classdef SubjectCON < Subject
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});
             end
             
-            
+            warning('off', 'all')
             % find all xls or xlsx files per sub folder
             for j = 1:1: length(sub_folders)
                 path = [directory filesep() sub_folders(j).name];
@@ -305,18 +305,28 @@ classdef SubjectCON < Subject
                 
                 % load subjects
                 for i = 1:1:length(files)
-                    % read file
-                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
-                    covariates = readtable(fullfile(path, files(i).name), 'Sheet', 2, 'ReadVariableNames', 1);
+                    
                     atlases = cohort.getBrainAtlases();
                     
-                    % transform covariates table to useful arrays
-                    cov_keys = covariates.Properties.VariableNames;
-                    cov_vals = table2array(covariates);
-                    
-                    for k = 1:1:length(cov_vals)
-                        covs{1, k} = cov_keys{k}; %#ok<AGROW>
-                        covs{2, k} = cov_vals(k); %#ok<AGROW>
+                    % read file
+                    [num, ~, raw] = xlsread(fullfile(path, files(i).name));
+                    [~, B] = xlsfinfo(fullfile(path, files(i).name));
+                    sheetValid = any(strcmp(B, 'Sheet2'));
+                    covs = {};
+                    if sheetValid
+                        covariates = readtable(fullfile(path, files(i).name), 'Sheet', 2, 'ReadVariableNames', 1);
+                        % transform covariates table to useful arrays
+                        cov_keys = covariates.Properties.VariableNames;
+                        for k = 1:width(covariates)
+                            if ~iscell(covariates.(k))
+                                covariates.(k) = num2cell(covariates.(k));
+                            end
+                        end
+                        cov_vals = table2array(covariates);
+                        for k = 1:1:length(cov_vals)
+                            covs{1, k} = cov_keys{k}; %#ok<AGROW>
+                            covs{2, k} = str2double(cov_vals{k}); %#ok<AGROW>
+                        end
                     end
                     
                     % create subject
@@ -328,10 +338,12 @@ classdef SubjectCON < Subject
                     
                     % checks if all covs have been added
                     data_codes = subject.get_internal_datacodes();
-                    for k = 1:1:length(cov_keys)
-                        if ~ismember(cov_keys{k}, data_codes)
-                            subject.add_data_to_datadict({'DataScalar', cov_keys{k}, cov_vals{k}});
-                        end                        
+                    if sheetValid
+                        for k = 1:1:length(cov_keys)
+                            if ~ismember(cov_keys{k}, data_codes)
+                                subject.add_data_to_datadict({'DataScalar', cov_keys{k}, cov_vals{k}});
+                            end
+                        end
                     end
                     
                     cohort.getSubjects().add(subject.getID(), subject);
@@ -342,6 +354,7 @@ classdef SubjectCON < Subject
                 group = Group(subject_class, ['Group_' num2str(j)], '', '', subjects);
                 cohort.getGroups().add(group.getID(), group, j);
             end
+            warning('on', 'all')
         end
         function save_to_xls(cohort, varargin)
             % SAVE_TO_XLS saves the cohort of SubjectsCON to '.xls' files
@@ -365,7 +378,7 @@ classdef SubjectCON < Subject
             end
             
             % save cohort info
-            
+            warning('off', 'all')
             % creates groups folders
             for i=1:1:cohort.getGroups().length()
                 if ~exist([root_directory filesep() cohort.getGroups().getValue(i).getID()], 'dir')
@@ -413,6 +426,8 @@ classdef SubjectCON < Subject
                     clearvars  t cov_keys cov_vals;
                 end
             end
+            
+            warning('on', 'all')
         end
         function cohort = load_from_txt(tmp, varargin)
             % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectCON
