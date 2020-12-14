@@ -293,6 +293,8 @@ end
 for i = 1:1:numel(measures)
     measure = measures{i};
     analysis = AnalysisFNC_WU('id', 'label', 'notes', cohort, {}, {}, {});
+    statistic = 'PermutationTest';
+    
     number_of_permutations = 10;
     calculate_comparison = analysis.getComparison(measure, group1, group2, 'PermutationNumber', number_of_permutations);
     
@@ -305,14 +307,16 @@ for i = 1:1:numel(measures)
         ['AnalysisFNC_WU.calculateComparison() not working'])
     
     comparison = analysis.getComparisons().getValue(1);
-    comparison_values_1 = comparison.getGroupValue(1);
-    comparison_values_2 = comparison.getGroupValue(2);
-    comparison_difference = comparison.getDifference();
-    comparison_all_differences = comparison.getAllDifferences();
-    comparison_p1 = comparison.getP1();
-    comparison_p2 = comparison.getP2();
-    comparison_confidence_interval_min = comparison.getConfidenceIntervalMin();
-    comparison_confidence_interval_max = comparison.getConfidenceIntervalMax();
+    comparison_values_1 = comparison.getComparisonProperties('ComparisonFNC.values_1');
+    comparison_values_2 = comparison.getComparisonProperties('ComparisonFNC.values_2');
+    comparison_average_1 = comparison.getComparisonProperties('ComparisonFNC.average_values_1');
+    comparison_average_2 = comparison.getComparisonProperties('ComparisonFNC.average_values_2');
+    comparison_difference = comparison.getComparisonProperties('ComparisonFNC.difference');
+    comparison_all_differences = comparison.getComparisonProperties('ComparisonFNC.all_differences');
+    comparison_p1 = comparison.getComparisonProperties('ComparisonFNC.p1');
+    comparison_p2 = comparison.getComparisonProperties('ComparisonFNC.p2');
+    comparison_confidence_interval_min = comparison.getComparisonProperties('ComparisonFNC.confidence_min');
+    comparison_confidence_interval_max = comparison.getComparisonProperties('ComparisonFNC.confidence_max');
     
      if Measure.is_global(measures{i})
         assert(iscell(comparison_values_1) & ...

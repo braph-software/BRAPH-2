@@ -120,7 +120,11 @@ classdef ComparisonFNC_WU < Comparison
             
             measure_code = c.getMeasureCode();
             if isequal(c.statistic, 'PermutationTest') && ~isempty(c.comparison_dict)
-                number_of_permutations = c.getSettings('ComparisonFNC.PermutationNumber');
+                number_of_permutations =  c.getComparisonProperties('ComparisonFNC.PermutationNumber'); %c.getSettings('ComparisonCON.PermutationNumber');
+                
+                if iscell(number_of_permutations)
+                    number_of_permutations = number_of_permutations{:};
+                end
                 
                 if Measure.is_global(measure_code)  % global measure
                     % values
@@ -409,9 +413,7 @@ classdef ComparisonFNC_WU < Comparison
             %
             % See also getClass, getName, getDescription
             
-            available_settings = {
-                'ComparisonFNC.PermutationNumber', BRAPH2.NUMERIC, 1000, {};
-                };
+            available_settings = {};
         end
         function sub = getComparison(comparisonClass, id, label, notes, atlas, measure_code, group_1, group_2, varargin) %#ok<INUSD>
             % GETCOMPARISON returns a new comparison

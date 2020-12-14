@@ -4777,7 +4777,7 @@ classdef AnalysisFNC_WU < Analysis
             
             % create structs
             Measurements_structure = struct;
-            Comparisons_structure = struct;
+%             Comparisons_structure = struct;
             RandomComparisons_structure = struct;
             
             % fill info into structures
