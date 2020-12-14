@@ -29,14 +29,14 @@ classdef Regression < Statistics
                 subs1 = group_1.getSubjects();
                 for j = 1:1:length(subs1)
                     s = subs1{j};
-                    cov1{i, j} = s.getData(c);  %#ok<AGROW>
+                    cov1{i, j} = s.getData(c).getValue();  %#ok<AGROW>
                 end
                 
                 % get cov data for subjs in group 1
                 subs2 = group_2.getSubjects();
                 for j = 1:1:length(subs2)
                     s = subs2{j};
-                    cov2{i, j} = s.getData(c);  %#ok<AGROW>
+                    cov2{i, j} = s.getData(c).getValue();  %#ok<AGROW>
                 end
             end
             
@@ -113,6 +113,7 @@ classdef Regression < Statistics
                                    
             covariates = get_from_varargin('', 'Covariates', varargin{:});
             choosen_covariates = {};
+            end_height = 0;
             
             init_child_panel()            
             function init_child_panel()
@@ -124,6 +125,7 @@ classdef Regression < Statistics
                         'Units', 'normalized', 'FontSize', 8, 'Position', [.3 height .4 .08], ...
                         'String', covariates{i}, 'Callback', {@checkbox_cov});
                     hold = hold + .1;
+                    end_height = height;
                 end                
             end
             
@@ -139,6 +141,7 @@ classdef Regression < Statistics
             end
             handle.variables = [];
             handle.regression = choosen_covariates;
+            handle.nextheight = end_height;
         end
         function property = getPlotProperty()
             property = '';

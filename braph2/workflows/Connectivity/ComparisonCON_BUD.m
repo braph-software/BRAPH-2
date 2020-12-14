@@ -138,31 +138,36 @@ classdef ComparisonCON_BUD < ComparisonCON_WU
             ui_density_min_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
             ui_density_max_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
             ui_density_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
-            init_child_panel()
             init_Statistic_Panel()
+            init_child_panel()            
             function init_child_panel()
+                if isequal(statistic_type, 'PermutationTest')
+                    h = .55;
+                else
+                    h = handle.nextheight - .1;
+                end                
                 set(ui_density_text, 'String', 'Density')
-                set(ui_density_text, 'Position', [.01 .55 .47 .08])
+                set(ui_density_text, 'Position', [.01 h .47 .08])
                 set(ui_density_text, 'Fontweight', 'bold')
                 
                 set(ui_density_edit, 'String', 1)
-                set(ui_density_edit, 'Position', [.5 .57 .45 .08])
+                set(ui_density_edit, 'Position', [.5 h+.02 .45 .08])
                 set(ui_density_edit, 'Callback', {@cb_comparison_density})
                 
                 set(ui_density_min_text, 'String', 'Min')
-                set(ui_density_min_text, 'Position', [.01 .45 .47 .08])
+                set(ui_density_min_text, 'Position', [.01 h-.1 .47 .08])
                 set(ui_density_min_text, 'Fontweight', 'bold')
                 
                 set(ui_density_min_edit, 'String', 0)
-                set(ui_density_min_edit, 'Position', [.5 .47 .45 .08])
+                set(ui_density_min_edit, 'Position', [.5 h-.12 .45 .08])
                 set(ui_density_min_edit, 'Callback', {@cb_comparison_min})
                 
                 set(ui_density_max_text, 'String', 'Max')
-                set(ui_density_max_text, 'Position', [.01 .35 .47 .08])
+                set(ui_density_max_text, 'Position', [.01 h-.2 .47 .08])
                 set(ui_density_max_text, 'Fontweight', 'bold')
                 
                 set(ui_density_max_edit, 'String', 100)
-                set(ui_density_max_edit, 'Position', [.5 .37 .45 .08])
+                set(ui_density_max_edit, 'Position', [.5 h-.22 .45 .08])
                 set(ui_density_max_edit, 'Callback', {@cb_comparison_max})                
             end
             function init_Statistic_Panel()
