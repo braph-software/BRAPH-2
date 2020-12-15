@@ -63,8 +63,11 @@ classdef Regression < Statistics
             value_gr2_res = Y_res(length(value_gr1) + 1:1:no1);
             
             % run permutation test on the residuals
-            compare(value_gr1_res, value_gr2_res, 1000)
             
+            statistic = Statistics.getStatistic('PermutationTest', varargin{:});
+            pt_dict = statistic.getStatistics('CallingClass', analysis.getComparisonClass(), ...                
+               'PermutationNumber', 1000, 'Val1', value_gr1_res, 'Val2', value_gr2_res, ...
+               'Group_1', group_1, 'Group_2', group_2);
 
              % init data_dict
              
