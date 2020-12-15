@@ -40,12 +40,12 @@ classdef Regression < Statistics
                 end
             end
             
-            cov1_f = '';
-            cov2_f = '';
+            cov1_f = [];
+            cov2_f = [];
             % arrange info
             for i = 1:1:length(covariates_data)
-                cov1_f = [cov1_f cov1{i, :}]; %#ok<AGROW>
-                cov2_f = [cov2_f cov2{i, :}]; %#ok<AGROW>
+                cov1_f = [cov1_f; cov1{i, :};]; %#ok<AGROW>
+                cov2_f = [cov2_f; cov2{i, :};]; %#ok<AGROW>
             end
       
             % algorithm
@@ -53,7 +53,7 @@ classdef Regression < Statistics
             % create the full covariates matrix 
             no1 = length(cov1_f) + length(cov2_f);
             X_temp = [cov1_f; cov2_f];
-            X = [ones(no1,1) X_temp];
+            X = [ones(no1, 1) X_temp];
             % write the model Y = XB + E and find the LS estimate of B by using  b=(X'X)^{-1}X'y
             B = inv(X'*X) *X' *Y; %#ok<MINV>
             % find the residual values
@@ -63,10 +63,8 @@ classdef Regression < Statistics
             value_gr2_res = Y_res(length(value_gr1) + 1:1:no1);
             
             % run permutation test on the residuals
+            compare(value_gr1_res, value_gr2_res, 1000)
             
-            statistic = Statistics.getStatistic('PermutationTest', varargin{:});
-            pt_dict = statistic.getStatistics('CallingClass', analysis.getComparisonClass(), ...                
-                varargin{:});
 
              % init data_dict
              
