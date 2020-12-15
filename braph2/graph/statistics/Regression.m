@@ -50,7 +50,7 @@ classdef Regression < Statistics
       
             % algorithm
             Y = [values_1; values_2];
-            % create the full covariates matrix (merge CTR and PDcomb values + add ones)
+            % create the full covariates matrix 
             no1 = length(cov1_f) + length(cov2_f);
             X_temp = [cov1_f; cov2_f];
             X = [ones(no1,1) X_temp];
@@ -60,7 +60,7 @@ classdef Regression < Statistics
             Y_res = Y - X*B;
             % create the 2 new groups consisting of residuals values
             value_gr1_res = Y_res(1:1:length(value_gr1));
-            value_gr2_res = Y_res(length(value_gr1)+1:1:no1);
+            value_gr2_res = Y_res(length(value_gr1) + 1:1:no1);
             
             % run permutation test on the residuals
             
