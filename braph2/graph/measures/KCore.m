@@ -83,13 +83,10 @@ classdef KCore < Measure
                     directionality_layer = directionality_type(li, li);
                 end
 
-                % peelorder = [];
-                % peellevel = [];
                 iter = 0;
                 subAii = binarize(Aii);
                 while 1
                     % get degrees of matrix
-                    %[deg] = degrees_und(CIJ);
                     if directionality_layer == Graph.UNDIRECTED  % undirected graphs
                         deg = sum(subAii, 1)';  % degree undirected graphs
                     else
@@ -106,8 +103,6 @@ classdef KCore < Measure
                     iter = iter + 1;
                     subAii(low_k_nodes, :) = 0;
                     subAii(:, low_k_nodes) = 0; 
-                    %peelorder = [peelorder; low_k_nodes'];
-                    %peellevel = [peellevel; iter.*ones(1,length(low_k_nodes))'];
                 end
                 k_core(li) = {subAii};  % add k-core of layer li          
             end
