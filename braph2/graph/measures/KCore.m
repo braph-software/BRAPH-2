@@ -25,7 +25,7 @@ classdef KCore < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
-    % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
+    % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
     
     methods
         function m = KCore(g, varargin)
@@ -47,7 +47,7 @@ classdef KCore < Measure
             % GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, 
             % MultiplexGraphWD or MultiplexGraphWU). 
             %
-            % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
+            % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
             m = m@Measure(g, varargin{:});
         end
@@ -59,7 +59,7 @@ classdef KCore < Measure
             % RICHCLUBDEGREE = CALCULATE(M) returns the value of the 
             % k-core of a graph.
             %
-            % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
+            % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
