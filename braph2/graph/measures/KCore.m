@@ -1,4 +1,4 @@
-classdef KCore < Degree
+classdef KCore < Measure
     % KCore K-Core measure
     % KCore provides the k-core of a network for binary undirected (BU),
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
@@ -49,7 +49,7 @@ classdef KCore < Degree
             %
             % See also Measure, Degree, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
             
-            m = m@Degree(g, varargin{:});
+            m = m@Measure(g, varargin{:});
         end
     end
     methods (Access=protected)
