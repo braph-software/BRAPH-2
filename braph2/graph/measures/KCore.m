@@ -56,7 +56,7 @@ classdef KCore < Measure
         function k_core = calculate(m)
             % CALCULATE calculates the k-core value of a graph
             %
-            % RICHCLUBDEGREE = CALCULATE(M) returns the value of the 
+            % KCORE = CALCULATE(M) returns the value of the 
             % k-core of a graph.
             %
             % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
@@ -93,7 +93,7 @@ classdef KCore < Measure
                     if directionality_layer == Graph.UNDIRECTED  % undirected graphs
                         deg = sum(subAii, 1)';  % degree undirected graphs
                     else
-                        deg = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree directed
+                        deg = (sum(subAii, 1)' + sum(subAii, 2));  % degree directed
                     end
                     
                     % find nodes with degree < k
@@ -164,11 +164,11 @@ classdef KCore < Measure
             % GETMEASUREFORMAT returns the measure format of KCore
             %
             % MEASURE_FORMAT = GETMEASUREFORMAT() returns the measure format
-            % of k-core measure (NODAL).
+            % of k-core measure (BINODAL).
             %
             % See also getMeasureScope.
             
-            measure_format = Measure.NODAL;
+            measure_format = Measure.BINODAL;
         end
         function measure_scope = getMeasureScope()
             % GETMEASURESCOPE returns the measure scope of KCore

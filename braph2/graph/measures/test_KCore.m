@@ -38,7 +38,7 @@ known_kcore = {[
                 ]};
 
 g = GraphBD(A);
-kcore = KCore(g, 'KCoreThreshold', 2);
+kcore = KCore(g, 'KCoreThreshold', 4);
 
 assert(isequal(kcore.getValue(), known_kcore), ...
     [BRAPH2.STR ':KCore:' BRAPH2.BUG_ERR], ...
@@ -82,7 +82,7 @@ known_kcore = {[
                 ]};
 
 g = GraphWD(A);
-kcore = KCore(g, 'KCoreThreshold', 2);
+kcore = KCore(g, 'KCoreThreshold', 4);
 
 assert(isequal(kcore.getValue(), known_kcore), ...
     [BRAPH2.STR ':KCore:' BRAPH2.BUG_ERR], ...
@@ -162,7 +162,7 @@ known_kcore(2, 1) = {[
                 ]};            
 
 g = MultiplexGraphBD(A);
-kcore = KCore(g, 'KCoreThreshold', 2);
+kcore = KCore(g, 'KCoreThreshold', 4);
 
 assert(isequal(kcore.getValue(), known_kcore), ...
     [BRAPH2.STR ':KCore:' BRAPH2.BUG_ERR], ...
@@ -242,7 +242,7 @@ known_kcore(2, 1) = {[
                 ]};            
 
 g = MultiplexGraphWD(A);
-kcore = KCore(g, 'KCoreThreshold', 2);
+kcore = KCore(g, 'KCoreThreshold', 4);
 
 assert(isequal(kcore.getValue(), known_kcore), ...
     [BRAPH2.STR ':KCore:' BRAPH2.BUG_ERR], ...
