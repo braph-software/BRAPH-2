@@ -1,13 +1,13 @@
 classdef CategoricalPersistence < Measure
     % CategoricalPersistence Categorical Persistence measure
-    % CategoricalPersistence provides the categorical persistence  of a node for 
+    % CategoricalPersistence provides the categorical persistence of a node for 
     % binary undirected (BU), binary directed (BD), weighted undirected (WU) 
     % and weighted directed (WD) multilayer graphs in a given community. 
     %    
-    % The categorical persistence shows the node connectivity through the
-    % availible communities. It is calculated as the ratio of the edges that
-    % a node forms within a single layer community to the total number of edges the node
-    % forms whithin the whole graph within a single layer.
+    % The categorical persistence shows the "persistence" of multilayer 
+    % partitions for a multilayer network with unordered layers. It is  
+    % calculated as the sum over all pairs of layers of the number of nodes 
+    % that do not change community assignments.
     % 
     % CategoricalPersistence methods:
     %   CategoricalPersistence      - constructor
@@ -62,22 +62,15 @@ classdef CategoricalPersistence < Measure
             S = cell2mat(S');
             m.Ci = S;
             
-%             categorical_persistence = zeros(N, 1);  
-%             for i = 1:N 
-%                 if S(i, 1) == S(i, 2)
-%                     categorical_persistence(i) = 1;
-%                 end
-%             end
-            
+            S = {S};
             all2all = N*[(-L+1):-1,1:(L-1)];
             A = spdiags(ones(N*L, 2*L-2), all2all, N*L, N*L);
             categorical_persistence = cell(1, L-1);
             for i = 1:length(S)
                 G = sparse(1:length(S{i}(:)), S{i}(:), 1);
-                categorical_persistence_l = trace(G'*A*G)/(N*T*(T-1));
+                categorical_persistence_l = trace(G'*A*G)/(N*L*(L-1));
                 categorical_persistence(i) = {categorical_persistence_l};
             end
-    
         end
     end  
     methods (Static)  % Descriptive methods
@@ -108,9 +101,9 @@ classdef CategoricalPersistence < Measure
             % See also getList, getCompatibleGraphList.
             
             description = [ ...
-                'The categorical persistence of a node is the ratio of ' ...
-                'edges that a node forms within a single layer community to the total '...
-                'number of edges that forms within the whole single layer graph.' ...
+                'The categorical persistence of an unordered multilayer network is the ' ...
+                'sum over all pairs of layers of the number of nodes that '...
+                'do not change community assignments. It varies between 0 and 1.' ...
                 ];
         end
         function available_settings = getAvailableSettings()
