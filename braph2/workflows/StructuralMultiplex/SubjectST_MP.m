@@ -32,6 +32,11 @@ classdef SubjectST_MP < Subject
     %   save_to_json            - saves the subject data to a '.json' file
     %
     % See also Group, Cohort, Subject, SubjectST, SubjectfMRI, SubjectDTI.
+ 
+    properties
+        layers
+        datalist
+    end
     
     methods  % Constructor
         function sub = SubjectST_MP(id, label, notes, atlas, varargin)
@@ -76,13 +81,24 @@ classdef SubjectST_MP < Subject
             atlas = atlases{1};
             
             age = get_from_varargin(0, 'age', varargin{:});
-            structural_multiplex1 = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'ST_MP1', varargin{:});  % column vector with the same number of elements as the BrainAtlas
-            structural_multiplex2 = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), 'ST_MP2', varargin{:});  % column vector with the same number of elements as the BrainAtlas
-            
+            gender = get_from_varargin(-1, 'gender', varargin{:});
+            education = get_from_varargin(0, 'education', varargin{:});
+            sub.layers = get_from_varargin(2, 'ST_Layers', varargin{:});  
             sub.datadict = containers.Map;
             sub.datadict('age') = DataScalar(atlas, age);
-            sub.datadict('ST_MP1') = DataStructural(atlas, structural_multiplex1);
-            sub.datadict('ST_MP2') = DataStructural(atlas, structural_multiplex2);
+            sub.datadict('gender') = DataScalar(atlas, gender);
+            sub.datadict('education') = DataScalar(atlas, education);
+            if ~isempty(sub.layers)  % finds info
+                for i = 1:1:sub.layers
+                    id = ['ST_MP_' num2str(i)];
+                    structural_multiplex_N = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), id, varargin{:});
+                    sub.datadict(id) = DataStructural(atlas, structural_multiplex_N);
+                end
+            else  % default behaviour
+                sub.datadict('ST_MP_1') = DataStructural(atlas, zeros(atlas.getBrainRegions().length(), 1));
+                sub.datadict('ST_MP_2') = DataStructural(atlas, zeros(atlas.getBrainRegions().length(), 1));
+            end  
+            sub.init_internal_datalist();
         end
         function update_brainatlases(sub, atlases)
             % UPDATE_BRAINATLASES updates the atlases of the subject Structural Multiplex 
@@ -96,14 +112,60 @@ classdef SubjectST_MP < Subject
             sub.atlases = atlases;
             atlas = atlases{1};
             
-            d1 = sub.datadict('age');
-            d1.setBrainAtlas(atlas)
-            
-            d2 = sub.datadict('ST_MP1');
-            d2.setBrainAtlas(atlas);
-            
-            d3 = sub.datadict('ST_MP2');
-            d3.setBrainAtlas(atlas);
+            data_codes = sub.get_internal_datacodes();
+            for i = 1:1:length(data_codes)
+                d = sub.datadict(data_codes{i});
+                d.setBrainAtlas(atlas)
+            end
+        end
+        function init_internal_datalist(sub)
+            sub.datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
+            sub.datalist('age') = 'DataScalar';            
+            sub.datalist('gender') = 'DataScalar';
+            sub.datalist('education') = 'DataScalar'; 
+            if ~isempty(sub.layers)  % finds info
+                for i = 1:1:sub.layers
+                    id = ['ST_MP_' num2str(i)];
+                    sub.datalist(id) = 'DataStructural';
+                end
+            else  % default behaviour
+                sub.datalist('ST_MP_1') = 'DataStructural';
+                sub.datalist('ST_MP_2') = 'DataStructural';
+            end
+        end 
+    end
+    methods  % extra because N is variable
+        function add_data_to_datadict(sub, info)
+            atlases = sub.getBrainAtlases();
+            atlas = atlases{1};
+            data_structure = Data.getDataStructure(info{1});
+            if isequal(data_structure, 'char')
+            elseif isequal(data_structure, 'numeric')
+                info{3} = str2double(info{3});
+            else
+                info{3} = [];
+            end
+            sub.datalist(info{2}) = info{1};
+            sub.datadict(info{2}) = Data.getData(info{1}, atlas, info{3});
+        end
+        function delete_data_from_datadict(sub, info)
+            if ismember(info, keys(sub.datalist))
+                remove(sub.datadict, info)
+                remove(sub.datalist, info)
+            end            
+        end
+        function datalist = get_internal_datalist(sub)
+            datalist = sub.datalist;
+        end
+        function datacodes = get_internal_datacodes(sub)
+            data_list = sub.get_internal_datalist();
+            datacodes = keys(data_list);
+        end
+        function dict_number = getDataDictLength(sub)
+            dict_number = length(sub.datadict);
+        end
+        function layers_n = getNumberOfLayers(sub)
+            layers_n = sub.layers;
         end
     end
     methods (Static)  % Inspection functions
@@ -134,7 +196,7 @@ classdef SubjectST_MP < Subject
             % See also getList, getName, getClass.
             
             description = [ ...
-                'Subject with structural multiplex data (2 layers), ' ...
+                'Subject with structural multiplex data (N layers), ' ...
                 'such as cortical thickness for each brain region' ...
                 ];
         end
@@ -154,6 +216,8 @@ classdef SubjectST_MP < Subject
             % CELL ARRAY = GETDATALIST() returns a cell array of subject
             % data. For Subject Structural Multiplex, the data list is:
             %   age            -    DataScalar.
+            %   gender         -    DataScalar.
+            %   education      -    DataScalar.
             %   ST_MP1         -    DataStructural.
             %   ST_MP2         -    DataStructural.
             %
@@ -161,8 +225,10 @@ classdef SubjectST_MP < Subject
             
             datalist = containers.Map('KeyType', 'char', 'ValueType', 'char');
             datalist('age') = 'DataScalar';
-            datalist('ST_MP1') = 'DataStructural';
-            datalist('ST_MP2') = 'DataStructural';
+            datalist('gender') = 'DataScalar';
+            datalist('education') = 'DataScalar';
+            datalist('ST_MP_1') = 'DataStructural';
+            datalist('ST_MP_2') = 'DataStructural';
         end
         function data_number = getDataNumber()
             % GETDATANUMBER returns the number of data.
@@ -226,28 +292,35 @@ classdef SubjectST_MP < Subject
             % 
             % See also save_to_xls, load_from_txt, load_from_json.
             
-            % file1 (fullpath)
-            file1 = get_from_varargin('', 'File1', varargin{:});
-            if isequal(file1, '')  % select file
-                msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
-                file1 = [filepath1 filename1];
-                
-                if ~filterindex1
-                    return
-                end
+            % directory
+            directory = get_from_varargin('', 'Directory', varargin{:});
+            if isequal(directory, '')  % select file
+                msg = get_from_varargin(BRAPH2.MSG_GETDIR, 'MSG', varargin{:});                
+                directory = uigetdir(msg);
             end
-            % file2 (fullpath)
-            file2 = get_from_varargin('', 'File2', varargin{:});
-            if isequal(file2, '')  % select file
-                msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename2, filepath2, filterindex2] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
-                file2 = [filepath2 filename2];
-                
-                if ~filterindex2
-                    return
-                end
-            end
+            
+%             % file1 (fullpath)
+%             file1 = get_from_varargin('', 'File1', varargin{:});
+%             if isequal(file1, '')  % select file
+%                 msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
+%                 [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
+%                 file1 = [filepath1 filename1];
+%                 
+%                 if ~filterindex1
+%                     return
+%                 end
+%             end
+%             % file2 (fullpath)
+%             file2 = get_from_varargin('', 'File2', varargin{:});
+%             if isequal(file2, '')  % select file
+%                 msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
+%                 [filename2, filepath2, filterindex2] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
+%                 file2 = [filepath2 filename2];
+%                 
+%                 if ~filterindex2
+%                     return
+%                 end
+%             end
             
             % Set/create cohort
             if isa(tmp, 'Cohort')
@@ -255,64 +328,90 @@ classdef SubjectST_MP < Subject
                 subject_class = cohort.getSubjectClass();
             else  % tmp is an atlas
                 
-                % search for cohort info file
-                file_path = strsplit(file1, filesep());
-                file_cohort_path = '';
-                for i = 1:1:length(file_path)-1
-                    file_cohort_path = [file_cohort_path filesep() file_path{i}]; %#ok<AGROW>
-                end
-                file_cohort = [file_cohort_path filesep() 'cohort_info.txt'];
-                file_cohort = file_cohort(2:end);
+                file_cohort = [directory filesep() 'cohort_info.txt'];
                 cohort_id = '';
                 cohort_label = '';
                 cohort_notes = '';
+                
                 if exist(file_cohort, 'file')
                     raw_cohort = textread(file_cohort, '%s', 'delimiter', '\t', 'whitespace', ''); %#ok<DTXTRD>
                     cohort_id = raw_cohort{1, 1};
                     cohort_label = raw_cohort{2, 1};
                     cohort_notes = raw_cohort{3, 1};
                 end
-                
-                % creates new cohort
+
+                % creates cohort
                 subject_class = 'SubjectST_MP';
-                atlas = tmp;
-                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlas, {});  
+                atlases = tmp;
+                cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});  
             end          
             
-            % supress warning
-            warning_id = 'MATLAB:table:ModifiedAndSavedVarnames';
-            warning('off', warning_id)
-            
-            raw1 = readtable(file1);
-            raw2 = readtable(file2);
-            % Assert both files have the same size (they should contain
-            % same number of regions and same number of subjects)
-            assert(size(raw1, 1) == size(raw2, 1) && size(raw1, 2) == size(raw2, 2), ...
-                [BRAPH2.STR ':SubjectST_MP:' BRAPH2.WRONG_INPUT], ...
-                'The input excel files must have the same number of subjects with data from the same brain regions')
-            atlas = cohort.getBrainAtlases();
+            % find all subjects subfolders from groups folders
+            for i = 1:1:length(sub_folders_group)
+                path_group_folder = [directory filesep() sub_folders_group(i).name];
+
+                % get all layers per subject
+                files = dir(fullfile(path_group_folder, '*.xlsx'));
+                files2 = dir(fullfile(path_group_folder, '*.xls'));
+                len = length(files);
+                for k = 1:1:length(files2)
+                    files(len + k, 1) = files2(k, 1);
+                end
+                
+                atlases = cohort.getBrainAtlases();
+                group_keys_layers = cell(2, length(files));
+                for k = 1:1:length(files)
+                    raw = readtable(fullfile(path_group_folder, files(k).name));
+                    group_keys_layers{1, k} = ['ST_MP_' num2str(k)];
+                    group_keys_layers{2, k} = raw;
+                    
+                    if k == 1
+                        group_id = erase(files(k).name, '.xlsx');
+                        group_id = erase(group_id, '.xls');
+                        group_id = erase(group_id, '_1'); % quitarle el _1
+                        group_lab = '';
+                        group_not = '';
                         
-            % sneak peak to see if it is a subject
-            id_tmp1 = raw1{1, 1};
-            labl_tmp1 = raw1{1, 2};
-            notes_tmp1 = raw1{1, 3};
-            data_tmp1 = raw1{1, 4:size(raw1, 2)};
-            if iscell(id_tmp1)
-                id_tmp1 = id_tmp1{1};
-            end
-            if iscell(labl_tmp1)
-                labl_tmp1 = labl_tmp1{1};
-            end
-            if  iscell(notes_tmp1)
-                notes_tmp1 = notes_tmp1{1};
-            end
-            data_tmp2 = raw2{1, 4:size(raw2, 2)};
+                        covariates = readtable(fullfile(path_group_folder, files(k).name), 'Sheet', 2, 'ReadVariableNames', 1);
+                    end
+                end
+                
+                % transform covariates table to useful arrays
+                cov_keys = covariates.Properties.VariableNames;
+                cov_vals = table2array(covariates);
+                
+                for k = 1:1:length(cov_vals)
+                    covs{1, k} = cov_keys{k}; %#ok<AGROW>
+                    covs{2, k} = cov_vals(k); %#ok<AGROW>
+                end
+                
+                % load subjects to cohort & add them to the group
+                group = Group(subject_class,'', '', '', {});
+                group.setID(group_id);
+                cohort.getGroups().add(group.getID(), group);
             
-            sub_tmp = Subject.getSubject(subject_class, ...
-                num2str(id_tmp1), num2str(labl_tmp1), num2str(notes_tmp1), atlas, ...
-                'ST_MP1', data_tmp1', ...
-                'ST_MP2', data_tmp2');
-            delete(sub_tmp);
+                % create subject
+                subject = Subject.getSubject(subject_class, ...
+                    group_id, group_lab, group_not, atlases, ...
+                    'ST_Layers', length(files), covs{:}, ...
+                    group_keys_layers{:});
+                
+                if ~cohort.getSubjects().contains(subject.getID())
+                    cohort.getSubjects().add(subject.getID(), subject, i);
+                end
+                group.addSubject(subject);   
+                
+                
+                
+                cohort.getSubjects().add(subject.getID(), subject);
+                
+                %subjects{j} = subject;                    %#ok<AGROW>
+                group = Group(subject_class, ['Group_' num2str(i)], '', '', subject);
+                cohort.getGroups().add(group.getID(), group, i);
+ 
+            end
+                
+
              
             % load subjects to cohort & add them to the group
             group = Group(subject_class,'', '', '', {});
@@ -327,7 +426,10 @@ classdef SubjectST_MP < Subject
                 id_tmp = raw1{i, 1};
                 labl_tmp = raw1{i, 2};
                 notes_tmp = raw1{i, 3};
-                data_tmp1 = raw1{i, 4:size(raw1, 2)};
+                %data_tmp1 = raw1{i, 4:size(raw1, 2)};
+                data_tmp1 = raw1{i, 4:75};
+                age = raw1{i, 76};
+                gender = raw1{i, 77};
                 if iscell(id_tmp)
                     id_tmp = id_tmp{1};
                 end
@@ -337,12 +439,15 @@ classdef SubjectST_MP < Subject
                 if  iscell(notes_tmp)
                     notes_tmp = notes_tmp{1};
                 end
-                data_tmp2 = raw2{i, 4:size(raw2, 2)};
+                %data_tmp2 = raw2{i, 4:size(raw2, 2)};
+                data_tmp2 = raw2{i, 4:75};
                 
                 subject = Subject.getSubject(subject_class, ...
                     num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlas, ...
                     'ST_MP1', data_tmp1', ...
-                    'ST_MP2', data_tmp2');
+                    'ST_MP2', data_tmp2', ...
+                    'age', age', ...
+                    'gender', gender');
                 if ~cohort.getSubjects().contains(subject.getID())
                     cohort.getSubjects().add(subject.getID(), subject, i);
                 end
