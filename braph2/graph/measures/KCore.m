@@ -4,11 +4,10 @@ classdef KCore < Measure
     % binary directed (BD), weighted undirected (WU) and weighted directed (WD)  
     % graphs.  
     %
-    % It is a parametric measure, it calculates the connection matrix of the 
-    % k-core for a given network by recursively peeling off nodes with 
-    % degree lower than k within a layer, until no such nodes remain. 
-    % The value of k is set by the user (setting 'KCoreThreshold'), the 
-    % default value is equal to 1.          
+    % It calculates the connection matrix of the k-core for a given network 
+    % by recursively peeling off nodes with degree lower than k within a layer, 
+    % until no such nodes remain. The value of k is set by the user 
+    % (setting 'KCoreThreshold'), the default value is equal to 1.          
     % 
     % KCore methods:
     %   KCore                       - constructor
@@ -136,7 +135,7 @@ classdef KCore < Measure
             % See also getClass, getName.
             
             description = [ ...
-                'The k-core of a graph is the largest subnetwork comprising' ...
+                'The k-core of a graph is the largest subnetwork comprising ' ...
                 'nodes of degree k or higher. ' ...
                 'k is set by the user; the default value is equal to 1. ' ...
                 ];  
