@@ -340,10 +340,15 @@ classdef SubjectST_MP < Subject
                 
                 atlases = cohort.getBrainAtlases();
                 
+                % load subjects to cohort & add them to the group
+                group = Group(subject_class,'', '', '', {});
+                group.setID(groups_folders(i).name);
+                cohort.getGroups().add(group.getID(), group);
+                
                 % peek into first file to get number of subjects per group
                 raw_tmp = readtable(fullfile(group_path, files(1).name));
                 number_subjects = height(raw_tmp);
-                number_fields = width(raw_tmp);
+                number_fields = width(raw_tmp) - 3;
                 
                 % I want to load all data into a cell, this is better since
                 % it will assure N calls to xls file. Instead of
@@ -351,13 +356,52 @@ classdef SubjectST_MP < Subject
                 
                 % layer, subject, field
                 all_subjects_data = cell(length(files), number_subjects, number_fields);
+                subjects_info = cell(number_subjects, 3);
+                n_f = length(files);
                 
                 for k = 1:1:length(files)
                     raw = readtable(fullfile(group_path, files(k).name));
+                    if k == 1  % just 1 time
+                        % info
+                        subjects_info(:, :) = raw{:, 1:3};
+                        covariates = readtable(fullfile(group_path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 1);
+                    end
+                    % data
                     data = raw{:, 4:number_fields};  % we remove id, lbl, notes
                     all_subjects_data(k, :, :) = num2cell(data);
+                    % create tags
+                    tags{k} = ['ST_MP_' num2str(k)]; %#ok<AGROW>
+                end                
+                
+                for k = 1:1:size(all_subjects_data, 2)  % cycle over subjects
+                    subject_keys_layers{1, :} = tags{:};
+                    layer_subject = reshape(all_subjects_data, [n_f number_fields]);
+                    subject_keys_layers{2, :} = layer_subject;
+                    
+                    % transform covariates table to useful arrays
+                    cov_keys = covariates.Properties.VariableNames;
+                    cov_vals = table2array(covariates);
+                    
+                    for j = 1:1:length(cov_keys)
+                        covs{1, j} = cov_keys{j}; %#ok<AGROW>
+                        covs{2, j} = cov_vals(j); %#ok<AGROW>
+                    end
+                    
+                    % create subject
+                    sub_id = subjects_info(k, 1);
+                    sub_label = subjects_info(k, 2);
+                    sub_notes = subjects_info(k, 3);
+                    subject = Subject.getSubject(subject_class, ...
+                        sub_id, sub_label, sub_notes, atlases, ...
+                        'ST_Layers', n_f, covs{:}, ...
+                        subject_keys_layers{:});
+                    
+                    if ~cohort.getSubjects().contains(subject.getID())
+                        cohort.getSubjects().add(subject.getID(), subject, i);
+                    end
+                    group.addSubject(subject);
                 end
-
+                
             end
         end
         function save_to_xls(cohort, varargin)
