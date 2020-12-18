@@ -67,7 +67,7 @@ classdef KCorenessCentrality < Measure
                     ss = sum(k_core) > 0;
                     coreness(ss) = k;
                 end
-                k_coreness_centrality(li) = {coreness};
+                k_coreness_centrality(li) = {coreness'};
             end
         end
         function k_core = calculate_kcore(m, A, k, directionality_layer)
