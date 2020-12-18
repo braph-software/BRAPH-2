@@ -18,9 +18,9 @@ classdef EigenvectorCentrality < Measure
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure  
-    %   getMeasure                  - returns the eigenvector centrality class.
-    %   getCompatibleGraphList      - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
+    %   getMeasure                  - returns the eigenvector centrality class
+    %   getCompatibleGraphList      - returns a list of compatible graphs
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
     
@@ -30,7 +30,7 @@ classdef EigenvectorCentrality < Measure
             % G is a graph (e.g, an instance of GraphBU, GraphWU,
             % MultiplexGraphBU or MultiplexGraphBU). 
             %
-            % See also Measure, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU
+            % See also Measure, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
             
             m = m@Measure(g, varargin{:});
         end
@@ -42,6 +42,8 @@ classdef EigenvectorCentrality < Measure
             %
             % EIGENVECTORCENTRALITY = CALCULATE(M) returns the value of the eigenvector centrality 
             % of a node.
+            %
+            % See also Measure, GraphBU, GraphWU, MultiplexGraphBU, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjacency matrix of the graph
