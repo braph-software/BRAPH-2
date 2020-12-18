@@ -68,11 +68,10 @@ classdef CategoricalPersistence < Measure
             S = {S};
             all2all = N*[(-L+1):-1,1:(L-1)];
             A = spdiags(ones(N*L, 2*L-2), all2all, N*L, N*L);
-            categorical_persistence = cell(1, L-1);
             for i = 1:length(S)
                 G = sparse(1:length(S{i}(:)), S{i}(:), 1);
                 categorical_persistence_l = trace(G'*A*G)/(N*L*(L-1));
-                categorical_persistence(i) = {categorical_persistence_l};
+                categorical_persistence = {categorical_persistence_l};
             end
         end
     end  
@@ -133,11 +132,11 @@ classdef CategoricalPersistence < Measure
             % GETMEASURESCOPE returns the measure scope of CategoricalPersistence
             %
             % MEASURE_SCOPE = GETMEASURESCOPE() returns the
-            % measure scope of categorical persistence measure (BILAYER).
+            % measure scope of categorical persistence measure (SUPERGLOBAL).
             %
             % See also getMeasureFormat.
             
-            measure_scope = Measure.BILAYER;
+            measure_scope = Measure.SUPERGLOBAL;
         end
         function parametricity = getParametricity()
             % GETPARAMETRICITY returns the parametricity of CategoricalPersistence
