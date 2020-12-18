@@ -92,7 +92,10 @@ classdef SubjectST_MP < Subject
                 for i = 1:1:sub.layers
                     id = ['ST_MP_' num2str(i)];
                     structural_multiplex_N = get_from_varargin(zeros(atlas.getBrainRegions().length(), 1), id, varargin{:});
-                    sub.datadict(id) = DataStructural(atlas, structural_multiplex_N);
+                    if iscell(structural_multiplex_N)
+                       structural_multiplex_N = [structural_multiplex_N{:}]';
+                    end
+                    sub.datadict(id) = DataStructural(atlas,structural_multiplex_N );
                 end
             else  % default behaviour
                 sub.datadict('ST_MP_1') = DataStructural(atlas, zeros(atlas.getBrainRegions().length(), 1));
@@ -367,24 +370,25 @@ classdef SubjectST_MP < Subject
                         covariates = readtable(fullfile(group_path, files(k).name), 'Sheet', 2, 'ReadVariableNames', 1);
                     end
                     % data
-                    data = raw{:, 4:number_fields};  % we remove id, lbl, notes
-                    all_subjects_data(k, :, :) = num2cell(data);
+                    data = raw{:, 4: width(raw_tmp)};  % we remove id, lbl, notes
+                    all_subjects_data(k, :, :) = reshape(num2cell(data), [1 number_subjects number_fields]);
                     % create tags
                     tags{k} = ['ST_MP_' num2str(k)]; %#ok<AGROW>
                 end                
                 
                 for k = 1:1:size(all_subjects_data, 2)  % cycle over subjects
-                    subject_keys_layers{1, :} = tags{:};
-                    layer_subject = reshape(all_subjects_data, [n_f number_fields]);
-                    subject_keys_layers{2, :} = layer_subject;
-                    
+                    subject_keys_layers(1, :) = tags;
+                    layer_subject = reshape(all_subjects_data(:, k, :), [n_f number_fields]);
+                    for l = 1:1:n_f
+                        subject_keys_layers(2, l) = {layer_subject(l, :)'};
+                    end
+
                     % transform covariates table to useful arrays
                     cov_keys = covariates.Properties.VariableNames;
                     cov_vals = table2array(covariates);
-                    
                     for j = 1:1:length(cov_keys)
                         covs{1, j} = cov_keys{j}; %#ok<AGROW>
-                        covs{2, j} = cov_vals(j); %#ok<AGROW>
+                        covs{2, j} = cov_vals(k, j); %#ok<AGROW>                     
                     end
                     
                     % create subject
@@ -392,7 +396,7 @@ classdef SubjectST_MP < Subject
                     sub_label = subjects_info(k, 2);
                     sub_notes = subjects_info(k, 3);
                     subject = Subject.getSubject(subject_class, ...
-                        sub_id, sub_label, sub_notes, atlases, ...
+                        sub_id{:}, sub_label{:}, sub_notes{:}, atlases, ...
                         'ST_Layers', n_f, covs{:}, ...
                         subject_keys_layers{:});
                     
@@ -418,7 +422,7 @@ classdef SubjectST_MP < Subject
             % See also load_from_xls, save_to_txt, save_to_json
             
             % directory (fullpath)
-             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+             root_directory = get_from_varargin('', 'Directory', varargin{:});
             if isequal(root_directory, '')  % no path, open gui
                 msg = get_from_varargin(BRAPH2.MSG_PUTDIR, 'MSG', varargin{:});
                 root_directory = uigetdir(msg);

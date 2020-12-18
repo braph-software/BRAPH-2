@@ -91,14 +91,7 @@ classdef Subject < handle & matlab.mixin.Copyable
             sub.setLabel(label)
             sub.setNotes(notes)
             
-            sub.initialize_datadict(atlases, varargin{:})
-            
-            data_codes = sub.getDataCodes();            
-            for i = 1:1:numel(data_codes)
-                data_code = data_codes{i};
-                value = get_from_varargin(sub.getData(data_code).getValue(), data_code, varargin{:});
-                sub.getData(data_code).setValue(value);
-            end
+            sub.initialize_datadict(atlases, varargin{:}) 
         end
     end
     methods  % Basic functions
