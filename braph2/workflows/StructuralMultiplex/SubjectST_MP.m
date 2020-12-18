@@ -297,30 +297,7 @@ classdef SubjectST_MP < Subject
             if isequal(directory, '')  % select file
                 msg = get_from_varargin(BRAPH2.MSG_GETDIR, 'MSG', varargin{:});                
                 directory = uigetdir(msg);
-            end
-            
-%             % file1 (fullpath)
-%             file1 = get_from_varargin('', 'File1', varargin{:});
-%             if isequal(file1, '')  % select file
-%                 msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
-%                 [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
-%                 file1 = [filepath1 filename1];
-%                 
-%                 if ~filterindex1
-%                     return
-%                 end
-%             end
-%             % file2 (fullpath)
-%             file2 = get_from_varargin('', 'File2', varargin{:});
-%             if isequal(file2, '')  % select file
-%                 msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
-%                 [filename2, filepath2, filterindex2] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
-%                 file2 = [filepath2 filename2];
-%                 
-%                 if ~filterindex2
-%                     return
-%                 end
-%             end
+            end            
             
             % Set/create cohort
             if isa(tmp, 'Cohort')
@@ -346,115 +323,42 @@ classdef SubjectST_MP < Subject
                 cohort = Cohort(cohort_id, cohort_label, cohort_notes, subject_class, atlases, {});  
             end          
             
-            % find all subjects subfolders from groups folders
-            for i = 1:1:length(sub_folders_group)
-                path_group_folder = [directory filesep() sub_folders_group(i).name];
-
-                % get all layers per subject
-                files = dir(fullfile(path_group_folder, '*.xlsx'));
-                files2 = dir(fullfile(path_group_folder, '*.xls'));
+            % find all group folders
+            % find all subfolders get all groups
+            groups_folders = dir(directory);
+            groups_folders = groups_folders([groups_folders(:).isdir] == 1);
+            groups_folders = groups_folders(~ismember({groups_folders(:).name}, {'.', '..'}));
+            
+            for i = 1:1:length(groups_folders)
+                group_path = [directory filesep() groups_folders(i).name];
+                files = dir(fullfile(group_path, '*.xlsx'));
+                files2 = dir(fullfile(group_path, '*.xls'));
                 len = length(files);
                 for k = 1:1:length(files2)
                     files(len + k, 1) = files2(k, 1);
                 end
                 
                 atlases = cohort.getBrainAtlases();
-                group_keys_layers = cell(2, length(files));
+                
+                % peek into first file to get number of subjects per group
+                raw_tmp = readtable(fullfile(group_path, files(1).name));
+                number_subjects = height(raw_tmp);
+                number_fields = width(raw_tmp);
+                
+                % I want to load all data into a cell, this is better since
+                % it will assure N calls to xls file. Instead of
+                % N*nSubjects calls to xls files.
+                
+                % layer, subject, field
+                all_subjects_data = cell(length(files), number_subjects, number_fields);
+                
                 for k = 1:1:length(files)
-                    raw = readtable(fullfile(path_group_folder, files(k).name));
-                    group_keys_layers{1, k} = ['ST_MP_' num2str(k)];
-                    group_keys_layers{2, k} = raw;
-                    
-                    if k == 1
-                        group_id = erase(files(k).name, '.xlsx');
-                        group_id = erase(group_id, '.xls');
-                        group_id = erase(group_id, '_1'); % quitarle el _1
-                        group_lab = '';
-                        group_not = '';
-                        
-                        covariates = readtable(fullfile(path_group_folder, files(k).name), 'Sheet', 2, 'ReadVariableNames', 1);
-                    end
+                    raw = readtable(fullfile(group_path, files(k).name));
+                    data = raw{:, 4:number_fields};  % we remove id, lbl, notes
+                    all_subjects_data(k, :, :) = num2cell(data);
                 end
-                
-                % transform covariates table to useful arrays
-                cov_keys = covariates.Properties.VariableNames;
-                cov_vals = table2array(covariates);
-                
-                for k = 1:1:length(cov_vals)
-                    covs{1, k} = cov_keys{k}; %#ok<AGROW>
-                    covs{2, k} = cov_vals(k); %#ok<AGROW>
-                end
-                
-                % load subjects to cohort & add them to the group
-                group = Group(subject_class,'', '', '', {});
-                group.setID(group_id);
-                cohort.getGroups().add(group.getID(), group);
-            
-                % create subject
-                subject = Subject.getSubject(subject_class, ...
-                    group_id, group_lab, group_not, atlases, ...
-                    'ST_Layers', length(files), covs{:}, ...
-                    group_keys_layers{:});
-                
-                if ~cohort.getSubjects().contains(subject.getID())
-                    cohort.getSubjects().add(subject.getID(), subject, i);
-                end
-                group.addSubject(subject);   
-                
-                
-                
-                cohort.getSubjects().add(subject.getID(), subject);
-                
-                %subjects{j} = subject;                    %#ok<AGROW>
-                group = Group(subject_class, ['Group_' num2str(i)], '', '', subject);
-                cohort.getGroups().add(group.getID(), group, i);
- 
-            end
-                
 
-             
-            % load subjects to cohort & add them to the group
-            group = Group(subject_class,'', '', '', {});
-            group_path = strsplit(file1, filesep());
-            group_id = group_path{length(group_path)};            
-            group_id = erase(group_id, '.xlsx');
-            group_id = erase(group_id, '.xls');            
-            group.setID(group_id);
-            cohort.getGroups().add(group.getID(), group); 
-            
-            for i = 1:1:size(raw1, 1)
-                id_tmp = raw1{i, 1};
-                labl_tmp = raw1{i, 2};
-                notes_tmp = raw1{i, 3};
-                %data_tmp1 = raw1{i, 4:size(raw1, 2)};
-                data_tmp1 = raw1{i, 4:75};
-                age = raw1{i, 76};
-                gender = raw1{i, 77};
-                if iscell(id_tmp)
-                    id_tmp = id_tmp{1};
-                end
-                if iscell(labl_tmp)
-                    labl_tmp = labl_tmp{1};
-                end
-                if  iscell(notes_tmp)
-                    notes_tmp = notes_tmp{1};
-                end
-                %data_tmp2 = raw2{i, 4:size(raw2, 2)};
-                data_tmp2 = raw2{i, 4:75};
-                
-                subject = Subject.getSubject(subject_class, ...
-                    num2str(id_tmp), num2str(labl_tmp), num2str(notes_tmp), atlas, ...
-                    'ST_MP1', data_tmp1', ...
-                    'ST_MP2', data_tmp2', ...
-                    'age', age', ...
-                    'gender', gender');
-                if ~cohort.getSubjects().contains(subject.getID())
-                    cohort.getSubjects().add(subject.getID(), subject, i);
-                end
-                group.addSubject(subject);                
-            end   
-            % warning on
-            warning('on', 'all')
+            end
         end
         function save_to_xls(cohort, varargin)
             % SAVE_TO_XLS saves the cohort of SubjectST_MP to a '.xls' file
