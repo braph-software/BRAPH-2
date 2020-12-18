@@ -417,83 +417,97 @@ classdef SubjectST_MP < Subject
             % 
             % See also load_from_xls, save_to_txt, save_to_json
             
-            % file1 (fullpath)
-            file1 = get_from_varargin('', 'File1', varargin{:});
-            if isequal(file1, '')  % select file
-                msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename1, filepath1, filterindex1] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
-                file1 = [filepath1 filename1];
-                
-                if ~filterindex1
-                    return
-                end
-            end
-            % file2 (fullpath)
-            file2 = get_from_varargin('', 'File2', varargin{:});
-            if isequal(file2, '')  % select file
-                msg = get_from_varargin(BRAPH2.XLS_MSG_GETFILE, 'MSG', varargin{:});
-                [filename2, filepath2, filterindex2] = uigetfile(BRAPH2.XLS_EXTENSION, msg);
-                file2 = [filepath2 filename2];
-                
-                if ~filterindex2
-                    return
-                end
+            % directory (fullpath)
+             root_directory = get_from_varargin('', 'RootDirectory', varargin{:});
+            if isequal(root_directory, '')  % no path, open gui
+                msg = get_from_varargin(BRAPH2.MSG_PUTDIR, 'MSG', varargin{:});
+                root_directory = uigetdir(msg);
             end
             
-            % get info
-            groups = cohort.getGroups().getValues();
-            group = groups{1};  % must change
-            subjects_list = group.getSubjects();
-                        
-            for j = 1:1:group.subjectnumber()
-                % get subject data
-                subject = subjects_list{j};
-                row_ids{j, 1} = subject.getID(); %#ok<AGROW>
-                row_labels{j, 1} = subject.getLabel(); %#ok<AGROW>
-                row_notes{j, 1} = subject.getNotes(); %#ok<AGROW>
-                row_datas1{j, 1} = subject.getData('ST_MP1').getValue(); %#ok<AGROW>
-                row_datas2{j, 1} = subject.getData('ST_MP2').getValue(); %#ok<AGROW>
-            end
-            tab1 = table(row_ids, row_labels, row_notes, row_datas1);
-            tab2 = table(row_ids, row_labels, row_notes, row_datas2);
-            
+             % warning xls sheets off
+            warning( 'off', 'MATLAB:xlswrite:AddSheet' ) ;
             atlases = cohort.getBrainAtlases();
-            atlas = atlases{1};  % must change
+            atlas = atlases{1};
             
-            for i = 1:1:atlas.getBrainRegions().length()
-                brain_regions{i} = atlas.getBrainRegions().getValue(i);  %#ok<AGROW>
+             % creates groups folders
+            for i=1:1:cohort.getGroups().length()
+                if ~exist([root_directory filesep() cohort.getGroups().getValue(i).getID()], 'dir')
+                    mkdir(root_directory, cohort.getGroups().getValue(i).getID());
+                end
+                
+                % group info
+                group = cohort.getGroups().getValue(i);
+                group_directory = [root_directory filesep() cohort.getGroups().getValue(i).getID()];
+                
+                % create container tensor for all data we have to peek into
+                % first subject
+                % get subject info
+                subjects_list = group.getSubjects();
+                s_tmp = subjects_list{1};
+                number_layers = s_tmp.getNumberOfLayers();
+                number_elements = size(s_tmp.getData('ST_MP_1').getValue(), 1);
+                number_covariates = s_tmp.getDataDictLength() - number_layers;                
+                all_data = cell(number_layers, group.subjectnumber(), number_elements);
+                subjects_info = cell(group.subjectnumber(), 3); 
+                covs_vals = cell(group.subjectnumber(), number_covariates);
+                covs_keys = cell(1, number_covariates);
+                
+                for j = 1:1:group.subjectnumber()
+                    subject = subjects_list{j};
+                    subjects_info{j, 1} = subject.getID();
+                    subjects_info{j, 2} = subject.getLabel();
+                    subjects_info{j, 3} = subject.getNotes();
+                    layers = subject.getNumberOfLayers();
+                    for k = 1:1:layers
+                        id_layer = ['ST_MP_' num2str(k)];
+                        data_val = subject.getData(id_layer).getValue();
+                        all_data(k, j, :) = num2cell(data_val');
+                    end
+                    
+                    % covariates
+                    data_codes = subject.get_internal_datacodes();
+                    for k = 1:1:length(data_codes)
+                        d = data_codes{k};
+                        if ~contains(d, 'ST_MP_')
+                            cov_keys{k} = d; %#ok<AGROW>
+                            cov_vals{k} = subject.getData(d).getValue(); %#ok<AGROW>
+                        end
+                    end
+                    cov_keys(cellfun('isempty', cov_keys)) = [];
+                    cov_vals(cellfun('isempty', cov_vals)) = [];
+                    if j == 1
+                        covs_keys(1, :) = cov_keys;
+                    end
+                    covs_vals(j, :) = cov_vals;
+                    cov_vals = [];
+                    cov_keys = [];
+                end
+                
+                % save info
+                t = cell2table(covs_vals);
+                t.Properties.VariableNames = covs_keys;
+                
+                for j =1:1:number_layers
+                    file_id = [group.getID() '_' num2str(j) '.xlsx'];
+                    % save id lbl notes
+                    tab_id = cell2table(subjects_info);
+                    tab_id.Properties.VariableNames = {'id', 'label', 'notes'};
+                    writetable(tab_id, [group_directory filesep() file_id], 'Sheet', 1, 'WriteVariableNames', 1, 'Range', 'A1');
+                    
+                    % save data
+                    tab_data =  cell2table(reshape(all_data(j, :, :), [group.subjectnumber(), number_elements]));
+                    tab_data.Properties.VariableNames = atlas.getBrainRegions().getKeys();
+                    writetable(tab_data, [group_directory filesep() file_id], 'Sheet', 1, 'WriteVariableNames', 1, 'Range', 'D1');
+                    
+                    % save covariates
+                    if j == 1
+                        writetable(t, [group_directory filesep() file_id], 'Sheet', 2, 'WriteVariableNames', 1, 'Range', 'A1');
+                    end
+                end
             end
-            
-            row_data{1,:} = cellfun(@(x) x.getLabel, brain_regions, 'UniformOutput', false);
-            row_id = 'ID';
-            row_label = 'Label';
-            row_notes = 'Notes';
-            first_row_table1 = table(row_data, 'VariableNames', {'row_datas1'});
-            first_row_table1.row_ids = row_id;
-            first_row_table1.row_labels = row_label;
-            first_row_table1.row_notes = row_notes;
-            first_row_table1 = [first_row_table1(:, 2) first_row_table1(:, 3) ...
-                first_row_table1(:, 4) first_row_table1(:, 1)];
-            first_row_table2 = table(row_data, 'VariableNames', {'row_datas2'});
-            first_row_table2.row_ids = row_id;
-            first_row_table2.row_labels = row_label;
-            first_row_table2.row_notes = row_notes;
-            first_row_table2 = [first_row_table2(:, 2) first_row_table2(:, 3) ...
-                first_row_table2(:, 4) first_row_table2(:, 1)];
-            
-            % creates tables
-            tab1 = [
-                first_row_table1
-                tab1
-                ];
-            tab2 = [
-                first_row_table2
-                tab2
-                ];
-            
-            % save
-            writetable(tab1, file1, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
-            writetable(tab2, file2, 'Sheet', 1, 'WriteVariableNames', 0, 'Range', 'A1');
+            %
+            warning('on', 'MATLAB:xlswrite:AddSheet');
+          
         end
         function cohort = load_from_txt(tmp, varargin)
             % LOAD_FROM_TXT loads a '.txt' file to a Cohort with SubjectST_MP

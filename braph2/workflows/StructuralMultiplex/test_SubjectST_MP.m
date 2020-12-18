@@ -1,11 +1,8 @@
 % test SubjectST_MP
 
-br1 = BrainRegion('BR1', 'brain region 1', 'notes 1', 1, 1.1, 1.11);
-br2 = BrainRegion('BR2', 'brain region 2', 'notes 2', 2, 2.2, 2.22);
-br3 = BrainRegion('BR3', 'brain region 3', 'notes 3', 3, 3.3, 3.33);
-br4 = BrainRegion('BR4', 'brain region 4', 'notes 4', 4, 4.4, 4.44);
-br5 = BrainRegion('BR5', 'brain region 5', 'notes 5', 5, 5.5, 5.55);
-atlas = BrainAtlas('BA', 'brain atlas', 'notes', 'BrainMesh_ICBM152.nv', {br1, br2, br3, br4, br5});
+root = fileparts(which('SubjectST_MP'));
+example = [root filesep() 'example_data_ST_MP' filesep() 'desikan_atlas.xlsx'];
+atlas = BrainAtlas.load_from_xls('File', example);
 
 %% Test 1: Instantiation
 sub = SubjectST_MP('id', 'label', 'notes', atlas);
@@ -13,24 +10,31 @@ sub = SubjectST_MP('id', 'label', 'notes', atlas);
 %% Test 2.1: Save and Load Cohort XLS
 % setup
 sub_class = 'SubjectST_MP';
-input_rule1 = 'ST_MP1';
-input_rule2 = 'ST_MP2';
-input_data1 = rand(atlas.getBrainRegions().length(), 1);
-input_data2 = rand(atlas.getBrainRegions().length(), 1);
-save_dir_rule = 'File1';
-save_dir_rule2 = 'File2';
-save_dir_path1 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased.xlsx'];
-save_dir_path2 = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased2.xlsx'];
-sub1 = Subject.getSubject(sub_class, 'SubjectID1', 'label1', 'notes1', atlas, input_rule1, input_data1, input_rule2, input_data2);
-sub2 = Subject.getSubject(sub_class, 'SubjectID2', 'label2', 'notes2', atlas, input_rule1, input_data1, input_rule2, input_data2);
-sub3 = Subject.getSubject(sub_class, 'SubjectID3', 'label3', 'notes3', atlas, input_rule1, input_data1, input_rule2, input_data2);
-group = Group(sub_class, 'GroupName1', 'TestGroup1', 'notes1', {sub1, sub2, sub3});
+% create groups of 5 subjects with 4 layers each
+for i = 1:1:5  % subs
+    for j = 1:1:4  % layers
+        inputs{1, j} = ['ST_MP_' num2str(j)]; %#ok<SAGROW> % this will be the layers id inside the dicts
+        inputs{2, j} = rand(atlas.getBrainRegions().length(), 1); %#ok<SAGROW>
+    end
+    subs{i} = Subject.getSubject(sub_class, ['SubjectID_1_' num2str(i)], 'label1', 'notes1', atlas, 'ST_Layers', 4, 'age', randi(50), ...
+        'gender', randi(2)-1, 'education', randi(20), inputs{:});  %#ok<SAGROW> 
+    subs2{i} = Subject.getSubject(sub_class, ['SubjectID_2_' num2str(i)], 'label1', 'notes1', atlas, 'ST_Layers', 4, 'age', randi(50), ...
+        'gender', randi(2)-1, 'education', randi(20), inputs{:});
+end
 
-cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {sub1, sub2, sub3});
+group = Group(sub_class, 'GroupName1', 'TestGroup1', 'notes1', {subs{:}});
+group2 = Group(sub_class, 'GroupName2', 'TestGroup2', 'notes2', {subs2{:}});
+
+
+cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {subs{:}});
 cohort.getGroups().add(group.getID(), group);
+cohort.getGroups().add(group2.getID(), group2);
+
+save_dir_rule = 'RootDirectory';
+save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_erased'];
 
 % act
-SubjectST_MP.save_to_xls(cohort, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
+SubjectST_MP.save_to_xls(cohort, save_dir_rule, save_dir_path);
 
 load_cohort = SubjectST_MP.load_from_xls(atlas, sub_class, save_dir_rule, save_dir_path1, save_dir_rule2, save_dir_path2);
 
