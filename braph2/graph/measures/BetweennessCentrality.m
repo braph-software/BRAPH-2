@@ -19,9 +19,9 @@ classdef BetweennessCentrality < Measure
     %   getMeasureFormat            - returns the measure format
     %   getMeasureScope             - returns the measure scope
     %   getParametricity            - returns the parametricity of the measure  
-    %   getMeasure                  - returns the betweenness centrality class.
-    %   getCompatibleGraphList      - returns a list of compatible graphs.
-    %   getCompatibleGraphNumber    - returns the number of compatible graphs.
+    %   getMeasure                  - returns the betweenness centrality class
+    %   getCompatibleGraphList      - returns a list of compatible graphs
+    %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
     % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
     
@@ -44,6 +44,8 @@ classdef BetweennessCentrality < Measure
             %
             % BETWEENNESSCENTRALITY = CALCULATE(M) returns the value of the betweenness centrality 
             % of a node.
+            %
+            % See also Measure, GraphBD, GraphBU, GraphWD, GraphWU, MultiplexGraphBD, MultiplexGraphBU, MultiplexGraphWD, MultiplexGraphWU.
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjacency matrix of the graph
