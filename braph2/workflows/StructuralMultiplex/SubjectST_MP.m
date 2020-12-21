@@ -95,7 +95,7 @@ classdef SubjectST_MP < Subject
                     if iscell(structural_multiplex_N)
                        structural_multiplex_N = [structural_multiplex_N{:}]';
                     end
-                    sub.datadict(id) = DataStructural(atlas,structural_multiplex_N );
+                    sub.datadict(id) = DataStructural(atlas, structural_multiplex_N );
                 end
             else  % default behaviour
                 sub.datadict('ST_MP_1') = DataStructural(atlas, zeros(atlas.getBrainRegions().length(), 1));
@@ -401,7 +401,7 @@ classdef SubjectST_MP < Subject
                         subject_keys_layers{:});
                     
                     if ~cohort.getSubjects().contains(subject.getID())
-                        cohort.getSubjects().add(subject.getID(), subject, i);
+                        cohort.getSubjects().add(subject.getID(), subject);
                     end
                     group.addSubject(subject);
                 end
