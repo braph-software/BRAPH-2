@@ -24,6 +24,9 @@ classdef Participation < Measure
     %   getCompatibleGraphList      - returns a list of compatible graphs
     %   getCompatibleGraphNumber    - returns the number of compatible graphs
     %
+    % Participation methods 
+    %   getCI                       - returns the given community structure
+    %
     % See also Measure, GraphBU, GraphBD, GraphWU, GraphWD, MultiplexGraphBU, MultiplexGraphBD, MultiplexGraphWU, MultiplexGraphWD.
   
     properties (GetAccess=protected, SetAccess=protected)
