@@ -25,8 +25,7 @@ end
 group = Group(sub_class, 'GroupName1', 'TestGroup1', 'notes1', {subs{:}});
 group2 = Group(sub_class, 'GroupName2', 'TestGroup2', 'notes2', {subs2{:}});
 
-
-cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {subs{:}});
+cohort = Cohort('cohorttest', 'label1', 'notes1', sub_class, atlas, {subs{:}, subs2{:}});
 cohort.getGroups().add(group.getID(), group);
 cohort.getGroups().add(group2.getID(), group2);
 
@@ -37,20 +36,22 @@ save_dir_path = [fileparts(which('test_braph2')) filesep 'trial_cohort_to_be_era
 SubjectST_MP.save_to_xls(cohort, save_dir_rule, save_dir_path);
 
 load_cohort = SubjectST_MP.load_from_xls(atlas, sub_class, save_dir_rule, save_dir_path);
+
 % assert
-% assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
-%     [BRAPH2.STR ':SubjectST_MP:SaveLoadXLS'], ...
-%     'Problems saving or loading a cohort.')
-% assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), ...
-%     [BRAPH2.STR ':SubjectST_MP:SaveLoadXLS'], ...
-%     'Problems saving or loading a cohort.')
+assert(isequal(cohort.getSubjects().length(), load_cohort.getSubjects().length()), ...
+    [BRAPH2.STR ':SubjectST_MP:SaveLoadXLS'], ...
+    'Problems saving or loading a cohort.')
+assert(isequal(cohort.getGroups().length(), load_cohort.getGroups().length()), ...
+    [BRAPH2.STR ':SubjectST_MP:SaveLoadXLS'], ...
+    'Problems saving or loading a cohort.')
+
 % for i = 1:1:max(cohort.getSubjects().length(), load_cohort.getSubjects().length())
 %     sub = cohort.getSubjects().getValue(i);
 %     sub_loaded = load_cohort.getSubjects().getValue(i);
-%     data1 = sub.getData(input_rule1);
-%     data_loaded1 = sub_loaded.getData(input_rule1);
-%     data2 = sub.getData(input_rule2);
-%     data_loaded2 = sub_loaded.getData(input_rule2);
+%     data1 = sub.getData('ST_MP_1');
+%     data_loaded1 = sub_loaded.getData('ST_MP_1');
+%     data2 = sub.getData('ST_MP_2');
+%     data_loaded2 = sub_loaded.getData('ST_MP_2');
 %     assert( ...
 %         isequal(sub.getID(), sub_loaded.getID()) & ...
 %         isequal(data1.getValue(), data_loaded1.getValue()) & ...
