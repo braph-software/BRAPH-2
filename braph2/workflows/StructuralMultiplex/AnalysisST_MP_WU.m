@@ -120,36 +120,44 @@ classdef AnalysisST_MP_WU < Analysis
     end
     methods (Access = protected)  % graph methods
         function A = get_weighted_correlation_matrix(analysis, subjects, varargin)
+%         function A = get_weighted_correlation_matrix(analysis, subjects, matrix1, matrix2, varargin)
             % GET_WEIGHTED_CORRELATION_MATRIX creates a correlated matrix
             %
             % A = GET_WEIGHTED_CORRELATION_MATRIX(ANALYSIS, SUBJECTS)
             % creates a correlated matrix using the SUBJECTS data. Applies
             % the ANALYSIS settings to correlate.
             %
-            % See also get_graph_for_subjects.
-            
-            atlases = analysis.cohort.getBrainAtlases();
-            atlas = atlases{1};
+            % See also get_graph_for_subjects.           
             
             subject_number = numel(subjects);
             
-            data1 = zeros(subject_number, atlas.getBrainRegions().length());
-            data2 = zeros(subject_number, atlas.getBrainRegions().length());
-            for i = 1:1:subject_number
-                subject = subjects{i};
-                data1(i, :) = subject.getData('ST_MP1').getValue();  % Structural data layer 1
-                data2(i, :) = subject.getData('ST_MP2').getValue();  % Structural data layer 2
-            end
-            
+            covariates_keys = get_from_varargin({}, 'ST_MP_Covariates', varargin{:});
             correlation_rule = analysis.getSettings('AnalysisST_MP.CorrelationRule');
             negative_weight_rule = analysis.getSettings('AnalysisST_MP.NegativeWeightRule');
-            A11 = Correlation.getAdjacencyMatrix(data1, correlation_rule, negative_weight_rule);
-            A22 = Correlation.getAdjacencyMatrix(data2, correlation_rule, negative_weight_rule);
-            A12 = eye(length(A11));
-            A21 = eye(length(A11));
-            A = {A11, A12; A21, A22};
+            
+            for i = 1:1:subject_number
+                subject = subjects{i};
+                layers = subject.getNumberOfLayers();
+                
+                for j = 1:1:layers
+                    id = ['ST_MP_' num2str(j)];
+                    data = subject.getData(id).getValue();
+                    
+                    covariates = [];
+                    for k = 1:1:length(covariates_keys)
+                        covs = subject.getData(covariates_keys{k}).getValue();
+                        covariates = [covs{:}];  % comma or ;
+                    end
+                    
+                    A{j, j} = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule, covariates); %#ok<AGROW>
+                end
+            end
+            
+            hold_size = size(A{1,1});
+            A(cellfun('isempty', A)) = {eye(hold_size)};
         end
         function g = get_graph_for_subjects(analysis, subjects, varargin)
+        %function g = get_graph_for_subjects(analysis, subjects, matrix1, matrix2, varargin)
             % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
             %
             % G = GET_GRAPH_FOR_SUBJECTS(ANALYSIS, SUBJECTS) creates a
@@ -175,6 +183,7 @@ classdef AnalysisST_MP_WU < Analysis
     end
     methods (Access = protected)  % Calculation functions
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
+%         function measurement = calculate_measurement(analysis, measure_code, group, matrix1, matrix2, varargin)
             % CALCULATE_MEASUREMENT returns a measurement
             %
             % MEASUREMENT = CALCULTE_MEASUREMENT(ANALYSIS, MEASURE_CODE, GROUP)
@@ -191,12 +200,15 @@ classdef AnalysisST_MP_WU < Analysis
             % See also calculate_random_comparison, calculate_comparison.
             
             subjects = group.getSubjects();
-            
             g = analysis.get_graph_for_subjects(subjects, varargin{:});
-            
             measure = Measure.getMeasure(measure_code, g, varargin{:});
             measurement_value = measure.getValue();
             measurement_parameter_values = measure.getParameterValues();
+            
+            % get layers info
+            subs = group.getSubjects();
+            sub = subs{1};
+            layers = sub.getNumberOfLayers();
             
             measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
@@ -205,6 +217,7 @@ classdef AnalysisST_MP_WU < Analysis
                 analysis.getCohort().getBrainAtlases(), ...
                 measure_code, ...
                 group,  ...
+                'ST_MP_Layers', layers, ...
                 'MeasurementST_MP.Value', measurement_value, ...
                 'MeasurementST_MP.ParameterValues', measurement_parameter_values, ...
                 varargin{:} ...
@@ -237,20 +250,24 @@ classdef AnalysisST_MP_WU < Analysis
             
             verbose = get_from_varargin(false, 'Verbose', varargin{:});
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
-            
             M = get_from_varargin(1e+3, 'RandomizationNumber', varargin{:});
             attempts_per_edge = get_from_varargin(5, 'AttemptsPerEdge', varargin{:});
             number_of_weights = get_from_varargin(1, 'NumberOfWeights', varargin{:});
+            
+            % get layers info
+            subs = group.getSubjects();
+            sub = subs{1};
+            layers = sub.getNumberOfLayers();
             
             if Measure.is_superglobal(measure_code)
                 rows = 1;
                 columns = 1;
             elseif Measure.is_unilayer(measure_code)
-                rows = 2;
+                rows = layers;
                 columns = 1;
             elseif Measure.is_bilayer(measure_code)
-                rows = 2;
-                columns = 2;
+                rows = layers;
+                columns = layers;
             end
             
             % Measurements for the group
@@ -334,6 +351,7 @@ classdef AnalysisST_MP_WU < Analysis
                 'RandomComparisonST_MP.p2', p2, ....
                 'RandomComparisonST_MP.confidence_min', ci_lower, ...
                 'RandomComparisonST_MP.confidence_max', ci_upper, ...
+                'RandomComparisonST_MP.ParameterValues', parameter_value_group, ...
                 varargin{:} ...
                 );
         end
@@ -378,9 +396,15 @@ classdef AnalysisST_MP_WU < Analysis
             end
             
             % Measurements for groups 1 and 2, and their difference
+%             g1matrix1 = get_from_varargin(1e+3, 'CorrelationMatrix1', varargin{:});
+%             g1matrix2 = get_from_varargin(1e+3, 'CorrelationMatrix2', varargin{:});
+%             measurements_1 = analysis.getMeasurement(measure_code, group_1, g1matrix1, g1matrix2, varargin{:});
             measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
             value_1 = measurements_1.getMeasureValue();
             
+%             g2matrix1 = get_from_varargin(1e+3, 'CorrelationMatrix3', varargin{:});
+%             g2matrix2 = get_from_varargin(1e+3, 'CorrelationMatrix4', varargin{:});
+%             measurements_2 = analysis.getMeasurement(measure_code, group_2,  g2matrix1, g2matrix2,  varargin{:});
             measurements_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
             value_2 = measurements_2.getMeasureValue();
             
