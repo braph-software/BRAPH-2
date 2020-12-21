@@ -116,15 +116,17 @@ classdef MeasurementST_MP_WU < Measurement
                     varargin{:});
             parameter_values_length = max(1, length(m.parameter_values));
             
+            layers = get_from_varargin(2, 'ST_MP_Layers', varargin{:});
+            
             if Measure.is_superglobal(measure_code)  % superglobal measure
                 rows = 1;
                 columns = 1;
             elseif Measure.is_unilayer(measure_code)  % unilayer measure
-                rows = 2;
+                rows = layers;
                 columns = 1;
             elseif Measure.is_bilayer(measure_code)  % bilayer measure
-                rows = 2;
-                columns = 2;
+                rows = layers;
+                columns = layers;
             end
             
             if Measure.is_global(measure_code)  % global measure
@@ -184,7 +186,7 @@ classdef MeasurementST_MP_WU < Measurement
             %
             % See also getList, getClass, getDescription.
             
-            name = 'Measurement ST MP WU';
+            name = 'Measurement Structural Multiplex WU';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of structural multiplex measurement
