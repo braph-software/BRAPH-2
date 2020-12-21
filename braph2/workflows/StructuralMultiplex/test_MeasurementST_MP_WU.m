@@ -29,14 +29,15 @@ end
 for i = 1:1:numel(measures)
     measurement = MeasurementST_MP_WU('m1', 'label', 'notes', atlas, measures{i}, group);
     
+    layers = 2;  % default
     value = measurement.getMeasureValue();
     
     if Measure.is_superglobal(measures{i})
         num_elements = 1;
     elseif Measure.is_unilayer(measures{i})
-        num_elements = 2;
+        num_elements = layers;
     elseif Measure.is_bilayer(measures{i})
-        num_elements = 4;
+        num_elements = layers*layers;
     end
     
     parameter_values_length = max(1, length(measurement.getMeasureParameterValues()));
@@ -85,13 +86,14 @@ for i=1:1:numel(measures)
         'MeasurementST_MP.Value', value, 'MeasurementST_MP.ParameterValues', parameter_values ...
         );    
     
+    layers = 2;  % default
     % assert
     if Measure.is_superglobal(measures{i})
         num_elements = 1;
     elseif Measure.is_unilayer(measures{i})
-        num_elements = 2;
+        num_elements = layers;
     elseif Measure.is_bilayer(measures{i})
-        num_elements = 4;
+        num_elements = layers*layers;
     end
     
     if Measure.is_global(measures{i})
