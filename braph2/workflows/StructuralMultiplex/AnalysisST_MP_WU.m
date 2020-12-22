@@ -592,7 +592,264 @@ classdef AnalysisST_MP_WU < Analysis
             %
             % See also getClass, getSubjectClass, getGraphType.
             
-            graph_panel = [];
+            ui_parent = get_from_varargin([], 'UIParent', varargin{:});
+            ui_parent_axes = get_from_varargin([], 'UIParentAxes', varargin{:});
+            
+            % groups labels
+            groups = analysis.getCohort().getGroups().getValues();
+            if ~isempty(groups)
+                groups_labels = analysis.getCohort().getGroups().getKeys();
+            else
+                groups_labels = 'No groups';
+            end
+            
+            % layer labels
+            subs = analysis.getCohort().getSubjects().getValues();
+            s = subs{1};
+            for j = 1:1:s.getNumberOfLayers()
+                layers_labels{j} = ['Layer ' num2str(j)]; %#ok<AGROW>
+            end
+            
+            subject_labels = {''};
+            selected_group = 1;
+            selected_subject = 1;
+            selected_layer = 1;
+            matrix_plot = [];
+            
+            
+            cla(ui_parent_axes)
+            axes(ui_parent_axes)
+            
+            % create the options     ****************
+            % groups popup
+            ui_matrix_groups_popup = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'popup');
+            set(ui_matrix_groups_popup, 'Position', [.7 .88 .28 .05])  % left bottom width height
+            set(ui_matrix_groups_popup, 'TooltipString', 'Select Group')
+            set(ui_matrix_groups_popup, 'String', groups_labels)
+            set(ui_matrix_groups_popup, 'Callback', {@cb_groups_popup})
+            
+            % layer popup
+            ui_matrix_layers_popup = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'popup');
+            set(ui_matrix_layers_popup, 'Position', [.70 .8 .28 .05])
+            set(ui_matrix_layers_popup, 'TooltipString', 'Select Layer')
+            set(ui_matrix_layers_popup, 'String', layers_labels)
+            set(ui_matrix_layers_popup, 'Callback', {@cb_layers_popup})
+            
+            % weighted
+            ui_matrix_weighted_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+            set(ui_matrix_weighted_checkbox, 'Position', [.70 .6 .28 .05])
+            set(ui_matrix_weighted_checkbox, 'String', 'weighted correlation matrix')
+            set(ui_matrix_weighted_checkbox, 'Value', true)
+            set(ui_matrix_weighted_checkbox, 'TooltipString', 'Select weighted matrix')
+            set(ui_matrix_weighted_checkbox, 'FontWeight', 'bold')
+            set(ui_matrix_weighted_checkbox, 'Callback', {@cb_matrix_weighted_checkbox})
+            
+            % density
+            ui_matrix_density_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+            set(ui_matrix_density_checkbox, 'Position', [.70 .54 .28 .05])
+            set(ui_matrix_density_checkbox, 'String', 'binary correlation matrix (set density)')
+            set(ui_matrix_density_checkbox, 'Value', false)
+            set(ui_matrix_density_checkbox, 'TooltipString', 'Select binary correlation matrix with a set density')
+            set(ui_matrix_density_checkbox, 'Callback', {@cb_matrix_density_checkbox})
+            
+            ui_matrix_density_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
+            set(ui_matrix_density_edit, 'Position', [.70 .515 .05 .025])
+            set(ui_matrix_density_edit, 'String', '50.00');
+            set(ui_matrix_density_edit, 'TooltipString', 'Set density.');
+            set(ui_matrix_density_edit, 'FontWeight', 'bold')
+            set(ui_matrix_density_edit, 'Enable', 'off')
+            set(ui_matrix_density_edit, 'Callback', {@cb_matrix_density_edit});
+            
+            ui_matrix_density_slider = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'slider');
+            set(ui_matrix_density_slider, 'Position', [.75 .515 .23 .025])
+            set(ui_matrix_density_slider, 'Min', 0, 'Max', 100, 'Value', 50)
+            set(ui_matrix_density_slider, 'TooltipString', 'Set density.')
+            set(ui_matrix_density_slider, 'Enable', 'off')
+            set(ui_matrix_density_slider, 'Callback', {@cb_matrix_density_slider})
+            
+            % threshold
+            ui_matrix_threshold_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+            set(ui_matrix_threshold_checkbox, 'Position', [.70 .44 .28 .05])
+            set(ui_matrix_threshold_checkbox, 'String', 'binary correlation matrix (set threshold)')
+            set(ui_matrix_threshold_checkbox, 'Value', false)
+            set(ui_matrix_threshold_checkbox, 'TooltipString', 'Select binary correlation matrix with a set threshold')
+            set(ui_matrix_threshold_checkbox, 'Callback', {@cb_matrix_threshold_checkbox})
+            
+            ui_matrix_threshold_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
+            set(ui_matrix_threshold_edit, 'Position', [.70 .415 .05 .025])
+            set(ui_matrix_threshold_edit, 'String', '0.50');
+            set(ui_matrix_threshold_edit, 'TooltipString', 'Set threshold.');
+            set(ui_matrix_threshold_edit, 'FontWeight', 'bold')
+            set(ui_matrix_threshold_edit, 'Enable', 'off')
+            set(ui_matrix_threshold_edit, 'Callback', {@cb_matrix_threshold_edit});
+            
+            ui_matrix_threshold_slider = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'slider');
+            set(ui_matrix_threshold_slider, 'Position', [.75 .415 .23 .025])
+            set(ui_matrix_threshold_slider, 'Min', -1, 'Max', 1, 'Value', .50)
+            set(ui_matrix_threshold_slider, 'TooltipString', 'Set threshold.')
+            set(ui_matrix_threshold_slider, 'Enable', 'off')
+            set(ui_matrix_threshold_slider, 'Callback', {@cb_matrix_threshold_slider})
+            
+            % histogram
+            ui_matrix_histogram_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+            set(ui_matrix_histogram_checkbox, 'Position', [.70 .34 .28 .05])
+            set(ui_matrix_histogram_checkbox, 'String', 'histogram')
+            set(ui_matrix_histogram_checkbox, 'Value', false)
+            set(ui_matrix_histogram_checkbox, 'TooltipString', 'Select histogram of correlation coefficients')
+            set(ui_matrix_histogram_checkbox, 'Callback', {@cb_matrix_histogram_checkbox})
+            
+            function cb_layers_popup(~, ~)
+                selected_layer = get(ui_matrix_layers_popup, 'Value');
+                update_matrix()
+            end
+            function cb_groups_popup(~, ~)
+                selected_group = get(ui_matrix_groups_popup, 'Value');
+                set(ui_matrix_layers_popup, 'Value', 1)
+                update_layers();
+                update_matrix();
+            end
+            function cb_matrix_weighted_checkbox(~, ~)
+                set(ui_matrix_weighted_checkbox, 'Value', true)
+                set(ui_matrix_weighted_checkbox, 'FontWeight', 'bold')
+                
+                set(ui_matrix_histogram_checkbox, 'Value', false)
+                set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+                
+                set(ui_matrix_density_checkbox, 'Value', false)
+                set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
+                set(ui_matrix_density_edit, 'Enable', 'off')
+                set(ui_matrix_density_slider, 'Enable', 'off')
+                
+                set(ui_matrix_threshold_checkbox, 'Value', false)
+                set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+                set(ui_matrix_threshold_edit, 'Enable', 'off')
+                set(ui_matrix_threshold_slider, 'Enable', 'off')
+                
+                update_matrix()
+            end
+            function cb_matrix_density_checkbox(~, ~)
+                set(ui_matrix_weighted_checkbox, 'Value', false)
+                set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
+                
+                set(ui_matrix_histogram_checkbox, 'Value', false)
+                set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+                
+                set(ui_matrix_density_checkbox, 'Value', true)
+                set(ui_matrix_density_checkbox, 'FontWeight', 'bold')
+                set(ui_matrix_density_edit, 'Enable', 'on')
+                set(ui_matrix_density_slider, 'Enable', 'on')
+                
+                set(ui_matrix_threshold_checkbox, 'Value', false)
+                set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+                set(ui_matrix_threshold_edit, 'Enable', 'off')
+                set(ui_matrix_threshold_slider, 'Enable', 'off')
+                
+                update_matrix()
+            end
+            function cb_matrix_threshold_checkbox(~, ~)
+                set(ui_matrix_weighted_checkbox, 'Value', false)
+                set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
+                
+                set(ui_matrix_histogram_checkbox, 'Value', false)
+                set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+                
+                set(ui_matrix_density_checkbox, 'Value', false)
+                set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
+                set(ui_matrix_density_edit, 'Enable', 'off')
+                set(ui_matrix_density_slider, 'Enable', 'off')
+                
+                set(ui_matrix_threshold_checkbox, 'Value', true)
+                set(ui_matrix_threshold_checkbox, 'FontWeight', 'bold')
+                set(ui_matrix_threshold_edit, 'Enable', 'on')
+                set(ui_matrix_threshold_slider, 'Enable', 'on')
+                
+                update_matrix()
+            end
+            function cb_matrix_histogram_checkbox(~, ~)
+                set(ui_matrix_weighted_checkbox, 'Value', false)
+                set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
+                
+                set(ui_matrix_histogram_checkbox, 'Value', true)
+                set(ui_matrix_histogram_checkbox, 'FontWeight', 'bold')
+                
+                set(ui_matrix_density_checkbox, 'Value', false)
+                set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
+                set(ui_matrix_density_edit, 'Enable', 'off')
+                set(ui_matrix_density_slider, 'Enable', 'off')
+                
+                set(ui_matrix_threshold_checkbox, 'Value', false)
+                set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+                set(ui_matrix_threshold_edit, 'Enable', 'off')
+                set(ui_matrix_threshold_slider, 'Enable', 'off')
+                
+                update_matrix()
+            end
+            function cb_matrix_density_edit(~, ~)
+                update_matrix();
+            end
+            function cb_matrix_density_slider(src, ~)
+                set(ui_matrix_density_edit, 'String', get(src, 'Value'))
+                update_matrix();
+            end
+            function cb_matrix_threshold_edit(~, ~)
+                update_matrix();
+            end
+            function cb_matrix_threshold_slider(src, ~)
+                set(ui_matrix_threshold_edit, 'String', get(src, 'Value'))
+                update_matrix();
+            end
+            function update_layers()
+            end
+            
+            function update_matrix()
+                % i need to ask graph to return the plot 'Graph.PlotType'
+                if  get(ui_matrix_histogram_checkbox, 'Value') % histogram
+                    graph_type_value = 'histogram';
+                elseif get(ui_matrix_threshold_checkbox, 'Value')  % threshold
+                    graph_type_value = 'binary';
+                    graph_rule = 'threshold';
+                    graph_rule_value = str2double(get(ui_matrix_threshold_edit, 'String'));
+                elseif get(ui_matrix_density_checkbox, 'Value')  % density
+                    graph_type_value = 'binary';
+                    graph_rule = 'density';
+                    graph_rule_value = str2double(get(ui_matrix_density_edit, 'String'));
+                else  % weighted correlation
+                    graph_type_value = 'correlation';
+                    graph_rule = 'nothing';
+                    graph_rule_value = 0;
+                end
+                
+                if ~isempty(groups)
+                    cla(ui_parent_axes)
+                    axes(ui_parent_axes)
+                    
+                    % get A
+                    group = analysis.getCohort().getGroups().getValue(selected_group);
+                    subjects = group.getSubjects();
+                    A = analysis.get_weighted_correlation_matrix(subjects, varargin{:});
+                    
+                    if get(ui_matrix_histogram_checkbox, 'Value')
+                        matrix_plot = Graph.hist(A, varargin{:});
+                    else
+                        % get atlas labels
+                        atlases = analysis.getCohort().getBrainAtlases();
+                        atlas = atlases{1};
+                        br_labels = atlas.getBrainRegions().getKeys();
+                        matrix_plot = GraphWU.plot(A, ...
+                            graph_rule, graph_rule_value, ...
+                            'Graph.PlotType', graph_type_value, ...
+                            'xlabels', br_labels, ...
+                            'ylabels', br_labels, ...
+                            varargin{:});
+                    end
+                end
+            end
+            
+            update_matrix()
+            
+            if nargout > 0
+                graph_panel = matrix_plot;
+            end
         end
         function global_panel = getGlobalPanel(analysis, varargin)
             % GETGLOBALPANEL creates the global uipanel for GUIAnalysis
