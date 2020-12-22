@@ -384,27 +384,24 @@ classdef AnalysisST_MP_WU < Analysis
             is_longitudinal = analysis.getSettings('AnalysisST_MP.Longitudinal');
             M = get_from_varargin(1e+3, 'PermutationNumber', varargin{:});
             
+            % get layers info
+            subs = group.getSubjects();
+            sub = subs{1};
+            layers = sub.getNumberOfLayers();
+            
             if Measure.is_superglobal(measure_code)
                 rows = 1;
                 columns = 1;
             elseif Measure.is_unilayer(measure_code)
-                rows = 2;
+                rows = layers;
                 columns = 1;
             elseif Measure.is_bilayer(measure_code)
-                rows = 2;
-                columns = 2;
+                rows = layers;
+                columns = layers;
             end
             
-            % Measurements for groups 1 and 2, and their difference
-%             g1matrix1 = get_from_varargin(1e+3, 'CorrelationMatrix1', varargin{:});
-%             g1matrix2 = get_from_varargin(1e+3, 'CorrelationMatrix2', varargin{:});
-%             measurements_1 = analysis.getMeasurement(measure_code, group_1, g1matrix1, g1matrix2, varargin{:});
             measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
             value_1 = measurements_1.getMeasureValue();
-            
-%             g2matrix1 = get_from_varargin(1e+3, 'CorrelationMatrix3', varargin{:});
-%             g2matrix2 = get_from_varargin(1e+3, 'CorrelationMatrix4', varargin{:});
-%             measurements_2 = analysis.getMeasurement(measure_code, group_2,  g2matrix1, g2matrix2,  varargin{:});
             measurements_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
             value_2 = measurements_2.getMeasureValue();
             
@@ -477,6 +474,7 @@ classdef AnalysisST_MP_WU < Analysis
                 'ComparisonST_MP.p2', p2, ...
                 'ComparisonST_MP.confidence_min', ci_lower, ...
                 'ComparisonST_MP.confidence_max', ci_upper, ...
+                'ComparisonST_MP.ParameterValues', parameter_value_group, ...
                 varargin{:} ...
                 );
         end
