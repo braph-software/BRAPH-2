@@ -13,18 +13,14 @@ classdef ComparisonFNC_WU < Comparison
     % ComparisonFNC_WU basic methods:
     %  disp                         - displays the comparison
     %
-    % ComparisonFNC_WU get methods:
-    %  getGroupValues               - returns the groups measurement value
-    %  getGroupValue                - returns the group measurement value
-    %  getDifference                - returns the difference between values
-    %  getAllDifferences            - returns all the differecens between values
-    %  getP1                        - returns the p-values single tail
-    %  getP2                        - returns the p-values double tail
-    %  getConfidenceIntervalMin     - returns the min value of the confidence interval
-    %  getConfidenceIntervalMax     - returns the max value of the confidence interval
+    % ComparisonCON_WU get methods:
+    %  getComparisonProperties      - returns the comparison properties
+    %  getComparisonPropertiesKeys  - returns the comparison keys
+    %  getStatisticType             - returns the type of statisic
     %
     % ComparisonFNC_WU initialze data (Access=protected):
-    %  initialize_data              - initializes and checks the data
+    %  initialize_data              - initializes the data
+    %  check                        - checks the initialization of the data
     %
     % ComparisonFNC_WU descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
@@ -71,49 +67,76 @@ classdef ComparisonFNC_WU < Comparison
     end
     methods  % Get functions
         function data = getComparisonProperties(c, key)
+            % GETCOMPARISONPROPERTIES returns the comparison property or properties
+            %
+            % DATA = GETCOMPARISONPROPERTIES(C) returns all the properties
+            % in a dictionary structure.
+            %
+            % DATA = GETCOMPARISONPROPERTIES(C, KEY) returns the property
+            % specified by the KEY.
+            %
+            % See also getComparisonPropertiesKeys, getStatisticType.
+            
             % returns a dict
             if nargin < 2
                 data = c.comparison_dict;
-            else  % or returns specified key                
+            else  % or returns specified key
                 data = c.comparison_dict(key);
             end
         end
-        function keys_list = getComparisonPropertiesKeys(c)
+        function keys_list = getComparisonPropertyKeys(c)
+            % GETCOMPARISONPROPERTYKEYS returns the comparison property keys
+            %
+            % KET_LIST = GETCOMPARISONPROPERTYKEYS(C) returns all the keys.
+            %
+            % See also getComparisonProperties, getStatisticType.
+            
             data = c.comparison_dict;
             keys_list = keys(data);
         end
         function type = getStatisticType(c)
+            % GETSTATISTICTYPE returns the comparison statistic analysis type
+            %
+            % TYPE = GETCOMPARISONPROPERTYKEYS(C) returns the type of
+            % statistic.
+            %
+            % See also getComparisonProperties, getStatisticType.
+            
             type = c.statistic;
         end
     end
     methods (Access=protected)  % Initialize data
         function initialize_data(c, varargin)
-            % INITIALIZE_DATA initialize and check the data for the comparison
+            % INITIALIZE_DATA initialize  the data for the comparison
             %
-            % INITIALIZE_DATA(C) initialize and check the data for the
-            % comparison. It initializes with default settings.
+            % INITIALIZE_DATA(C) initialize the data for the
+            % comparison.
             %
-            % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and
-            % check the data for the comparison. It initializes with VALUE settings.
-            % Admissible rules are:
-            %  'ComparisonFNC.PermutationNumber'  - number of permutations
-            %  'ComparisonFNC.value_1'            - value of group 1
-            %  'ComparisonFNC.value_2'            - value of group 2
-            %  'ComparisonFNC.average_value_1'    - average value of group 1
-            %  'ComparisonFNC.average_value_2'    - average value of group 2
-            %  'ComparisonFNC.difference'         - value of difference
-            %  'ComparisonFNC.all_differences'    - value of all differences
-            %  'ComparisonFNC.p1'                 - single tail p-value
-            %  'ComparisonFNC.p2'                 - double tail p-value
-            %  'ComparisonFNC.confidence_min'     - min value in confidence interval
-            %  'ComparisonFNC.confidence_max'     - max value in confidence interval
-            %
-            % See also AnalysisFNC_WU.
+            % See also check.
+            
             c.statistic = get_from_varargin('PermutationTest', 'StatisticalTest', varargin{:});
             c.comparison_dict = get_from_varargin([], 'StatisticalDict', varargin{:});
             c.Check()
         end
         function Check(c)
+            % CHECK checks the data for the comparison
+            %
+            % CHECK(C) checks the data for the
+            % comparison. Admissible rules for Permutation Test are:
+            %  'ComparisonCON.PermutationNumber'  - number of permutations
+            %  'ComparisonCON.value_1'            - value of group 1
+            %  'ComparisonCON.value_2'            - value of group 2
+            %  'ComparisonCON.average_value_1'    - average value of group 1
+            %  'ComparisonCON.average_value_2'    - average value of group 2
+            %  'ComparisonCON.difference'         - value of difference
+            %  'ComparisonCON.all_differences'    - value of all differences
+            %  'ComparisonCON.p1'                 - single tail p-value
+            %  'ComparisonCON.p2'                 - double tail p-value
+            %  'ComparisonCON.confidence_min'     - min value in confidence interval
+            %  'ComparisonCON.confidence_max'     - max value in confidence interval
+            %
+            % See also initialize_data.
+            
             atlases = c.getBrainAtlases();
             atlas = atlases{1};
             [group_1, group_2]  = c.getGroups();
@@ -434,7 +457,7 @@ classdef ComparisonFNC_WU < Comparison
         end
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
-        function handle = getComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getComparisonSettingsPanel(analysis, uiparent, varargin) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
