@@ -5,26 +5,22 @@ classdef ComparisonCON_WU < Comparison
     %
     % ComparisonCON_WU implements the initialization of the data which the
     % class will save. It checks if the data being saved has correct
-    % dimensions. Connectivity data can be for example MRI or PET data.
+    % dimensions. Connectivity data can be for example DTI data.
     %
     % ComparisonCON_WU constructor methods:
-    %  ComparisonCON_WU              - Constructor
+    %  ComparisonCON_WU             - Constructor
     %
     % ComparisonCON_WU basic methods:
     %  disp                         - displays the comparison
     %
     % ComparisonCON_WU get methods:
-    %  getGroupValues               - returns the groups measurement value
-    %  getGroupValue                - returns the group measurement value
-    %  getDifference                - returns the difference between values
-    %  getAllDifferences            - returns all the differecens between values
-    %  getP1                        - returns the p-values single tail
-    %  getP2                        - returns the p-values double tail
-    %  getConfidenceIntervalMin     - returns the min value of the confidence interval
-    %  getConfidenceIntervalMax     - returns the max value of the confidence interval
+    %  getComparisonProperties      - returns the comparison properties
+    %  getComparisonPropertiesKeys  - returns the comparison keys
+    %  getStatisticType             - returns the type of statisic
     %
     % ComparisonCON_WU initialze data (Access=protected):
-    %  initialize_data              - initializes and checks the data
+    %  initialize_data              - initializes the data
+    %  check                        - checks the initialization of the data
     %
     % ComparisonCON_WU descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
@@ -74,6 +70,16 @@ classdef ComparisonCON_WU < Comparison
     end
     methods  % Get functions
         function data = getComparisonProperties(c, key)
+            % GETCOMPARISONPROPERTIES returns the comparison property or properties
+            %
+            % DATA = GETCOMPARISONPROPERTIES(C) returns all the properties
+            % in a dictionary structure.
+            % 
+            % DATA = GETCOMPARISONPROPERTIES(C, KEY) returns the property
+            % specified by the KEY.
+            % 
+            % See also getComparisonPropertiesKeys, getStatisticType.
+            
             % returns a dict
             if nargin < 2
                 data = c.comparison_dict;
@@ -81,24 +87,45 @@ classdef ComparisonCON_WU < Comparison
                 data = c.comparison_dict(key);
             end
         end
-        function keys_list = getComparisonPropertiesKeys(c)
+        function keys_list = getComparisonPropertyKeys(c)
+            % GETCOMPARISONPROPERTYKEYS returns the comparison property keys
+            %
+            % KET_LIST = GETCOMPARISONPROPERTYKEYS(C) returns all the keys.
+            %
+            % See also getComparisonProperties, getStatisticType.
+            
             data = c.comparison_dict;
             keys_list = keys(data);
         end
         function type = getStatisticType(c)
+            % GETSTATISTICTYPE returns the comparison statistic analysis type
+            %
+            % TYPE = GETCOMPARISONPROPERTYKEYS(C) returns the type of
+            % statistic.
+            %
+            % See also getComparisonProperties, getStatisticType.
+            
             type = c.statistic;
         end
     end
     methods (Access=protected)  % Initialize data
         function initialize_data(c, varargin)
-            % INITIALIZE_DATA initialize and check the data for the comparison
+            % INITIALIZE_DATA initialize  the data for the comparison
             %
-            % INITIALIZE_DATA(C) initialize and check the data for the
-            % comparison. It initializes with default settings.
+            % INITIALIZE_DATA(C) initialize the data for the
+            % comparison.
             %
-            % INITIALIZE_DATA(C, PROPERTY, VALUE, ...) initialize and
-            % check the data for the comparison. It initializes with VALUE settings.
-            % Admissible rules are:
+            % See also check
+            
+            c.statistic = get_from_varargin('PermutationTest', 'StatisticalTest', varargin{:});
+            c.comparison_dict = get_from_varargin([], 'StatisticalDict', varargin{:});
+            c.check()
+        end
+        function check(c)
+            % CHECK checks the data for the comparison
+            %
+            % CHECK(C) checks the data for the
+            % comparison. Admissible rules for Permutation Test are:
             %  'ComparisonCON.PermutationNumber'  - number of permutations
             %  'ComparisonCON.value_1'            - value of group 1
             %  'ComparisonCON.value_2'            - value of group 2
@@ -111,13 +138,8 @@ classdef ComparisonCON_WU < Comparison
             %  'ComparisonCON.confidence_min'     - min value in confidence interval
             %  'ComparisonCON.confidence_max'     - max value in confidence interval
             %
-            % See also AnalysisCON_WU.
+            % See also initialize_data.
             
-            c.statistic = get_from_varargin('PermutationTest', 'StatisticalTest', varargin{:});
-            c.comparison_dict = get_from_varargin([], 'StatisticalDict', varargin{:});
-            c.Check()
-        end
-        function Check(c)
             % this will have to be modified with each addition of statistic
             atlases = c.getBrainAtlases();
             atlas = atlases{1};

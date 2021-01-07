@@ -611,7 +611,7 @@ classdef ComparisonST_WU < Comparison
         end
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
-        function handle = getComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
+        function handle = getComparisonSettingsPanel(analysis, uiparent, varargin) %#ok<INUSL>
             % GETCHILDPANEL returns a dynamic UIPanel
             %
             % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
