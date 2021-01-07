@@ -14,18 +14,13 @@ classdef ComparisonST_MP_WU < Comparison
     %  disp                         - displays the comparison
     % 
     % ComparisonST_MP_WU get methods:
-    %  getGroupValues               - returns the groups measurement value
-    %  getGroupValue                - returns the group measurement value
-    %  getDifference                - returns the difference between values
-    %  getAllDifferences            - returns all the differecens between values
-    %  getP1                        - returns the p-values single tail
-    %  getP2                        - returns the p-values double tail
-    %  getConfidenceIntervalMin     - returns the min value of the confidence interval
-    %  getConfidenceIntervalMax     - returns the max value of the confidence interval
-    %  getMeasureParameterValues    - returns the values of the measure's parameter
+    %  getComparisonProperties      - returns the comparison properties
+    %  getComparisonPropertiesKeys  - returns the comparison keys
+    %  getStatisticType             - returns the type of statisic
     %
     % ComparisonST_MP_WU initialze data (Access=protected):
-    %  initialize_data              - initializes and checks the data
+    %  initialize_data              - initializes the data
+    %  check                        - checks the initialization of the data
     %
     % ComparisonST_MP_WU descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
@@ -43,18 +38,6 @@ classdef ComparisonST_MP_WU < Comparison
     % See also Comparison, AnalysisST_MP_WU, MeasurementST_MP_WU, RandomComparisonST_MP_WU. 
   
     properties
-%         value_1  % array with the value_1 of the measure for each subject of group 1
-%         value_2  % array with the value_1 of the measure for each subject of group 1
-%         difference  % difference
-%         all_differences  % all differences obtained through the permutation test
-%         p1  % p value single tailed
-%         p2  % p value double tailed
-%         confidence_interval_min  % min value of the 95% confidence interval
-%         confidence_interval_max  % max value of the 95% confidence interval
-%         parameter_values  % parameter values of the measure
-%         
-%         
-        
         % I want to remove this properties and just a dict
         % the properties of a comparison should not be hard coded
         % this is the dict
