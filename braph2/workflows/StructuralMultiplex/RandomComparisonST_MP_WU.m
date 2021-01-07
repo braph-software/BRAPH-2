@@ -526,20 +526,6 @@ classdef RandomComparisonST_MP_WU < RandomComparison
             end
         end
     end
-    methods (Static)  % Plot ComparisonGUI Child Panel
-        function handle = getRandomComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
-            % GETCHILDPANEL returns a dynamic UIPanel
-            %
-            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
-            % UIPanel. Modificable settings are: Verbose, Interruptible and
-            % Randomization.
-            %
-            % See also RandomComparisonST_WU.
-
-            handle.variables = [];
-            handle.randomization = [];
-        end
-    end
     methods (Static)  % Descriptive functions
         function measurement_class = getClass() %#ok<*INUSD>
             % GETCLASS returns the class of structural multiplex random comparison
@@ -631,6 +617,67 @@ classdef RandomComparisonST_MP_WU < RandomComparison
             % See also getClass, getName, getDescription.
             
             sub = eval([random_comparison_class '(id, label, notes, atlas, measure_code, group, varargin{:})']);
+        end
+    end
+        methods (Static)  % Plot ComparisonGUI Child Panel
+        function handle = getRandomComparisonSettingsPanel(analysis, uiparent) %#ok<INUSL>
+            % GETCHILDPANEL returns a dynamic UIPanel
+            %
+            % HANDLE = GETCHILDPANEL(ANALYSIS, UIPARENT) returns a dynamic
+            % UIPanel. Modificable settings are: Verbose, Interruptible and
+            % Randomization.
+            %
+            % See also RandomComparisonST_MP_WU.
+            
+            set(uiparent, 'Visible', 'on')
+            
+            ui_randomization_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_randomization_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_attempts_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_attempts_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_weights_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_weights_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            init_child_panel()
+            function init_child_panel()
+                
+                set(ui_randomization_text, 'String', 'Randomization Number')
+                set(ui_randomization_text, 'Position', [.01 .86 .47 .08])
+                set(ui_randomization_text, 'Fontweight', 'bold')
+                
+                set(ui_randomization_edit, 'String', 1000)
+                set(ui_randomization_edit, 'Position', [.5 .87 .45 .08])
+                set(ui_randomization_edit, 'Callback', {@cb_randomcomparison_randomization})
+                
+                set(ui_attempts_text, 'String', 'Attempts per Edge')
+                set(ui_attempts_text, 'Position', [.01 .76 .47 .08])
+                set(ui_attempts_text, 'Fontweight', 'bold')
+                
+                set(ui_attempts_edit, 'String', 5)
+                set(ui_attempts_edit, 'Position', [.5 .77 .45 .08])
+                set(ui_attempts_edit, 'Callback', {@cb_randomcomparison_attempts})
+                
+                set(ui_weights_text, 'String', 'Number of Weights')
+                set(ui_weights_text, 'Position', [.01 .66 .47 .08])
+                set(ui_weights_text, 'Fontweight', 'bold')
+                
+                set(ui_weights_edit, 'String', 1)
+                set(ui_weights_edit, 'Position', [.5 .67 .45 .08])
+                set(ui_weights_edit, 'Callback', {@cb_randomcomparison_weights})
+            end
+            function cb_randomcomparison_randomization(~, ~)
+                setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
+            end
+            function cb_randomcomparison_attempts(~, ~)
+                setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
+            end
+            function cb_randomcomparison_weights(~, ~)
+                setappdata(uiparent, 'weights', str2double(get(ui_weights_edit, 'String')))
+            end
+            handle.variables = [];
+            handle.randomization = ui_randomization_edit;
+            setappdata(uiparent, 'randomization', str2double(get(ui_randomization_edit, 'String')))
+            setappdata(uiparent, 'attempts', str2double(get(ui_attempts_edit, 'String')))
+            setappdata(uiparent, 'weights', str2double(get(ui_weights_edit, 'String')))
         end
     end
 end
