@@ -7,10 +7,13 @@ classdef MeasurementFNC_MP_BUD < MeasurementFNC_MP_WU
     % initialization of data. Functional data can be for example fMRI data.
     %
     % MeasurementFNC_MP_BUD constructor methods:
-    %  MeasurementFNC_MP_BUD           - Constructor
+    %  MeasurementFNC_MP_BUD        - Constructor
     %
     % MeasurementFNC_MP_BUD get methods:
-    %  getThreshold                 - returns the density
+    %  getDensity                   - returns the density
+    %
+    % MeasurementST_MP_BUD set methods:
+    %  setDensity                   - sets the density 
     %
     % MeasurementFNC_MP_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the measurement
@@ -30,7 +33,7 @@ classdef MeasurementFNC_MP_BUD < MeasurementFNC_MP_WU
         function m =  MeasurementFNC_MP_BUD(id, label, notes, atlas, measure_code, group, varargin)
             % MEASUREMENTFNC_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'density',  THRESHOLD)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
-            % with the data from GROUP, this data will have a fixed THRESHOLD.
+            % with the data from GROUP, this data will have a fixed DENSITY.
             %
             % MEASUREMENTFNC_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a comparison with ID, LABEL, ATLAS, MEASURE_CODE,
@@ -95,17 +98,17 @@ classdef MeasurementFNC_MP_BUD < MeasurementFNC_MP_WU
             %
             % See also getList, getClass, getName
             
-            description = 'Functional Multiplex with Threshold measurement.';
+            description = 'Functional Multiplex with Density measurement.';
         end
         function analysis_class = getAnalysisClass()
             % GETANALYSISCLASS returns the class of the analsysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % analysis the measurement is part of, 'AnalysisFNC_BUT'.
+            % analysis the measurement is part of, 'AnalysisFNC_BUD'.
             %
             % See also getClass, getName, getDescription.
             
-            analysis_class = 'AnalysisFNC_BUD';
+            analysis_class = 'AnalysisFNC_MP_BUD';
         end
     end
     methods (Static)  % Plot MeasurementGUI Child Panel
