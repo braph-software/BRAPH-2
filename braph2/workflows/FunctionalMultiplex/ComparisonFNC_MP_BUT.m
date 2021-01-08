@@ -7,10 +7,13 @@ classdef ComparisonFNC_MP_BUT < ComparisonFNC_MP_WU
     % Functional data can be for example fMRI data.
     %
     % ComparisonFNC_MP_BUT constructor methods:
-    %  ComparisonFNC_MP_BUT          - Constructor
+    %  ComparisonFNC_MP_BUT         - Constructor
     %
     % ComparisonFNC_MP_BUT get methods:
     %  getThreshold                 - returns the threshold
+    %
+    % ComparisonFNC_MP_BUT set methods:
+    %  setThreshold                 - sets the threshold 
     %
     % ComparisonFNC_MP_BUT descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
