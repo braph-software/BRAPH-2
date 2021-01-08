@@ -10,8 +10,10 @@ classdef ComparisonST_MP_BUD < ComparisonST_MP_WU
     %  ComparisonST_MP_BUD          - Constructor
     %
     % ComparisonST_MP_BUD get methods:
-    %  getDensity1                  - returns the density of the first layer
-    %  getDensity2                  - returns the density of the second layer
+    %  getDensity                   - returns the density 
+    %
+    % ComparisonST_MP_BUD set methods:
+    %  setDensity                   - sets the density 
     %
     % ComparisonST_MP_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
@@ -25,74 +27,48 @@ classdef ComparisonST_MP_BUD < ComparisonST_MP_WU
     % See also Comparison, AnalysisST_MP_BUD, MeasurementST_MP_BUD, RandomComparisonST_MP_BUD.
     
     properties (Access = protected)
-        density1  % density of the values of the first layer
-        density2  % density of the values of the second layer   
+        density  % density of the values  
     end
     methods  % Constructor
         function c =  ComparisonST_MP_BUD(id, label, notes, atlas, measure_code, group_1, group_2, varargin)
-            % COMPARISONST_MP_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, 'density1', DENSITY1, 'density2', DENSITY2)
+            % COMPARISONST_MP_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2, 'density', DENSITY)
             % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE
             % between the data from GROUP_1 and GROUP_2. The data will have
-            % a fixed DENSITY1 for the first layer and a fixed DENSITY2 for 
-            % the second layer.
+            % a fixed DENSITY.
             %
             % COMPARISONST_MP_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP_1, GROUP_2)
             % creates a comparison with ID, LABEL, ATLAS and MEASURE_CODE
             % between the data from GROUP_1 and GROUP_2. The data will have
-            % a fixed default DENSITY1 for the first layer and a fixed default 
-            % DENSITY2 for the second layer.
+            % a fixed default density.
             %
             % See also MeasurementST_MP_BUD, RandomComparisonST_MP_BUD, AnalysisST_MP_BUD.
             
             c = c@ComparisonST_MP_WU(id, label, notes, atlas, measure_code, group_1, group_2, varargin{:});
-            density1 = get_from_varargin(0, 'density1', varargin{:});
-            density2 = get_from_varargin(0, 'density2', varargin{:});
-            c.setDensity1(density1)
-            c.setDensity2(density2)
+            density = get_from_varargin(0, 'density', varargin{:});
+            c.setDensity(density)
         end
     end
     methods (Access = protected) % Set functions
-        function setDensity1(c, density1)
-            % SETDENSITY1 sets the fixed density of the values of the first layer
+        function setDensity(c, density)
+            % SETDENSITY sets the fixed density of the values 
             %
-            % SETDENSITY1(C, DENSITY) sets the fixed density of the values
-            % of the first layer.
+            % SETDENSITY(C, DENSITY) sets the fixed density.
             %
-            % See also getDensity1, setDensity2.
+            % See also getDensity.
             
-            c.density1 = density1;
-        end
-        function setDensity2(c, density2)
-            % SETDENSITY2 sets the fixed density of the values of the second layer
-            %
-            % SETDENSITY2(C, DENSITY) sets the fixed density of the values
-            % of the second layer.
-            %
-            % See also getDensity2, setDensity1.
-            
-            c.density2 = density2;
+            c.density = density;
         end
     end
     methods  % Get functions
-        function density1 = getDensity1(c)
-            % GETDENSITY1 returns the fixed density of the data values of the first layer
+        function density = getDensity(c)
+            % GETDENSITY returns the fixed density of the data values
             %
-            % DENSITY1 = GETDENSITY1(C) returns the fixed density of the
-            % data values of the first layer.
+            % DENSITY = GETDENSITY(C) returns the fixed density of the
+            % data values.
             %
-            % See also getMeasureValue, setDensity1, getDensity2.
+            % See also getMeasureValue, setDensity.
             
-            density1 = c.density1;
-        end
-        function density2 = getDensity2(c)
-            % GETDENSITY2 returns the fixed density of the data values of the second layer
-            %
-            % DENSITY2 = GETDENSITY2(C) returns the fixed density of the
-            % data values of the second layer.
-            %
-            % See also getMeasureValue, setDensity2, getDensity1.
-            
-            density2 = c.density2;
+            density = c.density;
         end
     end
     methods (Static)  % Descriptive functions
@@ -150,11 +126,78 @@ classdef ComparisonST_MP_BUD < ComparisonST_MP_WU
             %
             % See also ComparisonST_BUD.
 
-            handle.variables = {'density1', 'density2'};
-            handle.step = [];
-            handle.min = [];
-            handle.max = [];
-            handle.permutation = [];
+            set(uiparent, 'Visible', 'on')
+            ui_density_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_density_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_density_min_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_density_min_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_density_max_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_density_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_permutation_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_permutation_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            init_child_panel()
+            function init_child_panel()
+                set(ui_density_text, 'String', 'Density')
+                set(ui_density_text, 'Position', [.01 .65 .47 .08])
+                set(ui_density_text, 'Fontweight', 'bold')
+                
+                set(ui_density_edit, 'String', 0.1)
+                set(ui_density_edit, 'Position', [.5 .67 .45 .08])
+                set(ui_density_edit, 'Callback', {@cb_comparison_density})
+                
+                set(ui_density_min_text, 'String', 'Min')
+                set(ui_density_min_text, 'Position', [.01 .75 .47 .08])
+                set(ui_density_min_text, 'Fontweight', 'bold')
+                
+                set(ui_density_min_edit, 'String', -1)
+                set(ui_density_min_edit, 'Position', [.5 .77 .45 .08])
+                set(ui_density_min_edit, 'Callback', {@cb_comparison_min})
+                
+                set(ui_density_max_text, 'String', 'Max')
+                set(ui_density_max_text, 'Position', [.01 .55 .47 .08])
+                set(ui_density_max_text, 'Fontweight', 'bold')
+                
+                set(ui_density_max_edit, 'String', 1)
+                set(ui_density_max_edit, 'Position', [.5 .57 .45 .08])
+                set(ui_density_max_edit, 'Callback', {@cb_comparison_max})
+                
+                set(ui_permutation_text, 'String', 'Perumtation Number')
+                set(ui_permutation_text, 'Position', [.01 .85 .47 .08])
+                set(ui_permutation_text, 'Fontweight', 'bold')
+                
+                set(ui_permutation_edit, 'String', 1000)
+                set(ui_permutation_edit, 'Position', [.5 .87 .45 .08])
+                set(ui_permutation_edit, 'Callback', {@cb_comparison_permutation})
+                
+            end
+            function cb_comparison_density(~,~)
+                setappdata(uiparent, 'density', ...
+                    str2double(get(ui_density_min_edit, 'String')) : ...
+                    str2double(get(ui_density_edit, 'String')) : ...
+                    str2double(get(ui_density_max_edit, 'String')))
+            end
+            function cb_comparison_min(src, ~)
+                newdata = get(src, 'String');
+                set(ui_density_min_edit, 'String', newdata);
+            end
+            function cb_comparison_max(src, ~)
+                newdata = get(src, 'String');
+                set(ui_density_max_edit, 'String', newdata);
+            end
+            function cb_comparison_permutation(~, ~)
+                setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
+            end
+            
+            handle.variables = {'density'};
+            handle.step = ui_density_edit;
+            handle.min = ui_density_min_edit;
+            handle.max = ui_density_max_edit;
+            handle.permutation = ui_permutation_edit;
+            setappdata(uiparent, 'density', ...
+                str2double(get(ui_density_min_edit, 'String')) : ...
+                str2double(get(ui_density_edit, 'String')) : ...
+                str2double(get(ui_density_max_edit, 'String')))
+            setappdata(uiparent, 'permutation', str2double(get(ui_permutation_edit, 'String')))
         end
     end
 end

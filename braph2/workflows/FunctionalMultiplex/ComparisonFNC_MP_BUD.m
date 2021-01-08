@@ -10,7 +10,10 @@ classdef ComparisonFNC_MP_BUD < ComparisonFNC_MP_WU
     %  ComparisonFNC_MP_BUD          - Constructor
     %
     % ComparisonFNC_MP_BUD get methods:
-    %  getDensity                 - returns the density
+    %  getDensity                   - returns the density
+    %
+    % ComparisonFNC_MP_BUD set methods:
+    %  setDensity                   - sets the density 
     %
     % ComparisonFNC_MP_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
