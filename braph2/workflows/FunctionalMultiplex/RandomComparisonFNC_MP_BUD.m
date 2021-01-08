@@ -7,10 +7,13 @@ classdef RandomComparisonFNC_MP_BUD < RandomComparisonFNC_MP_WU
     % density. Functional data can be for example fMRI data.
     %
     % RandomComparisonFNC_MP_BUD constructor methods:
-    %  RandomComparisonFNC_MP_BUD      - Constructor
+    %  RandomComparisonFNC_MP_BUD   - Constructor
     %
     % RandomComparisonFNC_MP_BUD get methods:
-    %  getThreshold                 - returns the density
+    %  getDensity                   - returns the density
+    %
+    % RandomComparisonFNC_MP_BUD set methods:
+    %  setDensity                   - sets the density
     %
     % RandomComparisonFNC_MP_BUD descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
@@ -87,7 +90,7 @@ classdef RandomComparisonFNC_MP_BUD < RandomComparisonFNC_MP_WU
             %
             % See also getList, getClass, getDescription.
             
-            name = 'RandomComparison FNC MP BUT';
+            name = 'RandomComparison FNC MP BUD';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of functional random comparison BUT
@@ -108,11 +111,11 @@ classdef RandomComparisonFNC_MP_BUD < RandomComparisonFNC_MP_WU
             % GETANALYSISCLASS returns the class of the analysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % analysis the random comparison is part of, 'AnalysisFNC_BUT'.
+            % analysis the random comparison is part of, 'AnalysisFNC_MP_BUD'.
             %
             % See also getList, getClass, getName.
             
-            analysis_class = 'AnalysisFNC_MP_BUT';
+            analysis_class = 'AnalysisFNC_MP_BUD';
         end
     end
     methods (Static)  % Plot ComparisonGUI Child Panel
