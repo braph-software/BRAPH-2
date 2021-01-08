@@ -7,10 +7,13 @@ classdef RandomComparisonFNC_MP_BUT < RandomComparisonFNC_MP_WU
     % threshold. Functional data can be for example fMRI data.
     %
     % RandomComparisonFNC_MP_BUT constructor methods:
-    %  RandomComparisonFNC_MP_BUT       - Constructor
+    %  RandomComparisonFNC_MP_BUT   - Constructor
     %
     % RandomComparisonFNC_MP_BUT get methods:
     %  getThreshold                 - returns the threshold
+    %
+    % RandomComparisonFNC_MP_BUT set methods:
+    %  setThreshold                 - sets the threshold
     %
     % RandomComparisonFNC_MP_BUT descriptive methods (Static):
     %  getClass                     - returns the class of the comparison
@@ -107,7 +110,7 @@ classdef RandomComparisonFNC_MP_BUT < RandomComparisonFNC_MP_WU
             % GETANALYSISCLASS returns the class of the analysis
             %
             % ANALYSIS_CLASS = GETANALYSISCLASS() returns the class of the
-            % analysis the random comparison is part of, 'AnalysisFNC_BUT'.
+            % analysis the random comparison is part of, 'AnalysisFNC_MP_BUT'.
             %
             % See also getList, getClass, getName.
             
