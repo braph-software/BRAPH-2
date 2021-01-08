@@ -7,10 +7,13 @@ classdef MeasurementFNC_MP_BUT < MeasurementFNC_MP_WU
     % initialization of data. Functional data can be for example fMRI data.
     %
     % MeasurementFNC_MP_BUT constructor methods:
-    %  MeasurementFNC_MP_BUT            - Constructor
+    %  MeasurementFNC_MP_BUT        - Constructor
     %
     % MeasurementFNC_MP_BUT get methods:
     %  getThreshold                 - returns the threshold
+    %
+    % MeasurementFNC_MP_BUT set methods:
+    %  setThreshold                 - sets the threshold
     %
     % MeasurementFNC_MP_BUT descriptive methods (Static):
     %  getClass                     - returns the class of the measurement

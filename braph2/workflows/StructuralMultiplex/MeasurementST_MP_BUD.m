@@ -38,7 +38,7 @@ classdef MeasurementST_MP_BUD < MeasurementST_MP_WU
             % MEASUREMENTST_MP_BUD(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a measurement with ID, LABEL, ATLAS, MEASURE_CODE,
             % with the data from GROUP, this data will have a fixed default
-            % DENSITY.
+            % density.
             %
             % See also ComparisonST_MP_BUD, RandomComparisonST_MP_BUD, AnalysisST_MP_BUD.
             
@@ -49,9 +49,9 @@ classdef MeasurementST_MP_BUD < MeasurementST_MP_WU
     end
     methods (Access = protected) % Set functions
         function setDensity(m, density)
-            % SETDENSITY1 sets the fixed density of the values
+            % SETDENSITY sets the fixed density of the values
             %
-            % SETDENSITY1(M, DENSITY) sets the fixed density of the values.
+            % SETDENSITY(M, DENSITY) sets the fixed density of the values.
             %
             % See also getDensity
             
@@ -60,9 +60,9 @@ classdef MeasurementST_MP_BUD < MeasurementST_MP_WU
     end
     methods  % Get functions
         function density = getDensity(m)
-            % GETDENSITY1 returns the fixed density of the data values
+            % GETDENSITY returns the fixed density of the data values
             %
-            % DENSITY1 = GETDENSITY1(M) returns the fixed density of the
+            % DENSITY = GETDENSITY(M) returns the fixed density of the
             % data values.
             %
             % See also getMeasureValue, setDensity.

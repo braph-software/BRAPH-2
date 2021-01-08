@@ -10,8 +10,10 @@ classdef MeasurementST_MP_BUT < MeasurementST_MP_WU
     %  MeasurementST_MP_BUT         - Constructor
     %
     % MeasurementST_MP_BUT get methods:
-    %  getThreshold1                - returns the threshold of the first layer
-    %  getThreshold2                - returns the threshold of the second layer
+    %  getThreshold                 - returns the threshold 
+    %
+    % MeasurementST_MP_BUT set methods:
+    %  setThreshold                 - sets the threshold
     %
     % MeasurementST_MP_BUT descriptive methods (Static):
     %  getClass                     - returns the class of the measurement
@@ -25,72 +27,45 @@ classdef MeasurementST_MP_BUT < MeasurementST_MP_WU
     % See also Measurement, AnalysisST_MP_BUT, ComparisonST_MP_BUT, RandomComparisonST_MP_BUT.
     
     properties (Access = protected)
-        threshold1  % threshold of the values of the first layer
-        threshold2  % threshold of the values of the second layer
+        threshold  % threshold of the values 
     end
     methods  % Constructor
         function m =  MeasurementST_MP_BUT(id, label, notes, atlas, measure_code, group, varargin)
-            % MEASUREMENTST_MP_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'threshold1', THRESHOLD1, 'threshold2', THRESHOLD2)
+            % MEASUREMENTST_MP_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP, 'threshold', THRESHOLD)
             % creates a measurement with ID, LABEL, ATLAS and MEASURE_CODE
-            % with the data from GROUP, this data will have a fixed THRESHOLD1 
-            % for the first layer and a fixed THRESHOLD2 for the second layer.
+            % with the data from GROUP, this data will have a fixed THRESHOLD.
             %
             % MEASUREMENTST_MP_BUT(ID, LABEL, NOTES, ATLAS, MEASURE_CODE, GROUP)
             % creates a measurement with ID, LABEL, ATLAS, MEASURE_CODE,
-            % with the data from GROUP, this data will have a fixed default THRESHOLD1
-            % for the first layer and a fixed default THRESHOLD2 for the second layer.
+            % with the data from GROUP, this data will have a fixed default threshold.
             %
             % See also ComparisonST_MP_BUT, RandomComparisonST_MP_BUT, AnalysisST_MP_BUT.
             
             m = m@MeasurementST_MP_WU(id, label, notes, atlas, measure_code, group, varargin{:});
-            threshold1 = get_from_varargin(0, 'threshold1', varargin{:});
-            threshold2 = get_from_varargin(0, 'threshold2', varargin{:});
-            m.setThreshold1(threshold1)
-            m.setThreshold2(threshold2)
+            threshold = get_from_varargin(0, 'threshold', varargin{:});
+            m.setThreshold(threshold)
         end
     end
     methods (Access = protected) % Set functions
-        function setThreshold1(m, threshold1)
-            % SETTHRESHOLD1 sets the threshold of the values of the first layer
+        function setThreshold(m, threshold)
+            % SETTHRESHOLD sets the threshold of the values 
             %
-            % SETTHRESHOLD1(M, THRESHOLD1) sets the threshold of the values
-            % of the first layer.
+            % SETTHRESHOLD(M, THRESHOLD) sets the threshold of the values.
             %
-            % See also getThreshold1, setThreshold2.
+            % See also getThreshold.
             
-            m.threshold1 = threshold1;
-        end
-        function setThreshold2(m, threshold2)
-            % SETTHRESHOLD2 sets the threshold of the values of the second layer
-            %
-            % SETTHRESHOLD2(M, THRESHOLD2) sets the threshold of the values
-            % of the second layer.
-            %
-            % See also getThreshold2, setThreshold1.
-            
-            m.threshold2 = threshold2;
+            m.threshold = threshold;
         end
     end
     methods  % Get functions
-        function threshold1 = getThreshold1(m)
-            % GETTHRESHOLD1 returns the threshold of the data values of the first layer
+        function threshold = getThreshold(m)
+            % GETTHRESHOLD returns the threshold of the data values
             %
-            % T = GETTHRESHOLD1(M) returns the threshold of the data values
-            % of the first layer.
+            % T = GETTHRESHOLD(M) returns the threshold of the data values.
             %
-            % See also getMeasureValue, setThreshold1, getThreshold2.
+            % See also getMeasureValue, setThreshold.
             
-            threshold1 = m.threshold1;
-        end
-        function threshold2 = getThreshold2(m)
-            % GETTHRESHOLD2 returns the threshold of the data values of the second layer
-            %
-            % T = GETTHRESHOLD2(M) returns the threshold of the data values
-            % of the second layer.
-            %
-            % See also getMeasureValue, setThreshold2, getThreshold1.
-            
-            threshold2 = m.threshold2;
+            threshold = m.threshold;
         end
     end
     methods (Static)  % Descriptive functions
@@ -121,11 +96,7 @@ classdef MeasurementST_MP_BUT < MeasurementST_MP_WU
             %
             % See also getList, getClass, getName
             
-            description = [ ...
-                'ST MP measurement with structural multiplex data using binary graphs ' ...
-                'calculated at a fixed threshold. ' ...
-                'For example, it can use MRI or/and PET data.' ...
-                ];
+            description = 'Structural Multiplex with Threshold measurement.';
         end
         function analysis_class = getAnalysisClass()
             % GETANALYSISCLASS returns the class of the analsysis
@@ -147,10 +118,62 @@ classdef MeasurementST_MP_BUT < MeasurementST_MP_WU
             %
             % See also MeasurementST_BUT.
             
-            handle.variables = {'threshold1', 'threshold2'};
-            handle.step = [];
-            handle.min = [];
-            handle.max = [];
+            set(uiparent, 'Visible', 'on')
+            ui_threshold_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_threshold_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_threshold_min_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_threshold_min_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            ui_threshold_max_text = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'text');
+            ui_threshold_max_edit = uicontrol('Parent', uiparent, 'Units', 'normalized', 'Style', 'edit');
+            init_child_panel()
+            function init_child_panel()
+                set(ui_threshold_text, 'String', 'Threshold')
+                set(ui_threshold_text, 'Position', [.01 .8 .3 .08])
+                set(ui_threshold_text, 'Fontweight', 'bold')
+                
+                set(ui_threshold_edit, 'String', 0.1)
+                set(ui_threshold_edit, 'Position', [.31 .8 .3 .08])
+                set(ui_threshold_edit, 'Callback', {@cb_measurement_threshold})
+                
+                set(ui_threshold_min_text, 'String', 'Min')
+                set(ui_threshold_min_text, 'Position', [.01 .9 .3 .08])
+                set(ui_threshold_min_text, 'Fontweight', 'bold')
+                
+                set(ui_threshold_min_edit, 'String', -1)
+                set(ui_threshold_min_edit, 'Position', [.31 .9 .3 .08])
+                set(ui_threshold_min_edit, 'Callback', {@cb_measurement_min})
+                
+                set(ui_threshold_max_text, 'String', 'Max')
+                set(ui_threshold_max_text, 'Position', [.01 .7 .3 .08])
+                set(ui_threshold_max_text, 'Fontweight', 'bold')
+                
+                set(ui_threshold_max_edit, 'String', 1)
+                set(ui_threshold_max_edit, 'Position', [.31 .7 .3 .08])
+                set(ui_threshold_max_edit, 'Callback', {@cb_measurement_max})
+                
+            end
+            function cb_measurement_threshold(~, ~)
+                setappdata(uiparent, 'threshold', ...
+                    str2double(get(ui_threshold_min_edit, 'String')) : ...
+                    str2double(get(ui_threshold_edit, 'String')) : ...
+                    str2double(get(ui_threshold_max_edit, 'String')))
+            end
+            function cb_measurement_min(src, ~)
+                newdata = get(src, 'String');
+                set(ui_threshold_min_edit, 'String', newdata);
+            end
+            function cb_measurement_max(src, ~)
+                newdata = get(src, 'String');
+                set(ui_threshold_max_edit, 'String', newdata);
+            end
+            handle.variables = {'threshold'};
+            handle.step = ui_threshold_edit;
+            handle.min = ui_threshold_min_edit;
+            handle.max = ui_threshold_max_edit;
+            setappdata(uiparent, 'threshold', ...
+                str2double(get(ui_threshold_min_edit, 'String')) : ...
+                str2double(get(ui_threshold_edit, 'String')) : ...
+                str2double(get(ui_threshold_max_edit, 'String')))
         end
     end
 end

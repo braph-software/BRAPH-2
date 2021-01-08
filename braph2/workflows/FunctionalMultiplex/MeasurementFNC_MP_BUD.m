@@ -12,7 +12,7 @@ classdef MeasurementFNC_MP_BUD < MeasurementFNC_MP_WU
     % MeasurementFNC_MP_BUD get methods:
     %  getDensity                   - returns the density
     %
-    % MeasurementST_MP_BUD set methods:
+    % MeasurementFNC_MP_BUD set methods:
     %  setDensity                   - sets the density 
     %
     % MeasurementFNC_MP_BUD descriptive methods (Static):
