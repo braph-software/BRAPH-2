@@ -157,7 +157,6 @@ classdef AnalysisST_MP_WU < Analysis
             A(cellfun('isempty', A)) = {eye(hold_size)};
         end
         function g = get_graph_for_subjects(analysis, subjects, varargin)
-        %function g = get_graph_for_subjects(analysis, subjects, matrix1, matrix2, varargin)
             % GET_GRAPH_FOR_SUBJECTS returns the graph created with the correlation matrix
             %
             % G = GET_GRAPH_FOR_SUBJECTS(ANALYSIS, SUBJECTS) creates a
@@ -183,7 +182,6 @@ classdef AnalysisST_MP_WU < Analysis
     end
     methods (Access = protected)  % Calculation functions
         function measurement = calculate_measurement(analysis, measure_code, group, varargin)
-%         function measurement = calculate_measurement(analysis, measure_code, group, matrix1, matrix2, varargin)
             % CALCULATE_MEASUREMENT returns a measurement
             %
             % MEASUREMENT = CALCULTE_MEASUREMENT(ANALYSIS, MEASURE_CODE, GROUP)
@@ -280,7 +278,6 @@ classdef AnalysisST_MP_WU < Analysis
             % Randomization
             all_randomizations = cell(1, M);
             all_differences = cell(1, M);
-            %difference_all_permutations = cell(rows*columns, M);
             
             start = tic;
             for i = 1:1:M
@@ -291,7 +288,6 @@ classdef AnalysisST_MP_WU < Analysis
                 g_random = g.randomize('AttemptsPerEdge', attempts_per_edge, 'NumberOfWeights', number_of_weights);
                 measure_random = g_random.getMeasure(measure_code);
                 value_randomization = measure_random.getValue();
-                
                 all_randomizations(i) = {value_randomization};
                 all_differences(i) = {cellfun(@(x, y) x - y, value_group, value_randomization, 'UniformOutput', false)};
                 
@@ -305,7 +301,6 @@ classdef AnalysisST_MP_WU < Analysis
             for i = 2:1:M
                 for j=1:rows
                     for t=1:columns
-                        % value_random = value_random + all_randomizations{i};
                         value_random = cellfun(@(x, y) x - y, value_random, all_randomizations{i}, 'UniformOutput', false);
                     end
                 end

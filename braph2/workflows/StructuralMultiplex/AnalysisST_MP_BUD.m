@@ -5,7 +5,7 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
     %
     % AnalysisST_MP_BUD inhertis AnalysisST_MP_WU calculating methods
     % to obtain a structural multiplex data of fixed density binary undirected 
-    % graphs measurement, a random comparison or a comparison. AnalysisST_BUD
+    % graphs measurement, a random comparison or a comparison. AnalysisST_MP_BUD
     % overrides the ID methods of its superclass.
     % Structural multiplex data can be for example MRI or/and PET data.
     %
@@ -34,7 +34,7 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
     %  getGlobalComparisonPlot      - returns a global comparison plot
     %  getGlobalRandomComparisonPlot - returns a global randomcomparison plot
     %
-    % See also Analysis, MeasurementST_BUD, RandomComparisonST_BUD, ComparisonST_BUD
+    % See also Analysis, MeasurementST_MP_BUD, RandomComparisonST_MP_BUD, ComparisonST_MP_BUD
     
     methods
         function analysis = AnalysisST_MP_BUD(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin)
@@ -48,7 +48,7 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             % COHORT, MEASUREMENTS, RANDOMCOMPARISON and COMPARISONS. It
             % initializes the ANALYSISST_MP_WU with specified settings VALUES.
             %
-            % See also MeasurementST_BUD, RandomComparisonST_BUD, ComparisonST_BUD.
+            % See also MeasurementST_MP_BUD, RandomComparisonST_MP_BUD, ComparisonST_MP_BUD.
             
             analysis = analysis@AnalysisST_MP_WU(id, label, notes, cohort, measurements, randomcomparisons, comparisons, varargin{:});
         end
@@ -57,50 +57,44 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
             % GETMEASUREMENTID returns a measurement ID
             %
-            % MEASUREMENT_ID = GETMEASUREMENTID(ANALYSIS, MEASURE_CODE, GROUP,
-            % 'density1', DENSITY1, 'density2', DENSITY2)
+            % MEASUREMENT_ID = GETMEASUREMENTID(ANALYSIS, MEASURE_CODE, GROUP, 'density', DENSITY)
             % creates a measurement ID with the ANALYSIS class, the
-            % MEASURE_CODE, the GROUP, DENSITY1 and the DENSITY2.
+            % MEASURE_CODE, the GROUP and the DENSITY.
             %
             % See also getRandomComparisonID, getComparisonID.
             
             measurement_id = getMeasurementID@AnalysisST_MP_WU(analysis, measure_code, group, varargin{:});
             
-            density1 = get_from_varargin(0, 'density1', varargin{:});
-            density2 = get_from_varargin(0, 'density2', varargin{:});
-            measurement_id = [measurement_id ' density1=' num2str(density1) ' density2=' num2str(density2)];
+            density = get_from_varargin(0, 'density', varargin{:});
+            measurement_id = [measurement_id ' density=' num2str(density)];
         end
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             % GETRANDOMCOMPARISONID returns a random comparison ID
             %
-            % RANDOMCOMPARISON_ID = GETRANDOMCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP,
-            % 'density1', DENSITY1, 'density2', DENSITY2)
+            % RANDOMCOMPARISON_ID = GETRANDOMCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP, 'density', DENSITY)
             % creates a random comparison ID with the ANALYSIS class, the
-            % MEASURE_CODE, the GROUP, DENSITY1 and the DENSITY2.
+            % MEASURE_CODE, the GROUP, and the DENSITY.
             %
             % See also getMeasurementID, getComparisonID.
             
             randomcomparison_id = getRandomComparisonID@AnalysisST_MP_WU(analysis, measure_code, group, varargin{:});
             
-            density1 = get_from_varargin(0, 'density1', varargin{:});
-            density2 = get_from_varargin(0, 'density2', varargin{:});
-            randomcomparison_id = [randomcomparison_id ' density1=' num2str(density1) ' density2=' num2str(density2)];
+            density = get_from_varargin(0, 'density', varargin{:});
+            randomcomparison_id = [randomcomparison_id ' density=' num2str(density)];
         end
         function comparison_id = getComparisonID(analysis, measure_code, group_1, group_2, varargin)
             % GETCOMPARISONID returns a comparison ID
             %
-            % COMPARISON_ID = GETCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2,
-            % 'density1', DENSITY1, 'density2', DENSITY2)
+            % COMPARISON_ID = GETCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2, 'density', DENSITY)
             % creates a random comparison ID with the ANALYSIS class, the
-            % MEASURE_CODE, GROUP_1 and GROUP_2, DENSITY1 and the DENSITY2.
+            % MEASURE_CODE, GROUP_1 and GROUP_2, and the DENSITY.
             %
             % See also getMeasurementID, getRandomComparisonID.
             
             comparison_id = getComparisonID@AnalysisST_MP_WU(analysis, measure_code, group_1, group_2, varargin{:});
             
-            density1 = get_from_varargin(0, 'density1', varargin{:});
-            density2 = get_from_varargin(0, 'density2', varargin{:});
-            comparison_id = [comparison_id ' density1=' num2str(density1) ' density2=' num2str(density2)];
+            density = get_from_varargin(0, 'density', varargin{:});
+            comparison_id = [comparison_id ' density=' num2str(density)];
         end
     end
     methods (Access = protected)  % graph methods
@@ -115,15 +109,15 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             % See also calculate_measurement.
             
             A = analysis.get_weighted_correlation_matrix(subjects, varargin{:});
+            subject = subjects{1};
+            layers = subject.getNumberOfLayers(); 
+            density = get_from_varargin(0, 'density', varargin{:});
             
-            density1 = get_from_varargin(0, 'density1', varargin{:});
-            density2 = get_from_varargin(0, 'density2', varargin{:});
-            L1 = A{1, 1};
-            L2 = A{2, 2};
-            L1 = binarize(L1, 'density', density1, varargin{:});
-            L2 = binarize(L2, 'density', density2, varargin{:});
-            A(1, 1) = {L1};
-            A(2, 2) = {L2};
+            for i=1:1:layers
+                L = A{i, i};
+                new_L = binarize(L, 'density', density, varargin{:});
+                A(i, i) = {new_L};
+            end
             
             graph_type = AnalysisST_MP_WU.getGraphType();
             g = Graph.getGraph(graph_type, A);
@@ -147,7 +141,7 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             %
             % See also getList, getClass, getDescription.
             
-            name = 'Analysis Structural MP BUD';
+            name = 'Analysis Structural Multiplex BUD';
         end
         function description = getDescription()
             % GETDESCRIPTION returns the description of structural multiplex analysis
@@ -216,7 +210,28 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            p = [];
+            X = analysis.selectMeasurements(measure_code, group, '.getDensity()');   
+            Y = analysis.selectMeasurements(measure_code, group, '.getMeasureValue()');
+            
+            if ~isempty(X) && ~isempty(Y)
+                x_ = cell2mat(X);
+                y_ = cell2mat([Y{:}]);
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1], ...
+                    varargin{:});
+            else
+            end
+            
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, [measure_code ' Measure Value'])
         end
         function p = getGlobalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
@@ -227,7 +242,89 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            p = [];
+            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getDensity()');
+            Y = analysis.selectComparisons(measure_code, group_1, group_2, '.getDifference()');
+            
+            if ~isempty(X) && ~isempty(Y)
+                x_ = cell2mat(X);
+                y_ = cell2mat([Y{:}]);
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            hold(ui_parent_axes, 'on')
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
+            
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMin()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMax()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
+            end
         end
         function p = getGlobalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, varargin)
             % GETGLOBALCOMPARISONPLOT creates a uipanel to contain a plot
@@ -238,7 +335,90 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            p = [];
+            X = analysis.selectRandomComparisons(measure_code, group, '.getDensity()');
+            Y = analysis.selectRandomComparisons(measure_code, group, '.getDifference()');
+            
+            if ~isempty(X) && ~isempty(Y)
+                x_ = cell2mat(X);
+                y_ = cell2mat([Y{:}]);
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            hold(ui_parent_axes, 'on')
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
+            
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMin()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMax()');
+                    x_ = cell2mat(X);
+                    y_ = cell2mat([y_confidence{:}]);
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
+            end            
         end
         function p = getNodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_regions, varargin) %#ok<INUSL>
             % GETNODALMEASUREPLOT creates a uipanel to contain a plot
@@ -249,7 +429,33 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            p = [];
+            X = analysis.selectMeasurements(measure_code, group, '.getDensity()');
+            Y = analysis.selectMeasurements(measure_code, group, '.getMeasureValue()');
+            for i = 1:1:length(Y)
+                y_unique_cell = Y{i};
+                y_nodal_values = y_unique_cell{1};
+                y_brain_region{i} = y_nodal_values(brain_regions); %#ok<AGROW>
+            end
+                        
+            if ~isempty(X) && ~isempty(y_brain_region)
+                x_ = cell2mat(X);
+                y_ = [y_brain_region{:}];
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1], ...
+                    varargin{:});
+            else
+            end
+            
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, [measure_code ' Measure Value'])
         end
         function p = getNodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, brain_region, varargin)
             % GETNODALCOMPARISONPLOT creates a uipanel to contain a plot
@@ -260,7 +466,105 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            p = [];
+            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getDensity()');
+            Y = analysis.selectComparisons(measure_code, group_1, group_2, '.getDifference()');
+            
+            for i = 1:1:length(Y)
+                y_unique_cell = Y{i};
+                y_nodal_values = y_unique_cell{1};
+                y_brain_region{i} = y_nodal_values(brain_region); %#ok<AGROW>
+            end
+            
+            if ~isempty(X) && ~isempty(y_brain_region)
+                x_ = cell2mat(X);
+                y_ = [y_brain_region{:}];
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            hold(ui_parent_axes, 'on')
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
+            
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMin()');
+                    for j = 1:1:length(y_confidence)
+                        min_cell = y_confidence{j};
+                        min_cell_values = min_cell{1};
+                        min_brs{j} = min_cell_values(brain_region); %#ok<AGROW>
+                    end
+                    x_ = cell2mat(X);
+                    y_ = [min_brs{:}];
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMax()');
+                    for j = 1:1:length(y_confidence)
+                        max_cell = y_confidence{j};
+                        max_cell_values = max_cell{1};
+                        max_brs{j} = max_cell_values(brain_region); %#ok<AGROW>
+                    end
+                    x_ = cell2mat(X);
+                    y_ = [max_brs{:}];
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
+            end
         end
         function p = getNodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region, varargin)
             % GETNODALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
@@ -271,7 +575,105 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            p = [];
+            X = analysis.selectRandomComparisons(measure_code, group, '.getDensity()');
+            Y = analysis.selectRandomComparisons(measure_code, group, '.getDifference()');
+            
+            for i = 1:1:length(Y)
+                y_unique_cell = Y{i};
+                y_nodal_values = y_unique_cell{1};
+                y_brain_region{i} = y_nodal_values(brain_region); %#ok<AGROW>
+            end
+            
+            if ~isempty(X) && ~isempty(y_brain_region)
+                x_ = cell2mat(X);
+                y_ = [y_brain_region{:}];
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            hold(ui_parent_axes, 'on')
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
+            
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMin()');
+                    for j = 1:1:length(y_confidence)
+                        min_cell = y_confidence{j};
+                        min_cell_values = min_cell{1};
+                        min_brs{j} = min_cell_values(brain_region); %#ok<AGROW>
+                    end
+                    x_ = cell2mat(X);
+                    y_ = [min_brs{:}];
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMax()');
+                    for j = 1:1:length(y_confidence)
+                        max_cell = y_confidence{j};
+                        max_cell_values = max_cell{1};
+                        max_brs{j} = max_cell_values(brain_region); %#ok<AGROW>
+                    end
+                    x_ = cell2mat(X);
+                    y_ = [max_brs{:}];
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
+            end            
         end
         function p = getBinodalMeasurePlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)  %#ok<INUSL>
             % GETBINODALMEASUREPLOT creates a uipanel to contain a plot
@@ -282,7 +684,33 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             %
             % See also getGraphPanel, getBinodalPanel.
             
-            p = [];
+            X = analysis.selectMeasurements(measure_code, group, '.getDensity()');
+            Y = analysis.selectMeasurements(measure_code, group, '.getMeasureValue()');
+            for i = 1:1:length(Y)
+                y_unique_cell = Y{i};
+                y_nodal_values = y_unique_cell{1};
+                y_brain_region{i} = y_nodal_values(brain_region_1, brain_region_2); %#ok<AGROW>
+            end
+            
+            if ~isempty(X) && ~isempty(y_brain_region)
+                x_ = cell2mat(X);
+                y_ = [y_brain_region{:}];
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1], ...
+                    varargin{:});
+            else
+            end
+            
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, [measure_code ' Measure Value'])
         end
         function p = getBinodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes,  measure_code, group_1, group_2, brain_region_1, brain_region_2, varargin)
             % GETNODALCOMPARISONPLOT creates a uipanel to contain a plot
@@ -293,7 +721,105 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            p = [];
+            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getDensity()');
+            Y = analysis.selectComparisons(measure_code, group_1, group_2, '.getDifference()');
+            
+            for i = 1:1:length(Y)
+                y_unique_cell = Y{i};
+                y_nodal_values = y_unique_cell{1};
+                y_brain_region{i} = y_nodal_values(brain_region_1, brain_region_2); %#ok<AGROW>
+            end
+            
+            if ~isempty(X) && ~isempty(y_brain_region)
+                x_ = cell2mat(X);
+                y_ = [y_brain_region{:}];
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            hold(ui_parent_axes, 'on')
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
+            
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMin()');
+                    for j = 1:1:length(y_confidence)
+                        min_cell = y_confidence{j};
+                        min_cell_values = min_cell{1};
+                        min_brs{j} = min_cell_values(brain_region_1, brain_region_2); %#ok<AGROW>
+                    end
+                    x_ = cell2mat(X);
+                    y_ = [min_brs{:}];
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectComparisons(measure_code, group_1, group_2, '.getConfidenceIntervalMax()');
+                    for j = 1:1:length(y_confidence)
+                        max_cell = y_confidence{j};
+                        max_cell_values = max_cell{1};
+                        max_brs{j} = max_cell_values(brain_region_1, brain_region_2); %#ok<AGROW>
+                    end
+                    x_ = cell2mat(X);
+                    y_ = [max_brs{:}];
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
+            end
         end
         function p = getBinodalRandomComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group, brain_region_1, brain_region_2, varargin)
             % GETNODALRANDOMCOMPARISONPLOT creates a uipanel to contain a plot
@@ -303,7 +829,106 @@ classdef AnalysisST_MP_BUD < AnalysisST_MP_WU
             % measure panel for GUIAnalysis.
             %
             % See also getGraphPanel, getGlobalPanel.
-            p = [];
+            
+            X = analysis.selectRandomComparisons(measure_code, group, '.getDensity()');
+            Y = analysis.selectRandomComparisons(measure_code, group, '.getDifference()');
+            
+            for i = 1:1:length(Y)
+                y_unique_cell = Y{i};
+                y_nodal_values = y_unique_cell{1};
+                y_brain_region{i} = y_nodal_values(brain_region_1, brain_region_2); %#ok<AGROW>
+            end
+            
+            if ~isempty(X) && ~isempty(y_brain_region)
+                x_ = cell2mat(X);
+                y_ = [y_brain_region{:}];
+                
+                p = plot(ui_parent_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'o', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 0 1]);
+            else
+            end
+            
+            hold(ui_parent_axes, 'on')
+            xlabel(ui_parent_axes, 'Density')
+            ylabel(ui_parent_axes, [measure_code ' Difference'])
+            
+            ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .08 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+                
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .02 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+            
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMin()');
+                    for j = 1:1:length(y_confidence)
+                        min_cell = y_confidence{j};
+                        min_cell_values = min_cell{1};
+                        min_brs{j} = min_cell_values(brain_region_1, brain_region_2); %#ok<AGROW>
+                    end
+                    x_ = cell2mat(X);
+                    y_ = [min_brs{:}];
+                    h_p_min = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+                    
+                    y_confidence = analysis.selectRandomComparisons(measure_code, group, '.getConfidenceIntervalMax()');
+                    for j = 1:1:length(y_confidence)
+                        max_cell = y_confidence{j};
+                        max_cell_values = max_cell{1};
+                        max_brs{j} = max_cell_values(brain_region_1, brain_region_2); %#ok<AGROW>
+                    end
+                    x_ = cell2mat(X);
+                    y_ = [max_brs{:}];
+                    h_p_max = plot(ui_parent_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
+            end
         end
     end
 end

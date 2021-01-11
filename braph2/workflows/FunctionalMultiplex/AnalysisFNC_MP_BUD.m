@@ -263,32 +263,32 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             % GETMEASUREMENTCLASS returns the class of functional multiplex analysis measurement
             %
             % MEASUREMENT_CLASS = GETMEASUREMENT_CLASS() returns the
-            % class of AnalysisFNC_MP_BUD measurement, 'MeasurementFNC_BUT'.
+            % class of AnalysisFNC_MP_BUD measurement, 'MeasurementFNC_BUD'.
             %
             % See also getRandomComparisonClass, getComparisonClass.
             
-            measurement_class =  'MeasurementFNC_MP_BUT';
+            measurement_class =  'MeasurementFNC_MP_BUD';
         end
         function randomcomparison_class = getRandomComparisonClass()
             % GETRANDOMCOMPARISONCLASS returns the class of functional multiplex analysis randomcomparison
             %
             % RANDOMCOMPARISON_CLASS = GETRANDOMCOMPARISONCLASS()
             % returns the class of AnalysisFNC_MP_BUD randomcomparison,
-            % 'RandomComparisonFNC_BUT'.
+            % 'RandomComparisonFNC_BUD'.
             %
             % See also getMeasurementClass, getComparisonClass.
             
-            randomcomparison_class = 'RandomComparisonFNC_MP_BUT';
+            randomcomparison_class = 'RandomComparisonFNC_MP_BUD';
         end
         function comparison_class = getComparisonClass()
             % GETCOMPARISONCLASS returns the class of functional multiplex analysis comparison
             %
             % COMPARISON_CLASS = GETCOMPARISONCLASS() returns the
-            % class of AnalysisFNC_MP_BUD comparison, 'ComparisonFNC_BUT'.
+            % class of AnalysisFNC_MP_BUD comparison, 'ComparisonFNC_BUD'.
             %
             % See also getMeasurementClass, getRandomComparisonClass.
             
-            comparison_class = 'ComparisonFNC_MP_BUT';
+            comparison_class = 'ComparisonFNC_MP_BUD';
         end
     end
     methods  % plot methods
