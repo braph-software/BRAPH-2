@@ -62,9 +62,9 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
         function measurement_id = getMeasurementID(analysis, measure_code, group, varargin)
             % GETMEASUREMENTID returns a measurement ID
             %
-            % MEASUREMENT_ID = GETMEASUREMENTID(ANALYSIS, MEASURE_CODE, GROUP, 'density', THRESHOLD)
+            % MEASUREMENT_ID = GETMEASUREMENTID(ANALYSIS, MEASURE_CODE, GROUP, 'density', DENSITY)
             % creates a measurement ID with the ANALYSIS class, the
-            % MEASURE_CODE, the GROUP and the THRESHOLD.
+            % MEASURE_CODE, the GROUP and the DENSITY.
             %
             % See also getRandomComparisonID, getComparisonID.
             
@@ -76,9 +76,9 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
         function randomcomparison_id = getRandomComparisonID(analysis, measure_code, group, varargin)
             % GETRANDOMCOMPARISONID returns a random comparison ID
             %
-            % RANDOMCOMPARISON_ID = GETRANDOMCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP, 'density', THRESHOLD)
+            % RANDOMCOMPARISON_ID = GETRANDOMCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP, 'density', DENSITY)
             % creates a random comparison ID with the ANALYSIS class, the
-            % MEASURE_CODE, the GROUP and the THRESHOLD.
+            % MEASURE_CODE, the GROUP and the DENSITY.
             %
             % See also getMeasurementID, getComparisonID.
             
@@ -90,9 +90,9 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
         function comparison_id = getComparisonID(analysis, measure_code, group_1, group_2, varargin)
             % GETCOMPARISONID returns a comparison ID
             %
-            % COMPARISON_ID = GETCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2, 'density', THRESHOLD)
+            % COMPARISON_ID = GETCOMPARISONID(ANALYSIS, MEASURE_CODE, GROUP_1, GROUP_2, 'density', DENSITY)
             % creates a random comparison ID with the ANALYSIS class, the
-            % MEASURE_CODE, GROUP_1 and GROUP_2, and the THRESHOLD.
+            % MEASURE_CODE, GROUP_1 and GROUP_2, and the DENSITY.
             %
             % See also getMeasurementID, getRandomComparisonID.
             
@@ -301,7 +301,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');            
+            X = analysis.selectMeasurements(measure_code, group, '.getDensity()');            
             if subject == 1
                 Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
             else 
@@ -326,7 +326,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             else
             end
             
-            xlabel(ui_parent_axes, 'Threshold')
+            xlabel(ui_parent_axes, 'Density')
             ylabel(ui_parent_axes, [measure_code ' Group Average'])
             
         end
@@ -339,7 +339,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getThreshold()');
+            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getDensity()');
             Y = analysis.selectComparisons(measure_code, group_1, group_2, '.getDifference()');
             
             if ~isempty(X) && ~isempty(Y)
@@ -360,7 +360,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             end
             
             hold(ui_parent_axes, 'on')
-            xlabel(ui_parent_axes, 'Threshold')
+            xlabel(ui_parent_axes, 'Density')
             ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -432,7 +432,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectRandomComparisons(measure_code, group, '.getThreshold()');
+            X = analysis.selectRandomComparisons(measure_code, group, '.getDensity()');
             Y = analysis.selectRandomComparisons(measure_code, group, '.getDifference()');
             
             if ~isempty(X) && ~isempty(Y)
@@ -453,7 +453,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             end
             
             hold(ui_parent_axes, 'on')
-            xlabel(ui_parent_axes, 'Threshold')
+            xlabel(ui_parent_axes, 'Density')
             ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -525,7 +525,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');
+            X = analysis.selectMeasurements(measure_code, group, '.getDensity()');
             if subject == 1
                 Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
             else
@@ -555,7 +555,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             else
             end
             
-            xlabel(ui_parent_axes, 'Threshold')
+            xlabel(ui_parent_axes, 'Density')
             ylabel(ui_parent_axes, [measure_code ' Group Average'])
         end
         function p = getNodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, brain_region, varargin)
@@ -567,7 +567,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getThreshold()');
+            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getDensity()');
             Y = analysis.selectComparisons(measure_code, group_1, group_2, '.getDifference()');
             
             for i = 1:1:length(Y)
@@ -594,7 +594,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             end
             
             hold(ui_parent_axes, 'on')
-            xlabel(ui_parent_axes, 'Threshold')
+            xlabel(ui_parent_axes, 'Density')
             ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -676,7 +676,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectRandomComparisons(measure_code, group, '.getThreshold()');
+            X = analysis.selectRandomComparisons(measure_code, group, '.getDensity()');
             Y = analysis.selectRandomComparisons(measure_code, group, '.getDifference()');
             
             for i = 1:1:length(Y)
@@ -703,7 +703,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             end
             
             hold(ui_parent_axes, 'on')
-            xlabel(ui_parent_axes, 'Threshold')
+            xlabel(ui_parent_axes, 'Density')
             ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -785,7 +785,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             %
             % See also getGraphPanel, getBinodalPanel.
             
-            X = analysis.selectMeasurements(measure_code, group, '.getThreshold()');
+            X = analysis.selectMeasurements(measure_code, group, '.getDensity()');
             if subject == 1
                 Y = analysis.selectMeasurements(measure_code, group, '.getGroupAverageValue()');
             else
@@ -815,7 +815,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             else
             end
             
-            xlabel(ui_parent_axes, 'Threshold')
+            xlabel(ui_parent_axes, 'Density')
             ylabel(ui_parent_axes, [measure_code ' Group Average'])
         end
         function p = getBinodalComparisonPlot(analysis, ui_parent_panel, ui_parent_axes, measure_code, group_1, group_2, brain_region_1, brain_region_2, varargin)
@@ -827,7 +827,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getThreshold()');
+            X = analysis.selectComparisons(measure_code, group_1, group_2, '.getDensity()');
             Y = analysis.selectComparisons(measure_code, group_1, group_2, '.getDifference()');
             
             for i = 1:1:length(Y)
@@ -854,7 +854,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             end
             
             hold(ui_parent_axes, 'on')
-            xlabel(ui_parent_axes, 'Threshold')
+            xlabel(ui_parent_axes, 'Density')
             ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -936,7 +936,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             %
             % See also getGraphPanel, getGlobalPanel.
             
-            X = analysis.selectRandomComparisons(measure_code, group, '.getThreshold()');
+            X = analysis.selectRandomComparisons(measure_code, group, '.getDensity()');
             Y = analysis.selectRandomComparisons(measure_code, group, '.getDifference()');
             
             for i = 1:1:length(Y)
@@ -963,7 +963,7 @@ classdef AnalysisFNC_MP_BUD < AnalysisFNC_MP_WU
             end
             
             hold(ui_parent_axes, 'on')
-            xlabel(ui_parent_axes, 'Threshold')
+            xlabel(ui_parent_axes, 'Density')
             ylabel(ui_parent_axes, [measure_code ' Difference'])
             
             ui_confidence_interval_min_checkbox = uicontrol(ui_parent_panel, 'Style', 'checkbox', 'Units', 'normalized');

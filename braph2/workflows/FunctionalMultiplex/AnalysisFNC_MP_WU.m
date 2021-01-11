@@ -325,7 +325,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             M = get_from_varargin(1e+3, 'RandomizationNumber', varargin{:});
             
-            sub1 = analysis.getSubjects().getValue(1);
+            sub1 = analysis.getCohort().getSubjects().getValue(1);
             layers = sub1.getNumberOfLayers();
             
             if Measure.is_superglobal(measure_code)  % superglobal measure
@@ -344,7 +344,7 @@ classdef AnalysisFNC_MP_WU < Analysis
             measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});
             values_group = measurement_group.getMeasureValues();
             parameter_value_group = measurement_group.getMeasureParameterValues();
-            average_value_group = mean(reshape(cell2mat(values_group), [size(values_group{1}, 1), size(values_group{1}, 2), group.subjectnumber()]), 3);
+            average_value_group = measurement_group.getGroupAverageValue();   
             
             graphs = analysis.get_graphs_for_group(group, varargin{:});
             
@@ -353,52 +353,96 @@ classdef AnalysisFNC_MP_WU < Analysis
             all_differences = cell(1, M);
             
             start = tic;
+            
             for i = 1:1:M
                 if verbose
                     disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
                 end
+                
                 for j = 1:1:length(graphs)
                     g = graphs{j};
                     g_random = g.randomize('AttemptsPerEdge', attempts_per_edge, 'NumberOfWeights', number_of_weights);
                     measure_random = g_random.getMeasure(measure_code);
-                    measure_random_packed = measure_random.getValue();
-                    values_randomizations{j}  =  measure_random_packed{1}; %#ok<AGROW>
+                    m_v_layers = measure_random.getValue();                   
+                    if isequal(measure_random.getMeasureScope, Measure.SUPERGLOBAL)
+                        values_randomizations{j} = cell2mat(m_v_layers(1)); %#ok<AGROW>
+                    else
+                        for l = 1:1:layers
+                            values_randomizations{l, j} = cell2mat(m_v_layers(l));
+                        end
+                    end
                 end
-                mean_groups = mean(reshape(cell2mat(values_group), [size(values_group{1}, 1), size(values_group{1}, 2), group.subjectnumber()]), 3);
-                mean_randomizations = mean(reshape(cell2mat(values_randomizations), [size(values_randomizations{1}, 1), size(values_randomizations{1}, 2), group.subjectnumber()]), 3);
-                all_randomizations{1, i} = mean_randomizations;
-                all_differences{1, i} =  mean_groups - mean_randomizations;
+                if isequal(measure_random.getMeasureFormat, Measure.BINODAL)
+                    for l = 1:1:layers
+                        if isequal(measure_random.getMeasureScope, Measure.SUPERGLOBAL)
+                            holdit = values_randomizations{1, 1};
+                            m = zeros(size(holdit));
+                            for j = 1:1:group.subjectnumber()
+                                m = m + cell2mat(values_randomizations(1, j));
+                            end
+                            mean_randomizations = {m ./ group.subjectnumber()};
+                        else
+                            holdit = values_randomizations{l, 1};
+                            m = zeros(size(holdit));
+                            for j = 1:1:group.subjectnumber()
+                                m = m + cell2mat(values_randomizations(l, j));
+                            end
+                            mean_randomizations{l} = m ./ group.subjectnumber();
+                        end
+                    end
+                else
+                    for l = 1:1:layers
+                        if isequal(measure_random.getMeasureScope, Measure.SUPERGLOBAL)
+                            mean_randomizations = {sum(cell2mat(values_randomizations(1, :)), 2) ./ group.subjectnumber()};
+                        else
+                            mean_randomizations{l} = sum(cell2mat(values_randomizations(l, :)), 2) ./ group.subjectnumber();
+                        end
+                    end
+                end
+                
+                value_randomizations = mean(cell2mat(values_randomizations),2);
+                all_randomizations{1, i} = {value_randomizations};                
+                
+                differences_group = cellfun(@(x,y) x-y, values_group, values_randomizations);
+                all_differences{1, i} =  {mean(differences_group, 2)};
                 
                 if interruptible
                     pause(interruptible)
                 end
             end
             
-            value_random = all_randomizations{1};
-            for i = 2:1:M
-                for j=1:rows
-                    for t=1:columns
-                        % value_random = value_random + all_randomizations{i};
-                        value_random = cellfun(@(x, y) x - y, value_random, all_randomizations{i}, 'UniformOutput', false);
-                    end
+            y = cat(3, all_randomizations{:});
+            average_random_value = mean(cell2mat(y),3);
+            average_random_value = mean(average_random_value, 2)';
+            
+            if measure_random.getMeasureFormat == 1 || measure_random.getMeasureFormat == 2
+                difference_mean = num2cell(average_value_group - average_random_value, 1);
+            else
+                difference_mean = num2cell(average_value_group - average_random_value, 2);
+            end
+            
+            % transform all differences
+            for r = 1:1:rows
+                for i = 1:1:M
+                    t_packed = all_differences{i};
+                    t = t_packed{1};                    
+                    t_all_differences(r, i) = {t(r)};
+                    
                 end
             end
-            value_random = cellfun(@(x) x/M, value_random, 'UniformOutput', false);
-            difference = cellfun(@(x, y) x - y, value_group, value_random, 'UniformOutput', false);
-            
-            
+
             % Statistical analysis
-            all_differences2 = cell(rows*columns, M);
             p1 = cell(rows, columns);
             p2 =  cell(rows, columns);
             qtl = cell(rows, columns);
             ci_lower = cell(rows, columns);
-            ci_upper =  cell(rows, columns);
+            ci_upper =  cell(rows, columns);                
+
             for i = 1:1:rows
                 for j = 1:1:columns
-                    p1(i, j) = {pvalue1(difference{i, j}, all_differences2(i*j, :))};  % singe tail,
-                    p2(i, j) = {pvalue2(difference{i, j}, all_differences2(i*j, :))};  % double tail
-                    qtl(i, j) = {quantiles(all_differences2(i*j, :), 40)};
+                    p1(i, j) = {pvalue1(difference_mean(i), t_all_differences(i, :))};  % singe tail,
+                    p2(i, j) = {pvalue2(difference_mean(i), t_all_differences(i, :))};  % double tail
+                    qtl(i, j) = {quantiles(t_all_differences(i, :), 40)};
                     ci_lower(i, j) = {cellfun(@(x) x(2), qtl{i, j})};
                     ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})};
                 end
@@ -412,18 +456,18 @@ classdef AnalysisFNC_MP_WU < Analysis
                 analysis.getCohort().getBrainAtlases(), ...
                 measure_code, ...
                 group, ...
-                'RandomComparisonFNC.RandomizationNumber', M, ...
-                'RandomComparisonFNC.value_group', values_group, ...
-                'RandomComparisonFNC.value_random', value_random, ...
-                'RandomComparisonFNC.average_value_group', {average_value_group}, ...
-                'RandomComparisonFNC.average_value_random', average_value_random, ...
-                'RandomComparisonFNC.difference', difference, ...
-                'RandomComparisonFNC.all_differences', all_differences2, ...
-                'RandomComparisonFNC.p1', p1, ...
-                'RandomComparisonFNC.p2', p2, ....
-                'RandomComparisonFNC.confidence_min', ci_lower, ...
-                'RandomComparisonFNC.confidence_max', ci_upper, ...
-                'RandomComparisonFNC.ParameterValues', parameter_value_group, ...
+                'RandomComparisonFNC_MP.RandomizationNumber', M, ...
+                'RandomComparisonFNC_MP.value_group', values_group, ...
+                'RandomComparisonFNC_MP.value_random', values_randomizations, ...
+                'RandomComparisonFNC_MP.average_value_group', num2cell(average_value_group)', ...
+                'RandomComparisonFNC_MP.average_value_random', num2cell(average_random_value)', ...
+                'RandomComparisonFNC_MP.difference', num2cell(average_random_value)', ...
+                'RandomComparisonFNC_MP.all_differences', t_all_differences, ...
+                'RandomComparisonFNC_MP.p1', p1, ...
+                'RandomComparisonFNC_MP.p2', p2, ....
+                'RandomComparisonFNC_MP.confidence_min', ci_lower, ...
+                'RandomComparisonFNC_MP.confidence_max', ci_upper, ...
+                'RandomComparisonFNC_MP.ParameterValues', {parameter_value_group}, ...
                 varargin{:} ...
                 );
         end

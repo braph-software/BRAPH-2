@@ -145,7 +145,7 @@ end
 for i = 1:1:numel(measures)
     measure = measures{i};
     analysis = AnalysisFNC_MP_WU('id', 'label', 'notes', cohort, {}, {}, {});
-    number_of_randomizations = 10;
+    number_of_randomizations = 2;
     calculate_comparison = analysis.getRandomComparison(measure, group1, 'RandomizationNumber', number_of_randomizations);
     
     assert(~isempty(calculate_comparison), ...
