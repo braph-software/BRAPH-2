@@ -29,16 +29,18 @@ end
 for i = 1:1:numel(measures)
     measurement = MeasurementST_MP_BUD('m1', 'label', 'notes', atlas, measures{i}, group);
 
+    layers = 2;  % default
     value = measurement.getMeasureValue();
-    parameter_values_length = max(1, length(measurement.getMeasureParameterValues()));
     
     if Measure.is_superglobal(measures{i})
         num_elements = 1;
     elseif Measure.is_unilayer(measures{i})
-        num_elements = 2;
+        num_elements = layers;
     elseif Measure.is_bilayer(measures{i})
-        num_elements = 4;
+        num_elements = 2*layers;
     end
+    
+    parameter_values_length = max(1, length(measurement.getMeasureParameterValues()));  
     
     if Measure.is_global(measures{i})
         assert(iscell(value) & ...
@@ -55,7 +57,7 @@ for i = 1:1:numel(measures)
             all(cellfun(@(x) isequal(size(x, 2), 1), value)) & ...
             all(cellfun(@(x) isequal(size(x, 3), parameter_values_length), value)), ...
             [BRAPH2.STR ':MeasurementST_MP_BUD:' BRAPH2.BUG_FUNC], ...
-            'MeasurementST_MP_BUD does not initialize correctly with global measures')
+            'MeasurementST_MP_BUD does not initialize correctly with nodal measures')
     elseif Measure.is_binodal(measures{i})
         assert(iscell(value) & ...
             isequal(numel(value), num_elements) & ...
@@ -63,14 +65,14 @@ for i = 1:1:numel(measures)
             all(cellfun(@(x) isequal(size(x, 2), atlas.getBrainRegions().length()), value)) & ...
             all(cellfun(@(x) isequal(size(x, 3), parameter_values_length), value)), ...
             [BRAPH2.STR ':MeasurementST_MP_BUD:' BRAPH2.BUG_FUNC], ...
-            'MeasurementST_MP_BUD does not initialize correctly with global measures')
+            'MeasurementST_MP_BUD does not initialize correctly with binodal measures')
     end
 end
 
 %% Test 3: Initialize with value
 for i=1:1:numel(measures)
+    
     % setup
-
     B = rand(5);
     A = {B, B; B, B};
     g = Graph.getGraph('MultiplexGraphBU', A);
@@ -84,12 +86,13 @@ for i=1:1:numel(measures)
         'MeasurementST_MP.Value', value, 'MeasurementST_MP.ParameterValues', parameter_values ...
         );
 
+    layers = 2;  % default
     if Measure.is_superglobal(measures{i})
         num_elements = 1;
     elseif Measure.is_unilayer(measures{i})
-        num_elements = 2;
+        num_elements = layers;
     elseif Measure.is_bilayer(measures{i})
-        num_elements = 4;
+        num_elements = 2*layers;
     end
     
     % assert
@@ -110,7 +113,7 @@ for i=1:1:numel(measures)
             all(cellfun(@(x) isequal(size(x, 3), parameter_values_length), measurement.getMeasureValue())) ...
             & isequal(size(measurement.getMeasureValue()), size(m.getValue()))), ...
             [BRAPH2.STR ':MeasurementST_MP_BUD:' BRAPH2.BUG_FUNC], ...
-            'MeasurementST_MP_BUD does not initialize correctly with global measures.')
+            'MeasurementST_MP_BUD does not initialize correctly with nodal measures.')
     elseif Measure.is_binodal(measures{i})
         assert(iscell(measurement.getMeasureValue()) & ...
             isequal(numel(measurement.getMeasureValue()), num_elements) & ...
@@ -119,6 +122,6 @@ for i=1:1:numel(measures)
             all(cellfun(@(x) isequal(size(x, 3), parameter_values_length), measurement.getMeasureValue())) ...
             & isequal(size(measurement.getMeasureValue()), size(m.getValue()))), ...
             [BRAPH2.STR ':MeasurementST_MP_BUD:' BRAPH2.BUG_FUNC], ...
-            'MeasurementST_MP_BUD does not initialize correctly with global measures.')
+            'MeasurementST_MP_BUD does not initialize correctly with binodal measures.')
     end
 end
