@@ -241,20 +241,52 @@ classdef AnalysisFNC_MP_WU < Analysis
             %
             % See also calculate_random_comparison, calculate_comparison.
             
-            graphs = analysis.get_graphs_for_group(group, varargin{:});
-            measures = cell(1, group.subjectnumber());
-            for i = 1:1:group.subjectnumber()
-                measure = Measure.getMeasure(measure_code, graphs{i}, varargin{:});
-                measurement_parameter_values{i} = measure.getParameterValues(); %#ok<AGROW>
-                measures{i} = cell2mat(measure.getValue());
-            end
-            
             % get layers info
             subs = group.getSubjects();
             sub = subs{1};
             layers = sub.getNumberOfLayers();
             
-            measure_average = mean(reshape(cell2mat(measures), [size(measures{1}, 1), size(measures{1}, 2), group.subjectnumber()]), 3);
+            graphs = analysis.get_graphs_for_group(group, varargin{:});
+            measures = cell(1, group.subjectnumber());            
+            for i = 1:1:group.subjectnumber()
+                measure = Measure.getMeasure(measure_code, graphs{i}, varargin{:});
+                m_v_layers = measure.getValue();
+                if isequal(measure.getMeasureScope, Measure.SUPERGLOBAL)
+                    measures{i} = cell2mat(m_v_layers(1));
+                else
+                    for j = 1:1:layers
+                        measures{j, i} = cell2mat(m_v_layers(j));
+                    end
+                end                
+            end
+            
+            if isequal(measure.getMeasureFormat, Measure.BINODAL)
+                for i = 1:1:layers
+                    if isequal(measure.getMeasureScope, Measure.SUPERGLOBAL)
+                        holdit = measures{1, 1};
+                        m = zeros(size(holdit));
+                        for j = 1:1:group.subjectnumber()
+                            m = m + cell2mat(measures(1, j));
+                        end
+                        measure_average = {m ./ group.subjectnumber()};
+                    else
+                        holdit = measures{i, 1};
+                        m = zeros(size(holdit));
+                        for j = 1:1:group.subjectnumber()
+                            m = m + cell2mat(measures(i, j));
+                        end
+                        measure_average{i} = m ./ group.subjectnumber(); %#ok<AGROW>
+                    end                    
+                end
+            else
+                for i = 1:1:layers
+                    if isequal(measure.getMeasureScope, Measure.SUPERGLOBAL)
+                        measure_average = {sum(cell2mat(measures(1, :)), 2) ./ group.subjectnumber()};
+                    else
+                        measure_average{i} = sum(cell2mat(measures(i, :)), 2) ./ group.subjectnumber(); %#ok<AGROW>
+                    end
+                end
+            end            
             
             measurement = Measurement.getMeasurement(analysis.getMeasurementClass(), ...
                 analysis.getMeasurementID(measure_code, group, varargin{:}), ...
@@ -265,8 +297,8 @@ classdef AnalysisFNC_MP_WU < Analysis
                 group,  ...
                 'FNC_MP_Layers', layers, ...
                 'MeasurementFNC_MP.values', measures, ...
-                'MeasurementFNC_MP.average_value', measure_average, ...
-                'MeasurementFNC_MP.ParameterValues', measurement_parameter_values, ...
+                'MeasurementFNC_MP.average_value', [measure_average{:}], ...
+                'MeasurementFNC_MP.ParameterValues', measure.getParameterValues(), ...
                 varargin{:});
         end
         function randomcomparison = calculate_random_comparison(analysis, measure_code, group, varargin)
@@ -293,16 +325,20 @@ classdef AnalysisFNC_MP_WU < Analysis
             interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
             M = get_from_varargin(1e+3, 'RandomizationNumber', varargin{:});
             
-            if Measure.is_superglobal(measure_code)
+            sub1 = analysis.getSubjects().getValue(1);
+            layers = sub1.getNumberOfLayers();
+            
+            if Measure.is_superglobal(measure_code)  % superglobal measure
                 rows = 1;
                 columns = 1;
-            elseif Measure.is_unilayer(measure_code)
-                rows = 2;
+            elseif Measure.is_unilayer(measure_code)  % unilayer measure
+                rows = layers;
                 columns = 1;
-            elseif Measure.is_bilayer(measure_code)
-                rows = 2;
-                columns = 2;
+            elseif Measure.is_bilayer(measure_code)  % bilayer measure
+                rows = layers;
+                columns = layers;
             end
+
             
             % Measurements for the group
             measurement_group = analysis.getMeasurement(measure_code, group, varargin{:});
@@ -338,23 +374,35 @@ classdef AnalysisFNC_MP_WU < Analysis
                 end
             end
             
-            all_random = all_randomizations{1};
+            value_random = all_randomizations{1};
             for i = 2:1:M
-                all_random = all_random + all_randomizations{i};
+                for j=1:rows
+                    for t=1:columns
+                        % value_random = value_random + all_randomizations{i};
+                        value_random = cellfun(@(x, y) x - y, value_random, all_randomizations{i}, 'UniformOutput', false);
+                    end
+                end
             end
-            average_value_random = {all_random / M};
+            value_random = cellfun(@(x) x/M, value_random, 'UniformOutput', false);
+            difference = cellfun(@(x, y) x - y, value_group, value_random, 'UniformOutput', false);
             
-            value_random = values_randomizations;
-            
-            difference = {average_value_group - average_value_random{1}};
             
             % Statistical analysis
-            p1 = pvalue1(difference, all_differences);  % singe tail,
-            p2 = pvalue2(difference, all_differences);  % double tail
-            
-            qtl = quantiles(all_differences, 40);
-            ci_lower = {cellfun(@(x) x(2), qtl)};
-            ci_upper = {cellfun(@(x) x(40), qtl)};
+            all_differences2 = cell(rows*columns, M);
+            p1 = cell(rows, columns);
+            p2 =  cell(rows, columns);
+            qtl = cell(rows, columns);
+            ci_lower = cell(rows, columns);
+            ci_upper =  cell(rows, columns);
+            for i = 1:1:rows
+                for j = 1:1:columns
+                    p1(i, j) = {pvalue1(difference{i, j}, all_differences2(i*j, :))};  % singe tail,
+                    p2(i, j) = {pvalue2(difference{i, j}, all_differences2(i*j, :))};  % double tail
+                    qtl(i, j) = {quantiles(all_differences2(i*j, :), 40)};
+                    ci_lower(i, j) = {cellfun(@(x) x(2), qtl{i, j})};
+                    ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})};
+                end
+            end
             
             % create randomComparisonClass
             randomcomparison = RandomComparison.getRandomComparison(analysis.getRandomComparisonClass(), ...
@@ -370,7 +418,7 @@ classdef AnalysisFNC_MP_WU < Analysis
                 'RandomComparisonFNC.average_value_group', {average_value_group}, ...
                 'RandomComparisonFNC.average_value_random', average_value_random, ...
                 'RandomComparisonFNC.difference', difference, ...
-                'RandomComparisonFNC.all_differences', all_differences, ...
+                'RandomComparisonFNC.all_differences', all_differences2, ...
                 'RandomComparisonFNC.p1', p1, ...
                 'RandomComparisonFNC.p2', p2, ....
                 'RandomComparisonFNC.confidence_min', ci_lower, ...
