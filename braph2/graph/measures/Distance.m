@@ -51,7 +51,6 @@ classdef Distance < Measure
             
             g = m.getGraph();  % graph from measure class
             A = g.getA();  % adjacency matrix (for graph) or 2D-cell array (for multiplex)
-            
             distance = cell(g.layernumber(), 1);
             connectivity_type =  g.getConnectivityType(g.layernumber());
             for li = 1:1:g.layernumber()
@@ -109,7 +108,8 @@ classdef Distance < Measure
                     V = find(D(u,:)==minD);
                 end
             end
-            m.B = B;  %#ok<PROPLC>
+            m.B{end+1} = B;  %#ok<PROPLC>
+            m.B = reshape(m.B, [length(m.B) 1]);
             weighted_distance = D;
         end
         function binary_distance = getBinaryCalculation(m, A)
@@ -237,6 +237,15 @@ classdef Distance < Measure
             % See also getCompatibleGraphList.
             
             n = Measure.getCompatibleGraphNumber('Distance');
+        end
+    end
+    methods
+        function b = getB(m)
+            % GETCI returns the given community structure
+            %
+            % CI = GETCI() returns the community structure used (Ci).
+
+            b = m.B;
         end
     end
 end
