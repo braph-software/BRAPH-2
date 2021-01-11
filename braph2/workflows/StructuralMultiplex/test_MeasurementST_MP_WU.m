@@ -37,7 +37,7 @@ for i = 1:1:numel(measures)
     elseif Measure.is_unilayer(measures{i})
         num_elements = layers;
     elseif Measure.is_bilayer(measures{i})
-        num_elements = layers*layers;
+        num_elements = 2*layers;
     end
     
     parameter_values_length = max(1, length(measurement.getMeasureParameterValues()));
@@ -71,8 +71,8 @@ end
 
 %% Test 3: Initialize with value
 for i=1:1:numel(measures)
-    % setup
     
+    % setup  
     B = rand(5);
     A = {B, B; B, B};
     g = Graph.getGraph('MultiplexGraphWU', A);
@@ -93,7 +93,7 @@ for i=1:1:numel(measures)
     elseif Measure.is_unilayer(measures{i})
         num_elements = layers;
     elseif Measure.is_bilayer(measures{i})
-        num_elements = layers*layers;
+        num_elements = 2*layers;
     end
     
     if Measure.is_global(measures{i})
