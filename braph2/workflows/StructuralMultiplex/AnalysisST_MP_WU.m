@@ -129,27 +129,28 @@ classdef AnalysisST_MP_WU < Analysis
             %
             % See also get_graph_for_subjects.           
             
+            atlases = analysis.cohort.getBrainAtlases();
+            atlas = atlases{1};
             subject_number = numel(subjects);
             
             covariates_keys = get_from_varargin({}, 'ST_MP_Covariates', varargin{:});
             correlation_rule = analysis.getSettings('AnalysisST_MP.CorrelationRule');
             negative_weight_rule = analysis.getSettings('AnalysisST_MP.NegativeWeightRule');
             
-            for i = 1:1:subject_number
-                subject = subjects{i};
-                layers = subject.getNumberOfLayers();
-                
-                for j = 1:1:layers
-                    id = ['ST_MP_' num2str(j)];
-                    data = subject.getData(id).getValue();
+            subject = subjects{1};
+            layers = subject.getNumberOfLayers();
                     
+            for j = 1:1:layers
+                data = zeros(subject_number, atlas.getBrainRegions().length());
+                for i = 1:1:subject_number
+                    id = ['ST_MP_' num2str(j)];
+                    data(i, :) = subject.getData(id).getValue();
                     covariates = [];
                     for k = 1:1:length(covariates_keys)
                         covs = subject.getData(covariates_keys{k}).getValue();
                         covariates = [covs{:}];  % comma or ;
                     end
-                    
-                    A{j, j} = Correlation.getAdjacencyMatrix(data', correlation_rule, negative_weight_rule, covariates); %#ok<AGROW>
+                    A{j, j} = Correlation.getAdjacencyMatrix(data, correlation_rule, negative_weight_rule, covariates); %#ok<AGROW>
                 end
             end
             
