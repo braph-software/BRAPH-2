@@ -4,7 +4,6 @@ root = fileparts(which('SubjectST_MP'));
 example = [root filesep() 'example_data_ST_MP' filesep() 'desikan_atlas.xlsx'];
 atlas = BrainAtlas.load_from_xls('File', example);
 
-% first 10 subjects, 5 brain regions. abs value
 sub1 = SubjectST_MP('id1', 'label1', 'notes1', atlas, 'ST_MP_1', .5 + .5 * rand(atlas.getBrainRegions().length(), 1), 'ST_MP_2', .5 + .5 * rand(atlas.getBrainRegions().length(), 1));
 sub2 = SubjectST_MP('id2', 'label2', 'notes2', atlas, 'ST_MP_1', .5 + .5 * rand(atlas.getBrainRegions().length(), 1), 'ST_MP_2', .5 + .5 * rand(atlas.getBrainRegions().length(), 1));
 sub3 = SubjectST_MP('id3', 'label3', 'notes3', atlas, 'ST_MP_1', .5 + .5 * rand(atlas.getBrainRegions().length(), 1), 'ST_MP_2', .5 + .5 * rand(atlas.getBrainRegions().length(), 1));
@@ -15,7 +14,7 @@ sub6 = SubjectST_MP('id6', 'label6', 'notes6', atlas, 'ST_MP_1', .5 + .5 * rand(
 group1 = Group('SubjectST_MP', 'group 1 id', 'group 1 label', 'group 1 notes', {sub1, sub2, sub3}, 'GroupName', 'GroupTestST_MP_1');
 group2 = Group('SubjectST_MP', 'group 2 id', 'group 2 label', 'group 2 notes', {sub4, sub5, sub6}, 'GroupName', 'GroupTestST_MP_2');
 
-cohort = Cohort('Cohort ST MP WU', 'cohort label', 'cohort notes', 'SubjectST_MP', atlas, {sub1, sub2, sub3, sub4, sub5, sub6});
+cohort = Cohort('Cohort ST MP BUD', 'cohort label', 'cohort notes', 'SubjectST_MP', atlas, {sub1, sub2, sub3, sub4, sub5, sub6});
 cohort.getGroups().add(group1.getID(), group1)
 cohort.getGroups().add(group2.getID(), group2)
 
@@ -152,7 +151,7 @@ for i = 1:1:numel(measures)
     parameter_values_length = max(1, length(parameter_value_group)); 
 
     number_of_randomizations = 10;
-    calculated_comparison = analysis.getRandomComparison(measure, group1, 'RandomizationNumber', number_of_randomizations, 'RandomComparisonST_MP.ParameterValues', parameter_value_group, 'density1', .6, 'density2', .5);
+    calculated_comparison = analysis.getRandomComparison(measure, group1, 'RandomizationNumber', number_of_randomizations, 'RandomComparisonST_MP.ParameterValues', parameter_value_group, 'density', .6);
 
     assert(~isempty(calculated_comparison), ...
         [BRAPH2.STR ':AnalysisST_MP_BUD:calculateComparison'], ...
