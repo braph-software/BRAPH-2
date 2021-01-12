@@ -302,7 +302,7 @@ classdef AnalysisST_MP_WU < Analysis
             for i = 2:1:M
                 for j=1:rows
                     for t=1:columns
-                        value_random = cellfun(@(x, y) x - y, value_random, all_randomizations{i}, 'UniformOutput', false);
+                        value_random = cellfun(@(x, y) x + y, value_random, all_randomizations{i}, 'UniformOutput', false);
                     end
                 end
             end
