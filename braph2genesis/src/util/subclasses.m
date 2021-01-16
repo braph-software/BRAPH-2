@@ -1,4 +1,4 @@
-function subclass_list = subclasses(class_name, directory, search_subdirectories, self)
+function subclass_list = subclasses(class_name, directory, search_subdirectories, add_class_name)
 % SUBCLASSES returns all subclasses of a class.
 %
 % LIST = SUBCLASSES(CLASS_NAME) returns all subclasses of class CLASS_NAME
@@ -19,7 +19,7 @@ function subclass_list = subclasses(class_name, directory, search_subdirectories
 % See also SUPERCLASSES.
 
 if nargin < 4 % by default it does not add the class to the list of subclasses
-    self = false;
+    add_class_name = false;
 end
 
 if nargin < 3 || isempty(search_subdirectories)  % by default it does not search subdirectories
@@ -59,8 +59,8 @@ if search_subdirectories
     end
 end
 
-% add self
-if self
+% adds class_name
+if add_class_name
     subclass_list = [class_name, subclass_list];
 end
 
