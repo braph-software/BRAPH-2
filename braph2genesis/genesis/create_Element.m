@@ -9,6 +9,8 @@ function create_Element(generator_file, target_dir)
 % starts with "_") has the following structure (the token ¡header! is
 % required, while the rest is optional):
 %
+% ----------
+%
 % <strong>%% ¡header!</strong>
 % <class_name> < <superclass_name> (<moniker>, <descriptive_name>) <header_description>.
 %
@@ -23,7 +25,9 @@ function create_Element(generator_file, target_dir)
 % Related functions and classes is a single line.
 %
 % <strong>%% ¡staticmethods!</strong>
-% Static methods written as functions includign the relative documentation.
+% Static methods written as functions including the relative documentation.
+% 
+% ----------
 % 
 % See also genesis, create_test_Element.
 
