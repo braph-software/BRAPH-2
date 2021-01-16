@@ -42,7 +42,7 @@ classdef Category < handle
     % getCategoryNumber - returns the number of categories
     % existsCategory - returns whether a category exists/error
     % getCategoryName - returns the name of a category
-    % getCategoryDescription - 
+    % getCategoryDescription - returns the description of a category
     %
     % See also Element, Format.
     
