@@ -120,10 +120,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %             end
 %         end
 %     end
-%     methods (Access=protected) % constructor
-%         function el = Element(varargin)
-%             % varargin = {prop/tag, value, ...}
-%             
+    methods % constructor
+        function el = Element(varargin)
+            % varargin = {prop/tag, value, ...}
+            
 %             % undocumented trick to avoid inizialization of props             
 %             % (e.g. when deep-copying or cloning)
 %             % by having a single value in the varargin
@@ -166,8 +166,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %             el.seed()
 % 
 %             el.set(propvalues{:})
-%         end
-%     end
+        end
+    end
 %     methods % set/check/get value
 %         function set(el, varargin)
 %             % varargin = {prop/tag, value, ...}
