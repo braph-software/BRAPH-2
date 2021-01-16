@@ -32,14 +32,31 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         % first time a result is successfully calculated.
         props
     end
-%     methods (Static) % inspection
-%         function el_class = getClass(el)
-%             if isa(el, 'Element')
-%                 el_class = class(el);
-%             else % el should be a string with the element class
-%                 el_class = el;
-%             end
-%         end
+    methods (Static) % inspection
+        function el_class = getClass(el)
+			% GETCLASS returns the class of the element.
+			%
+            % CLASS = Element.GETCLASS() returns the class 'Element'.
+            % 
+            % Alternative forms to call this method are:
+			% CLASS = GETCLASS(EL) returns the class of the element EL.
+            % CLASS = EL.GETCLASS() returns the class of the element EL.
+			% CLASS = Element.GETCLASS(CLASS) returns CLASS.
+			% CLASS = EL.GETCLASS(CLASS) returns CLASS.
+			%
+			% See also getName, getDescription.
+
+            if nargin < 1
+                el_class = 'Element';
+                return
+            end
+            
+            if isa(el, 'Element')
+                el_class = class(el);
+            else % el should be a string with the element class
+                el_class = el;
+            end
+        end
 %         function el_name = getName(el)
 %             el_name = eval([Element.getClass(el) '.getName()']);
 %         end
@@ -119,7 +136,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                 eval([Element.getClass(el) '.checkProp(pointer, value)']);
 %             end
 %         end
-%     end
+    end
     methods % constructor
         function el = Element(varargin)
             % varargin = {prop/tag, value, ...}
