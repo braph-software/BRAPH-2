@@ -189,25 +189,29 @@ generate_staticmethods()
 % 
 %         g(1, 'end');
 %     end
-% 
-% generate_inspection()
-%     function generate_inspection()
-%         g(1, 'methods (Static) % inspection methods')
-% 
-%         % getClass()
-%         g(2, ['function ' moniker '_class = getClass()'])
-%             gs(3, {
-%                 ['% GETCLASS returns the class of the ' descriptive_name '.']
-%                 '%'
-%                 ['% ' upper(moniker) '_CLASS = GETCLASS() returns the class of the ' descriptive_name ', ']
-%                 ['% ''' class_name '''.']
-%                 '%'
-%                 '% See also getName, getDescription.'
-%                 ''
-%                 })
-%            g(3, [moniker '_class = ''' class_name ''';'])
-%         g(2, 'end')
-% 
+
+generate_inspection()
+    function generate_inspection()
+        g(1, 'methods (Static) % inspection methods')
+
+            % getClass()
+            g(2, ['function ' moniker '_class = getClass()'])
+                gs(3, {
+                    ['% GETCLASS returns the class of the ' descriptive_name '.']
+                    '%'
+                    ['% CLASS = ' class_name '.GETCLASS() returns the class ''' class_name '''.']
+                    '%'
+                    '% Alternative forms to call this method are:'
+                    ['% CLASS = ' upper(moniker) '.GETCLASS() returns the class of the ' descriptive_name ' ' upper(moniker) '.']
+                    ['% CLASS = Element.GETCLASS(' upper(moniker) ') returns ''' class_name '''.']
+                    ['% CLASS = Element.GETCLASS(''' class_name ''') returns ''' class_name '''.']
+                    '%'
+                    '% See also getName, getDescription.'
+                    ''
+                    })
+               g(3, [moniker '_class = ''' class_name ''';'])
+            g(2, 'end')
+
 %         % getName()
 %         g(2, ['function ' moniker '_name = getName()'])
 %             gs(3, {
@@ -531,9 +535,9 @@ generate_staticmethods()
 %                     g(5, ')')
 %             g(3, 'end')
 %         g(2, 'end')
-% 
-%         g(1, 'end')
-%     end
+
+        g(1, 'end')
+    end
 % 
 % generate_header_graph() % only for graphs
 %     function generate_header_graph()
