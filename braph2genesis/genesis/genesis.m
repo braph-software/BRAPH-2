@@ -175,63 +175,63 @@ disp('¡! copied ready files - ds')
 % disp('¡! copied ready files - test')
 % 
 % disp(' ')
-% 
-% %% CREATE ELEMENTS
-% % src
-% ds_gen_list = get_generators([source_dir fp 'src' fp 'ds']);
-% for i = 1:1:numel(ds_gen_list)
-%     create_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
-% end
-% 
-% util_gen_list = get_generators([source_dir fp 'src' fp 'util']);
+
+%% CREATE ELEMENTS
+% src
+ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
+for i = 1:1:numel(ds_gen_list)
+    create_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
+end
+
+% util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
 % for i = 1:1:numel(util_gen_list)
 %     create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
 % end
 % 
-% atlas_gen_list = get_generators([source_dir fp 'src' fp 'atlas']);
+% atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
 % for i = 1:1:numel(atlas_gen_list)
 %     create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
 % end
 % 
-% cohort_gen_list = get_generators([source_dir fp 'src' fp 'cohort']);
+% cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
 % for i = 1:1:numel(cohort_gen_list)
 %     create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
 % end
 % 
-% gt_gen_list = get_generators([source_dir fp 'src' fp 'gt']);
+% gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
 % for i = 1:1:numel(gt_gen_list)
 %     create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
 % end
 % 
-% analysis_gen_list = get_generators([source_dir fp 'src' fp 'analysis']);
+% analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
 % for i = 1:1:numel(analysis_gen_list)
 %     create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
 % end
 % 
 % % graphs
-% graphs_gen_list = get_generators([source_dir fp 'graphs']);
+% graphs_gen_list = getGenerators([source_dir fp 'graphs']);
 % for i = 1:1:numel(graphs_gen_list)
 %     create_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
 % end
 % 
 % % measures
-% measures_gen_list = get_generators([source_dir fp 'measures']);
+% measures_gen_list = getGenerators([source_dir fp 'measures']);
 % for i = 1:1:numel(measures_gen_list)
 %     create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
 % end
 % 
 % % worksflows
-% wf_structural_gen_list = get_generators([source_dir fp 'workflows' fp 'structural']);
+% wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
 % for i = 1:1:numel(wf_structural_gen_list)
 %     create_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
 % end
 % 
-% wf_functional_gen_list = get_generators([source_dir fp 'workflows' fp 'functional']);
+% wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
 % for i = 1:1:numel(wf_functional_gen_list)
 %     create_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
 % end
 % 
-% wf_connectivity_gen_list = get_generators([source_dir fp 'workflows' fp 'connectivity']);
+% wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
 % for i = 1:1:numel(wf_connectivity_gen_list)
 %     create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
 % end
@@ -245,60 +245,60 @@ disp('¡! copied ready files - ds')
 % 
 % %% CREATE TEST
 % % src
-% ds_gen_list = get_generators([source_dir fp 'src' fp 'ds']);
+% ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
 % for i = 1:1:numel(ds_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
 % end
 % 
-% util_gen_list = get_generators([source_dir fp 'src' fp 'util']);
+% util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
 % for i = 1:1:numel(util_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
 % end
 % 
-% atlas_gen_list = get_generators([source_dir fp 'src' fp 'atlas']);
+% atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
 % for i = 1:1:numel(atlas_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
 % end
 % 
-% cohort_gen_list = get_generators([source_dir fp 'src' fp 'cohort']);
+% cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
 % for i = 1:1:numel(cohort_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
 % end
 % 
-% gt_gen_list = get_generators([source_dir fp 'src' fp 'gt']);
+% gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
 % for i = 1:1:numel(gt_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
 % end
 % 
-% analysis_gen_list = get_generators([source_dir fp 'src' fp 'analysis']);
+% analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
 % for i = 1:1:numel(analysis_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
 % end
 % 
 % % graphs
-% graphs_gen_list = get_generators([source_dir fp 'graphs']);
+% graphs_gen_list = getGenerators([source_dir fp 'graphs']);
 % for i = 1:1:numel(graphs_gen_list)
 %     create_test_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
 % end
 % 
 % % measures
-% measures_gen_list = get_generators([source_dir fp 'measures']);
+% measures_gen_list = getGenerators([source_dir fp 'measures']);
 % for i = 1:1:numel(measures_gen_list)
 %     create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
 % end
 % 
 % % workflows
-% wf_structural_gen_list = get_generators([source_dir fp 'workflows' fp 'structural']);
+% wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
 % for i = 1:1:numel(wf_structural_gen_list)
 %     create_test_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
 % end
 % 
-% wf_functional_gen_list = get_generators([source_dir fp 'workflows' fp 'functional']);
+% wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
 % for i = 1:1:numel(wf_functional_gen_list)
 %     create_test_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
 % end
 % 
-% wf_connectivity_gen_list = get_generators([source_dir fp 'workflows' fp 'connectivity']);
+% wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
 % for i = 1:1:numel(wf_connectivity_gen_list)
 %     create_test_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
 % end

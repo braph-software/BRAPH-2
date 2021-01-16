@@ -5,50 +5,71 @@ function create_Element(generator_file, target_dir)
 % generator file FILE (with ending '.gen.m') and saves it in the target
 % directory DIR.
 %
+% A generator file (whose name must have ending '.gen.m', and tipically
+% starts with "_") has the following structure (the token ¡header! is
+% required, while the rest is optional):
+%
+% <strong>%% ¡header!</strong>
+% <class_name> < <superclass_name> (<moniker>, <descriptive_name>) <header_description>.
+%
+% <strong>%%% ¡class_attributes!</strong>
+% Class attributes is a single line, e.g. Abstract = true, Sealed = true.
+%
+% <strong>%%% ¡description!</strong>
+% This is a plain description of the element.
+% It can occupy several lines.
+%
+% <strong>%%% ¡seealso!</strong>
+% Related functions and classes is a single line.
+%
 % See also genesis, create_test_Element.
 
-% disp(['¡ source file: ' generator_file])
-% disp(['¡ target dir: ' target_dir])
-% 
-% txt = fileread(generator_file);
-% 
-% disp('¡! generator file read')
-% 
-% %% Analysis
-% [class_name, superclass_name, descriptive_name, moniker, header_description, description] = analyze_header(); %#ok<ASGLU>
-%     function [class_name, superclass_name, descriptive_name, moniker, header_description, description] = analyze_header()
-%         header = get_token(txt, 'header');
-%         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
-%         class_name = res.class_name;
-%         superclass_name = res.superclass_name;
-%         descriptive_name = res.descriptive_name;
-%         moniker = res.moniker;
-%         header_description = res.header_description;
-%         
-%         description = splitlines(get_token(txt, 'header', 'description'));
-%     end
-% 
+disp(['¡ source file: ' generator_file])
+disp(['¡ target dir: ' target_dir])
+
+txt = fileread(generator_file);
+
+disp('¡! generator file read')
+
+%% Analysis
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso] = analyze_header(); %#ok<ASGLU>
+    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso] = analyze_header()
+        header = getToken(txt, 'header');
+        res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
+        class_name = res.class_name;
+        superclass_name = res.superclass_name;
+        moniker = res.moniker;
+        descriptive_name = res.descriptive_name;
+        header_description = res.header_description;
+        
+        class_attributes = getToken(txt, 'header', 'class_attributes');
+
+        description = splitlines(getToken(txt, 'header', 'description'));
+        
+        seealso = getToken(txt, 'header', 'seealso');        
+    end
+
 % [ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
 %     function [ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph()
-%         ensemble = get_token(txt, 'header', 'ensemble');
-%         graph = get_token(txt, 'header', 'graph');
-%         connectivity = splitlines(get_token(txt, 'header', 'connectivity'));
-%         directionality = splitlines(get_token(txt, 'header', 'directionality'));
-%         selfconnectivity = splitlines(get_token(txt, 'header', 'selfconnectivity'));
-%         negativity = splitlines(get_token(txt, 'header', 'negativity'));
+%         ensemble = getToken(txt, 'header', 'ensemble');
+%         graph = getToken(txt, 'header', 'graph');
+%         connectivity = splitlines(getToken(txt, 'header', 'connectivity'));
+%         directionality = splitlines(getToken(txt, 'header', 'directionality'));
+%         selfconnectivity = splitlines(getToken(txt, 'header', 'selfconnectivity'));
+%         negativity = splitlines(getToken(txt, 'header', 'negativity'));
 %     end
 % 
 % [shape, scope, parametricity, compatible_graphs] = analyze_header_measure(); % only for measures
 %     function [shape, scope, parametricity, compatible_graphs] = analyze_header_measure()
-%         shape = get_token(txt, 'header', 'shape');
-%         scope = get_token(txt, 'header', 'scope');
-%         parametricity = get_token(txt, 'header', 'parametricity');
-%         compatible_graphs = get_token(txt, 'header', 'compatible_graphs');
+%         shape = getToken(txt, 'header', 'shape');
+%         scope = getToken(txt, 'header', 'scope');
+%         parametricity = getToken(txt, 'header', 'parametricity');
+%         compatible_graphs = getToken(txt, 'header', 'compatible_graphs');
 %     end
 % 
 % [props, props_update] = analyze_props();
 %     function [props, props_update] = analyze_props()
-%         props = get_tokens(txt, 'props', 'prop');
+%         props = getTokens(txt, 'props', 'prop');
 %         for i = 1:1:numel(props)
 %             res = regexp(props{i}.token, '^(\s*)(?<tag>\w*)\s*\((?<category>\w*),\s*(?<format>\w*)\)\.*', 'names');
 %             props{i}.TAG = upper(res.tag);
@@ -61,13 +82,13 @@ function create_Element(generator_file, target_dir)
 %             lines = splitlines(props{i}.token);
 %             props{i}.description = lines{1};
 % 
-%             props{i}.settings = get_token(props{i}.token, 'settings');
-%             props{i}.check_prop = splitlines(get_token(props{i}.token, 'check_prop'));
-%             props{i}.check_value = splitlines(get_token(props{i}.token, 'check_value'));
-%             props{i}.default = get_token(props{i}.token, 'default');
-%             props{i}.calculate = splitlines(get_token(props{i}.token, 'calculate'));
+%             props{i}.settings = getToken(props{i}.token, 'settings');
+%             props{i}.check_prop = splitlines(getToken(props{i}.token, 'check_prop'));
+%             props{i}.check_value = splitlines(getToken(props{i}.token, 'check_value'));
+%             props{i}.default = getToken(props{i}.token, 'default');
+%             props{i}.calculate = splitlines(getToken(props{i}.token, 'calculate'));
 %         end
-%         props_update = get_tokens(txt, 'props_update', 'prop');
+%         props_update = getTokens(txt, 'props_update', 'prop');
 %         for i = 1:1:numel(props_update)
 %             res = regexp(props_update{i}.token, '^(\s*)(?<tag>\w*)\s*\((?<category>\w*),\s*(?<format>\w*)\)\.*', 'names');
 %             props_update{i}.TAG = upper(res.tag);
@@ -80,27 +101,42 @@ function create_Element(generator_file, target_dir)
 %             lines = splitlines(props_update{i}.token);
 %             props_update{i}.description = lines{1};
 % 
-%             props_update{i}.settings = get_token(props_update{i}.token, 'settings');
-%             props_update{i}.check_prop = splitlines(get_token(props_update{i}.token, 'check_prop'));
-%             props_update{i}.check_value = splitlines(get_token(props_update{i}.token, 'check_value'));
-%             props_update{i}.default = get_token(props_update{i}.token, 'default');
-%             props_update{i}.calculate = splitlines(get_token(props_update{i}.token, 'calculate'));
+%             props_update{i}.settings = getToken(props_update{i}.token, 'settings');
+%             props_update{i}.check_prop = splitlines(getToken(props_update{i}.token, 'check_prop'));
+%             props_update{i}.check_value = splitlines(getToken(props_update{i}.token, 'check_value'));
+%             props_update{i}.default = getToken(props_update{i}.token, 'default');
+%             props_update{i}.calculate = splitlines(getToken(props_update{i}.token, 'calculate'));
 %         end
 %     end
 % 
-% constants = splitlines(get_token(txt, 'constants'));
-% staticmethods = splitlines(get_token(txt, 'staticmethods'));
-% methods = splitlines(get_token(txt, 'methods'));
-% 
-% %% Generate and save file
-% target_file = [target_dir filesep() class_name '.m'];
-% object_file = fopen(target_file, 'w');
-% 
-% generate_header()
-%     function generate_header()
-%         g(0, ['classdef ' class_name ' < ' superclass_name])
-%     end
-% 
+% constants = splitlines(getToken(txt, 'constants'));
+% staticmethods = splitlines(getToken(txt, 'staticmethods'));
+% methods = splitlines(getToken(txt, 'methods'));
+
+%% Generate and save file
+target_file = [target_dir filesep() class_name '.m'];
+object_file = fopen(target_file, 'w');
+
+generate_header()
+    function generate_header()
+        if isempty(class_attributes)
+            g(0, ['classdef ' class_name ' < ' superclass_name])
+        else
+            g(0, ['classdef (' class_attributes ') ' class_name ' < ' superclass_name])
+        end
+        gs(1, {...
+            ['% ' class_name ' ' header_description '.'], ...
+            ['% It is a subclass of <a href="matlab:help ' superclass_name '">' superclass_name '</a>.'], ...
+            '%' ...
+            })
+        gs(1, cellfun(@(x) ['% ' x], description, 'UniformOutput', false))
+        gs(1, {...
+            '%', ...
+            ['% See also ' seealso '.'], ...
+            ''
+            })
+    end
+
 % generate_constants()
 %     function generate_constants()
 %         if numel(constants) == 1 && isempty(constants{1})
@@ -582,16 +618,20 @@ function create_Element(generator_file, target_dir)
 %             g(1, 'end')
 %         end
 %     end
-% 
-% generate_constructor()
-%     function generate_constructor()
-%         g(1, 'methods % constructor')
-%             g(2, ['function ' moniker ' = ' class_name '(varargin)'])
-%                 g(3, [moniker ' = ' moniker '@' superclass_name '(varargin{:});'])
-%             g(2, 'end')
-%         g(1, 'end')
-%     end
-% 
+
+generate_constructor()
+    function generate_constructor()
+        g(1, 'methods % constructor')
+            g(2, ['function ' moniker ' = ' class_name '(varargin)'])
+                gs(3, { ...
+                    ['% ' class_name '() creates a ' descriptive_name '.'], ...
+                    ''
+                    })
+                g(3, [moniker ' = ' moniker '@' superclass_name '(varargin{:});'])
+            g(2, 'end')
+        g(1, 'end')
+    end
+
 % generate_checkValue()
 %     function generate_checkValue()
 %         if all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props)) && all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props_update))
@@ -662,25 +702,25 @@ function create_Element(generator_file, target_dir)
 %             gs(2, methods)
 %         g(1, 'end')
 %     end
-% 
-% generate_footer()
-%     function generate_footer()
-%         g(0, 'end')
-%     end
-% 
-% fclose(object_file);    
-% 
-% disp(['¡! saved file: ' target_file])
-% disp(' ')
-% 
-% %% Help functions
-%     function g(tabs, str)
-%         str = regexprep(str, '%', '%%');
-%         fprintf(object_file, [repmat('\t', 1, tabs) str '\n']);
-%     end
-%     function gs(tabs, lines)
-%         for i = 1:1:length(lines)
-%             g(tabs, lines{i})
-%         end
-%     end
+
+generate_footer()
+    function generate_footer()
+        g(0, 'end')
+    end
+
+fclose(object_file);    
+
+disp(['¡! saved file: ' target_file])
+disp(' ')
+
+%% Help functions
+    function g(tabs, str)
+        str = regexprep(str, '%', '%%');
+        fprintf(object_file, [repmat('\t', 1, tabs) str '\n']);
+    end
+    function gs(tabs, lines)
+        for i = 1:1:length(lines)
+            g(tabs, lines{i})
+        end
+    end
 end
