@@ -9,14 +9,14 @@ function create_test_Element(generator_file, target_dir)
 %
 % See also genesis, create_Element.
 
-% disp(['¡ source file: ' generator_file])
-% disp(['¡ target dir: ' target_dir])
-% 
-% txt = fileread(generator_file);
-% 
-% disp('¡! generator file read')
-% 
-% %% Analysis
+disp(['¡ source file: ' generator_file])
+disp(['¡ target dir: ' target_dir])
+
+txt = fileread(generator_file);
+
+disp('¡! generator file read')
+
+%% Analysis
 % [class_name, superclass_name, descriptive_name, moniker, header_description] = analyze_header(); %#ok<ASGLU>
 %     function [class_name, superclass_name, descriptive_name, moniker, header_description] = analyze_header()
 %         header = get_token(txt, 'header');
@@ -38,8 +38,8 @@ function create_test_Element(generator_file, target_dir)
 %             tests{i}.code = splitlines(get_token(tests{i}.token, 'code'));
 %         end
 %     end
-% 
-% %% Generate and save file
+
+%% Generate and save file
 % target_file = [target_dir filesep() 'test_' class_name '.m'];
 % object_file = fopen(target_file, 'w');
 % 
@@ -478,15 +478,15 @@ function create_test_Element(generator_file, target_dir)
 % 
 % disp(['¡! saved file: ' target_file])
 % disp(' ')
-% 
-% %% Help functions
-%     function g(tabs, str)
-%         str = regexprep(str, '%', '%%');
-%         fprintf(object_file, [repmat('\t', 1, tabs) str '\n']);
-%     end
-%     function gs(tabs, lines)
-%         for i = 1:1:length(lines)
-%             g(tabs, lines{i})
-%         end
-%     end
+
+%% Help functions
+    function g(tabs, str)
+        str = regexprep(str, '%', '%%');
+        fprintf(object_file, [repmat('\t', 1, tabs) str '\n']);
+    end
+    function gs(tabs, lines)
+        for i = 1:1:length(lines)
+            g(tabs, lines{i})
+        end
+    end
 end
