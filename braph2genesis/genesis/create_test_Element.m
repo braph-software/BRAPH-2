@@ -5,6 +5,8 @@ function create_test_Element(generator_file, target_dir)
 % an Element from its generator file FILE (with ending '.gen.m') and saves
 % it in the target directory DIR.
 %
+% The structure of the generator file can be found in <a href="matlab:help create_Element">create_Element</a>.
+%
 % See also genesis, create_Element.
 
 % disp(['¡ source file: ' generator_file])
