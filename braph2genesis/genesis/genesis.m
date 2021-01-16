@@ -92,7 +92,7 @@ copyfile([source_dir fp 'src' fp 'ds' fp 'test_Category.m'], [target_dir fp 'src
 copyfile([source_dir fp 'src' fp 'ds' fp 'Format.m'], [target_dir fp 'src' fp 'ds' fp 'Format.m'])
 copyfile([source_dir fp 'src' fp 'ds' fp 'test_Format.m'], [target_dir fp 'src' fp 'ds' fp 'test_Format.m'])
 copyfile([source_dir fp 'src' fp 'ds' fp 'Element.m'], [target_dir fp 'src' fp 'ds' fp 'Element.m'])
-% copyfile([source_dir fp 'src' fp 'ds' fp 'test_Element.m'], [target_dir fp 'src' fp 'ds' fp 'test_Element.m'])
+copyfile([source_dir fp 'src' fp 'ds' fp 'test_Element.m'], [target_dir fp 'src' fp 'ds' fp 'test_Element.m'])
 disp('¡! copied ready files - ds')
 
 % copyfile([source_dir fp 'src' fp 'gt' fp 'histogram.m'], [target_dir fp 'src' fp 'gt' fp 'histogram.m'])
