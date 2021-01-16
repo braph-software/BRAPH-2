@@ -61,13 +61,13 @@ disp('¡! created dir structure - SRC')
 % mkdir([target_dir fp 'workflows' fp 'connectivity'])
 % 
 % disp('¡! created dir structure - WORKFLOWS')
-% 
-% % test
-% mkdir([target_dir fp 'test'])
-% 
-% disp('¡! created dir structure - TEST')
-% 
-% disp(' ')
+
+% test
+mkdir([target_dir fp 'test'])
+
+disp('¡! created dir structure - TEST')
+
+disp(' ')
 
 %% COPY READY FILES
 % braph2.m and license.rtf
@@ -166,15 +166,15 @@ disp('¡! copied ready files - ds')
 % disp('¡! copied ready files - workflow connectivity')
 % 
 % disp(' ')
-% 
-% % test
-% copyfile([source_dir fp 'test' fp 'test_braph2.m'], [target_dir fp 'test' fp 'test_braph2.m'])
-% copyfile([source_dir fp 'test' fp 'assert_with_error.m'], [target_dir fp 'test' fp 'assert_with_error.m'])
+
+% test
+copyfile([source_dir fp 'test' fp 'test_braph2.m'], [target_dir fp 'test' fp 'test_braph2.m'])
+copyfile([source_dir fp 'test' fp 'assert_with_error.m'], [target_dir fp 'test' fp 'assert_with_error.m'])
 % copyfile([source_dir fp 'test' fp 'DummyObject.m'], [target_dir fp 'test' fp 'DummyObject.m'])
 % copyfile([source_dir fp 'test' fp 'DummyCopiableObject.m'], [target_dir fp 'test' fp 'DummyCopiableObject.m'])
-% disp('¡! copied ready files - test')
-% 
-% disp(' ')
+disp('¡! copied ready files - test')
+
+disp(' ')
 
 %% CREATE ELEMENTS
 % src

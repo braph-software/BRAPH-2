@@ -27,4 +27,4 @@ target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2tmp'];
 addpath(target_dir)
 braph2
 
-% test_braph2
+test_braph2
