@@ -21,9 +21,10 @@ warning('off', 'MATLAB:MKDIR:DirectoryExists')
 addpath(fileparts(which('braph2genesis')))
 addpath([fileparts(which('braph2genesis')) filesep 'genesis'])
 
-[target_dir, source_dir] = genesis();
+target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2tmp']; % TODO change to braph2
+[target_dir, source_dir] = genesis(target_dir);
 
 addpath(target_dir)
 braph2
 
-test_braph2
+% test_braph2
