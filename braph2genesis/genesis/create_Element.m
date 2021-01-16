@@ -22,6 +22,9 @@ function create_Element(generator_file, target_dir)
 % <strong>%%% ¡seealso!</strong>
 % Related functions and classes is a single line.
 %
+% <strong>%% ¡staticmethods!</strong>
+% Static methods written as functions includign the relative documentation.
+% 
 % See also genesis, create_test_Element.
 
 disp(['¡ source file: ' generator_file])
@@ -110,7 +113,9 @@ disp('¡! generator file read')
 %     end
 % 
 % constants = splitlines(getToken(txt, 'constants'));
-% staticmethods = splitlines(getToken(txt, 'staticmethods'));
+
+staticmethods = splitlines(getToken(txt, 'staticmethods'));
+
 % methods = splitlines(getToken(txt, 'methods'));
 
 %% Generate and save file
@@ -146,17 +151,17 @@ generate_header()
 %             gs(2, constants)
 %         g(1, 'end')
 %     end
-% 
-% generate_staticmethods()
-%     function generate_staticmethods()
-%         if numel(staticmethods) == 1 && isempty(staticmethods{1})
-%             return
-%         end
-%         g(1, 'methods (Static) % static methods')
-%             gs(2, staticmethods)
-%         g(1, 'end')
-%     end
-% 
+
+generate_staticmethods()
+    function generate_staticmethods()
+        if numel(staticmethods) == 1 && isempty(staticmethods{1})
+            return
+        end
+        g(1, 'methods (Static) % static methods')
+            gs(2, staticmethods)
+        g(1, 'end')
+    end
+
 % generate_props()
 %     function generate_props()
 %         if isempty(props)
