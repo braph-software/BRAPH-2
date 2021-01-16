@@ -1,21 +1,20 @@
 function subclass_list = subclasses(class_name, directory, search_subdirectories, self)
-% SUBCLASSES searches for all the subclasses of a class
+% SUBCLASSES returns all subclasses of a class.
 %
-% LIST = SUBCLASSES(CLASS_NAME) searches for all the subclasses of class
-% CLASS_NAME within BRAPH2.
+% LIST = SUBCLASSES(CLASS_NAME) returns all subclasses of class CLASS_NAME
+% within BRAPH2.
 %
-% LIST = SUBCLASSES(CLASS_NAME, PATH) searches for all the subclasses of
-% class CLASS_NAME inside the directory PATH. 
+% LIST = SUBCLASSES(CLASS_NAME, PATH) returns all subclasses of class
+% CLASS_NAME inside the directory PATH.
 %
-% LIST = SUBCLASSES(CLASS_NAME, PATH, SEARCH_SUBDIR) searches for all the
-% subclasses of class CLASS_NAME inside the directory PATH and its
-% subdirectories.
+% LIST = SUBCLASSES(CLASS_NAME, PATH, true) returns all subclasses
+% of class CLASS_NAME inside the directory PATH and its subdirectories.
 %
-% LIST = SUBCLASSES(CLASS_NAME, PATH, SEARCH_SUBDIR, true) adds the
-% CLASS_NAME to the list of subclasses.
+% LIST = SUBCLASSES(CLASS_NAME, PATH, SEARCH_SUBDIR, true) adds CLASS_NAME
+% to the list of subclasses.
 %
-% LIST = SUBCLASSES(CLASS_NAME, [], [], true) searchers for all subclasses
-% of CLASS_NAME within BRAPH2, including CLASS_NAME.
+% LIST = SUBCLASSES(CLASS_NAME, [], [], true) returns all subclasses of
+% CLASS_NAME within BRAPH2, including CLASS_NAME.
 %
 % See also SUPERCLASSES.
 
