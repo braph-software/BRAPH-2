@@ -580,8 +580,8 @@ generate_inspection()
                         end                            
                     end
                     if ~strcmp(superclass_name, 'Element')
-                        g(4, [ 'otherwise' '\n']);
-                            g(5, [ 'prop_default = getPropDefault@' superclass_name '(prop);' '\n']);
+                        g(4, [ 'otherwise']);
+                            g(5, [ 'prop_default = getPropDefault@' superclass_name '(prop);']);
                     end
                 g(3, 'end')
             g(2, 'end')
