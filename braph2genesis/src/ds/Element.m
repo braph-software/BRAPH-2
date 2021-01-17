@@ -254,7 +254,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %             el.set(propvalues{:})
         end
     end
-%     methods % set/check/get value
+    methods % set/check/get value
 %         function set(el, varargin)
 %             % varargin = {prop/tag, value, ...}
 % 
@@ -477,8 +477,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % 
 %             seed = el.props{prop}.seed;
 %         end
-%     end
-%     methods % operators
+    end
+    methods % operators
 %         function check = isequal(el1, el2)
 %             
 %             check = isa(el2, el1.getClass());
@@ -489,8 +489,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                 end
 %             end
 %         end
-%     end
-%     methods (Access=private) % unlock/seed
+    end
+    methods (Access=private) % unlock/seed
 %         function unlock(el, pointer)
 %             % prop can also be tag
 % 
@@ -523,19 +523,19 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                 end
 %             end
 %         end
-%     end
-%     methods (Access=protected) % check value
+    end
+    methods (Access=protected) % check value
 %         function [value_check, value_msg] = checkValue(el, prop, value) %#ok<INUSD>
 %             value_check = true;
 %             value_msg = ['Error while checking ' tostring(el) ' ' el.getPropTag(prop) '.'];
 %         end
-%     end
-%     methods (Access=protected) % calculate value
+    end
+    methods (Access=protected) % calculate value
 %         function value = calculateValue(el, prop)
 %             value = el.props{prop}.value;
 %         end
-%     end
-%     methods % display
+    end
+    methods % display
 %         function str = tostring(el, varargin)
 %             if el.getPropNumber() > 0
 %                 % str = char(join([class(el) 'with properties' cellfun(@(prod) el.getPropTag(prod), num2cell(Element.getProps(el)'), 'UniformOutput', false)]));
@@ -662,8 +662,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                 disp(txt_el)
 %             end
 %         end
-%     end
-%     methods % el_list
+    end
+    methods % el_list
 %         function el_list = getElementList(el, el_list)
 % 
 %             if nargin < 2
@@ -686,8 +686,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                 end
 %             end
 %         end        
-%     end
-%     methods % encodeJSON
+    end
+    methods % encodeJSON
 %         function [json, struct, el_list] = encodeJSON(el) %#ok<STOUT>
 %             
 %             el_list = el.getElementList();
@@ -734,8 +734,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % 
 %             json = jsonencode(struct);
 %         end
-%     end
-%     methods (Static) % decodeJSON
+    end
+    methods (Static) % decodeJSON
 %         function [el, struct, el_list] = decodeJSON(json)
 %             
 %             struct = jsondecode(json);
@@ -776,8 +776,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %             
 %             el = el_list{1};
 %         end
-%     end
-%     methods (Access=protected) % deep copy
+    end
+    methods (Access=protected) % deep copy
 %         function el_copy = copyElement(el)
 % 
 %             el_list = el.getElementList();
@@ -809,12 +809,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %             
 %             el_copy = el_copy_list{1};
 %         end
-%     end
-%     methods % clone
+    end
+    methods % clone
 %         function el_clone = clone(el)
 %             el_clone = el.copy();
 %             el_clone.unlock()
 %             el_clone.seed()
 %         end
-%     end
+    end
 end
