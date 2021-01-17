@@ -73,10 +73,10 @@ disp('¡! generator file read')
 %         parametricity = getToken(txt, 'header', 'parametricity');
 %         compatible_graphs = getToken(txt, 'header', 'compatible_graphs');
 %     end
-% 
-% [props, props_update] = analyze_props();
-%     function [props, props_update] = analyze_props()
-%         props = getTokens(txt, 'props', 'prop');
+
+[props, props_update] = analyze_props();
+    function [props, props_update] = analyze_props()
+        props = getTokens(txt, 'props', 'prop');
 %         for i = 1:1:numel(props)
 %             res = regexp(props{i}.token, '^(\s*)(?<tag>\w*)\s*\((?<category>\w*),\s*(?<format>\w*)\)\.*', 'names');
 %             props{i}.TAG = upper(res.tag);
@@ -95,7 +95,7 @@ disp('¡! generator file read')
 %             props{i}.default = getToken(props{i}.token, 'default');
 %             props{i}.calculate = splitlines(getToken(props{i}.token, 'calculate'));
 %         end
-%         props_update = getTokens(txt, 'props_update', 'prop');
+        props_update = getTokens(txt, 'props_update', 'prop');
 %         for i = 1:1:numel(props_update)
 %             res = regexp(props_update{i}.token, '^(\s*)(?<tag>\w*)\s*\((?<category>\w*),\s*(?<format>\w*)\)\.*', 'names');
 %             props_update{i}.TAG = upper(res.tag);
@@ -114,8 +114,8 @@ disp('¡! generator file read')
 %             props_update{i}.default = getToken(props_update{i}.token, 'default');
 %             props_update{i}.calculate = splitlines(getToken(props_update{i}.token, 'calculate'));
 %         end
-%     end
-% 
+    end
+
 % constants = splitlines(getToken(txt, 'constants'));
 
 staticmethods = splitlines(getToken(txt, 'staticmethods'));
@@ -256,74 +256,74 @@ generate_inspection()
                     g(4, '];')
             g(2, 'end')
 
-%         % getProps(category)
-%         g(2, 'function prop_list = getProps(category)')
-%             g(3, 'if nargin < 1')
-%                 g(4, 'category = ''all'';')
-%             g(3, 'end')
-%             g(3, '')
-%             g(3, 'switch category')
-%                 g(4, 'case Category.METADATA')
-%                     g(5, 'prop_list = [')
-%                         if ~strcmp(superclass_name, 'Element')
-%                             g(6, [superclass_name '.getProps(Category.METADATA)'])
-%                         end
-%                         for i = 1:1:numel(props)
-%                             if strcmp(props{i}.CATEGORY, 'METADATA')
-%                                 g(6, [class_name '.' props{i}.TAG])
-%                             end
-%                         end
-%                         g(6, '];')
-%                 g(4, 'case Category.PARAMETER')
-%                     g(5, 'prop_list = [')
-%                         if ~strcmp(superclass_name, 'Element')
-%                             g(6, [superclass_name '.getProps(Category.PARAMETER)'])
-%                         end
-%                         for i = 1:1:numel(props)
-%                             if strcmp(props{i}.CATEGORY, 'PARAMETER')
-%                                 g(6, [class_name '.' props{i}.TAG])
-%                             end
-%                         end
-%                         g(6, '];')
-%                 g(4, 'case Category.DATA')
-%                     g(5, 'prop_list = [');
-%                         if ~strcmp(superclass_name, 'Element')
-%                             g(6, [superclass_name '.getProps(Category.DATA)'])
-%                         end
-%                         for i = 1:1:numel(props)
-%                             if strcmp(props{i}.CATEGORY, 'DATA')
-%                                 g(6, [class_name '.' props{i}.TAG])
-%                             end
-%                         end
-%                         g(6, '];')
-%                 g(4, 'case Category.RESULT')
-%                     g(5, 'prop_list = [')
-%                         if ~strcmp(superclass_name, 'Element')
-%                             g(6, [superclass_name '.getProps(Category.RESULT)'])
-%                         end
-%                         for i = 1:1:numel(props)
-%                             if strcmp(props{i}.CATEGORY, 'RESULT')
-%                                 g(6, [class_name '.' props{i}.TAG])
-%                             end
-%                         end
-%                         g(6, '];')
-%                 g(4, 'otherwise')
-%                     g(5, 'prop_list = [')
-%                         if ~strcmp(superclass_name, 'Element')
-%                             g(6, [superclass_name '.getProps()'])
-%                         end
-%                         for i = 1:1:numel(props)
-%                             g(6, [class_name '.' props{i}.TAG])
-%                         end
-%                         g(6, '];')
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % getPropNumber()
-%         g(2, 'function prop_number = getPropNumber()')
-%             g(3, ['prop_number = numel(' class_name '.getProps());'])
-%         g(2, 'end')
-% 
+            % getProps(category)
+            g(2, 'function prop_list = getProps(category)')
+                g(3, 'if nargin < 1')
+                    g(4, 'category = ''all'';')
+                g(3, 'end')
+                g(3, '')
+                g(3, 'switch category')
+                    g(4, 'case Category.METADATA')
+                        g(5, 'prop_list = [')
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps(Category.METADATA)'])
+                            end
+                            for i = 1:1:numel(props)
+                                if strcmp(props{i}.CATEGORY, 'METADATA')
+                                    g(6, [class_name '.' props{i}.TAG])
+                                end
+                            end
+                            g(6, '];')
+                    g(4, 'case Category.PARAMETER')
+                        g(5, 'prop_list = [')
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps(Category.PARAMETER)'])
+                            end
+                            for i = 1:1:numel(props)
+                                if strcmp(props{i}.CATEGORY, 'PARAMETER')
+                                    g(6, [class_name '.' props{i}.TAG])
+                                end
+                            end
+                            g(6, '];')
+                    g(4, 'case Category.DATA')
+                        g(5, 'prop_list = [');
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps(Category.DATA)'])
+                            end
+                            for i = 1:1:numel(props)
+                                if strcmp(props{i}.CATEGORY, 'DATA')
+                                    g(6, [class_name '.' props{i}.TAG])
+                                end
+                            end
+                            g(6, '];')
+                    g(4, 'case Category.RESULT')
+                        g(5, 'prop_list = [')
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps(Category.RESULT)'])
+                            end
+                            for i = 1:1:numel(props)
+                                if strcmp(props{i}.CATEGORY, 'RESULT')
+                                    g(6, [class_name '.' props{i}.TAG])
+                                end
+                            end
+                            g(6, '];')
+                    g(4, 'otherwise')
+                        g(5, 'prop_list = [')
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps()'])
+                            end
+                            for i = 1:1:numel(props)
+                                g(6, [class_name '.' props{i}.TAG])
+                            end
+                            g(6, '];')
+                g(3, 'end')
+            g(2, 'end')
+
+            % getPropNumber()
+            g(2, 'function prop_number = getPropNumber()')
+                g(3, ['prop_number = numel(' class_name '.getProps());'])
+            g(2, 'end')
+
 %         % existsProp(prop)
 %         g(2, 'function check = existsProp(prop)')
 %             g(3, 'if nargout == 1')

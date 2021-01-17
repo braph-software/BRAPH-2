@@ -119,7 +119,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             if nargin < 1 % no arguments
                 prop_list = [];
                 return
-            elseif nargin == 1 && Category.existsCategory(el)  % category argument
+            elseif nargin == 1 && Category.existsCategory(el) % category argument
                 prop_list = [];                
                 return
             end
@@ -133,9 +133,17 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 prop_list = eval([Element.getClass(el) '.getProps(category)']);
             end
         end
-%         function prop_number = getPropNumber(el)
-%             prop_number = eval([Element.getClass(el) '.getPropNumber()']);
-%         end
+        function prop_number = getPropNumber(el)
+            
+            % calls from Element
+            if nargin < 1
+                prop_number = 0;
+                return
+            end
+            
+            % calls from subclasses of Element
+            prop_number = eval([Element.getClass(el) '.getPropNumber()']);
+        end
 %         function check = existsProp(el, prop)
 %             if nargout == 1
 %                 check = any(prop == Element.getProps(el));
