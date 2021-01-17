@@ -566,7 +566,7 @@ classdef Format < handle
                     class = Format.getFormatSettings(Format.IDICT, format_settings);
                     check = isa(value, 'IndexedDictionary') && ...
                         any(strcmp(class, subclasses('Element', [], [], true))) && ...
-                        any(strcmp(value.getItemClass(), subclasses(class, [], [], true)));
+                        any(strcmp(value.get('IT_CLASS'), subclasses(class, [], [], true)));
                 case Format.SCALAR
                     check = isnumeric(value) && isscalar(value);
                 case Format.RVECTOR
