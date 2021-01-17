@@ -201,29 +201,29 @@ generate_staticmethods()
         g(1, 'end')
     end
 
-% generate_props()
-%     function generate_props()
-%         if isempty(props)
-%             return
-%         end
-%         g(1, 'properties (Constant) % properties')
-% 
-%         for i = 1:1:numel(props)
-%             if strcmp(superclass_name, 'Element')
-%                 g(2, [props{i}.TAG ' = ' int2str(i) ';'])
-%             else
-%                 g(2, [props{i}.TAG ' = ' superclass_name '.getPropNumber() + ' int2str(i) ';'])
-%             end
-%             g(2, [props{i}.TAG '_TAG = ''' props{i}.tag ''';'])
-%             g(2, [props{i}.TAG '_CATEGORY = Category.' props{i}.CATEGORY ';'])
-%             g(2, [props{i}.TAG '_FORMAT = Format.' props{i}.FORMAT ';'])
-%             if i ~= numel(props)
-%                 g(2, '')
-%             end
-%         end
-% 
-%         g(1, 'end');
-%     end
+generate_props()
+    function generate_props()
+        if isempty(props)
+            return
+        end
+        g(1, 'properties (Constant) % properties')
+
+        for i = 1:1:numel(props)
+            if strcmp(superclass_name, 'Element')
+                g(2, [props{i}.TAG ' = ' int2str(i) ';'])
+            else
+                g(2, [props{i}.TAG ' = ' superclass_name '.getPropNumber() + ' int2str(i) ';'])
+            end
+            g(2, [props{i}.TAG '_TAG = ''' props{i}.tag ''';'])
+            g(2, [props{i}.TAG '_CATEGORY = Category.' props{i}.CATEGORY ';'])
+            g(2, [props{i}.TAG '_FORMAT = Format.' props{i}.FORMAT ';'])
+            if i ~= numel(props)
+                g(2, '')
+            end
+        end
+
+        g(1, 'end');
+    end
 
 generate_inspection()
     function generate_inspection()
