@@ -424,29 +424,29 @@ generate_inspection()
             g(2, 'end')
 
             % getPropProp(pointer)
-            g(2, 'function prop_prop = getPropProp(pointer)')
+            g(2, 'function prop = getPropProp(pointer)')
                 g(3, 'if ischar(pointer)')
                     gs(4, {
                          'tag = pointer;'
                         [class_name '.existsTag(tag);']
                     	 ''
                         ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()''), ''UniformOutput'', false);']
-                    	 'prop_prop = find(strcmpi(tag, tag_list));'
+                    	 'prop = find(strcmpi(tag, tag_list));'
                          })
                 g(3, 'else % numeric')
                     gs(4, {
-                         'prop_prop = pointer;'
-                        [class_name '.existsProp(prop_prop);']
+                         'prop = pointer;'
+                        [class_name '.existsProp(prop);']
                         })
                 g(3, 'end')
             g(2, 'end')
 
             % getPropTag(pointer)
-            g(2, 'function prop_tag = getPropTag(pointer)')
+            g(2, 'function tag = getPropTag(pointer)')
                 g(3, 'if ischar(pointer)')
                     gs(4, {
-                         'prop_tag = pointer;'
-                    	[class_name '.existsTag(prop_tag);']
+                         'tag = pointer;'
+                    	[class_name '.existsTag(tag);']
                         })
                 g(3, 'else % numeric')
                     gs(4, {
@@ -457,11 +457,11 @@ generate_inspection()
                          })
                         for i = 1:1:numel(props)
                             g(5, ['case ' class_name '.' props{i}.TAG])
-                                g(6, ['prop_tag = ' class_name '.' props{i}.TAG '_TAG;'])
+                                g(6, ['tag = ' class_name '.' props{i}.TAG '_TAG;'])
                         end
                         if ~strcmp(superclass_name, 'Element')
                             g(5, 'otherwise')
-                                g(6, ['prop_tag = getPropTag@' superclass_name '(prop);'])
+                                g(6, ['tag = getPropTag@' superclass_name '(prop);'])
                         end
                     g(4, 'end')
                 g(3, 'end')
@@ -471,7 +471,6 @@ generate_inspection()
             g(2, 'function prop_category = getPropCategory(pointer)')
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
-                	[class_name '.existsProp(prop);']
                 	 ''
                      'switch prop'
                      })
@@ -490,7 +489,6 @@ generate_inspection()
             g(2, 'function prop_format = getPropFormat(pointer)')
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
-                    [ class_name '.existsProp(prop);']
                 	 ''
                 	 'switch prop'
                      })
@@ -509,7 +507,6 @@ generate_inspection()
             g(2, 'function prop_description = getPropDescription(pointer)')
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
-                	[class_name '.existsProp(prop);']
                 	 ''
                      'switch prop'
                     })
@@ -532,7 +529,6 @@ generate_inspection()
             g(2, 'function prop_settings = getPropSettings(pointer)')
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
-                	[class_name '.existsProp(prop);']
                 	 ''
                 	 'switch prop'
                      })
@@ -561,7 +557,6 @@ generate_inspection()
             g(2, 'function prop_default = getPropDefault(pointer)')
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
-                	[class_name '.existsProp(prop);']
                      ''
                 	 'switch prop'
                      })
@@ -590,7 +585,6 @@ generate_inspection()
             g(2, 'function prop_check = checkProp(pointer, value)')
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
-                	[class_name '.existsProp(prop);']
                 	 ''
                 	 'switch prop'
                     })
