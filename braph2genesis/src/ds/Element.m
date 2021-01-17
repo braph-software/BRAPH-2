@@ -57,6 +57,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 el_class = class(el);
             else % el should be a string with the element class
                 el_class = el;
+                assert( ...
+                    exist(el_class, 'class') == 8, ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
+                    'The value ' tostring(el, 100, '...') 'is not a valid class name.'] ...
+                    )
             end
         end
         function el_name = getName(el)
@@ -169,67 +175,132 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % calls from subclasses of Element
             prop_number = eval([Element.getClass(el) '.getPropNumber()']);
         end
-%         function check = existsProp(el, prop)
-%             if nargout == 1
-%                 check = any(prop == Element.getProps(el));
-%             else
-%                 assert( ...
-%                     Element.existsProp(el, prop), ...
-%                     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
-%                     ['The value ' tostring(prop) ' is not a valid prop for ' Element.getClass(el) '.'] ...
-%                     )
-%             end
-%         end
-%         function check = existsTag(el, tag)
-%             if nargout == 1
-%                 tag_list = cellfun(@(x) Element.getPropTag(el, x), num2cell(Element.getProps(el)'), 'UniformOutput', false);
-%                 check = any(strcmpi(tag, tag_list));
-%             else
-%                 assert( ...
-%                     Element.existsTag(el, tag), ...
-%                     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
-%                     ['The value ''' tag ''' is not a valid tag for ' Element.getClass(el) '.'] ...
-%                     )
-%             end
-%         end
-%         function prop_prop = getPropProp(el, pointer) %#ok<INUSD>
-%             % pointer can be prop/tag
-%             
-%             prop_prop = eval([Element.getClass(el) '.getPropProp(pointer)']);
-%         end       
-%         function prop_tag = getPropTag(el, pointer) %#ok<INUSD>
-%             % pointer can be prop/tag
-%             
-%             prop_tag = eval([Element.getClass(el) '.getPropTag(pointer)']);
-%         end
-%         function prop_category = getPropCategory(el, pointer) %#ok<INUSD>
-%             
-%             prop_category = eval([Element.getClass(el) '.getPropCategory(pointer)']);
-%         end
-%         function prop_format = getPropFormat(el, pointer) %#ok<INUSD>
-% 
-%             prop_format = eval([Element.getClass(el) '.getPropFormat(pointer)']);
-%         end
-%         function prop_description = getPropDescription(el, pointer) %#ok<INUSD>
-% 
-%             prop_description = eval([Element.getClass(el) '.getPropDescription(pointer)']);
-%         end 
-%         function prop_settings = getPropSettings(el, pointer) %#ok<INUSD>
-% 
-%             prop_settings = eval([Element.getClass(el) '.getPropSettings(pointer)']);
-%         end 
-%         function prop_default = getPropDefault(el, pointer) %#ok<INUSD>
-% 
-%             prop_default = eval([Element.getClass(el) '.getPropDefault(pointer)']);
-%         end
-%         function prop_check = checkProp(el, pointer, value, varargin) %#ok<INUSD>
-% 
-%             if nargout == 1
-%                 prop_check = eval([Element.getClass(el) '.checkProp(pointer, value)']);
-%             else
-%                 eval([Element.getClass(el) '.checkProp(pointer, value)']);
-%             end
-%         end
+        function check = existsProp(el, prop)
+            % calls from Element
+            if nargin < 2
+                prop = el;
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            if nargout == 1
+                check = any(prop == Element.getProps(el));
+            else
+                assert( ...
+                    Element.existsProp(el, prop), ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
+                    'The value ' tostring(prop) ' is not a valid prop for ' Element.getClass(el) '.'] ...
+                    )
+            end
+        end
+        function check = existsTag(el, tag)
+            % calls from Element
+            if nargin < 2
+                tag = el;
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            if nargout == 1
+                tag_list = cellfun(@(x) Element.getPropTag(el, x), num2cell(Element.getProps(el)'), 'UniformOutput', false);
+                check = any(strcmpi(tag, tag_list));
+            else
+                assert( ...
+                    Element.existsTag(el, tag), ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
+                    'The value ''' tag ''' is not a valid tag for ' Element.getClass(el) '.'] ...
+                    )
+            end
+        end
+        function prop_prop = getPropProp(el, pointer) %#ok<INUSD>
+            % pointer can be prop/tag
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_prop = eval([Element.getClass(el) '.getPropProp(pointer)']);
+        end       
+        function prop_tag = getPropTag(el, pointer) %#ok<INUSD>
+            % pointer can be prop/tag
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_tag = eval([Element.getClass(el) '.getPropTag(pointer)']);
+        end
+        function prop_category = getPropCategory(el, pointer) %#ok<INUSD>
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_category = eval([Element.getClass(el) '.getPropCategory(pointer)']);
+        end
+        function prop_format = getPropFormat(el, pointer) %#ok<INUSD>
+
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_format = eval([Element.getClass(el) '.getPropFormat(pointer)']);
+        end
+        function prop_description = getPropDescription(el, pointer) %#ok<INUSD>
+
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_description = eval([Element.getClass(el) '.getPropDescription(pointer)']);
+        end 
+        function prop_settings = getPropSettings(el, pointer) %#ok<INUSD>
+
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_settings = eval([Element.getClass(el) '.getPropSettings(pointer)']);
+        end 
+        function prop_default = getPropDefault(el, pointer) %#ok<INUSD>
+
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_default = eval([Element.getClass(el) '.getPropDefault(pointer)']);
+        end
+        function prop_check = checkProp(el, pointer, value, varargin) %#ok<INUSD>
+
+            if nargout == 1
+                prop_check = eval([Element.getClass(el) '.checkProp(pointer, value)']);
+            else
+                eval([Element.getClass(el) '.checkProp(pointer, value)']);
+            end
+        end
     end
     methods % constructor
         function el = Element(varargin)

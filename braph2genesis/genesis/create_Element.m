@@ -74,7 +74,7 @@ txt = fileread(generator_file);
 disp('¡! generator file read')
 
 %% Analysis
-[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso] = analyze_header(); %#ok<ASGLU>
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso] = analyze_header();
     function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso] = analyze_header()
         header = getToken(txt, 'header');
         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
@@ -388,228 +388,251 @@ generate_inspection()
                 g(3, ['prop_number = numel(' class_name '.getProps());'])
             g(2, 'end')
 
-%         % existsProp(prop)
-%         g(2, 'function check = existsProp(prop)')
-%             g(3, 'if nargout == 1')
-%                 g(4, ['check = any(prop == ' class_name '.getProps());'])
-%             g(3, 'else')
-%                 g(4, 'assert( ...')
-%                     g(5, [class_name '.existsProp(prop), ...'])
-%                     g(5, ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT], ...'])
-%                     g(5, ['[''The value '' tostring(prop, 100, '' ...'') '' is not a valid prop for ' class_name '''] ...'])
-%                     g(5, ')')
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % existsTag(prop)
-%         g(2, 'function check = existsTag(tag)')
-%             g(3, 'if nargout == 1')
-%                 g(4, ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);'])
-%                 g(4, 'check = any(strcmpi(tag, tag_list));')
-%             g(3, 'else')
-%                 g(4, 'assert( ...')
-%                     g(5, [class_name '.existsTag(tag), ...'])
-%                     g(5, ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT], ...'])
-%                     g(5, ['[''The value '' tag '' is not a valid tag for ' class_name '''] ...'])
-%                     g(5, ')')
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % getPropProp(pointer)
-%         g(2, 'function prop_prop = getPropProp(pointer)')
-%             g(3, 'if ischar(pointer)')
-%                 g(4, 'tag = pointer;')
-%                 g(4, [class_name '.existsTag(tag);'])
-%                 g(4, '')
-%                 g(4, ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()''), ''UniformOutput'', false);'])
-%                 g(4, 'prop_prop = find(strcmpi(tag, tag_list));')
-%             g(3, 'else % numeric')
-%                 g(4, 'prop_prop = pointer;')
-%                 g(4, [class_name '.existsProp(prop_prop);'])
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % getPropTag(pointer)
-%         g(2, 'function prop_tag = getPropTag(pointer)')
-%             g(3, 'if ischar(pointer)')
-%                 g(4, 'prop_tag = pointer;')
-%                 g(4, [class_name '.existsTag(prop_tag);'])
-%             g(3, 'else % numeric')
-%                 g(4, 'prop = pointer;')
-%                 g(4, [class_name '.existsProp(prop);'])
-%                 g(4, '');
-%                 g(4, 'switch prop')
-%                     for i = 1:1:numel(props)
-%                         g(5, ['case ' class_name '.' props{i}.TAG])
-%                             g(6, ['prop_tag = ' class_name '.' props{i}.TAG '_TAG;'])
-%                     end
-%                     if ~strcmp(superclass_name, 'Element')
-%                         g(5, 'otherwise')
-%                             g(6, ['prop_tag = getPropTag@' superclass_name '(prop);'])
-%                     end
-%                 g(4, 'end')
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % getPropCategory(pointer)
-%         g(2, 'function prop_category = getPropCategory(pointer)')
-%             g(3, ['prop = ' class_name '.getPropProp(pointer);'])
-%             g(3, [class_name '.existsProp(prop);'])
-%             g(3, '')
-%             g(3, 'switch prop')
-%             for i = 1:1:numel(props)
-%                 g(4, ['case ' class_name '.' props{i}.TAG])
-%                     g(5, ['prop_category = ' class_name '.' props{i}.TAG '_CATEGORY;'])
-%             end
-%             if ~strcmp(superclass_name, 'Element')
-%                 g(4, 'otherwise')
-%                     g(5, ['prop_category = getPropCategory@' superclass_name '(prop);'])
-%             end
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % getPropFormat(pointer)
-%         g(2, 'function prop_format = getPropFormat(pointer)')
-%             g(3, ['prop = ' class_name '.getPropProp(pointer);'])
-%             g(3, [ class_name '.existsProp(prop);'])
-%             g(3, '')
-%             g(3, 'switch prop')
-%                 for i = 1:1:numel(props)
-%                     g(4, ['case ' class_name '.' props{i}.TAG])
-%                         g(5, ['prop_format = ' class_name '.' props{i}.TAG '_FORMAT;'])
-%                 end
-%                 if ~strcmp(superclass_name, 'Element')
-%                     g(4, 'otherwise')
-%                         g(5, ['prop_format = getPropFormat@' superclass_name '(prop);'])
-%                 end
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % getPropDescription(pointer)
-%         g(2, 'function prop_description = getPropDescription(pointer)')
-%             g(3, ['prop = ' class_name '.getPropProp(pointer);'])
-%             g(3, [class_name '.existsProp(prop);'])
-%             g(3, '')
-%             g(3, 'switch prop')
-%                 for i = 1:1:numel(props)
-%                     g(4, ['case ' class_name '.' props{i}.TAG])
-%                         g(5, ['prop_description = ''' props{i}.description ''';'])
-%                 end
-%                 for i = 1:1:numel(props_update)
-%                     g(4, ['case ' class_name '.' props_update{i}.TAG])
-%                         g(5, ['prop_description = ''' props_update{i}.description ''';'])
-%                 end
-%                 if ~strcmp(superclass_name, 'Element')
-%                     g(4, 'otherwise')
-%                         g(5, ['prop_description = getPropDescription@' superclass_name '(prop);'])
-%                 end
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % getPropSettings(pointer)
-%         g(2, 'function prop_settings = getPropSettings(pointer)')
-%             g(3, ['prop = ' class_name '.getPropProp(pointer);'])
-%             g(3, [class_name '.existsProp(prop);'])
-%             g(3, '')
-%             g(3, 'switch prop')
-%                 for i = 1:1:numel(props)
-%                     g(4, ['case ' class_name '.' props{i}.TAG])
-%                         if isempty(props{i}.settings)
-%                             g(5, 'prop_settings = '''';')
-%                         else
-%                             g(5, ['prop_settings = ' props{i}.settings ';'])
-%                         end
-%                 end
-%                 for i = 1:1:numel(props_update)
-%                     if ~isempty(props_update{i}.settings)
-%                         g(4, ['case ' class_name '.' props_update{i}.TAG])
-%                             g(5, ['prop_settings = ' props_update{i}.settings ';'])
-%                     end
-%                 end
-%                 if ~strcmp(superclass_name, 'Element')
-%                     g(4, 'otherwise')
-%                         g(5, ['prop_settings = getPropSettings@' superclass_name '(prop);'])
-%                 end
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % getPropDefault(pointer)
-%         g(2, 'function prop_default = getPropDefault(pointer)')
-%             g(3, ['prop = ' class_name '.getPropProp(pointer);'])
-%             g(3, [class_name '.existsProp(prop);'])
-%             g(3, '')
-%             g(3, 'switch prop')
-%                 for i = 1:1:numel(props)
-%                     g(4, ['case ' class_name '.' props{i}.TAG])
-%                         if ~isempty(props{i}.default)
-%                             g(5, ['prop_default = ' props{i}.default ';'])
-%                         else
-%                             g(5, ['prop_default = Format.getFormatDefault(Format.' props{i}.FORMAT ');'])
-%                         end                            
-%                 end
-%                 for i = 1:1:numel(props_update)
-%                     if ~isempty(props_update{i}.default)
-%                         g(4, ['case ' class_name '.' props_update{i}.TAG])
-%                             g(5, ['prop_default = ' props_update{i}.default ';'])
-%                     end                            
-%                 end
-%                 if ~strcmp(superclass_name, 'Element')
-%                     g(4, [ 'otherwise' '\n']);
-%                         g(5, [ 'prop_default = getPropDefault@' superclass_name '(prop);' '\n']);
-%                 end
-%             g(3, 'end')
-%         g(2, 'end')
-% 
-%         % checkProp(pointer, value)
-%         g(2, 'function prop_check = checkProp(pointer, value)')
-%             g(3, ['prop = ' class_name '.getPropProp(pointer);'])
-%             g(3, [class_name '.existsProp(prop);'])
-%             g(3, '')
-%             g(3, 'switch prop')
-%                 for i = 1:1:numel(props)
-%                     g(4, ['case ' class_name '.' props{i}.TAG]);
-%                         if isempty(props{i}.settings)
-%                             g(5, ['check = Format.checkFormat(Format.' props{i}.FORMAT ', value);'])
-%                         else
-%                             g(5, ['check = Format.checkFormat(Format.' props{i}.FORMAT ', value, ' props{i}.settings ');'])
-%                         end
-%                         if numel(props{i}.check_prop) > 1 || ~isempty(props{i}.check_prop{1})
-%                             g(5, 'if check')
-%                                 gs(6, props{i}.check_prop)
-%                             g(5, 'end')
-%                         end                        
-%                 end
-%                 for i = 1:1:numel(props_update)
-%                     if ~isempty(props_update{i}.settings) || numel(props_update{i}.check_prop) > 1 || ~isempty(props_update{i}.check_prop{1})
-%                         g(4, ['case ' class_name '.' props_update{i}.TAG]);
-%                             if isempty(props_update{i}.settings)
-%                                 g(5, ['check = Format.checkFormat(Format.' props_update{i}.FORMAT ', value);'])
-%                             else
-%                                 g(5, ['check = Format.checkFormat(Format.' props_update{i}.FORMAT ', value, ' props_update{i}.settings ');'])
-%                             end
-%                             if numel(props_update{i}.check_prop) > 1 || ~isempty(props_update{i}.check_prop{1})
-%                                 g(5, 'if check')
-%                                     gs(6, props_update{i}.check_prop)
-%                                 g(5, 'end')
-%                             end
-%                     end
-%                 end
-%                 if ~strcmp(superclass_name, 'Element')
-%                     g(4, 'otherwise')
-%                         g(5, ['check = checkProp@' superclass_name '(prop, value);'])
-%                 end
-%             g(3, 'end')
-%             g(3, '')
-%             g(3, 'if nargout == 1')
-%                 g(4, 'prop_check = check;')
-%             g(3, 'else')
-%                 g(4, 'assert( ...')
-%                     g(5, 'check, ...')
-%                     g(5, ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT], ...'])
-%                     g(5, ['[''The value '' tostring(value, 100, '' ...'') '' is not a valid property '' ' class_name '.getPropTag(prop) '' ('' ' class_name '.getPropFormat(prop) '').''] ...'])
-%                     g(5, ')')
-%             g(3, 'end')
-%         g(2, 'end')
+            % existsProp(prop)
+            g(2, 'function check = existsProp(prop)')
+                g(3, 'if nargout == 1')
+                    g(4, ['check = any(prop == ' class_name '.getProps());'])
+                g(3, 'else')
+                    g(4, 'assert( ...')
+                        gs(5, {
+                            [class_name '.existsProp(prop), ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT], ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT '' '' ...']
+                            ['''The value '' tostring(prop, 100, '' ...'') '' is not a valid prop for ' class_name '''] ...']
+                             ')'
+                             })
+                g(3, 'end')
+            g(2, 'end')
+
+            % existsTag(prop)
+            g(2, 'function check = existsTag(tag)')
+                g(3, 'if nargout == 1')
+                    gs(4, {
+                        ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
+                         'check = any(strcmpi(tag, tag_list));'
+                         })
+                g(3, 'else')
+                    g(4, 'assert( ...')
+                        gs(5, {
+                            [class_name '.existsTag(tag), ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT], ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT '' '' ...']
+                        	['''The value '' tag '' is not a valid tag for ' class_name '''] ...']
+                            ')'
+                            })
+                g(3, 'end')
+            g(2, 'end')
+
+            % getPropProp(pointer)
+            g(2, 'function prop_prop = getPropProp(pointer)')
+                g(3, 'if ischar(pointer)')
+                    gs(4, {
+                         'tag = pointer;'
+                        [class_name '.existsTag(tag);']
+                    	 ''
+                        ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()''), ''UniformOutput'', false);']
+                    	 'prop_prop = find(strcmpi(tag, tag_list));'
+                         })
+                g(3, 'else % numeric')
+                    gs(4, {
+                         'prop_prop = pointer;'
+                        [class_name '.existsProp(prop_prop);']
+                        })
+                g(3, 'end')
+            g(2, 'end')
+
+            % getPropTag(pointer)
+            g(2, 'function prop_tag = getPropTag(pointer)')
+                g(3, 'if ischar(pointer)')
+                    gs(4, {
+                         'prop_tag = pointer;'
+                    	[class_name '.existsTag(prop_tag);']
+                        })
+                g(3, 'else % numeric')
+                    gs(4, {
+                         'prop = pointer;'
+                    	[class_name '.existsProp(prop);']
+                    	 ''
+                         'switch prop'
+                         })
+                        for i = 1:1:numel(props)
+                            g(5, ['case ' class_name '.' props{i}.TAG])
+                                g(6, ['prop_tag = ' class_name '.' props{i}.TAG '_TAG;'])
+                        end
+                        if ~strcmp(superclass_name, 'Element')
+                            g(5, 'otherwise')
+                                g(6, ['prop_tag = getPropTag@' superclass_name '(prop);'])
+                        end
+                    g(4, 'end')
+                g(3, 'end')
+            g(2, 'end')
+
+            % getPropCategory(pointer)
+            g(2, 'function prop_category = getPropCategory(pointer)')
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                	[class_name '.existsProp(prop);']
+                	 ''
+                     'switch prop'
+                     })
+                for i = 1:1:numel(props)
+                    g(4, ['case ' class_name '.' props{i}.TAG])
+                        g(5, ['prop_category = ' class_name '.' props{i}.TAG '_CATEGORY;'])
+                end
+                if ~strcmp(superclass_name, 'Element')
+                    g(4, 'otherwise')
+                        g(5, ['prop_category = getPropCategory@' superclass_name '(prop);'])
+                end
+                g(3, 'end')
+            g(2, 'end')
+
+            % getPropFormat(pointer)
+            g(2, 'function prop_format = getPropFormat(pointer)')
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                    [ class_name '.existsProp(prop);']
+                	 ''
+                	 'switch prop'
+                     })
+                    for i = 1:1:numel(props)
+                        g(4, ['case ' class_name '.' props{i}.TAG])
+                            g(5, ['prop_format = ' class_name '.' props{i}.TAG '_FORMAT;'])
+                    end
+                    if ~strcmp(superclass_name, 'Element')
+                        g(4, 'otherwise')
+                            g(5, ['prop_format = getPropFormat@' superclass_name '(prop);'])
+                    end
+                g(3, 'end')
+            g(2, 'end')
+
+            % getPropDescription(pointer)
+            g(2, 'function prop_description = getPropDescription(pointer)')
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                	[class_name '.existsProp(prop);']
+                	 ''
+                     'switch prop'
+                    })
+                    for i = 1:1:numel(props)
+                        g(4, ['case ' class_name '.' props{i}.TAG])
+                            g(5, ['prop_description = ''' props{i}.description ''';'])
+                    end
+                    for i = 1:1:numel(props_update)
+                        g(4, ['case ' class_name '.' props_update{i}.TAG])
+                            g(5, ['prop_description = ''' props_update{i}.description ''';'])
+                    end
+                    if ~strcmp(superclass_name, 'Element')
+                        g(4, 'otherwise')
+                            g(5, ['prop_description = getPropDescription@' superclass_name '(prop);'])
+                    end
+                g(3, 'end')
+            g(2, 'end')
+
+            % getPropSettings(pointer)
+            g(2, 'function prop_settings = getPropSettings(pointer)')
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                	[class_name '.existsProp(prop);']
+                	 ''
+                	 'switch prop'
+                     })
+                    for i = 1:1:numel(props)
+                        g(4, ['case ' class_name '.' props{i}.TAG])
+                            if isempty(props{i}.settings)
+                                g(5, ['prop_settings = Format.getFormatSettings(Format.' props{i}.FORMAT ');'])
+                            else
+                                g(5, ['prop_settings = ' props{i}.settings ';'])
+                            end
+                    end
+                    for i = 1:1:numel(props_update)
+                        if ~isempty(props_update{i}.settings)
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                g(5, ['prop_settings = ' props_update{i}.settings ';'])
+                        end
+                    end
+                    if ~strcmp(superclass_name, 'Element')
+                        g(4, 'otherwise')
+                            g(5, ['prop_settings = getPropSettings@' superclass_name '(prop);'])
+                    end
+                g(3, 'end')
+            g(2, 'end')
+
+            % getPropDefault(pointer)
+            g(2, 'function prop_default = getPropDefault(pointer)')
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                	[class_name '.existsProp(prop);']
+                     ''
+                	 'switch prop'
+                     })
+                    for i = 1:1:numel(props)
+                        g(4, ['case ' class_name '.' props{i}.TAG])
+                            if ~isempty(props{i}.default)
+                                g(5, ['prop_default = ' props{i}.default ';'])
+                            else
+                                g(5, ['prop_default = Format.getFormatDefault(Format.' props{i}.FORMAT ');'])
+                            end                            
+                    end
+                    for i = 1:1:numel(props_update)
+                        if ~isempty(props_update{i}.default)
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                g(5, ['prop_default = ' props_update{i}.default ';'])
+                        end                            
+                    end
+                    if ~strcmp(superclass_name, 'Element')
+                        g(4, [ 'otherwise' '\n']);
+                            g(5, [ 'prop_default = getPropDefault@' superclass_name '(prop);' '\n']);
+                    end
+                g(3, 'end')
+            g(2, 'end')
+
+            % checkProp(pointer, value)
+            g(2, 'function prop_check = checkProp(pointer, value)')
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                	[class_name '.existsProp(prop);']
+                	 ''
+                	 'switch prop'
+                    })
+                    for i = 1:1:numel(props)
+                        g(4, ['case ' class_name '.' props{i}.TAG]);
+                            g(5, ['check = Format.checkFormat(Format.' props{i}.FORMAT ', value, ' class_name '.getPropSettings(prop));'])
+                            if numel(props{i}.check_prop) > 1 || ~isempty(props{i}.check_prop{1})
+                                g(5, 'if check')
+                                    gs(6, props{i}.check_prop)
+                                g(5, 'end')
+                            end                        
+                    end
+                    for i = 1:1:numel(props_update)
+                        if ~isempty(props_update{i}.settings) || numel(props_update{i}.check_prop) > 1 || ~isempty(props_update{i}.check_prop{1})
+                            g(4, ['case ' class_name '.' props_update{i}.TAG]);
+                                g(5, ['check = Format.checkFormat(Format.' props_update{i}.FORMAT ', value, ' class_name '.getPropSettings(prop));'])
+                                if numel(props_update{i}.check_prop) > 1 || ~isempty(props_update{i}.check_prop{1})
+                                    g(5, 'if check')
+                                        gs(6, props_update{i}.check_prop)
+                                    g(5, 'end')
+                                end
+                        end
+                    end
+                    if ~strcmp(superclass_name, 'Element')
+                        g(4, 'otherwise')
+                            g(5, ['check = checkProp@' superclass_name '(prop, value);'])
+                    end
+                g(3, 'end')
+                g(3, '')
+                g(3, 'if nargout == 1')
+                    g(4, 'prop_check = check;')
+                g(3, 'else')
+                    g(4, 'assert( ...')
+                        gs(5, {
+                             'check, ...'
+                        	['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT], ...']
+                        	['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT '' '' ...']
+                        	['''The value '' tostring(value, 100, '' ...'') '' is not a valid property '' ' class_name '.getPropTag(prop) '' ('' ' class_name '.getPropFormat(prop) '').''] ...']
+                        	 ')'
+                             })
+                g(3, 'end')
+            g(2, 'end')
 
         g(1, 'end')
     end
