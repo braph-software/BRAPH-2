@@ -95,7 +95,7 @@ classdef Category < handle
             %
             % EXISTSCATEGORY(CATEGORY) throws an error if category CATEGORY
             %  does not exist.
-            %  Error id: [BRAPH2.STR:Category:BRAPH2.WRONG_INPUT].
+            %  Error id: [BRAPH2:Category:WrongInput].
             %
             % See also getCategories, getCategoryNumber.
             
