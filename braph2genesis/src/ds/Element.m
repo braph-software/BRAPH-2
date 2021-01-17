@@ -119,7 +119,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             if nargin < 1 % no arguments
                 prop_list = [];
                 return
-            elseif nargin == 1 && ~isa(el, 'Element') % category argument
+            elseif nargin == 1 && Category.existsCategory(el)  % category argument
                 prop_list = [];                
                 return
             end
