@@ -401,7 +401,7 @@ for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.SMATRIX, varargin{1})', error_identifier, wrong_value{i})
 end
 
-%% Test 2.LL: Check CLASS
+%% Test 2.LL: Check CELL
 % % ADJACENCY formats that should be accepted
 % clear value
 % value{1} = rand(5);
