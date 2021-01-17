@@ -11,20 +11,55 @@ function create_Element(generator_file, target_dir)
 %
 % ----------
 %
-% <strong>%% ¡header!</strong>
+%<strong>%% ¡header!</strong>
 % <class_name> < <superclass_name> (<moniker>, <descriptive_name>) <header_description>.
-%
 % <strong>%%% ¡class_attributes!</strong>
-% Class attributes is a single line, e.g. Abstract = true, Sealed = true.
-%
+%  Class attributes is a single line, e.g. Abstract = true, Sealed = true.
 % <strong>%%% ¡description!</strong>
-% This is a plain description of the element.
-% It can occupy several lines.
-%
+%  This is a plain description of the element.
+%  It can occupy several lines.
 % <strong>%%% ¡seealso!</strong>
-% Related functions and classes is a single line.
-%
-% <strong>%% ¡staticmethods!</strong>
+%  Related functions and classes is a single line.
+% 
+%<strong>%% ¡props!</strong>
+% <strong>%%% ¡prop!</strong>
+%  <tag1> (<category>, <format>) <description>.
+%  <strong>%%%% ¡settings!</strong>
+%   Prop settings, depending on format.
+%  <strong>%%%% ¡check_prop!</strong>
+%   Code to check prop format (before calculation).
+%   Can be on multiple lines.
+%   The outcome should be in variable 'check'.
+%  <strong>%%%% ¡check_value!</strong>
+%   Code to check prop value (after calculation).
+%   Can be on multiple lines.
+%   The outcome should be in variable 'check'.
+%  <strong>%%%% ¡default!</strong>
+%   Prop default value (seldom needed).
+%  <strong>%%%% ¡calculate!</strong>
+%   Code to calcualte prop results (only for category RESULT).
+%   Can be on multiple lines.
+%   The result should be in variable 'value'.
+% <strong>%%% ¡prop!</strong>
+%   <tag2> ...
+% 
+%<strong>%% ¡props_update!</strong>
+% <strong>%%% ¡prop!</strong>
+%  <tag1> (<category>, <format>) <description>. [Only description can be different from original prop]
+%  <strong>%%%% ¡settings!</strong>
+%   Updated settings.
+%  <strong>%%%% ¡check_prop!</strong>
+%   Updated check prop format (before calculation).
+%  <strong>%%%% ¡check_value!</strong>
+%   Updated check prop value (after calculation).
+%  <strong>%%%% ¡default!</strong>
+%   Updated default.
+%  <strong>%%%% ¡calculate!</strong>
+%   Updated calculation.
+% <strong>%%% ¡prop!</strong>
+%  <tag2> ...
+% 
+%<strong>%% ¡staticmethods!</strong>
 % Static methods written as functions including the relative documentation.
 % 
 % ----------
@@ -77,43 +112,43 @@ disp('¡! generator file read')
 [props, props_update] = analyze_props();
     function [props, props_update] = analyze_props()
         props = getTokens(txt, 'props', 'prop');
-%         for i = 1:1:numel(props)
-%             res = regexp(props{i}.token, '^(\s*)(?<tag>\w*)\s*\((?<category>\w*),\s*(?<format>\w*)\)\.*', 'names');
-%             props{i}.TAG = upper(res.tag);
-%             props{i}.tag = lower(res.tag);
-%             props{i}.CATEGORY = upper(res.category);
-%             props{i}.category = lower(res.category);
-%             props{i}.FORMAT = upper(res.format);
-%             props{i}.format = lower(res.format);
-% 
-%             lines = splitlines(props{i}.token);
-%             props{i}.description = lines{1};
-% 
-%             props{i}.settings = getToken(props{i}.token, 'settings');
-%             props{i}.check_prop = splitlines(getToken(props{i}.token, 'check_prop'));
-%             props{i}.check_value = splitlines(getToken(props{i}.token, 'check_value'));
-%             props{i}.default = getToken(props{i}.token, 'default');
-%             props{i}.calculate = splitlines(getToken(props{i}.token, 'calculate'));
-%         end
+        for i = 1:1:numel(props)
+            res = regexp(props{i}.token, '^(\s*)(?<tag>\w*)\s*\((?<category>\w*),\s*(?<format>\w*)\)\.*', 'names');
+            props{i}.TAG = upper(res.tag);
+            props{i}.tag = lower(res.tag);
+            props{i}.CATEGORY = upper(res.category);
+            props{i}.category = lower(res.category);
+            props{i}.FORMAT = upper(res.format);
+            props{i}.format = lower(res.format);
+
+            lines = splitlines(props{i}.token);
+            props{i}.description = lines{1};
+
+            props{i}.settings = getToken(props{i}.token, 'settings');
+            props{i}.check_prop = splitlines(getToken(props{i}.token, 'check_prop'));
+            props{i}.check_value = splitlines(getToken(props{i}.token, 'check_value'));
+            props{i}.default = getToken(props{i}.token, 'default');
+            props{i}.calculate = splitlines(getToken(props{i}.token, 'calculate'));
+        end
         props_update = getTokens(txt, 'props_update', 'prop');
-%         for i = 1:1:numel(props_update)
-%             res = regexp(props_update{i}.token, '^(\s*)(?<tag>\w*)\s*\((?<category>\w*),\s*(?<format>\w*)\)\.*', 'names');
-%             props_update{i}.TAG = upper(res.tag);
-%             props_update{i}.tag = lower(res.tag);
-%             props_update{i}.CATEGORY = upper(res.category);
-%             props_update{i}.category = lower(res.category);
-%             props_update{i}.FORMAT = upper(res.format);
-%             props_update{i}.format = lower(res.format);
-% 
-%             lines = splitlines(props_update{i}.token);
-%             props_update{i}.description = lines{1};
-% 
-%             props_update{i}.settings = getToken(props_update{i}.token, 'settings');
-%             props_update{i}.check_prop = splitlines(getToken(props_update{i}.token, 'check_prop'));
-%             props_update{i}.check_value = splitlines(getToken(props_update{i}.token, 'check_value'));
-%             props_update{i}.default = getToken(props_update{i}.token, 'default');
-%             props_update{i}.calculate = splitlines(getToken(props_update{i}.token, 'calculate'));
-%         end
+        for i = 1:1:numel(props_update)
+            res = regexp(props_update{i}.token, '^(\s*)(?<tag>\w*)\s*\((?<category>\w*),\s*(?<format>\w*)\)\.*', 'names');
+            props_update{i}.TAG = upper(res.tag);
+            props_update{i}.tag = lower(res.tag);
+            props_update{i}.CATEGORY = upper(res.category);
+            props_update{i}.category = lower(res.category);
+            props_update{i}.FORMAT = upper(res.format);
+            props_update{i}.format = lower(res.format);
+
+            lines = splitlines(props_update{i}.token);
+            props_update{i}.description = lines{1};
+
+            props_update{i}.settings = getToken(props_update{i}.token, 'settings');
+            props_update{i}.check_prop = splitlines(getToken(props_update{i}.token, 'check_prop'));
+            props_update{i}.check_value = splitlines(getToken(props_update{i}.token, 'check_value'));
+            props_update{i}.default = getToken(props_update{i}.token, 'default');
+            props_update{i}.calculate = splitlines(getToken(props_update{i}.token, 'calculate'));
+        end
     end
 
 % constants = splitlines(getToken(txt, 'constants'));
