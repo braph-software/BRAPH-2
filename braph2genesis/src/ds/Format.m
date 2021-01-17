@@ -232,7 +232,7 @@ classdef Format < handle
             %
             % EXISTSFORMAT(FORMAT) throws an error if format FORMAT
             %  does not exist.
-            %  Error id: [BRAPH2.STR:Format:BRAPH2.WRONG_INPUT].
+            %  Error id: [BRAPH2:Format:WrongInput].
             %
             % See also getFormats, getFormatNumber.
 
@@ -520,6 +520,17 @@ classdef Format < handle
             end
         end
         function format_check = checkFormat(format, value, format_settings)
+            %CHECKFORMAT returns whether a value format is correct/error.
+            %
+            % CHECK = CHECKFORMAT(FORMAT, VAlUE) returns whether the value
+            %  VALUE has the format FORMAT is correct.
+            %
+            % CHECK = CHECKFORMAT(FORMAT, VAlUE, SETTINGS) takes into
+            %  account the format settings SETTINGS.
+            %
+            % CHECKFORMAT(FORMAT, VAlUE[, SETTINGS]) throws an error if the
+            %  VALUE does not have format FORMAT.
+            %  Error id: [BRAPH2:Format:WrongInput]
             %
             % See also getFormats, getFormatName, getFormatDescription, getFormatSettings, getFormatDefault.
 
