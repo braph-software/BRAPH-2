@@ -114,6 +114,20 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             el_description = eval([Element.getClass(el) '.getDescription()']);
         end
         function prop_list = getProps(el, category)
+			% GETPROPS returns the property list of an element.
+			%
+            % PROPS = Element.GETPROPS() returns the property list of Element.
+            %
+            % PROPS = Element.GETPROPS(CATEGORY) returns the property list
+            %  of category CATEGORY.
+            %
+            % Alternative forms to call this method are:
+			%  PROPS = GETPROPS(EL[, CATEGORY]) returns the property list of element EL.
+            %  PROPS = EL.GETPROPS([CATEGORY]) returns the property list of element EL.
+			%  PROPS = Element.GETPROPS(CLASS[, CATEGORY]) returns the property list of CLASS.
+			%  PROPS = EL.GETPROPS(CLASS[, CATEGORY]) returns the property list of CLASS.
+			%
+			% See also getPropNumber.
             
             % calls from Element
             if nargin < 1 % no arguments
@@ -134,6 +148,17 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function prop_number = getPropNumber(el)
+			% GETPROPNUMBER returns the property number of an element.
+			%
+            % N = Element.GETPROPNUMBER() returns the number of element properties.
+            %
+            % Alternative forms to call this method are:
+			%  N = GETPROPNUMBER(EL) returns the property number of element EL.
+            %  N = EL.GETPROPNUMBER() returns the property number of element EL.
+			%  N = Element.GETPROPNUMBER(CLASS) returns the property number of CLASS.
+			%  N = EL.GETPROPNUMBER(CLASS) returns the property number of CLASS.
+			%
+			% See also getProps.
             
             % calls from Element
             if nargin < 1
