@@ -1,18 +1,18 @@
 function token = getToken(txt, h1, varargin)
-% GETTOKEN extract a token from a text.
+%GETTOKEN extract a token from a text.
 %
 % TOKEN = GETTOKEN(TXT, H1) extracts from text TXT the token 
-% %% ¡H1!
-% TOKEN
+%  %% ¡H1!
+%  TOKEN
 %
 % TOKEN = GETTOKEN(TXT, H1, H2) extracts from text TXT the token 
-% %% ¡H1!
-% ...
-% %%% ¡H2!
-% TOKEN
+%  %% ¡H1!
+%  ...
+%  %%% ¡H2!
+%  TOKEN
 %
 % TOKEN = GETTOKEN(TXT, H1, H2, H3, ...) extracts from text TXT the token
-% corresponding to the headings H1, H2, H3, ...
+%  corresponding to the headings H1, H2, H3, ...
 %
 % See also getTokens, create_Element, create_test_Element.
 

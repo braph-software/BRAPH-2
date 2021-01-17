@@ -1,5 +1,4 @@
-% TEST_BRAPH2 
-%
+%TEST_BRAPH2 
 % This script runs all the unit tests for BRAPH2.
 
 close all

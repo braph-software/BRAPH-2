@@ -1,13 +1,13 @@
 function create_Element(generator_file, target_dir)
-% CREATE_ELEMENT creates an element.
+%CREATE_ELEMENT creates an element.
 %
 % CREATE_ELEMENT(FILE, DIR) creates the m-file of an Element from its
-% generator file FILE (with ending '.gen.m') and saves it in the target
-% directory DIR.
+%  generator file FILE (with ending '.gen.m') and saves it in the target
+%  directory DIR.
 %
 % A generator file (whose name must have ending '.gen.m', and tipically
-% starts with "_") has the following structure (the token ¡header! is
-% required, while the rest is optional):
+%  starts with "_") has the following structure (the token ¡header! is
+%  required, while the rest is optional):
 %
 % ----------
 %
@@ -197,54 +197,65 @@ generate_inspection()
             % getClass()
             g(2, ['function ' moniker '_class = getClass()'])
                 gs(3, {
-                    ['% GETCLASS returns the class of the ' descriptive_name '.']
-                    '%'
+                    ['%GETCLASS returns the class of the ' descriptive_name '.']
+                     '%'
                     ['% CLASS = ' class_name '.GETCLASS() returns the class ''' class_name '''.']
-                    '%'
-                    '% Alternative forms to call this method are:'
-                    ['% CLASS = ' upper(moniker) '.GETCLASS() returns the class of the ' descriptive_name ' ' upper(moniker) '.']
-                    ['% CLASS = Element.GETCLASS(' upper(moniker) ') returns ''' class_name '''.']
-                    ['% CLASS = Element.GETCLASS(''' class_name ''') returns ''' class_name '''.']
-                    '%'
-                    '% See also getName, getDescription.'
-                    ''
+                     '%'
+                     '% Alternative forms to call this method are:'
+                    ['%  CLASS = ' upper(moniker) '.GETCLASS() returns the class of the ' descriptive_name ' ' upper(moniker) '.']
+                    ['%  CLASS = Element.GETCLASS(' upper(moniker) ') returns the class of ''' upper(moniker) '''.']
+                    ['%  CLASS = Element.GETCLASS(''' class_name ''') returns ''' class_name '''.']
+                     '%'
+                     '% See also getName, getDescription.'
+                     ''
                     })
                g(3, [moniker '_class = ''' class_name ''';'])
             g(2, 'end')
 
-%         % getName()
-%         g(2, ['function ' moniker '_name = getName()'])
-%             gs(3, {
-%                 ['% GETNAME returns the name of the ' descriptive_name '.']
-%                 '%'
-%                 ['% ' upper(moniker) '_NAME = GETNAME() returns the name of the ' descriptive_name ',']
-%                 ['% ' regexprep(descriptive_name, '(\<[a-z])', '${upper($1)}') '.']
-%                 '%'
-%                 '% See also getClass, getDescription.'
-%                 ''
-%                 })
-%             g(3, [moniker '_name = regexprep(''' descriptive_name ''', ''(\\<[a-z])'', ''${upper($1)}'');']) % note use of "\\<" instead of "\<" to deal with special character
-%         g(2, 'end')
-% 
-%         % getDescription()
-%         g(2, ['function ' moniker '_description = getDescription()'])
-%             gs(3, {
-%                 ['% GETDESCRIPTION returns the name of the ' descriptive_name '.']
-%                 '%'
-%                 ['% ' upper(moniker) '_DESCRIPTION = GETDESCRIPTION() returns the description of the ' descriptive_name ',']
-%                 '% which is:'
-%                 })
-%             gs(3, cellfun(@(x) ['% ' x], description, 'UniformOutput', false))
-%             gs(3, {
-%                 '%'
-%                 '% See also getClass, getName.'
-%                 ''
-%                 })
-%             g(3, [moniker '_description = ['])
-%                 gs(4, cellfun(@(x) ['''' x ''' ...'], description, 'UniformOutput', false))
-%                 g(4, '];')
-%         g(2, 'end')
-%         
+            % getName()
+            g(2, ['function ' moniker '_name = getName()'])
+                gs(3, {
+                    ['%GETNAME returns the name of the ' descriptive_name '.']
+                     '%'
+                    ['% NAME = ' class_name '.GETNAME() returns the name of the ''' descriptive_name '''.']
+                    ['%  ' regexprep(descriptive_name, '(\<[a-z])', '${upper($1)}') '.']
+                     '%'
+                     '% Alternative forms to call this method are:'
+                    ['%  NAME = ' upper(moniker) '.GETNAME() returns the name of the ' descriptive_name ' ' upper(moniker) '.']
+                    ['%  NAME = Element.GETNAME(' upper(moniker) ') returns the name of ''' upper(moniker) '''.']
+                    ['%  NAME = Element.GETNAME(''' class_name ''') returns the name of ''' class_name '''.']
+                     '%'
+                     '% See also getClass, getDescription.'
+                     ''
+                    })
+                g(3, [moniker '_name = regexprep(''' descriptive_name ''', ''(\\<[a-z])'', ''${upper($1)}'');']) % note use of "\\<" instead of "\<" to deal with special character
+            g(2, 'end')
+
+            % getDescription()
+            g(2, ['function ' moniker '_description = getDescription()'])
+                gs(3, {
+                    ['%GETDESCRIPTION returns the description of the ' descriptive_name '.']
+                     '%'
+                    ['% STR = ' class_name '.GETDESCRIPTION() returns the description of the ''' descriptive_name '''.']
+                     '%  which is:'
+                     '%'
+                    })
+                gs(3, cellfun(@(x) ['%  ' x], description, 'UniformOutput', false))
+                gs(3, {
+                     '%'
+                     '% Alternative forms to call this method are:'
+                    ['%  STR = ' upper(moniker) '.GETDESCRIPTION() returns the description of the ' descriptive_name ' ' upper(moniker) '.']
+                    ['%  STR = Element.GETDESCRIPTION(' upper(moniker) ') returns the description of ''' upper(moniker) '''.']
+                    ['%  STR = Element.GETDESCRIPTION(''' class_name ''') returns the description of ''' class_name '''.']
+                     '%'
+                     '% See also getClass, getName.'
+                     ''
+                    })
+                g(3, [moniker '_description = ['])
+                    gs(4, cellfun(@(x) ['''' x ''' ...'], description, 'UniformOutput', false))
+                    g(4, '];')
+            g(2, 'end')
+
 %         % getProps(category)
 %         g(2, 'function prop_list = getProps(category)')
 %             g(3, 'if nargin < 1')

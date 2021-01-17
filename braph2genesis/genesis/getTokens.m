@@ -1,24 +1,24 @@
 function tokens = getTokens(txt, h1, varargin)
-% GETTOKENS extract a list of tokens from a text.
+%GETTOKENS extract a list of tokens from a text.
 %
 % TOKENS = GETTOKENS(TXT, H1) extracts from text TXT the list of tokens 
-% %% ¡H1!
-% TOKENS{1}.token
-% %% ¡H1!
-% TOKENS{2}.token
-% ...
+%  %% ¡H1!
+%  TOKENS{1}.token
+%  %% ¡H1!
+%  TOKENS{2}.token
+%  ...
 %
 % TOKENS = GETTOKENS(TXT, H1, H2) extracts from text TXT the list of tokens 
-% %% ¡H1!
-% ...
-% %%% ¡H2!
-% TOKENS{1}.token
-% %%% ¡H2!
-% TOKENS{2}.token
-% ...
+%  %% ¡H1!
+%  ...
+%  %%% ¡H2!
+%  TOKENS{1}.token
+%  %%% ¡H2!
+%  TOKENS{2}.token
+%  ...
 %
 % TOKENS = GETTOKENS(TXT, H1, H2, H3, ...) extracts from text TXT the list
-% of tokens corresponding to the headings H1, H2, H3, ...
+%  of tokens corresponding to the headings H1, H2, H3, ...
 %
 % See also getToken, create_Element, create_test_Element.
 

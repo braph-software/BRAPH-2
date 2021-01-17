@@ -1,8 +1,8 @@
 function generator_list = getGenerators(source_dir)
-% GETGENERATORS retrieves all generators within a directory.
+%GETGENERATORS retrieves all generators within a directory.
 %
 % GENERATORS = GETGENERATORS(DIR) retrieves a list of all generators within
-% the directory DIR. The generators are all files with ending '.gen.m'.
+%  the directory DIR. The generators are all files with ending '.gen.m'.
 %
 % See also genesis.
 

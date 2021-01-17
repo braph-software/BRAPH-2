@@ -1,36 +1,38 @@
-% Test BRAPH by running all unit tests
+%TEST_BRAPH2 
+% This script runs all the unit tests for BRAPH2.
 
 close all
-clear variables
-clc
+clear all %#ok<CLALL>
 
 %% Identifies test directories
-directory = fileparts(which('braph2'));
+braph2_dir = fileparts(which('braph2'));
 
 directories_to_test = { ...
-    [directory filesep 'util'] ...
-    [directory filesep 'graph'] ...
-    [directory filesep 'graph' filesep 'graphs'] ...
-    [directory filesep 'graph' filesep 'measures'] ...
-    [directory filesep 'atlas'] ...
-    [directory filesep 'analysis'] ...
-    [directory filesep 'cohort'] ...
-    [directory filesep 'cohort' filesep 'datas'] ...
-    [directory filesep 'workflows'] ...
+    [braph2_dir filesep 'src' filesep 'util'] ...
+    [braph2_dir filesep 'src' filesep 'ds'] ...
+%     [braph2_dir filesep 'src' filesep 'atlas'] ... 
+%     [braph2_dir filesep 'src' filesep 'cohort'] ...
+%     [braph2_dir filesep 'src' filesep 'gt'] ...
+%     [braph2_dir filesep 'src' filesep 'analysis'] ...
+%     [braph2_dir filesep 'graphs'] ...
+%     [braph2_dir filesep 'measures'] ...
     };
 
-workflows_directories = dir([directory filesep 'workflows']);  % get the folder contents
-workflows_directories = workflows_directories([workflows_directories(:).isdir] == 1);  % remove all files (isdir property is 0)
-workflows_directories = workflows_directories(~ismember({workflows_directories(:).name}, {'.', '..'}));  % remove '.' and '..'
-for i = 1:1:length(workflows_directories)
-    directories_to_test{end + 1} = [directory filesep 'workflows' filesep workflows_directories(i).name]; %#ok<SAGROW>
-end
-clear directory workflows_directories i
+% workflows_dir = [fileparts(which('braph2')) filesep 'workflows'];
+% 
+% addpath(workflows_dir)
+% workflows_dir_list = dir(workflows_dir);   % get the folder contents
+% workflows_dir_list = workflows_dir_list([workflows_dir_list(:).isdir] == 1);  % remove all files (isdir property is 0)
+% workflows_dir_list = workflows_dir_list(~ismember({workflows_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+% for i = 1:1:length(workflows_dir_list)
+%     directories_to_test{end + 1} = [workflows_dir filesep workflows_dir_list(i).name]; %#ok<SAGROW>
+% end
+
+clear braph2_dir workflows_dir workflows_dir_list i
 
 %% Runs tests
-tic
 results = runtests(directories_to_test, 'UseParallel', true);
-toc
+
 %% Shows test results
 results_table = table(results) %#ok<NOPTS>
 
@@ -38,4 +40,5 @@ if all([results(:).Passed])
     disp('*** All good! ***')
 else
     disp('*** Something went wrong! ***')
+    failed_results_table = table(results([results(:).Failed])) %#ok<NOPTS>
 end

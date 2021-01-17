@@ -1,15 +1,15 @@
 function [target_dir, source_dir] = genesis(target_dir, source_dir)
-% GENESIS generates BRAPH2.
+%GENESIS generates BRAPH2.
 %
 % [TARGET_DIR, SOURCE_DIR] = GENESIS() generates BRAPH2 from the default
-% SOURCE_DIR (the directory that contains braph2genesis) to the default
-% TARGET_DIR (the directory 'braph2' in the superdirectory of SOURCE_DIR).
+%  SOURCE_DIR (the directory that contains braph2genesis) to the default
+%  TARGET_DIR (the directory 'braph2' in the superdirectory of SOURCE_DIR).
 %
 % GENESIS(TARGET_DIR) generates BRAPH2 in TARGET_DIR from the default
-% SOURCE_DIR.
+%  SOURCE_DIR.
 %
 % GENESIS(TARGET_DIR, SOURCE_DIR) generates BRAPH2 in TARGET_DIR from
-% SOURCE_DIR.
+%  SOURCE_DIR.
 %
 % See also braph2genesis, create_Element, create_test_Element.
 

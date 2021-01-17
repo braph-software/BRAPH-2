@@ -1,9 +1,9 @@
 function create_test_Element(generator_file, target_dir)
-% CREATE_TEST_ELEMENT creates the test of an element.
+%CREATE_TEST_ELEMENT creates the test of an element.
 %
 % CREATE_TEST_ELEMENT(FILE, DIR) creates the m-file with the script to test
-% an Element from its generator file FILE (with ending '.gen.m') and saves
-% it in the target directory DIR.
+%  an Element from its generator file FILE (with ending '.gen.m') and saves
+%  it in the target directory DIR.
 %
 % The structure of the generator file can be found in <a href="matlab:help create_Element">create_Element</a>.
 %

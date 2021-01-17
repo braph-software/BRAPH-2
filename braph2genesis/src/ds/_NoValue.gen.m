@@ -18,11 +18,11 @@ Element
 
 %% ¡staticmethods!
 function nv = getNoValue()
-    % GETNV returns a pointer to a persistent instance of NoValue.
+    %GETNV returns a pointer to a persistent instance of NoValue.
     %
     % NV = GETNV() returns a pointer to a persistent instance of NoValue.
-    % For computational efficiency, it is best to use NoValue.getNoValue(),
-    % instead of creating new instances using the  constructor NoValue().
+    %  For computational efficiency, it is best to use NoValue.getNoValue(),
+    %  instead of creating new instances using the  constructor NoValue().
 
     persistent local_nv
     
