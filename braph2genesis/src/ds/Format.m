@@ -257,7 +257,8 @@ classdef Format < handle
             % A list of all format names can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatName(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatName(x), Format.getFormats(), 'UniformOutput', false)</a>
             %
-            % See also getFormats, getFormatDescription, getFormatSettings, getFormatDefault, checkFormat.
+            % See also getFormats, getFormatDescription, getFormatSettings,
+            % getFormatDefault, checkFormat.
 
             switch format
                 case Format.EMPTY
@@ -306,7 +307,8 @@ classdef Format < handle
             % A list of all format descriptions with default settings can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatDescription(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatDescription(x), Format.getFormats(), 'UniformOutput', false)</a>
             %
-            % See also getFormats, getFormatName, getFormatSettings, getFormatDefault, checkFormat.
+            % See also getFormats, getFormatName, getFormatSettings,
+            % getFormatDefault, checkFormat.
             
             switch format
                 case Format.EMPTY
@@ -385,7 +387,8 @@ classdef Format < handle
             % A list of all format descriptions with default settings can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatSettings(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatSettings(x), Format.getFormats(), 'UniformOutput', false)</a>
             %
-            % See also getFormats, getFormatName, getFormatDescription, getFormatDefault, checkFormat.
+            % See also getFormats, getFormatName, getFormatDescription,
+            % getFormatDefault, checkFormat.
             
             switch format
                 case Format.EMPTY
@@ -452,7 +455,8 @@ classdef Format < handle
             % A list of all format defaults with default settings can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatDefault(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatDefault(x), Format.getFormats(), 'UniformOutput', false)</a>
             %
-            % See also getFormats, getFormatName, getFormatDescription, getFormatSettings, checkFormat.
+            % See also getFormats, getFormatName, getFormatDescription,
+            % getFormatSettings, checkFormat.
             
             switch format
                 case Format.EMPTY
@@ -532,7 +536,8 @@ classdef Format < handle
             %  VALUE does not have format FORMAT.
             %  Error id: [BRAPH2:Format:WrongInput]
             %
-            % See also getFormats, getFormatName, getFormatDescription, getFormatSettings, getFormatDefault.
+            % See also getFormats, getFormatName, getFormatDescription,
+            % getFormatSettings, getFormatDefault.
 
             if nargin < 3 || isempty(format_settings)
                 format_settings = '';
