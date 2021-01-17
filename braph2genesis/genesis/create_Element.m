@@ -293,6 +293,22 @@ generate_inspection()
 
             % getProps(category)
             g(2, 'function prop_list = getProps(category)')
+                gs(3, {
+                    ['%GETPROPS returns the property list of ' descriptive_name '.']
+                     '%'
+                    ['% PROPS = ' class_name '.GETPROPS() returns the property list of ' descriptive_name '.']
+                     '%'
+                    ['% PROPS = ' class_name '.GETPROPS(CATEGORY) returns the property list ']
+                     '%  of category CATEGORY.'
+                     '%'
+                     '% Alternative forms to call this method are:'
+                    ['%  PROPS = ' upper(moniker) '.GETPROPS([CATEGORY]) returns the property list of the ' descriptive_name ' ' upper(moniker) '.']
+                    ['%  PROPS = Element.GETPROPS(' upper(moniker) '[, CATEGORY]) returns the property list of ''' upper(moniker) '''.']
+                    ['%  PROPS = Element.GETPROPS(''' class_name '''[, CATEGORY]) returns the property list of ''' class_name '''.']
+                     '%'
+                     '% See also getPropNumber.'
+                     ''
+                    })
                 g(3, 'if nargin < 1')
                     g(4, 'category = ''all'';')
                 g(3, 'end')
@@ -356,6 +372,19 @@ generate_inspection()
 
             % getPropNumber()
             g(2, 'function prop_number = getPropNumber()')
+                gs(3, {
+                    ['%GETPROPNUMBER returns the property number of ' descriptive_name '.']
+                     '%'
+                    ['% N = ' class_name '.GETPROPNUMBER() returns the property number of ' descriptive_name '.']
+                     '%'
+                     '% Alternative forms to call this method are:'
+                    ['%  N = ' upper(moniker) '.GETPROPNUMBER() returns the property number of the ' descriptive_name ' ' upper(moniker) '.']
+                    ['%  N = Element.GETPROPNUMBER(' upper(moniker) ') returns the property number of ''' upper(moniker) '''.']
+                    ['%  N = Element.GETPROPNUMBER(''' class_name ''') returns the property number of ''' class_name '''.']
+                     '%'
+                     '% See also getProps.'
+                     ''
+                    })
                 g(3, ['prop_number = numel(' class_name '.getProps());'])
             g(2, 'end')
 
