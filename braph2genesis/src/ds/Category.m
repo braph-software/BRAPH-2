@@ -94,8 +94,8 @@ classdef Category < handle
             %  CATEGORY exists.
             %
             % EXISTSCATEGORY(CATEGORY) throws an error if category CATEGORY
-            %  doe not exist.
-            %  Error id: [BRAPH2.STR:Category.existsCategory:BRAPH2.WRONG_INPUT].
+            %  does not exist.
+            %  Error id: [BRAPH2.STR:Category:BRAPH2.WRONG_INPUT].
             %
             % See also getCategories, getCategoryNumber.
             
@@ -122,23 +122,25 @@ classdef Category < handle
             %
             % See also getCategoryDescription, getCategories.
 
-            Category.existsCategory(category)
+            % Category.existsCategory(category)
 
             switch category
                 case Category.METADATA
                     category_name = Category.METADATA_NAME;
                 case Category.PARAMETER
-                    category_name = Category.PARAMETER_NAME;                    
+                    category_name = Category.PARAMETER_NAME;
                 case Category.DATA
-                    category_name = Category.DATA_NAME;                    
+                    category_name = Category.DATA_NAME;
                 case Category.RESULT
-                    category_name = Category.RESULT_NAME;                    
+                    category_name = Category.RESULT_NAME;
+                otherwise
+                    Category.existsCategory(category) % error because category does not exist
             end
         end
         function category_description = getCategoryDescription(category)
             %GETCATEGORYDESCRIPTION returns the description of a category.
             %
-            % NAME = GETCATEGORYDESCRIPTION(CATEGORY) returns the description of category
+            % STR = GETCATEGORYDESCRIPTION(CATEGORY) returns the description of category
             %  CATEGORY.
             %
             % A list of all category descriptions can be obtained using
@@ -146,7 +148,7 @@ classdef Category < handle
             %
             % See also getCategoryName, getCategories.
 
-            Category.existsCategory(category)
+            % Category.existsCategory(category)
 
             switch category
                 case Category.METADATA
@@ -157,6 +159,8 @@ classdef Category < handle
                     category_description = Category.DATA_DESCRIPTION;                    
                 case Category.RESULT
                     category_description = Category.RESULT_DESCRIPTION;                    
+                otherwise
+                    Category.existsCategory(category) % error because category does not exist
             end
         end
     end
