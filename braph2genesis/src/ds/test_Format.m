@@ -226,57 +226,25 @@ end
 % TODO
 
 %% Test 2.IL: Check ITEMLIST
-% % % STRING formats that should be accepted
-% % clear value
-% % value{1} = 
-% % 
-% % % STRING formats that should NOT be accepted
-% % clear wrong_value
-% % wrong_value{1} = 
-% % 
-% % % tests
-% % for i = 1:1:length(value)
-% %     Format.checkFormat(Format.STRING, value{i})
-% % end
-% % for i = 1:1:length(wrong_value)
-% %     assert_with_error('Format.checkFormat(Format.ITEMLIST, varargin{1})', error_identifier, wrong_value{i})
-% % end
-% 
-% % % element_class_list = subclasses('Element', [], [], true);
-% % % element_list = cellfun(@(x) eval([x '()']), element_class_list, 'UniformOutput', false);
-% % % assert(Format.checkFormat(Format.ITEMLIST, element_list), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, element_class_list), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % for i = 1:1:numel(element_class_list)
-% % %     element_class = element_class_list{i};
-% % %     assert(Format.checkFormat(Format.ITEMLIST, {eval([element_class '()'])}), ...
-% % %         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %         'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % %     assert(~Format.checkFormat(Format.ITEMLIST, {element_class}), ...
-% % %         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %         'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % end
-% % % assert(~Format.checkFormat(Format.ITEMLIST, {'Element'}), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, 'Element'), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, {'non existing class'}), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, 3.14), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, true), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, 'string'), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
+clear value
+clear element_class_list
+clear wrong_value
+
+element_class_list{1} = Element();
+element_class_list{2} = Element();
+
+% ITEMLIST formats that should NOT be accepted
+wrong_value{1} = 3.14;
+wrong_value{2} = true;
+wrong_value{3} = 'String';
+wrong_value{4} = {'1', '2', '3'};
+
+% tests
+Format.checkFormat(Format.ITEMLIST, element_class_list)
+
+for i = 1:1:length(wrong_value)
+    assert_with_error('Format.checkFormat(Format.ITEMLIST, varargin{1})', error_identifier, wrong_value{i})
+end
 
 %% Test 2.IL.s: Check ITEMLIST
 % TODO
