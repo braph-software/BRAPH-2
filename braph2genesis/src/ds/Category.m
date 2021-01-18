@@ -5,15 +5,15 @@ classdef Category < handle
     %
     % The possible categories are:
     %
-    %  METADATA     Metadata about the element not used in the calculation of
-    %               the results (does not allow callbacks). 
+    %  METADATA     Metadata NOT used in the calculation of the results
+    %               (does not allow callbacks).
     %
     %  PARAMETER    Parameter used to calculate the results of the element
-    %               (allow incoming and outgoing callbacks).
+    %               (allow incoming and outgoing callbacks, cloned).
     %
     %  DATA         Data used to calculate the results of the element 
     %               (can be NoResult when not set, allow incoming and outgoing
-    %               callbacks).
+    %               callbacks, not cloned).
     %
     %  RESULT       Result calculated by the element using parameters and data
     %               (can be NoResult when not calculated, allows incoming
@@ -49,15 +49,15 @@ classdef Category < handle
     properties (Constant)
         METADATA = 'm'
         METADATA_NAME = 'metadata'
-        METADATA_DESCRIPTION = 'Metadata about the element not used in the calculation of the results (does not allow callbacks).'
+        METADATA_DESCRIPTION = 'Metadata NOT used in the calculation of the results (does not allow callbacks).'
         
         PARAMETER = 'p'
         PARAMETER_NAME = 'parameter'
-        PARAMETER_DESCRIPTION = 'Parameter used to calculate the results of the element (allow incoming and outgoing callbacks).'
+        PARAMETER_DESCRIPTION = 'Parameter used to calculate the results of the element (allow incoming and outgoing callbacks, cloned).'
         
         DATA = 'd'
         DATA_NAME = 'data'
-        DATA_DESCRIPTION = 'Data used to calculate the results of the element (can be NoResult when not set, allow incoming and outgoing callbacks).'
+        DATA_DESCRIPTION = 'Data used to calculate the results of the element (can be NoResult when not set, allow incoming and outgoing callbacks, not cloned).'
 
         RESULT = 'r'
         RESULT_NAME = 'result'
