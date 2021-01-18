@@ -7,7 +7,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
     properties (Access=private)
-        % props is a prvate struct containing the element properties whose
+        % props is a private struct containing the element properties whose
         % details depend on the property category (YOCO, YADIR):
         %
         % METADATA:
@@ -89,7 +89,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             el_name = eval([Element.getClass(el) '.getName()']);
         end
         function el_description = getDescription(el)
-			% GETNAME returns the description of the element.
+			%GETNAME returns the description of the element.
 			%
             % STR = Element.GETDESCRIPTION() returns the description of the element,
             %  which in this case is:
@@ -120,7 +120,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             el_description = eval([Element.getClass(el) '.getDescription()']);
         end
         function prop_list = getProps(el, category)
-			% GETPROPS returns the property list of an element.
+			%GETPROPS returns the property list of an element.
 			%
             % PROPS = Element.GETPROPS() returns the property list of Element.
             %
@@ -154,7 +154,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function prop_number = getPropNumber(el)
-			% GETPROPNUMBER returns the property number of an element.
+			%GETPROPNUMBER returns the property number of an element.
 			%
             % N = Element.GETPROPNUMBER() returns the number of element properties.
             %
