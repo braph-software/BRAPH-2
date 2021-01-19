@@ -513,17 +513,21 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %             props_backup = el.props; % props backup
 
             value = el.getr(prop);
-%             
-%             switch el.getPropCategory(prop)
-%                 case Category.METADATA
-%                     % nothing needs to be done
-%                     
-%                 case {Category.PARAMETER, Category.DATA}
-%                     if isa(value, 'Callback')
+            
+            switch el.getPropCategory(prop)
+                case Category.METADATA
+                    if isa(value, 'NoValue')
+                        value = el.getPropDefault(prop);
+                    end
+                    
+                case {Category.PARAMETER, Category.DATA}
+                    if isa(value, 'NoValue')
+                        value = el.getPropDefault(prop);
+%                     elseif isa(value, 'Callback')
 %                         value = value.get(Callback.EL).get(value.get(Callback.PROP));
-%                     end
-%                     
-%                 case Category.RESULT
+                    end
+                    
+                case Category.RESULT
 %                     if isa(value, 'NoValue')
 %                         value = el.calculateValue(prop);
 % 
@@ -541,8 +545,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                                 )
 %                         end
 %                     end
-%                 
-%             end
+            end
         end
 %         function value = memorize(el, pointer)
 %             % prop can also be tag
