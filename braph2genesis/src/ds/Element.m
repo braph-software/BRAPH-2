@@ -343,7 +343,22 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_description = eval([Element.getClass(el) '.getPropDescription(pointer)']);
         end 
         function prop_settings = getPropSettings(el, pointer) %#ok<INUSD>
-
+            % GETPROPSETTINGS returns the settings of an element's property/tag.
+			%
+            % PROPSETTINGS = Element.GETPROPSETTINGS() returns the settings
+            %  of the default element's property.
+            %
+            % PROPSETTINGS = Element.GETPROPSETTINGS(EL, POINTER) returns the
+            %  settings of the property POINTER of the element EL.
+            %
+            % Alternative forms to call this method are:
+            %  PROPSETTINGS = EL.GETPROPSETTINGS(POINTER) returns the settings of property POINTER of the element EL.
+			%  PROPSETTINGS = Element.GETPROPSETTINGS(CLASS, POINTER) returns the settings of property POINTER of CLASS.
+			%
+            % POINTER can be prop/tag.
+            %
+			% See also getPropProp.
+            
             % calls from Element
             if nargin < 2
                 pointer = el; %#ok<NASGU>
