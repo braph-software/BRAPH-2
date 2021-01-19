@@ -161,7 +161,7 @@ for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.CLASS, varargin{1})', error_identifier, wrong_value{i})
 end
 
-%% Test 2.CA.s: Check CLASS
+%% Test 2.CA.s: Check CLASS with settings
 clear value
 clear element_class_list
 value{1} = 'Element'; settings{1} = Element.getClass();
