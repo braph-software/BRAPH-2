@@ -351,24 +351,22 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods % set/check/get value
-%         function set(el, varargin)
-%             % varargin = {prop/tag, value, ...}
-% 
+        function set(el, varargin)
+            % varargin = {prop/tag, value, ...}
+
 %             props_backup = el.props; % props backup
-%             
-%             for i = 1:2:length(varargin)
-%                 prop = el.getPropProp(varargin{i});
-%                 value = varargin{i+1};
-%                 
-%                 Element.existsProp(el, prop)
-%                 
-%                 switch el.getPropCategory(prop)
-%                     case Category.METADATA
+            
+            for i = 1:2:length(varargin)
+                prop = el.getPropProp(varargin{i}); % also Element.existsProp(el, prop)
+                value = varargin{i+1};
+                
+                switch el.getPropCategory(prop)
+                    case Category.METADATA
 %                         el.checkProp(prop, value)
-%                         
-%                         el.props{prop}.value = value;
-%                         
-%                     case {Category.PARAMETER, Category.DATA}
+                        
+                        el.props{prop}.value = value;
+                        
+                    case {Category.PARAMETER, Category.DATA}
 %                         if ~el.isLocked(prop)
 %                             if isa(value, 'Callback')
 %                                 if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
@@ -390,8 +388,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                                 el.props{prop}.value = value;
 %                             else
 %                                 el.checkProp(prop, value)
-% 
-%                                 el.props{prop}.value = value;
+
+                                el.props{prop}.value = value;
 %                             end
 %                         else
 %                             warning( ...
@@ -401,9 +399,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                                 )                            
 %                         end
 %                        
-%                     case Category.RESULT
+                    case Category.RESULT
 %                         if isa(value, 'NoValue')
-%                             el.props{prop}.value = value;
+                            el.props{prop}.value = value;
 %                         else
 %                             warning( ...
 %                                 [BRAPH2.STR ':' class(el)], ...
@@ -411,9 +409,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                                 'Probably not a problem, but shouldn''t happen with well-written code!'] ...
 %                                 )
 %                         end
-%                 end
-%             end
-%             
+                end
+            end
+            
 %             [check, msg] = el.check();
 %             if ~check
 %                 el.props = props_backup; % restore props backup
@@ -425,7 +423,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                     'Nevertheless, there might be problems, so better you check your code!'] ...
 %                     )
 %             end
-%         end
+        end
 %         function [element_check, element_msg] = check(el, varargin)
 % 
 %             value_checks = ones(el.getPropNumber(), true);
@@ -475,15 +473,21 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                     )
 %             end
 %         end
-%         function value = getr(el, pointer)
-%             % prop can also be tag
-%             
-%             prop = el.getPropProp(pointer);
-%             
-%             Element.existsProp(el, prop)
-%             
-%             value = el.props{prop}.value; % raw element value
-%         end
+        function value = getr(el, pointer)
+            %GETR returns the row value of a property.
+            %
+            % VALUE = GETR(EL, PROP) returns the row value of property PROP
+            %  of element EL.
+            %
+            % VALUE = GETR(EL, TAG) returns the row value of property TAG
+            %  of element EL.
+            %
+            % See also get, memorize, set, check.
+            
+            prop = el.getPropProp(pointer); % also Element.existsProp(el, prop)
+            
+            value = el.props{prop}.value; % raw element value
+        end
 %         function value = get(el, pointer)
 %             % prop can also be tag
 % 

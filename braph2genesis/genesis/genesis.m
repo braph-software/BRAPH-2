@@ -242,14 +242,14 @@ end
 % 
 % disp('¡! loaded BRAPH2')
 % disp(' ')
-% 
-% %% CREATE TEST
-% % src
-% ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
-% for i = 1:1:numel(ds_gen_list)
-%     create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
-% end
-% 
+
+%% CREATE TEST
+% src
+ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
+for i = 1:1:numel(ds_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
+end
+
 % util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
 % for i = 1:1:numel(util_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
