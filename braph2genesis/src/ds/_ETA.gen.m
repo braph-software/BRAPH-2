@@ -144,47 +144,47 @@ PROP_SMATRIX_D (data, smatrix) is a data, smatrix.
 %%% ¡prop!
 PROP_CELL_D (data, cell) is a data, cell.
 
-% %%% ¡prop!
-% PROP_EMPTY_R (result, empty) is a result, empty.
-% 
-% %%% ¡prop!
-% PROP_STRING_R (result, string) is a result, string.
-% 
-% %%% ¡prop!
-% PROP_LOGICAL_R (result, logical) is a result, logical.
-% 
-% %%% ¡prop!
-% PROP_OPTION_R (result, option) is a result, option.
-% 
-% %%% ¡prop!
-% PROP_CLASS_R (result, class) is a result, class.
-% 
-% %%% ¡prop!
-% PROP_CLASSLIST_R (result, classlist) is a result, classlist.
-% 
-% %%% ¡prop!
-% PROP_ITEM_R (result, item) is a result, item.
-% 
-% %%% ¡prop!
-% PROP_ITEMLIST_R (result, itemlist) is a result, itemlist.
-% 
-% %%% ¡prop!
-% PROP_IDICT_R (result, idict) is a result, idict.
-% 
-% %%% ¡prop!
-% PROP_SCALAR_R (result, scalar) is a result, scalar.
-% 
-% %%% ¡prop!
-% PROP_RVECTOR_R (result, rvector) is a result, rvector.
-% 
-% %%% ¡prop!
-% PROP_CVECTOR_R (result, cvector) is a result, cvector.
-% 
-% %%% ¡prop!
-% PROP_MATRIX_R (result, matrix) is a result, matrix.
-% 
-% %%% ¡prop!
-% PROP_SMATRIX_R (result, smatrix) is a result, smatrix.
-% 
-% %%% ¡prop!
-% PROP_CELL_R (result, cell) is a result, cell.
+%%% ¡prop!
+PROP_EMPTY_R (result, empty) is a result, empty.
+
+%%% ¡prop!
+PROP_STRING_R (result, string) is a result, string.
+
+%%% ¡prop!
+PROP_LOGICAL_R (result, logical) is a result, logical.
+
+%%% ¡prop!
+PROP_OPTION_R (result, option) is a result, option.
+
+%%% ¡prop!
+PROP_CLASS_R (result, class) is a result, class.
+
+%%% ¡prop!
+PROP_CLASSLIST_R (result, classlist) is a result, classlist.
+
+%%% ¡prop!
+PROP_ITEM_R (result, item) is a result, item.
+
+%%% ¡prop!
+PROP_ITEMLIST_R (result, itemlist) is a result, itemlist.
+
+%%% ¡prop!
+PROP_IDICT_R (result, idict) is a result, idict.
+
+%%% ¡prop!
+PROP_SCALAR_R (result, scalar) is a result, scalar.
+
+%%% ¡prop!
+PROP_RVECTOR_R (result, rvector) is a result, rvector.
+
+%%% ¡prop!
+PROP_CVECTOR_R (result, cvector) is a result, cvector.
+
+%%% ¡prop!
+PROP_MATRIX_R (result, matrix) is a result, matrix.
+
+%%% ¡prop!
+PROP_SMATRIX_R (result, smatrix) is a result, smatrix.
+
+%%% ¡prop!
+PROP_CELL_R (result, cell) is a result, cell.
