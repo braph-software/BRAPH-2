@@ -304,15 +304,33 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % constructor
         function el = Element(varargin)
-            % varargin = {prop/tag, value, ...}
+            % ELEMENT() creates an Element.
+            %
+            % ELEMENT(PROP, VALUE, ...) with property PROP initialized to VALUE.
+            %
+            % ELEMENT(TAG, VALUE, ...) with property with tag TAG set to VALUE.
+            %
+            % Multiple properties can be initialized at once identifying
+            %  them with either property numbers (PROP) or tags (TAG).
+            %
+            % See also Category, Format, set, check.
             
-%             % undocumented trick to avoid inizialization of props             
-%             % (e.g. when deep-copying or cloning)
-%             % by having a single value in the varargin
-%             if length(varargin) == 1
-%                 return
-%             end
-% 
+            % undocumented trick to avoid inizialization of props             
+            % (e.g. when deep-copying or cloning)
+            % by having a single value in the varargin
+            if length(varargin) == 1
+                return
+            end
+
+            for prop = 1:1:el.getPropNumber()
+                el.props{prop}.value = NoValue.getNoValue();
+                el.props{prop}.check = true;
+                el.props{prop}.locked = false;
+            end
+            
+            rng('shuffle', 'twister')
+            el.seed()
+            
 %             % prop -> tag
 %             for i = 1:2:length(varargin)
 %                 if isnumeric(varargin{i})
@@ -613,16 +631,22 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                 end
 %             end
 %         end
-%         function seed(el)
-%             
-%             prop_number = el.getPropNumber();
-%             
-%             if prop_number > 0
-%                 for prop = 1:1:el.getPropNumber()
-%                     el.props{prop}.seed = randi(intmax('uint32'));
-%                 end
-%             end
-%         end
+        function seed(el)
+            %SEED assigns new seeds to all properties.
+            %
+            % This private function is used by the Element constructor and
+            % the clone function.
+            %
+            % See also Element, clone.
+            
+            prop_number = el.getPropNumber();
+            
+            if prop_number > 0
+                for prop = 1:1:el.getPropNumber()
+                    el.props{prop}.seed = randi(intmax('uint32'));
+                end
+            end
+        end
     end
     methods (Access=protected) % check value
 %         function [value_check, value_msg] = checkValue(el, prop, value) %#ok<INUSD>
