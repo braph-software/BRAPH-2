@@ -322,7 +322,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                 return
 %             end
 
-            rng('shuffle', 'twister')
+            % rng('shuffle', 'twister') % this should be done before creating the element to ensure reproducibitlity of the random numbers
             for prop = 1:1:el.getPropNumber()
                 el.props{prop}.value = NoValue.getNoValue();
                 el.props{prop}.seed = randi(intmax('uint32'));
