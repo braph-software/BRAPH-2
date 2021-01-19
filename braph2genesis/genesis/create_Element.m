@@ -157,14 +157,25 @@ staticmethods = splitlines(getToken(txt, 'staticmethods'));
 
 % methods = splitlines(getToken(txt, 'methods'));
 
-%% Load info from already generated file
-prop_list_txt = {};
-if exist(class_name, 'class') == 8
-	prop_list_txt = cell(Element.getPropNumber(class_name), 1);
-    for prop = 1:1:Element.getPropNumber(class_name)
-        prop_list_txt{prop} = ['<strong>' int2str(prop) '</strong> <strong>' Element.getPropTag(class_name, prop) '</strong> \t' Element.getPropDescription(class_name, prop)];
+%% Load info from already generated file [fc = from class]
+[fc_prop_number, fc_prop_list_txt, fc_prop_list, fc_prop_tag_list] = load_from_class_prop();
+    function [fc_prop_number, fc_prop_list_txt, fc_prop_list, fc_prop_tag_list] = load_from_class_prop()
+        fc_prop_number = [];
+        fc_prop_list_txt = {};
+        fc_prop_list = '';
+        fc_prop_tag_list = '';
+        
+        if exist(class_name, 'class') == 8
+            fc_prop_number = Element.getPropNumber(class_name);
+
+            fc_prop_list_txt = cell(Element.getPropNumber(class_name), 1);
+            for prop = 1:1:Element.getPropNumber(class_name)
+                fc_prop_list_txt{prop} = ['<strong>' int2str(prop) '</strong> <strong>' Element.getPropTag(class_name, prop) '</strong> \t' Element.getPropDescription(class_name, prop)];
+                fc_prop_list = [fc_prop_list ' ' int2str(prop) ' ']; %#ok<AGROW>
+                fc_prop_tag_list = [fc_prop_tag_list ' ''' Element.getPropTag(class_name, prop) ''' ']; %#ok<AGROW>
+            end
+        end
     end
-end
 
 %% Generate and save file
 target_file = [target_dir filesep() class_name '.m'];
@@ -187,7 +198,7 @@ generate_header()
              '%'
             ['% The list of ' class_name ' properties is:']
             })
-        gs(1, cellfun(@(x) ['%  ' x], prop_list_txt, 'UniformOutput', false))
+        gs(1, cellfun(@(x) ['%  ' x], fc_prop_list_txt, 'UniformOutput', false))
         if ~isempty(seealso)
             gs(1, {
                  '%'
@@ -401,13 +412,27 @@ generate_inspection()
                      '% See also getProps.'
                      ''
                     })
-                g(3, ['prop_number = numel(' class_name '.getProps());'])
+                if isempty(fc_prop_number)
+                    g(3, ['prop_number = numel(' class_name '.getProps());'])
+                else
+                    gs(3, { 
+                         '% hardcoded for computational efficiency'
+                        ['prop_number = ' int2str(fc_prop_number) ';']
+                        })
+                end
             g(2, 'end')
 
             % existsProp(prop)
             g(2, 'function check = existsProp(prop)')
                 g(3, 'if nargout == 1')
-                    g(4, ['check = any(prop == ' class_name '.getProps());'])
+                    if isempty(fc_prop_list)
+                        g(4, ['check = any(prop == ' class_name '.getProps());'])
+                    else
+                        gs(4, {
+                             '% hardcoded for computational efficiency'
+                            ['check = any(prop == [' fc_prop_list ']);']
+                            })
+                    end
                 g(3, 'else')
                     g(4, 'assert( ...')
                         gs(5, {
@@ -422,11 +447,24 @@ generate_inspection()
 
             % existsTag(prop)
             g(2, 'function check = existsTag(tag)')
+                if isempty(fc_prop_tag_list)
+                    gs(3, {
+                         '% persistent variable for computational efficiency'
+                        ['persistent ' lower(class_name) '_tag_list']
+                        ['if isempty(' lower(class_name) '_tag_list)']
+                        ['\t' lower(class_name) '_tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
+                         'end'
+                         ''
+                        })
+                else
+                    gs(3, {
+                         '% hardcoded for computational efficiency'
+                        [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
+                         ''
+                        })
+                end
                 g(3, 'if nargout == 1')
-                    gs(4, {
-                        ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
-                         'check = any(strcmpi(tag, tag_list));'
-                         })
+                    g(4, ['check = any(strcmpi(tag, ' lower(class_name) '_tag_list));'])
                 g(3, 'else')
                     g(4, 'assert( ...')
                         gs(5, {
@@ -441,13 +479,28 @@ generate_inspection()
 
             % getPropProp(pointer)
             g(2, 'function prop = getPropProp(pointer)')
+                if isempty(fc_prop_tag_list)
+                    gs(3, {
+                         '% persistent variable for computational efficiency'
+                        ['persistent ' lower(class_name) '_tag_list']
+                        ['if isempty(' lower(class_name) '_tag_list)']
+                        ['\t' lower(class_name) '_tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
+                         'end'
+                         ''
+                        })
+                else
+                    gs(3, {
+                         '% hardcoded for computational efficiency'
+                        [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
+                         ''
+                        })
+                end                
                 g(3, 'if ischar(pointer)')
                     gs(4, {
                          'tag = pointer;'
                         [class_name '.existsTag(tag);']
                     	 ''
-                        ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()''), ''UniformOutput'', false);']
-                    	 'prop = find(strcmpi(tag, tag_list));'
+                    	['prop = find(strcmpi(tag, ' lower(class_name) '_tag_list));']
                          })
                 g(3, 'else % numeric')
                     gs(4, {
@@ -756,7 +809,7 @@ generate_constructor()
                     '%'
                     ['% The list of ' class_name ' properties is:']
                     })
-                gs(3, cellfun(@(x) ['%  ' x], prop_list_txt, 'UniformOutput', false))
+                gs(3, cellfun(@(x) ['%  ' x], fc_prop_list_txt, 'UniformOutput', false))
                 gs(3, {
                     '%'
                     '% See also Category, Format, set, check.'
