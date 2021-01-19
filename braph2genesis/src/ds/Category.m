@@ -122,8 +122,6 @@ classdef Category < handle
             %
             % See also getCategoryDescription, getCategories.
 
-            % Category.existsCategory(category)
-
             switch category
                 case Category.METADATA
                     category_name = Category.METADATA_NAME;
@@ -147,8 +145,6 @@ classdef Category < handle
             %  <a href="matlab:cellfun(@(x) Category.getCategoryDescription(x), Category.getCategories(), 'UniformOutput', false)">cellfun(@(x) Category.getCategoryDescription(x), Category.getCategories(), 'UniformOutput', false)</a>
             %
             % See also getCategoryName, getCategories.
-
-            % Category.existsCategory(category)
 
             switch category
                 case Category.METADATA
