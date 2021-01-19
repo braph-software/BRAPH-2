@@ -226,7 +226,6 @@ end
 % TODO
 
 %% Test 2.IL: Check ITEMLIST
-%% Test 2.IL: Check ITEMLIST
 clear value
 clear wrong_value
 
