@@ -54,8 +54,8 @@ generate_header()
         gs(0, {['%TEST_' upper(class_name)]; ''})
     end
 
-% generate_test1_1_instantation_empty()
-%     function generate_test1_1_instantation_empty()
+generate_test1_1_instantation_empty()
+    function generate_test1_1_instantation_empty()
 %         gs(0, {'%% Test 1.1: Instantiation - empty'; ''})
 %         
 %         gs(0, {[moniker ' = ' class_name '();']; ''})
@@ -103,10 +103,10 @@ generate_header()
 %             g(1, 'end')
 %         g(0, 'end')
 %         g(0, '')
-%     end
-% 
-% generate_test1_2_instantation_defaults()
-%     function generate_test1_2_instantation_defaults()
+    end
+
+generate_test1_2_instantation_defaults()
+    function generate_test1_2_instantation_defaults()
 %         gs(0, {'%% Test 1.2: Instantiation - defaults'; ''})
 % 
 %         g(0, [moniker ' = ' class_name '( ...'])
@@ -163,10 +163,10 @@ generate_header()
 %             g(1, 'end')
 %         g(0, 'end')
 %         g(0, '')
-%     end
-% 
-% generate_test_2_callbacks()
-%     function generate_test_2_callbacks()
+    end
+
+generate_test_2_callbacks()
+    function generate_test_2_callbacks()
 %         gs(0, {'%% Test 2: Callbacks'; ''})
 %         
 %         if strcmp(class_name, 'Callback')
@@ -419,10 +419,10 @@ generate_header()
 %             g(1, 'end')
 %         g(0, 'end')
 %         g(0, '')
-%     end
-% 
-% generate_test_4_memorize()
-%     function generate_test_4_memorize()
+    end
+
+generate_test_4_memorize()
+    function generate_test_4_memorize()
 %         gs(0, {'%% Test 4: Memorize'; ''})
 % 
 %         g(0, [moniker ' = ' class_name '( ...'])
@@ -467,10 +467,10 @@ generate_header()
 %             g(1, 'end')
 %         g(0, 'end')
 %         g(0, '')
-%     end
-% 
-% generate_tests()
-%     function generate_tests()    
+    end
+
+generate_tests()
+    function generate_tests()    
 %         test_number = 4;
 %         for i = 1:1:numel(tests)
 %             test_number = test_number + 1;
@@ -478,7 +478,7 @@ generate_header()
 %             gs(0, tests{i}.code)
 %             g(0, '')
 %         end
-%     end
+    end
 
 fclose(object_file);    
 
