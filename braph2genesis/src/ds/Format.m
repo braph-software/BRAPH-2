@@ -593,7 +593,7 @@ classdef Format < handle
                     check = isnumeric(value) && ismatrix(value);
                 case Format.SMATRIX
                     check = isnumeric(value) && ismatrix(value) && size(value, 1) == size(value, 2);
-                case Format.CLASS
+                case Format.CELL
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
