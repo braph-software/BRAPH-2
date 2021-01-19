@@ -393,6 +393,27 @@ generate_inspection()
             % existsProp(prop)
             g(2, 'function check = existsProp(prop)')
                 gs(3, {
+                    ['%EXISTSPROP checks if the property exists in ' descriptive_name '.']
+                     '%'
+                    ['% CHECK = ' class_name '.EXISTPROP(PROP) checks if the property']
+                     '%  PROP exists in the default Element.'
+                     '%'
+                    ['% CHECK = ' class_name '.EXISTPROP(EL, PROP)  checks if the property']
+                    ['%  PROP exists in ' class_name '.']
+                     '%'
+                    ['% ' class_name '.EXISTPROP(PROP)  asserts if the property']
+                     '%  PROP exists in the default Element.' 
+                     '%' 
+                    ['% ' class_name '.EXISTPROP(EL, PROP)  asserts if the property']
+                    ['%  PROP exists in ' class_name '.']
+                     '%'
+                     '% Alternative forms to call this method are:'
+                    ['%  ' upper(moniker) '.EXISTPROP(PROP) asserts if the property exists in ' descriptive_name '.']
+                    ['%  CHECK = Element.EXISTPROP(' upper(moniker) ' , PROP) checks if the property exists in ' descriptive_name '.']
+                    ['%  CHECK = Element.EXISTPROP(PROP) checks if the property exists in ' descriptive_name '.']
+                     '%'
+                     '% See also getProps.'
+                     ''
                     })
                 g(3, 'if nargout == 1')
                     g(4, ['check = any(prop == ' class_name '.getProps());'])
