@@ -431,6 +431,28 @@ generate_inspection()
 
             % existsTag(prop)
             g(2, 'function check = existsTag(tag)')
+            gs(3, {
+                ['%EXISTSTAG checks if the tag exists in ' descriptive_name '.']
+                 '%'
+                ['% CHECK = ' class_name '.EXISTSTAG(TAG) checks if the tag TAG exists in ']
+                 '%  the default Element.'
+                 '%'
+                ['% CHECK = ' class_name '.EXISTSTAG(TAG) checks if the tag TAG exists in ']
+                ['%  the ' class_name '.']
+                 '%'
+                ['% ' class_name '.EXISTSTAG(TAG) asserts if the tag TAG exists in ']
+                 '%  the default Element.'
+                 '%'
+                ['% ' class_name '.EXISTSTAG(TAG) asserts if the tag TAG exists in ']
+                ['%  the ' class_name '.']
+                 '%'
+                 '% Alternative forms to call this method are:'
+                 '%  CHECK = EL.EXISTSTAG(TAG) checks if the tag TAG exists in element EL.'
+			     '%  EL.EXISTSTAG(EL, TAG) asserts if the tag TAG exists in element EL. '
+                 '%'
+			     '% See also getProps, existsProp.'
+                 ''
+                })
                 g(3, 'if nargout == 1')
                     gs(4, {
                         ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
