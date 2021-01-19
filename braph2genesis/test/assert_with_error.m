@@ -1,9 +1,13 @@
 function assert_with_error(code, error_identifier, varargin)
 %ASSERTWITHERROR checks if the error is correctly thrown by the code.
 %
+% ASSERTWITHERROR(CODE, ERRORIDENTIFIER) checks if the correct
+%  error with ERRORIDENTIFIER is thrown by the CODE.
+%
 % ASSERTWITHERROR(CODE, ERRORIDENTIFIER, VARARGIN) checks if the correct
-%  error with ERRORIDENTIFIER is thrown by the CODE utilizing the format 
-%  given by the VARARGIN. 
+%  error with ERRORIDENTIFIER is thrown by the CODE which uses the variables 
+%  in VARARGIN. In the code, the variables are referred to as varargin{1}, 
+%  varargin{2}, ...
 %
 % See also TESTBRAPH2.
 
