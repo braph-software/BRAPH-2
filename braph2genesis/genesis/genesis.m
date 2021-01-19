@@ -235,13 +235,13 @@ end
 % for i = 1:1:numel(wf_connectivity_gen_list)
 %     create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
 % end
-% 
-% %% LOAD BRAPH2
-% addpath(target_dir)
-% braph2
-% 
-% disp('¡! loaded BRAPH2')
-% disp(' ')
+
+%% LOAD BRAPH2
+addpath(target_dir)
+braph2
+
+disp('¡! loaded BRAPH2')
+disp(' ')
 
 %% CREATE TEST
 % src
