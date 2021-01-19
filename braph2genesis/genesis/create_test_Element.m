@@ -56,53 +56,33 @@ generate_header()
 
 generate_test1_1_instantation_empty()
     function generate_test1_1_instantation_empty()
-%         gs(0, {'%% Test 1.1: Instantiation - empty'; ''})
-%         
-%         gs(0, {[moniker ' = ' class_name '();']; ''})
-%         
-%         g(0, ['prop_number = ' class_name '.getPropNumber();'])
-%         g(0, 'for prop = 1:1:prop_number')
-%             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
-%             g(1, ['switch ' class_name '.getPropCategory(prop)'])
-%                 g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA}')
-%                     g(3, 'assert( ...')
-%                         gs(4, {
-%                             ['isequal(' moniker '.getr(prop), ' class_name '.getPropDefault(prop)), ...']
-%                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-%                             ['[''' class_name '.getr('' int2str(prop) '') must be inizialized to its default value '' ...']
-%                             ['''given by ' class_name '.getPropDefault('' int2str(prop) ''). '' ...']
-%                             ['''Or there could be an error in ' class_name '.getr('' int2str(prop) '').''] ...']
-%                             ')'
-%                             })
-%                     g(3, 'assert( ...')
-%                         gs(4, {
-%                             ['isequal(' moniker '.getr(TAG), ' class_name '.getPropDefault(prop)), ...']
-%                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-%                             ['[''' class_name '.getr('''''' TAG '''''') must be inizialized to its default value '' ...']
-%                             ['''given by ' class_name '.getPropDefault('' int2str(prop) ''). '' ...']
-%                             ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
-%                             ')'
-%                             })
-%                 g(2, 'case Category.RESULT')
-%                     g(3, 'assert( ...')
-%                         gs(4, {
-%                             ['isa(' moniker '.getr(prop), ''NoValue''), ...']
-%                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-%                             ['[''Being a result, ' class_name '.getr('' int2str(prop) '') must be inizialized to NoValue(). '' ...']
-%                             ['''Or there could be an error in ' class_name '.getr('' int2str(prop) '').''] ...']
-%                             ')'
-%                             })
-%                     g(3, 'assert( ...')
-%                         gs(4, {
-%                             ['isa(' moniker '.getr(TAG), ''NoValue''), ...']
-%                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-%                             ['[''Being a result, ' class_name '.getr('''''' TAG '''''') must be inizialized to NoValue(). '' ...']
-%                             ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
-%                             ')'
-%                             })
-%             g(1, 'end')
-%         g(0, 'end')
-%         g(0, '')
+        gs(0, {'%% Test 1.1: Instantiation - empty'; ''})
+        
+        gs(0, {[moniker ' = ' class_name '();']; ''})
+        
+        g(0, ['prop_number = ' class_name '.getPropNumber();'])
+        g(0, 'for prop = 1:1:prop_number')
+            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+            g(1, 'assert( ...')
+                gs(2, {
+                    ['isa(' moniker '.getr(prop), ''NoValue''), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC '' '' ...']
+                    ['''' class_name '.getr('' int2str(prop) '') must be inizialized to NoValue(). '' ...']
+                    ['''Or there could be an error in ' class_name '.getr('' int2str(prop) '').''] ...']
+                    ')'
+                    })
+            g(1, 'assert( ...')
+                gs(2, {
+                    ['isa(' moniker '.getr(TAG), ''NoValue''), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC '' '' ...']
+                    ['''' class_name '.getr('''''' TAG '''''') must be inizialized to NoValue(). '' ...']
+                    ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
+                    ')'
+                    })
+        g(0, 'end')
+        g(0, '')
     end
 
 generate_test1_2_instantation_defaults()
