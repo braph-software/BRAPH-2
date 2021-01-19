@@ -157,6 +157,14 @@ staticmethods = splitlines(getToken(txt, 'staticmethods'));
 
 % methods = splitlines(getToken(txt, 'methods'));
 
+%% Load info from already generated file
+if exist(class_name, 'class') == 8
+	prop_list_txt = cell(Element.getPropNumber(class_name), 1);
+    for prop = 1:1:Element.getPropNumber(class_name)
+        prop_list_txt{prop} = ['<strong>' int2str(prop) '</strong> <strong>' Element.getPropTag(class_name, prop) '</strong> \t' Element.getPropDescription(class_name, prop)];
+    end
+end
+
 %% Generate and save file
 target_file = [target_dir filesep() class_name '.m'];
 object_file = fopen(target_file, 'w');
@@ -168,16 +176,21 @@ generate_header()
         else
             g(0, ['classdef (' class_attributes ') ' class_name ' < ' superclass_name])
         end
-        gs(1, {...
-            ['% ' class_name ' ' header_description '.'], ...
-            ['% It is a subclass of <a href="matlab:help ' superclass_name '">' superclass_name '</a>.'], ...
-            '%' ...
+        gs(1, {
+            ['% ' class_name ' ' header_description '.']
+            ['% It is a subclass of <a href="matlab:help ' superclass_name '">' superclass_name '</a>.']
+             '%'
             })
         gs(1, cellfun(@(x) ['% ' x], description, 'UniformOutput', false))
+        gs(1, {
+             '%'
+            ['% The list of ' class_name ' properties is:']
+            })
+        gs(1, cellfun(@(x) ['%  ' x], prop_list_txt, 'UniformOutput', false))
         if ~isempty(seealso)
-            gs(1, {...
-                '%', ...
-                ['% See also ' seealso '.'], ...
+            gs(1, {
+                 '%'
+                ['% See also ' seealso '.']
                 })
         end
         g(1, '')
@@ -577,7 +590,7 @@ generate_inspection()
                         end                            
                     end
                     if ~strcmp(superclass_name, 'Element')
-                        g(4, [ 'otherwise']);
+                        g(4, 'otherwise');
                             g(5, [ 'prop_default = getPropDefault@' superclass_name '(prop);']);
                     end
                 g(3, 'end')
@@ -730,8 +743,22 @@ generate_constructor()
     function generate_constructor()
         g(1, 'methods % constructor')
             g(2, ['function ' moniker ' = ' class_name '(varargin)'])
-                gs(3, { ...
-                    ['% ' class_name '() creates a ' descriptive_name '.'], ...
+                gs(3, {
+                    ['% ' class_name '() creates a ' descriptive_name '.']
+                     '%'
+                    ['% ' class_name '(PROP, VALUE, ...) with property PROP initialized to VALUE.']
+                     '%'
+                    ['% ' class_name '(TAG, VALUE, ...) with property with tag TAG set to VALUE.']
+                     '%'
+                    '% Multiple properties can be initialized at once identifying'
+                    '%  them with either property numbers (PROP) or tags (TAG).'
+                    '%'
+                    ['% The list of ' class_name ' properties is:']
+                    })
+                gs(3, cellfun(@(x) ['%  ' x], prop_list_txt, 'UniformOutput', false))
+                gs(3, {
+                    '%'
+                    '% See also Category, Format, set, check.'
                     ''
                     })
                 g(3, [moniker ' = ' moniker '@' superclass_name '(varargin{:});'])
