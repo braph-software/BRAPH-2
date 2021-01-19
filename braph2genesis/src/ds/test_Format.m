@@ -214,8 +214,33 @@ for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.CLASSLIST, varargin{1})', error_identifier, wrong_value{i})
 end
 
-%% Test 2.CL.s: Check CLASSLIST
-% TODO
+%% Test 2.CL.s: Check CLASSLIST with settings
+% CLASSLIST formats that should be accepted
+clear value
+value{1} = {'Element'}; settings{1} = Element.getClass();
+element_class_list = subclasses('Element', [], [], true);
+value{2} = element_class_list;
+for i = 1:1:numel(element_class_list)
+    element_class = element_class_list{i};
+    value{i + 2} = {element_class};
+    settings{i+2} = eval([element_class '.getClass()']);
+end
+
+% CLASSLIST formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = 'Element'; wrong_settings{1} = 'IndexedDictionary';
+wrong_value{2} = {'non existing class'}; wrong_settings{2} = 'Very existing class';
+wrong_value{3} = 3.14; wrong_settings{3} = 'Numeric';
+wrong_value{4} = true; wrong_settings{4} = 'Boolean';
+wrong_value{5} = 'String'; wrong_settings{5} = 'StringClass';
+
+% tests
+for i = 1:1:length(value)
+    Format.checkFormat(Format.CLASSLIST, value{i}, settings{i})
+end
+for i = 1:1:length(wrong_value)
+    assert_with_error('Format.checkFormat(Format.CLASSLIST, varargin{1}, varargin{2})', error_identifier, wrong_value{i}, wrong_settings{i})
+end
 
 %% Test 2.IT: Check ITEM
 % ITEM formats that should be accepted
