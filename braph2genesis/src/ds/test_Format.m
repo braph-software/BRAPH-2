@@ -226,12 +226,13 @@ end
 % TODO
 
 %% Test 2.IL: Check ITEMLIST
+%% Test 2.IL: Check ITEMLIST
 clear value
-clear element_class_list
 clear wrong_value
 
-element_class_list{1} = Element();
-element_class_list{2} = Element();
+% ITEMLIST formats that should be accepted
+element_item_list_names = subclasses('Element', [], [], true);
+element_item_list = cellfun(@(x) eval([x '()']), element_item_list_names, 'UniformOutput', false);
 
 % ITEMLIST formats that should NOT be accepted
 wrong_value{1} = 3.14;
@@ -240,11 +241,12 @@ wrong_value{3} = 'String';
 wrong_value{4} = {'1', '2', '3'};
 
 % tests
-Format.checkFormat(Format.ITEMLIST, element_class_list)
+Format.checkFormat(Format.ITEMLIST, element_item_list)
 
 for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.ITEMLIST, varargin{1})', error_identifier, wrong_value{i})
 end
+
 
 %% Test 2.IL.s: Check ITEMLIST
 % TODO
