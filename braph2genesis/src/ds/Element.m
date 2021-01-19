@@ -505,14 +505,14 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             value = el.props{prop}.value; % raw element value
         end
-%         function value = get(el, pointer)
-%             % prop can also be tag
-% 
-%             prop = el.getPropProp(pointer);
-%             
+        function value = get(el, pointer)
+            % prop can also be tag
+
+            prop = el.getPropProp(pointer);
+            
 %             props_backup = el.props; % props backup
-% 
-%             value = el.getr(prop);
+
+            value = el.getr(prop);
 %             
 %             switch el.getPropCategory(prop)
 %                 case Category.METADATA
@@ -543,7 +543,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                     end
 %                 
 %             end
-%         end
+        end
 %         function value = memorize(el, pointer)
 %             % prop can also be tag
 % 
