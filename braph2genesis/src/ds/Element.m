@@ -300,8 +300,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  format of the property POINTER of the element EL.
             %
             % Alternative forms to call this method are:
-            %  PROPFORMAT = EL.GETPROPFORMAT(POINTER) returns the property POINTER of the element EL.
-			%  PROPFORMAT = Element.GETPROPFORMAT(CLASS, POINTER]) returns the property POINTER of CLASS.
+            %  PROPFORMAT = EL.GETPROPFORMAT(POINTER) returns the format of property POINTER of the element EL.
+			%  PROPFORMAT = Element.GETPROPFORMAT(CLASS, POINTER) returns the format of property POINTER of CLASS.
 			%
             % POINTER can be prop/tag.
             %
@@ -317,7 +317,22 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_format = eval([Element.getClass(el) '.getPropFormat(pointer)']);
         end
         function prop_description = getPropDescription(el, pointer) %#ok<INUSD>
-
+            % GETPROPDESCRIPTION returns the description of an element's property/tag.
+			%
+            % PROPDESCRIPTION = Element.GETPROPDESCRIPTION() returns the description
+            %  of the default element's property.
+            %
+            % PROPDESCRIPTION = Element.GETPROPDESCRIPTION(EL, POINTER) returns the
+            %  description of the property POINTER of the element EL.
+            %
+            % Alternative forms to call this method are:
+            %  PROPDESCRIPTION = EL.GETPROPDESCRIPTION(POINTER) returns the description of property POINTER of the element EL.
+			%  PROPDESCRIPTION = Element.GETPROPDESCRIPTION(CLASS, POINTER) returns the description of property POINTER of CLASS.
+			%
+            % POINTER can be prop/tag.
+            %
+			% See also getPropProp.
+            
             % calls from Element
             if nargin < 2
                 pointer = el; %#ok<NASGU>
