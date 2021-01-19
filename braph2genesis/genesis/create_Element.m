@@ -158,6 +158,7 @@ staticmethods = splitlines(getToken(txt, 'staticmethods'));
 % methods = splitlines(getToken(txt, 'methods'));
 
 %% Load info from already generated file
+prop_list_txt = {};
 if exist(class_name, 'class') == 8
 	prop_list_txt = cell(Element.getPropNumber(class_name), 1);
     for prop = 1:1:Element.getPropNumber(class_name)
