@@ -195,7 +195,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 			%  CHECK = Element.EXISTSPROP(EL, PROP) checks if the property PROP exists in element EL.
 			%  CHECK = EL.EXISTSPROP(EL, PROP) checks if the property PROP exists in element EL.
 			%
-			% See also getProps.
+			% See also getProps, existsTag.
             
             % calls from Element
             if nargin < 2
@@ -216,6 +216,26 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function check = existsTag(el, tag)
+            %EXISTSTAG checks if the tag exists in element.
+			%
+            % CHECK = Element.EXISTSTAG(TAG) checks if the tag TAG exists in
+            %  the default Element.
+            %
+            % CHECK = Element.EXISTSTAG(EL, TAG) checks if the tag TAG exists in
+            %  the element EL.
+            % 
+            % Element.EXISTSTAG(TAG) asserts if the tag TAG exists in
+            %  the default Element.
+            %
+            % ELEMENT.EXISTSTAG(TAG) asserts if the tag TAG exists in the element
+            %  EL.
+            %
+            % Alternative forms to call this method are:
+            %  CHECK = EL.EXISTSTAG(TAG) checks if the tag TAG exists in element EL.
+			%  EL.EXISTSTAG(EL, TAG) asserts if the tag TAG exists in element EL. 
+            %
+			% See also getProps, existsProp.
+            
             % calls from Element
             if nargin < 2
                 tag = el;
