@@ -271,6 +271,21 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_category = eval([Element.getClass(el) '.getPropCategory(pointer)']);
         end
         function prop_format = getPropFormat(el, pointer) %#ok<INUSD>
+            % GETPROPFORMAT returns the format of an element's property/tag.
+			%
+            % PROPFORMAT = Element.GETPROPFORMAT() returns the format of the
+            %  default element's property.
+            %
+            % PROPFORMAT = Element.GETPROPFORMAT(EL, POINTER) returns the
+            %  format of the property POINTER of the element EL.
+            %
+            % Alternative forms to call this method are:
+            %  PROPFORMAT = EL.GETPROPFORMAT(POINTER) returns the property POINTER of the element EL.
+			%  PROPFORMAT = Element.GETPROPFORMAT(CLASS, POINTER]) returns the property POINTER of CLASS.
+			%
+            % POINTER can be prop/tag.
+            %
+			% See also getPropNumber.
 
             % calls from Element
             if nargin < 2
