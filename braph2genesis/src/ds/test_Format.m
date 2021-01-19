@@ -232,9 +232,9 @@ clear wrong_value
 % ITEMLIST formats that should be accepted
 element_item_list_names = subclasses('Element', [], [], true);
 value{1} = cellfun(@(x) eval([x '()']), element_item_list_names, 'UniformOutput', false);
-value{2} = {Element(), Element()};
-value{3} = {IndexedDictionary(), IndexedDictionary()};
-value{4} = {NoValue(), NoValue()};
+for i = 1:1:length(element_item_list_names)
+    value{i+1} = {repmat(eval([element_item_list_names{i} '()']), 1, length(element_item_list_names))}; %#ok<SAGROW>
+end
 
 % ITEMLIST formats that should NOT be accepted
 wrong_value{1} = 3.14;
@@ -250,6 +250,7 @@ end
 for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.ITEMLIST, varargin{1})', error_identifier, wrong_value{i})
 end
+
 
 %% Test 2.IL.s: Check ITEMLIST
 % TODO
