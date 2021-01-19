@@ -329,7 +329,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 el.props{prop}.check = true;
                 el.props{prop}.locked = false;
             end
-                        
+            
+            el.set(varargin{:})
+
 %             % prop -> tag
 %             for i = 1:2:length(varargin)
 %                 if isnumeric(varargin{i})
