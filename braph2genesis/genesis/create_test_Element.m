@@ -34,7 +34,7 @@ disp('¡! generator file read')
         seealso = getToken(txt, 'header', 'seealso');        
     end
 
-prop_number = eval([class_name '.getPropNumber()']);
+prop_number = Element.getPropNumber(class_name);
 
 % tests = analyze_tests();
 %     function tests = analyze_tests()
