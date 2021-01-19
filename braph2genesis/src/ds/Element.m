@@ -305,7 +305,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 			%
             % POINTER can be prop/tag.
             %
-			% See also getPropNumber.
+			% See also getPropProp.
 
             % calls from Element
             if nargin < 2
