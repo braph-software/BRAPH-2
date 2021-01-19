@@ -214,7 +214,7 @@ for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.CLASSLIST, varargin{1})', error_identifier, wrong_value{i})
 end
 
-%% Test 2.CL.s: Check CLASSLIST
+%% Test 2.CL.s: Check CLASSLIST with settings
 % TODO
 
 %% Test 2.IT: Check ITEM
