@@ -456,15 +456,17 @@ generate_inspection()
                          'end'
                          ''
                         })
+                    g(3, 'if nargout == 1')
+                        g(4, ['check = any(strcmpi(tag, ' lower(class_name) '_tag_list));'])
                 else
-                    gs(3, {
-                         '% hardcoded for computational efficiency'
-                        [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
-                         ''
-                        })
+                    g(3, 'if nargout == 1')
+                        gs(4, {
+                             '% hardcoded for computational efficiency'
+                            [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
+                             ''
+                            })
+                        g(4, ['check = any(strcmpi(tag, ' lower(class_name) '_tag_list));'])
                 end
-                g(3, 'if nargout == 1')
-                    g(4, ['check = any(strcmpi(tag, ' lower(class_name) '_tag_list));'])
                 g(3, 'else')
                     g(4, 'assert( ...')
                         gs(5, {
@@ -488,20 +490,27 @@ generate_inspection()
                          'end'
                          ''
                         })
+                    g(3, 'if ischar(pointer)')
+                        gs(4, {
+                             'tag = pointer;'
+                            [class_name '.existsTag(tag);']
+                             ''
+                            ['prop = find(strcmpi(tag, ' lower(class_name) '_tag_list));']
+                             })
                 else
-                    gs(3, {
-                         '% hardcoded for computational efficiency'
-                        [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
-                         ''
-                        })
+                    g(3, 'if ischar(pointer)')
+                        gs(4, {
+                             '% hardcoded for computational efficiency'
+                            [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
+                             ''
+                            })
+                        gs(4, {
+                             'tag = pointer;'
+                            [class_name '.existsTag(tag);']
+                             ''
+                            ['prop = find(strcmpi(tag, ' lower(class_name) '_tag_list));']
+                             })
                 end                
-                g(3, 'if ischar(pointer)')
-                    gs(4, {
-                         'tag = pointer;'
-                        [class_name '.existsTag(tag);']
-                    	 ''
-                    	['prop = find(strcmpi(tag, ' lower(class_name) '_tag_list));']
-                         })
                 g(3, 'else % numeric')
                     gs(4, {
                          'prop = pointer;'
