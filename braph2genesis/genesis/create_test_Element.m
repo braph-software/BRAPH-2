@@ -16,20 +16,26 @@ txt = fileread(generator_file);
 
 disp('¡! generator file read')
 
-%% Analysis
-% [class_name, superclass_name, descriptive_name, moniker, header_description] = analyze_header(); %#ok<ASGLU>
-%     function [class_name, superclass_name, descriptive_name, moniker, header_description] = analyze_header()
-%         header = get_token(txt, 'header');
-%         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>.*)\)\s*(?<header_description>.*)\.', 'names');
-%         class_name = res.class_name;
-%         superclass_name = res.superclass_name;
-%         descriptive_name = res.descriptive_name;
-%         moniker = res.moniker;
-%         header_description = res.header_description;
-%     end
-% 
-% prop_number = eval([class_name '.getPropNumber()']);
-% 
+% Analysis
+[class_name, superclass_name, moniker] = analyze_header();
+    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso] = analyze_header()
+        header = getToken(txt, 'header');
+        res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
+        class_name = res.class_name;
+        superclass_name = res.superclass_name;
+        moniker = res.moniker;
+        descriptive_name = res.descriptive_name;
+        header_description = res.header_description;
+        
+        class_attributes = getToken(txt, 'header', 'class_attributes');
+
+        description = splitlines(getToken(txt, 'header', 'description'));
+        
+        seealso = getToken(txt, 'header', 'seealso');        
+    end
+
+prop_number = eval([class_name '.getPropNumber()']);
+
 % tests = analyze_tests();
 %     function tests = analyze_tests()
 %         tests = get_tokens(txt, 'tests', 'test');
@@ -40,14 +46,14 @@ disp('¡! generator file read')
 %     end
 
 %% Generate and save file
-% target_file = [target_dir filesep() 'test_' class_name '.m'];
-% object_file = fopen(target_file, 'w');
-% 
-% generate_header()
-%     function generate_header()
-%         gs(0, {['% test ' class_name]; ''})
-%     end
-% 
+target_file = [target_dir filesep() 'test_' class_name '.m'];
+object_file = fopen(target_file, 'w');
+
+generate_header()
+    function generate_header()
+        gs(0, {['%TEST_' upper(class_name)]; ''})
+    end
+
 % generate_test1_1_instantation_empty()
 %     function generate_test1_1_instantation_empty()
 %         gs(0, {'%% Test 1.1: Instantiation - empty'; ''})
@@ -473,11 +479,11 @@ disp('¡! generator file read')
 %             g(0, '')
 %         end
 %     end
-% 
-% fclose(object_file);    
-% 
-% disp(['¡! saved file: ' target_file])
-% disp(' ')
+
+fclose(object_file);    
+
+disp(['¡! saved file: ' target_file])
+disp(' ')
 
 %% Help functions
     function g(tabs, str)
