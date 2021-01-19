@@ -176,6 +176,27 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_number = eval([Element.getClass(el) '.getPropNumber()']);
         end
         function check = existsProp(el, prop)
+            %EXISTSPROP checks if the property exists in element.
+			%
+            % CHECK = Element.EXISTSPROP(PROP) checks if the property 
+            %  PROP exists in the default Element.
+            %
+            % CHECK = Element.EXISTSPROP(EL, PROP) checks if the property 
+            %  PROP exists in element EL.
+            % 
+            % Element.EXISTSPROP(EL, PROP) asserts if the property 
+            %  PROP exists in the default Element.
+            %
+            % Element.EXISTSPROP(PROP) asserts if the property 
+            %  PROP exists in element EL.
+            %
+            % Alternative forms to call this method are:
+            %  CHECK = EL.EXISTSPROP(PROP) checks if the property PROP exists in element EL.
+			%  CHECK = Element.EXISTSPROP(EL, PROP) checks if the property PROP exists in element EL.
+			%  CHECK = EL.EXISTSPROP(EL, PROP) checks if the property PROP exists in element EL.
+			%
+			% See also getPropNumber.
+            
             % calls from Element
             if nargin < 2
                 prop = el;

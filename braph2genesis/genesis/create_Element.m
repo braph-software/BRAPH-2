@@ -392,6 +392,8 @@ generate_inspection()
 
             % existsProp(prop)
             g(2, 'function check = existsProp(prop)')
+                gs(3, {
+                    })
                 g(3, 'if nargout == 1')
                     g(4, ['check = any(prop == ' class_name '.getProps());'])
                 g(3, 'else')
