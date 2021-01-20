@@ -226,17 +226,16 @@ end
 % TODO
 
 %% Test 2.IL: Check ITEMLIST
-clear value
-clear wrong_value
-
 % ITEMLIST formats that should be accepted
-element_item_list_names = subclasses('Element', [], [], true);
-value{1} = cellfun(@(x) eval([x '()']), element_item_list_names, 'UniformOutput', false);
-for i = 1:1:length(element_item_list_names)
-    value{i+1} = {repmat(eval([element_item_list_names{i} '()']), 1, length(element_item_list_names))}; %#ok<SAGROW>
+clear value
+element_class_list = subclasses('Element', [], [], true);
+value{1} = cellfun(@(x) eval([x '()']), element_class_list, 'UniformOutput', false);
+for i = 1:1:length(element_class_list)
+    value{i + 1} = {eval([element_class_list{i} '()'])}; %#ok<SAGROW>
 end
 
 % ITEMLIST formats that should NOT be accepted
+clear wrong_value
 wrong_value{1} = 3.14;
 wrong_value{2} = true;
 wrong_value{3} = 'String';
@@ -246,7 +245,6 @@ wrong_value{4} = {'1', '2', '3'};
 for i = 1:1:length(value)
     Format.checkFormat(Format.ITEMLIST, value{i})
 end
-
 for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.ITEMLIST, varargin{1})', error_identifier, wrong_value{i})
 end
@@ -408,6 +406,13 @@ value{6} = {
     rand(2, 3) rand(2) rand(2, 4)
     rand(4, 3) rand(4, 2) rand(4)
     };
+value{7} = {
+    rand(5) 
+    rand(2)
+    rand(1)
+    };
+value{8} = {rand(5) rand(2) rand(1)};
+value{9} = {rand(3, 2, 4) 1 2};
 
 % CELL formats that should NOT be accepted
 clear wrong_value
