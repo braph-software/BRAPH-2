@@ -220,3 +220,50 @@ PROP_SMATRIX_R (result, smatrix) is a result, smatrix.
 
 %%% ¡prop!
 PROP_CELL_R (result, cell) is a result, cell.
+
+%%% ¡prop!
+PROP_EMPTY_R_CALC (result, empty) is a result, empty.
+%%%% ¡calculate!
+value = et.get('PROP_EMPTY_P');
+
+%%% ¡prop!
+PROP_STRING_R_CALC (result, string) is a result, string.
+
+%%% ¡prop!
+PROP_LOGICAL_R_CALC (result, logical) is a result, logical.
+
+%%% ¡prop!
+PROP_OPTION_R_CALC (result, option) is a result, option.
+
+%%% ¡prop!
+PROP_CLASS_R_CALC (result, class) is a result, class.
+
+%%% ¡prop!
+PROP_CLASSLIST_R_CALC (result, classlist) is a result, classlist.
+
+%%% ¡prop!
+PROP_ITEM_R_CALC (result, item) is a result, item.
+
+%%% ¡prop!
+PROP_ITEMLIST_R_CALC (result, itemlist) is a result, itemlist.
+
+%%% ¡prop!
+PROP_IDICT_R_CALC (result, idict) is a result, idict.
+
+%%% ¡prop!
+PROP_SCALAR_R_CALC (result, scalar) is a result, scalar.
+
+%%% ¡prop!
+PROP_RVECTOR_R_CALC (result, rvector) is a result, rvector.
+
+%%% ¡prop!
+PROP_CVECTOR_R_CALC (result, cvector) is a result, cvector.
+
+%%% ¡prop!
+PROP_MATRIX_R_CALC (result, matrix) is a result, matrix.
+
+%%% ¡prop!
+PROP_SMATRIX_R_CALC (result, smatrix) is a result, smatrix.
+
+%%% ¡prop!
+PROP_CELL_R_CALC (result, cell) is a result, cell.
