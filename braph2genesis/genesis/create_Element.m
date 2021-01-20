@@ -7,7 +7,7 @@ function create_Element(generator_file, target_dir)
 %
 % A generator file (whose name must have ending '.gen.m', and tipically
 %  starts with "_") has the following structure (the token ¡header! is
-%  required, while the rest is optional):
+%  required, while the rest is mostly optional, unless otherwise stated):
 %
 % ----------
 %
@@ -869,18 +869,22 @@ generate_calculateValue()
                 g(3, 'switch prop')
                     for i = 1:1:numel(props)
                         if strcmpi(props{i}.category, 'RESULT')
-                            g(4, ['case ' class_name '.' props{i}.TAG])
-                                g(5, ['rng(' moniker '.getPropSeed(' class_name '.' props{i}.TAG '), ''twister'')'])
-                                g(5, '')
-                                gs(5, props{i}.calculate)
-                                g(5, '')
+                            if ~(numel(props{i}.calculate) == 1 && isempty(props{i}.calculate{1}))
+                                g(4, ['case ' class_name '.' props{i}.TAG])
+                                    g(5, ['rng(' moniker '.getPropSeed(' class_name '.' props{i}.TAG '), ''twister'')'])
+                                    g(5, '')
+                                    gs(5, props{i}.calculate)
+                                    g(5, '')
+                            end
                         end
                     end
                     for i = 1:1:numel(props_update)
                         if strcmpi(props_update{i}.category, 'RESULT')
-                            g(4, ['case ' class_name '.' props_update{i}.TAG])
-                                gs(5, props_update{i}.calculate)
-                                g(5, '')
+                            if ~(numel(props_update{i}.calculate) == 1 && isempty(props_update{i}.calculate{1}))
+                                g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                    gs(5, props_update{i}.calculate)
+                                    g(5, '')
+                            end
                         end
                     end
                     g(4, 'otherwise')
