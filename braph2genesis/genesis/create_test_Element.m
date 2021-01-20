@@ -408,50 +408,69 @@ generate_test_2_callbacks()
 
 generate_test_4_memorize()
     function generate_test_4_memorize()
-%         gs(0, {'%% Test 4: Memorize'; ''})
-% 
-%         g(0, [moniker ' = ' class_name '( ...'])
-%             for prop = 1:1:prop_number
-%                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
-%                 if prop < prop_number
-%                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
-%                 else
-%                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
-%                 end
-%             end
-%             g(1, ');')
-%             g(1, '')
-%         
-%         g(0, ['prop_number = ' class_name '.getPropNumber();'])
-%         g(0, 'for prop = 1:1:prop_number')
-%             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
-%             g(1, ['switch ' class_name '.getPropCategory(prop)'])
-%                 g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA}')
-%                 g(2, 'case Category.RESULT')
-%                     g(3, 'assert( ...')
-%                         gs(4, {
-%                             ['~isa(' moniker '.memorize(prop),  ''NoValue''), ...']
-%                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-%                             ['[''' class_name '.memorize('' int2str(prop) '') must NOT be a NoValue, because it should have been calculated.''] ...']
-%                             ')'
-%                             })
-%                     g(3, 'assert( ...')
-%                         gs(4, {
-%                             ['~isa(' moniker '.getr(prop),  ''NoValue''), ...']
-%                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-%                             ['[''' class_name '.getr('' int2str(prop) '') must NOT be a NoValue, because it should have been memorized.''] ...']
-%                             ')'
-%                             })
-%                     g(4, 'assert( ...')
-%                         gs(5, {
-%                             [moniker '.checkFormat(' moniker '.getPropFormat(prop), ' moniker '.getr(prop),' moniker '.getPropSettings(prop)), ...']
-%                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-%                             ['[''' class_name '.getr('' int2str(prop) '') returns a value with the wrong format.''] ...']
-%                             ')'
-%                             })
-%             g(1, 'end')
-%         g(0, 'end')
-%         g(0, '')
+        gs(0, {'%% Test 4: Memorize'; ''})
+
+        gs(0, {['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+        g(0, [moniker ' = ' class_name '( ...'])
+            for prop = 1:1:prop_number
+                TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
+                if prop < prop_number
+                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
+                else
+                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
+                end
+            end
+            g(1, ');')
+        gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+        
+        g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
+            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+            g(1, ['switch ' class_name '.getPropCategory(prop)'])
+                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA}')
+                g(2, 'case Category.RESULT')
+                    g(3, 'assert( ...')
+                        gs(4, {
+                            ['~isa(' moniker '.get(prop),  ''NoValue''), ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC '' '' ...']
+                            ['''' class_name '.get('' int2str(prop) '') must NOT be a NoValue, because it should have been calculated.''] ...']
+                            ')'
+                            })
+                    g(3, 'assert( ...')
+                        gs(4, {
+                            ['isa(' moniker '.getr(prop),  ''NoValue''), ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC '' '' ...']
+                            ['''' class_name '.getr('' int2str(prop) '') must be a NoValue, because it should NOT have been memorized.''] ...']
+                            ')'
+                            })
+                    g(3, 'assert( ...')
+                        gs(4, {
+                            ['~isa(' moniker '.memorize(prop),  ''NoValue''), ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC '' '' ...']
+                            ['''' class_name '.memorize('' int2str(prop) '') must NOT be a NoValue, because it should have been calculated.''] ...']
+                            ')'
+                            })
+                    g(3, 'assert( ...')
+                        gs(4, {
+                            ['~isa(' moniker '.getr(prop),  ''NoValue''), ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC '' '' ...']
+                            ['''' class_name '.getr('' int2str(prop) '') must NOT be a NoValue, because it should have been memorized.''] ...']
+                            ')'
+                            })
+                    g(3, 'assert( ...')
+                        gs(4, {
+                            [moniker '.checkFormat(' moniker '.getPropFormat(prop), ' moniker '.getr(prop),' moniker '.getPropSettings(prop)), ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC '' '' ...']
+                            ['''' class_name '.getr('' int2str(prop) '') returns a value with the wrong format.''] ...']
+                            ')'
+                            })
+            g(1, 'end')
+        g(0, 'end')
+        g(0, '')
     end
 
 % generate_tests()
