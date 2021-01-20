@@ -668,7 +668,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods (Access=protected) % calculate value
         function value = calculateValue(el, prop)
-            value = el.props{prop}.value;
+            value = el.getPropDefault(prop);
         end
     end
     methods % display
