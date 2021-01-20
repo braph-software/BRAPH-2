@@ -549,17 +549,17 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                     end
             end
         end
-%         function value = memorize(el, pointer)
-%             % prop can also be tag
-% 
-%             prop = el.getPropProp(pointer);
-%             
-%             value = el.get(prop);
-% 
-%             if isequal(el.getPropCategory(prop), Category.RESULT)
-%                 el.props{prop}.value = value;
-%             end
-%         end
+        function value = memorize(el, pointer)
+            % prop can also be tag
+
+            prop = el.getPropProp(pointer);
+            
+            value = el.get(prop);
+
+            if isequal(el.getPropCategory(prop), Category.RESULT)
+                el.props{prop}.value = value;
+            end
+        end
 %         function lock(el, pointer)
 %             % prop can also be tag
 % 
