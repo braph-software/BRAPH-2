@@ -59,9 +59,15 @@ function create_Element(generator_file, target_dir)
 % <strong>%%% ¡prop!</strong>
 %  <tag2> ...
 % 
+%<strong>%% ¡constants!</strong>
+% Constants.
+% 
 %<strong>%% ¡staticmethods!</strong>
 % Static methods written as functions including the relative documentation.
 % 
+%<strong>%% ¡methods!</strong>
+% Class methods written as functions including the relative documentation.
+%
 % ----------
 % 
 % See also genesis, create_test_Element.
@@ -151,11 +157,11 @@ disp('¡! generator file read')
         end
     end
 
-% constants = splitlines(getToken(txt, 'constants'));
+constants = splitlines(getToken(txt, 'constants'));
 
 staticmethods = splitlines(getToken(txt, 'staticmethods'));
 
-% methods = splitlines(getToken(txt, 'methods'));
+methods = splitlines(getToken(txt, 'methods'));
 
 %% Load info from already generated file [fc = from class]
 [fc_prop_number, fc_prop_list_txt, fc_prop_list, fc_prop_tag_list] = load_from_class_prop();
@@ -208,15 +214,15 @@ generate_header()
         g(1, '')
     end
 
-% generate_constants()
-%     function generate_constants()
-%         if numel(constants) == 1 && isempty(constants{1})
-%             return
-%         end
-%         g(1, 'properties (Constant) % constants')
-%             gs(2, constants)
-%         g(1, 'end')
-%     end
+generate_constants()
+    function generate_constants()
+        if numel(constants) == 1 && isempty(constants{1})
+            return
+        end
+        g(1, 'properties (Constant) % constants')
+            gs(2, constants)
+        g(1, 'end')
+    end
 
 generate_staticmethods()
     function generate_staticmethods()
@@ -708,9 +714,9 @@ generate_inspection()
 
         g(1, 'end')
     end
-% 
-% generate_header_graph() % only for graphs
-%     function generate_header_graph()
+
+generate_header_graph() % only for graphs
+    function generate_header_graph()
 %         get_layernumber = { ''
 %             'if isempty(varargin)'
 %             '\tlayernumber = 1;'
@@ -761,10 +767,10 @@ generate_inspection()
 %                 end
 %             g(1, 'end')
 %         end
-%     end
-% 
-% generate_header_measure() % only for measures
-%     function generate_header_measure()
+    end
+
+generate_header_measure() % only for measures
+    function generate_header_measure()
 %         if ~isempty(shape) || ...
 %                 ~isempty(scope) || ...
 %                 ~isempty(parametricity) || ...
@@ -800,7 +806,7 @@ generate_inspection()
 %                 end
 %             g(1, 'end')
 %         end
-%     end
+    end
 
 generate_constructor()
     function generate_constructor()
@@ -829,8 +835,8 @@ generate_constructor()
         g(1, 'end')
     end
 
-% generate_checkValue()
-%     function generate_checkValue()
+generate_checkValue()
+    function generate_checkValue()
 %         if all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props)) && all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props_update))
 %             return
 %         end
@@ -857,7 +863,7 @@ generate_constructor()
 %                 g(3, 'end')
 %             g(2, 'end')
 %         g(1, 'end')
-%     end
+    end
 
 generate_calculateValue()
     function generate_calculateValue()
@@ -894,15 +900,15 @@ generate_calculateValue()
         g(1, 'end')
     end
 
-% generate_methods()
-%     function generate_methods()
-%         if numel(methods) == 1 && isempty(methods{1})
-%             return
-%         end
-%         g(1, 'methods % methods')
-%             gs(2, methods)
-%         g(1, 'end')
-%     end
+generate_methods()
+    function generate_methods()
+        if numel(methods) == 1 && isempty(methods{1})
+            return
+        end
+        g(1, 'methods % methods')
+            gs(2, methods)
+        g(1, 'end')
+    end
 
 generate_footer()
     function generate_footer()
