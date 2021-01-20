@@ -1,15 +1,14 @@
 function assert_with_error(code, error_identifier, varargin)
-%ASSERTWITHERROR checks if the error is correctly thrown by the code.
+%ASSERTWITHERROR checks whether an error is correctly thrown by the code.
 %
-% ASSERTWITHERROR(CODE, ERRORIDENTIFIER) checks if the correct
-%  error with ERRORIDENTIFIER is thrown by the CODE.
+% ASSERTWITHERROR(CODE, ERRID) checks whether the correct error with the
+%  error identifier ERRID is thrown by the CODE (a string).
 %
-% ASSERTWITHERROR(CODE, ERRORIDENTIFIER, VARARGIN) checks if the correct
-%  error with ERRORIDENTIFIER is thrown by the CODE which uses the variables 
-%  in VARARGIN. In the code, the variables are referred to as varargin{1}, 
-%  varargin{2}, ...
+% ASSERTWITHERROR(CODE, ERRID, VAR1, VAR2, ...) executes the CODE using the
+%  variables VAR1, VAR2, ... which are referred to in the code string as 'varargin{1}', 
+%  'varargin{2}', ...
 %
-% See also TESTBRAPH2.
+% See also TEST_BRAPH2.
 
 try % tries the code, it is expected to throw an error    
     clear e
