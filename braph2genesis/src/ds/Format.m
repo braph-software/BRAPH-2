@@ -482,9 +482,9 @@ classdef Format < handle
                 case Format.CLASSLIST
                     % settings must be a class name of a subclass of Element (or Element itself)
                     if nargin < 2 || isempty(format_settings)
-                        format_default = {'Element'};
+                        format_default = {};
                     else
-                        format_default = {format_settings{1}};
+                        format_default = {};
                     end
                 case Format.ITEM
                     % settings must be a class name of a subclass of Element (or Element itself)

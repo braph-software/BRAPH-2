@@ -643,7 +643,7 @@ generate_inspection()
                             if ~isempty(props{i}.default)
                                 g(5, ['prop_default = ' props{i}.default ';'])
                             else
-                                g(5, ['prop_default = Format.getFormatDefault(Format.' props{i}.FORMAT ');'])
+                                g(5, ['prop_default = Format.getFormatDefault(Format.' props{i}.FORMAT ', ' class_name '.getPropSettings(prop));'])
                             end                            
                     end
                     for i = 1:1:numel(props_update)

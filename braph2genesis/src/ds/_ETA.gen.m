@@ -20,21 +20,33 @@ PROP_LOGICAL_M (metadata, logical) is a metadata, logical.
 
 %%% ¡prop!
 PROP_OPTION_M (metadata, option) is a metadata, option.
+%%%% ¡settings!
+{'one' 'two' 'three'}
 
 %%% ¡prop!
 PROP_CLASS_M (metadata, class) is a metadata, class.
+%%%% ¡settings!
+'ETA'
 
 %%% ¡prop!
 PROP_CLASSLIST_M (metadata, classlist) is a metadata, classlist.
+%%%% ¡settings!
+'ETA'
 
 %%% ¡prop!
 PROP_ITEM_M (metadata, item) is a metadata, item.
+%%%% ¡settings!
+'ETA'
 
 %%% ¡prop!
 PROP_ITEMLIST_M (metadata, itemlist) is a metadata, itemlist.
+%%%% ¡settings!
+'ETA'
 
 %%% ¡prop!
 PROP_IDICT_M (metadata, idict) is a metadata, idict.
+%%%% ¡settings!
+'ETA'
 
 %%% ¡prop!
 PROP_SCALAR_M (metadata, scalar) is a metadata, scalar.
