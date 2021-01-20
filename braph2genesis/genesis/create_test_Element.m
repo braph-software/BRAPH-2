@@ -473,16 +473,16 @@ generate_test_4_memorize()
         g(0, '')
     end
 
-% generate_tests()
-%     function generate_tests()    
-%         test_number = 4;
-%         for i = 1:1:numel(tests)
-%             test_number = test_number + 1;
-%             gs(0, {['%% Test ' int2str(test_number) ': ' tests{i}.name]; ''})
-%             gs(0, tests{i}.code)
-%             g(0, '')
-%         end
-%     end
+generate_tests()
+    function generate_tests()    
+        test_number = 4;
+        for i = 1:1:numel(tests)
+            test_number = test_number + 1;
+            gs(0, {['%% Test ' int2str(test_number) ': ' tests{i}.name]; ''})
+            gs(0, tests{i}.code)
+            g(0, '')
+        end
+    end
 
 fclose(object_file);    
 
