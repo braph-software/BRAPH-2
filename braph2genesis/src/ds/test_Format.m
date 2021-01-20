@@ -184,7 +184,7 @@ for i = 1:1:length(value)
     Format.checkFormat(Format.CLASS, value{i}, settings{i})
 end
 for i = 1:1:length(wrong_value)
-    assert_with_error('Format.checkFormat(Format.CLASS, varargin{1})', error_identifier, wrong_value{i}, wrong_settings{i})
+    assert_with_error('Format.checkFormat(Format.CLASS, varargin{1}, varargin{2})', error_identifier, wrong_value{i}, wrong_settings{i})
 end
 
 %% Test 2.CL: Check CLASSLIST
