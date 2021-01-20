@@ -156,7 +156,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function prop_number = getPropNumber(el)
 			% GETPROPNUMBER returns the property number of an element.
 			%
-            % N = Element.GETPROPNUMBER() returns the number of element properties.
+            % N = Element.GETPROPNUMBER() returns the number of properties in Element.
             %
             % Alternative forms to call this method are:
 			%  N = GETPROPNUMBER(EL) returns the property number of element EL.
@@ -176,25 +176,31 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_number = eval([Element.getClass(el) '.getPropNumber()']);
         end
         function check = existsProp(el, prop)
-            %EXISTSPROP checks if a property exists in element.
+            %EXISTSPROP checks whether property exists/error.
 			%
-            % CHECK = Element.EXISTSPROP(PROP) checks if the property 
-            %  PROP exists in Element.
-            %
-            % CHECK = Element.EXISTSPROP(EL, PROP) checks if the property 
-            %  PROP exists in element EL.
-            % 
-            % Element.EXISTSPROP(PROP) asserts if the property 
-            %  PROP exists in Element.
-            %
-            % Element.EXISTSPROP(EL, PROP) asserts if the property 
-            %  PROP exists in element EL.
+            % CHECK = Element.EXISTSPROP(PROP) checks whether the property 
+            %  PROP exists.
             %
             % Alternative forms to call this method are:
-            %  CHECK = EL.EXISTSPROP(PROP) checks if the property PROP exists in element EL.
-			%  CHECK = Element.EXISTSPROP(EL, PROP) checks if the property PROP exists in element EL.
-			%  CHECK = EL.EXISTSPROP(EL, PROP) checks if the property PROP exists in element EL.
+            %  CHECK = EXISTSPROP(EL, PROP) checks PROP for EL.
+            %  CHECK = EL.EXISTSPROP(PROP) checks PROP for EL.
+            %  CHECK = Element.EXISTSPROP(CLASS, PROP) checks PROP for CLASS.
+            %  CHECK = EL.EXISTSPROP(CLASS, PROP) checks PROP for CLASS.
+            % 
+            % Element.EXISTSPROP(PROP) throws an error if the PROP does NOT
+            %  exist.
+            %  Error id: [BRAPH2:Element:WrongInput]
 			%
+            % Alternative forms to call this method are:
+            %  EXISTSPROP(EL, PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  EL.EXISTSPROP(PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  Element.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:CLASS:WrongInput]
+            %  EL.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:CLASS:WrongInput]
+            %
 			% See also getProps, existsTag.
             
             % calls from Element
@@ -291,21 +297,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_category = eval([Element.getClass(el) '.getPropCategory(pointer)']);
         end
         function prop_format = getPropFormat(el, pointer) %#ok<INUSD>
-            % GETPROPFORMAT returns the format of an element's property/tag.
+            % GETPROPFORMAT returns the format of a property.
 			%
-            % PROPFORMAT = Element.GETPROPFORMAT() returns the format of the
-            %  default element's property.
+            % FORMAT = Element.GETPROPFORMAT(PROP) returns the format of
+            %  property PROP.
             %
-            % PROPFORMAT = Element.GETPROPFORMAT(EL, POINTER) returns the
-            %  format of the property POINTER of the element EL.
+            % FORMAT = Element.GETPROPFORMAT(TAG) returns the format of
+            %  the property with tag TAG.
             %
-            % Alternative forms to call this method are:
-            %  PROPFORMAT = EL.GETPROPFORMAT(POINTER) returns the format of property POINTER of the element EL.
-			%  PROPFORMAT = Element.GETPROPFORMAT(CLASS, POINTER) returns the format of property POINTER of CLASS.
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  PROPFORMAT = GETPROPFORMAT(EL, POINTER) retutns format of POINTER of EL.
+            %  PROPFORMAT = EL.GETPROPFORMAT(POINTER) retutns format of POINTER of EL.
+			%  PROPFORMAT = Element.GETPROPFORMAT(CLASS, POINTER) retutns format of POINTER of CLASS.
+			%  PROPFORMAT = EL.GETPROPFORMAT(CLASS, POINTER) retutns format of POINTER of CLASS.
 			%
-            % POINTER can be prop/tag.
-            %
-			% See also getPropProp.
+			% See also getPropProp, getPropTag, getPropCategory,
+			% getPropDescription, getPropSettings, getPropDefault,
+			% checkProp.
 
             % calls from Element
             if nargin < 2
