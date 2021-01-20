@@ -447,8 +447,8 @@ generate_inspection()
                 ['%  the ' class_name '.']
                  '%'
                  '% Alternative forms to call this method are:'
-                 '%  CHECK = EL.EXISTSTAG(TAG) checks if the tag TAG exists in element EL.'
-			     '%  EL.EXISTSTAG(EL, TAG) asserts if the tag TAG exists in element EL. '
+                 ['%  CHECK = ' upper(moniker) '.EXISTSTAG(TAG) checks if the tag TAG exists in ' descriptive_name '.']
+			     ['%  ' upper(moniker) '.EXISTSTAG(EL, TAG) asserts if the tag TAG exists in element ' descriptive_name '.']
                  '%'
 			     '% See also getProps, existsProp.'
                  ''
@@ -602,6 +602,22 @@ generate_inspection()
 
             % getPropDefault(pointer)
             g(2, 'function prop_default = getPropDefault(pointer)')
+              gs(3, {
+                  '%GETPROPDEFAULT returns the default value of a property/tag.'
+                  '%'
+                 ['% PROPDEFAULT = ' class_name '.GETPROPDEFAULT(POINTER) returns the default ']
+                  '%  value of Element.'
+                  '%'
+                 ['% PROPDEFAULT = ' class_name '.GETPROPDEFAULT(EL, POINTER) returns the default ']
+                  '%  value of a property/tag.'
+                  '%'
+                  '% Alternative forms to call this method are:'
+                 ['%  PROPDEFAULT = ' upper(moniker) '.GETPROPDEFAULT(POINTER) returns the default value of a property/tag.']
+                 ['%  PROPDEFAULT = ' upper(moniker) '.GETPROPDEFAULT(CLASS, POINTER) returns the default value of a property/tag.']
+                  '%'
+                  '% See also getPropSettings, getPropDescription.'
+                  ''
+                    })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                      ''
@@ -630,6 +646,18 @@ generate_inspection()
 
             % checkProp(pointer, value)
             g(2, 'function prop_check = checkProp(pointer, value)')
+              gs(3, {
+                   '%CHECKPROP returns whether the property/tag is in the correct format.'
+                   '%'
+                  ['% PROPCHECK = ' class_name '.GETPROPDEFAULT(EL, POINTER, VALUE) returns']
+                   '%  whether the property/tag is in the correct format.'
+                   '%'
+                   '% Alternative forms to call this method are:'
+                  ['%  PROPCHECK = ' upper(moniker) '.GETPROPDEFAULT(POINTER, VALUE) returns whether  the property/tag is in the correct format.']
+                   '%'
+                   '% See also getPropSettings, getPropDefault.'
+                   ''
+                  })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''

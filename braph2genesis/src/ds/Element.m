@@ -176,16 +176,16 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_number = eval([Element.getClass(el) '.getPropNumber()']);
         end
         function check = existsProp(el, prop)
-            %EXISTSPROP checks if the property exists in element.
+            %EXISTSPROP checks if a property exists in element.
 			%
             % CHECK = Element.EXISTSPROP(PROP) checks if the property 
-            %  PROP exists in the default Element.
+            %  PROP exists in Element.
             %
             % CHECK = Element.EXISTSPROP(EL, PROP) checks if the property 
             %  PROP exists in element EL.
             % 
             % Element.EXISTSPROP(PROP) asserts if the property 
-            %  PROP exists in the default Element.
+            %  PROP exists in Element.
             %
             % Element.EXISTSPROP(EL, PROP) asserts if the property 
             %  PROP exists in element EL.
@@ -369,6 +369,19 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_settings = eval([Element.getClass(el) '.getPropSettings(pointer)']);
         end 
         function prop_default = getPropDefault(el, pointer) %#ok<INUSD>
+            %GETPROPDEFAULT returns the default value of a property/tag.
+			%
+            % PROPDEFAULT = Element.GETPROPDEFAULT(POINTER) returns the default 
+            %  value of Element.
+            %
+            % PROPDEFAULT = Element.GETPROPDEFAULT(EL, POINTER) returns the default 
+            %  value of a property/tag.
+            % 
+            % Alternative forms to call this method are:
+			%  PROPDEFAULT = EL.GETPROPDEFAULT(POINTER) returns the default value of a property/tag.
+            %  PROPDEFAULT = EL.GETPROPDEFAULT(CLASS, POINTER) returns the default value of a property/tag.
+			%
+			% See also getPropSettings, getPropDescription.
 
             % calls from Element
             if nargin < 2
@@ -380,6 +393,15 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_default = eval([Element.getClass(el) '.getPropDefault(pointer)']);
         end
         function prop_check = checkProp(el, pointer, value, varargin) %#ok<INUSD>
+            %CHECKPROP returns whether  the property/tag is in the correct format.
+			%
+            % PROPCHECK = Element.GETPROPDEFAULT(EL, POINTER, VALUE) returns
+            %  whether the property/tag is in the correct format.
+            % 
+            % Alternative forms to call this method are:
+			%  PROPCHECK = EL.GETPROPDEFAULT(POINTER, VALUE) returns whether  the property/tag is in the correct format.
+			%
+			% See also getPropSettings, getPropDefault.
 
             if nargout == 1
                 prop_check = eval([Element.getClass(el) '.checkProp(pointer, value)']);
