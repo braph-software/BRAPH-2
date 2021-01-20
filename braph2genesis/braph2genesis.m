@@ -23,8 +23,7 @@ target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2tmp'];
 if exist(target_dir, 'dir') 
     rmdir(target_dir, 's')
 end
-[target_dir, source_dir] = genesis(target_dir); %#ok<ASGLU>
-[target_dir, source_dir] = genesis(target_dir);
+[target_dir, source_dir] = genesis(target_dir, [], 1);
 
 addpath(target_dir)
 braph2
