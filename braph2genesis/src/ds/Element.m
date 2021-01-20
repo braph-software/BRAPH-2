@@ -13,19 +13,19 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         % METADATA:
         % props{prop}.value     - value
         % props{prop}.seed      - seed for rng
-        % props{prop}.check     - true/false
+        % props{prop}.checked 	- true/false
         % props{prop}.locked    - false/true
         %
         % PARAMETER, DATA:
         % props{prop}.value     - NoValue() or value or Callback()
         % props{prop}.seed      - seed for rng
-        % props{prop}.check     - true/false
+        % props{prop}.checked   - true/false
         % props{prop}.locked    - false/true
         %
         % RESULT:
         % props{prop}.value     - NoValue() or value
         % props{prop}.seed      - seed for rng
-        % props{prop}.check     - true/false
+        % props{prop}.checked 	- true/false
         % props{prop}.locked    - false/true
         %
         % The parameter and data properties of the element get locked the
@@ -326,7 +326,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             for prop = 1:1:el.getPropNumber()
                 el.props{prop}.value = NoValue.getNoValue();
                 el.props{prop}.seed = randi(intmax('uint32'));
-                el.props{prop}.check = true;
+                el.props{prop}.checked = true;
                 el.props{prop}.locked = false;
             end
             
@@ -586,19 +586,26 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                 end
 %             end
 %         end
-%         function locked = isLocked(el, pointer)
-%             % prop can also be tag
-% 
-%             prop = el.getPropProp(pointer);
-%             
-%             locked = el.props{prop}.locked;
-%         end
-%         function seed = getPropSeed(el, pointer)
-%             
-%             prop = el.getPropProp(pointer);
-% 
-%             seed = el.props{prop}.seed;
-%         end
+        function seed = getPropSeed(el, pointer)
+            
+            prop = el.getPropProp(pointer);
+
+            seed = el.props{prop}.seed;
+        end
+        function locked = isLocked(el, pointer)
+            % prop can also be tag
+
+            prop = el.getPropProp(pointer);
+            
+            locked = el.props{prop}.locked;
+        end
+        function checked = isChecked(el, pointer)
+            % prop can also be tag
+
+            prop = el.getPropProp(pointer);
+            
+            checked = el.props{prop}.checked;
+        end
     end
     methods % operators
 %         function check = isequal(el1, el2)
@@ -664,132 +671,139 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %         end
     end
     methods % display
-%         function str = tostring(el, varargin)
-%             if el.getPropNumber() > 0
-%                 % str = char(join([class(el) 'with properties' cellfun(@(prod) el.getPropTag(prod), num2cell(Element.getProps(el)'), 'UniformOutput', false)]));
-%                 str = [class(el) ' with ' int2str(el.getPropNumber()) ' properties ' el.getPropTag(1) ' = ' tostring(el.get(1)) '.'];
-%             else
-%                 str = [class(el) ' without properties.'];
-%             end
-%             str = tostring(str, varargin{:});
-%             str = str(2:1:end-1);
-%         end
-%         function disp(el)
-% 
-%             disp(['<a href="matlab:help ' class(el) '">' class(el) '</a>']);
-% 
-%             for prop = 1:1:el.getPropNumber()
-%                 if ~el.isLocked(prop)
-%                     disp([upper(el.getPropTag(prop)) ...
-%                         ' (' ...
-%                         Category.getCategoryName(el.getPropCategory(prop)) ...
-%                         ', ' ...
-%                         Format.getFormatName(el.getPropFormat(prop)) ...
-%                         ') = ' ...
-%                         tostring(el.getr(prop))])
-%                 else % prop locked
-%                     disp([upper(el.getPropTag(prop)) ...
-%                         ' (' ...
-%                         Category.getCategoryName(el.getPropCategory(prop)) ...
-%                         ', ' ...
-%                         Format.getFormatName(el.getPropFormat(prop)) ...
-%                         ', locked' ...
-%                         ') = ' ...
-%                         tostring(el.getr(prop))])
-%                 end
-%             end
-%         end
-%         function txt_output = tree(el, level, prop_list, n, ending)
-%                         
-%             if nargin < 5
-%                 ending = ' ...';
-%             end
-% 
-%             if nargin < 4 || isempty(n)
-%                 n = 100;
-%             end
-% 
-%             if nargin < 3 || isempty(prop_list)
-%                 prop_list = 1:1:el.getPropNumber();
-%             end
-%             
-%             if nargin < 2 || isempty(level)
-%                 level = 0;
-%             end
-%             
-%             txt_el = sprintf(['<strong>' class(el) '</strong>\n']);
-%             
-%             for prop = prop_list
-%                 category = el.getPropCategory(prop);
-%                 format = el.getPropFormat(prop);
-%                 value = el.getr(prop);
-%                 
-%                 if el.isLocked(prop)
-%                     txt_locked = ['<strong>' char(254) '</strong> '];
-%                 else
-%                     txt_locked = '  ';
-%                 end
-%                 
-%                 txt_el = [txt_el ...
-%                     sprintf([ ...
-%                     int2str(prop) ' ' ...
-%                     category ' ' ...
-%                     format ...
-%                     '\t' upper(el.getPropTag(prop)) ...
-%                     '\t' txt_locked ...
-%                     '\t' int2str(el.getPropSeed(prop)) ...
-%                     '\t' tostring(value, n, ending) ...
-%                     '\n'])]; %#ok<AGROW>
-%                 
-%                 if level > 0
-%                     if isa(value, 'Callback')
-%                         cb = value;
-%                         cb_element = cb.get('el');
-%                         cb_prop = cb.get('prop');
-%                         txt_cd = cb_element.tree(level - 1, cb_prop, n, ending);
-%                         lines = splitlines(txt_cd);
-%                         for i = 1:1:length(lines)
-%                             txt_el = [txt_el ...
-%                                 sprintf(['  ' lines{i} '\n']) ... % indent
-%                                 ]; %#ok<AGROW>
-%                         end
-%                     elseif isa(value, 'Element')
-%                         value_el = value;
-%                         txt_value_el = value_el.tree(level - 1, [], n, ending);
-%                         lines = splitlines(txt_value_el);
-%                         for i = 1:1:length(lines)
-%                             txt_el = [txt_el ...
-%                                 sprintf(['  ' lines{i} '\n']) ... % indent
-%                                 ]; %#ok<AGROW>
-%                         end                    
-%                     elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-%                         for i = 1:1:length(value)
-%                             txt_el = [txt_el ...
-%                                 sprintf(['  index:<strong>' int2str(i) '</strong> item:']) ... % indent
-%                                 ]; %#ok<AGROW>
-%                             txt_value_dict_i = value{i}.tree(level - 1, [], n, ending);
-%                             lines = splitlines(txt_value_dict_i);
-%                             txt_el = [txt_el ...
-%                                 sprintf([lines{1} '\n']) ...
-%                                 ]; %#ok<AGROW>
-%                             for j = 2:1:length(lines)
-%                                 txt_el = [txt_el ...
-%                                     sprintf(['  ' lines{j} '\n']) ... % indent
-%                                     ]; %#ok<AGROW>
-%                             end
-%                         end
-%                     end
-%                 end
-%             end
-%             
-%             txt_el = txt_el(1:end - 1); % eliminates last carriage return
-% 
-%             if nargout == 1
-%                 txt_output = txt_el;
-%             else
-%                 disp(txt_el)
-%             end
-%         end
+        function str = tostring(el, varargin)
+            if el.getPropNumber() > 0
+                % str = char(join([class(el) 'with properties' cellfun(@(prod) el.getPropTag(prod), num2cell(Element.getProps(el)'), 'UniformOutput', false)]));
+                str = [class(el) ' with ' int2str(el.getPropNumber()) ' properties ' el.getPropTag(1) ' = ' tostring(el.get(1)) '.'];
+            else
+                str = [class(el) ' without properties.'];
+            end
+            str = tostring(str, varargin{:});
+            str = str(2:1:end-1);
+        end
+        function disp(el)
+
+            disp(['<a href="matlab:help ' class(el) '">' class(el) '</a>']);
+            el.tree(0)
+            
+            % for prop = 1:1:el.getPropNumber()
+            %     if ~el.isLocked(prop)
+            %         disp([upper(el.getPropTag(prop)) ...
+            %             ' (' ...
+            %             Category.getCategoryName(el.getPropCategory(prop)) ...
+            %             ', ' ...
+            %             Format.getFormatName(el.getPropFormat(prop)) ...
+            %             ') = ' ...
+            %             tostring(el.getr(prop))])
+            %     else % prop locked
+            %         disp([upper(el.getPropTag(prop)) ...
+            %             ' (' ...
+            %             Category.getCategoryName(el.getPropCategory(prop)) ...
+            %             ', ' ...
+            %             Format.getFormatName(el.getPropFormat(prop)) ...
+            %             ', locked' ...
+            %             ') = ' ...
+            %             tostring(el.getr(prop))])
+            %     end
+            % end
+        end
+        function txt_output = tree(el, level, prop_list, n, ending)
+                        
+            if nargin < 5
+                ending = ' ...';
+            end
+
+            if nargin < 4 || isempty(n)
+                n = 100;
+            end
+
+            if nargin < 3 || isempty(prop_list)
+                prop_list = 1:1:el.getPropNumber();
+            end
+            
+            if nargin < 2 || isempty(level)
+                level = 0;
+            end
+            
+            txt_el = sprintf(['<strong>' class(el) '</strong>\n']);
+            
+            for prop = prop_list
+                category = el.getPropCategory(prop);
+                format = el.getPropFormat(prop);
+                value = el.getr(prop);
+                
+                if el.isLocked(prop)
+                    txt_locked = ['<strong>' char(254) '</strong>'];
+                else
+                    txt_locked = ' ';
+                end
+                
+                if el.isChecked(prop)
+                    txt_checked = ['<strong>' char(391) '</strong> '];
+                else
+                    txt_checked = '  ';
+                end
+                
+                txt_el = [txt_el ...
+                    sprintf([ ...
+                    int2str(prop) ' ' ...
+                    category ' ' ...
+                    format ...
+                    '\t' upper(el.getPropTag(prop)) ...
+                    '\t' txt_locked txt_checked ...
+                    '\t' int2str(el.getPropSeed(prop)) ...
+                    '\t' tostring(value, n, ending) ...
+                    '\n'])]; %#ok<AGROW>
+                
+                if level > 0
+                    if isa(value, 'Callback')
+                        cb = value;
+                        cb_element = cb.get('el');
+                        cb_prop = cb.get('prop');
+                        txt_cd = cb_element.tree(level - 1, cb_prop, n, ending);
+                        lines = splitlines(txt_cd);
+                        for i = 1:1:length(lines)
+                            txt_el = [txt_el ...
+                                sprintf(['  ' lines{i} '\n']) ... % indent
+                                ]; %#ok<AGROW>
+                        end
+                    elseif isa(value, 'Element')
+                        value_el = value;
+                        txt_value_el = value_el.tree(level - 1, [], n, ending);
+                        lines = splitlines(txt_value_el);
+                        for i = 1:1:length(lines)
+                            txt_el = [txt_el ...
+                                sprintf(['  ' lines{i} '\n']) ... % indent
+                                ]; %#ok<AGROW>
+                        end                    
+                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                        for i = 1:1:length(value)
+                            txt_el = [txt_el ...
+                                sprintf(['  index:<strong>' int2str(i) '</strong> item:']) ... % indent
+                                ]; %#ok<AGROW>
+                            txt_value_dict_i = value{i}.tree(level - 1, [], n, ending);
+                            lines = splitlines(txt_value_dict_i);
+                            txt_el = [txt_el ...
+                                sprintf([lines{1} '\n']) ...
+                                ]; %#ok<AGROW>
+                            for j = 2:1:length(lines)
+                                txt_el = [txt_el ...
+                                    sprintf(['  ' lines{j} '\n']) ... % indent
+                                    ]; %#ok<AGROW>
+                            end
+                        end
+                    end
+                end
+            end
+            
+            txt_el = txt_el(1:end - 1); % eliminates last carriage return
+
+            if nargout == 1
+                txt_output = txt_el;
+            else
+                disp(txt_el)
+            end
+        end
     end
     methods % el_list
 %         function el_list = getElementList(el, el_list)
