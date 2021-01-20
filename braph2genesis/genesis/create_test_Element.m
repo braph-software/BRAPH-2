@@ -36,14 +36,14 @@ disp('¡! generator file read')
 
 prop_number = Element.getPropNumber(class_name);
 
-% tests = analyze_tests();
-%     function tests = analyze_tests()
-%         tests = get_tokens(txt, 'tests', 'test');
-%         for i = 1:1:numel(tests)
-%             tests{i}.name = get_token(tests{i}.token, 'name');
-%             tests{i}.code = splitlines(get_token(tests{i}.token, 'code'));
-%         end
-%     end
+tests = analyze_tests();
+    function tests = analyze_tests()
+        tests = getTokens(txt, 'tests', 'test');
+        for i = 1:1:numel(tests)
+            tests{i}.name = getToken(tests{i}.token, 'name');
+            tests{i}.code = splitlines(getToken(tests{i}.token, 'code'));
+        end
+    end
 
 %% Generate and save file
 target_file = [target_dir filesep() 'test_' class_name '.m'];
@@ -87,23 +87,24 @@ generate_test1_1_instantation_empty()
 
 generate_test1_2_instantation_defaults()
     function generate_test1_2_instantation_defaults()
-%         gs(0, {'%% Test 1.2: Instantiation - defaults'; ''})
-% 
-%         g(0, [moniker ' = ' class_name '( ...'])
-%             for prop = 1:1:prop_number
-%                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
-%                 if prop < prop_number
-%                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
-%                 else
-%                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
-%                 end
-%             end
-%             g(1, ');')
-% 
-%         g(0, ['prop_number = ' class_name '.getPropNumber();'])
-%         g(0, 'for prop = 1:1:prop_number')
-%             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
-%             g(1, ['switch ' class_name '.getPropCategory(prop)'])
+        gs(0, {'%% Test 1.2: Instantiation - defaults'; ''})
+
+        g(0, [moniker ' = ' class_name '( ...'])
+            for prop = 1:1:prop_number
+                TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
+                if prop < prop_number
+                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
+                else
+                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
+                end
+            end
+            g(1, ');')
+        g(0, '')
+
+        g(0, ['prop_number = ' class_name '.getPropNumber();'])
+        g(0, 'for prop = 1:1:prop_number')
+            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+            g(1, ['switch ' class_name '.getPropCategory(prop)'])
 %                 g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA}')
 %                     g(3, 'assert( ...')
 %                         gs(4, {
@@ -140,9 +141,9 @@ generate_test1_2_instantation_defaults()
 %                             ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
 %                             ')'
 %                             })
-%             g(1, 'end')
-%         g(0, 'end')
-%         g(0, '')
+            g(1, 'end')
+        g(0, 'end')
+        g(0, '')
     end
 
 generate_test_2_callbacks()
@@ -449,8 +450,8 @@ generate_test_4_memorize()
 %         g(0, '')
     end
 
-generate_tests()
-    function generate_tests()    
+% generate_tests()
+%     function generate_tests()    
 %         test_number = 4;
 %         for i = 1:1:numel(tests)
 %             test_number = test_number + 1;
@@ -458,7 +459,7 @@ generate_tests()
 %             gs(0, tests{i}.code)
 %             g(0, '')
 %         end
-    end
+%     end
 
 fclose(object_file);    
 
