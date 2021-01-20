@@ -422,6 +422,7 @@ generate_inspection()
                     g(3, ['prop_number = numel(' class_name '.getProps());'])
                 else
                     gs(3, { 
+                         '% COMPUTATIONAL EFFICIENCY TRICK'
                          '% hardcoded for computational efficiency'
                         ['prop_number = ' int2str(fc_prop_number) ';']
                         })
@@ -435,6 +436,7 @@ generate_inspection()
                         g(4, ['check = any(prop == ' class_name '.getProps());'])
                     else
                         gs(4, {
+                             '% COMPUTATIONAL EFFICIENCY TRICK'
                              '% hardcoded for computational efficiency'
                             ['check = any(prop == [' fc_prop_list ']);']
                             })
@@ -455,6 +457,7 @@ generate_inspection()
             g(2, 'function check = existsTag(tag)')
                 if isempty(fc_prop_tag_list)
                     gs(3, {
+                         '% COMPUTATIONAL EFFICIENCY TRICK'
                          '% persistent variable for computational efficiency'
                         ['persistent ' lower(class_name) '_tag_list']
                         ['if isempty(' lower(class_name) '_tag_list)']
@@ -467,6 +470,7 @@ generate_inspection()
                 else
                     g(3, 'if nargout == 1')
                         gs(4, {
+                             '% COMPUTATIONAL EFFICIENCY TRICK'
                              '% hardcoded for computational efficiency'
                             [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
                              ''
@@ -489,6 +493,7 @@ generate_inspection()
             g(2, 'function prop = getPropProp(pointer)')
                 if isempty(fc_prop_tag_list)
                     gs(3, {
+                         '% COMPUTATIONAL EFFICIENCY TRICK'
                          '% persistent variable for computational efficiency'
                         ['persistent ' lower(class_name) '_tag_list']
                         ['if isempty(' lower(class_name) '_tag_list)']
@@ -506,6 +511,7 @@ generate_inspection()
                 else
                     g(3, 'if ischar(pointer)')
                         gs(4, {
+                             '% COMPUTATIONAL EFFICIENCY TRICK'
                              '% hardcoded for computational efficiency'
                             [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
                              ''
