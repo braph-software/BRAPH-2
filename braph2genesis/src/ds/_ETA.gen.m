@@ -77,18 +77,38 @@ PROP_LOGICAL_P (parameter, logical) is a parameter, logical.
 
 %%% ¡prop!
 PROP_OPTION_P (parameter, option) is a parameter, option.
+%%%% ¡settings!
+{'one' 'two' 'three'}
+%%%% ¡default!
+'two'
 
 %%% ¡prop!
 PROP_CLASS_P (parameter, class) is a parameter, class.
+%%%% ¡settings!
+'Element'
+%%%% ¡default!
+'ETA'
 
 %%% ¡prop!
 PROP_CLASSLIST_P (parameter, classlist) is a parameter, classlist.
+%%%% ¡settings!
+'Element'
+%%%% ¡default!
+{'Element' 'NoValue' 'ETA'}
 
 %%% ¡prop!
 PROP_ITEM_P (parameter, item) is a parameter, item.
+%%%% ¡settings!
+'Element'
+%%%% ¡default!
+ETA()
 
 %%% ¡prop!
 PROP_ITEMLIST_P (parameter, itemlist) is a parameter, itemlist.
+%%%% ¡settings!
+'Element'
+%%%% ¡default!
+{ETA ETA ETA}
 
 %%% ¡prop!
 PROP_IDICT_P (parameter, idict) is a parameter, idict.
