@@ -303,27 +303,29 @@ for i = 1:1:length(wrong_value)
 end
 
 %% Test 2.IL: Check ITEMLIST
-clear value
-clear wrong_value
-
 % ITEMLIST formats that should be accepted
-element_item_list_names = subclasses('Element', [], [], true);
-element_item_list = cellfun(@(x) eval([x '()']), element_item_list_names, 'UniformOutput', false);
+clear value
+element_class_list = subclasses('Element', [], [], true);
+value{1} = cellfun(@(x) eval([x '()']), element_class_list, 'UniformOutput', false);
+for i = 1:1:length(element_class_list)
+    value{i + 1} = {eval([element_class_list{i} '()'])}; %#ok<SAGROW>
+end
 
 % ITEMLIST formats that should NOT be accepted
+clear wrong_value
 wrong_value{1} = 3.14;
 wrong_value{2} = true;
 wrong_value{3} = 'String';
 wrong_value{4} = {'1', '2', '3'};
 
 % tests
-Format.checkFormat(Format.ITEMLIST, element_item_list)
-
+for i = 1:1:length(value)
+    Format.checkFormat(Format.ITEMLIST, value{i})
+end
 for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.ITEMLIST, varargin{1})', error_identifier, wrong_value{i})
 end
 
-%% Test 2.IL.s: Check ITEMLIST
 %% Test 2.IL.s: Check ITEMLIST with settings
 % ITEMLIST formats that should be accepted
 clear value
@@ -332,8 +334,8 @@ element_class_list = subclasses('Element', [], [], true);
 value{1} = cellfun(@(x) eval([x '()']), element_class_list, 'UniformOutput', false);
 settings{1} = cellfun(@(x) eval([x '.getClass()']), element_class_list, 'UniformOutput', false);
 for i = 1:1:length(element_class_list)
-    value{i + 1} = {eval([element_class_list{i} '()'])}; %#ok<SAGROW>
-    settings{i + 1} = {eval([element_class_list{i} '.getClass()'])}; %#ok<SAGROW>
+    value{i } = {eval([element_class_list{i} '()'])}; %#ok<SAGROW>
+    settings{i  } = {eval([element_class_list{i} '.getClass()'])}; %#ok<SAGROW>
 end
 
 % ITEMLIST formats that should NOT be accepted
