@@ -33,7 +33,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡check_value!</strong>
 %   Code to check prop value (after calculation).
 %   Can be on multiple lines.
-%   The outcome should be in variable 'check'.
+%   The outcome should be in variable 'check' and the message in 'msg'.
 %  <strong>%%%% ¡default!</strong>
 %   Prop default value (seldom needed).
 %  <strong>%%%% ¡calculate!</strong>
@@ -843,32 +843,36 @@ generate_constructor()
 
 generate_checkValue()
     function generate_checkValue()
-%         if all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props)) && all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props_update))
-%             return
-%         end
-%         g(1, 'methods (Access=protected) % check value')
-%             g(2, ['function [check, msg] = checkValue(' moniker ', prop, value)'])
-%                 gs(3, {'check = true;', 'msg = '''';', ''})
-%                 g(3, 'switch prop')
-%                     for i = 1:1:numel(props)
-%                         if numel(props{i}.check_value) > 1 || ~isempty(props{i}.check_value{1})
-%                             g(4, ['case ' class_name '.' props{i}.TAG])
-%                                 gs(5, props{i}.check_value)
-%                                 g(5, '')
-%                         end
-%                     end
-%                     for i = 1:1:numel(props_update)
-%                         if numel(props_update{i}.check_value) > 1 || ~isempty(props_update{i}.check_value{1})
-%                             g(4, ['case ' class_name '.' props_update{i}.TAG])
-%                                 gs(5, props_update{i}.check_value)
-%                                 g(5, '')
-%                         end
-%                     end
-%                     g(4, 'otherwise')
-%                         gs(5, {['[check, msg] = checkValue@' superclass_name '(' moniker ', prop, value);'], ''})
-%                 g(3, 'end')
-%             g(2, 'end')
-%         g(1, 'end')
+        if all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props)) && all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props_update))
+            return
+        end
+        g(1, 'methods (Access=protected) % check value')
+            g(2, ['function [check, msg] = checkValue(' moniker ', prop, value)'])
+                gs(3, {
+                     'check = true;'
+                    ['msg = [''Error while checking'' tostring(' moniker ') '' '' ' moniker '.getPropTag(prop) ''.''];']
+                     ''
+                     })
+                g(3, 'switch prop')
+                    for i = 1:1:numel(props)
+                        if numel(props{i}.check_value) > 1 || ~isempty(props{i}.check_value{1})
+                            g(4, ['case ' class_name '.' props{i}.TAG])
+                                gs(5, props{i}.check_value)
+                                g(5, '')
+                        end
+                    end
+                    for i = 1:1:numel(props_update)
+                        if numel(props_update{i}.check_value) > 1 || ~isempty(props_update{i}.check_value{1})
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                gs(5, props_update{i}.check_value)
+                                g(5, '')
+                        end
+                    end
+                    g(4, 'otherwise')
+                        gs(5, {['[check, msg] = checkValue@' superclass_name '(' moniker ', prop, value);'], ''})
+                g(3, 'end')
+            g(2, 'end')
+        g(1, 'end')
     end
 
 generate_calculateValue()

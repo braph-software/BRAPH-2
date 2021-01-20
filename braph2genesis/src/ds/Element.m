@@ -315,12 +315,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also Category, Format, set, check.
             
-%             % undocumented trick to avoid inizialization of props             
-%             % (e.g. when deep-copying or cloning)
-%             % by having a single value in the varargin
-%             if length(varargin) == 1
-%                 return
-%             end
+            % COMPUTATIONAL EFFICIENCY TRICK
+            % undocumented trick to avoid inizialization of props
+            % by having a single value (42) in the varargin (e.g. when deep-copying)
+            if length(varargin) == 1 && varargin{1} == 42
+                return
+            end
 
             % rng('shuffle', 'twister') % this should be done before creating the element to ensure reproducibitlity of the random numbers
             for prop = 1:1:el.getPropNumber()
@@ -331,42 +331,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
             
             el.set(varargin{:})
-
-%             % prop -> tag
-%             for i = 1:2:length(varargin)
-%                 if isnumeric(varargin{i})
-%                     prop = varargin{i};
-%                     tag = el.getPropTag(prop);
-%                     varargin{i} = tag;
-%                 end
-%             end
-%             
-%             propvalues = cell(1, el.getPropNumber());
-%             for prop = 1:1:el.getPropNumber()
-%                 
-%                 tag = el.getPropTag(prop);
-%                 
-%                 switch el.getPropCategory(prop)
-%                     case {Category.METADATA, Category.PARAMETER, Category.DATA}
-%                         default = el.getPropDefault(prop);
-%                         value = get_from_varargin(default, tag, varargin);
-%                         
-%                     case Category.RESULT
-%                         default = NoValue();
-%                         value = NoValue();
-%                 end
-%                 
-%                 propvalues{2 * prop - 1} = tag;
-%                 propvalues{2 * prop} = value;
-%                 
-%                 el.props{prop}.value = default;
-%                 el.props{prop}.locked = false;
-%             end
-%             
-%             rng('shuffle', 'twister')
-%             el.seed()
-% 
-%             el.set(propvalues{:})
         end
     end
     methods % set/check/get value
@@ -381,7 +345,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 
                 switch el.getPropCategory(prop)
                     case Category.METADATA
-%                         el.checkProp(prop, value)
+                        if el.isChecked(prop)
+                            el.checkProp(prop, value) % check value format
+                        end
                         
                         el.props{prop}.value = value;
                         
@@ -406,7 +372,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % 
 %                                 el.props{prop}.value = value;
 %                             else
-%                                 el.checkProp(prop, value)
+                                if el.isChecked(prop)
+                                    el.checkProp(prop, value) % check value format
+                                end
 
                                 el.props{prop}.value = value;
 %                             end
@@ -432,67 +400,78 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
             
-%             [check, msg] = el.check();
-%             if ~check
-%                 el.props = props_backup; % restore props backup
-%                 error( ...
-%                     [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT], ...
-%                     [class(el) ': Wrong inputs: ' msg '\n' ...
-%                     'The value of this ' class(el) ' has been restored, \n' ...
-%                     'so you can keep on working if you are using command line. \n' ...
-%                     'Nevertheless, there might be problems, so better you check your code!'] ...
-%                     )
-%             end
+            if el.getPropNumber() && any(cellfun(@(x) x.checked, el.props))
+                [check, msg] = el.check();
+                if ~check
+%                     el.props = props_backup; % restore props backup
+                    error( ...
+                        [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT], ...
+                        [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT ' ' ...
+                        msg '\n' ...
+                        'The value of this ' class(el) ' has been restored, \n' ...
+                        'so you can keep on working if you are using command line. \n' ...
+                        'Nevertheless, there might be problems, so better you check your code!'] ...
+                        )
+                end
+            end
         end
-%         function [element_check, element_msg] = check(el, varargin)
-% 
-%             value_checks = ones(el.getPropNumber(), true);
-%             value_msgs = repmat({''}, el.getPropNumber(), 1);
-%             for prop = 1:1:el.getPropNumber()
-%                 value = el.getr(prop);
-%                 switch el.getPropCategory(prop)
-%                     case Category.METADATA
-%                         [value_check, value_msg] = el.checkValue(prop, value);
-%                     
-%                     case {Category.PARAMETER, Category.DATA}
+        function [element_check, element_msg] = check(el, varargin)
+
+            value_checks = ones(el.getPropNumber(), true);
+            value_msgs = repmat({''}, el.getPropNumber(), 1);
+            for prop = 1:1:el.getPropNumber()
+                if el.isChecked(prop)
+                    value = el.getr(prop);
+                    switch el.getPropCategory(prop)
+                        case Category.METADATA
+                            if ~isa(value, 'NoValue')
+                                [value_check, value_msg] = el.checkValue(prop, value);
+                            else % NoValue
+                                value_check = true;
+                                value_msg = '';
+                            end
+                    
+                        case {Category.PARAMETER, Category.DATA}
 %                         while isa(value, 'Callback')
 %                             value = value.get('EL').get(value.get('PROP'));
 %                         end
-%                         if ~isa(value, 'NoValue')
-%                             [value_check, value_msg] = el.checkValue(prop, value);
-%                         else % NoValue()
-%                             value_check = true;
-%                             value_msg = '';
-%                         end
-%                         
-%                     case Category.RESULT
-%                         if ~isa(value, 'NoValue')
-%                             [value_check, value_msg] = el.checkValue(prop, value);
-%                         else % NoValue()
-%                             value_check = true;
-%                             value_msg = '';
-%                         end
-%                 end
-%                 value_checks(prop) = value_check;
-%                 if ~value_check
-%                     value_msgs{prop} = value_msg;
-%                 end
-%             end
-%             check = all(value_checks);
-%             msg = join(value_msgs);
-%             msg = strtrim(msg{1});
-%             
-%             if nargout >= 1
-%                 element_check = check;
-%                 element_msg = msg;
-%             else
-%                 assert( ...
-%                     check, ...
-%                     [BRAPH2.STR ':' el.getClass() ':' BRAPH2.BUG_ERR], ...
-%                     msg ...
-%                     )
-%             end
-%         end
+                            if ~isa(value, 'NoValue')
+                                [value_check, value_msg] = el.checkValue(prop, value);
+                            else % NoValue
+                                value_check = true;
+                                value_msg = '';
+                            end
+                        
+                        case Category.RESULT
+                            if ~isa(value, 'NoValue')
+                                [value_check, value_msg] = el.checkValue(prop, value);
+                            else % NoValue
+                                value_check = true;
+                                value_msg = '';
+                            end
+                    end
+                    value_checks(prop) = value_check;
+                    if ~value_check
+                        value_msgs{prop} = value_msg;
+                    end
+                end
+            end
+            check = all(value_checks);
+            msg = join(value_msgs);
+            msg = strtrim(msg{1});
+            
+            if nargout >= 1
+                element_check = check;
+                element_msg = msg;
+            else
+                assert( ...
+                    check, ...
+                    [BRAPH2.STR ':' el.getClass() ':' BRAPH2.BUG_ERR], ...
+                    [BRAPH2.STR ':' el.getClass() ':' BRAPH2.BUG_ERR ' ' ...
+                    msg] ...
+                    )
+            end
+        end
         function value = getr(el, pointer)
             %GETR returns the row value of a property.
             %
@@ -561,7 +540,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 el.props{prop}.value = value;
             end
         end
-%         function lock(el, pointer)
+        function lock(el, pointer)
 %             % prop can also be tag
 % 
 %             if nargin < 2
@@ -586,7 +565,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                     end
 %                 end
 %             end
-%         end
+        end
         function seed = getPropSeed(el, pointer)
             
             prop = el.getPropProp(pointer);
@@ -661,10 +640,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %         end
     end
     methods (Access=protected) % check value
-%         function [value_check, value_msg] = checkValue(el, prop, value) %#ok<INUSD>
-%             value_check = true;
-%             value_msg = ['Error while checking ' tostring(el) ' ' el.getPropTag(prop) '.'];
-%         end
+        function [value_check, value_msg] = checkValue(el, prop, value) %#ok<INUSD>
+            value_check = true;
+            value_msg = '';
+        end
     end
     methods (Access=protected) % calculate value
         function value = calculateValue(el, prop)
