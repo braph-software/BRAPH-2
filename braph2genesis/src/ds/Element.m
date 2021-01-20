@@ -531,9 +531,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     end
                     
                 case Category.RESULT
-%                     if isa(value, 'NoValue')
-%                         value = el.calculateValue(prop);
-% 
+                    if isa(value, 'NoValue')
+                        value = el.calculateValue(prop);
+
 %                         [check, msg] = el.check();
 %                         if check
 %                             el.lock()
@@ -547,7 +547,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                                 'but there might be problems, so better you check your code!'] ...
 %                                 )
 %                         end
-%                     end
+                    end
             end
         end
         function value = memorize(el, pointer)
@@ -667,9 +667,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %         end
     end
     methods (Access=protected) % calculate value
-%         function value = calculateValue(el, prop)
-%             value = el.props{prop}.value;
-%         end
+        function value = calculateValue(el, prop)
+            value = el.props{prop}.value;
+        end
     end
     methods % display
         function str = tostring(el, varargin)

@@ -858,38 +858,38 @@ generate_constructor()
 %             g(2, 'end')
 %         g(1, 'end')
 %     end
-% 
-% generate_calculateValue()
-%     function generate_calculateValue()
-%         if sum(cellfun(@(x) strcmpi(x.category, 'RESULT'), props)) == 0 && sum(cellfun(@(x) strcmpi(x.category, 'RESULT'), props_update)) == 0
-%             return
-%         end
-%         g(1, 'methods (Access=protected) % calculate value')
-%             gs(2, {['function value = calculateValue(' moniker ', prop)']; ''})
-%                 g(3, 'switch prop')
-%                     for i = 1:1:numel(props)
-%                         if strcmpi(props{i}.category, 'RESULT')
-%                             g(4, ['case ' class_name '.' props{i}.TAG])
-%                                 g(5, ['rng(' moniker '.getPropSeed(' class_name '.' props{i}.TAG '), ''twister'')'])
-%                                 g(5, '')
-%                                 gs(5, props{i}.calculate)
-%                                 g(5, '')
-%                         end
-%                     end
-%                     for i = 1:1:numel(props_update)
-%                         if strcmpi(props_update{i}.category, 'RESULT')
-%                             g(4, ['case ' class_name '.' props_update{i}.TAG])
-%                                 gs(5, props_update{i}.calculate)
-%                                 g(5, '')
-%                         end
-%                     end
-%                     g(4, 'otherwise')
-%                         gs(5, {['value = calculateValue@' superclass_name '(' moniker ', prop);']; ''})
-%                 g(3, 'end')
-%             g(2, 'end')
-%         g(1, 'end')
-%     end
-% 
+
+generate_calculateValue()
+    function generate_calculateValue()
+        if sum(cellfun(@(x) strcmpi(x.category, 'RESULT'), props)) == 0 && sum(cellfun(@(x) strcmpi(x.category, 'RESULT'), props_update)) == 0
+            return
+        end
+        g(1, 'methods (Access=protected) % calculate value')
+            gs(2, {['function value = calculateValue(' moniker ', prop)']; ''})
+                g(3, 'switch prop')
+                    for i = 1:1:numel(props)
+                        if strcmpi(props{i}.category, 'RESULT')
+                            g(4, ['case ' class_name '.' props{i}.TAG])
+                                g(5, ['rng(' moniker '.getPropSeed(' class_name '.' props{i}.TAG '), ''twister'')'])
+                                g(5, '')
+                                gs(5, props{i}.calculate)
+                                g(5, '')
+                        end
+                    end
+                    for i = 1:1:numel(props_update)
+                        if strcmpi(props_update{i}.category, 'RESULT')
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                gs(5, props_update{i}.calculate)
+                                g(5, '')
+                        end
+                    end
+                    g(4, 'otherwise')
+                        gs(5, {['value = calculateValue@' superclass_name '(' moniker ', prop);']; ''})
+                g(3, 'end')
+            g(2, 'end')
+        g(1, 'end')
+    end
+
 % generate_methods()
 %     function generate_methods()
 %         if numel(methods) == 1 && isempty(methods{1})
