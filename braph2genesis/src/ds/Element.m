@@ -608,16 +608,16 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods % operators
-%         function check = isequal(el1, el2)
-%             
-%             check = isa(el2, el1.getClass());
-%             
-%             if check
-%                 for prop = 1:1:el1.getPropNumber()
-%                     check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
-%                 end
-%             end
-%         end
+        function check = isequal(el1, el2)
+            
+            check = isa(el2, el1.getClass());
+            
+            if check
+                for prop = 1:1:el1.getPropNumber()
+                    check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
+                end
+            end
+        end
     end
     methods (Access=private) % unlock
 %         function unlock(el, pointer)
