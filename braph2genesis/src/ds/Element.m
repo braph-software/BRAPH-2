@@ -306,10 +306,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  the property with tag TAG.
             %
             % Alternative forms to call this method are (POINTER = PROP or TAG):
-            %  PROPFORMAT = GETPROPFORMAT(EL, POINTER) retutns format of POINTER of EL.
-            %  PROPFORMAT = EL.GETPROPFORMAT(POINTER) retutns format of POINTER of EL.
-			%  PROPFORMAT = Element.GETPROPFORMAT(CLASS, POINTER) retutns format of POINTER of CLASS.
-			%  PROPFORMAT = EL.GETPROPFORMAT(CLASS, POINTER) retutns format of POINTER of CLASS.
+            %  FORMAT = GETPROPFORMAT(EL, POINTER) returns format of POINTER of EL.
+            %  FORMAT = EL.GETPROPFORMAT(POINTER) returns format of POINTER of EL.
+			%  FORMAT = Element.GETPROPFORMAT(CLASS, POINTER) returns format of POINTER of CLASS.
+			%  FORMAT = EL.GETPROPFORMAT(CLASS, POINTER) returns format of POINTER of CLASS.
 			%
 			% See also getPropProp, getPropTag, getPropCategory,
 			% getPropDescription, getPropSettings, getPropDefault,
@@ -325,21 +325,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_format = eval([Element.getClass(el) '.getPropFormat(pointer)']);
         end
         function prop_description = getPropDescription(el, pointer) %#ok<INUSD>
-            % GETPROPDESCRIPTION returns the description of an element's property/tag.
+            % GETPROPDESCRIPTION returns the description of a property.
 			%
-            % PROPDESCRIPTION = Element.GETPROPDESCRIPTION() returns the description
-            %  of the default element's property.
+            % DESCRIPTION = Element.GETPROPDESCRIPTION(PROP) returns the 
+            %  description of the property PROP.
             %
-            % PROPDESCRIPTION = Element.GETPROPDESCRIPTION(EL, POINTER) returns the
-            %  description of the property POINTER of the element EL.
+            % DESCRIPTION = Element.GETPROPDESCRIPTION(TAG) returns the
+            %  description of the property with tag TAG.
             %
-            % Alternative forms to call this method are:
-            %  PROPDESCRIPTION = EL.GETPROPDESCRIPTION(POINTER) returns the description of property POINTER of the element EL.
-			%  PROPDESCRIPTION = Element.GETPROPDESCRIPTION(CLASS, POINTER) returns the description of property POINTER of CLASS.
-			%
-            % POINTER can be prop/tag.
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  DESCRIPTION = GETPROPDESCRIPTION(EL, POINTER) returns description of POINTER of EL.
+            %  DESCRIPTION = EL.GETPROPDESCRIPTION(POINTER) returns description of POINTER of EL.
+			%  DESCRIPTION = Element.GETPROPDESCRIPTION(CLASS, POINTER) returns description of POINTER of CLASS.
+			%  DESCRIPTION = EL.GETPROPDESCRIPTION(CLASS, POINTER) returns description of POINTER of CLASS.
             %
-			% See also getPropProp.
+			% See also getPropProp, getPropTag, getPropCategory,
+			% getPropFormat, getPropSettings, getPropDefault,
+			% checkProp.
             
             % calls from Element
             if nargin < 2
@@ -351,21 +353,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_description = eval([Element.getClass(el) '.getPropDescription(pointer)']);
         end 
         function prop_settings = getPropSettings(el, pointer) %#ok<INUSD>
-            % GETPROPSETTINGS returns the settings of an element's property/tag.
+            % GETPROPSETTINGS returns the settings of a property.
 			%
-            % PROPSETTINGS = Element.GETPROPSETTINGS() returns the settings
-            %  of the default element's property.
+            % SETTINGS = Element.GETPROPSETTINGS(PROP) returns the 
+            %  settings of the property PROP.
             %
-            % PROPSETTINGS = Element.GETPROPSETTINGS(EL, POINTER) returns the
-            %  settings of the property POINTER of the element EL.
+            % SETTINGS = Element.GETPROPSETTINGS(TAG) returns the
+            %  settings of the property with tag TAG.
             %
-            % Alternative forms to call this method are:
-            %  PROPSETTINGS = EL.GETPROPSETTINGS(POINTER) returns the settings of property POINTER of the element EL.
-			%  PROPSETTINGS = Element.GETPROPSETTINGS(CLASS, POINTER) returns the settings of property POINTER of CLASS.
-			%
-            % POINTER can be prop/tag.
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  SETTINGS = GETPROPSETTINGS(EL, POINTER) returns settings of POINTER of EL.
+            %  SETTINGS = EL.GETPROPSETTINGS(POINTER) returns settings of POINTER of EL.
+			%  SETTINGS = Element.GETPROPSETTINGS(CLASS, POINTER) returns settings of POINTER of CLASS.
+			%  SETTINGS = EL.GETPROPSETTINGS(CLASS, POINTER) returns settings of POINTER of CLASS.
             %
-			% See also getPropProp.
+			% See also getPropProp, getPropTag, getPropCategory,
+			% getPropFormat, getPropDescription, getPropDefault,
+			% checkProp.
             
             % calls from Element
             if nargin < 2
