@@ -295,7 +295,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_prop = eval([Element.getClass(el) '.getPropProp(pointer)']);
         end       
         function prop_tag = getPropTag(el, pointer) %#ok<INUSD>
-            % pointer can be prop/tag
+            % GETPROPTAG returns the tag of a property.
+			%
+            % TAG = Element.GETPROPTAG(PROP) returns the 
+            %  tag of the property PROP.
+            %
+            % TAG = Element.GETPROPTAG(TAG) returns the
+            %  tag of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  TAG = GETPROPTAG(EL, POINTER) returns tag of POINTER of EL.
+            %  TAG = EL.GETPROPTAG(POINTER) returns tag of POINTER of EL.
+			%  TAG = Element.GETPROPTAG(CLASS, POINTER) returns tag of POINTER of CLASS.
+			%  TAG = EL.GETPROPTAG(CLASS, POINTER) returns tag of POINTER of CLASS.
+            %
+			% See also getPropProp, getPropSettings, getPropCategory,
+			% getPropFormat, getPropDescription, getPropDefault,
+			% checkProp.
             
             % calls from Element
             if nargin < 2
