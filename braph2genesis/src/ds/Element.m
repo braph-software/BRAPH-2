@@ -323,6 +323,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_tag = eval([Element.getClass(el) '.getPropTag(pointer)']);
         end
         function prop_category = getPropCategory(el, pointer) %#ok<INUSD>
+            % GETPROPCATEGORY returns the category of a property.
+			%
+            % CATEGORY = Element.GETPROPCATEGORY(PROP) returns the 
+            %  category of the property PROP.
+            %
+            % CATEGORY = Element.GETPROPCATEGORY(TAG) returns the
+            %  category of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  CATEGORY = GETPROPCATEGORY(EL, POINTER) returns category of POINTER of EL.
+            %  CATEGORY = EL.GETPROPCATEGORY(POINTER) returns category of POINTER of EL.
+			%  CATEGORY = Element.GETPROPCATEGORY(CLASS, POINTER) returns category of POINTER of CLASS.
+			%  CATEGORY = EL.GETPROPCATEGORY(CLASS, POINTER) returns category of POINTER of CLASS.
+            %
+			% See also getPropProp, getPropTag, getPropSettings,
+			% getPropFormat, getPropDescription, getPropDefault,
+			% checkProp.
             
             % calls from Element
             if nargin < 2
