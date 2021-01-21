@@ -568,19 +568,19 @@ generate_inspection()
             % getPropCategory(pointer)
             g(2, 'function prop_category = getPropCategory(pointer)')
             gs(3, {
-                '%GETPROPCATEGORY returns the tag of a property.'
+                '%GETPROPCATEGORY returns the category of a property.'
                 '%'
-                '% TAG = Element.GETPROPCATEGORY(PROP) returns the'
-                '%  tag of property PROP.'
+                '% CATEGORY = Element.GETPROPCATEGORY(PROP) returns the'
+                '%  category of property PROP.'
                 '%'
-                '% TAG = Element.GETPROPCATEGORY(TAG) returns the'
-                '%  tag of the property with tag TAG.'
+                '% CATEGORY = Element.GETPROPCATEGORY(TAG) returns the'
+                '%  category of the property with tag TAG.'
                 '%'
                 '% Alternative forms to call this method are (POINTER = PROP or TAG):'
-                ['%  TAG = GETPROPCATEGORY(' upper(moniker) ', POINTER) returns tag of POINTER of ' class_name '.']
-                ['%  TAG = ' upper(moniker) '.GETPROPCATEGORY(POINTER) returns tag of POINTER of ' class_name '.']
-                ['%  TAG = Element.GETPROPCATEGORY(' class_name ', POINTER) returns tag of POINTER of CLASS.']
-                ['%  TAG = ' upper(moniker) '.GETPROPCATEGORY(' class_name ', POINTER) returns tag of POINTER of CLASS.']
+                ['%  CATEGORY = GETPROPCATEGORY(' upper(moniker) ', POINTER) returns category of POINTER of ' class_name '.']
+                ['%  CATEGORY = ' upper(moniker) '.GETPROPCATEGORY(POINTER) returns category of POINTER of ' class_name '.']
+                ['%  CATEGORY = Element.GETPROPCATEGORY(' class_name ', POINTER) returns category of POINTER of CLASS.']
+                ['%  CATEGORY = ' upper(moniker) '.GETPROPCATEGORY(' class_name ', POINTER) returns category of POINTER of CLASS.']
                 '%'
                 '% See also getPropProp, getPropTag, getPropSettings,'
                 '% getPropFormat, getPropDescription, getPropDefault,'
