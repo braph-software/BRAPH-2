@@ -483,6 +483,26 @@ generate_inspection()
 
             % getPropProp(pointer)
             g(2, 'function prop = getPropProp(pointer)')
+            gs(3, {
+                '%GETPROPPROP returns the property of a property.'
+                '%'
+                '% PROPERTY = Element.GETPROPPROP(PROP) returns the'
+                '%  property of property PROP.'
+                '%'
+                '% PROPERTY = Element.GETPROPPROP(TAG) returns the'
+                '%  property of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  PROPERTY = GETPROPPROP(' upper(moniker) ', POINTER) returns property of POINTER of ' class_name '.']
+                ['%  PROPERTY = ' upper(moniker) '.GETPROPPROP(POINTER) returns property of POINTER of ' class_name '.']
+                ['%  PROPERTY = Element.GETPROPPROP(' class_name ', POINTER) returns property of POINTER of CLASS.']
+                ['%  PROPERTY = ' upper(moniker) '.GETPROPPROP(' class_name ', POINTER) returns property of POINTER of CLASS.']
+                '%'
+                '% See also getPropFormat, getPropTag, getPropCategory,'
+                '% getPropDescription, getPropSettings, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 g(3, 'if ischar(pointer)')
                     gs(4, {
                          'tag = pointer;'
