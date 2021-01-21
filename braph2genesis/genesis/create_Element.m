@@ -418,7 +418,7 @@ generate_inspection()
                     ['%  ' upper(moniker) '.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for ' class_name '.']
                     ['%   Error id: [BRAPH2:CLASS:WrongInput]']
                      '%'
-                     '% See also getProps.'
+                     '% See also getProps, existTag.'
                      ''
                     })
                 g(3, 'if nargout == 1')
@@ -437,28 +437,33 @@ generate_inspection()
 
             % existsTag(prop)
             g(2, 'function check = existsTag(tag)')
-            gs(3, {
-                ['%EXISTSTAG checks if the tag exists in ' descriptive_name '.']
-                 '%'
-                ['% CHECK = ' class_name '.EXISTSTAG(TAG) checks if the tag TAG exists in ']
-                 '%  the default Element.'
-                 '%'
-                ['% CHECK = ' class_name '.EXISTSTAG(TAG) checks if the tag TAG exists in ']
-                ['%  the ' class_name '.']
-                 '%'
-                ['% ' class_name '.EXISTSTAG(TAG) asserts if the tag TAG exists in ']
-                 '%  the default Element.'
-                 '%'
-                ['% ' class_name '.EXISTSTAG(TAG) asserts if the tag TAG exists in ']
-                ['%  the ' class_name '.']
-                 '%'
-                 '% Alternative forms to call this method are:'
-                 ['%  CHECK = ' upper(moniker) '.EXISTSTAG(TAG) checks if the tag TAG exists in ' descriptive_name '.']
-			     ['%  ' upper(moniker) '.EXISTSTAG(EL, TAG) asserts if the tag TAG exists in element ' descriptive_name '.']
-                 '%'
-			     '% See also getProps, existsProp.'
-                 ''
-                })
+                gs(3, {
+                    ['%EXISTSTAG checks whether tag exists/error in ' descriptive_name '.']
+                     '%'
+                     '% CHECK = Element.EXISTPROP(PROP) checks whether tag TAG exists.'
+                     '%'                    
+                     '% Alternative forms to call this method are:'
+                    ['%  CHECK = EXISTSTAG(' upper(moniker) ', PROP) checks tag TAG for ' class_name '.']
+                    ['%  CHECK = ' upper(moniker) '.EXISTSTAG(PROP) checks tag TAG for ' class_name '.']
+                    ['%  CHECK = Element.EXISTSTAG(' class_name ', PROP) checks tag TAG for CLASS.']
+                    ['%  CHECK = ' upper(moniker) '.EXISTSTAG(' class_name ', PROP) checks tag TAG for CLASS.']
+                     '%'
+                     '% Element.EXISTSTAG(PROP) throws an error if the TAG NOT exist.'
+                    ['%  Error id: [BRAPH2:' class_name ':WrongInput]']
+                     '%'
+                     '% Alternative forms to call this method are:'
+                    ['%  EXISTSTAG(' upper(moniker) ', PROP) throws error if TAG does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  ' upper(moniker) '.EXISTSTAG(PROP) throws error if TAG does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  ' upper(moniker) '.EXISTSTAG(CLASS, PROP) throws error if TAG does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:CLASS:WrongInput]']
+                    ['%  ' upper(moniker) '.EXISTSTAG(CLASS, PROP) throws error if TAG does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:CLASS:WrongInput]']
+                     '%'
+                     '% See also getProps, existsProp.'
+                     ''
+                    })
                 g(3, 'if nargout == 1')
                     gs(4, {
                         ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']

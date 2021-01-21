@@ -222,23 +222,28 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function check = existsTag(el, tag)
-            %EXISTSTAG checks if the tag exists in element.
+            %EXISTSTAG checks whether tag exists/error.
 			%
-            % CHECK = Element.EXISTSTAG(TAG) checks if the tag TAG exists in
-            %  the default Element.
-            %
-            % CHECK = Element.EXISTSTAG(EL, TAG) checks if the tag TAG exists in
-            %  the element EL.
-            % 
-            % Element.EXISTSTAG(TAG) asserts if the tag TAG exists in
-            %  the default Element.
-            %
-            % ELEMENT.EXISTSTAG(TAG) asserts if the tag TAG exists in the element
-            %  EL.
+            % CHECK = Element.EXISTSTAG(TAG) checks whether tag TAG exists.
             %
             % Alternative forms to call this method are:
-            %  CHECK = EL.EXISTSTAG(TAG) checks if the tag TAG exists in element EL.
-			%  EL.EXISTSTAG(EL, TAG) asserts if the tag TAG exists in element EL. 
+            %  CHECK = EXISTSTAG(EL, TAG) checks tag TAG for EL.
+            %  CHECK = EL.EXISTSTAG(TAG) checks tag TAG for EL.
+            %  CHECK = Element.EXISTSTAG(CLASS, TAG) checks tag TAG for EL.
+            %  CHECK = EL.EXISTSTAG(CLASS, TAG) checks tag TAG for EL.
+            %
+            % Element.EXISTSTAG(PROP) throws an error if the TAG NOT exist.
+            %  Error id: [BRAPH2:Element:WrongInput]
+            %
+            % Alternative forms to call this method are:
+            %  EXISTSTAG(EL, TAG) throws error if TAG does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  EL.EXISTSTAG(TAG) throws error if TAG does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  Element.EXISTSTAG(CLASS, TAG) throws error if TAG does NOT 
+            %   exist for EL. Error id: [BRAPH2:Element:WrongInput]
+            %  Element.EXISTSTAG(CLASS, TAG) throws error if TAG does NOT 
+            %   exist for EL. Error id: [BRAPH2:Element:WrongInput] 
             %
 			% See also getProps, existsProp.
             
