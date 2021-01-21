@@ -393,24 +393,30 @@ generate_inspection()
             % existsProp(prop)
             g(2, 'function check = existsProp(prop)')
                 gs(3, {
-                    ['%EXISTSPROP checks if the property exists in ' descriptive_name '.']
+                    ['%EXISTSPROP checks whether property exists/error in ' descriptive_name '.']
                      '%'
-                    ['% CHECK = ' class_name '.EXISTPROP(PROP) checks if the property']
-                     '%  PROP exists in the default Element.'
+                     '% CHECK = Element.EXISTPROP(PROP) checks whether the property'
+                     '%  PROP exists.'
+                     '%'                    
+                     '% Alternative forms to call this method are:'
+                    ['%  CHECK = EXISTSPROP(' upper(moniker) ', PROP) checks PROP for ' class_name '.']
+                    ['%  CHECK = ' upper(moniker) '.EXISTSPROP(PROP) checks PROP for ' class_name '.']
+                    ['%  CHECK = Element.EXISTSPROP(' class_name ', PROP) checks PROP for CLASS.']
+                    ['%  CHECK = ' upper(moniker) '.EXISTSPROP(' class_name ', PROP) checks PROP for CLASS.']
                      '%'
-                    ['% CHECK = ' class_name '.EXISTPROP(EL, PROP)  checks if the property']
-                    ['%  PROP exists in ' class_name '.']
-                     '%'
-                    ['% ' class_name '.EXISTPROP(PROP)  asserts if the property']
-                     '%  PROP exists in the default Element.' 
-                     '%' 
-                    ['% ' class_name '.EXISTPROP(EL, PROP)  asserts if the property']
-                    ['%  PROP exists in ' class_name '.']
+                     '% Element.EXISTSPROP(PROP) throws an error if the PROP does NOT'
+                     '%  exist.'
+                    ['%  Error id: [BRAPH2:' class_name ':WrongInput]']
                      '%'
                      '% Alternative forms to call this method are:'
-                    ['%  ' upper(moniker) '.EXISTPROP(PROP) asserts if the property exists in ' descriptive_name '.']
-                    ['%  CHECK = Element.EXISTPROP(' upper(moniker) ' , PROP) checks if the property exists in ' descriptive_name '.']
-                    ['%  CHECK = Element.EXISTPROP(PROP) checks if the property exists in ' descriptive_name '.']
+                    ['%  EXISTSPROP(' upper(moniker) ', PROP) throws error if PROP does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  ' upper(moniker) '.EXISTSPROP(PROP) throws error if PROP does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  ' upper(moniker) '.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:CLASS:WrongInput]']
+                    ['%  ' upper(moniker) '.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:CLASS:WrongInput]']
                      '%'
                      '% See also getProps.'
                      ''
