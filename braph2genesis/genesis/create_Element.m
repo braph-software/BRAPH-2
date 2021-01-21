@@ -521,6 +521,26 @@ generate_inspection()
 
             % getPropTag(pointer)
             g(2, 'function tag = getPropTag(pointer)')
+            gs(3, {
+                '%GETPROPTAG returns the tag of a property.'
+                '%'
+                '% TAG = Element.GETPROPTAG(PROP) returns the'
+                '%  tag of property PROP.'
+                '%'
+                '% TAG = Element.GETPROPTAG(TAG) returns the'
+                '%  tag of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  TAG = GETPROPTAG(' upper(moniker) ', POINTER) returns tag of POINTER of ' class_name '.']
+                ['%  TAG = ' upper(moniker) '.GETPROPTAG(POINTER) returns tag of POINTER of ' class_name '.']
+                ['%  TAG = Element.GETPROPTAG(' class_name ', POINTER) returns tag of POINTER of CLASS.']
+                ['%  TAG = ' upper(moniker) '.GETPROPTAG(' class_name ', POINTER) returns tag of POINTER of CLASS.']
+                '%'
+                '% See also getPropProp, getPropSettings, getPropCategory,'
+                '% getPropFormat, getPropDescription, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 g(3, 'if ischar(pointer)')
                     gs(4, {
                          'tag = pointer;'
@@ -547,6 +567,26 @@ generate_inspection()
 
             % getPropCategory(pointer)
             g(2, 'function prop_category = getPropCategory(pointer)')
+            gs(3, {
+                '%GETPROPCATEGORY returns the tag of a property.'
+                '%'
+                '% TAG = Element.GETPROPCATEGORY(PROP) returns the'
+                '%  tag of property PROP.'
+                '%'
+                '% TAG = Element.GETPROPCATEGORY(TAG) returns the'
+                '%  tag of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  TAG = GETPROPCATEGORY(' upper(moniker) ', POINTER) returns tag of POINTER of ' class_name '.']
+                ['%  TAG = ' upper(moniker) '.GETPROPCATEGORY(POINTER) returns tag of POINTER of ' class_name '.']
+                ['%  TAG = Element.GETPROPCATEGORY(' class_name ', POINTER) returns tag of POINTER of CLASS.']
+                ['%  TAG = ' upper(moniker) '.GETPROPCATEGORY(' class_name ', POINTER) returns tag of POINTER of CLASS.']
+                '%'
+                '% See also getPropProp, getPropTag, getPropSettings,'
+                '% getPropFormat, getPropDescription, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
