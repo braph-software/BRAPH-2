@@ -332,7 +332,6 @@ clear value
 clear settings
 element_class_list = subclasses('Element', [], [], true);
 value{1} = cellfun(@(x) eval([x '()']), element_class_list, 'UniformOutput', false);
-%settings{1} = cellfun(@(x) eval([x '.getClass()']), element_class_list, 'UniformOutput', false);
 settings{1} = Element.getClass();
 for i = 1:1:length(element_class_list)
     value{i + 1} = {eval([element_class_list{i} '()'])}; %#ok<SAGROW>
