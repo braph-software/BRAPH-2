@@ -545,6 +545,26 @@ generate_inspection()
 
             % getPropFormat(pointer)
             g(2, 'function prop_format = getPropFormat(pointer)')
+            gs(3, {
+                '%GETPROPFORMAT returns the format of a property.'
+                '%'
+                '% FORMAT = Element.GETPROPFORMAT(PROP) returns the'
+                '%  format of property PROP.'
+                '%'
+                '% FORMAT = Element.GETPROPFORMAT(TAG) returns the'
+                '%  format of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  FORMAT = GETPROPFORMAT(' upper(moniker) ', POINTER) returns format of POINTER of ' class_name '.']
+                ['%  FORMAT = ' upper(moniker) '.GETPROPFORMAT(POINTER) returns format of POINTER of ' class_name '.']
+                ['%  FORMAT = Element.GETPROPFORMAT(' class_name ', POINTER) returns format of POINTER of CLASS.']
+                ['%  FORMAT = ' upper(moniker) '.GETPROPFORMAT(' class_name ', POINTER) returns format of POINTER of CLASS.']
+                '%'
+                '% See also getPropProp, getPropTag, getPropCategory,'
+                '% getPropDescription, getPropSettings, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
@@ -563,6 +583,26 @@ generate_inspection()
 
             % getPropDescription(pointer)
             g(2, 'function prop_description = getPropDescription(pointer)')
+            gs(3, {
+                '%GETPROPDESCRIPTION returns the format of a property.'
+                '%'
+                '% DESCRIPTION = Element.GETPROPDESCRIPTION(PROP) returns the'
+                '%  description of the property PROP.'
+                '%'
+                '% DESCRIPTION = Element.GETPROPDESCRIPTION(TAG) returns the'
+                '%  description of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  DESCRIPTION = GETPROPDESCRIPTION(' upper(moniker) ', POINTER) returns description of POINTER of ' class_name '.']
+                ['%  DESCRIPTION = ' upper(moniker) '.GETPROPDESCRIPTION(POINTER) returns description of POINTER of ' class_name '.']
+                ['%  DESCRIPTION = Element.GETPROPDESCRIPTION(' class_name ', POINTER) returns description of POINTER of CLASS.']
+                ['%  DESCRIPTION = ' upper(moniker) '.GETPROPDESCRIPTION(' class_name ', POINTER) returns description of POINTER of CLASS.']
+                '%'
+                '% See also getPropProp, getPropTag, getPropCategory,'
+                '% getPropFormat, getPropSettings, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
@@ -585,6 +625,26 @@ generate_inspection()
 
             % getPropSettings(pointer)
             g(2, 'function prop_settings = getPropSettings(pointer)')
+            gs(3, {
+                '%GETPROPSETTINGS returns the settings of a property.'
+                '%'
+                '% SETTINGS = Element.GETPROPSETTINGS(PROP) returns the'
+                '%  settings of the property PROP.'
+                '%'
+                '% SETTINGS = Element.GETPROPSETTINGS(TAG) returns the'
+                '%  settings of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  SETTINGS = GETPROPSETTINGS(' upper(moniker) ', POINTER) returns settings of POINTER of ' class_name '.']
+                ['%  SETTINGS = ' upper(moniker) '.GETPROPSETTINGS(POINTER) returns settings of POINTER of ' class_name '.']
+                ['%  SETTINGS = Element.GETPROPSETTINGS(' class_name ', POINTER) returns settings of POINTER of CLASS.']
+                ['%  SETTINGS = ' upper(moniker) '.GETPROPSETTINGS(' class_name ', POINTER) returns settings of POINTER of CLASS.']
+                '%'
+                '% See also getPropProp, getPropTag, getPropCategory,'
+                '% getPropFormat, getPropDescription, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
