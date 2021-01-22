@@ -346,7 +346,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % set
             for i = 1:2:length(varargin)
                 prop = el.getPropProp(varargin{i}); % also Element.existsProp(el, prop)
-                value = varargin{i+1};
+                value = el.conditioning(prop, varargin{i+1}); % also conditions the value
                 
                 switch el.getPropCategory(prop)
                     case Category.METADATA
@@ -644,6 +644,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %                 end
 %             end
 %         end
+    end
+    methods (Access=protected) % conditioning
+        function value = conditioning(el, prop, value) %#ok<INUSL>
+            % returns the same value
+        end
     end
     methods (Access=protected) % check value
         function [value_check, value_msg] = checkValue(el, prop, value) %#ok<INUSD>

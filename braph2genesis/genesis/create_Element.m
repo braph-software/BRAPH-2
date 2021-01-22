@@ -26,6 +26,10 @@ function create_Element(generator_file, target_dir)
 %  <tag1> (<category>, <format>) <description>.
 %  <strong>%%%% ¡settings!</strong>
 %   Prop settings, depending on format.
+%  <strong>%%%% ¡conditioning!</strong>
+%   Code to condition value (before checks and calculation).
+%   Can be on multiple lines.
+%   The conditioned value should be in variable 'value'.
 %  <strong>%%%% ¡check_prop!</strong>
 %   Code to check prop format (before calculation).
 %   Can be on multiple lines.
@@ -48,6 +52,8 @@ function create_Element(generator_file, target_dir)
 %  <tag1> (<category>, <format>) <description>. [Only description can be different from original prop]
 %  <strong>%%%% ¡settings!</strong>
 %   Updated settings.
+%  <strong>%%%% ¡conditioning!</strong>
+%   Update value conditioning (before checks and calculation).
 %  <strong>%%%% ¡check_prop!</strong>
 %   Updated check prop format (before calculation).
 %  <strong>%%%% ¡check_value!</strong>
@@ -141,6 +147,7 @@ disp('¡! generator file read')
             props{i}.description = lines{1};
 
             props{i}.settings = getToken(props{i}.token, 'settings');
+            props{i}.conditioning = splitlines(getToken(props{i}.token, 'conditioning'));
             props{i}.check_prop = splitlines(getToken(props{i}.token, 'check_prop'));
             props{i}.check_value = splitlines(getToken(props{i}.token, 'check_value'));
             props{i}.default = getToken(props{i}.token, 'default');
@@ -160,6 +167,7 @@ disp('¡! generator file read')
             props_update{i}.description = lines{1};
 
             props_update{i}.settings = getToken(props_update{i}.token, 'settings');
+            props_update{i}.conditioning = splitlines(getToken(props_update{i}.token, 'conditioning'));
             props_update{i}.check_prop = splitlines(getToken(props_update{i}.token, 'check_prop'));
             props_update{i}.check_value = splitlines(getToken(props_update{i}.token, 'check_value'));
             props_update{i}.default = getToken(props_update{i}.token, 'default');
@@ -847,6 +855,35 @@ generate_constructor()
                     ''
                     })
                 g(3, [moniker ' = ' moniker '@' superclass_name '(varargin{:});'])
+            g(2, 'end')
+        g(1, 'end')
+    end
+
+generate_conditioning()
+    function generate_conditioning()
+        if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
+            return
+        end
+        g(1, 'methods (Access=protected) % conditioning')
+            g(2, ['function value = conditioning(' moniker ', prop, value)'])
+                g(3, 'switch prop')
+                    for i = 1:1:numel(props)
+                        if numel(props{i}.conditioning) > 1 || ~isempty(props{i}.conditioning{1})
+                            g(4, ['case ' class_name '.' props{i}.TAG])
+                                gs(5, props{i}.conditioning)
+                                g(5, '')
+                        end
+                    end
+                    for i = 1:1:numel(props_update)
+                        if numel(props_update{i}.conditioning) > 1 || ~isempty(props_update{i}.conditioning{1})
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                gs(5, props_update{i}.conditioning)
+                                g(5, '')
+                        end
+                    end
+                    g(4, 'otherwise')
+                        gs(5, {['[check, msg] = conditioning@' superclass_name '(' moniker ', prop, value);'], ''})
+                g(3, 'end')
             g(2, 'end')
         g(1, 'end')
     end
