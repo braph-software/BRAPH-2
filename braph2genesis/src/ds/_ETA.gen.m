@@ -291,6 +291,8 @@ PROP_SMATRIX_R_CALC (result, smatrix) is a result, smatrix.
 
 %%% ¡prop!
 PROP_CELL_R_CALC (result, cell) is a result, cell.
+%%%% ¡conditioning!
+value = NoValue.getNoValue();
 
 %% ¡tests!
 
@@ -375,3 +377,5 @@ Cell & conditioning
 assert_with_error('et = ETA(''PROP_SCALAR_P'', rand(5))', ...
     [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT])
 et = ETA('PROP_CELL_D', rand(5));
+
+et = ETA('PROP_CELL_R_CALC', 'whatever woth produce a warnign because of the conditioning');
