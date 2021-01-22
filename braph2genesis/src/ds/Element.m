@@ -337,8 +337,13 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function set(el, varargin)
             % varargin = {prop/tag, value, ...}
 
-%             props_backup = el.props; % props backup
+            % backup properties (if any prop is checked)
+            checked = el.getPropNumber() && any(cellfun(@(x) x.checked, el.props));
+            if checked
+                props_backup = el.props; % props backup
+            end
             
+            % set
             for i = 1:2:length(varargin)
                 prop = el.getPropProp(varargin{i}); % also Element.existsProp(el, prop)
                 value = varargin{i+1};
@@ -400,10 +405,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
             
-            if el.getPropNumber() && any(cellfun(@(x) x.checked, el.props))
+            % check values and restore (if any prop is checked)
+            if checked
                 [check, msg] = el.check();
                 if ~check
-%                     el.props = props_backup; % restore props backup
+                    el.props = props_backup; % restore props backup
                     error( ...
                         [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT], ...
                         [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT ' ' ...
