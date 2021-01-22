@@ -3,7 +3,8 @@ ETA < Element (et, test Element A) tests props.
 
 %%% ¡description!
 Tests the methods set, get, and check for all properties categories and formats.
-It also checks the use of reproducible randomness.
+It also checks the use of reproducible randomness, the conditioning, 
+and the restoring of a property after a failed check value.
 
 %%% ¡seealso!
 Element, Category, Format
@@ -116,6 +117,8 @@ PROP_IDICT_P (parameter, idict) is a parameter, idict.
 
 %%% ¡prop!
 PROP_SCALAR_P (parameter, scalar) is a parameter, scalar.
+%%%% ¡default!
+pi
 
 %%% ¡prop!
 PROP_RVECTOR_P (parameter, rvector) is a parameter, rvector.
@@ -263,6 +266,8 @@ PROP_IDICT_R_CALC (result, idict) is a result, idict.
 
 %%% ¡prop!
 PROP_SCALAR_R_CALC (result, scalar) is a result, scalar.
+%%%% ¡calculate!
+value = et.get('PROP_SCALAR_P') + et.get('PROP_SCALAR_D') + et.get('PROP_SCALAR_R');
 
 %%% ¡prop!
 PROP_RVECTOR_R_CALC (result, rvector) is a result, rvector.
@@ -313,7 +318,7 @@ assert(any(strcmpi(et.get('PROP_OPTION_P'), et.get('PROP_OPTION_R_CALC'))))
 
 %%% ¡test!
 %%%% ¡name!
-Matrix
+Matrix & randomness
 %%%% ¡code!
 et_1 = ETA();
 value_1 = et_1.get('PROP_MATRIX_R_CALC');
@@ -336,3 +341,19 @@ value_4 = et_4.get('PROP_MATRIX_R_CALC');
 assert(isequal(value_4, et_4.get('PROP_MATRIX_R_CALC')))
 
 assert(isequal(value_4, value_4)) % same values!
+
+%%% ¡test!
+%%%% ¡name!
+Scalar & prop backup
+%%%% ¡code!
+et = ETA('PROP_SCALAR_D', 2);
+assert(et.get('PROP_SCALAR_R_CALC') == pi + 2)
+
+et.set('PROP_SCALAR_P', 1)
+assert(et.get('PROP_SCALAR_R_CALC') == 1 + 2)
+
+assert_with_error('varargin{1}.set(''PROP_SCALAR_P'', ''a'')', ...
+    [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT], ...
+    et)
+assert(et.get('PROP_SCALAR_R_CALC') == 1 + 2)
+
