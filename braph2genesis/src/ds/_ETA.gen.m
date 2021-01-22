@@ -3,6 +3,7 @@ ETA < Element (et, test Element A) tests props.
 
 %%% ¡description!
 Tests the methods set, get, and check for all properties categories and formats.
+It also checks the use of reproducible randomness.
 
 %%% ¡seealso!
 Element, Category, Format
@@ -228,12 +229,22 @@ value = et.get('PROP_EMPTY_P');
 
 %%% ¡prop!
 PROP_STRING_R_CALC (result, string) is a result, string.
+%%%% ¡calculate!
+value = ['P: ' et.get('PROP_STRING_P') ' D:' et.get('PROP_STRING_D')];
 
 %%% ¡prop!
 PROP_LOGICAL_R_CALC (result, logical) is a result, logical.
+%%%% ¡calculate!
+value = xor(et.get('PROP_LOGICAL_P'), et.get('PROP_LOGICAL_D'));
 
 %%% ¡prop!
 PROP_OPTION_R_CALC (result, option) is a result, option.
+%%%% ¡settings!
+[ETA.getPropSettings('PROP_OPTION_D') ETA.getPropSettings('PROP_OPTION_P')]
+%%%% ¡calculate!
+options = ETA.getPropSettings('PROP_OPTION_R_CALC');
+option = et.get('PROP_OPTION_P');
+value = options{find(strcmpi(option, options))};
 
 %%% ¡prop!
 PROP_CLASS_R_CALC (result, class) is a result, class.
@@ -261,9 +272,67 @@ PROP_CVECTOR_R_CALC (result, cvector) is a result, cvector.
 
 %%% ¡prop!
 PROP_MATRIX_R_CALC (result, matrix) is a result, matrix.
+%%%% ¡calculate!
+value = rand(10);
 
 %%% ¡prop!
 PROP_SMATRIX_R_CALC (result, smatrix) is a result, smatrix.
 
 %%% ¡prop!
 PROP_CELL_R_CALC (result, cell) is a result, cell.
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Empty
+%%%% ¡code!
+et = ETA();
+assert(isempty(et.get('PROP_EMPTY_R_CALC')))
+
+%%% ¡test!
+%%%% ¡name!
+String
+%%%% ¡code!
+et = ETA('PROP_STRING_P', 'param', 'PROP_STRING_D', 'data');
+assert(ischar(et.get('PROP_STRING_R_CALC')))
+
+%%% ¡test!
+%%%% ¡name!
+Logical
+%%%% ¡code!
+et = ETA('PROP_LOGICAL_P', true, 'PROP_LOGICAL_D', false);
+assert(islogical(et.get('PROP_LOGICAL_R_CALC')))
+
+%%% ¡test!
+%%%% ¡name!
+Option
+%%%% ¡code!
+et = ETA('PROP_OPTION_P', 'two');
+assert(any(strcmpi(et.get('PROP_OPTION_P'), et.get('PROP_OPTION_R_CALC'))))
+
+%%% ¡test!
+%%%% ¡name!
+Matrix
+%%%% ¡code!
+et_1 = ETA();
+value_1 = et_1.get('PROP_MATRIX_R_CALC');
+assert(isequal(value_1, et_1.get('PROP_MATRIX_R_CALC')))
+
+et_2 = ETA();
+value_2 = et_2.get('PROP_MATRIX_R_CALC');
+assert(isequal(value_2, et_2.get('PROP_MATRIX_R_CALC')))
+
+assert(~isequal(value_1, value_2)) % different values!
+
+rng(0)
+et_3 = ETA();
+value_3 = et_3.get('PROP_MATRIX_R_CALC');
+assert(isequal(value_3, et_3.get('PROP_MATRIX_R_CALC')))
+
+rng(0)
+et_4 = ETA();
+value_4 = et_4.get('PROP_MATRIX_R_CALC');
+assert(isequal(value_4, et_4.get('PROP_MATRIX_R_CALC')))
+
+assert(isequal(value_4, value_4)) % same values!
