@@ -1,10 +1,10 @@
 function assert_with_error(code, error_identifier, varargin)
-%ASSERTWITHERROR checks whether an error is correctly thrown by the code.
+%ASSERT_WITH_ERROR checks whether an error is correctly thrown by the code.
 %
-% ASSERTWITHERROR(CODE, ERRID) checks whether the correct error with the
+% ASSERT_WITH_ERROR(CODE, ERRID) checks whether the correct error with the
 %  error identifier ERRID is thrown by the CODE (a string).
 %
-% ASSERTWITHERROR(CODE, ERRID, VAR1, VAR2, ...) executes the CODE using the
+% ASSERT_WITH_ERROR(CODE, ERRID, VAR1, VAR2, ...) executes the CODE using the
 %  variables VAR1, VAR2, ... which are referred to in the code string as 'varargin{1}', 
 %  'varargin{2}', ...
 %
