@@ -418,7 +418,7 @@ generate_inspection()
                     ['%  ' upper(moniker) '.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for ' class_name '.']
                     ['%   Error id: [BRAPH2:CLASS:WrongInput]']
                      '%'
-                     '% See also getProps, existTag.'
+                     '% See also getProps, existsTag.'
                      ''
                     })
                 g(3, 'if nargout == 1')
