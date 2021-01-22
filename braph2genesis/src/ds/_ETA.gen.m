@@ -119,6 +119,8 @@ PROP_IDICT_P (parameter, idict) is a parameter, idict.
 PROP_SCALAR_P (parameter, scalar) is a parameter, scalar.
 %%%% ¡default!
 pi
+%%%% ¡check_value!
+check = value >= 0;
 
 %%% ¡prop!
 PROP_RVECTOR_P (parameter, rvector) is a parameter, rvector.
@@ -179,6 +181,10 @@ PROP_SMATRIX_D (data, smatrix) is a data, smatrix.
 
 %%% ¡prop!
 PROP_CELL_D (data, cell) is a data, cell.
+%%%% ¡conditioning!
+if isnumeric(value)
+    value = {value};
+end
 
 %%% ¡prop!
 PROP_EMPTY_R (result, empty) is a result, empty.
@@ -352,8 +358,20 @@ assert(et.get('PROP_SCALAR_R_CALC') == pi + 2)
 et.set('PROP_SCALAR_P', 1)
 assert(et.get('PROP_SCALAR_R_CALC') == 1 + 2)
 
+assert_with_error('varargin{1}.set(''PROP_SCALAR_P'', -2)', ...
+    [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT], ...
+    et)
+assert(et.get('PROP_SCALAR_R_CALC') == 1 + 2)
+
 assert_with_error('varargin{1}.set(''PROP_SCALAR_P'', ''a'')', ...
     [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT], ...
     et)
 assert(et.get('PROP_SCALAR_R_CALC') == 1 + 2)
 
+%%% ¡test!
+%%%% ¡name!
+Cell & conditioning
+%%%% ¡code!
+assert_with_error('et = ETA(''PROP_SCALAR_P'', rand(5))', ...
+    [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT])
+et = ETA('PROP_CELL_D', rand(5));
