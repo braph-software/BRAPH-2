@@ -69,13 +69,13 @@ function create_Element(generator_file, target_dir)
 % Class methods written as functions including the relative documentation.
 %
 %<strong>%% ¡tests!</strong>
-% <strong>%% ¡test!</strong>
-%  <strong>%% ¡name!</strong>
+% <strong>%%% ¡test!</strong>
+%  <strong>%%%% ¡name!</strong>
 %  Name of the text on a single line.
-%  <strong>%% ¡code!</strong>
+%  <strong>%%%% ¡code!</strong>
 %  Code of the text.
 %  Can be on multiple lines.
-% <strong>%% ¡test!</strong>
+% <strong>%%% ¡test!</strong>
 %  ...
 % 
 % ----------
