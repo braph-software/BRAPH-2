@@ -882,7 +882,7 @@ generate_conditioning()
                         end
                     end
                     g(4, 'otherwise')
-                        gs(5, {['[check, msg] = conditioning@' superclass_name '(' moniker ', prop, value);'], ''})
+                        gs(5, {['value = conditioning@' superclass_name '(' moniker ', prop, value);'], ''})
                 g(3, 'end')
             g(2, 'end')
         g(1, 'end')
