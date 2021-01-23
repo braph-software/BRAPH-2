@@ -333,7 +333,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             el.set(varargin{:})
         end
     end
-    methods % set/check/get value
+    methods % set/check/get/seed/locked/checked
         function set(el, varargin)
             % varargin = {prop/tag, value, ...}
 
@@ -556,6 +556,19 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 el.props{prop}.value = value;
             end
         end
+        function seed = getPropSeed(el, pointer)
+            
+            prop = el.getPropProp(pointer);
+
+            seed = el.props{prop}.seed;
+        end
+        function locked = isLocked(el, pointer)
+            % prop can also be tag
+
+            prop = el.getPropProp(pointer);
+            
+            locked = el.props{prop}.locked;
+        end
         function lock(el, pointer)
             % prop can also be tag
 
@@ -580,19 +593,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
         end
-        function seed = getPropSeed(el, pointer)
-            
-            prop = el.getPropProp(pointer);
-
-            seed = el.props{prop}.seed;
-        end
-        function locked = isLocked(el, pointer)
-            % prop can also be tag
-
-            prop = el.getPropProp(pointer);
-            
-            locked = el.props{prop}.locked;
-        end
         function checked = isChecked(el, pointer)
             % prop can also be tag
 
@@ -600,6 +600,50 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             checked = el.props{prop}.checked;
         end
+        function checked(el, pointer)
+            % prop can also be tag
+
+            if nargin < 2
+                for prop = 1:1:el.getPropNumber()
+                    el.checked(prop)
+                end
+            else
+                if ~el.isChecked(pointer) % This condition is for computational efficiency 
+                    prop = el.getPropProp(pointer);
+
+                    el.props{prop}.checked = true;
+
+                    value = el.getr(prop);
+                    if isa(value, 'Element')
+                        value.checked();
+                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                        cellfun(@(x) x.checked(), value)
+                    end
+                end
+            end
+        end
+        function unchecked(el, pointer)
+            % prop can also be tag
+
+            if nargin < 2
+                for prop = 1:1:el.getPropNumber()
+                    el.unchecked(prop)
+                end
+            else
+                if el.isChecked(pointer) % This condition is for computational efficiency 
+                    prop = el.getPropProp(pointer);
+
+                    el.props{prop}.checked = false;
+
+                    value = el.getr(prop);
+                    if isa(value, 'Element')
+                        value.unchecked();
+                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                        cellfun(@(x) x.unchecked(), value)
+                    end
+                end
+            end
+        end     
     end
     methods % operators
         function check = isequal(el1, el2)
