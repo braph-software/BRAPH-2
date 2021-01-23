@@ -201,9 +201,8 @@ methods = splitlines(getToken(txt, 'methods'));
         end
     end
 
-%% Generate and save file
-target_file = [target_dir filesep() class_name '.m'];
-object_file = fopen(target_file, 'w');
+%% Generate file
+file_str = [];
 
 generate_header()
     function generate_header()
@@ -972,7 +971,11 @@ generate_footer()
         g(0, 'end')
     end
 
-fclose(object_file);    
+%% Save file
+target_file = [target_dir filesep() class_name '.m'];
+object_file = fopen(target_file, 'w');
+fprintf(object_file, file_str);
+fclose(object_file);
 
 disp(['¡! saved file: ' target_file])
 disp(' ')
@@ -980,7 +983,7 @@ disp(' ')
 %% Help functions
     function g(tabs, str)
         str = regexprep(str, '%', '%%');
-        fprintf(object_file, [repmat('\t', 1, tabs) str '\n']);
+        file_str = [file_str repmat('\t', 1, tabs) str '\n'];
     end
     function gs(tabs, lines)
         for i = 1:1:length(lines)
