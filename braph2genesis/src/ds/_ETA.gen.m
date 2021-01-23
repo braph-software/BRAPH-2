@@ -354,21 +354,29 @@ assert(isequal(value_4, value_4)) % same values!
 %%%% ¡name!
 Scalar & prop backup
 %%%% ¡code!
-et = ETA('PROP_SCALAR_D', 2);
-assert(et.get('PROP_SCALAR_R_CALC') == pi + 2)
+et_1 = ETA('PROP_SCALAR_D', 2);
+assert(et_1.get('PROP_SCALAR_R_CALC') == pi + 2)
 
-et.set('PROP_SCALAR_P', 1)
-assert(et.get('PROP_SCALAR_R_CALC') == 1 + 2)
+et_2 = ETA('PROP_SCALAR_D', 2);
+et_2.set('PROP_SCALAR_P', 1)
+assert(et_2.get('PROP_SCALAR_R_CALC') == 1 + 2)
 
+warning('off', [BRAPH2.STR ':ETA'])
+et_2.set('PROP_SCALAR_P', 100)
+assert(et_2.get('PROP_SCALAR_R_CALC') == 1 + 2) % i.e. it has not been updated
+warning('on', [BRAPH2.STR ':ETA'])
+
+et_3 = ETA('PROP_SCALAR_D', 2);
 assert_with_error('varargin{1}.set(''PROP_SCALAR_P'', -2)', ...
     [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT], ...
-    et)
-assert(et.get('PROP_SCALAR_R_CALC') == 1 + 2)
+    et_3)
+assert(et_3.get('PROP_SCALAR_R_CALC') == pi + 2)
 
+et_4 = ETA('PROP_SCALAR_D', 2);
 assert_with_error('varargin{1}.set(''PROP_SCALAR_P'', ''a'')', ...
     [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT], ...
-    et)
-assert(et.get('PROP_SCALAR_R_CALC') == 1 + 2)
+    et_4)
+assert(et_4.get('PROP_SCALAR_R_CALC') == pi + 2)
 
 %%% ¡test!
 %%%% ¡name!

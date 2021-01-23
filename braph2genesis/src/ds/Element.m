@@ -357,7 +357,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         el.props{prop}.value = value;
                         
                     case {Category.PARAMETER, Category.DATA}
-%                         if ~el.isLocked(prop)
+                        if ~el.isLocked(prop)
 %                             if isa(value, 'Callback')
 %                                 if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
 %                                     warning( ...
@@ -383,14 +383,15 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
                                 el.props{prop}.value = value;
 %                             end
-%                         else
-%                             warning( ...
-%                                 [BRAPH2.STR ':' class(el)], ...
-%                                 [class(el) ': Attempt to set the values of a LOCKED property (' el.getPropTag(prop) '), which was obviously not done. ' ...
-%                                 'Hopefully this won''t create probblems, but your code shouldn''t let this happen!'] ...
-%                                 )                            
-%                         end
-%                        
+                        else
+                            warning( ...
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) ' ' ... 
+                                'Attempt to set the values of a LOCKED property (' el.getPropTag(prop) '), which was obviously not done. ' ...
+                                'Hopefully this won''t create probblems, but your code shouldn''t let this happen!'] ...
+                                )                            
+                        end
+                       
                     case Category.RESULT
                         if isa(value, 'NoValue')
                             el.props{prop}.value = NoValue.getNoValue();
@@ -498,8 +499,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             prop = el.getPropProp(pointer);
             
-%             props_backup = el.props; % props backup
-
             value = el.getr(prop);
             
             switch el.getPropCategory(prop)
@@ -517,21 +516,32 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     
                 case Category.RESULT
                     if isa(value, 'NoValue')
+                        
+                        % backup properties (if prop is checked)
+                        if el.isChecked(prop)
+                            props_backup = el.props; % props backup
+                        end                        
+                        
                         value = el.calculateValue(prop);
 
-%                         [check, msg] = el.check();
-%                         if check
-%                             el.lock()
-%                         else
-%                             el.props = props_backup; % restore props backup
-%                             value = el.props{prop}.value; % value is also set to the original NoValue()
-%                             warning( ...
-%                                 [BRAPH2.STR ':' class(el)], ...
-%                                 [class(el) ': Wrong results: ' msg '\n' ...
-%                                 'The value of this ' class(el) ' has been restored,\n' ...
-%                                 'but there might be problems, so better you check your code!'] ...
-%                                 )
-%                         end
+                        if ~el.isChecked(prop)
+                            el.lock()
+                        else
+                            % check values and restore (if prop is checked)
+                            [check, msg] = el.check();
+                            if check
+                                el.lock()
+                            else
+                                el.props = props_backup; % restore props backup
+                                value = el.props{prop}.value; % value is also set to the original NoValue()
+                                warning( ...
+                                    [BRAPH2.STR ':' class(el)], ...
+                                    [BRAPH2.STR ':' class(el) msg '\n' ...
+                                    'The value of this ' class(el) ' has been restored,\n' ...
+                                    'but there might be problems, so better you check your code!'] ...
+                                    )
+                            end
+                        end
                     end
             end
         end
@@ -547,30 +557,28 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function lock(el, pointer)
-%             % prop can also be tag
-% 
-%             if nargin < 2
-%                 for prop = 1:1:el.getPropNumber()
-%                     if any(strcmp(el.getPropCategory(prop), {Category.PARAMETER, Category.DATA}))
-%                         el.lock(prop)
-%                     end
-%                 end
-%             else
-%                 if ~el.isLocked(pointer) % This condition is for computational efficiency 
-%                                          % TODO: check that this is fully correct
-% 
-%                     prop = el.getPropProp(pointer);
-% 
-%                     el.props{prop}.locked = true;
-% 
-%                     value = el.getr(prop);
-%                     if isa(value, 'Element')
-%                         value.lock();
-%                     elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-%                         cellfun(@(x) x.lock(), value)
-%                     end
-%                 end
-%             end
+            % prop can also be tag
+
+            if nargin < 2
+                for prop = 1:1:el.getPropNumber()
+                    if any(strcmp(el.getPropCategory(prop), {Category.PARAMETER, Category.DATA}))
+                        el.lock(prop)
+                    end
+                end
+            else
+                if ~el.isLocked(pointer) % This condition is for computational efficiency 
+                    prop = el.getPropProp(pointer);
+
+                    el.props{prop}.locked = true;
+
+                    value = el.getr(prop);
+                    if isa(value, 'Element')
+                        value.lock();
+                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                        cellfun(@(x) x.lock(), value)
+                    end
+                end
+            end
         end
         function seed = getPropSeed(el, pointer)
             
@@ -606,28 +614,28 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods (Access=private) % unlock
-%         function unlock(el, pointer)
-%             % prop can also be tag
-% 
-%             if nargin < 2
-%                 for prop = 1:1:el.getPropNumber()
-%                     if any(strcmp(el.getPropCategory(prop), {Category.PARAMETER, Category.DATA}))
-%                         el.unlock(prop)
-%                     end
-%                 end
-%             else
-%                 prop = el.getPropProp(pointer);
-% 
-%                 el.props{prop}.locked = false;
-%                 
-%                 value = el.getr(prop);
-%                 if isa(value, 'Element')
-%                     value.unlock();
-%                 elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-%                     cellfun(@(x) x.unlock(), value)
-%                 end
-%             end
-%         end
+        function unlock(el, pointer)
+            % prop can also be tag
+
+            if nargin < 2
+                for prop = 1:1:el.getPropNumber()
+                    if any(strcmp(el.getPropCategory(prop), {Category.PARAMETER, Category.DATA}))
+                        el.unlock(prop)
+                    end
+                end
+            else
+                prop = el.getPropProp(pointer);
+
+                el.props{prop}.locked = false;
+                
+                value = el.getr(prop);
+                if isa(value, 'Element')
+                    value.unlock();
+                elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                    cellfun(@(x) x.unlock(), value)
+                end
+            end
+        end
 %         function seed(el)
 %             %SEED assigns new seeds to all properties.
 %             %
