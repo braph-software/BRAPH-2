@@ -378,4 +378,4 @@ assert_with_error('et = ETA(''PROP_SCALAR_P'', rand(5))', ...
     [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT])
 et = ETA('PROP_CELL_D', rand(5));
 
-et = ETA('PROP_CELL_R_CALC', 'whatever woth produce a warnign because of the conditioning');
+et = ETA('PROP_CELL_R_CALC', 'whatever, will not produce a warning because of the conditioning');
