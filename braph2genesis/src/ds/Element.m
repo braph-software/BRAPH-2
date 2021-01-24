@@ -891,7 +891,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % no action
         end
     end
-    
     methods (Access=protected) % check value
         function [value_check, value_msg] = checkValue(el, prop, value) %#ok<INUSD>
             value_check = true;
