@@ -482,9 +482,9 @@ classdef Format < handle
                 case Format.CLASSLIST
                     % settings must be a class name of a subclass of Element (or Element itself)
                     if nargin < 2 || isempty(format_settings)
-                        format_default = {'Element'};
+                        format_default = {};
                     else
-                        format_default = {format_settings{1}};
+                        format_default = {};
                     end
                 case Format.ITEM
                     % settings must be a class name of a subclass of Element (or Element itself)
@@ -593,7 +593,7 @@ classdef Format < handle
                     check = isnumeric(value) && ismatrix(value);
                 case Format.SMATRIX
                     check = isnumeric(value) && ismatrix(value) && size(value, 1) == size(value, 2);
-                case Format.CLASS
+                case Format.CELL
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
                 otherwise
                     Format.existsFormat(format) % error because format does not exist

@@ -1,4 +1,4 @@
-function [target_dir, source_dir] = genesis(target_dir, source_dir)
+function [target_dir, source_dir] = genesis(target_dir, source_dir, run_number)
 %GENESIS generates BRAPH2.
 %
 % [TARGET_DIR, SOURCE_DIR] = GENESIS() generates BRAPH2 from the default
@@ -11,15 +11,23 @@ function [target_dir, source_dir] = genesis(target_dir, source_dir)
 % GENESIS(TARGET_DIR, SOURCE_DIR) generates BRAPH2 in TARGET_DIR from
 %  SOURCE_DIR.
 %
+% GENESIS(TARGET_DIR, SOURCE_DIR, RUN_NUMBER) runs the creation scripts
+%  RUN_NUMBER times. RUN_NUMBER = 2 improves the computational efficiency
+%  of the code  mainly by hardcoding some intermediate values.
+%
 % See also braph2genesis, create_Element, create_test_Element.
 
 fp = filesep();
 
-if nargin < 2
+if nargin < 3
+    run_number = 1;
+end
+
+if nargin < 2 || isempty(source_dir)
     source_dir = fileparts(which('braph2genesis'));
 end
 
-if nargin < 1
+if nargin < 1 || isempty(target_dir)
     target_dir = [fileparts(source_dir) fp 'braph2tmp'];
 end
 
@@ -177,84 +185,92 @@ disp('¡! copied ready files - test')
 disp(' ')
 
 %% CREATE ELEMENTS
+for run = 1:1:run_number
+    
+    disp(['¡! started run number ' int2str(run)])
+    
+    % src
+    ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
+    for i = 1:1:numel(ds_gen_list)
+        create_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
+    end
+
+    util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
+    for i = 1:1:numel(util_gen_list)
+        create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
+    end
+
+    % atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
+    % for i = 1:1:numel(atlas_gen_list)
+    %     create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
+    % end
+    % 
+    % cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
+    % for i = 1:1:numel(cohort_gen_list)
+    %     create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
+    % end
+    % 
+    % gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
+    % for i = 1:1:numel(gt_gen_list)
+    %     create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
+    % end
+    % 
+    % analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
+    % for i = 1:1:numel(analysis_gen_list)
+    %     create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
+    % end
+    % 
+    % % graphs
+    % graphs_gen_list = getGenerators([source_dir fp 'graphs']);
+    % for i = 1:1:numel(graphs_gen_list)
+    %     create_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
+    % end
+    % 
+    % % measures
+    % measures_gen_list = getGenerators([source_dir fp 'measures']);
+    % for i = 1:1:numel(measures_gen_list)
+    %     create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
+    % end
+    % 
+    % % worksflows
+    % wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
+    % for i = 1:1:numel(wf_structural_gen_list)
+    %     create_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
+    % end
+    % 
+    % wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
+    % for i = 1:1:numel(wf_functional_gen_list)
+    %     create_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
+    % end
+    % 
+    % wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
+    % for i = 1:1:numel(wf_connectivity_gen_list)
+    %     create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
+    % end
+    
+    disp(['¡! completed run number ' int2str(run)])
+    disp(' ')
+end
+
+%% LOAD BRAPH2
+addpath(target_dir)
+braph2
+
+disp('¡! loaded BRAPH2')
+disp(' ')
+
+%% CREATE TEST
 % src
 ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
 for i = 1:1:numel(ds_gen_list)
-    create_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
+    create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
 end
 
-% util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
-% for i = 1:1:numel(util_gen_list)
-%     create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
-% end
-% 
-% atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-% for i = 1:1:numel(atlas_gen_list)
-%     create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
-% end
-% 
-% cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-% for i = 1:1:numel(cohort_gen_list)
-%     create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
-% end
-% 
-% gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
-% for i = 1:1:numel(gt_gen_list)
-%     create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
-% end
-% 
-% analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-% for i = 1:1:numel(analysis_gen_list)
-%     create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
-% end
-% 
-% % graphs
-% graphs_gen_list = getGenerators([source_dir fp 'graphs']);
-% for i = 1:1:numel(graphs_gen_list)
-%     create_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
-% end
-% 
-% % measures
-% measures_gen_list = getGenerators([source_dir fp 'measures']);
-% for i = 1:1:numel(measures_gen_list)
-%     create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
-% end
-% 
-% % worksflows
-% wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
-% for i = 1:1:numel(wf_structural_gen_list)
-%     create_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
-% end
-% 
-% wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
-% for i = 1:1:numel(wf_functional_gen_list)
-%     create_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
-% end
-% 
-% wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
-% for i = 1:1:numel(wf_connectivity_gen_list)
-%     create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
-% end
-% 
-% %% LOAD BRAPH2
-% addpath(target_dir)
-% braph2
-% 
-% disp('¡! loaded BRAPH2')
-% disp(' ')
-% 
-% %% CREATE TEST
-% % src
-% ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
-% for i = 1:1:numel(ds_gen_list)
-%     create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
-% end
-% 
-% util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
-% for i = 1:1:numel(util_gen_list)
-%     create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
-% end
-% 
+util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
+for i = 1:1:numel(util_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
+end
+
 % atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
 % for i = 1:1:numel(atlas_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])

@@ -7,7 +7,7 @@ function create_Element(generator_file, target_dir)
 %
 % A generator file (whose name must have ending '.gen.m', and tipically
 %  starts with "_") has the following structure (the token ¡header! is
-%  required, while the rest is optional):
+%  required, while the rest is mostly optional, unless otherwise stated):
 %
 % ----------
 %
@@ -26,6 +26,14 @@ function create_Element(generator_file, target_dir)
 %  <tag1> (<category>, <format>) <description>.
 %  <strong>%%%% ¡settings!</strong>
 %   Prop settings, depending on format.
+%  <strong>%%%% ¡conditioning!</strong>
+%   Code to condition value (before checks and calculation).
+%   Can be on multiple lines.
+%   The conditioned value should be in variable 'value'.
+%  <strong>%%%% ¡postprocessing!</strong>
+%   Postprocessign code (executed after setting, but before checking, value).
+%   Can be on multiple lines.
+%   Does not return anything.
 %  <strong>%%%% ¡check_prop!</strong>
 %   Code to check prop format (before calculation).
 %   Can be on multiple lines.
@@ -33,7 +41,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡check_value!</strong>
 %   Code to check prop value (after calculation).
 %   Can be on multiple lines.
-%   The outcome should be in variable 'check'.
+%   The outcome should be in variable 'check' and the message in 'msg'.
 %  <strong>%%%% ¡default!</strong>
 %   Prop default value (seldom needed).
 %  <strong>%%%% ¡calculate!</strong>
@@ -48,6 +56,10 @@ function create_Element(generator_file, target_dir)
 %  <tag1> (<category>, <format>) <description>. [Only description can be different from original prop]
 %  <strong>%%%% ¡settings!</strong>
 %   Updated settings.
+%  <strong>%%%% ¡conditioning!</strong>
+%   Update value conditioning (before checks and calculation).
+%  <strong>%%%% ¡postprocessing!</strong>
+%   Update value postprocessing (after setting, bur before checking, value).
 %  <strong>%%%% ¡check_prop!</strong>
 %   Updated check prop format (before calculation).
 %  <strong>%%%% ¡check_value!</strong>
@@ -59,8 +71,24 @@ function create_Element(generator_file, target_dir)
 % <strong>%%% ¡prop!</strong>
 %  <tag2> ...
 % 
+%<strong>%% ¡constants!</strong>
+% Constants.
+% 
 %<strong>%% ¡staticmethods!</strong>
 % Static methods written as functions including the relative documentation.
+% 
+%<strong>%% ¡methods!</strong>
+% Class methods written as functions including the relative documentation.
+%
+%<strong>%% ¡tests!</strong>
+% <strong>%%% ¡test!</strong>
+%  <strong>%%%% ¡name!</strong>
+%  Name of the text on a single line.
+%  <strong>%%%% ¡code!</strong>
+%  Code of the text.
+%  Can be on multiple lines.
+% <strong>%%% ¡test!</strong>
+%  ...
 % 
 % ----------
 % 
@@ -125,6 +153,8 @@ disp('¡! generator file read')
             props{i}.description = lines{1};
 
             props{i}.settings = getToken(props{i}.token, 'settings');
+            props{i}.conditioning = splitlines(getToken(props{i}.token, 'conditioning'));
+            props{i}.postprocessing = splitlines(getToken(props{i}.token, 'postprocessing'));
             props{i}.check_prop = splitlines(getToken(props{i}.token, 'check_prop'));
             props{i}.check_value = splitlines(getToken(props{i}.token, 'check_value'));
             props{i}.default = getToken(props{i}.token, 'default');
@@ -144,6 +174,8 @@ disp('¡! generator file read')
             props_update{i}.description = lines{1};
 
             props_update{i}.settings = getToken(props_update{i}.token, 'settings');
+            props_update{i}.conditioning = splitlines(getToken(props_update{i}.token, 'conditioning'));
+            props_update{i}.postprocessing = splitlines(getToken(props_update{i}.token, 'postprocessing'));
             props_update{i}.check_prop = splitlines(getToken(props_update{i}.token, 'check_prop'));
             props_update{i}.check_value = splitlines(getToken(props_update{i}.token, 'check_value'));
             props_update{i}.default = getToken(props_update{i}.token, 'default');
@@ -151,15 +183,34 @@ disp('¡! generator file read')
         end
     end
 
-% constants = splitlines(getToken(txt, 'constants'));
+constants = splitlines(getToken(txt, 'constants'));
 
 staticmethods = splitlines(getToken(txt, 'staticmethods'));
 
-% methods = splitlines(getToken(txt, 'methods'));
+methods = splitlines(getToken(txt, 'methods'));
 
-%% Generate and save file
-target_file = [target_dir filesep() class_name '.m'];
-object_file = fopen(target_file, 'w');
+%% Load info from already generated file [fc = from class]
+[fc_prop_number, fc_prop_list_txt, fc_prop_list, fc_prop_tag_list] = load_from_class_prop();
+    function [fc_prop_number, fc_prop_list_txt, fc_prop_list, fc_prop_tag_list] = load_from_class_prop()
+        fc_prop_number = [];
+        fc_prop_list_txt = {};
+        fc_prop_list = '';
+        fc_prop_tag_list = '';
+        
+        if exist(class_name, 'class') == 8
+            fc_prop_number = Element.getPropNumber(class_name);
+
+            fc_prop_list_txt = cell(Element.getPropNumber(class_name), 1);
+            for prop = 1:1:Element.getPropNumber(class_name)
+                fc_prop_list_txt{prop} = ['<strong>' int2str(prop) '</strong> <strong>' Element.getPropTag(class_name, prop) '</strong> \t' Element.getPropDescription(class_name, prop)];
+                fc_prop_list = [fc_prop_list ' ' int2str(prop) ' ']; %#ok<AGROW>
+                fc_prop_tag_list = [fc_prop_tag_list ' ''' Element.getPropTag(class_name, prop) ''' ']; %#ok<AGROW>
+            end
+        end
+    end
+
+%% Generate file
+file_str = [];
 
 generate_header()
     function generate_header()
@@ -168,30 +219,35 @@ generate_header()
         else
             g(0, ['classdef (' class_attributes ') ' class_name ' < ' superclass_name])
         end
-        gs(1, {...
-            ['% ' class_name ' ' header_description '.'], ...
-            ['% It is a subclass of <a href="matlab:help ' superclass_name '">' superclass_name '</a>.'], ...
-            '%' ...
+        gs(1, {
+            ['% ' class_name ' ' header_description '.']
+            ['% It is a subclass of <a href="matlab:help ' superclass_name '">' superclass_name '</a>.']
+             '%'
             })
         gs(1, cellfun(@(x) ['% ' x], description, 'UniformOutput', false))
+        gs(1, {
+             '%'
+            ['% The list of ' class_name ' properties is:']
+            })
+        gs(1, cellfun(@(x) ['%  ' x], fc_prop_list_txt, 'UniformOutput', false))
         if ~isempty(seealso)
-            gs(1, {...
-                '%', ...
-                ['% See also ' seealso '.'], ...
+            gs(1, {
+                 '%'
+                ['% See also ' seealso '.']
                 })
         end
         g(1, '')
     end
 
-% generate_constants()
-%     function generate_constants()
-%         if numel(constants) == 1 && isempty(constants{1})
-%             return
-%         end
-%         g(1, 'properties (Constant) % constants')
-%             gs(2, constants)
-%         g(1, 'end')
-%     end
+generate_constants()
+    function generate_constants()
+        if numel(constants) == 1 && isempty(constants{1})
+            return
+        end
+        g(1, 'properties (Constant) % constants')
+            gs(2, constants)
+        g(1, 'end')
+    end
 
 generate_staticmethods()
     function generate_staticmethods()
@@ -387,13 +443,53 @@ generate_inspection()
                      '% See also getProps.'
                      ''
                     })
-                g(3, ['prop_number = numel(' class_name '.getProps());'])
+                if isempty(fc_prop_number)
+                    g(3, ['prop_number = numel(' class_name '.getProps());'])
+                else
+                    gs(3, { 
+                         '% COMPUTATIONAL EFFICIENCY TRICK'
+                         '% hardcoded for computational efficiency'
+                        ['prop_number = ' int2str(fc_prop_number) ';']
+                        })
+                end
             g(2, 'end')
 
             % existsProp(prop)
             g(2, 'function check = existsProp(prop)')
+                gs(3, {
+                    ['%EXISTSPROP checks whether property exists in ' descriptive_name '/error.']
+                     '%'
+                     ['% CHECK = ' class_name '.EXISTSPROP(PROP) checks whether the property PROP exists.']
+                     '%'                    
+                     '% Alternative forms to call this method are:'
+                    ['%  CHECK = ' upper(moniker) '.EXISTSPROP(PROP) checks whether PROP exists for ' upper(moniker) '.']
+                    ['%  CHECK = Element.EXISTSPROP(' upper(moniker) ', PROP) checks whether PROP exists for ' upper(moniker) '.']
+                    ['%  CHECK = Element.EXISTSPROP(' class_name ', PROP) checks whether PROP exists for ' class_name '.']
+                     '%'
+                     '% Element.EXISTSPROP(PROP) throws an error if the PROP does NOT exist.'
+                    ['%  Error id: [BRAPH2:' class_name ':WrongInput]']
+                     '%'
+                     '% Alternative forms to call this method are:'
+                    ['%  ' upper(moniker) '.EXISTSPROP(PROP) throws error if PROP does NOT exist for ' upper(moniker) '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  Element.EXISTSPROP(' upper(moniker) ', PROP) throws error if PROP does NOT exist for ' upper(moniker) '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  Element.EXISTSPROP(' class_name ', PROP) throws error if PROP does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                     '%'
+                     '% See also getProps, existsTag.'
+                     ''
+                    })
                 g(3, 'if nargout == 1')
-                    g(4, ['check = any(prop == ' class_name '.getProps());'])
+                    if isempty(fc_prop_list)
+                        g(4, ['check = any(prop == ' class_name '.getProps());'])
+                    else
+                        gs(4, {
+                             '% COMPUTATIONAL EFFICIENCY TRICK'
+                             '% hardcoded for computational efficiency'
+                            ['check = any(prop == [' fc_prop_list ']);']
+                            })
+                    end
                 g(3, 'else')
                     g(4, 'assert( ...')
                         gs(5, {
@@ -408,11 +504,52 @@ generate_inspection()
 
             % existsTag(prop)
             g(2, 'function check = existsTag(tag)')
-                g(3, 'if nargout == 1')
-                    gs(4, {
-                        ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
-                         'check = any(strcmpi(tag, tag_list));'
-                         })
+                gs(3, {
+                    ['%EXISTSTAG checks whether tag exists in ' descriptive_name '/error.']
+                     '%'
+                     ['% CHECK = ' class_name '.EXISTSTAG(TAG) checks whether a property with tag TAG exists.']
+                     '%'                    
+                     '% Alternative forms to call this method are:'
+                    ['%  CHECK = ' upper(moniker) '.EXISTSTAG(TAG) checks whether TAG exists for ' upper(moniker) '.']
+                    ['%  CHECK = Element.EXISTSTAG(' upper(moniker) ', TAG) checks whether TAG exists for ' upper(moniker) '.']
+                    ['%  CHECK = Element.EXISTSTAG(' class_name ', TAG) checks whether TAG exists for ' class_name '.']
+                     '%'
+                     '% Element.EXISTSTAG(TAG) throws an error if the TAG does NOT exist.'
+                    ['%  Error id: [BRAPH2:' class_name ':WrongInput]']
+                     '%'
+                     '% Alternative forms to call this method are:'
+                    ['%  ' upper(moniker) '.EXISTSTAG(TAG) throws error if TAG does NOT exist for ' upper(moniker) '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  Element.EXISTSTAG(' upper(moniker) ', TAG) throws error if TAG does NOT exist for ' upper(moniker) '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  Element.EXISTSTAG(' class_name ', TAG) throws error if TAG does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                     '%'
+                     '% See also getProps, existsTag.'
+                     ''
+                     })
+                if isempty(fc_prop_tag_list)
+                    gs(3, {
+                         '% COMPUTATIONAL EFFICIENCY TRICK'
+                         '% persistent variable for computational efficiency'
+                        ['persistent ' lower(class_name) '_tag_list']
+                        ['if isempty(' lower(class_name) '_tag_list)']
+                        ['\t' lower(class_name) '_tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
+                         'end'
+                         ''
+                        })
+                    g(3, 'if nargout == 1')
+                        g(4, ['check = any(strcmpi(tag, ' lower(class_name) '_tag_list));'])
+                else
+                    g(3, 'if nargout == 1')
+                        gs(4, {
+                             '% COMPUTATIONAL EFFICIENCY TRICK'
+                             '% hardcoded for computational efficiency'
+                            [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
+                             ''
+                            })
+                        g(4, ['check = any(strcmpi(tag, ' lower(class_name) '_tag_list));'])
+                end
                 g(3, 'else')
                     g(4, 'assert( ...')
                         gs(5, {
@@ -427,14 +564,57 @@ generate_inspection()
 
             % getPropProp(pointer)
             g(2, 'function prop = getPropProp(pointer)')
-                g(3, 'if ischar(pointer)')
-                    gs(4, {
-                         'tag = pointer;'
-                        [class_name '.existsTag(tag);']
-                    	 ''
-                        ['tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()''), ''UniformOutput'', false);']
-                    	 'prop = find(strcmpi(tag, tag_list));'
-                         })
+            gs(3, {
+                '%GETPROPPROP returns the property number of a property.'
+                '%'
+                '% PROP = Element.GETPROPPROP(PROP) returns PROP, i.e., the '
+                '%  property number of the property PROP.'
+                '%'
+                '% PROP = Element.GETPROPPROP(TAG) returns the property number '
+                '%  of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  PROPERTY = ' upper(moniker) '.GETPROPPROP(POINTER) returns property number of POINTER of ' upper(moniker) '.']
+                ['%  PROPERTY = Element.GETPROPPROP(' class_name ', POINTER) returns property number of POINTER of ' class_name '.']
+                ['%  PROPERTY = ' upper(moniker) '.GETPROPPROP(' class_name ', POINTER) returns property number of POINTER of ' class_name '.']
+                '%'
+                '% See also getPropFormat, getPropTag, getPropCategory,'
+                '% getPropDescription, getPropSettings, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
+                if isempty(fc_prop_tag_list)
+                    gs(3, {
+                         '% COMPUTATIONAL EFFICIENCY TRICK'
+                         '% persistent variable for computational efficiency'
+                        ['persistent ' lower(class_name) '_tag_list']
+                        ['if isempty(' lower(class_name) '_tag_list)']
+                        ['\t' lower(class_name) '_tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
+                         'end'
+                         ''
+                        })
+                    g(3, 'if ischar(pointer)')
+                        gs(4, {
+                             'tag = pointer;'
+                            [class_name '.existsTag(tag);']
+                             ''
+                            ['prop = find(strcmpi(tag, ' lower(class_name) '_tag_list));']
+                             })
+                else
+                    g(3, 'if ischar(pointer)')
+                        gs(4, {
+                             '% COMPUTATIONAL EFFICIENCY TRICK'
+                             '% hardcoded for computational efficiency'
+                            [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
+                             ''
+                            })
+                        gs(4, {
+                             'tag = pointer;'
+                            [class_name '.existsTag(tag);']
+                             ''
+                            ['prop = find(strcmpi(tag, ' lower(class_name) '_tag_list));']
+                             })
+                end
                 g(3, 'else % numeric')
                     gs(4, {
                          'prop = pointer;'
@@ -445,6 +625,25 @@ generate_inspection()
 
             % getPropTag(pointer)
             g(2, 'function tag = getPropTag(pointer)')
+            gs(3, {
+                '%GETPROPTAG returns the tag of a property.'
+                '%'
+                '% TAG = Element.GETPROPTAG(PROP) returns the tag TAG of the '
+                '%  property PROP.'
+                '%'
+                '% TAG = Element.GETPROPTAG(TAG) returns TAG, i.e. the tag of '
+                '%  the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  TAG = ' upper(moniker) '.GETPROPTAG(POINTER) returns tag of POINTER of ' upper(moniker) '.']
+                ['%  TAG = Element.GETPROPTAG(' class_name ', POINTER) returns tag of POINTER of ' class_name '.']
+                ['%  TAG = ' upper(moniker) '.GETPROPTAG(' class_name ', POINTER) returns tag of POINTER of ' class_name '.']
+                '%'
+                '% See also getPropProp, getPropSettings, getPropCategory,'
+                '% getPropFormat, getPropDescription, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 g(3, 'if ischar(pointer)')
                     gs(4, {
                          'tag = pointer;'
@@ -471,6 +670,25 @@ generate_inspection()
 
             % getPropCategory(pointer)
             g(2, 'function prop_category = getPropCategory(pointer)')
+            gs(3, {
+                '%GETPROPCATEGORY returns the category of a property.'
+                '%'
+                '% CATEGORY = Element.GETPROPCATEGORY(PROP) returns the'
+                '%  category of the property PROP.'
+                '%'
+                '% CATEGORY = Element.GETPROPCATEGORY(TAG) returns the'
+                '%  category of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  CATEGORY = ' upper(moniker) '.GETPROPCATEGORY(POINTER) returns category of POINTER of ' upper(moniker) '.']
+                ['%  CATEGORY = Element.GETPROPCATEGORY(' class_name ', POINTER) returns category of POINTER of ' class_name '.']
+                ['%  CATEGORY = ' upper(moniker) '.GETPROPCATEGORY(' class_name ', POINTER) returns category of POINTER of ' class_name '.']
+                '%'
+                '% See also Category, getPropProp, getPropTag, getPropSettings,'
+                '% getPropFormat, getPropDescription, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
@@ -489,6 +707,25 @@ generate_inspection()
 
             % getPropFormat(pointer)
             g(2, 'function prop_format = getPropFormat(pointer)')
+            gs(3, {
+                '%GETPROPFORMAT returns the format of a property.'
+                '%'
+                '% FORMAT = Element.GETPROPFORMAT(PROP) returns the'
+                '%  format of the property PROP.'
+                '%'
+                '% FORMAT = Element.GETPROPFORMAT(TAG) returns the'
+                '%  format of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  FORMAT = ' upper(moniker) '.GETPROPFORMAT(POINTER) returns format of POINTER of ' upper(moniker) '.']
+                ['%  FORMAT = Element.GETPROPFORMAT(' class_name ', POINTER) returns format of POINTER of ' class_name '.']
+                ['%  FORMAT = ' upper(moniker) '.GETPROPFORMAT(' class_name ', POINTER) returns format of POINTER of ' class_name '.']
+                '%'
+                '% See also Format, getPropProp, getPropTag, getPropCategory,'
+                '% getPropDescription, getPropSettings, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
@@ -507,6 +744,25 @@ generate_inspection()
 
             % getPropDescription(pointer)
             g(2, 'function prop_description = getPropDescription(pointer)')
+            gs(3, {
+                '%GETPROPDESCRIPTION returns the description of a property.'
+                '%'
+                '% DESCRIPTION = Element.GETPROPDESCRIPTION(PROP) returns the'
+                '%  description of the property PROP.'
+                '%'
+                '% DESCRIPTION = Element.GETPROPDESCRIPTION(TAG) returns the'
+                '%  description of the property with tag TAG.'
+                '%'
+                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  DESCRIPTION = ' upper(moniker) '.GETPROPDESCRIPTION(POINTER) returns description of POINTER of ' upper(moniker) '.']
+                ['%  DESCRIPTION = Element.GETPROPDESCRIPTION(' class_name ', POINTER) returns description of POINTER of ' class_name '.']
+                ['%  DESCRIPTION = ' upper(moniker) '.GETPROPDESCRIPTION(' class_name ', POINTER) returns description of POINTER of ' class_name '.']
+                '%'
+                '% See also getPropProp, getPropTag, getPropCategory,'
+                '% getPropFormat, getPropSettings, getPropDefault,'
+                '% checkProp.'
+                ''
+                })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
@@ -529,6 +785,25 @@ generate_inspection()
 
             % getPropSettings(pointer)
             g(2, 'function prop_settings = getPropSettings(pointer)')
+            gs(3, {
+                 '%GETPROPSETTINGS returns the settings of a property.'
+                 '%'
+                 '% SETTINGS = Element.GETPROPSETTINGS(PROP) returns the'
+                 '%  settings of the property PROP.'
+                 '%'
+                 '% SETTINGS = Element.GETPROPSETTINGS(TAG) returns the'
+                 '%  settings of the property with tag TAG.'
+                 '%'
+                 '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  SETTINGS = ' upper(moniker) '.GETPROPSETTINGS(POINTER) returns settings of POINTER of ' upper(moniker) '.']
+                ['%  SETTINGS = Element.GETPROPSETTINGS(' class_name ', POINTER) returns settings of POINTER of ' class_name '.']
+                ['%  SETTINGS = ' upper(moniker) '.GETPROPSETTINGS(' class_name ', POINTER) returns settings of POINTER of ' class_name '.']
+                 '%'
+                 '% See also getPropProp, getPropTag, getPropCategory,'
+                 '% getPropFormat, getPropDescription, getPropDefault,'
+                 '% checkProp.'
+                 ''
+                })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
@@ -557,6 +832,25 @@ generate_inspection()
 
             % getPropDefault(pointer)
             g(2, 'function prop_default = getPropDefault(pointer)')
+              gs(3, {
+                     '%GETPROPDEFAULT returns the default value of a property.'
+                     '%'
+                    ['% DEFAULT = ' class_name '.GETPROPDEFAULT(PROP) returns the default ']
+                     '%  value of the property PROP.'
+                     '%'
+                    ['% DEFAULT = ' class_name '.GETPROPDEFAULT(TAG) returns the default ']
+                     '%  value of the property with tag TAG.'
+                     '%'
+                     '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                    ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULT(POINTER) returns the default value of POINTER of ' upper(moniker) '.']
+                    ['%  DEFAULT = Element.GETPROPDEFAULT(' class_name ', POINTER) returns the default value of POINTER of ' class_name '.']
+                    ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULT(' class_name ', POINTER) returns the default value of POINTER of ' class_name '.']
+                     '%'
+                     '% See also getPropProp, getPropTag, getPropSettings, '
+                     '% getPropCategory, getPropFormat, getPropDescription, '
+                     '% checkProp.'
+                     ''
+                    })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                      ''
@@ -567,7 +861,7 @@ generate_inspection()
                             if ~isempty(props{i}.default)
                                 g(5, ['prop_default = ' props{i}.default ';'])
                             else
-                                g(5, ['prop_default = Format.getFormatDefault(Format.' props{i}.FORMAT ');'])
+                                g(5, ['prop_default = Format.getFormatDefault(Format.' props{i}.FORMAT ', ' class_name '.getPropSettings(prop));'])
                             end                            
                     end
                     for i = 1:1:numel(props_update)
@@ -577,7 +871,7 @@ generate_inspection()
                         end                            
                     end
                     if ~strcmp(superclass_name, 'Element')
-                        g(4, [ 'otherwise']);
+                        g(4, 'otherwise');
                             g(5, [ 'prop_default = getPropDefault@' superclass_name '(prop);']);
                     end
                 g(3, 'end')
@@ -585,6 +879,35 @@ generate_inspection()
 
             % checkProp(pointer, value)
             g(2, 'function prop_check = checkProp(pointer, value)')
+              gs(3, {
+                     '%CHECKPROP checks whether a value has the correct format/error.'
+                     '%'
+                    ['% CHECK = ' upper(moniker) '.CHECKPROP(POINTER, VALUE) checks whether']
+                     '%  VALUE is an acceptable value for the format of the property'
+                     '%  POINTER (POINTER = PROP or TAG).'
+                     '% '
+                     '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                    ['%  CHECK = ' upper(moniker) '.CHECKPROP(POINTER, VALUE) checks VALUE format for PROP of ' upper(moniker) '.']
+                    ['%  CHECK = Element.CHECKPROP(' class_name ', PROP, VALUE) checks VALUE format for PROP of ' class_name '.']
+                    ['%  CHECK = ' upper(moniker) '.CHECKPROP(' class_name ', PROP, VALUE) checks VALUE format for PROP of ' class_name '.']
+                     '% ' 
+                    ['% ' upper(moniker) '.CHECKPROP(POINTER, VALUE) throws an error if VALUE is']
+                     '%  NOT an acceptable value for the format of the property POINTER.'
+                    ['%  Error id: [BRAPH2:' class_name ':WrongInput]']
+                     '% '
+                     '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                    ['%  ' upper(moniker) '.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of ' upper(moniker) '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  Element.CHECKPROP(' class_name ', PROP, VALUE) throws error if VALUE has not a valid format for PROP of ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  ' upper(moniker) '.CHECKPROP(' class_name ', PROP, VALUE) throws error if VALUE has not a valid format for PROP of ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                     '% '
+                     '% See also Format, getPropProp, getPropTag, getPropSettings,'
+                     '% getPropCategory, getPropFormat, getPropDescription,'
+                     '% getPropDefault.'
+                     ''
+                    })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
@@ -632,9 +955,9 @@ generate_inspection()
 
         g(1, 'end')
     end
-% 
-% generate_header_graph() % only for graphs
-%     function generate_header_graph()
+
+generate_header_graph() % only for graphs
+    function generate_header_graph()
 %         get_layernumber = { ''
 %             'if isempty(varargin)'
 %             '\tlayernumber = 1;'
@@ -685,10 +1008,10 @@ generate_inspection()
 %                 end
 %             g(1, 'end')
 %         end
-%     end
-% 
-% generate_header_measure() % only for measures
-%     function generate_header_measure()
+    end
+
+generate_header_measure() % only for measures
+    function generate_header_measure()
 %         if ~isempty(shape) || ...
 %                 ~isempty(scope) || ...
 %                 ~isempty(parametricity) || ...
@@ -724,14 +1047,28 @@ generate_inspection()
 %                 end
 %             g(1, 'end')
 %         end
-%     end
+    end
 
 generate_constructor()
     function generate_constructor()
         g(1, 'methods % constructor')
             g(2, ['function ' moniker ' = ' class_name '(varargin)'])
-                gs(3, { ...
-                    ['% ' class_name '() creates a ' descriptive_name '.'], ...
+                gs(3, {
+                    ['% ' class_name '() creates a ' descriptive_name '.']
+                     '%'
+                    ['% ' class_name '(PROP, VALUE, ...) with property PROP initialized to VALUE.']
+                     '%'
+                    ['% ' class_name '(TAG, VALUE, ...) with property with tag TAG set to VALUE.']
+                     '%'
+                    '% Multiple properties can be initialized at once identifying'
+                    '%  them with either property numbers (PROP) or tags (TAG).'
+                    '%'
+                    ['% The list of ' class_name ' properties is:']
+                    })
+                gs(3, cellfun(@(x) ['%  ' x], fc_prop_list_txt, 'UniformOutput', false))
+                gs(3, {
+                    '%'
+                    '% See also Category, Format, set, check.'
                     ''
                     })
                 g(3, [moniker ' = ' moniker '@' superclass_name '(varargin{:});'])
@@ -739,83 +1076,153 @@ generate_constructor()
         g(1, 'end')
     end
 
-% generate_checkValue()
-%     function generate_checkValue()
-%         if all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props)) && all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props_update))
-%             return
-%         end
-%         g(1, 'methods (Access=protected) % check value')
-%             g(2, ['function [check, msg] = checkValue(' moniker ', prop, value)'])
-%                 gs(3, {'check = true;', 'msg = '''';', ''})
-%                 g(3, 'switch prop')
-%                     for i = 1:1:numel(props)
-%                         if numel(props{i}.check_value) > 1 || ~isempty(props{i}.check_value{1})
-%                             g(4, ['case ' class_name '.' props{i}.TAG])
-%                                 gs(5, props{i}.check_value)
-%                                 g(5, '')
-%                         end
-%                     end
-%                     for i = 1:1:numel(props_update)
-%                         if numel(props_update{i}.check_value) > 1 || ~isempty(props_update{i}.check_value{1})
-%                             g(4, ['case ' class_name '.' props_update{i}.TAG])
-%                                 gs(5, props_update{i}.check_value)
-%                                 g(5, '')
-%                         end
-%                     end
-%                     g(4, 'otherwise')
-%                         gs(5, {['[check, msg] = checkValue@' superclass_name '(' moniker ', prop, value);'], ''})
-%                 g(3, 'end')
-%             g(2, 'end')
-%         g(1, 'end')
-%     end
-% 
-% generate_calculateValue()
-%     function generate_calculateValue()
-%         if sum(cellfun(@(x) strcmpi(x.category, 'RESULT'), props)) == 0 && sum(cellfun(@(x) strcmpi(x.category, 'RESULT'), props_update)) == 0
-%             return
-%         end
-%         g(1, 'methods (Access=protected) % calculate value')
-%             gs(2, {['function value = calculateValue(' moniker ', prop)']; ''})
-%                 g(3, 'switch prop')
-%                     for i = 1:1:numel(props)
-%                         if strcmpi(props{i}.category, 'RESULT')
-%                             g(4, ['case ' class_name '.' props{i}.TAG])
-%                                 g(5, ['rng(' moniker '.getPropSeed(' class_name '.' props{i}.TAG '), ''twister'')'])
-%                                 g(5, '')
-%                                 gs(5, props{i}.calculate)
-%                                 g(5, '')
-%                         end
-%                     end
-%                     for i = 1:1:numel(props_update)
-%                         if strcmpi(props_update{i}.category, 'RESULT')
-%                             g(4, ['case ' class_name '.' props_update{i}.TAG])
-%                                 gs(5, props_update{i}.calculate)
-%                                 g(5, '')
-%                         end
-%                     end
-%                     g(4, 'otherwise')
-%                         gs(5, {['value = calculateValue@' superclass_name '(' moniker ', prop);']; ''})
-%                 g(3, 'end')
-%             g(2, 'end')
-%         g(1, 'end')
-%     end
-% 
-% generate_methods()
-%     function generate_methods()
-%         if numel(methods) == 1 && isempty(methods{1})
-%             return
-%         end
-%         g(1, 'methods % methods')
-%             gs(2, methods)
-%         g(1, 'end')
-%     end
+generate_conditioning()
+    function generate_conditioning()
+        if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
+            return
+        end
+        g(1, 'methods (Access=protected) % conditioning')
+            g(2, ['function value = conditioning(' moniker ', prop, value)'])
+                g(3, 'switch prop')
+                    for i = 1:1:numel(props)
+                        if numel(props{i}.conditioning) > 1 || ~isempty(props{i}.conditioning{1})
+                            g(4, ['case ' class_name '.' props{i}.TAG])
+                                gs(5, props{i}.conditioning)
+                                g(5, '')
+                        end
+                    end
+                    for i = 1:1:numel(props_update)
+                        if numel(props_update{i}.conditioning) > 1 || ~isempty(props_update{i}.conditioning{1})
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                gs(5, props_update{i}.conditioning)
+                                g(5, '')
+                        end
+                    end
+                    g(4, 'otherwise')
+                        gs(5, {['value = conditioning@' superclass_name '(' moniker ', prop, value);'], ''})
+                g(3, 'end')
+            g(2, 'end')
+        g(1, 'end')
+    end
+
+generate_postprocessing()
+    function generate_postprocessing()
+        if all(cellfun(@(x) numel(x.postprocessing) == 1 && isempty(x.postprocessing{1}), props)) && all(cellfun(@(x) numel(x.postprocessing) == 1 && isempty(x.postprocessing{1}), props_update))
+            return
+        end
+        g(1, 'methods (Access=protected) % postprocessing')
+            g(2, ['function postprocessing(' moniker ', prop)'])
+                g(3, 'switch prop')
+                    for i = 1:1:numel(props)
+                        if numel(props{i}.postprocessing) > 1 || ~isempty(props{i}.postprocessing{1})
+                            g(4, ['case ' class_name '.' props{i}.TAG])
+                                gs(5, props{i}.postprocessing)
+                                g(5, '')
+                        end
+                    end
+                    for i = 1:1:numel(props_update)
+                        if numel(props_update{i}.postprocessing) > 1 || ~isempty(props_update{i}.postprocessing{1})
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                gs(5, props_update{i}.postprocessing)
+                                g(5, '')
+                        end
+                    end
+                    g(4, 'otherwise')
+                        gs(5, {['postprocessing@' superclass_name '(' moniker ', prop);'], ''})
+                g(3, 'end')
+            g(2, 'end')
+        g(1, 'end')
+    end
+
+generate_checkValue()
+    function generate_checkValue()
+        if all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props)) && all(cellfun(@(x) numel(x.check_value) == 1 && isempty(x.check_value{1}), props_update))
+            return
+        end
+        g(1, 'methods (Access=protected) % check value')
+            g(2, ['function [check, msg] = checkValue(' moniker ', prop, value)'])
+                gs(3, {
+                     'check = true;'
+                    ['msg = [''Error while checking'' tostring(' moniker ') '' '' ' moniker '.getPropTag(prop) ''.''];']
+                     ''
+                     })
+                g(3, 'switch prop')
+                    for i = 1:1:numel(props)
+                        if numel(props{i}.check_value) > 1 || ~isempty(props{i}.check_value{1})
+                            g(4, ['case ' class_name '.' props{i}.TAG])
+                                gs(5, props{i}.check_value)
+                                g(5, '')
+                        end
+                    end
+                    for i = 1:1:numel(props_update)
+                        if numel(props_update{i}.check_value) > 1 || ~isempty(props_update{i}.check_value{1})
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                gs(5, props_update{i}.check_value)
+                                g(5, '')
+                        end
+                    end
+                    g(4, 'otherwise')
+                        gs(5, {['[check, msg] = checkValue@' superclass_name '(' moniker ', prop, value);'], ''})
+                g(3, 'end')
+            g(2, 'end')
+        g(1, 'end')
+    end
+
+generate_calculateValue()
+    function generate_calculateValue()
+        if sum(cellfun(@(x) strcmpi(x.category, 'RESULT'), props)) == 0 && sum(cellfun(@(x) strcmpi(x.category, 'RESULT'), props_update)) == 0
+            return
+        end
+        g(1, 'methods (Access=protected) % calculate value')
+            gs(2, {['function value = calculateValue(' moniker ', prop)']; ''})
+                g(3, 'switch prop')
+                    for i = 1:1:numel(props)
+                        if strcmpi(props{i}.category, 'RESULT')
+                            if ~(numel(props{i}.calculate) == 1 && isempty(props{i}.calculate{1}))
+                                g(4, ['case ' class_name '.' props{i}.TAG])
+                                    g(5, ['rng(' moniker '.getPropSeed(' class_name '.' props{i}.TAG '), ''twister'')'])
+                                    g(5, '')
+                                    gs(5, props{i}.calculate)
+                                    g(5, '')
+                            end
+                        end
+                    end
+                    for i = 1:1:numel(props_update)
+                        if strcmpi(props_update{i}.category, 'RESULT')
+                            if ~(numel(props_update{i}.calculate) == 1 && isempty(props_update{i}.calculate{1}))
+                                g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                    gs(5, props_update{i}.calculate)
+                                    g(5, '')
+                            end
+                        end
+                    end
+                    g(4, 'otherwise')
+                        gs(5, {['value = calculateValue@' superclass_name '(' moniker ', prop);']; ''})
+                g(3, 'end')
+            g(2, 'end')
+        g(1, 'end')
+    end
+
+generate_methods()
+    function generate_methods()
+        if numel(methods) == 1 && isempty(methods{1})
+            return
+        end
+        g(1, 'methods % methods')
+            gs(2, methods)
+        g(1, 'end')
+    end
 
 generate_footer()
     function generate_footer()
         g(0, 'end')
     end
 
-fclose(object_file);    
+%% Save file
+target_file = [target_dir filesep() class_name '.m'];
+object_file = fopen(target_file, 'w');
+fprintf(object_file, file_str);
+fclose(object_file);
 
 disp(['¡! saved file: ' target_file])
 disp(' ')
@@ -823,7 +1230,7 @@ disp(' ')
 %% Help functions
     function g(tabs, str)
         str = regexprep(str, '%', '%%');
-        fprintf(object_file, [repmat('\t', 1, tabs) str '\n']);
+        file_str = [file_str repmat('\t', 1, tabs) str '\n'];
     end
     function gs(tabs, lines)
         for i = 1:1:length(lines)

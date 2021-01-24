@@ -14,13 +14,16 @@
 close all
 clear all %#ok<CLALL>
 clc
-warning('off', 'MATLAB:MKDIR:DirectoryExists')
+warning('off', 'MATLAB:RMDIR:RemovedFromPath')
 
 addpath(fileparts(which('braph2genesis')))
 addpath([fileparts(which('braph2genesis')) filesep 'genesis'])
 
 target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2tmp']; % TODO change to braph2
-[target_dir, source_dir] = genesis(target_dir);
+if exist(target_dir, 'dir') 
+    rmdir(target_dir, 's')
+end
+[target_dir, source_dir] = genesis(target_dir, [], 1);
 
 addpath(target_dir)
 braph2

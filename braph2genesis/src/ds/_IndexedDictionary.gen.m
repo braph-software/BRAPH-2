@@ -4,8 +4,11 @@ IndexedDictionary < Element (idict, indexed dictionary) is an indexed dictionary
 %%% ¡description!
 IndexedDictionary provides the methods necessary to handle data in an indexed dictionary. 
 It contains and manages an ordered list of couples {KEY, ITEM}, 
-where KEY is a unique alphanumeric key (a string) and 
-ITEM is an element of a class defined in the constructor.
+where KEY is a unique alphanumeric key (a string) provided by a property of category PARAMETER or DATA and 
+ITEM is an element of a class defined in the constructor using the property IT_CLASS.
+
+%%% ¡seealso!
+Element
 
 %% ¡props!
 
@@ -26,11 +29,24 @@ it_class = idict.get('IT_CLASS');
 category = Element.getPropCategory(it_class, value);
 format = Element.getPropFormat(it_class, value);
 check = isequal(format, Format.STRING) && any(strcmp(category, {Category.PARAMETER, Category.DATA}));
+if check 
+    msg = 'All ok!';
+else
+    msg = [ ...
+        'The format of property ''IT_KEY'' must be ''' Format.STRING ''' (it is ''' format '''). ' ...
+        'Its category must be ''' Category.PARAMETER ''' or ''' Category.DATA ''' (it is ''' category ''').' ...
+        ];
+end
 
 %%% ¡prop!
 IT_LIST (data, itemlist) is the list containing the items.
 %%%% ¡check_value!
 check = all(cellfun(@(x) isa(x, idict.get('IT_CLASS')), idict.get('IT_LIST')));
+if check 
+    msg = 'All ok!';
+else
+    msg = ['All items of ''IT_LIST'' must be ' idict.get('IT_CLASS') '.'];
+end
 
 %% ¡methods!
 function str = tostring(idict, varargin)
@@ -491,22 +507,22 @@ end
 %%%% ¡name!
 Instantiation with items
 %%%% ¡code!
-it1 = ET('ST', 'item_1');
-it2 = ET('ST', 'item_2');
-it3 = ET('ST', 'item_3');
-it4 = ET('ST', 'item_4');
-it5 = ET('ST', 'item_5');
-it6 = ET('ST', 'item_6');
+it1 = ETA('PROP_STRING_P', 'item_1');
+it2 = ETA('PROP_STRING_P', 'item_2');
+it3 = ETA('PROP_STRING_P', 'item_3');
+it4 = ETA('PROP_STRING_P', 'item_4');
+it5 = ETA('PROP_STRING_P', 'item_5');
+it6 = ETA('PROP_STRING_P', 'item_6');
 
 items = {it1, it2, it3, it4, it5, it6};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 assert_with_error( ...
     ['idict = IndexedDictionary(' ...
     '''id'', ''idict'', ' ...
-    '''it_class'', ''ET'', '...
-    '''it_key'', 1, '...
-    '''it_list'', {varargin{1}, varargin{2}, varargin{3}, varargin{4}, varargin{5}, ET2()}' ...
+    '''it_class'', ''ETA'', '...
+    '''it_key'', 2, '...
+    '''it_list'', {varargin{1}, varargin{2}, varargin{3}, varargin{4}, varargin{5}, NoValue()}' ...
     ');'], ...
     [BRAPH2.STR ':IndexedDictionary:' BRAPH2.WRONG_INPUT], ...
     it1, it2, it3, it4, it5 ...
@@ -514,8 +530,8 @@ assert_with_error( ...
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -523,20 +539,20 @@ idict = IndexedDictionary( ...
 %%%% ¡name!
 Inspection
 %%%% ¡code!
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4, it5, it6};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -612,20 +628,20 @@ assert(isequal(idict.getItem('Key 3'), it3), ...
 %%%% ¡name!
 Add
 %%%% ¡code!    
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -649,20 +665,20 @@ assert(isequal(idict.getItem(5), it5) && isequal(idict.getItem(6), it6), ...
 %%%% ¡name!
 Remove
 %%%% ¡code!
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4, it5, it6};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -684,20 +700,20 @@ assert(isequal(idict.getItems(), {it2, it3, it5}), ...
 %%%% ¡name!
 Replace
 %%%% ¡code!    
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -731,20 +747,20 @@ assert(isequal(idict.getKey(4), 'Key 4') && isequal(idict.getItem(4), it4), ...
 %%%% ¡name!
 Invert
 %%%% ¡code!
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -761,20 +777,20 @@ assert(isequal(idict.getKeys(), {'Key 4', 'Key 3', 'Key 2', 'Key 1'}), ...
 %%%% ¡name!
 Move_to
 %%%% ¡code!
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -793,20 +809,20 @@ assert(isequal(idict.getKeys(), {'Key 4', 'Key 3', 'Key 2', 'Key 1'}), ...
 %%%% ¡name!
 Remove all
 %%%% ¡code!
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4, it5, it6};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -825,20 +841,20 @@ assert(isequal(selected, []), ...
 %%%% ¡name!
 Move up
 %%%% ¡code!
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4, it5, it6};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -857,20 +873,20 @@ assert(isequal(selected, [1 2 3 5]), ...
 %%%% ¡name!
 Move down
 %%%% ¡code!
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4, it5, it6};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -889,20 +905,20 @@ assert(isequal(selected, [2 4 5 6]), ...
 %%%% ¡name!
 Move to top
 %%%% ¡code!
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4, it5, it6};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
@@ -921,20 +937,20 @@ assert(isequal(selected, [1 2 3 4]), ...
 %%%% ¡name!
 Move to bottom
 %%%% ¡code!
-it1 = ET('ST', 'Key 1');
-it2 = ET('ST', 'Key 2');
-it3 = ET('ST', 'Key 3');
-it4 = ET('ST', 'Key 4');
-it5 = ET('ST', 'Key 5');
-it6 = ET('ST', 'Key 6');
+it1 = ETA('PROP_STRING_P', 'Key 1');
+it2 = ETA('PROP_STRING_P', 'Key 2');
+it3 = ETA('PROP_STRING_P', 'Key 3');
+it4 = ETA('PROP_STRING_P', 'Key 4');
+it5 = ETA('PROP_STRING_P', 'Key 5');
+it6 = ETA('PROP_STRING_P', 'Key 6');
 
 items = {it1, it2, it3, it4, it5, it6};
-keys = cellfun(@(x) x.get('ST'), items, 'UniformOutput', false);
+keys = cellfun(@(x) x.get('PROP_STRING_P'), items, 'UniformOutput', false);
 
 idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'ET', ...
-    'it_key', 1, ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
     'it_list', items ...
     );
 
