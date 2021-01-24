@@ -321,15 +321,14 @@ for i = 1:1:length(wrong_value)
 end
 
 %% Test 2.IL.s: Check ITEMLIST with settings
-% ITEMLIST formats that should be accepted
 clear value
 clear settings
 element_class_list = subclasses('Element', [], [], true);
 value{1} = cellfun(@(x) eval([x '()']), element_class_list, 'UniformOutput', false);
-settings{1} = Element.getClass();
+settings{1} = 'Element';
 for i = 1:1:length(element_class_list)
     value{i + 1} = {eval([element_class_list{i} '()'])}; %#ok<SAGROW>
-    settings{i + 1} = eval([element_class_list{i} '.getClass()']); %#ok<SAGROW>
+    settings{i + 1} = element_class_list{i}; %#ok<SAGROW>
 end
 
 % ITEMLIST formats that should NOT be accepted
@@ -338,7 +337,7 @@ clear wrong_settings
 wrong_value{1} = 3.14; wrong_settings{1} = 'String';
 wrong_value{2} = true; wrong_settings{2} = 'Boolean';
 wrong_value{3} = 'String'; wrong_settings{3} = 'Char';
-wrong_value{4} = {'1', '2', '3'}; wrong_settings{4} = {'String', 'Boolean', 'Char'};
+wrong_value{4} = {'1', '2', '3'}; wrong_settings{4} = 'String';
 
 % tests
 for i = 1:1:length(value)
