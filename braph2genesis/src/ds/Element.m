@@ -156,7 +156,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function prop_number = getPropNumber(el)
 			%GETPROPNUMBER returns the property number of an element.
 			%
-            % N = Element.GETPROPNUMBER() returns the number of element properties.
+            % N = Element.GETPROPNUMBER() returns the number of properties in Element.
             %
             % Alternative forms to call this method are:
 			%  N = GETPROPNUMBER(EL) returns the property number of element EL.
@@ -176,6 +176,33 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_number = eval([Element.getClass(el) '.getPropNumber()']);
         end
         function check = existsProp(el, prop)
+            %EXISTSPROP checks whether property exists/error.
+			%
+            % CHECK = Element.EXISTSPROP(PROP) checks whether the property 
+            %  PROP exists.
+            %
+            % Alternative forms to call this method are:
+            %  CHECK = EXISTSPROP(EL, PROP) checks PROP for EL.
+            %  CHECK = EL.EXISTSPROP(PROP) checks PROP for EL.
+            %  CHECK = Element.EXISTSPROP(CLASS, PROP) checks PROP for CLASS.
+            %  CHECK = EL.EXISTSPROP(CLASS, PROP) checks PROP for CLASS.
+            % 
+            % Element.EXISTSPROP(PROP) throws an error if the PROP does NOT
+            %  exist.
+            %  Error id: [BRAPH2:Element:WrongInput]
+			%
+            % Alternative forms to call this method are:
+            %  EXISTSPROP(EL, PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  EL.EXISTSPROP(PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  Element.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:CLASS:WrongInput]
+            %  EL.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:CLASS:WrongInput]
+            %
+			% See also getProps, existsTag.
+            
             % calls from Element
             if nargin < 2
                 prop = el;
@@ -195,6 +222,31 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function check = existsTag(el, tag)
+            %EXISTSTAG checks whether tag exists/error.
+			%
+            % CHECK = Element.EXISTSTAG(TAG) checks whether tag TAG exists.
+            %
+            % Alternative forms to call this method are:
+            %  CHECK = EXISTSTAG(EL, TAG) checks tag TAG for EL.
+            %  CHECK = EL.EXISTSTAG(TAG) checks tag TAG for EL.
+            %  CHECK = Element.EXISTSTAG(CLASS, TAG) checks tag TAG for EL.
+            %  CHECK = EL.EXISTSTAG(CLASS, TAG) checks tag TAG for EL.
+            %
+            % Element.EXISTSTAG(TAG) throws an error if the TAG NOT exist.
+            %  Error id: [BRAPH2:Element:WrongInput]
+            %
+            % Alternative forms to call this method are:
+            %  EXISTSTAG(EL, TAG) throws error if TAG does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  EL.EXISTSTAG(TAG) throws error if TAG does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  Element.EXISTSTAG(CLASS, TAG) throws error if TAG does NOT 
+            %   exist for EL. Error id: [BRAPH2:Element:WrongInput]
+            %  Element.EXISTSTAG(CLASS, TAG) throws error if TAG does NOT 
+            %   exist for EL. Error id: [BRAPH2:Element:WrongInput] 
+            %
+			% See also getProps, existsProp.
+            
             % calls from Element
             if nargin < 2
                 tag = el;
@@ -215,7 +267,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function prop_prop = getPropProp(el, pointer) %#ok<INUSD>
-            % pointer can be prop/tag
+            % GETPROPPROP returns the property number of a property.
+			%
+            % PROP = Element.GETPROPPROP(PROP) returns PROP, i.e., the
+            %  property number of the property PROP.
+            %
+            % PROP = Element.GETPROPFORMAT(TAG) returns the property number
+            %  of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  PROP = GETPROPPROP(EL, POINTER) returns property number of POINTER of EL.
+            %  PROP = EL.GETPROPPROP(POINTER) returns property number of POINTER of EL.
+			%  PROP = Element.GETPROPPROP(CLASS, POINTER) returns property number of POINTER of CLASS.
+			%  PROP = EL.GETPROPPROP(CLASS, POINTER) returns property number of POINTER of CLASS.
+			%
+			% See also getPropFormat, getPropTag, getPropCategory,
+			% getPropDescription, getPropSettings, getPropDefault,
+			% checkProp.
             
             % calls from Element
             if nargin < 2
@@ -227,7 +295,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_prop = eval([Element.getClass(el) '.getPropProp(pointer)']);
         end       
         function prop_tag = getPropTag(el, pointer) %#ok<INUSD>
-            % pointer can be prop/tag
+            % GETPROPTAG returns the tag of a property.
+			%
+            % TAG = Element.GETPROPTAG(PROP) returns the tag TAG of the
+            %  property PROP.
+            %
+            % TAG = Element.GETPROPTAG(TAG) returns TAG, i.e. the tag of
+            %  the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  TAG = GETPROPTAG(EL, POINTER) returns tag of POINTER of EL.
+            %  TAG = EL.GETPROPTAG(POINTER) returns tag of POINTER of EL.
+			%  TAG = Element.GETPROPTAG(CLASS, POINTER) returns tag of POINTER of CLASS.
+			%  TAG = EL.GETPROPTAG(CLASS, POINTER) returns tag of POINTER of CLASS.
+            %
+			% See also getPropProp, getPropSettings, getPropCategory,
+			% getPropFormat, getPropDescription, getPropDefault,
+			% checkProp.
             
             % calls from Element
             if nargin < 2
@@ -239,6 +323,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_tag = eval([Element.getClass(el) '.getPropTag(pointer)']);
         end
         function prop_category = getPropCategory(el, pointer) %#ok<INUSD>
+            % GETPROPCATEGORY returns the category of a property.
+			%
+            % CATEGORY = Element.GETPROPCATEGORY(PROP) returns the 
+            %  category of the property PROP.
+            %
+            % CATEGORY = Element.GETPROPCATEGORY(TAG) returns the
+            %  category of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  CATEGORY = GETPROPCATEGORY(EL, POINTER) returns category of POINTER of EL.
+            %  CATEGORY = EL.GETPROPCATEGORY(POINTER) returns category of POINTER of EL.
+			%  CATEGORY = Element.GETPROPCATEGORY(CLASS, POINTER) returns category of POINTER of CLASS.
+			%  CATEGORY = EL.GETPROPCATEGORY(CLASS, POINTER) returns category of POINTER of CLASS.
+            %
+			% See also getPropProp, getPropTag, getPropSettings,
+			% getPropFormat, getPropDescription, getPropDefault,
+			% checkProp.
             
             % calls from Element
             if nargin < 2
@@ -250,6 +351,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_category = eval([Element.getClass(el) '.getPropCategory(pointer)']);
         end
         function prop_format = getPropFormat(el, pointer) %#ok<INUSD>
+            % GETPROPFORMAT returns the format of a property.
+			%
+            % FORMAT = Element.GETPROPFORMAT(PROP) returns the format of
+            %  property PROP.
+            %
+            % FORMAT = Element.GETPROPFORMAT(TAG) returns the format of
+            %  the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  FORMAT = GETPROPFORMAT(EL, POINTER) returns format of POINTER of EL.
+            %  FORMAT = EL.GETPROPFORMAT(POINTER) returns format of POINTER of EL.
+			%  FORMAT = Element.GETPROPFORMAT(CLASS, POINTER) returns format of POINTER of CLASS.
+			%  FORMAT = EL.GETPROPFORMAT(CLASS, POINTER) returns format of POINTER of CLASS.
+			%
+			% See also getPropProp, getPropTag, getPropCategory,
+			% getPropDescription, getPropSettings, getPropDefault,
+			% checkProp.
 
             % calls from Element
             if nargin < 2
@@ -261,7 +379,24 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_format = eval([Element.getClass(el) '.getPropFormat(pointer)']);
         end
         function prop_description = getPropDescription(el, pointer) %#ok<INUSD>
-
+            % GETPROPDESCRIPTION returns the description of a property.
+			%
+            % DESCRIPTION = Element.GETPROPDESCRIPTION(PROP) returns the 
+            %  description of the property PROP.
+            %
+            % DESCRIPTION = Element.GETPROPDESCRIPTION(TAG) returns the
+            %  description of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  DESCRIPTION = GETPROPDESCRIPTION(EL, POINTER) returns description of POINTER of EL.
+            %  DESCRIPTION = EL.GETPROPDESCRIPTION(POINTER) returns description of POINTER of EL.
+			%  DESCRIPTION = Element.GETPROPDESCRIPTION(CLASS, POINTER) returns description of POINTER of CLASS.
+			%  DESCRIPTION = EL.GETPROPDESCRIPTION(CLASS, POINTER) returns description of POINTER of CLASS.
+            %
+			% See also getPropProp, getPropTag, getPropCategory,
+			% getPropFormat, getPropSettings, getPropDefault,
+			% checkProp.
+            
             % calls from Element
             if nargin < 2
                 pointer = el; %#ok<NASGU>
@@ -272,7 +407,24 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_description = eval([Element.getClass(el) '.getPropDescription(pointer)']);
         end 
         function prop_settings = getPropSettings(el, pointer) %#ok<INUSD>
-
+            % GETPROPSETTINGS returns the settings of a property.
+			%
+            % SETTINGS = Element.GETPROPSETTINGS(PROP) returns the 
+            %  settings of the property PROP.
+            %
+            % SETTINGS = Element.GETPROPSETTINGS(TAG) returns the
+            %  settings of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  SETTINGS = GETPROPSETTINGS(EL, POINTER) returns settings of POINTER of EL.
+            %  SETTINGS = EL.GETPROPSETTINGS(POINTER) returns settings of POINTER of EL.
+			%  SETTINGS = Element.GETPROPSETTINGS(CLASS, POINTER) returns settings of POINTER of CLASS.
+			%  SETTINGS = EL.GETPROPSETTINGS(CLASS, POINTER) returns settings of POINTER of CLASS.
+            %
+			% See also getPropProp, getPropTag, getPropCategory,
+			% getPropFormat, getPropDescription, getPropDefault,
+			% checkProp.
+            
             % calls from Element
             if nargin < 2
                 pointer = el; %#ok<NASGU>
@@ -283,6 +435,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             prop_settings = eval([Element.getClass(el) '.getPropSettings(pointer)']);
         end 
         function prop_default = getPropDefault(el, pointer) %#ok<INUSD>
+            %GETPROPDEFAULT returns the default value of a property.
+			%
+            % DEFAULT = Element.GETPROPDEFAULT(PROP) returns the default
+            %   value of the property PROP.
+            %
+            % DEFAULT = Element.GETPROPDEFAULT(TAG) returns the default
+            %   value of the property with tag TAG.
+            % 
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  TAG = GETPROPDEFAULT(EL, POINTER) returns the default value of POINTER of EL.
+            %  TAG = EL.GETPROPDEFAULT(POINTER) returns the default value of POINTER of EL.
+			%  TAG = Element.GETPROPDEFAULT(CLASS, POINTER) returns the default value of POINTER of CLASS.
+			%  TAG = EL.GETPROPDEFAULT(CLASS, POINTER) returns the default value of POINTER of CLASS.
+			%
+			% See also getPropProp, getPropTag, getPropSettings,
+			% getPropCategory, getPropFormat, getPropDescription,
+			% checkProp.
 
             % calls from Element
             if nargin < 2
@@ -293,7 +462,18 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % calls from subclasses of Element
             prop_default = eval([Element.getClass(el) '.getPropDefault(pointer)']);
         end
-        function prop_check = checkProp(el, pointer, value, varargin) %#ok<INUSD>
+        function prop_check = checkProp(el, pointer, value) %#ok<INUSD>
+            %CHECKPROP checks whether a value has the correct format/error.
+			%
+            % CHECK = Element.CHECKPROP(POINTER, VALUE) checks whether
+            %  VALUE is an acceptable value for the format of the property
+            %  POINTER (POINTER = PROP or TAG).
+            %
+            % Alternative forms to call this method are:
+            %
+			% See also getPropProp, getPropTag, getPropSettings,
+			% getPropCategory, getPropFormat, getPropDescription,
+			% getPropDefault.
 
             if nargout == 1
                 prop_check = eval([Element.getClass(el) '.checkProp(pointer, value)']);
