@@ -155,8 +155,31 @@ for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.CLASS, varargin{1})', error_identifier, wrong_value{i})
 end
 
-%% Test 2.CA.s: Check CLASS
-% TODO
+%% Test 2.CA.s: Check CLASS with settings
+clear value
+clear element_class_list
+value{1} = 'Element'; settings{1} = Element.getClass();
+element_class_list = subclasses('Element', [], [], true);
+for i = 1:1:numel(element_class_list)
+    element_class = element_class_list{i};
+    value{i + 1} = element_class; %#ok<SAGROW>
+    settings{i+1} = eval([element_class '.getClass()']);
+end
+
+% CLASS formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = 'non existing class'; wrong_settings{1} = 'CharClass';
+wrong_value{2} = 3.14; wrong_settings{2} = 'DoubleClass';
+wrong_value{3} = true; wrong_settings{3} = 'BooleanClass';
+wrong_value{4} = 'String'; wrong_settings{4} = 'StringClass';
+
+% tests
+for i = 1:1:length(value)
+    Format.checkFormat(Format.CLASS, value{i}, settings{i})
+end
+for i = 1:1:length(wrong_value)
+    assert_with_error('Format.checkFormat(Format.CLASS, varargin{1}, varargin{2})', error_identifier, wrong_value{i}, wrong_settings{i})
+end
 
 %% Test 2.CL: Check CLASSLIST
 % CLASSLIST formats that should be accepted
@@ -185,8 +208,33 @@ for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.CLASSLIST, varargin{1})', error_identifier, wrong_value{i})
 end
 
-%% Test 2.CL.s: Check CLASSLIST
-% TODO
+%% Test 2.CL.s: Check CLASSLIST with settings
+% CLASSLIST formats that should be accepted
+clear value
+value{1} = {'Element'}; settings{1} = Element.getClass();
+element_class_list = subclasses('Element', [], [], true);
+value{2} = element_class_list;
+for i = 1:1:numel(element_class_list)
+    element_class = element_class_list{i};
+    value{i + 2} = {element_class};
+    settings{i+2} = eval([element_class '.getClass()']);
+end
+
+% CLASSLIST formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = 'Element'; wrong_settings{1} = 'IndexedDictionary';
+wrong_value{2} = {'non existing class'}; wrong_settings{2} = 'Very existing class';
+wrong_value{3} = 3.14; wrong_settings{3} = 'Numeric';
+wrong_value{4} = true; wrong_settings{4} = 'Boolean';
+wrong_value{5} = 'String'; wrong_settings{5} = 'StringClass';
+
+% tests
+for i = 1:1:length(value)
+    Format.checkFormat(Format.CLASSLIST, value{i}, settings{i})
+end
+for i = 1:1:length(wrong_value)
+    assert_with_error('Format.checkFormat(Format.CLASSLIST, varargin{1}, varargin{2})', error_identifier, wrong_value{i}, wrong_settings{i})
+end
 
 %% Test 2.IT: Check ITEM
 % ITEM formats that should be accepted
@@ -216,8 +264,37 @@ for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.ITEM, varargin{1})', error_identifier, wrong_value{i})
 end
 
-%% Test 2.IT.s: Check ITEM
-% TODO
+%% Test 2.IT.s: Check ITEM with settings
+% ITEM formats that should be accepted
+clear value
+clear settings
+element_class_list = subclasses('Element', [], [], true);
+for i = 1:1:numel(element_class_list)
+    element_class = element_class_list{i};
+    value{i} = eval([element_class '()']); %#ok<SAGROW>
+    settings{i} = eval([element_class '.getClass()']); %#ok<SAGROW>
+end
+
+% ITEM formats that should NOT be accepted
+clear wrong_value
+clear wrong_settings
+wrong_value{1} = 3.14;
+wrong_value{2} = true;
+wrong_value{3} = 'String';
+element_class_list = subclasses('Element', [], [], true);
+for i = 1:1:numel(element_class_list)
+    element_class = element_class_list{i};
+    wrong_value{i + 3} = element_class;
+    wrong_settings{i + 3} = eval([element_class '.getClass()']); %#ok<SAGROW>
+end
+
+% tests
+for i = 1:1:length(value)
+    Format.checkFormat(Format.ITEM, value{i}, settings{i})
+end
+for i = 1:1:length(wrong_value)
+    assert_with_error('Format.checkFormat(Format.ITEM, varargin{1}, varargin{2})', error_identifier, wrong_value{i}, wrong_settings{i})
+end
 
 %% Test 2.IL: Check ITEMLIST
 % ITEMLIST formats that should be accepted
@@ -243,9 +320,33 @@ for i = 1:1:length(wrong_value)
     assert_with_error('Format.checkFormat(Format.ITEMLIST, varargin{1})', error_identifier, wrong_value{i})
 end
 
+%% Test 2.IL.s: Check ITEMLIST with settings
+% ITEMLIST formats that should be accepted
+clear value
+clear settings
+element_class_list = subclasses('Element', [], [], true);
+value{1} = cellfun(@(x) eval([x '()']), element_class_list, 'UniformOutput', false);
+settings{1} = Element.getClass();
+for i = 1:1:length(element_class_list)
+    value{i + 1} = {eval([element_class_list{i} '()'])}; %#ok<SAGROW>
+    settings{i + 1} = eval([element_class_list{i} '.getClass()']); %#ok<SAGROW>
+end
 
-%% Test 2.IL.s: Check ITEMLIST 
-% TODO
+% ITEMLIST formats that should NOT be accepted
+clear wrong_value
+clear wrong_settings
+wrong_value{1} = 3.14; wrong_settings{1} = 'String';
+wrong_value{2} = true; wrong_settings{2} = 'Boolean';
+wrong_value{3} = 'String'; wrong_settings{3} = 'Char';
+wrong_value{4} = {'1', '2', '3'}; wrong_settings{4} = {'String', 'Boolean', 'Char'};
+
+% tests
+for i = 1:1:length(value)
+    Format.checkFormat(Format.ITEMLIST, value{i}, settings{i})
+end
+for i = 1:1:length(wrong_value)
+    assert_with_error('Format.checkFormat(Format.ITEM, varargin{1}, varargin{2})', error_identifier, wrong_value{i}, wrong_settings{i})
+end
 
 %% Test 2.DI: Check IDICT
 % IDICT formats that should be accepted
