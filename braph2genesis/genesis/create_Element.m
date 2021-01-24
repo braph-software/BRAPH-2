@@ -457,30 +457,25 @@ generate_inspection()
             % existsProp(prop)
             g(2, 'function check = existsProp(prop)')
                 gs(3, {
-                    ['%EXISTSPROP checks whether property exists/error in ' descriptive_name '.']
+                    ['%EXISTSPROP checks whether property exists in ' descriptive_name '/error.']
                      '%'
-                     '% CHECK = Element.EXISTPROP(PROP) checks whether the property'
-                     '%  PROP exists.'
+                     ['% CHECK = ' class_name '.EXISTSPROP(PROP) checks whether the property PROP exists.']
                      '%'                    
                      '% Alternative forms to call this method are:'
-                    ['%  CHECK = EXISTSPROP(' upper(moniker) ', PROP) checks PROP for ' class_name '.']
-                    ['%  CHECK = ' upper(moniker) '.EXISTSPROP(PROP) checks PROP for ' class_name '.']
-                    ['%  CHECK = Element.EXISTSPROP(' class_name ', PROP) checks PROP for CLASS.']
-                    ['%  CHECK = ' upper(moniker) '.EXISTSPROP(' class_name ', PROP) checks PROP for CLASS.']
+                    ['%  CHECK = ' upper(moniker) '.EXISTSPROP(PROP) checks whether PROP exists for ' upper(moniker) '.']
+                    ['%  CHECK = Element.EXISTSPROP(' upper(moniker) ', PROP) checks whether PROP exists for ' upper(moniker) '.']
+                    ['%  CHECK = Element.EXISTSPROP(' class_name ', PROP) checks whether PROP exists for ' class_name '.']
                      '%'
-                     '% Element.EXISTSPROP(PROP) throws an error if the PROP does NOT'
-                     '%  exist.'
+                     '% Element.EXISTSPROP(PROP) throws an error if the PROP does NOT exist.'
                     ['%  Error id: [BRAPH2:' class_name ':WrongInput]']
                      '%'
                      '% Alternative forms to call this method are:'
-                    ['%  EXISTSPROP(' upper(moniker) ', PROP) throws error if PROP does NOT exist for ' class_name '.']
+                    ['%  ' upper(moniker) '.EXISTSPROP(PROP) throws error if PROP does NOT exist for ' upper(moniker) '.']
                     ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
-                    ['%  ' upper(moniker) '.EXISTSPROP(PROP) throws error if PROP does NOT exist for ' class_name '.']
+                    ['%  Element.EXISTSPROP(' upper(moniker) ', PROP) throws error if PROP does NOT exist for ' upper(moniker) '.']
                     ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
-                    ['%  ' upper(moniker) '.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for ' class_name '.']
-                    ['%   Error id: [BRAPH2:CLASS:WrongInput]']
-                    ['%  ' upper(moniker) '.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for ' class_name '.']
-                    ['%   Error id: [BRAPH2:CLASS:WrongInput]']
+                    ['%  Element.EXISTSPROP(' class_name ', PROP) throws error if PROP does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
                      '%'
                      '% See also getProps, existsTag.'
                      ''
@@ -510,32 +505,29 @@ generate_inspection()
             % existsTag(prop)
             g(2, 'function check = existsTag(tag)')
                 gs(3, {
-                    ['%EXISTSTAG checks whether tag exists/error in ' descriptive_name '.']
+                    ['%EXISTSTAG checks whether tag exists in ' descriptive_name '/error.']
                      '%'
-                     '% CHECK = Element.EXISTPROP(PROP) checks whether tag TAG exists.'
+                     ['% CHECK = ' class_name '.EXISTSTAG(TAG) checks whether a property with tag TAG exists.']
                      '%'                    
                      '% Alternative forms to call this method are:'
-                    ['%  CHECK = EXISTSTAG(' upper(moniker) ', PROP) checks tag TAG for ' class_name '.']
-                    ['%  CHECK = ' upper(moniker) '.EXISTSTAG(PROP) checks tag TAG for ' class_name '.']
-                    ['%  CHECK = Element.EXISTSTAG(' class_name ', PROP) checks tag TAG for CLASS.']
-                    ['%  CHECK = ' upper(moniker) '.EXISTSTAG(' class_name ', PROP) checks tag TAG for CLASS.']
+                    ['%  CHECK = ' upper(moniker) '.EXISTSTAG(TAG) checks whether TAG exists for ' upper(moniker) '.']
+                    ['%  CHECK = Element.EXISTSTAG(' upper(moniker) ', TAG) checks whether TAG exists for ' upper(moniker) '.']
+                    ['%  CHECK = Element.EXISTSTAG(' class_name ', TAG) checks whether TAG exists for ' class_name '.']
                      '%'
-                     '% Element.EXISTSTAG(PROP) throws an error if the TAG NOT exist.'
+                     '% Element.EXISTSTAG(TAG) throws an error if the TAG does NOT exist.'
                     ['%  Error id: [BRAPH2:' class_name ':WrongInput]']
                      '%'
                      '% Alternative forms to call this method are:'
-                    ['%  EXISTSTAG(' upper(moniker) ', PROP) throws error if TAG does NOT exist for ' class_name '.']
+                    ['%  ' upper(moniker) '.EXISTSTAG(TAG) throws error if TAG does NOT exist for ' upper(moniker) '.']
                     ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
-                    ['%  ' upper(moniker) '.EXISTSTAG(PROP) throws error if TAG does NOT exist for ' class_name '.']
+                    ['%  Element.EXISTSTAG(' upper(moniker) ', TAG) throws error if TAG does NOT exist for ' upper(moniker) '.']
                     ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
-                    ['%  ' upper(moniker) '.EXISTSTAG(CLASS, PROP) throws error if TAG does NOT exist for ' class_name '.']
-                    ['%   Error id: [BRAPH2:CLASS:WrongInput]']
-                    ['%  ' upper(moniker) '.EXISTSTAG(CLASS, PROP) throws error if TAG does NOT exist for ' class_name '.']
-                    ['%   Error id: [BRAPH2:CLASS:WrongInput]']
+                    ['%  Element.EXISTSTAG(' class_name ', TAG) throws error if TAG does NOT exist for ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
                      '%'
-                     '% See also getProps, existsProp.'
+                     '% See also getProps, existsTag.'
                      ''
-                    })
+                     })
                 if isempty(fc_prop_tag_list)
                     gs(3, {
                          '% COMPUTATIONAL EFFICIENCY TRICK'
@@ -573,19 +565,18 @@ generate_inspection()
             % getPropProp(pointer)
             g(2, 'function prop = getPropProp(pointer)')
             gs(3, {
-                '%GETPROPPROP returns the property of a property.'
+                '%GETPROPPROP returns the property number of a property.'
                 '%'
-                '% PROPERTY = Element.GETPROPPROP(PROP) returns the'
-                '%  property of property PROP.'
+                '% PROP = Element.GETPROPPROP(PROP) returns PROP, i.e., the '
+                '%  property number of the property PROP.'
                 '%'
-                '% PROPERTY = Element.GETPROPPROP(TAG) returns the'
-                '%  property of the property with tag TAG.'
+                '% PROP = Element.GETPROPPROP(TAG) returns the property number '
+                '%  of the property with tag TAG.'
                 '%'
                 '% Alternative forms to call this method are (POINTER = PROP or TAG):'
-                ['%  PROPERTY = GETPROPPROP(' upper(moniker) ', POINTER) returns property of POINTER of ' class_name '.']
-                ['%  PROPERTY = ' upper(moniker) '.GETPROPPROP(POINTER) returns property of POINTER of ' class_name '.']
-                ['%  PROPERTY = Element.GETPROPPROP(' class_name ', POINTER) returns property of POINTER of CLASS.']
-                ['%  PROPERTY = ' upper(moniker) '.GETPROPPROP(' class_name ', POINTER) returns property of POINTER of CLASS.']
+                ['%  PROPERTY = ' upper(moniker) '.GETPROPPROP(POINTER) returns property number of POINTER of ' upper(moniker) '.']
+                ['%  PROPERTY = Element.GETPROPPROP(' class_name ', POINTER) returns property number of POINTER of ' class_name '.']
+                ['%  PROPERTY = ' upper(moniker) '.GETPROPPROP(' class_name ', POINTER) returns property number of POINTER of ' class_name '.']
                 '%'
                 '% See also getPropFormat, getPropTag, getPropCategory,'
                 '% getPropDescription, getPropSettings, getPropDefault,'
@@ -637,17 +628,16 @@ generate_inspection()
             gs(3, {
                 '%GETPROPTAG returns the tag of a property.'
                 '%'
-                '% TAG = Element.GETPROPTAG(PROP) returns the'
-                '%  tag of property PROP.'
+                '% TAG = Element.GETPROPTAG(PROP) returns the tag TAG of the '
+                '%  property PROP.'
                 '%'
-                '% TAG = Element.GETPROPTAG(TAG) returns the'
-                '%  tag of the property with tag TAG.'
+                '% TAG = Element.GETPROPTAG(TAG) returns TAG, i.e. the tag of '
+                '%  the property with tag TAG.'
                 '%'
                 '% Alternative forms to call this method are (POINTER = PROP or TAG):'
-                ['%  TAG = GETPROPTAG(' upper(moniker) ', POINTER) returns tag of POINTER of ' class_name '.']
-                ['%  TAG = ' upper(moniker) '.GETPROPTAG(POINTER) returns tag of POINTER of ' class_name '.']
-                ['%  TAG = Element.GETPROPTAG(' class_name ', POINTER) returns tag of POINTER of CLASS.']
-                ['%  TAG = ' upper(moniker) '.GETPROPTAG(' class_name ', POINTER) returns tag of POINTER of CLASS.']
+                ['%  TAG = ' upper(moniker) '.GETPROPTAG(POINTER) returns tag of POINTER of ' upper(moniker) '.']
+                ['%  TAG = Element.GETPROPTAG(' class_name ', POINTER) returns tag of POINTER of ' class_name '.']
+                ['%  TAG = ' upper(moniker) '.GETPROPTAG(' class_name ', POINTER) returns tag of POINTER of ' class_name '.']
                 '%'
                 '% See also getPropProp, getPropSettings, getPropCategory,'
                 '% getPropFormat, getPropDescription, getPropDefault,'
@@ -684,18 +674,17 @@ generate_inspection()
                 '%GETPROPCATEGORY returns the category of a property.'
                 '%'
                 '% CATEGORY = Element.GETPROPCATEGORY(PROP) returns the'
-                '%  category of property PROP.'
+                '%  category of the property PROP.'
                 '%'
                 '% CATEGORY = Element.GETPROPCATEGORY(TAG) returns the'
                 '%  category of the property with tag TAG.'
                 '%'
                 '% Alternative forms to call this method are (POINTER = PROP or TAG):'
-                ['%  CATEGORY = GETPROPCATEGORY(' upper(moniker) ', POINTER) returns category of POINTER of ' class_name '.']
-                ['%  CATEGORY = ' upper(moniker) '.GETPROPCATEGORY(POINTER) returns category of POINTER of ' class_name '.']
-                ['%  CATEGORY = Element.GETPROPCATEGORY(' class_name ', POINTER) returns category of POINTER of CLASS.']
-                ['%  CATEGORY = ' upper(moniker) '.GETPROPCATEGORY(' class_name ', POINTER) returns category of POINTER of CLASS.']
+                ['%  CATEGORY = ' upper(moniker) '.GETPROPCATEGORY(POINTER) returns category of POINTER of ' upper(moniker) '.']
+                ['%  CATEGORY = Element.GETPROPCATEGORY(' class_name ', POINTER) returns category of POINTER of ' class_name '.']
+                ['%  CATEGORY = ' upper(moniker) '.GETPROPCATEGORY(' class_name ', POINTER) returns category of POINTER of ' class_name '.']
                 '%'
-                '% See also getPropProp, getPropTag, getPropSettings,'
+                '% See also Category, getPropProp, getPropTag, getPropSettings,'
                 '% getPropFormat, getPropDescription, getPropDefault,'
                 '% checkProp.'
                 ''
@@ -722,18 +711,17 @@ generate_inspection()
                 '%GETPROPFORMAT returns the format of a property.'
                 '%'
                 '% FORMAT = Element.GETPROPFORMAT(PROP) returns the'
-                '%  format of property PROP.'
+                '%  format of the property PROP.'
                 '%'
                 '% FORMAT = Element.GETPROPFORMAT(TAG) returns the'
                 '%  format of the property with tag TAG.'
                 '%'
                 '% Alternative forms to call this method are (POINTER = PROP or TAG):'
-                ['%  FORMAT = GETPROPFORMAT(' upper(moniker) ', POINTER) returns format of POINTER of ' class_name '.']
-                ['%  FORMAT = ' upper(moniker) '.GETPROPFORMAT(POINTER) returns format of POINTER of ' class_name '.']
-                ['%  FORMAT = Element.GETPROPFORMAT(' class_name ', POINTER) returns format of POINTER of CLASS.']
-                ['%  FORMAT = ' upper(moniker) '.GETPROPFORMAT(' class_name ', POINTER) returns format of POINTER of CLASS.']
+                ['%  FORMAT = ' upper(moniker) '.GETPROPFORMAT(POINTER) returns format of POINTER of ' upper(moniker) '.']
+                ['%  FORMAT = Element.GETPROPFORMAT(' class_name ', POINTER) returns format of POINTER of ' class_name '.']
+                ['%  FORMAT = ' upper(moniker) '.GETPROPFORMAT(' class_name ', POINTER) returns format of POINTER of ' class_name '.']
                 '%'
-                '% See also getPropProp, getPropTag, getPropCategory,'
+                '% See also Format, getPropProp, getPropTag, getPropCategory,'
                 '% getPropDescription, getPropSettings, getPropDefault,'
                 '% checkProp.'
                 ''
@@ -757,7 +745,7 @@ generate_inspection()
             % getPropDescription(pointer)
             g(2, 'function prop_description = getPropDescription(pointer)')
             gs(3, {
-                '%GETPROPDESCRIPTION returns the format of a property.'
+                '%GETPROPDESCRIPTION returns the description of a property.'
                 '%'
                 '% DESCRIPTION = Element.GETPROPDESCRIPTION(PROP) returns the'
                 '%  description of the property PROP.'
@@ -766,10 +754,9 @@ generate_inspection()
                 '%  description of the property with tag TAG.'
                 '%'
                 '% Alternative forms to call this method are (POINTER = PROP or TAG):'
-                ['%  DESCRIPTION = GETPROPDESCRIPTION(' upper(moniker) ', POINTER) returns description of POINTER of ' class_name '.']
-                ['%  DESCRIPTION = ' upper(moniker) '.GETPROPDESCRIPTION(POINTER) returns description of POINTER of ' class_name '.']
-                ['%  DESCRIPTION = Element.GETPROPDESCRIPTION(' class_name ', POINTER) returns description of POINTER of CLASS.']
-                ['%  DESCRIPTION = ' upper(moniker) '.GETPROPDESCRIPTION(' class_name ', POINTER) returns description of POINTER of CLASS.']
+                ['%  DESCRIPTION = ' upper(moniker) '.GETPROPDESCRIPTION(POINTER) returns description of POINTER of ' upper(moniker) '.']
+                ['%  DESCRIPTION = Element.GETPROPDESCRIPTION(' class_name ', POINTER) returns description of POINTER of ' class_name '.']
+                ['%  DESCRIPTION = ' upper(moniker) '.GETPROPDESCRIPTION(' class_name ', POINTER) returns description of POINTER of ' class_name '.']
                 '%'
                 '% See also getPropProp, getPropTag, getPropCategory,'
                 '% getPropFormat, getPropSettings, getPropDefault,'
@@ -799,24 +786,23 @@ generate_inspection()
             % getPropSettings(pointer)
             g(2, 'function prop_settings = getPropSettings(pointer)')
             gs(3, {
-                '%GETPROPSETTINGS returns the settings of a property.'
-                '%'
-                '% SETTINGS = Element.GETPROPSETTINGS(PROP) returns the'
-                '%  settings of the property PROP.'
-                '%'
-                '% SETTINGS = Element.GETPROPSETTINGS(TAG) returns the'
-                '%  settings of the property with tag TAG.'
-                '%'
-                '% Alternative forms to call this method are (POINTER = PROP or TAG):'
-                ['%  SETTINGS = GETPROPSETTINGS(' upper(moniker) ', POINTER) returns settings of POINTER of ' class_name '.']
-                ['%  SETTINGS = ' upper(moniker) '.GETPROPSETTINGS(POINTER) returns settings of POINTER of ' class_name '.']
-                ['%  SETTINGS = Element.GETPROPSETTINGS(' class_name ', POINTER) returns settings of POINTER of CLASS.']
-                ['%  SETTINGS = ' upper(moniker) '.GETPROPSETTINGS(' class_name ', POINTER) returns settings of POINTER of CLASS.']
-                '%'
-                '% See also getPropProp, getPropTag, getPropCategory,'
-                '% getPropFormat, getPropDescription, getPropDefault,'
-                '% checkProp.'
-                ''
+                 '%GETPROPSETTINGS returns the settings of a property.'
+                 '%'
+                 '% SETTINGS = Element.GETPROPSETTINGS(PROP) returns the'
+                 '%  settings of the property PROP.'
+                 '%'
+                 '% SETTINGS = Element.GETPROPSETTINGS(TAG) returns the'
+                 '%  settings of the property with tag TAG.'
+                 '%'
+                 '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                ['%  SETTINGS = ' upper(moniker) '.GETPROPSETTINGS(POINTER) returns settings of POINTER of ' upper(moniker) '.']
+                ['%  SETTINGS = Element.GETPROPSETTINGS(' class_name ', POINTER) returns settings of POINTER of ' class_name '.']
+                ['%  SETTINGS = ' upper(moniker) '.GETPROPSETTINGS(' class_name ', POINTER) returns settings of POINTER of ' class_name '.']
+                 '%'
+                 '% See also getPropProp, getPropTag, getPropCategory,'
+                 '% getPropFormat, getPropDescription, getPropDefault,'
+                 '% checkProp.'
+                 ''
                 })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
@@ -847,20 +833,23 @@ generate_inspection()
             % getPropDefault(pointer)
             g(2, 'function prop_default = getPropDefault(pointer)')
               gs(3, {
-                  '%GETPROPDEFAULT returns the default value of a property/tag.'
-                  '%'
-                 ['% PROPDEFAULT = ' class_name '.GETPROPDEFAULT(POINTER) returns the default ']
-                  '%  value of Element.'
-                  '%'
-                 ['% PROPDEFAULT = ' class_name '.GETPROPDEFAULT(EL, POINTER) returns the default ']
-                  '%  value of a property/tag.'
-                  '%'
-                  '% Alternative forms to call this method are:'
-                 ['%  PROPDEFAULT = ' upper(moniker) '.GETPROPDEFAULT(POINTER) returns the default value of a property/tag.']
-                 ['%  PROPDEFAULT = ' upper(moniker) '.GETPROPDEFAULT(CLASS, POINTER) returns the default value of a property/tag.']
-                  '%'
-                  '% See also getPropSettings, getPropDescription.'
-                  ''
+                     '%GETPROPDEFAULT returns the default value of a property.'
+                     '%'
+                    ['% DEFAULT = ' class_name '.GETPROPDEFAULT(PROP) returns the default ']
+                     '%  value of the property PROP.'
+                     '%'
+                    ['% DEFAULT = ' class_name '.GETPROPDEFAULT(TAG) returns the default ']
+                     '%  value of the property with tag TAG.'
+                     '%'
+                     '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                    ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULT(POINTER) returns the default value of POINTER of ' upper(moniker) '.']
+                    ['%  DEFAULT = Element.GETPROPDEFAULT(' class_name ', POINTER) returns the default value of POINTER of ' class_name '.']
+                    ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULT(' class_name ', POINTER) returns the default value of POINTER of ' class_name '.']
+                     '%'
+                     '% See also getPropProp, getPropTag, getPropSettings, '
+                     '% getPropCategory, getPropFormat, getPropDescription, '
+                     '% checkProp.'
+                     ''
                     })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
@@ -891,17 +880,34 @@ generate_inspection()
             % checkProp(pointer, value)
             g(2, 'function prop_check = checkProp(pointer, value)')
               gs(3, {
-                   '%CHECKPROP returns whether the property/tag is in the correct format.'
-                   '%'
-                  ['% PROPCHECK = ' class_name '.GETPROPDEFAULT(EL, POINTER, VALUE) returns']
-                   '%  whether the property/tag is in the correct format.'
-                   '%'
-                   '% Alternative forms to call this method are:'
-                  ['%  PROPCHECK = ' upper(moniker) '.GETPROPDEFAULT(POINTER, VALUE) returns whether  the property/tag is in the correct format.']
-                   '%'
-                   '% See also getPropSettings, getPropDefault.'
-                   ''
-                  })
+                     '%CHECKPROP checks whether a value has the correct format/error.'
+                     '%'
+                    ['% CHECK = ' upper(moniker) '.CHECKPROP(POINTER, VALUE) checks whether']
+                     '%  VALUE is an acceptable value for the format of the property'
+                     '%  POINTER (POINTER = PROP or TAG).'
+                     '% '
+                     '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                    ['%  CHECK = ' upper(moniker) '.CHECKPROP(POINTER, VALUE) checks VALUE format for PROP of ' upper(moniker) '.']
+                    ['%  CHECK = Element.CHECKPROP(' class_name ', PROP, VALUE) checks VALUE format for PROP of ' class_name '.']
+                    ['%  CHECK = ' upper(moniker) '.CHECKPROP(' class_name ', PROP, VALUE) checks VALUE format for PROP of ' class_name '.']
+                     '% ' 
+                    ['% ' upper(moniker) '.CHECKPROP(POINTER, VALUE) throws an error if VALUE is']
+                     '%  NOT an acceptable value for the format of the property POINTER.'
+                    ['%  Error id: [BRAPH2:' class_name ':WrongInput]']
+                     '% '
+                     '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                    ['%  ' upper(moniker) '.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of ' upper(moniker) '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  Element.CHECKPROP(' class_name ', PROP, VALUE) throws error if VALUE has not a valid format for PROP of ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                    ['%  ' upper(moniker) '.CHECKPROP(' class_name ', PROP, VALUE) throws error if VALUE has not a valid format for PROP of ' class_name '.']
+                    ['%   Error id: [BRAPH2:' class_name ':WrongInput]']
+                     '% '
+                     '% See also Format, getPropProp, getPropTag, getPropSettings,'
+                     '% getPropCategory, getPropFormat, getPropDescription,'
+                     '% getPropDefault.'
+                     ''
+                    })
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
