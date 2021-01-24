@@ -358,31 +358,31 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         
                     case {Category.PARAMETER, Category.DATA}
                         if ~el.isLocked(prop)
-%                             if isa(value, 'Callback')
-%                                 if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
-%                                     warning( ...
-%                                         [BRAPH2.STR ':' class(el)], ...
-%                                         [class(el) ': Different formats for a prop (' el.getPropFormat(prop) ') ' ...
-%                                         'and a callback (' value.get('EL').getPropFormat(value.get('PROP')) '). ' ...
-%                                         'This is not necessarily an problem.'] ...
-%                                         )
-%                                 elseif  ~isequal(el.getPropSettings(prop), value.get('EL').getPropSettings(value.get('PROP')))
-%                                     warning( ...
-%                                         [BRAPH2.STR ':' class(el)], ...
-%                                         [class(el) ': Different format settings for a prop (' el.getPropFormat(prop) ', ' tostring(el.getPropSettings(prop)) ') ' ...
-%                                         'and a callback (' value.get('EL').getPropFormat(value.get('PROP')) ', ' tostring(value.get('EL').getPropSettings(value.get('PROP'))) '). ' ...
-%                                         'This is not necessarily an problem.'] ...
-%                                         )                                
-%                                 end
-% 
-%                                 el.props{prop}.value = value;
-%                             else
+                            if isa(value, 'Callback')
+                                if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
+                                    warning( ...
+                                        [BRAPH2.STR ':' class(el)], ...
+                                        [class(el) ': Different formats for a prop (' el.getPropFormat(prop) ') ' ...
+                                        'and a callback (' value.get('EL').getPropFormat(value.get('PROP')) '). ' ...
+                                        'This is not necessarily an problem.'] ...
+                                        )
+                                elseif  ~isequal(el.getPropSettings(prop), value.get('EL').getPropSettings(value.get('PROP')))
+                                    warning( ...
+                                        [BRAPH2.STR ':' class(el)], ...
+                                        [class(el) ': Different format settings for a prop (' el.getPropFormat(prop) ', ' tostring(el.getPropSettings(prop)) ') ' ...
+                                        'and a callback (' value.get('EL').getPropFormat(value.get('PROP')) ', ' tostring(value.get('EL').getPropSettings(value.get('PROP'))) '). ' ...
+                                        'This is not necessarily an problem.'] ...
+                                        )                                
+                                end
+
+                                el.props{prop}.value = value;
+                            else
                                 if el.isChecked(prop)
                                     el.checkProp(prop, value) % check value format
                                 end
 
                                 el.props{prop}.value = value;
-%                             end
+                            end
                         else
                             warning( ...
                                 [BRAPH2.STR ':' class(el)], ...
@@ -404,6 +404,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 )
                         end
                 end
+            end
+            
+            for prop = 1:1:el.getPropNumber()
+                el.postprocessing(prop)
             end
             
             % check values and restore (if any prop is checked)
@@ -439,9 +443,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             end
                     
                         case {Category.PARAMETER, Category.DATA}
-%                         while isa(value, 'Callback')
-%                             value = value.get('EL').get(value.get('PROP'));
-%                         end
+                            while isa(value, 'Callback')
+                                value = value.get('EL').get(value.get('PROP'));
+                            end
                             if ~isa(value, 'NoValue')
                                 [value_check, value_msg] = el.checkValue(prop, value);
                             else % NoValue
@@ -510,8 +514,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 case {Category.PARAMETER, Category.DATA}
                     if isa(value, 'NoValue')
                         value = el.getPropDefault(prop);
-%                     elseif isa(value, 'Callback')
-%                         value = value.get(Callback.EL).get(value.get(Callback.PROP));
+                    elseif isa(value, 'Callback')
+                        value = value.get(Callback.EL).get(value.get(Callback.PROP));
                     end
                     
                 case Category.RESULT
@@ -702,6 +706,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % returns the same value
         end
     end
+    methods (Access=protected) % postprocessing
+        function postprocessing(el, prop) %#ok<*INUSD>
+            % no action
+        end
+    end
+    
     methods (Access=protected) % check value
         function [value_check, value_msg] = checkValue(el, prop, value) %#ok<INUSD>
             value_check = true;
