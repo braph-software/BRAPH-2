@@ -7,25 +7,25 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
     properties (Access=private)
-        % props is a prvate struct containing the element properties whose
+        % props is a private struct containing the element properties whose
         % details depend on the property category (YOCO, YADIR):
         %
         % METADATA:
         % props{prop}.value     - value
         % props{prop}.seed      - seed for rng
-        % props{prop}.check     - true/false
+        % props{prop}.checked 	- true/false
         % props{prop}.locked    - false/true
         %
         % PARAMETER, DATA:
         % props{prop}.value     - NoValue() or value or Callback()
         % props{prop}.seed      - seed for rng
-        % props{prop}.check     - true/false
+        % props{prop}.checked   - true/false
         % props{prop}.locked    - false/true
         %
         % RESULT:
         % props{prop}.value     - NoValue() or value
         % props{prop}.seed      - seed for rng
-        % props{prop}.check     - true/false
+        % props{prop}.checked 	- true/false
         % props{prop}.locked    - false/true
         %
         % The parameter and data properties of the element get locked the
@@ -89,7 +89,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             el_name = eval([Element.getClass(el) '.getName()']);
         end
         function el_description = getDescription(el)
-			% GETNAME returns the description of the element.
+			%GETNAME returns the description of the element.
 			%
             % STR = Element.GETDESCRIPTION() returns the description of the element,
             %  which in this case is:
@@ -120,7 +120,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             el_description = eval([Element.getClass(el) '.getDescription()']);
         end
         function prop_list = getProps(el, category)
-			% GETPROPS returns the property list of an element.
+			%GETPROPS returns the property list of an element.
 			%
             % PROPS = Element.GETPROPS() returns the property list of Element.
             %
@@ -154,7 +154,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function prop_number = getPropNumber(el)
-			% GETPROPNUMBER returns the property number of an element.
+			%GETPROPNUMBER returns the property number of an element.
 			%
             % N = Element.GETPROPNUMBER() returns the number of properties in Element.
             %
@@ -484,312 +484,393 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % constructor
         function el = Element(varargin)
-            % varargin = {prop/tag, value, ...}
+            % ELEMENT() creates an Element.
+            %
+            % ELEMENT(PROP, VALUE, ...) with property PROP initialized to VALUE.
+            %
+            % ELEMENT(TAG, VALUE, ...) with property with tag TAG set to VALUE.
+            %
+            % Multiple properties can be initialized at once identifying
+            %  them with either property numbers (PROP) or tags (TAG).
+            %
+            % See also Category, Format, set, check.
             
-%             % undocumented trick to avoid inizialization of props             
-%             % (e.g. when deep-copying or cloning)
-%             % by having a single value in the varargin
-%             if length(varargin) == 1
-%                 return
-%             end
-% 
-%             % prop -> tag
-%             for i = 1:2:length(varargin)
-%                 if isnumeric(varargin{i})
-%                     prop = varargin{i};
-%                     tag = el.getPropTag(prop);
-%                     varargin{i} = tag;
-%                 end
-%             end
-%             
-%             propvalues = cell(1, el.getPropNumber());
-%             for prop = 1:1:el.getPropNumber()
-%                 
-%                 tag = el.getPropTag(prop);
-%                 
-%                 switch el.getPropCategory(prop)
-%                     case {Category.METADATA, Category.PARAMETER, Category.DATA}
-%                         default = el.getPropDefault(prop);
-%                         value = get_from_varargin(default, tag, varargin);
-%                         
-%                     case Category.RESULT
-%                         default = NoValue();
-%                         value = NoValue();
-%                 end
-%                 
-%                 propvalues{2 * prop - 1} = tag;
-%                 propvalues{2 * prop} = value;
-%                 
-%                 el.props{prop}.value = default;
-%                 el.props{prop}.locked = false;
-%             end
-%             
-%             rng('shuffle', 'twister')
-%             el.seed()
-% 
-%             el.set(propvalues{:})
+            % COMPUTATIONAL EFFICIENCY TRICK
+            % undocumented trick to avoid inizialization of props
+            % by having a single value (42) in the varargin (e.g. when deep-copying)
+            if length(varargin) == 1 && varargin{1} == 42
+                return
+            end
+
+            % rng('shuffle', 'twister') % this should be done before creating the element to ensure reproducibitlity of the random numbers
+            for prop = 1:1:el.getPropNumber()
+                el.props{prop}.value = NoValue.getNoValue();
+                el.props{prop}.seed = randi(intmax('uint32'));
+                el.props{prop}.checked = true;
+                el.props{prop}.locked = false;
+            end
+            
+            el.set(varargin{:})
         end
     end
-    methods % set/check/get value
-%         function set(el, varargin)
-%             % varargin = {prop/tag, value, ...}
-% 
-%             props_backup = el.props; % props backup
-%             
-%             for i = 1:2:length(varargin)
-%                 prop = el.getPropProp(varargin{i});
-%                 value = varargin{i+1};
-%                 
-%                 Element.existsProp(el, prop)
-%                 
-%                 switch el.getPropCategory(prop)
-%                     case Category.METADATA
-%                         el.checkProp(prop, value)
-%                         
-%                         el.props{prop}.value = value;
-%                         
-%                     case {Category.PARAMETER, Category.DATA}
-%                         if ~el.isLocked(prop)
-%                             if isa(value, 'Callback')
-%                                 if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
-%                                     warning( ...
-%                                         [BRAPH2.STR ':' class(el)], ...
-%                                         [class(el) ': Different formats for a prop (' el.getPropFormat(prop) ') ' ...
-%                                         'and a callback (' value.get('EL').getPropFormat(value.get('PROP')) '). ' ...
-%                                         'This is not necessarily an problem.'] ...
-%                                         )
-%                                 elseif  ~isequal(el.getPropSettings(prop), value.get('EL').getPropSettings(value.get('PROP')))
-%                                     warning( ...
-%                                         [BRAPH2.STR ':' class(el)], ...
-%                                         [class(el) ': Different format settings for a prop (' el.getPropFormat(prop) ', ' tostring(el.getPropSettings(prop)) ') ' ...
-%                                         'and a callback (' value.get('EL').getPropFormat(value.get('PROP')) ', ' tostring(value.get('EL').getPropSettings(value.get('PROP'))) '). ' ...
-%                                         'This is not necessarily an problem.'] ...
-%                                         )                                
-%                                 end
-% 
-%                                 el.props{prop}.value = value;
-%                             else
-%                                 el.checkProp(prop, value)
-% 
-%                                 el.props{prop}.value = value;
-%                             end
-%                         else
-%                             warning( ...
-%                                 [BRAPH2.STR ':' class(el)], ...
-%                                 [class(el) ': Attempt to set the values of a LOCKED property (' el.getPropTag(prop) '), which was obviously not done. ' ...
-%                                 'Hopefully this won''t create probblems, but your code shouldn''t let this happen!'] ...
-%                                 )                            
-%                         end
-%                        
-%                     case Category.RESULT
-%                         if isa(value, 'NoValue')
-%                             el.props{prop}.value = value;
-%                         else
-%                             warning( ...
-%                                 [BRAPH2.STR ':' class(el)], ...
-%                                 [class(el) ': Rightfully unsuccessful attempt to set result (' el.getPropTag(prop) ') to a value. ' ...
-%                                 'Probably not a problem, but shouldn''t happen with well-written code!'] ...
-%                                 )
-%                         end
-%                 end
-%             end
-%             
-%             [check, msg] = el.check();
-%             if ~check
-%                 el.props = props_backup; % restore props backup
-%                 error( ...
-%                     [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT], ...
-%                     [class(el) ': Wrong inputs: ' msg '\n' ...
-%                     'The value of this ' class(el) ' has been restored, \n' ...
-%                     'so you can keep on working if you are using command line. \n' ...
-%                     'Nevertheless, there might be problems, so better you check your code!'] ...
-%                     )
-%             end
-%         end
-%         function [element_check, element_msg] = check(el, varargin)
-% 
-%             value_checks = ones(el.getPropNumber(), true);
-%             value_msgs = repmat({''}, el.getPropNumber(), 1);
-%             for prop = 1:1:el.getPropNumber()
-%                 value = el.getr(prop);
-%                 switch el.getPropCategory(prop)
-%                     case Category.METADATA
-%                         [value_check, value_msg] = el.checkValue(prop, value);
-%                     
-%                     case {Category.PARAMETER, Category.DATA}
-%                         while isa(value, 'Callback')
-%                             value = value.get('EL').get(value.get('PROP'));
-%                         end
-%                         if ~isa(value, 'NoValue')
-%                             [value_check, value_msg] = el.checkValue(prop, value);
-%                         else % NoValue()
-%                             value_check = true;
-%                             value_msg = '';
-%                         end
-%                         
-%                     case Category.RESULT
-%                         if ~isa(value, 'NoValue')
-%                             [value_check, value_msg] = el.checkValue(prop, value);
-%                         else % NoValue()
-%                             value_check = true;
-%                             value_msg = '';
-%                         end
-%                 end
-%                 value_checks(prop) = value_check;
-%                 if ~value_check
-%                     value_msgs{prop} = value_msg;
-%                 end
-%             end
-%             check = all(value_checks);
-%             msg = join(value_msgs);
-%             msg = strtrim(msg{1});
-%             
-%             if nargout >= 1
-%                 element_check = check;
-%                 element_msg = msg;
-%             else
-%                 assert( ...
-%                     check, ...
-%                     [BRAPH2.STR ':' el.getClass() ':' BRAPH2.BUG_ERR], ...
-%                     msg ...
-%                     )
-%             end
-%         end
-%         function value = getr(el, pointer)
-%             % prop can also be tag
-%             
-%             prop = el.getPropProp(pointer);
-%             
-%             Element.existsProp(el, prop)
-%             
-%             value = el.props{prop}.value; % raw element value
-%         end
-%         function value = get(el, pointer)
-%             % prop can also be tag
-% 
-%             prop = el.getPropProp(pointer);
-%             
-%             props_backup = el.props; % props backup
-% 
-%             value = el.getr(prop);
-%             
-%             switch el.getPropCategory(prop)
-%                 case Category.METADATA
-%                     % nothing needs to be done
-%                     
-%                 case {Category.PARAMETER, Category.DATA}
-%                     if isa(value, 'Callback')
-%                         value = value.get(Callback.EL).get(value.get(Callback.PROP));
-%                     end
-%                     
-%                 case Category.RESULT
-%                     if isa(value, 'NoValue')
-%                         value = el.calculateValue(prop);
-% 
-%                         [check, msg] = el.check();
-%                         if check
-%                             el.lock()
-%                         else
-%                             el.props = props_backup; % restore props backup
-%                             value = el.props{prop}.value; % value is also set to the original NoValue()
-%                             warning( ...
-%                                 [BRAPH2.STR ':' class(el)], ...
-%                                 [class(el) ': Wrong results: ' msg '\n' ...
-%                                 'The value of this ' class(el) ' has been restored,\n' ...
-%                                 'but there might be problems, so better you check your code!'] ...
-%                                 )
-%                         end
-%                     end
-%                 
-%             end
-%         end
-%         function value = memorize(el, pointer)
-%             % prop can also be tag
-% 
-%             prop = el.getPropProp(pointer);
-%             
-%             value = el.get(prop);
-% 
-%             if isequal(el.getPropCategory(prop), Category.RESULT)
-%                 el.props{prop}.value = value;
-%             end
-%         end
-%         function lock(el, pointer)
-%             % prop can also be tag
-% 
-%             if nargin < 2
-%                 for prop = 1:1:el.getPropNumber()
-%                     if any(strcmp(el.getPropCategory(prop), {Category.PARAMETER, Category.DATA}))
-%                         el.lock(prop)
-%                     end
-%                 end
-%             else
-%                 if ~el.isLocked(pointer) % This condition is for computational efficiency 
-%                                          % TODO: check that this is fully correct
-% 
-%                     prop = el.getPropProp(pointer);
-% 
-%                     el.props{prop}.locked = true;
-% 
-%                     value = el.getr(prop);
-%                     if isa(value, 'Element')
-%                         value.lock();
-%                     elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-%                         cellfun(@(x) x.lock(), value)
-%                     end
-%                 end
-%             end
-%         end
-%         function locked = isLocked(el, pointer)
-%             % prop can also be tag
-% 
-%             prop = el.getPropProp(pointer);
-%             
-%             locked = el.props{prop}.locked;
-%         end
-%         function seed = getPropSeed(el, pointer)
-%             
-%             prop = el.getPropProp(pointer);
-% 
-%             seed = el.props{prop}.seed;
-%         end
+    methods % set/check/get/seed/locked/checked
+        function set(el, varargin)
+            % varargin = {prop/tag, value, ...}
+
+            % backup properties (if any prop is checked)
+            checked = el.getPropNumber() && any(cellfun(@(x) x.checked, el.props));
+            if checked
+                props_backup = el.props; % props backup
+            end
+            
+            % set
+            for i = 1:2:length(varargin)
+                prop = el.getPropProp(varargin{i}); % also Element.existsProp(el, prop)
+                value = el.conditioning(prop, varargin{i+1}); % also conditions the value
+                
+                switch el.getPropCategory(prop)
+                    case Category.METADATA
+                        if el.isChecked(prop)
+                            el.checkProp(prop, value) % check value format
+                        end
+                        
+                        el.props{prop}.value = value;
+                        
+                    case {Category.PARAMETER, Category.DATA}
+                        if ~el.isLocked(prop)
+                            if isa(value, 'Callback')
+                                if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
+                                    warning( ...
+                                        [BRAPH2.STR ':' class(el)], ...
+                                        [class(el) ': Different formats for a prop (' el.getPropFormat(prop) ') ' ...
+                                        'and a callback (' value.get('EL').getPropFormat(value.get('PROP')) '). ' ...
+                                        'This is not necessarily an problem.'] ...
+                                        )
+                                elseif  ~isequal(el.getPropSettings(prop), value.get('EL').getPropSettings(value.get('PROP')))
+                                    warning( ...
+                                        [BRAPH2.STR ':' class(el)], ...
+                                        [class(el) ': Different format settings for a prop (' el.getPropFormat(prop) ', ' tostring(el.getPropSettings(prop)) ') ' ...
+                                        'and a callback (' value.get('EL').getPropFormat(value.get('PROP')) ', ' tostring(value.get('EL').getPropSettings(value.get('PROP'))) '). ' ...
+                                        'This is not necessarily an problem.'] ...
+                                        )                                
+                                end
+
+                                el.props{prop}.value = value;
+                            else
+                                if el.isChecked(prop)
+                                    el.checkProp(prop, value) % check value format
+                                end
+
+                                el.props{prop}.value = value;
+                            end
+                        else
+                            warning( ...
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) ' ' ... 
+                                'Attempt to set the values of a LOCKED property (' el.getPropTag(prop) '), which was obviously not done. ' ...
+                                'Hopefully this won''t create probblems, but your code shouldn''t let this happen!'] ...
+                                )                            
+                        end
+                       
+                    case Category.RESULT
+                        if isa(value, 'NoValue')
+                            el.props{prop}.value = NoValue.getNoValue();
+                        else
+                            warning( ...
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) ' ' ...
+                                'Rightfully unsuccessful attempt to set result (' el.getPropTag(prop) ') to a value. ' ...
+                                'Probably not a problem, but shouldn''t happen with well-written code!'] ...
+                                )
+                        end
+                end
+            end
+            
+            for prop = 1:1:el.getPropNumber()
+                el.postprocessing(prop)
+            end
+            
+            % check values and restore (if any prop is checked)
+            if checked
+                [check, msg] = el.check();
+                if ~check
+                    el.props = props_backup; % restore props backup
+                    error( ...
+                        [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT], ...
+                        [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT ' ' ...
+                        msg '\n' ...
+                        'The value of this ' class(el) ' has been restored, \n' ...
+                        'so you can keep on working if you are using command line. \n' ...
+                        'Nevertheless, there might be problems, so better you check your code!'] ...
+                        )
+                end
+            end
+        end
+        function [element_check, element_msg] = check(el, varargin)
+
+            value_checks = ones(el.getPropNumber(), true);
+            value_msgs = repmat({''}, el.getPropNumber(), 1);
+            for prop = 1:1:el.getPropNumber()
+                if el.isChecked(prop)
+                    value = el.getr(prop);
+                    switch el.getPropCategory(prop)
+                        case Category.METADATA
+                            if ~isa(value, 'NoValue')
+                                [value_check, value_msg] = el.checkValue(prop, value);
+                            else % NoValue
+                                value_check = true;
+                                value_msg = '';
+                            end
+                    
+                        case {Category.PARAMETER, Category.DATA}
+                            while isa(value, 'Callback')
+                                value = value.get('EL').get(value.get('PROP'));
+                            end
+                            if ~isa(value, 'NoValue')
+                                [value_check, value_msg] = el.checkValue(prop, value);
+                            else % NoValue
+                                value_check = true;
+                                value_msg = '';
+                            end
+                        
+                        case Category.RESULT
+                            if ~isa(value, 'NoValue')
+                                [value_check, value_msg] = el.checkValue(prop, value);
+                            else % NoValue
+                                value_check = true;
+                                value_msg = '';
+                            end
+                    end
+                    value_checks(prop) = value_check;
+                    if ~value_check
+                        value_msgs{prop} = value_msg;
+                    end
+                end
+            end
+            check = all(value_checks);
+            msg = join(value_msgs);
+            msg = strtrim(msg{1});
+            
+            if nargout >= 1
+                element_check = check;
+                element_msg = msg;
+            else
+                assert( ...
+                    check, ...
+                    [BRAPH2.STR ':' el.getClass() ':' BRAPH2.BUG_ERR], ...
+                    [BRAPH2.STR ':' el.getClass() ':' BRAPH2.BUG_ERR ' ' ...
+                    msg] ...
+                    )
+            end
+        end
+        function value = getr(el, pointer)
+            %GETR returns the row value of a property.
+            %
+            % VALUE = GETR(EL, PROP) returns the row value of property PROP
+            %  of element EL.
+            %
+            % VALUE = GETR(EL, TAG) returns the row value of property TAG
+            %  of element EL.
+            %
+            % See also get, memorize, set, check.
+            
+            prop = el.getPropProp(pointer); % also Element.existsProp(el, prop)
+            
+            value = el.props{prop}.value; % raw element value
+        end
+        function value = get(el, pointer)
+            % prop can also be tag
+
+            prop = el.getPropProp(pointer);
+            
+            value = el.getr(prop);
+            
+            switch el.getPropCategory(prop)
+                case Category.METADATA
+                    if isa(value, 'NoValue')
+                        value = el.getPropDefault(prop);
+                    end
+                    
+                case {Category.PARAMETER, Category.DATA}
+                    if isa(value, 'NoValue')
+                        value = el.getPropDefault(prop);
+                    elseif isa(value, 'Callback')
+                        value = value.get(Callback.EL).get(value.get(Callback.PROP));
+                    end
+                    
+                case Category.RESULT
+                    if isa(value, 'NoValue')
+                        
+                        % backup properties (if prop is checked)
+                        if el.isChecked(prop)
+                            props_backup = el.props; % props backup
+                        end                        
+                        
+                        value = el.calculateValue(prop);
+
+                        if ~el.isChecked(prop)
+                            el.lock()
+                        else
+                            % check values and restore (if prop is checked)
+                            [check, msg] = el.check();
+                            if check
+                                el.lock()
+                            else
+                                el.props = props_backup; % restore props backup
+                                value = el.props{prop}.value; % value is also set to the original NoValue()
+                                warning( ...
+                                    [BRAPH2.STR ':' class(el)], ...
+                                    [BRAPH2.STR ':' class(el) msg '\n' ...
+                                    'The value of this ' class(el) ' has been restored,\n' ...
+                                    'but there might be problems, so better you check your code!'] ...
+                                    )
+                            end
+                        end
+                    end
+            end
+        end
+        function value = memorize(el, pointer)
+            % prop can also be tag
+
+            prop = el.getPropProp(pointer);
+            
+            value = el.get(prop);
+
+            if isequal(el.getPropCategory(prop), Category.RESULT)
+                el.props{prop}.value = value;
+            end
+        end
+        function seed = getPropSeed(el, pointer)
+            
+            prop = el.getPropProp(pointer);
+
+            seed = el.props{prop}.seed;
+        end
+        function locked = isLocked(el, pointer)
+            % prop can also be tag
+
+            prop = el.getPropProp(pointer);
+            
+            locked = el.props{prop}.locked;
+        end
+        function lock(el, pointer)
+            % prop can also be tag
+
+            if nargin < 2
+                for prop = 1:1:el.getPropNumber()
+                    if any(strcmp(el.getPropCategory(prop), {Category.PARAMETER, Category.DATA}))
+                        el.lock(prop)
+                    end
+                end
+            else
+                if ~el.isLocked(pointer) % This condition is for computational efficiency 
+                    prop = el.getPropProp(pointer);
+
+                    el.props{prop}.locked = true;
+
+                    value = el.getr(prop);
+                    if isa(value, 'Element')
+                        value.lock();
+                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                        cellfun(@(x) x.lock(), value)
+                    end
+                end
+            end
+        end
+        function checked = isChecked(el, pointer)
+            % prop can also be tag
+
+            prop = el.getPropProp(pointer);
+            
+            checked = el.props{prop}.checked;
+        end
+        function checked(el, pointer)
+            % prop can also be tag
+
+            if nargin < 2
+                for prop = 1:1:el.getPropNumber()
+                    el.checked(prop)
+                end
+            else
+                if ~el.isChecked(pointer) % This condition is for computational efficiency 
+                    prop = el.getPropProp(pointer);
+
+                    el.props{prop}.checked = true;
+
+                    value = el.getr(prop);
+                    if isa(value, 'Element')
+                        value.checked();
+                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                        cellfun(@(x) x.checked(), value)
+                    end
+                end
+            end
+        end
+        function unchecked(el, pointer)
+            % prop can also be tag
+
+            if nargin < 2
+                for prop = 1:1:el.getPropNumber()
+                    el.unchecked(prop)
+                end
+            else
+                if el.isChecked(pointer) % This condition is for computational efficiency 
+                    prop = el.getPropProp(pointer);
+
+                    el.props{prop}.checked = false;
+
+                    value = el.getr(prop);
+                    if isa(value, 'Element')
+                        value.unchecked();
+                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                        cellfun(@(x) x.unchecked(), value)
+                    end
+                end
+            end
+        end     
     end
     methods % operators
-%         function check = isequal(el1, el2)
-%             
-%             check = isa(el2, el1.getClass());
-%             
-%             if check
-%                 for prop = 1:1:el1.getPropNumber()
-%                     check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
-%                 end
-%             end
-%         end
+        function check = isequal(el1, el2)
+            
+            check = isa(el2, el1.getClass());
+            
+            if check
+                for prop = 1:1:el1.getPropNumber()
+                    check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
+                end
+            end
+        end
     end
-    methods (Access=private) % unlock/seed
-%         function unlock(el, pointer)
-%             % prop can also be tag
-% 
-%             if nargin < 2
-%                 for prop = 1:1:el.getPropNumber()
-%                     if any(strcmp(el.getPropCategory(prop), {Category.PARAMETER, Category.DATA}))
-%                         el.unlock(prop)
-%                     end
-%                 end
-%             else
-%                 prop = el.getPropProp(pointer);
-% 
-%                 el.props{prop}.locked = false;
-%                 
-%                 value = el.getr(prop);
-%                 if isa(value, 'Element')
-%                     value.unlock();
-%                 elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-%                     cellfun(@(x) x.unlock(), value)
-%                 end
-%             end
-%         end
+    methods (Access=private) % unlock
+        function unlock(el, pointer)
+            % prop can also be tag
+
+            if nargin < 2
+                for prop = 1:1:el.getPropNumber()
+                    if any(strcmp(el.getPropCategory(prop), {Category.PARAMETER, Category.DATA}))
+                        el.unlock(prop)
+                    end
+                end
+            else
+                prop = el.getPropProp(pointer);
+
+                el.props{prop}.locked = false;
+                
+                value = el.getr(prop);
+                if isa(value, 'Element')
+                    value.unlock();
+                elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                    cellfun(@(x) x.unlock(), value)
+                end
+            end
+        end
 %         function seed(el)
+%             %SEED assigns new seeds to all properties.
+%             %
+%             % This private function is used by the Element constructor and
+%             % the clone function.
+%             %
+%             % See also Element, clone.
 %             
 %             prop_number = el.getPropNumber();
 %             
@@ -800,168 +881,186 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %             end
 %         end
     end
+    methods (Access=protected) % conditioning
+        function value = conditioning(el, prop, value) %#ok<INUSL>
+            % returns the same value
+        end
+    end
+    methods (Access=protected) % postprocessing
+        function postprocessing(el, prop) %#ok<*INUSD>
+            % no action
+        end
+    end
+    
     methods (Access=protected) % check value
-%         function [value_check, value_msg] = checkValue(el, prop, value) %#ok<INUSD>
-%             value_check = true;
-%             value_msg = ['Error while checking ' tostring(el) ' ' el.getPropTag(prop) '.'];
-%         end
+        function [value_check, value_msg] = checkValue(el, prop, value) %#ok<INUSD>
+            value_check = true;
+            value_msg = '';
+        end
     end
     methods (Access=protected) % calculate value
-%         function value = calculateValue(el, prop)
-%             value = el.props{prop}.value;
-%         end
+        function value = calculateValue(el, prop)
+            value = el.getPropDefault(prop);
+        end
     end
     methods % display
-%         function str = tostring(el, varargin)
-%             if el.getPropNumber() > 0
-%                 % str = char(join([class(el) 'with properties' cellfun(@(prod) el.getPropTag(prod), num2cell(Element.getProps(el)'), 'UniformOutput', false)]));
-%                 str = [class(el) ' with ' int2str(el.getPropNumber()) ' properties ' el.getPropTag(1) ' = ' tostring(el.get(1)) '.'];
-%             else
-%                 str = [class(el) ' without properties.'];
-%             end
-%             str = tostring(str, varargin{:});
-%             str = str(2:1:end-1);
-%         end
-%         function disp(el)
-% 
-%             disp(['<a href="matlab:help ' class(el) '">' class(el) '</a>']);
-% 
-%             for prop = 1:1:el.getPropNumber()
-%                 if ~el.isLocked(prop)
-%                     disp([upper(el.getPropTag(prop)) ...
-%                         ' (' ...
-%                         Category.getCategoryName(el.getPropCategory(prop)) ...
-%                         ', ' ...
-%                         Format.getFormatName(el.getPropFormat(prop)) ...
-%                         ') = ' ...
-%                         tostring(el.getr(prop))])
-%                 else % prop locked
-%                     disp([upper(el.getPropTag(prop)) ...
-%                         ' (' ...
-%                         Category.getCategoryName(el.getPropCategory(prop)) ...
-%                         ', ' ...
-%                         Format.getFormatName(el.getPropFormat(prop)) ...
-%                         ', locked' ...
-%                         ') = ' ...
-%                         tostring(el.getr(prop))])
-%                 end
-%             end
-%         end
-%         function txt_output = tree(el, level, prop_list, n, ending)
-%                         
-%             if nargin < 5
-%                 ending = ' ...';
-%             end
-% 
-%             if nargin < 4 || isempty(n)
-%                 n = 100;
-%             end
-% 
-%             if nargin < 3 || isempty(prop_list)
-%                 prop_list = 1:1:el.getPropNumber();
-%             end
-%             
-%             if nargin < 2 || isempty(level)
-%                 level = 0;
-%             end
-%             
-%             txt_el = sprintf(['<strong>' class(el) '</strong>\n']);
-%             
-%             for prop = prop_list
-%                 category = el.getPropCategory(prop);
-%                 format = el.getPropFormat(prop);
-%                 value = el.getr(prop);
-%                 
-%                 if el.isLocked(prop)
-%                     txt_locked = ['<strong>' char(254) '</strong> '];
-%                 else
-%                     txt_locked = '  ';
-%                 end
-%                 
-%                 txt_el = [txt_el ...
-%                     sprintf([ ...
-%                     int2str(prop) ' ' ...
-%                     category ' ' ...
-%                     format ...
-%                     '\t' upper(el.getPropTag(prop)) ...
-%                     '\t' txt_locked ...
-%                     '\t' int2str(el.getPropSeed(prop)) ...
-%                     '\t' tostring(value, n, ending) ...
-%                     '\n'])]; %#ok<AGROW>
-%                 
-%                 if level > 0
-%                     if isa(value, 'Callback')
-%                         cb = value;
-%                         cb_element = cb.get('el');
-%                         cb_prop = cb.get('prop');
-%                         txt_cd = cb_element.tree(level - 1, cb_prop, n, ending);
-%                         lines = splitlines(txt_cd);
-%                         for i = 1:1:length(lines)
-%                             txt_el = [txt_el ...
-%                                 sprintf(['  ' lines{i} '\n']) ... % indent
-%                                 ]; %#ok<AGROW>
-%                         end
-%                     elseif isa(value, 'Element')
-%                         value_el = value;
-%                         txt_value_el = value_el.tree(level - 1, [], n, ending);
-%                         lines = splitlines(txt_value_el);
-%                         for i = 1:1:length(lines)
-%                             txt_el = [txt_el ...
-%                                 sprintf(['  ' lines{i} '\n']) ... % indent
-%                                 ]; %#ok<AGROW>
-%                         end                    
-%                     elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-%                         for i = 1:1:length(value)
-%                             txt_el = [txt_el ...
-%                                 sprintf(['  index:<strong>' int2str(i) '</strong> item:']) ... % indent
-%                                 ]; %#ok<AGROW>
-%                             txt_value_dict_i = value{i}.tree(level - 1, [], n, ending);
-%                             lines = splitlines(txt_value_dict_i);
-%                             txt_el = [txt_el ...
-%                                 sprintf([lines{1} '\n']) ...
-%                                 ]; %#ok<AGROW>
-%                             for j = 2:1:length(lines)
-%                                 txt_el = [txt_el ...
-%                                     sprintf(['  ' lines{j} '\n']) ... % indent
-%                                     ]; %#ok<AGROW>
-%                             end
-%                         end
-%                     end
-%                 end
-%             end
-%             
-%             txt_el = txt_el(1:end - 1); % eliminates last carriage return
-% 
-%             if nargout == 1
-%                 txt_output = txt_el;
-%             else
-%                 disp(txt_el)
-%             end
-%         end
+        function str = tostring(el, varargin)
+            if el.getPropNumber() > 0
+                % str = char(join([class(el) 'with properties' cellfun(@(prod) el.getPropTag(prod), num2cell(Element.getProps(el)'), 'UniformOutput', false)]));
+                str = [class(el) ' with ' int2str(el.getPropNumber()) ' properties ' el.getPropTag(1) ' = ' tostring(el.get(1)) '.'];
+            else
+                str = [class(el) ' without properties.'];
+            end
+            str = tostring(str, varargin{:});
+            str = str(2:1:end-1);
+        end
+        function disp(el)
+
+            disp(['<a href="matlab:help ' class(el) '">' class(el) '</a>']);
+            el.tree(0)
+            
+            % for prop = 1:1:el.getPropNumber()
+            %     if ~el.isLocked(prop)
+            %         disp([upper(el.getPropTag(prop)) ...
+            %             ' (' ...
+            %             Category.getCategoryName(el.getPropCategory(prop)) ...
+            %             ', ' ...
+            %             Format.getFormatName(el.getPropFormat(prop)) ...
+            %             ') = ' ...
+            %             tostring(el.getr(prop))])
+            %     else % prop locked
+            %         disp([upper(el.getPropTag(prop)) ...
+            %             ' (' ...
+            %             Category.getCategoryName(el.getPropCategory(prop)) ...
+            %             ', ' ...
+            %             Format.getFormatName(el.getPropFormat(prop)) ...
+            %             ', locked' ...
+            %             ') = ' ...
+            %             tostring(el.getr(prop))])
+            %     end
+            % end
+        end
+        function txt_output = tree(el, level, prop_list, n, ending)
+                        
+            if nargin < 5
+                ending = ' ...';
+            end
+
+            if nargin < 4 || isempty(n)
+                n = 100;
+            end
+
+            if nargin < 3 || isempty(prop_list)
+                prop_list = 1:1:el.getPropNumber();
+            end
+            
+            if nargin < 2 || isempty(level)
+                level = 0;
+            end
+            
+            txt_el = sprintf(['<strong>' class(el) '</strong>\n']);
+            
+            for prop = prop_list
+                category = el.getPropCategory(prop);
+                format = el.getPropFormat(prop);
+                value = el.getr(prop);
+                
+                if el.isLocked(prop)
+                    txt_locked = ['<strong>' char(254) '</strong>'];
+                else
+                    txt_locked = ' ';
+                end
+                
+                if el.isChecked(prop)
+                    txt_checked = ['<strong>' char(391) '</strong> '];
+                else
+                    txt_checked = '  ';
+                end
+                
+                txt_el = [txt_el ...
+                    sprintf([ ...
+                    int2str(prop) ' ' ...
+                    category ' ' ...
+                    format ...
+                    '\t' upper(el.getPropTag(prop)) ...
+                    '\t' txt_locked txt_checked ...
+                    '\t' int2str(el.getPropSeed(prop)) ...
+                    '\t' tostring(value, n, ending) ...
+                    '\n'])]; %#ok<AGROW>
+                
+                if level > 0
+                    if isa(value, 'Callback')
+                        cb = value;
+                        cb_element = cb.get('el');
+                        cb_prop = cb.get('prop');
+                        txt_cd = cb_element.tree(level - 1, cb_prop, n, ending);
+                        lines = splitlines(txt_cd);
+                        for i = 1:1:length(lines)
+                            txt_el = [txt_el ...
+                                sprintf(['  ' lines{i} '\n']) ... % indent
+                                ]; %#ok<AGROW>
+                        end
+                    elseif isa(value, 'Element')
+                        value_el = value;
+                        txt_value_el = value_el.tree(level - 1, [], n, ending);
+                        lines = splitlines(txt_value_el);
+                        for i = 1:1:length(lines)
+                            txt_el = [txt_el ...
+                                sprintf(['  ' lines{i} '\n']) ... % indent
+                                ]; %#ok<AGROW>
+                        end                    
+                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                        for i = 1:1:length(value)
+                            txt_el = [txt_el ...
+                                sprintf(['  index:<strong>' int2str(i) '</strong> item:']) ... % indent
+                                ]; %#ok<AGROW>
+                            txt_value_dict_i = value{i}.tree(level - 1, [], n, ending);
+                            lines = splitlines(txt_value_dict_i);
+                            txt_el = [txt_el ...
+                                sprintf([lines{1} '\n']) ...
+                                ]; %#ok<AGROW>
+                            for j = 2:1:length(lines)
+                                txt_el = [txt_el ...
+                                    sprintf(['  ' lines{j} '\n']) ... % indent
+                                    ]; %#ok<AGROW>
+                            end
+                        end
+                    end
+                end
+            end
+            
+            txt_el = txt_el(1:end - 1); % eliminates last carriage return
+
+            if nargout == 1
+                txt_output = txt_el;
+            else
+                disp(txt_el)
+            end
+        end
     end
     methods % el_list
-%         function el_list = getElementList(el, el_list)
-% 
-%             if nargin < 2
-%                 el_list = {};
-%             end
-%             
-%             if all(cellfun(@(x) el ~= x, el_list))
-%                 el_list = [el_list(:); {el}];
-%             end
-%             
-%             for prop = 1:1:el.getPropNumber()
-%                 value = el.getr(prop);
-%                 
-%                 if isa(value, 'Element')
-%                     el_list = value.getElementList(el_list);
-%                 elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-%                     for i = 1:1:length(value)
-%                         el_list = value{i}.getElementList(el_list);
-%                     end
-%                 end
-%             end
-%         end        
+        function el_list = getElementList(el, el_list)
+
+            if nargin < 2
+                el_list = {};
+            end
+            
+            if all(cellfun(@(x) el ~= x, el_list))
+                el_list = [el_list(:); {el}];
+            end
+            
+            for prop = 1:1:el.getPropNumber()
+                value = el.getr(prop);
+                
+                if isa(value, 'Element')
+                    el_list = value.getElementList(el_list);
+                elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                    for i = 1:1:length(value)
+                        el_list = value{i}.getElementList(el_list);
+                    end
+                end
+            end
+        end        
     end
     methods % encodeJSON
 %         function [json, struct, el_list] = encodeJSON(el) %#ok<STOUT>

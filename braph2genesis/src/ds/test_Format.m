@@ -7,37 +7,31 @@ error_identifier = [BRAPH2.STR ':Format:' BRAPH2.WRONG_INPUT];
 %% Test 1: Static methods
 assert(numel(format_list) == Format.getFormatNumber(), ...
     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-    [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT ' ' ...
-    'Format.getFormatNumber() does not return correct number of formats.'])
+    ['Format.getFormatNumber() does not return correct number of formats.'])
 
 for i = 1:1:numel(format_list)
     format = format_list{i};
 
     assert(Format.existsFormat(format), ...
         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-        [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT ' ' ...
-        'Format.existsFormat(' tostring(format) ') must return true.'])
+        ['Format.existsFormat(' tostring(format) ') must return true.'])
 
     assert(strcmp(eval(['Format.' upper(Format.getFormatName(format)) '_NAME']), Format.getFormatName(format)), ...
         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-        [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT ' ' ...
-        'Format.getFormatName(' tostring(format) ') does not return correct output.'])
+        ['Format.getFormatName(' tostring(format) ') does not return correct output.'])
 
     assert(strcmp(eval(['Format.' upper(Format.getFormatName(format)) '_DESCRIPTION']), Format.getFormatDescription(format)), ...
         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-        [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT ' ' ...
-        'Format.getFormatDescription(' tostring(format) ') does not return correct output.'])
+        ['Format.getFormatDescription(' tostring(format) ') does not return correct output.'])
     
     assert(ischar(Format.getFormatDescription(format, Format.getFormatSettings(format))), ...
         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-        [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT '' ...
-        'Format.getDescription(' tostring(format) ', settings) should return a char array.'])
+        ['Format.getDescription(' tostring(format) ', settings) should return a char array.'])
 
-% TODO: uncomment once IndexedDictionary works
-%     assert(Format.checkFormat(format, Format.getFormatDefault(format)), ...
-%         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-%         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT '' ...
-%         'Format.checkFormat(' tostring(format) ') should return a char array, when called with the default format.'])
+    assert(Format.checkFormat(format, Format.getFormatDefault(format)), ...
+        [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
+        [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT '' ...
+        'Format.checkFormat(' tostring(format) ') should return a char array, when called with the default format.'])
 end
 
 %% Test 2.EM: Check EMPTY
@@ -226,80 +220,56 @@ end
 % TODO
 
 %% Test 2.IL: Check ITEMLIST
-% % % STRING formats that should be accepted
-% % clear value
-% % value{1} = 
-% % 
-% % % STRING formats that should NOT be accepted
-% % clear wrong_value
-% % wrong_value{1} = 
-% % 
-% % % tests
-% % for i = 1:1:length(value)
-% %     Format.checkFormat(Format.STRING, value{i})
-% % end
-% % for i = 1:1:length(wrong_value)
-% %     assert_with_error('Format.checkFormat(Format.ITEMLIST, varargin{1})', error_identifier, wrong_value{i})
-% % end
-% 
-% % % element_class_list = subclasses('Element', [], [], true);
-% % % element_list = cellfun(@(x) eval([x '()']), element_class_list, 'UniformOutput', false);
-% % % assert(Format.checkFormat(Format.ITEMLIST, element_list), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, element_class_list), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % for i = 1:1:numel(element_class_list)
-% % %     element_class = element_class_list{i};
-% % %     assert(Format.checkFormat(Format.ITEMLIST, {eval([element_class '()'])}), ...
-% % %         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %         'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % %     assert(~Format.checkFormat(Format.ITEMLIST, {element_class}), ...
-% % %         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %         'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % end
-% % % assert(~Format.checkFormat(Format.ITEMLIST, {'Element'}), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, 'Element'), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, {'non existing class'}), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, 3.14), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, true), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
-% % % assert(~Format.checkFormat(Format.ITEMLIST, 'string'), ...
-% % %     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
-% % %     'Format.checkFormat(Format.ITEMLIST) does not return correct output.')
+% ITEMLIST formats that should be accepted
+clear value
+element_class_list = subclasses('Element', [], [], true);
+value{1} = cellfun(@(x) eval([x '()']), element_class_list, 'UniformOutput', false);
+for i = 1:1:length(element_class_list)
+    value{i + 1} = {eval([element_class_list{i} '()'])}; %#ok<SAGROW>
+end
 
-%% Test 2.IL.s: Check ITEMLIST
+% ITEMLIST formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = 3.14;
+wrong_value{2} = true;
+wrong_value{3} = 'String';
+wrong_value{4} = {'1', '2', '3'};
+
+% tests
+for i = 1:1:length(value)
+    Format.checkFormat(Format.ITEMLIST, value{i})
+end
+for i = 1:1:length(wrong_value)
+    assert_with_error('Format.checkFormat(Format.ITEMLIST, varargin{1})', error_identifier, wrong_value{i})
+end
+
+
+%% Test 2.IL.s: Check ITEMLIST 
 % TODO
 
 %% Test 2.DI: Check IDICT
-% % % IDICT formats that should be accepted
-% % clear value
-% % value{1} = IndexedDictionary('Element');
-% % 
-% % % IDICT formats that should NOT be accepted
-% % clear wrong_value
-% % wrong_value{1} = IndexedDictionary('DummyObject');
-% % wrong_value{2} = 3.14;
-% % wrong_value{3} = true;
-% % wrong_value{4} = 'String';
-% % 
-% % % tests
-% % for i = 1:1:length(value)
-% %     Format.checkFormat(Format.IDICT, value{i})
-% % end
-% % for i = 1:1:length(wrong_value)
-% %     assert_with_error('Format.checkFormat(Format.IDICT, varargin{1})', error_identifier, wrong_value{i})
-% % end
+% IDICT formats that should be accepted
+% clear value
+% element_class_list = subclasses('Element', [], [], true);
+% for i = 1:1:numel(element_class_list)
+%     element_class = element_class_list{i};
+%     value{i} = IndexedDictionary(element_class); %#ok<SAGROW>
+% end
+% 
+% % IDICT formats that should NOT be accepted
+% clear wrong_value
+% wrong_value{1} = IndexedDictionary('DummyObject');
+% wrong_value{2} = 3.14;
+% wrong_value{3} = true;
+% wrong_value{4} = 'String';
+% 
+% % tests
+% for i = 1:1:length(value)
+%     Format.checkFormat(Format.IDICT, value{i})
+% end
+% for i = 1:1:length(wrong_value)
+%     assert_with_error('Format.checkFormat(Format.IDICT, varargin{1})', error_identifier, wrong_value{i})
+% end
 
 %% Test 2.DI.s: Check IDICT
 % TODO
@@ -402,58 +372,54 @@ for i = 1:1:length(wrong_value)
 end
 
 %% Test 2.LL: Check CELL
-% % ADJACENCY formats that should be accepted
-% clear value
-% value{1} = rand(5);
-% value{2} = {
-%     rand(5) [] []
-%     [] rand(2) []
-%     [] [] rand(1)
-%     };
-% value{3} = {
-%     rand(4) diag(rand(4, 1)) []
-%     diag(rand(4, 1)) rand(4) diag(rand(4, 1))
-%     [] diag(rand(4, 1)) rand(4)
-%     };
-% value{4} = {
-%     rand(4) diag(rand(4, 1)) diag(rand(4, 1))
-%     diag(rand(4, 1)) rand(4) diag(rand(4, 1))
-%     diag(rand(4, 1)) diag(rand(4, 1)) rand(4)
-%     };
-% value{5} = {
-%     rand(3) rand(3, 2) []
-%     rand(2, 3) rand(2) rand(2, 4)
-%     [] rand(4, 2) rand(4)
-%     };
-% value{6} = {
-%     rand(3) rand(3, 2) rand(3, 4)
-%     rand(2, 3) rand(2) rand(2, 4)
-%     rand(4, 3) rand(4, 2) rand(4)
-%     };
-% 
-% % ADJACENCY formats that should NOT be accepted
-% clear wrong_value
-% wrong_value{1} = 'String';
-% wrong_value{2} = true;
-% wrong_value{3} = rand(5, 3);
-% wrong_value{4} = {rand(4, 3)};
-% wrong_value{5} = {rand(3, 4)};
-% wrong_value{6} = {
-%     rand(4, 3) rand(4) rand(4)
-%     rand(4) rand(4) rand(4)
-%     rand(4) rand(4) rand(4)
-%     };
-% wrong_value{6} = {
-%     rand(3, 4) rand(4) rand(4)
-%     rand(4) rand(4) rand(4)
-%     rand(4) rand(4) rand(4)
-%     };
-% wrong_value{7} = {rand(4) rand(4)};
-%  
-% % tests
-% for i = 1:1:length(value)
-%     Format.checkFormat(Format.ADJACENCY, value{i})
-% end
-% for i = 1:1:length(wrong_value)
-%     assert_with_error('Format.checkFormat(Format.ADJACENCY, varargin{1})', error_identifier, wrong_value{i})
-% end
+% CELL formats that should be accepted
+clear value
+value{1} = {rand(5)};
+value{2} = {
+    rand(5) [] []
+    [] rand(2) []
+    [] [] rand(1)
+    };
+value{3} = {
+    rand(4) diag(rand(4, 1)) []
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    [] diag(rand(4, 1)) rand(4)
+    };
+value{4} = {
+    rand(4) diag(rand(4, 1)) diag(rand(4, 1))
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    diag(rand(4, 1)) diag(rand(4, 1)) rand(4)
+    };
+value{5} = {
+    rand(3) rand(3, 2) []
+    rand(2, 3) rand(2) rand(2, 4)
+    [] rand(4, 2) rand(4)
+    };
+value{6} = {
+    rand(3) rand(3, 2) rand(3, 4)
+    rand(2, 3) rand(2) rand(2, 4)
+    rand(4, 3) rand(4, 2) rand(4)
+    };
+value{7} = {
+    rand(5) 
+    rand(2)
+    rand(1)
+    };
+value{8} = {rand(5) rand(2) rand(1)};
+value{9} = {rand(3, 2, 4) 1 2};
+
+% CELL formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = 'String';
+wrong_value{2} = true;
+wrong_value{3} = rand(5, 3);
+wrong_value{4} = rand(4, 3);
+wrong_value{5} = rand(3, 4);
+ 
+% tests
+for i = 1:1:length(value)
+    Format.checkFormat(Format.CELL, value{i})
+end
+for i = 1:1:length(wrong_value)
+    assert_with_error('Format.checkFormat(Format.CELL, varargin{1})', error_identifier, wrong_value{i})
+end
