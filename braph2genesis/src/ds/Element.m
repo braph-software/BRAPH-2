@@ -859,28 +859,28 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods % el_list
-%         function el_list = getElementList(el, el_list)
-% 
-%             if nargin < 2
-%                 el_list = {};
-%             end
-%             
-%             if all(cellfun(@(x) el ~= x, el_list))
-%                 el_list = [el_list(:); {el}];
-%             end
-%             
-%             for prop = 1:1:el.getPropNumber()
-%                 value = el.getr(prop);
-%                 
-%                 if isa(value, 'Element')
-%                     el_list = value.getElementList(el_list);
-%                 elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-%                     for i = 1:1:length(value)
-%                         el_list = value{i}.getElementList(el_list);
-%                     end
-%                 end
-%             end
-%         end        
+        function el_list = getElementList(el, el_list)
+
+            if nargin < 2
+                el_list = {};
+            end
+            
+            if all(cellfun(@(x) el ~= x, el_list))
+                el_list = [el_list(:); {el}];
+            end
+            
+            for prop = 1:1:el.getPropNumber()
+                value = el.getr(prop);
+                
+                if isa(value, 'Element')
+                    el_list = value.getElementList(el_list);
+                elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                    for i = 1:1:length(value)
+                        el_list = value{i}.getElementList(el_list);
+                    end
+                end
+            end
+        end        
     end
     methods % encodeJSON
 %         function [json, struct, el_list] = encodeJSON(el) %#ok<STOUT>
