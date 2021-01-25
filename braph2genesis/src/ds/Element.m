@@ -838,46 +838,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
     end
-    methods (Access=private) % unlock
-        function unlock(el, pointer)
-            % prop can also be tag
-
-            if nargin < 2
-                for prop = 1:1:el.getPropNumber()
-                    if any(strcmp(el.getPropCategory(prop), {Category.PARAMETER, Category.DATA}))
-                        el.unlock(prop)
-                    end
-                end
-            else
-                prop = el.getPropProp(pointer);
-
-                el.props{prop}.locked = false;
-                
-                value = el.getr(prop);
-                if isa(value, 'Element')
-                    value.unlock();
-                elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-                    cellfun(@(x) x.unlock(), value)
-                end
-            end
-        end
-%         function seed(el)
-%             %SEED assigns new seeds to all properties.
-%             %
-%             % This private function is used by the Element constructor and
-%             % the clone function.
-%             %
-%             % See also Element, clone.
-%             
-%             prop_number = el.getPropNumber();
-%             
-%             if prop_number > 0
-%                 for prop = 1:1:el.getPropNumber()
-%                     el.props{prop}.seed = randi(intmax('uint32'));
-%                 end
-%             end
-%         end
-    end
     methods (Access=protected) % conditioning
         function value = conditioning(el, prop, value) %#ok<INUSL>
             % returns the same value
@@ -1187,10 +1147,17 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods % clone
-%         function el_clone = clone(el)
-%             el_clone = el.copy();
-%             el_clone.unlock()
-%             el_clone.seed()
-%         end
+        function el_clone = clone(el)
+            el_clone = el.copy();
+            
+            el_list = el_clone.getElementList();
+            for i = 1:1:length(el_list)
+                el = el_list{i};
+                for prop = 1:1:el.getPropNumber()
+                    el.props{prop}.seed = randi(intmax('uint32'));
+                    el.props{prop}.locked = false;
+                end
+            end
+        end
     end
 end
