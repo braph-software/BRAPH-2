@@ -1149,37 +1149,42 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 %         end
     end
     methods (Access=protected) % deep copy
-%         function el_copy = copyElement(el)
-% 
-%             el_list = el.getElementList();
-%             
-%             % creates empty elements
-%             % fills them with shallow copies of props
-%             el_copy_list = cell(size(el_list));
-%             for i = 1:1:length(el_list)
-%                 el_copy_list{i} = eval([el_list{i}.getClass() '(42)']);
-%                 el_copy_list{i}.props = el_list{i}.props;
-%             end
-% 
-%             % fills in handle props
-%             for i = 1:1:length(el_list)
-%                 el = el_list{i};
-%                 
-%                 for prop = 1:1:el.getPropNumber()
-%                     value = el.getr(prop);
-% 
-%                     if isa(value, 'Element')
-%                         el_copy_list{i}.props{prop}.value = el_copy_list{cellfun(@(x) x == value, el_list)};
-%                     elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
-%                         for j = 1:1:length(value)
-%                             el_copy_list{i}.props{prop}.value{j} = el_copy_list{cellfun(@(x) x == value{j}, el_list)};
-%                         end
-%                     end
-%                 end
-%             end
-%             
-%             el_copy = el_copy_list{1};
-%         end
+        function el_copy = copyElement(el)
+
+            el_list = el.getElementList();
+            
+            % creates empty elements
+            % fills them with shallow copies of props
+            el_copy_list = cell(size(el_list));
+            for i = 1:1:length(el_list)
+                el_class = el_list{i}.getClass();
+                if strcmp(el_class, 'NoValue')
+                    el_copy_list{i} = NoValue.getNoValue();
+                else
+                    el_copy_list{i} = eval([el_class '(42)']);
+                    el_copy_list{i}.props = el_list{i}.props;
+                end
+            end
+
+            % fills in handle props
+            for i = 1:1:length(el_list)
+                el = el_list{i};
+                
+                for prop = 1:1:el.getPropNumber()
+                    value = el.getr(prop);
+
+                    if isa(value, 'Element')
+                        el_copy_list{i}.props{prop}.value = el_copy_list{cellfun(@(x) x == value, el_list)};
+                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                        for j = 1:1:length(value)
+                            el_copy_list{i}.props{prop}.value{j} = el_copy_list{cellfun(@(x) x == value{j}, el_list)};
+                        end
+                    end
+                end
+            end
+            
+            el_copy = el_copy_list{1};
+        end
     end
     methods % clone
 %         function el_clone = clone(el)
