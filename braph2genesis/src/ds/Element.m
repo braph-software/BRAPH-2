@@ -512,7 +512,41 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % set/check/get/seed/locked/checked
         function set(el, varargin)
-            % varargin = {prop/tag, value, ...}
+            %SET sets the value of a property.
+            %
+            % SET(EL, POINTER1, VALUE1, POINTER2, VALUE2, ...) sets the value of
+            %  POINTER1 to VALUE1, POINTER2 to VALUE2, ... where the pointers can be
+            %  either property numbers or property tags.
+            %
+            % Each property is conditioned before being set (by calling the protected
+            %  function <a href="matlab:help Element.conditioning">conditioning</a>, which is defined in each subelement) and all
+            %  properties are postprocessed after being set (by calling the protected
+            %  function <a href="matlab:help Element.postprocessing">postprocessing</a>, which is defined in each subelement).
+            %
+            % If a property is checked, its format is checked before proceeding to its
+            %  setting by calling <a href="matlab:help Format.checkFormat">Format.checkFormat</a>. 
+            %  If the check fails, the property is not set and an error is thrown.
+            %  Error id: [BRAPH2:<Element Class>:WrongInput]
+            %
+            % If any property is checked, the method Element.check() is called after
+            %  all settings are made and the consistency of the values of all
+            %  properties is checked. If the check fails an error is thrown.
+            %  Error id: [BRAPH2:<Element Class>:WrongInput]
+            %
+            % It the property is Category.PARAMETER or Category.DATA, the value is set
+            %  only if the property is unlocked. If an attempt is made to set a locked
+            %  property, no setting occurs and a warning is thrown.
+            %  Warning id: [BRAPH2:<Element Class>]
+            % If the value is a Callback, a warning is thrown if the element,
+            %  property number and/or settings of the callback do not coincide with
+            %  those of the property.
+            %  Warning id: [BRAPH2:<Element Class>]
+            %
+            % If the property is Category.RESULT, the value can only be set to
+            %  NoValue()
+            %
+            % See also get, getr, memorize, check, isChecked, checked, unchecked,
+            % isLocked, lock, Callback.
 
             % backup properties (if any prop is checked)
             checked = el.getPropNumber() && any(cellfun(@(x) x.checked, el.props));
@@ -603,7 +637,20 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
         end
-        function [element_check, element_msg] = check(el, varargin)
+        function [element_check, element_msg] = check(el)
+            %CHECK checks the values of all properties.
+            %
+            % [CHECK, MSG] = CHECK(EL) checks the values of all properties of element
+            %  EL. It returns a flag CHECK (true = passed check; false = failed check)
+            %  and a message MSG. The check is performed by calling the protected
+            %  function <a href="matlab:help Element.checkValue">checkValue</a>, which is defined in each subclass. By default
+            %  checkValue does not make any check.
+            %
+            % CHECK(EL) checks the values of all properties of element EL and thorws an
+            %  error if the check fails.
+            %  Error id: [BRAPH2:<Element Class>:BugErr]
+            %
+            % See also isChecked, checked, unchecked, set, get, getr, memorize.
 
             value_checks = ones(el.getPropNumber(), true);
             value_msgs = repmat({''}, el.getPropNumber(), 1);
@@ -661,13 +708,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function value = getr(el, pointer)
-            %GETR returns the row value of a property.
+            %GETR returns the raw value of a property.
             %
-            % VALUE = GETR(EL, PROP) returns the row value of property PROP
-            %  of element EL.
-            %
-            % VALUE = GETR(EL, TAG) returns the row value of property TAG
-            %  of element EL.
+            % VALUE = GETR(EL, POINTER) returns the raw value of property POINTER of
+            %  element EL. POINTER can be either a property number (PROP) or tag (TAG).
             %
             % See also get, memorize, set, check.
             
@@ -676,7 +720,30 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             value = el.props{prop}.value; % raw element value
         end
         function value = get(el, pointer)
-            % prop can also be tag
+            %GET returns the value of a property.
+            %
+            % VALUE = GET(EL, POINTER) returns the value of property POINTER of element
+            %  EL. POINTER can be either a property number (PROP) or tag (TAG).
+            %
+            % If the raw value of the property is a NoValue, it proceed to return the
+            %  default property value (for Category.METADATA, Category.PARAMETER, and
+            %  Category.DATA).
+            %
+            % If the raw value of the property is a Callback, it retrieves the value of
+            %  the linked property (for Category.PARAMETER, and
+            %  Category.DATA).
+            %
+            % If a result is not calculated (i.e., its raw value is NoValue), it
+            %  proceeds to calculate it (but NOT memorize it). After the calculation
+            %  all properties of Category.PARAMETER, and Category.DATA are irreversibly
+            %  locked. 
+            % If the property is checked, it proceeds to check all properties
+            %  after the calculation calling the function <a href="matlab:help Element.check">check</a>.
+            %  if the check fails, it resets the property to NoValue, returns NoValue,
+            %  does not lockthe property, and throws an warning.
+            %  Warning id: [BRAPH2:<Element Class>]
+            % 
+            % See also getr, memorize, set, check, NoValue, Callback, getPropDefault, lock.
 
             prop = el.getPropProp(pointer);
             
@@ -727,7 +794,15 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function value = memorize(el, pointer)
-            % prop can also be tag
+            %MEMORIZE returns and memorizes the value of a property.
+            %
+            % VALUE = MEMORIZE(EL, POINTER) returns and memorize the value of property POINTER of
+            %  element EL. POINTER can be either a property number (PROP) or tag (TAG).
+            % 
+            % It calls the function <a href="matlab:help Element.check">check</a> and
+            %  proceed to save the result if the property is Category.RESULT.
+            %
+            % See also get, getr, set, check.
 
             prop = el.getPropProp(pointer);
             
