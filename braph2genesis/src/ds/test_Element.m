@@ -300,4 +300,18 @@ for i = 1:1:length(el_class_list)
 end
 
 %% Test 4: JSON
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el = eval([el_class '()']);
+    
+    [json, struct, el_list] = encodeJSON(el);
+    
+    [el_dec, struct_dec, el_list_dec] = Element.decodeJSON(json);
 
+    assert(el_dec ~= el, ...
+        [BRAPH2.STR ':' el_class ':' BRAPH2.BUG_JSON], ...
+        [el_class '.encodeJSON() or ' el_class '.decodeJSON() does not work. A JSON encoded/decoded element must point to an element other than the original one.'])
+    assert(isequal(el_dec, el), ...
+        [BRAPH2.STR ':' el_class ':' BRAPH2.BUG_JSON], ...
+        [el_class '.encodeJSON() or ' el_class '.decodeJSON does not work. A JSON encoded/decoded element must have the same property values of the original element.'])
+end
