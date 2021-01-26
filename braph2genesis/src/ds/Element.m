@@ -768,7 +768,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     value = el.getr(prop);
                     if isa(value, 'Element')
                         value.lock();
-                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                    elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
                         cellfun(@(x) x.lock(), value)
                     end
                 end
@@ -797,7 +797,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     value = el.getr(prop);
                     if isa(value, 'Element')
                         value.checked();
-                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                    elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
                         cellfun(@(x) x.checked(), value)
                     end
                 end
@@ -819,7 +819,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     value = el.getr(prop);
                     if isa(value, 'Element')
                         value.unchecked();
-                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                    elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
                         cellfun(@(x) x.unchecked(), value)
                     end
                 end
@@ -965,7 +965,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 sprintf(['  ' lines{i} '\n']) ... % indent
                                 ]; %#ok<AGROW>
                         end                    
-                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                    elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
                         for i = 1:1:length(value)
                             txt_el = [txt_el ...
                                 sprintf(['  index:<strong>' int2str(i) '</strong> item:']) ... % indent
@@ -1010,7 +1010,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 
                 if isa(value, 'Element')
                     el_list = value.getElementList(el_list);
-                elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
                     for i = 1:1:length(value)
                         el_list = value{i}.getElementList(el_list);
                     end
@@ -1019,94 +1019,138 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end        
     end
     methods % encodeJSON
-%         function [json, struct, el_list] = encodeJSON(el) %#ok<STOUT>
-%             
-%             el_list = el.getElementList();
-%             
-%             for i = 1:1:length(el_list)
-%                 el = el_list{i};
-%                 
-%                 eval(['struct{i}.class = ''' el.getClass() ''';'])
-%                 
-%                 for prop = 1:1:el.getPropNumber()
-%                     value = el.getr(prop);
-%                     
-%                     switch el.getPropFormat(prop)
-%                         case {Format.EMPTY, Format.STRING, Format.OPTION, Format.CLASS}
-%                             json_str = regexprep(tostring(value), '''', '''''');
-%                         case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
-%                             json_str = mat2str(value);
-%                         case Format.CLASSLIST
-%                             json_str = '{';
-%                             for j = 1:1:length(value)
-%                                 json_str = [json_str ' ''' value{j} ''' ']; %#ok<AGROW>
-%                             end
-%                             json_str = [json_str '}']; %#ok<AGROW>
-%                             json_str = regexprep(tostring(json_str), '''', '''''');
-%                         case {Format.ITEM, Format.IDICT}
-%                             json_str = int2str(find(cellfun(@(x) value == x, el_list)));
-%                         case Format.ITEMLIST
-%                             indices = zeros(1, length(value));
-%                             for j = 1:1:length(value)
-%                                 indices(j) = find(cellfun(@(x) value{j} == x, el_list));
-%                             end
-%                             json_str = mat2str(indices);
-%                         case Format.ADJACENCY
-%                             % TODO correct this once Format.ADJACENCY is finalized
-%                             json_str = mat2str(value);
-%                         case Format.MEASURE
-%                             % TODO correct this once Format.MEASURE is finalized
-%                             json_str = mat2str(value);
-%                     end
-%                     eval(['struct{i}.props{prop}.value = ''' json_str ''';'])
-%                     eval(['struct{i}.props{prop}.locked = ' mat2str(el.isLocked(prop)) ';'])
-%                 end
-%             end
-% 
-%             json = jsonencode(struct);
-%         end
+        function [json, struct, el_list] = encodeJSON(el)
+            
+            el_list = el.getElementList();
+            
+            for i = 1:1:length(el_list)
+                el = el_list{i};
+                
+                struct{i}.class = el.getClass(); %#ok<AGROW>
+                
+                for prop = 1:1:el.getPropNumber()
+                    value = el.getr(prop);
+
+                    struct{i}.props{prop}.prop = prop;
+                    struct{i}.props{prop}.tag = el.getPropTag(prop);
+                    
+                    if isa(value, 'NoValue')
+                        struct{i}.props{prop}.value = find(cellfun(@(x) value == x, el_list));
+                    else
+                        switch el.getPropFormat(prop)
+                            case Format.EMPTY
+                                struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
+                            case {Format.STRING, Format.OPTION, Format.CLASS}
+                                struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
+                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                                struct{i}.props{prop}.value = mat2str(value);
+                            case Format.CLASSLIST
+                                json_str = '{';
+                                for j = 1:1:length(value)
+                                    json_str = [json_str ' ''' value{j} ''' ']; %#ok<AGROW>
+                                end
+                                json_str = [json_str '}']; %#ok<AGROW>
+                                struct{i}.props{prop}.value = json_str;
+                            case {Format.ITEM, Format.IDICT}
+                                struct{i}.props{prop}.value = find(cellfun(@(x) value == x, el_list));
+                            case Format.ITEMLIST
+                                indices = zeros(1, length(value));
+                                for j = 1:1:length(value)
+                                    indices(j) = find(cellfun(@(x) value{j} == x, el_list));
+                                end
+                                struct{i}.props{prop}.value = indices;
+                            case Format.CELL
+                                json_str = '{';
+                                for j = 1:1:size(value, 1)
+                                    for k = 1:1:size(value, 2)
+                                        if k < size(value, 2)
+                                            json_str = [json_str mat2str(value{j, k}) ', ']; %#ok<AGROW>
+                                        elseif j < size(value, 1)
+                                            json_str = [json_str mat2str(value{j, k}) '; ']; %#ok<AGROW>
+                                        else
+                                            json_str = [json_str mat2str(value{j, k})]; %#ok<AGROW>
+                                        end
+                                    end
+                                end
+                                json_str = [json_str '}']; %#ok<AGROW>
+                                struct{i}.props{prop}.value = json_str;
+                        end
+                    end
+                    struct{i}.props{prop}.seed = el.getPropSeed(prop);
+                    struct{i}.props{prop}.locked = el.isLocked(prop);
+                    struct{i}.props{prop}.checked = el.isChecked(prop);
+                end
+            end
+
+            json = jsonencode(struct);
+        end
     end
     methods (Static) % decodeJSON
-%         function [el, struct, el_list] = decodeJSON(json)
-%             
-%             struct = jsondecode(json);
-% 
-%             % creates empty elements
-%             el_list = cell(length(struct), 1);
-%             for i = 1:1:length(struct)
-%                 el_list{i} = eval([struct{i}.class '()']);
-%             end
-%             
-%             % fills in props
-%             for i = 1:1:length(el_list)
-%                 el = el_list{i};
-%                 
-%                 for prop = 1:1:el.getPropNumber()
-%                     switch el.getPropFormat(prop)
-%                         case {Format.EMPTY, Format.STRING, Format.OPTION, Format.CLASS}
-%                             el.props{prop}.value = struct{i}.props(prop).value;
-%                         case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
-%                             el.props{prop}.value = eval(struct{i}.props(prop).value);
-%                         case Format.CLASSLIST
-%                             el.props{prop}.value = eval(struct{i}.props(prop).value(2:end-1));
-%                         case {Format.ITEM, Format.IDICT}
-%                             el.props{prop}.value = el_list(eval(struct{i}.props(prop).value));
-%                         case Format.ITEMLIST
-%                             indices = eval(struct{i}.props(prop).value);
-%                             el.props{prop}.value = el_list(indices);
-%                         case Format.ADJACENCY
-%                             % TODO correct this once Format.ADJACENCY is finalized
-%                             el.props{prop}.value = eval(struct{i}.props(prop).value);
-%                         case Format.MEASURE
-%                             % TODO correct this once Format.MEASURE is finalized
-%                             el.props{prop}.value = eval(struct{i}.props(prop).value);
-%                     end
-%                     el.props{prop}.value = struct{i}.props(prop).locked;
-%                 end
-%             end
-%             
-%             el = el_list{1};
-%         end
+        function [el, struct, el_list] = decodeJSON(json)
+            
+            struct = jsondecode(json);
+            
+            % manages special case when only one element
+            if length(struct) == 1
+                struct_tmp{1}.class = struct.class;
+                if isfield(struct, 'prop')
+                    struct_tmp{1}.props = struct.props;
+                end
+                struct = struct_tmp;
+                clear struct_tmp
+            end
+
+            % creates empty elements
+            el_list = cell(length(struct), 1);
+            for i = 1:1:length(struct)
+                el_class = struct{i}.class;
+                if strcmp(el_class, 'NoValue')
+                    el_list{i} = NoValue.getNoValue();
+                else
+                    el_list{i} = eval([el_class '()']);
+                end
+            end
+            
+            % fills in props
+            for i = 1:1:length(el_list)
+                el = el_list{i};
+
+                for prop = 1:1:el.getPropNumber()
+                    value = struct{i}.props(prop).value;
+                    if isnumeric(value)
+                        if length(value) == 1 % also case {Format.ITEM, Format.IDICT}
+                            el.props{prop}.value = el_list{value};
+                        else % also case Format.ITEMLIST
+                            indices = value;
+                            el.props{prop}.value = el_list(indices)';
+                        end
+                    else
+                        switch el.getPropFormat(prop)
+                            case Format.EMPTY
+                                el.props{prop}.value = eval(value);
+                            case {Format.STRING, Format.OPTION, Format.CLASS}
+                                el.props{prop}.value = eval(value(2:end-1));
+                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                                el.props{prop}.value = eval(value);
+                            case Format.CLASSLIST
+                                el.props{prop}.value = eval(value);
+                                % case {Format.ITEM, Format.IDICT}
+                                %     el.props{prop}.value = el_list{value};
+                                % case Format.ITEMLIST
+                                %     indices = value;
+                                %     el.props{prop}.value = el_list(indices);
+                            case Format.CELL
+                                el.props{prop}.value = eval(value);
+                        end
+                    end
+                    el.props{prop}.seed = uint32(struct{i}.props(prop).seed);
+                    el.props{prop}.locked = struct{i}.props(prop).locked;
+                    el.props{prop}.checked = struct{i}.props(prop).checked;
+                end
+            end
+            
+            el = el_list{1};
+        end
     end
     methods (Access=protected) % deep copy
         function el_copy = copyElement(el)
@@ -1135,7 +1179,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
                     if isa(value, 'Element')
                         el_copy_list{i}.props{prop}.value = el_copy_list{cellfun(@(x) x == value, el_list)};
-                    elseif iscell(value) && all(cellfun(@(x) isa(x, 'Element'), value))
+                    elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
                         for j = 1:1:length(value)
                             el_copy_list{i}.props{prop}.value{j} = el_copy_list{cellfun(@(x) x == value{j}, el_list)};
                         end
@@ -1154,6 +1198,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             for i = 1:1:length(el_list)
                 el = el_list{i};
                 for prop = 1:1:el.getPropNumber()
+                    switch el.getPropCategory(prop)
+                        case {Category.METADATA, Category.PARAMETER}
+                        case {Category.DATA, Category.RESULT}
+                        el.props{prop}.value = NoValue.getNoValue();
+                    end
                     el.props{prop}.seed = randi(intmax('uint32'));
                     el.props{prop}.locked = false;
                 end
