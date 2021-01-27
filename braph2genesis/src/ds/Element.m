@@ -1,8 +1,15 @@
 classdef Element < Category & Format & matlab.mixin.Copyable
     %Element is the base class for all elements.
-    % Even though it is possible to create instances of Element, typically
+    % Element provides the infrastructure necessary for all elements. Even
+    %  though it is possible to create instances of Element, typically 
     %  one uses its subclasses. It is a subclass of Category, Format,
     %  handle, and matlab.mixin.Copyable.
+    %
+    % Each element is essentially a container for a series of properties.
+    %  Each propery has a category (see <a href="matlab:help Category">Category</a>) and a format (see <a href="matlab:help Format">Format</a>).
+    %
+    % Element methods (Static):
+    % 
     %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
@@ -813,20 +820,47 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function seed = getPropSeed(el, pointer)
+            %GETPROPSEED returns the seed of a property.
+            %
+            % SEED = GETPROPSEED(EL, POINTER) returns the seed of property POINTER of
+            %  element EL. POINTER can be either a property number (PROP) or tag (TAG).
+            %
+            % The seed of each property is a 32-bit unsigned integer and is initialized
+            %  when an element is constructed by calling randi(intmax('uint32')).
+            % 
+            % See also randi.
             
             prop = el.getPropProp(pointer);
 
             seed = el.props{prop}.seed;
         end
         function locked = isLocked(el, pointer)
-            % prop can also be tag
+            %ISLOCKED returns whether a property is locked.
+            %
+            % LOCKED = ISLOCKED(EL, POINTER) returns whether the property POINTER of
+            %  element EL is locked. POINTER can be either a property number (PROP) or
+            %  tag (TAG).
+            %
+            % Properties can be locked by the user using the function <a href="matalb:help Element.lock">lock</a>.
+            % All properties with Category.PARAMETER and Category.DATA are
+            %  automatically locked as soon as the first result is calculated.
+            %  Afterwards they cannot be unlocked. If an element with unlocked
+            %  properties is needed, it it possible to clone the element using the
+            %  function <a href="matalb:help Element.clone">clone</a>.
+            %
+            % See also lock.
 
             prop = el.getPropProp(pointer);
             
             locked = el.props{prop}.locked;
         end
         function lock(el, pointer)
-            % prop can also be tag
+            %LOCK locks unreversibly a property.
+            %
+            % LOCK(EL, POINTER) locks unreversibly the property POINTER of element EL.
+            %  POINTER can be either a property number (PROP) or tag (TAG).
+            %
+            % See also isLocked.
 
             if nargin < 2
                 for prop = 1:1:el.getPropNumber()
@@ -850,14 +884,28 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function checked = isChecked(el, pointer)
-            % prop can also be tag
+            %ISCHECKED returns whether a property is checked.
+            %
+            % CHECKED = ISCHECKED(EL, POINTER) returns whether the property POINTER of
+            %  element EL is checked. POINTER can be either a property number (PROP) or
+            %  tag (TAG).
+            %
+            % Checked properties are checked both for format and value when they are
+            %  set (<a href="matalb:help Element.set">set</a>) and calculated (<a href="matalb:help Element.get">get</a>).
+            %
+            % See also checked, unchecked.
 
             prop = el.getPropProp(pointer);
             
             checked = el.props{prop}.checked;
         end
         function checked(el, pointer)
-            % prop can also be tag
+            %CHECKED sets a property to checked.
+            %
+            % CHECKED(EL, POINTER) sets the property POINTER of element EL to checked.
+            %  POINTER can be either a property number (PROP) or tag (TAG).
+            %
+            % See also unchecked, isChecked.
 
             if nargin < 2
                 for prop = 1:1:el.getPropNumber()
@@ -879,7 +927,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function unchecked(el, pointer)
-            % prop can also be tag
+            %UNCHECKED sets a property to NOT checked.
+            %
+            % UNCHECKED(EL, POINTER) sets the property POINTER of element EL to NOT checked.
+            %  POINTER can be either a property number (PROP) or tag (TAG).
+            %
+            % See also checked, isChecked.
 
             if nargin < 2
                 for prop = 1:1:el.getPropNumber()
@@ -903,6 +956,14 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % operators
         function check = isequal(el1, el2)
+            %ISEQUAL determines whether two elements are equal (values, locked).
+            %
+            % CHECK = ISEQUAL(EL1, EL2) determines whether elements EL1 and EL2 are
+            %  equal in terms of values and locked status.
+            %  POINTER can be either a property number (PROP) or tag (TAG).
+            %
+            % Note that, instead, El1 == El2 detemines whether the two handles EL1 and
+            %  EL2 refer to the very same element.
             
             check = isa(el2, el1.getClass());
             
@@ -915,27 +976,69 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods (Access=protected) % conditioning
         function value = conditioning(el, prop, value) %#ok<INUSL>
-            % returns the same value
+            %CONDITIONING conditions a value before.
+            %
+            % VALUE = CONDITIONING(EL, PROP, VALUE) conditions the value VALUE before
+            %  it is set as the value of the property PROP. This function by default
+            %  does not do anything and should be implemented in the subclasses of
+            %  Element when needed.
+            %
+            % See also set, postprocessing, calculateValue, checkValue.
         end
     end
     methods (Access=protected) % postprocessing
         function postprocessing(el, prop) %#ok<*INUSD>
-            % no action
+            %POSTPROCESSING postprocesses the value of a prop after it has been set.
+            %
+            % POSTPROCESSING(EL, PROP) conditions the value of the property PROP. This
+            %  function by default does not do anything and should be implemented in
+            %  the subclasses of Element when needed.
+            %
+            % See also set, conditioning, calculateValue, checkValue.
         end
     end
     methods (Access=protected) % check value
         function [value_check, value_msg] = checkValue(el, prop, value)
+            %CHECKVALUE checks the value of a property after it is calculated.
+            %
+            % [CHECK, MSG] = CONDITCHECKVALUEIONING(EL, PROP, VALUE) checks the value
+            %  of the property PROP after it is calculated. This function by default
+            %  returns a CHECK = true and MSG = ''. It should be implemented in the
+            %  subclasses of Element when needed.
+            %
+            % See also check, set, conditioning, postprocessing, checkValue.
+
             value_check = true;
             value_msg = '';
         end
     end
     methods (Access=protected) % calculate value
         function value = calculateValue(el, prop)
+            %CALCULATEVALUE calculates the value of a property.
+            %
+            % VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
+            %  PROP. Works only with properties with Category.RESULT. By default
+            %  this function returns the default value for the prop and should be
+            %  implemented in the subclasses of Element when needed.
+            %
+            % See also getDefault, set, conditioning, postprocessing, checkValue.
+
             value = el.getPropDefault(prop);
         end
     end
     methods % display
         function str = tostring(el, varargin)
+            %TOSTRING string with information about the element.
+            %
+            % STR = TOSTRING(EL) returns a string with information about the element.
+            %
+            % STR = TOSTRING(EL, N) trims the string to the first N characters.
+            %
+            % STR = TOSTRING(EL, N, ENDING) ends the string with ENDING if it has
+            %  been trimmed.
+            %
+            % See also disp, tree.
+
             if el.getPropNumber() > 0
                 % str = char(join([class(el) 'with properties' cellfun(@(prod) el.getPropTag(prod), num2cell(Element.getProps(el)'), 'UniformOutput', false)]));
                 str = [class(el) ' with ' int2str(el.getPropNumber()) ' properties ' el.getPropTag(1) ' = ' tostring(el.get(1)) '.'];
@@ -946,11 +1049,31 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             str = str(2:1:end-1);
         end
         function disp(el)
+            % DISP displays information about the element.
+            %
+            % DISP(EL) displays information about the element.
+            %
+            % See also tostring, tree.
 
             disp(['<a href="matlab:help ' class(el) '">' class(el) '</a>']);
             el.tree(0)
         end
         function txt_output = tree(el, level, prop_list, n, ending)
+            %TREE displays the element tree.
+            %
+            % TREE(EL) displays the first level of the element tree.
+            %
+            % TREE(EL, LEVEL) displays a number LEVEL of the levels of the element tree.
+            %
+            % TREE(EL, [], PROPS) displays only PROPS at the first level.
+            %
+            % TREE(EL, [], [], N[, ENDING]) trims the string of each property to the
+            %  first N characters and, optionally, ends the string with ENDING if it
+            %  has been trimmed.
+            %
+            % STR = TREE(EL) returns the element tree as a string.
+            %
+            % See also tostring, tree.  
                         
             if nargin < 5
                 ending = ' ...';
@@ -1050,6 +1173,16 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % el_list
         function el_list = getElementList(el, el_list)
+            %GETELEMETLIST returns a list with all subelements.
+            %
+            % LIST = GETELEMETLIST(EL)  returns a list with all subelements of element
+            %  EL (including EL itself).
+            %
+            % LIST = GETELEMETLIST(EL, LIST) appends the subelements of element EL
+            %  (including EL itself) to LIST. This form of the function is mainly used
+            %  internally within the class Element.
+            %
+            % See also encodeJSON, decodeJSON, copy, clone.
 
             if nargin < 2
                 el_list = {};
@@ -1208,6 +1341,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods (Access=protected) % deep copy
         function el_copy = copyElement(el)
+            %COPYELEMENT copies the element.
+            %
+            % EL_COPY = COPYELEMENT(EL) copies the element EL making a deep copy of all
+            %  its properties.
+            %
+            % See also copy, clone.
 
             el_list = el.getElementList();
             
@@ -1246,6 +1385,16 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % clone
         function el_clone = clone(el)
+            %CLONE clones the element.
+            %
+            % EL_COPY = CLONE(EL) clones the element EL. The cloning operation makes a
+            %  deep copy of the element including all properties with Category.METADATA
+            %  and Category.PARAMETER and the checked status.
+            %  The properties with Category.DATA and Category.RESULT are set to
+            %  NoValue, the seeds are randomized, and all properties are unlocked.
+            %
+            % See also copy.
+            
             el_clone = el.copy();
             
             el_list = el_clone.getElementList();
