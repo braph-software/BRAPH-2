@@ -7,10 +7,83 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %
     % Each element is essentially a container for a series of properties.
     %  Each propery has a category (see <a href="matlab:help Category">Category</a>) and a format (see <a href="matlab:help Format">Format</a>).
+    %  Each subelement can implement the following protected methods:
+    %   conditioning - conditions a value before setting a property
+    %   calculateValue - calculates the value of a property
+    %   checkValue - checks the value of a property after it is calculated
+    %   postprocessing - postprocesses the value of a prop after it has been set
     %
-    % Element methods (Static):
-    % 
+    % Element methods (inspection, Static):
+    %  getClass - returns the class of the element
+    %  getName - returns the name of the element
+    %  getDescription - returns the description of the element
+    %  getProps - returns the property list of an element
+    %  getPropNumber - returns the property number of an element
+    %  existsProp - checks whether property exists/error
+    %  existsTag - checks whether tag exists/error
+    %  getPropProp - returns the property number of a property
+    %  getPropTag - returns the tag of a property
+    %  getPropCategory - returns the category of a property
+    %  getPropFormat - returns the format of a property
+    %  getPropDescription - returns the description of a property
+    %  getPropSettings - returns the settings of a property
+    %  getPropDefault - returns the default value of a property
+    %  checkProp - checks whether a value has the correct format/error
     %
+    % Category methods (Static):
+    %  getCategories - returns the list of categories
+    %  getCategoryNumber - returns the number of categories
+    %  existsCategory - returns whether a category exists/error
+    %  getCategoryName - returns the name of a category
+    %  getCategoryDescription - returns the description of a category
+    %
+    % Format methods (Static):
+    %  getFormats - returns the list of formats
+    %  getFormatNumber - returns the number of formats
+    %  existsFormat - returns whether a format exists/error
+    %  getFormatName - returns the name of a format
+    %  getFormatDescription - returns the description of a format
+    %  getFormatSettings - returns the settings for a format
+    %  getFormatDefault - returns the default value for a format
+    %  checkFormat - returns whether a value format is correct/error
+    %
+    % Element constructor:
+    %  Element - constructor
+    %  
+    % Element methods:
+    %  set - sets the value of a property
+    %  check - checks the values of all properties
+    %  getr - returns the raw value of a property
+    %  get - returns the value of a property
+    %  memorize - returns and memorizes the value of a property
+    %  getPropSeed - returns the seed of a property
+    %  isLocked - returns whether a property is locked
+    %  lock - locks unreversibly a property
+    %  isChecked - returns whether a property is checked
+    %  checked - sets a property to checked
+    %  unchecked - sets a property to NOT checked
+    %  
+    % Element methods (operators):
+    %  isequal - determines whether two elements are equal (values, locked)
+    %  
+    % Element methods (display):
+    %  tostring - string with information about the element
+    %  disp - displays information about the element
+    %  tree - displays the element tree
+    %  
+    % Element method (element list):
+    %  getElementList - returns a list with all subelements
+    %  
+    % Element method (JSON encode):
+    %  encodeJSON - returns a JSON string encoding the element
+    %  
+    % Element method (JSON decode, Static):
+    %  decodeJSON - returns a JSON string encoding the element
+    %
+    % Element methods (copy):
+    %  copy - copies the element
+    %  clone - clones the element
+
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
     properties (Access=private)
@@ -976,7 +1049,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods (Access=protected) % conditioning
         function value = conditioning(el, prop, value) %#ok<INUSL>
-            %CONDITIONING conditions a value before.
+            %CONDITIONING conditions a value before setting a property.
             %
             % VALUE = CONDITIONING(EL, PROP, VALUE) conditions the value VALUE before
             %  it is set as the value of the property PROP. This function by default
@@ -1175,7 +1248,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function el_list = getElementList(el, el_list)
             %GETELEMETLIST returns a list with all subelements.
             %
-            % LIST = GETELEMETLIST(EL)  returns a list with all subelements of element
+            % LIST = GETELEMETLIST(EL) returns a list with all subelements of element
             %  EL (including EL itself).
             %
             % LIST = GETELEMETLIST(EL, LIST) appends the subelements of element EL
@@ -1207,6 +1280,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % encodeJSON
         function [json, struct, el_list] = encodeJSON(el)
+            %ENCODEJSON returns a JSON string encoding the element.
+            %
+            % JSON = ENCODEJSON(EL) returns a JSON string encoding the element EL.
+            %
+            % See also decodeJSON.
             
             el_list = el.getElementList();
             
@@ -1274,6 +1352,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods (Static) % decodeJSON
         function [el, struct, el_list] = decodeJSON(json)
+            %DECODEJSON returns a JSON string encoding the element.
+            %
+            % EL = DECODEJSON(JSON) returns the element EL decoding the a JSON string.
+            %
+            % See also encodeJSON.
             
             struct = jsondecode(json);
             
