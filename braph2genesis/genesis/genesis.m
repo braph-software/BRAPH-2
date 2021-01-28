@@ -45,7 +45,7 @@ disp('¡! created target dir')
 % src
 mkdir([target_dir fp 'src' fp 'util'])
 mkdir([target_dir fp 'src' fp 'ds'])
-% mkdir([target_dir fp 'src' fp 'atlas'])
+mkdir([target_dir fp 'src' fp 'atlas'])
 % mkdir([target_dir fp 'src' fp 'cohort'])
 % mkdir([target_dir fp 'src' fp 'analysis'])
 % mkdir([target_dir fp 'src' fp 'gt'])
@@ -200,11 +200,11 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
     end
 
-    % atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-    % for i = 1:1:numel(atlas_gen_list)
-    %     create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
-    % end
-    % 
+    atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
+    for i = 1:1:numel(atlas_gen_list)
+        create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
+    end
+    
     % cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
     % for i = 1:1:numel(cohort_gen_list)
     %     create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
@@ -271,10 +271,10 @@ for i = 1:1:numel(util_gen_list)
     create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
 end
 
-% atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-% for i = 1:1:numel(atlas_gen_list)
-%     create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
-% end
+atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
+for i = 1:1:numel(atlas_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
+end
 % 
 % cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
 % for i = 1:1:numel(cohort_gen_list)
