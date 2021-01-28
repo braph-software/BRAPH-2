@@ -5,7 +5,7 @@ ETB < Element (et, test Element B) tests JSON.
 Tests the JSON encoding and decoding.
 
 %%% ¡seealso!
-Element, Category, Format
+Element
 
 %% ¡props!
 
