@@ -623,7 +623,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  Warning id: [BRAPH2:<Element Class>]
             %
             % If the property is Category.RESULT, the value can only be set to
-            %  NoValue()
+            %  NoValue().
             %
             % See also get, getr, memorize, check, isChecked, checked, unchecked,
             % isLocked, lock, Callback.
