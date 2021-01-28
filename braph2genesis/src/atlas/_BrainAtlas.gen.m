@@ -3,8 +3,8 @@ BrainAtlas < Element (ba, brain atlas) is a brain atlas.
 
 %%% ¡description!
 BrainAtlas represents a brain atlas,
-constituted by a collection of brain regions.  BrainAtlas contains and
-manages brain regions inside an IndexedDictionary;
+constituted by a collection of brain regions.  
+BrainAtlas contains and manages brain regions inside an IndexedDictionary;
 thus, it has access to all IndexedDictionary methods.
 BrainAtlas can be imported/exported to .txt, .xls and .json files.
 

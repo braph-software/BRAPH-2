@@ -4,8 +4,9 @@ BrainRegion < Element (br, brain region) is a brain region.
 %%% ¡description!
 BrainRegion contains the information of a brain region.
 It provides the methods necessary to handle the brain regions data.
-It is a subclass of Element.
-
+BrainRegion contains and manages the id, label, x coordinate, y 
+coordinate, and z coordinate of a brain region. 
+    
 %%% ¡seealso!
 Element, BrainAtlas
 
@@ -28,34 +29,6 @@ Y (data, scalar) is the y-coordinate of the brain region.
 
 %%% ¡prop!
 Z (data, scalar) is the z-coordinate of the brain region.
-
-%% ¡methods!
-function r = getPosition(br)
-% GETPOSITION returns the x, y, z coordinates
-%
-% POSITION = GET(BR) returns the x, y, z coordinates of the brain
-% region BR in an array.
-%
-% See also setPosition.
-
-r = [br.get('X') br.get('Y') br.get('Z')];
-end
-function setPosition(br, position)
-% SETPOSITION sets an array containing x, y, z coordinates
-%
-% SETPOSITION(BR, POSITION) sets an array [X Y Z] where X, Y, Z
-% are coordinates (numbers) of the brain region.
-%
-% See also getPosition.
-
-assert(isnumeric(position) && isequal(size(position), [1, 3]), ...
-    [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_INPUT], ...
-    'Position must be a row vector 1x3.')
-
-br.set('X', position(1))
-br.set('Y', position(2))
-br.set('Z', position(3))
-end
 
 %% ¡tests!
 
@@ -98,9 +71,6 @@ assert(isequal(br.get('Y'), y), ...
 assert(isequal(br.get('Z'), z), ...
     [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_OUTPUT], ...
     'BrainRegion.get() does not work.')
-assert(isequal(br.getPosition(), [x, y, z]), ...
-    [BRAPH2.STR ':' class(br) ':' BRAPH2.WRONG_OUTPUT], ...
-    'BrainRegion.getPosition() does not work.')
 
 %%% ¡test!
 %%%% ¡name!
