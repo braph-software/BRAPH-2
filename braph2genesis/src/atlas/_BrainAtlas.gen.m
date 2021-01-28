@@ -8,6 +8,9 @@ manages brain regions inside an IndexedDictionary;
 thus, it has access to all IndexedDictionary methods.
 BrainAtlas can be imported/exported to .txt, .xls and .json files.
 
+%%% ¡seealso!
+Element, BrainRegion
+
 %% ¡props!
 
 %%% ¡prop!
@@ -23,8 +26,6 @@ NOTES (metadata, string) are some specific notes about the brain atlas.
 BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'BrainRegion', 'IT_KEY', 1)
 
 %% ¡tests!
 
