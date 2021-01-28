@@ -1,3 +1,13 @@
+%BRAPH2 - BRrain Analysis using graPH theory version 2.0
+% This script loads all packages necessary to use BRAPH2.
+%
+% BRAPH2 packages:
+%  <a href="matlab:help src      ">src</a>       - software core
+%  <a href="matlab:help graphs   ">graphs</a>    - graphs
+%  <a href="matlab:help measures ">measures</a>  - measures
+%  <a href="matlab:help workflows">workflows</a> - workflows
+%  <a href="matlab:help test     ">test</a>      - unit test
+
 format long
 
 src_dir = [fileparts(which('braph2')) filesep 'src'];
