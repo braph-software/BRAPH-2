@@ -83,7 +83,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % Element methods (copy):
     %  copy - copies the element
     %  clone - clones the element
-
+    %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
     properties (Access=private)
