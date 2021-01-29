@@ -1,6 +1,13 @@
 %% ¡header!
 Importer < Element (im, importer from a file) imports an element from a file.
 
+%%% ¡description!
+Importer imports an element from generic file. 
+Importer contains and manages the properties of the element.
+
+%%% ¡seealso!
+Element, Exporter.
+
 %% ¡props!
 
 %%% ¡prop!

@@ -1,6 +1,13 @@
 %% ¡header!
 Exporter < Element (ex, exporter to a file) exports an element to a file.
 
+%%% ¡description!
+Exporter exports an element to generic file. 
+Exporter contains and manages the properties of the element.
+
+%%% ¡seealso!
+Element, Importer.
+
 %% ¡props!
 
 %%% ¡prop!
