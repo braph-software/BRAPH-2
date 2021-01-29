@@ -23,13 +23,13 @@ LABEL (metadata, string) is an extended label of the brain surface.
 NOTES (metadata, string) are some specific notes about the brain surface.
 
 %%% ¡prop!
-VERTEX_NUMBER (data, scalar) is the vertex number of the brain surface.
+VERTEX_NUMBER (data, cvector) is the vertex number of the brain surface.
 
 %%% ¡prop!
-COORDINATES (data, scalar) is the coordinate of the brain surface.
+COORDINATES (data, cvector) is the coordinate of the brain surface.
 
 %%% ¡prop!
-TRIANGLES_NUMBER (data, scalar) is the coordinate of the brain surface.
+TRIANGLES_NUMBER (data, cvector) is the coordinate of the brain surface.
 
 %%% ¡prop!
-TRIANGLES (data, scalar) is the coordinate of the brain surface.
+TRIANGLES (data, cvector) is the coordinate of the brain surface.
