@@ -5,7 +5,7 @@ ExporterBrainAtlasTXT < Exporter (ex, exporter of brain atlas in TXT) exports a 
 ExporterBrainAtlasTXT exports a brain atlas to a TXT file.
 
 %%% ¡seealso!
-Element, Exporter, ExporterBrainAtlasXLS.
+Element, Exporter, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS.
 
 %% ¡props!
 
@@ -13,8 +13,6 @@ Element, Exporter, ExporterBrainAtlasXLS.
 BA (data, item) is a brain atlas.
 %%%% ¡settings!
 'BrainAtlas'
-%%%% ¡default!
-BrainAtlas()
 
 %%% ¡prop!
 FILE (data, string) is the TXT file where to save the brain atlas.
