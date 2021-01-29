@@ -30,14 +30,14 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  getPropDefault - returns the default value of a property
     %  checkProp - checks whether a value has the correct format/error
     %
-    % Category methods (Static):
+    % Element methods (category, Static):
     %  getCategories - returns the list of categories
     %  getCategoryNumber - returns the number of categories
     %  existsCategory - returns whether a category exists/error
     %  getCategoryName - returns the name of a category
     %  getCategoryDescription - returns the description of a category
     %
-    % Format methods (Static):
+    % Element methods (format, Static):
     %  getFormats - returns the list of formats
     %  getFormatNumber - returns the number of formats
     %  existsFormat - returns whether a format exists/error
