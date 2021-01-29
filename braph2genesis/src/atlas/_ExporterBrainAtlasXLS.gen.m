@@ -3,6 +3,9 @@ ExporterBrainAtlasXLS < Exporter (ex, exporter of brain atlas in XLS) exports a 
 
 %%% ¡description!
 ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.
+The XLS/XLSX file consists of a first row with the BrainAtlas' ID,
+second row with the BrainAtlas'LABEL, a third row with the 
+BrainAtlas' NOTES, followed by the BrainRegions (one per row).
 
 %%% ¡seealso!
 Element, Exporter, ImporterBrainAtlasXLS, ExporterBrainAtlasTXT.
