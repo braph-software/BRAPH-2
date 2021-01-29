@@ -4,6 +4,9 @@ ExporterBrainAtlasXLS < Exporter (ex, exporter of brain atlas in XLS) exports a 
 %%% ¡description!
 ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.
 
+%%% ¡seealso!
+Element, Exporter, ExporterBrainAtlasTXT.
+
 %% ¡props!
 
 %%% ¡prop!

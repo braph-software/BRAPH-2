@@ -4,6 +4,9 @@ ImporterBrainAtlasXLS < Importer (im, importer of brain atlas from XLS/XLSX) imp
 %%% ¡description!
 ImporterBrainAtlasXLS imports a brain atlas from an XLS/XLSX file.
 
+%%% ¡seealso!
+Element, Importer, ImporterBrainAtlasTXT.
+
 %% ¡props!
 
 %%% ¡prop!
