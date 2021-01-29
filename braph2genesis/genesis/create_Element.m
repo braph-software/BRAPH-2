@@ -231,40 +231,6 @@ generate_header()
         gs(1, cellfun(@(x) ['%  ' x], fc_prop_list_txt, 'UniformOutput', false))
         gs(1, {
              '%'
-            ['% ' class_name ' methods (inspection, Static):']
-            ['%  getClass - returns ' class_name]
-            ['%  getName - returns the name of ' class_name]
-            ['%  getDescription - returns the description of ' class_name]
-            ['%  getProps - returns the property list of ' class_name]
-            ['%  getPropNumber - returns the property number of ' class_name]
-             '%  existsProp - checks whether property exists/error'
-             '%  existsTag - checks whether tag exists/error'
-             '%  getPropProp - returns the property number of a property'
-             '%  getPropTag - returns the tag of a property'
-             '%  getPropCategory - returns the category of a property'
-             '%  getPropFormat - returns the format of a property'
-             '%  getPropDescription - returns the description of a property'
-             '%  getPropSettings - returns the settings of a property'
-             '%  getPropDefault - returns the default value of a property'
-             '%  checkProp - checks whether a value has the correct format/error'
-             '%'
-            ['% ' class_name ' methods (category, Static):']
-             '%  getCategories - returns the list of categories'
-             '%  getCategoryNumber - returns the number of categories'
-             '%  existsCategory - returns whether a category exists/error'
-             '%  getCategoryName - returns the name of a category'
-             '%  getCategoryDescription - returns the description of a category'
-             '%'
-            ['% ' class_name ' methods (format, Static):']
-             '%  getFormats - returns the list of formats'
-             '%  getFormatNumber - returns the number of formats'
-             '%  existsFormat - returns whether a format exists/error'
-             '%  getFormatName - returns the name of a format'
-             '%  getFormatDescription - returns the description of a format'
-             '%  getFormatSettings - returns the settings for a format'
-             '%  getFormatDefault - returns the default value for a format'
-             '%  checkFormat - returns whether a value format is correct/error'
-             '%'
             ['% ' class_name ' constructor:']
             ['%  ' class_name ' - constructor']
              '%'
@@ -301,6 +267,40 @@ generate_header()
             ['% ' class_name ' methods (copy):']
             ['%  copy - copies the ' class_name]
             ['%  clone - clones the ' class_name]
+            '%'
+            ['% ' class_name ' methods (inspection, Static):']
+            ['%  getClass - returns ' class_name]
+            ['%  getName - returns the name of ' class_name]
+            ['%  getDescription - returns the description of ' class_name]
+            ['%  getProps - returns the property list of ' class_name]
+            ['%  getPropNumber - returns the property number of ' class_name]
+             '%  existsProp - checks whether property exists/error'
+             '%  existsTag - checks whether tag exists/error'
+             '%  getPropProp - returns the property number of a property'
+             '%  getPropTag - returns the tag of a property'
+             '%  getPropCategory - returns the category of a property'
+             '%  getPropFormat - returns the format of a property'
+             '%  getPropDescription - returns the description of a property'
+             '%  getPropSettings - returns the settings of a property'
+             '%  getPropDefault - returns the default value of a property'
+             '%  checkProp - checks whether a value has the correct format/error'
+             '%'
+            ['% ' class_name ' methods (category, Static):']
+             '%  getCategories - returns the list of categories'
+             '%  getCategoryNumber - returns the number of categories'
+             '%  existsCategory - returns whether a category exists/error'
+             '%  getCategoryName - returns the name of a category'
+             '%  getCategoryDescription - returns the description of a category'
+             '%'
+            ['% ' class_name ' methods (format, Static):']
+             '%  getFormats - returns the list of formats'
+             '%  getFormatNumber - returns the number of formats'
+             '%  existsFormat - returns whether a format exists/error'
+             '%  getFormatName - returns the name of a format'
+             '%  getFormatDescription - returns the description of a format'
+             '%  getFormatSettings - returns the settings for a format'
+             '%  getFormatDefault - returns the default value for a format'
+             '%  checkFormat - returns whether a value format is correct/error'
             })
         if ~isempty(seealso)
             gs(1, {
