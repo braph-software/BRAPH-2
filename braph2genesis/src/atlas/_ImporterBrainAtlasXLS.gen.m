@@ -2,11 +2,7 @@
 ImporterBrainAtlasXLS < Importer (im, importer of brain atlas from XLS/XLSX) imports a brain atlas from an XLS/XLSX file.
 
 %%% ¡description!
-ImporterBrainAtlasXLS imports a brain atlas from an XLS/XLSX file.
-The TXT file consists of 6 columns. It reads as follows: 
-BrainAtlas'ID (column 1), BrainAtlas'LABEL (column 2),
-BrainRegions (column 3-5; coordinates x, y, z, one per column) and 
-BrainAtlas'NOTES (column 6).
+
 
 %%% ¡seealso!
 Element, Importer, ExporterBrainAtlasXLS, ImporterBrainAtlasTXT.
