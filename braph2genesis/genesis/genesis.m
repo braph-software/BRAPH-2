@@ -48,7 +48,7 @@ mkdir([target_dir fp 'src' fp 'ds'])
 % mkdir([target_dir fp 'src' fp 'atlas'])
 % mkdir([target_dir fp 'src' fp 'cohort'])
 % mkdir([target_dir fp 'src' fp 'analysis'])
-% mkdir([target_dir fp 'src' fp 'gt'])
+mkdir([target_dir fp 'src' fp 'gt'])
 
 disp('¡! created dir structure - SRC')
 
@@ -87,12 +87,12 @@ disp('¡! copied ready files - braph2')
 copyfile([source_dir fp 'src' fp 'util' fp 'BRAPH2.m'], [target_dir fp 'src' fp 'util' fp 'BRAPH2.m'])
 copyfile([source_dir fp 'src' fp 'util' fp 'tostring.m'], [target_dir fp 'src' fp 'util' fp 'tostring.m'])
 copyfile([source_dir fp 'src' fp 'util' fp 'subclasses.m'], [target_dir fp 'src' fp 'util' fp 'subclasses.m'])
-% copyfile([source_dir fp 'src' fp 'util' fp 'clean_varargin.m'], [target_dir fp 'src' fp 'util' fp 'clean_varargin.m'])
-% copyfile([source_dir fp 'src' fp 'util' fp 'test_clean_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_clean_varargin.m'])
-% copyfile([source_dir fp 'src' fp 'util' fp 'copy_varargin.m'], [target_dir fp 'src' fp 'util' fp 'copy_varargin.m'])
-% copyfile([source_dir fp 'src' fp 'util' fp 'test_copy_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_copy_varargin.m'])
-% copyfile([source_dir fp 'src' fp 'util' fp 'get_from_varargin.m'], [target_dir fp 'src' fp 'util' fp 'get_from_varargin.m'])
-% copyfile([source_dir fp 'src' fp 'util' fp 'test_get_from_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_get_from_varargin.m'])
+copyfile([source_dir fp 'src' fp 'util' fp 'clean_varargin.m'], [target_dir fp 'src' fp 'util' fp 'clean_varargin.m'])
+copyfile([source_dir fp 'src' fp 'util' fp 'test_clean_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_clean_varargin.m'])
+copyfile([source_dir fp 'src' fp 'util' fp 'copy_varargin.m'], [target_dir fp 'src' fp 'util' fp 'copy_varargin.m'])
+copyfile([source_dir fp 'src' fp 'util' fp 'test_copy_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_copy_varargin.m'])
+copyfile([source_dir fp 'src' fp 'util' fp 'get_from_varargin.m'], [target_dir fp 'src' fp 'util' fp 'get_from_varargin.m'])
+copyfile([source_dir fp 'src' fp 'util' fp 'test_get_from_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_get_from_varargin.m'])
 disp('¡! copied ready files - util')
 
 copyfile([source_dir fp 'src' fp 'ds' fp 'Category.m'], [target_dir fp 'src' fp 'ds' fp 'Category.m'])
@@ -103,21 +103,21 @@ copyfile([source_dir fp 'src' fp 'ds' fp 'Element.m'], [target_dir fp 'src' fp '
 copyfile([source_dir fp 'src' fp 'ds' fp 'test_Element.m'], [target_dir fp 'src' fp 'ds' fp 'test_Element.m'])
 disp('¡! copied ready files - ds')
 
-% copyfile([source_dir fp 'src' fp 'gt' fp 'histogram.m'], [target_dir fp 'src' fp 'gt' fp 'histogram.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'binarize.m'], [target_dir fp 'src' fp 'gt' fp 'binarize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'test_binarize.m'], [target_dir fp 'src' fp 'gt' fp 'test_binarize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'dediagonalize.m'], [target_dir fp 'src' fp 'gt' fp 'dediagonalize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'test_dediagonalize.m'], [target_dir fp 'src' fp 'gt' fp 'test_dediagonalize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'diagonalize.m'], [target_dir fp 'src' fp 'gt' fp 'diagonalize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'test_diagonalize.m'], [target_dir fp 'src' fp 'gt' fp 'test_diagonalize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'semipositivize.m'], [target_dir fp 'src' fp 'gt' fp 'semipositivize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'test_semipositivize.m'], [target_dir fp 'src' fp 'gt' fp 'test_semipositivize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'standardize.m'], [target_dir fp 'src' fp 'gt' fp 'standardize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'test_standardize.m'], [target_dir fp 'src' fp 'gt' fp 'test_standardize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'symmetrize.m'], [target_dir fp 'src' fp 'gt' fp 'symmetrize.m'])
-% copyfile([source_dir fp 'src' fp 'gt' fp 'test_symmetrize.m'], [target_dir fp 'src' fp 'gt' fp 'test_symmetrize.m'])
-% disp('¡! copied ready files - gt')
-% 
+copyfile([source_dir fp 'src' fp 'gt' fp 'histogram.m'], [target_dir fp 'src' fp 'gt' fp 'histogram.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'binarize.m'], [target_dir fp 'src' fp 'gt' fp 'binarize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'test_binarize.m'], [target_dir fp 'src' fp 'gt' fp 'test_binarize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'dediagonalize.m'], [target_dir fp 'src' fp 'gt' fp 'dediagonalize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'test_dediagonalize.m'], [target_dir fp 'src' fp 'gt' fp 'test_dediagonalize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'diagonalize.m'], [target_dir fp 'src' fp 'gt' fp 'diagonalize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'test_diagonalize.m'], [target_dir fp 'src' fp 'gt' fp 'test_diagonalize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'semipositivize.m'], [target_dir fp 'src' fp 'gt' fp 'semipositivize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'test_semipositivize.m'], [target_dir fp 'src' fp 'gt' fp 'test_semipositivize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'standardize.m'], [target_dir fp 'src' fp 'gt' fp 'standardize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'test_standardize.m'], [target_dir fp 'src' fp 'gt' fp 'test_standardize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'symmetrize.m'], [target_dir fp 'src' fp 'gt' fp 'symmetrize.m'])
+copyfile([source_dir fp 'src' fp 'gt' fp 'test_symmetrize.m'], [target_dir fp 'src' fp 'gt' fp 'test_symmetrize.m'])
+disp('¡! copied ready files - gt')
+
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'Correlation.m'], [target_dir fp 'src' fp 'analysis' fp 'Correlation.m'])
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'test_Correlation.m'], [target_dir fp 'src' fp 'analysis' fp 'test_Correlation.m'])
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'permutation.m'], [target_dir fp 'src' fp 'analysis' fp 'permutation.m'])
@@ -133,9 +133,9 @@ disp('¡! copied ready files - ds')
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'quantiles.m'])
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'])
 % disp('¡! copied ready files - analysis')
-% 
-% disp(' ')
-% 
+
+disp(' ')
+
 % % workflows
 % copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST.m'])
 % mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)'])
@@ -144,7 +144,7 @@ disp('¡! copied ready files - ds')
 % copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group1.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group1.xlsx'])
 % copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group2.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group2.xlsx'])
 % disp('¡! copied ready files - workflow structural')
-% 
+
 % copyfile([source_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'], [target_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'])
 % mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)'])
 % copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'desikan_atlas.xlsx'])
@@ -158,7 +158,7 @@ disp('¡! copied ready files - ds')
 %     copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2' fp 'subject' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2' fp 'subject' int2str(i) '.xlsx'])
 % end
 % disp('¡! copied ready files - workflow functional')
-% 
+
 % copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'])
 % mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)'])
 % copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'])
@@ -172,14 +172,14 @@ disp('¡! copied ready files - ds')
 %     copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'])
 % end
 % disp('¡! copied ready files - workflow connectivity')
-% 
-% disp(' ')
+
+disp(' ')
 
 % test
 copyfile([source_dir fp 'test' fp 'test_braph2.m'], [target_dir fp 'test' fp 'test_braph2.m'])
 copyfile([source_dir fp 'test' fp 'assert_with_error.m'], [target_dir fp 'test' fp 'assert_with_error.m'])
-% copyfile([source_dir fp 'test' fp 'DummyObject.m'], [target_dir fp 'test' fp 'DummyObject.m'])
-% copyfile([source_dir fp 'test' fp 'DummyCopiableObject.m'], [target_dir fp 'test' fp 'DummyCopiableObject.m'])
+copyfile([source_dir fp 'test' fp 'DummyObject.m'], [target_dir fp 'test' fp 'DummyObject.m'])
+copyfile([source_dir fp 'test' fp 'DummyCopiableObject.m'], [target_dir fp 'test' fp 'DummyCopiableObject.m'])
 disp('¡! copied ready files - test')
 
 disp(' ')
@@ -209,12 +209,12 @@ for run = 1:1:run_number
     % for i = 1:1:numel(cohort_gen_list)
     %     create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
     % end
-    % 
-    % gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
-    % for i = 1:1:numel(gt_gen_list)
-    %     create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
-    % end
-    % 
+    
+    gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
+    for i = 1:1:numel(gt_gen_list)
+        create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
+    end
+    
     % analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
     % for i = 1:1:numel(analysis_gen_list)
     %     create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
