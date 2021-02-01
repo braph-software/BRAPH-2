@@ -29,6 +29,8 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 
 %%% ¡prop!
 BS (data, item) contains the brain surface of the brain atlas.
+%%%% ¡settings!
+'BrainSurface'
 
 %% ¡tests!
 
