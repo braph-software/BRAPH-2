@@ -221,9 +221,9 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             
             fid = fopen(['brainsurfs' filesep brain_surf_file]);
             vertex_number = fscanf(fid, '%f', 1);
-            coord = fscanf(fid, '%f', [3, bs.vertex_number]);
+            coord = fscanf(fid, '%f', [3, vertex_number]);
             tri_number = fscanf(fid, '%f', 1);
-            tri = fscanf(fid, '%d', [3, bs.tri_number])';
+            tri = fscanf(fid, '%d', [3, tri_number])';
             fclose(fid);
             
             bs.brain_surface.set('vertex_number', vertex_number);
