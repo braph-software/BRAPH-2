@@ -10,7 +10,6 @@ triangles of a brain surface.
 %%% ¡seealso!
 Element, BrainAtlas, BrainRegion.
 
-
 %% ¡props!
 
 %%% ¡prop!
