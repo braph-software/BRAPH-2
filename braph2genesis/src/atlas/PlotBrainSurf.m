@@ -383,7 +383,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             % See also brain, trisurf.
             
             FigPosition = get_from_varargin([.70 .50 .40 .20], 'figposition', varargin);
-            FigColor = get_from_varargin(GUI.BKGCOLOR, 'figcolor', varargin);
+            FigColor = get_from_varargin([.95 .95 .95], 'figcolor', varargin);
             FigName = get_from_varargin('Brain Surface Settings', 'figname', varargin);
             
             % create a figure
