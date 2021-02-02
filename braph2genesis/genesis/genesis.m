@@ -230,10 +230,10 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
     end
     
-    % cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-    % for i = 1:1:numel(cohort_gen_list)
-    %     create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
-    % end
+    cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
+    for i = 1:1:numel(cohort_gen_list)
+        create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
+    end
     
     gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
     for i = 1:1:numel(gt_gen_list)
