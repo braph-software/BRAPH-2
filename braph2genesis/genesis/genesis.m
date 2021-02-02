@@ -45,7 +45,8 @@ disp('¡! created target dir')
 % src
 mkdir([target_dir fp 'src' fp 'util'])
 mkdir([target_dir fp 'src' fp 'ds'])
-% mkdir([target_dir fp 'src' fp 'atlas'])
+mkdir([target_dir fp 'src' fp 'atlas'])
+mkdir([target_dir fp 'brainsurfs'])
 % mkdir([target_dir fp 'src' fp 'cohort'])
 % mkdir([target_dir fp 'src' fp 'analysis'])
 mkdir([target_dir fp 'src' fp 'gt'])
@@ -102,6 +103,24 @@ copyfile([source_dir fp 'src' fp 'ds' fp 'test_Format.m'], [target_dir fp 'src' 
 copyfile([source_dir fp 'src' fp 'ds' fp 'Element.m'], [target_dir fp 'src' fp 'ds' fp 'Element.m'])
 copyfile([source_dir fp 'src' fp 'ds' fp 'test_Element.m'], [target_dir fp 'src' fp 'ds' fp 'test_Element.m'])
 disp('¡! copied ready files - ds')
+
+copyfile([source_dir fp 'brainsurfs' fp 'human_Cerebellum.nv'], [target_dir fp 'brainsurfs' fp 'Human_Cerebellum.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_Ch2_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'Human_Ch2_smoothed.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_Ch2.nv'], [target_dir fp 'brainsurfs' fp 'Human_Ch2.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_Ch2withCerebellum.nv'], [target_dir fp 'brainsurfs' fp 'Human_Ch2withCerebellum.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152_smoothed.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152_smoothed_tal.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152_smoothed_tal.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152_tal.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152_tal.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152Left.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152Left.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152Left_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152Left_smoothed.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152Right.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152Right.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'ferret.nv'], [target_dir fp 'brainsurfs' fp 'ferret.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human.nv'], [target_dir fp 'brainsurfs' fp 'human.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'macaque.nv'], [target_dir fp 'brainsurfs' fp 'macaque.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'mouse.nv'], [target_dir fp 'brainsurfs' fp 'mouse.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'rat.nv'], [target_dir fp 'brainsurfs' fp 'rat.nv'])
+disp('¡! copied ready files - brainsurf')
 
 copyfile([source_dir fp 'src' fp 'gt' fp 'histogram.m'], [target_dir fp 'src' fp 'gt' fp 'histogram.m'])
 copyfile([source_dir fp 'src' fp 'gt' fp 'binarize.m'], [target_dir fp 'src' fp 'gt' fp 'binarize.m'])
@@ -200,11 +219,11 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
     end
 
-    % atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-    % for i = 1:1:numel(atlas_gen_list)
-    %     create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
-    % end
-    % 
+    atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
+    for i = 1:1:numel(atlas_gen_list)
+        create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
+    end
+    
     % cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
     % for i = 1:1:numel(cohort_gen_list)
     %     create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
@@ -271,10 +290,10 @@ for i = 1:1:numel(util_gen_list)
     create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
 end
 
-% atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-% for i = 1:1:numel(atlas_gen_list)
-%     create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
-% end
+atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
+for i = 1:1:numel(atlas_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
+end
 % 
 % cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
 % for i = 1:1:numel(cohort_gen_list)
