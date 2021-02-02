@@ -37,6 +37,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡check_prop!</strong>
 %   Code to check prop format (before calculation).
 %   Can be on multiple lines.
+%   The prop value should be in variable 'value'.
 %   The outcome should be in variable 'check'.
 %  <strong>%%%% ¡check_value!</strong>
 %   Code to check prop value (after calculation).
