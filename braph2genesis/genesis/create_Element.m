@@ -29,6 +29,8 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡conditioning!</strong>
 %   Code to condition value (before checks and calculation).
 %   Can be on multiple lines.
+%   The prop value is in the variable 'value', 
+%   where also the modified prop value is returned.
 %   The conditioned value should be in variable 'value'.
 %  <strong>%%%% ¡postprocessing!</strong>
 %   Postprocessign code (executed after setting, but before checking, value).
@@ -37,16 +39,17 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡check_prop!</strong>
 %   Code to check prop format (before calculation).
 %   Can be on multiple lines.
-%   The prop value should be in variable 'value'.
+%   The prop value is in the variable 'value'.
 %   The outcome should be in variable 'check'.
 %  <strong>%%%% ¡check_value!</strong>
 %   Code to check prop value (after calculation).
 %   Can be on multiple lines.
+%   The prop value is in the variable 'value'.
 %   The outcome should be in variable 'check' and the message in 'msg'.
 %  <strong>%%%% ¡default!</strong>
 %   Prop default value (seldom needed).
 %  <strong>%%%% ¡calculate!</strong>
-%   Code to calcualte prop results (only for category RESULT).
+%   Code to calculate prop results (only for category RESULT).
 %   Can be on multiple lines.
 %   The result should be in variable 'value'.
 % <strong>%%% ¡prop!</strong>
