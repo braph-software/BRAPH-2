@@ -6,6 +6,9 @@ Subject provides the methods necessary for all subjects.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
+%%% ¡seealso!
+Element, BrainAtlas, Group
+
 %% ¡props!
 
 %%% ¡prop!
