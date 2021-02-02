@@ -92,7 +92,7 @@ copyfile([source_dir fp 'src' fp 'util' fp 'subclasses.m'], [target_dir fp 'src'
 % copyfile([source_dir fp 'src' fp 'util' fp 'test_clean_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_clean_varargin.m'])
 % copyfile([source_dir fp 'src' fp 'util' fp 'copy_varargin.m'], [target_dir fp 'src' fp 'util' fp 'copy_varargin.m'])
 % copyfile([source_dir fp 'src' fp 'util' fp 'test_copy_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_copy_varargin.m'])
-% copyfile([source_dir fp 'src' fp 'util' fp 'get_from_varargin.m'], [target_dir fp 'src' fp 'util' fp 'get_from_varargin.m'])
+copyfile([source_dir fp 'src' fp 'util' fp 'get_from_varargin.m'], [target_dir fp 'src' fp 'util' fp 'get_from_varargin.m'])
 % copyfile([source_dir fp 'src' fp 'util' fp 'test_get_from_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_get_from_varargin.m'])
 disp('¡! copied ready files - util')
 
