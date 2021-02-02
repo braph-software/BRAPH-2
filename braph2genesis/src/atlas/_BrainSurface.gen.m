@@ -32,3 +32,4 @@ TRIANGLES_NUMBER (data, scalar) is the number of triangles.
 
 %%% ¡prop!
 TRIANGLES (data, matrix) is the triad of vertex identifiers to create a triangle.
+

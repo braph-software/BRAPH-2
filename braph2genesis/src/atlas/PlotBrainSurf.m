@@ -48,7 +48,6 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     %   PlotBrainSurf        - constructor
     %   tostring             - returns a string representing the surface
     %   disp                 - displays the plot brain surface
-    %   getBrainSurfFile     - returns the brain surf file
     % 
     % PlotBrainSurf graphic methods: 
     %   set_axes             - sets the handle of the axes
@@ -131,9 +130,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             }
     end
     properties (Access = protected)
-        brain_surf_file  % file of the brain surface
-
-        % brain coordinates
+        % brain surf
         brain_surface
         
         h_axes  % handle for the axes
@@ -147,7 +144,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         Colormap  % colormap value
     end
     methods  % Basic functions
-        function bs = PlotBrainSurf(brain_surf_file, varargin)
+        function bs = PlotBrainSurf(brain_surf, varargin)
             % PLOTBRAINSURF constructor 
             %
             % PLOTBRAINSURF(BRAIN_SURF_FILE) construct the brain surface
@@ -167,7 +164,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %
             % See also BrainAtlas, PlotBrainAtlas, PlotBrainGraph. 
             
-            bs.setBrainSurfFile(brain_surf_file);
+            bs.setBrainSurf(brain_surf);
             bs.Lighting = get_from_varargin('Phong', 'Lighting', varargin);  % 'none', 'flat', 'phong', 'gouraud'
             bs.Material = get_from_varargin('Shiny', 'Material', varargin);  % 'dull', 'shiny', 'metal'
             bs.CamLight = get_from_varargin('HeadLight', 'CamLight', varargin);  % 'headlight', 'right', 'left'
@@ -196,40 +193,31 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             disp(['Surface file: ' bs.getBrainSurfFile()]);
             disp(['Number of vertices: ' tostring(bs.brain_surface.get('vertex_number'))]);
             disp(['Number of triangles: ' tostring(bs.brain_surface.get('triangles_number'))]);
-        end
+        end  
         function brain_surf_file = getBrainSurfFile(bs)
             % GETBRAINSURFFILE returns the brain surface file
             %
             % BRAIN_SURF_FILE = GETBRAINSURFFILE(BS) gets the name of the
             % brain surface file.
             
-            brain_surf_file = bs.brain_surf_file;
-        end
+            brain_surf_file = bs.brain_surf.get('ID');
+        end 
     end
     methods (Access = protected) % Set Brain Surf File
-        function setBrainSurfFile(bs, brain_surf_file)
-            % SETBRAINSURFFILE reads the brain surf file and sets the data
+        function setBrainSurf(bs, brain_surf)
+            % SETBRAINSURF reads the brain surf file and sets the data
             %
             % SETBRAINSURFFILE(BS, BRAIN_SURF_FILE) reads the brain surf
             % file and loads the data.
             %
             % See getBrainSurfFile.
             
-            bs.brain_surf_file =  brain_surf_file;
-            bs.brain_surface = BrainSurface();
+            bs.brain_surface = brain_surf;   
             
-            
-            fid = fopen(['brainsurfs' filesep brain_surf_file]);
-            vertex_number = fscanf(fid, '%f', 1);
-            coord = fscanf(fid, '%f', [3, vertex_number]);
-            tri_number = fscanf(fid, '%f', 1);
-            tri = fscanf(fid, '%d', [3, tri_number])';
-            fclose(fid);
-            
-            bs.brain_surface.set('vertex_number', vertex_number);
-            bs.brain_surface.set('coordinates', coord);
-            bs.brain_surface.set('triangles_number', tri_number);
-            bs.brain_surface.set('triangles', tri);
+            if bs.brain_surface.get('vertex_number') == 0
+                im = ImporterBrainSurfaceNV('File', [fileparts(which('braph2')) filesep 'brainsurfs' filesep bs.brain_surface.get('id')]); 
+                bs.brain_surface = im.get('bs');
+            end           
         end
     end
     methods  % Graphic functions

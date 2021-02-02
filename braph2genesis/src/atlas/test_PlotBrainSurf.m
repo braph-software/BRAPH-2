@@ -1,37 +1,38 @@
 % test PlotBrainSurf
 
 %% Test 1: Basic use
-bs = PlotBrainSurf('Human_ICBM152.nv');
+bs = BrainSurface('ID', 'Human_ICBM152.nv');
+pbs = PlotBrainSurf(bs);
 
-bs.set_axes()
-h = bs.get_axes();
+pbs.set_axes()
+h = pbs.get_axes();
 
-bs.brain()
-bs.brain_off()
-bs.brain_on()
+pbs.brain()
+pbs.brain_off()
+pbs.brain_on()
 
-bs.brain_settings();
+pbs.brain_settings();
 
-bs.hold_on()
-bs.hold_off()
+pbs.hold_on()
+pbs.hold_off()
 
-bs.grid_off()
-bs.grid_on()
+pbs.grid_off()
+pbs.grid_on()
 
-bs.axis_off()
-bs.axis_on()
+pbs.axis_off()
+pbs.axis_on()
 
-bs.axis_equal()
+pbs.axis_equal()
 
-bs.axis_tight()
+pbs.axis_tight()
 
-bs.view([45 45])
+pbs.view([45 45])
 
-bs.lighting('phong')
-bs.material('shiny')
-bs.camlight('left')
-bs.shading('interp')
-bs.colormap('jet')
+pbs.lighting('phong')
+pbs.material('shiny')
+pbs.camlight('left')
+pbs.shading('interp')
+pbs.colormap('jet')
 
 close(gcf)
 close(gcf)

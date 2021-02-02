@@ -203,7 +203,7 @@ classdef PlotBrainAtlas < PlotBrainSurf
                 [BRAPH2.STR ':' class(atlas) ':' BRAPH2.WRONG_INPUT], ...
                 'Argument must be a BrainAtlas.')
             
-            ba = ba@PlotBrainSurf(atlas.get('bs').get('id'), varargin{:});
+            ba = ba@PlotBrainSurf(atlas.get('bs'), varargin{:});
             
             ba.atlas = atlas;
             ba.setRegions();
