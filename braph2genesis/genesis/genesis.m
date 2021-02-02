@@ -106,6 +106,8 @@ disp('¡! copied ready files - ds')
 
 copyfile([source_dir fp 'src' fp 'atlas' fp 'PlotBrainSurf.m'], [target_dir fp 'src' fp 'atlas' fp 'PlotBrainSurf.m'])
 copyfile([source_dir fp 'src' fp 'atlas' fp 'test_PlotBrainSurf.m'], [target_dir fp 'src' fp 'atlas' fp 'test_PlotBrainSurf.m'])
+copyfile([source_dir fp 'src' fp 'atlas' fp 'PlotBrainAtlas.m'], [target_dir fp 'src' fp 'atlas' fp 'PlotBrainAtlas.m'])
+copyfile([source_dir fp 'src' fp 'atlas' fp 'test_PlotBrainAtlas.m'], [target_dir fp 'src' fp 'atlas' fp 'test_PlotBrainAtlas.m'])
 copyfile([source_dir fp 'src' fp 'atlas' fp 'brainsurfs' fp 'BrainMesh_Cerebellum.nv'], [target_dir fp 'src' fp 'atlas' fp 'brainsurfs' fp 'BrainMesh_Cerebellum.nv'])
 copyfile([source_dir fp 'src' fp 'atlas' fp 'brainsurfs' fp 'BrainMesh_Ch2_smoothed.nv'], [target_dir fp 'src' fp 'atlas' fp 'brainsurfs' fp 'BrainMesh_Ch2_smoothed.nv'])
 copyfile([source_dir fp 'src' fp 'atlas' fp 'brainsurfs' fp 'BrainMesh_Ch2.nv'], [target_dir fp 'src' fp 'atlas' fp 'brainsurfs' fp 'BrainMesh_Ch2.nv'])
