@@ -26,10 +26,10 @@ NOTES (metadata, string) are some specific notes about the brain surface.
 VERTEX_NUMBER (data, scalar) is the number of triangles vertices.
 
 %%% ¡prop!
-COORDINATES (data, cvector) is the coordinates of the triangles vertices.
+COORDINATES (data, matrix) is the coordinates of the triangles vertices.
 
 %%% ¡prop!
 TRIANGLES_NUMBER (data, scalar) is the number of triangles.
 
 %%% ¡prop!
-TRIANGLES (data, cvector) is the triad of vertex identifiers to create a triangle.
+TRIANGLES (data, matrix) is the triad of vertex identifiers to create a triangle.
