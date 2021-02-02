@@ -21,7 +21,9 @@ LABEL (metadata, string) is an extended label of the subject.
 NOTES (metadata, string) are some specific notes about the subject.
 
 %%% ¡prop!
-ATLASES (data, cell) is a cell array with brain atlases.
+ATLAS_DICT (data, idict) is a dictionary with brain atlases.
+%%%% ¡settings!
+'BrainAtlas'
 
 %%% ¡prop!
 DATA_DICT (data, idict) is a dictionary with subject data.
@@ -50,7 +52,7 @@ function atlas_number = getBrainAtlasNumber(sub)
 
     % number of differetn brain atlases
 
-    atlas_number = length(sub.get('ATLASES'));
+    atlas_number = length(sub.get('ATLAS_DICT'));
 end
 function data_number = getDataNumber(sub)
     % GETDATANUMBER returns the number of data
@@ -63,7 +65,7 @@ function data_number = getDataNumber(sub)
     %
     % See also getDataList, getBrainAtlasNumber, getDataCodes
 
-    data_number = length(gr.get('DATA_DICT'));
+    data_number = length(sub.get('DATA_DICT'));
 end
 
 %% ¡tests!
@@ -88,4 +90,11 @@ idict_1 = IndexedDictionary( ...
     );
 atlas = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
 
-git re
+atlas_dict = IndexedDictionary( ...
+    'id', 'atlas_idict', ...
+    'it_class', 'BrainAtlas', ...
+    'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+    'it_list', {atlas} ...
+    );
+
+sub = Subject('ID','id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'ATLAS_DICT', atlas_dict)
