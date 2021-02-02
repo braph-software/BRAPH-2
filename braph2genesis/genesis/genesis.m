@@ -104,9 +104,9 @@ copyfile([source_dir fp 'src' fp 'ds' fp 'Element.m'], [target_dir fp 'src' fp '
 copyfile([source_dir fp 'src' fp 'ds' fp 'test_Element.m'], [target_dir fp 'src' fp 'ds' fp 'test_Element.m'])
 disp('¡! copied ready files - ds')
 
-copyfile([source_dir fp 'brainsurfs' fp 'Human_Cerebellum.nv'], [target_dir fp 'src' fp 'atlas' fp 'brainsurfs' fp 'Human_Cerebellum.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'Human_Ch2_smoothed.nv'], [target_dir fp 'src' fp 'atlas' fp 'brainsurfs' fp 'Human_Ch2_smoothed.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'Human_Ch2.nv'], [target_dir fp 'src' fp 'atlas' fp 'brainsurfs' fp 'Human_Ch2.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'Human_Cerebellum.nv'], [target_dir fp 'brainsurfs' fp 'Human_Cerebellum.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'Human_Ch2_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'Human_Ch2_smoothed.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'Human_Ch2.nv'], [target_dir fp 'brainsurfs' fp 'Human_Ch2.nv'])
 copyfile([source_dir fp 'brainsurfs' fp 'Human_Ch2withCerebellum.nv'], [target_dir fp 'brainsurfs' fp 'Human_Ch2withCerebellum.nv'])
 copyfile([source_dir fp 'brainsurfs' fp 'Human_ICBM152_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152_smoothed.nv'])
 copyfile([source_dir fp 'brainsurfs' fp 'Human_ICBM152_smoothed_tal.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152_smoothed_tal.nv'])

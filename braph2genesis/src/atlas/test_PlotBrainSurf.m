@@ -1,7 +1,7 @@
 % test PlotBrainSurf
 
 %% Test 1: Basic use
-bs = PlotBrainSurf('BrainMesh_ICBM152.nv');
+bs = PlotBrainSurf('Human_ICBM152.nv');
 
 bs.set_axes()
 h = bs.get_axes();
