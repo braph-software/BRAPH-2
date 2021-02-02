@@ -96,4 +96,38 @@ function removeSubjects(gr, subjects)
         gr.removeSubject(subject)
     end
 end
-        
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Instantiation
+%%%% ¡code!
+br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
+br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
+br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
+br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
+
+items = {br1, br2, br3, br4, br5};
+
+idict_1 = IndexedDictionary( ...
+    'id', 'idict', ...
+    'it_class', 'BrainRegion', ...
+    'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+    'it_list', items ...
+    );
+atlas = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
+
+% TO ADAPT FROM PREVIOUS VERSION
+% for i = 1:1:length(subject_class_list)
+%     subject_class = subject_class_list{i};
+% 
+%     sub1 = Subject.getSubject(subject_class, 'id1', 'label 1', 'notes 1', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+%     sub2 = Subject.getSubject(subject_class, 'id2', 'label 2', 'notes 2', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+%     sub3 = Subject.getSubject(subject_class, 'id3', 'label 3', 'notes 3', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+%     sub4 = Subject.getSubject(subject_class, 'id4', 'label 4', 'notes 4', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+%     sub5 = Subject.getSubject(subject_class, 'id5', 'label 5', 'notes 5', repmat({atlas}, 1, Subject.getBrainAtlasNumber(subject_class)));
+%     
+%     group = Group(subject_class, 'id', 'label', 'notes', {sub1, sub2, sub3 sub4, sub5});
+% end
