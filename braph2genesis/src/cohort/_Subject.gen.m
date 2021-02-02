@@ -26,9 +26,6 @@ ATLASES (data, cell) is a cell array with brain atlases.
 %%% ¡prop!
 DATA_DICT (data, idict) is a dictionary with subject data.
 
-%%% ¡prop!
-h_panel
-
 %% ¡methods!
 function subject_list = getList()
     % GETLIST returns the list of available subjects
@@ -68,3 +65,27 @@ function data_number = getDataNumber(sub)
 
     data_number = length(gr.get('DATA_DICT'));
 end
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Instantiation
+%%%% ¡code!
+br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
+br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
+br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
+br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
+
+items = {br1, br2, br3, br4, br5};
+
+idict_1 = IndexedDictionary( ...
+    'id', 'idict', ...
+    'it_class', 'BrainRegion', ...
+    'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+    'it_list', items ...
+    );
+atlas = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
+
+git re
