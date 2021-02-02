@@ -29,6 +29,8 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡conditioning!</strong>
 %   Code to condition value (before checks and calculation).
 %   Can be on multiple lines.
+%   The prop value is in the variable 'value', 
+%   where also the modified prop value is returned.
 %   The conditioned value should be in variable 'value'.
 %  <strong>%%%% ¡postprocessing!</strong>
 %   Postprocessign code (executed after setting, but before checking, value).
@@ -37,15 +39,17 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡check_prop!</strong>
 %   Code to check prop format (before calculation).
 %   Can be on multiple lines.
+%   The prop value is in the variable 'value'.
 %   The outcome should be in variable 'check'.
 %  <strong>%%%% ¡check_value!</strong>
 %   Code to check prop value (after calculation).
 %   Can be on multiple lines.
+%   The prop value is in the variable 'value'.
 %   The outcome should be in variable 'check' and the message in 'msg'.
 %  <strong>%%%% ¡default!</strong>
 %   Prop default value (seldom needed).
 %  <strong>%%%% ¡calculate!</strong>
-%   Code to calcualte prop results (only for category RESULT).
+%   Code to calculate prop results (only for category RESULT).
 %   Can be on multiple lines.
 %   The result should be in variable 'value'.
 % <strong>%%% ¡prop!</strong>
@@ -190,16 +194,13 @@ staticmethods = splitlines(getToken(txt, 'staticmethods'));
 methods = splitlines(getToken(txt, 'methods'));
 
 %% Load info from already generated file [fc = from class]
-[fc_prop_number, fc_prop_list_txt, fc_prop_list, fc_prop_tag_list] = load_from_class_prop();
-    function [fc_prop_number, fc_prop_list_txt, fc_prop_list, fc_prop_tag_list] = load_from_class_prop()
-        fc_prop_number = [];
+element_class_created = exist(class_name, 'class') == 8;
+[fc_prop_list_txt, fc_prop_list, fc_prop_tag_list] = load_from_class_prop();
+    function [fc_prop_list_txt, fc_prop_list, fc_prop_tag_list] = load_from_class_prop()
         fc_prop_list_txt = {};
         fc_prop_list = '';
         fc_prop_tag_list = '';
-        
-        if exist(class_name, 'class') == 8
-            fc_prop_number = Element.getPropNumber(class_name);
-
+        if element_class_created
             fc_prop_list_txt = cell(Element.getPropNumber(class_name), 1);
             for prop = 1:1:Element.getPropNumber(class_name)
                 fc_prop_list_txt{prop} = ['<strong>' int2str(prop) '</strong> <strong>' Element.getPropTag(class_name, prop) '</strong> \t' Element.getPropDescription(class_name, prop)];
@@ -208,6 +209,8 @@ methods = splitlines(getToken(txt, 'methods'));
             end
         end
     end
+
+CET = '% COMPUTATIONAL EFFICIENCY TRICK';
 
 %% Generate file
 file_str = [];
@@ -230,6 +233,79 @@ generate_header()
             ['% The list of ' class_name ' properties is:']
             })
         gs(1, cellfun(@(x) ['%  ' x], fc_prop_list_txt, 'UniformOutput', false))
+        gs(1, {
+             '%'
+            ['% ' class_name ' constructor:']
+            ['%  ' class_name ' - constructor']
+             '%'
+            ['% ' class_name ' methods:']
+             '%  set - sets the value of a property'
+             '%  check - checks the values of all properties'
+             '%  getr - returns the raw value of a property'
+             '%  get - returns the value of a property'
+             '%  memorize - returns and memorizes the value of a property'
+             '%  getPropSeed - returns the seed of a property'
+             '%  isLocked - returns whether a property is locked'
+             '%  lock - locks unreversibly a property'
+             '%  isChecked - returns whether a property is checked'
+             '%  checked - sets a property to checked'
+             '%  unchecked - sets a property to NOT checked'
+             '%'
+            ['% ' class_name ' methods (operators):']
+            ['%  isequal - determines whether two ' class_name ' are equal (values, locked)']
+             '%'
+            ['% ' class_name ' methods (display):']
+            ['%  tostring - string with information about the ' class_name]
+            ['%  disp - displays information about the ' class_name]
+            ['%  tree - displays the element of ' class_name]
+             '%'
+            ['% ' class_name ' method (element list):']
+            ['%  getElementList - returns a list with all subelements of ' class_name]
+             '%'
+            ['% ' class_name ' method (JSON encode):']
+            ['%  encodeJSON - returns a JSON string encoding the ' class_name]
+             '%'
+            ['% ' class_name ' method (JSON decode, Static):']
+            ['%  decodeJSON - returns a JSON string encoding the ' class_name]
+             '%'
+            ['% ' class_name ' methods (copy):']
+            ['%  copy - copies the ' class_name]
+            ['%  clone - clones the ' class_name]
+            '%'
+            ['% ' class_name ' methods (inspection, Static):']
+            ['%  getClass - returns ' class_name]
+            ['%  getName - returns the name of ' class_name]
+            ['%  getDescription - returns the description of ' class_name]
+            ['%  getProps - returns the property list of ' class_name]
+            ['%  getPropNumber - returns the property number of ' class_name]
+             '%  existsProp - checks whether property exists/error'
+             '%  existsTag - checks whether tag exists/error'
+             '%  getPropProp - returns the property number of a property'
+             '%  getPropTag - returns the tag of a property'
+             '%  getPropCategory - returns the category of a property'
+             '%  getPropFormat - returns the format of a property'
+             '%  getPropDescription - returns the description of a property'
+             '%  getPropSettings - returns the settings of a property'
+             '%  getPropDefault - returns the default value of a property'
+             '%  checkProp - checks whether a value has the correct format/error'
+             '%'
+            ['% ' class_name ' methods (category, Static):']
+             '%  getCategories - returns the list of categories'
+             '%  getCategoryNumber - returns the number of categories'
+             '%  existsCategory - returns whether a category exists/error'
+             '%  getCategoryName - returns the name of a category'
+             '%  getCategoryDescription - returns the description of a category'
+             '%'
+            ['% ' class_name ' methods (format, Static):']
+             '%  getFormats - returns the list of formats'
+             '%  getFormatNumber - returns the number of formats'
+             '%  existsFormat - returns whether a format exists/error'
+             '%  getFormatName - returns the name of a format'
+             '%  getFormatDescription - returns the description of a format'
+             '%  getFormatSettings - returns the settings for a format'
+             '%  getFormatDefault - returns the default value for a format'
+             '%  checkFormat - returns whether a value format is correct/error'
+            })
         if ~isempty(seealso)
             gs(1, {
                  '%'
@@ -321,7 +397,14 @@ generate_inspection()
                      '% See also getClass, getDescription.'
                      ''
                     })
-                g(3, [moniker '_name = regexprep(''' descriptive_name ''', ''(\\<[a-z])'', ''${upper($1)}'');']) % note use of "\\<" instead of "\<" to deal with special character
+                if ~element_class_created
+                    g(3, [moniker '_name = regexprep(''' descriptive_name ''', ''(\\<[a-z])'', ''${upper($1)}'');']) % note use of "\\<" instead of "\<" to deal with special character
+                else
+                    gs(3, {
+                         CET
+                        [moniker '_name = ''' Element.getName(class_name) ''';']
+                        })
+                end
             g(2, 'end')
 
             % getDescription()
@@ -443,13 +526,12 @@ generate_inspection()
                      '% See also getProps.'
                      ''
                     })
-                if isempty(fc_prop_number)
+                if ~element_class_created
                     g(3, ['prop_number = numel(' class_name '.getProps());'])
                 else
                     gs(3, { 
-                         '% COMPUTATIONAL EFFICIENCY TRICK'
-                         '% hardcoded for computational efficiency'
-                        ['prop_number = ' int2str(fc_prop_number) ';']
+                         CET
+                        ['prop_number = ' int2str(Element.getPropNumber(class_name)) ';']
                         })
                 end
             g(2, 'end')
@@ -485,8 +567,7 @@ generate_inspection()
                         g(4, ['check = any(prop == ' class_name '.getProps());'])
                     else
                         gs(4, {
-                             '% COMPUTATIONAL EFFICIENCY TRICK'
-                             '% hardcoded for computational efficiency'
+                             CET
                             ['check = any(prop == [' fc_prop_list ']);']
                             })
                     end
@@ -530,8 +611,7 @@ generate_inspection()
                      })
                 if isempty(fc_prop_tag_list)
                     gs(3, {
-                         '% COMPUTATIONAL EFFICIENCY TRICK'
-                         '% persistent variable for computational efficiency'
+                         CET
                         ['persistent ' lower(class_name) '_tag_list']
                         ['if isempty(' lower(class_name) '_tag_list)']
                         ['\t' lower(class_name) '_tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
@@ -543,8 +623,7 @@ generate_inspection()
                 else
                     g(3, 'if nargout == 1')
                         gs(4, {
-                             '% COMPUTATIONAL EFFICIENCY TRICK'
-                             '% hardcoded for computational efficiency'
+                             CET
                             [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
                              ''
                             })
@@ -585,8 +664,7 @@ generate_inspection()
                 })
                 if isempty(fc_prop_tag_list)
                     gs(3, {
-                         '% COMPUTATIONAL EFFICIENCY TRICK'
-                         '% persistent variable for computational efficiency'
+                         CET
                         ['persistent ' lower(class_name) '_tag_list']
                         ['if isempty(' lower(class_name) '_tag_list)']
                         ['\t' lower(class_name) '_tag_list = cellfun(@(x) ' class_name '.getPropTag(x), num2cell(' class_name '.getProps()), ''UniformOutput'', false);']
@@ -603,8 +681,7 @@ generate_inspection()
                 else
                     g(3, 'if ischar(pointer)')
                         gs(4, {
-                             '% COMPUTATIONAL EFFICIENCY TRICK'
-                             '% hardcoded for computational efficiency'
+                             CET
                             [lower(class_name) '_tag_list = {' fc_prop_tag_list '};']
                              ''
                             })

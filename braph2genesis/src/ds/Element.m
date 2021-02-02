@@ -13,40 +13,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %   checkValue - checks the value of a property after it is calculated
     %   postprocessing - postprocesses the value of a prop after it has been set
     %
-    % Element methods (inspection, Static):
-    %  getClass - returns the class of the element
-    %  getName - returns the name of the element
-    %  getDescription - returns the description of the element
-    %  getProps - returns the property list of an element
-    %  getPropNumber - returns the property number of an element
-    %  existsProp - checks whether property exists/error
-    %  existsTag - checks whether tag exists/error
-    %  getPropProp - returns the property number of a property
-    %  getPropTag - returns the tag of a property
-    %  getPropCategory - returns the category of a property
-    %  getPropFormat - returns the format of a property
-    %  getPropDescription - returns the description of a property
-    %  getPropSettings - returns the settings of a property
-    %  getPropDefault - returns the default value of a property
-    %  checkProp - checks whether a value has the correct format/error
-    %
-    % Category methods (Static):
-    %  getCategories - returns the list of categories
-    %  getCategoryNumber - returns the number of categories
-    %  existsCategory - returns whether a category exists/error
-    %  getCategoryName - returns the name of a category
-    %  getCategoryDescription - returns the description of a category
-    %
-    % Format methods (Static):
-    %  getFormats - returns the list of formats
-    %  getFormatNumber - returns the number of formats
-    %  existsFormat - returns whether a format exists/error
-    %  getFormatName - returns the name of a format
-    %  getFormatDescription - returns the description of a format
-    %  getFormatSettings - returns the settings for a format
-    %  getFormatDefault - returns the default value for a format
-    %  checkFormat - returns whether a value format is correct/error
-    %
     % Element constructor:
     %  Element - constructor
     %  
@@ -83,7 +49,41 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % Element methods (copy):
     %  copy - copies the element
     %  clone - clones the element
-
+    %
+    % Element methods (inspection, Static):
+    %  getClass - returns the class of the element
+    %  getName - returns the name of the element
+    %  getDescription - returns the description of the element
+    %  getProps - returns the property list of an element
+    %  getPropNumber - returns the property number of an element
+    %  existsProp - checks whether property exists/error
+    %  existsTag - checks whether tag exists/error
+    %  getPropProp - returns the property number of a property
+    %  getPropTag - returns the tag of a property
+    %  getPropCategory - returns the category of a property
+    %  getPropFormat - returns the format of a property
+    %  getPropDescription - returns the description of a property
+    %  getPropSettings - returns the settings of a property
+    %  getPropDefault - returns the default value of a property
+    %  checkProp - checks whether a value has the correct format/error
+    %
+    % Element methods (category, Static):
+    %  getCategories - returns the list of categories
+    %  getCategoryNumber - returns the number of categories
+    %  existsCategory - returns whether a category exists/error
+    %  getCategoryName - returns the name of a category
+    %  getCategoryDescription - returns the description of a category
+    %
+    % Element methods (format, Static):
+    %  getFormats - returns the list of formats
+    %  getFormatNumber - returns the number of formats
+    %  existsFormat - returns whether a format exists/error
+    %  getFormatName - returns the name of a format
+    %  getFormatDescription - returns the description of a format
+    %  getFormatSettings - returns the settings for a format
+    %  getFormatDefault - returns the default value for a format
+    %  checkFormat - returns whether a value format is correct/error
+    %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
     properties (Access=private)
