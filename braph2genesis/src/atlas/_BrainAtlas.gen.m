@@ -9,7 +9,7 @@ thus, it has access to all IndexedDictionary methods.
 BrainAtlas can be imported/exported to .txt, .xls and .json files.
 
 %%% ¡seealso!
-Element, BrainRegion
+Element, BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS, ExporterBrainAtlasTXT
 
 %% ¡props!
 
@@ -28,7 +28,7 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 'BrainRegion'
 
 %%% ¡prop!
-BS (data, item) contains the brain surface of the brain atlas.
+SURF (data, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
 

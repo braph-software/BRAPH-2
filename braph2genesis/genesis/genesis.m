@@ -46,23 +46,27 @@ disp('¡! created target dir')
 mkdir([target_dir fp 'src' fp 'util'])
 mkdir([target_dir fp 'src' fp 'ds'])
 mkdir([target_dir fp 'src' fp 'atlas'])
-mkdir([target_dir fp 'brainsurfs'])
-% mkdir([target_dir fp 'src' fp 'cohort'])
-% mkdir([target_dir fp 'src' fp 'analysis'])
+mkdir([target_dir fp 'src' fp 'cohort'])
+mkdir([target_dir fp 'src' fp 'analysis'])
 mkdir([target_dir fp 'src' fp 'gt'])
 
 disp('¡! created dir structure - SRC')
 
-% % graphs
-% mkdir([target_dir fp 'graphs'])
-% 
-% disp('¡! created dir structure - GRAPHS')
-% 
-% % measures
-% mkdir([target_dir fp 'measures'])
-% 
-% disp('¡! created dir structure - MEASURES')
-% 
+% brainsurfs
+mkdir([target_dir fp 'brainsurfs'])
+
+disp('¡! created dir structure - BRAINGRAPHS')
+
+% graphs
+mkdir([target_dir fp 'graphs'])
+
+disp('¡! created dir structure - GRAPHS')
+
+% measures
+mkdir([target_dir fp 'measures'])
+
+disp('¡! created dir structure - MEASURES')
+
 % % workflows
 % mkdir([target_dir fp 'workflows'])
 % mkdir([target_dir fp 'workflows' fp 'structural'])
@@ -104,24 +108,6 @@ copyfile([source_dir fp 'src' fp 'ds' fp 'Element.m'], [target_dir fp 'src' fp '
 copyfile([source_dir fp 'src' fp 'ds' fp 'test_Element.m'], [target_dir fp 'src' fp 'ds' fp 'test_Element.m'])
 disp('¡! copied ready files - ds')
 
-copyfile([source_dir fp 'brainsurfs' fp 'human_Cerebellum.nv'], [target_dir fp 'brainsurfs' fp 'Human_Cerebellum.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_Ch2_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'Human_Ch2_smoothed.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_Ch2.nv'], [target_dir fp 'brainsurfs' fp 'Human_Ch2.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_Ch2withCerebellum.nv'], [target_dir fp 'brainsurfs' fp 'Human_Ch2withCerebellum.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152_smoothed.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152_smoothed_tal.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152_smoothed_tal.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152_tal.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152_tal.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152Left.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152Left.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152Left_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152Left_smoothed.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152Right.nv'], [target_dir fp 'brainsurfs' fp 'Human_ICBM152Right.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'ferret.nv'], [target_dir fp 'brainsurfs' fp 'ferret.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'human.nv'], [target_dir fp 'brainsurfs' fp 'human.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'macaque.nv'], [target_dir fp 'brainsurfs' fp 'macaque.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'mouse.nv'], [target_dir fp 'brainsurfs' fp 'mouse.nv'])
-copyfile([source_dir fp 'brainsurfs' fp 'rat.nv'], [target_dir fp 'brainsurfs' fp 'rat.nv'])
-disp('¡! copied ready files - brainsurf')
-
 copyfile([source_dir fp 'src' fp 'gt' fp 'histogram.m'], [target_dir fp 'src' fp 'gt' fp 'histogram.m'])
 copyfile([source_dir fp 'src' fp 'gt' fp 'binarize.m'], [target_dir fp 'src' fp 'gt' fp 'binarize.m'])
 copyfile([source_dir fp 'src' fp 'gt' fp 'test_binarize.m'], [target_dir fp 'src' fp 'gt' fp 'test_binarize.m'])
@@ -152,6 +138,26 @@ disp('¡! copied ready files - gt')
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'quantiles.m'])
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'])
 % disp('¡! copied ready files - analysis')
+
+disp(' ')
+
+copyfile([source_dir fp 'brainsurfs' fp 'human_Cerebellum.nv'], [target_dir fp 'brainsurfs' fp 'human_Cerebellum.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_Ch2_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'human_Ch2_smoothed.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_Ch2.nv'], [target_dir fp 'brainsurfs' fp 'human_Ch2.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_Ch2withCerebellum.nv'], [target_dir fp 'brainsurfs' fp 'human_Ch2withCerebellum.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'human_ICBM152_smoothed.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152_smoothed_tal.nv'], [target_dir fp 'brainsurfs' fp 'human_ICBM152_smoothed_tal.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152_tal.nv'], [target_dir fp 'brainsurfs' fp 'human_ICBM152_tal.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152.nv'], [target_dir fp 'brainsurfs' fp 'human_ICBM152.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152Left.nv'], [target_dir fp 'brainsurfs' fp 'human_ICBM152Left.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152Left_smoothed.nv'], [target_dir fp 'brainsurfs' fp 'human_ICBM152Left_smoothed.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human_ICBM152Right.nv'], [target_dir fp 'brainsurfs' fp 'human_ICBM152Right.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'ferret.nv'], [target_dir fp 'brainsurfs' fp 'ferret.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'human.nv'], [target_dir fp 'brainsurfs' fp 'human.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'macaque.nv'], [target_dir fp 'brainsurfs' fp 'macaque.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'mouse.nv'], [target_dir fp 'brainsurfs' fp 'mouse.nv'])
+copyfile([source_dir fp 'brainsurfs' fp 'rat.nv'], [target_dir fp 'brainsurfs' fp 'rat.nv'])
+disp('¡! copied ready files - brainsurf')
 
 disp(' ')
 

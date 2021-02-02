@@ -9,7 +9,7 @@ BrainRegions (column 3-5; coordinates x, y, z, one per column) and
 BrainAtlas NOTES (column 6).
 
 %%% ¡seealso!
-Element, Importer, ExporterBrainAtlasXLS, ImporterBrainAtlasTXT.
+Element, Importer, ExporterBrainAtlasXLS.
 
 %% ¡props!
 

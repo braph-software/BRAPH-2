@@ -5,7 +5,7 @@ ImporterBrainSurfaceNV < Importer (im, importer of brain surface from NV) import
 ImporterBrainSurfaceNV imports a brain surface from a NV file.
 
 %%% ¡seealso!
-Element, Importer, ExporterBrainAtlasTXT, ImporterBrainAtlasXLS.
+Element, Importer.
 
 %% ¡props!
 
@@ -16,8 +16,6 @@ FILE (data, string) is the NV file from where to load the brain atlas.
 BS (result, item) is a brain surface.
 %%%% ¡settings!
 'BrainSurface'
-%%%% ¡default!
-BrainSurface()
 
 %%%% ¡calculate!
 % creates empty BrainSurface

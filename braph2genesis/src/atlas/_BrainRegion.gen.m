@@ -8,7 +8,7 @@ BrainRegion contains and manages the id, label, x coordinate, y
 coordinate, and z coordinate of a brain region. 
     
 %%% ¡seealso!
-Element, BrainAtlas
+Element, BrainAtlas, BrainSurface
 
 %% ¡props!
 
@@ -37,6 +37,7 @@ Z (data, scalar) is the z-coordinate of the brain region.
 Basic functions
 %%%% ¡code!
 br = BrainRegion('ID', 'BR1', 'LABEL', 'brain region', 'Notes', 'Notes on brain region.', 'X', -1, 'Y', -2, 'Z', -3);
+
 assert(ischar(br.tostring()), ...
     [BRAPH2.STR ':BrainRegion:' BRAPH2.WRONG_OUTPUT], ...
     'BrainRegion.tostring() must return a string.')
