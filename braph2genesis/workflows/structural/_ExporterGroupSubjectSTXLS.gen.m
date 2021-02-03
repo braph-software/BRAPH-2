@@ -10,7 +10,7 @@ ExporterGroupSubjectSTXLS exports a group of subjects with structural data to an
 GR (data, item) is a group of subjects with structural data.
 %%%% ¡settings!
 'Group'
-%%%% ¡check!
+%%%% ¡check_value!
 check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectST', [], [], true))); % Format.checkFormat(Format.ITEM, value, 'Group') already checked
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'))

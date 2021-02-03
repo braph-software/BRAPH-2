@@ -22,7 +22,7 @@ BrainAtlas()
 GR (result, item) is a group of subjects with structural data.
 %%%% ¡settings!
 'Group'
-%%%% ¡check!
+%%%% ¡check_value!
 check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectST', [], [], true))); % Format.checkFormat(Format.ITEM, value, 'Group') already checked
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'))
@@ -34,7 +34,7 @@ gr = Group( ...
     );
 
 % analyzes file
-file = im.get('FILE');
+file = im.memorize('FILE');
 if isfile(file)
     [~, ~, raw] = xlsread(file);
 
@@ -51,13 +51,17 @@ if isfile(file)
     br_number = size(raw, 2) - 3;
     if ba.get('BR_DICT').length ~= br_number
         ba = BrainAtlas();
+        idict = ba.get('BR_DICT');
         for j = 4:1:length(raw)
             br_id = raw{1, j};
             br = BrainRegion('ID', br_id);
-            ba.get('BR_DICT').add(br)
+            idict.add(br)
         end
+        ba.set('br_dict', idict);
     end
 
+    subdict = gr.get('SUB_DICT');
+    
     % adds subjects
     for i = 2:1:size(raw, 1)
         ST = zeros(br_number, 1);
@@ -71,8 +75,9 @@ if isfile(file)
             'BA', ba, ...
             'ST', ST ...
         );
-        gr.get('SUB_DICT').add(sub);
+        subdict.add(sub);
     end
+    gr.set('sub_dict', subdict);
 end
 
 value = gr;
