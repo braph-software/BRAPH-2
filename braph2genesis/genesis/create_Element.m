@@ -79,7 +79,7 @@ function create_Element(generator_file, target_dir)
 % Constants.
 % 
 %<strong>%% ¡properties!</strong>
-% Properties (protected).
+% Properties (private).
 % 
 %<strong>%% ¡staticmethods!</strong>
 % Static methods written as functions including the relative documentation.
@@ -335,7 +335,7 @@ generate_properties()
         if numel(properties) == 1 && isempty(properties{1})
             return
         end
-        g(1, 'properties (Access = protected) % element properties')
+        g(1, 'properties (Access = private) % element properties')
             gs(2, properties)
         g(1, 'end')
     end
