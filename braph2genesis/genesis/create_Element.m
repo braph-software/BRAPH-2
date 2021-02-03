@@ -78,6 +78,9 @@ function create_Element(generator_file, target_dir)
 %<strong>%% ¡constants!</strong>
 % Constants.
 % 
+%<strong>%% ¡properties!</strong>
+% Properties (protected).
+% 
 %<strong>%% ¡staticmethods!</strong>
 % Static methods written as functions including the relative documentation.
 % 
@@ -188,6 +191,8 @@ disp('¡! generator file read')
     end
 
 constants = splitlines(getToken(txt, 'constants'));
+
+properties = splitlines(getToken(txt, 'properties'));
 
 staticmethods = splitlines(getToken(txt, 'staticmethods'));
 
@@ -322,6 +327,16 @@ generate_constants()
         end
         g(1, 'properties (Constant) % constants')
             gs(2, constants)
+        g(1, 'end')
+    end
+
+generate_properties()
+    function generate_properties()
+        if numel(properties) == 1 && isempty(properties{1})
+            return
+        end
+        g(1, 'properties (Access = protected) % element properties')
+            gs(2, properties)
         g(1, 'end')
     end
 
