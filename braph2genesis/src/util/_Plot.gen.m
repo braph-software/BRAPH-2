@@ -2,8 +2,11 @@
 Plot < Element (pl, plot) is a plot.
 
 %%% ¡description!
-Base element to manage graphic plots. It permits to manage the handle of 
-a uipanel using the methods pl.setPanel(h) and h = getPanel(pl).
+Base element to the uipanel that contains all graphical elements. 
+Basic commands:
+pl = Plot(''PLOT'', h) to create a plot for uipanel h.
+pl.set(''PLOT'', h) to change the uipanel. 
+pl.get(''PLOT'') to visualize the uipanel.
 
 %%% ¡seealso!
 uipanel, ishandle
@@ -14,10 +17,10 @@ h % panel graphical handle
 %% ¡props!
 
 %%% ¡prop!
-Plot (result, empty) is an empty property to plot.
+PLOT (result, empty) is an empty property to plot.
 %%%% ¡conditioning!
 if isgraphics(value, 'uipanel')
-    pl.h = h;
+    pl.h = value;
 end
 
 value = NoValue.getNoValue();
@@ -62,7 +65,19 @@ value = [];
 
 %%% ¡test!
 %%%% ¡name!
+Close figure
+%%%% ¡code!
+close(gcf)
+
+%%% ¡test!
+%%%% ¡name!
 Basics
 %%%% ¡code!
-pl = Plot();
-pl.get('PLOT');
+fig = figure();
+
+pl1 = Plot();
+pl1.get('PLOT');
+
+pl2 = Plot('PLOT', uipanel('Units', 'normalized', 'Position', [.25 .25 .50 .50]));
+
+close(fig)
