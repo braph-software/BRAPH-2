@@ -26,6 +26,13 @@ VERTEX_NUMBER (data, scalar) is the number of triangles vertices.
 
 %%% ¡prop!
 COORDINATES (data, matrix) is the coordinates of the triangles vertices.
+%%%% ¡check_value!
+check = isequal(bs.get('VERTEX_NUMBER'), size(value, 1)) 
+if check 
+    msg = 'All ok!';
+else
+    msg = [' ''COORDINATES'' must have ' bs.get('VERTEX_NUMBER') ' rows while it has ' size(bs.get('COORDINATES'), 1) '.'];
+end
 
 %%% ¡prop!
 TRIANGLES_NUMBER (data, scalar) is the number of triangles.
