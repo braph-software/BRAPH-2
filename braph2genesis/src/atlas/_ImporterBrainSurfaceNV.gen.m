@@ -13,16 +13,15 @@ Element, Importer.
 FILE (data, string) is the NV file from where to load the brain atlas.
 
 %%% ¡prop!
-BS (result, item) is a brain surface.
+SURF (result, item) is a brain surface.
 %%%% ¡settings!
 'BrainSurface'
-
 %%%% ¡calculate!
 % creates empty BrainSurface
 bs = BrainSurface();
 
 % analyzes file
-file = im.get('FILE');
+file = [fileparts(which('braph2')) filesep 'brainsurfs' filesep im.get('FILE')];
 if isfile(file)
     fid = fopen(file);
     vertex_number = fscanf(fid, '%f', 1);
@@ -45,10 +44,11 @@ value = bs;
 
 %% ¡methods!
 function uigetfile(im)
-% UIGETFILE opens a dialog box to set the NV file where to save the brain atlas.
-[filename, filepath, filterindex] = uigetfile('*.nv', 'Select NV file');
-if filterindex
-    file = [filepath filename];
-    im.set('FILE', file);
-end
+    % UIGETFILE opens a dialog box to set the NV file where to save the brain atlas.
+
+    [filename, filepath, filterindex] = uigetfile('*.nv', 'Select NV file');
+    if filterindex
+        file = [filepath filename];
+        im.set('FILE', file);
+    end
 end
