@@ -18,13 +18,10 @@ SURF (metadata, item) is the brain surface to be plotted.
 
 %%% ¡test!
 %%%% ¡name!
-Basic use
+Basics
 %%%% ¡code!
 pl = PlotBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 
-
-% pbs = PlotBrainSurf(bs);
-% 
 % pbs.set_axes()
 % h = pbs.get_axes();
 % 
