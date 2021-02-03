@@ -19,15 +19,15 @@ directories_to_test = { ...
     [braph2_dir filesep 'measures'] ...
     };
 
-% workflows_dir = [fileparts(which('braph2')) filesep 'workflows'];
-% 
-% addpath(workflows_dir)
-% workflows_dir_list = dir(workflows_dir);   % get the folder contents
-% workflows_dir_list = workflows_dir_list([workflows_dir_list(:).isdir] == 1);  % remove all files (isdir property is 0)
-% workflows_dir_list = workflows_dir_list(~ismember({workflows_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
-% for i = 1:1:length(workflows_dir_list)
-%     directories_to_test{end + 1} = [workflows_dir filesep workflows_dir_list(i).name]; %#ok<SAGROW>
-% end
+workflows_dir = [fileparts(which('braph2')) filesep 'workflows'];
+
+addpath(workflows_dir)
+workflows_dir_list = dir(workflows_dir);   % get the folder contents
+workflows_dir_list = workflows_dir_list([workflows_dir_list(:).isdir] == 1);  % remove all files (isdir property is 0)
+workflows_dir_list = workflows_dir_list(~ismember({workflows_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+for i = 1:1:length(workflows_dir_list)
+    directories_to_test{end + 1} = [workflows_dir filesep workflows_dir_list(i).name]; %#ok<SAGROW>
+end
 
 clear braph2_dir workflows_dir workflows_dir_list i
 
