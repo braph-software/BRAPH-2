@@ -7,6 +7,16 @@ PlotBrainSurface < Plot (pl, plot brain surface) is a plot of a brain surfce.
 %%% ¡seealso!
 Plot, BrainSurface
 
+%% ¡properties!
+h_axes % handle for the axes
+
+%% ¡props_update!
+
+%%% ¡prop!
+PLOT (result, empty) is an empty property to plot.
+%%%% ¡calculate!
+value = calculateValue@Plot(pl, prop);
+
 %% ¡props!
 
 %%% ¡prop!
