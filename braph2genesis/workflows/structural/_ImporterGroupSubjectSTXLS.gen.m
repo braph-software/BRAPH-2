@@ -3,6 +3,12 @@ ImporterGroupSubjectSTXLS < Importer (im, importer of ST subject group from XLS/
 
 %%% ¡description!
 ImporterGroupSubjectSTXLS imports a group of subjects with structural data from an XLS/XLSX file.
+The XLS/XLSX file consists of 6 columns. It reads as follows: 
+Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
+BrainRegions (column 4-end; one brainregion value per column).
+
+%%% ¡seealso!
+Element, Importer, ExporterGroupSubjectSTXLS.
 
 %% ¡props!
 

@@ -5,6 +5,9 @@ SubjectST < Subject (sub, subject with structural data) is a subject with struct
 Subject with structural data (such as cortical thickness) for each brain region.
 For example, structural data can be structural MRI.
 
+%%% ¡seealso!
+Element, Subject
+
 %% ¡props!
 
 %%% ¡prop!

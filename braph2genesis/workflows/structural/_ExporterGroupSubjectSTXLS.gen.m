@@ -4,6 +4,9 @@ ExporterGroupSubjectSTXLS < Exporter (ex, exporter of ST subject group in XLS/XL
 %%% ¡description!
 ExporterGroupSubjectSTXLS exports a group of subjects with structural data to an XLSX file.
 
+%%% ¡seealso!
+Element, Exporter, ImporterGroupSubjectSTXLS.
+
 %% ¡props!
 
 %%% ¡prop!
