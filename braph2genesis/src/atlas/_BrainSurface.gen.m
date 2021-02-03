@@ -31,7 +31,7 @@ check = isequal(bs.get('VERTEX_NUMBER'), size(value, 1))
 if check 
     msg = 'All ok!';
 else
-    msg = [' ''COORDINATES'' must have ' bs.get('VERTEX_NUMBER') ' rows while it has ' size(bs.get('COORDINATES'), 1) '.'];
+    msg = ['''COORDINATES'' must have ' num2str(bs.get('VERTEX_NUMBER')) ' rows while it has ' num2str(size(bs.get('COORDINATES'), 1)) '.'];
 end
 
 %%% ¡prop!
@@ -39,4 +39,10 @@ TRIANGLES_NUMBER (data, scalar) is the number of triangles.
 
 %%% ¡prop!
 TRIANGLES (data, matrix) is the triad of vertex identifiers to create a triangle.
-
+%%%% ¡check_value!
+check = isequal(bs.get('TRIANGLES_NUMBER'), size(value, 1)) 
+if check 
+    msg = 'All ok!';
+else
+    msg = ['''TRIANGLES'' must have ' num2str(bs.get('TRIANGLES_NUMBER')) ' rows while it has ' num2str(size(bs.get('TRIANGLES'), 1)) '.'];
+end
