@@ -16,7 +16,7 @@ ba_loaded = im.get('BA');
 
 disp(['Loaded BrainAtlas: ' ba_loaded.tostring()])
 
-%% Load ST Subject Data for group 1
+%% Load ST Subject Data for group 1 from XLSX
 [file, path, filterindex] = uigetfile('.xlsx');
 if filterindex
     group1_file = fullfile(path, file);
@@ -33,7 +33,7 @@ gr_loaded1 = im1.get('GR');
 
 disp(['Loaded Group 1: ' gr_loaded1.tostring()])
 
-%% Load ST Subject Data for group 2 into the same cohort
+%% Load ST Subject Data for group 2 from XLSX
 [file, path, filterindex] = uigetfile('.xlsx');
 if filterindex
     group2_file = fullfile(path, file);    

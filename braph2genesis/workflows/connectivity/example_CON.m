@@ -42,7 +42,7 @@ im1 = ImporterGroupSubjectFUNXLS('DIRECTORY', group1_file, 'BA', ba_loaded);
 gr_loaded1 = im1.get('GR');
 disp(['Loaded Group 1: ' gr_loaded1.tostring()])
 
-%% Load CON Subject Data for group 2 into the same cohort
+%% Load CON Subject Data for group 2 
 [file, path, filterindex] = uigetfile('.xlsx');
 if filterindex
     group2_file = fullfile(path, file);    
