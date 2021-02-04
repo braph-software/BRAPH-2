@@ -7,14 +7,14 @@ clear
 if filterindex
     atlas_file = fullfile(path, file);
 else
-    atlas_file = [fileparts(which('example_workflow_FUN.m')) filesep() 'example data FUN (fMRI)' filesep() 'desikan_atlas.xlsx'];
+    atlas_file = [fileparts(which('example_FUN.m')) filesep() 'example data FUN (fMRI)' filesep() 'desikan_atlas.xlsx'];
 end
 clear file filterindex path
 
-atlas_imp = ImporterBrainAtlasXLS('File', atlas_file);
-atlas = atlas_imp.get('BA');
+im = ImporterBrainAtlasXLS('File', atlas_file);
+ba_loaded = im.get('BA');
 
-disp(['Loaded BrainAtlas: ' atlas.tostring()])
+disp(['Loaded BrainAtlas: ' ba_loaded.tostring()])
 %%
 sub_class = 'SubjectFUN';
 input_rule = 'FUN';
@@ -77,7 +77,7 @@ ex.get('SAVE');
 if filterindex
     group1_file = fullfile(path, file);
 else
-    group1_file = [fileparts(which('example_workflow_FNC_WU.m')) filesep() 'example data FNC (fMRI)'  filesep() 'txt' filesep() 'GroupName1'];
+    group1_file = [fileparts(which('example_FUN.m')) filesep() 'example data FNC (fMRI)'  filesep() 'xls' filesep() 'GroupName1'];
 end
 clear file path filterindex;
 
