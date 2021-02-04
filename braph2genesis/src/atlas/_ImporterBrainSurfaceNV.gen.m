@@ -21,7 +21,7 @@ SURF (result, item) is a brain surface.
 bs = BrainSurface();
 
 % analyzes file
-file = [fileparts(which('braph2')) filesep 'brainsurfs' filesep im.get('FILE')];
+file = im.get('FILE');
 if isfile(file)
     fid = fopen(file);
     vertex_number = fscanf(fid, '%f', 1);
