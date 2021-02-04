@@ -11,6 +11,10 @@ Element, Importer.
 
 %%% ¡prop!
 FILE (data, string) is the NV file from where to load the brain atlas.
+%%%% ¡!
+if ~isfile(value)
+    value = [fileparts(which('braph2')) filesep 'brainsurfs' filesep value];
+end
 
 %%% ¡prop!
 SURF (result, item) is a brain surface.
