@@ -44,7 +44,7 @@ Basics
 %%%% ¡code!
 fig = figure();
 
-pl = PlotBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', [fileparts(which('braph2')) filesep 'brainsurfs' filesep 'human_ICBM152.nv']).get('SURF'));
+pl = PlotBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 pl.setPanel(uipanel('Units', 'normalized', 'Position', [.1 .1 .8 .8]));
 h = pl.getPanel();
 
