@@ -40,7 +40,7 @@ TRIANGLES_NUMBER (data, scalar) is the number of triangles.
 %%% ¡prop!
 TRIANGLES (data, matrix) is the triad of coordinates identifiers to create a triangle.
 %%%% ¡check_value!
-check = isequal(bs.get('TRIANGLES_NUMBER'), size(value, 1)) && all(all(value <= bs.get('VERTEX_NUMBER')) && all(all(value > 0)
+check = isequal(bs.get('TRIANGLES_NUMBER'), size(value, 1)) && all(all(value <= bs.get('VERTEX_NUMBER'))) && all(all(value > 0))
 if check 
     msg = 'All ok!';
 else
