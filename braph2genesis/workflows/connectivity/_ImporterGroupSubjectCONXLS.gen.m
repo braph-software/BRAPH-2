@@ -4,6 +4,9 @@ ImporterGroupSubjectCONXLS < Importer (im, importer of CON subject group from XL
 %%% ¡description!
 ImporterGroupSubjectCONXLS imports a group of subjects with connectivity data from a series of XLS/XLSX file.
 
+%%% ¡seealso!
+Element, Importer, ExporterGroupSubjectCONXLS.
+
 %% ¡props!
 
 %%% ¡prop!
@@ -13,14 +16,12 @@ DIRECTORY (data, string) is the directory containing the CON subject group files
 BA (data, item) is a brain atlas.
 %%%% ¡settings!
 'BrainAtlas'
-%%%% ¡default!
-BrainAtlas()
 
 %%% ¡prop!
 GR (result, item) is a group of subjects with connectivity data.
 %%%% ¡settings!
 'Group'
-%%%% ¡check!
+%%%% ¡check_value!
 check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON', [], [], true))); % Format.checkFormat(Format.ITEM, value, 'Group') already checked
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'))
@@ -52,13 +53,17 @@ if isfolder(directory)
         br_number = size(xlsread(fullfile(directory, files(1).name)), 1);
         if ba.get('BR_DICT').length ~= br_number
             ba = BrainAtlas();
+            idict = ba.get('BR_DICT');
             for j = 1:1:br_number
                 br_id = ['br' int2str(j)];
                 br = BrainRegion('ID', br_id);
-                ba.get('BR_DICT').add(br)
+                idict.add(br)
             end
+            ba.set('br_dict', idict);
         end
 
+        subdict = gr.get('SUB_DICT');
+        
         % adds subjects
         for i = 1:1:length(files)
             % read file
@@ -69,8 +74,9 @@ if isfolder(directory)
                 'BA', ba, ...
                 'CON', CON ...
             );
-            gr.get('SUB_DICT').add(sub);
+            subdict.add(sub);
         end
+        gr.set('sub_dict', subdict);
     end
 end
 
