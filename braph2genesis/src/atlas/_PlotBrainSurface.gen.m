@@ -175,12 +175,13 @@ jet
 %% ¡methods!
 function h_panel = draw(pl, varargin)
 
-    h_panel = draw@Plot(pl, varargin{:});
+    h = draw@Plot(pl, varargin{:});
 
     % axes
     if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
-        pl.h_axes = axes(h_panel);
+        pl.h_axes = axes(h);
     end
+    set(pl.h_axes, 'Color', pl.get('BKGCOLOR'))
     
     % brain
     if pl.get('BRAIN')
@@ -248,11 +249,11 @@ function h_panel = draw(pl, varargin)
     end
     
     % output
-    if nargout == 0
-        clear h_panel
+    if nargout > 0
+        h_panel = h;
     end
 end
-% function settings(pl)
+function f_settings = settings(pl, varargin)
 % %     % BRAIN_SETTINGS opens the GUI property editor
 % %     %
 % %     % BRAIN_SETTINGS(BS) allows the user to specify the properties
@@ -267,41 +268,25 @@ end
 % %     % FigName       -  name of the user interface
 % %     %
 % %     % See also brain, trisurf.
-% 
-% %     FigPosition = get_from_varargin([.70 .50 .40 .20], 'figposition', varargin);
-% %     FigColor = get_from_varargin(GUI.BKGCOLOR, 'figcolor', varargin);
-% %     FigName = get_from_varargin('Brain Surface Settings', 'figname', varargin);
-% 
-%     % create a figure
-%     if isempty(pl.f_brain_settings) || ~isgraphics(pl.f_brain_settings, 'figure')
-%         pl.f_brain_settings = uifigure('Visible', 'off');
-%     end
-%     f = bs.f_brain_settings;
-% %     set(f, 'units', 'normalized')
-% %     set(f, 'Position', FigPosition)
-% %     set(f, 'Color', FigColor)
-% %     set(f, 'Name', FigName)
-% %     set(f, 'MenuBar', 'none')
-% %     set(f, 'Toolbar', 'none')
-% %     set(f, 'NumberTitle', 'off')
-% %     set(f, 'DockControls', 'off')
-% % 
-% %     % background color
-% %     ui_button_backgroundcolor = uicontrol(f, 'Style', 'pushbutton');
-% %     set(ui_button_backgroundcolor, 'Units','normalized')
-% %     set(ui_button_backgroundcolor, 'Position', [.05 .80 .20 .20])
-% %     set(ui_button_backgroundcolor, 'String', 'background color')
-% %     set(ui_button_backgroundcolor, 'HorizontalAlignment', 'center')
-% %     set(ui_button_backgroundcolor, 'TooltipString', 'Image background color')
-% %     set(ui_button_backgroundcolor, 'Callback', {@cb_backgroundcolor})
-% % 
-% %     function cb_backgroundcolor(~, ~)  % (src, event)
-% %         color = uisetcolor;
-% %         if length(color) == 3
-% %             set(bs.get_axes(), 'Color', color)
-% %         end
-% %     end
-% % 
+
+    f = settings@Plot(pl, varargin{:})
+
+    % background color
+    ui_button_backgroundcolor = uicontrol(f, 'Style', 'pushbutton', ...
+        'Units','normalized', ...
+        'Position', [.05 .80 .20 .20], ...
+        'String', 'background color', ...
+        'HorizontalAlignment', 'center', ...
+        'TooltipString', 'Image background color', ...
+        'Callback', {@cb_backgroundcolor})
+    function cb_backgroundcolor(~, ~) % (src, event)
+        color = uisetcolor;
+        if length(color) == 3
+            pl.set('BKGCOLOR', color)
+            pl.draw()
+        end
+    end
+
 % %     % brain color and transparency
 % %     ui_text_transparency = uicontrol(f, 'Style', 'text');
 % %     set(ui_text_transparency, 'Units', 'normalized')
@@ -508,9 +493,12 @@ end
 % %         str = ui_popup_colormap.String;
 % %         bs.colormap(str{val});
 % %     end
-% 
-%     set(f, 'Visible', 'on')
-% end
+
+    % output
+    if nargout > 0
+        f_settings = f;
+    end
+end
 
 %% ¡tests!
 
