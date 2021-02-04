@@ -184,19 +184,19 @@ for i = 11:1:20
 end
 disp('¡! copied ready files - workflow functional')
 
-% copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'])
-% mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)'])
-% copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'])
-% mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls'])
-% mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1'])
-% for i = 1:1:5
-%     copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1' fp 'SubjectID' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1' fp 'SubjectID' int2str(i) '.xlsx'])
-% end
-% mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2'])
-% for i = 1:1:5
-%     copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'])
-% end
-% disp('¡! copied ready files - workflow connectivity')
+%copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'])
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)'])
+copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'])
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls'])
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1'])
+for i = 1:1:5
+    copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1' fp 'SubjectID' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1' fp 'SubjectID' int2str(i) '.xlsx'])
+end
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2'])
+for i = 1:1:5
+    copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'])
+end
+disp('¡! copied ready files - workflow connectivity')
 
 disp(' ')
 
@@ -267,11 +267,11 @@ for run = 1:1:run_number
     for i = 1:1:numel(wf_functional_gen_list)
         create_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
     end
-    % 
-    % wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
-    % for i = 1:1:numel(wf_connectivity_gen_list)
-    %     create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
-    % end
+    
+    wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
+    for i = 1:1:numel(wf_connectivity_gen_list)
+        create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
+    end
     
     % LOAD BRAPH2
     addpath(target_dir)
@@ -338,10 +338,10 @@ wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional
 for i = 1:1:numel(wf_functional_gen_list)
     create_test_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
 end
-% 
-% wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
-% for i = 1:1:numel(wf_connectivity_gen_list)
-%     create_test_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
-% end
+
+wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
+for i = 1:1:numel(wf_connectivity_gen_list)
+    create_test_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
+end
 
 end
