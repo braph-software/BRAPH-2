@@ -38,15 +38,15 @@ end
 TRIANGLES_NUMBER (data, scalar) is the number of triangles.
 
 %%% ¡prop!
-TRIANGLES (data, matrix) is the triad of vertex identifiers to create a triangle.
+TRIANGLES (data, matrix) is the triad of coordinates identifiers to create a triangle.
 %%%% ¡check_value!
-check = isequal(bs.get('TRIANGLES_NUMBER'), size(value, 1)) && size(value, 1)*size(value, 2) >= bs.get('VERTEX_NUMBER') 
+check = isequal(bs.get('TRIANGLES_NUMBER'), size(value, 1)) && all(all(value <= bs.get('VERTEX_NUMBER')) && all(all(value > 0)
 if check 
     msg = 'All ok!';
 else
     msg = [ ...
         '''TRIANGLES'' must have ' num2str(bs.get('TRIANGLES_NUMBER')) ' rows while it has ' num2str(size(bs.get('TRIANGLES'), 1)) '.' ...
-        '''TRIANGLES'' must have more or the same number of vertex than "VERTEX_NUMBER" (' num2str(bs.get('VERTEX_NUMBER')) ') ' ...
-        'while it has ' num2str(size(bs.get('TRIANGLES'), 1)*size(bs.get('TRIANGLES'), 2)) '.' ...
+        'The identifiers in ''TRIANGLES'' must be greater than 0 and smaller or equal to the "VERTEX_NUMBER" (' num2str(bs.get('VERTEX_NUMBER')) ') ' ...
+        'while they are ' num2str(bs.get('TRIANGLES')) '.' ...
         ];
 end
