@@ -5,16 +5,14 @@ ImporterBrainSurfaceNV < Importer (im, importer of brain surface from NV) import
 ImporterBrainSurfaceNV imports a brain surface from a NV file.
 
 %%% ¡seealso!
-Element, Importer.
+Element, Importer, BrainSurface.
 
 %% ¡props!
 
 %%% ¡prop!
 FILE (data, string) is the NV file from where to load the brain atlas.
-%%%% ¡!
-if ~isfile(value)
-    value = [fileparts(which('braph2')) filesep 'brainsurfs' filesep value];
-end
+%%%% ¡default!
+'human_ICBM152.nv'
 
 %%% ¡prop!
 SURF (result, item) is a brain surface.
@@ -26,6 +24,10 @@ bs = BrainSurface();
 
 % analyzes file
 file = im.get('FILE');
+if ~isfile(file)
+    file = [fileparts(which('braph2')) filesep 'brainsurfs' filesep file];
+end
+
 if isfile(file)
     fid = fopen(file);
     vertex_number = fscanf(fid, '%f', 1);

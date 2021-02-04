@@ -8,17 +8,17 @@ Plot < Element (pl, plot) is a plot.
 uipanel, ishandle
 
 %% ¡properties!
-h % panel graphical handle
+h_panel % panel graphical handle
 
 %% ¡methods!
-function h = draw(pl, varargin)
+function h_panel = draw(pl, varargin)
 
-    if isempty(pl.h) || ~isgraphics(pl.h, 'uipanel')
-        h = uipanel(varargin{:});
+    if isempty(pl.h_panel) || ~isgraphics(pl.h_panel, 'uipanel')
+        pl.h_panel = uipanel(varargin{:});
     end
     
-    if nargout == 0
-        clear h
+    if nargout > 0
+        h_panel = pl.h_panel;
     end
 end
 % function setPanel(pl, h)
