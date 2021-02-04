@@ -2,16 +2,28 @@
 Plot < Element (pl, plot) is a plot.
 
 %%% ¡description!
-...
+Plot is the basic element to manage graphical representations of elements.
+It is an empty graphical panel, which should be filled by derived element.
 
 %%% ¡seealso!
-uipanel, ishandle
+uipanel, ishandle, isgraphics
 
 %% ¡properties!
 h_panel % panel graphical handle
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
+    %DRAW draws the graphical panel.
+    %
+    % DRAW(PL) draws the graphical panel.
+    %
+    % H = DRAW(PL) returns a handle to the graphical panel.
+    %
+    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom property-value couples.
+    %  All standard plot properties of uipanel can be used.
+    %
+    % see also uipanel, ishandle, isgraphics.
 
     if isempty(pl.h_panel) || ~isgraphics(pl.h_panel, 'uipanel')
         pl.h_panel = uipanel(varargin{:});
