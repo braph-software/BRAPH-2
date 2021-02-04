@@ -1,16 +1,16 @@
 %% ¡header!
-ImporterGroupSubjectFUNTXT < Importer (im, importer of FUN subject group from TXT) imports a group of subjects with connectivity data from a series of TXT file.
+ImporterGroupSubjectCONTXT < Importer (im, importer of CON subject group from TXT) imports a group of subjects with connectivity data from a series of TXT file.
 
 %%% ¡description!
-ImporterGroupSubjectFUNTXT imports a group of subjects with connectivity data from a series of TXT file.
+ImporterGroupSubjectCONTXT imports a group of subjects with connectivity data from a series of TXT file.
 
 %%% ¡seealso!
-Element, Importer, ExporterGroupSubjectFUNTXT.
+Element, Importer, ExporterGroupSubjectCONTXT.
 
 %% ¡props!
 
 %%% ¡prop!
-DIRECTORY (data, string) is the directory containing the FUN subject group files from which to load the subject group.
+DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -18,18 +18,18 @@ BA (data, item) is a brain atlas.
 'BrainAtlas'
 
 %%% ¡prop!
-GR (result, item) is a group of subjects with functional data.
+GR (result, item) is a group of subjects with connectivity data.
 %%%% ¡settings!
 'Group'
 %%%% ¡check_value!
-check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectFUN', [], [], true))); % Format.checkFormat(Format.ITEM, value, 'Group') already checked
+check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON', [], [], true))); % Format.checkFormat(Format.ITEM, value, 'Group') already checked
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'))
+Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'))
 %%%% ¡calculate!
 % creates empty Group
 gr = Group( ...
-    'SUB_CLASS', 'SubjectFUN', ...
-    'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN') ...
+    'SUB_CLASS', 'SubjectCON', ...
+    'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON') ...
     );
 
 directory = im.get('DIRECTORY');
@@ -66,12 +66,12 @@ if isfolder(directory)
         % adds subjects
         for i = 1:1:length(files)
             % read file
-            FUN = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
+            CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
             [~, sub_id] = fileparts(files(i).name);
-            sub = SubjectFUN( ...
+            sub = SubjectCON( ...
                 'ID', sub_id, ...
                 'BA', ba, ...
-                'FUN', FUN ...
+                'CON', CON ...
             );
             subdict.add(sub);
         end
@@ -83,7 +83,7 @@ value = gr;
 
 %% ¡methods!
 function uigetdir(im)
-    % UIGETDIR opens a dialog box to set the directory from where to load the TXT files of the FUN subject group.
+    % UIGETDIR opens a dialog box to set the directory from where to load the TXT files of the CON subject group.
 
     directory = uigetdir('Select directory');
     if isfolder(directory)

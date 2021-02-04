@@ -1,11 +1,11 @@
 %% ¡header!
-ExporterGroupSubjectCONXLS < Exporter (ex, exporter of CON subject group in XLS/XLSX) exports a group of subjects with connectivity data to a series of XLSX file.
+ExporterGroupSubjectCONTXT < Exporter (ex, exporter of CON subject group in TXT) exports a group of subjects with connectivity data to a series of TXT file.
 
 %%% ¡description!
-ExporterGroupSubjectCONXLS exports a group of subjects with connectivity data to a series of XLSX file.
+ExporterGroupSubjectCONTXT exports a group of subjects with connectivity data to a series of TXT file.
 
 %%% ¡seealso!
-Element, Exporter, ImporterGroupSubjectCONXLS.
+Element, Exporter, ImporterGroupSubjectCONTXT.
 
 %% ¡props!
 
@@ -24,7 +24,7 @@ DIRECTORY (data, string) is the directory name where to save the group of subjec
 fileparts(which('test_braph2'))
 
 %%% ¡prop!
-SAVE (result, empty) saves the group of subjects with connectivity data in XLS/XLSX files in the selected directory.
+SAVE (result, empty) saves the group of subjects with connectivity data in TXT files in the selected directory.
 %%%% ¡calculate!
 directory = ex.get('DIRECTORY');
 
