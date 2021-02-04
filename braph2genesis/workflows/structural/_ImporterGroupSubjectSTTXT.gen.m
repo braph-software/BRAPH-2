@@ -21,8 +21,6 @@ FILE (data, string) is the TXT file from where to load the ST subject group.
 BA (data, item) is a brain atlas.
 %%%% ¡settings!
 'BrainAtlas'
-%%%% ¡default!
-BrainAtlas()
 
 %%% ¡prop!
 GR (result, item) is a group of subjects with structural data.
