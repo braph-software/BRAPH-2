@@ -81,10 +81,7 @@ else
 end
 clear file path filterindex;
 
-im1 = ImporterGroupSubjectFUNXLS( ...
-    'DIRECTORY', group1_file, ...
-    'BA', ba_loaded ...
-    );
+im1 = ImporterGroupSubjectFUNXLS('DIRECTORY', group1_file, 'BA', ba_loaded);
 
 gr_loaded1 = im1.get('GR');
 
