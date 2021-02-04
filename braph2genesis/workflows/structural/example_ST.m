@@ -11,8 +11,7 @@ else
 end
 clear file filterindex path
 
-im = ImporterBrainAtlasXLS('FILE', atlas_file);
-ba_loaded = im.get('BA');
+ba_loaded = ImporterBrainAtlasXLS('FILE', atlas_file).get('BA');
 
 disp(['Loaded BrainAtlas: ' ba_loaded.tostring()])
 
@@ -25,11 +24,7 @@ else
 end
 clear file path filterindex;
 
-im1 = ImporterGroupSubjectSTXLS( ...
-    'FILE', group1_file, ...
-    'BA', ba_loaded ...
-    );
-gr_loaded1 = im1.get('GR');
+gr_loaded1 = ImporterGroupSubjectSTXLS('FILE', group1_file, 'BA', ba_loaded).get('GR');
 
 disp(['Loaded Group 1: ' gr_loaded1.tostring()])
 
@@ -42,11 +37,7 @@ else
 end
 clear file path filterindex;
 
-im2 = ImporterGroupSubjectSTXLS( ...
-    'FILE', group2_file, ...
-    'BA', ba_loaded ...
-    );
-gr_loaded2 = im2.get('GR');
+gr_loaded2 = ImporterGroupSubjectSTXLS('FILE', group2_file, 'BA', ba_loaded).get('GR');
 
 disp(['Loaded Group 2: ' gr_loaded2.tostring()])
 

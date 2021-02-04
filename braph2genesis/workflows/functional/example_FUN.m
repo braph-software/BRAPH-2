@@ -11,8 +11,7 @@ else
 end
 clear file filterindex path
 
-im = ImporterBrainAtlasXLS('File', atlas_file);
-ba_loaded = im.get('BA');
+ba_loaded = ImporterBrainAtlasXLS('File', atlas_file).get('BA');
 
 disp(['Loaded BrainAtlas: ' ba_loaded.tostring()])
 %%
@@ -72,7 +71,7 @@ ex = ExporterGroupSubjectFUNTXT( ...
 
 ex.get('SAVE');
 
-%% Load FNC Subject Data for group 1
+%% Load FNC Subject Data for group 1 from XLSX
 [file, path, filterindex] = uigetfile('.xlsx');
 if filterindex
     group1_file = fullfile(path, file);
@@ -81,13 +80,11 @@ else
 end
 clear file path filterindex;
 
-im1 = ImporterGroupSubjectFUNXLS('DIRECTORY', group1_file, 'BA', ba_loaded);
-
-gr_loaded1 = im1.get('GR');
+gr_loaded1 = ImporterGroupSubjectFUNXLS('DIRECTORY', group1_file, 'BA', ba_loaded).get('GR');
 
 disp(['Loaded Group 1: ' gr_loaded1.tostring()])
 
-%% Load FNC Subject Data for group 2
+%% Load FNC Subject Data for group 2 from XLSX
 [file, path, filterindex] = uigetfile('.xlsx');
 if filterindex
     group2_file = fullfile(path, file);
@@ -96,11 +93,6 @@ else
 end
 clear file path filterindex;
 
-im2 = ImporterGroupSubjectFUNXLS( ...
-    'DIRECTORY', group2_file, ...
-    'BA', ba_loaded ...
-    );
-
-gr_loaded2 = im2.get('GR');
+gr_loaded2 = ImporterGroupSubjectFUNXLS('DIRECTORY', group2_file, 'BA', ba_loaded).get('GR');
 
 disp(['Loaded Group 2: ' gr_loaded2.tostring()])
