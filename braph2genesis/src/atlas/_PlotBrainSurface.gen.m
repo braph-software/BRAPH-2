@@ -19,6 +19,11 @@ SURF (metadata, item) is the brain surface to be plotted.
 'BrainSurface'
 
 %%% ¡prop!
+LIGHTING (metadata, option) is the lighting.
+%%%% ¡settings!
+{'phong' 'none' 'flat' 'gouraud'}
+
+%%% ¡prop!
 BRAIN (metadata, logical) determines whether the brain surface is shown.
 %%%% ¡default!
 true
@@ -60,6 +65,7 @@ function h_panel = draw(pl, varargin)
     if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
         pl.h_axes = axes(h_panel);
     end
+    lighting(pl.h_axes, pl.get('LIGHTING'))
     
     % brain
     if pl.get('BRAIN')
