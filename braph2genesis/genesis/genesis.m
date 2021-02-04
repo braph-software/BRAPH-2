@@ -162,7 +162,7 @@ disp('¡! copied ready files - brainsurf')
 disp(' ')
 
 % workflows
-%copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST.m'])
+copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST.m'])
 mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)'])
 copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'])
 mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls'])
