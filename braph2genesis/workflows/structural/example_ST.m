@@ -11,9 +11,7 @@ else
 end
 clear file filterindex path
 
-im = ImporterBrainAtlasXLS( ...
-    'FILE', atlas_file ...
-    );
+im = ImporterBrainAtlasXLS('FILE', atlas_file);
 ba_loaded = im.get('BA');
 
 disp(['Loaded BrainAtlas: ' ba_loaded.tostring()])
