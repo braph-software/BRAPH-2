@@ -66,7 +66,7 @@ if isfolder(directory)
         % adds subjects
         for i = 1:1:length(files)
             % read file
-            FUN = readtable(fullfile(directory, files(i).name), 'Delimiter', '\t');
+            FUN = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
             [~, sub_id] = fileparts(files(i).name);
             sub = SubjectFUN( ...
                 'ID', sub_id, ...
