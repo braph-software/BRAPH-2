@@ -147,10 +147,10 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
         function bs = PlotBrainSurf(brain_surf, varargin)
             % PLOTBRAINSURF constructor 
             %
-            % PLOTBRAINSURF(BRAIN_SURF_FILE) construct the brain surface
+            % PLOTBRAINSURF(BRAIN_SURF) construct the brain surface
             % object, with default settings.
             %            
-            % PLOTBRAINSURF(BRAIN_SURF_FILE, 'Property', VALUE, ...) construct
+            % PLOTBRAINSURF(BRAIN_SURF, 'Property', VALUE, ...) construct
             % the brain surface object with custom property-value couples.
             % Admissible properties and values are:
             % Lighting  = 'phong' (default) 'none' 'flat' 'gouraud'
@@ -162,7 +162,7 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
             %             'copper' 'pink' 'lines' 'colorcube' 'prism'
             %             'flag' 'white'
             %
-            % See also BrainAtlas, PlotBrainAtlas, PlotBrainGraph. 
+            % See also BrainAtlas, PlotBrainAtlas, PlotBrainGraph, BrainSurface. 
             
             bs.setBrainSurf(brain_surf);
             bs.Lighting = get_from_varargin('Phong', 'Lighting', varargin);  % 'none', 'flat', 'phong', 'gouraud'
@@ -205,10 +205,10 @@ classdef PlotBrainSurf < handle & matlab.mixin.Copyable
     end
     methods (Access = protected) % Set Brain Surf File
         function setBrainSurf(bs, brain_surf)
-            % SETBRAINSURF reads the brain surf file and sets the data
+            % SETBRAINSURF sets the brain surface.
             %
-            % SETBRAINSURFFILE(BS, BRAIN_SURF_FILE) reads the brain surf
-            % file and loads the data.
+            % SETBRAINSURFFILE(BS, BRAIN_SURF) sets the brain surf to
+            % PlotBrainSurf.
             %
             % See getBrainSurfFile.
             

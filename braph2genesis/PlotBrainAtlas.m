@@ -10,6 +10,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
     % from PlotBrainSurf to integrate the regions to a brain surface.
     %
     % PlotBrainAtlas properties (Constants):
+    %   PLOT_SYMBOL_NAME          - symbol names for the plot
+    %   PLOT_SYMBOL_TAG           - symbols for the plot
     %   INIT_SYM_MARKER           - symbol type (default = 'o')
     %   INIT_SYM_SIZE             - symbol size (default = 10)
     %   INIT_SYM_EDGE_COLOR       - symbol edge color (default = 'none')
@@ -233,6 +235,8 @@ classdef PlotBrainAtlas < PlotBrainSurf
             % GETBRAINATLAS returns the brain atlas
             %
             % ATLAS = GETBRAINATLAS(BA) gets the brain atlas.
+            %
+            % see also PlotBrainAtlas.
             
             atlas = ba.atlas;
         end
