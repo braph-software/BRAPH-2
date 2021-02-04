@@ -19,15 +19,3 @@ LABEL (metadata, string) is an extended label of the subject.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the subject.
-
-%% ¡methods!
-function subject_list = getList()
-    % GETLIST returns the list of available subjects
-    %
-    % SUBJECT_LIST = GETLIST() returns the list of subjects
-    % (cell array) that are subclasses of Subject.
-    %
-    % See also getClass, getName, getDescription.
-
-    subject_list = subclasses('Subject');
-end
