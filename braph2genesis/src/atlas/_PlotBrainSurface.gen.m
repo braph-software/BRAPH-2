@@ -523,7 +523,7 @@ function f_settings = settings(pl, varargin)
     function cb_colormap(~, ~)  % (src, event)
         val = ui_popup_colormap.Value;
         str = ui_popup_colormap.String;
-        pl.set('COLORMAP', str{val})
+        pl.set('COLORMAP', eval(str{val}))
         pl.draw()
     end
 
