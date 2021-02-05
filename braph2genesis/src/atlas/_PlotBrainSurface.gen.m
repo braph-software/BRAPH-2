@@ -129,7 +129,7 @@ EDGECOLOR (metadata, rvector) is the RGB edge color.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[1 1 1]
+[0 0 0]
 
 %%% ¡prop!
 EDGEALPHA (metadata, scalar) is the edge transparency.
@@ -155,7 +155,7 @@ check = value >= 0 && value <= 1;
 %%% ¡prop!
 LIGHTING (metadata, option) is the lighting value.
 %%%% ¡settings!
-{'phong' 'flat' 'gouraud'}
+{'phong' 'flat' 'gouraud' 'none'}
 
 %%% ¡prop!
 MATERIAL (metadata, option) is the material value.
@@ -202,7 +202,6 @@ function h_panel = draw(pl, varargin)
     if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
         pl.h_axes = axes(h);
     end
-    set(pl.h_axes, 'Color', pl.get('AXESCOLOR'))
     
     % brain
     if pl.get('BRAIN')
@@ -231,9 +230,11 @@ function h_panel = draw(pl, varargin)
         delete(findall(pl.h_axes, 'Type', 'light'));
         camlight(pl.h_axes, pl.get('CAMLIGHT'))
 
-        shading(pl.h_axes, pl.get('SHADING'))
-        
         colormap(pl.h_axes, pl.get('COLORMAP'))
+        
+        if ~strcmpi(pl.get('SHADING'), 'none')
+            shading(pl.h_axes, pl.get('SHADING'))
+        end
     else
         if ~isempty(pl.h_brain) && isgraphics(pl.h_brain, 'patch')
             set(pl.h_brain, 'Visible', 'off')
@@ -241,6 +242,8 @@ function h_panel = draw(pl, varargin)
     end
     
     % plot settings
+    set(pl.h_axes, 'Color', pl.get('AXESCOLOR'))
+
     view(pl.h_axes, pl.get('VIEW'))
     
     if pl.get('HOLD')
@@ -284,7 +287,7 @@ function f_settings = settings(pl, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    f = settings@Plot(pl, varargin{:})
+    f = settings@Plot(pl, varargin{:});
 
     % background color
     ui_button_backgroundcolor = uicontrol(f, 'Style', 'pushbutton', ...
@@ -293,81 +296,82 @@ function f_settings = settings(pl, varargin)
         'String', 'background color', ...
         'HorizontalAlignment', 'center', ...
         'TooltipString', 'Image background color', ...
-        'Callback', {@cb_backgroundcolor})
+        'Callback', {@cb_backgroundcolor});
     function cb_backgroundcolor(~, ~) % (src, event)
         color = uisetcolor;
         if length(color) == 3
-            pl.set('BKGCOLOR', color)
+            pl.set('AXESCOLOR', color)
             pl.draw()
         end
     end
 
-% %     % brain color and transparency
-% %     ui_text_transparency = uicontrol(f, 'Style', 'text');
-% %     set(ui_text_transparency, 'Units', 'normalized')
-% %     set(ui_text_transparency, 'BackgroundColor', FigColor)
-% %     set(ui_text_transparency, 'String', 'transparency')
-% %     set(ui_text_transparency, 'Position', [.25 .60 .35 .20])
-% %     set(ui_text_transparency, 'HorizontalAlignment', 'center')
-% %     set(ui_text_transparency, 'FontWeight', 'bold')
-% % 
-% %     ui_button_color = uicontrol(f, 'Style', 'pushbutton');
-% %     set(ui_button_color, 'Units', 'normalized')
-% %     set(ui_button_color, 'Position', [.05 .50 .15 .20])
-% %     set(ui_button_color, 'String', 'brain color')
-% %     set(ui_button_color, 'HorizontalAlignment', 'center')
-% %     set(ui_button_color, 'TooltipString', 'Brain surface color (applied both to faces and edges)')
-% %     set(ui_button_color, 'Callback', {@cb_color})
-% % 
-% %     ui_slider_alpha = uicontrol(f, 'Style', 'slider');
-% %     set(ui_slider_alpha, 'Units', 'normalized')
-% %     set(ui_slider_alpha, 'BackgroundColor', FigColor)
-% %     set(ui_slider_alpha, 'Position', [.25 .50 .35 .15])
-% %     set(ui_slider_alpha, 'String', 'Brain transparency')
-% %     set(ui_slider_alpha, 'Min', 0, 'Max', 1, 'Value', max(get(bs.brain, 'FaceAlpha'), get(bs.brain, 'EdgeAlpha')))
-% %     set(ui_slider_alpha, 'TooltipString', 'Brain surface transparency (applied both to faces and edges)')
-% %     set(ui_slider_alpha, 'Callback', {@cb_alpha})
-% % 
-% %     ui_button_facecolor = uicontrol(f, 'Style', 'pushbutton');
-% %     set(ui_button_facecolor, 'Units', 'normalized')
-% %     set(ui_button_facecolor, 'Position', [.05 .30 .15 .20])
-% %     set(ui_button_facecolor, 'String', 'face color')
-% %     set(ui_button_facecolor, 'HorizontalAlignment', 'center')
-% %     set(ui_button_facecolor, 'TooltipString', 'Brain surface face color')
-% %     set(ui_button_facecolor, 'Callback', {@cb_facecolor})
-% % 
-% %     ui_slider_facealpha = uicontrol(f, 'Style', 'slider');
-% %     set(ui_slider_facealpha, 'Units', 'normalized')
-% %     set(ui_slider_facealpha, 'BackgroundColor', FigColor)
-% %     set(ui_slider_facealpha, 'Position', [.25 .30 .35 .15])
-% %     set(ui_slider_facealpha, 'String', 'Brain transparency')
-% %     set(ui_slider_facealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain,'FaceAlpha'))
-% %     set(ui_slider_facealpha, 'TooltipString', 'Brain surface face transparency')
-% %     set(ui_slider_facealpha, 'Callback', {@cb_facealpha})
-% % 
-% %     ui_button_edgecolor = uicontrol(f, 'Style', 'pushbutton');
-% %     set(ui_button_edgecolor, 'Units', 'normalized')
-% %     set(ui_button_edgecolor, 'Position', [.05 .10 .15 .20])
-% %     set(ui_button_edgecolor, 'String', 'edge color')
-% %     set(ui_button_edgecolor, 'HorizontalAlignment', 'center')
-% %     set(ui_button_edgecolor, 'TooltipString', 'Brain surface edge color')
-% %     set(ui_button_edgecolor, 'Callback', {@cb_edgecolor})
-% % 
-% %     ui_slider_edgealpha = uicontrol(f, 'Style', 'slider');
-% %     set(ui_slider_edgealpha, 'Units', 'normalized')
-% %     set(ui_slider_edgealpha, 'BackgroundColor', FigColor)
-% %     set(ui_slider_edgealpha, 'Position', [.25 .10 .35 .15])
-% %     set(ui_slider_edgealpha, 'String', 'Brain transparency')
-% %     set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain, 'EdgeAlpha'))
-% %     set(ui_slider_edgealpha, 'TooltipString', 'Brain surface edge transparency')
-% %     set(ui_slider_edgealpha, 'Callback', {@cb_edgealpha})
-% % 
-% %     function cb_color(~, ~)  % (src, event)
-% %         color = uisetcolor;
-% %         if length(color) == 3
-% %             bs.brain('Color', color)
-% %         end
-% %     end
+    % brain color and transparency
+    ui_text_transparency = uicontrol(f, 'Style', 'text', ...
+        'Units', 'normalized', ...
+        'BackgroundColor', pl.get('BKGCOLOR'), ...
+        'String', 'transparency', ...
+        'Position', [.25 .60 .35 .20], ...
+        'HorizontalAlignment', 'center', ...
+        'FontWeight', 'bold');
+
+    ui_button_color = uicontrol(f, 'Style', 'pushbutton', ...
+        'Units', 'normalized', ...
+        'Position', [.05 .50 .15 .20], ...
+        'String', 'brain color', ...
+        'HorizontalAlignment', 'center', ...
+        'TooltipString', 'Brain surface color (applied both to faces and edges)', ...
+        'Callback', {@cb_color});
+
+%     ui_slider_alpha = uicontrol(f, 'Style', 'slider', ...
+%         'Units', 'normalized', ...
+%         'BackgroundColor', FigColor, ...
+%         'Position', [.25 .50 .35 .15], ...
+%         'String', 'Brain transparency', ...
+%         'Min', 0, 'Max', 1, 'Value', max(get(bs.brain, 'FaceAlpha'), get(bs.brain, 'EdgeAlpha')))
+%     set(ui_slider_alpha, 'TooltipString', 'Brain surface transparency (applied both to faces and edges)')
+%     set(ui_slider_alpha, 'Callback', {@cb_alpha})
+% 
+%     ui_button_facecolor = uicontrol(f, 'Style', 'pushbutton');
+%     set(ui_button_facecolor, 'Units', 'normalized')
+%     set(ui_button_facecolor, 'Position', [.05 .30 .15 .20])
+%     set(ui_button_facecolor, 'String', 'face color')
+%     set(ui_button_facecolor, 'HorizontalAlignment', 'center')
+%     set(ui_button_facecolor, 'TooltipString', 'Brain surface face color')
+%     set(ui_button_facecolor, 'Callback', {@cb_facecolor})
+% 
+%     ui_slider_facealpha = uicontrol(f, 'Style', 'slider');
+%     set(ui_slider_facealpha, 'Units', 'normalized')
+%     set(ui_slider_facealpha, 'BackgroundColor', FigColor)
+%     set(ui_slider_facealpha, 'Position', [.25 .30 .35 .15])
+%     set(ui_slider_facealpha, 'String', 'Brain transparency')
+%     set(ui_slider_facealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain,'FaceAlpha'))
+%     set(ui_slider_facealpha, 'TooltipString', 'Brain surface face transparency')
+%     set(ui_slider_facealpha, 'Callback', {@cb_facealpha})
+% 
+%     ui_button_edgecolor = uicontrol(f, 'Style', 'pushbutton');
+%     set(ui_button_edgecolor, 'Units', 'normalized')
+%     set(ui_button_edgecolor, 'Position', [.05 .10 .15 .20])
+%     set(ui_button_edgecolor, 'String', 'edge color')
+%     set(ui_button_edgecolor, 'HorizontalAlignment', 'center')
+%     set(ui_button_edgecolor, 'TooltipString', 'Brain surface edge color')
+%     set(ui_button_edgecolor, 'Callback', {@cb_edgecolor})
+% 
+%     ui_slider_edgealpha = uicontrol(f, 'Style', 'slider');
+%     set(ui_slider_edgealpha, 'Units', 'normalized')
+%     set(ui_slider_edgealpha, 'BackgroundColor', FigColor)
+%     set(ui_slider_edgealpha, 'Position', [.25 .10 .35 .15])
+%     set(ui_slider_edgealpha, 'String', 'Brain transparency')
+%     set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', get(bs.brain, 'EdgeAlpha'))
+%     set(ui_slider_edgealpha, 'TooltipString', 'Brain surface edge transparency')
+%     set(ui_slider_edgealpha, 'Callback', {@cb_edgealpha})
+
+    function cb_color(~, ~) % (src, event)
+        color = uisetcolor;
+        if length(color) == 3
+            pl.set('FACECOLOR', color, 'EDGECOLOR', color)
+            pl.draw()
+        end
+    end
 % %     function cb_alpha(~, ~)  % (src, event)
 % %         bs.brain('Alpha', get(ui_slider_alpha, 'Value'))
 % %         set(ui_slider_facealpha, 'Value', get(ui_slider_alpha, 'Value'))
