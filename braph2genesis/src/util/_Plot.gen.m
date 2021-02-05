@@ -55,9 +55,10 @@ function h_panel = draw(pl, varargin)
     if isempty(pl.h_panel) || ~isgraphics(pl.h_panel, 'uipanel')
         pl.h_panel = uipanel(varargin{:});
     end
+    h = pl.h_panel;
     
     if nargout > 0
-        h_panel = pl.h_panel;
+        h_panel = h;
     end
 end
 function f_settings = settings(pl, varargin)
