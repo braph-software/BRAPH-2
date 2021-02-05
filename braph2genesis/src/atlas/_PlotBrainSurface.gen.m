@@ -334,7 +334,7 @@ function f_settings = settings(pl, varargin)
         'String', 'Brain transparency', ...
         'Min', 0, 'Max', 1, 'Value', max(pl.get('FACEALPHA'), pl.get('EDGEALPHA')), ...
         'TooltipString', 'Brain surface transparency (applied both to faces and edges)', ...
-        'Callback', {@cb_alpha})
+        'Callback', {@cb_alpha});
 
     ui_button_facecolor = uicontrol(f, 'Style', 'pushbutton', ...
         'Units', 'normalized', ...
@@ -351,7 +351,7 @@ function f_settings = settings(pl, varargin)
         'String', 'Brain transparency', ...
         'Min', 0, 'Max', 1, 'Value', pl.get('FACEALPHA'), ...
         'TooltipString', 'Brain surface face transparency', ...
-        'Callback', {@cb_facealpha})
+        'Callback', {@cb_facealpha});
 
     ui_button_edgecolor = uicontrol(f, 'Style', 'pushbutton', ...
         'Units', 'normalized', ...
@@ -368,7 +368,7 @@ function f_settings = settings(pl, varargin)
         'String', 'Brain transparency', ...
         'Min', 0, 'Max', 1, 'Value', pl.get('EDGEALPHA'), ...
         'TooltipString', 'Brain surface edge transparency', ...
-        'Callback', {@cb_edgealpha})
+        'Callback', {@cb_edgealpha});
 
     function cb_color(~, ~) % (src, event)
         color = uisetcolor;
@@ -406,74 +406,77 @@ function f_settings = settings(pl, varargin)
         pl.draw()
     end
 
-%     % lightining
-%     ui_text_lighting = uicontrol(f, 'Style', 'text');
-%     set(ui_text_lighting, 'Units','normalized')
-%     set(ui_text_lighting, 'BackgroundColor', FigColor)
-%     set(ui_text_lighting, 'String', 'lighting')
-%     set(ui_text_lighting, 'Position', [.65 .70 .10 .15])
-%     set(ui_text_lighting, 'HorizontalAlignment', 'center')
-%     set(ui_text_lighting, 'FontWeight', 'bold')
-% 
-%     ui_popup_lighting = uicontrol(f, 'Style', 'popupmenu');
-%     set(ui_popup_lighting, 'Units', 'normalized')
-%     set(ui_popup_lighting, 'Position', [.75 .70 .20 .15])
-%     set(ui_popup_lighting, 'String', {'none', 'flat', 'phong', 'gouraud'})
-%     set(ui_popup_lighting, 'Value', find(strcmpi(bs.Lighting, get(ui_popup_lighting, 'String'))))
-%     set(ui_popup_lighting, 'HorizontalAlignment', 'center')
-%     set(ui_popup_lighting, 'Callback', {@cb_lighting})
-% 
-%     function cb_lighting(~, ~)  % (src, event)
-%         val = ui_popup_lighting.Value;
-%         str = ui_popup_lighting.String;
-%         bs.lighting(str{val});
-%     end
-% 
-%     % material
-%     ui_text_material = uicontrol(f, 'Style', 'text');
-%     set(ui_text_material, 'Units', 'normalized')
-%     set(ui_text_material, 'BackgroundColor', FigColor)
-%     set(ui_text_material, 'String', 'material')
-%     set(ui_text_material, 'Position', [.65 .55 .10 .15])
-%     set(ui_text_material, 'HorizontalAlignment', 'center')
-%     set(ui_text_material, 'FontWeight', 'bold')            
-% 
-%     ui_popup_material = uicontrol(f, 'Style', 'popupmenu');
-%     set(ui_popup_material, 'Units', 'normalized')
-%     set(ui_popup_material, 'Position', [.75 .55 .20 .15])
-%     set(ui_popup_material, 'String', {'dull', 'shiny', 'metal'})
-%     set(ui_popup_material, 'Value', find(strcmpi(bs.Material, get(ui_popup_material, 'String'))))
-%     set(ui_popup_material, 'HorizontalAlignment', 'center')
-%     set(ui_popup_material, 'Callback', {@cb_material})
-% 
-%     function cb_material(~, ~)  % (src, event)
-%         val = ui_popup_material.Value;
-%         str = ui_popup_material.String;
-%         bs.material(str{val});
-%     end
-% 
-%     % camlight
-%     ui_text_camlight = uicontrol(f, 'Style', 'text');
-%     set(ui_text_camlight, 'Units', 'normalized')
-%     set(ui_text_camlight, 'BackgroundColor', FigColor)
-%     set(ui_text_camlight, 'String', 'camlight')
-%     set(ui_text_camlight, 'Position', [.65 .40 .10 .15])
-%     set(ui_text_camlight, 'HorizontalAlignment', 'center')
-%     set(ui_text_camlight, 'FontWeight', 'bold') 
-% 
-%     ui_popup_camlight = uicontrol(f, 'Style', 'popupmenu');
-%     set(ui_popup_camlight, 'Units', 'normalized')
-%     set(ui_popup_camlight, 'Position', [.75 .40 .20 .15])
-%     set(ui_popup_camlight, 'String', {'headlight', 'right', 'left'})
-%     set(ui_popup_camlight, 'Value', find(strcmpi(bs.CamLight, get(ui_popup_camlight, 'String'))))
-%     set(ui_popup_camlight, 'HorizontalAlignment', 'center')
-%     set(ui_popup_camlight, 'Callback', {@cb_camlight})
-% 
-%     function cb_camlight(~, ~)  % (src, event)
-%         val = ui_popup_camlight.Value;
-%         str = ui_popup_camlight.String;
-%         bs.camlight(str{val});
-%     end
+    % lightining
+    ui_text_lighting = uicontrol(f, 'Style', 'text', ...
+        'Units','normalized', ...
+        'BackgroundColor', pl.get('BKGCOLOR'), ...
+        'String', 'lighting', ...
+        'Position', [.65 .70 .10 .15], ...
+        'HorizontalAlignment', 'center', ...
+        'FontWeight', 'bold');
+
+    ui_popup_lighting = uicontrol(f, 'Style', 'popupmenu', ...
+        'Units', 'normalized', ...
+        'Position', [.75 .70 .20 .15], ...
+        'String', PlotBrainSurface.getPropSettings('LIGHTING'), ...
+        'Value', find(strcmpi(pl.get('LIGHTING'), PlotBrainSurface.getPropSettings('LIGHTING'))), ...
+        'HorizontalAlignment', 'center', ...
+        'Callback', {@cb_lighting});
+
+    function cb_lighting(~, ~)  % (src, event)
+        val = ui_popup_lighting.Value;
+        str = ui_popup_lighting.String;
+        pl.set('LIGHTING', str{val})
+        pl.draw()
+    end
+
+    % material
+    ui_text_material = uicontrol(f, 'Style', 'text', ...
+        'Units', 'normalized', ...
+        'BackgroundColor', pl.get('BKGCOLOR'), ...
+        'String', 'material', ...
+        'Position', [.65 .55 .10 .15], ...
+        'HorizontalAlignment', 'center', ...
+        'FontWeight', 'bold');       
+
+    ui_popup_material = uicontrol(f, 'Style', 'popupmenu', ...
+        'Units', 'normalized', ...
+        'Position', [.75 .55 .20 .15], ...
+        'String', PlotBrainSurface.getPropSettings('MATERIAL'), ...
+        'Value', find(strcmpi(pl.get('MATERIAL'), PlotBrainSurface.getPropSettings('MATERIAL'))), ...
+        'HorizontalAlignment', 'center', ...
+        'Callback', {@cb_material});
+
+    function cb_material(~, ~)  % (src, event)
+        val = ui_popup_material.Value;
+        str = ui_popup_material.String;
+        pl.set('MATERIAL', str{val})
+        pl.draw()
+    end
+
+    % camlight
+    ui_text_camlight = uicontrol(f, 'Style', 'text', ...
+        'Units', 'normalized', ...
+        'BackgroundColor', pl.get('BKGCOLOR'), ...
+        'String', 'camlight', ...
+        'Position', [.65 .40 .10 .15], ...
+        'HorizontalAlignment', 'center', ...
+        'FontWeight', 'bold');
+
+    ui_popup_camlight = uicontrol(f, 'Style', 'popupmenu', ...
+        'Units', 'normalized', ...
+        'Position', [.75 .40 .20 .15], ...
+        'String', PlotBrainSurface.getPropSettings('CAMLIGHT'), ...
+        'Value', find(strcmpi(pl.get('CAMLIGHT'), PlotBrainSurface.getPropSettings('CAMLIGHT'))), ...
+        'HorizontalAlignment', 'center', ...
+        'Callback', {@cb_camlight});
+
+    function cb_camlight(~, ~)  % (src, event)
+        val = ui_popup_camlight.Value;
+        str = ui_popup_camlight.String;
+        pl.set('CAMLIGHT', str{val})
+        pl.draw()
+    end
 
     % shading
     ui_text_shading = uicontrol(f, 'Style', 'text', ...
@@ -499,30 +502,30 @@ function f_settings = settings(pl, varargin)
         pl.draw()
     end
 
-%     % colormap
-%     ui_text_colormap = uicontrol(f, 'Style', 'text');
-%     set(ui_text_colormap, 'Units', 'normalized')
-%     set(ui_text_colormap, 'BackgroundColor', FigColor)
-%     set(ui_text_colormap, 'String', 'colormap')
-%     set(ui_text_colormap, 'Position', [.65 .10 .10 .15])
-%     set(ui_text_colormap, 'HorizontalAlignment', 'center')
-%     set(ui_text_colormap, 'FontWeight', 'bold') 
-% 
-%     ui_popup_colormap = uicontrol(f, 'Style', 'popupmenu');
-%     set(ui_popup_colormap, 'Units', 'normalized')
-%     set(ui_popup_colormap, 'Position', [.75 .10 .20 .15])
-%     set(ui_popup_colormap, 'String', {'parula', 'jet', 'hsv', 'hot', ...
-%         'cool', 'spring', 'summer', 'autumn', 'winter', 'gray', 'bone', ...
-%         'copper', 'pink', 'lines', 'colorcube', 'prism', 'flag', 'white'})
-%     set(ui_popup_colormap, 'Value', find(strcmpi(bs.Colormap, get(ui_popup_colormap, 'String'))))
-%     set(ui_popup_colormap, 'HorizontalAlignment', 'center')
-%     set(ui_popup_colormap, 'Callback', {@cb_colormap})
-% 
-%     function cb_colormap(~, ~)  % (src, event)
-%         val = ui_popup_colormap.Value;
-%         str = ui_popup_colormap.String;
-%         bs.colormap(str{val});
-%     end
+    % colormap
+    ui_text_colormap = uicontrol(f, 'Style', 'text', ...
+        'Units', 'normalized', ...
+        'BackgroundColor', pl.get('BKGCOLOR'), ...
+        'String', 'colormap', ...
+        'Position', [.65 .10 .10 .15], ...
+        'HorizontalAlignment', 'center', ...
+        'FontWeight', 'bold');
+
+    ui_popup_colormap = uicontrol(f, 'Style', 'popupmenu', ...
+        'Units', 'normalized', ...
+        'Position', [.75 .10 .20 .15], ...
+        'String', {'parula', 'jet', 'hsv', 'hot', 'cool', 'spring', ...
+            'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', ...
+            'pink', 'lines', 'colorcube', 'prism', 'flag', 'white', ... % set(ui_popup_colormap, 'Value', find(strcmpi(bs.Colormap, get(ui_popup_colormap, 'String'))))
+        'HorizontalAlignment', 'center', ...
+    	'Callback', {@cb_colormap});
+
+    function cb_colormap(~, ~)  % (src, event)
+        val = ui_popup_colormap.Value;
+        str = ui_popup_colormap.String;
+        pl.set('COLORMAP', str{val})
+        pl.draw()
+    end
 
     % output
     if nargout > 0
