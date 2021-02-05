@@ -174,6 +174,20 @@ jet
         
 %% ¡methods!
 function h_panel = draw(pl, varargin)
+    %DRAW draws the brain surface graphical panel.
+    %
+    % DRAW(PL) draws the brain surface graphical panel.
+    %
+    % H = DRAW(PL) returns a handle to the brain surface graphical panel.
+    %
+    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom property-value couples.
+    %  All standard plot properties of uipanel can be used.
+    %
+    % It is possible to access the properties of the various graphical
+    %  objects from the handle to the brain surface graphical panel H.
+    %
+    % see also settings, uipanel, isgraphics.
 
     h = draw@Plot(pl, varargin{:});
 
@@ -254,20 +268,14 @@ function h_panel = draw(pl, varargin)
     end
 end
 function f_settings = settings(pl, varargin)
-% %     % BRAIN_SETTINGS opens the GUI property editor
-% %     %
-% %     % BRAIN_SETTINGS(BS) allows the user to specify the properties
-% %     % of the brain surf by opening a GUI property editor.
-% %     %
-% %     % BRAIN_SETTINGS(BS, 'Property', VALUE, ...) allows the user to specify the 
-% %     % properties of the brain surf by opening a GUI property editor.
-% %     % sets the property of the user interface's Property to VALUE.
-% %     % Admissible properties are:
-% %     % FigPosition   -  position of the user interface on the screen
-% %     % FigColor      -  background color of the user interface
-% %     % FigName       -  name of the user interface
-% %     %
-% %     % See also brain, trisurf.
+    %SETTINGS opens the brain surface property editor GUI.
+    %
+    % SETTINGS(PL) allows the user to specify the properties of the brain
+    %  surface plot by opening a GUI property editor.
+    %
+    % F = SETTINGS(PL) returns a handle to the property editor GUI.
+    %
+    % See also draw, figure, isgraphics.
 
     f = settings@Plot(pl, varargin{:})
 

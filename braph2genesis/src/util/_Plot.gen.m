@@ -50,7 +50,7 @@ function h_panel = draw(pl, varargin)
     %  panel with custom property-value couples.
     %  All standard plot properties of uipanel can be used.
     %
-    % see also uipanel, ishandle, isgraphics.
+    % see also settings, uipanel, isgraphics.
 
     if isempty(pl.h_panel) || ~isgraphics(pl.h_panel, 'uipanel')
         pl.h_panel = uipanel(varargin{:});
@@ -61,20 +61,14 @@ function h_panel = draw(pl, varargin)
     end
 end
 function f_settings = settings(pl, varargin)
-%     % BRAIN_SETTINGS opens the GUI property editor
-%     %
-%     % BRAIN_SETTINGS(BS) allows the user to specify the properties
-%     % of the brain surf by opening a GUI property editor.
-%     %
-%     % BRAIN_SETTINGS(BS, 'Property', VALUE, ...) allows the user to specify the 
-%     % properties of the brain surf by opening a GUI property editor.
-%     % sets the property of the user interface's Property to VALUE.
-%     % Admissible properties are:
-%     % FigPosition   -  position of the user interface on the screen
-%     % FigColor      -  background color of the user interface
-%     % FigName       -  name of the user interface
-%     %
-%     % See also brain, trisurf.
+    %SETTINGS opens the property editor GUI.
+    %
+    % SETTINGS(PL) allows the user to specify the properties of the plot
+    %  by opening a GUI property editor.
+    %
+    % F = SETTINGS(PL) returns a handle to the property editor GUI.
+    %
+    % See also draw, figure, isgraphics.
 
     % create a figure
     if isempty(pl.f_settings) || ~isgraphics(pl.f_settings, 'figure')
