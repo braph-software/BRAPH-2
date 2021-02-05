@@ -22,11 +22,6 @@ check = (length(value) == 3) && all(value >= 0 & value <= 1);
 [.95 .95 .95]
 
 %%% ¡prop!
-SETVIS (metadata, logical) determines whether the settings are visible.
-%%%% ¡default!
-true
-
-%%% ¡prop!
 SETPOS (metadata, rvector) is the normalized position of the setting interface on the screen.
 %%%% ¡check_prop!
 check = (length(value) == 4) && all(value >= 0 & value <= 1);
@@ -69,11 +64,15 @@ function f_settings = settings(pl, varargin)
     %
     % F = SETTINGS(PL) returns a handle to the property editor GUI.
     %
+    % SETTINGS(PL, 'Property', VALUE, ...) sets the properties of the
+    %  property editor GUI with custom property-value couples. 
+    %  All standard plot properties of figure can be used.
+    %
     % See also draw, figure, isgraphics.
 
     % create a figure
     if isempty(pl.f_settings) || ~isgraphics(pl.f_settings, 'figure')
-        pl.f_settings = figure('Visible', 'off');
+        pl.f_settings = figure(varargin{:});
     end
     f = pl.f_settings;
     set(f, 'units', 'normalized')
@@ -84,8 +83,6 @@ function f_settings = settings(pl, varargin)
     set(f, 'Toolbar', 'none')
     set(f, 'NumberTitle', 'off')
     set(f, 'DockControls', 'off')
-
-    set(f, 'Visible', pl.get('SETVIS'))
     
     if nargout > 0
         f_settings = pl.f_settings;
