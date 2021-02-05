@@ -4,6 +4,7 @@ Plot < Element (pl, plot) is a plot.
 %%% ¡description!
 Plot is the basic element to manage graphical representations of elements.
 It is an empty graphical panel, which should be filled by derived element.
+To generate the plot, call pl.draw() and to open the setting GUI call pl.settings().
 
 %%% ¡seealso!
 uipanel, ishandle, isgraphics
@@ -114,6 +115,4 @@ pl2 = Plot();
 h2 = pl2.draw('Units', 'normalized', 'Position', [.25 .25 .50 .50]);
 f2 = pl2.settings();
 
-close(pl1.settings())
-close(pl2.settings())
 close(fig)
