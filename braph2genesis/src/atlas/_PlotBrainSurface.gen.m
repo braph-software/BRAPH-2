@@ -81,6 +81,13 @@ SURF (metadata, item) is the brain surface to be plotted.
 'BrainSurface'
 
 %%% ¡prop!
+AXESCOLOR (metadata, rvector) is axes background color.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+[1 1 1]
+
+%%% ¡prop!
 VIEW (metadata, rvector) sets the desired view.
 %%%% ¡check_prop!
 check = length(value) == 2;
@@ -148,7 +155,7 @@ check = value >= 0 && value <= 1;
 %%% ¡prop!
 LIGHTING (metadata, option) is the lighting value.
 %%%% ¡settings!
-{'phong' 'none' 'flat' 'gouraud'}
+{'phong' 'flat' 'gouraud'}
 
 %%% ¡prop!
 MATERIAL (metadata, option) is the material value.
@@ -195,7 +202,7 @@ function h_panel = draw(pl, varargin)
     if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
         pl.h_axes = axes(h);
     end
-    set(pl.h_axes, 'Color', pl.get('BKGCOLOR'))
+    set(pl.h_axes, 'Color', pl.get('AXESCOLOR'))
     
     % brain
     if pl.get('BRAIN')
