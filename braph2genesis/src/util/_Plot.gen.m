@@ -48,9 +48,17 @@ function h_panel = draw(pl, varargin)
     % see also settings, uipanel, isgraphics.
 
     if isempty(pl.h_panel) || ~isgraphics(pl.h_panel, 'uipanel')
-        pl.h_panel = uipanel(varargin{:});
+        pl.h_panel = uipanel();
     end
     h = pl.h_panel;
+    set(h, 'DeleteFcn', {@close_f_settings}, ...
+        varargin{:})
+
+    function close_f_settings(~, ~) % (src, event)
+        if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
+            close(pl.f_settings)
+        end
+    end
     
     if nargout > 0
         h_panel = h;
@@ -72,17 +80,18 @@ function f_settings = settings(pl, varargin)
 
     % create a figure
     if isempty(pl.f_settings) || ~isgraphics(pl.f_settings, 'figure')
-        pl.f_settings = figure(varargin{:});
+        pl.f_settings = figure();
     end
     f = pl.f_settings;
-    set(f, 'units', 'normalized')
-    set(f, 'Position', pl.get('SETPOS'))
-    set(f, 'Color', pl.get('BKGCOLOR'))
-    set(f, 'Name', pl.get('SETNAME'))
-    set(f, 'MenuBar', 'none')
-    set(f, 'Toolbar', 'none')
-    set(f, 'NumberTitle', 'off')
-    set(f, 'DockControls', 'off')
+    set(f, 'units', 'normalized', ...
+        'Position', pl.get('SETPOS'), ... 
+        'Color', pl.get('BKGCOLOR'), ...
+        'Name', pl.get('SETNAME'), ...
+        'MenuBar', 'none', ...
+        'Toolbar', 'none', ...
+        'NumberTitle', 'off', ...
+        'DockControls', 'off', ...
+        varargin{:})
     
     if nargout > 0
         f_settings = pl.f_settings;
