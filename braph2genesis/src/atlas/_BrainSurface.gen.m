@@ -24,14 +24,14 @@ NOTES (metadata, string) are some specific notes about the brain surface.
 %%% ¡prop!
 VERTEX_NUMBER (data, scalar) is the number of triangles vertices.
 %%%% ¡check_prop!
-check = value > 0 && isnumeric(value)
+check = value >= 0 
 %%%% ¡default!
-1
+0
 
 %%% ¡prop!
 COORDINATES (data, matrix) is the coordinates of the triangles vertices.
 %%%% ¡check_prop!
-check = all(all(value >= 0)) && isnumeric(value)
+check = isempty(value) || size(value, 2) == 3
 %%%% ¡check_value!
 check = isequal(bs.get('VERTEX_NUMBER'), size(value, 1)) 
 if check 
@@ -39,20 +39,18 @@ if check
 else
     msg = ['''COORDINATES'' must have ' num2str(bs.get('VERTEX_NUMBER')) ' rows while it has ' num2str(size(bs.get('COORDINATES'), 1)) '.'];
 end
-%%%% ¡default!
-zeros(1, 3)
 
 %%% ¡prop!
 TRIANGLES_NUMBER (data, scalar) is the number of triangles.
 %%%% ¡check_prop!
-check = value > 0 && isnumeric(value)
+check = value >= 0 
 %%%% ¡default!
-1
+0
 
 %%% ¡prop!
 TRIANGLES (data, matrix) is the triad of coordinates identifiers to create a triangle.
 %%%% ¡check_prop!
-check = all(all(value > 0)) && isnumeric(value)
+check = isempty(value) || size(value, 2) == 3 
 %%%% ¡check_value!
 check = isequal(bs.get('TRIANGLES_NUMBER'), size(value, 1)) && all(all(value <= bs.get('VERTEX_NUMBER'))) && all(all(value > 0))
 if check 
@@ -64,5 +62,3 @@ else
         'while they are ' num2str(bs.get('TRIANGLES')) '.' ...
         ];
 end
-%%%% ¡default!
-ones(1, 3)
