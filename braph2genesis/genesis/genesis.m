@@ -67,13 +67,13 @@ mkdir([target_dir fp 'measures'])
 
 disp('¡! created dir structure - MEASURES')
 
-% % workflows
-% mkdir([target_dir fp 'workflows'])
-% mkdir([target_dir fp 'workflows' fp 'structural'])
-% mkdir([target_dir fp 'workflows' fp 'functional'])
-% mkdir([target_dir fp 'workflows' fp 'connectivity'])
-% 
-% disp('¡! created dir structure - WORKFLOWS')
+% workflows
+mkdir([target_dir fp 'workflows'])
+mkdir([target_dir fp 'workflows' fp 'structural'])
+mkdir([target_dir fp 'workflows' fp 'functional'])
+mkdir([target_dir fp 'workflows' fp 'connectivity'])
+
+disp('¡! created dir structure - WORKFLOWS')
 
 % test
 mkdir([target_dir fp 'test'])
@@ -161,42 +161,42 @@ disp('¡! copied ready files - brainsurf')
 
 disp(' ')
 
-% % workflows
-% copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST.m'])
-% mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)'])
-% copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'])
-% mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls'])
-% copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group1.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group1.xlsx'])
-% copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group2.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group2.xlsx'])
-% disp('¡! copied ready files - workflow structural')
+% workflows
+copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST.m'])
+mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)'])
+copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'])
+mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls'])
+copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group1.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group1.xlsx'])
+copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group2.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group2.xlsx'])
+disp('¡! copied ready files - workflow structural')
 
-% copyfile([source_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'], [target_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'])
-% mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)'])
-% copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'desikan_atlas.xlsx'])
-% mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls'])
-% mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName1'])
-% for i = 1:1:10
-%     copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName1' fp 'subject' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName1' fp 'subject' int2str(i) '.xlsx'])
-% end
-% mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2'])
-% for i = 11:1:20
-%     copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2' fp 'subject' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2' fp 'subject' int2str(i) '.xlsx'])
-% end
-% disp('¡! copied ready files - workflow functional')
+copyfile([source_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'], [target_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'])
+mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)'])
+copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'desikan_atlas.xlsx'])
+mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls'])
+mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName1'])
+for i = 1:1:10
+    copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName1' fp 'subject' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName1' fp 'subject' int2str(i) '.xlsx'])
+end
+mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2'])
+for i = 11:1:20
+    copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2' fp 'subject' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2' fp 'subject' int2str(i) '.xlsx'])
+end
+disp('¡! copied ready files - workflow functional')
 
-% copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'])
-% mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)'])
-% copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'])
-% mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls'])
-% mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1'])
-% for i = 1:1:5
-%     copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1' fp 'SubjectID' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1' fp 'SubjectID' int2str(i) '.xlsx'])
-% end
-% mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2'])
-% for i = 1:1:5
-%     copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'])
-% end
-% disp('¡! copied ready files - workflow connectivity')
+copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'])
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)'])
+copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'])
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls'])
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1'])
+for i = 1:1:5
+    copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1' fp 'SubjectID' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName1' fp 'SubjectID' int2str(i) '.xlsx'])
+end
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2'])
+for i = 1:1:5
+    copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'])
+end
+disp('¡! copied ready files - workflow connectivity')
 
 disp(' ')
 
@@ -230,10 +230,10 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
     end
     
-    % cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-    % for i = 1:1:numel(cohort_gen_list)
-    %     create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
-    % end
+    cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
+    for i = 1:1:numel(cohort_gen_list)
+        create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
+    end
     
     gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
     for i = 1:1:numel(gt_gen_list)
@@ -257,21 +257,21 @@ for run = 1:1:run_number
     %     create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
     % end
     % 
-    % % worksflows
-    % wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
-    % for i = 1:1:numel(wf_structural_gen_list)
-    %     create_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
-    % end
-    % 
-    % wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
-    % for i = 1:1:numel(wf_functional_gen_list)
-    %     create_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
-    % end
-    % 
-    % wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
-    % for i = 1:1:numel(wf_connectivity_gen_list)
-    %     create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
-    % end
+    % workflows
+    wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
+    for i = 1:1:numel(wf_structural_gen_list)
+        create_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
+    end
+    
+    wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
+    for i = 1:1:numel(wf_functional_gen_list)
+        create_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
+    end
+    
+    wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
+    for i = 1:1:numel(wf_connectivity_gen_list)
+        create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
+    end
     
     % LOAD BRAPH2
     addpath(target_dir)
@@ -300,16 +300,16 @@ atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
 for i = 1:1:numel(atlas_gen_list)
     create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
 end
-% 
-% cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-% for i = 1:1:numel(cohort_gen_list)
-%     create_test_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
-% end
-% 
-% gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
-% for i = 1:1:numel(gt_gen_list)
-%     create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
-% end
+
+cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
+for i = 1:1:numel(cohort_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
+end
+
+gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
+for i = 1:1:numel(gt_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
+end
 % 
 % analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
 % for i = 1:1:numel(analysis_gen_list)
@@ -328,20 +328,20 @@ end
 %     create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
 % end
 % 
-% % workflows
-% wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
-% for i = 1:1:numel(wf_structural_gen_list)
-%     create_test_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
-% end
-% 
-% wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
-% for i = 1:1:numel(wf_functional_gen_list)
-%     create_test_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
-% end
-% 
-% wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
-% for i = 1:1:numel(wf_connectivity_gen_list)
-%     create_test_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
-% end
+% workflows
+wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
+for i = 1:1:numel(wf_structural_gen_list)
+    create_test_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
+end
+
+wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
+for i = 1:1:numel(wf_functional_gen_list)
+    create_test_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
+end
+
+wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
+for i = 1:1:numel(wf_connectivity_gen_list)
+    create_test_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
+end
 
 end
