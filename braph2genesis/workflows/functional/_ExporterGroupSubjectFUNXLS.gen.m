@@ -4,6 +4,7 @@ ExporterGroupSubjectFUNXLS < Exporter (ex, exporter of FUN subject group in XLS/
 %%% ¡description!
 ExporterGroupSubjectFUNXLS exports a group of subjects with functional data to a series of XLSX file.
 All these files are saved in the same folder.
+Each file contains a table with each row correspoding to a brain region and each column to a time.
 
 %%% ¡seealso!
 Element, Exporter, ImporterGroupSubjectFUNXLS

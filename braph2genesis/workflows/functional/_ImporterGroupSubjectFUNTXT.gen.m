@@ -4,6 +4,7 @@ ImporterGroupSubjectFUNTXT < Importer (im, importer of FUN subject group from TX
 %%% ¡description!
 ImporterGroupSubjectFUNTXT imports a group of subjects with connectivity data from a series of TXT file.
 All these files must be in the same folder; also, no other files should be in the folder.
+Each file contains a table with each row correspoding to a brain region and each column to a time.
 
 %%% ¡seealso!
 Element, Importer, ExporterGroupSubjectFUNTXT
