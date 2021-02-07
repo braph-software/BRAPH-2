@@ -2,14 +2,13 @@
 Group < Element (gr, group of subjects) is a group of subjects.
 
 %%% ¡description!
-Group represents a group of subjects whose class is defined in the constructor.
+Group represents a group of subjects whose class is defined in the property SUB_CLASS.
 Group provides the methods necessary to handle groups of subjects. 
-It manages the subjects as a dictionary of subjects. Group can inspect
-inside the dictionary to search for specific subjects. Group can add or 
-remove subjects from the dictionary.
+It manages the subjects as an indexed dictionary of subjects SUB_DICT, 
+whose methods can be used to inspect, add or remove subjects.
 
 %%% ¡seealso!
-Element, Subject
+Element, Subject, IndexedDictionary
 
 %% ¡props!
 
