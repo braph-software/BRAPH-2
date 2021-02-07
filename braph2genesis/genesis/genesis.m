@@ -168,6 +168,9 @@ copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' f
 mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls'])
 copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group1.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group1.xlsx'])
 copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group2.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls' fp 'ST_group2.xlsx'])
+mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'txt'])
+copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'txt' fp 'ST_group1.txt'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'txt' fp 'ST_group1.txt'])
+copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'txt' fp 'ST_group2.txt'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'txt' fp 'ST_group2.txt'])
 disp('¡! copied ready files - workflow structural')
 
 copyfile([source_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'], [target_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'])
@@ -182,6 +185,15 @@ mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp
 for i = 11:1:20
     copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2' fp 'subject' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls' fp 'GroupName2' fp 'subject' int2str(i) '.xlsx'])
 end
+mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'txt'])
+mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'txt' fp 'GroupName1'])
+for i = 1:1:10
+    copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'txt' fp 'GroupName1' fp 'subject' int2str(i) '.txt'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'txt' fp 'GroupName1' fp 'subject' int2str(i) '.txt'])
+end
+mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'txt' fp 'GroupName2'])
+for i = 11:1:20
+    copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'txt' fp 'GroupName2' fp 'subject' int2str(i) '.txt'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'txt' fp 'GroupName2' fp 'subject' int2str(i) '.txt'])
+end
 disp('¡! copied ready files - workflow functional')
 
 copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'])
@@ -195,6 +207,15 @@ end
 mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2'])
 for i = 1:1:5
     copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls' fp 'GroupName2' fp 'subject_' int2str(i) '.xlsx'])
+end
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'txt'])
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'txt' fp 'GroupName1'])
+for i = 1:1:5
+    copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'txt' fp 'GroupName1' fp 'SubjectID' int2str(i) '.txt'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'txt' fp 'GroupName1' fp 'SubjectID' int2str(i) '.txt'])
+end
+mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'txt' fp 'GroupName2'])
+for i = 1:1:5
+    copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'txt' fp 'GroupName2' fp 'subject_' int2str(i) '.txt'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'txt' fp 'GroupName2' fp 'subject_' int2str(i) '.txt'])
 end
 disp('¡! copied ready files - workflow connectivity')
 
