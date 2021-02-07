@@ -8,7 +8,7 @@ BrainSurface contains and manages the vertex_number, coordinates, triangles_numb
 triangles of a brain surface. 
     
 %%% ¡seealso!
-Element, BrainAtlas, BrainRegion.
+Element, BrainAtlas, BrainRegion
 
 %% ¡props!
 
@@ -25,8 +25,6 @@ NOTES (metadata, string) are some specific notes about the brain surface.
 VERTEX_NUMBER (data, scalar) is the number of triangles vertices.
 %%%% ¡check_prop!
 check = value >= 0 
-%%%% ¡default!
-0
 
 %%% ¡prop!
 COORDINATES (data, matrix) is the coordinates of the triangles vertices.
@@ -44,15 +42,13 @@ end
 TRIANGLES_NUMBER (data, scalar) is the number of triangles.
 %%%% ¡check_prop!
 check = value >= 0 
-%%%% ¡default!
-0
 
 %%% ¡prop!
 TRIANGLES (data, matrix) is the triad of coordinates identifiers to create a triangle.
 %%%% ¡check_prop!
 check = isempty(value) || size(value, 2) == 3 
 %%%% ¡check_value!
-check = isequal(bs.get('TRIANGLES_NUMBER'), size(value, 1)) && all(all(value <= bs.get('VERTEX_NUMBER'))) && all(all(value > 0))
+check = isequal(bs.get('TRIANGLES_NUMBER'), size(value, 2)) && all(all(value > 0)) && all(all(value <= bs.get('VERTEX_NUMBER')))
 if check 
     msg = 'All ok!';
 else
