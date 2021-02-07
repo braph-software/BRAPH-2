@@ -3,9 +3,10 @@ ExporterGroupSubjectSTXLS < Exporter (ex, exporter of ST subject group in XLS/XL
 
 %%% ¡description!
 ExporterGroupSubjectSTXLS exports a group of subjects with structural data to an XLSX file.
-The XLS/XLSX file consists of 6 columns. It reads as follows: 
+The XLS/XLSX file consists of of the following columns:
 Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
+The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Element, Exporter, ImporterGroupSubjectSTXLS

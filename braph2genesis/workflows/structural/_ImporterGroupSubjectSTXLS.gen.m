@@ -3,9 +3,10 @@ ImporterGroupSubjectSTXLS < Importer (im, importer of ST subject group from XLS/
 
 %%% ¡description!
 ImporterGroupSubjectSTXLS imports a group of subjects with structural data from an XLS/XLSX file.
-The XLS/XLSX file consists of 6 columns. It reads as follows: 
+The XLS/XLSX file consists of the following columns: 
 Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
+The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Element, Importer, ExporterGroupSubjectSTXLS
@@ -45,7 +46,7 @@ if isfile(file)
     % sets group props
     [~, name, ext] = fileparts(file);
     gr.set( ...
-        'ID', [name], ...
+        'ID', name, ...
         'LABEL', [name ext], ...
         'NOTES', ['Group loaded from ' file] ...
     );
