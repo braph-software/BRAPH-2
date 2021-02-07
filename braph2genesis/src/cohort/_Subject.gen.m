@@ -3,8 +3,8 @@ Subject < Element (sub, subject) is a subject.
 
 %%% ¡description!
 Subject provides the methods necessary for all subjects. 
-Instances of this class should not be created. 
-Use one of its subclasses instead.
+Instances of this element should not be created. 
+Use one of its subelements instead.
 
 %%% ¡seealso!
 Element, BrainAtlas, Group
