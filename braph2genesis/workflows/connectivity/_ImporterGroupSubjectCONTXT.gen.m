@@ -4,6 +4,7 @@ ImporterGroupSubjectCONTXT < Importer (im, importer of CON subject group from TX
 %%% ¡description!
 ImporterGroupSubjectCONTXT imports a group of subjects with connectivity data from a series of TXT file.
 All these files must be in the same folder; also, no other files should be in the folder.
+Each file contains a table of values corresponding to the adjacency matrix.
 
 %%% ¡seealso!
 Element, Importer, ExporterGroupSubjectCONTXT

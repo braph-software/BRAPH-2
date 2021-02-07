@@ -4,6 +4,7 @@ ExporterGroupSubjectCONXLS < Exporter (ex, exporter of CON subject group in XLS/
 %%% ¡description!
 ExporterGroupSubjectCONXLS exports a group of subjects with connectivity data to a series of XLSX file.
 All these files are saved in the same folder.
+Each file contains a table of values corresponding to the adjacency matrix.
 
 %%% ¡seealso!
 Element, Exporter, ImporterGroupSubjectCONXLS

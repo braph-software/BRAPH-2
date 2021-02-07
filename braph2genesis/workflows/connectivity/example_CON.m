@@ -17,27 +17,21 @@ ba_loaded = ImporterBrainAtlasXLS('File', atlas_file).get('BA');
 disp(['Loaded BrainAtlas: ' ba_loaded.tostring()])
 
 %% Load CON Subject Data for group 1 from XLSX
-[file, path, filterindex] = uigetfile('.xlsx');
-if filterindex
-    group_1_file = fullfile(path, file);
-else
-    group_1_file = [fileparts(which('example_CON.m')) filesep 'example data CON (DTI)' filesep 'xls'  filesep 'GroupName1'];
+group_1_dir = uigetdir('Select directory');
+if ~isfolder(group_1_dir)
+    group_1_dir = [fileparts(which('example_CON.m')) filesep 'example data CON (DTI)' filesep 'xls'  filesep 'GroupName1'];
 end
-clear file path filterindex;
 
-gr_loaded_1 = ImporterGroupSubjectFUNXLS('DIRECTORY', group_1_file, 'BA', ba_loaded).get('GR');
+gr_loaded_1 = ImporterGroupSubjectFUNXLS('DIRECTORY', group_1_dir, 'BA', ba_loaded).get('GR');
 
 disp(['Loaded Group 1: ' gr_loaded_1.tostring()])
 
 %% Load CON Subject Data for group 2 from XLSX
-[file, path, filterindex] = uigetfile('.xlsx');
-if filterindex
-    group_2_file = fullfile(path, file);    
-else    
-    group_2_file = [fileparts(which('example_CON.m')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName2'];
+group_2_dir = uigetdir('Select directory');
+if ~isfolder(group_2_dir)
+    group_2_dir = [fileparts(which('example_CON.m')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName2'];
 end
-clear file path filterindex;
 
-gr_loaded_2 = ImporterGroupSubjectFUNXLS('DIRECTORY', group_2_file, 'BA', ba_loaded).get('GR');
+gr_loaded_2 = ImporterGroupSubjectFUNXLS('DIRECTORY', group_2_dir, 'BA', ba_loaded).get('GR');
 
 disp(['Loaded Group 2: ' gr_loaded_2.tostring()])
