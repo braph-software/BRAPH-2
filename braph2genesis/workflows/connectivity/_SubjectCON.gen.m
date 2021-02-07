@@ -2,7 +2,7 @@
 SubjectCON < Subject (sub, subject with connectivity matrix) is a subject with connectivity matrix (e.g. DTI).
 
 %%% ¡description!
-Subject with a connectivity matrix, for example, obtained from DTI.
+Subject with a connectivity matrix (e.g. obtained from DTI).
 
 %%% ¡seealso!
 Element, Subject
@@ -26,5 +26,3 @@ if check
 else   
     msg = ['CON must be a square matrix with the dimensiton equal to the number of brain regions (' int2str(br_number) ').'];
 end
-%%%% ¡default!
-[]

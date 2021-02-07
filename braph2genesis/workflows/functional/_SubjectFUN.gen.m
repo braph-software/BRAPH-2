@@ -2,7 +2,7 @@
 SubjectFUN  < Subject (sub, subject with time series) is a subject with time series (e.g. fMRI).
 
 %%% ¡description!
-Subject with functional data (such as activation timeseries) for each brain region. 
+Subject with functional data (e.g. activation timeseries) for each brain region. 
 For example, functional data can be fMRI or EEG.
 
 %%% ¡seealso!
@@ -25,5 +25,3 @@ if check
 else   
     msg = ['FUN must be a matrix with the same number of rows as the brain regions (' int2str(br_number) ').'];
 end
-%%%% ¡default!
-[]

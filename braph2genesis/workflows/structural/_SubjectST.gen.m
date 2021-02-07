@@ -2,7 +2,7 @@
 SubjectST < Subject (sub, subject with structural data) is a subject with structural data (e.g. sMRI).
 
 %%% ¡description!
-Subject with structural data (such as cortical thickness) for each brain region.
+Subject with structural data (e.g. cortical thickness) for each brain region.
 For example, structural data can be structural MRI.
 
 %%% ¡seealso!
@@ -25,5 +25,3 @@ if check
 else   
     msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
-%%%% ¡default!
-[]
