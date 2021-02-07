@@ -38,9 +38,9 @@ SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the g
 %%%% ¡name!
 Instantiation
 %%%% ¡code!
-sub1 = Subject('ID','id1', 'LABEL', 'label1', 'NOTES', 'notes1')
-sub2 = Subject('ID','id2', 'LABEL', 'label2', 'NOTES', 'notes2')
-sub3 = Subject('ID','id3', 'LABEL', 'label3', 'NOTES', 'notes3')
+sub1 = Subject('ID','id1', 'LABEL', 'label1', 'NOTES', 'notes1');
+sub2 = Subject('ID','id2', 'LABEL', 'label2', 'NOTES', 'notes2');
+sub3 = Subject('ID','id3', 'LABEL', 'label3', 'NOTES', 'notes3');
 
 subject_dict = IndexedDictionary( ...
     'id', 'subject_idict', ...
