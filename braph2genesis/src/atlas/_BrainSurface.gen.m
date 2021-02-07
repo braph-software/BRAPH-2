@@ -35,7 +35,7 @@ check = isequal(bs.get('VERTEX_NUMBER'), size(value, 1));
 if check 
     msg = 'All ok!';
 else
-    msg = ['''COORDINATES'' must have ' num2str(bs.get('VERTEX_NUMBER')) ' columns while it has ' num2str(size(value, 2)) '.'];
+    msg = ['COORDINATES must have VERTEX_NUMBER (' num2str(bs.get('VERTEX_NUMBER')) ') columns while it has ' num2str(size(value, 2)) '.'];
 end
 
 %%% ¡prop!
@@ -53,8 +53,8 @@ if check
     msg = 'All ok!';
 else
     msg = [ ...
-        '''TRIANGLES'' must have ' num2str(bs.get('TRIANGLES_NUMBER')) ' columns while it has ' num2str(size(value, 1)) '.' ...
-        'The identifiers in ''TRIANGLES'' must be greater than 0 and smaller or equal to the "VERTEX_NUMBER" (' num2str(bs.get('VERTEX_NUMBER')) ') ' ...
+        'TRIANGLES must have ' num2str(bs.get('TRIANGLES_NUMBER')) ' columns while it has ' num2str(size(value, 1)) '.' ...
+        'The identifiers in TRIANGLES must be greater than 0 and smaller or equal to the VERTEX_NUMBER (' num2str(bs.get('VERTEX_NUMBER')) ') ' ...
         'while they are ' num2str(value) '.' ...
         ];
 end
