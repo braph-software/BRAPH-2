@@ -31,7 +31,7 @@ end
 if isfile(file)
     fid = fopen(file);
     vertex_number = fscanf(fid, '%f', 1);
-    coord = fscanf(fid, '%f', [3, vertex_number]);
+    coord = fscanf(fid, '%f', [3, vertex_number])';
     tri_number = fscanf(fid, '%f', 1);
     tri = fscanf(fid, '%d', [3, tri_number])';
     fclose(fid);
