@@ -3,9 +3,10 @@ ExporterGroupSubjectFUNXLS < Exporter (ex, exporter of FUN subject group in XLS/
 
 %%% ¡description!
 ExporterGroupSubjectFUNXLS exports a group of subjects with functional data to a series of XLSX file.
+All these files are saved in the same folder.
 
 %%% ¡seealso!
-Element, Exporter, ImporterGroupSubjectFUNXLS.
+Element, Exporter, ImporterGroupSubjectFUNXLS
 
 %% ¡props!
 

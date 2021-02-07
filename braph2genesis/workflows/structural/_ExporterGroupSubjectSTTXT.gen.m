@@ -3,9 +3,12 @@ ExporterGroupSubjectSTTXT < Exporter (ex, exporter of ST subject group in TXT) e
 
 %%% ¡description!
 ExporterGroupSubjectSTTXT exports a group of subjects with structural data to an TXT file.
+The TXT file consists of 6 columns. It reads as follows: 
+Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
+BrainRegions (column 4-end; one brainregion value per column).
 
 %%% ¡seealso!
-Element, Exporter, ImporterGroupSubjectSTTXT.
+Element, Exporter, ImporterGroupSubjectSTTXT
 
 %% ¡props!
 

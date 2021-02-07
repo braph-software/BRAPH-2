@@ -3,9 +3,10 @@ ExporterGroupSubjectFUNTXT < Exporter (ex, exporter of FUN subject group in TXT)
 
 %%% ¡description!
 ExporterGroupSubjectFUNTXT exports a group of subjects with functional data to a series of TXT file.
+All these files are saved in the same folder.
 
 %%% ¡seealso!
-Element, Exporter, ImporterGroupSubjectFUNTXT.
+Element, Exporter, ImporterGroupSubjectFUNTXT
 
 %% ¡props!
 

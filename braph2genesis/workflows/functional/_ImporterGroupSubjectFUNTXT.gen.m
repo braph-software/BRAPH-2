@@ -3,9 +3,10 @@ ImporterGroupSubjectFUNTXT < Importer (im, importer of FUN subject group from TX
 
 %%% ¡description!
 ImporterGroupSubjectFUNTXT imports a group of subjects with connectivity data from a series of TXT file.
+All these files must be in the same folder; also, no other files should be in the folder.
 
 %%% ¡seealso!
-Element, Importer, ExporterGroupSubjectFUNTXT.
+Element, Importer, ExporterGroupSubjectFUNTXT
 
 %% ¡props!
 
@@ -37,8 +38,8 @@ if isfolder(directory)
     % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...
-        'ID', [name], ...
-        'LABEL', [name], ...
+        'ID', name, ...
+        'LABEL', name, ...
         'NOTES', ['Group loaded from ' directory] ...
     );
 

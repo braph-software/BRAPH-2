@@ -8,7 +8,7 @@ Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
 
 %%% ¡seealso!
-Element, Importer, ExporterGroupSubjectSTXLS.
+Element, Importer, ExporterGroupSubjectSTXLS
 
 %% ¡props!
 

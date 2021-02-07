@@ -3,9 +3,10 @@ ExporterGroupSubjectCONXLS < Exporter (ex, exporter of CON subject group in XLS/
 
 %%% ¡description!
 ExporterGroupSubjectCONXLS exports a group of subjects with connectivity data to a series of XLSX file.
+All these files are saved in the same folder.
 
 %%% ¡seealso!
-Element, Exporter, ImporterGroupSubjectCONXLS.
+Element, Exporter, ImporterGroupSubjectCONXLS
 
 %% ¡props!
 

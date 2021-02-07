@@ -3,9 +3,10 @@ ExporterGroupSubjectCONTXT < Exporter (ex, exporter of CON subject group in TXT)
 
 %%% ¡description!
 ExporterGroupSubjectCONTXT exports a group of subjects with connectivity data to a series of TXT file.
+All these files are saved in the same folder.
 
 %%% ¡seealso!
-Element, Exporter, ImporterGroupSubjectCONTXT.
+Element, Exporter, ImporterGroupSubjectCONTXT
 
 %% ¡props!
 
