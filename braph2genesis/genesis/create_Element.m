@@ -233,6 +233,9 @@ generate_header()
              '%'
             })
         gs(1, cellfun(@(x) ['% ' x], description, 'UniformOutput', false))
+        if element_class_created
+% element-specific constants
+        end       
         gs(1, {
              '%'
             ['% The list of ' class_name ' properties is:']
@@ -242,6 +245,15 @@ generate_header()
              '%'
             ['% ' class_name ' constructor:']
             ['%  ' class_name ' - constructor']
+            })
+        if element_class_created
+% class-specific methods
+% m = methods('Element')
+% m = methods('Element', '-full')
+% txt = help('Plot.set')
+% class-specific static methods
+        end
+        gs(1, {
              '%'
             ['% ' class_name ' methods:']
              '%  set - sets the value of a property'
