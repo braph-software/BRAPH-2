@@ -403,8 +403,10 @@ function h_panel = draw(pl, varargin)
                 'MarkerEdgeColor', SYMS_EDGE_COLOR(i, :) ...
                 );
         else
-            set(pl.symbols.h(i), ...
-                'Visible', 'off');
+            if ishandle(pl.symbols.h(i))  && ~isempty(pl.symbols.h(i))
+                set(pl.symbols.h(i), ...
+                    'Visible', 'off');
+            end
         end
 
         % spheres
@@ -424,8 +426,10 @@ function h_panel = draw(pl, varargin)
                 'FaceAlpha', SPHS_FACE_ALPHA(i) ...
                 );
         else
-            set(pl.spheres.h(i), ...
-                'Visible', 'off');
+            if ishandle(pl.spheres.h(i))  && ~isempty(pl.spheres.h(i))
+                set(pl.spheres.h(i), ...
+                    'Visible', 'off');
+            end
         end
 
         % ids
@@ -476,22 +480,22 @@ function h_panel = draw(pl, varargin)
     end
 end
 function f_settings = settings(pl, varargin)
-		    %SETTINGS opens the brain surface property editor GUI.
-		    %
-		    % SETTINGS(PL) allows the user to specify the properties of the brain
-		    %  atlas plot by opening a GUI property editor.
-		    %
-		    % F = SETTINGS(PL) returns a handle to the brain atlas property editor GUI.
-		    %
-		    % SETTINGS(PL, 'Property', VALUE, ...) sets the properties of the brain
-		    %  atlas property editor GUI with custom property-value couples.
-		    %  All standard plot properties of figure can be used.
-		    %
-		    % See also draw, figure, isgraphics.
+            %SETTINGS opens the brain surface property editor GUI.
+            %
+            % SETTINGS(PL) allows the user to specify the properties of the brain
+            %  atlas plot by opening a GUI property editor.
+            %
+            % F = SETTINGS(PL) returns a handle to the brain atlas property editor GUI.
+            %
+            % SETTINGS(PL, 'Property', VALUE, ...) sets the properties of the brain
+            %  atlas property editor GUI with custom property-value couples.
+            %  All standard plot properties of figure can be used.
+            %
+            % See also draw, figure, isgraphics.
 
-		    f_settings = settings@PlotBrainSurface(pl, varargin{:});            
+            f_settings = settings@PlotBrainSurface(pl, varargin{:});            
             pl.f_settings = f_settings;
-            
+
             % create small buttons figure
             f_settings_position = f_settings.Position;
             new_position = [f_settings_position(1) f_settings_position(2)-.2 f_settings_position(3)-.2 f_settings_position(4)-.1]; 
@@ -503,9 +507,9 @@ function f_settings = settings(pl, varargin)
                 'Toolbar', 'none', ...
                 'NumberTitle', 'off', ...
                 'DockControls', 'off');
-            
+
             pl.f_settings_buttons = f_settings_buttons;
-            
+
             % initiliaze buttons for individual settings
             ui_button_syms_pushbutton = uicontrol(f_settings_buttons, 'Style', 'pushbutton', ...
                 'Units', 'normalized', ...
@@ -514,7 +518,7 @@ function f_settings = settings(pl, varargin)
                 'HorizontalAlignment', 'center', ...
                 'TooltipString', 'Symbols Settings', ...
                 'Callback', {@cb_syms_figure_settings});
-            
+
             ui_button_sphs_pushbutton = uicontrol(f_settings_buttons, 'Style', 'pushbutton', ...
                 'Units', 'normalized', ...
                 'Position', [.52 .5 .45 .3], ...
@@ -522,7 +526,7 @@ function f_settings = settings(pl, varargin)
                 'HorizontalAlignment', 'center', ...
                 'TooltipString', 'Spheres Settings', ...
                 'Callback', {@cb_sphs_figure_settings});
-            
+
             ui_button_ids_pushbutton = uicontrol(f_settings_buttons, 'Style', 'pushbutton', ...
                 'Units', 'normalized', ...
                 'Position', [.02 .02 .45 .3], ...
@@ -530,7 +534,7 @@ function f_settings = settings(pl, varargin)
                 'HorizontalAlignment', 'center', ...
                 'TooltipString', 'Ids Settings', ...
                 'Callback', {@cb_ids_figure_settings});
-            
+
             ui_button_labs_pushbutton = uicontrol(f_settings_buttons, 'Style', 'pushbutton', ...
                 'Units', 'normalized', ...
                 'Position', [.52 .02 .45 .3], ...
@@ -538,7 +542,7 @@ function f_settings = settings(pl, varargin)
                 'HorizontalAlignment', 'center', ...
                 'TooltipString', 'Labs Settings', ...
                 'Callback', {@cb_labs_figure_settings});
-            
+
             % callback functions
             function cb_syms_figure_settings(~, ~) % (src, event)
                pl.syms_settings = pl.symbols_settings();
@@ -804,18 +808,50 @@ function f_out = symbols_settings(pl)
             pl.draw();
         end
         function cb_facecolor(~, ~)  % (src, event)
-            color = uisetcolor();
-
-            if length(color) == 3
-                pl.br_syms(get_br_list(), 'MarkerFaceColor', color)
+            color = uisetcolor();   
+            original_color = pl.get('SYMS_FACE_COLOR');
+            syms_to_change = get_br_list();
+            if length(original_color) == 1
+                original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
+            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+            if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
+                for i = 1:1:length(syms_to_change)
+                    syms_to_(syms_to_change(i)) = syms_to_change(i);
+                end
+            else
+                syms_to_ = syms_to_change;
+            end
+            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+                if i == syms_to_(i)
+                    original_color(i) = color;
+                end
+            end 
+            pl.set('SYMS_FACE_COLOR', original_color);
+            pl.draw();
         end
         function cb_edgecolor(~, ~)  % (src, event)
-            color = uisetcolor();
-
-            if length(color) == 3
-                pl.br_syms(get_br_list(), 'MarkerEdgeColor', color)
+            color = uisetcolor();   
+            original_color = pl.get('SYMS_EDGE_COLOR');
+            syms_to_change = get_br_list();
+            if length(original_color) == 1
+                original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
+            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+            if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
+                for i = 1:1:length(syms_to_change)
+                    syms_to_(syms_to_change(i)) = syms_to_change(i);
+                end
+            else
+                syms_to_ = syms_to_change;
+            end
+            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+                if i == syms_to_(i)
+                    original_color(i) = color;
+                end
+            end 
+            pl.set('SYMS_EDGE_COLOR', original_color);
+            pl.draw();
         end
         function bri = get_br_list()
             if pl.get('ATLAS').get('BR_DICT').length()>0
@@ -827,9 +863,445 @@ function f_out = symbols_settings(pl)
 
     if nargout > 0
         f_out = f;
-end
+    end
 end
 function f_out = spheres_settings(pl)
+    if isempty(pl.sphs_settings) || ~isgraphics(pl.sphs_settings, 'figure')
+        pl.sphs_settings = figure();
+    end
+
+    f = pl.sphs_settings;
+
+    set(f, 'units', 'normalized', ...
+        'Position', [.50 .30 .30 .30], ...
+        'Color', [.95 .95 .95], ...
+        'Name','Brain Region Sphere Settings', ...
+        'MenuBar', 'none', ...
+        'Toolbar', 'none', ...
+        'NumberTitle', 'off', ...
+        'DockControls', 'off')
+
+    % Initialization
+    ui_list = uicontrol(f, 'Style', 'listbox');
+    set(ui_list, 'Units','normalized')
+    set(ui_list, 'BackgroundColor', [.95 .95 .95])
+    set(ui_list, 'Value', [])
+    set(ui_list, 'Max', 2, 'Min', 0)
+    set(ui_list, 'BackgroundColor', [1 1 1])
+    set(ui_list, 'Position', [.05 .15 .40 .80])
+    set(ui_list, 'TooltipString', 'Select brain regions');
+    set(ui_list, 'Callback', {@cb_list});
+
+    ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
+    set(ui_checkbox_id, 'Units','normalized')
+    set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
+    set(ui_checkbox_id, 'String', 'id')
+    set(ui_checkbox_id, 'Value', true)
+    set(ui_checkbox_id, 'FontWeight', 'bold')
+    set(ui_checkbox_id, 'TooltipString', 'Shows brain regions by name')
+    set(ui_checkbox_id, 'Callback', {@cb_id})
+
+    ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
+    set(ui_checkbox_label, 'Units','normalized')
+    set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
+    set(ui_checkbox_label, 'String', 'label')
+    set(ui_checkbox_label, 'Value', false)
+    set(ui_checkbox_label, 'TooltipString', 'Shows brain regions by label')
+    set(ui_checkbox_label, 'Callback', {@cb_label})
+
+    ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
+    set(ui_checkbox_xyz, 'Units','normalized')
+    set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
+    set(ui_checkbox_xyz, 'String', 'xyz')
+    set(ui_checkbox_xyz, 'Value', false)
+    set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by position')
+    set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
+
+    ui_button_show = uicontrol(f, 'Style', 'pushbutton');
+    set(ui_button_show, 'Units','normalized')
+    set(ui_button_show, 'Position', [.50 .85 .45 .10])
+    set(ui_button_show, 'String', 'Show Regions')
+    set(ui_button_show, 'TooltipString', 'Show selected brain regions')
+    set(ui_button_show, 'Callback', {@cb_show})
+
+    ui_button_hide = uicontrol(f, 'Style', 'pushbutton');
+    set(ui_button_hide, 'Units','normalized')
+    set(ui_button_hide, 'Position', [.50 .75 .45 .10])
+    set(ui_button_hide, 'String', 'Hide Regions')
+    set(ui_button_hide, 'TooltipString', 'Hide selected brain regions')
+    set(ui_button_hide, 'Callback', {@cb_hide})
+
+    ui_text = uicontrol(f, 'Style', 'text');
+    set(ui_text, 'Units','normalized')
+    set(ui_text, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text, 'String', 'transparency')
+    set(ui_text, 'Position', [.70 .60 .25 .10])
+    set(ui_text, 'HorizontalAlignment', 'center')
+    set(ui_text, 'FontWeight', 'bold')
+
+    ui_button_color = uicontrol(f, 'Style', 'pushbutton');
+    set(ui_button_color, 'Units','normalized')
+    set(ui_button_color, 'Position', [.50 .50 .15 .10])
+    set(ui_button_color, 'String', 'sphere color')
+    set(ui_button_color, 'HorizontalAlignment', 'center')
+    set(ui_button_color, 'TooltipString', 'Brain region color (applied both to faces and edges)')
+    set(ui_button_color, 'Callback', {@cb_color})
+
+    ui_slider_alpha = uicontrol(f, 'Style', 'slider');
+    set(ui_slider_alpha, 'Units','normalized')
+    set(ui_slider_alpha, 'BackgroundColor', [.95 .95 .95])
+    set(ui_slider_alpha, 'Position', [.70 .475 .25 .10])
+    set(ui_slider_alpha, 'String', 'Brain region transparency')
+    set(ui_slider_alpha, 'Min', 0, 'Max',1, 'Value',.5);
+    set(ui_slider_alpha, 'TooltipString','Brain region transparency (applied both to faces and edges)')
+    set(ui_slider_alpha, 'Callback',{@cb_alpha})
+
+    ui_button_facecolor = uicontrol(f, 'Style', 'pushbutton');
+    set(ui_button_facecolor, 'Units','normalized')
+    set(ui_button_facecolor, 'Position', [.50 .35 .15 .10])
+    set(ui_button_facecolor, 'String', 'face color')
+    set(ui_button_facecolor, 'HorizontalAlignment', 'center')
+    set(ui_button_facecolor, 'TooltipString', 'Brain region face color')
+    set(ui_button_facecolor, 'Callback', {@cb_facecolor})
+
+    ui_slider_facealpha = uicontrol(f, 'Style', 'slider');
+    set(ui_slider_facealpha, 'Units', 'normalized')
+    set(ui_slider_facealpha, 'BackgroundColor', [.95 .95 .95])
+    set(ui_slider_facealpha, 'Position', [.70 .325 .25 .10])
+    set(ui_slider_facealpha, 'String', 'Brain region transparency')
+    set(ui_slider_facealpha, 'Min', 0, 'Max', 1, 'Value', .5)
+    set(ui_slider_facealpha, 'TooltipString', 'Brain region face transparency')
+    set(ui_slider_facealpha, 'Callback', {@cb_facealpha})
+
+    ui_button_edgecolor = uicontrol(f, 'Style', 'pushbutton');
+    set(ui_button_edgecolor, 'Units', 'normalized')
+    set(ui_button_edgecolor, 'Position', [.50 .20 .15 .10])
+    set(ui_button_edgecolor, 'String', 'edge color')
+    set(ui_button_edgecolor, 'HorizontalAlignment', 'center')
+    set(ui_button_edgecolor, 'TooltipString', 'Brain region edge color')
+    set(ui_button_edgecolor, 'Callback', {@cb_edgecolor})
+
+    ui_slider_edgealpha = uicontrol(f, 'Style', 'slider');
+    set(ui_slider_edgealpha, 'Units', 'normalized')
+    set(ui_slider_edgealpha, 'BackgroundColor', [.95 .95 .95])
+    set(ui_slider_edgealpha, 'Position', [.70 .175 .25 .10])
+    set(ui_slider_edgealpha, 'String', 'Brain transparency')
+    set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', .5)
+    set(ui_slider_edgealpha, 'TooltipString', 'Brain region edge transparency')
+    set(ui_slider_edgealpha, 'Callback', {@cb_edgealpha})
+
+    ui_text_radius = uicontrol(f, 'Style', 'text');
+    set(ui_text_radius, 'Units', 'normalized')
+    set(ui_text_radius, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text_radius, 'Position', [.50 .025 .20 .10])
+    set(ui_text_radius, 'String', 'sphere radius ')
+    set(ui_text_radius, 'HorizontalAlignment', 'left')
+    set(ui_text_radius, 'FontWeight', 'bold')
+
+    ui_edit_radius = uicontrol(f, 'Style', 'edit');
+    set(ui_edit_radius, 'Units', 'normalized')
+    set(ui_edit_radius, 'BackgroundColor', [.95 .95 .95])
+    set(ui_edit_radius, 'Position', [.70 .05 .25 .10])
+    set(ui_edit_radius, 'HorizontalAlignment', 'center')
+    set(ui_edit_radius, 'FontWeight', 'bold')
+    set(ui_edit_radius, 'TooltipString', 'Brain region sphere radius')
+    set(ui_edit_radius, 'String', '1')
+    set(ui_edit_radius, 'Callback', {@cb_radius})
+
+    update_list()
+    set(f,'Visible','on');
+
+    function update_list()
+        % get info
+        ids_ = cellfun(@(x) x.get('ID'), pl.get('ATLAS').get('BR_DICT').getItems(), 'UniformOutput', false);
+        labels = cellfun(@(x) x.get('Label'), pl.get('ATLAS').get('BR_DICT').getItems(), 'UniformOutput', false);
+        xs = cellfun(@(x) x.get('X'), pl.get('ATLAS').get('BR_DICT').getItems(), 'UniformOutput', false);
+        ys = cellfun(@(x) x.get('Y'), pl.get('ATLAS').get('BR_DICT').getItems(), 'UniformOutput', false);
+        zs = cellfun(@(x) x.get('Z'), pl.get('ATLAS').get('BR_DICT').getItems(), 'UniformOutput', false);
+
+        % Set list names
+        if get(ui_checkbox_id, 'Value')
+            set(ui_list, 'String', ids_)
+        elseif get(ui_checkbox_label, 'Value')
+            set(ui_list, 'String', labels)
+        elseif get(ui_checkbox_xyz, 'Value')
+            xyz = cell(1, pl.get('ATLAS').get('BR_DICT').length());
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
+                xyz{j} = [num2str(xs{j}) '   ' ...
+                    num2str(ys{j}) '   ' ...
+                    num2str(zs{j})];
+            end
+            set(ui_list, 'String', xyz)
+        end
+    end
+    function cb_list(~, ~)  % (src, event)
+        update_list()
+    end
+    function cb_id(~,~)  % (src,event)
+        set(ui_checkbox_id, 'Value', true)
+        set(ui_checkbox_id, 'FontWeight', 'bold')
+
+        set(ui_checkbox_label, 'Value', false)
+        set(ui_checkbox_label, 'FontWeight', 'normal')
+
+        set(ui_checkbox_xyz, 'Value', false)
+        set(ui_checkbox_xyz, 'FontWeight', 'normal')
+
+        update_list()
+    end
+    function cb_label(~, ~)  % (src, event)
+        set(ui_checkbox_id, 'Value', false)
+        set(ui_checkbox_id, 'FontWeight', 'normal')
+
+        set(ui_checkbox_label, 'Value', true)
+        set(ui_checkbox_label, 'FontWeight', 'bold')
+
+        set(ui_checkbox_xyz, 'Value', false)
+        set(ui_checkbox_xyz, 'FontWeight', 'normal')
+
+        update_list()
+    end
+    function cb_xyz(~, ~)  % (src, event)
+        set(ui_checkbox_id, 'Value', false)
+        set(ui_checkbox_id, 'FontWeight', 'normal')
+
+        set(ui_checkbox_label, 'Value', false)
+        set(ui_checkbox_label, 'FontWeight', 'normal')
+
+        set(ui_checkbox_xyz, 'Value', true)
+        set(ui_checkbox_xyz, 'FontWeight', 'bold')
+
+        update_list()
+    end
+    function cb_show(~, ~)  % (src, event)
+        sphs_to_show = get_br_list();
+        all_brs_show = pl.get('SPHS');
+        if length(all_brs_show) == 1
+            all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
+        end
+        sphs_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+        if length(sphs_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
+            for i = 1:1:length(sphs_to_show)
+                sphs_to_(sphs_to_show(i)) = sphs_to_show(i);
+            end
+        else
+            sphs_to_ = sphs_to_show;
+        end
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+            if i == sphs_to_(i)
+                all_brs_show(i) = 1;
+            end
+        end
+        pl.set('SPHS', all_brs_show);
+        pl.draw();
+    end
+    function cb_hide(~, ~)  % (src, event)
+        syms_to_show = get_br_list();
+        all_brs_show = pl.get('SPHS');
+        if length(all_brs_show) == 1
+            all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
+        end
+        syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+        if length(syms_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
+            for i = 1:1:length(syms_to_show)
+                syms_to_(syms_to_show(i)) = syms_to_show(i);
+            end
+        else
+            syms_to_ = syms_to_show;
+        end
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+            if i == syms_to_(i)
+                all_brs_show(i) = 0;
+            end
+        end
+        pl.set('SPHS', all_brs_show);
+        pl.draw();
+    end
+    function cb_color(~, ~)  %  (src, event)
+        color = uisetcolor();
+        original_color = pl.get('SYMS_FACE_COLOR');
+        syms_to_change = get_br_list();
+        if length(original_color) == 1
+            original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
+        end
+        syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+        if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
+            for i = 1:1:length(syms_to_change)
+                syms_to_(syms_to_change(i)) = syms_to_change(i);
+            end
+        else
+            syms_to_ = syms_to_change;
+        end
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+            if i == syms_to_(i)
+                original_color(i) = color;
+            end
+        end
+        pl.set('SYMS_FACE_COLOR', original_color);
+        pl.set('SYMS_EDGE_COLOR', original_color);
+        pl.draw();
+    end
+    function cb_facecolor(~, ~)  % (src, event)
+        color = uisetcolor();
+        original_color = pl.get('SYMS_FACE_COLOR');
+        syms_to_change = get_br_list();
+        if length(original_color) == 1
+            original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
+        end
+        syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+        if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
+            for i = 1:1:length(syms_to_change)
+                syms_to_(syms_to_change(i)) = syms_to_change(i);
+            end
+        else
+            syms_to_ = syms_to_change;
+        end
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+            if i == syms_to_(i)
+                original_color(i) = color;
+            end
+        end
+        pl.set('SYMS_FACE_COLOR', original_color);
+        pl.draw();
+    end
+    function cb_edgecolor(~, ~)  % (src, event)
+        color = uisetcolor();
+        original_color = pl.get('SYMS_EDGE_COLOR');
+        syms_to_change = get_br_list();
+        if length(original_color) == 1
+            original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
+        end
+        syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+        if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
+            for i = 1:1:length(syms_to_change)
+                syms_to_(syms_to_change(i)) = syms_to_change(i);
+            end
+        else
+            syms_to_ = syms_to_change;
+        end
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+            if i == syms_to_(i)
+                original_color(i) = color;
+            end
+        end
+        pl.set('SYMS_EDGE_COLOR', original_color);
+        pl.draw();
+    end
+    function cb_alpha(~, ~)  % (src, event)
+        new_value = get(ui_slider_alpha, 'Value');
+        brs_to_change = get_br_list();
+        all_alphas_show = pl.get('SPHS_FACE_ALPHA');
+        if length(all_alphas_show) == 1
+            all_alphas_show = repmat(all_alphas_show, pl.get('ATLAS').get('BR_DICT').length, 1);
+        end
+        syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+        if length(brs_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
+            for i = 1:1:length(brs_to_change)
+                syms_to_(brs_to_change(i)) = brs_to_change(i);
+            end
+        else
+            syms_to_ = brs_to_change;
+        end
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+            if i == syms_to_(i)
+                all_alphas_show(i) = new_value;
+            end
+        end
+        pl.set('SPHS_FACE_ALPHA', all_alphas_show)
+        pl.set('SPHS_EDGE_ALPHA', all_alphas_show)
+        pl.draw();
+
+        set(ui_slider_facealpha, 'Value', get(ui_slider_alpha, 'Value'))
+        set(ui_slider_edgealpha, 'Value', get(ui_slider_alpha, 'Value'))
+    end
+    function cb_facealpha(~, ~)  % (src, event)
+        new_value = get(ui_slider_alpha, 'Value');
+        brs_to_change = get_br_list();
+        all_alphas_show = pl.get('SPHS_FACE_ALPHA');
+        if length(all_alphas_show) == 1
+            all_alphas_show = repmat(all_alphas_show, pl.get('ATLAS').get('BR_DICT').length, 1);
+        end
+        syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+        if length(brs_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
+            for i = 1:1:length(brs_to_change)
+                syms_to_(brs_to_change(i)) = brs_to_change(i);
+            end
+        else
+            syms_to_ = brs_to_change;
+        end
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+            if i == syms_to_(i)
+                all_alphas_show(i) = new_value;
+            end
+        end
+        pl.set('SPHS_FACE_ALPHA', all_alphas_show)
+        pl.draw();
+    end
+    function cb_edgealpha(~, ~)  % (src, event)
+       new_value = get(ui_slider_alpha, 'Value');
+        brs_to_change = get_br_list();
+        all_alphas_show = pl.get('SPHS_FACE_ALPHA');
+        if length(all_alphas_show) == 1
+            all_alphas_show = repmat(all_alphas_show, pl.get('ATLAS').get('BR_DICT').length, 1);
+        end
+        syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+        if length(brs_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
+            for i = 1:1:length(brs_to_change)
+                syms_to_(brs_to_change(i)) = brs_to_change(i);
+            end
+        else
+            syms_to_ = brs_to_change;
+        end
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+            if i == syms_to_(i)
+                all_alphas_show(i) = new_value;
+            end
+        end
+        pl.set('SPHS_EDGE_ALPHA', all_alphas_show)
+        pl.draw();
+    end
+    function cb_radius(~, ~)  % (src, event)
+        R = real(str2double(get(ui_edit_radius, 'String')));
+
+        if isempty(R) || R <= 0
+            set(ui_edit_radius, 'String', '1')
+            R = 1;
+        end
+
+        syms_to_show = get_br_list();
+        all_brs_show = pl.get('SPHS_SIZE');
+        if length(all_brs_show) == 1
+            all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
+        end
+        syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+        if length(syms_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
+            for i = 1:1:length(syms_to_show)
+                syms_to_(syms_to_show(i)) = syms_to_show(i);
+            end
+        else
+            syms_to_ = syms_to_show;
+        end
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+            if i == syms_to_(i)
+                all_brs_show(i) = R;
+            end
+        end
+        pl.set('SPHS_SIZE', all_brs_show);
+        pl.draw();
+    end
+    function bri = get_br_list()
+        if pl.get('atlas').get('BR_DICT').length() > 0
+            bri = get(ui_list, 'Value');
+        else
+            bri = [];
+        end
+    end
+    if nargout > 0
+        f_out = f;
+    end
 end
 function f_out = identificators_settings(pl)
 end
@@ -865,7 +1337,7 @@ pl = PlotBrainAtlas('atlas', atlas, ...
     'IDS', 1, 'IDS_SIZE', [11:1:15]', 'IDS_FONT_COLOR', [0 0 0], ...
     'LABS', 1, 'LABS_SIZE', [12:1:16]', 'LABS_FONT_COLOR', [0 0 0], ...
     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
-pl.draw()
-pl.settings()
+pl.draw();
+pl.settings();
 
 close(fig)
