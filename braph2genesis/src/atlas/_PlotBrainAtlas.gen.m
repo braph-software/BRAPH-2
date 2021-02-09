@@ -44,9 +44,15 @@ PLOT_SYMBOL_TAG = { ...
     'none' ...
     }
 
+PLOT_ID_FONT_INTREPETER = { ...
+    'none' ...
+    'latex' ...
+    }
+
 %% ¡properties!
 symbols % handle for the symbols structure
 spheres % handle for the spheres structure
+ids % handle for the id structure
 
 %% ¡props!
 
@@ -76,7 +82,7 @@ SYMS_MARKER (metadata, cvector) is the symbol option.
 %%%% ¡settings!
 1:length(PlotBrainAtlas.PLOT_SYMBOL_TAG)
 %%%% ¡check_value!
-check = 1 < value &&  value < length(PlotBrainAtlas.PLOT_SYMBOL_TAG);
+check = 1 <= value &&  value <= length(PlotBrainAtlas.PLOT_SYMBOL_TAG);
 %%%% ¡default!
 2
 
@@ -142,6 +148,44 @@ check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').le
 %%%% ¡default!
 .5
 
+%%% ¡prop!
+IDS (metadata, cvector) is the ids visibility.
+%%%% ¡check_value!
+check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
+%%%% ¡default!
+1
+
+%%% ¡prop!
+IDS_SIZE (metadata, cvector) is the ids size.
+%%%% ¡conditioning!
+value = abs(value);
+%%%% ¡check_value!
+check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
+%%%% ¡default!
+1
+
+%%% ¡prop!
+IDS_FONT_COLOR (metadata, matrix) is the ids font color.
+%%%% ¡check_value!
+check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+%%%% ¡default!
+[0 0 0]
+
+%%% ¡prop!
+IDS_FONT_NAME (metadata, string) is the ids font name.
+%%%% ¡default!
+'Helvetica'
+
+%%% ¡prop!
+IDS_FONT_INTERPRETER (metadata, cvector) is the ids font interpreter.
+%%%% ¡settings!
+1:length(PlotBrainAtlas.PLOT_ID_FONT_INTREPETER)
+%%%% ¡check_value!
+check = 1 <= value &&  value <= length(PlotBrainAtlas.PLOT_ID_FONT_INTREPETER);
+%%%% ¡default!
+1
+
+
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the brain surface graphical panel.
@@ -170,33 +214,40 @@ function h_panel = draw(pl, varargin)
         pl.spheres = cell(1, pl.get('ATLAS').get('BR_DICT').length);
     end
     
+    if isempty(pl.ids)
+        pl.ids = cell(1, pl.get('ATLAS').get('BR_DICT').length);
+    end
+    
     % get coordinates
     X = cellfun(@(x) x.get('X'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
     Y = cellfun(@(x) x.get('Y'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
     Z = cellfun(@(x) x.get('Z'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
+    ID = cellfun(@(x) x.get('ID'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
     
     % get values & complete vector size
-    SYMS_SIZE = pl.get('syms_size');
-    if length(SYMS_SIZE) == 1
-        SYMS_SIZE = repmat(SYMS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
-    end
-    
-    SYMS_SHOW = pl.get('syms');
+    % symbols
+    SYMS_SHOW = pl.get('SYMS');
     if length(SYMS_SHOW) == 1
         SYMS_SHOW = repmat(SYMS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
     
-    SYMS_FACE_COLOR = pl.get('syms_face_color');
+    SYMS_SIZE = pl.get('SYMS_SIZE');
+    if length(SYMS_SIZE) == 1
+        SYMS_SIZE = repmat(SYMS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end  
+
+    SYMS_FACE_COLOR = pl.get('SYMS_FACE_COLOR');
     if  size(SYMS_FACE_COLOR, 1) == 1        
         SYMS_FACE_COLOR = repmat(SYMS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
     
-    SYMS_EDGE_COLOR = pl.get('syms_edge_color');
+    SYMS_EDGE_COLOR = pl.get('SYMS_EDGE_COLOR');
     if  size(SYMS_EDGE_COLOR, 1) == 1
         SYMS_EDGE_COLOR = repmat(SYMS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
     
-    SPHS_SHOW = pl.get('sphs');
+    % spheres
+    SPHS_SHOW = pl.get('SPHS');
     if length(SPHS_SHOW) == 1
         SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
@@ -206,12 +257,12 @@ function h_panel = draw(pl, varargin)
         SPHS_SIZE = repmat(SPHS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
     end  
     
-    SPHS_FACE_COLOR = pl.get('sphs_face_color');
+    SPHS_FACE_COLOR = pl.get('SPHS_FACE_COLOR');
     if  size(SPHS_FACE_COLOR, 1) == 1        
         SPHS_FACE_COLOR = repmat(SPHS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
     
-    SPHS_EDGE_COLOR = pl.get('sphs_edge_color');
+    SPHS_EDGE_COLOR = pl.get('SPHS_FACE_COLOR');
     if  size(SPHS_EDGE_COLOR, 1) == 1
         SPHS_EDGE_COLOR = repmat(SPHS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
@@ -225,6 +276,22 @@ function h_panel = draw(pl, varargin)
     if length(SPHS_FACE_ALPHA) == 1
         SPHS_FACE_ALPHA = repmat(SPHS_FACE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
+    
+    % ids
+    IDS_SHOW = pl.get('IDS');
+    if length(IDS_SHOW) == 1
+        IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+    
+    IDS_SIZE = pl.get('IDS_SIZE'); 
+    if length(IDS_SIZE) == 1
+        IDS_SIZE = repmat(IDS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end  
+    
+    IDS_FONT_COLOR = pl.get('IDS_FONT_COLOR');
+    if  size(IDS_FONT_COLOR, 1) == 1        
+        IDS_FONT_COLOR = repmat(IDS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end   
     
     % for loop for plots and sets
     for i = 1:1:pl.get('ATLAS').get('BR_DICT').length        
@@ -268,6 +335,26 @@ function h_panel = draw(pl, varargin)
             set(pl.spheres{i}, ...
                 'Visible', 'off');
         end
+        
+        % ids
+        if IDS_SHOW(i)
+            % plotting
+            if ~ishandle(pl.ids(i))                
+                pls.ids{i} = text(X{i}, Y{i}, Z{i}, ID{i});
+            end
+            % set            
+            set(pl.ids{i}, ...
+                'Visible', 'on', ...
+                'FontSize', IDS_SIZE(i), ...
+                'Color' , IDS_FONT_COLOR(i, :), ...  
+                'FontName', pl.get('IDS_FONT_NAME'), ...
+                'Interpreter', pl.get('IDS_FONT_INTERPRETER') ...
+                );
+        else
+            set(pl.ids{i}, ...
+                'Visible', 'off');
+        end
+        
     end
     
     % output
@@ -297,11 +384,12 @@ br_dict =  IndexedDictionary( ...
     'it_list', {br1, br2, br3, br4, br5});
 atlas = BrainAtlas('ID', 'BA ID', 'Label', 'Brain Atlas Label', 'Notes', 'Brain atlas notes', 'SURF', bs, 'BR_DICT', br_dict);
 pl = PlotBrainAtlas('atlas', atlas, ...
-    'syms', 1, 'SYMS_SIZE', [20:10:60]', ...
+    'syms', 1, 'SYMS_SIZE', [1:5:25]', ...
     'SYMS_FACE_COLOR', [0 0 0], 'SYMS_EDGE_COLOR', [0 0 0], ...
-    'SPHS', 1, 'SPHS_SIZE', [1:2:10]', ...
+    'SPHS', 1, 'SPHS_SIZE', [1:1:5]', ...
     'SPHS_FACE_ALPHA', .7, 'SPHS_FACE_COLOR', [0 1 0], ...
     'SPHS_EDGE_ALPHA', .4, 'SPHS_EDGE_COLOR', [1 1 1], ...
+    'IDS', 1, 'IDS_SIZE', [11:1:15]', 'IDS_FONT_COLOR', [0 0 0], ...
     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 pl.draw()
 
