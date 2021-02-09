@@ -53,6 +53,7 @@ PLOT_ID_FONT_INTREPETER = { ...
 symbols % handle for the symbols structure
 spheres % handle for the spheres structure
 ids % handle for the id structure
+labs % handle for the labs structure
 
 %% ¡props!
 
@@ -185,6 +186,43 @@ check = 1 <= value &&  value <= length(PlotBrainAtlas.PLOT_ID_FONT_INTREPETER);
 %%%% ¡default!
 1
 
+%%% ¡prop!
+LABS (metadata, cvector) is the labs visibility.
+%%%% ¡check_value!
+check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
+%%%% ¡default!
+1
+
+%%% ¡prop!
+LABS_SIZE (metadata, cvector) is the labs size.
+%%%% ¡conditioning!
+value = abs(value);
+%%%% ¡check_value!
+check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
+%%%% ¡default!
+1
+
+%%% ¡prop!
+LABS_FONT_COLOR (metadata, matrix) is the labs font color.
+%%%% ¡check_value!
+check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+%%%% ¡default!
+[0 0 0]
+
+%%% ¡prop!
+LABS_FONT_NAME (metadata, string) is the labs font name.
+%%%% ¡default!
+'Helvetica'
+
+%%% ¡prop!
+LABS_FONT_INTERPRETER (metadata, cvector) is the labs font interpreter.
+%%%% ¡settings!
+1:length(PlotBrainAtlas.PLOT_ID_FONT_INTREPETER)
+%%%% ¡check_value!
+check = 1 <= value &&  value <= length(PlotBrainAtlas.PLOT_ID_FONT_INTREPETER);
+%%%% ¡default!
+1
+
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -218,11 +256,16 @@ function h_panel = draw(pl, varargin)
         pl.ids = cell(1, pl.get('ATLAS').get('BR_DICT').length);
     end
     
+    if isempty(pl.labs)
+        pl.labs = cell(1, pl.get('ATLAS').get('BR_DICT').length);
+    end
+    
     % get coordinates
     X = cellfun(@(x) x.get('X'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
     Y = cellfun(@(x) x.get('Y'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
     Z = cellfun(@(x) x.get('Z'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
     ID = cellfun(@(x) x.get('ID'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
+    LABS = cellfun(@(x) x.get('LABEL'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
     
     % get values & complete vector size
     % symbols
@@ -293,6 +336,22 @@ function h_panel = draw(pl, varargin)
         IDS_FONT_COLOR = repmat(IDS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
     end   
     
+    % labs
+    LABS_SHOW = pl.get('LABS');
+    if length(LABS_SHOW) == 1
+        LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+    
+    LABS_SIZE = pl.get('LABS_SIZE'); 
+    if length(LABS_SIZE) == 1
+        LABS_SIZE = repmat(LABS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end  
+    
+    LABS_FONT_COLOR = pl.get('LABS_FONT_COLOR');
+    if  size(LABS_FONT_COLOR, 1) == 1        
+        LABS_FONT_COLOR = repmat(LABS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end 
+    
     % for loop for plots and sets
     for i = 1:1:pl.get('ATLAS').get('BR_DICT').length        
         % symbols
@@ -355,6 +414,25 @@ function h_panel = draw(pl, varargin)
                 'Visible', 'off');
         end
         
+        % labs
+        if LABS_SHOW(i)
+            % plotting
+            if ~ishandle(pl.labs(i))                
+                pls.labs{i} = text(X{i}, Y{i}, Z{i}, ID{i});
+            end
+            % set            
+            set(pl.labs{i}, ...
+                'Visible', 'on', ...
+                'FontSize', LABS_SIZE(i), ...
+                'Color' , LABS_FONT_COLOR(i, :), ...  
+                'FontName', pl.get('LABS_FONT_NAME'), ...
+                'Interpreter', pl.get('LABS_FONT_INTERPRETER') ...
+                );
+        else
+            set(pl.labs{i}, ...
+                'Visible', 'off');
+        end
+        
     end
     
     % output
@@ -390,6 +468,7 @@ pl = PlotBrainAtlas('atlas', atlas, ...
     'SPHS_FACE_ALPHA', .7, 'SPHS_FACE_COLOR', [0 1 0], ...
     'SPHS_EDGE_ALPHA', .4, 'SPHS_EDGE_COLOR', [1 1 1], ...
     'IDS', 1, 'IDS_SIZE', [11:1:15]', 'IDS_FONT_COLOR', [0 0 0], ...
+    'LABS', 1, 'LABS_SIZE', [12:1:16]', 'LABS_FONT_COLOR', [0 0 0], ...
     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 pl.draw()
 
