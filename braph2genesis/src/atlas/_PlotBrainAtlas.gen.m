@@ -110,6 +110,38 @@ check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').le
 %%%% ¡default!
 1
 
+%%% ¡prop!
+SPHS_EDGE_COLOR (metadata, matrix) is the sphere edge color.
+%%%% ¡check_value!
+check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+%%%% ¡default!
+[0 0 0]
+
+%%% ¡prop!
+SPHS_FACE_COLOR (metadata, matrix) is the sphere face color.
+%%%% ¡check_value!
+check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+%%%% ¡default!
+[0 0 0]
+
+%%% ¡prop!
+SPHS_EDGE_ALPHA (metadata, cvector) is the sphere alpha.
+%%%% ¡conditioning!
+value = abs(value);
+%%%% ¡check_value!
+check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
+%%%% ¡default!
+.5
+
+%%% ¡prop!
+SPHS_FACE_ALPHA (metadata, cvector) is the sphere alpha.
+%%%% ¡conditioning!
+value = abs(value);
+%%%% ¡check_value!
+check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
+%%%% ¡default!
+.5
+
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the brain surface graphical panel.
@@ -133,6 +165,7 @@ function h_panel = draw(pl, varargin)
     if isempty(pl.symbols)
         pl.symbols = cell(1, pl.get('ATLAS').get('BR_DICT').length);
     end
+    
     if isempty(pl.spheres)
         pl.spheres = cell(1, pl.get('ATLAS').get('BR_DICT').length);
     end
@@ -147,26 +180,51 @@ function h_panel = draw(pl, varargin)
     if length(SYMS_SIZE) == 1
         SYMS_SIZE = repmat(SYMS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
+    
     SYMS_SHOW = pl.get('syms');
     if length(SYMS_SHOW) == 1
         SYMS_SHOW = repmat(SYMS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
+    
     SYMS_FACE_COLOR = pl.get('syms_face_color');
     if  size(SYMS_FACE_COLOR, 1) == 1        
         SYMS_FACE_COLOR = repmat(SYMS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
+    
     SYMS_EDGE_COLOR = pl.get('syms_edge_color');
     if  size(SYMS_EDGE_COLOR, 1) == 1
         SYMS_EDGE_COLOR = repmat(SYMS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
+    
     SPHS_SHOW = pl.get('sphs');
     if length(SPHS_SHOW) == 1
         SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
+    
     SPHS_SIZE = pl.get('SPHS_SIZE'); 
     if length(SPHS_SIZE) == 1
         SPHS_SIZE = repmat(SPHS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
-    end    
+    end  
+    
+    SPHS_FACE_COLOR = pl.get('sphs_face_color');
+    if  size(SPHS_FACE_COLOR, 1) == 1        
+        SPHS_FACE_COLOR = repmat(SPHS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+    
+    SPHS_EDGE_COLOR = pl.get('sphs_edge_color');
+    if  size(SPHS_EDGE_COLOR, 1) == 1
+        SPHS_EDGE_COLOR = repmat(SPHS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+    
+    SPHS_EDGE_ALPHA = pl.get('SPHS_EDGE_ALPHA'); 
+    if length(SPHS_EDGE_ALPHA) == 1
+        SPHS_EDGE_ALPHA = repmat(SPHS_EDGE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+    
+    SPHS_FACE_ALPHA = pl.get('SPHS_FACE_ALPHA'); 
+    if length(SPHS_FACE_ALPHA) == 1
+        SPHS_FACE_ALPHA = repmat(SPHS_FACE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
     
     % for loop for plots and sets
     for i = 1:1:pl.get('ATLAS').get('BR_DICT').length        
@@ -200,7 +258,12 @@ function h_panel = draw(pl, varargin)
             end
             % set
             set(pl.spheres{i}, ...
-                'Visible', 'on');
+                'Visible', 'on', ...
+                'EdgeColor', SPHS_EDGE_COLOR(i, :), ...
+                'EdgeAlpha', SPHS_EDGE_ALPHA(i), ...
+                'FaceColor', SPHS_FACE_COLOR(i, :), ...
+                'FaceAlpha', SPHS_FACE_ALPHA(i) ...
+                );
         else
             set(pl.spheres{i}, ...
                 'Visible', 'off');
@@ -237,6 +300,8 @@ pl = PlotBrainAtlas('atlas', atlas, ...
     'syms', 1, 'SYMS_SIZE', [20:10:60]', ...
     'SYMS_FACE_COLOR', [0 0 0], 'SYMS_EDGE_COLOR', [0 0 0], ...
     'SPHS', 1, 'SPHS_SIZE', [1:2:10]', ...
+    'SPHS_FACE_ALPHA', .7, 'SPHS_FACE_COLOR', [0 1 0], ...
+    'SPHS_EDGE_ALPHA', .4, 'SPHS_EDGE_COLOR', [1 1 1], ...
     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 pl.draw()
 
