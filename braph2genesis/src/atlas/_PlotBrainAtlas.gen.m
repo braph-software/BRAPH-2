@@ -54,6 +54,12 @@ symbols % handle for the symbols structure
 spheres % handle for the spheres structure
 ids % handle for the id structure
 labs % handle for the labs structure
+f_settings % handle for draw panel 
+f_settings_buttons % handle for settings panel 
+syms_settings % handle for symbols panel 
+sphs_settings % handle for spheres panel 
+ids_settings % handle for ids panel 
+labs_settings % handle for labs panel 
 
 %% ¡props!
 
@@ -240,8 +246,31 @@ function h_panel = draw(pl, varargin)
     %  objects from the handle to the brain atlas graphical panel H.
     %
     % see also settings, uipanel, isgraphics.
-   
+       
     h = draw@PlotBrainSurface(pl, varargin{:});
+    % close function
+    set(h, 'DeleteFcn', {@close_f_settings}, ...
+        varargin{:})
+    function close_f_settings(~, ~)
+        if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
+            close(pl.f_settings)
+        end
+        if ~isempty(pl.f_settings_buttons) && isgraphics(pl.f_settings_buttons, 'figure')
+            close(pl.f_settings_buttons)
+        end
+        if ~isempty(pl.syms_settings) && isgraphics(pl.syms_settings, 'figure')
+            close(pl.syms_settings)
+        end
+        if ~isempty(pl.sphs_settings) && isgraphics(pl.sphs_settings, 'figure')
+            close(pl.sphs_settings)
+        end
+        if ~isempty(pl.ids_settings) && isgraphics(pl.ids_settings, 'figure')
+            close(pl.ids_settings)
+        end
+        if ~isempty(pl.labs_settings) && isgraphics(pl.labs_settings, 'figure')
+            close(pl.labs_settings)
+        end
+    end
     
     % initialization
     if isempty(pl.symbols)
@@ -456,11 +485,290 @@ function f_settings = settings(pl, varargin)
         
     
     f_settings = settings@PlotBrainSurface(pl, varargin{:});
+    pl.f_settings = f_settings;
     
-    % I need a check to see which figure to create or which controls to
-    % show. cant use varargin, figure will crash. I propose turning on and
-    % uicontrols and add a new property to see which setting we using.
+    % create small buttons figure
+    f_settings_position = f_settings.Position;
+    new_position = [f_settings_position(1) f_settings_position(2)-.2 f_settings_position(3)-.2 f_settings_position(4)-.1];
+    f_settings_buttons = figure('Units', 'normalized', ...
+        'Position', new_position, ...
+        'Color', [.95 .95 .95], ...
+        'Name','Brain Region Symbol Settings', ...
+        'MenuBar', 'none', ...
+        'Toolbar', 'none', ...
+        'NumberTitle', 'off', ...
+        'DockControls', 'off');
+    
+    pl.f_settings_buttons = f_settings_buttons;
+    
+    % initiliaze buttons for individual settings
+    ui_button_syms_pushbutton = uicontrol(f_settings_buttons, 'Style', 'pushbutton', ...
+        'Units', 'normalized', ...
+        'Position', [.02 .5 .45 .3], ...
+        'String', 'Symbols Settings', ...
+        'HorizontalAlignment', 'center', ...
+        'TooltipString', 'Symbols Settings', ...
+        'Callback', {@cb_syms_figure_settings});
+    
+    ui_button_sphs_pushbutton = uicontrol(f_settings_buttons, 'Style', 'pushbutton', ...
+        'Units', 'normalized', ...
+        'Position', [.52 .5 .45 .3], ...
+        'String', 'Spheres Settings', ...
+        'HorizontalAlignment', 'center', ...
+        'TooltipString', 'Spheres Settings', ...
+        'Callback', {@cb_sphs_figure_settings});
+    
+    ui_button_ids_pushbutton = uicontrol(f_settings_buttons, 'Style', 'pushbutton', ...
+        'Units', 'normalized', ...
+        'Position', [.02 .02 .45 .3], ...
+        'String', 'Ids Settings', ...
+        'HorizontalAlignment', 'center', ...
+        'TooltipString', 'Ids Settings', ...
+        'Callback', {@cb_ids_figure_settings});
+    
+    ui_button_labs_pushbutton = uicontrol(f_settings_buttons, 'Style', 'pushbutton', ...
+        'Units', 'normalized', ...
+        'Position', [.52 .02 .45 .3], ...
+        'String', 'Labs Settings', ...
+        'HorizontalAlignment', 'center', ...
+        'TooltipString', 'Labs Settings', ...
+        'Callback', {@cb_labs_figure_settings});
+    
+    % callback functions
+    function cb_sphs_figure_settings(~, ~) % (src, event)
+        pl.syms_settings = pl.symbols_settings();
+    end
+    function cb_syms_figure_settings(~, ~) % (src, event)
+        pl.sphs_settings = pl.spheres_settings();
+    end
+    function cb_ids_figure_settings(~, ~) % (src, event)
+        pl.ids_settings = pl.identificators_settings();
+    end
+    function cb_labs_figure_settings(~, ~) % (src, event)
+        pl.labs_settings = pl.labels_settings();
+    end
+end
+function f_out = symbols_settings(pl)
+f = figure();
+set(f, 'units', 'normalized', ...
+    'Position', [.50 .30 .30 .30], ...
+    'Color', [.95 .95 .95], ...
+    'Name','Brain Region Symbol Settings', ...
+    'MenuBar', 'none', ...
+    'Toolbar', 'none', ...
+    'NumberTitle', 'off', ...
+    'DockControls', 'off')
 
+% Initialization
+ui_list = uicontrol(f, 'Style', 'listbox');
+set(ui_list, 'Units', 'normalized')
+set(ui_list, 'BackgroundColor', [.95 .95 .95])
+set(ui_list, 'Value', [])
+set(ui_list, 'Max', 2, 'Min',0)
+set(ui_list, 'BackgroundColor', [1 1 1])
+set(ui_list, 'Position', [.05 .15 .40 .80])
+set(ui_list, 'TooltipString', 'Select brain regions');
+set(ui_list, 'Callback', {@cb_list});
+
+ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
+set(ui_checkbox_id, 'Units', 'normalized')
+set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
+set(ui_checkbox_id, 'String', 'id')
+set(ui_checkbox_id, 'Value', true)
+set(ui_checkbox_id, 'FontWeight', 'bold')
+set(ui_checkbox_id, 'TooltipString', 'Shows brain regions by id')
+set(ui_checkbox_id, 'Callback', {@cb_id})
+
+ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
+set(ui_checkbox_label, 'Units', 'normalized')
+set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
+set(ui_checkbox_label, 'String', 'label')
+set(ui_checkbox_label, 'Value', false)
+set(ui_checkbox_label, 'TooltipString', 'Shows brain regions by label')
+set(ui_checkbox_label, 'Callback', {@cb_label})
+
+ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
+set(ui_checkbox_xyz, 'Units', 'normalized')
+set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
+set(ui_checkbox_xyz, 'String', 'xyz')
+set(ui_checkbox_xyz, 'Value', false)
+set(ui_checkbox_xyz, 'TooltipString', 'Shows brain regions by name')
+set(ui_checkbox_xyz, 'Callback', {@cb_xyz})
+
+ui_button_show = uicontrol(f, 'Style', 'pushbutton');
+set(ui_button_show, 'Units','normalized')
+set(ui_button_show, 'Position', [.50 .85 .45 .10])
+set(ui_button_show, 'String', 'Show Regions')
+set(ui_button_show, 'TooltipString', 'Show selected brain regions')
+set(ui_button_show, 'Callback', {@cb_show})
+
+ui_button_hide = uicontrol(f, 'Style', 'pushbutton');
+set(ui_button_hide, 'Units', 'normalized')
+set(ui_button_hide, 'Position', [.50 .75 .45 .10])
+set(ui_button_hide, 'String', 'Hide Regions')
+set(ui_button_hide, 'TooltipString', 'Hide selected brain regions')
+set(ui_button_hide, 'Callback', {@cb_hide})
+
+ui_popup_marker = uicontrol(f, 'Style', 'popup', 'String', {''});
+set(ui_popup_marker, 'Units', 'normalized')
+set(ui_popup_marker, 'BackgroundColor', [.95 .95 .95])
+set(ui_popup_marker, 'Position', [.50 .50 .45 .10])
+set(ui_popup_marker, 'String', PlotBrainAtlas.PLOT_SYMBOL_NAME)
+set(ui_popup_marker, 'Value', 2)
+set(ui_popup_marker, 'TooltipString', 'Select symbol');
+set(ui_popup_marker, 'Callback', {@cb_marker})
+
+ui_text_size = uicontrol(f, 'Style', 'text');
+set(ui_text_size, 'Units', 'normalized')
+set(ui_text_size, 'BackgroundColor', [.95 .95 .95])
+set(ui_text_size, 'Position', [.50 .375 .20 .10])
+set(ui_text_size, 'String', 'symbol size ')
+set(ui_text_size, 'HorizontalAlignment', 'left')
+set(ui_text_size, 'FontWeight', 'bold')
+
+ui_edit_size = uicontrol(f, 'Style', 'edit');
+set(ui_edit_size, 'Units','normalized')
+set(ui_edit_size, 'BackgroundColor', [.95 .95 .95])
+set(ui_edit_size, 'Position', [.70 .40 .25 .10])
+set(ui_edit_size, 'HorizontalAlignment', 'center')
+set(ui_edit_size, 'FontWeight', 'bold')
+set(ui_edit_size, 'String', '1')
+set(ui_edit_size, 'Callback', {@cb_size})
+
+ui_button_facecolor = uicontrol(f, 'Style', 'pushbutton');
+set(ui_button_facecolor, 'Units', 'normalized')
+set(ui_button_facecolor, 'Position', [.50 .25 .45 .10])
+set(ui_button_facecolor, 'String', 'Symbol Color')
+set(ui_button_facecolor, 'TooltipString', 'Select symbol color')
+set(ui_button_facecolor, 'Callback', {@cb_facecolor})
+
+ui_button_edgecolor = uicontrol(f, 'Style', 'pushbutton');
+set(ui_button_edgecolor, 'Units', 'normalized')
+set(ui_button_edgecolor, 'Position', [.50 .15 .45 .10])
+set(ui_button_edgecolor, 'String', 'Edge Color')
+set(ui_button_edgecolor, 'TooltipString', 'Select symbol edge color')
+set(ui_button_edgecolor, 'Callback', {@cb_edgecolor})
+
+%             update_list()
+
+set(f, 'Visible', 'on')
+
+    function update_list()
+        % get info
+        ids = cellfun(@(br) br.get('ID'), ba.getBrainAtlas().get('BR_DICT').getItems(), 'UniformOutput', false); %#ok<PROPLC>
+        labels = cellfun(@(br) br.get('Label'), ba.getBrainAtlas().get('BR_DICT').getItems(), 'UniformOutput', false);
+        xs = cellfun(@(br) br.get('X'), ba.getBrainAtlas().get('BR_DICT').getItems(), 'UniformOutput', false);
+        ys = cellfun(@(br) br.get('Y'), ba.getBrainAtlas().get('BR_DICT').getItems(), 'UniformOutput', false);
+        zs = cellfun(@(br) br.get('Z'), ba.getBrainAtlas().get('BR_DICT').getItems(), 'UniformOutput', false);
+        
+        % Set list names
+        if get(ui_checkbox_id, 'Value')
+            set(ui_list, 'String', ids) %#ok<PROPLC>
+        elseif get(ui_checkbox_label, 'Value')
+            set(ui_list, 'String', labels)
+        elseif get(ui_checkbox_xyz, 'Value')
+            xyz = cell(1, ba.getBrainAtlas().get('BR_DICT').length());
+            for j = 1:1:ba.getBrainAtlas().get('BR_DICT').length()
+                xyz{j} = [num2str(xs{j}) '   ' ...
+                    num2str(ys{j}) '   ' ...
+                    num2str(zs{j})];
+            end
+            set(ui_list, 'String', xyz)
+        end
+    end
+    function cb_list(~, ~)  % (src, event)
+        update_list()
+    end
+    function cb_id(~,~)  % (src,event)
+        set(ui_checkbox_id, 'Value', true)
+        set(ui_checkbox_id, 'FontWeight', 'bold')
+        
+        set(ui_checkbox_label, 'Value', false)
+        set(ui_checkbox_label, 'FontWeight', 'normal')
+        
+        set(ui_checkbox_xyz, 'Value', false)
+        set(ui_checkbox_xyz, 'FontWeight', 'normal')
+        
+        update_list()
+    end
+    function cb_label(~, ~)  % (src, event)
+        set(ui_checkbox_id, 'Value', false)
+        set(ui_checkbox_id, 'FontWeight', 'normal')
+        
+        set(ui_checkbox_label, 'Value', true)
+        set(ui_checkbox_label, 'FontWeight', 'bold')
+        
+        set(ui_checkbox_xyz, 'Value', false)
+        set(ui_checkbox_xyz, 'FontWeight', 'normal')
+        
+        update_list()
+    end
+    function cb_xyz(~, ~)  % (src, event)
+        set(ui_checkbox_id, 'Value', false)
+        set(ui_checkbox_id, 'FontWeight', 'normal')
+        
+        set(ui_checkbox_label, 'Value', false)
+        set(ui_checkbox_label, 'FontWeight', 'normal')
+        
+        set(ui_checkbox_xyz, 'Value', true)
+        set(ui_checkbox_xyz, 'FontWeight', 'bold')
+        
+        update_list()
+    end
+    function cb_show(~, ~)  % (src, event)
+        ba.br_syms(get_br_list())
+        ba.br_syms_on(get_br_list())
+    end
+    function cb_hide(~, ~)  % (src, event)
+        ba.br_syms_off(get_br_list())
+    end
+    function cb_marker(~, ~)  % (src, event)
+        symbol = PlotBrainAtlas.PLOT_SYMBOL_TAG{get(ui_popup_marker, 'Value')};
+        ba.br_syms(get_br_list(), 'Marker', symbol)
+    end
+    function cb_size(~, ~)  % (src, event)
+        size = real(str2double(get(ui_edit_size, 'String')));
+        
+        if isempty(size) || size <= 1
+            set(ui_edit_size, 'String', '1')
+            size = 1;
+        end
+        ba.br_syms(get_br_list(), 'MarkerSize', size)
+    end
+    function cb_facecolor(~, ~)  % (src, event)
+        color = uisetcolor();
+        
+        if length(color) == 3
+            ba.br_syms(get_br_list(), 'MarkerFaceColor', color)
+        end
+    end
+    function cb_edgecolor(~, ~)  % (src, event)
+        color = uisetcolor();
+        
+        if length(color) == 3
+            ba.br_syms(get_br_list(), 'MarkerEdgeColor', color)
+        end
+    end
+    function bri = get_br_list()
+        if ba.getBrainAtlas().get('BR_DICT').length()>0
+            bri = get(ui_list, 'Value');
+        else
+            bri = [];
+        end
+    end
+
+if nargout > 0
+    f_out = f;
+end
+end
+function f_out = spheres_settings(pl)
+end
+function f_out = identificators_settings(pl)
+end
+function f_out = labels_settings(pl)
 end
 
 %% ¡tests!
