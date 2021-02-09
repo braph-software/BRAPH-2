@@ -226,18 +226,18 @@ check = 1 <= value &&  value <= length(PlotBrainAtlas.PLOT_ID_FONT_INTREPETER);
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
-    %DRAW draws the brain surface graphical panel.
+    %DRAW draws the brain atlas graphical panel.
     %
-    % DRAW(PL) draws the brain surface graphical panel.
+    % DRAW(PL) draws the brain atlas graphical panel.
     %
-    % H = DRAW(PL) returns a handle to the brain surface graphical panel.
+    % H = DRAW(PL) returns a handle to the brain atlas graphical panel.
     %
     % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
     %  panel with custom property-value couples.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle to the brain surface graphical panel H.
+    %  objects from the handle to the brain atlas graphical panel H.
     %
     % see also settings, uipanel, isgraphics.
    
@@ -440,6 +440,28 @@ function h_panel = draw(pl, varargin)
         h_panel = h;
     end
 end
+function f_settings = settings(pl, varargin)
+    %SETTINGS opens the brain surface property editor GUI.
+    %
+    % SETTINGS(PL) allows the user to specify the properties of the brain
+    %  atlas plot by opening a GUI property editor.
+    %
+    % F = SETTINGS(PL) returns a handle to the brain atlas property editor GUI.
+    %
+    % SETTINGS(PL, 'Property', VALUE, ...) sets the properties of the brain
+    %  atlas property editor GUI with custom property-value couples.
+    %  All standard plot properties of figure can be used.
+    %
+    % See also draw, figure, isgraphics.
+        
+    
+    f_settings = settings@PlotBrainSurface(pl, varargin{:});
+    
+    % I need a check to see which figure to create or which controls to
+    % show. cant use varargin, figure will crash. I propose turning on and
+    % uicontrols and add a new property to see which setting we using.
+
+end
 
 %% ¡tests!
 
@@ -471,5 +493,6 @@ pl = PlotBrainAtlas('atlas', atlas, ...
     'LABS', 1, 'LABS_SIZE', [12:1:16]', 'LABS_FONT_COLOR', [0 0 0], ...
     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 pl.draw()
+pl.settings()
 
 close(fig)
