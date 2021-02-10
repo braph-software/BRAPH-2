@@ -50,18 +50,17 @@ PLOT_ID_FONT_INTREPETER = { ...
     }
 
 %% ¡properties!
-symbols % handle for the symbols structure
-spheres % handle for the spheres structure
-ids % handle for the id structure
-labs % handle for the labs structure
-h_panel
-h_axes
+h_syms % handle for the symbols 
+h_sphs % handle for the spheres 
+h_ids % handle for the id 
+h_labs % handle for the labs 
+
 f_settings
 f_settings_buttons
-syms_settings
-sphs_settings
-ids_settings
-labs_settings
+f_syms_settings
+f_sphs_settings
+f_ids_settings
+f_labs_settings
 
 %% ¡props!
 
@@ -91,21 +90,21 @@ SYMS_MARKER (metadata, cvector) is the symbol option.
 %%%% ¡settings!
 1:length(PlotBrainAtlas.PLOT_SYMBOL_TAG)
 %%%% ¡check_value!
-check = 1 <= value &&  value <= length(PlotBrainAtlas.PLOT_SYMBOL_TAG);
+check = 1 <= value && value <= length(PlotBrainAtlas.PLOT_SYMBOL_TAG);
 %%%% ¡default!
 2
 
 %%% ¡prop!
 SYMS_FACE_COLOR (metadata, matrix) is the symbol face color.
 %%%% ¡check_value!
-check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
 [0 0 0]
 
 %%% ¡prop!
 SYMS_EDGE_COLOR (metadata, matrix) is the symbol edge color.
 %%%% ¡check_value!
-check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
 [0 0 0]
 
@@ -128,14 +127,14 @@ check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').le
 %%% ¡prop!
 SPHS_EDGE_COLOR (metadata, matrix) is the sphere edge color.
 %%%% ¡check_value!
-check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
 [0 0 0]
 
 %%% ¡prop!
 SPHS_FACE_COLOR (metadata, matrix) is the sphere face color.
 %%%% ¡check_value!
-check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
 [0 0 0]
 
@@ -176,7 +175,7 @@ check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').le
 %%% ¡prop!
 IDS_FONT_COLOR (metadata, matrix) is the ids font color.
 %%%% ¡check_value!
-check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
 [0 0 0]
 
@@ -213,7 +212,7 @@ check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').le
 %%% ¡prop!
 LABS_FONT_COLOR (metadata, matrix) is the labs font color.
 %%%% ¡check_value!
-check = (size(value, 1) == 1 &&  size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
+check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
 [0 0 0]
 
@@ -250,50 +249,52 @@ function h_panel = draw(pl, varargin)
     % see also settings, uipanel, isgraphics.
 
     h = draw@PlotBrainSurface(pl, varargin{:});
-
-    if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
-        pl.h_axes = get(h, 'Children');
+    
+    h_axes = [];
+    if isempty(h_axes) || ~isgraphics(h_axes, 'axes')
+        h_axes = get(h, 'Children');
     end
     
     % close function
     set(h, 'DeleteFcn', {@close_f_settings}, ...
         varargin{:})
-        function close_f_settings(~, ~)
+    
+        function close_f_settings(~, ~)     
             if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
                 close(pl.f_settings)
             end
             if ~isempty(pl.f_settings_buttons) && isgraphics(pl.f_settings_buttons, 'figure')
                 close(pl.f_settings_buttons)
             end
-            if ~isempty(pl.syms_settings) && isgraphics(pl.syms_settings, 'figure')
-                close(pl.syms_settings)
+            if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
+                close(pl.f_syms_settings)
             end
-            if ~isempty(pl.sphs_settings) && isgraphics(pl.sphs_settings, 'figure')
-                close(pl.sphs_settings)
+            if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
+                close(pl.f_sphs_settings)
             end
-            if ~isempty(pl.ids_settings) && isgraphics(pl.ids_settings, 'figure')
-                close(pl.ids_settings)
+            if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
+                close(pl.f_ids_settings)
             end
-            if ~isempty(pl.labs_settings) && isgraphics(pl.labs_settings, 'figure')
-                close(pl.labs_settings)
+            if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
+                close(pl.f_labs_settings)
             end
         end
 
     % initialization
-    if isempty(pl.symbols)
-        pl.symbols.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
+    if isempty(pl.h_syms)
+        pl.h_syms.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
     end
 
-    if isempty(pl.spheres)
-        pl.spheres.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
+    if isempty(pl.h_sphs)
+        pl.h_sphs.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
     end
 
-    if isempty(pl.ids)
-        pl.ids.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
+    if isempty(pl.h_ids)
+        pl.h_ids.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
     end
 
-    if isempty(pl.labs)
-        pl.labs.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
+    if isempty(pl.h_labs)
+        pl.h_labs.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
     end
 
     % get coordinates
@@ -393,12 +394,12 @@ function h_panel = draw(pl, varargin)
         % symbols
         if SYMS_SHOW(i)
             % plotting
-            if ~ishandle(pl.symbols.h(i))
-                pl.symbols.h(i) = plot3(pl.h_axes, X{i}, Y{i}, Z{i});
+            if ~ishandle(pl.h_syms.h(i))
+                pl.h_syms.h(i) = plot3(h_axes, X{i}, Y{i}, Z{i});
             end
             % set
             m = PlotBrainAtlas.PLOT_SYMBOL_TAG(pl.get('syms_marker'));
-            set(pl.symbols.h(i), ...
+            set(pl.h_syms.h(i), ...
                 'Visible', 'on', ...
                 'Marker', m{1}, ...
                 'MarkerSize', SYMS_SIZE(i), ...
@@ -406,8 +407,8 @@ function h_panel = draw(pl, varargin)
                 'MarkerEdgeColor', SYMS_EDGE_COLOR(i, :) ...
                 );
         else
-            if ishandle(pl.symbols.h(i))  && ~isempty(pl.symbols.h(i))
-                set(pl.symbols.h(i), ...
+            if ishandle(pl.h_syms.h(i))  && ~isempty(pl.h_syms.h(i))
+                set(pl.h_syms.h(i), ...
                     'Visible', 'off');
             end
         end
@@ -415,13 +416,13 @@ function h_panel = draw(pl, varargin)
         % spheres
         if SPHS_SHOW(i)
             % plotting
-            if ~ishandle(pl.spheres.h(i))
+            if ~ishandle(pl.h_sphs.h(i))
                 [sx, sy, sz] = sphere();
-                pl.spheres.h(i) = surf(pl.h_axes, X{i} * SPHS_SIZE(i) *sx, Y{i} * SPHS_SIZE(i) * sy, ...
+                pl.h_sphs.h(i) = surf(h_axes, X{i} * SPHS_SIZE(i) *sx, Y{i} * SPHS_SIZE(i) * sy, ...
                     Z{i} * SPHS_SIZE(i) * sz);
             end
             % set
-            set(pl.spheres.h(i), ...
+            set(pl.h_sphs.h(i), ...
                 'Visible', 'on', ...
                 'EdgeColor', SPHS_EDGE_COLOR(i, :), ...
                 'EdgeAlpha', SPHS_EDGE_ALPHA(i), ...
@@ -429,8 +430,8 @@ function h_panel = draw(pl, varargin)
                 'FaceAlpha', SPHS_FACE_ALPHA(i) ...
                 );
         else
-            if ishandle(pl.spheres.h(i))  && ~isempty(pl.spheres.h(i))
-                set(pl.spheres.h(i), ...
+            if ishandle(pl.h_sphs.h(i))  && ~isempty(pl.h_sphs.h(i))
+                set(pl.h_sphs.h(i), ...
                     'Visible', 'off');
             end
         end
@@ -438,12 +439,12 @@ function h_panel = draw(pl, varargin)
         % ids
         if IDS_SHOW(i)
             % plotting
-            if ~ishandle(pl.ids.h(i))
-                pl.ids.h(i) = text(pl.h_axes, X{i}, Y{i}, Z{i}, ID{i});
+            if ~ishandle(pl.h_ids.h(i))
+                pl.h_ids.h(i) = text(h_axes, X{i}, Y{i}, Z{i}, ID{i});
             end
             % set
             int_ids = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('IDS_FONT_INTERPRETER'));
-            set(pl.ids.h(i), ...
+            set(pl.h_ids.h(i), ...
                 'Visible', 'on', ...
                 'FontSize', IDS_SIZE(i), ...
                 'Color' , IDS_FONT_COLOR(i, :), ...
@@ -451,8 +452,8 @@ function h_panel = draw(pl, varargin)
                 'Interpreter', int_ids{1} ...
                 );
         else
-            if ishandle(pl.ids.h(i))  && ~isempty(pl.ids.h(i))
-                set(pl.ids.h(i), ...
+            if ishandle(pl.h_ids.h(i))  && ~isempty(pl.h_ids.h(i))
+                set(pl.h_ids.h(i), ...
                     'Visible', 'off');
             end
         end
@@ -460,12 +461,12 @@ function h_panel = draw(pl, varargin)
         % labs
         if LABS_SHOW(i)
             % plotting
-            if ~ishandle(pl.labs.h(i))
-                pl.labs.h(i) = text(pl.h_axes, X{i}, Y{i}, Z{i}, LABS{i});
+            if ~ishandle(pl.h_labs.h(i))
+                pl.h_labs.h(i) = text(h_axes, X{i}, Y{i}, Z{i}, LABS{i});
             end
             % set
             int_labs = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('LABS_FONT_INTERPRETER'));
-            set(pl.labs.h(i), ...
+            set(pl.h_labs.h(i), ...
                 'Visible', 'on', ...
                 'FontSize', LABS_SIZE(i), ...
                 'Color' , LABS_FONT_COLOR(i, :), ...
@@ -473,8 +474,8 @@ function h_panel = draw(pl, varargin)
                 'Interpreter', int_labs{1} ...
                 );
         else
-            if ishandle(pl.labs.h(i))  && ~isempty(pl.labs.h(i))
-                set(pl.labs.h(i), ...
+            if ishandle(pl.h_labs.h(i))  && ~isempty(pl.h_labs.h(i))
+                set(pl.h_labs.h(i), ...
                     'Visible', 'off');
             end
         end
@@ -500,7 +501,7 @@ function f_settings = settings(pl, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    f_settings = settings@PlotBrainSurface(pl, varargin{:});
+    f_settings = settings@PlotBrainSurface(pl, varargin{:}); 
     pl.f_settings = f_settings;
 
     % create small buttons figure
@@ -552,25 +553,25 @@ function f_settings = settings(pl, varargin)
 
     % callback functions
         function cb_syms_figure_settings(~, ~) % (src, event)
-            pl.syms_settings = pl.symbols_settings();
+            pl.f_syms_settings = pl.syms_settings();
         end
         function cb_sphs_figure_settings(~, ~) % (src, event)
-            pl.sphs_settings = pl.spheres_settings();
+            pl.f_sphs_settings = pl.sphs_settings();
         end
         function cb_ids_figure_settings(~, ~) % (src, event)
-            pl.ids_settings = pl.identificators_settings();
+            pl.f_ids_settings = pl.ids_settings();
         end
         function cb_labs_figure_settings(~, ~) % (src, event)
-            pl.labs_settings = pl.labels_settings();
+            pl.f_labs_settings = pl.labs_settings();
         end
 end
-function f_out = symbols_settings(pl)
-    % SYMBOLS_SETTINGS panel to set symbols properties
+function f_out = syms_settings(pl)
+    % SYMS_SETTINGS panel to set symbols properties
     %
-    % SYMBOLS_SETTINGS(PL) allows the user to interactively
+    % SYMS_SETTINGS(PL) allows the user to interactively
     % change the symbols settings via a graphical user interface.
     %
-    % SYMBOLS_SETTINGS(PL, 'Property', VALUE, ...) sets
+    % SYMS_SETTINGS(PL, 'Property', VALUE, ...) sets
     % the property of the GUI's Property to VALUE.
     % Admissible properties are:
     %     FigPosition  -   normalized position of the GUI on the screen
@@ -578,13 +579,13 @@ function f_out = symbols_settings(pl)
     %     FigColor     -   background color of the GUI
     %     FigName      -   name of the GUI
     %
-    % see also settings, symbols_settings, ids_settings, labels_settings.
+    % see also settings, sphs_settings, ids_settings, las_settings.
     
-        if isempty(pl.syms_settings) || ~isgraphics(pl.syms_settings, 'figure')
-            pl.syms_settings = figure();
+        if isempty(pl.f_syms_settings) || ~isgraphics(pl.f_syms_settings, 'figure')
+            pl.f_syms_settings = figure();
         end
 
-        f = pl.syms_settings;
+        f = pl.f_syms_settings;
 
         set(f, 'units', 'normalized', ...
             'Position', [.50 .30 .30 .30], ...
@@ -887,13 +888,13 @@ function f_out = symbols_settings(pl)
             f_out = f;
         end
     end
-function f_out = spheres_settings(pl)
-    % SPHERES_SETTINGS panel to set spheres properties
+function f_out = sphs_settings(pl)
+    % SPHS_SETTINGS panel to set spheres properties
     %
-    % SPHERES_SETTINGS(PL) allows the user to interactively
+    % SPHS_SETTINGS(PL) allows the user to interactively
     % change the spheres settings via a graphical user interface.
     %
-    % SPHERES_SETTINGS(PL, 'Property', VALUE, ...) sets
+    % SPHS_SETTINGS(PL, 'Property', VALUE, ...) sets
     % the property of the GUI's Property to VALUE.
     % Admissible properties are:
     %     FigPosition  -   normalized position of the GUI on the screen
@@ -901,13 +902,13 @@ function f_out = spheres_settings(pl)
     %     FigColor     -   background color of the GUI
     %     FigName      -   name of the GUI
     %
-    % see also settings, symbols_settings, ids_settings, labels_settings.
+    % see also settings, symbols_settings, f_ids_settings, labels_settings.
 
-    if isempty(pl.sphs_settings) || ~isgraphics(pl.sphs_settings, 'figure')
-        pl.sphs_settings = figure();
+    if isempty(pl.f_sphs_settings) || ~isgraphics(pl.f_sphs_settings, 'figure')
+        pl.f_sphs_settings = figure();
     end
 
-    f = pl.sphs_settings;
+    f = pl.f_sphs_settings;
 
     set(f, 'units', 'normalized', ...
         'Position', [.50 .30 .30 .30], ...
@@ -1340,13 +1341,13 @@ function f_out = spheres_settings(pl)
         f_out = f;
     end
 end
-function f_out = identificators_settings(pl)
-    % IDENTIFICATORS_SETTINGS panel to set ids properties
+function f_out = ids_settings(pl)
+    % IDS_SETTINGS panel to set ids properties
     %
-    % IDENTIFICATORS_SETTINGS(PL) allows the user to interactively
+    % IDS_SETTINGS(PL) allows the user to interactively
     % change the ids settings via a graphical user interface.
     %
-    % IDENTIFICATORS_SETTINGS(PL, 'Property', VALUE, ...) sets
+    % IDS_SETTINGS(PL, 'Property', VALUE, ...) sets
     % the property of the GUI's Property to VALUE.
     % Admissible properties are:
     %     FigPosition  -   normalized position of the GUI on the screen
@@ -1356,11 +1357,11 @@ function f_out = identificators_settings(pl)
     %
     % see also settings, symbols_settings, spheres_settings, labels_settings.
 
-    if isempty(pl.ids_settings) || ~isgraphics(pl.ids_settings, 'figure')
-        pl.ids_settings = figure();
+    if isempty(pl.f_ids_settings) || ~isgraphics(pl.f_ids_settings, 'figure')
+        pl.f_ids_settings = figure();
     end
 
-    f = pl.ids_settings;
+    f = pl.f_ids_settings;
 
     set(f, 'units', 'normalized', ...
         'Position', [.50 .30 .30 .30], ...
@@ -1628,13 +1629,13 @@ function f_out = identificators_settings(pl)
         f_out = f;
     end
 end
-function f_out = labels_settings(pl)
-    % LABELS_SETTINGS panel to set labels properties
+function f_out = labs_settings(pl)
+    % LABS_SETTINGS panel to set labels properties
     %
-    % LABELS_SETTINGS(PL) allows the user to interactively
+    % LABS_SETTINGS(PL) allows the user to interactively
     % change the label settings via a graphical user interface.
     %
-    % LABELS_SETTINGS(PL, 'Property', VALUE, ...) sets
+    % LABS_SETTINGS(PL, 'Property', VALUE, ...) sets
     % the property of the GUI's Property to VALUE.
     % Admissible properties are:
     %     FigPosition  -   normalized position of the GUI on the screen
@@ -1644,11 +1645,11 @@ function f_out = labels_settings(pl)
     %
     % see also settings, symbols_settings, spheres_settings, identificators_settings.
     
-    if isempty(pl.labs_settings) || ~isgraphics(pl.labs_settings, 'figure')
-        pl.labs_settings = figure();
+    if isempty(pl.f_labs_settings) || ~isgraphics(pl.f_labs_settings, 'figure')
+        pl.f_labs_settings = figure();
     end
 
-    f = pl.labs_settings;
+    f = pl.f_labs_settings;
 
     set(f, 'units', 'normalized', ...
         'Position', [.50 .30 .30 .30], ...
