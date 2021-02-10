@@ -126,23 +126,23 @@ disp('¡! generator file read')
         seealso = getToken(txt, 'header', 'seealso');        
     end
 
-% [ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
-%     function [ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph()
-%         ensemble = getToken(txt, 'header', 'ensemble');
-%         graph = getToken(txt, 'header', 'graph');
-%         connectivity = splitlines(getToken(txt, 'header', 'connectivity'));
-%         directionality = splitlines(getToken(txt, 'header', 'directionality'));
-%         selfconnectivity = splitlines(getToken(txt, 'header', 'selfconnectivity'));
-%         negativity = splitlines(getToken(txt, 'header', 'negativity'));
-%     end
-% 
-% [shape, scope, parametricity, compatible_graphs] = analyze_header_measure(); % only for measures
-%     function [shape, scope, parametricity, compatible_graphs] = analyze_header_measure()
-%         shape = getToken(txt, 'header', 'shape');
-%         scope = getToken(txt, 'header', 'scope');
-%         parametricity = getToken(txt, 'header', 'parametricity');
-%         compatible_graphs = getToken(txt, 'header', 'compatible_graphs');
-%     end
+[ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
+    function [ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph()
+        ensemble = getToken(txt, 'header', 'ensemble');
+        graph = getToken(txt, 'header', 'graph');
+        connectivity = splitlines(getToken(txt, 'header', 'connectivity'));
+        directionality = splitlines(getToken(txt, 'header', 'directionality'));
+        selfconnectivity = splitlines(getToken(txt, 'header', 'selfconnectivity'));
+        negativity = splitlines(getToken(txt, 'header', 'negativity'));
+    end
+
+[shape, scope, parametricity, compatible_graphs] = analyze_header_measure(); % only for measures
+    function [shape, scope, parametricity, compatible_graphs] = analyze_header_measure()
+        shape = getToken(txt, 'header', 'shape');
+        scope = getToken(txt, 'header', 'scope');
+        parametricity = getToken(txt, 'header', 'parametricity');
+        compatible_graphs = getToken(txt, 'header', 'compatible_graphs');
+    end
 
 [props, props_update] = analyze_props();
     function [props, props_update] = analyze_props()
@@ -1062,95 +1062,95 @@ generate_inspection()
 
 generate_header_graph() % only for graphs
     function generate_header_graph()
-%         get_layernumber = { ''
-%             'if isempty(varargin)'
-%             '\tlayernumber = 1;'
-%             'else'
-%             '\tlayernumber = varargin{1};'
-%             'end'
-%             ''};
-%         if ~isempty(ensemble) || ...
-%                 ~isempty(graph) || ...
-%                 ~(numel(connectivity) == 1 && isempty(connectivity{1})) || ...
-%                 ~(numel(directionality) == 1 && isempty(directionality{1})) || ...
-%                 ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1})) || ...
-%                 ~(numel(negativity) == 1 && isempty(negativity{1}))
-%             g(1, 'methods (Static) %% graph methods')
-%                 if ~isempty(ensemble)
-%                     g(2, 'function bool = is_ensemble()')
-%                         g(3, ['bool = ' ensemble ';'])
-%                     g(2, 'end')
-%                 end
-%                 if ~isempty(graph)
-%                     g(2, 'function graph = getGraphType()')
-%                         g(3, graph)
-%                     g(2, 'end')
-%                 end
-%                 if ~(numel(connectivity) == 1 && isempty(connectivity{1}))
-%                     g(2, 'function connectivity = getConnectivityType(varargin)')
-%                         gs(3, get_layernumber)
-%                         gs(3, connectivity)
-%                     g(2, 'end')
-%                 end
-%                 if ~(numel(directionality) == 1 && isempty(directionality{1}))
-%                     g(2, 'function directionality = getDirectionalityType(varargin)')
-%                         gs(3, get_layernumber)
-%                         gs(3, directionality)
-%                     g(2, 'end')
-%                 end
-%                 if ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1}))
-%                     g(2, 'function selfconnectivity = getSelfConnectivityType(varargin)')
-%                         gs(3, get_layernumber)
-%                         gs(3, selfconnectivity)
-%                     g(2, 'end')
-%                 end
-%                 if ~(numel(negativity) == 1 && isempty(negativity{1}))
-%                     g(2, 'function negativity = getNegativityType(varargin)')
-%                         gs(3, get_layernumber)
-%                         gs(3, negativity)
-%                     g(2, 'end')
-%                 end
-%             g(1, 'end')
-%         end
+        get_layernumber = { ''
+            'if isempty(varargin)'
+            '\tlayernumber = 1;'
+            'else'
+            '\tlayernumber = varargin{1};'
+            'end'
+            ''};
+        if ~isempty(ensemble) || ...
+                ~isempty(graph) || ...
+                ~(numel(connectivity) == 1 && isempty(connectivity{1})) || ...
+                ~(numel(directionality) == 1 && isempty(directionality{1})) || ...
+                ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1})) || ...
+                ~(numel(negativity) == 1 && isempty(negativity{1}))
+            g(1, 'methods (Static) %% graph methods')
+                if ~isempty(ensemble)
+                    g(2, 'function bool = is_ensemble()')
+                        g(3, ['bool = ' ensemble ';'])
+                    g(2, 'end')
+                end
+                if ~isempty(graph)
+                    g(2, 'function graph = getGraphType()')
+                        g(3, graph)
+                    g(2, 'end')
+                end
+                if ~(numel(connectivity) == 1 && isempty(connectivity{1}))
+                    g(2, 'function connectivity = getConnectivityType(varargin)')
+                        gs(3, get_layernumber)
+                        gs(3, connectivity)
+                    g(2, 'end')
+                end
+                if ~(numel(directionality) == 1 && isempty(directionality{1}))
+                    g(2, 'function directionality = getDirectionalityType(varargin)')
+                        gs(3, get_layernumber)
+                        gs(3, directionality)
+                    g(2, 'end')
+                end
+                if ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1}))
+                    g(2, 'function selfconnectivity = getSelfConnectivityType(varargin)')
+                        gs(3, get_layernumber)
+                        gs(3, selfconnectivity)
+                    g(2, 'end')
+                end
+                if ~(numel(negativity) == 1 && isempty(negativity{1}))
+                    g(2, 'function negativity = getNegativityType(varargin)')
+                        gs(3, get_layernumber)
+                        gs(3, negativity)
+                    g(2, 'end')
+                end
+            g(1, 'end')
+        end
     end
 
 generate_header_measure() % only for measures
     function generate_header_measure()
-%         if ~isempty(shape) || ...
-%                 ~isempty(scope) || ...
-%                 ~isempty(parametricity) || ...
-%                 ~isempty(compatible_graphs)
-%             g(1, 'methods (Static) %% graph methods')
-%                 if ~isempty(shape)
-%                     g(2, 'function shape = getMeasureShape()')
-%                         g(3, shape)
-%                     g(2, 'end')
-%                 end
-%                 if ~isempty(scope)
-%                     g(2, 'function scope = getMeasureScope()')
-%                         g(3, scope)
-%                     g(2, 'end')
-%                 end
-%                 if ~isempty(parametricity)
-%                     g(2, 'function parametricity = getMeasureParametricity()')
-%                         g(3, parametricity)
-%                     g(2, 'end')
-%                 end
-%                 if ~isempty(compatible_graphs)
-%                     g(2, 'function list = getCompatibleGraphList()')
-%                         g(3, 'list = { ...');
-%                             lines = splitlines(compatible_graphs);
-%                             for i = 1:1:length(lines)
-%                                 g(4, ['' lines{i} ''', ...'])
-%                             end
-%                             g(4, '};')
-%                     g(2, 'end')
-%                     g(2, 'function n = getCompatibleGraphNumber()')
-%                         g(3, ['n = Measure.getCompatibleGraphNumber(''' class_name ''');'])
-%                     g(2, 'end')
-%                 end
-%             g(1, 'end')
-%         end
+        if ~isempty(shape) || ...
+                ~isempty(scope) || ...
+                ~isempty(parametricity) || ...
+                ~isempty(compatible_graphs)
+            g(1, 'methods (Static) %% graph methods')
+                if ~isempty(shape)
+                    g(2, 'function shape = getMeasureShape()')
+                        g(3, shape)
+                    g(2, 'end')
+                end
+                if ~isempty(scope)
+                    g(2, 'function scope = getMeasureScope()')
+                        g(3, scope)
+                    g(2, 'end')
+                end
+                if ~isempty(parametricity)
+                    g(2, 'function parametricity = getMeasureParametricity()')
+                        g(3, parametricity)
+                    g(2, 'end')
+                end
+                if ~isempty(compatible_graphs)
+                    g(2, 'function list = getCompatibleGraphList()')
+                        g(3, 'list = { ...');
+                            lines = splitlines(compatible_graphs);
+                            for i = 1:1:length(lines)
+                                g(4, ['' lines{i} ''', ...'])
+                            end
+                            g(4, '};')
+                    g(2, 'end')
+                    g(2, 'function n = getCompatibleGraphNumber()')
+                        g(3, ['n = Measure.getCompatibleGraphNumber(''' class_name ''');'])
+                    g(2, 'end')
+                end
+            g(1, 'end')
+        end
     end
 
 generate_constructor()
