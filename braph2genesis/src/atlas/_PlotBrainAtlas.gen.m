@@ -565,6 +565,21 @@ function f_settings = settings(pl, varargin)
         end
 end
 function f_out = symbols_settings(pl)
+    % SYMBOLS_SETTINGS panel to set symbols properties
+    %
+    % SYMBOLS_SETTINGS(PL) allows the user to interactively
+    % change the symbols settings via a graphical user interface.
+    %
+    % SYMBOLS_SETTINGS(PL, 'Property', VALUE, ...) sets
+    % the property of the GUI's Property to VALUE.
+    % Admissible properties are:
+    %     FigPosition  -   normalized position of the GUI on the screen
+    %                      [X0 Y0 DX DY]
+    %     FigColor     -   background color of the GUI
+    %     FigName      -   name of the GUI
+    %
+    % see also settings, symbols_settings, ids_settings, labels_settings.
+    
         if isempty(pl.syms_settings) || ~isgraphics(pl.syms_settings, 'figure')
             pl.syms_settings = figure();
         end
@@ -873,6 +888,21 @@ function f_out = symbols_settings(pl)
         end
     end
 function f_out = spheres_settings(pl)
+    % SPHERES_SETTINGS panel to set spheres properties
+    %
+    % SPHERES_SETTINGS(PL) allows the user to interactively
+    % change the spheres settings via a graphical user interface.
+    %
+    % SPHERES_SETTINGS(PL, 'Property', VALUE, ...) sets
+    % the property of the GUI's Property to VALUE.
+    % Admissible properties are:
+    %     FigPosition  -   normalized position of the GUI on the screen
+    %                      [X0 Y0 DX DY]
+    %     FigColor     -   background color of the GUI
+    %     FigName      -   name of the GUI
+    %
+    % see also settings, symbols_settings, ids_settings, labels_settings.
+
     if isempty(pl.sphs_settings) || ~isgraphics(pl.sphs_settings, 'figure')
         pl.sphs_settings = figure();
     end
@@ -1311,6 +1341,21 @@ function f_out = spheres_settings(pl)
     end
 end
 function f_out = identificators_settings(pl)
+    % IDENTIFICATORS_SETTINGS panel to set ids properties
+    %
+    % IDENTIFICATORS_SETTINGS(PL) allows the user to interactively
+    % change the ids settings via a graphical user interface.
+    %
+    % IDENTIFICATORS_SETTINGS(PL, 'Property', VALUE, ...) sets
+    % the property of the GUI's Property to VALUE.
+    % Admissible properties are:
+    %     FigPosition  -   normalized position of the GUI on the screen
+    %                      [X0 Y0 DX DY]
+    %     FigColor     -   background color of the GUI
+    %     FigName      -   name of the GUI
+    %
+    % see also settings, symbols_settings, spheres_settings, labels_settings.
+
     if isempty(pl.ids_settings) || ~isgraphics(pl.ids_settings, 'figure')
         pl.ids_settings = figure();
     end
@@ -1584,6 +1629,21 @@ function f_out = identificators_settings(pl)
     end
 end
 function f_out = labels_settings(pl)
+    % LABELS_SETTINGS panel to set labels properties
+    %
+    % LABELS_SETTINGS(PL) allows the user to interactively
+    % change the label settings via a graphical user interface.
+    %
+    % LABELS_SETTINGS(PL, 'Property', VALUE, ...) sets
+    % the property of the GUI's Property to VALUE.
+    % Admissible properties are:
+    %     FigPosition  -   normalized position of the GUI on the screen
+    %                      [X0 Y0 DX DY]
+    %     FigColor     -   background color of the GUI
+    %     FigName      -   name of the GUI
+    %
+    % see also settings, symbols_settings, spheres_settings, identificators_settings.
+    
     if isempty(pl.labs_settings) || ~isgraphics(pl.labs_settings, 'figure')
         pl.labs_settings = figure();
     end
