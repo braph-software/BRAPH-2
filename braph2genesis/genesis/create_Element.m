@@ -20,6 +20,30 @@ function create_Element(generator_file, target_dir)
 %  It can occupy several lines.
 % <strong>%%% ¡seealso!</strong>
 %  Related functions and classes is a single line.
+%
+%  Only for graphs:
+%  <strong>%%% ¡ensemble!</strong> %%% 
+%  False or True
+%  <strong>%%% ¡graph!</strong> %%% 
+%  Type of graph (GRAPH, MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER, MULTILAYER)
+%  <strong>%%% ¡connectivity!</strong> %%% 
+%  Connectivity type of the graph (WEIGHTED, BINARY)
+%  <strong>%%% ¡directionality!</strong> %%% 
+%  Directionality type of the graph (DIRECTED, UNDIRECTED)
+%  <strong>%%% ¡selfconnectivity!</strong> %%% 
+%  Self-connectivity type of the graph (NONSELFCONNECTED, SELFCONNECTED)
+%  <strong>%%% ¡negativity!</strong> %%% 
+%  Negativity type of the graph (NONNEGATIVE, NEGATIVE)
+%
+%  Only for measures:
+%  <strong>%%% ¡shape!</strong> %%% 
+%  Measure shape (GLOBAL, NODAL, BINODAL)
+%  <strong>%%% ¡scope!</strong> %%% 
+%  Measure scope (SUPERGLOBAL, UNILAYER, BILAYER)
+%  <strong>%%% ¡parametricity!</strong> %%% 
+%  Parametricity of the measure (PARAMETRIC, NONPARAMETRIC)
+%  <strong>%%% ¡compatible_graphs!</strong> %%% 
+%  Compatible graphs with the measure (GraphBD, ...)
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
