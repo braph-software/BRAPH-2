@@ -6,6 +6,9 @@ Graph provides the methods necessary for all graphs.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
+%%% ¡seealso!
+Measure
+
 %% ¡props!
 
 %%% ¡prop!
@@ -21,8 +24,6 @@ NOTES (metadata, string) are some specific notes about the graph.
 G_DICT (data, idict) contains an ensemble of graphs (only used by graph ensembles).
 %%%% ¡settings!
 'Graph'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'Graph', 'IT_KEY', 1)
 
 %%% ¡prop!
 A (result, cell) is the graph adjacency matrix. 
@@ -31,24 +32,16 @@ value = {};
 %%%% ¡check_value!
 A = value;
 Graph.checkA(Graph.getGraphType(g), A);  % performs all necessary checks on A
-if isnumeric(A)
-    Graph.checkConnectivity(Graph.getConnectivityType(g), A);
-    Graph.checkDirectionality(Graph.getDirectionalityType(g), A);
-    Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g), A);
-    Graph.checkNegativity(Graph.getNegativityType(g), A);
-else
-    Graph.checkConnectivity(Graph.getConnectivityType(g, length(A)), A);
-    Graph.checkDirectionality(Graph.getDirectionalityType(g, length(A)), A);
-    Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g, length(A)), A);
-    Graph.checkNegativity(Graph.getNegativityType(g, length(A)), A);
-end
+Graph.checkConnectivity(Graph.getConnectivityType(g, length(A)), A);
+Graph.checkDirectionality(Graph.getDirectionalityType(g, length(A)), A);
+Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g, length(A)), A);
+Graph.checkNegativity(Graph.getNegativityType(g, length(A)), A);
+check = true; % only if no error is thrown by the previous code!
 
 %%% ¡prop!
 M_DICT (result, idict) contains the calculated measures of the graph.
 %%%% ¡settings!
 'Measure'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 1)
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 1);
 
@@ -192,13 +185,13 @@ NEGATIVITY_TYPE_DESCRIPTION = {
 %% ¡staticmethods!
 % basic methods
 function bool = is_ensemble(g)
-    % IS_ENSEMBLE checks if graph is an ensemble of graphs.
+    %IS_ENSEMBLE returns whther a graph is an ensemble of graphs.
     %
-    % BOOL = IS_ENSEMBLE(G) returns if the instance of the
-    % concrete graph G is an ensemble of graphs.
+    % BOOL = IS_ENSEMBLE(G) returns whether the instance of the concrete graph
+    %  G is an ensemble of graphs. 
     %
-    % BOOL = IS_ENSEMBLE(GRAPH_CLASS) returns true if graph whose
-    % class is GRAPH_CLASS is an ensemble of graphs.
+    % BOOL = IS_ENSEMBLE(GRAPH_CLASS) returns true if graph whose class is
+    % GRAPH_CLASS is an ensemble of graphs.
 
     if strcmp(Element.getClass(g), 'Graph')
         bool = false;
@@ -207,17 +200,18 @@ function bool = is_ensemble(g)
     end    
 end
 function graph_type = getGraphType(g)
-    % GETGRAPHTYPE returns the graph type
+    %GETGRAPHTYPE returns the graph type.
     %
-    % GRAPH_TYPE = GETGRAPHTYPE(G) returns the graph type of graph
-    % G (e.g., GRAPH, MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX,
-    % ORDERED_MULTILAYER, MULTILAYER)
+    % GRAPH_TYPE = GETGRAPHTYPE(G) returns the graph type of graph G (e.g.,
+    %  GRAPH, MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER,
+    %  MULTILAYER)
     %
-    % GRAPH_TYPE = GETGRAPHTYPE(GRAPH_CLASS) returns the graph type
-    % of the graph whose class is GRAPH_CLASS (e.g., GRAPH,
-    % MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER, MULTILAYER)
+    % GRAPH_TYPE = GETGRAPHTYPE(GRAPH_CLASS) returns the graph type of the
+    %  graph whose class is GRAPH_CLASS (e.g., GRAPH, MULTIGRAPH,
+    %  ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER, MULTILAYER)
     %
-    % See also is_graph, is_multigraph, is_multilayer, is_multiplex, is_ordered_multilayer, is_ordered_multiplex.
+    % See also is_graph, is_multigraph, is_multilayer, is_multiplex,
+    % is_ordered_multilayer, is_ordered_multiplex.
 
     if strcmp(Element.getClass(g), 'Graph')
         graph_type = Graph.GRAPH;
@@ -226,96 +220,101 @@ function graph_type = getGraphType(g)
     end
 end
 function bool = is_graph(g)
-    % IS_GRAPH checks if graph is graph (single layer)
+    %IS_GRAPH checks if graph is graph (single layer).
     %
-    % BOOL = IS_GRAPH(G) returns if the instance of the
-    % concrete graph G is graph (single layer).
+    % BOOL = IS_GRAPH(G) returns if the instance of the concrete graph G is
+    %  graph (single layer).
     %
-    % BOOL = IS_GRAPH(GRAPH_CLASS) returns true if graph whose
-    % class is GRAPH_CLASS is graph (single layer).
+    % BOOL = IS_GRAPH(GRAPH_CLASS) returns true if graph whose class is
+    %  GRAPH_CLASS is graph (single layer). 
     %
-    % See also getGraphType, is_multigraph, is_multilayer, is_multiplex, is_ordered_multilayer, is_ordered_multiplex.
+    % See also getGraphType, is_multigraph, is_multilayer, is_multiplex,
+    % is_ordered_multilayer, is_ordered_multiplex. 
 
     bool = Graph.getGraphType(g) == Graph.GRAPH;
 end
 function bool = is_multigraph(g)
-    % IS_MULTIGRAPH checks if graph is multigraph
+    %IS_MULTIGRAPH checks if graph is multigraph.
     %
-    % BOOL = IS_MULTIGRAPH(G) returns if the instance of the
-    % concrete graph G is multigraph.
+    % BOOL = IS_MULTIGRAPH(G) returns if the instance of the concrete graph G
+    %  is multigraph.
     %
-    % BOOL = IS_MULTIGRAPH(GRAPH_CLASS) returns true if graph whose
-    % class is GRAPH_CLASS is multigraph.
+    % BOOL = IS_MULTIGRAPH(GRAPH_CLASS) returns true if graph whose class is
+    %  GRAPH_CLASS is multigraph.
     %
-    % See also getGraphType, is_graph, is_multilayer, is_multiplex, is_ordered_multilayer, is_ordered_multiplex.
+    % See also getGraphType, is_graph, is_multilayer, is_multiplex,
+    % is_ordered_multilayer, is_ordered_multiplex.
 
     bool = g.getGraphType() == Graph.MULTIGRAPH;
 end
 function bool = is_ordered_multiplex(g)
-    % IS_ORDERED_MULTIPLEX checks if graph is ordered multiplex
+    %IS_ORDERED_MULTIPLEX checks if graph is ordered multiplex.
     %
-    % BOOL = IS_ORDERED_MULTIPLEX(G) returns if the instance of the
-    % concrete graph G is ordered multiplex.
+    % BOOL = IS_ORDERED_MULTIPLEX(G) returns if the instance of the concrete
+    %  graph G is ordered multiplex.
     %
-    % BOOL = IS_ORDERED_MULTIPLEX(GRAPH_CLASS) returns true if graph
-    % whose class is GRAPH_CLASS is ordered multiplex.
+    % BOOL = IS_ORDERED_MULTIPLEX(GRAPH_CLASS) returns true if graph whose
+    %  class is GRAPH_CLASS is ordered multiplex.
     %
-    % See also getGraphType, is_graph, is_multigraph, is_multilayer, is_multiplex, is_ordered_multilayer.
+    % See also getGraphType, is_graph, is_multigraph, is_multilayer,
+    % is_multiplex, is_ordered_multilayer.
 
     bool = Graph.getGraphType(g) == Graph.ORDERED_MULTIPLEX;
 end
 function bool = is_multiplex(g)
-    % IS_MULTIPLEX checks if graph is multiplex
+    %IS_MULTIPLEX checks if graph is multiplex.
     %
-    % BOOL = IS_MULTIPLEX(G) returns if the instance of the
-    % concrete graph G is multiplex.
+    % BOOL = IS_MULTIPLEX(G) returns if the instance of the concrete graph G is
+    %  multiplex.
     %
-    % BOOL = IS_MULTIPLEX(GRAPH_CLASS) returns true if graph whose
-    % class is GRAPH_CLASS is multiplex.
+    % BOOL = IS_MULTIPLEX(GRAPH_CLASS) returns true if graph whose class is
+    %  GRAPH_CLASS is multiplex.
     %
-    % See also getGraphType, is_graph, is_multigraph, is_multilayer, is_ordered_multilayer, is_ordered_multiplex.
+    % See also getGraphType, is_graph, is_multigraph, is_multilayer,
+    % is_ordered_multilayer, is_ordered_multiplex.
 
     bool = Graph.getGraphType(g) == Graph.MULTIPLEX;
 end
 function bool = is_ordered_multilayer(g)
-    % IS_ORDERED_MULTILAYER checks if graph is ordered multilayer
+    %IS_ORDERED_MULTILAYER checks if graph is ordered multilayer.
     %
-    % BOOL = IS_ORDERED_MULTILAYER(G) returns if the instance of the
-    % concrete graph G is ordered multilayer.
+    % BOOL = IS_ORDERED_MULTILAYER(G) returns if the instance of the concrete
+    %  graph G is ordered multilayer.
     %
-    % BOOL = IS_ORDERED_MULTILAYER(GRAPH_CLASS) returns true if graph
-    % whose class is GRAPH_CLASS is ordered multilayer.
+    % BOOL = IS_ORDERED_MULTILAYER(GRAPH_CLASS) returns true if graph whose
+    %  class is GRAPH_CLASS is ordered multilayer.
     %
-    % See also getGraphType, is_graph, is_multigraph, is_multilayer, is_multiplex, is_ordered_multiplex.
+    % See also getGraphType, is_graph, is_multigraph, is_multilayer,
+    % is_multiplex, is_ordered_multiplex.
 
     bool = Graph.getGraphType(g) == Graph.ORDERED_MULTILAYER;
 end
 function bool = is_multilayer(g)
-    % IS_MULTILAYER checks if graph is multilayer
+    %IS_MULTILAYER checks if graph is multilayer
     %
-    % BOOL = IS_MULTILAYER(G) returns if the instance of the
-    % concrete graph G is multilayer.
+    % BOOL = IS_MULTILAYER(G) returns if the instance of the concrete graph G
+    %  is multilayer.
     %
-    % BOOL = IS_MULTILAYER(GRAPH_CLASS) returns true if graph whose
-    % class is GRAPH_CLASS is multilayer.
+    % BOOL = IS_MULTILAYER(GRAPH_CLASS) returns true if graph whose class is
+    %  GRAPH_CLASS is multilayer.
     %
-    % See also getGraphType, is_graph, is_multigraph, is_multiplex, is_ordered_multilayer, is_ordered_multiplex.
+    % See also getGraphType, is_graph, is_multigraph, is_multiplex,
+    % is_ordered_multilayer, is_ordered_multiplex.
 
     bool = Graph.getGraphType(g) == Graph.MULTILAYER;
 end
 function connectivity_type = getConnectivityType(g, varargin)
-    % GETCONNECTIVITYTYPE returns the connectivity type of the graph
+    %GETCONNECTIVITYTYPE returns the connectivity type of the graph.
     %
-    % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G) returns the
-    % connectivity type of the instance of the concrete graph G.
+    % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G) returns the connectivity type
+    %  of the instance of the concrete graph G.
     %
-    % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(GRAPH_CLASS)
-    % returns the connectivity type of the graph whose class is GRAPH_CLASS.
+    % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(GRAPH_CLASS) returns the
+    %  connectivity type of the graph whose class is GRAPH_CLASS.
     %
-    % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G, LAYERNUMBER)
-    % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(GRAPH_CLASS, LAYERNUMBER)
-    % returns a matrix with the connectivity type of each layer in
-    % a multiple layer graph.
+    % CONNECTIVITY_TYPE = GETCONNECTIVITYTYPE(G | GRAPH_CLASS, LAYERNUMBER)
+    %  returns a matrix with the connectivity type of each layer in
+    %  a multiple layer graph.
     %
     % See also is_binary, is_weighted.
 
@@ -326,44 +325,43 @@ function connectivity_type = getConnectivityType(g, varargin)
     end
 end
 function bool = is_weighted(g, varargin)
-    % IS_WEIGHTED checks if graph is weighted
+    %IS_WEIGHTED checks if graph is weighted.
     %
-    % BOOL = IS_WEIGHTED(G) returns if the instance of the
-    % concrete graph G is weighted.
+    % BOOL = IS_WEIGHTED(G) returns if the instance of the concrete graph G is
+    %  weighted.
     %
-    % BOOL = IS_WEIGHTED(GRAPH_CLASS) returns true if graph whose
-    % class is GRAPH_CLASS is weighted.
+    % BOOL = IS_WEIGHTED(GRAPH_CLASS) returns true if graph whose class is
+    %  GRAPH_CLASS is weighted.
     %
     % See also getConnectivityType, is_binary.
 
     bool = Graph.getConnectivityType(g, varargin{:}) == Graph.WEIGHTED;
 end
 function bool = is_binary(g, varargin)
-    % IS_BINARY checks if graph is binary
+    %IS_BINARY checks if graph is binary
     %
-    % BOOL = IS_BINARY(G) returns if the instance of the
-    % concrete graph G is binary.
+    % BOOL = IS_BINARY(G) returns if the instance of the concrete graph G is
+    %  binary.
     %
-    % BOOL = IS_BINARY(GRAPH_CLASS) returns true if graph whose
-    % class is GRAPH_CLASS is binary.
+    % BOOL = IS_BINARY(GRAPH_CLASS) returns true if graph whose class is
+    %  GRAPH_CLASS is binary.
     %
     % See also getConnectivityType, is_weighted.
 
     bool = Graph.getConnectivityType(g, varargin{:}) == Graph.BINARY;
 end
 function directionality_type = getDirectionalityType(g, varargin)
-    % GETDIRECTIONALITYTYPE returns the directionality type of the graph
+    %GETDIRECTIONALITYTYPE returns the directionality type of the graph.
     %
-    % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(G) returns the
-    % directionality type of the instance of the concrete graph G.
+    % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(G) returns the directionality
+    %  type of the instance of the concrete graph G.
     %
-    % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(GRAPH_CLASS)
-    % returns the directionality type of the graph whose class is GRAPH_CLASS.
+    % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(GRAPH_CLASS) returns the
+    %  directionality type of the graph whose class is GRAPH_CLASS.
     %
-    % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(G, LAYERNUMBER)
-    % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(GRAPH_CLASS, LAYERNUMBER)
-    % returns a matrix with the directionality type of each layer
-    % in a multiple layer graph.
+    % DIRECTIONALITY_TYPE = GETDIRECTIONALITYTYPE(G | GRAPH_CLASS, LAYERNUMBER)
+    %  returns a matrix with the directionality type of each layer
+    %  in a multiple layer graph.
     %
     % See also is_directed, is_undirected.
 
@@ -374,44 +372,43 @@ function directionality_type = getDirectionalityType(g, varargin)
     end
 end
 function bool = is_directed(g, varargin)
-    % IS_DIRECTED checks if graph is directed
+    %IS_DIRECTED checks if graph is directed
     %
-    % BOOL = IS_DIRECTED(G) returns if the instance of the
-    % concrete graph G is directed.
+    % BOOL = IS_DIRECTED(G) returns if the instance of the concrete graph G is
+    %  directed.
     %
-    % BOOL = IS_DIRECTED(GRAPH_CLASS) returns true if graph whose
-    % class is GRAPH_CLASS is directed.
+    % BOOL = IS_DIRECTED(GRAPH_CLASS) returns true if graph whose class is
+    %  GRAPH_CLASS is directed.
     %
     % See also getDirectionalityType, is_undirected.
 
     bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.DIRECTED;
 end
 function bool = is_undirected(g, varargin)
-    % IS_UNDIRECTED checks if graph is undirected
+    %IS_UNDIRECTED checks if graph is undirected.
     %
-    % BOOL = IS_UNDIRECTED(G) returns if the instance of the
-    % concrete graph G is undirected.
+    % BOOL = IS_UNDIRECTED(G) returns if the instance of the concrete graph G
+    %  is undirected.
     %
-    % BOOL = IS_UNDIRECTED(GRAPH_CLASS) returns true if graph whose
-    % class is GRAPH_CLASS is undirected.
+    % BOOL = IS_UNDIRECTED(GRAPH_CLASS) returns true if graph whose class is
+    %  GRAPH_CLASS is undirected.
     %
     % See also getDirectionalityType, is_directed.
 
     bool = Graph.getDirectionalityType(g, varargin{:}) == Graph.UNDIRECTED;
 end
 function selfconnectivity_type = getSelfConnectivityType(g, varargin)
-    % GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph
+    %GETSELFCONNECTIVITYTYPE returns the self-connectivity type of the graph.
     %
     % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(G) returns the
-    % self-connectivity type of the instance of the concrete graph G.
+    %  self-connectivity type of the instance of the concrete graph G.
     %
-    % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(GRAPH_CLASS)
-    % returns the self-connectivity type of the graph whose class is GRAPH_CLASS.
+    % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(GRAPH_CLASS) returns the
+    %  self-connectivity type of the graph whose class is GRAPH_CLASS.
     %
-    % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(G, LAYERNUMBER)
-    % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(GRAPH_CLASS, LAYERNUMBER)
-    % returns a matrix with the self-connectivity  type of each layer
-    % in a multiple layer graph.
+    % SELFCONNECTIVITY_TYPE = GETSELFCONNECTIVITYTYPE(G | GRAPH_CLASS, LAYERNUMBER)
+    %  returns a matrix with the self-connectivity  type of each layer
+    %  in a multiple layer graph.
     %
     % See also is_selfconnected, is_not_selfconnected.
 
@@ -422,44 +419,43 @@ function selfconnectivity_type = getSelfConnectivityType(g, varargin)
     end
 end
 function bool = is_selfconnected(g, varargin)
-    % IS_SELFCONNECTED checks if graph is self-connected
+    %IS_SELFCONNECTED checks if graph is self-connected.
     %
-    % BOOL = IS_SELFCONNECTED(G) returns true if the instance of the
-    % concrete graph G is self-connected and false otherwise.
+    % BOOL = IS_SELFCONNECTED(G) returns true if the instance of the concrete
+    %  graph G is self-connected and false otherwise.
     %
-    % BOOL = IS_SELFCONNECTED(GRAPH_CLASS) returns true if graph
-    % whose class is GRAPH_CLASS is self-connected and false otherwise.
+    % BOOL = IS_SELFCONNECTED(GRAPH_CLASS) returns true if graph whose class is
+    %  GRAPH_CLASS is self-connected and false otherwise.
     %
     % See also getSelfConnectivityType, is_not_selfconnected.
 
     bool = Graph.getSelfConnectivityType(g, varargin{:}) == Graph.SELFCONNECTED;
 end
 function bool = is_not_selfconnected(g, varargin)
-    % IS_NONSELFCONNECTED checks if graph is not self-connected
+    %IS_NONSELFCONNECTED checks if graph is not self-connected.
     %
     % BOOL = IS_NONSELFCONNECTED(G) returns true if the instance of the
-    % concrete graph G is not self-connected and false otherwise.
+    %  concrete graph G is not self-connected and false otherwise.
     %
-    % BOOL = IS_NONSELFCONNECTED(GRAPH_CLASS) returns true if graph
-    % whose class is GRAPH_CLASS is not self-connected and false otherwise.
+    % BOOL = IS_NONSELFCONNECTED(GRAPH_CLASS) returns true if graph whose class
+    %  is GRAPH_CLASS is not self-connected and false otherwise.
     %
     % See also getSelfConnectivityType, is_selfconnected.
 
     bool = Graph.getSelfConnectivityType(g, varargin{:}) == Graph.NONSELFCONNECTED;
 end
 function negativity_type = getNegativityType(g, varargin)
-    % GETNEGATIVITYTYPE returns the negativity type of the graph
+    %GETNEGATIVITYTYPE returns the negativity type of the graph.
     %
-    % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G) returns the
-    % negativity type of the instance of the concrete graph G.
+    % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G) returns the negativity type of the
+    %  instance of the concrete graph G.
     %
-    % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(GRAPH_CLASS) returns
-    % the negativity type of the graph whose class is GRAPH_CLASS.
+    % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(GRAPH_CLASS) returns the negativity
+    %  type of the graph whose class is GRAPH_CLASS.
     %
-    % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G, LAYERNUMBER)
-    % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(GRAPH_CLASS, LAYERNUMBER)
-    % returns a matrix with the negativity  type of each layer in
-    % a multiple layer graph.
+    % NEGATIVITY_TYPE = GETNEGATIVITYTYPE(G | GRAPH_CLASS, LAYERNUMBER)
+    %  returns a matrix with the negativity  type of each layer in
+    %  a multiple layer graph.
     %
     % See also is_negative, is_nonnegative.
 
@@ -470,26 +466,26 @@ function negativity_type = getNegativityType(g, varargin)
     end
 end
 function bool = is_nonnegative(g, varargin)
-    % IS_NONNEGATIVE checks whether graph allows non-negative values
+    %IS_NONNEGATIVE checks whether graph allows non-negative values.
     %
-    % BOOL = IS_NONNEGATIVE(G) returns true if the concrete instance
-    % of graph G allows non-negative values and false otherwise.
+    % BOOL = IS_NONNEGATIVE(G) returns true if the concrete instance of graph G
+    %  allows non-negative values and false otherwise.
     %
-    % BOOL = IS_NONNEGATIVE(GRAPH_CLASS) returns true if the graph
-    % whose class is GRAPH_CLASS allows non-negative values and false otherwise.
+    % BOOL = IS_NONNEGATIVE(GRAPH_CLASS) returns true if the graph whose class
+    % is GRAPH_CLASS allows non-negative values and false otherwise.
     %
     % See also getNegativityType, is_negative.
 
     bool = Graph.getNegativityType(g, varargin{:}) == Graph.NONNEGATIVE;
 end
 function bool = is_negative(g, varargin)
-    % IS_NEGATIVE checks whether graph allows negative values
+    %IS_NEGATIVE checks whether graph allows negative values.
     %
-    % BOOL = IS_NEGATIVE(G) returns true if the concrete instance
-    % of graph G allows negative values and false otherwise.
+    % BOOL = IS_NEGATIVE(G) returns true if the concrete instance of graph G
+    %  allows negative values and false otherwise.
     %
-    % BOOL = IS_NEGATIVE(GRAPH_CLASS) returns true if the graph
-    % whose class is GRAPH_CLASS allows negative values and false otherwise.
+    % BOOL = IS_NEGATIVE(GRAPH_CLASS) returns true if the graph whose class is
+    % GRAPH_CLASS allows negative values and false otherwise.
     %
     % See also getNegativityType, is_nonnegative.
 
@@ -497,27 +493,23 @@ function bool = is_negative(g, varargin)
 end
 % check methods
 function checkA(graph_type, A)
-    % CHECKA checks if adjacency matrix A or cell array of adjacency matrices A is correct for the type of graph
+    %CHECKA checks whether adjacency matrix A is correct for the type of graph.
     %
-    % CHECKA(GRAPH_TYPE, A) checks if adjacency matrix A or cell array of
-    % adjacency matrices A is correct for the GRAPH_TYPE.
+    % CHECKA(GRAPH_TYPE, A) checks if adjacency matrix A is correct for the
+    %  GRAPH_TYPE.
     %
-    % See also checkConnectivity, checkDirectionality, checkNegativity, checkSelfConnectivity.
+    % See also checkConnectivity, checkDirectionality, checkNegativity,
+    % checkSelfConnectivity.
 
     % Basic checks
-    if graph_type == Graph.GRAPH  % if graph, adjacency matrix
-        assert(isnumeric(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
-            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-            'A must be a square adjacency matrix.')
-    else  % all other graph types, square cell array of matrices
-        assert(iscell(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
-            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-            'A must be a superadjacency matrix (square cell array of matrices).')
-        % all submatrices in the diagonal are square
-        assert(all(cellfun(@(a) size(a, 1) == size(a, 2), A(1:length(A)+1:end))), ...
-            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-            'All submatrices in the cell diagonal must be square.')
-    end
+    % square cell array of matrices
+    assert(iscell(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
+        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+        'A must be a superadjacency matrix (square cell array of matrices).')
+    % all submatrices in the diagonal are square
+    assert(all(cellfun(@(a) size(a, 1) == size(a, 2), A(1:length(A)+1:end))), ...
+        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+        'All submatrices in the cell diagonal must be square.')
 
     % Additional checks
     switch graph_type
@@ -572,15 +564,13 @@ function checkA(graph_type, A)
     end
 end
 function checkConnectivity(connectivity_type, A)
-    % CHECKCONNECTIVITY checks if adjacency matrix A or cell array of adjacency matrices A is correct for the connectivity type
+    %CHECKCONNECTIVITY checks if adjacency matrix A is correct for the connectivity type.
     %
-    % CHECKCONNECTIVITY(CONNECTIVITY_TYPE, A) checks if adjacency
-    % matrix A or cell array of adjacency matrices A is correct for
-    % the CONNECTIVITY_TYPE of the graph.
-    % This check assumes that checkA has already been passed.
+    % CHECKCONNECTIVITY(CONNECTIVITY_TYPE, A) checks if adjacency matrix A is
+    %  correct for the CONNECTIVITY_TYPE of the graph.
+    %  This check assumes that checkA has already been passed.
     %
     % See also checkA, checkDirectionality, checkNegativity, checkSelfConnectivity.
-
 
     if isnumeric(A)  % A is a matrix
         switch connectivity_type
@@ -613,12 +603,11 @@ function checkConnectivity(connectivity_type, A)
     end
 end
 function checkDirectionality(directionality_type, A, At)
-    % CHECKDIRECTIONALITY checks if adjacency matrix A or cell array of adjacency matrices A is correct for the directionality type
+    %CHECKDIRECTIONALITY checks if adjacency matrix A is correct for the directionality type.
     %
-    % CHECKDIRECTIONALITY(DIRECTIONALITY_TYPE, A) checks if adjacency
-    % matrix A or cell array of adjacency matrices A is correct for
-    % the DIRECTIONALITY_TYPE of the graph.
-    % This check assumes that checkA has already been passed.
+    % CHECKDIRECTIONALITY(DIRECTIONALITY_TYPE, A) checks if adjacency matrix A
+    %  is correct for the DIRECTIONALITY_TYPE of the graph.
+    %  This check assumes that checkA has already been passed.
     %
     % See also checkA, checkConnectivity, checkNegativity, checkSelfConnectivity.
 
@@ -662,12 +651,11 @@ function checkDirectionality(directionality_type, A, At)
     end
 end
 function checkSelfConnectivity(selfconnectivity_type, A)
-    % CHECKSELFCONNECTIVITY checks if adjacency matrix A or cell array of adjacency matrices A is correct for the self-connectivity type
+    %CHECKSELFCONNECTIVITY checks if adjacency matrix A is correct for the self-connectivity type.
     %
     % CHECKSELFCONNECTIVITY(SELFCONNECTIVITY_TYPE, A) checks if adjacency
-    % matrix A or cell array of adjacency matrices A is correct for
-    % the SELFCONNECTIVITY_TYPE of the graph.
-    % This check assumes that checkA has already been passed.
+    %  matrix A is correct for the SELFCONNECTIVITY_TYPE of the graph.
+    %  This check assumes that checkA has already been passed.
     %
     % See also checkA, checkConnectivity, checkDirectionality, checkNegativity.
 
@@ -700,12 +688,11 @@ function checkSelfConnectivity(selfconnectivity_type, A)
     end
 end
 function checkNegativity(negativity_type, A)
-    % CHECKNEGATIVITY checks if adjacency matrix A or cell array of adjacency matrices A is correct for the negativity type
+    %CHECKNEGATIVITY checks if adjacency matrix A is correct for the negativity type.
     %
-    % CHECKNEGATIVITY(NEGATIVITY_TYPE, A) checks if adjacency
-    % matrix A or cell array of adjacency matrices A is correct for
-    % the NEGATIVITY_TYPE of the graph.
-    % This check assumes that checkA has already been passed.
+    % CHECKNEGATIVITY(NEGATIVITY_TYPE, A) checks if adjacency matrix A is
+    %  correct for the NEGATIVITY_TYPE of the graph.
+    %  This check assumes that checkA has already been passed.
     %
     % See also checkA, checkConnectivity, checkDirectionality, checkSelfConnectivity.
 
@@ -742,46 +729,32 @@ end
 
 %% ¡methods!
 function n = nodenumber(g)
-    % NODENUMBER returns the number of nodes in the graph
+    %NODENUMBER returns the number of nodes in the graph.
     %
-    % N = NODENUMBER(G) returns the number of nodes in graph G. For
-    % non single layer graphs it returns an array with the number
-    % of nodes in each layer.
+    % N = NODENUMBER(G) returns the number of nodes in graph G. For non single
+    %  layer graphs it returns an array with the number of nodes in each layer.
     %
-    % See also getA, getSettings, layernumber.
+    % See also layernumber.
 
-    switch Graph.getGraphType(g)
-        case Graph.GRAPH
-            n = length(g.get('A'));
-        otherwise
-            A = g.get('A'); %#ok<PROP>
-            n = cellfun(@(a) length(a), A(1:length(A)+1:end)); %#ok<PROP>
-    end
+    A = g.get('A'); %#ok<PROP>
+    n = cellfun(@(a) length(a), A(1:length(A)+1:end)); %#ok<PROP>
 end
 function n = layernumber(g)
-    % LAYERNUMBER returns the number of layers in the graph
+    %LAYERNUMBER returns the number of layers in the graph.
     %
     % N = LAYERNUMBER(G) returns the number of layers in graph G.
     %
-    % See also getA, getSettings, nodenumber.
+    % See also nodenumber.
 
-    switch Graph.getGraphType(g)
-        case Graph.GRAPH
-            n = 1;
-        otherwise
-            n = length(g.get('A'));
-    end
+    length(g.get('A'));
 end
 function m = getMeasure(g, measure_class, varargin)
-    % GETMEASURE returns measure
+    %GETMEASURE returns measure.
     %
-    % M = GETMEASURE(G, MEASURE_CLASS) checks if the measure
-    % exists in the property MDICT. If not it creates a new measure
-    % M of class MEASURE_CLASS with properties defined by the graph
-    % settings. The user must call getValue() for the new measure M
-    % to retrieve the value of measure M.
-    %
-    % See also getMeasureValue, is_measure_calculated.
+    % M = GETMEASURE(G, MEASURE_CLASS) checks if the measure exists in the
+    % property MDICT. If not it creates a new measure M of class MEASURE_CLASS
+    % with properties defined by the graph settings. The user must call
+    % getValue() for the new measure M to retrieve the value of measure M.
 
     m_dict = g.memorize('M_DICT');
     if m_dict.containsKey(measure_class)
