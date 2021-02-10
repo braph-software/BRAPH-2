@@ -6,6 +6,9 @@ Measure provides the methods necessary for all graph measures.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
+%%% ¡seealso!
+Graph
+
 %% ¡props!
 
 %%% ¡prop!
@@ -21,8 +24,6 @@ NOTES (metadata, string) are some specific notes about the graph measure.
 G (data, item) is the measure graph.
 %%%% ¡settings!
 'Graph'
-%%%% ¡default!
-Graph()
 
 %%% ¡prop!
 M (result, cell) is the measure result.
@@ -118,14 +119,14 @@ PARAMETRICITY_DESCRIPTION = {
 
 %% ¡staticmethods!
 function measure_shape = getMeasureShape(m)
-    % GETMEASURESHAPE returns the measure shape
+    %GETMEASURESHAPE returns the measure shape.
     %
-    % MEASURE_TYPE = GETMEASURESHAPE(M) returns the measure shape
-    % of measure M (e.g., GLOBAL, NODAL, BINODAL).
+    % MEASURE_TYPE = GETMEASURESHAPE(M) returns the measure shape of measure M
+    %  (e.g., GLOBAL, NODAL, BINODAL).
     %
-    % MEASURE_TYPE = GETMEASURESHAPE(MEASURE_CLASS) returns the measure 
-    % shape of the measure whose class is MEASURE_CLASS (e.g., GLOBAL,
-    % NODAL, BINODAL).
+    % MEASURE_TYPE = GETMEASURESHAPE(MEASURE_CLASS) returns the measure shape
+    %  of the measure whose class is MEASURE_CLASS (e.g., GLOBAL, NODAL,
+    %  BINODAL).
     %
     % See also is_binodal, is_global, is_nodal.
 
@@ -137,54 +138,53 @@ function measure_shape = getMeasureShape(m)
     end
 end
 function bool = is_global(m)
-    % IS_GLOBAL checks if measure is global
+    %IS_GLOBAL checks if measure is global.
     %
-    % BOOL = IS_GLOBAL(M) returns true if the concrete measure M
-    % is global and false otherwise.
+    % BOOL = IS_GLOBAL(M) returns true if the concrete measure M is global and
+    %  false otherwise.
     %
-    % BOOL = IS_GLOBAL(MEASURE_CLASS) returns true if the measure
-    % whose class is MEASURE_CLASS is global and false otherwise.
+    % BOOL = IS_GLOBAL(MEASURE_CLASS) returns true if the measure whose class
+    %  is MEASURE_CLASS is global and false otherwise.
     %
     % See also getMeasureShape, is_binodal, is_nodal.
 
     bool = Measure.getMeasureShape(m) == Measure.GLOBAL;
 end
 function bool = is_nodal(m)
-    % IS_NODAL checks if measure is nodal
+    %IS_NODAL checks if measure is nodal.
     %
-    % BOOL = IS_NODAL(M) returns true if the concrete measure M is nodal
-    % and false otherwise.
+    % BOOL = IS_NODAL(M) returns true if the concrete measure M is nodal and
+    %  false otherwise.
     %
-    % BOOL = IS_NODAL(MEASURE_CLASS) returns true if the measure
-    % whose class is MEASURE_CLASS is nodal and false otherwise.
+    % BOOL = IS_NODAL(MEASURE_CLASS) returns true if the measure whose class is
+    %  MEASURE_CLASS is nodal and false otherwise.
     %
     % See also getMeasureShape, is_binodal, is_global.
 
     bool = Measure.getMeasureShape(m) == Measure.NODAL;
 end
 function bool = is_binodal(m)
-    % IS_BINODAL checks if measure is bi-nodal
+    %IS_BINODAL checks if measure is bi-nodal.
     %
-    % BOOL = IS_BINODAL(M) returns true if concrete measure M is binodal
-    % and false otherwise.
+    % BOOL = IS_BINODAL(M) returns true if concrete measure M is binodal and
+    %  false otherwise.
     %
-    % BOOL = IS_BINODAL(MEASURE_CLASS) returns true if a  measure
-    % whose class is MEASURE_CALSS is binodal and false otherwise.
+    % BOOL = IS_BINODAL(MEASURE_CLASS) returns true if a  measure whose class
+    %  is MEASURE_CALSS is binodal and false otherwise.
     %
     % See also getMeasureShape, is_global, is_nodal.
 
     bool = Measure.getMeasureShape(m) == Measure.BINODAL;
 end
 function measure_scope = getMeasureScope(m)
-    % GETMEASURESCOPE returns the measure scope
+    %GETMEASURESCOPE returns the measure scope.
     %
-    % MEASURE_SCOPE = GETMEASURESCOPE(M) returns the
-    % measure scope of measure M (e.g., SUPERGLOBAL, UNILAYER,
-    % BILAYER).
+    % MEASURE_SCOPE = GETMEASURESCOPE(M) returns the measure scope of measure M
+    %  (e.g., SUPERGLOBAL, UNILAYER, BILAYER).
     %
-    % MEASURE_SCOPE = GETMEASURESCOPE(MEASURE_CLASS)
-    % returns the measure scope of the measure whose class is
-    % MEASURE_CLASS (e.g., SUPERGLOBAL, UNILAYER, BILAYER).
+    % MEASURE_SCOPE = GETMEASURESCOPE(MEASURE_CLASS) returns the measure scope
+    %  of the measure whose class is MEASURE_CLASS (e.g., SUPERGLOBAL, UNILAYER,
+    %  BILAYER).
     %
     % See also is_bilayer, is_superglobal, is_unilayer.
 
@@ -195,53 +195,53 @@ function measure_scope = getMeasureScope(m)
     end
 end
 function bool = is_superglobal(m)
-    % IS_SUPERGLOBAL checks if measure is superglobal
+    %IS_SUPERGLOBAL checks if measure is superglobal.
     %
-    % BOOL = IS_SUPERGLOBAL(M) returns true if the concrete measure M
-    % is superglobal and false otherwise.
+    % BOOL = IS_SUPERGLOBAL(M) returns true if the concrete measure M is
+    %  superglobal and false otherwise.
     %
-    % BOOL = IS_SUPERGLOBAL(MEASURE_CLASS) returns true if the measure
-    % whose class is MEASURE_CLASS is superglobal and false otherwise.
+    % BOOL = IS_SUPERGLOBAL(MEASURE_CLASS) returns true if the measure whose
+    %  class is MEASURE_CLASS is superglobal and false otherwise.
     %
     % See also getMeasureScope, is_bilayer, is_unilayer.
 
     bool = Measure.getMeasureScope(m) == Measure.SUPERGLOBAL;
 end
 function bool = is_unilayer(m)
-    % IS_UNILAYER checks if measure is unilayer
+    %IS_UNILAYER checks if measure is unilayer.
     %
     % BOOL = IS_UNILAYER(M) returns true if the concrete measure M is unilayer
-    % and false otherwise.
+    %  and false otherwise.
     %
-    % BOOL = IS_UNILAYER(MEASURE_CLASS) returns true if the measure
-    % whose class is MEASURE_CLASS is unilayer and false otherwise.
+    % BOOL = IS_UNILAYER(MEASURE_CLASS) returns true if the measure whose class
+    %  is MEASURE_CLASS is unilayer and false otherwise.
     %
     % See also getMeasureScope, is_bilayer, is_superglobal.
 
     bool = Measure.getMeasureScope(m) == Measure.UNILAYER;
 end
 function bool = is_bilayer(m)
-    % IS_BILYER checks if measure is bi-layer
+    %IS_BILYER checks if measure is bi-layer.
     %
-    % BOOL = IS_BILYER(M) returns true if concrete measure M is
-    % bi-layer and false otherwise.
+    % BOOL = IS_BILYER(M) returns true if concrete measure M is bi-layer and
+    %  false otherwise.
     %
-    % BOOL = IS_BILYER(MEASURE_CLASS) returns true if a measure
-    % whose class is MEASURE_CALSS is bi-layer and false otherwise.
+    % BOOL = IS_BILYER(MEASURE_CLASS) returns true if a measure whose class is
+    %  MEASURE_CALSS is bi-layer and false otherwise.
     %
     % See also getMeasureScope, is_superglobal, is_unilayer.
 
     bool = Measure.getMeasureScope(m) == Measure.BILAYER;
 end
 function parametricity = getParametricity(m)
-    % GETPARAMETRICITY returns the parametricity of the measure
+    %GETPARAMETRICITY returns the parametricity of the measure.
     %
-    % PARAMETRICITY = GETPARAMETRICITY(M) returns the
-    % parametricity of measure M (e.g., NONPARAMETRIC, PARAMETRIC).
+    % PARAMETRICITY = GETPARAMETRICITY(M) returns the parametricity of measure
+    %  M (e.g., NONPARAMETRIC, PARAMETRIC).
     %
-    % PARAMETRICITY = GETPARAMETRICITY(MEASURE_CLASS)
-    % returns the parametricity of the measure whose class is
-    % MEASURE_CLASS (e.g., NONPARAMETRIC, PARAMETRIC).
+    % PARAMETRICITY = GETPARAMETRICITY(MEASURE_CLASS) returns the parametricity
+    %  of the measure whose class is MEASURE_CLASS (e.g., NONPARAMETRIC,
+    %  PARAMETRIC).
     %
     % See also is_nonparametric, is_parametric.
 
@@ -252,58 +252,57 @@ function parametricity = getParametricity(m)
     end
 end
 function bool = is_parametric(m)
-    % IS_PARAMETRIC checks if measure is parametric
+    %IS_PARAMETRIC checks if measure is parametric.
     %
-    % BOOL = IS_PARAMETRIC(M) returns true if the concrete measure M
-    % is parametric and false otherwise.
+    % BOOL = IS_PARAMETRIC(M) returns true if the concrete measure M is
+    %  parametric and false otherwise.
     %
-    % BOOL = IS_PARAMETRIC(MEASURE_CLASS) returns true if the measure
-    % whose class is MEASURE_CLASS is parametric and false otherwise.
+    % BOOL = IS_PARAMETRIC(MEASURE_CLASS) returns true if the measure whose
+    %  class is MEASURE_CLASS is parametric and false otherwise.
     %
     % See also getParametricity, is_nonparametric.
 
     bool = Measure.getParametricity(m) == Measure.PARAMETRIC;
 end
 function bool = is_nonparametric(m)
-    % IS_NONPARAMETRIC checks if measure is non-parametric
+    %IS_NONPARAMETRIC checks if measure is non-parametric.
     %
-    % BOOL = IS_NONPARAMETRIC(M) returns true if the concrete measure M
-    % is non-parametric and false otherwise.
+    % BOOL = IS_NONPARAMETRIC(M) returns true if the concrete measure M is
+    %  non-parametric and false otherwise.
     %
-    % BOOL = IS_NONPARAMETRIC(MEASURE_CLASS) returns true if the measure
-    % whose class is MEASURE_CLASS is non-parametric and false otherwise.
+    % BOOL = IS_NONPARAMETRIC(MEASURE_CLASS) returns true if the measure whose
+    %  class is MEASURE_CLASS is non-parametric and false otherwise.
     %
     % See also getParametricity, is_parametric.
 
     bool = Measure.getParametricity(m) == Measure.NONPARAMETRIC;
 end
 function list = getCompatibleGraphList(m)
-    % GETCOMPATIBLEGRAPHLIST returns the list of graphs
+    %GETCOMPATIBLEGRAPHLIST returns the list of graphs.
     %
-    % GRAPH_CLASS_LIST = GETCOMPATIBLEGRAPHLIST(M) returns a cell
-    % array of compatible graph classes to the concrete measure M. 
-    % M will not work if the graph is not compatible. 
+    % GRAPH_CLASS_LIST = GETCOMPATIBLEGRAPHLIST(M) returns a cell array of
+    % compatible graph classes to the concrete measure M. M will not work if
+    % the graph is not compatible.
     %
     % GRAPH_CLASS_LIST = GETCOMPATIBLEGRAPHLIST(MEASURE_CLASS)
     % returns a cell array of compatible graph classes to the measure
     % whose class is MEASURE_CLASS. M will not work if the
     % graph is not compatible. 
     %
-    % See also getAvailableSettings, getList, getCompatibleGraphNumber, getMeasure.
+    % See also getCompatibleGraphNumber, getMeasure.
 
     list = eval([Element.getClass(m) '.getCompatibleGraphList()']);
 end
 function n = getCompatibleGraphNumber(m)
-    % GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs
+    %GETCOMPATIBLEGRAPHNUMBER returns the number of compatible graphs.
     %
-    % N = GETCOMPATIBLEGRAPHNUMBER(M) returns the number of
-    % compatible graphs to the concrete measure M.
+    % N = GETCOMPATIBLEGRAPHNUMBER(M) returns the number of compatible graphs
+    %  to the concrete measure M.
     %
     % N = GETCOMPATIBLEGRAPHNUMBER(MEASURE_CLASS) returns the number of
-    % compatible graphs to the a measure whose class is
-    % MEASURE_CLASS.
+    %  compatible graphs to the a measure whose class is MEASURE_CLASS.
     %
-    % See also getAvailableSettings, getList, getCompatibleGraphList, getMeasure.
+    % See also getCompatibleGraphList, getMeasure.
 
     list = Measure.getCompatibleGraphList(m);
     n = numel(list);
