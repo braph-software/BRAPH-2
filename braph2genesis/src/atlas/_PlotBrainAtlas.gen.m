@@ -251,7 +251,10 @@ function h_panel = draw(pl, varargin)
 
     h = draw@PlotBrainSurface(pl, varargin{:});
 
-    pl.h_axes = axes(h);
+    if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
+        pl.h_axes = get(h, 'Children');
+    end
+    
     % close function
     set(h, 'DeleteFcn', {@close_f_settings}, ...
         varargin{:})
