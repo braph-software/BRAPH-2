@@ -23,7 +23,7 @@ MultigraphBUT
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, measure) is the degree.
+M (result, cell) is the degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

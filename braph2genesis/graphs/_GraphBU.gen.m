@@ -28,12 +28,12 @@ negativity = Graph.NONNEGATIVE;
 %% ¡props!
 
 %%% ¡prop!
-B (data, adjacency) is the input graph adjacency matrix.
+B (data, cell) is the input graph adjacency matrix.
 
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, adjacency) is the symmetric binary adjacency matrix of the binary undirected graph.
+A (result, cell) is the symmetric binary adjacency matrix of the binary undirected graph.
 %%%% ¡calculate!
 B = g.get('B');
 A = B;

@@ -25,7 +25,7 @@ MultigraphBUT
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, measure) is the distance.
+M (result, cell) is the distance.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multiplex)

@@ -24,7 +24,7 @@ MultigraphBUT
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, measure) is the average degree.
+M (result, cell) is the average degree.
 %%%% ¡calculate!
 degree = calculateValue@Degree(m, prop);
 
