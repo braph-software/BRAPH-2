@@ -31,11 +31,7 @@ A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph,
 degree = cell(g.layernumber(), 1);
 
 for li = 1:1:g.layernumber()
-    if g.is_graph(g)
-        Aii = A;
-    else
-        Aii = A{li, li};
-    end
+    Aii = A{li, li};
     Aii = binarize(Aii);  % binarizes the adjacency matrix
     degree(li) = {sum(Aii, 2)};  % calculates the degree of a node for layer li
 end
@@ -56,7 +52,7 @@ B = [
 
 known_degree = {[2 1 1]'};
 
-g = GraphBU('B', B);
+g = GraphBU('B', {B});
 
 m_outside_g = Degree('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree), ...
@@ -80,7 +76,7 @@ B = [
 
 known_degree = {[2 1 1]'};
 
-g = GraphWU('B', B);
+g = GraphWU('B', {B});
 
 m_outside_g = Degree('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree), ...
@@ -110,7 +106,7 @@ known_degree = { ...
     [0 0 0]'
     };
 
-g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+g = MultigraphBUT('B', {B}, 'THRESHOLDS', thresholds);
 
 m_outside_g = Degree('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree), ...
@@ -141,7 +137,7 @@ known_degree = { ...
     [2 2 2]'
     };
 
-g = MultigraphBUD('B', B, 'DENSITIES', densities);
+g = MultigraphBUD('B', {B}, 'DENSITIES', densities);
 
 m_outside_g = Degree('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree), ...

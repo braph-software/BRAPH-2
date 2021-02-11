@@ -39,11 +39,11 @@ B = g.get('B');
 A = B;
 
 varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, binarize
-A = dediagonalize(A, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
+A = dediagonalize(cell2mat(A), varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
 A = semipositivize(A, varargin{:}); %% removes negative weights
 A = binarize(A, varargin{:}); %% enforces binary adjacency matrix
 
-value = A;
+value = {A};
 
 %% ¡tests!
 
@@ -52,10 +52,10 @@ value = A;
 Constructor
 %%%% ¡code!
 B = rand(randi(10));
-g = GraphBD('B', B);
+g = GraphBD('B', {B});
 
 A = binarize(semipositivize(dediagonalize(B)));
 
-assert(isequal(g.get('A'), A), ...
+assert(isequal(g.get('A'), {A}), ...
     [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_ERR], ...
     'GraphBD is not constructing well.')

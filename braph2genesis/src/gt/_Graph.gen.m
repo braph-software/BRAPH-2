@@ -746,7 +746,7 @@ function n = layernumber(g)
     %
     % See also nodenumber.
 
-    length(g.get('A'));
+    n = length(g.get('A'));
 end
 function m = getMeasure(g, measure_class, varargin)
     %GETMEASURE returns measure.

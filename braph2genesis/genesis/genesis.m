@@ -336,19 +336,19 @@ end
 % for i = 1:1:numel(analysis_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
 % end
-% 
-% % graphs
-% graphs_gen_list = getGenerators([source_dir fp 'graphs']);
-% for i = 1:1:numel(graphs_gen_list)
-%     create_test_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
-% end
-% 
-% % measures
-% measures_gen_list = getGenerators([source_dir fp 'measures']);
-% for i = 1:1:numel(measures_gen_list)
-%     create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
-% end
-% 
+
+% graphs
+graphs_gen_list = getGenerators([source_dir fp 'graphs']);
+for i = 1:1:numel(graphs_gen_list)
+    create_test_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
+end
+
+% measures
+measures_gen_list = getGenerators([source_dir fp 'measures']);
+for i = 1:1:numel(measures_gen_list)
+    create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
+end
+
 % workflows
 wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
 for i = 1:1:numel(wf_structural_gen_list)

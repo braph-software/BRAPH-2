@@ -39,12 +39,12 @@ B = g.get('B');
 A = B;
 
 varargin = {}; %% TODO add props to manage the relevant properties of symmetrize, dediagonalize, semipositivize, standardize
-A = symmetrize(A, varargin{:}); %% enforces symmetry of adjacency matrix
+A = symmetrize(cell2mat(A), varargin{:}); %% enforces symmetry of adjacency matrix
 A = dediagonalize(A, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
 A = semipositivize(A, varargin{:}); %% removes negative weights
 A = standardize(A, varargin{:}); %% ensures all weights are between 0 and 1
 
-value = A;
+value = {A};
 
 %% ¡tests!
 
@@ -53,10 +53,10 @@ value = A;
 Constructor
 %%%% ¡code!
 B = rand(randi(10));
-g = GraphWU('B', B);
+g = GraphWU('B', {B});
 
 A = standardize(symmetrize(semipositivize(dediagonalize(B))));
 
-assert(isequal(g.get('A'), A), ...
+assert(isequal(g.get('A'), {A}), ...
     [BRAPH2.STR ':GraphWU:' BRAPH2.BUG_ERR], ...
     'GraphWU is not constructing well.')

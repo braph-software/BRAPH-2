@@ -51,7 +51,7 @@ B = [
 
 known_degree_av = {mean([2 1 1])};
 
-g = GraphBU('B', B);
+g = GraphBU('B', {B});
 
 m_outside_g = DegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree_av), ...
@@ -75,7 +75,7 @@ B = [
 
 known_degree_av = {mean([2 1 1])};
 
-g = GraphWU('B', B);
+g = GraphWU('B', {B});
 
 m_outside_g = DegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree_av), ...
@@ -105,7 +105,7 @@ known_degree = { ...
     mean([0 0 0])
     };
 
-g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+g = MultigraphBUT('B', {B}, 'THRESHOLDS', thresholds);
 
 m_outside_g = DegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree), ...
@@ -136,7 +136,7 @@ known_degree = { ...
     mean([2 2 2])
     };
 
-g = MultigraphBUD('B', B, 'DENSITIES', densities);
+g = MultigraphBUD('B', {B}, 'DENSITIES', densities);
 
 m_outside_g = DegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree), ...
