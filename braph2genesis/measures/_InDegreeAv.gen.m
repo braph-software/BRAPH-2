@@ -22,7 +22,7 @@ MultiplexGraphBD
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the in-degree-av.
+M (result, cell) is the average in-degree.
 %%%% ¡calculate!
 in_degree = calculateValue@InDegree(m, prop);	
 g = m.get('G'); % graph from measure class
