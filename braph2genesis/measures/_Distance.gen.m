@@ -31,7 +31,7 @@ g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multiplex)
 
 distance = cell(g.layernumber(), 1);
-connectivity_type =  g.getConnectivityType(g, g.layernumber());  % getConnectivityType is Graph static
+connectivity_type =  g.getConnectivityType(g.layernumber());
 for li = 1:1:g.layernumber()
 
     Aii = A{li, li};
@@ -48,10 +48,10 @@ value = distance;
 
 %% ¡methods!
 function weighted_distance = getWeightedCalculation(m, A)
-    % GETWEIGHTEDCALCULATION calculates the distance value of a weighted adjacency matrix
+    %GETWEIGHTEDCALCULATION calculates the distance value of a weighted adjacency matrix.
     %
-    % WEIGHTED_DISTANCE = GETWEIGHTEDCALCULATION(M, A) returns the value of the distance of a
-    % weighted adjacency matrix A.
+    % WEIGHTED_DISTANCE = GETWEIGHTEDCALCULATION(M, A) returns the value of the
+    %  distance of a weighted adjacency matrix A.
 
     ind = A~=0;
     A(ind) = A(ind).^-1;
@@ -89,10 +89,10 @@ function weighted_distance = getWeightedCalculation(m, A)
     weighted_distance = D;
 end
 function binary_distance = getBinaryCalculation(m, A)
-    % GETBINARYCALCULATION calculates the distance value of a binary adjacency matrix
+    %GETBINARYCALCULATION calculates the distance value of a binary adjacency matrix.
     %
-    % BINARY_DISTANCE = GETBINARYCALCULATION(A) returns the
-    % value of the distance of a binary adjacency matrix A.
+    % BINARY_DISTANCE = GETBINARYCALCULATION(A) returns the value of the
+    %  distance of a binary adjacency matrix A.
 
     l = 1; % path length
     D = A; % distance matrix
