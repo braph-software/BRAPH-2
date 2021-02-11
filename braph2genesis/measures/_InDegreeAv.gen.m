@@ -49,7 +49,7 @@ B = [
 
 known_in_degree_av = {mean([1 1 1]')};
 
-g = GraphBD('B', {B});
+g = GraphBD('B', B);
 
 m_outside_g = InDegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree_av), ...
@@ -73,7 +73,7 @@ B = [
 
 known_in_degree_av = {mean([1 1 2]')};
 
-g = GraphWD('B', {B});
+g = GraphWD('B', B);
 
 m_outside_g = InDegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree_av), ...
@@ -111,7 +111,7 @@ known_in_degree_av = {
                      mean([2 2 1]')
                      };
 
-g = MultiplexGraphBD('B', {B});
+g = MultiplexGraphBD('B', B);
 
 m_outside_g = InDegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree_av), ...
@@ -149,7 +149,7 @@ known_in_degree_av = {
                      mean([1 2 2]')
                      };
 
-g = MultiplexGraphWD('B', {B});
+g = MultiplexGraphWD('B', B);
 
 m_outside_g = InDegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree_av), ...

@@ -52,7 +52,7 @@ B = [
 
 known_in_degree = {[1 1 1]'};
 
-g = GraphBD('B', {B});
+g = GraphBD('B', B);
 
 m_outside_g = InDegree('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree), ...
@@ -76,7 +76,7 @@ B = [
 
 known_in_degree = {[1 1 2]'};
 
-g = GraphWD('B', {B});
+g = GraphWD('B', B);
 
 m_outside_g = InDegree('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree), ...
@@ -114,7 +114,7 @@ known_in_degree = {
                   [2 2 1]'
                   };
 
-g = MultiplexGraphBD('B', {B});
+g = MultiplexGraphBD('B', B);
 
 m_outside_g = InDegree('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree), ...
@@ -152,7 +152,7 @@ known_in_degree = {
                   [1 2 2]'
                   };
 
-g = MultiplexGraphWD('B', {B});
+g = MultiplexGraphWD('B', B);
 
 m_outside_g = InDegree('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree), ...
