@@ -132,7 +132,7 @@ known_distance = {[
     Inf Inf Inf Inf 0
     ]};
 
-g = GraphBU('B', {B});
+g = GraphBU('B', B);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
@@ -164,7 +164,7 @@ known_distance = {[
     Inf Inf Inf Inf 0
     ]};
 
-g = GraphBD('B', {B});
+g = GraphBD('B', B);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
@@ -196,7 +196,7 @@ known_distance = {[
     Inf Inf Inf Inf 0
     ]};
 
-g = GraphWU('B', {B});
+g = GraphWU('B', B);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
@@ -229,7 +229,7 @@ known_distance = {[
     Inf Inf Inf Inf 0
     ]};
 
-g = GraphWD('B', {B});
+g = GraphWD('B', B);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
@@ -271,7 +271,7 @@ known_distance = {
     ]
     };
 
-g = MultigraphBUT('B', {B}, 'THRESHOLDS', thresholds);
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
@@ -319,7 +319,7 @@ known_distance = {
     ]
     };
 
-g = MultigraphBUD('B', {B}, 'DENSITIES', densities);
+g = MultigraphBUD('B', B, 'DENSITIES', densities);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
