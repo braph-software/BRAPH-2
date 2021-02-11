@@ -1,5 +1,5 @@
 %% ¡header!
-InDegreeAv < InDegreeAv (m, degree) is the graph degree.
+InDegreeAv < InDegree (m, degree) is the graph degree.
 
 %%% ¡description!
 The average in-degree of a graph is the average of all number of inward edges connected to a node within a layer. 
@@ -22,7 +22,7 @@ MultiplexGraphBD
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the in-degree.
+M (result, cell) is the in-degree-av.
 %%%% ¡calculate!
 in_degree = calculateValue@InDegreeAv(m, prop);	
 g = m.get('G'); % graph from measure class
