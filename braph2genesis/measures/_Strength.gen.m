@@ -28,8 +28,7 @@ A = g.get('A');  % adjency matrix (for graph) or 2D-cell array (for multiplex)
 
 strength = cell(g.layernumber(), 1);
 
-for li = 1:1:g.layernumber()
-    A = cell2mat(A);
+for li = 1:1:g.layernumber()    
     Aii = A{li, li};
     strength(li) = {sum(Aii, 2)};  % calculates the strength of a node for layer li
 end

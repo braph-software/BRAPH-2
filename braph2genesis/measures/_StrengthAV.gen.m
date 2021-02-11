@@ -1,5 +1,5 @@
 %% ¡header!
-StrengthAV < Strength (m, average strength) is the graph average strength.
+StrengthAv < Strength (m, average strength) is the graph average strength.
 
 %%% ¡description!
 The average strength of a graph is the average of the sum of all weights of
