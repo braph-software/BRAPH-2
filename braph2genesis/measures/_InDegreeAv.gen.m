@@ -102,13 +102,13 @@ B22 = [
        1  1  0
        ];
 B = {
-    A11     A12  
-    A21     A22
+    B11 B12  
+    B21 B22
     };
 
 known_in_degree_av = { 
-                     [1 1 1]'
-                     [2 2 1]'
+                     mean([1 1 1]')
+                     mean([2 2 1]')
                      };
 
 g = MultiplexGraphBD('B', {B});
@@ -127,26 +127,26 @@ assert(isequal(m_inside_g.get('M'), known_in_degree_av), ...
 %%%% ¡name!
 MultiplexGraphWD
 %%%% ¡code!
-A11 = [
+B11 = [
       0   .2  1
       0   0   .8
       1   0   0
       ];
-A12 = eye(3);
-A21 = eye(3);
-A22 = [
+B12 = eye(3);
+B21 = eye(3);
+B22 = [
       0  1   .6
       1  0   .4
       0  .4  0
       ];
-A = {
-    A11     A12  
-    A21     A22
+B = {
+    B11     B12  
+    B21     B22
     };
 
 known_in_degree_av = {
-                     [1 1 2]'
-                     [1 2 2]'
+                     mean([1 1 2]')
+                     mean([1 2 2]')
                      };
 
 g = MultiplexGraphWD('B', {B});
