@@ -31,11 +31,7 @@ A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph,
 degree = cell(g.layernumber(), 1);
 
 for li = 1:1:g.layernumber()
-    if g.is_graph(g)
-        Aii = A;
-    else
-        Aii = A{li, li};
-    end
+    Aii = A{li, li};
     Aii = binarize(Aii);  % binarizes the adjacency matrix
     degree(li) = {sum(Aii, 2)};  % calculates the degree of a node for layer li
 end

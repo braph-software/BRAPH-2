@@ -34,13 +34,8 @@ distance = cell(g.layernumber(), 1);
 connectivity_type =  g.getConnectivityType(g.layernumber());
 for li = 1:1:g.layernumber()
 
-    if g.is_graph(g)
-        Aii = A;
-        connectivity_layer = connectivity_type;
-    else
-        Aii = A{li, li};
-        connectivity_layer = connectivity_type(li, li);
-    end
+    Aii = A{li, li};
+    connectivity_layer = connectivity_type(li, li);
 
     if connectivity_layer == Graph.WEIGHTED  % weighted graphs
         distance(li) = {m.getWeightedCalculation(Aii)};
