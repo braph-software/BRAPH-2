@@ -1,5 +1,5 @@
 %% ¡header!
-InDegreeAv < InDegree (m, degree) is the graph degree.
+InDegreeAv < InDegree (m, degree) is the graph average in-degree.
 
 %%% ¡description!
 The average in-degree of a graph is the average of all number of inward edges connected to a node within a layer. 
