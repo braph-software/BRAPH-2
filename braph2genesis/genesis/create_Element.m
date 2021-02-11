@@ -21,29 +21,29 @@ function create_Element(generator_file, target_dir)
 % <strong>%%% ¡seealso!</strong>
 %  Related functions and classes is a single line.
 %
-%  Only for graphs:
-%  <strong>%%% ¡ensemble!</strong> %%% 
-%  False or True
-%  <strong>%%% ¡graph!</strong> %%% 
-%  Type of graph (GRAPH, MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER, MULTILAYER)
-%  <strong>%%% ¡connectivity!</strong> %%% 
-%  Connectivity type of the graph (WEIGHTED, BINARY)
-%  <strong>%%% ¡directionality!</strong> %%% 
-%  Directionality type of the graph (DIRECTED, UNDIRECTED)
-%  <strong>%%% ¡selfconnectivity!</strong> %%% 
-%  Self-connectivity type of the graph (NONSELFCONNECTED, SELFCONNECTED)
-%  <strong>%%% ¡negativity!</strong> %%% 
-%  Negativity type of the graph (NONNEGATIVE, NEGATIVE)
+% Only for graphs:
+%  <strong>%%% ¡ensemble!</strong>
+%   Whether graph is ensemble graph (false or true).
+%  <strong>%%% ¡graph!</strong>
+%   Graph type (GRAPH, MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER, MULTILAYER).
+%  <strong>%%% ¡connectivity!</strong>
+%   Graph connectivity (WEIGHTED, BINARY).
+%  <strong>%%% ¡directionality!</strong>
+%   Graph directionality (DIRECTED, UNDIRECTED).
+%  <strong>%%% ¡selfconnectivity!</strong>
+%   Graph self-connectivity (NONSELFCONNECTED, SELFCONNECTED).
+%  <strong>%%% ¡negativity!</strong>
+%   Graph negativity (NONNEGATIVE, NEGATIVE).
 %
-%  Only for measures:
-%  <strong>%%% ¡shape!</strong> %%% 
-%  Measure shape (GLOBAL, NODAL, BINODAL)
-%  <strong>%%% ¡scope!</strong> %%% 
-%  Measure scope (SUPERGLOBAL, UNILAYER, BILAYER)
-%  <strong>%%% ¡parametricity!</strong> %%% 
-%  Parametricity of the measure (PARAMETRIC, NONPARAMETRIC)
-%  <strong>%%% ¡compatible_graphs!</strong> %%% 
-%  Compatible graphs with the measure (GraphBD, ...)
+% Only for measures:
+%  <strong>%%% ¡shape!</strong>
+%   Measure shape (GLOBAL, NODAL, BINODAL).
+%  <strong>%%% ¡scope!</strong>
+%   Measure scope (SUPERGLOBAL, UNILAYER, BILAYER).
+%  <strong>%%% ¡parametricity!</strong>
+%   Measure parametricity (PARAMETRIC, NONPARAMETRIC).
+%  <strong>%%% ¡compatible_graphs!</strong>
+%  Lis of compatible graphs with the measure.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
