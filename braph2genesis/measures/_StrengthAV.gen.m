@@ -23,13 +23,12 @@ MultiplexGraphWU
 %%% ¡prop!
 M (result, cell) is the average strength.
 %%%% ¡calculate!
-strength_av = calculateValue@Strength(m, prop);
-
+strength= calculateValue@Strength(m, prop);					
 g = m.get('G');  % graph from measure class
 
 strength_av = cell(g.layernumber(), 1);
 for li = 1:1:length(strength_av)
-    strength_av(li) = {mean(strength_av{li})};
+    strength_av(li) = {mean(strength{li})};
 end
 
 value = strength_av;
@@ -46,10 +45,10 @@ B = [
     1  0  0
     ];
 known_strength_av = {mean([1.2 0.2 1])'};
-g = GraphWU('B', B);
+g = GraphWU('B', {B});
 s_outside_g = Strength('G', g);
 
-assert(isequal(s_outside_g.getValue('M'), known_strength_av), ...
+assert(isequal(s_outside_g.get('M'), known_strength_av), ...
     [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
     'StrengthAV is not being calculated correctly for GraphWU.')
 
@@ -79,7 +78,7 @@ known_strength_av = {
                  mean([1   1.4 .4]')
                  };
                                 
-g = MultiplexGraphWU('B', B);
+g = MultiplexGraphWU('B', {B});
 strength_av = Strength('G', g);
 
 assert(isequal(strength_av.get('M'), known_strength_av), ...

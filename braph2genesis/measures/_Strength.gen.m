@@ -23,11 +23,13 @@ MultiplexGraphWU
 %%% ¡prop!
 M (result, cell) is the strength.
 %%%% ¡calculate!
-g = s.get('G');  % graph from measure class
+g = m.get('G');  % graph from measure class
 A = g.get('A');  % adjency matrix (for graph) or 2D-cell array (for multiplex)
 
 strength = cell(g.layernumber(), 1);
+
 for li = 1:1:g.layernumber()
+    A = cell2mat(A);
     if g.is_graph(g)
         Aii = A;
     else
@@ -36,6 +38,7 @@ for li = 1:1:g.layernumber()
     strength(li) = {sum(Aii, 2)};  % calculates the strength of a node for layer li
 end
 value = strength;
+
 %% ¡tests!
 
 %%% ¡test!
@@ -48,10 +51,10 @@ B = [
     1  0  0
     ];
 known_strength = {[1.2 0.2 1]'};
-g = GraphWU('B', B);
+g = GraphWU('B', {B});
 s_outside_g = Strength('G', g);
 
-assert(isequal(s_outside_g.getValue('M'), known_strength), ...
+assert(isequal(s_outside_g.get('M'), known_strength), ...
     [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
     'Strength is not being calculated correctly for GraphWU.')
 
@@ -81,7 +84,7 @@ known_strength = {
                  [1   1.4 .4]'
                  };
                                 
-g = MultiplexGraphWU('B', B);
+g = MultiplexGraphWU('B', {B});
 strength = Strength('G', g);
 
 assert(isequal(strength.get('M'), known_strength), ...
