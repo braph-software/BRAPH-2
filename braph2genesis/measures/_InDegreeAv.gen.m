@@ -24,7 +24,7 @@ MultiplexGraphBD
 %%% ¡prop!
 M (result, cell) is the in-degree-av.
 %%%% ¡calculate!
-in_degree = calculateValue@InDegreeAv(m, prop);	
+in_degree = calculateValue@InDegree(m, prop);	
 g = m.get('G'); % graph from measure class
 
 in_degree_av = cell(g.layernumber(), 1);
