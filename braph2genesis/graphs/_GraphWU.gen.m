@@ -28,7 +28,7 @@ negativity = Graph.NONNEGATIVE;
 %% ¡props!
 
 %%% ¡prop!
-B (data, cell) is the input graph adjacency matrix.
+B (data, smatrix) is the input graph adjacency matrix.
 
 %% ¡props_update!
 
@@ -36,15 +36,15 @@ B (data, cell) is the input graph adjacency matrix.
 A (result, cell) is the symmetric non-negative adjacency matrix of the weighted undirected graph.
 %%%% ¡calculate!
 B = g.get('B');
-A = B{1, 1};
 
 varargin = {}; %% TODO add props to manage the relevant properties of symmetrize, dediagonalize, semipositivize, standardize
-A = symmetrize(A, varargin{:}); %% enforces symmetry of adjacency matrix
-A = dediagonalize(A, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
-A = semipositivize(A, varargin{:}); %% removes negative weights
-A = standardize(A, varargin{:}); %% ensures all weights are between 0 and 1
+B = symmetrize(B, varargin{:}); %% enforces symmetry of adjacency matrix
+B = dediagonalize(B, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
+B = semipositivize(B, varargin{:}); %% removes negative weights
+B = standardize(B, varargin{:}); %% ensures all weights are between 0 and 1
 
-value = {A};
+A = {B};
+value = A;
 
 %% ¡tests!
 
@@ -53,10 +53,10 @@ value = {A};
 Constructor
 %%%% ¡code!
 B = rand(randi(10));
-g = GraphWU('B', {B});
+g = GraphWU('B', B);
 
-A = standardize(symmetrize(semipositivize(dediagonalize(B))));
+A = {standardize(symmetrize(semipositivize(dediagonalize(B))))};
 
-assert(isequal(g.get('A'), {A}), ...
+assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':GraphWU:' BRAPH2.BUG_ERR], ...
     'GraphWU is not constructing well.')
