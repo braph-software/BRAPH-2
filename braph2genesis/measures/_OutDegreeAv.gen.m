@@ -47,7 +47,7 @@ B = [
     1   0   0
     ];
 
-known_out_degree_av = {mean([1 1 2])};
+known_out_degree_av = {mean([2 1 1]')};
 
 g = GraphBD('B', B);
 
@@ -71,7 +71,7 @@ B = [
     1   0   0
     ];
 
-known_out_degree_av = {mean([1 1 2])};
+known_out_degree_av = {mean([2 1 1])};
 
 g = GraphWD('B', B);
 
@@ -107,8 +107,8 @@ B = {
     };
 
 known_out_degree_av = { 
-                      mean([1 1 2])
-                      mean([2 2 1])
+                      mean([2 1 1]')
+                      mean([1 2 2]')
                       };
 
 g = MultiplexGraphBD('B', B);
@@ -145,8 +145,8 @@ B = {
     };
 
 known_out_degree_av = {
-                      mean([1 1 2])
-                      mean([1 2 2])
+                      mean([2 1 1]')
+                      mean([2 2 1]')
                       };
 
 g = MultiplexGraphWD('B', B);
