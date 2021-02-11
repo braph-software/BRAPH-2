@@ -36,10 +36,10 @@ B (data, cell) is the input graph adjacency matrix.
 A (result, cell) is the symmetric binary adjacency matrix of the binary undirected graph.
 %%%% ¡calculate!
 B = g.get('B');
-A = B;
+A = B{1, 1};
 
 varargin = {}; %% TODO add props to manage the relevant properties of symmetrize, dediagonalize, semipositivize, binarize
-A = symmetrize(cell2mat(A), varargin{:}); %% enforces symmetry of adjacency matrix
+A = symmetrize(A, varargin{:}); %% enforces symmetry of adjacency matrix
 A = dediagonalize(A, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
 A = semipositivize(A, varargin{:}); %% removes negative weights
 A = binarize(A, varargin{:}); %% enforces binary adjacency matrix
