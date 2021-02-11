@@ -28,7 +28,7 @@ negativity = Graph.NONNEGATIVE;
 %% ¡props!
 
 %%% ¡prop!
-B (data, cell) is the input graph adjacency matrix.
+B (data, smatrix) is the input graph adjacency matrix.
 
 %% ¡props_update!
 
@@ -36,14 +36,14 @@ B (data, cell) is the input graph adjacency matrix.
 A (result, cell) is the binary adjacency matrix of the binary directed graph.
 %%%% ¡calculate!
 B = g.get('B');
-A = B{1, 1};
 
 varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, binarize
-A = dediagonalize(A, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
-A = semipositivize(A, varargin{:}); %% removes negative weights
-A = binarize(A, varargin{:}); %% enforces binary adjacency matrix
+B = dediagonalize(B, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
+B = semipositivize(B, varargin{:}); %% removes negative weights
+B = binarize(B, varargin{:}); %% enforces binary adjacency matrix
 
-value = {A};
+A = {B};
+value = A;
 
 %% ¡tests!
 
@@ -52,10 +52,10 @@ value = {A};
 Constructor
 %%%% ¡code!
 B = rand(randi(10));
-g = GraphBD('B', {B});
+g = GraphBD('B', B);
 
-A = binarize(semipositivize(dediagonalize(B)));
+A = {binarize(semipositivize(dediagonalize(B)))};
 
-assert(isequal(g.get('A'), {A}), ...
+assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_ERR], ...
     'GraphBD is not constructing well.')
