@@ -30,11 +30,7 @@ strength = cell(g.layernumber(), 1);
 
 for li = 1:1:g.layernumber()
     A = cell2mat(A);
-    if g.is_graph(g)
-        Aii = A;
-    else
-        Aii = A{li, li};
-    end
+    Aii = A{li, li};
     strength(li) = {sum(Aii, 2)};  % calculates the strength of a node for layer li
 end
 value = strength;
