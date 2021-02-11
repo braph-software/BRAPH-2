@@ -2,9 +2,6 @@
 InDegree < Measure (m, degree) is the graph degree.
 
 %%% ¡description!
-The degree of a node is the number of edges connected to the node within a layer. 
-Connection weights are ignored in calculations.
-
 The in-degree of a node is the number of inward edges connected to a node within a layer.
 Connection weights are ignored in calculations.
 
