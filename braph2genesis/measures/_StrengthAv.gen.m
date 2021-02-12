@@ -45,7 +45,7 @@ B = [
     1  0  0
     ];
 known_strength_av = {mean([1.2 0.2 1])'};
-g = GraphWU('B', {B});
+g = GraphWU('B', B);
 s_outside_g = StrengthAv('G', g);
 
 assert(isequal(s_outside_g.get('M'), known_strength_av), ...
