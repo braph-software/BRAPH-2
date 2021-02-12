@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexGraphWD < Graph (g, multiplex weighted undirected graph) is a multiplex weighted undirected graph.
+MultiplexGraphWU < Graph (g, multiplex weighted undirected graph) is a multiplex weighted undirected graph.
 
 %%% ¡description!
 In a multiplex weighted undirected (WU) graph, 
