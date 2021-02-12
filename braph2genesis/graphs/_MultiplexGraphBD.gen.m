@@ -35,11 +35,7 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 %%% ¡prop!
 B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.
 %%%% ¡default!
-{
-round(rand(4))            round(diag(rand(4, 1)))   round(diag(rand(4, 1)))	
-round(diag(rand(4, 1)))   round(rand(4))            round(diag(rand(4, 1)))	
-round(diag(rand(4, 1)))   round(diag(rand(4, 1)))   round(rand(4))      
-};
+{[] [] []; [] [] []; [] [] []};
 
 %% ¡props_update!
 
