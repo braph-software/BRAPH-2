@@ -31,11 +31,11 @@ A (result, cell) is the graph adjacency matrix.
 value = {};
 %%%% ¡check_value!
 A = value;
-Graph.checkA(Graph.getGraphType(g), A);  % performs all necessary checks on A
-Graph.checkConnectivity(Graph.getConnectivityType(g, length(A)), A);
-Graph.checkDirectionality(Graph.getDirectionalityType(g, length(A)), A);
-Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g, length(A)), A);
-Graph.checkNegativity(Graph.getNegativityType(g, length(A)), A);
+Graph.checkA(g.getGraphType(), A);  % performs all necessary checks on A
+Graph.checkConnectivity(g.getConnectivityType(length(A)), A);
+Graph.checkDirectionality(g.getDirectionalityType(length(A)), A);
+Graph.checkSelfConnectivity(g.getSelfConnectivityType(length(A)), A);
+Graph.checkNegativity(g.getNegativityType(length(A)), A);
 check = true; % only if no error is thrown by the previous code!
 
 %%% ¡prop!
@@ -183,6 +183,243 @@ NEGATIVITY_TYPE_DESCRIPTION = {
     }
 
 %% ¡staticmethods!
+% check methods
+function checkA(graph_type, A)
+    %CHECKA checks whether adjacency matrix A is correct for the type of graph.
+    %
+    % CHECKA(GRAPH_TYPE, A) checks if adjacency matrix A is correct for the
+    %  GRAPH_TYPE.
+    %
+    % See also checkConnectivity, checkDirectionality, checkNegativity,
+    % checkSelfConnectivity.
+
+    % Basic checks
+    % square cell array of matrices
+    assert(iscell(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
+        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+        'A must be a superadjacency matrix (square cell array of matrices).')
+    % all submatrices in the diagonal are square
+    assert(all(cellfun(@(a) size(a, 1) == size(a, 2), A(1:length(A)+1:end))), ...
+        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+        'All submatrices in the cell diagonal must be square.')
+
+    % Additional checks
+    switch graph_type
+        case Graph.GRAPH
+            % no additional checks
+
+        case  Graph.MULTIGRAPH
+            % no additional checks
+
+        case Graph.ORDERED_MULTIPLEX
+            % all matrixes in diagonal +/- 1 same dimensions
+            assert(all(cellfun(@(a) size(a, 1), A(1:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'In a sequence, submatrices in the cell diagonal must have the same dimensions.')
+            assert(all(cellfun(@(a) size(a, 1), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'In a sequence, submatrices in the cell sub-diagonal must have the same dimensions.')
+            assert(all(cellfun(@(a) size(a, 1), A(length(A)+1:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'In a sequence, submatrices in the cell super-diagonal must have the same dimensions.')
+
+        case Graph.MULTIPLEX
+            assert(all(cellfun(@(a) size(a, 1) == size(a, 2), A(:))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'In a multiplex, all submatrices must be square.')
+            % check they are all submatrices have same dimensions.
+            assert(all(cellfun(@(a) size(a, 1), A(:)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'In a multiplex, all submatrices must have the same dimensions.')
+
+        case Graph.ORDERED_MULTILAYER
+            assert(all(cellfun(@(a) size(a, 1), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(length(A)+2:length(A)+1:end))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'Sub-diagonal submatrices in the same row must have the same number of rows.')
+            assert(all(cellfun(@(a) size(a, 2), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 2), A(1:length(A)+1:length(A)*2-1))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'Sub-diagonal submatrices in the same column must have the same number of columns.')
+            assert(all(cellfun(@(a) size(a, 1), A(length(A)+1:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1:length(A)+1:length(A)*2-1))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'Super-diagonal submatrices in the same row must have the same number of rows.')
+            assert(all(cellfun(@(a) size(a, 2), A(length(A)+1:length(A)+1:end)) == cellfun(@(a) size(a, 2), A(length(A)+2:length(A)+1:end))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'Super-diagonal submatrices in the same column must have the same number of columns.')
+
+        case Graph.MULTILAYER
+            assert(all(all(cellfun(@(a) size(a, 1), A) == cellfun(@(a) size(a, 1), A(:, 1)))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'All submatrices in the same row must have the same number of rows.')
+            assert(all(all(cellfun(@(a) size(a, 2), A) == cellfun(@(a) size(a, 2), A(1, :)))), ...
+                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                'All submatrices in the same column must have the same number of columns.')
+    end
+end
+function checkConnectivity(connectivity_type, A)
+    %CHECKCONNECTIVITY checks if adjacency matrix A is correct for the connectivity type.
+    %
+    % CHECKCONNECTIVITY(CONNECTIVITY_TYPE, A) checks if adjacency matrix A is
+    %  correct for the CONNECTIVITY_TYPE of the graph.
+    %  This check assumes that checkA has already been passed.
+    %
+    % See also checkA, checkDirectionality, checkNegativity, checkSelfConnectivity.
+
+    if isnumeric(A)  % A is a matrix
+        switch connectivity_type
+            case Graph.BINARY
+                assert(all(all(A == 0 | A == 1)), ...
+                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['For connectivity type Graph.BINARY, A must be binary (0s and 1s),' ...
+                    ' while it is ' tostring(A)])
+
+            case Graph.WEIGHTED
+                % no further check needed
+
+            otherwise
+                error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['Connectivity type must be Graph.BINARY (%i) or Graph.WEIGHTED (%i),' ...
+                    ' while it is ' tostring(connectivity_type)], ...
+                    Graph.BINARY, Graph.WEIGHTED)
+        end
+    else  % A is 2D cell array
+
+        if numel(connectivity_type) == 1
+            connectivity_type = connectivity_type * ones(size(A));
+        end
+
+        for i = 1:1:size(A, 1)
+            for j = 1:1:size(A, 2)
+                Graph.checkConnectivity(connectivity_type(i, j), A{i, j});
+            end
+        end
+    end
+end
+function checkDirectionality(directionality_type, A, At)
+    %CHECKDIRECTIONALITY checks if adjacency matrix A is correct for the directionality type.
+    %
+    % CHECKDIRECTIONALITY(DIRECTIONALITY_TYPE, A) checks if adjacency matrix A
+    %  is correct for the DIRECTIONALITY_TYPE of the graph.
+    %  This check assumes that checkA has already been passed.
+    %
+    % See also checkA, checkConnectivity, checkNegativity, checkSelfConnectivity.
+
+    if nargin < 3
+        At = A';
+    end
+
+    if isnumeric(A)  % A is a matrix
+        switch directionality_type
+            case Graph.UNDIRECTED
+                assert(all(all(A == At)), ...
+                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['For directionality type Graph.UNDIRECTED, A must equal to At,' ...
+                    ' while it is A = ' tostring(A) ...
+                    ' and At = ' tostring(At)])
+
+            case Graph.DIRECTED
+                % no further check needed
+
+            otherwise
+                error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['Directionality type must be Graph.DIRECTED (%i) or Graph.UNDIRECTED (%i),' ...
+                    ' while it is ' tostring(directionality_type)], ...
+                    Graph.DIRECTED, Graph.UNDIRECTED)
+        end
+    else  % A is 2D cell array
+
+        if numel(directionality_type) == 1
+            directionality_type = directionality_type * ones(size(A));
+        end
+        assert(all(all(directionality_type == directionality_type')), ...
+            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+            ['The directionality type must be symmetric,' ...
+            ' while it is ' tostring(directionality_type)])
+
+        for i = 1:1:size(A, 1)
+            for j = 1:1:size(A, 2)
+                Graph.checkDirectionality(directionality_type(i, j), A{i, j}, A{j, i}');
+            end
+        end
+    end
+end
+function checkSelfConnectivity(selfconnectivity_type, A)
+    %CHECKSELFCONNECTIVITY checks if adjacency matrix A is correct for the self-connectivity type.
+    %
+    % CHECKSELFCONNECTIVITY(SELFCONNECTIVITY_TYPE, A) checks if adjacency
+    %  matrix A is correct for the SELFCONNECTIVITY_TYPE of the graph.
+    %  This check assumes that checkA has already been passed.
+    %
+    % See also checkA, checkConnectivity, checkDirectionality, checkNegativity.
+
+    if isnumeric(A)  % A is a matrix
+        switch selfconnectivity_type
+            case Graph.NONSELFCONNECTED
+                assert(all(all(A(1:length(A)+1:end) == 0)), ...
+                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['For self-connectivity type Graph.NONSELFCONNECTED, A must have' ...
+                    ' 0 values along the diagonal while it is ' tostring(A)])
+
+            case Graph.SELFCONNECTED
+                % no further check needed
+
+            otherwise
+                error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['Self-connectivity type must be Graph.SELFCONNECTED (%i) or' ...
+                    ' Graph.NONSELFCONNECTED (%i), while it is ' tostring(selfconnectivity_type)], ...
+                    Graph.SELFCONNECTED, Graph.NONSELFCONNECTED)
+        end
+    else  % A is 2D cell array
+
+        if numel(selfconnectivity_type) == 1
+            selfconnectivity_type = selfconnectivity_type * ones(size(A));
+        end
+
+        for i = 1:1:size(A, 1)
+            Graph.checkSelfConnectivity(selfconnectivity_type(i, i), A{i, i});
+        end
+    end
+end
+function checkNegativity(negativity_type, A)
+    %CHECKNEGATIVITY checks if adjacency matrix A is correct for the negativity type.
+    %
+    % CHECKNEGATIVITY(NEGATIVITY_TYPE, A) checks if adjacency matrix A is
+    %  correct for the NEGATIVITY_TYPE of the graph.
+    %  This check assumes that checkA has already been passed.
+    %
+    % See also checkA, checkConnectivity, checkDirectionality, checkSelfConnectivity.
+
+    if isnumeric(A)  % A is a matrix
+        switch negativity_type
+            case Graph.NONNEGATIVE
+                assert(all(all(A >= 0)), ...
+                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['For negativity type Graph.NONNEGATIVE, A must have' ...
+                    ' non-negative values, while it is ' tostring(A)])
+
+            case Graph.NEGATIVE
+                % no further check needed
+
+            otherwise
+                error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+                    ['Negativity type must be Graph.NEGATIVE (%i) or' ...
+                    ' Graph.NONNEGATIVE (%i), while it is ' tostring(negativity_type)], ...
+                    Graph.NEGATIVE, Graph.NONNEGATIVE)
+        end
+    else  % A is 2D cell array
+
+        if numel(negativity_type) == 1
+            negativity_type = negativity_type * ones(size(A));
+        end
+
+        for i = 1:1:size(A, 1)
+            for j = 1:1:size(A, 2)
+                Graph.checkNegativity(negativity_type(i, j), A{i, j});
+            end
+        end
+    end
+end
+
+%% ¡methods!
 % basic methods
 function bool = is_ensemble(g)
     %IS_ENSEMBLE returns whther a graph is an ensemble of graphs.
@@ -245,7 +482,7 @@ function bool = is_multigraph(g)
     % See also getGraphType, is_graph, is_multilayer, is_multiplex,
     % is_ordered_multilayer, is_ordered_multiplex.
 
-    bool = g.getGraphType() == Graph.MULTIGRAPH;
+    bool = g.getGraphType(g) == Graph.MULTIGRAPH;
 end
 function bool = is_ordered_multiplex(g)
     %IS_ORDERED_MULTIPLEX checks if graph is ordered multiplex.
@@ -491,243 +728,6 @@ function bool = is_negative(g, varargin)
 
     bool = Graph.getNegativityType(g, varargin{:}) == Graph.NEGATIVE;
 end
-% check methods
-function checkA(graph_type, A)
-    %CHECKA checks whether adjacency matrix A is correct for the type of graph.
-    %
-    % CHECKA(GRAPH_TYPE, A) checks if adjacency matrix A is correct for the
-    %  GRAPH_TYPE.
-    %
-    % See also checkConnectivity, checkDirectionality, checkNegativity,
-    % checkSelfConnectivity.
-
-    % Basic checks
-    % square cell array of matrices
-    assert(iscell(A) && ismatrix(A) && size(A, 1) == size(A, 2), ...
-        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-        'A must be a superadjacency matrix (square cell array of matrices).')
-    % all submatrices in the diagonal are square
-    assert(all(cellfun(@(a) size(a, 1) == size(a, 2), A(1:length(A)+1:end))), ...
-        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-        'All submatrices in the cell diagonal must be square.')
-
-    % Additional checks
-    switch graph_type
-        case Graph.GRAPH
-            % no additional checks
-
-        case  Graph.MULTIGRAPH
-            % no additional checks
-
-        case Graph.ORDERED_MULTIPLEX
-            % all matrixes in diagonal +/- 1 same dimensions
-            assert(all(cellfun(@(a) size(a, 1), A(1:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'In a sequence, submatrices in the cell diagonal must have the same dimensions.')
-            assert(all(cellfun(@(a) size(a, 1), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'In a sequence, submatrices in the cell sub-diagonal must have the same dimensions.')
-            assert(all(cellfun(@(a) size(a, 1), A(length(A)+1:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'In a sequence, submatrices in the cell super-diagonal must have the same dimensions.')
-
-        case Graph.MULTIPLEX
-            assert(all(cellfun(@(a) size(a, 1) == size(a, 2), A(:))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'In a multiplex, all submatrices must be square.')
-            % check they are all submatrices have same dimensions.
-            assert(all(cellfun(@(a) size(a, 1), A(:)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'In a multiplex, all submatrices must have the same dimensions.')
-
-        case Graph.ORDERED_MULTILAYER
-            assert(all(cellfun(@(a) size(a, 1), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(length(A)+2:length(A)+1:end))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'Sub-diagonal submatrices in the same row must have the same number of rows.')
-            assert(all(cellfun(@(a) size(a, 2), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 2), A(1:length(A)+1:length(A)*2-1))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'Sub-diagonal submatrices in the same column must have the same number of columns.')
-            assert(all(cellfun(@(a) size(a, 1), A(length(A)+1:length(A)+1:end)) == cellfun(@(a) size(a, 1), A(1:length(A)+1:length(A)*2-1))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'Super-diagonal submatrices in the same row must have the same number of rows.')
-            assert(all(cellfun(@(a) size(a, 2), A(length(A)+1:length(A)+1:end)) == cellfun(@(a) size(a, 2), A(length(A)+2:length(A)+1:end))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'Super-diagonal submatrices in the same column must have the same number of columns.')
-
-        case Graph.MULTILAYER
-            assert(all(all(cellfun(@(a) size(a, 1), A) == cellfun(@(a) size(a, 1), A(:, 1)))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'All submatrices in the same row must have the same number of rows.')
-            assert(all(all(cellfun(@(a) size(a, 2), A) == cellfun(@(a) size(a, 2), A(1, :)))), ...
-                [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                'All submatrices in the same column must have the same number of columns.')
-    end
-end
-function checkConnectivity(connectivity_type, A)
-    %CHECKCONNECTIVITY checks if adjacency matrix A is correct for the connectivity type.
-    %
-    % CHECKCONNECTIVITY(CONNECTIVITY_TYPE, A) checks if adjacency matrix A is
-    %  correct for the CONNECTIVITY_TYPE of the graph.
-    %  This check assumes that checkA has already been passed.
-    %
-    % See also checkA, checkDirectionality, checkNegativity, checkSelfConnectivity.
-
-    if isnumeric(A)  % A is a matrix
-        switch connectivity_type
-            case Graph.BINARY
-                assert(all(all(A == 0 | A == 1)), ...
-                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                    ['For connectivity type Graph.BINARY, A must be binary (0s and 1s),' ...
-                    ' while it is ' tostring(A)])
-
-            case Graph.WEIGHTED
-                % no further check needed
-
-            otherwise
-                error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                    ['Connectivity type must be Graph.BINARY (%i) or Graph.WEIGHTED (%i),' ...
-                    ' while it is ' tostring(connectivity_type)], ...
-                    Graph.BINARY, Graph.WEIGHTED)
-        end
-    else  % A is 2D cell array
-
-        if numel(connectivity_type) == 1
-            connectivity_type = connectivity_type * ones(size(A));
-        end
-
-        for i = 1:1:size(A, 1)
-            for j = 1:1:size(A, 2)
-                Graph.checkConnectivity(connectivity_type(i, j), A{i, j});
-            end
-        end
-    end
-end
-function checkDirectionality(directionality_type, A, At)
-    %CHECKDIRECTIONALITY checks if adjacency matrix A is correct for the directionality type.
-    %
-    % CHECKDIRECTIONALITY(DIRECTIONALITY_TYPE, A) checks if adjacency matrix A
-    %  is correct for the DIRECTIONALITY_TYPE of the graph.
-    %  This check assumes that checkA has already been passed.
-    %
-    % See also checkA, checkConnectivity, checkNegativity, checkSelfConnectivity.
-
-    if nargin < 3
-        At = A';
-    end
-
-    if isnumeric(A)  % A is a matrix
-        switch directionality_type
-            case Graph.UNDIRECTED
-                assert(all(all(A == At)), ...
-                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                    ['For directionality type Graph.UNDIRECTED, A must equal to At,' ...
-                    ' while it is A = ' tostring(A) ...
-                    ' and At = ' tostring(At)])
-
-            case Graph.DIRECTED
-                % no further check needed
-
-            otherwise
-                error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                    ['Directionality type must be Graph.DIRECTED (%i) or Graph.UNDIRECTED (%i),' ...
-                    ' while it is ' tostring(directionality_type)], ...
-                    Graph.DIRECTED, Graph.UNDIRECTED)
-        end
-    else  % A is 2D cell array
-
-        if numel(directionality_type) == 1
-            directionality_type = directionality_type * ones(size(A));
-        end
-        assert(all(all(directionality_type == directionality_type')), ...
-            [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-            ['The directionality type must be symmetric,' ...
-            ' while it is ' tostring(directionality_type)])
-
-        for i = 1:1:size(A, 1)
-            for j = 1:1:size(A, 2)
-                Graph.checkDirectionality(directionality_type(i, j), A{i, j}, A{j, i}');
-            end
-        end
-    end
-end
-function checkSelfConnectivity(selfconnectivity_type, A)
-    %CHECKSELFCONNECTIVITY checks if adjacency matrix A is correct for the self-connectivity type.
-    %
-    % CHECKSELFCONNECTIVITY(SELFCONNECTIVITY_TYPE, A) checks if adjacency
-    %  matrix A is correct for the SELFCONNECTIVITY_TYPE of the graph.
-    %  This check assumes that checkA has already been passed.
-    %
-    % See also checkA, checkConnectivity, checkDirectionality, checkNegativity.
-
-    if isnumeric(A)  % A is a matrix
-        switch selfconnectivity_type
-            case Graph.NONSELFCONNECTED
-                assert(all(all(A(1:length(A)+1:end) == 0)), ...
-                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                    ['For self-connectivity type Graph.NONSELFCONNECTED, A must have' ...
-                    ' 0 values along the diagonal while it is ' tostring(A)])
-
-            case Graph.SELFCONNECTED
-                % no further check needed
-
-            otherwise
-                error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                    ['Self-connectivity type must be Graph.SELFCONNECTED (%i) or' ...
-                    ' Graph.NONSELFCONNECTED (%i), while it is ' tostring(selfconnectivity_type)], ...
-                    Graph.SELFCONNECTED, Graph.NONSELFCONNECTED)
-        end
-    else  % A is 2D cell array
-
-        if numel(selfconnectivity_type) == 1
-            selfconnectivity_type = selfconnectivity_type * ones(size(A));
-        end
-
-        for i = 1:1:size(A, 1)
-            Graph.checkSelfConnectivity(selfconnectivity_type(i, i), A{i, i});
-        end
-    end
-end
-function checkNegativity(negativity_type, A)
-    %CHECKNEGATIVITY checks if adjacency matrix A is correct for the negativity type.
-    %
-    % CHECKNEGATIVITY(NEGATIVITY_TYPE, A) checks if adjacency matrix A is
-    %  correct for the NEGATIVITY_TYPE of the graph.
-    %  This check assumes that checkA has already been passed.
-    %
-    % See also checkA, checkConnectivity, checkDirectionality, checkSelfConnectivity.
-
-    if isnumeric(A)  % A is a matrix
-        switch negativity_type
-            case Graph.NONNEGATIVE
-                assert(all(all(A >= 0)), ...
-                    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                    ['For negativity type Graph.NONNEGATIVE, A must have' ...
-                    ' non-negative values, while it is ' tostring(A)])
-
-            case Graph.NEGATIVE
-                % no further check needed
-
-            otherwise
-                error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-                    ['Negativity type must be Graph.NEGATIVE (%i) or' ...
-                    ' Graph.NONNEGATIVE (%i), while it is ' tostring(negativity_type)], ...
-                    Graph.NEGATIVE, Graph.NONNEGATIVE)
-        end
-    else  % A is 2D cell array
-
-        if numel(negativity_type) == 1
-            negativity_type = negativity_type * ones(size(A));
-        end
-
-        for i = 1:1:size(A, 1)
-            for j = 1:1:size(A, 2)
-                Graph.checkNegativity(negativity_type(i, j), A{i, j});
-            end
-        end
-    end
-end
-
-%% ¡methods!
 function n = nodenumber(g)
     %NODENUMBER returns the number of nodes in the graph.
     %
