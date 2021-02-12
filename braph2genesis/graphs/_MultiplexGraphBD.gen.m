@@ -21,10 +21,10 @@ directionality = Graph.DIRECTED * ones(layernumber);
 
 %%% ¡selfconnectivity!
 if layernumber == 1
-    selfconnectivity_type = Graph.SELFCONNECTED;
+    selfconnectivity = Graph.SELFCONNECTED;
 else          
-    selfconnectivity_type = Graph.SELFCONNECTED * ones(layernumber);
-    selfconnectivity_type(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
+    selfconnectivity = Graph.SELFCONNECTED * ones(layernumber);
+    selfconnectivity(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
 end
 
 %%% ¡negativity!
@@ -78,8 +78,8 @@ C = rand(randi(10));
 B = {C, C; C, C};
 g = MultiplexGraphBD('B', B);
 
-A1 = {binarize(semipositivize(dediagonalize(C)))};
-A2 = {binarize(semipositivize(diagonalize(C)))};
+A1 = binarize(semipositivize(dediagonalize(C)));
+A2 = binarize(semipositivize(diagonalize(C)));
 A = {A1, A2; A2, A1};
 
 assert(isequal(g.get('A'), A), ...
