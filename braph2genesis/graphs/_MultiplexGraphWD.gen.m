@@ -1,11 +1,10 @@
 %% ¡header!
-MultiplexGraphBU < Graph (g, multiplex binary undirected graph) is a multiplex binary undirected graph.
+MultiplexGraphWD < Graph (g, multiplex weighted directed graph) is a multiplex weighted directed graph.
 
 %%% ¡description!
-In a multiplex binary undirected (BU) graph, 
-the edges can be either 0 (absence of connection) 
-or 1 (existence of connection), and they are undirected.
-The connectivity matrices are symmetric.
+In a multiplex weighted directed (WD) graph, 
+the edges are associated with a real number between 0 and 1 
+indicating the strength of the connection, and they are directed.
 
 %%% ¡ensemble!
 false
@@ -14,10 +13,10 @@ false
 graph = Graph.MULTIPLEX;
 
 %%% ¡connectivity!
-connectivity = Graph.BINARY * ones(layernumber);
+connectivity = Graph.WEIGHTED * ones(layernumber);
 
 %%% ¡directionality!
-directionality = Graph.UNDIRECTED * ones(layernumber);
+directionality = Graph.DIRECTED * ones(layernumber);
 
 %%% ¡selfconnectivity!
 if layernumber == 1
@@ -40,7 +39,7 @@ B (data, cell) is the input cell containing the multiplex adjacency matrices on 
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary undirected graph.
+A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.
 %%%% ¡calculate!
 B = g.get('B');
 L = length(B); %% number of layers
@@ -48,10 +47,9 @@ L = length(B); %% number of layers
 varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, binarize
 for layer = 1:1:L
     M = B{layer, layer};
-    M = symmetrize(M, varargin{:}); %% enforces symmetry of adjacency matrix
-    M = dediagonalize(M, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
-    M = semipositivize(M, varargin{:}); %% removes negative weights
-    M = binarize(M, varargin{:}); %% enforces binary adjacency matrix
+    M = dediagonalize(M, varargin{:});  % removes self-connections by removing diagonal from adjacency matrix
+    M = semipositivize(M, varargin{:});  % removes negative weights
+    M = standardize(M, varargin{:});  % enforces binary adjacency matrix
     B(layer, layer) = {M};
 end
 % enforce zero off-diagonal values and binary diagonal values
@@ -61,8 +59,8 @@ for i = 1:1:size(B, 1)
         B(j, i) = {diagonalize(B{j, i}, varargin{:})};
         B(i, j) = {semipositivize(B{i, j}, varargin{:})};
         B(j, i) = {semipositivize(B{j, i}, varargin{:})};
-        B(i, j) = {binarize(B{i, j}, varargin{:})};
-        B(j, i) = {binarize(B{j, i}, varargin{:})};
+        B(i, j) = {standardize(B{i, j}, varargin{:})};
+        B(j, i) = {standardize(B{j, i}, varargin{:})};
     end
 end
 
@@ -77,13 +75,12 @@ Constructor
 %%%% ¡code!
 C = rand(randi(10));
 B = {C, C; C, C};
-g = MultiplexGraphBU('B', B);
+g = MultiplexGraphWD('B', B);
 
-A1 = symmetrize(binarize(semipositivize(dediagonalize(C))));
-A2 = binarize(semipositivize(diagonalize(C)));
+A1 = standardize(semipositivize(dediagonalize(C)));
+A2 = standardize(semipositivize(diagonalize(C)));
 A = {A1, A2; A2, A1};
 
 assert(isequal(g.get('A'), A), ...
-    [BRAPH2.STR ':MultiplexGraphBU:' BRAPH2.BUG_ERR], ...
-    'MultiplexGraphBU is not constructing well.')
-
+    [BRAPH2.STR ':MultiplexGraphWD:' BRAPH2.BUG_ERR], ...
+    'MultiplexGraphWD is not constructing well.')
