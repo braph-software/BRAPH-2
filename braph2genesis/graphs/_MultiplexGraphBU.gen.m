@@ -79,7 +79,7 @@ C = rand(randi(10));
 B = {C, C; C, C};
 g = MultiplexGraphBU('B', B);
 
-A1 = binarize(semipositivize(dediagonalize(C)));
+A1 = symmetrize(binarize(semipositivize(dediagonalize(C))));
 A2 = binarize(semipositivize(diagonalize(C)));
 A = {A1, A2; A2, A1};
 
