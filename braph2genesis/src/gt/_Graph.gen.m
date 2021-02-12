@@ -318,7 +318,7 @@ function connectivity_type = getConnectivityType(g, varargin)
     %
     % See also is_binary, is_weighted.
 
-    if strcmp(Element.getClass(g), 'Graph') || isnumeric(g)
+    if isnumeric(g) || strcmp(Element.getClass(g), 'Graph')
         connectivity_type = Graph.WEIGHTED;
     else
         connectivity_type = eval([Element.getClass(g) '.getConnectivityType(varargin{:})']);
@@ -365,7 +365,7 @@ function directionality_type = getDirectionalityType(g, varargin)
     %
     % See also is_directed, is_undirected.
 
-    if strcmp(Element.getClass(g), 'Graph') || isnumeric(g)
+    if isnumeric(g) || strcmp(Element.getClass(g), 'Graph')
         directionality_type = Graph.DIRECTED;
     else
         directionality_type = eval([Element.getClass(g) '.getDirectionalityType(varargin{:})']);
@@ -412,7 +412,7 @@ function selfconnectivity_type = getSelfConnectivityType(g, varargin)
     %
     % See also is_selfconnected, is_not_selfconnected.
 
-    if strcmp(Element.getClass(g), 'Graph') || isnumeric(g)
+    if isnumeric(g) || strcmp(Element.getClass(g), 'Graph')
         selfconnectivity_type = Graph.SELFCONNECTED;
     else
         selfconnectivity_type = eval([Element.getClass(g) '.getSelfConnectivityType(varargin{:})']);
@@ -459,7 +459,7 @@ function negativity_type = getNegativityType(g, varargin)
     %
     % See also is_negative, is_nonnegative.
 
-    if strcmp(Element.getClass(g), 'Graph') || isnumeric(g)
+    if isnumeric(g) || strcmp(Element.getClass(g), 'Graph')
         negativity_type = Graph.NEGATIVE;
     else
         negativity_type = eval([Element.getClass(g) '.getNegativityType(varargin{:})']);
