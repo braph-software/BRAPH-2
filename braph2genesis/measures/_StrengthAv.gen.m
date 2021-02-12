@@ -46,7 +46,7 @@ B = [
     ];
 known_strength_av = {mean([1.2 0.2 1])'};
 g = GraphWU('B', {B});
-s_outside_g = Strength('G', g);
+s_outside_g = StrengthAv('G', g);
 
 assert(isequal(s_outside_g.get('M'), known_strength_av), ...
     [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
@@ -78,8 +78,8 @@ known_strength_av = {
                  mean([1   1.4 .4]')
                  };
                                 
-g = MultiplexGraphWU('B', {B});
-strength_av = Strength('G', g);
+g = MultiplexGraphWU('B', B);
+strength_av = StrengthAv('G', g);
 
 assert(isequal(strength_av.get('M'), known_strength_av), ...
     [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...

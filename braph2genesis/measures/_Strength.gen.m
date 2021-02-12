@@ -79,7 +79,7 @@ known_strength = {
                  [1   1.4 .4]'
                  };
                                 
-g = MultiplexGraphWU('B', {B});
+g = MultiplexGraphWU('B', B);
 strength = Strength('G', g);
 
 assert(isequal(strength.get('M'), known_strength), ...
