@@ -32,17 +32,17 @@ A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph,
 
 clustering = cell(g.layernumber(), 1);
 
-triangles = calculateValue@Triangles(m, prop);
+triangles = cell2mat(calculateValue@Triangles(m, prop));
 
 if isa(g, 'GraphBU') || isa(g, 'GraphWU')                
-    degree = Degree('G', g).get('M');
+    degree = cell2mat(Degree('G', g).get('M'));
     
     clustering = 2 * triangles ./ (degree .* (degree - 1));
     
 elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')    
     
-    in_degree = InDegree('G', g).get('M');  
-    out_degree = OutDegree('G', g).get('M');
+    in_degree = cell2mat(InDegree('G', g).get('M'));
+    out_degree = cell2mat(OutDegree('G', g).get('M'));
     directed_triangles_rule = Triangles.RULES(m.get('rule'));
     switch lower(directed_triangles_rule)
         case {'all'}  % all rule

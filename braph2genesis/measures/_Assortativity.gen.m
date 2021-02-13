@@ -27,29 +27,35 @@ M (result, cell) is the assortativity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+L = g.layernumber();
 
-[i, j] = find(triu(A) ~= 0);  % nodes [i, j]
-M = length(i);  % Number of edges
-
-if isa(g, 'GraphBU')  % Binary undirected
-
-    degree = Degree('G', g).get('M');
-
-    k_i = degree(i);  % degree node i
-    k_j = degree(j);  % degree node j
+assortativity = cell(L, 1);
+connectivity_type =  g.getConnectivityType(g.layernumber());
+for li = 1:1:L
+    Aii = A{li, li};
+    [i, j] = find(triu(Aii) ~= 0);  % nodes [i, j]
+    M = length(i);  % Number of edges
+    k_i = zeros(M, L);
+    k_j = zeros(length(j), L);
     
-elseif isa(g, 'GraphWU')  % Weighted undirected
-    
-    strength = Strength('G', g).get('M');
-    
-    k_i = strength(i);  % strength node i
-    k_j = strength(j);  % strength node j
+    if connectivity_layer == Graph.BINARY 
+        
+        degree = Degree('G', g).get('M');        
+        d = degree{li};
+        
+    elseif connectivity_layer == Graph.WEIGHTED 
+        
+        strength = Strength('G', g).get('M');        
+        d = strength{li};
+    end
+    k_i(:, li) = d(i);  % degree/strength node i
+    k_j(:, li) = d(j);  % degree/strength node j
+    % compute assortativity
+    assortativity_layer = (sum(k_i(:, li) .* k_j(:, li)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2)...
+        / (sum(0.5 * (k_i(:, li).^2 + k_j(:, li).^2)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2);
+    assortativity_layer(isnan(assortativity_layer)) = 0;  % Should return zeros, not NaN
+    assortativity(li) = {assortativity_layer};
 end
-
-% compute assortativity
-assortativity = (sum(k_i .* k_j) / M - (sum(0.5 * (k_i + k_j)) / M)^2)...
-    / (sum(0.5 * (k_i.^2 + k_j.^2)) / M - (sum(0.5 * (k_i + k_j)) / M)^2);
-assortativity(isnan(assortativity)) = 0;  % Should return zeros, not NaN
 
 value = assortativity;
 

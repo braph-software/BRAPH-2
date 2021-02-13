@@ -26,7 +26,7 @@ GraphBD
 M (result, cell) is the average clustering.
 %%%% ¡calculate!
 
-clustering  = calculateValue@Clustering(m, prop);
+clustering  = cell2mat(calculateValue@Clustering(m, prop));
 clustering_av = mean(clustering);
 value = clustering_av;
 
