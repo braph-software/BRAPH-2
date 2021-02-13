@@ -55,8 +55,8 @@ for layer = 1:1:L
 end
 for i = 1:1:L
     for j = i+1:1:L
-        C(i, j) = {eye(L)};
-        C(j, i) = {eye(L)};
+        C(i, j) = {eye(length(C{1, 1}))};
+        C(j, i) = {eye(length(C{1, 1}))};
     end
 end
 
