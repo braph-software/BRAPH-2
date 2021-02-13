@@ -30,7 +30,7 @@ A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph,
 L = g.layernumber();
 
 assortativity = cell(L, 1);
-connectivity_type =  g.getConnectivityType(g.layernumber());
+connectivity_layer =  g.getConnectivityType(g.layernumber());
 for li = 1:1:L
     Aii = A{li, li};
     [i, j] = find(triu(Aii) ~= 0);  % nodes [i, j]
