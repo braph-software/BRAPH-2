@@ -27,7 +27,9 @@ M (result, cell) is the radius.
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
+eccentricity = Eccentricity('G', g).get('M');
 radius = cell(g.layernumber(), 1);
+
 
 for li = 1:1:g.layernumber()
     Aii = A{li, li};
