@@ -1099,37 +1099,89 @@ generate_header_graph() % only for graphs
                 ~(numel(directionality) == 1 && isempty(directionality{1})) || ...
                 ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1})) || ...
                 ~(numel(negativity) == 1 && isempty(negativity{1}))
-            g(1, 'methods (Static) %% graph methods')
+            g(1, 'methods (Static) %% graph methods')                
                 if ~isempty(ensemble)
                     g(2, 'function bool = is_ensemble()')
+                        gs(3, {
+                            ['%IS_ENSEMBLE returns true if ' descriptive_name ' is an ensamble.']
+                            '%'
+                            ['% BOOL = ' descriptive_name '.IS_ENSEMBLE() returns true if it is an ensamble graph.']
+                            '%'
+                            '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+                            ''
+                            })
                         g(3, ['bool = ' ensemble ';'])
                     g(2, 'end')
                 end
                 if ~isempty(graph)
                     g(2, 'function graph = getGraphType()')
+                        gs(3, {
+                                ['%GETGRAPHTYPE returns ' descriptive_name ' type of graph.']
+                                '%'
+                                ['% GRAPH = ' descriptive_name '.GETGRAPHTYPE() returns the type of graph.']
+                                '%'
+                                '% See also is_ensemble, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+                                ''
+                                })
                         g(3, graph)
                     g(2, 'end')
                 end
                 if ~(numel(connectivity) == 1 && isempty(connectivity{1}))
                     g(2, 'function connectivity = getConnectivityType(varargin)')
+                        gs(3, {
+                            ['%GETCONNECTIVITYTYPE returns ' descriptive_name ' type of graph connectivity.']
+                            '%'
+                            ['% CONNECTIVITY = ' descriptive_name '.GETCONNECTIVITYTYPE() returns the type of graph connectivity.']
+                            '% Graphs can have binary or weighted connectivity.' 
+                            '%'
+                            '% See also is_ensemble, getGraphType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+                            ''
+                            })
                         gs(3, get_layernumber)
                         gs(3, connectivity)
                     g(2, 'end')
                 end
                 if ~(numel(directionality) == 1 && isempty(directionality{1}))
                     g(2, 'function directionality = getDirectionalityType(varargin)')
+                        gs(3, {
+                            ['%GETDIRECTIONALITYTYPE returns ' descriptive_name ' type of graph directionality.']
+                            '%'
+                            ['% DIRECTIONALITY = ' descriptive_name '.GETDIRECTIONALITYTYPE() returns the type of graph directionality.']
+                            '% Graphs can have directed or undirected directionality.'
+                            '%'
+                            '% See also is_ensemble, getGraphType, getConnectivityType, getSelfConnectivityType, getNegativityType.'
+                            ''
+                            })
                         gs(3, get_layernumber)
                         gs(3, directionality)
                     g(2, 'end')
                 end
                 if ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1}))
                     g(2, 'function selfconnectivity = getSelfConnectivityType(varargin)')
+                        gs(3, {
+                            ['%GETSELFCONNECTIVITYTYPE returns ' descriptive_name ' type of graph self connectivity.']
+                            '%'
+                            ['% SELFCONNECTIVITY = ' descriptive_name '.GETSELFCONNECTIVITYTYPE() returns the type of graph self connnectivity.']
+                            '% Graphs can be self connected or non self connected.'
+                            '%'
+                            '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
+                            ''
+                            })
                         gs(3, get_layernumber)
                         gs(3, selfconnectivity)
                     g(2, 'end')
                 end
                 if ~(numel(negativity) == 1 && isempty(negativity{1}))
                     g(2, 'function negativity = getNegativityType(varargin)')
+                        gs(3, {
+                                ['%GETNEGATIVITYTYPE returns ' descriptive_name ' type of graph negativity.']
+                                '%'
+                                ['% NEGATIVITY = ' descriptive_name '.GETNEGATIVITYTYPE() returns the type of graph negativity.']
+                                '% Graphs can be negative or non negative.'
+                                '%'
+                                '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
+                                ''
+                                })
                         gs(3, get_layernumber)
                         gs(3, negativity)
                     g(2, 'end')
