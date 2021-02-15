@@ -1,5 +1,5 @@
 %% ¡header!
-EccentricityAv < Eccentricity (m, eccentricity) is the eccentricity.
+EccentricityAv < Eccentricity (m, average eccentricity) is the eccentricity.
 
 %%% ¡description!
 The average eccentricity of a graph is the sum of the nodal eccentricities divided by their number within a layer.
@@ -27,7 +27,7 @@ M (result, cell) is the average eccentricity.
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
-eccentritivity = calculateValue@Eccentritivity(m, prop);	
+eccentritivity = calculateValue@Eccentricity(m, prop);	
 g = m.get('G'); % graph from measure class
 
 eccentritivity_av = cell(g.layernumber(), 1);
@@ -58,26 +58,26 @@ known_eccentricity_av_default = {mean([Inf Inf Inf Inf Inf]')};
 g = GraphBU('B', B);
 m_outside_g = EccentricityAv('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_subgraphs), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for GraphBU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for GraphBU.')
 
 g = GraphBU('B', B);
-m_inside_g = g.getMeasure('Eccentricity', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_inside_g = g.getMeasure('EccentricityAv', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_subgraphs), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for GraphBU.')
+    [BRAPH2.STR ':EccentricityAv' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for GraphBU.')
 
 g = GraphBU('B', B);
-m_outside_g = Eccentricity('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_outside_g = EccentricityAv('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_default), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for GraphBU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for GraphBU.')
 
 g = GraphBU('B', B);
-m_inside_g = g.getMeasure('Eccentricity', 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_inside_g = g.getMeasure('EccentricityAv', 'rule', find(contains(Eccentricity.RULES, 'all')));
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_default), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for GraphBU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for GraphBU.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -95,28 +95,28 @@ known_eccentricity_av_subgraphs = {mean([5 5 5 4 0]')};
 known_eccentricity_av_default = {mean([Inf Inf Inf Inf Inf]')};
 
 g = GraphWU('B', B);
-m_outside_g = Eccentricity('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_outside_g = EccentricityAv('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_subgraphs), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for GraphWU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for GraphWU.')
 
 g = GraphWU('B', B);
-m_inside_g = g.getMeasure('Eccentricity', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_inside_g = g.getMeasure('EccentricityAv', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_subgraphs), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for GraphWU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for GraphWU.')
 
 g = GraphWU('B', B);
-m_outside_g = Eccentricity('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_outside_g = EccentricityAv('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_default), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for GraphWU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for GraphWU.')
 
 g = GraphWU('B', B);
-m_inside_g = g.getMeasure('Eccentricity', 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_inside_g = g.getMeasure('EccentricityAv', 'rule', find(contains(Eccentricity.RULES, 'all')));
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_default), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for GraphWU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for GraphWU.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -129,8 +129,6 @@ B11 = [
       .125  10  0   0    0;
       0     0   0   0    0
       ];
-B12 = eye(5);
-B21 = eye(5);
 B22 = [
       0     .1  .2  .25  0;
       .125  0   0   0    0;
@@ -139,8 +137,7 @@ B22 = [
       0     0   0   0    0
       ];
 B = {
-    B11     B12  
-    B21     B22
+    B11 B22
     };
 
 known_eccentricity_av_subgraphs = { 
@@ -153,48 +150,49 @@ known_eccentricity_av_default = {
                              };
 
 g = MultiplexGraphBU('B', B);
-m_outside_g = Eccentricity('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_outside_g = EccentricityAv('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_subgraphs), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphBU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for MultiplexGraphBU.')
 
 g = MultiplexGraphBU('B', B);
-m_inside_g = g.getMeasure('Eccentricity', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_inside_g = g.getMeasure('EccentricityAv', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_subgraphs), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphBU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for MultiplexGraphBU.')
 
 g = MultiplexGraphBU('B', B);
-m_outside_g = Eccentricity('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_outside_g = EccentricityAv('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_default), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphBU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for MultiplexGraphBU.')
 
 g = MultiplexGraphBU('B', B);
-m_inside_g = g.getMeasure('Eccentricity', 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_inside_g = g.getMeasure('EccentricityAv', 'rule', find(contains(Eccentricity.RULES, 'all')));
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_default), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphBU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for MultiplexGraphBU.')
 
 %%% ¡test!
 %%%% ¡name!
 MultiplexGraphWU
 %%%% ¡code!
 B11 = [
-      0   .2  1
-      0   0   .8
-      1   0   0
+      0     .1  .2  .25  0;
+      .125  0   0   0    0;
+      .2    .5  0   .25  0;
+      .125  10  0   0    0;
+      0     0   0   0    0
       ];
-B12 = eye(3);
-B21 = eye(3);
 B22 = [
-      0  1   .6
-      1  0   .4
-      0  .4  0
+      0     .1  .2  .25  0;
+      .125  0   0   0    0;
+      .2    .5  0   .25  0;
+      .125  10  0   0    0;
+      0     0   0   0    0
       ];
 B = {
-    B11 B12  
-    B21 B22
+    B11 B22
     };
 
 known_eccentricity_av_subgraphs = {
@@ -207,25 +205,25 @@ known_eccentricity_av_default = {
                              };
                            
 g = MultiplexGraphWU('B', B);
-m_outside_g = Eccentricity('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_outside_g = EccentricityAv('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_subgraphs), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphWU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for MultiplexGraphWU.')
 
 g = MultiplexGraphWU('B', B);
-m_inside_g = g.getMeasure('Eccentricity', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_inside_g = g.getMeasure('EccentricityAv', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_subgraphs), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphWU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for MultiplexGraphWU.')
 
 g = MultiplexGraphWU('B', B);
-m_outside_g = Eccentricity('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_outside_g = EccentricityAv('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_default), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphWU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for MultiplexGraphWU.')
 
 g = MultiplexGraphWU('B', B);
-m_inside_g = g.getMeasure('Eccentricity', 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_inside_g = g.getMeasure('EccentricityAv', 'rule', find(contains(Eccentricity.RULES, 'all')));
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_default), ...
-    [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphWU.')
+    [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
+    'EccentricityAv is not being calculated correctly for MultiplexGraphWU.')
