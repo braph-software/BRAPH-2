@@ -53,10 +53,12 @@ for layer = 1:1:L
     M = binarize(M, varargin{:}); %% enforces binary adjacency matrix
     C(layer, layer) = {M};
 end
-for i = 1:1:L
-    for j = i+1:1:L
-        C(i, j) = {eye(length(C{1, 1}))};
-        C(j, i) = {eye(length(C{1, 1}))};
+if ~isempty(C{1, 1})
+    for i = 1:1:L
+        for j = i+1:1:L
+            C(i, j) = {eye(length(C{1, 1}))};
+            C(j, i) = {eye(length(C{1, 1}))};
+        end
     end
 end
 
@@ -74,7 +76,7 @@ B = {C, C};
 g = MultiplexGraphBD('B', B);
 
 A1 = binarize(semipositivize(dediagonalize(C)));
-A = {A1, eye(2); eye(2), A1};
+A = {A1, eye(length(C)); eye(length(C)), A1};
 
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':MultiplexGraphBD:' BRAPH2.BUG_ERR], ...
