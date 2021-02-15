@@ -1,29 +1,29 @@
-%% Â¡header!
+%% ¡header!
 OutDegreeAv < OutDegree (m, degree) is the graph average out-degree.
 
-%%% Â¡description!
+%%% ¡description!
 The average out-degree of a graph is the average of all number of outward edges connected to a node within a layer. 
 
-%%% Â¡shape!
+%%% ¡shape!
 shape = Measure.GLOBAL;
 
-%%% Â¡scope!
+%%% ¡scope!
 scope = Measure.UNILAYER;
 
-%%% Â¡parametricity!
+%%% ¡parametricity!
 parametricity = Measure.NONPARAMETRIC;
 
-%%% Â¡compatible_graphs!
+%%% ¡compatible_graphs!
 GraphWD
 GraphBD
 MultiplexGraphWD
 MultiplexGraphBD
 
-%% Â¡props_update!
+%% ¡props_update!
 
-%%% Â¡prop!
+%%% ¡prop!
 M (result, cell) is the average out-degree.
-%%%% Â¡calculate!
+%%%% ¡calculate!
 out_degree = calculateValue@OutDegree(m, prop);	
 g = m.get('G'); % graph from measure class
 
@@ -35,12 +35,12 @@ end
 
 value = out_degree_av;
 
-%% Â¡tests!
+%% ¡tests!
 
-%%% Â¡test!
-%%%% Â¡name!
+%%% ¡test!
+%%%% ¡name!
 GraphBD
-%%%% Â¡code!
+%%%% ¡code!
 B = [
     0   .2  1
     0   0   .8
@@ -61,8 +61,8 @@ assert(isequal(m_inside_g.get('M'), known_out_degree_av), ...
     [BRAPH2.STR ':OutDegreeAv:' BRAPH2.BUG_ERR], ...
     'OutDegreeAv is not being calculated correctly for GraphBD.')
 
-%%% Â¡test!
-%%%% Â¡name!
+%%% ¡test!
+%%%% ¡name!
 GraphWD
 %%%% ¡code!
 B = [
@@ -85,10 +85,10 @@ assert(isequal(m_inside_g.get('M'), known_out_degree_av), ...
     [BRAPH2.STR ':OutDegreeAv:' BRAPH2.BUG_ERR], ...
     'OutDegreeAv is not being calculated correctly for GraphWD.')
 
-%%% Â¡test!
-%%%% Â¡name!
+%%% ¡test!
+%%%% ¡name!
 MultiplexGraphBD
-%%%% Â¡code!
+%%%% ¡code!
 B11 = [
       0  1  1
       0  0  1
@@ -123,10 +123,10 @@ assert(isequal(m_inside_g.get('M'), known_out_degree_av), ...
     [BRAPH2.STR ':OutDegreeAv:' BRAPH2.BUG_ERR], ...
     'OutDegreeAv is not being calculated correctly for MultiplexGraphBD.')
 
-%%% Â¡test!
-%%%% Â¡name!
+%%% ¡test!
+%%%% ¡name!
 MultiplexGraphWD
-%%%% Â¡code!
+%%%% ¡code!
 B11 = [
       0   .2  1
       0   0   .8
