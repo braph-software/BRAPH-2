@@ -72,6 +72,7 @@ classdef GUI
         function gui = GUI(el, varargin)
             gui.el = el;
             
+            % parameters
             if el.existsTag('ID')
                 gui.name = get_from_varargin([el.getClass() ' - ' el.get('ID')], 'x0', varargin);
             else
