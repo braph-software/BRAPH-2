@@ -27,7 +27,7 @@ M (result, cell) is the radius.
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
-eccentricity = Eccentricity('G', g).get('M');
+eccentricity = Eccentricity('G', g, 'RULE', prop).get('M');
 radius = cell(g.layernumber(), 1);
 
 
@@ -46,106 +46,185 @@ value = radius;
 GraphBU
 %%%% ¡code!
 B = [
-    0   1   1
-    1   0   0
-    1   0   0
+    0     .1  .2  .25  0;
+    .125  0   0   0    0;
+    .2    .5  0   .25  0;
+    .125  10  0   0    0;
+    0     0   0   0    0
     ];
 
-known_degree = {[2 1 1]'};
+known_radius_subgraphs = {0};
+known_radius_default = {Inf};
 
 g = GraphBU('B', B);
+m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+assert(isequal(m_outside_g.get('M'), known_radius_subgraphs), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for GraphBU.')
 
-m_outside_g = Degree('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for GraphBU.')
+g = GraphBU('B', B);
+m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+assert(isequal(m_inside_g.get('M'), known_radius_subgraphs), ...
+    [BRAPH2.STR ':Radius' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for GraphBU.')
 
-m_inside_g = g.getMeasure('Degree');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for GraphBU.')
+g = GraphBU('B', B);
+m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+assert(isequal(m_outside_g.get('M'), known_radius_default), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for GraphBU.')
+
+g = GraphBU('B', B);
+m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'all')));
+assert(isequal(m_inside_g.get('M'), known_radius_default), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for GraphBU.')
 
 %%% ¡test!
 %%%% ¡name!
 GraphWU
 %%%% ¡code!
-B = [
-    0   .6  1
-    .6  0   0
-    1   0   0
+B = 
+    0     .1  .2  .25  0;
+    .125  0   0   0    0;
+    .2    .5  0   .25  0;
+    .125  10  0   0    0;
+    0     0   0   0    0
     ];
 
-known_degree = {[2 1 1]'};
+known_radius_subgraphs = {0};
+known_radius_default = {Inf};
 
 g = GraphWU('B', B);
+m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+assert(isequal(m_outside_g.get('M'), known_radius_subgraphs), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for GraphWU.')
 
-m_outside_g = Degree('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for GraphWU.')
+g = GraphWU('B', B);
+m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+assert(isequal(m_inside_g.get('M'), known_radius_subgraphs), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for GraphWU.')
 
-m_inside_g = g.getMeasure('Degree');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for GraphWU.')
+g = GraphWU('B', B);
+m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+assert(isequal(m_outside_g.get('M'), known_radius_default), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for GraphWU.')
 
-%%% ¡test!
-%%%% ¡name!
-MultigraphBUT
-%%%% ¡code!
-B = [
-    0   .2   .7
-    .2   0   0
-    .7   0   0
-    ];
-
-thresholds = [0 .5 1];
-
-known_degree = { ...
-    [2 1 1]'
-    [1 0 1]'
-    [0 0 0]'
-    };
-
-g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
-
-m_outside_g = Degree('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for MultigraphBUT.')
-
-m_inside_g = g.getMeasure('Degree');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for MultigraphBUT.')
+g = GraphWU('B', B);
+m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'all')));
+assert(isequal(m_inside_g.get('M'), known_radius_default), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for GraphWU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultigraphBUD
+MultiplexGraphBU
 %%%% ¡code!
-B = [
-    0   .2   .7
-    .2   0   .1
-    .7  .1   0
-    ];
-
-densities = [0 33 67 100];
-
-known_degree = { ...
-    [0 0 0]'
-    [1 0 1]'
-    [2 1 1]'
-    [2 2 2]'
+B11 = [
+      0     .1  .2  .25  0;
+      .125  0   0   0    0;
+      .2    .5  0   .25  0;
+      .125  10  0   0    0;
+      0     0   0   0    0
+      ];
+B22 = [
+      0     .1  .2  .25  0;
+      .125  0   0   0    0;
+      .2    .5  0   .25  0;
+      .125  10  0   0    0;
+      0     0   0   0    0
+      ];
+B = {
+    B11 B22
     };
 
-g = MultigraphBUD('B', B, 'DENSITIES', densities);
+known_radius_subgraphs = { 
+                         0
+                         0 
+                         };
+known_radius_default = {
+                       inf
+                       inf
+                       };
 
-m_outside_g = Degree('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for MultigraphBUD.')
+g = MultiplexGraphBU('B', B);
+m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+assert(isequal(m_outside_g.get('M'), known_radius_subgraphs), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for MultiplexGraphBU.')
 
-m_inside_g = g.getMeasure('Degree');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-    'Degree is not being calculated correctly for MultigraphBUD.')
+g = MultiplexGraphBU('B', B);
+m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+assert(isequal(m_inside_g.get('M'), known_radius_subgraphs), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for MultiplexGraphBU.')
+
+g = MultiplexGraphBU('B', B);
+m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+assert(isequal(m_outside_g.get('M'), known_radius_default), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for MultiplexGraphBU.')
+
+g = MultiplexGraphBU('B', B);
+m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'all')));
+assert(isequal(m_inside_g.get('M'), known_radius_default), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for MultiplexGraphBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphWU
+%%%% ¡code!
+B11 = [
+      0     .1  .2  .25  0;
+      .125  0   0   0    0;
+      .2    .5  0   .25  0;
+      .125  10  0   0    0;
+      0     0   0   0    0
+      ];
+B22 = [
+      0     .1  .2  .25  0;
+      .125  0   0   0    0;
+      .2    .5  0   .25  0;
+      .125  10  0   0    0;
+      0     0   0   0    0
+      ];
+B = {
+    B11 B22
+    };
+
+known_radius_subgraphs = {
+                         0
+                         0
+                         };
+known_radius_default = {
+                       inf
+                       inf
+                       };
+                           
+g = MultiplexGraphWU('B', B);
+m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+assert(isequal(m_outside_g.get('M'), known_radius_subgraphs), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for MultiplexGraphWU.')
+
+g = MultiplexGraphWU('B', B);
+m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+assert(isequal(m_inside_g.get('M'), known_radius_subgraphs), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for MultiplexGraphWU.')
+
+g = MultiplexGraphWU('B', B);
+m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+assert(isequal(m_outside_g.get('M'), known_radius_default), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for MultiplexGraphWU.')
+
+g = MultiplexGraphWU('B', B);
+m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'all')));
+assert(isequal(m_inside_g.get('M'), known_radius_default), ...
+    [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
+    'Radius is not being calculated correctly for MultiplexGraphWU.')
