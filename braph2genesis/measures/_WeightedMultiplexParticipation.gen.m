@@ -31,7 +31,7 @@ if L > 0
 end
 
 strength = Strength('G', g).get('M');
-overlapping_strength = OverlappingStrength('G', g).get('M');;
+overlapping_strength = OverlappingStrength('G', g).get('M');
 
 weighted_multiplex_participation =  zeros(N, 1);
 for li = 1:1:L
