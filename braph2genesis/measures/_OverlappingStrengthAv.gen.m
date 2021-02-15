@@ -48,8 +48,8 @@ B = {B11 B22};
 known_overlapping_strength_av = {mean([2.2 1.5 1.3])};
 
 g = MultiplexGraphWU('B', B);
-overlapping_strength = OverlappingStrengthAv('G', g);
+overlapping_strength_av = OverlappingStrengthAv('G', g);
 
-assert(isequal(overlapping_strength.get('M'), known_overlapping_strength_av), ...
+assert(isequal(overlapping_strength_av.get('M'), known_overlapping_strength_av), ...
     [BRAPH2.STR ':OverlappingStrengthAv:' BRAPH2.BUG_ERR], ...
     'OverlappingStrengthAv is not being calculated correctly for MultiplexGraphWU.')
