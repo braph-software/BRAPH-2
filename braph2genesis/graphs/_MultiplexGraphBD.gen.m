@@ -19,13 +19,9 @@ connectivity = Graph.BINARY * ones(layernumber);
 %%% ¡directionality!
 directionality = Graph.DIRECTED * ones(layernumber);
 
-%%% ¡selfconnectivity!
-if layernumber == 1
-    selfconnectivity = Graph.SELFCONNECTED;
-else          
-    selfconnectivity = Graph.SELFCONNECTED * ones(layernumber);
-    selfconnectivity(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
-end
+%%% ¡selfconnectivity!  
+selfconnectivity = Graph.SELFCONNECTED * ones(layernumber);
+selfconnectivity(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
 
 %%% ¡negativity!
 negativity = Graph.NONNEGATIVE * ones(layernumber);
@@ -44,25 +40,23 @@ A (result, cell) is the cell containing the multiplex binary adjacency matrices 
 %%%% ¡calculate!
 B = g.get('B');
 L = length(B); %% number of layers
-C = cell(L, L);
+A = cell(L, L);
 
 varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, binarize
 for layer = 1:1:L
     M = dediagonalize(B{layer}, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
     M = semipositivize(M, varargin{:}); %% removes negative weights
     M = binarize(M, varargin{:}); %% enforces binary adjacency matrix
-    C(layer, layer) = {M};
+    A(layer, layer) = {M};
 end
-if ~isempty(C{1, 1})
+if ~isempty(A{1, 1})
     for i = 1:1:L
         for j = i+1:1:L
-            C(i, j) = {eye(length(C{1, 1}))};
-            C(j, i) = {eye(length(C{1, 1}))};
+            A(i, j) = {eye(length(A{1, 1}))};
+            A(j, i) = {eye(length(A{1, 1}))};
         end
     end
 end
-
-A = C;
 value = A;
 
 %% ¡tests!
@@ -71,12 +65,12 @@ value = A;
 %%%% ¡name!
 Constructor
 %%%% ¡code!
-C = rand(randi(10));
-B = {C, C};
+A = rand(randi(10));
+B = {A, A};
 g = MultiplexGraphBD('B', B);
 
-A1 = binarize(semipositivize(dediagonalize(C)));
-A = {A1, eye(length(C)); eye(length(C)), A1};
+A1 = binarize(semipositivize(dediagonalize(A)));
+A = {A1, eye(length(A)); eye(length(A)), A1};
 
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':MultiplexGraphBD:' BRAPH2.BUG_ERR], ...

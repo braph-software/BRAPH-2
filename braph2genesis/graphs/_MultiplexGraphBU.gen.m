@@ -20,12 +20,8 @@ connectivity = Graph.BINARY * ones(layernumber);
 directionality = Graph.UNDIRECTED * ones(layernumber);
 
 %%% ¡selfconnectivity!
-if layernumber == 1
-    selfconnectivity = Graph.SELFCONNECTED;
-else          
-    selfconnectivity = Graph.SELFCONNECTED * ones(layernumber);
-    selfconnectivity(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
-end
+selfconnectivity = Graph.SELFCONNECTED * ones(layernumber);
+selfconnectivity(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
 
 %%% ¡negativity!
 negativity = Graph.NONNEGATIVE * ones(layernumber);
@@ -35,7 +31,7 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 %%% ¡prop!
 B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.
 %%%% ¡default!
-{[] [] []; [] [] []; [] [] []};
+{[] []};
 
 %% ¡props_update!
 
@@ -44,29 +40,24 @@ A (result, cell) is the cell containing the multiplex binary adjacency matrices 
 %%%% ¡calculate!
 B = g.get('B');
 L = length(B); %% number of layers
+A = cell(L, L);
 
 varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, binarize
 for layer = 1:1:L
-    M = B{layer, layer};
-    M = symmetrize(M, varargin{:}); %% enforces symmetry of adjacency matrix
+    M = symmetrize(B{layer}, varargin{:}); %% enforces symmetry of adjacency matrix
     M = dediagonalize(M, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
     M = semipositivize(M, varargin{:}); %% removes negative weights
     M = binarize(M, varargin{:}); %% enforces binary adjacency matrix
-    B(layer, layer) = {M};
+    A(layer, layer) = {M};
 end
-% enforce zero off-diagonal values and binary diagonal values
-for i = 1:1:size(B, 1)
-    for j = i+1:1:size(B, 2)
-        B(i, j) = {diagonalize(B{i, j}, varargin{:})};
-        B(j, i) = {diagonalize(B{j, i}, varargin{:})};
-        B(i, j) = {semipositivize(B{i, j}, varargin{:})};
-        B(j, i) = {semipositivize(B{j, i}, varargin{:})};
-        B(i, j) = {binarize(B{i, j}, varargin{:})};
-        B(j, i) = {binarize(B{j, i}, varargin{:})};
+if ~isempty(A{1, 1})
+    for i = 1:1:L
+        for j = i+1:1:L
+            A(i, j) = {eye(length(A{1, 1}))};
+            A(j, i) = {eye(length(A{1, 1}))};
+        end
     end
 end
-
-A = B;
 value = A;
 
 %% ¡tests!
@@ -75,13 +66,12 @@ value = A;
 %%%% ¡name!
 Constructor
 %%%% ¡code!
-C = rand(randi(10));
-B = {C, C; C, C};
+A = rand(randi(10));
+B = {A, A};
 g = MultiplexGraphBU('B', B);
 
-A1 = symmetrize(binarize(semipositivize(dediagonalize(C))));
-A2 = binarize(semipositivize(diagonalize(C)));
-A = {A1, A2; A2, A1};
+A1 = symmetrize(binarize(semipositivize(dediagonalize(A))));
+A = {A1, eye(length(A)); eye(length(A)), A1};
 
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':MultiplexGraphBU:' BRAPH2.BUG_ERR], ...
