@@ -21,9 +21,9 @@ MultiplexGraphBU
 
 %% ¡constants!
 RULES = { ... 
-    'all' ... % default
-    'subgraphs' ...
-    };
+        'all' ... % default
+        'subgraphs' ...
+        };
 
 %% ¡props!
 %%% ¡prop! 
@@ -34,7 +34,6 @@ check = value >= 1 & value <= 2;
 1
 
 %% ¡props_update!
-
 %%% ¡prop!
 M (result, cell) is the eccentricity.
 %%%% ¡calculate!
