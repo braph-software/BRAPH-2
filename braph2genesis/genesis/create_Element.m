@@ -1199,21 +1199,56 @@ generate_header_measure() % only for measures
             g(1, 'methods (Static) %% graph methods')
                 if ~isempty(shape)
                     g(2, 'function shape = getMeasureShape()')
+                        gs(3, {
+                            ['%GETMEASURESHAPE returns ' descriptive_name ' measure graph shape.']
+                            '%'
+                            ['% SHAPE = ' descriptive_name '.GETMEASURESHAPE() returns the measures graph shape.']
+                            '%   Shape can be global, nodal, binodal.'
+                            '%'
+                            '% See also getMeasureScope, getMeasureParametricity, getCompatibleGraphList.'
+                            ''
+                            })
                         g(3, shape)
                     g(2, 'end')
                 end
                 if ~isempty(scope)
                     g(2, 'function scope = getMeasureScope()')
+                        gs(3, {
+                            ['%GETMEASURESCOPE returns ' descriptive_name ' measure layer scope.']
+                            '%'
+                            ['% SCOPE = ' descriptive_name '.GETMEASURESCOPE() returns the measures layer scope.']
+                            '%   Scope can be unilayer, superglobal or bilayer.'
+                            '%'
+                            '% See also getMeasureShape, getMeasureParametricity, getCompatibleGraphList.'
+                            ''
+                            })
                         g(3, scope)
                     g(2, 'end')
                 end
                 if ~isempty(parametricity)
                     g(2, 'function parametricity = getMeasureParametricity()')
+                        gs(3, {
+                                ['%GETMEASUREPARAMETRICITY returns ' descriptive_name ' measure parametricity.']
+                                '%'
+                                ['% PARAMETRICITY = ' descriptive_name '.GETMEASUREPARAMETRICITY() returns the measures parametricity.']
+                                '%   Measures can be parametric or non parametric.'
+                                '%'
+                                '% See also getMeasureShape, getMeasureScope, getCompatibleGraphList.'
+                                ''
+                                })
                         g(3, parametricity)
                     g(2, 'end')
                 end
                 if ~isempty(compatible_graphs)
                     g(2, 'function list = getCompatibleGraphList()')
+                        gs(3, {
+                                ['%GETCOMPATIBLEGRAPHLIST returns ' descriptive_name ' measure compatible graph list.']
+                                '%'
+                                ['% LIST = ' descriptive_name '.GETCOMPATIBLEGRAPHLIST() returns the measures compatible graph list.']
+                                '%'
+                                '% See also getMeasureShape, getMeasureScope, getMeasureParametricity.'
+                                ''
+                                })
                         g(3, 'list = { ...');
                             lines = splitlines(compatible_graphs);
                             for i = 1:1:length(lines)
@@ -1222,6 +1257,14 @@ generate_header_measure() % only for measures
                             g(4, '};')
                     g(2, 'end')
                     g(2, 'function n = getCompatibleGraphNumber()')
+                        gs(3, {
+                            ['%GETCOMPATIBLEGRAPHNUMBER returns ' descriptive_name ' measures number of compatible graphs.']
+                            '%'
+                            ['% N = ' descriptive_name '.GETCOMPATIBLEGRAPHNUMBER() returns the measures number of compatible graphs.']
+                            '%'
+                            '% See also getMeasureShape, getMeasureScope, getMeasureParametricity.'
+                            ''
+                            })
                         g(3, ['n = Measure.getCompatibleGraphNumber(''' class_name ''');'])
                     g(2, 'end')
                 end
