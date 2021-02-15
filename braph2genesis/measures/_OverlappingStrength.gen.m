@@ -25,7 +25,10 @@ M (result, cell) is the overlapping strength.
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell array with adjacency matrix 
 L = g.layernumber();
-N = length(A{1, 1});
+N = 1;
+if L > 0
+    N = length(A{1});
+end
 
 strength = calculateValue@Strength(m, prop);	
 overlapping_strength = zeros(N, 1);
@@ -50,12 +53,12 @@ B22 = [
     1   0   .3
     0   .3  0
     ];
-B = {B11 B22 };
+B = {B11 B22};
 
 known_overlapping_strength = {[2.2 1.5 1.3]'};
 
 g = MultiplexGraphWU('B', B);
-overlapping_strength = Strength('G', g);
+overlapping_strength = OverlappingStrength('G', g);
 
 assert(isequal(overlapping_strength.get('M'), known_overlapping_strength), ...
     [BRAPH2.STR ':OverlappingStrength:' BRAPH2.BUG_ERR], ...
