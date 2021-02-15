@@ -19,22 +19,26 @@ GraphBU
 MultiplexGraphBU
 MultiplexGraphWU
 
-%% ¡props_update!
+%% ¡props!
+%%% ¡prop! 
+rule (metadata, SCALAR) 
+%%%% ¡check_prop!
+check = value >= 1 & value <= 2;
+%%%% ¡default!
+1
 
+%% ¡props_update!
 %%% ¡prop!
 M (result, cell) is the radius.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
-eccentricity = Eccentricity('G', g, 'RULE', prop).get('M');
+eccentricity = Eccentricity('G', g, 'RULE', m.get('rule')).get('M');
 radius = cell(g.layernumber(), 1);
 
-
 for li = 1:1:g.layernumber()
-    Aii = A{li, li};
-    Aii = binarize(Aii);  % binarizes the adjacency matrix
-    radius(li) = {sum(Aii, 2)};  % calculates the radius of a node for layer li
+    radius(li) = {min(eccentricity{li})};
 end
 
 value = radius;
@@ -84,7 +88,7 @@ assert(isequal(m_inside_g.get('M'), known_radius_default), ...
 %%%% ¡name!
 GraphWU
 %%%% ¡code!
-B = 
+B = [
     0     .1  .2  .25  0;
     .125  0   0   0    0;
     .2    .5  0   .25  0;
