@@ -1,5 +1,5 @@
 %% ¡header!
-Eccentricity < Measure (m, eccentricity) is the eccentricity.
+Eccentricity < Measure (m, eccentricity) is the graph eccentricity.
 
 %%% ¡description!
 The Eccentricity of a node is the maximal shortest path length between a node and any other node within a layer.

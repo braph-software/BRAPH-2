@@ -1,5 +1,5 @@
 %% ¡header!
-EccentricityAv < Eccentricity (m, average eccentricity) is the eccentricity.
+EccentricityAv < Eccentricity (m, average eccentricity) is the graph average eccentricity.
 
 %%% ¡description!
 The average eccentricity of a graph is the sum of the nodal eccentricities divided by their number within a layer.
