@@ -1103,9 +1103,9 @@ generate_header_graph() % only for graphs
                 if ~isempty(ensemble)
                     g(2, 'function bool = is_ensemble()')
                         gs(3, {
-                            ['%IS_ENSEMBLE returns true if ' descriptive_name ' is an ensamble.']
+                            ['%IS_ENSEMBLE returns true if ' descriptive_name ' is an ensemble.']
                             '%'
-                            ['% BOOL = ' descriptive_name '.IS_ENSEMBLE() returns true if it is an ensamble graph.']
+                            ['% BOOL = ' descriptive_name '.IS_ENSEMBLE() returns true if it is an ensemble graph.']
                             '%'
                             '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
                             ''
@@ -1162,7 +1162,7 @@ generate_header_graph() % only for graphs
                             ['%GETSELFCONNECTIVITYTYPE returns ' descriptive_name ' type of graph self connectivity.']
                             '%'
                             ['% SELFCONNECTIVITY = ' descriptive_name '.GETSELFCONNECTIVITYTYPE() returns the type of graph self connnectivity.']
-                            '% Graphs can be self connected or non self connected.'
+                            '% Graphs can be self-connected or non self-connected.'
                             '%'
                             '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
                             ''
@@ -1179,7 +1179,7 @@ generate_header_graph() % only for graphs
                                 ['% NEGATIVITY = ' descriptive_name '.GETNEGATIVITYTYPE() returns the type of graph negativity.']
                                 '% Graphs can be negative or non negative.'
                                 '%'
-                                '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
+                                '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType.'
                                 ''
                                 })
                         gs(3, get_layernumber)
@@ -1203,7 +1203,7 @@ generate_header_measure() % only for measures
                             ['%GETMEASURESHAPE returns ' descriptive_name ' measure graph shape.']
                             '%'
                             ['% SHAPE = ' descriptive_name '.GETMEASURESHAPE() returns the measures graph shape.']
-                            '%   Shape can be global, nodal, binodal.'
+                            '%   Shape can be global, nodal or binodal.'
                             '%'
                             '% See also getMeasureScope, getMeasureParametricity, getCompatibleGraphList.'
                             ''
@@ -1217,7 +1217,7 @@ generate_header_measure() % only for measures
                             ['%GETMEASURESCOPE returns ' descriptive_name ' measure layer scope.']
                             '%'
                             ['% SCOPE = ' descriptive_name '.GETMEASURESCOPE() returns the measures layer scope.']
-                            '%   Scope can be unilayer, superglobal or bilayer.'
+                            '%   Scope can be superglobal, unilayer or bilayer.'
                             '%'
                             '% See also getMeasureShape, getMeasureParametricity, getCompatibleGraphList.'
                             ''
