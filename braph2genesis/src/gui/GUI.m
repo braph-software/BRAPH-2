@@ -98,6 +98,7 @@ classdef GUI
             
             % properties
             
+            
             % details
             
             % shows GUI
