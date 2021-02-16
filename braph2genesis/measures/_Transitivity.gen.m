@@ -36,7 +36,7 @@ L = g.layernumber();
 
 triangles = calculateValue@Triangles(m, prop);
 
-transitivity = cell(g.layernumber(), 1);
+transitivity = cell(L, 1);
 directionality_type =  g.getDirectionalityType(g.layernumber());
 for li = 1:1:L      
     Aii = A{li, li};
