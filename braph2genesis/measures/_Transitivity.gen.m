@@ -91,27 +91,19 @@ A11 = [
       1 1 0 1;
       1 0 1 0
       ];
-A12 = eye(4);
-A21 = eye(4);
 A22 = [
       0 1 1 1;
       1 0 1 0;
       1 1 0 1;
       1 0 1 0
       ];
-A = {
-    A11     A12
-    A21     A22
-    };
+A = {A11  A22};
 
-known_transitivity = {
-                 3/4
-                 3/4
-                 };      
+known_transitivity = {3/4; 3/4};      
 
 g = MultiplexGraphBU('B', A);
-transitivity = Transitivity('G', g);
+transitivity = Transitivity('G', g).get('M');
 
-assert(isequal(transitivity.get('M'), known_transitivity), ...
+assert(isequal(transitivity, known_transitivity), ...
     [BRAPH2.STR ':Transitivity:' BRAPH2.BUG_ERR], ...
     'Transitivity is not being calculated correctly for MultiplexGraphBU.')
