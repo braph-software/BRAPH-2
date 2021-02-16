@@ -123,7 +123,6 @@ classdef GUI
                 'Max', 0, ...
                 'Value', 0, ...
                 'Callback', {@cb_slider_prop});
-            
             function cb_slider_prop(ui_slider_prop, ~)
                 offset = get(ui_slider_prop, 'Value')
             end
