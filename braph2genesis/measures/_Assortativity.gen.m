@@ -75,9 +75,9 @@ assortativity_BU = (37/6-(15/6)^2)/(39/6-(15/6)^2);
 
 g = GraphBU('B', B_BU);
 
-assortativity_1 = Assortativity('G', g);
+assortativity_1 = Assortativity('G', g).get('M');
 assortativity_2 = assortativity_BU;
-assert(isequal(assortativity_1.get('M'), assortativity_BU), ...
+assert(isequal(round(assortativity_1{1}, 3), round(assortativity_BU, 3)), ...
     [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
     'Assortativity is not being calculated correctly for GraphBU')
 
@@ -86,17 +86,17 @@ assert(isequal(assortativity_1.get('M'), assortativity_BU), ...
 GraphWU
 %%%% ¡code!
 B_WU = [
-    1 2 0 0 1;
-    2 1 3 2 0;
-    0 3 1 1 0;
-    0 2 1 1 2;
-    1 0 0 2 1];
+    .1 .2 0 0 .1;
+    .2 .1 .3 .2 0;
+    0 .3 .1 .1 0;
+    0 .2 .1 .1 .2;
+    .1 0 0 .2 .1];
 
 assortativity_WU_compress = (14.222222/6-(9.333333/6)^2)/(16.111111/6-(9.333333/6)^2);
 
 g = GraphWU('B', B_WU);
 
-assortativity_1 = Assortativity('G', g);
-assert(isequal(assortativity_1.get('M'), assortativity_WU_compress), ...
+assortativity_1 = Assortativity('G', g).get('M');
+assert(isequal(round(assortativity_1{1}, 3), round(assortativity_WU_compress, 3)), ...
     [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
     'Assortativity is not being calculated correctly for GraphBU')
