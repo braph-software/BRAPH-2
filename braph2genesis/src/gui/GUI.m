@@ -9,10 +9,13 @@ classdef GUI
         width % window width
         height % window height
         
-        p % property panel list
+        border % standard border
+        
+        ui_panel_props % property panel list
     end
     properties (Constant)
         BKGCOLOR = [.98 .98 .98]
+        FRGCOLOR = [.90 .90 .90]
         
         MSG_YES = 'Yes'
         MSG_NO = 'No'
@@ -83,8 +86,10 @@ classdef GUI
             
             gui.x0 = get_from_varargin(.02, 'x0', varargin);
             gui.y0 = get_from_varargin(.10, 'y0', varargin);
-            gui.width = get_from_varargin(.60, 'width', varargin);
+            gui.width = get_from_varargin(.90, 'width', varargin);
             gui.height = get_from_varargin(.80, 'height', varargin);
+
+            gui.border = get_from_varargin(.01, 'border', varargin);
             
             % initializes GUI
             f = figure( ...
@@ -99,6 +104,29 @@ classdef GUI
                 );
             
             % properties
+            ui_panel_prop = uipanel( ...
+                'Parent', f, ...
+                'Units', 'normalized', ...
+                'Position', [gui.border gui.border .4-2*gui.border 1-2*gui.border], ...
+                'BackgroundColor', GUI.FRGCOLOR);
+            
+            for prop = 1:1:el.getPropNumber()
+                %
+            end
+            
+            ui_slider_prop = uicontrol( ...
+                'Style', 'slider', ...
+                'Parent', f, ...
+                'Units', 'normalized', ...
+                'Position', [2*gui.border 2*gui.border .4-4*gui.border 1-4*gui.border], ...
+                'Min', -.5, ...
+                'Max', 0, ...
+                'Value', 0, ...
+                'Callback', {@cb_slider_prop});
+            
+            function cb_slider_prop(ui_slider_prop, ~)
+                offset = get(ui_slider_prop, 'Value')
+            end
             
             % details
             
