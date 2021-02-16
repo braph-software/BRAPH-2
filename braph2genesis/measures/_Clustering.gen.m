@@ -44,7 +44,7 @@ elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
     in_degree = cell2mat(InDegree('G', g).get('M'));
     out_degree = cell2mat(OutDegree('G', g).get('M'));
     directed_triangles_rule = Triangles.RULES(m.get('rule'));
-    switch lower(directed_triangles_rule)
+    switch lower(directed_triangles_rule{1})
         case {'all'}  % all rule
             clustering = triangles ./ ((out_degree + in_degree) .* (out_degree + in_degree - 1) - 2 * diag(A^2));
         case {'middleman'}  % middleman rule
@@ -56,7 +56,7 @@ elseif isa(g, 'GraphBD') || isa(g, 'GraphWD')
         otherwise  % {'cycle'}  % cycle rule
             clustering = triangles ./ ((out_degree .* in_degree) - diag(A^2));
     end
-    
+    clustering(isnan(clustering)) = 0;  % Should return zeros, not NaN  
 end
 
 value = clustering;
