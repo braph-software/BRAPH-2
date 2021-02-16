@@ -193,14 +193,18 @@ assert(isequal(m_inside_g.get('M'), known_eccentricity_default), ...
 MultiplexGraphWU
 %%%% ¡code!
 B11 = [
-      0   .2  1
-      0   0   .8
-      1   0   0
+      0     .1  .2  .25  0;
+      .125  0   0   0    0;
+      .2    .5  0   .25  0;
+      .125  10  0   0    0;
+      0     0   0   0    0
       ];
 B22 = [
-      0  1   .6
-      1  0   .4
-      0  .4  0
+      0     .1  .2  .25  0;
+      .125  0   0   0    0;
+      .2    .5  0   .25  0;
+      .125  10  0   0    0;
+      0     0   0   0    0
       ];
 B = {
     B11 B22
@@ -252,7 +256,7 @@ distance = Distance('G', g).get('M');
 
 m_outside_g = Eccentricity('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
 calculated_eccentricity = m_outside_g.get('M')
-assert(isequal(round(calculated_eccentricity(1), 3), round(bct_eccentricity, 3)), ...
+assert(isequal(round(calculated_eccentricity{1}(1), 3), round(bct_eccentricity, 3)), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
     'Eccentricity is not being calculated correctly for GraphWU.')
 
