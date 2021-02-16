@@ -99,7 +99,6 @@ classdef GUI
                 );
             
             % properties
-            for 
             
             % details
             
