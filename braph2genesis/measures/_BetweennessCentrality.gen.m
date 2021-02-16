@@ -60,7 +60,8 @@ function weighted_betweenness_centrality = getWeightedCalculation(m, A)
     %
     % WEIGHTED_DISTANCE = GETWEIGHTEDCALCULATION(M, A) returns the value of the
     %  distance of a weighted adjacency matrix A.
-
+    
+    A = cell2mat(A);
     N = size(A, 2);  % number of nodes
     E = find(A);
     A(E) = 1./A(E);  % invert weights
@@ -126,7 +127,8 @@ function binary_betweenness_centrality = getBinaryCalculation(m, A)
     %
     % BINARY_DISTANCE = GETBINARYCALCULATION(A) returns the value of the
     %  distance of a binary adjacency matrix A.
-
+    
+    A = cell2mat(A);
     N = size(A, 1);  % number of nodes
     I = eye(N)~=0;  % logical identity matrix
     d = 1;  % start path length d
@@ -179,7 +181,7 @@ g = GraphBU('B', B_BU);
 
 bc_1 = BetweennessCentrality('G', g).get('M');
 
-assert(isequal(bc_1, bc_BU), ...
+assert(isequal(bc_1{1}, bc_BU), ...
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
     'Betweenness Centrality is not being calculated correctly for GraphBU')
 
@@ -198,6 +200,6 @@ bc_WU =[1, 0, 0]';
 g = GraphWU('B', B_WU);
 
 bc_1 = BetweennessCentrality('G', g).get('M');
-assert(isequal(bc_1, bc_WU), ...
+assert(isequal(bc_1{1}, bc_WU), ...
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
     'Betweenness Centrality is not being calculated correctly for GraphWU')
