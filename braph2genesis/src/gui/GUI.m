@@ -8,6 +8,8 @@ classdef GUI
         y0 % widow lower corner
         width % window width
         height % window height
+        
+        p % property panel list
     end
     properties (Constant)
         BKGCOLOR = [.98 .98 .98]
@@ -97,7 +99,7 @@ classdef GUI
                 );
             
             % properties
-            
+            for 
             
             % details
             
