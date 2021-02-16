@@ -16,6 +16,7 @@ classdef GUI
     properties (Constant)
         BKGCOLOR = [.98 .98 .98]
         FRGCOLOR = [.90 .90 .90]
+        FFGCOLOR = [.95 .95 .95]
         
         MSG_YES = 'Yes'
         MSG_NO = 'No'
@@ -111,7 +112,12 @@ classdef GUI
                 'BackgroundColor', GUI.FRGCOLOR);
             
             for prop = 1:1:el.getPropNumber()
-                %
+                gui.ui_panel_props(prop) = uipanel( ...
+                    'Parent', ui_panel_prop, ...
+                    'Units', 'normalized', ...
+                    'Position', [0 0 .5 .5], ...
+                    'BackgroundColor', GUI.FFGCOLOR ...
+                    );
             end
             
             ui_slider_prop = uicontrol( ...
@@ -123,7 +129,7 @@ classdef GUI
                 'Max', 0, ...
                 'Value', 0, ...
                 'Callback', {@cb_slider_prop});
-            function cb_slider_prop(ui_slider_prop, ~)
+            function cb_slider_prop(~, ~)
                 offset = get(ui_slider_prop, 'Value')
             end
             
