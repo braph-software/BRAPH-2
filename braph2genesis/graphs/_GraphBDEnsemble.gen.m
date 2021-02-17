@@ -19,7 +19,7 @@ G_DICT (data, idict) contains the ensemble of binary directed graphs.
 IndexedDictionary('IT_CLASS', 'GraphBD', 'IT_KEY', 1)
 
 %%% ¡prop!
-A (result, adjacency) is the non-negative average adjacency matrix of the ensemble of binary directed graphs.
+A (result, matrix) is the non-negative average adjacency matrix of the ensemble of binary directed graphs.
 %%%% ¡calculate!
 A_list = cellfun(@(x) x.get('A'), ge.get('G_DICT').getItems, 'UniformOutput', false);
 A = mean(cat(3, A_list{:}), 3);
@@ -34,13 +34,15 @@ Constructor
 %%%% ¡code!
 ge = GraphBDEnsemble();
 
+dict = ge.get('G_DICT');
 for i = 1:1:10
     g = GraphBD( ...
         'ID', ['g ' int2str(i)], ...
         'B', rand(10) ...
         );
-    ge.get('G_DICT').add(g)
+    dict.add(g);   
 end
+ge.set('g_dict', dict);
 
 assert(ge.get('G_DICT').length == 10, ...
     [BRAPH2.STR ':GraphBDEnsemble:' BRAPH2.BUG_ERR], ...
