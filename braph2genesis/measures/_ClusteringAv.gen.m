@@ -29,13 +29,15 @@ MultiplexGraphWU
 %%% ¡prop!
 M (result, cell) is the average clustering.
 %%%% ¡calculate!
-
+g = m.get('G'); % graph from measure class
 clustering  = calculateValue@Clustering(m, prop);
-if iscell(clustering)
-    clustering = cell2mat(clustering);
+
+clustering_av = cell(g.layernumber(), 1);
+for li = 1:1:length(clustering_av)
+    clustering_av(li) = {mean(clustering{li})};
 end
-clustering_av = mean(clustering);
-value = {clustering_av};
+
+value = clustering_av;
 
 %% ¡tests!
 
@@ -49,10 +51,10 @@ B_BU = [
     1 1 0 1; 
     1 0 1 0
     ];
-clustering_BU = [2/3 1 2/3 1]';
+clustering_BU = [2/3 1 2/3 1];
 g = GraphBU('B', B_BU);
 clustering_1 = ClusteringAv('G', g).get('M');
-assert(isequal(clustering_1{1}, mean(clustering_BU)), ...
+assert(isequal(clustering_1, {mean(clustering_BU)}), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
     'ClusteringAv is not being calculated correctly for GraphBU')
 
@@ -65,10 +67,40 @@ B_BD = [
     1 0 0; 
     0 1 0 
     ];
-clustering_BD_out = [0 0 0]';  % out rule
+clustering_BD_out = [0 0 0];  % out rule
 g = GraphBD('B', B_BD);
 clustering_1 = ClusteringAv('G', g, 'rule', find(contains(Triangles.RULES, 'out'))).get('M');
-clustering_2 = mean(clustering_BD_out);
-assert(isequal(clustering_1{1}, clustering_2), ...
+clustering_2 = {mean(clustering_BD_out)};
+assert(isequal(clustering_1, clustering_2), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
     'ClusteringAv(''Rule'', ''out'') is not being calculated correctly for GraphBD')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphBU
+%%%% ¡code!
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B22 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B = {B11 B22};
+
+known_clustering_av = {
+                 mean([2/3 1 2/3 1])
+                 mean([2/3 1 2/3 1])
+                 };      
+
+g = MultiplexGraphBU('B', B);
+clustering_av = ClusteringAv('G', g);
+
+assert(isequal(clustering_av.get('M'), known_clustering_av), ...
+    [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
+    'ClusteringAv is not being calculated correctly for MultiplexGraphBU.')
