@@ -27,16 +27,16 @@ M (result, cell) is the average eccentricity.
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
-eccentritivity = calculateValue@Eccentricity(m, prop);	
+eccentricity = calculateValue@Eccentricity(m, prop);	
 g = m.get('G'); % graph from measure class
 
-eccentritivity_av = cell(g.layernumber(), 1);
+eccentricity_av = cell(g.layernumber(), 1);
 
 for li = 1:1:g.layernumber()
-    eccentritivity_av(li) = {mean(eccentritivity{li})};
+    eccentricity_av(li) = {mean(eccentricity{li})};
 end
 
-value = eccentritivity_av;
+value = eccentricity_av;
 
 %% ¡tests!
 
