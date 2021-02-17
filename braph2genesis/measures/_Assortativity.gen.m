@@ -102,3 +102,63 @@ assortativity_1 = Assortativity('G', g).get('M');
 assert(isequal(round(assortativity_1{1}, 3), round(assortativity_WU_compress, 3)), ...
     [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
     'Assortativity is not being calculated correctly for GraphBU')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphBU
+%%%% ¡code!
+B11 = [
+      1  1  0  0  1;
+      1  1  1  1  0;
+      0  1  1  1  0;
+      0  1  1  1  1;
+      1  0  0  1  0];
+B22 = [
+      1  1  0  0  1;
+      1  1  1  1  0;
+      0  1  1  1  0;
+      0  1  1  1  1;
+      1  0  0  1  0];
+B = {B11 B22};
+
+known_assortativity = {
+                    (37/6-(15/6)^2)/(39/6-(15/6)^2)
+                    (37/6-(15/6)^2)/(39/6-(15/6)^2)
+                    };
+
+g = MultiplexGraphBU('B', B);
+assortativity = Assortativity('G', g);
+
+assert(isequal(assortativity.get('M'), known_assortativity), ...
+    [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
+    'Assortativity is not being calculated correctly for MultiplexGraphBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphWU
+%%%% ¡code!
+B11 = [
+       1  2  0  0  1;
+       2  1  3  2  0;
+       0  3  1  1  0;
+       0  2  1  1  2;
+       1  0  0  2  1];
+B22 = [
+       1  2  0  0  1;
+       2  1  3  2  0;
+       0  3  1  1  0;
+       0  2  1  1  2;
+       1  0  0  2  1];
+B = {B11 B22};
+
+known_assortativity = {
+                    (37/6-(15/6)^2)/(39/6-(15/6)^2)
+                    (37/6-(15/6)^2)/(39/6-(15/6)^2)
+                    };
+
+g = MultiplexGraphWU('B', B);
+assortativity = Assortativity('G', g);
+
+assert(isequal(assortativity.getValue(), known_assortativity), ...
+    [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
+    'Assortativity is not being calculated correctly for MultiplexGraphWU.')
