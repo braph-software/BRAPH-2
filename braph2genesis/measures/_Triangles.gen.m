@@ -67,7 +67,7 @@ for li = 1:1:L
         
     else  % directed graphs
         directed_triangles_rule = m.get('rule');
-        switch lower(directed_triangles_rule{1})
+        switch lower(directed_triangles_rule)
             case 'all'  % all rule
                 triangles_layer = diag((Aii.^(1/3) + transpose(Aii).^(1/3))^3) / 2;
             case 'middleman'  % middleman rule
@@ -108,7 +108,10 @@ assert(isequal(triangles.get('M'), known_triangles), ...
     'Triangles is not being calculated correctly for GraphBU.')
 
 
-%% Test 2: GraphBD
+%%% ¡test!
+%%%% ¡name!
+GraphBD
+%%%% ¡code!
 B = [
     0 0 1; 
     1 0 0; 
@@ -164,3 +167,33 @@ triangles = Triangles('G', g, 'rule',  'all');
 assert(isequal(triangles.get('M'), known_triangles_all), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
     'Triangles is not being calculated correctly for GraphBD.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphBU
+%%%% ¡code!
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B22 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B = {B11 B22};
+
+known_triangles = {
+                 [2 1 2 1]'
+                 [2 1 2 1]'
+                 };      
+
+g = MultiplexGraphBU('B', B);
+triangles = Triangles('G', g);
+
+assert(isequal(triangles.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
+    'Triangles is not being calculated correctly for MultiplexGraphBU.')
