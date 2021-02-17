@@ -26,9 +26,12 @@ GraphBD
 M (result, cell) is the average clustering.
 %%%% ¡calculate!
 
-clustering  = cell2mat(calculateValue@Clustering(m, prop));
+clustering  = calculateValue@Clustering(m, prop);
+if iscell(clustering)
+    clustering = cell2mat(clustering);
+end
 clustering_av = mean(clustering);
-value = clustering_av;
+value = {clustering_av};
 
 %% ¡tests!
 
@@ -45,7 +48,7 @@ B_BU = [
 clustering_BU = [2/3 1 2/3 1]';
 g = GraphBU('B', B_BU);
 clustering_1 = ClusteringAv('G', g).get('M');
-assert(isequal(clustering_1, mean(clustering_BU)), ...
+assert(isequal(clustering_1{1}, mean(clustering_BU)), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
     'ClusteringAv is not being calculated correctly for GraphBU')
 
@@ -62,6 +65,6 @@ clustering_BD_out = [0 0 0]';  % out rule
 g = GraphBD('B', B_BD);
 clustering_1 = ClusteringAv('G', g, 'rule', find(contains(Triangles.RULES, 'out'))).get('M');
 clustering_2 = mean(clustering_BD_out);
-assert(isequal(clustering_1, clustering_2), ...
+assert(isequal(clustering_1{1}, clustering_2), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
     'ClusteringAv(''Rule'', ''out'') is not being calculated correctly for GraphBD')
