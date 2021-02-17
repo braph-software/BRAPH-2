@@ -42,16 +42,16 @@ A = g.get('A'); % cell matrix (for graph) or 2D-cell array (for multigraph, mult
 
 distance = Distance('G', g).get('M'); 
 eccentricity_rule = Eccentricity.RULES(m.get('rule'));
-bct_eccentricity = cell(g.layernumber(), 1);
+eccentricity = cell(g.layernumber(), 1);
 for li = 1:1:g.layernumber()
     switch lower(eccentricity_rule{1})
         case {'subgraphs'}
-            bct_eccentricity(li)  = {max(distance{li}.*(distance{li}~=Inf), [], 2)};
+            eccentricity(li)  = {max(distance{li}.*(distance{li}~=Inf), [], 2)};
         case {'all'}
-            bct_eccentricity(li)  = {max(distance{li}, [], 2)};
+            eccentricity(li)  = {max(distance{li}, [], 2)};
     end
 end
-value = bct_eccentricity;
+value = eccentricity;
 
 %% ¡tests!
 
