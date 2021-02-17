@@ -20,7 +20,10 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
-
+MultiplexGraphBD
+MultiplexGraphBU
+MultiplexGraphWD
+MultiplexGraphWU
 %% ¡props_update!
 
 %%% ¡prop!
