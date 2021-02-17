@@ -255,7 +255,7 @@ distance = Distance('G', g).get('M');
 [~, ~, bct_eccentricity, ~, ~]= charpath(distance{1});
 
 m_outside_g = Eccentricity('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
-calculated_eccentricity = m_outside_g.get('M')
+calculated_eccentricity = m_outside_g.get('M');
 assert(isequal(round(calculated_eccentricity{1}(1), 3), round(bct_eccentricity, 3)), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
     'Eccentricity is not being calculated correctly for GraphWU.')
