@@ -34,18 +34,11 @@ A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph,
 N = g.nodenumber(); 
 
 betweenness_centrality = cell(g.layernumber(), 1);
-connectivity_type =  g.getConnectivityType(g.layernumber());
+connectivity_layer =  g.getConnectivityType(g.layernumber());
 
 for li = 1:1:g.layernumber()
-    
-    if g.is_graph(g)
-        Aii = A;
-        connectivity_layer = connectivity_type;
-    else
-        Aii = A{li, li};
-        connectivity_layer = connectivity_type(li, li);
-    end
-    
+    Aii = A{li, li};
+
     if connectivity_layer == Graph.WEIGHTED  % weighted graphs
         betweenness_centrality_layer = m.getWeightedCalculation(Aii)/((N(li)-1)*(N(li)-2));  % Normalized betweenness centrality
         betweenness_centrality(li) = {betweenness_centrality_layer};
@@ -63,8 +56,7 @@ function weighted_betweenness_centrality = getWeightedCalculation(m, A)
     %
     % WEIGHTED_DISTANCE = GETWEIGHTEDCALCULATION(M, A) returns the value of the
     %  distance of a weighted adjacency matrix A.
-    
-    A = cell2mat(A);
+
     N = size(A, 2);  % number of nodes
     E = find(A);
     A(E) = 1./A(E);  % invert weights
@@ -131,7 +123,6 @@ function binary_betweenness_centrality = getBinaryCalculation(m, A)
     % BINARY_DISTANCE = GETBINARYCALCULATION(A) returns the value of the
     %  distance of a binary adjacency matrix A.
     
-    A = cell2mat(A);
     N = size(A, 1);  % number of nodes
     I = eye(N)~=0;  % logical identity matrix
     d = 1;  % start path length d
@@ -198,7 +189,7 @@ B_WU = [
     4 0 0 
     ];
 
-bc_WU =[1, 0, 0]'; 
+bc_WU = [1, 0, 0]'; 
 
 g = GraphWU('B', B_WU);
 
@@ -206,3 +197,60 @@ bc_1 = BetweennessCentrality('G', g).get('M');
 assert(isequal(bc_1{1}, bc_WU), ...
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
     'Betweenness Centrality is not being calculated correctly for GraphWU')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphBD
+%%%% ¡code!
+B11 = [
+    0   1   0
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   0
+    0   1   0
+    ];
+B = {B11 B22};
+
+known_betweenness_centrality = {
+    [1/2 0   0]'
+    [0   1/2 0]'
+    };
+
+g = MultiplexGraphBD('B', B);
+betweenness_centrality = BetweennessCentrality('G', g);
+
+assert(isequal(betweenness_centrality.get('M'), known_betweenness_centrality), ...
+    [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'BetweennessCentrality is not being calculated correctly for MultiplexGraphBD.')
+
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphWD
+%%%% ¡code!
+B11 = [
+    0   1   0
+    1   0   0
+    4   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   0
+    0   4   0
+    ];
+B = {B11 B22};
+
+known_betweenness_centrality = {
+    [1/2 0   0]'
+    [0   1/2 0]'
+    };
+
+g = MultiplexGraphWD('B', B);
+betweenness_centrality = BetweennessCentrality('G', g);
+
+assert(isequal(betweenness_centrality.get('M'), known_betweenness_centrality), ...
+    [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
+    'BetweennessCentrality is not being calculated correctly for MultiplexGraphWD.')
