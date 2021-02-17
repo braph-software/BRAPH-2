@@ -39,11 +39,11 @@ RULES = { ... % vector of triangles rules
 
 %% ¡props!
 %%% ¡prop! 
-rule (metadata, SCALAR) 
-%%%% ¡check_prop!
-check =  value >= 1 && value <= 5;
+rule (metadata, OPTION) 
+%%%% ¡settings!
+{'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!
-5
+'cycle'
 
 %% ¡props_update!
 
@@ -66,7 +66,7 @@ for li = 1:1:L
         triangles(li) = {triangles_layer};
         
     else  % directed graphs
-        directed_triangles_rule = Triangles.RULES(m.get('rule'));
+        directed_triangles_rule = m.get('rule');
         switch lower(directed_triangles_rule{1})
             case 'all'  % all rule
                 triangles_layer = diag((Aii.^(1/3) + transpose(Aii).^(1/3))^3) / 2;
@@ -129,7 +129,7 @@ assert(isequal(triangles.get('M'), known_triangles_default_cycle), ...
 known_triangles_in = {[0 0 0]'};
 
 g = GraphBD('B', B);
-triangles = Triangles('G', g, 'rule', find(contains(Triangles.RULES, 'in')));
+triangles = Triangles('G', g, 'rule', 'in');
 
 assert(isequal(triangles.get('M'), known_triangles_in), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
@@ -139,7 +139,7 @@ assert(isequal(triangles.get('M'), known_triangles_in), ...
 known_triangles_out = {[0 0 0]'};
 
 g = GraphBD('B', B);
-triangles = Triangles('G', g, 'rule', find(contains(Triangles.RULES, 'out')));
+triangles = Triangles('G', g, 'rule',  'out');
 
 assert(isequal(triangles.get('M'), known_triangles_out), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
@@ -149,7 +149,7 @@ assert(isequal(triangles.get('M'), known_triangles_out), ...
 known_triangles_middleman = {[0 0 0]'};
 
 g = GraphBD('B', B);
-triangles = Triangles('G', g, 'rule', find(contains(Triangles.RULES, 'middleman')));
+triangles = Triangles('G', g, 'rule', 'middleman');
 
 assert(isequal(triangles.get('M'), known_triangles_middleman), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
@@ -159,7 +159,7 @@ assert(isequal(triangles.get('M'), known_triangles_middleman), ...
 known_triangles_all = {[1 1 1]'};
 
 g = GraphBD('B', B);
-triangles = Triangles('G', g, 'rule', find(contains(Triangles.RULES, 'all')));
+triangles = Triangles('G', g, 'rule',  'all');
 
 assert(isequal(triangles.get('M'), known_triangles_all), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
