@@ -23,7 +23,7 @@ MultiplexGraphBU
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the strength.
+M (result, cell) is the average global efficiency.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 L = g.layernumber();
