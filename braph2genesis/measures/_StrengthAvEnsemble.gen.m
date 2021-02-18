@@ -12,7 +12,7 @@ MultigraphWUEnsemble
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, measure) is the ensemble-averaged strength av.
+M (result, cell) is the ensemble-averaged strength av.
 %%%% ¡calculate!
 ge = m.get('G'); % graph ensemble from measure class
 
@@ -41,13 +41,15 @@ B = [
 known_strength = {mean([1.2 0.2 1])};
 
 ge = GraphWUEnsemble();
+dict = ge.get('G_DICT');
 for i = 1:1:10
     g = GraphWU( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
-    ge.get('G_DICT').add(g)
+    dict.add(g)
 end
+ge.set('g_dict', dict);
 
 m_outside_g = StrengthAvEnsemble('G', ge);
 assert(isequal(m_outside_g.get('M'), known_strength), ...
@@ -81,13 +83,16 @@ known_strength = {
                  };
                                 
 ge = MultiplexGraphWUEnsemble();
+dict = ge.get('G_DICT');
 for i = 1:1:10
     g = MultiplexGraphWU( ...
         'ID', ['g ' int2str(i)], ...        
         'B', B ...
         );
-    ge.get('G_DICT').add(g)
+   dict.add(g)
 end
+ge.set('g_dict', dict);
+
 m_outside_strength = StrengthAvEnsemble('G', ge);
 assert(isequal(m_outside_strength.get('M'), known_strength), ...
     [BRAPH2.STR ':StrengthAvEnsemble:' BRAPH2.BUG_ERR], ...

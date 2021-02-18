@@ -13,7 +13,7 @@ MultigraphBUDEnsemble
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, measure) is the ensemble-averaged degree.
+M (result, cell) is the ensemble-averaged degree.
 %%%% ¡calculate!
 ge = m.get('G'); % graph ensemble from measure class
 
@@ -50,13 +50,15 @@ known_distance = {[
     ]};
 
 ge = GraphWUEnsemble();
+dict = ge.get('G_DICT');
 for i = 1:1:10
     g = GraphWU( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
-    ge.get('G_DICT').add(g)
+    dict.add(g)
 end
+ge.set('g_dict', dict);
 
 m_outside_g = DistanceEnsemble('G', ge);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
@@ -99,14 +101,16 @@ known_distance = {
     };
 
 ge = MultigraphBUTEnsemble('THRESHOLDS', thresholds);
+dict = ge.get('G_DICT');
 for i = 1:1:10
     g = MultigraphBUT( ...
         'ID', ['g ' int2str(i)], ...
         'THRESHOLDS', ge.get('THRESHOLDS'), ...
         'B', B ...
         );
-    ge.get('G_DICT').add(g)
+    dict.add(g)
 end
+ge.set('g_dict', dict);
 
 m_outside_g = DistanceEnsemble('G', ge);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
@@ -154,14 +158,16 @@ known_distance = {
     };
 
 ge = MultigraphBUDEnsemble('DENSITIES', densities);
+dict = ge.get('G_DICT');
 for i = 1:1:10
     g = MultigraphBUD( ...
         'ID', ['g ' int2str(i)], ...
         'DENSITIES', ge.get('DENSITIES'), ...
         'B', B ...
         );
-    ge.get('G_DICT').add(g)
+    dict.add(g)
 end
+ge.set('g_dict', dict);
 
 m_outside_g = DistanceEnsemble('G', ge);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
