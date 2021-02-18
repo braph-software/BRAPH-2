@@ -7,7 +7,7 @@ a node within a layer.
 
 %%% ¡compatible_graphs!
 GraphWUEnsemble
-MultigraphWUEnsemble
+MultiplexGraphWUEnsemble
 
 %% ¡props_update!
 
