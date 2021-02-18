@@ -81,7 +81,8 @@ known_strength = {
                  [1.2 .2  1]'
                  [1   1.4 .4]'
                  };
-                                
+known_strength = cellfun(@(x) round(x, 3), known_strength, 'UniformOutput', false);
+             
 ge = MultiplexGraphWUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
@@ -94,11 +95,11 @@ end
 ge.set('g_dict', dict);
 
 m_outside_g = StrengthEnsemble('G', ge).get('M');
-assert(isequal(round(m_outside_g{1}, 3), round(known_strength{1}, 3)), ...
+assert(isequal(cellfun(@(x) round(x, 3), m_outside_g, 'UniformOutput', false), known_strength), ...
     [BRAPH2.STR ':StrengthEnsemble:' BRAPH2.BUG_ERR], ...
     'StrengthEnsemble is not being calculated correctly for MultiplexGraphWU.')
 
 m_inside_g = ge.getMeasure('StrengthEnsemble').get('M');
-assert(isequal(round(m_inside_g{1}, 3), round(known_strength{1}, 3)), ...
+assert(isequal(cellfun(@(x) round(x, 3), m_inside_g, 'UniformOutput', false), known_strength), ...
     [BRAPH2.STR ':StrengthEnsemble:' BRAPH2.BUG_ERR], ...
     'StrengthEnsemble is not being calculated correctly for MultiplexGraphWU.')

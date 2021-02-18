@@ -38,7 +38,7 @@ B = [
     1  0  0
     ];
 
-known_strength = {mean([1.2 0.2 1])};
+known_strength_av = {mean([1.2 0.2 1])};
 
 ge = GraphWUEnsemble();
 dict = ge.get('G_DICT');
@@ -52,12 +52,12 @@ end
 ge.set('g_dict', dict);
 
 m_outside_g = StrengthAvEnsemble('G', ge);
-assert(isequal(m_outside_g.get('M'), known_strength), ...
+assert(isequal(m_outside_g.get('M'), known_strength_av), ...
     [BRAPH2.STR ':StrengthAvEnsemble:' BRAPH2.BUG_ERR], ...
     'StrengthAvEnsemble is not being calculated correctly for GraphWUEnsemble.')
 
 m_inside_g = ge.getMeasure('StrengthAvEnsemble');
-assert(isequal(m_inside_g.get('M'), known_strength), ...
+assert(isequal(m_inside_g.get('M'), known_strength_av), ...
     [BRAPH2.STR ':StrengthAvEnsemble:' BRAPH2.BUG_ERR], ...
     'StrengthAvEnsemble is not being calculated correctly for GraphWUEnsemble.')
 
@@ -77,11 +77,12 @@ B22 = [
     ];
 B = {B11 B22};
 
-known_strength = {
+known_strength_av = {
                  mean([1.2 .2  1]')
                  mean([1  1.4 .4]')
                  };
-                                
+known_strength_av = cellfun(@(x) round(x, 3), known_strength_av, 'UniformOutput', false);
+             
 ge = MultiplexGraphWUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
@@ -93,12 +94,12 @@ for i = 1:1:10
 end
 ge.set('g_dict', dict);
 
-m_outside_strength = StrengthAvEnsemble('G', ge);
-assert(isequal(m_outside_strength.get('M'), known_strength), ...
+m_outside_g = StrengthAvEnsemble('G', ge).get('M');
+assert(isequal(cellfun(@(x) round(x, 3), m_outside_g, 'UniformOutput', false), known_strength_av), ...
     [BRAPH2.STR ':StrengthAvEnsemble:' BRAPH2.BUG_ERR], ...
-    'StrengthAvEnsemble is not being calculated correctly for MultiplexGraphWU.')
+    'StrengthAvEnsemble is not being calculated correctly for MultiplexGraphWUEnsemble.')
 
-m_inside_strenght = ge.getMeasure('StrengthAvEnsemble');
-assert(isequal(m_inside_strenght.get('M'), known_strength), ...
+m_inside_g = ge.getMeasure('StrengthAvEnsemble').get('M');
+assert(isequal(cellfun(@(x) round(x, 3), m_inside_g, 'UniformOutput', false), known_strength_av), ...
     [BRAPH2.STR ':StrengthAvEnsemble:' BRAPH2.BUG_ERR], ...
-    'StrengthAvEnsemble is not being calculated correctly for MultiplexGraphWU.')
+    'StrengthAvEnsemble is not being calculated correctly for MultiplexGraphWUEnsemble.')
