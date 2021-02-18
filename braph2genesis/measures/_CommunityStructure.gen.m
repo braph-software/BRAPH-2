@@ -39,11 +39,11 @@ OM_TYPE_OPTIONS = { ...
 
 %% ¡props!
 %%% ¡prop! 
-rule (metadata, SCALAR) 
-%%%% ¡check_prop!
-check =  value >= 1 && value <= 2;
+rule (metadata, OPTION) 
+%%%% ¡settings!
+{ 'louvain' 'newman'}
 %%%% ¡default!
-1
+'louvain'
 
 %%% ¡prop! 
 gamma (metadata, SCALAR) 
@@ -61,11 +61,11 @@ OM (metadata, MATRIX)
 []
 
 %%% ¡prop! 
-OM_TYPE (metadata, SCALAR) 
-%%%% ¡check_prop!
-check =  value >= 1 && value <= 4;
+OM_TYPE (metadata, OPTION) 
+%%%% ¡settings!
+{'modularity' 'potts' 'negative_sym' 'negative_asym'}
 %%%% ¡default!
-1
+'modularity'
 
 %%% ¡prop! 
 quality_function (metadata, SCALAR) 
@@ -82,9 +82,9 @@ A = A{1};
 N = g.nodenumber();
 
 gamma = m.get('gamma');
-community_structure_algorithm = CommunityStructure.RULES(m.get('rule'));
+community_structure_algorithm = m.get('rule');
 
-switch lower(community_structure_algorithm{1})
+switch lower(community_structure_algorithm)
     case {'newman'}  % Newman algorithm
         if g.is_directed(g)  % directed graphs
             n_perm = randperm(N);  % randomly permute order of nodes
