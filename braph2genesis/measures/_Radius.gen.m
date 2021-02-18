@@ -21,11 +21,11 @@ MultiplexGraphWU
 
 %% ¡props!
 %%% ¡prop! 
-rule (metadata, SCALAR) 
-%%%% ¡check_prop!
-check = value >= 1 & value <= 2;
+rule (metadata, OPTION) 
+%%%% ¡settings!
+{'all', 'subgraphs'}
 %%%% ¡default!
-1
+'all'
 
 %% ¡props_update!
 %%% ¡prop!
@@ -61,25 +61,25 @@ known_radius_subgraphs = {0};
 known_radius_default = {Inf};
 
 g = GraphBU('B', B);
-m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_outside_g = Radius('G', g, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for GraphBU.')
 
 g = GraphBU('B', B);
-m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_inside_g = g.getMeasure('Radius', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for GraphBU.')
 
 g = GraphBU('B', B);
-m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_outside_g = Radius('G', g, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for GraphBU.')
 
 g = GraphBU('B', B);
-m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_inside_g = g.getMeasure('Radius', 'rule', 'all');
 assert(isequal(m_inside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for GraphBU.')
@@ -100,25 +100,25 @@ known_radius_subgraphs = {0};
 known_radius_default = {Inf};
 
 g = GraphWU('B', B);
-m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_outside_g = Radius('G', g, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for GraphWU.')
 
 g = GraphWU('B', B);
-m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_inside_g = g.getMeasure('Radius', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for GraphWU.')
 
 g = GraphWU('B', B);
-m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_outside_g = Radius('G', g, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for GraphWU.')
 
 g = GraphWU('B', B);
-m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_inside_g = g.getMeasure('Radius', 'rule', 'all');
 assert(isequal(m_inside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for GraphWU.')
@@ -155,25 +155,25 @@ known_radius_default = {
                        };
 
 g = MultiplexGraphBU('B', B);
-m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_outside_g = Radius('G', g, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for MultiplexGraphBU.')
 
 g = MultiplexGraphBU('B', B);
-m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_inside_g = g.getMeasure('Radius', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for MultiplexGraphBU.')
 
 g = MultiplexGraphBU('B', B);
-m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_outside_g = Radius('G', g, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for MultiplexGraphBU.')
 
 g = MultiplexGraphBU('B', B);
-m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_inside_g = g.getMeasure('Radius', 'rule', 'all');
 assert(isequal(m_inside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for MultiplexGraphBU.')
@@ -210,25 +210,25 @@ known_radius_default = {
                        };
                            
 g = MultiplexGraphWU('B', B);
-m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_outside_g = Radius('G', g, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for MultiplexGraphWU.')
 
 g = MultiplexGraphWU('B', B);
-m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'subgraphs')));
+m_inside_g = g.getMeasure('Radius', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for MultiplexGraphWU.')
 
 g = MultiplexGraphWU('B', B);
-m_outside_g = Radius('G', g, 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_outside_g = Radius('G', g, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for MultiplexGraphWU.')
 
 g = MultiplexGraphWU('B', B);
-m_inside_g = g.getMeasure('Radius', 'rule', find(contains(Eccentricity.RULES, 'all')));
+m_inside_g = g.getMeasure('Radius', 'rule', 'all');
 assert(isequal(m_inside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
     'Radius is not being calculated correctly for MultiplexGraphWU.')
