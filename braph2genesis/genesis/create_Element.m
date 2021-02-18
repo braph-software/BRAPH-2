@@ -1105,7 +1105,9 @@ generate_header_graph() % only for graphs
                         gs(3, {
                             ['%IS_ENSEMBLE returns true if ' descriptive_name ' is an ensemble.']
                             '%'
-                            ['% BOOL = ' descriptive_name '.IS_ENSEMBLE() returns true if it is an ensemble graph.']
+                            ['% TRUE = ' descriptive_name '.IS_ENSEMBLE() returns true if it is an ensemble graph.']
+                            '%'
+                            ['% FALSE = ' descriptive_name '.IS_ENSEMBLE() returns false if it is not an ensemble graph.']
                             '%'
                             '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
                             ''
@@ -1134,6 +1136,9 @@ generate_header_graph() % only for graphs
                             ['% CONNECTIVITY = ' descriptive_name '.GETCONNECTIVITYTYPE() returns the type of graph connectivity.']
                             '% Graphs can have binary or weighted connectivity.' 
                             '%'
+                            ['% CONNECTIVITY = ' descriptive_name '.GETCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix with the ']
+                            '%  connectivity type of each layer in a multiple layer graph. Graphs can have binary or weighted connectivity.'
+                            '%'
                             '% See also is_ensemble, getGraphType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
                             ''
                             })
@@ -1147,7 +1152,10 @@ generate_header_graph() % only for graphs
                             ['%GETDIRECTIONALITYTYPE returns ' descriptive_name ' type of graph directionality.']
                             '%'
                             ['% DIRECTIONALITY = ' descriptive_name '.GETDIRECTIONALITYTYPE() returns the type of graph directionality.']
-                            '% Graphs can have directed or undirected directionality.'
+                            '% the directionality type of each layer. Graphs can have directed or undirected directionality.'
+                            '%'
+                            ['% DIRECTIONALITY = ' descriptive_name '.GETDIRECTIONALITYTYPE(LAYERNUMBER) returns a matrix with ']
+                            '% the directionality type of each layer. Graphs can have directed or undirected directionality.'
                             '%'
                             '% See also is_ensemble, getGraphType, getConnectivityType, getSelfConnectivityType, getNegativityType.'
                             ''
@@ -1162,7 +1170,10 @@ generate_header_graph() % only for graphs
                             ['%GETSELFCONNECTIVITYTYPE returns ' descriptive_name ' type of graph self connectivity.']
                             '%'
                             ['% SELFCONNECTIVITY = ' descriptive_name '.GETSELFCONNECTIVITYTYPE() returns the type of graph self connnectivity.']
-                            '% Graphs can be self-connected or non self-connected.'
+                            '%  Graphs can be self-connected or non self-connected.'
+                            '%'
+                            ['% SELFCONNECTIVITY = ' descriptive_name '.GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix ']
+                            '% with the self-connectivity  type of each layer. Graphs can be self-connected or non self-connected.'
                             '%'
                             '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
                             ''
@@ -1178,6 +1189,9 @@ generate_header_graph() % only for graphs
                                 '%'
                                 ['% NEGATIVITY = ' descriptive_name '.GETNEGATIVITYTYPE() returns the type of graph negativity.']
                                 '% Graphs can be negative or non negative.'
+                                '%'
+                                ['% NEGATIVITY = ' descriptive_name '.GETNEGATIVITYTYPE(LAYERNUMBER) returns a matrix ']
+                                '% with the negativity  type of each layer in. Graphs can be negative or non negative.'
                                 '%'
                                 '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType.'
                                 ''
