@@ -78,7 +78,7 @@ M (result, cell) is the triangles.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell array with adjacency matrix
-A = A{1};
+A = cell2mat(A);
 N = g.nodenumber();
 
 gamma = m.get('gamma');
