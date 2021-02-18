@@ -1,5 +1,5 @@
 %% ¡header!
-GlobalEfficency < Measure (m, global efficency) is the graph global efficency.
+GlobalEfficiency < Measure (m, global efficiency) is the graph global efficiency.
 
 %%% ¡description!
 The global efficiency is the average inverse shortest path length within each layer.
@@ -29,7 +29,7 @@ g = m.get('G');  % graph from measure class
 N = g.nodenumber();
 L = g.layernumber();
 
-distance = cell2mat(Distance('G', g).get('M'));
+distance = Distance('G', g).get('M');
 
 global_efficiency = cell(L, 1);
 for li = 1:1:L
@@ -56,7 +56,7 @@ B = [
 
 known_global_efficiency = {[1/4 1/4 1/4 1/4 0]'};
 
-g = GraphBU('B', A);
+g = GraphBU('B', B);
 global_efficiency = GlobalEfficiency('G', g).get('M');
 
 assert(isequal(global_efficiency, known_global_efficiency), ...
@@ -67,7 +67,7 @@ assert(isequal(global_efficiency, known_global_efficiency), ...
 %%%% ¡name!
 MultiplexGraphWU
 %%%% ¡code!
-A11 = [
+B11 = [
       0   .1  0   0   0
       .2  0   0   0   0
       0   0   0   .2  0
@@ -75,14 +75,14 @@ A11 = [
       0   0   0   0   0
       ];
 
-A22 = [
+B22 = [
       0   .1  0   0   0
       .2  0   0   0   0
       0   0   0   .2  0
       0   0   .1  0   0
       0   0   0   0   0
       ];
-A = {A11  A22};
+B = {B11  B22};
 
 known_global_efficiency = {
                         [1/4 1/4 1/4 1/4 0]'
@@ -90,7 +90,7 @@ known_global_efficiency = {
                         };
 
 
-g = MultiplexGraphBU('B', A);
+g = MultiplexGraphBU('B', B);
 global_efficiency = GlobalEfficiency('G', g).get('M');
 
 assert(isequal(global_efficiency, known_global_efficiency), ...
