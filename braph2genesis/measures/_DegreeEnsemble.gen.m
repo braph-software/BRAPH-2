@@ -179,7 +179,7 @@ degree_ensemble = DegreeEnsemble('G', ge);
 
 assert(isequal(degree_ensemble.get('M'), known_degree), ...
     [BRAPH2.STR ':DegreeEnsemble:' BRAPH2.BUG_ERR], ...
-    'DegreeEnsemble is not being calculated correctly for MultiplexGraphBU.')
+    'DegreeEnsemble is not being calculated correctly for MultiplexGraphBUEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -216,4 +216,4 @@ degree_ensemble = DegreeEnsemble('G', ge);
 
 assert(isequal(degree_ensemble.get('M'), known_degree), ...
     [BRAPH2.STR ':DegreeEnsemble:' BRAPH2.BUG_ERR], ...
-    'DegreeEnsemble is not being calculated correctly for MultiplexGraphWU.')
+    'DegreeEnsemble is not being calculated correctly for MultiplexGraphWUEnsemble.')
