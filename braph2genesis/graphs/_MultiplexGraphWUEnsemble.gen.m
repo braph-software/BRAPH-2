@@ -1,11 +1,10 @@
 %% ¡header!
-MultiplexGraphWUEnsemble < MultiplexGraphWU (ge, ensemble of multiplex weighted undirected graph) is a multiplex binary directed graph.
+MultiplexGraphWUEnsemble < MultiplexGraphWU (ge, ensemble of multiplex weighted undirected graph) is a multiplex weighted undirected graph.
 
 %%% ¡description!
 In an ensemble of multiplex weighted undirected (WU) graph, 
-the edges can be either 0 (absence of connection) 
-or 1 (existence of connection), 
-and they are directed.
+the edges are associated with a real number between 0 and 1 
+indicating the strength of the connection, and are undirected.
 
 %%% ¡ensemble!
 true
@@ -24,19 +23,13 @@ A (result, cell) is the cell containing the multiplex weighted adjacency matrice
 %%%% ¡calculate!
 A_list = cellfun(@(x) cell2mat(x.get('A')), ge.get('G_DICT').getItems, 'UniformOutput', false);
 A = mean(cat(3, A_list{:}), 3);
-value = {A};
-
-%% ¡methods!
-function n = layernumber(g)
-    %LAYERNUMBER returns the number of layers in the graph.
-    %
-    % N = LAYERNUMBER(G) returns the number of layers in graph G.
-    %
-    % See also nodenumber.
-
-    n = length(g.get('B'));
+if isempty(A)
+    A = {A};
+else
+    L = length(ge.get('G_DICT').getItems{1}.get('B'));
+    A = mat2cell(A, size(A)/L, size(A)/L);
 end
-
+value = A;
 
 %% ¡tests!
 
