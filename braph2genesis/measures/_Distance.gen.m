@@ -15,12 +15,16 @@ scope = Measure.UNILAYER;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-GraphWD
-GraphWU
 GraphBD
 GraphBU
+GraphWD
+GraphWU
 MultigraphBUD
 MultigraphBUT
+MultiplexGraphBD
+MultiplexGraphBU
+MultiplexGraphWD
+MultiplexGraphWU
 
 %% ¡props_update!
 
@@ -330,3 +334,174 @@ m_inside_g = g.getMeasure('Distance');
 assert(isequal(m_inside_g.get('M'), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
     'Distance is not being calculated correctly for MultigraphBUD.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphBU
+B11 = [
+    0	1   1  0    0;
+    1   0   0  0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
+B22 = [
+    0   1   1   1   0; 
+    1   0   0   0   0;
+    1   1   0   1   0;
+    1   1   0   0   0;
+    0   0   0   0   0;
+    ];
+B = {B11 B22};
+
+known_distance = {
+    [
+    0   1   1   1   Inf;
+    1   0   1   1   Inf;
+    1   1   0   1   Inf;
+    1   1   1   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   1   1   1   Inf;
+    1   0   1   1   Inf;
+    1   1   0   1   Inf;
+    1   1   1   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
+
+g = MultiplexGraphBU('B', B);
+distance = Distance('G', g);
+
+assert(isequal(distance.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultiplexGraphBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphBD
+B11 = [
+    0	1   1   1   0;
+    1   0   0   0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
+B22 = [
+    0	1   1   1   0;
+    1   0   0   0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
+B = {B11 B22};
+known_distance = {
+    [
+    0   1   1   1   Inf;
+    1   0   2   2   Inf;
+    1   1   0   1   Inf;
+    1   1   2   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   1   1   1   Inf;
+    1   0   2   2   Inf;
+    1   1   0   1   Inf;
+    1   1   2   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
+
+g = MultiplexGraphBD('B', B);
+distance = Distance('G', g);
+
+assert(isequal(distance.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultiplexGraphBD.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphWU
+B11 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B22 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B = {B11 B22};
+
+known_distance = {
+    [
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+	]
+    [
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+	]
+    };
+
+g = MultiplexGraphWU('B', B);
+distance = Distance('G', g);
+
+assert(isequal(distance.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultiplexGraphWU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexGraphWD
+B11 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B22 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B = {B11 B22};
+
+known_distance = {
+    [
+    0   5   5   4   Inf;
+    8   0   13  12  Inf;
+    5   2   0   4   Inf;
+    8   1   13  0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   5   5   4   Inf;
+    8   0   13  12  Inf;
+    5   2   0   4   Inf;
+    8   1   13  0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
+
+g = MultiplexGraphWD('B', B);
+distance = Distance('G', g);
+
+assert(isequal(distance.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultiplexGraphWD.')
