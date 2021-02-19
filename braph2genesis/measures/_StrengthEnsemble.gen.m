@@ -18,10 +18,10 @@ ge = m.get('G'); % graph ensemble from measure class
 
 strength_ensemble = cell(ge.layernumber(), 1);
 
-degree_list = cellfun(@(x) x.getMeasure('Strength').get('M'), ge.get('G_DICT').getItems, 'UniformOutput', false);
+strength_list = cellfun(@(x) x.getMeasure('Strength').get('M'), ge.get('G_DICT').getItems, 'UniformOutput', false);
 for li = 1:1:ge.layernumber()
-    degree_li_list = cellfun(@(x) x{li}, degree_list, 'UniformOutput', false);
-    strength_ensemble{li} = mean(cat(3, degree_li_list{:}), 3);
+    strength_li_list = cellfun(@(x) x{li}, strength_list, 'UniformOutput', false);
+    strength_ensemble{li} = mean(cat(3, strength_li_list{:}), 3);
 end
 
 value = strength_ensemble;
@@ -81,7 +81,6 @@ known_strength = {
                  [1.2 .2  1]'
                  [1   1.4 .4]'
                  };
-known_strength = cellfun(@(x) round(x, 3), known_strength, 'UniformOutput', false);
              
 ge = MultiplexGraphWUEnsemble();
 dict = ge.get('G_DICT');
