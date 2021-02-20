@@ -11,6 +11,8 @@ classdef GUI
         
         border % standard border
         
+        ui_panel_prop % property panel
+        ui_slider_prop % propety slider
         ui_panel_props % property panel list
     end
     properties (Constant)
@@ -105,43 +107,48 @@ classdef GUI
                 );
             
             % properties
+            prop_w = .9;
+            for prop = 1:1:el.getPropNumber()
+                prop_h(prop) = .3; %#ok<AGROW>
+            end
+            prop_x0 = gui.border;
+            prop_y0 = sum(prop_h + gui.border) - cumsum(prop_h + gui.border) + gui.border;
+            
+            ui_panel_prop_w = .4;
+            ui_panel_prop_h = sum(prop_h + gui.border) + gui.border;
+            
+            prop_h = prop_h / ui_panel_prop_h;
+            prop_y0 = prop_y0 / ui_panel_prop_h;
+            
             ui_panel_prop = uipanel( ...
                 'Parent', f, ...
                 'Units', 'normalized', ...
-                'Position', [gui.border gui.border .4-2*gui.border 1-2*gui.border], ...
+                'Position', [0 0 ui_panel_prop_w ui_panel_prop_h], ...
                 'BackgroundColor', GUI.FRGCOLOR);
             
             for prop = 1:1:el.getPropNumber()
                 gui.ui_panel_props{prop} = uipanel( ...
                     'Parent', ui_panel_prop, ...
                     'Units', 'normalized', ...
-                    'Position', [gui.border gui.border .9 .3], ...
+                    'Position', [prop_x0 prop_y0(prop) prop_w prop_h(prop)], ...
                     'BackgroundColor', GUI.FFGCOLOR ...
                     );
-            end
-            
-            ui_panel_props_h = cellfun(@(y) y(4), cellfun(@(x) get(x, 'Position'), gui.ui_panel_props, 'UniformOutput', false));
-            ui_panel_props_y0 = gui.border + sum(ui_panel_props_h + gui.border) - cumsum(ui_panel_props_h + gui.border);
-            for prop = el.getPropNumber():-1:1
-                set(gui.ui_panel_props{prop}, 'Position', [gui.border ui_panel_props_y0(prop) .9 ui_panel_props_h(prop)])
             end
             
             ui_slider_prop = uicontrol( ...
                 'Style', 'slider', ...
                 'Parent', f, ...
                 'Units', 'normalized', ...
-                'Position', [2*gui.border 2*gui.border .4-4*gui.border 1-4*gui.border], ...
-                'Min', -.5, ...
+                'Position', [0 0 ui_panel_prop_w 1], ...
+                'Min', 1 - ui_panel_prop_h, ...
                 'Max', 0, ...
                 'Value', 0, ...
                 'Callback', {@cb_slider_prop});
             
             function cb_slider_prop(~, ~)
-                offset = get(ui_slider_prop, 'Value')
-                
-    position = get(ui_panel_prop, 'Position');  %# panel current position
-    set(ui_panel_prop, 'Position',[position(1) -.5-offset position(3) position(4)])
-                
+                offset = get(ui_slider_prop, 'Value');
+                position = get(ui_panel_prop, 'Position');
+                set(ui_panel_prop, 'Position', [position(1) 1-ui_panel_prop_h-offset position(3) position(4)]);
             end
             
             % details
