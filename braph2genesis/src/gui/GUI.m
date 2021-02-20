@@ -112,12 +112,18 @@ classdef GUI
                 'BackgroundColor', GUI.FRGCOLOR);
             
             for prop = 1:1:el.getPropNumber()
-                gui.ui_panel_props(prop) = uipanel( ...
+                gui.ui_panel_props{prop} = uipanel( ...
                     'Parent', ui_panel_prop, ...
                     'Units', 'normalized', ...
-                    'Position', [0 0 .5 .5], ...
+                    'Position', [gui.border gui.border .9 .3], ...
                     'BackgroundColor', GUI.FFGCOLOR ...
                     );
+            end
+            
+            ui_panel_props_h = cellfun(@(y) y(4), cellfun(@(x) get(x, 'Position'), gui.ui_panel_props, 'UniformOutput', false));
+            ui_panel_props_y0 = gui.border + sum(ui_panel_props_h + gui.border) - cumsum(ui_panel_props_h + gui.border);
+            for prop = el.getPropNumber():-1:1
+                set(gui.ui_panel_props{prop}, 'Position', [gui.border ui_panel_props_y0(prop) .9 ui_panel_props_h(prop)])
             end
             
             ui_slider_prop = uicontrol( ...
@@ -129,8 +135,13 @@ classdef GUI
                 'Max', 0, ...
                 'Value', 0, ...
                 'Callback', {@cb_slider_prop});
+            
             function cb_slider_prop(~, ~)
                 offset = get(ui_slider_prop, 'Value')
+                
+    position = get(ui_panel_prop, 'Position');  %# panel current position
+    set(ui_panel_prop, 'Position',[position(1) -.5-offset position(3) position(4)])
+                
             end
             
             % details
