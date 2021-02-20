@@ -13,11 +13,13 @@ classdef GUI
         
         ui_panel_prop % property panel
         ui_slider_prop % propety slider
+        
         ui_panel_props % property panel list
+        ui_text_props_tag
     end
     properties (Constant)
         BKGCOLOR = [.98 .98 .98]
-        FRGCOLOR = [.90 .90 .90]
+        FRGCOLOR = [.80 .80 .80]
         FFGCOLOR = [.95 .95 .95]
         
         MSG_YES = 'Yes'
@@ -88,9 +90,9 @@ classdef GUI
             end
             
             gui.x0 = get_from_varargin(.02, 'x0', varargin);
-            gui.y0 = get_from_varargin(.10, 'y0', varargin);
-            gui.width = get_from_varargin(.90, 'width', varargin);
-            gui.height = get_from_varargin(.80, 'height', varargin);
+            gui.y0 = get_from_varargin(.30, 'y0', varargin);
+            gui.width = get_from_varargin(.70, 'width', varargin);
+            gui.height = get_from_varargin(.60, 'height', varargin);
 
             gui.border = get_from_varargin(.01, 'border', varargin);
             
@@ -107,32 +109,44 @@ classdef GUI
                 );
             
             % properties
-            prop_w = .9;
+            props_w = .9;
             for prop = 1:1:el.getPropNumber()
-                prop_h(prop) = .3; %#ok<AGROW>
+                props_h(prop) = .3; %#ok<AGROW>
             end
-            prop_x0 = gui.border;
-            prop_y0 = sum(prop_h + gui.border) - cumsum(prop_h + gui.border) + gui.border;
+            props_x0 = gui.border;
+            props_y0 = sum(props_h + gui.border) - cumsum(props_h + gui.border) + gui.border;
             
             ui_panel_prop_w = .4;
-            ui_panel_prop_h = sum(prop_h + gui.border) + gui.border;
+            ui_panel_prop_h = sum(props_h + gui.border) + gui.border;
             
-            prop_h = prop_h / ui_panel_prop_h;
-            prop_y0 = prop_y0 / ui_panel_prop_h;
+            props_h = props_h / ui_panel_prop_h;
+            props_y0 = props_y0 / ui_panel_prop_h;
             
             ui_panel_prop = uipanel( ...
                 'Parent', f, ...
                 'Units', 'normalized', ...
-                'Position', [0 0 ui_panel_prop_w ui_panel_prop_h], ...
+                'Position', [0 1-ui_panel_prop_h ui_panel_prop_w ui_panel_prop_h], ...
                 'BackgroundColor', GUI.FRGCOLOR);
             
             for prop = 1:1:el.getPropNumber()
                 gui.ui_panel_props{prop} = uipanel( ...
                     'Parent', ui_panel_prop, ...
                     'Units', 'normalized', ...
-                    'Position', [prop_x0 prop_y0(prop) prop_w prop_h(prop)], ...
-                    'BackgroundColor', GUI.FFGCOLOR ...
+                    'Position', [props_x0 props_y0(prop) props_w props_h(prop)], ...
+                    'BackgroundColor', GUI.FFGCOLOR, ...
+                    'BorderType', 'none' ...
                     );
+                
+                gui.ui_text_props_tag{prop} = uicontrol( ...
+                    'Style', 'text', ...
+                    'Parent', gui.ui_panel_props{prop}, ...
+                    'Units', 'normalized', ...
+                    'String', upper(el.getPropTag(prop)), ...
+                    'HorizontalAlignment', 'left', ...
+                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
+                    );
+                pos = get(gui.ui_text_props_tag{prop}, 'Position');
+                set(gui.ui_text_props_tag{prop}, 'Position', [0 1-pos(4) 1 pos(4)])
             end
             
             ui_slider_prop = uicontrol( ...
