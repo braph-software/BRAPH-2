@@ -8,7 +8,7 @@ classdef GUI
         p % panel
         s % slider
         
-        prop_panel % prop panel cell array
+        pr % property cell array
         prop_text_tag
     end
     properties (Constant)
@@ -67,16 +67,16 @@ classdef GUI
                 dw = 1; % border along x
                 dh = .5; % border along y
                 
-                prop_panel_w = w(gui.p) - 2 * dw - w(gui.s);
-                prop_panel_h = cellfun(@(x) h(x), gui.prop_panel);
-                prop_panel_x0 = dw;
-                prop_panel_y0 = sum(prop_panel_h + dh) - cumsum(prop_panel_h + dh) + dh;
+                pr_panel_w = w(gui.p) - 2 * dw - w(gui.s);
+                pr_panel_h = cellfun(@(x) h(x), cellfun(@(y) y.panel, gui.pr, 'UniformOutput', false));
+                pr_panel_x0 = dw;
+                pr_panel_y0 = sum(pr_panel_h + dh) - cumsum(pr_panel_h + dh) + dh;
                 for prop = 1:1:el.getPropNumber() %#ok<FXUP>
-                    set(gui.prop_panel{prop}, 'Position', [prop_panel_x0 prop_panel_y0(prop) prop_panel_w prop_panel_h(prop)])
-                    set(gui.prop_text_tag{prop}, 'Position', [0 prop_panel_h(prop)-h(gui.prop_text_tag{prop}) prop_panel_w h(gui.prop_text_tag{prop})])
+                    set(gui.pr{prop}.panel, 'Position', [pr_panel_x0 pr_panel_y0(prop) pr_panel_w pr_panel_h(prop)])
+                    set(gui.pr{prop}.text_tag, 'Position', [0 pr_panel_h(prop)-h(gui.pr{prop}.text_tag) pr_panel_w h(gui.pr{prop}.text_tag)])
                 end
 
-                h_p = sum(prop_panel_h + dh) + dh;
+                h_p = sum(pr_panel_h + dh) + dh;
                 set(gui.p, 'Position', [0 h(gui.f) - h_p w(gui.f) h_p])
                 
                 if h(gui.f) >= h(gui.p)
@@ -98,17 +98,17 @@ classdef GUI
                 );
 
             for prop = 1:1:el.getPropNumber() %#ok<FXUP>
-                gui.prop_panel{prop} = uipanel( ...
+                gui.pr{prop}.panel = uipanel( ...
                     'Parent', gui.p, ...
                     'Units', 'character', ...
-                    'Position', [0 0 eps 2], ... % defines prop panel height
+                    'Position', [0 0 eps 1], ... % defines prop panel height
                     'BackgroundColor', GUI.FRGCOLOR, ...
                     'BorderType', 'none' ...
                     );
                 
-                gui.prop_text_tag{prop} =  uicontrol( ...
+                gui.pr{prop}.text_tag =  uicontrol( ...
                     'Style', 'text', ...
-                    'Parent', gui.prop_panel{prop}, ...
+                    'Parent', gui.pr{prop}.panel, ...
                     'Units', 'character', ...
                     'Position', [0 0 eps 1], ... % defines prop text tag height
                     'String', upper(el.getPropTag(prop)), ...
@@ -116,6 +116,21 @@ classdef GUI
                     'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                     'BackgroundColor', GUI.FRGCOLOR ...
                     );
+                
+                switch el.getPropFormat(prop)
+                    case Format.EMPTY
+                        
+                    case Format.STRING
+                        set(gui.pr{prop}.panel, 'Position', [0 0 eps 2]) % re-defines prop panel height
+                        
+                        gui.pr{prop}.edit_value = uicontrol( ...
+                            'Style', 'edit', ...
+                            'Parent', gui.pr{prop}.panel, ...
+                            'Units', 'character', ...
+                            'Position', [0 0 20 1], ... % defines prop text tag height
+                            'String', el.get(prop) ...
+                            );
+                end
             end
             
             gui.s = uicontrol( ...
