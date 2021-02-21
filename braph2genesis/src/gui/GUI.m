@@ -12,8 +12,8 @@ classdef GUI
         prop_text_tag
     end
     properties (Constant)
-        BKGCOLOR = [.80 .80 .80]
-        FRGCOLOR = [.98 .98 .98]
+        BKGCOLOR = [.98 .95 .95]
+        FRGCOLOR = [.90 .90 .90]
     end
     methods % constructor
         function gui = GUI(el, varargin)
@@ -119,18 +119,90 @@ classdef GUI
                 
                 switch el.getPropFormat(prop)
                     case Format.EMPTY
-                        
+                        draw_empty(prop)
                     case Format.STRING
-                        set(gui.pr{prop}.panel, 'Position', [0 0 eps 2]) % re-defines prop panel height
-                        
-                        gui.pr{prop}.edit_value = uicontrol( ...
-                            'Style', 'edit', ...
-                            'Parent', gui.pr{prop}.panel, ...
-                            'Units', 'character', ...
-                            'Position', [0 0 20 1], ... % defines prop text tag height
-                            'String', el.get(prop) ...
-                            );
+                        draw_string(prop)
+                    case Format.LOGICAL
+                        draw_logical(prop)
+                    case Format.OPTION
+                        draw_option(prop)
+                    case Format.CLASS
+                        draw_class(prop)
+                    case Format.CLASSLIST
+                        draw_classlist(prop)
+                    case Format.ITEM
+                        draw_item(prop)
+                    case Format.ITEMLIST
+                        draw_itemlist(prop)
+                    case Format.IDICT
+                        draw_idict(prop)
+                    case Format.SCALAR
+                        draw_scalar(prop)
+                    case Format.RVECTOR
+                        draw_rvector(prop)
+                    case Format.CVECTOR
+                        draw_cvector(prop)
+                    case Format.MATRIX
+                        draw_matrix(prop)
+                    case Format.SMATRIX
+                        draw_smatrix(prop)
+                    case Format.CELL
+                        draw_cell(prop)
                 end
+            end
+            function draw_empty(prop) %#ok<INUSD>
+            end
+            function draw_string(prop)
+                set(gui.pr{prop}.panel, 'Position', [0 0 eps 2.5]) % re-defines prop panel height
+
+                gui.pr{prop}.edit_value = uicontrol( ...
+                    'Style', 'edit', ...
+                    'Parent', gui.pr{prop}.panel, ...
+                    'Units', 'normalized', ...
+                    'Position', [.01 .10 .79 .40], ...
+                    'String', el.get(prop), ...
+                    'HorizontalAlignment', 'left', ...
+                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                    'BackgroundColor', 'w' ...
+                    );
+            end
+            function draw_logical(prop) %#ok<INUSD>
+            end
+            function draw_option(prop) %#ok<INUSD>
+            end
+            function draw_class(prop) %#ok<INUSD>
+            end
+            function draw_classlist(prop) %#ok<INUSD>
+            end
+            function draw_item(prop) %#ok<INUSD>
+            end
+            function draw_itemlist(prop) %#ok<INUSD>
+            end
+            function draw_idict(prop)%#ok<INUSD>
+            end
+            function draw_scalar(prop)
+                set(gui.pr{prop}.panel, 'Position', [0 0 eps 2.5]) % re-defines prop panel height
+
+                gui.pr{prop}.edit_value = uicontrol( ...
+                    'Style', 'edit', ...
+                    'Parent', gui.pr{prop}.panel, ...
+                    'Units', 'normalized', ...
+                    'Position', [.01 .10 .29 .40], ...
+                    'String', num2str(el.get(prop)), ...
+                    'HorizontalAlignment', 'center', ...
+                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                    'BackgroundColor', 'w' ...
+                    );
+            end                
+            function draw_rvector(prop) %#ok<INUSD>
+            end
+            function draw_cvector(prop) %#ok<INUSD>
+            end
+            function draw_matrix(prop) %#ok<INUSD>
+            end
+            function draw_smatrix(prop) %#ok<INUSD>
+            end
+            function draw_cell(prop) %#ok<INUSD>
             end
             
             gui.s = uicontrol( ...
