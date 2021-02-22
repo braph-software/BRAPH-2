@@ -39,29 +39,29 @@ OM_TYPE_OPTIONS = { ...
 
 %% ¡props!
 %%% ¡prop! 
-rule (metadata, OPTION) 
+rule (parameter, OPTION) 
 %%%% ¡settings!
 { 'louvain' 'newman'}
 %%%% ¡default!
 'louvain'
 
 %%% ¡prop! 
-gamma (metadata, SCALAR) 
+gamma (data, SCALAR) 
 %%%% ¡default!
 1
 
 %%% ¡prop! 
-M0 (metadata, rvector) 
+M0 (data, rvector) 
 %%%% ¡default!
 []
 
 %%% ¡prop! 
-OM (metadata, MATRIX) 
+OM (data, MATRIX) 
 %%%% ¡default!
 []
 
 %%% ¡prop! 
-OM_TYPE (metadata, OPTION) 
+OM_TYPE (data, OPTION) 
 %%%% ¡settings!
 {'modularity' 'potts' 'negative_sym' 'negative_asym'}
 %%%% ¡default!
