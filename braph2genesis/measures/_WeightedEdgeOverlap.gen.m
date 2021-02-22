@@ -24,22 +24,21 @@ MultiplexGraphWU
 M (result, cell) is the weighted edge overlap.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-N = g.nodenumber();
 L = g.layernumber();
 
-if isempty(N)
-    weighted_edge_overlap = zeros(1);
+if L == 0
+    value = {};
 else
+    A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+    N = g.nodenumber();
     weighted_edge_overlap = zeros(N(1));
-end
 
-for li = 1:1:L
-    Aii = A{li, li};
-    weighted_edge_overlap = weighted_edge_overlap + Aii;
+    for li = 1:1:L
+        Aii = A{li, li};
+        weighted_edge_overlap = weighted_edge_overlap + Aii;
+    end
+    value = {weighted_edge_overlap / L};
 end
-
-value = {weighted_edge_overlap / L};
 
 %% ¡tests!
 

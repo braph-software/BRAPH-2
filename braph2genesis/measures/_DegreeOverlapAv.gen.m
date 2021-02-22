@@ -24,7 +24,6 @@ MultiplexGraphWU
 M (result, cell) is the average degree overlap.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
 degree_overlap = calculateValue@DegreeOverlap(m, prop);	
 degree_overlap_av = {mean(cell2mat(degree_overlap))};

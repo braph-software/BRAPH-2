@@ -26,23 +26,22 @@ MultiplexGraphWU
 M (result, cell) is the edge overlap.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-N = g.nodenumber();
 L = g.layernumber();
 
-if isempty(N)
-    edge_overlap = zeros(1);
+if L == 0
+    value = {};
 else
+    A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+    N = g.nodenumber();
     edge_overlap = zeros(N(1));
-end
 
-for li = 1:1:L
-    Aii = A{li, li};
-    Aii = binarize(Aii);  % binarizes the adjacency matrix
-    edge_overlap = edge_overlap + Aii;
+    for li = 1:1:L
+        Aii = A{li, li};
+        Aii = binarize(Aii);  % binarizes the adjacency matrix
+        edge_overlap = edge_overlap + Aii;
+    end
+    value = {edge_overlap / L};
 end
-
-value = {edge_overlap / L};
 
 %% ¡tests!
 
