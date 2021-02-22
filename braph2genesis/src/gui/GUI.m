@@ -116,18 +116,26 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
         function init_empty(prop) %#ok<INUSD>
         end
         function init_string(prop)
-            set(pr{prop}.panel, 'Position', [0 0 eps 2.5]) % re-defines prop panel height
+            set(pr{prop}.panel, 'Position', [0 0 eps 3]) % re-defines prop panel height
 
             pr{prop}.edit_value = uicontrol( ...
                 'Style', 'edit', ...
                 'Parent', pr{prop}.panel, ...
                 'Units', 'normalized', ...
-                'Position', [.01 .10 .79 .40], ...
+                'Position', [.01 .10 .79 .50], ...
                 'HorizontalAlignment', 'left', ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'BackgroundColor', 'w', ...
-                'UserData', prop ...
+                'Callback', {@cb_string, prop} ...
                 );
+            
+            switch el.getPropCategory(prop)
+                case Category.METADATA
+                    
+                case Category.PARAMETER
+                case Category.DATA
+                case Category.RESULT
+            end
         end
         function init_logical(prop) %#ok<INUSD>
         end
@@ -154,7 +162,7 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
                 'HorizontalAlignment', 'center', ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'BackgroundColor', 'w', ...
-                'UserData', prop ...
+                'Callback', {@cb_scalar, prop} ...
                 );
         end                
         function init_rvector(prop) %#ok<INUSD>
@@ -206,6 +214,49 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
         end
     end
 
+%% Callbacks
+    function cb_empty(~, ~, prop)  %#ok<INUSD,DEFNU>
+    end
+    function cb_string(src, ~, prop)
+        switch el.getPropCategory(prop)
+            case Category.METADATA
+                el.set(prop, get(src, 'String'))
+
+            case Category.PARAMETER
+            case Category.DATA
+            case Category.RESULT
+        end
+        
+        update()
+        resize()
+    end
+    function cb_logical(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_option(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_class(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_classlist(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_item(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_itemlist(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_idict(~, ~, prop)%#ok<INUSD,DEFNU>
+    end
+    function cb_scalar(~, ~, prop) %#ok<INUSD>
+    end
+    function cb_rvector(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_cvector(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_matrix(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_smatrix(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+    function cb_cell(~, ~, prop) %#ok<INUSD,DEFNU>
+    end
+
 %% Update GUI
 update()
     function update()
@@ -246,7 +297,32 @@ update()
         function update_empty(prop) %#ok<INUSD>
         end
         function update_string(prop)
-            set(pr{prop}.edit_value, 'String', el.get(prop))
+            
+            if el.isLocked(prop)
+                set(pr{prop}.edit_value, 'Enable', 'off')
+            end
+            
+            switch el.getPropCategory(prop)
+                case Category.METADATA
+                    set(pr{prop}.edit_value, 'String', el.get(prop))
+                    
+                case {Category.PARAMETER, Category.DATA}
+                    set(pr{prop}.edit_value, 'String', el.get(prop))
+                    
+                    value = el.getr(prop);
+                    if isa(value, 'Callback')
+                        % button callback
+                    end
+                    
+                case Category.RESULT
+                    value = el.getr(prop);
+                    
+                    if isa(value, 'NoValue')
+                        % button calcualte
+                    else
+                        set(pr{prop}.edit_value, 'String', el.get(prop))
+                    end
+            end
         end
         function update_logical(prop) %#ok<INUSD>
         end
@@ -262,8 +338,8 @@ update()
         end
         function update_idict(prop)%#ok<INUSD>
         end
-        function update_scalar(prop)
-            set(pr{prop}.edit_value, 'String', num2str(el.get(prop)))
+        function update_scalar(prop) %#ok<INUSD>
+            % set(pr{prop}.edit_value, 'String', num2str(el.get(prop)))
         end                
         function update_rvector(prop) %#ok<INUSD>
         end
