@@ -34,7 +34,7 @@ rule (metadata, OPTION)
 M (result, cell) is the path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-A = g.get('A');  % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 N = g.nodenumber();
 L = g.layernumber();
 
