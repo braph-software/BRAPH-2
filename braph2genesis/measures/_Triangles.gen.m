@@ -28,7 +28,6 @@ MultiplexGraphWD
 MultiplexGraphBU
 MultiplexGraphBD
 
-
 %% ¡constants!
 RULES = { ... % vector of triangles rules
     'all' ...
