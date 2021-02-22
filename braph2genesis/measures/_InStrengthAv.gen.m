@@ -41,10 +41,10 @@ GraphWD
 %%%% ¡code!
 B = [
     0  .2 1
-    .2 0  0
+    0  0  .8
     1  0  0
     ];
-known_in_strength_av = {mean([1.2 0.2 1])'};
+known_in_strength_av = {mean([1.2 0.8 1])'};
 g = GraphWD('B', B);
 s_outside_g = InStrengthAv('G', g);
 
@@ -57,20 +57,20 @@ assert(isequal(s_outside_g.get('M'), known_in_strength_av), ...
 MultiplexGraphWD
 %%%% ¡code!
 B11 = [
-    0  .2 1
-    .2 0  0
-    1  0  0
+    0   .2  1
+    0   0   .8
+    1   0   0
     ];
 B22 = [
-    0 1  0
-    1 0  .4
-    0 .4 0
+    0  1   .6
+    1  0   .4
+    0  .4  0
     ];
 B = {B11 B22};
 
 known_in_strength_av = {
-                 mean([1.2 .2  1])
-                 mean([1   1.4 .4])
+                 mean([1.2 .8  1])
+                 mean([1.6 1.4 .4])
                  };
                                 
 g = MultiplexGraphWD('B', B);

@@ -2,7 +2,7 @@
 InStrength < Measure (m, in-strength) is the graph in-strength.
 
 %%% ¡description!
-The in-strength of a graph is the sum of all weights of the inward the edges 
+The in-strength of a graph is the sum of all weights of the inward edges 
 connected to a node within a layer, i.e., it is the sum of the columns of 
 the adjacency matrix. 
     
