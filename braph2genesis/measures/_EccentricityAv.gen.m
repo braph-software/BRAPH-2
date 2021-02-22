@@ -25,7 +25,7 @@ MultiplexGraphBU
 M (result, cell) is the average eccentricity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % cell matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc
 
 eccentricity = calculateValue@Eccentricity(m, prop);	
 g = m.get('G'); % graph from measure class

@@ -32,7 +32,7 @@ rule (metadata, OPTION)
 M (result, cell) is the diameter.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % cell matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc
 
 eccentricity = Eccentricity('G', g, 'RULE', m.get('rule')).get('M');
 diameter = cell(g.layernumber(), 1);
