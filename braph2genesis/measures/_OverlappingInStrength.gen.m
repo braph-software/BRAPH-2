@@ -23,19 +23,19 @@ MultiplexGraphWD
 M (result, cell) is the overlapping in-strength.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 L = g.layernumber();
-N = 1;
-if L > 0
-    N = length(A{1});
-end
 
-in_strength = calculateValue@InStrength(m, prop);	
-overlapping_in_strength = zeros(N, 1);
-for li = 1:1:L  
-    overlapping_in_strength = overlapping_in_strength + in_strength{li};
+if L == 0
+    value = {};
+else
+    N = g.nodenumber();
+    in_strength = calculateValue@InStrength(m, prop);	
+    overlapping_in_strength = zeros(N(1), 1);
+    for li = 1:1:L  
+        overlapping_in_strength = overlapping_in_strength + in_strength{li};
+    end
+    value = {overlapping_in_strength};
 end
-value = {overlapping_in_strength};
 
 %% ¡tests!
 
