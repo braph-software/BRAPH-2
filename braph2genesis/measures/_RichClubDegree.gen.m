@@ -2,8 +2,9 @@
 RichClubDegree < Degree (m, rich club degree) is the graph rich club degree.
 
 %%% ¡description!
-The degree of a node is the number of edges connected to the node within a layer. 
-Connection weights are ignored in calculations.
+The rich-club degree of a node at level k is the sum of 
+the edges that connect nodes of degree k or higher within a layer. 
+k is set by the user; the default value is equal to 1. 
 
 %%% ¡shape!
 shape = Measure.NODAL;
