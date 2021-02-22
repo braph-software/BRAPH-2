@@ -2,7 +2,7 @@
 InPathLength < Measure (m, in-path length) is the graph in-path length.
 
 %%% ¡description!
-The in-path length is the average shortest in-path lengths of one
+The in-path length is the average shortest in-path length of one
 node to all other nodes within a layer.
 
 %%% ¡shape!
@@ -31,7 +31,7 @@ rule (metadata, OPTION)
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the path length.
+M (result, cell) is the in-path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -44,28 +44,28 @@ path_length_rule = m.get('rule');
 distance = Distance('G', g).get('M');
 
 for li = 1:1:L
-    path_length_layer = zeros(N(1), 1);
+    in_path_length_layer = zeros(N(1), 1);
     distance_layer = distance{li};
 
     switch lower(path_length_rule)
         case {'subgraphs'}
             for u = 1:1:N
                 Du = distance_layer(:, u);
-                path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
+                in_path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
             end
-            path_length_layer(isnan(path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
+            in_path_length_layer(isnan(in_path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
         case {'harmonic'}
             for u = 1:1:N
                 Du = distance_layer(:, u);
-                path_length_layer(u) = harmmean(Du(Du~=0));
+                in_path_length_layer(u) = harmmean(Du(Du~=0));
             end
         otherwise  % 'default'
             for u = 1:1:N
                 Du = distance_layer(:, u);
-                path_length_layer(u) = mean(Du(Du~=0));
+                in_path_length_layer(u) = mean(Du(Du~=0));
             end
     end
-    in_path_length(li) = {path_length_layer};
+    in_path_length(li) = {in_path_length_layer};
 end
 value = in_path_length;
 

@@ -2,8 +2,8 @@
 InPathLengthAv < InPathLength (m, average in-path length) is the graph average in-path length.
 
 %%% ¡description!
-The average in-path length is the average shortest in-path lengths of one
-node to all other nodes within a layer.
+The average in-path length of a graph is 
+the average of the sum of the in-path lengths within each layer. 
 
 %%% ¡shape!
 shape = Measure.GLOBAL;
@@ -23,7 +23,7 @@ MultiplexGraphWD
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the path length.
+M (result, cell) is the average in-path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 
@@ -51,9 +51,9 @@ A = [
 known_in_path_length = {Inf};
 
 g = GraphBD('B', A);
-in_path_length = InPathLengthAv('G', g).get('M');
+in_path_length_av = InPathLengthAv('G', g).get('M');
 
-assert(isequal(in_path_length, known_in_path_length), ...
+assert(isequal(in_path_length_av, known_in_path_length), ...
     [BRAPH2.STR ':InPathLength:' BRAPH2.BUG_ERR], ...
     'InPathLength is not being calculated correctly for GraphBD.')
 
@@ -84,8 +84,8 @@ known_in_path_length = {
                     };
 
 g = MultiplexGraphBD('B', A);
-in_path_length = InPathLengthAv('G', g).get('M');
+in_path_length_av = InPathLengthAv('G', g).get('M');
 
-assert(isequal(in_path_length, known_in_path_length), ...
+assert(isequal(in_path_length_av, known_in_path_length), ...
     [BRAPH2.STR ':InPathLength:' BRAPH2.BUG_ERR], ...
     'InPathLength is not being calculated correctly for MultiplexGraphBD.')

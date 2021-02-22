@@ -2,8 +2,8 @@
 OutPathLengthAv < OutPathLength (m, average out-path length) is the graph average out-path length.
 
 %%% ¡description!
-The average out-path length is the average shortest out-path lengths of one
-node to all other nodes without a layer.
+The average out-path length of a graph is the average of the sum of the
+out-path lengths within each layer. 
 
 %%% ¡shape!
 shape = Measure.GLOBAL;
@@ -23,7 +23,7 @@ MultiplexGraphWD
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the path length.
+M (result, cell) is the average out-path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 
@@ -51,11 +51,11 @@ A = [
 known_out_path_length = {Inf};
 
 g = GraphBD('B', A);
-out_path_length = OutPathLengthAv('G', g).get('M');
+out_path_length_av = OutPathLengthAv('G', g).get('M');
 
-assert(isequal(out_path_length, known_out_path_length), ...
+assert(isequal(out_path_length_av, known_out_path_length), ...
     [BRAPH2.STR ':OutPathLength:' BRAPH2.BUG_ERR], ...
-    'OutPathLength is not beoutg calculated correctly for GraphBD.')
+    'OutPathLengthAv is not beoutg calculated correctly for GraphBD.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -84,8 +84,8 @@ known_out_path_length = {
                     };
 
 g = MultiplexGraphBD('B', A);
-out_path_length = OutPathLengthAv('G', g).get('M');
+out_path_length_av = OutPathLengthAv('G', g).get('M');
 
-assert(isequal(out_path_length, known_out_path_length), ...
+assert(isequal(out_path_length_av, known_out_path_length), ...
     [BRAPH2.STR ':OutPathLength:' BRAPH2.BUG_ERR], ...
-    'OutPathLength is not beoutg calculated correctly for MultiplexGraphBD.')
+    'OutPathLengthAv is not beoutg calculated correctly for MultiplexGraphBD.')
