@@ -26,7 +26,7 @@ MultigraphBUT
 M (result, cell) is the degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
 degree = cell(g.layernumber(), 1);
 

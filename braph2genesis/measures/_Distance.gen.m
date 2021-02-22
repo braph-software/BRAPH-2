@@ -28,7 +28,7 @@ MultigraphBUT
 M (result, cell) is the distance.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multiplex)
+A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
 distance = cell(g.layernumber(), 1);
 connectivity_type =  g.getConnectivityType(g.layernumber());
