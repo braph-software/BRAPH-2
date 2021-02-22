@@ -19,7 +19,6 @@ GraphWU
 MultiplexGraphBU
 MultiplexGraphWU
 
-
 %% ¡props_update!
 
 %%% ¡prop!
