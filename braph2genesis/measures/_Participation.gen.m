@@ -26,7 +26,7 @@ MultiplexGraphWU
 
 %% ¡props!
 %%% ¡prop! 
-CI (metadata, SCALAR) 
+CI (metadata, MATRIX) 
 %%%% ¡default!
 1
 
@@ -51,14 +51,15 @@ participation = cell(L, 1);
 directionality_type =  g.getDirectionalityType(L);
 connectivity_type =  g.getConnectivityType(L);
 for li = 1:1:L
-   
+   connectivity_layer = connectivity_type(li, li);
+   directionality_layer = directionality_type(li, li);
     if L == 1
         S = CommunityStructure('G', g).get('M');
     else
         S = MultilayerCommunityStructure('G', g).get('M');
     end
     Aii = A{li, li};    
-    m.set('CI', S);
+    m.set('CI', cell2mat(S));
    
     if connectivity_layer == Graph.WEIGHTED  % weighted graphs
         if directionality_layer == Graph.UNDIRECTED  % undirected graphs
