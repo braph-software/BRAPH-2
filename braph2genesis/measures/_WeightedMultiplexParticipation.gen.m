@@ -23,23 +23,23 @@ MultiplexGraphWU
 M (result, cell) is the weighted multiplex participation.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-B = g.get('A');  % cell array with adjacency matrices
 L = g.layernumber();
-N = 1;
-if L > 0
-    N = length(B{1});
-end
 
-strength = Strength('G', g).get('M');
-overlapping_strength = OverlappingStrength('G', g).get('M');
+if L == 0
+    value = {};
+else
+    N = g.nodenumber();
+    strength = Strength('G', g).get('M');
+    overlapping_strength = OverlappingStrength('G', g).get('M');
 
-weighted_multiplex_participation =  zeros(N, 1);
-for li = 1:1:L
-    weighted_multiplex_participation = weighted_multiplex_participation + (strength{li}./overlapping_strength{1}).^2;
+    weighted_multiplex_participation =  zeros(N(1), 1);
+    for li = 1:1:L
+        weighted_multiplex_participation = weighted_multiplex_participation + (strength{li}./overlapping_strength{1}).^2;
+    end
+    weighted_multiplex_participation = L / (L - 1) * (1 - weighted_multiplex_participation);
+    weighted_multiplex_participation(isnan(weighted_multiplex_participation)) = 0;  % Should return zeros, since NaN happens when strength = 0 and overlapping strength = 0 for all regions
+    value = {weighted_multiplex_participation};
 end
-weighted_multiplex_participation = L / (L - 1) * (1 - weighted_multiplex_participation);
-weighted_multiplex_participation(isnan(weighted_multiplex_participation)) = 0;  % Should return zeros, since NaN happens when strength = 0 and overlapping strength = 0 for all regions
-value = {weighted_multiplex_participation};
 
 %% ¡tests!
 
