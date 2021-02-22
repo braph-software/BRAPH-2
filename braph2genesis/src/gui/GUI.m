@@ -22,7 +22,7 @@ FRGCOLOR = get_from_varargin([.90 .90 .90], 'ForegroundColor', varargin);
 dw = get_from_varargin(1, 'BorderX', varargin);
 dh = get_from_varargin(.5, 'BorderY', varargin);
 
-%% Initializes GUI
+%% Initialize GUI
 [f, p, s, pr] = init();
     function [f, p, s, pr] = init()
         f = figure( ...
@@ -123,7 +123,6 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
                 'Parent', pr{prop}.panel, ...
                 'Units', 'normalized', ...
                 'Position', [.01 .10 .79 .40], ...
-                'String', el.get(prop), ...
                 'HorizontalAlignment', 'left', ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'BackgroundColor', 'w', ...
@@ -152,7 +151,6 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
                 'Parent', pr{prop}.panel, ...
                 'Units', 'normalized', ...
                 'Position', [.01 .10 .29 .40], ...
-                'String', num2str(el.get(prop)), ...
                 'HorizontalAlignment', 'center', ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'BackgroundColor', 'w', ...
@@ -208,7 +206,80 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
         end
     end
 
-%% Shows GUI
+%% Update GUI
+update()
+    function update()
+        for prop = 1:1:el.getPropNumber()
+            switch el.getPropFormat(prop)
+                case Format.EMPTY
+                    update_empty(prop)
+                case Format.STRING
+                    update_string(prop)
+                case Format.LOGICAL
+                    update_logical(prop)
+                case Format.OPTION
+                    update_option(prop)
+                case Format.CLASS
+                    update_class(prop)
+                case Format.CLASSLIST
+                    update_classlist(prop)
+                case Format.ITEM
+                    update_item(prop)
+                case Format.ITEMLIST
+                    update_itemlist(prop)
+                case Format.IDICT
+                    update_idict(prop)
+                case Format.SCALAR
+                    update_scalar(prop)
+                case Format.RVECTOR
+                    update_rvector(prop)
+                case Format.CVECTOR
+                    update_cvector(prop)
+                case Format.MATRIX
+                    update_matrix(prop)
+                case Format.SMATRIX
+                    update_smatrix(prop)
+                case Format.CELL
+                    update_cell(prop)
+            end
+        end
+        function update_empty(prop) %#ok<INUSD>
+        end
+        function update_string(prop)
+            set(pr{prop}.edit_value, 'String', el.get(prop))
+        end
+        function update_logical(prop) %#ok<INUSD>
+        end
+        function update_option(prop) %#ok<INUSD>
+        end
+        function update_class(prop) %#ok<INUSD>
+        end
+        function update_classlist(prop) %#ok<INUSD>
+        end
+        function update_item(prop) %#ok<INUSD>
+        end
+        function update_itemlist(prop) %#ok<INUSD>
+        end
+        function update_idict(prop)%#ok<INUSD>
+        end
+        function update_scalar(prop)
+            set(pr{prop}.edit_value, 'String', num2str(el.get(prop)))
+        end                
+        function update_rvector(prop) %#ok<INUSD>
+        end
+        function update_cvector(prop) %#ok<INUSD>
+        end
+        function update_matrix(prop) %#ok<INUSD>
+        end
+        function update_smatrix(prop) %#ok<INUSD>
+        end
+        function update_cell(prop) %#ok<INUSD>
+        end
+    end
+
+%% Setup GUI
+
+%% Show GUI
 set(f, 'Visible', 'on')
 
 %% Auxiliary functions
