@@ -80,6 +80,45 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
                 'BackgroundColor', FRGCOLOR ...
                 ); %#ok<AGROW>
             
+            pr{prop}.button_cb = uicontrol( ...
+                'Style', 'pushbutton', ...
+                'Parent', pr{prop}.panel, ...
+                'Units', 'character', ...
+                'Position', [0 0 3 1], ... % defines prop text tag length and height
+                'String', '@', ...
+                'HorizontalAlignment', 'left', ...
+                'FontWeight', 'bold', ...
+                'Tooltip', 'Callback', ...
+                'Callback', {@cb_cb, prop}, ...
+                'Visible', 'off' ...
+                ); %#ok<AGROW>
+            
+            pr{prop}.button_calc = uicontrol( ...
+                'Style', 'pushbutton', ...
+                'Parent', pr{prop}.panel, ...
+                'Units', 'character', ...
+                'Position', [0 0 3 1], ... % defines prop text tag length and height
+                'String', 'C', ...
+                'HorizontalAlignment', 'left', ...
+                'FontWeight', 'bold', ...
+                'Tooltip', 'Calculate', ...
+                'Callback', {@cb_calc, prop}, ...
+                'Visible', 'off' ...
+                ); %#ok<AGROW>
+
+            pr{prop}.button_del = uicontrol( ...
+                'Style', 'pushbutton', ...
+                'Parent', pr{prop}.panel, ...
+                'Units', 'character', ...
+                'Position', [0 0 3 1], ... % defines prop text tag length and height
+                'String', 'D', ...
+                'HorizontalAlignment', 'left', ...
+                'FontWeight', 'bold', ...
+                'Tooltip', 'Delete', ...
+                'Callback', {@cb_del, prop}, ...
+                'Visible', 'off' ...
+                ); %#ok<AGROW>
+            
             switch el.getPropFormat(prop)
                 case Format.EMPTY
                     init_empty(prop)
@@ -122,20 +161,12 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
                 'Style', 'edit', ...
                 'Parent', pr{prop}.panel, ...
                 'Units', 'normalized', ...
-                'Position', [.01 .10 .79 .50], ...
+                'Position', [.01 .10 .98 .50], ...
                 'HorizontalAlignment', 'left', ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'BackgroundColor', 'w', ...
                 'Callback', {@cb_string, prop} ...
                 );
-            
-            switch el.getPropCategory(prop)
-                case Category.METADATA
-                    
-                case Category.PARAMETER
-                case Category.DATA
-                case Category.RESULT
-            end
         end
         function init_logical(prop) %#ok<INUSD>
         end
@@ -184,13 +215,19 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
         for prop = 1:1:el.getPropNumber()
             set(pr{prop}.panel, 'Position', [pr_panel_x0 pr_panel_y0(prop) pr_panel_w pr_panel_h(prop)])
             set(pr{prop}.text_tag, 'Position', [0 pr_panel_h(prop)-h(pr{prop}.text_tag) pr_panel_w h(pr{prop}.text_tag)])
+            set(pr{prop}.button_cb, 'Position', [pr_panel_w-w(pr{prop}.button_cb)-1 pr_panel_h(prop)-h(pr{prop}.button_cb)-.2 w(pr{prop}.button_cb) h(pr{prop}.button_cb)])
+            set(pr{prop}.button_calc, 'Position', [pr_panel_w-w(pr{prop}.button_calc)-.5-w(pr{prop}.button_del)-1 pr_panel_h(prop)-h(pr{prop}.button_cb)-.2 w(pr{prop}.button_calc) h(pr{prop}.button_calc)])
+            set(pr{prop}.button_del, 'Position', [pr_panel_w-w(pr{prop}.button_del)-1 pr_panel_h(prop)-h(pr{prop}.button_del)-.2 w(pr{prop}.button_del) h(pr{prop}.button_del)])
         end
 
         h_p = sum(pr_panel_h + dh) + dh;
         if h_p < h(f)
             set(f, 'Position', [x0(f) y0(f)+h(f)-h_p w(f) h_p])
+            set(p, 'Position', [0 h(f)-h_p w(f) h_p])
+        else
+            offset = get(s, 'Value');
+            set(p, 'Position', [0 h(f)-h_p-offset w(f) h_p])
         end
-        set(p, 'Position', [0 h(f)-h_p w(f) h_p])
         
         if h(f) >= h(p) - dh
             set(s, 'Visible', 'off')
@@ -215,16 +252,31 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
     end
 
 %% Callbacks
+    function cb_cb(~, ~, prop)
+        GUI(el.getr(prop).get('EL'))
+    end
+    function cb_calc(~, ~, prop)
+        el.memorize(prop);
+        
+        update()
+        resize()
+    end
+    function cb_del(~, ~, prop)
+        el.set(prop, NoValue.getNoValue())
+        
+        update()
+        resize()
+    end
+
     function cb_empty(~, ~, prop)  %#ok<INUSD,DEFNU>
     end
     function cb_string(src, ~, prop)
         switch el.getPropCategory(prop)
-            case Category.METADATA
+            case {Category.METADATA, Category.PARAMETER, Category.DATA}
                 el.set(prop, get(src, 'String'))
 
-            case Category.PARAMETER
-            case Category.DATA
             case Category.RESULT
+                %
         end
         
         update()
@@ -244,7 +296,17 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
     end
     function cb_idict(~, ~, prop)%#ok<INUSD,DEFNU>
     end
-    function cb_scalar(~, ~, prop) %#ok<INUSD>
+    function cb_scalar(~, ~, prop)
+        switch el.getPropCategory(prop)
+            case {Category.METADATA, Category.PARAMETER, Category.DATA}
+                el.set(prop, str2double(get(src, 'String')))
+
+            case Category.RESULT
+                %
+        end
+        
+        update()
+        resize()
     end
     function cb_rvector(~, ~, prop) %#ok<INUSD,DEFNU>
     end
@@ -311,16 +373,35 @@ update()
                     
                     value = el.getr(prop);
                     if isa(value, 'Callback')
-                        % button callback
+                        set(pr{prop}.edit_value, 'Enable', 'off')
+                        set(pr{prop}.button_cb, ...
+                            'Visible', 'on', ...
+                            'Tooltip', value.tostring())
                     end
                     
                 case Category.RESULT
                     value = el.getr(prop);
                     
                     if isa(value, 'NoValue')
-                        % button calcualte
+                        set(pr{prop}.edit_value, ...
+                            'String', el.getPropDefault(prop), ...
+                            'Enable', 'off')
+                        set(pr{prop}.button_calc, ...
+                            'Visible', 'on', ...
+                            'Enable', 'on')
+                        set(pr{prop}.button_del, ...
+                            'Visible', 'on', ...
+                            'Enable', 'off')
                     else
-                        set(pr{prop}.edit_value, 'String', el.get(prop))
+                        set(pr{prop}.edit_value, ...
+                            'String', el.get(prop), ...
+                            'Enable', 'off')
+                        set(pr{prop}.button_calc, ...
+                            'Visible', 'on', ...
+                            'Enable', 'off')
+                        set(pr{prop}.button_del, ...
+                            'Visible', 'on', ...
+                            'Enable', 'on')
                     end
             end
         end
@@ -338,8 +419,52 @@ update()
         end
         function update_idict(prop)%#ok<INUSD>
         end
-        function update_scalar(prop) %#ok<INUSD>
-            % set(pr{prop}.edit_value, 'String', num2str(el.get(prop)))
+        function update_scalar(prop)
+            
+            if el.isLocked(prop)
+                set(pr{prop}.edit_value, 'Enable', 'off')
+            end
+            
+            switch el.getPropCategory(prop)
+                case Category.METADATA
+                    set(pr{prop}.edit_value, 'String', mat2str(el.get(prop)))
+                    
+                case {Category.PARAMETER, Category.DATA}
+                    set(pr{prop}.edit_value, 'String', mat2str(el.get(prop)))
+                    
+                    value = el.getr(prop);
+                    if isa(value, 'Callback')
+                        set(pr{prop}.edit_value, 'Enable', 'off')
+                        set(pr{prop}.button_cb, ...
+                            'Visible', 'on', ...
+                            'Tooltip', value.tostring())
+                    end
+                    
+                case Category.RESULT
+                    value = el.getr(prop);
+                    
+                    if isa(value, 'NoValue')
+                        set(pr{prop}.edit_value, ...
+                            'String', mat2str(el.getPropDefault(prop)), ...
+                            'Enable', 'off')
+                        set(pr{prop}.button_calc, ...
+                            'Visible', 'on', ...
+                            'Enable', 'on')
+                        set(pr{prop}.button_del, ...
+                            'Visible', 'on', ...
+                            'Enable', 'off')
+                    else
+                        set(pr{prop}.edit_value, ...
+                            'String', mat2str(el.get(prop)), ...
+                            'Enable', 'off')
+                        set(pr{prop}.button_calc, ...
+                            'Visible', 'on', ...
+                            'Enable', 'off')
+                        set(pr{prop}.button_del, ...
+                            'Visible', 'on', ...
+                            'Enable', 'on')
+                    end
+            end            
         end                
         function update_rvector(prop) %#ok<INUSD>
         end
