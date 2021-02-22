@@ -19,15 +19,9 @@ GraphBU
 MultiplexGraphWU
 MultiplexGraphBU
 
-%% ¡constants!
-RULES = { ... 
-        'all' ... % default
-        'subgraphs' ...
-        };
-
 %% ¡props!
 %%% ¡prop! 
-rule (metadata, OPTION) 
+rule (metadata, OPTION)  % calculation in a graph or its subgraph
 %%%% ¡settings!
 {'all', 'subgraphs'}
 %%%% ¡default!
