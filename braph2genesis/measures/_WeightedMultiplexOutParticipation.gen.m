@@ -23,7 +23,7 @@ MultiplexGraphWD
 M (result, cell) is the weighted multiplex out-participation.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-B = g.get('A');  % cell array with adjacency matrices
+B = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 L = g.layernumber();
 N = 1;
 if L > 0

@@ -24,7 +24,7 @@ MultiplexGraphWU
 M (result, cell) is the strength.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-A = g.get('A');  % cell array with adjacency matrix 
+A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
 strength = cell(g.layernumber(), 1);
 
