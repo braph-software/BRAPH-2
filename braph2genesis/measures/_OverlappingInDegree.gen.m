@@ -24,21 +24,20 @@ MultiplexGraphWD
 M (result, cell) is the overlapping in-degree.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 L = g.layernumber();
-N = g.nodenumber();
 
-in_degree = calculateValue@InDegree(m, prop);
-if L > 0
+if L == 0
+    value = {};
+else  
+    N = g.nodenumber();
+    in_degree = calculateValue@InDegree(m, prop);
     overlapping_in_degree = zeros(N(1), 1);
-else
-    overlapping_in_degree = zeros(1);
-end
 
-for li = 1:1:L  
-    overlapping_in_degree = overlapping_in_degree + in_degree{li};
+    for li = 1:1:L  
+        overlapping_in_degree = overlapping_in_degree + in_degree{li};
+    end
+    value = {overlapping_in_degree};
 end
-value = {overlapping_in_degree};
 
 %% ¡tests!
 

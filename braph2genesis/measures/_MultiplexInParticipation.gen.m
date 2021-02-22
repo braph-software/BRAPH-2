@@ -24,25 +24,31 @@ MultiplexGraphWD
 M (result, cell) is the multiplex in-participation.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-B = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 L = g.layernumber();
-N = g.nodenumber();
 
-in_degree = InDegree('G', g).get('M');
-overlapping_in_degree = OverlappingInDegree('G', g).get('M');
-
-if L > 0   
-    multiplex_in_participation =  zeros(N(1), 1);
+if L == 0
+    value = {};
 else
-    multiplex_in_participation =  zeros(1);
-end
+    B = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
-for li = 1:1:L
-    multiplex_in_participation = multiplex_in_participation + (in_degree{li}./overlapping_in_degree{1}).^2;
+    N = g.nodenumber();
+
+    in_degree = InDegree('G', g).get('M');
+    overlapping_in_degree = OverlappingInDegree('G', g).get('M');
+
+    if L > 0   
+        multiplex_in_participation =  zeros(N(1), 1);
+    else
+        multiplex_in_participation =  zeros(1);
+    end
+
+    for li = 1:1:L
+        multiplex_in_participation = multiplex_in_participation + (in_degree{li}./overlapping_in_degree{1}).^2;
+    end
+    multiplex_in_participation = L / (L - 1) * (1 - multiplex_in_participation);
+    multiplex_in_participation(isnan(multiplex_in_participation)) = 0;  % Should return zeros, since NaN happens when strength = 0 and overlapping strength = 0 for all regions
+    value = {multiplex_in_participation};
 end
-multiplex_in_participation = L / (L - 1) * (1 - multiplex_in_participation);
-multiplex_in_participation(isnan(multiplex_in_participation)) = 0;  % Should return zeros, since NaN happens when strength = 0 and overlapping strength = 0 for all regions
-value = {multiplex_in_participation};
 
 %% ¡tests!
 
