@@ -46,7 +46,7 @@ rule (parameter, OPTION)
 'louvain'
 
 %%% ¡prop! 
-gamma (data, SCALAR) 
+gamma (parameter, SCALAR) 
 %%%% ¡default!
 1
 
