@@ -64,7 +64,7 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
             pr{prop}.panel = uipanel( ...
                 'Parent', p, ...
                 'Units', 'character', ...
-                'Position', [0 0 eps 1], ... % defines pr panel height
+                'Position', [0 0 eps 1.4], ... % defines pr panel height
                 'BackgroundColor', FRGCOLOR, ...
                 'BorderType', 'none' ...
                 ); %#ok<AGROW>
@@ -158,7 +158,7 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
                     init_cell(prop)
             end
         end
-        function init_empty(prop) %#ok<INUSD>
+        function init_empty(~)
         end
         function init_string(prop)
             set(pr{prop}.panel, 'Position', [0 0 eps 3]) % re-defines prop panel height
@@ -174,7 +174,19 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
                 'Callback', {@cb_string, prop} ...
                 );
         end
-        function init_logical(prop) %#ok<INUSD>
+        function init_logical(prop)
+            set(pr{prop}.panel, 'Position', [0 0 eps 2.5]) % re-defines prop panel height
+
+            pr{prop}.checkbox_value = uicontrol( ...
+                'Style', 'checkbox', ...
+                'Parent', pr{prop}.panel, ...
+                'Units', 'normalized', ...
+                'Position', [.01 .10 .29 .40], ...
+                'HorizontalAlignment', 'center', ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'BackgroundColor', get(pr{prop}.panel, 'BackgroundColor'), ...
+                'Callback', {@cb_logical, prop} ...
+                );
         end
         function init_option(prop) %#ok<INUSD>
         end
@@ -316,6 +328,9 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
     end
 
     function cb_empty(~, ~, prop)  %#ok<INUSD,DEFNU>
+
+        update()
+        resize()
     end
     function cb_string(src, ~, prop)
         el.set(prop, get(src, 'String'))
@@ -323,7 +338,11 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
         update()
         resize()
     end
-    function cb_logical(~, ~, prop) %#ok<INUSD,DEFNU>
+    function cb_logical(src, ~, prop)
+        el.set(prop, logical(get(src, 'Value')))
+        
+        update()
+        resize()
     end
     function cb_option(~, ~, prop) %#ok<INUSD,DEFNU>
     end
@@ -415,7 +434,33 @@ update()
                     update_cell(prop)
             end
         end
-        function update_empty(prop) %#ok<INUSD>
+        function update_empty(prop)
+            
+            switch el.getPropCategory(prop)
+                case Category.METADATA
+                    %
+                    
+                case {Category.PARAMETER, Category.DATA}
+
+                    value = el.getr(prop);
+                    if isa(value, 'Callback')
+                        set(pr{prop}.edit_value, 'Enable', 'off')
+                        set(pr{prop}.button_cb, ...
+                            'Visible', 'on', ...
+                            'Tooltip', value.tostring())
+                    end
+                    
+                case Category.RESULT
+                    value = el.getr(prop);
+                    
+                    if isa(value, 'NoValue')
+                        set(pr{prop}.button_calc, 'Enable', 'on')
+                        set(pr{prop}.button_del, 'Enable', 'off')
+                    else
+                        set(pr{prop}.button_calc, 'Enable', 'off')
+                        set(pr{prop}.button_del, 'Enable', 'on')
+                    end
+            end
         end
         function update_string(prop)
             
@@ -456,7 +501,45 @@ update()
                     end
             end
         end
-        function update_logical(prop) %#ok<INUSD>
+        function update_logical(prop)
+            
+            if el.isLocked(prop)
+                set(pr{prop}.checkbox_value, 'Enable', 'off')
+            end
+            
+            switch el.getPropCategory(prop)
+                case Category.METADATA
+                    set(pr{prop}.checkbox_value, 'Value', el.get(prop))
+                    
+                case {Category.PARAMETER, Category.DATA}
+                    set(pr{prop}.checkbox_value, 'Value', el.get(prop))
+                    
+                    value = el.getr(prop);
+                    if isa(value, 'Callback')
+                        set(pr{prop}.checkbox_value, 'Enable', 'off')
+                        set(pr{prop}.button_cb, ...
+                            'Visible', 'on', ...
+                            'Tooltip', value.tostring())
+                    end
+                    
+                case Category.RESULT
+                    value = el.getr(prop);
+                    
+                    if isa(value, 'NoValue')
+                        set(pr{prop}.checkbox_value, ...
+                            'Value', el.getPropDefault(prop), ...
+                            'Enable', 'off')
+                        set(pr{prop}.button_calc, 'Enable', 'on')
+                        set(pr{prop}.button_del, 'Enable', 'off')
+                    else
+                        set(pr{prop}.checkbox_value, ...
+                            'Value', el.get(prop), ...
+                            'Enable', 'off')
+                        set(pr{prop}.button_calc, 'Enable', 'off')
+                        set(pr{prop}.button_del, ...
+                            'Visible', 'on', 'Enable', 'on')
+                    end
+            end
         end
         function update_option(prop) %#ok<INUSD>
         end
