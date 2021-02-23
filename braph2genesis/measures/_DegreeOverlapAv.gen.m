@@ -2,7 +2,7 @@
 DegreeOverlapAv < DegreeOverlap (m, average degree overlap) is the graph average degree overlap.
 
 %%% ¡description!
-The degree overlap is the average of the number of edges connected to the 
+The average degree overlap is the average of the number of edges connected to the 
 node in all layers. Connection weights are ignored in calculations.
 
 %%% ¡shape!
