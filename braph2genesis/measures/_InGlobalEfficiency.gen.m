@@ -44,7 +44,7 @@ value = in_global_efficiency;
 
 %%% ¡test!
 %%%% ¡name!
-GraphWD
+GraphBD
 %%%% ¡code!
 B = [
     0   .1  0   0   0
@@ -61,11 +61,11 @@ in_global_efficiency = InGlobalEfficiency('G', g).get('M');
 
 assert(isequal(in_global_efficiency, known_in_global_efficiency), ...
     [BRAPH2.STR ':InGlobalEfficiency:' BRAPH2.BUG_ERR], ...
-    'InGlobalEfficiency is not being calculated correctly for GraphBU.')
+    'InGlobalEfficiency is not being calculated correctly for GraphBD.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexGraphBD
 %%%% ¡code!
 B11 = [
       0   .1  0   0   0
@@ -95,4 +95,4 @@ in_global_efficiency = InGlobalEfficiency('G', g).get('M');
 
 assert(isequal(in_global_efficiency, known_in_global_efficiency), ...
     [BRAPH2.STR ':InGlobalEfficiency:' BRAPH2.BUG_ERR], ...
-    'InGlobalEfficiency is not being calculated correctly for MultiplexGraphBU.')
+    'InGlobalEfficiency is not being calculated correctly for MultiplexGraphBD.')

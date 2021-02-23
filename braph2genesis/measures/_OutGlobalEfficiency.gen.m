@@ -44,7 +44,7 @@ value = out_global_efficiency;
 
 %%% ¡test!
 %%%% ¡name!
-GraphWD
+GraphBD
 %%%% ¡code!
 B = [
     0   .1  0   0   0
@@ -61,11 +61,11 @@ out_global_efficiency = OutGlobalEfficiency('G', g).get('M');
 
 assert(isequal(out_global_efficiency, known_out_global_efficiency), ...
     [BRAPH2.STR ':OutGlobalEfficiency:' BRAPH2.BUG_ERR], ...
-    'OutGlobalEfficiency is not beoutg calculated correctly for GraphBU.')
+    'OutGlobalEfficiency is not beoutg calculated correctly for GraphBD.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexGraphBD
 %%%% ¡code!
 B11 = [
       0   .1  0   0   0
@@ -95,4 +95,4 @@ out_global_efficiency = OutGlobalEfficiency('G', g).get('M');
 
 assert(isequal(out_global_efficiency, known_out_global_efficiency), ...
     [BRAPH2.STR ':OutGlobalEfficiency:' BRAPH2.BUG_ERR], ...
-    'OutGlobalEfficiency is not beoutg calculated correctly for MultiplexGraphBU.')
+    'OutGlobalEfficiency is not beoutg calculated correctly for MultiplexGraphBD.')
