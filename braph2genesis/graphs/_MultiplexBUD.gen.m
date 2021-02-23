@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexGraphBUD < MultiplexGraphWU (g, multiplex binary undirected multigraph with fixed densities) is a multiplex binary undirected multigraph with fixed densities.
+MultiplexBUD < MultiplexGraphWU (g, binary undirected multiplex with fixed densities) is a binary undirected multiplex with fixed densities.
 
 %%% ¡description!
-In a multiplex binary undirected multigraph with fixed densities (BUD), 
+In a binary undirected multiplex with fixed densities (BUD), 
 all the layers consist of binary undirected (BU) multiplex graphs 
 derived from the same weighted supra-connectivity matrices 
 binarized at different densities.
@@ -34,12 +34,12 @@ DENSITIES (data, rvector) is the vector of densities.
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the multiplex binary undirected multigraph. 
+A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. 
 %%%% ¡calculate!
 A_WU = calculateValue@MultiplexGraphWU(g, prop);
 
 densities = g.get('DENSITIES');
-L = length(A_WU); %% number of layers
+L = length(A_WU); % number of layers
 A = cell(length(densities)*L);
 
 for i = 1:1:length(densities)
@@ -68,13 +68,6 @@ A = [
     ];
 B = {A, A};
 
-g = MultiplexGraphBUD('B', B, 'DENSITIES', [0 55 100]);
+g = MultiplexBUD('B', B, 'DENSITIES', [0 55 100]);
 
 A = g.get('A');
-
-assert( ...
-    sum(sum(A{1, 1})) == 0 && ...
-    sum(sum(A{2, 2})) == 10 && ...
-    sum(sum(A{3, 3})) == 20, ...
-    [BRAPH2.STR ':MultigraphBUD:' BRAPH2.BUG_ERR], ...
-    'MultigraphBUD is not constructing well.')
