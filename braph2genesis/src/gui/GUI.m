@@ -206,7 +206,15 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
         end
         function init_cvector(prop) %#ok<INUSD>
         end
-        function init_matrix(prop) %#ok<INUSD>
+        function init_matrix(prop)
+            set(pr{prop}.panel, 'Position', [0 0 eps 10]) % re-defines prop panel height
+            
+            pr{prop}.table_value = uitable( ...
+                'Parent', pr{prop}.panel, ...
+                'Units', 'normalized', ...
+                'Position', [.01 .05 .98 .80], ...
+                'CellEditCallback', {@cb_matrix, prop} ...
+                );
         end
         function init_smatrix(prop) %#ok<INUSD>
         end
@@ -286,14 +294,8 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
     function cb_empty(~, ~, prop)  %#ok<INUSD,DEFNU>
     end
     function cb_string(src, ~, prop)
-        switch el.getPropCategory(prop)
-            case {Category.METADATA, Category.PARAMETER, Category.DATA}
-                el.set(prop, get(src, 'String'))
+        el.set(prop, get(src, 'String'))
 
-            case Category.RESULT
-                %
-        end
-        
         update()
         resize()
     end
@@ -311,14 +313,8 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
     end
     function cb_idict(~, ~, prop)%#ok<INUSD,DEFNU>
     end
-    function cb_scalar(~, ~, prop)
-        switch el.getPropCategory(prop)
-            case {Category.METADATA, Category.PARAMETER, Category.DATA}
-                el.set(prop, str2double(get(src, 'String')))
-
-            case Category.RESULT
-                %
-        end
+    function cb_scalar(src, ~, prop)
+        el.set(prop, str2double(get(src, 'String')))
         
         update()
         resize()
@@ -327,7 +323,13 @@ dh = get_from_varargin(.5, 'BorderY', varargin);
     end
     function cb_cvector(~, ~, prop) %#ok<INUSD,DEFNU>
     end
-    function cb_matrix(~, ~, prop) %#ok<INUSD,DEFNU>
+    function cb_matrix(~, event, prop)
+        value = el.get(prop);
+        value(event.Indices(1), event.Indices(2)) = event.NewData;
+        el.set(prop, value)
+        
+        update()
+        resize()       
     end
     function cb_smatrix(~, ~, prop) %#ok<INUSD,DEFNU>
     end
@@ -470,7 +472,53 @@ update()
         end
         function update_cvector(prop) %#ok<INUSD>
         end
-        function update_matrix(prop) %#ok<INUSD>
+        function update_matrix(prop)
+
+            if el.isLocked(prop)
+                set(pr{prop}.table_value, 'Enable', 'off')
+            end
+            
+            switch el.getPropCategory(prop)
+                case Category.METADATA
+                    set(pr{prop}.table_value, ...
+                        'Data', el.get(prop), ...
+                        'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                        'ColumnEditable', true)
+                    
+                case {Category.PARAMETER, Category.DATA}
+                    set(pr{prop}.table_value, ...
+                        'Data', el.get(prop), ...
+                        'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                        'ColumnEditable', true)
+                    
+                    value = el.getr(prop);
+                    if isa(value, 'Callback')
+                        set(pr{prop}.edit_value, 'Enable', 'off')
+                        set(pr{prop}.button_cb, ...
+                            'Visible', 'on', ...
+                            'Tooltip', value.tostring())
+                    end
+                    
+                case Category.RESULT
+                    value = el.getr(prop);
+                    
+                    if isa(value, 'NoValue')
+                        set(pr{prop}.table_value, ...
+                            'Data', el.getPropDefault(prop), ...
+                            'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                            'ColumnEditable', false)
+                        set(pr{prop}.button_calc, 'Enable', 'on')
+                        set(pr{prop}.button_del, 'Enable', 'off')
+                    else
+                        set(pr{prop}.table_value, ...
+                            'Data', el.get(prop), ...
+                            'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                            'ColumnEditable', false)
+                        set(pr{prop}.button_calc, 'Enable', 'off')
+                        set(pr{prop}.button_del, ...
+                            'Visible', 'on', 'Enable', 'on')
+                    end
+            end
         end
         function update_smatrix(prop) %#ok<INUSD>
         end
