@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexGraphBUT < MultiplexGraphWU (g, multiplex binary undirected multigraph with fixed thresholds) is a multiplex binary undirected multigraph with fixed thresholds.
+MultiplexBUT < MultiplexGraphWU (g, binary undirected multiplex with fixed thresholds) is a binary undirected multiplex with fixed thresholds.
 
 %%% ¡description!
-In a multiplex binary undirected multigraph with fixed thresholds (BUT), 
+In a binary undirected multiplex with fixed thresholds (BUT), 
 all the layers consist of binary undirected (BU) multiplex graphs 
 derived from the same weighted supra-connectivity matrices 
 binarized at different thresholds.
@@ -34,7 +34,7 @@ THRESHOLDS (data, rvector) is the vector of thresholds.
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the multiplex binary undirected multigraph. 
+A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. 
 %%%% ¡calculate!
 A_WU = calculateValue@MultiplexGraphWU(g, prop);
 
@@ -67,7 +67,7 @@ A = [
     .4 .3 .2 .1 0
     ];
 B = {A, A};
-g = MultiplexGraphBUT('B', B, 'THRESHOLDS', [0 .1 .2 .3 .4]);
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 .1 .2 .3 .4]);
 
 A = g.get('A');
 
@@ -170,5 +170,5 @@ assert(isequal( ...
     0 0 0 0 0
     0 0 0 0 0
     ]), ...
-    [BRAPH2.STR ':MultigraphBUT:' BRAPH2.BUG_ERR], ...
-    'MultigraphBUT is not constructing well.')
+    [BRAPH2.STR ':MultiplexBUT:' BRAPH2.BUG_ERR], ...
+    'MultiplexBUT is not constructing well.')
