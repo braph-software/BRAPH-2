@@ -44,7 +44,7 @@ value = global_efficiency;
 
 %%% ¡test!
 %%%% ¡name!
-GraphWU
+GraphBU
 %%%% ¡code!
 B = [
     0   .1  0   0   0
@@ -65,7 +65,7 @@ assert(isequal(global_efficiency, known_global_efficiency), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexGraphBU
 %%%% ¡code!
 B11 = [
       0   .1  0   0   0
