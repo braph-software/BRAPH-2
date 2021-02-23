@@ -50,7 +50,6 @@ assert(mod(richclub_threshold, 1) == 0, ...
     'while it is ' tostring(richclub_threshold)])
 
 k_level = abs(richclub_threshold);
-m.set('PARAMETRIC_VALUE', k_level)  % Set the parameter
 for li = 1:1:L
     
     Aii = A{li, li};

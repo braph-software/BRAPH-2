@@ -47,7 +47,6 @@ assert(isnumeric(weighted_rich_club_threshold) == 1, ...
     'while it is ' tostring(weighted_rich_club_threshold)])
 
 s_levels = abs(weighted_rich_club_threshold);
-m.set('PARAMETRIC_VALUE', s_levels)  % Set the parameter
     
 for li = 1:1:L
     
