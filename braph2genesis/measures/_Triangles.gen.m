@@ -28,18 +28,9 @@ MultiplexGraphWD
 MultiplexGraphBU
 MultiplexGraphBD
 
-%% ¡constants!
-RULES = { ... % vector of triangles rules
-    'all' ...
-    'middleman' ...
-    'in' ...
-    'out' ...
-    'cycle' ...
-    };
-
 %% ¡props!
 %%% ¡prop! 
-rule (metadata, OPTION) 
+rule (parameter, OPTION) 
 %%%% ¡settings!
 {'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!

@@ -28,7 +28,7 @@ MultiplexGraphWU
 
 %% ¡props!
 %%% ¡prop! 
-PARAMETRIC_VALUE (metadata, SCALAR) 
+PARAMETRIC_VALUE (parameter, SCALAR) 
 %%%% ¡default!
 1
 
@@ -42,7 +42,15 @@ A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph,
 L = g.layernumber();
 
 rich_club = cell(L, 1);
-directionality_type = g.getDirectionalityType(L);    
+directionality_type = g.getDirectionalityType(L);  
+richclub_threshold = m.get('PARAMETRIC_VALUE');
+assert(mod(richclub_threshold, 1) == 0, ...
+    [BRAPH2.STR ':RichClub:' BRAPH2.WRONG_INPUT], ...
+    ['RichClub threshold must be an integer value ' ...
+    'while it is ' tostring(richclub_threshold)])
+
+k_level = abs(richclub_threshold);
+m.set('PARAMETRIC_VALUE', k_level)  % Set the PARAMETRIC_VALUE
 for li = 1:1:L
     
     Aii = A{li, li};
@@ -59,15 +67,6 @@ for li = 1:1:L
         out_degree = OutDegree('G', g).get('M');
         deg = (in_degree{li} + out_degree{li})/2;
     end
-    
-    richclub_threshold = m.get('PARAMETRIC_VALUE');
-    assert(mod(richclub_threshold, 1) == 0, ...
-        [BRAPH2.STR ':RichClub:' BRAPH2.WRONG_INPUT], ...
-        ['RichClub threshold must be an integer value ' ...
-        'while it is ' tostring(richclub_threshold)])
-    
-    k_level = abs(richclub_threshold);
-    m.set('PARAMETRIC_VALUE', k_level)  % Set the PARAMETRIC_VALUE
     
     richclub_layer = zeros(1, 1, k_level);
     Nk = zeros(1, k_level);

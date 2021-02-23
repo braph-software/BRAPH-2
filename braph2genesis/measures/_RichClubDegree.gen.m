@@ -27,7 +27,7 @@ MultiplexGraphWU
 
 %% ¡props!
 %%% ¡prop! 
-PARAMETRIC_VALUE (metadata, SCALAR) 
+PARAMETRIC_VALUE (parameter, SCALAR) 
 %%%% ¡default!
 1
 
@@ -42,7 +42,15 @@ L = g.layernumber();
 N = g.nodenumber();
 
 rich_club_degree = cell(L, 1); 
-directionality_type = g.getDirectionalityType(L);    
+directionality_type = g.getDirectionalityType(L);
+richclub_threshold = m.get('PARAMETRIC_VALUE');
+assert(mod(richclub_threshold, 1) == 0, ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.WRONG_INPUT], ...
+    ['RichClubDegree threshold must be an integer value ' ...
+    'while it is ' tostring(richclub_threshold)])
+
+k_level = abs(richclub_threshold);
+m.set('PARAMETRIC_VALUE', k_level)  % Set the parameter
 for li = 1:1:L
     
     Aii = A{li, li};
@@ -60,15 +68,6 @@ for li = 1:1:L
 
         deg = (in_degree{li} + out_degree{li})/2;
     end
-
-    richclub_threshold = m.get('PARAMETRIC_VALUE');
-    assert(mod(richclub_threshold, 1) == 0, ...
-        [BRAPH2.STR ':RichClubDegree:' BRAPH2.WRONG_INPUT], ...
-        ['RichClubDegree threshold must be an integer value ' ...
-        'while it is ' tostring(richclub_threshold)])
-
-    k_level = abs(richclub_threshold);  
-    m.set('PARAMETRIC_VALUE', k_level)  % Set the parameter
 
     richclub_layer = zeros(N(1), 1, k_level);
     for k = 1:1:k_level

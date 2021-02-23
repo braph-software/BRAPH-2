@@ -24,7 +24,7 @@ MultiplexGraphWU
 
 %% ¡props!
 %%% ¡prop! 
-PARAMETRIC_VALUE (metadata, RVECTOR)
+PARAMETRIC_VALUE (parameter, RVECTOR)
 %%%% ¡default!
 1
 
@@ -39,7 +39,16 @@ L = g.layernumber();
 N = g.nodenumber();
 
 rich_club_strength = cell(L, 1);
-directionality_type = g.getDirectionalityType(L);    
+directionality_type = g.getDirectionalityType(L);
+weighted_rich_club_threshold = m.get('PARAMETRIC_VALUE');
+assert(isnumeric(weighted_rich_club_threshold) == 1, ...
+    [BRAPH2.STR ':RichClubStrength:' BRAPH2.WRONG_INPUT], ...
+    ['RichClubStrength threshold must be a positive number ' ...
+    'while it is ' tostring(weighted_rich_club_threshold)])
+
+s_levels = abs(weighted_rich_club_threshold);
+m.set('PARAMETRIC_VALUE', s_levels)  % Set the parameter
+    
 for li = 1:1:L
     
     Aii = A{li, li};
@@ -57,16 +66,7 @@ for li = 1:1:L
         
         st = (in_strength{li} + out_strength{li})/2;
     end
-    
-    weighted_rich_club_threshold = m.get('PARAMETRIC_VALUE');
-    assert(isnumeric(weighted_rich_club_threshold) == 1, ...
-        [BRAPH2.STR ':RichClubStrength:' BRAPH2.WRONG_INPUT], ...
-        ['RichClubStrength threshold must be a positive number ' ...
-        'while it is ' tostring(weighted_rich_club_threshold)])
-    
-    s_levels = abs(weighted_rich_club_threshold);
-    m.set('PARAMETRIC_VALUE', s_levels)  % Set the parameter
-    
+
     rich_club_strength_layer = zeros(N(1), 1, length(s_levels));
     count = 1;
     for s = s_levels
