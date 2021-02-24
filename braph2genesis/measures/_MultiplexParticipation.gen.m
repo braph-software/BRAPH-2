@@ -34,8 +34,8 @@ L = g.layernumber();
 if L == 0
     value = {};
 else
+    
     N = g.nodenumber();
-
     degree = Degree('G', g).get('M');
     overlapping_degree = OverlappingDegree('G', g).get('M'); 
     multiplex_participation =  zeros(N(1), 1);

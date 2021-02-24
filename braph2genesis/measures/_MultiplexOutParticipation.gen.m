@@ -29,6 +29,7 @@ L = g.layernumber();
 if L == 0
     value = {};
 else
+    
     N = g.nodenumber();
     out_degree = OutDegree('G', g).get('M');
     overlapping_out_degree = OverlappingOutDegree('G', g).get('M');

@@ -29,10 +29,8 @@ L = g.layernumber();
 if L == 0
     value = {};
 else
-    B = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-
+    
     N = g.nodenumber();
-
     in_degree = InDegree('G', g).get('M');
     overlapping_in_degree = OverlappingInDegree('G', g).get('M');
 
