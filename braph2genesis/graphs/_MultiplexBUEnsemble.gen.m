@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexGraphBUEnsemble < MultiplexGraphBU (ge, ensemble of multiplex binary undirected graph) is a multiplex binary undirected graph.
+MultiplexBUEnsemble < MultiplexGraphBU (ge, ensemble of multiplex binary undirected graph) is a multiplex binary undirected graph.
 
 %%% ¡description!
 In an ensemble of multiplex binary undirected (BU) graph, 
@@ -37,7 +37,7 @@ value = A;
 %%%% ¡name!
 Constructor
 %%%% ¡code!
-ge = MultiplexGraphBUEnsemble();
+ge = MultiplexBUEnsemble();
 
 dict = ge.get('G_DICT');
 for i = 1:1:10
@@ -50,5 +50,5 @@ end
 ge.set('g_dict', dict);
 
 assert(ge.get('G_DICT').length == 10, ...
-    [BRAPH2.STR ':MultiplexGraphBUEnsemble:' BRAPH2.BUG_ERR], ...
-    'MultiplexGraphBUEnsemble is not constructing well.')
+    [BRAPH2.STR ':MultiplexBUEnsemble:' BRAPH2.BUG_ERR], ...
+    'MultiplexBUEnsemble is not constructing well.')

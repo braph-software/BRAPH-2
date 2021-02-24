@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexGraphBDEnsemble < MultiplexGraphBD (ge, ensemble of multiplex binary directed graph) is a multiplex binary directed graph.
+MultiplexBDEnsemble < MultiplexGraphBD (ge, ensemble of multiplex binary directed graph) is a multiplex binary directed graph.
 
 %%% ¡description!
 In an ensemble of multiplex binary directed (BD) graph, 
@@ -37,7 +37,7 @@ value = A;
 %%%% ¡name!
 Constructor
 %%%% ¡code!
-ge = MultiplexGraphBDEnsemble();
+ge = MultiplexBDEnsemble();
 
 dict = ge.get('G_DICT');
 for i = 1:1:10
@@ -50,5 +50,5 @@ end
 ge.set('g_dict', dict);
 
 assert(ge.get('G_DICT').length == 10, ...
-    [BRAPH2.STR ':MultiplexGraphBDEnsemble:' BRAPH2.BUG_ERR], ...
-    'MultiplexGraphBDEnsemble is not constructing well.')
+    [BRAPH2.STR ':MultiplexBDEnsemble:' BRAPH2.BUG_ERR], ...
+    'MultiplexBDEnsemble is not constructing well.')
