@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexBDEnsemble < MultiplexGraphBD (ge, ensemble of multiplex binary directed graph) is a multiplex binary directed graph.
+MultiplexBDEnsemble < MultiplexBD (ge, ensemble of multiplex binary directed graph) is a multiplex binary directed graph.
 
 %%% ¡description!
 In an ensemble of multiplex binary directed (BD) graph, 
@@ -14,9 +14,9 @@ true
 %%% ¡prop!
 G_DICT (data, idict) contains the ensemble of multiplex binary directed graph.
 %%%% ¡settings!
-'MultiplexGraphBD'
+'MultiplexBD'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexGraphBD', 'IT_KEY', 1)
+IndexedDictionary('IT_CLASS', 'MultiplexBD', 'IT_KEY', 1)
 
 %%% ¡prop!
 A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary directed graph.
@@ -41,7 +41,7 @@ ge = MultiplexBDEnsemble();
 
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphBD( ...
+    g = MultiplexBD( ...
         'ID', ['g ' int2str(i)], ...
         'B', {rand(10), rand(10)} ...
         );

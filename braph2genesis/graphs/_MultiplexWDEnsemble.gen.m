@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexWDEnsemble < MultiplexGraphWD (ge, ensemble of multiplex weighted directed graph) is a multiplex weighted directed graph.
+MultiplexWDEnsemble < MultiplexWD (ge, ensemble of multiplex weighted directed graph) is a multiplex weighted directed graph.
 
 %%% ¡description!
 In an ensemble of multiplex weighted directed (WD) graph, 
@@ -14,9 +14,9 @@ true
 %%% ¡prop!
 G_DICT (data, idict) contains the ensemble of multiplex weighted directed graph.
 %%%% ¡settings!
-'MultiplexGraphWD'
+'MultiplexWD'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexGraphWD', 'IT_KEY', 1)
+IndexedDictionary('IT_CLASS', 'MultiplexWD', 'IT_KEY', 1)
 
 %%% ¡prop!
 A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.
@@ -41,7 +41,7 @@ ge = MultiplexWDEnsemble();
 
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphWD( ...
+    g = MultiplexWD( ...
         'ID', ['g ' int2str(i)], ...
         'B', {rand(10), rand(10)} ...
         );

@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexBUEnsemble < MultiplexGraphBU (ge, ensemble of multiplex binary undirected graph) is a multiplex binary undirected graph.
+MultiplexBUEnsemble < MultiplexBU (ge, ensemble of multiplex binary undirected graph) is a multiplex binary undirected graph.
 
 %%% ¡description!
 In an ensemble of multiplex binary undirected (BU) graph, 
@@ -14,9 +14,9 @@ true
 %%% ¡prop!
 G_DICT (data, idict) contains the ensemble of multiplex binary undirected graph.
 %%%% ¡settings!
-'MultiplexGraphBU'
+'MultiplexBU'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexGraphBU', 'IT_KEY', 1)
+IndexedDictionary('IT_CLASS', 'MultiplexBU', 'IT_KEY', 1)
 
 %%% ¡prop!
 A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary undirected graph.
@@ -41,7 +41,7 @@ ge = MultiplexBUEnsemble();
 
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphBU( ...
+    g = MultiplexBU( ...
         'ID', ['g ' int2str(i)], ...
         'B', {rand(10), rand(10)} ...
         );

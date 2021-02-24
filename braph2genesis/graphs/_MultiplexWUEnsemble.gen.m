@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexWUEnsemble < MultiplexGraphWU (ge, ensemble of multiplex weighted undirected graph) is a multiplex weighted undirected graph.
+MultiplexWUEnsemble < MultiplexWU (ge, ensemble of multiplex weighted undirected graph) is a multiplex weighted undirected graph.
 
 %%% ¡description!
 In an ensemble of multiplex weighted undirected (WU) graph, 
@@ -14,9 +14,9 @@ true
 %%% ¡prop!
 G_DICT (data, idict) contains the ensemble of multiplex weighted undirected graph.
 %%%% ¡settings!
-'MultiplexGraphWU'
+'MultiplexWU'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexGraphWU', 'IT_KEY', 1)
+IndexedDictionary('IT_CLASS', 'MultiplexWU', 'IT_KEY', 1)
 
 %%% ¡prop!
 A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted undirected graph.
@@ -41,7 +41,7 @@ ge = MultiplexWUEnsemble();
 
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphWU( ...
+    g = MultiplexWU( ...
         'ID', ['g ' int2str(i)], ...
         'B', {rand(10), rand(10)} ...
         );
