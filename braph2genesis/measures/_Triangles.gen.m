@@ -29,8 +29,9 @@ MultiplexGraphBU
 MultiplexGraphBD
 
 %% ¡props!
+
 %%% ¡prop! 
-rule (parameter, OPTION) 
+rule (metadata, OPTION) is the rule to determine what is a triangle.
 %%%% ¡settings!
 {'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!
@@ -42,7 +43,7 @@ rule (parameter, OPTION)
 M (result, cell) is the triangles.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-A = g.get('A');  % cell array with adjacency matrix 
+A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.) 
 L = g.layernumber();
 
 triangles = cell(g.layernumber(), 1);
