@@ -23,7 +23,7 @@ GraphWU
 MultiplexGraphBD
 MultiplexGraphBU
 MultiplexGraphWD
-MultiplexGraphWU
+MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
@@ -171,7 +171,7 @@ assert(isequal(richclubdegree, known_richclubdegree), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 
 A11 = [
@@ -195,9 +195,9 @@ known_richclubdegree = {
     [3 3 2 2]'
     };
 
-g = MultiplexGraphWU('B', A);
+g = MultiplexWU('B', A);
 richclubdegree = RichClubDegree('G', g, 'PARAMETRIC_VALUE', 1).get('M');
 
 assert(isequal(richclubdegree, known_richclubdegree), ...
     [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
-    'RichClubDegree is not being calculated correctly for MultiplexGraphWU.')
+    'RichClubDegree is not being calculated correctly for MultiplexWU.')

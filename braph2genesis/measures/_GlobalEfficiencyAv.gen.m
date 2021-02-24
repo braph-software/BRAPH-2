@@ -17,7 +17,7 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphBU
-MultiplexGraphWU
+MultiplexWU
 MultiplexGraphBU
 
 %% ¡props_update!
@@ -60,7 +60,7 @@ assert(isequal(global_efficiency_av, known_global_efficiency), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
       0   .1  0   0   0

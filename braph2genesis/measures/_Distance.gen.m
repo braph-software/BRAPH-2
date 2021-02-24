@@ -24,7 +24,7 @@ MultigraphBUT
 MultiplexGraphBD
 MultiplexGraphBU
 MultiplexGraphWD
-MultiplexGraphWU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -422,7 +422,7 @@ assert(isequal(distance.get('M'), known_distance), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 B11 = [
     0       .1  .2  .25  0;
     .125    0   0   0    0;
@@ -456,12 +456,12 @@ known_distance = {
 	]
     };
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 distance = Distance('G', g);
 
 assert(isequal(distance.get('M'), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-    'Distance is not being calculated correctly for MultiplexGraphWU.')
+    'Distance is not being calculated correctly for MultiplexWU.')
 
 %%% ¡test!
 %%%% ¡name!

@@ -20,7 +20,7 @@ GraphWU
 GraphBU
 MultigraphBUD
 MultigraphBUT
-MultiplexGraphWU
+MultiplexWU
 MultiplexGraphBU
 
 %% ¡props_update!
@@ -180,7 +180,7 @@ assert(isequal(degree_av.get('M'), known_degree), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -199,9 +199,9 @@ known_degree = {
     mean([1 2 1])
     };
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 degree_av = DegreeAv('G', g);
 
 assert(isequal(degree_av.get('M'), known_degree), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
-    'DegreeAv is not being calculated correctly for MultiplexGraphWU.')
+    'DegreeAv is not being calculated correctly for MultiplexWU.')

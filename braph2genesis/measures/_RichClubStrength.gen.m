@@ -20,7 +20,7 @@ parametricity = Measure.PARAMETRIC;
 GraphWD
 GraphWU
 MultiplexGraphWD
-MultiplexGraphWU
+MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 

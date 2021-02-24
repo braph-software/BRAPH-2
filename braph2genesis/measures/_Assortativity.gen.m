@@ -19,7 +19,7 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphBU
-MultiplexGraphWU
+MultiplexWU
 MultiplexGraphBU
 
 %% ¡props_update!
@@ -135,7 +135,7 @@ assert(isequal(assortativity.get('M'), known_assortativity), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
        1  2  0  0  1;
@@ -156,9 +156,9 @@ known_assortativity = {
                     (37/6-(15/6)^2)/(39/6-(15/6)^2)
                     };
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 assortativity = Assortativity('G', g);
 
 assert(isequal(assortativity.get('M'), known_assortativity), ...
     [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
-    'Assortativity is not being calculated correctly for MultiplexGraphWU.')
+    'Assortativity is not being calculated correctly for MultiplexWU.')

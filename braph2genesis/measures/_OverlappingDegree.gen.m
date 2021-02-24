@@ -16,7 +16,7 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 MultiplexGraphBU
-MultiplexGraphWU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -68,7 +68,7 @@ assert(isequal(overlapping_degree.get('M'), known_overlapping_degree), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -84,9 +84,9 @@ B = {B11 B22};
 
 known_overlapping_degree = {[3, 3, 2]'};
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 overlapping_degree = OverlappingDegree('G', g);
 
 assert(isequal(overlapping_degree.get('M'), known_overlapping_degree), ...
     [BRAPH2.STR ':OverlappingStrength:' BRAPH2.BUG_ERR], ...
-    'OverlappingStrength is not being calculated correctly for MultiplexGraphWU.')
+    'OverlappingStrength is not being calculated correctly for MultiplexWU.')

@@ -16,7 +16,7 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphBU
-MultiplexGraphWU
+MultiplexWU
 MultiplexGraphBU
 
 %% ¡props_update!
@@ -175,7 +175,7 @@ assert(isequal(m_inside_g.get('M'), known_eccentricity_av_default), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
       0     .1  .2  .25  0;
@@ -204,26 +204,26 @@ known_eccentricity_av_default = {
                              mean([Inf Inf Inf Inf Inf]')
                              };
                            
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_outside_g = EccentricityAv('G', g, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_subgraphs), ...
     [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
-    'EccentricityAv is not being calculated correctly for MultiplexGraphWU.')
+    'EccentricityAv is not being calculated correctly for MultiplexWU.')
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_inside_g = g.getMeasure('EccentricityAv', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_subgraphs), ...
     [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
-    'EccentricityAv is not being calculated correctly for MultiplexGraphWU.')
+    'EccentricityAv is not being calculated correctly for MultiplexWU.')
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_outside_g = EccentricityAv('G', g, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_eccentricity_av_default), ...
     [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
-    'EccentricityAv is not being calculated correctly for MultiplexGraphWU.')
+    'EccentricityAv is not being calculated correctly for MultiplexWU.')
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_inside_g = g.getMeasure('EccentricityAv', 'rule', 'all');
 assert(isequal(m_inside_g.get('M'), known_eccentricity_av_default), ...
     [BRAPH2.STR ':EccentricityAv:' BRAPH2.BUG_ERR], ...
-    'EccentricityAv is not being calculated correctly for MultiplexGraphWU.')
+    'EccentricityAv is not being calculated correctly for MultiplexWU.')

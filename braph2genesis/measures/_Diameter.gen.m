@@ -17,7 +17,7 @@ parametricity = Measure.NONPARAMETRIC;
 GraphWU
 GraphBU
 MultiplexGraphBU
-MultiplexGraphWU
+MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
@@ -180,7 +180,7 @@ assert(isequal(m_inside_g.get('M'), known_diameter_default), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
       0     .1  .2  .25  0;
@@ -209,26 +209,26 @@ known_diameter_default = {
                        inf
                        };
                            
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_outside_g = Diameter('G', g, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_diameter_subgraphs), ...
     [BRAPH2.STR ':Diameter:' BRAPH2.BUG_ERR], ...
-    'Diameter is not being calculated correctly for MultiplexGraphWU.')
+    'Diameter is not being calculated correctly for MultiplexWU.')
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_inside_g = g.getMeasure('Diameter', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_diameter_subgraphs), ...
     [BRAPH2.STR ':Diameter:' BRAPH2.BUG_ERR], ...
-    'Diameter is not being calculated correctly for MultiplexGraphWU.')
+    'Diameter is not being calculated correctly for MultiplexWU.')
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_outside_g = Diameter('G', g, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_diameter_default), ...
     [BRAPH2.STR ':Diameter:' BRAPH2.BUG_ERR], ...
-    'Diameter is not being calculated correctly for MultiplexGraphWU.')
+    'Diameter is not being calculated correctly for MultiplexWU.')
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_inside_g = g.getMeasure('Diameter', 'rule', 'all');
 assert(isequal(m_inside_g.get('M'), known_diameter_default), ...
     [BRAPH2.STR ':Diameter:' BRAPH2.BUG_ERR], ...
-    'Diameter is not being calculated correctly for MultiplexGraphWU.')
+    'Diameter is not being calculated correctly for MultiplexWU.')
