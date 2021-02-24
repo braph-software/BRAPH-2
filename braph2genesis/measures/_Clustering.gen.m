@@ -99,7 +99,7 @@ B_BD = [
     ];
 clustering_BD_out = {[0 0 0]'};  % out rule
 g = GraphBD('B', B_BD);
-clustering_1 = Clustering('G', g, 'rule', find(contains(Triangles.RULES, 'out'))).get('M');
+clustering_1 = Clustering('G', g, 'rule', 'out').get('M');
 clustering_2 = clustering_BD_out;
 assert(isequal(clustering_1, clustering_2), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
@@ -158,7 +158,7 @@ known_clustering = {
                  }; 
 
 g = MultiplexGraphBD('B', B);
-clustering = Clustering('G', g, 'rule', find(contains(Triangles.RULES, 'cycle')));
+clustering = Clustering('G', g, 'rule', 'cycle');
 
 assert(isequal(clustering.get('M'), known_clustering), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
