@@ -11,7 +11,7 @@ binarized at different densities.
 false
 
 %%% ¡graph!
-graph = Graph.MULTIGRAPH;
+graph = Graph.MULTIPLEX;
 
 %%% ¡connectivity!
 connectivity = Graph.BINARY * ones(layernumber);
@@ -39,15 +39,18 @@ A (result, cell) is the cell array containing the multiplex binary adjacency mat
 A_WU = calculateValue@MultiplexGraphWU(g, prop);
 
 densities = g.get('DENSITIES');
-L = length(A_WU); % number of layers
-A = cell(length(densities)*L);
+L = length(A_WU); % number of layersof MultiplexWU
+A = cell(length(densities)*L); % the new g.layernumber() will be equal to = L*length(densities)
 
-for i = 1:1:length(densities)
-    density = densities(i);
-    layer = 1;
-    for j = (i*2) - 1:1: (i*2) + L - 2     
-        A{j, j} = binarize(A_WU{layer, layer}, 'density', density);
-        layer = layer + 1;
+if L > 0
+    A(:, :) = {eye(length(A_WU{1, 1}))};
+    for i = 1:1:length(densities)
+        density = densities(i);
+        layer = 1;
+        for j = (i*2) - 1:1: (i*2) + L - 2     
+            A{j, j} = binarize(A_WU{layer, layer}, 'density', density);
+            layer = layer + 1;
+        end
     end
 end
 
