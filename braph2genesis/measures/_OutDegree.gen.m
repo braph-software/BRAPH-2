@@ -18,7 +18,7 @@ parametricity = Measure.NONPARAMETRIC;
 GraphWD
 GraphBD
 MultiplexWD
-MultiplexGraphBD
+MultiplexBD
 
 %% ¡props_update!
 
@@ -90,7 +90,7 @@ assert(isequal(m_inside_g.get('M'), known_out_degree), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 B11 = [
       0  1  1
@@ -111,17 +111,17 @@ known_out_degree = {
                    [1 2 2]'
                    };
 
-g = MultiplexGraphBD('B', B);
+g = MultiplexBD('B', B);
 
 m_outside_g = OutDegree('G', g);
 assert(isequal(m_outside_g.get('M'), known_out_degree), ...
     [BRAPH2.STR ':OutDegree:' BRAPH2.BUG_ERR], ...
-    'OutDegree is not being calculated correctly for MultiplexGraphBD.')
+    'OutDegree is not being calculated correctly for MultiplexBD.')
 
 m_inside_g = g.getMeasure('OutDegree');
 assert(isequal(m_inside_g.get('M'), known_out_degree), ...
     [BRAPH2.STR ':OutDegree:' BRAPH2.BUG_ERR], ...
-    'OutDegree is not being calculated correctly for MultiplexGraphBD.')
+    'OutDegree is not being calculated correctly for MultiplexBD.')
 
 %%% ¡test!
 %%%% ¡name!

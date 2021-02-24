@@ -18,7 +18,7 @@ parametricity = Measure.NONPARAMETRIC;
 GraphWD
 GraphBD
 MultiplexWD
-MultiplexGraphBD
+MultiplexBD
 
 %% ¡props_update!
 
@@ -86,7 +86,7 @@ known_in_global_efficiency = {
                         };
 
 
-g = MultiplexGraphBD('B', B);
+g = MultiplexBD('B', B);
 in_global_efficiency = InGlobalEfficiencyAv('G', g).get('M');
 
 assert(isequal(in_global_efficiency, known_in_global_efficiency), ...

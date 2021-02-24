@@ -15,7 +15,7 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphBD
+MultiplexBD
 MultiplexGraphBU
 MultiplexWD
 MultiplexWU
@@ -76,7 +76,7 @@ assert(isequal(edge_overlap.get('M'), known_edge_overlap), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 B11 = [
     0   1   0
@@ -96,12 +96,12 @@ known_edge_overlap = {[
     .5  .5  0
     ]};
 
-g = MultiplexGraphBD('B', B);
+g = MultiplexBD('B', B);
 edge_overlap = EdgeOverlap('G', g);
 
 assert(isequal(edge_overlap.get('M'), known_edge_overlap), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for MultiplexGraphBD')
+    'EdgeOverlap is not being calculated correctly for MultiplexBD')
 
 %%% ¡test!
 %%%% ¡name!

@@ -19,7 +19,7 @@ GraphBD
 GraphBU
 GraphWD
 GraphWU
-MultiplexGraphBD
+MultiplexBD
 MultiplexGraphBU
 MultiplexWD
 MultiplexWU
@@ -126,7 +126,7 @@ assert(isequal(richness, known_richness), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 A11 = [
     0  1  1  1; 
@@ -148,12 +148,12 @@ known_richness = {
                  [1 0 1 2]'
                  };    
 
-g = MultiplexGraphBD('B', A);
+g = MultiplexBD('B', A);
 richness = Richness('G', g).get('M');
 
 assert(isequal(richness, known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for MultiplexGraphBD.')
+    'Richness is not being calculated correctly for MultiplexBD.')
 
 
 %%% ¡test!

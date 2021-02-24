@@ -20,7 +20,7 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
-MultiplexGraphBD
+MultiplexBD
 MultiplexGraphBU
 MultiplexWD
 MultiplexWU
@@ -201,7 +201,7 @@ assert(isequal(bc_1{1}, bc_WU), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 B11 = [
     0   1   0
@@ -220,12 +220,12 @@ known_betweenness_centrality = {
     [0   1/2 0]'
     };
 
-g = MultiplexGraphBD('B', B);
+g = MultiplexBD('B', B);
 betweenness_centrality = BetweennessCentrality('G', g);
 
 assert(isequal(betweenness_centrality.get('M'), known_betweenness_centrality), ...
     [BRAPH2.STR ':BetweennessCentrality:' BRAPH2.BUG_ERR], ...
-    'BetweennessCentrality is not being calculated correctly for MultiplexGraphBD.')
+    'BetweennessCentrality is not being calculated correctly for MultiplexBD.')
 
 
 %%% ¡test!
