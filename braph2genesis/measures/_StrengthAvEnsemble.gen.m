@@ -7,7 +7,7 @@ the edges connected to a node within a layer.
 
 %%% ¡compatible_graphs!
 GraphWUEnsemble
-MultiplexGraphWUEnsemble
+MultiplexWUEnsemble
 
 %% ¡props_update!
 
@@ -63,7 +63,7 @@ assert(isequal(m_inside_g.get('M'), known_strength_av), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWUEnsemble
+MultiplexWUEnsemble
 %%%% ¡code!
 B11 = [
     0  .2 1
@@ -82,7 +82,7 @@ known_strength_av = {
                  mean([1  1.4 .4])
                  };
              
-ge = MultiplexGraphWUEnsemble();
+ge = MultiplexWUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
     g = MultiplexWU( ...
@@ -96,9 +96,9 @@ ge.set('g_dict', dict);
 m_outside_g = StrengthAvEnsemble('G', ge).get('M');
 assert(isequal(cellfun(@(x) round(x, 3), m_outside_g, 'UniformOutput', false), cellfun(@(x) round(x, 3), known_strength_av, 'UniformOutput', false)), ...
     [BRAPH2.STR ':StrengthAvEnsemble:' BRAPH2.BUG_ERR], ...
-    'StrengthAvEnsemble is not being calculated correctly for MultiplexGraphWUEnsemble.')
+    'StrengthAvEnsemble is not being calculated correctly for MultiplexWUEnsemble.')
 
 m_inside_g = ge.getMeasure('StrengthAvEnsemble').get('M');
 assert(isequal(cellfun(@(x) round(x, 3), m_inside_g, 'UniformOutput', false), cellfun(@(x) round(x, 3), known_strength_av, 'UniformOutput', false)), ...
     [BRAPH2.STR ':StrengthAvEnsemble:' BRAPH2.BUG_ERR], ...
-    'StrengthAvEnsemble is not being calculated correctly for MultiplexGraphWUEnsemble.')
+    'StrengthAvEnsemble is not being calculated correctly for MultiplexWUEnsemble.')

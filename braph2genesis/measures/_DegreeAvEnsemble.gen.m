@@ -10,8 +10,8 @@ Connection weights are ignored in calculations.
 GraphWUEnsemble
 MultigraphBUTEnsemble
 MultigraphBUDEnsemble
-MultiplexGraphBUEnsemble
-MultiplexGraphWUEnsemble
+MultiplexBUEnsemble
+MultiplexWUEnsemble
 
 %% ¡props_update!
 
@@ -150,7 +150,7 @@ assert(isequal(m_inside_g.get('M'), known_degree_av), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBUEnsemble
+MultiplexBUEnsemble
 %%%% ¡code!
 B11 = [
     0   1   1
@@ -169,7 +169,7 @@ known_degree_av = {
     mean([1 2 1])
     };
 
-ge = MultiplexGraphBUEnsemble();
+ge = MultiplexBUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
     g = MultiplexBU( ...
@@ -187,7 +187,7 @@ assert(isequal(cellfun(@(x) round(x, 3), degree_av_ensemble, 'UniformOutput', fa
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWUEnsemble
+MultiplexWUEnsemble
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -206,7 +206,7 @@ known_degree_av = {
     mean([1 2 1])
     };
 
-ge = MultiplexGraphWUEnsemble();
+ge = MultiplexWUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
     g = MultiplexWU( ...

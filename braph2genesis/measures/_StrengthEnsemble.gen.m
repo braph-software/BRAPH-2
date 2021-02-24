@@ -7,7 +7,7 @@ a node within a layer.
 
 %%% ¡compatible_graphs!
 GraphWUEnsemble
-MultiplexGraphWUEnsemble
+MultiplexWUEnsemble
 
 %% ¡props_update!
 
@@ -63,7 +63,7 @@ assert(isequal(round(m_inside_g{1}, 3), round(known_strength{1}, 3)), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWUEnsemble
+MultiplexWUEnsemble
 %%%% ¡code!
 B11 = [
     0  .2 1
@@ -82,7 +82,7 @@ known_strength = {
                  [1   1.4 .4]'
                  };
              
-ge = MultiplexGraphWUEnsemble();
+ge = MultiplexWUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
     g = MultiplexWU( ...
