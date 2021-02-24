@@ -49,8 +49,8 @@ for li = 1:1:L
     else %% directed graphs    
         in_degree = InDegree('G', g).get('M');
         out_degree = OutDegree('G', g).get('M');
-        directed_triangles_rule = Triangles.RULES(m.get('rule'));
-        switch lower(directed_triangles_rule{1})
+        directed_triangles_rule = m.get('rule');
+        switch lower(directed_triangles_rule)
             case {'all'}  % all rule
                 clustering_layer = triangles{li} ./ ((out_degree{li} + in_degree{li}) .* (out_degree{li} + in_degree{li} - 1) - 2 * diag(Aii^2));
             case {'middleman'}  % middleman rule
