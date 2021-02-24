@@ -20,7 +20,7 @@ BKGCOLOR (metadata, rvector) is background color of the setting interface.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[.95 .95 .95]
+[.98 .95 .95]
 
 %%% ¡prop!
 SETPOS (metadata, rvector) is the normalized position of the setting interface on the screen.
@@ -98,6 +98,53 @@ function f_settings = settings(pl, varargin)
         f_settings = pl.f_settings;
     end
 end
+
+%% ¡staticmethods!
+function r = x0(h)
+    %X0 returns the position of the left edge of a graphical element.
+    %
+    % R = X0(H) is the distance from the inner left edge of the parent
+    %  container to the outer left edge of the graphical element H.
+    % 
+    % See also y0, w, h.
+
+    r = get(h, 'Position');
+    r = r(1);
+end
+function r = y0(h)
+    %Y0 returns the position of the bottom edge of a graphical element.
+    %
+    % R = Y0(H) is the distance from the inner bottom edge of the parent 
+    %  container to the outer bottom edge of the graphical element H.
+    %
+    % See also x0, w, h.
+
+    r = get(h, 'Position');
+    r = r(2);
+end
+function r = w(h)
+    %W returns the width of a graphical element.
+    %
+    % R = W(H) is the distance between the right and left outer edges of the
+    %   graphical element H.
+    % 
+    % See also x0, y0, h.
+
+    r = get(h, 'Position');
+    r = r(3);
+end
+function r = h(h)
+    %H returns the height of a graphical element.
+    %
+    % R = H(H) is the distance between the top and bottom outer edges of the
+    %  graphical element H.
+    % 
+    % See also x0, y0, w.
+
+    r = get(h, 'Position');
+    r = r(4);
+end
+
 
 %% ¡tests!
 
