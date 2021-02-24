@@ -25,13 +25,13 @@ MultiplexGraphWU
 
 %% ¡props!
 %%% ¡prop! 
-WRC_PARAMETER (parameter, RVECTOR) % calculation in a graph or its subgraph
+WRC_PARAMETER (parameter, RVECTOR) is the threshold
 %%%% ¡default!
 1
 
 %% ¡props_update!
 %%% ¡prop!
-M (result, cell) is the diameter.
+M (result, cell) is the weighted rich club.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc

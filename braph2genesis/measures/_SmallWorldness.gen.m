@@ -24,7 +24,7 @@ MultiplexGraphWU
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the in-path length.
+M (result, cell) is the small worldness
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 L = g.layernumber();

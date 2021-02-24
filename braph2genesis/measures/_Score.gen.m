@@ -22,7 +22,7 @@ MultiplexGraphWD
 
 %% ¡props!
 %%% ¡prop! 
-SCoreThreshold (parameter, scalar) % calculation in a graph or its subgraph
+SCoreThreshold (parameter, scalar) is the threshold.
 %%%% ¡default!
 1
 
