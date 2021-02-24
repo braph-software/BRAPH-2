@@ -15,7 +15,7 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphBU
+MultiplexBU
 MultiplexWU
 
 %% ¡props_update!
@@ -43,7 +43,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
     0   1   1
@@ -59,12 +59,12 @@ B = {B11 B22};
 
 known_overlapping_degree = {[3, 3, 2]'};
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 overlapping_degree = OverlappingDegree('G', g);
                  
 assert(isequal(overlapping_degree.get('M'), known_overlapping_degree), ...
     [BRAPH2.STR ':OverlappingDegree:' BRAPH2.BUG_ERR], ...
-    'OverlappingDegree is not being calculated correctly for MultiplexGraphBU')
+    'OverlappingDegree is not being calculated correctly for MultiplexBU')
 
 %%% ¡test!
 %%%% ¡name!

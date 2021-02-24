@@ -16,7 +16,7 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphBU
-MultiplexGraphBU
+MultiplexBU
 MultiplexWU
 
 %% ¡props!
@@ -125,7 +125,7 @@ assert(isequal(m_inside_g.get('M'), known_radius_default), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
       0     .1  .2  .25  0;
@@ -154,29 +154,29 @@ known_radius_default = {
                        inf
                        };
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 m_outside_g = Radius('G', g, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
-    'Radius is not being calculated correctly for MultiplexGraphBU.')
+    'Radius is not being calculated correctly for MultiplexBU.')
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 m_inside_g = g.getMeasure('Radius', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_radius_subgraphs), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
-    'Radius is not being calculated correctly for MultiplexGraphBU.')
+    'Radius is not being calculated correctly for MultiplexBU.')
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 m_outside_g = Radius('G', g, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
-    'Radius is not being calculated correctly for MultiplexGraphBU.')
+    'Radius is not being calculated correctly for MultiplexBU.')
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 m_inside_g = g.getMeasure('Radius', 'rule', 'all');
 assert(isequal(m_inside_g.get('M'), known_radius_default), ...
     [BRAPH2.STR ':Radius:' BRAPH2.BUG_ERR], ...
-    'Radius is not being calculated correctly for MultiplexGraphBU.')
+    'Radius is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!

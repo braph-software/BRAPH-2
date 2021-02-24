@@ -15,7 +15,7 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphBU
+MultiplexBU
 MultiplexWU
 
 %% ¡props_update!
@@ -34,7 +34,7 @@ value = degree_overlap_av;
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
     0   1   1
@@ -50,12 +50,12 @@ B = {B11 B22};
 
 known_degree_overlap = {mean([1 1 0])};
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 degree_overlap_av = DegreeOverlapAv('G', g);
                  
 assert(isequal(degree_overlap_av.get('M'), known_degree_overlap), ...
     [BRAPH2.STR ':DegreeOverlapAv:' BRAPH2.BUG_ERR], ...
-    'DegreeOverlapAv is not being calculated correctly for MultiplexGraphBU')
+    'DegreeOverlapAv is not being calculated correctly for MultiplexBU')
 
 %%% ¡test!
 %%%% ¡name!

@@ -18,7 +18,7 @@ parametricity = Measure.NONPARAMETRIC;
 GraphWU
 GraphBU
 MultiplexWU
-MultiplexGraphBU
+MultiplexBU
 
 %% ¡props_update!
 
@@ -65,7 +65,7 @@ assert(isequal(global_efficiency, known_global_efficiency), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
       0   .1  0   0   0
@@ -90,9 +90,9 @@ known_global_efficiency = {
                         };
 
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 global_efficiency = GlobalEfficiency('G', g).get('M');
 
 assert(isequal(global_efficiency, known_global_efficiency), ...
     [BRAPH2.STR ':GlobalEfficiency:' BRAPH2.BUG_ERR], ...
-    'GlobalEfficiency is not being calculated correctly for MultiplexGraphBU.')
+    'GlobalEfficiency is not being calculated correctly for MultiplexBU.')

@@ -23,7 +23,7 @@ GraphBU
 GraphBD
 MultiplexWU
 MultiplexWD
-MultiplexGraphBU
+MultiplexBU
 MultiplexBD
 
 %% ¡props_update!
@@ -107,7 +107,7 @@ assert(isequal(clustering_1, clustering_2), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
       0 1 1 1;
@@ -128,12 +128,12 @@ known_clustering = {
                  [2/3 1 2/3 1]'
                  };      
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 clustering = Clustering('G', g);
 
 assert(isequal(clustering.get('M'), known_clustering), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
-    'Clustering is not being calculated correctly for MultiplexGraphBU.')
+    'Clustering is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!

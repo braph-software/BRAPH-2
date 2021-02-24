@@ -21,7 +21,7 @@ GraphBU
 GraphBD
 MultiplexWU
 MultiplexWD
-MultiplexGraphBU
+MultiplexBU
 MultiplexBD
 
 %% ¡props_update!
@@ -83,7 +83,7 @@ assert(isequal(transitivity.get('M'), known_transitivity), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 A11 = [
       0 1 1 1;
@@ -104,9 +104,9 @@ known_transitivity = {
                  3/4
                  };      
 
-g = MultiplexGraphBU('B', A);
+g = MultiplexBU('B', A);
 transitivity = Transitivity('G', g);
 
 assert(isequal(transitivity.get('M'), known_transitivity), ...
     [BRAPH2.STR ':Transitivity:' BRAPH2.BUG_ERR], ...
-    'Transitivity is not being calculated correctly for MultiplexGraphBU.')
+    'Transitivity is not being calculated correctly for MultiplexBU.')

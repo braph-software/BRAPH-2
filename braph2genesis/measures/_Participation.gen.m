@@ -20,7 +20,7 @@ GraphBU
 GraphWD
 GraphWU
 MultiplexBD
-MultiplexGraphBU
+MultiplexBU
 MultiplexWD
 MultiplexWU
 
@@ -168,7 +168,7 @@ assert(isequal(participation, known_participation_in), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 
 A11 = [
@@ -191,10 +191,10 @@ known_participation = {
                  [0 0 0 0]'
                  };   
  
-g = MultiplexGraphBU('B', A);
+g = MultiplexBU('B', A);
 participation = Participation('G', g).get('M');
 
 assert(isequal(participation, known_participation), ...
     [BRAPH2.STR ':Participation:' BRAPH2.BUG_ERR], ...
-    'Participation is not being calculated correctly for MultiplexGraphBU.')
+    'Participation is not being calculated correctly for MultiplexBU.')
 

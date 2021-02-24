@@ -16,7 +16,7 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 MultiplexBD
-MultiplexGraphBU
+MultiplexBU
 MultiplexWD
 MultiplexWU
 
@@ -47,7 +47,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
     0   1   1
@@ -67,12 +67,12 @@ known_edge_overlap = {[
     .5  .5  0
     ]};
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 edge_overlap = EdgeOverlap('G', g);
  
 assert(isequal(edge_overlap.get('M'), known_edge_overlap), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for MultiplexGraphBU.')
+    'EdgeOverlap is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!

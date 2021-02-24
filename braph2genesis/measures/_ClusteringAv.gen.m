@@ -20,7 +20,7 @@ GraphWD
 GraphBU
 GraphBD
 MultiplexBD
-MultiplexGraphBU
+MultiplexBU
 MultiplexWD
 MultiplexWU
 
@@ -77,7 +77,7 @@ assert(isequal(clustering_1, clustering_2), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
       0 1 1 1;
@@ -98,9 +98,9 @@ known_clustering_av = {
                  mean([2/3 1 2/3 1])
                  };      
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 clustering_av = ClusteringAv('G', g);
 
 assert(isequal(clustering_av.get('M'), known_clustering_av), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
-    'ClusteringAv is not being calculated correctly for MultiplexGraphBU.')
+    'ClusteringAv is not being calculated correctly for MultiplexBU.')

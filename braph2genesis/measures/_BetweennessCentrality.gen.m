@@ -21,7 +21,7 @@ GraphWD
 GraphBU
 GraphBD
 MultiplexBD
-MultiplexGraphBU
+MultiplexBU
 MultiplexWD
 MultiplexWU
 
