@@ -25,7 +25,7 @@ M (result, cell) is the average overlapping out-strength.
 g = m.get('G');  % graph from measure class
 overlapping_out_strength = calculateValue@OverlappingOutStrength(m, prop);
 
-value = {mean(overlapping_out_strength{1})};
+value = {mean(cell2mat(overlapping_out_strength))};
 
 %% ¡tests!
 
