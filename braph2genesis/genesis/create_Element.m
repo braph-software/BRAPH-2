@@ -243,7 +243,7 @@ generate_header()
         gs(1, cellfun(@(x) ['%  ' x], fc_prop_list_txt, 'UniformOutput', false))
         gs(1, {
              '%'
-            ['% ' class_name ' constructor:']
+            ['% ' class_name ' methods (constructor):']
             ['%  ' class_name ' - constructor']
             })
         if element_class_created
