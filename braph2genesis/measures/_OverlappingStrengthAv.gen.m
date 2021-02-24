@@ -1,5 +1,5 @@
 %% ¡header!
-OverlappingStrengthAv < OverlappingStrength (m, overlapping strength) is the graph average overlapping strength.
+OverlappingStrengthAv < OverlappingStrength (m, average overlapping strength) is the graph average overlapping strength.
 
 %%% ¡description!
 The average overlapping strength of a graph is the average of the sum of the 
