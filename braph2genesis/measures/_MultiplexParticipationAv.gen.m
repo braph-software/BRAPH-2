@@ -2,7 +2,7 @@
 MultiplexParticipationAv < MultiplexParticipation (m, average multiplex participation) is the graph average multiplex participation.
 
 %%% ¡description!
-The multiplex participation of a graph is the average heterogeneity
+The average multiplex participation of a graph is the average heterogeneity
 of its number of neighbours across the layers. 
 
 %%% ¡shape!
