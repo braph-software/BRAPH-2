@@ -17,7 +17,7 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWD
 GraphBD
-MultiplexGraphWD
+MultiplexWD
 MultiplexGraphBD
 
 %% ¡props_update!
@@ -61,7 +61,7 @@ assert(isequal(out_global_efficiency, known_out_global_efficiency), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 B11 = [
       0   .1  0   0   0

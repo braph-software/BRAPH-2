@@ -15,7 +15,7 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphWD
+MultiplexWD
 MultiplexWU
 
 %% ¡props_update!
@@ -73,7 +73,7 @@ assert(isequal(weighted_edge_overlap.get('M'), known_weighted_edge_overlap), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 B11 = [
     0   .2  0
@@ -93,9 +93,9 @@ known_weighted_edge_overlap = {[
     .5  .2  0
     ]};
 
-g = MultiplexGraphWD('B', B);
+g = MultiplexWD('B', B);
 weighted_edge_overlap = WeightedEdgeOverlap('G', g);
 
 assert(isequal(weighted_edge_overlap.get('M'), known_weighted_edge_overlap), ...
     [BRAPH2.STR ':WeightedEdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'WeightedEdgeOverlap is not being calculated correctly for MultiplexGraphWD')
+    'WeightedEdgeOverlap is not being calculated correctly for MultiplexWD')

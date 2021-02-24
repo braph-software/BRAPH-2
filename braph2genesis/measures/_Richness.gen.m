@@ -21,7 +21,7 @@ GraphWD
 GraphWU
 MultiplexGraphBD
 MultiplexGraphBU
-MultiplexGraphWD
+MultiplexWD
 MultiplexWU
 
 %% ¡props_update!
@@ -158,7 +158,7 @@ assert(isequal(richness, known_richness), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 A11 = [
     0   1   1  .1; 
@@ -179,10 +179,10 @@ known_richness = {
                  [.6 0 1 21/20]'
                  };   
 
-g = MultiplexGraphWD('B', A);
+g = MultiplexWD('B', A);
 richness = Richness('G', g).get('M');
 richness = cellfun(@(s) round(s, 4), richness, 'UniformOutput', false);
 
 assert(isequal(richness, known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
-    'Richness is not being calculated correctly for MultiplexGraphWD.')
+    'Richness is not being calculated correctly for MultiplexWD.')

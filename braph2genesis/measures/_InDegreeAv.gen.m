@@ -16,7 +16,7 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWD
 GraphBD
-MultiplexGraphWD
+MultiplexWD
 MultiplexGraphBD
 
 %% ¡props_update!
@@ -120,7 +120,7 @@ assert(isequal(m_inside_g.get('M'), known_in_degree_av), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 B11 = [
       0   .2  1
@@ -139,14 +139,14 @@ known_in_degree_av = {
                      mean([1 2 2]')
                      };
 
-g = MultiplexGraphWD('B', B);
+g = MultiplexWD('B', B);
 
 m_outside_g = InDegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree_av), ...
     [BRAPH2.STR ':InDegreeAv:' BRAPH2.BUG_ERR], ...
-    'InDegreeAv is not being calculated correctly for MultiplexGraphWD.')
+    'InDegreeAv is not being calculated correctly for MultiplexWD.')
 
 m_inside_g = g.getMeasure('InDegreeAv');
 assert(isequal(m_inside_g.get('M'), known_in_degree_av), ...
     [BRAPH2.STR ':InDegreeAv:' BRAPH2.BUG_ERR], ...
-    'InDegreeAv is not being calculated correctly for MultiplexGraphWD.')
+    'InDegreeAv is not being calculated correctly for MultiplexWD.')

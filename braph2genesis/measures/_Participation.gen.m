@@ -21,7 +21,7 @@ GraphWD
 GraphWU
 MultiplexGraphBD
 MultiplexGraphBU
-MultiplexGraphWD
+MultiplexWD
 MultiplexWU
 
 %% ¡props!
