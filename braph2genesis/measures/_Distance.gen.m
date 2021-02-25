@@ -97,7 +97,7 @@ function weighted_distance = getWeightedCalculation(m, A)
     end
     % m.B = B;
     cell_B = m.get('EDGESNUMBER');
-    cell_B{end+1} = {B};
+    cell_B{end+1} = B;
     m.set('EDGESNUMBER', cell_B);
     weighted_distance = D;
 end
