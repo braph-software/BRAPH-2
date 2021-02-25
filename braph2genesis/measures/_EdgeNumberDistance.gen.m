@@ -25,11 +25,12 @@ MultiplexWU
 %%% ¡prop!
 M (result, cell) is the edge number distance.
 %%%% ¡calculate!
+g = m.get('G');
 distance = Distance('G', g);
 distance.get('M');
-edge_number_distance = distance.get('B');
+edge_number_distance = distance.get('EDGESNUMBER');
 
-value = edge_betweenness_centrality;
+value = edge_number_distance;
 
 %% ¡tests!
 
@@ -98,6 +99,6 @@ known_value = {[
 g = MultiplexWD('B', A);
 edge_number_distance = EdgeNumberDistance('G', g).get('M');
 
-assert(isequal(edge_number_distance, known_value), ...
+assert(isequal(edge_number_distance, known_value'), ...
     [BRAPH2.STR ':EdgeNumberDistance:' BRAPH2.BUG_ERR], ...
     'EdgeNumberDistance is not being calculated correctly for MultiplexGraphWD.')

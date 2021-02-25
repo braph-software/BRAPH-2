@@ -199,7 +199,7 @@ known_edge_betweenness_centrality = {[
                                 1 0 0;
                                 2 0 0
                                 ]};
-g = GraphBD('G', A);
+g = GraphBD('B', A);
 edge_betweenness_centrality = EdgeBetweennessCentrality('G', g).get('M');
 
 assert(isequal(edge_betweenness_centrality, known_edge_betweenness_centrality), ...
@@ -265,7 +265,7 @@ known_edge_betweenness_centrality = {[
                                       2 0 0;
                                       0 2 0
                                      ]};
-g = MultiplexGraphWD('B', A);
+g = MultiplexWD('B', A);
 edge_betweenness_centrality = EdgeBetweennessCentrality('G', g).get('M');
 assert(isequal(edge_betweenness_centrality, known_edge_betweenness_centrality), ...
     [BRAPH2.STR ':EdgeBetweennessCentrality:' BRAPH2.BUG_ERR], ...

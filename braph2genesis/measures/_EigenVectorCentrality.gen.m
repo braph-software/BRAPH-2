@@ -61,11 +61,11 @@ A = [
 known_eigenvector_centrality = {[1/2 1/2 1/2 1/2]'};
 
 g = GraphBU('B', A);
-eigenvector_centrality = EigenvectorCentrality('G', g).get('M');
+eigenvector_centrality = EigenVectorCentrality('G', g).get('M');
 
 assert(isequal(round(cell2mat(eigenvector_centrality), 6), round(cell2mat(known_eigenvector_centrality), 6)), ...
-    [BRAPH2.STR ':EigenvectorCentrality:' BRAPH2.BUG_ERR], ...
-    'EigenvectorCentrality is not being calculated correctly for GraphBU.')
+    [BRAPH2.STR ':EigenVectorCentrality:' BRAPH2.BUG_ERR], ...
+    'EigenVectorCentrality is not being calculated correctly for GraphBU.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -81,11 +81,11 @@ A = [
 known_eigenvector_centrality = {[1/2 1/2 1/2 1/2]'};
 
 g = GraphWU('B', A);
-eigenvector_centrality = EigenvectorCentrality('G', g).get('M');
+eigenvector_centrality = EigenVectorCentrality('G', g).get('M');
 
 assert(isequal(round(cell2mat(eigenvector_centrality), 6), round(cell2mat(known_eigenvector_centrality), 6)), ...
-    [BRAPH2.STR ':EigenvectorCentrality:' BRAPH2.BUG_ERR], ...
-    'EigenvectorCentrality is not being calculated correctly for GraphWU.')
+    [BRAPH2.STR ':EigenVectorCentrality:' BRAPH2.BUG_ERR], ...
+    'EigenVectorCentrality is not being calculated correctly for GraphWU.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -112,8 +112,8 @@ known_eigenvector_centrality = {
     };
 
 g = MultiplexBU('B', A);
-eigenvector_centrality = EigenvectorCentrality('G', g).get('M');
+eigenvector_centrality = EigenVectorCentrality('G', g).get('M');
 
 assert(isequal(round(cell2mat(eigenvector_centrality), 6), round(cell2mat(known_eigenvector_centrality), 6)), ...
-    [BRAPH2.STR ':EigenvectorCentrality:' BRAPH2.BUG_ERR], ...
-    'EigenvectorCentrality is not being calculated correctly for MultiplexBU.')
+    [BRAPH2.STR ':EigenVectorCentrality:' BRAPH2.BUG_ERR], ...
+    'EigenVectorCentrality is not being calculated correctly for MultiplexBU.')

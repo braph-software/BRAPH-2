@@ -75,7 +75,7 @@ for li = 1:1:L
     k_core(li) = {subAii};  % add k-core of layer li
 end
 
-value = kcore;
+value = k_core;
 
 %% ¡tests!
 
@@ -146,10 +146,7 @@ A22 = [
     1   1   0  0;
     1   .8  0  0
     ];
-A = {
-    A11     A12
-    A21     A22
-    };
+A = {A11 A22};
              
 known_kcore(1) = {[
                 0  1  1  0;
@@ -167,7 +164,7 @@ known_kcore(2, 1) = {[
 g = MultiplexWU('B', A);
 kcore = KCore('G', g, 'KCoreThreshold', 2).get('M');
 
-assert(isequal(kcore.getValue(), known_kcore), ...
+assert(isequal(kcore, known_kcore), ...
     [BRAPH2.STR ':KCore:' BRAPH2.BUG_ERR], ...
     'KCore is not being calculated correctly for MultiplexGraphWU.')
 

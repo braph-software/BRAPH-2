@@ -37,6 +37,10 @@ M (result, cell) is the categorical persistence.
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 L = g.layernumber();
+N = g.nodenumber();
+if isempty(N)
+    N(1) = 1;
+end
 N = N(1);
 
 S = MultilayerCommunityStructure('G', g).get('M');
