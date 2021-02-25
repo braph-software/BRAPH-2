@@ -18,8 +18,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphBU
 GraphWU
-MultiplexGraphBU
-MultiplexGraphWU
+MultiplexBU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -76,7 +76,7 @@ assert(isequal(smallworldness, known_smallworldness), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 A11 = rand(20);
 
@@ -88,13 +88,13 @@ known_smallworldness = {
                        1
                        };
 
-g = MultiplexGraphWU('B', A);
+g = MultiplexWU('B', A);
 smallworldness = SmallWorldness('G', g).get('M');
 smallworldness = cellfun(@(s) round(s, 1), smallworldness, 'UniformOutput', false);
 
 assert(isequal(smallworldness, known_smallworldness), ...
     [BRAPH2.STR ':SmallWorldness:' BRAPH2.BUG_ERR], ...
-    'SmallWorldness is not being calculated correctly for MultiplexGraphWU.')
+    'SmallWorldness is not being calculated correctly for MultiplexWU.')
 
 %%% ¡test!
 %%%% ¡name!

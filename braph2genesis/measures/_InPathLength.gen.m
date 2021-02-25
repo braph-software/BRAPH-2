@@ -17,8 +17,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphBD
 GraphWD
-MultiplexGraphBD
-MultiplexGraphWD
+MultiplexBD
+MultiplexWD
 
 %% ¡props!
 %%% ¡prop! 
@@ -95,7 +95,7 @@ assert(isequal(in_path_length, known_in_path_length), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 A11 = [
       0     .1  .2  .25  0;
@@ -119,9 +119,9 @@ known_in_path_length = {
                     [Inf Inf Inf Inf Inf]'
                     };
 
-g = MultiplexGraphBD('B', A);
+g = MultiplexBD('B', A);
 in_path_length = InPathLength('G', g).get('M');
 
 assert(isequal(in_path_length, known_in_path_length), ...
     [BRAPH2.STR ':InPathLength:' BRAPH2.BUG_ERR], ...
-    'InPathLength is not being calculated correctly for MultiplexGraphBD.')
+    'InPathLength is not being calculated correctly for MultiplexBD.')

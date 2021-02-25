@@ -20,8 +20,8 @@ parametricity = Measure.PARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphWU
-MultiplexGraphWU
-MultiplexGraphWU
+MultiplexWU
+MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
@@ -115,7 +115,7 @@ assert(isequal(round(weighted_rich_club{1}, 10), round(known_weighted_rich_club{
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 A11 = [
     0   .1  1  0; 
@@ -137,16 +137,16 @@ known_weighted_rich_club = {
                            1
                            };      
 
-g = MultiplexGraphWU('B', A);
+g = MultiplexWU('B', A);
 weighted_rich_club = WeightedRichClub('G', g).get('M');
 
 assert(isequal(round(weighted_rich_club{1}, 10), round(known_weighted_rich_club{1}, 10)), ...
     [BRAPH2.STR ':WeightedRichClub:' BRAPH2.BUG_ERR], ...
-    'WeightedRichClub is not being calculated correctly for MultiplexGraphWU.')
+    'WeightedRichClub is not being calculated correctly for MultiplexWU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 
 A11 = [
@@ -174,9 +174,9 @@ known_weighted_rich_club = {
                  wrichclub_l2
                  };             
 
-g = MultiplexGraphWD('B', A);
+g = MultiplexWD('B', A);
 weighted_rich_club = WeightedRichClub('G', g, 'WRC_PARAMETER', [1.5, 2]).get('M');
 
 assert(isequal(weighted_rich_club, known_weighted_rich_club), ...
     [BRAPH2.STR ':WeightedRichClub:' BRAPH2.BUG_ERR], ...
-    'WeightedRichClub is not being calculated correctly for MultiplexGraphWD.')
+    'WeightedRichClub is not being calculated correctly for MultiplexWD.')

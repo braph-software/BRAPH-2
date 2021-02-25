@@ -17,8 +17,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphBD
 GraphWD
-MultiplexGraphBD
-MultiplexGraphWD
+MultiplexBD
+MultiplexWD
 
 %% ¡props!
 %%% ¡prop! 
@@ -95,7 +95,7 @@ assert(isequal(out_path_length, known_out_path_length), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 A11 = [
       0     .1  .2  .25  0;
@@ -119,9 +119,9 @@ known_out_path_length = {
                     [Inf Inf Inf Inf Inf]'
                     };
 
-g = MultiplexGraphBD('B', A);
+g = MultiplexBD('B', A);
 out_path_length = OutPathLength('G', g).get('M');
 
 assert(isequal(out_path_length, known_out_path_length), ...
     [BRAPH2.STR ':OutPathLength:' BRAPH2.BUG_ERR], ...
-    'OutPathLength is not beoutg calculated correctly for MultiplexGraphBD.')
+    'OutPathLength is not beoutg calculated correctly for MultiplexBD.')
