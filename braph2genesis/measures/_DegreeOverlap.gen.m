@@ -26,7 +26,7 @@ M (result, cell) is the degree overlap.
 g = m.get('G'); % graph from measure class
 
 edge_overlap = calculateValue@EdgeOverlap(m, prop);	
-degree_overlap = {sum(edge_overlap{1} == 1, 2)};
+degree_overlap = {sum(cell2mat(edge_overlap) == 1, 2)};
 
 value = degree_overlap;
 
