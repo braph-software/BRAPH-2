@@ -1,10 +1,10 @@
 %% ¡header!
-MultiplexGraphWDEnsemble < MultiplexGraphWD (ge, ensemble of multiplex weighted directed graph) is a multiplex weighted directed graph.
+MultiplexWUEnsemble < MultiplexWU (ge, ensemble of multiplex weighted undirected graph) is a multiplex weighted undirected graph.
 
 %%% ¡description!
-In an ensemble of multiplex weighted directed (WD) graph, 
+In an ensemble of multiplex weighted undirected (WU) graph, 
 the edges are associated with a real number between 0 and 1 
-indicating the strength of the connection, and are directed.
+indicating the strength of the connection, and are undirected.
 
 %%% ¡ensemble!
 true
@@ -12,14 +12,14 @@ true
 %% ¡props_update!
 
 %%% ¡prop!
-G_DICT (data, idict) contains the ensemble of multiplex weighted directed graph.
+G_DICT (data, idict) contains the ensemble of multiplex weighted undirected graph.
 %%%% ¡settings!
-'MultiplexGraphWD'
+'MultiplexWU'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexGraphWD', 'IT_KEY', 1)
+IndexedDictionary('IT_CLASS', 'MultiplexWU', 'IT_KEY', 1)
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.
+A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted undirected graph.
 %%%% ¡calculate!
 A_list = cellfun(@(x) cell2mat(x.get('A')), ge.get('G_DICT').getItems, 'UniformOutput', false);
 A = mean(cat(3, A_list{:}), 3);
@@ -37,11 +37,11 @@ value = A;
 %%%% ¡name!
 Constructor
 %%%% ¡code!
-ge = MultiplexGraphWDEnsemble();
+ge = MultiplexWUEnsemble();
 
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphWD( ...
+    g = MultiplexWU( ...
         'ID', ['g ' int2str(i)], ...
         'B', {rand(10), rand(10)} ...
         );
@@ -50,5 +50,5 @@ end
 ge.set('g_dict', dict);
 
 assert(ge.get('G_DICT').length == 10, ...
-    [BRAPH2.STR ':MultiplexGraphWDEnsemble:' BRAPH2.BUG_ERR], ...
-    'MultiplexGraphWDEnsemble is not constructing well.')
+    [BRAPH2.STR ':MultiplexWUEnsemble:' BRAPH2.BUG_ERR], ...
+    'MultiplexWUEnsemble is not constructing well.')
