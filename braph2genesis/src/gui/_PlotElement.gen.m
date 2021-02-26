@@ -71,12 +71,12 @@ for prop = 1:1:el.getPropNumber()
     
     switch el.getPropFormat(prop)
 %         case Format.EMPTY
-        case Format.STRING
-            pp_list{prop} = PlotPropString( ...
-                'ID', el.getPropTag(prop), ...
-                'EL', el, ...
-                'PROP', prop, ...
-                'BKGCOLOR', color);
+%         case Format.STRING
+%             pp_list{prop} = PlotPropString( ...
+%                 'ID', el.getPropTag(prop), ...
+%                 'EL', el, ...
+%                 'PROP', prop, ...
+%                 'BKGCOLOR', color);
 %         case Format.LOGICAL
 %         case Format.OPTION
 %         case Format.CLASS
@@ -128,7 +128,15 @@ function h_panel = draw(pl, varargin)
     % see also resize, settings, uipanel, isgraphics.
 
     % initialization
-    f = draw@Plot(pl, varargin{:}, 'SizeChangedFcn', {@resize});
+    f = draw@Plot(pl, ...
+        'Visible', 'off', ...
+        varargin{:}, ...
+        'SizeChangedFcn', {@resize} ...
+        );
+
+    function resize(~, ~)
+        pl.resize()
+    end
 
     if isempty(pl.p) || ~isgraphics(pl.p, 'uipanel')
         pl.p = uipanel('Parent', f);
@@ -148,13 +156,9 @@ function h_panel = draw(pl, varargin)
     if isempty(pl.pp_list) || any(cellfun(@(x) ~isgraphics(x, 'uipanel'), pl.pp_list))
         pl.pp_list = cellfun(@(x) x.draw('Parent', pl.p), pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
     end
-        
-    resize()
 
-    function resize(~, ~)
-        pl.resize()
-    end
-
+    set(f, 'Visible', 'on')
+    
     % output
     if nargout > 0
         h_panel = f;
