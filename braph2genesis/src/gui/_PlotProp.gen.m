@@ -36,7 +36,7 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also settings, uipanel, isgraphics.
+    % see also resize, settings, uipanel, isgraphics.
 
     el = pl.get('EL');
     prop = pl.get('PROP');
@@ -78,102 +78,107 @@ function h_panel = draw(pl, varargin)
     end
 
     resize()
+    
     function resize(~, ~)
-        set(pp, ...
-            'Units', 'character', ...
-            'Position', [x0(pp) y0(pp) w(pp) 1.4], ...
-            'BackgroundColor', pl.get('BKGCOLOR'), ... 
-            'BorderType', 'none' ...
-            )
+        pl.resize()
+    end
 
-        set(pl.text_tag, ...
-            'Units', 'character', ...
-            'Position', [0 h(pp)-1 w(pp) 1], ... % defines prop text tag height
-            'String', upper(el.getPropTag(prop)), ...
-            'HorizontalAlignment', 'left', ...
-            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'BackgroundColor', pl.get('BKGCOLOR') ...
-            );
-        
-        switch el.getPropCategory(prop)
-            case Category.METADATA
-                %
+    % output
+    if nargout > 0
+        h_panel = pp;
+    end
+end
+function resize(pl)
+    %RESIZE resizes the element graphical panel.
+    %
+    % RESIZE(PL) resizes the plot PL.
+    %
+    % See also draw.
+    
+    el = pl.get('EL');
+    prop = pl.get('PROP');
+    
+    pp = get(pl.text_tag, 'Parent');
 
-            case {Category.PARAMETER, Category.DATA}
-                value = el.getr(prop);
-                if isa(value, 'Callback')
-                    set(pl.button_cb, ...
-                        'Units', 'character', ...
-                        'Position', [w(pp)-4 h(pp)-1.2 3 1], ...
-                        'String', '@', ...
-                        'HorizontalAlignment', 'left', ...
-                        'FontWeight', 'bold', ...
-                        'Tooltip', value.tostring(), ...
-                        'Callback', {@cb_button_cb}, ...
-                        'Visible', 'on' ...
-                        );
-                else
-                    set(pl.button_cb, 'Visible', 'off')
-                end
+    set(pp, ...
+        'Units', 'character', ...
+        'Position', [x0(pp) y0(pp) w(pp) 1.4], ...
+        'BackgroundColor', pl.get('BKGCOLOR'), ...
+        'BorderType', 'none' ...
+        )
 
-            case Category.RESULT
-                set(pl.button_calc, ...
-                    'Units', 'character', ...
-                    'Position', [w(pp)-7.5 h(pp)-1.2 3 1], ...
-                    'String', 'C', ...
-                    'HorizontalAlignment', 'left', ...
-                    'FontWeight', 'bold', ...
-                    'Tooltip', 'Calculate', ...
-                    'Callback', {@cb_button_calc} ...
-                    );
-                
-                set(pl.button_del, ...
+    set(pl.text_tag, ...
+        'Units', 'character', ...
+        'Position', [0 h(pp)-1 w(pp) 1], ... % defines prop text tag height
+        'String', upper(el.getPropTag(prop)), ...
+        'HorizontalAlignment', 'left', ...
+        'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+        'BackgroundColor', pl.get('BKGCOLOR') ...
+        );
+
+    switch el.getPropCategory(prop)
+        case Category.METADATA
+            %
+
+        case {Category.PARAMETER, Category.DATA}
+            value = el.getr(prop);
+            if isa(value, 'Callback')
+                set(pl.button_cb, ...
                     'Units', 'character', ...
                     'Position', [w(pp)-4 h(pp)-1.2 3 1], ...
-                    'String', 'D', ...
+                    'String', '@', ...
                     'HorizontalAlignment', 'left', ...
                     'FontWeight', 'bold', ...
-                    'Tooltip', 'Delete', ...
-                    'Callback', {@cb_button_del} ...
+                    'Tooltip', value.tostring(), ...
+                    'Callback', {@cb_button_cb}, ...
+                    'Visible', 'on' ...
                     );
+            else
+                set(pl.button_cb, 'Visible', 'off')
+            end
 
-                value = el.getr(prop);
-                if isa(value, 'NoValue')
-                    set(pl.button_calc, 'Enable', 'on')
-                    set(pl.button_del, 'Enable', 'off')
-                else
-                    set(pl.button_calc, 'Enable', 'off')
-                    set(pl.button_del, 'Enable', 'on')
-                end
-        end
+        case Category.RESULT
+            set(pl.button_calc, ...
+                'Units', 'character', ...
+                'Position', [w(pp)-7.5 h(pp)-1.2 3 1], ...
+                'String', 'C', ...
+                'HorizontalAlignment', 'left', ...
+                'FontWeight', 'bold', ...
+                'Tooltip', 'Calculate', ...
+                'Callback', {@cb_button_calc} ...
+                );
+
+            set(pl.button_del, ...
+                'Units', 'character', ...
+                'Position', [w(pp)-4 h(pp)-1.2 3 1], ...
+                'String', 'D', ...
+                'HorizontalAlignment', 'left', ...
+                'FontWeight', 'bold', ...
+                'Tooltip', 'Delete', ...
+                'Callback', {@cb_button_del} ...
+                );
+
+            value = el.getr(prop);
+            if isa(value, 'NoValue')
+                set(pl.button_calc, 'Enable', 'on')
+                set(pl.button_del, 'Enable', 'off')
+            else
+                set(pl.button_calc, 'Enable', 'off')
+                set(pl.button_del, 'Enable', 'on')
+            end
     end
+    
+    % callback functions
     function cb_button_cb(~, ~)
-        warning('TBI')
-        % GUI(el.getr(prop).get('EL'))
+        pl.cb_button_cb()
     end
     function cb_button_calc(~, ~)
-        el.memorize(prop);
-        
-        resize()
-
-        f = get(get(pp, 'Parent'), 'Parent');
-        units = get(f, 'Units');
-        position = get(f, 'Position');
-        set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
-        set(f, 'Units', units, 'Position', position)
+        pl.cb_button_calc()
     end
     function cb_button_del(~, ~)
-        el.set(prop, NoValue.getNoValue())
-        
-        resize()
-        
-        f = get(get(pp, 'Parent'), 'Parent');
-        units = get(f, 'Units');
-        position = get(f, 'Position');
-        set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
-        set(f, 'Units', units, 'Position', position)
+        pl.cb_button_del()
     end
-
+    
     % auxiliary functions
     function r = x0(h)
         r = PlotElement.x0(h);
@@ -187,9 +192,50 @@ function h_panel = draw(pl, varargin)
     function r = h(h)
         r = PlotElement.h(h);
     end
+end
+function cb_button_cb(pl)
+    %CB_BUTTON_CB executes callback for button callback.
+    %
+    % CB_BUTTON_CB(PL) executes callback for button callback.
 
-    % output
-    if nargout > 0
-        h_panel = pp;
-    end
+    warning('TBI')
+    % GUI(el.getr(prop).get('EL'))
+end
+function cb_button_calc(pl)
+    %CB_BUTTON_CALC executes callback for button calculate.
+    %
+    % CB_BUTTON_CALC(PL) executes callback for button calculate.
+
+    el = pl.get('EL');
+    prop = pl.get('PROP');
+
+    el.memorize(prop);
+
+    pl.resize()
+
+    pp = get(pl.text_tag, 'Parent');
+    f = get(get(pp, 'Parent'), 'Parent');
+    units = get(f, 'Units');
+    position = get(f, 'Position');
+    set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
+    set(f, 'Units', units, 'Position', position)
+end
+function cb_button_del(pl)
+    %CB_BUTTON_DEL executes callback for button delete.
+    %
+    % CB_BUTTON_DEL(PL) executes callback for button delete.
+
+    el = pl.get('EL');
+    prop = pl.get('PROP');
+    
+    el.set(prop, NoValue.getNoValue())
+
+    pl.resize()
+
+    pp = get(pl.text_tag, 'Parent');
+    f = get(get(pp, 'Parent'), 'Parent');
+    units = get(f, 'Units');
+    position = get(f, 'Position');
+    set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
+    set(f, 'Units', units, 'Position', position)
 end

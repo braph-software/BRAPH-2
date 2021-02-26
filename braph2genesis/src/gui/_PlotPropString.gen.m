@@ -25,7 +25,7 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also settings, uipanel, isgraphics.
+    % see also resize, settings, uipanel, isgraphics.
 
     el = pl.get('EL');
     prop = pl.get('PROP');

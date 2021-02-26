@@ -71,12 +71,12 @@ for prop = 1:1:el.getPropNumber()
     
     switch el.getPropFormat(prop)
 %         case Format.EMPTY
-        case Format.STRING
-            pp_list{prop} = PlotPropString( ...
-                'ID', el.getPropTag(prop), ...
-                'EL', el, ...
-                'PROP', prop, ...
-                'BKGCOLOR', color);
+%         case Format.STRING
+%             pp_list{prop} = PlotPropString( ...
+%                 'ID', el.getPropTag(prop), ...
+%                 'EL', el, ...
+%                 'PROP', prop, ...
+%                 'BKGCOLOR', color);
 %         case Format.LOGICAL
 %         case Format.OPTION
 %         case Format.CLASS
@@ -125,7 +125,7 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also settings, uipanel, isgraphics.
+    % see also resize, settings, uipanel, isgraphics.
 
     % initialization
     f = draw@Plot(pl, varargin{:}, 'SizeChangedFcn', {@resize});
@@ -133,7 +133,6 @@ function h_panel = draw(pl, varargin)
     if isempty(pl.p) || ~isgraphics(pl.p, 'uipanel')
         pl.p = uipanel('Parent', f);
     end
-    p = pl.p;
 
     if isempty(pl.s) || ~isgraphics(pl.s, 'slider')    
         pl.s = uicontrol( ...
@@ -145,72 +144,85 @@ function h_panel = draw(pl, varargin)
             'Callback', {@resize} ...
             );
     end
-	s = pl.s;
-
-%     function cb_s(~, ~)
-%         offset = get(s, 'Value');
-%         set(p, 'Position', [x0(p) h(f)-h(p)-offset w(p) h(p)]);
-%     end
 
     if isempty(pl.pp_list) || any(cellfun(@(x) ~isgraphics(x, 'uipanel'), pl.pp_list))
-        pl.pp_list = cellfun(@(x) x.draw('Parent', p), pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
+        pl.pp_list = cellfun(@(x) x.draw('Parent', pl.p), pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
     end
-    pp_list = pl.pp_list;
-    
-    resize()
-    function resize(~, ~)
-        dw = pl.get('DW');
-        dh = pl.get('DH');
-        w_s = 5; % defines slider width
         
-        w_pp = w(f) - 2 * dw - w_s;
-        h_pp = cellfun(@(x) h(x), pp_list);
-        x0_pp = dw;
-        y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
+    resize()
 
-        h_p = sum(h_pp + dh) + dh;
-        if h_p > h(f)
-            offset = get(s, 'Value');
-            set(p, ...
-                'Units', 'character', ...
-                'Position', [0 h(f)-h_p-offset w(f) h_p], ...
-                'BackgroundColor', pl.get('BKGCOLOR'), ...
-                'BorderType', 'none' ...
-                );
+    function resize(~, ~)
+        pl.resize()
+    end
 
-            set(s, ...
-                'Units', 'character', ...
-                'Position', [w(f)-w_s 0 w_s h(f)], ...
-                'Visible', 'on', ...
-                'Min', h(f) - h(p), ...
-                'Value', max(get(s, 'Value'), h(f) - h(p)) ...
-                );
-            
-            for prop = 1:1:length(pp_list)
-                set(pp_list{prop}, ...
-                    'Units', 'character', ...
-                    'Position', [x0_pp y0_pp(prop) w_pp h_pp(prop)] ...
-                    )
-            end
-        else
-            set(p, ...
-                'Units', 'character', ...
-                'Position', [0 0 w(f) h(f)], ...
-                'BackgroundColor', pl.get('BKGCOLOR'), ...
-                'BorderType', 'none' ...
-                );
-            
-            set(s, 'Visible', 'off')            
+    % output
+    if nargout > 0
+        h_panel = f;
+    end
+end
+function resize(pl)
+    %RESIZE resizes the element graphical panel.
+    %
+    % RESIZE(PL) resizes the plot PL.
+    %
+    % See also draw.
 
-            for prop = 1:1:length(pp_list)
-                set(pp_list{prop}, ...
-                    'Units', 'character', ...
-                    'Position', [x0_pp y0_pp(prop)+h(f)-h_p w_pp h_pp(prop)] ...
-                    )
-            end
+    f = get(pl.p, 'Parent');
+    p = pl.p;
+	s = pl.s;
+    pp_list = pl.pp_list;
+
+    dw = pl.get('DW');
+    dh = pl.get('DH');
+    w_s = 5; % defines slider width
+
+    w_pp = w(f) - 2 * dw - w_s;
+    h_pp = cellfun(@(x) h(x), pp_list);
+    x0_pp = dw;
+    y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
+
+    h_p = sum(h_pp + dh) + dh;
+    if h_p > h(f)
+        offset = get(s, 'Value');
+        set(p, ...
+            'Units', 'character', ...
+            'Position', [0 h(f)-h_p-offset w(f) h_p], ...
+            'BackgroundColor', pl.get('BKGCOLOR'), ...
+            'BorderType', 'none' ...
+            );
+
+        set(s, ...
+            'Units', 'character', ...
+            'Position', [w(f)-w_s 0 w_s h(f)], ...
+            'Visible', 'on', ...
+            'Min', h(f) - h(p), ...
+            'Value', max(get(s, 'Value'), h(f) - h(p)) ...
+            );
+
+        for prop = 1:1:length(pp_list)
+            set(pp_list{prop}, ...
+                'Units', 'character', ...
+                'Position', [x0_pp y0_pp(prop) w_pp h_pp(prop)] ...
+                )
+        end
+    else
+        set(p, ...
+            'Units', 'character', ...
+            'Position', [0 0 w(f) h(f)], ...
+            'BackgroundColor', pl.get('BKGCOLOR'), ...
+            'BorderType', 'none' ...
+            );
+
+        set(s, 'Visible', 'off')            
+
+        for prop = 1:1:length(pp_list)
+            set(pp_list{prop}, ...
+                'Units', 'character', ...
+                'Position', [x0_pp y0_pp(prop)+h(f)-h_p w_pp h_pp(prop)] ...
+                )
         end
     end
-
+    
     % auxiliary functions
     function r = x0(h)
         r = PlotElement.x0(h);
@@ -223,11 +235,6 @@ function h_panel = draw(pl, varargin)
     end
     function r = h(h)
         r = PlotElement.h(h);
-    end
-
-    % output
-    if nargout > 0
-        h_panel = f;
     end
 end
 
