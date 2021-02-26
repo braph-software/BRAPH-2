@@ -10,8 +10,8 @@ Connection weights are ignored in calculations.
 GraphWUEnsemble
 MultigraphBUTEnsemble
 MultigraphBUDEnsemble
-MultiplexGraphBUEnsemble
-MultiplexGraphWUEnsemble
+MultiplexBUEnsemble
+MultiplexWUEnsemble
 
 %% ¡props_update!
 
@@ -150,7 +150,7 @@ assert(isequal(m_inside_g.get('M'), known_degree_av), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBUEnsemble
+MultiplexBUEnsemble
 %%%% ¡code!
 B11 = [
     0   1   1
@@ -169,10 +169,10 @@ known_degree_av = {
     mean([1 2 1])
     };
 
-ge = MultiplexGraphBUEnsemble();
+ge = MultiplexBUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphBU( ...
+    g = MultiplexBU( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
@@ -183,11 +183,11 @@ degree_av_ensemble = DegreeAvEnsemble('G', ge).get('M');
 
 assert(isequal(cellfun(@(x) round(x, 3), degree_av_ensemble, 'UniformOutput', false), cellfun(@(x) round(x, 3), known_degree_av, 'UniformOutput', false)), ...
     [BRAPH2.STR ':DegreeAvEnsemble:' BRAPH2.BUG_ERR], ...
-    'DegreeAvEnsemble is not being calculated correctly for MultiplexGraphBU.')
+    'DegreeAvEnsemble is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWUEnsemble
+MultiplexWUEnsemble
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -206,10 +206,10 @@ known_degree_av = {
     mean([1 2 1])
     };
 
-ge = MultiplexGraphWUEnsemble();
+ge = MultiplexWUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphWU( ...
+    g = MultiplexWU( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
@@ -220,4 +220,4 @@ degree_av_ensemble = DegreeAvEnsemble('G', ge).get('M');
 
 assert(isequal(cellfun(@(x) round(x, 3), degree_av_ensemble, 'UniformOutput', false), cellfun(@(x) round(x, 3), known_degree_av, 'UniformOutput', false)), ...
     [BRAPH2.STR ':DegreeAvEnsemble:' BRAPH2.BUG_ERR], ...
-    'DegreeAvEnsemble is not being calculated correctly for MultiplexGraphWU.')
+    'DegreeAvEnsemble is not being calculated correctly for MultiplexWU.')

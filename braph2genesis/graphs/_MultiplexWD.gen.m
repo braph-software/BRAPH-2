@@ -1,12 +1,10 @@
 %% ¡header!
-MultiplexGraphWU < Graph (g, multiplex weighted undirected graph) is a multiplex weighted undirected graph.
+MultiplexWD < Graph (g, multiplex weighted directed graph) is a multiplex weighted directed graph.
 
 %%% ¡description!
-In a multiplex weighted undirected (WU) graph, 
+In a multiplex weighted directed (WD) graph, 
 the edges are associated with a real number between 0 and 1 
-indicating the strength of the connection, and they are undirected.
-The connectivity matrix is symmetric.
-
+indicating the strength of the connection, and they are directed.
 
 %%% ¡ensemble!
 false
@@ -18,7 +16,7 @@ graph = Graph.MULTIPLEX;
 connectivity = Graph.WEIGHTED * ones(layernumber);
 
 %%% ¡directionality!
-directionality = Graph.UNDIRECTED * ones(layernumber);
+directionality = Graph.DIRECTED * ones(layernumber);
 
 %%% ¡selfconnectivity!
 selfconnectivity = Graph.SELFCONNECTED * ones(layernumber);
@@ -37,7 +35,7 @@ B (data, cell) is the input cell containing the multiplex adjacency matrices on 
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted undirected graph.
+A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.
 %%%% ¡calculate!
 B = g.get('B');
 L = length(B); %% number of layers
@@ -45,8 +43,7 @@ A = cell(L, L);
 
 varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, binarize
 for layer = 1:1:L
-    M = symmetrize(B{layer}, varargin{:}); %% enforces symmetry of adjacency matrix
-    M = dediagonalize(M, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
+    M = dediagonalize(B{layer}, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
     M = semipositivize(M, varargin{:}); %% removes negative weights
     M = standardize(M, varargin{:}); %% enforces binary adjacency matrix
     A(layer, layer) = {M};
@@ -69,12 +66,11 @@ Constructor
 %%%% ¡code!
 A = rand(randi(10));
 B = {A, A};
-g = MultiplexGraphWU('B', B);
+g = MultiplexWD('B', B);
 
-A1 = symmetrize(standardize(semipositivize(dediagonalize(A))));
+A1 = standardize(semipositivize(dediagonalize(A)));
 A = {A1, eye(length(A)); eye(length(A)), A1};
 
 assert(isequal(g.get('A'), A), ...
-    [BRAPH2.STR ':MultiplexGraphWU:' BRAPH2.BUG_ERR], ...
-    'MultiplexGraphWU is not constructing well.')
-
+    [BRAPH2.STR ':MultiplexWD:' BRAPH2.BUG_ERR], ...
+    'MultiplexWD is not constructing well.')

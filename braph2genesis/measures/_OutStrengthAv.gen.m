@@ -16,7 +16,7 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 GraphWD
-MultiplexGraphWD
+MultiplexWD
 
 %% ¡props_update!
 
@@ -54,7 +54,7 @@ assert(isequal(s_outside_g.get('M'), known_out_strength_av), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -73,9 +73,9 @@ known_out_strength_av = {
                  mean([1.6 1.4 .4])
                  };
                                 
-g = MultiplexGraphWD('B', B);
+g = MultiplexWD('B', B);
 out_strength_av = OutStrengthAv('G', g);
 
 assert(isequal(out_strength_av.get('M'), known_out_strength_av), ...
     [BRAPH2.STR ':OutStrengthAv:' BRAPH2.BUG_ERR], ...
-    'OutStrengthAv is not being calculated correctly for MultiplexGraphWD.')
+    'OutStrengthAv is not being calculated correctly for MultiplexWD.')

@@ -15,7 +15,7 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphWD
+MultiplexWD
 
 %% ¡props_update!
 
@@ -41,7 +41,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -57,9 +57,9 @@ B = {B11 B22};
 
 known_overlapping_in_strength = {[3 1.5 1.5]'};
 
-g = MultiplexGraphWD('B', B);
+g = MultiplexWD('B', B);
 overlapping_in_strength = OverlappingInStrength('G', g);
 
 assert(isequal(overlapping_in_strength.get('M'), known_overlapping_in_strength), ...
     [BRAPH2.STR ':OverlappingInStrength:' BRAPH2.BUG_ERR], ...
-    'OverlappingInStrength is not being calculated correctly for MultiplexGraphWD.')
+    'OverlappingInStrength is not being calculated correctly for MultiplexWD.')

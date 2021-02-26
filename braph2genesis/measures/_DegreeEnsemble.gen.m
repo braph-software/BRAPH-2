@@ -8,8 +8,8 @@ Connection weights are ignored in calculations.
 %%% ¡compatible_graphs!
 GraphWUEnsemble
 MultigraphBUTEnsemble
-MultiplexGraphBUEnsemble
-MultiplexGraphWUEnsemble
+MultiplexBUEnsemble
+MultiplexWUEnsemble
 
 %% ¡props_update!
 
@@ -146,7 +146,7 @@ assert(isequal(m_inside_g.get('M'), known_degree), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBUEnsemble
+MultiplexBUEnsemble
 %%%% ¡code!
 B11 = [
     0   1   1
@@ -165,10 +165,10 @@ known_degree = {
     [1 2 1]'
     };
 
-ge = MultiplexGraphBUEnsemble();
+ge = MultiplexBUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphBU( ...
+    g = MultiplexBU( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
@@ -179,11 +179,11 @@ degree_ensemble = DegreeEnsemble('G', ge);
 
 assert(isequal(degree_ensemble.get('M'), known_degree), ...
     [BRAPH2.STR ':DegreeEnsemble:' BRAPH2.BUG_ERR], ...
-    'DegreeEnsemble is not being calculated correctly for MultiplexGraphBUEnsemble.')
+    'DegreeEnsemble is not being calculated correctly for MultiplexBUEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWUEnsemble
+MultiplexWUEnsemble
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -202,10 +202,10 @@ known_degree = {
     [1 2 1]'
     };
 
-ge = MultiplexGraphWUEnsemble();
+ge = MultiplexWUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphWU( ...
+    g = MultiplexWU( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
@@ -216,4 +216,4 @@ degree_ensemble = DegreeEnsemble('G', ge);
 
 assert(isequal(degree_ensemble.get('M'), known_degree), ...
     [BRAPH2.STR ':DegreeEnsemble:' BRAPH2.BUG_ERR], ...
-    'DegreeEnsemble is not being calculated correctly for MultiplexGraphWUEnsemble.')
+    'DegreeEnsemble is not being calculated correctly for MultiplexWUEnsemble.')
