@@ -282,12 +282,13 @@ while ~isequal(Sb, S2)  % loop around each "pass" (in language of Blondel et al)
     if isequal(Sb,S2)
         P = sparse(y,1:length(y),1);
         Q = full(sum(sum((P*M).*P)));
-        m.quality_function = Q/twom;  % save normalized quality function
+        % m.quality_function = Q/twom;  % save normalized quality function
         S = reshape(S, N(1), L);
         multilayer_community_structure = cell(L, 1);
         for li = 1:1:L
             multilayer_community_structure(li) = {S(:, li)};
         end
+        value = multilayer_community_structure;
         return
     end
     
@@ -707,7 +708,7 @@ B = {A A};
 g = MultiplexBU('B', B);
 mcs = MultilayerCommunityStructure('G', g).get('M');
 
-assert(~isempty(mcs.getValue), ...
+assert(~isempty(mcs), ...
     [BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.BUG_ERR], ...
     'MultilayerCommunityStructure is not being calculated correctly for MultiplexBU.')
 
