@@ -214,7 +214,10 @@ function cb_button_calc(pl)
     pl.resize()
 
     pp = get(pl.text_tag, 'Parent');
-    f = get(get(pp, 'Parent'), 'Parent');
+    f = get(pp, 'Parent');
+    if isgraphics(f, 'uipanel')
+        f = get(f, 'Parent');
+    end
     units = get(f, 'Units');
     position = get(f, 'Position');
     set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
@@ -233,7 +236,10 @@ function cb_button_del(pl)
     pl.resize()
 
     pp = get(pl.text_tag, 'Parent');
-    f = get(get(pp, 'Parent'), 'Parent');
+    f = get(pp, 'Parent');
+    if isgraphics(f, 'uipanel')
+        f = get(f, 'Parent');
+    end
     units = get(f, 'Units');
     position = get(f, 'Position');
     set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
