@@ -102,7 +102,7 @@ B22 = [
       ];
 B = {B11 B22};
 
-known_multiplex_clustering = diag(A11.^(1/3)*A22.^(1/3)*A11.^(1/3) + A22.^(1/3)*A11.^(1/3)*A22.^(1/3)) ./ ([12, 2, 2, 0]');
+known_multiplex_clustering = diag(B11.^(1/3)*B22.^(1/3)*B11.^(1/3) + B22.^(1/3)*B11.^(1/3)*B22.^(1/3)) ./ ([12, 2, 2, 0]');
 known_multiplex_clustering(isnan(known_multiplex_clustering)) = 0;
 known_multiplex_clustering = {
                  known_multiplex_clustering
@@ -111,6 +111,6 @@ known_multiplex_clustering = {
 g = MultiplexGraphWU('B', B);
 multiplex_clustering = MultiplexClustering('G', g);
 
-assert(isequal(multiplex_clustering.getValue(), known_multiplex_clustering), ...
+assert(isequal(multiplex_clustering.get('M'), known_multiplex_clustering), ...
     [BRAPH2.STR ':MultiplexClustering:' BRAPH2.BUG_ERR], ...
     'MultiplexClustering is not being calculated correctly for MultiplexGraphWU.')
