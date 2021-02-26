@@ -124,12 +124,12 @@ function h_panel = draw(pl, varargin)
     end
 	s = pl.s;
 
-    function cb_s(~, ~)
-        offset = get(s, 'Value');
-        set(p, 'Position', [x0(p) h(f)-h(p)-offset w(p) h(p)]);
-    end
+%     function cb_s(~, ~)
+%         offset = get(s, 'Value');
+%         set(p, 'Position', [x0(p) h(f)-h(p)-offset w(p) h(p)]);
+%     end
 
-    if isempty(pl.pp_list)
+    if isempty(pl.pp_list) || any(cellfun(@(x) ~isgraphics(x, 'uipanel'), pl.pp_list))
         pl.pp_list = cellfun(@(x) x.draw('Parent', p), pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
     end
     pp_list = pl.pp_list;
