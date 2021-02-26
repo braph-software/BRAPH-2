@@ -16,6 +16,9 @@ f_settings % setting figure handle
 %% ¡props!
 
 %%% ¡prop!
+ID (data, string) is a few-letter code for the plot.
+
+%%% ¡prop!
 BKGCOLOR (metadata, rvector) is background color of the setting interface.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
