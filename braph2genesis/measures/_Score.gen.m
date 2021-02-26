@@ -1,5 +1,5 @@
 %% ¡header!
-Score < Measure (m, score) is the graph score.
+Score < Measure (m, s-core) is the graph s-core.
 
 %%% ¡description!
 The s-core of a graph is the largest subnetwork comprising nodes of strength
@@ -22,13 +22,13 @@ MultiplexGraphWD
 
 %% ¡props!
 %%% ¡prop! 
-SCoreThreshold (parameter, scalar) is the threshold.
+SCoreThreshold (parameter, scalar) is the strength threshold.
 %%%% ¡default!
 1
 
 %% ¡props_update!
 %%% ¡prop!
-M (result, cell) is the score.
+M (result, cell) is the s-core.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc

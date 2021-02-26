@@ -1,5 +1,5 @@
 %% ¡header!
-SmallWorldness < PathLengthAv (m, small worldness) is the graph small worldness.
+SmallWorldness < PathLengthAv (m, small-worldness) is the graph small-worldness.
 
 %%% ¡description!
 The small-worldness coefficient is the fraction of the clustering coefficient 
@@ -30,6 +30,7 @@ g = m.get('G');  % graph from measure class
 L = g.layernumber();
 
 clustering_av = ClusteringAv('G', g).get('M');
+path_length_av = calculateValue@PathLengthAv(m, prop);
 
 M = 100;  % number of random graphs
 clustering_av_random = cell(1, M);
@@ -38,7 +39,7 @@ for r = 1:1:M
     g_random = g.randomize();
 
     clustering_av_random(r) = {ClusteringAv('G', g_random).get('M')};
-    path_length_av_random(r) = {calculateValue@PathLengthAv(m, prop)}; 
+    path_length_av_random(r) = {PathLengthAv('G', g_random).get('M')};
     
 end
 path_length_av_random = cellfun(@(x) cell2mat(x), path_length_av_random, 'UniformOutput', false);

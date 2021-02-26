@@ -1,5 +1,5 @@
 %% ¡header!
-WeightedRichClub < Strength (m, weighted rich club) is the graph weighted rich club.
+WeightedRichClub < Strength (m, weighted rich-club) is the graph weighted rich-club.
 
 %%% ¡description!
 The weighted rich-club of a node at level s is the fraction of the
@@ -19,9 +19,9 @@ parametricity = Measure.PARAMETRIC;
 
 %%% ¡compatible_graphs!
 GraphWU
-GraphWU
+GraphWD
 MultiplexGraphWU
-MultiplexGraphWU
+MultiplexGraphWD
 
 %% ¡props!
 %%% ¡prop! 
@@ -31,12 +31,11 @@ WRC_PARAMETER (parameter, RVECTOR) is the threshold
 
 %% ¡props_update!
 %%% ¡prop!
-M (result, cell) is the weighted rich club.
+M (result, cell) is the weighted rich-club.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc
 L = g.layernumber();
-N = g.nodenumber();
 
 weighted_rich_club = cell(L, 1);
 directionality_type =  g.getDirectionalityType(L);
