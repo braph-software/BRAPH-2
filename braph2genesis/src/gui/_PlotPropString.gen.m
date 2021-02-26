@@ -31,6 +31,38 @@ function h_panel = draw(pl, varargin)
     prop = pl.get('PROP');
     
     pp = draw@PlotProp(pl, varargin{:});
+    
+    if isempty(pl.edit_value) || ~isgraphics(pl.edit_value, 'edit')
+        pl.edit_value = uicontrol( ...
+                'Style', 'edit', ...
+                'Parent', pp ...
+                );
+    end
+
+    % output
+    if nargout > 0
+        h_panel = pp;
+    end
+end
+function resize(pl)
+    %RESIZE resizes the element graphical panel.
+    %
+    % RESIZE(PL) resizes the plot PL.
+    %
+    % See also draw.
+
+    resize@PlotProp(pl)
+    
+    pp = get(pl.edit_value, 'Parent');
+
+    set(pp, 'Position', [x0(pp) y0(pp) w(pp) 3])
+    
+%     'BackgroundColor', 'w', ...
+%     'Units', 'normalized', ...
+%     'Position', [.01 .10 .98 .50], ...
+%     'HorizontalAlignment', 'left', ...
+%     'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+%     'Callback', {@cb_string, prop} ...
 
     % auxiliary functions
     function r = x0(h)
@@ -44,10 +76,5 @@ function h_panel = draw(pl, varargin)
     end
     function r = h(h)
         r = PlotElement.h(h);
-    end
-
-    % output
-    if nargout > 0
-        h_panel = pp;
     end
 end
