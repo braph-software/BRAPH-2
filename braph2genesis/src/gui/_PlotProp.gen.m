@@ -85,7 +85,7 @@ function h_panel = draw(pl, varargin)
             'BackgroundColor', pl.get('BKGCOLOR'), ... 
             'BorderType', 'none' ...
             )
-        
+
         set(pl.text_tag, ...
             'Units', 'character', ...
             'Position', [0 h(pp)-1 w(pp) 1], ... % defines prop text tag height
@@ -155,11 +155,23 @@ function h_panel = draw(pl, varargin)
         el.memorize(prop);
         
         resize()
+
+        f = get(get(pp, 'Parent'), 'Parent');
+        units = get(f, 'Units');
+        position = get(f, 'Position');
+        set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
+        set(f, 'Units', units, 'Position', position)
     end
     function cb_button_del(~, ~)
         el.set(prop, NoValue.getNoValue())
         
         resize()
+        
+        f = get(get(pp, 'Parent'), 'Parent');
+        units = get(f, 'Units');
+        position = get(f, 'Position');
+        set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
+        set(f, 'Units', units, 'Position', position)
     end
 
     % auxiliary functions
