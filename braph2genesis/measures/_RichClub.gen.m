@@ -21,10 +21,10 @@ GraphBD
 GraphBU
 GraphWD
 GraphWU
-MultiplexGraphBD
-MultiplexGraphBU
-MultiplexGraphWD
-MultiplexGraphWU
+MultiplexBD
+MultiplexBU
+MultiplexWD
+MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
@@ -140,7 +140,7 @@ assert(isequal(richclub, known_richclub), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 
 A11 = [
@@ -169,16 +169,16 @@ known_richclub = {
                  richclub_l2
                  };      
 
-g = MultiplexGraphBD('B', A);
+g = MultiplexBD('B', A);
 richclub = RichClub('G', g, 'PARAMETRIC_VALUE', 2).get('M');
 
 assert(isequal(richclub, known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...
-    'RichClub is not being calculated correctly for MultiplexGraphBD.')
+    'RichClub is not being calculated correctly for MultiplexBD.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 
 A11 = [
@@ -206,10 +206,10 @@ known_richclub = {
                  richclub_l2
                  };  
 
-g = MultiplexGraphWD('B', A);
+g = MultiplexWD('B', A);
 richclub = RichClub('G', g, 'PARAMETRIC_VALUE', 2).get('M');
 
 assert(isequal(richclub, known_richclub), ...
     [BRAPH2.STR ':RichClub:' BRAPH2.BUG_ERR], ...
-    'RichClub is not being calculated correctly for MultiplexGraphWD.')
+    'RichClub is not being calculated correctly for MultiplexWD.')
 

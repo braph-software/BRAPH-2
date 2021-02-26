@@ -15,7 +15,7 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphWU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -45,7 +45,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
     0   .5  1
@@ -61,9 +61,9 @@ B = {B11  B22};
 
 known_weighted_multiplex_participation = {[24/25 3/4 8/9]'};
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 weighted_multiplex_participation = WeightedMultiplexParticipation('G', g);
 
 assert(isequal(weighted_multiplex_participation.get('M'), known_weighted_multiplex_participation), ...
     [BRAPH2.STR ':WeightedMultiplexParticipation:' BRAPH2.BUG_ERR], ...
-    'WeightedMultiplexParticipation is not being calculated correctly for MultiplexGraphWU.')
+    'WeightedMultiplexParticipation is not being calculated correctly for MultiplexWU.')

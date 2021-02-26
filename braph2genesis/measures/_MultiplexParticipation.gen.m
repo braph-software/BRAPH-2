@@ -20,8 +20,8 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphBU
-MultiplexGraphWU
+MultiplexBU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -52,7 +52,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
     0   1   1
@@ -68,16 +68,16 @@ B = {B11  B22};
 
 known_multiplex_participation = {[8/9 8/9 1]'};
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 multiplex_participation = MultiplexParticipation('G', g);
 
 assert(isequal(multiplex_participation.get('M'), known_multiplex_participation), ...
     [BRAPH2.STR ':MultiplexParticipation:' BRAPH2.BUG_ERR], ...
-    'MultiplexParticipation is not being calculated correctly for MultiplexGraphBU.')
+    'MultiplexParticipation is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -93,9 +93,9 @@ B = {B11  B22};
 
 known_multiplex_participation = {[8/9 8/9 1]'};
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 multiplex_participation = MultiplexParticipation('G', g);
 
 assert(isequal(multiplex_participation.get('M'), known_multiplex_participation), ...
     [BRAPH2.STR ':MultiplexParticipation:' BRAPH2.BUG_ERR], ...
-    'MultiplexParticipation is not being calculated correctly for MultiplexGraphWU.')
+    'MultiplexParticipation is not being calculated correctly for MultiplexWU.')
