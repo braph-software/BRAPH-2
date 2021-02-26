@@ -164,74 +164,20 @@ function h_panel = draw(pl, varargin)
 
     % auxiliary functions
     function r = x0(h)
-        r = pl.x0(h);
+        r = PlotElement.x0(h);
     end
     function r = y0(h)
-        r = pl.y0(h);
+        r = PlotElement.y0(h);
     end
     function r = w(h)
-        r = pl.w(h);
+        r = PlotElement.w(h);
     end
     function r = h(h)
-        r = pl.h(h);
+        r = PlotElement.h(h);
     end
 
     % output
     if nargout > 0
         h_panel = pp;
     end
-end
-
-%% ¡staticmethods!
-function r = x0(h)
-    %X0 returns the position of the left edge of a graphical element in character units.
-    %
-    % R = X0(H) is the distance from the inner left edge of the parent
-    %  container to the outer left edge of the graphical element H.
-    % 
-    % See also y0, w, h.
-
-    units = get(h, 'Units');
-    set(h, 'Units', 'character')
-    r = x0@Plot(h);
-    set(h, 'Units', units)
-end
-function r = y0(h)
-    %Y0 returns the position of the bottom edge of a graphical element in character units.
-    %
-    % R = Y0(H) is the distance from the inner bottom edge of the parent 
-    %  container to the outer bottom edge of the graphical element H.
-    %
-    % See also x0, w, h.
-
-    units = get(h, 'Units');
-    set(h, 'Units', 'character')
-    r = y0@Plot(h);
-    set(h, 'Units', units)
-end
-function r = w(h)
-    %W returns the width of a graphical element in character units.
-    %
-    % R = W(H) is the distance between the right and left outer edges of the
-    %   graphical element H.
-    % 
-    % See also x0, y0, h.
-
-    units = get(h, 'Units');
-    set(h, 'Units', 'character')
-    r = w@Plot(h);
-    set(h, 'Units', units)
-end
-function r = h(h)
-    %H returns the height of a graphical element in character units.
-    %
-    % R = H(H) is the distance between the top and bottom outer edges of the
-    %  graphical element H.
-    % 
-    % See also x0, y0, w.
-
-    units = get(h, 'Units');
-    set(h, 'Units', 'character')
-    r = h@Plot(h);
-    set(h, 'Units', units)
 end
