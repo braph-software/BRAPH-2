@@ -11,12 +11,12 @@ GUI, PlotProp
 
 %%% ¡prop!
 DW (metadata, scalar) is the margin along the width in character units.
-%%%% ¡deafult!
+%%%% ¡default!
 1
 
 %%% ¡prop!
 DH (metadata, scalar) is the margin along the height in character units.
-%%%% ¡deafult!
+%%%% ¡default!
 .5
 
 %%% ¡prop!
