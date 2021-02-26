@@ -10,14 +10,6 @@ GUI, PlotProp
 %% ¡props!
 
 %%% ¡prop!
-EL (metadata, item) is the element to be plotted.
-
-%%% ¡prop!
-PP_DICT (result, idict) is a dictionary of the property plots.
-%%%% ¡settings!
-'PlotProp'
-
-%%% ¡prop!
 DW (metadata, scalar) is the margin along the width in character units.
 %%%% ¡deafult!
 1
@@ -26,6 +18,69 @@ DW (metadata, scalar) is the margin along the width in character units.
 DH (metadata, scalar) is the margin along the height in character units.
 %%%% ¡deafult!
 .5
+
+%%% ¡prop!
+MCOLOR (metadata, rvector) is background color of the metadata properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+[.87 .95 .85]
+
+%%% ¡prop!
+PCOLOR (metadata, rvector) is background color of the parameter properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+[.86 .92 .97]
+
+%%% ¡prop!
+DCOLOR (metadata, rvector) is background color of the data properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+[1 .96 .79]
+
+%%% ¡prop!
+RCOLOR (metadata, rvector) is background color of the result properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+[1 .89 .84]
+
+%%% ¡prop!
+EL (metadata, item) is the element to be plotted.
+
+%%% ¡prop!
+PP_DICT (result, idict) is a dictionary of the property plots.
+%%%% ¡settings!
+'PlotProp'
+%%%% ¡calculate!
+el = pl.get('EL');
+pp_list = cell(1, el.getPropNumber());
+for prop = 1:1:el.getPropNumber()
+    switch el.getPropCategory(prop)
+        case Category.METADATA
+            color = pl.get('MCOLOR');
+        case Category.PARAMETER
+            color = pl.get('PCOLOR');
+        case Category.DATA
+            color = pl.get('DCOLOR');
+        case Category.RESULT
+            color = pl.get('RCOLOR');
+    end
+    
+    pp_list{prop} = PlotProp( ...
+        'ID', el.getPropTag(prop), ...
+        'EL', el, ...
+        'PROP', prop, ...
+        'BKGCOLOR', color);
+end
+value = IndexedDictionary( ...
+    'ID', el.tostring(), ...
+    'IT_CLASS', 'PlotProp', ...
+    'IT_KEY', 1, ...
+    'IT_LIST', pp_list ...
+    );
 
 %% ¡properties!
 p % handle for scrollable
@@ -49,121 +104,158 @@ function h_panel = draw(pl, varargin)
     % see also settings, uipanel, isgraphics.
 
     % initialization
-    f = draw@Plot(pl, varargin{:}, ...
-        'Visible', 'off', ...
-        'SizeChangedFcn', {@resize} ...
-        );
-    
+    f = draw@Plot(pl, varargin{:}, 'SizeChangedFcn', {@resize});
+
     if isempty(pl.p) || ~isgraphics(pl.p, 'uipanel')
-        pl.p = uipanel( ...
-            'Parent', f, ...
-            'Units', 'character', ...
-            'Position', [0 0 w(f) h(f)], ...
-            'BackgroundColor', pl.get('BKGCOLOR'), ...
-            'BorderType', 'none' ...
-            );
+        pl.p = uipanel('Parent', f);
     end
     p = pl.p;
 
     if isempty(pl.s) || ~isgraphics(pl.s, 'slider')    
         pl.s = uicontrol( ...
             'Style', 'slider', ...
-            'Parent', f, ...
-            'Units', 'character', ...
-            'Position', [w(f)-5 0 5 h(f)], ... % defines slider width
+            'Parent', f, ....
             'Min', -eps, ...
             'Max', 0, ...
-            'Value', 0, ...
-            'Callback', {@cb_s});
+            'Value', 0, ...            
+            'Callback', {@cb_s} ...
+            );
     end
-    s = pl.s;
+	s = pl.s;
 
     function cb_s(~, ~)
         offset = get(s, 'Value');
         set(p, 'Position', [x0(p) h(f)-h(p)-offset w(p) h(p)]);
-    end
-    
-    el = pl.get('EL');
-    pp = cell(1, el.getPropNumber());
-    for prop = 1:1:el.getPropNumber()
-        if pl.get('PP_DICT').length() < prop
-            pl.memorize('PP_DICT').add(PlotProp('ID', el.getPropTag(prop), 'EL', el, 'PROP', prop))
-        end
-        
-        pp{prop} = pl.get('PP_DICT').getItem(prop).draw('Parent', p);
     end
 
     resize()
     function resize(~, ~)
         dw = pl.get('DW');
         dh = pl.get('DH');
-        
-        pp_w = w(f) - 2 * dw - w(s);
-        pp_h = cellfun(@(x) h(x), pp);
-        pp_x0 = dw;
-        pp_y0 = sum(pp_h + dh) - cumsum(pp_h + dh) + dh;
-        for prop = 1:1:el.getPropNumber()
-            set(pp{prop}, ...
-                'Units', 'character', ...
-                'Position', [pp_x0 pp_y0(prop) pp_w pp_h(prop)] ...
-                )
-        end
+        w_s = 5; % defines slider width
 
-        h_p = sum(pp_h + dh) + dh;
-        if h_p < h(f)
-            set(p, 'Position', [0 0 w(f) h(f)])
-            for prop = 1:1:el.getPropNumber()
-                set(pp{prop}, 'Position', [x0(pp{prop}) y0(pp{prop})+h(f)-h_p w(pp{prop}) h(pp{prop})])
+        pp_list = cellfun(@(x) x.draw('Parent', p), pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
+
+        w_pp = w(f) - 2 * dw - w_s;
+        h_pp = cellfun(@(x) h(x), pp_list);
+        x0_pp = dw;
+        y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
+
+        h_p = sum(h_pp + dh) + dh;
+        if h_p > h(f)
+            offset = get(s, 'Value');
+            set(p, ...
+                'Units', 'character', ...
+                'Position', [0 h(f)-h_p-offset w(f) h_p], ...
+                'BackgroundColor', pl.get('BKGCOLOR'), ...
+                'BorderType', 'none' ...
+                );
+
+            set(s, ...
+                'Units', 'character', ...
+                'Position', [w(f)-w_s 0 w_s h(f)], ...
+                'Visible', 'on', ...
+                'Min', h(f) - h(p), ...
+                'Value', max(get(s, 'Value'), h(f) - h(p)) ...
+                );
+            
+            for prop = 1:1:length(pp_list)
+                set(pp_list{prop}, ...
+                    'Units', 'character', ...
+                    'Position', [x0_pp y0_pp(prop) w_pp h_pp(prop)] ...
+                    )
             end
         else
-            offset = get(s, 'Value');
-            set(p, 'Position', [0 h(f)-h_p-offset w(f) h_p])
-        end
+            set(p, ...
+                'Units', 'character', ...
+                'Position', [0 0 w(f) h(f)], ...
+                'BackgroundColor', pl.get('BKGCOLOR'), ...
+                'BorderType', 'none' ...
+                );
+            
+            set(s, 'Visible', 'off')            
 
-        if h(f) >= h(p) - dh
-            set(s, 'Visible', 'off')
-        else
-            set(s, ...
-                'Visible', 'on', ...
-                'Position', [w(p)-w(s) 0 w(s) h(f)], ...
-                'Min', h(f) - h(p) ...
-                )            
+            for prop = 1:1:length(pp_list)
+                set(pp_list{prop}, ...
+                    'Units', 'character', ...
+                    'Position', [x0_pp y0_pp(prop)+h(f)-h_p w_pp h_pp(prop)] ...
+                    )
+            end
         end
     end
-
-    % show
-    set(f, 'Visible', 'on')
 
     % auxiliary functions
     function r = x0(h)
-        units = get(h, 'Units');
-        set(h, 'Units', 'character')
         r = pl.x0(h);
-        set(h, 'Units', units)
     end
     function r = y0(h)
-        units = get(h, 'Units');
-        set(h, 'Units', 'character')
         r = pl.y0(h);
-        set(h, 'Units', units)
     end
     function r = w(h)
-        units = get(h, 'Units');
-        set(h, 'Units', 'character')
         r = pl.w(h);
-        set(h, 'Units', units)
     end
     function r = h(h)
-        units = get(h, 'Units');
-        set(h, 'Units', 'character')
         r = pl.h(h);
-        set(h, 'Units', units)
     end
 
     % output
     if nargout > 0
         h_panel = f;
     end
+end
+
+%% ¡staticmethods!
+function r = x0(h)
+    %X0 returns the position of the left edge of a graphical element in character units.
+    %
+    % R = X0(H) is the distance from the inner left edge of the parent
+    %  container to the outer left edge of the graphical element H.
+    % 
+    % See also y0, w, h.
+
+    units = get(h, 'Units');
+    set(h, 'Units', 'character')
+    r = x0@Plot(h);
+    set(h, 'Units', units)
+end
+function r = y0(h)
+    %Y0 returns the position of the bottom edge of a graphical element in character units.
+    %
+    % R = Y0(H) is the distance from the inner bottom edge of the parent 
+    %  container to the outer bottom edge of the graphical element H.
+    %
+    % See also x0, w, h.
+
+    units = get(h, 'Units');
+    set(h, 'Units', 'character')
+    r = y0@Plot(h);
+    set(h, 'Units', units)
+end
+function r = w(h)
+    %W returns the width of a graphical element in character units.
+    %
+    % R = W(H) is the distance between the right and left outer edges of the
+    %   graphical element H.
+    % 
+    % See also x0, y0, h.
+
+    units = get(h, 'Units');
+    set(h, 'Units', 'character')
+    r = w@Plot(h);
+    set(h, 'Units', units)
+end
+function r = h(h)
+    %H returns the height of a graphical element in character units.
+    %
+    % R = H(H) is the distance between the top and bottom outer edges of the
+    %  graphical element H.
+    % 
+    % See also x0, y0, w.
+
+    units = get(h, 'Units');
+    set(h, 'Units', 'character')
+    r = h@Plot(h);
+    set(h, 'Units', units)
 end
 
 %% ¡tests!
