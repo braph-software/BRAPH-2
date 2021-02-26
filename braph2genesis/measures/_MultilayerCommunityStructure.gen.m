@@ -31,11 +31,6 @@ LIMIT (parameter, SCALAR) is the maximum size of modularity matrix.
 10000
 
 %%% ¡prop! 
-VERBOSE (parameter, LOGICAL) is the level of reported/displayed text output.
-%%%% ¡default!
-true
-
-%%% ¡prop! 
 RANDORD (parameter, LOGICAL) is used to set randperm.
 %%%% ¡default!
 true
@@ -46,12 +41,12 @@ RANDMOVE (parameter, LOGICAL) is the move function.
 true
 
 %%% ¡prop! 
-gamma (parameter, SCALAR) is the the resolution parameter.
+gamma (parameter, SCALAR) is the resolution parameter.
 %%%% ¡default!
 1
 
 %%% ¡prop! 
-omega (parameter, SCALAR) 
+omega (parameter, SCALAR) is the interlayer weight parameter.
 %%%% ¡default!
 1
 
@@ -79,13 +74,12 @@ g = m.get('G');  % graph from measure class
 N = g.nodenumber();
 L = g.layernumber();  % number of layers
 limit = m.get('LIMIT');  % set default for maximum size of modularity matrix
-verbose = m.get('verbose');  % set level of reported/displayed text output
 randord = m.get('randord');  % set randperm
 randmove = m.get('randmove');  % set move function
 gamma = m.get('gamma');
 omega = m.get('omega');
 S0 = m.get('S0');
-B = m.get('OM');
+OM = m.get('OM');
 
 if L == 0  % no value case
     value = {};
@@ -114,33 +108,36 @@ else
     movefunction = 'move';
 end
 
-if isempty(B)
+if isempty(OM)
     directionality_type =  g.getDirectionalityType(g.layernumber());
     directionality_firstlayer = directionality_type(1, 1);
     if g.is_multiplex(g) || g.is_multilayer(g)
         A = cell(L, 1);
         for i=1:L
-            A_hold = g.get('B');
-            A(i) = {A_hold{i}};
+            A_hold = g.get('A');
+            A(i) = {A_hold{i, i}};
         end
+%         for i=1:L
+%             A(i) = {g.getA(i)};
+%         end
         if directionality_firstlayer == Graph.UNDIRECTED  % undirected
-            [B, twom] = m.multicat_undirected(A, gamma, omega, N(1), L);
+            [OM, twom] = m.multicat_undirected(A, gamma, omega, N(1), L);
         else  % directed
-            [B, twom] = m.multicat_directed(A, gamma, omega, N(1), L);
+            [OM, twom] = m.multicat_directed(A, gamma, omega, N(1), L);
         end
     elseif g.is_ordered_multiplex(g) || g.is_ordered_multilayer(g)
         A = g.getA();  % 2D-cell array
         if directionality_firstlayer == Graph.UNDIRECTED  % undirected
-            [B, twom] = m.multiord_undirected(A, gamma, omega, N(1), L);
+            [OM, twom] = m.multiord_undirected(A, gamma, omega, N(1), L);
         else  % directed
-            [B, twom] = m.multiord_directed(A, gamma, omega, N(1), L);
+            [OM, twom] = m.multiord_directed(A, gamma, omega, N(1), L);
         end
     end
 end
 
 % initialise variables and do symmetry check
-if isa(B,'function_handle')
-    n = length(B(1));
+if isa(OM,'function_handle')
+    n = length(OM(1));
     S = (1:n)';
     
     if isempty(S0)
@@ -157,7 +154,7 @@ if isa(B,'function_handle')
     end
     
     % symmetry check (only checks symmetry of a small part of the matrix)
-    M = B;
+    M = OM;
     it(:,1) = M(1);
     ii = find(it(2:end)>0,3) + 1;
     ii = [1,ii'];
@@ -170,7 +167,7 @@ if isa(B,'function_handle')
             'Function handle does not correspond to a symmetric matrix. Deviation: %i', norm(full(it-it')))
     end
 else
-    n = length(B);
+    n = length(OM);
     S = (1:n)';
     if isempty(S0)
         S0 = (1:n)';
@@ -186,17 +183,17 @@ else
         end
     end
     %symmetry check and fix if not symmetric
-    if nnz(B-B')
-        B = (B+B')/2;
-        %                     disp('WARNING: Forced symmetric B matrix')
+    if nnz(OM-OM')
+        OM = (OM+OM')/2;
+        %                     disp('WARNING: Forced symmetric OM matrix')
     end
-    M = B;
+    M = OM;
 end
 
 dtot = eps;  % keeps track of total change in modularity
 y = S0;
 % Run using function handle, if provided
-while (isa(M,'function_handle'))  % loop around each "pass" (in language of Blondel et al) with B function handle
+while (isa(M,'function_handle'))  % loop around each "pass" (in language of Blondel et al) with OM function handle
     Sb = S;
     yb = [];
     while ~isequal(yb,y)
@@ -244,20 +241,20 @@ while (isa(M,'function_handle'))  % loop around each "pass" (in language of Blon
     t = length(unique(S));
     if (t > limit)
         metanetwork_reduce('assign', S);  % inputs group information to metanetwork_reduce
-        M = @(i) m.metanetwork_i(B,i);  % use function handle if #groups > limit
+        M = @(i) m.metanetwork_i(OM,i);  % use function handle if #groups > limit
     else
         metanetwork_reduce('assign', S);
         J = zeros(t);  % convert to matrix if #groups small enough
         for c=1:t
-            J(:,c) = m.metanetwork_i(B,c);
+            J(:,c) = m.metanetwork_i(OM,c);
         end
-        B = J;
-        M = B;
+        OM = J;
+        M = OM;
     end
 end
 
-% Run using matrix B
-S2 = (1:length(B))';
+% Run using matrix OM (old B)
+S2 = (1:length(OM))';
 Sb = [];
 while ~isequal(Sb, S2)  % loop around each "pass" (in language of Blondel et al) with B matrix
     Sb = S2;
@@ -294,7 +291,7 @@ while ~isequal(Sb, S2)  % loop around each "pass" (in language of Blondel et al)
         return
     end
     
-    M = m.metanetwork(B, S2);
+    M = m.metanetwork(OM, S2);
     y = unique(S2);  % unique also puts elements in ascending order
 end
 m.set('quality_function') = Q/twom;  % save normalized quality function
@@ -307,7 +304,7 @@ end
 value = multilayer_community_structure;
 
 %% ¡methods!
-function [B, twom] = multiord_undirected(m, A, gamma, omega, N, T)
+function [OM, twom] = multiord_undirected(m, A, gamma, omega, N, T)
 % MULTIORDUNDIRECTED returns the multilayer modularity matrix for ordered undirected networks
 %
 % [B, twom] = MULTIORDUNDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer
@@ -406,10 +403,10 @@ K = sparse(ki, kj, kv, N*T, T);
 clear ii jj vv ki kj kv
 kvec = full(sum(AA));
 AA = AA + omega*spdiags(ones(N*T,2),[-N,N],N*T,N*T);
-B = @(i) AA(:,i) - gamma(ceil(i/(N+eps)))*K(:,ceil(i/(N+eps)))*kvec(i);
+OM = @(i) AA(:,i) - gamma(ceil(i/(N+eps)))*K(:,ceil(i/(N+eps)))*kvec(i);
 twom = twom + 2*N*(T-1)*omega;
 end
-function [B, twom] = multiord_directed(m, A, gamma, omega, N, T)
+function [OM, twom] = multiord_directed(m, A, gamma, omega, N, T)
 % MULTIORDDIRECTED returns the multilayer modularity matrix for ordered directed networks
 %
 % [B, twom] = MULTIORDDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer
@@ -495,10 +492,10 @@ kinmat = sparse(1:(N*T), kron(1:T, ones(1,N)), kin);
 A = (A+A')./2;
 A = A + omega*spdiags(ones(N*T,2), [-N,N], N*T, N*T);
 
-B = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps)))+kin(i).*koutmat(:,ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps))));
+OM = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps)))+kin(i).*koutmat(:,ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps))));
 twom = sum(m) + omega*2*N*(T-1);
 end
-function [B, twom] = multicat_undirected(m, A, gamma, omega, N, T)
+function [OM, twom] = multicat_undirected(m, A, gamma, omega, N, T)
 % MULTICATUNDIRECTED returns the multilayer modularity matrix for unordered undirected networks
 %
 % [B, twom] = MULTICATUNDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer
@@ -588,10 +585,10 @@ clear ii jj vv ki kj kv
 kvec = full(sum(AA));
 all2all = N*[(-T+1):-1,1:(T-1)];
 AA = AA + omega*spdiags(ones(N*T, 2*T-2), all2all, N*T, N*T);
-B = @(i) AA(:,i) - gamma(ceil(i/(N+eps)))*K(:, ceil(i/(N+eps)))*kvec(i);
+OM = @(i) AA(:,i) - gamma(ceil(i/(N+eps)))*K(:, ceil(i/(N+eps)))*kvec(i);
 twom = twom + 2*N*(T-1)*T*omega;
 end
-function [B, twom] = multicat_directed(m, A, gamma, omega, N, T)
+function [OM, twom] = multicat_directed(m, A, gamma, omega, N, T)
 % MULTICATDIRECTED returns the multilayer modularity matrix for unordered directed networks
 %
 % [B, twom] = MULTICATDIRECTED(A, GAMMA, OMEGA, N, T) returns the multilayer
@@ -673,7 +670,7 @@ A = (A+A')./2;
 all2all = N*[(-T+1):-1,1:(T-1)];
 A = A + omega*spdiags(ones(N*T, 2*T-2), all2all, N*T, N*T);
 
-B = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps))) + kin(i).*koutmat(:, ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps))));
+OM = @(i) A(:,i) - gamma(ceil(i./(N+eps))).*(kout(i).*kinmat(:,ceil(i./(N+eps))) + kin(i).*koutmat(:, ceil(i./(N+eps))))./(2*m(ceil(i./(N+eps))));
 twom = sum(m) + omega*2*N*(T-1);
 end
 function M = metanetwork(m, J, S)
