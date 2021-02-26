@@ -85,6 +85,7 @@ value = IndexedDictionary( ...
 %% ¡properties!
 p % handle for scrollable
 s % handle for slider
+pp_list % list of handles for prop panels
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -118,7 +119,7 @@ function h_panel = draw(pl, varargin)
             'Min', -eps, ...
             'Max', 0, ...
             'Value', 0, ...            
-            'Callback', {@cb_s} ...
+            'Callback', {@resize} ...
             );
     end
 	s = pl.s;
@@ -128,14 +129,17 @@ function h_panel = draw(pl, varargin)
         set(p, 'Position', [x0(p) h(f)-h(p)-offset w(p) h(p)]);
     end
 
+    if isempty(pl.pp_list)
+        pl.pp_list = cellfun(@(x) x.draw('Parent', p), pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
+    end
+    pp_list = pl.pp_list;
+    
     resize()
     function resize(~, ~)
         dw = pl.get('DW');
         dh = pl.get('DH');
         w_s = 5; % defines slider width
-
-        pp_list = cellfun(@(x) x.draw('Parent', p), pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
-
+        
         w_pp = w(f) - 2 * dw - w_s;
         h_pp = cellfun(@(x) h(x), pp_list);
         x0_pp = dw;
@@ -186,16 +190,16 @@ function h_panel = draw(pl, varargin)
 
     % auxiliary functions
     function r = x0(h)
-        r = pl.x0(h);
+        r = PlotElement.x0(h);
     end
     function r = y0(h)
-        r = pl.y0(h);
+        r = PlotElement.y0(h);
     end
     function r = w(h)
-        r = pl.w(h);
+        r = PlotElement.w(h);
     end
     function r = h(h)
-        r = pl.h(h);
+        r = PlotElement.h(h);
     end
 
     % output
