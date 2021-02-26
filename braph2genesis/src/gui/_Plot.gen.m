@@ -52,11 +52,13 @@ function h_panel = draw(pl, varargin)
     % see also settings, uipanel, isgraphics.
 
     if isempty(pl.h_panel) || ~isgraphics(pl.h_panel, 'uipanel')
-        pl.h_panel = uipanel();
+        pl.h_panel = uipanel(varargin{:}, ...
+            'DeleteFcn', {@close_f_settings});
+    else
+        set(pl.h_panel, varargin{:}, ...
+            'DeleteFcn', {@close_f_settings})
     end
     h = pl.h_panel;
-    set(h, 'DeleteFcn', {@close_f_settings}, ...
-        varargin{:})
 
     function close_f_settings(~, ~) % (src, event)
         if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
