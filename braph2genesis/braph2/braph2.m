@@ -14,6 +14,7 @@ format long
 src_dir = [fileparts(which('braph2')) filesep 'src'];
 addpath(src_dir)
 addpath([src_dir filesep 'util'])
+addpath([src_dir filesep 'util' filesep 'MEX_SRC'])
 addpath([src_dir filesep 'ds'])
 addpath([src_dir filesep 'atlas'])
 addpath([src_dir filesep 'cohort'])

@@ -87,6 +87,10 @@ omega = m.get('omega');
 S0 = m.get('S0');
 B = m.get('OM');
 
+if L == 0  % no value case
+    value = {};
+    return;
+end
 % set randperm- v. index-ordered
 if randord
     myord = @(n) randperm(n);
@@ -116,7 +120,8 @@ if isempty(B)
     if g.is_multiplex(g) || g.is_multilayer(g)
         A = cell(L, 1);
         for i=1:L
-            A(i) = {g.getA(i)};
+            A_hold = g.get('B');
+            A(i) = {A_hold{i}};
         end
         if directionality_firstlayer == Graph.UNDIRECTED  % undirected
             [B, twom] = m.multicat_undirected(A, gamma, omega, N(1), L);
@@ -700,8 +705,9 @@ end
 MultiplexBU
 %%%% ¡code!
 
-A = rand(5, 5, 2);
-g = MultiplexBU('B', A);
+A = rand(5, 5);
+B = {A A};
+g = MultiplexBU('B', B);
 mcs = MultilayerCommunityStructure('G', g).get('M');
 
 assert(~isempty(mcs.getValue), ...
