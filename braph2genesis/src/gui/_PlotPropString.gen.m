@@ -97,33 +97,6 @@ function update(pl)
             end
     end
 end
-function resize(pl)
-    %RESIZE resizes the element graphical panel.
-    %
-    % RESIZE(PL) resizes the plot PL.
-    %
-    % See also draw.
-
-    resize@PlotProp(pl)
-    
-    el = pl.get('EL');
-    prop = pl.get('PROP');
-
-    pp = pl.pp;
-    
-    set(pp, 'Position', [x0(pp) y0(pp) w(pp) 3])
-    
-    % auxiliary functions
-    function r = x0(h)
-        r = Plot.x0(h);
-    end
-    function r = y0(h)
-        r = Plot.y0(h);
-    end
-    function r = w(h)
-        r = Plot.w(h);
-    end
-    function r = h(h)
-        r = Plot.h(h);
-    end
+function h = height(pl)
+    h = 3;
 end
