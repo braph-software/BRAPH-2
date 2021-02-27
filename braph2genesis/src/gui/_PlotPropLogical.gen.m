@@ -71,7 +71,7 @@ function update(pl)
     prop = pl.get('PROP');
     
     if el.isLocked(prop)
-        set(pl.checkbox_value, 'Enable', 'off')
+        set(pl.checkbox_value, 'Enable', pl.get('ENABLE'))
     end
 
     switch el.getPropCategory(prop)
@@ -83,7 +83,7 @@ function update(pl)
 
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pl.checkbox_value, 'Enable', 'off')
+                set(pl.checkbox_value, 'Enable', pl.get('ENABLE'))
             end
 
         case Category.RESULT
@@ -92,12 +92,12 @@ function update(pl)
             if isa(value, 'NoValue')
                 set(pl.checkbox_value, ...
                     'Value', el.getPropDefault(prop), ...
-                    'Enable', 'off' ...
+                    'Enable', pl.get('ENABLE') ...
                     )
             else
             set(pl.checkbox_value, ...
                 'Value', el.get(prop), ...
-                'Enable', 'off' ...
+                'Enable', pl.get('ENABLE') ...
                 )
             end
     end

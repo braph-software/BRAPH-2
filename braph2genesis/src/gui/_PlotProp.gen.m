@@ -19,6 +19,11 @@ EL (metadata, item) is the element.
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 
+%%% ¡prop!
+ENABLE (metadata, option) switches between off and inactive fields.
+%%%% ¡settings!
+{'inactive' 'off'}
+
 %% ¡properties!
 pp
 text_tag
