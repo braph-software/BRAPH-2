@@ -58,23 +58,13 @@ function h_panel = draw(pl, varargin)
         h_panel = pl.pp;
     end
 end
-function resize(pl)
-    %RESIZE resizes the element graphical panel.
-    %
-    % RESIZE(PL) resizes the plot PL.
-    %
-    % See also draw.
+function update(pl)
 
-    resize@PlotProp(pl)
+    update@PlotProp(pl)
     
     el = pl.get('EL');
     prop = pl.get('PROP');
     
-    pp = pl.pp;
-    
-    set(pp, 'Position', [x0(pp) y0(pp) w(pp) 3])
-    
-    % update
     if el.isLocked(prop)
         set(pl.edit_value, 'Enable', 'off')
     end
@@ -106,6 +96,22 @@ function resize(pl)
                     )
             end
     end
+end
+function resize(pl)
+    %RESIZE resizes the element graphical panel.
+    %
+    % RESIZE(PL) resizes the plot PL.
+    %
+    % See also draw.
+
+    resize@PlotProp(pl)
+    
+    el = pl.get('EL');
+    prop = pl.get('PROP');
+
+    pp = pl.pp;
+    
+    set(pp, 'Position', [x0(pp) y0(pp) w(pp) 3])
     
     % auxiliary functions
     function r = x0(h)

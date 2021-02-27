@@ -46,8 +46,7 @@ function h_panel = draw(pl, varargin)
         varargin{:}, ...
         'Units', 'character', ...
         'BackgroundColor', pl.get('BKGCOLOR'), ...
-        'BorderType', 'none', ... 
-        'SizeChangedFcn', {@resize} ...
+        'BorderType', 'none' ...
         );
     
     if isempty(pl.text_tag) || ~isgraphics(pl.text_tag, 'text')
@@ -126,6 +125,37 @@ function h_panel = draw(pl, varargin)
         h_panel = pl.pp;
     end
 end
+function update(pl)
+
+    el = pl.get('EL');
+    prop = pl.get('PROP');
+
+    switch el.getPropCategory(prop)
+        case Category.METADATA
+            %
+
+        case {Category.PARAMETER, Category.DATA}
+            value = el.getr(prop);
+            if isa(value, 'Callback')
+                set(pl.button_cb, ...
+                    'Tooltip', value.tostring(), ...
+                    'Visible', 'on' ...
+                    );
+            else
+                set(pl.button_cb, 'Visible', 'off')
+            end
+
+        case Category.RESULT
+            value = el.getr(prop);
+            if isa(value, 'NoValue')
+                set(pl.button_calc, 'Enable', 'on')
+                set(pl.button_del, 'Enable', 'off')
+            else
+                set(pl.button_calc, 'Enable', 'off')
+                set(pl.button_del, 'Enable', 'on')
+            end
+    end
+end
 function resize(pl)
     %RESIZE resizes the element graphical panel.
     %
@@ -135,7 +165,7 @@ function resize(pl)
     
     el = pl.get('EL');
     prop = pl.get('PROP');
-    
+
     pp = pl.pp;
 
     set(pp, 'Position', [x0(pp) y0(pp) w(pp) 1.4])
@@ -149,11 +179,7 @@ function resize(pl)
         case {Category.PARAMETER, Category.DATA}
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pl.button_cb, ...
-                    'Position', [w(pp)-4 h(pp)-1.2 3 1], ...
-                    'Tooltip', value.tostring(), ...
-                    'Visible', 'on' ...
-                    );
+                set(pl.button_cb, 'Position', [w(pp)-4 h(pp)-1.2 3 1]);
             else
                 set(pl.button_cb, 'Visible', 'off')
             end
@@ -162,15 +188,6 @@ function resize(pl)
             set(pl.button_calc, 'Position', [w(pp)-7.5 h(pp)-1.2 3 1])
 
             set(pl.button_del, 'Position', [w(pp)-4 h(pp)-1.2 3 1])
-
-            value = el.getr(prop);
-            if isa(value, 'NoValue')
-                set(pl.button_calc, 'Enable', 'on')
-                set(pl.button_del, 'Enable', 'off')
-            else
-                set(pl.button_calc, 'Enable', 'off')
-                set(pl.button_del, 'Enable', 'on')
-            end
     end
     
     % auxiliary functions
@@ -196,12 +213,12 @@ function refresh(pl)
     f = get(pp, 'Parent');
     if isgraphics(f, 'uipanel')
         f = get(f, 'Parent');
+        units = get(f, 'Units');
+        position = get(f, 'Position');
+        set(f, 'Units', 'pixels') 
+        set(f, 'UserData', 'ignore', 'Position', get(f, 'Position') + [0 0 0 -10])
+        set(f, 'UserData', 'update', 'Units', units, 'Position', position)
     end
-    units = get(f, 'Units');
-    position = get(f, 'Position');
-    set(f, 'Units', 'pixels') 
-    set(f, 'Position', get(f, 'Position') + [0 0 0 -10])
-    set(f, 'Units', units, 'Position', position)
 end
 function cb_button_cb(pl)
     %CB_BUTTON_CB executes callback for button callback.
@@ -221,8 +238,8 @@ function cb_button_calc(pl)
 
     el.memorize(prop);
 
-    pl.resize()
-    pl.refresh()
+    pl.update()
+    pl.refresh() % includes pl.resize()
 end
 function cb_button_del(pl)
     %CB_BUTTON_DEL executes callback for button delete.
@@ -234,6 +251,6 @@ function cb_button_del(pl)
     
     el.set(prop, NoValue.getNoValue())
 
-    pl.resize()
-    % pl.refresh()
+    pl.update()
+    pl.refresh() % includes pl.resize()
 end

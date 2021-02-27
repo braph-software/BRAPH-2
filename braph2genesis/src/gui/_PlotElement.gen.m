@@ -135,10 +135,6 @@ function h_panel = draw(pl, varargin)
         'SizeChangedFcn', {@resize} ...
         );
 
-    function resize(~, ~)
-        pl.resize()
-    end
-
     if isempty(pl.p) || ~isgraphics(pl.p, 'uipanel')
         pl.p = uipanel( ...
             'Parent', pl.f, ...
@@ -167,12 +163,25 @@ function h_panel = draw(pl, varargin)
             ), ...
             pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
     end
+    
+    pl.update()
 
-    set(pl.f, 'Visible', 'on')
+    set(pl.f, 'Visible', 'on') % calls resize()
+    
+    % callbacks
+    function resize(~, ~)
+        pl.resize()
+    end
     
     % output
     if nargout > 0
         h_panel = pl.f;
+    end
+end
+function update(pl)
+
+    for prop = 1:1:pl.get('PP_DICT').length()
+        pl.get('PP_DICT').getItem(prop).update()
     end
 end
 function resize(pl)
@@ -187,6 +196,14 @@ function resize(pl)
 	s = pl.s;
     pp_list = pl.pp_list;
 
+    if strcmpi(get(f, 'UserData'), 'ignore')
+        set(f, 'UserData', [])
+        return
+    elseif strcmpi(get(f, 'UserData'), 'update')
+        set(f, 'UserData', [])
+        pl.update()
+    end
+    
     units = get(f, 'Units');
     set(f, 'Units', 'character')
     
@@ -194,11 +211,16 @@ function resize(pl)
     dh = pl.get('DH');
     w_s = 5; % defines slider width
 
+    % prop panels
+    for prop = 1:1:length(pp_list)
+        pl.get('PP_DICT').getItem(prop).resize()
+    end
     w_pp = w(f) - 2 * dw - w_s;
     h_pp = cellfun(@(x) h(x), pp_list);
     x0_pp = dw;
     y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
 
+    % p, s
     h_p = sum(h_pp + dh) + dh;
     if h_p > h(f)
         offset = get(s, 'Value');
@@ -212,7 +234,6 @@ function resize(pl)
             );
 
         for prop = 1:1:length(pp_list)
-            pl.get('PP_DICT').getItem(prop).resize()
             set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop) w_pp h_pp(prop)])
         end
     else
@@ -221,7 +242,6 @@ function resize(pl)
         set(s, 'Visible', 'off')            
 
         for prop = 1:1:length(pp_list)
-            pl.get('PP_DICT').getItem(prop).resize()
             set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w_pp h_pp(prop)])
         end
     end
