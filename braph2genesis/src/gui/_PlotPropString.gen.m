@@ -75,6 +75,7 @@ function resize(pl)
         el.set(prop, get(src, 'String'))
    
         pl.resize()
+        pl.refresh()
     end    
     
     % update

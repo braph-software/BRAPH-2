@@ -196,6 +196,21 @@ function resize(pl)
         r = PlotElement.h(h);
     end
 end
+function refresh(pl)
+    %REFRESH recalculates the size and values of the parent.
+    %
+    % REFRESH(PL) recalculates the size and values of the parent.
+    
+    pp = get(pl.text_tag, 'Parent');
+    f = get(pp, 'Parent');
+    if isgraphics(f, 'uipanel')
+        f = get(f, 'Parent');
+    end
+    units = get(f, 'Units');
+    position = get(f, 'Position');
+    set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
+    set(f, 'Units', units, 'Position', position)
+end
 function cb_button_cb(pl)
     %CB_BUTTON_CB executes callback for button callback.
     %
@@ -215,16 +230,7 @@ function cb_button_calc(pl)
     el.memorize(prop);
 
     pl.resize()
-
-    pp = get(pl.text_tag, 'Parent');
-    f = get(pp, 'Parent');
-    if isgraphics(f, 'uipanel')
-        f = get(f, 'Parent');
-    end
-    units = get(f, 'Units');
-    position = get(f, 'Position');
-    set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
-    set(f, 'Units', units, 'Position', position)
+    pl.refresh()
 end
 function cb_button_del(pl)
     %CB_BUTTON_DEL executes callback for button delete.
@@ -237,14 +243,5 @@ function cb_button_del(pl)
     el.set(prop, NoValue.getNoValue())
 
     pl.resize()
-
-    pp = get(pl.text_tag, 'Parent');
-    f = get(pp, 'Parent');
-    if isgraphics(f, 'uipanel')
-        f = get(f, 'Parent');
-    end
-    units = get(f, 'Units');
-    position = get(f, 'Position');
-    set(f, 'Units', 'pixels', 'Position', get(f, 'Position') + [0 0 0 -1])
-    set(f, 'Units', units, 'Position', position)
+    pl.refresh()
 end
