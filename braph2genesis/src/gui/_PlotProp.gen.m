@@ -41,8 +41,15 @@ function h_panel = draw(pl, varargin)
     el = pl.get('EL');
     prop = pl.get('PROP');
     
-    pp = draw@Plot(pl, varargin{:}, 'SizeChangedFcn', {@resize});
+    pp = draw@Plot(pl, ...
+        varargin{:}, ...
+        'SizeChangedFcn', {@resize} ...
+        );
 
+    function resize(~, ~)
+        pl.resize()
+    end
+    
     if isempty(pl.text_tag) || ~isgraphics(pl.text_tag, 'text')
         pl.text_tag =  uicontrol( ...
             'Style', 'text', ...
@@ -77,12 +84,6 @@ function h_panel = draw(pl, varargin)
             end
     end
 
-    resize()
-    
-    function resize(~, ~)
-        pl.resize()
-    end
-
     % output
     if nargout > 0
         h_panel = pp;
@@ -100,6 +101,7 @@ function resize(pl)
     
     pp = get(pl.text_tag, 'Parent');
 
+    % resize
     set(pp, ...
         'Units', 'character', ...
         'Position', [x0(pp) y0(pp) w(pp) 1.4], ...
@@ -116,6 +118,7 @@ function resize(pl)
         'BackgroundColor', pl.get('BKGCOLOR') ...
         );
 
+    % update
     switch el.getPropCategory(prop)
         case Category.METADATA
             %
