@@ -1,23 +1,23 @@
 %% ¡header!
-PlotPropString < PlotProp (pl, plot property string) is a plot of a property string.
+PlotPropMatrix < PlotProp (pl, plot property matrix) is a plot of a property matrix.
 
 %%% ¡description!
-PlotProp plots a property string of an element in a panel.
+PlotProp plots a property matrix of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
 
 %% ¡properties!
 pp
-edit_value
+table_value
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
-    %DRAW draws the string property graphical panel.
+    %DRAW draws the matrix property graphical panel.
     %
-    % DRAW(PL) draws the string property graphical panel.
+    % DRAW(PL) draws the matrix property graphical panel.
     %
-    % H = DRAW(PL) returns a handle to the string property graphical panel.
+    % H = DRAW(PL) returns a handle to the matrix property graphical panel.
     %
     % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
     %  panel with custom property-value couples.
@@ -33,22 +33,21 @@ function h_panel = draw(pl, varargin)
     
     pl.pp = draw@PlotProp(pl, varargin{:});
     
-    if isempty(pl.edit_value) || ~isgraphics(pl.edit_value, 'edit')
-        pl.edit_value = uicontrol( ...
-            'Style', 'edit', ...
+    if isempty(pl.table_value) || ~isgraphics(pl.table_value, 'uitable')
+        pl.table_value = uitable( ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
-            'Position', [.01 .10 .98 .45], ...
-            'HorizontalAlignment', 'left', ...
-            'BackgroundColor', 'w', ...
+            'Position', [.01 .05 .98 .80], ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'Callback', {@cb_edit_value} ...
+            'CellEditCallback', {@cb_matrix_value} ...
             );
     end
 
     % callback
-    function cb_edit_value(src, ~)
-        el.set(prop, get(src, 'String'))
+    function cb_matrix_value(src, event)
+        value = el.get(prop);
+        value(event.Indices(1), event.Indices(2)) = event.NewData;
+        el.set(prop, value)
    
         pl.update()
     end
@@ -71,34 +70,40 @@ function update(pl)
     prop = pl.get('PROP');
     
     if el.isLocked(prop)
-        set(pl.edit_value, 'Enable', 'off')
+        set(pl.table_value, 'Enable', 'off')
     end
 
     switch el.getPropCategory(prop)
         case Category.METADATA
-            set(pl.edit_value, 'String', el.get(prop))
+            set(pl.table_value, ...
+                'Data', el.get(prop), ...
+                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                'ColumnEditable', true)
 
         case {Category.PARAMETER, Category.DATA}
-            set(pl.edit_value, 'String', el.get(prop))
+            set(pl.table_value, ...
+                'Data', el.get(prop), ...
+                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                'ColumnEditable', true)
 
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pl.edit_value, 'Enable', 'off')
+                set(pl.table_value, 'ColumnEditable', false)
             end
 
         case Category.RESULT
             value = el.getr(prop);
 
             if isa(value, 'NoValue')
-                set(pl.edit_value, ...
-                    'String', el.getPropDefault(prop), ...
-                    'Enable', 'off' ...
-                    )
+                set(pl.table_value, ...
+                    'Data', el.getPropDefault(prop), ...
+                    'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                    'ColumnEditable', false)
             else
-                set(pl.edit_value, ...
-                    'String', el.get(prop), ...
-                    'Enable', 'off' ...
-                    )
+                set(pl.table_value, ...
+                    'Data', el.get(prop), ...
+                    'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                    'ColumnEditable', false)
             end
     end
 end
@@ -111,5 +116,5 @@ function resize(pl, varargin)
     %
     % See also draw, update, refresh.
     
-    pl.resize@PlotProp('Height', 3.33)
+    pl.resize@PlotProp('Height', 10)
 end
