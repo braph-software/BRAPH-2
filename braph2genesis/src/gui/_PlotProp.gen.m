@@ -156,6 +156,9 @@ function update(pl)
             end
     end
 end
+function h =height(pl)
+    h = 1.4;
+end
 function resize(pl)
     %RESIZE resizes the element graphical panel.
     %
@@ -168,7 +171,7 @@ function resize(pl)
 
     pp = pl.pp;
 
-    set(pp, 'Position', [x0(pp) y0(pp) w(pp) 1.4])
+    set(pp, 'Position', [x0(pp) y0(pp) w(pp) pl.height()])
 
     set(pl.text_tag, 'Position', [0 h(pp)-1 w(pp) 1]);
 
