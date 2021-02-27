@@ -1,5 +1,5 @@
 %% ¡header!
-KCorenessCentrality < Measure (m, kcoreness centrality) is the graph kcoreness centrality.
+KCorenessCentrality < Measure (m, k-coreness centrality) is the graph k-coreness centrality.
 
 %%% ¡description!
 The k-coreness centrality of a node is k if the node belongs to the k-core
@@ -27,7 +27,7 @@ MultiplexBD
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the kcoreness centrality.
+M (result, cell) is the k-coreness centrality.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

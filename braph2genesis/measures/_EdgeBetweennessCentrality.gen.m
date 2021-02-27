@@ -32,8 +32,6 @@ M (result, cell) is the edge betweenness centrality.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-N = g.nodenumber();
-L = g.layernumber();
 
 edge_betweenness_centrality = cell(L, 1);
 connectivity_type =  g.getConnectivityType(L);

@@ -1,5 +1,5 @@
 %% ¡header!
-KCore < Measure (m, kcore) is the graph kcore.
+KCore < Measure (m, k-core) is the graph k-core.
 
 %%% ¡description!
 The k-core of a graph is the largest subnetwork comprising nodes of degree k or higher. 
@@ -26,14 +26,14 @@ MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
-KCoreThreshold (parameter, SCALAR) is the kcore threshold
+KCoreThreshold (parameter, SCALAR) is the k-core threshold
 %%%% ¡default!
 1
 
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the kcore.
+M (result, cell) is the k-core.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
