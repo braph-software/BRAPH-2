@@ -15,8 +15,8 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphBU
-MultiplexGraphWU
+MultiplexBU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -26,7 +26,7 @@ M (result, cell) is the degree overlap.
 g = m.get('G'); % graph from measure class
 
 edge_overlap = calculateValue@EdgeOverlap(m, prop);	
-degree_overlap = {sum(edge_overlap{1} == 1, 2)};
+degree_overlap = {sum(cell2mat(edge_overlap) == 1, 2)};
 
 value = degree_overlap;
 
@@ -34,7 +34,7 @@ value = degree_overlap;
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
     0   1   1
@@ -50,16 +50,16 @@ B = {B11 B22};
 
 known_degree_overlap = {[1 1 0]'};
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 degree_overlap = DegreeOverlap('G', g);
                  
 assert(isequal(degree_overlap.get('M'), known_degree_overlap), ...
     [BRAPH2.STR ':DegreeOverlap:' BRAPH2.BUG_ERR], ...
-    'DegreeOverlap is not being calculated correctly for MultiplexGraphBU')
+    'DegreeOverlap is not being calculated correctly for MultiplexBU')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -75,9 +75,9 @@ B = {B11 B22};
 
 known_degree_overlap = {[1 1 0]'};
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 degree_overlap = DegreeOverlap('G', g);
 
 assert(isequal(degree_overlap.get('M'), known_degree_overlap), ...
     [BRAPH2.STR ':DegreeOverlap:' BRAPH2.BUG_ERR], ...
-    'DegreeOverlap is not being calculated correctly for MultiplexGraphWU')
+    'DegreeOverlap is not being calculated correctly for MultiplexWU')

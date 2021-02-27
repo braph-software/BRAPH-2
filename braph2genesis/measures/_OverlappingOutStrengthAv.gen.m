@@ -15,7 +15,7 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphWD
+MultiplexWD
 
 %% ¡props_update!
 
@@ -31,7 +31,7 @@ value = {mean(cell2mat(overlapping_out_strength))};
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -47,9 +47,9 @@ B = {B11 B22};
 
 known_overlapping_in_strength_av = {mean([2.2 1.4 2])};
 
-g = MultiplexGraphWD('B', B);
+g = MultiplexWD('B', B);
 overlapping_in_strength_av = OverlappingOutStrengthAv('G', g);
 
 assert(isequal(overlapping_in_strength_av.get('M'), known_overlapping_in_strength_av), ...
     [BRAPH2.STR ':OverlappingOutStrengthAv:' BRAPH2.BUG_ERR], ...
-    'OverlappingOutStrengthAv is not being calculated correctly for MultiplexGraphWD.')
+    'OverlappingOutStrengthAv is not being calculated correctly for MultiplexWD.')

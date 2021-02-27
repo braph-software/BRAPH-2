@@ -15,8 +15,8 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphBD
-MultiplexGraphWD
+MultiplexBD
+MultiplexWD
 
 %% ¡props_update!
 
@@ -43,7 +43,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 B11 = [
     0   1   0
@@ -59,16 +59,16 @@ B = {B11 B22};
 
 known_overlapping_in_degree = {[3, 2, 1]'};
 
-g = MultiplexGraphBD('B', B);
+g = MultiplexBD('B', B);
 overlapping_in_degree = OverlappingInDegree('G', g);
                  
 assert(isequal(overlapping_in_degree.get('M'), known_overlapping_in_degree), ...
     [BRAPH2.STR ':OverlappingInDegree:' BRAPH2.BUG_ERR], ...
-    'OverlappingInDegree is not being calculated correctly for MultiplexGraphBD')
+    'OverlappingInDegree is not being calculated correctly for MultiplexBD')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 B11 = [
     0   .4  1
@@ -84,9 +84,9 @@ B = {B11 B22};
 
 known_overlapping_in_degree = {[2, 3, 1]'};
 
-g = MultiplexGraphWD('B', B);
+g = MultiplexWD('B', B);
 overlapping_in_degree = OverlappingInDegree('G', g);
 
 assert(isequal(overlapping_in_degree.get('M'), known_overlapping_in_degree), ...
     [BRAPH2.STR ':OverlappingInDegree:' BRAPH2.BUG_ERR], ...
-    'OverlappingInDegree is not being calculated correctly for MultiplexGraphWD.')
+    'OverlappingInDegree is not being calculated correctly for MultiplexWD.')

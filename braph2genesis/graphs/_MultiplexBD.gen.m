@@ -1,10 +1,11 @@
 %% ¡header!
-MultiplexGraphWD < Graph (g, multiplex weighted directed graph) is a multiplex weighted directed graph.
+MultiplexBD < Graph (g, multiplex binary directed graph) is a multiplex binary directed graph.
 
 %%% ¡description!
-In a multiplex weighted directed (WD) graph, 
-the edges are associated with a real number between 0 and 1 
-indicating the strength of the connection, and they are directed.
+In a multiplex binary directed (BD) graph, 
+the edges can be either 0 (absence of connection) 
+or 1 (existence of connection), 
+and they are directed.
 
 %%% ¡ensemble!
 false
@@ -13,12 +14,12 @@ false
 graph = Graph.MULTIPLEX;
 
 %%% ¡connectivity!
-connectivity = Graph.WEIGHTED * ones(layernumber);
+connectivity = Graph.BINARY * ones(layernumber);
 
 %%% ¡directionality!
 directionality = Graph.DIRECTED * ones(layernumber);
 
-%%% ¡selfconnectivity!
+%%% ¡selfconnectivity!  
 selfconnectivity = Graph.SELFCONNECTED * ones(layernumber);
 selfconnectivity(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
 
@@ -28,14 +29,14 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 %% ¡props!
 
 %%% ¡prop!
-B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.
+B (data, cell) is the input cell containing the multiplex adjacency matrices.
 %%%% ¡default!
 {[] []};
 
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.
+A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary directed graph.
 %%%% ¡calculate!
 B = g.get('B');
 L = length(B); %% number of layers
@@ -45,7 +46,7 @@ varargin = {}; %% TODO add props to manage the relevant properties of dediagonal
 for layer = 1:1:L
     M = dediagonalize(B{layer}, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
     M = semipositivize(M, varargin{:}); %% removes negative weights
-    M = standardize(M, varargin{:}); %% enforces binary adjacency matrix
+    M = binarize(M, varargin{:}); %% enforces binary adjacency matrix
     A(layer, layer) = {M};
 end
 if ~isempty(A{1, 1})
@@ -66,11 +67,12 @@ Constructor
 %%%% ¡code!
 A = rand(randi(10));
 B = {A, A};
-g = MultiplexGraphWD('B', B);
+g = MultiplexBD('B', B);
 
-A1 = standardize(semipositivize(dediagonalize(A)));
+A1 = binarize(semipositivize(dediagonalize(A)));
 A = {A1, eye(length(A)); eye(length(A)), A1};
 
 assert(isequal(g.get('A'), A), ...
-    [BRAPH2.STR ':MultiplexGraphWD:' BRAPH2.BUG_ERR], ...
-    'MultiplexGraphWD is not constructing well.')
+    [BRAPH2.STR ':MultiplexBD:' BRAPH2.BUG_ERR], ...
+    'MultiplexBD is not constructing well.')
+

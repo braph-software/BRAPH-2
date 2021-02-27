@@ -16,8 +16,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphBU
-MultiplexGraphWU
-MultiplexGraphBU
+MultiplexWU
+MultiplexBU
 
 %% ¡props!
 %%% ¡prop! 
@@ -129,7 +129,7 @@ assert(isequal(m_inside_g.get('M'), known_eccentricity_default), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
       0     .1  .2  .25  0;
@@ -158,33 +158,33 @@ known_eccentricity_default = {
                              [Inf Inf Inf Inf Inf]'
                              };
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 m_outside_g = Eccentricity('G', g, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_eccentricity_subgraphs), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphBU.')
+    'Eccentricity is not being calculated correctly for MultiplexBU.')
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 m_inside_g = g.getMeasure('Eccentricity', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_eccentricity_subgraphs), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphBU.')
+    'Eccentricity is not being calculated correctly for MultiplexBU.')
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 m_outside_g = Eccentricity('G', g, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_eccentricity_default), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphBU.')
+    'Eccentricity is not being calculated correctly for MultiplexBU.')
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 m_inside_g = g.getMeasure('Eccentricity', 'rule', 'all');
 assert(isequal(m_inside_g.get('M'), known_eccentricity_default), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphBU.')
+    'Eccentricity is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
       0     .1  .2  .25  0;
@@ -213,29 +213,29 @@ known_eccentricity_default = {
                              [Inf Inf Inf Inf Inf]'
                              };
                            
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_outside_g = Eccentricity('G', g, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_eccentricity_subgraphs), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphWU.')
+    'Eccentricity is not being calculated correctly for MultiplexWU.')
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_inside_g = g.getMeasure('Eccentricity', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_eccentricity_subgraphs), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphWU.')
+    'Eccentricity is not being calculated correctly for MultiplexWU.')
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_outside_g = Eccentricity('G', g, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_eccentricity_default), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphWU.')
+    'Eccentricity is not being calculated correctly for MultiplexWU.')
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 m_inside_g = g.getMeasure('Eccentricity', 'rule', 'all');
 assert(isequal(m_inside_g.get('M'), known_eccentricity_default), ...
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
-    'Eccentricity is not being calculated correctly for MultiplexGraphWU.')
+    'Eccentricity is not being calculated correctly for MultiplexWU.')
 
 %%% ¡test!
 %%%% ¡name!

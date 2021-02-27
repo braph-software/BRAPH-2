@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexBUT < MultiplexGraphWU (g, binary undirected multiplex with fixed thresholds) is a binary undirected multiplex with fixed thresholds.
+MultiplexBUT < MultiplexWU (g, binary undirected multiplex with fixed thresholds) is a binary undirected multiplex with fixed thresholds.
 
 %%% ¡description!
 In a binary undirected multiplex with fixed thresholds (BUT), 
@@ -36,7 +36,7 @@ THRESHOLDS (data, rvector) is the vector of thresholds.
 %%% ¡prop!
 A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. 
 %%%% ¡calculate!
-A_WU = calculateValue@MultiplexGraphWU(g, prop);
+A_WU = calculateValue@MultiplexWU(g, prop);
 
 thresholds = g.get('THRESHOLDS');
 L = length(A_WU); % number of layers

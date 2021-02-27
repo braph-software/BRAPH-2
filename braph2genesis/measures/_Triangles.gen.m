@@ -23,10 +23,10 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
-MultiplexGraphWU
-MultiplexGraphWD
-MultiplexGraphBU
-MultiplexGraphBD
+MultiplexWU
+MultiplexWD
+MultiplexBU
+MultiplexBD
 
 %% ¡props!
 
@@ -161,7 +161,7 @@ assert(isequal(triangles.get('M'), known_triangles_all), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
       0 1 1 1;
@@ -182,9 +182,9 @@ known_triangles = {
                  [2 1 2 1]'
                  };      
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 triangles = Triangles('G', g);
 
 assert(isequal(triangles.get('M'), known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
-    'Triangles is not being calculated correctly for MultiplexGraphBU.')
+    'Triangles is not being calculated correctly for MultiplexBU.')

@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexBUD < MultiplexGraphWU (g, binary undirected multiplex with fixed densities) is a binary undirected multiplex with fixed densities.
+MultiplexBUD < MultiplexWU (g, binary undirected multiplex with fixed densities) is a binary undirected multiplex with fixed densities.
 
 %%% ¡description!
 In a binary undirected multiplex with fixed densities (BUD), 
@@ -36,7 +36,7 @@ DENSITIES (data, rvector) is the vector of densities.
 %%% ¡prop!
 A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. 
 %%%% ¡calculate!
-A_WU = calculateValue@MultiplexGraphWU(g, prop);
+A_WU = calculateValue@MultiplexWU(g, prop);
 
 densities = g.get('DENSITIES');
 L = length(A_WU); % number of layersof MultiplexWU
