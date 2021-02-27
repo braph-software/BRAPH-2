@@ -22,8 +22,8 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphWU
-MultiplexGraphBU
+MultiplexWU
+MultiplexBU
 
 %% ¡props_update!
 
@@ -53,7 +53,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
       0 1 1 1;
@@ -73,16 +73,16 @@ known_multiplex_triangles = {
                  [2 2 2 0]'
                  };      
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 multiplex_triangles = MultiplexTriangles('G', g);
 
 assert(isequal(multiplex_triangles.get('M'), known_multiplex_triangles), ...
     [BRAPH2.STR ':MultiplexTriangles:' BRAPH2.BUG_ERR], ...
-    'MultiplexTriangles is not being calculated correctly for MultiplexGraphBU.')
+    'MultiplexTriangles is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
       0   .2  1   1;
@@ -102,9 +102,9 @@ known_multiplex_triangles = {
                  diag(B11.^(1/3)*B22.^(1/3)*B11.^(1/3) + B22.^(1/3)*B11.^(1/3)*B22.^(1/3))
                  };      
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 multiplex_triangles = MultiplexTriangles('G', g);
 
 assert(isequal(multiplex_triangles.get('M'), known_multiplex_triangles), ...
     [BRAPH2.STR ':MultiplexTriangles:' BRAPH2.BUG_ERR], ...
-    'MultiplexTriangles is not being calculated correctly for MultiplexGraphWU.')
+    'MultiplexTriangles is not being calculated correctly for MultiplexWU.')

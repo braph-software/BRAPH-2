@@ -19,8 +19,8 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphWU
-MultiplexGraphBU
+MultiplexWU
+MultiplexBU
 
 %% ¡props_update!
 
@@ -37,7 +37,7 @@ value = multiplex_clustering_av;
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
       0 1 1 1;
@@ -59,16 +59,16 @@ known_multiplex_clustering_av = {
                  mean(known_multiplex_clustering)
                  };      
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 multiplex_clustering_av = MultiplexClusteringAv('G', g);
 
 assert(isequal(multiplex_clustering_av.get('M'), known_multiplex_clustering_av), ...
     [BRAPH2.STR ':MultiplexClusteringAv:' BRAPH2.BUG_ERR], ...
-    'MultiplexClusteringAv is not being calculated correctly for MultiplexGraphBU.')
+    'MultiplexClusteringAv is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
       0   .2  1   1;
@@ -90,9 +90,9 @@ known_multiplex_clustering_av = {
                  mean(known_multiplex_clustering)
                  };  
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 multiplex_clustering_av = MultiplexClusteringAv('G', g);
 
 assert(isequal(multiplex_clustering_av.get('M'), known_multiplex_clustering_av), ...
     [BRAPH2.STR ':MultiplexClusteringAv:' BRAPH2.BUG_ERR], ...
-    'MultiplexClusteringAv is not being calculated correctly for MultiplexGraphWU.')
+    'MultiplexClusteringAv is not being calculated correctly for MultiplexWU.')
