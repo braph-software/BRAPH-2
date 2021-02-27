@@ -88,7 +88,12 @@ for prop = 1:1:el.getPropNumber()
 %         case Format.ITEM
 %         case Format.ITEMLIST
 %         case Format.IDICT
-%         case Format.SCALAR
+        case Format.SCALAR
+            pp_list{prop} = PlotPropScalar( ...
+                'ID', el.getPropTag(prop), ...
+                'EL', el, ...
+                'PROP', prop, ...
+                'BKGCOLOR', color);            
 %         case Format.RVECTOR
 %         case Format.CVECTOR
 %         case Format.MATRIX
