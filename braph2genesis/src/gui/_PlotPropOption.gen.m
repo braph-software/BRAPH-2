@@ -114,5 +114,5 @@ function resize(pl, varargin)
     %
     % See also draw, update, refresh.
     
-    pl.resize@PlotProp('Height', 3.33)
+    pl.resize@PlotProp('Height', 3.50)
 end
