@@ -58,9 +58,6 @@ function h_panel = draw(pl, varargin)
         h_panel = pl.pp;
     end
 end
-function h = height(pl)
-    h = 3.33;
-end
 function update(pl)
 
     update@PlotProp(pl)
@@ -99,4 +96,13 @@ function update(pl)
                     )
             end
     end
+end
+function resize(pl, varargin)
+    %RESIZE resizes the element graphical panel.
+    %
+    % RESIZE(PL) resizes the plot PL.
+    %
+    % See also draw.
+    
+    pl.resize@PlotProp('Height', 3.33)
 end

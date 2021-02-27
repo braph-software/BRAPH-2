@@ -156,10 +156,7 @@ function update(pl)
             end
     end
 end
-function h =height(pl)
-    h = 1.4;
-end
-function resize(pl)
+function resize(pl, varargin)
     %RESIZE resizes the element graphical panel.
     %
     % RESIZE(PL) resizes the plot PL.
@@ -170,8 +167,9 @@ function resize(pl)
     prop = pl.get('PROP');
 
     pp = pl.pp;
+    h_pp = get_from_varargin(1.4, 'Height', varargin);
 
-    set(pp, 'Position', [x0(pp) y0(pp) w(pp) pl.height()])
+    set(pp, 'Position', [x0(pp) y0(pp) w(pp) h_pp])
 
     set(pl.text_tag, 'Position', [0 h(pp)-1 w(pp) 1]);
 
