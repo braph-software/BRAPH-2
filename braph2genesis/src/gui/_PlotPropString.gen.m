@@ -38,7 +38,7 @@ function h_panel = draw(pl, varargin)
                 'Style', 'edit', ...
                 'Parent', pl.pp, ...
                 'Units', 'normalized', ...
-                'Position', [.01 .10 .98 .40], ...
+                'Position', [.01 .10 .98 .45], ...
                 'HorizontalAlignment', 'left', ...
                 'BackgroundColor', 'w', ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
@@ -57,6 +57,9 @@ function h_panel = draw(pl, varargin)
     if nargout > 0
         h_panel = pl.pp;
     end
+end
+function h = height(pl)
+    h = 3.33;
 end
 function update(pl)
 
@@ -96,7 +99,4 @@ function update(pl)
                     )
             end
     end
-end
-function h = height(pl)
-    h = 3.75;
 end
