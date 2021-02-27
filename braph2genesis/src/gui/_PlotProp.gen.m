@@ -2,7 +2,11 @@
 PlotProp < Plot (pl, plot property) is a plot of a property.
 
 %%% ¡description!
-PlotProp plots a property of an element in a panel.
+PlotProp plots a property of an element in a panel. It contains a text 
+with the prop tag and a tooltip with the prop description.
+For parameter and data callback, it also features a callback button.
+For results, it features calculate and delete buttons.
+It typically is employed in one of its derived forms.
 
 %%% ¡seealso!
 GUI, PlotElement
@@ -37,7 +41,7 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also resize, settings, uipanel, isgraphics.
+    % see also update, resize, refresh, settings, uipanel, isgraphics.
 
     el = pl.get('EL');
     prop = pl.get('PROP');
@@ -126,6 +130,12 @@ function h_panel = draw(pl, varargin)
     end
 end
 function update(pl)
+    %UPDATE updates the content of the property graphical panel.
+    %
+    % UPDATE(PL) updates the content of the property graphical panel.
+    %
+    % See also draw, resize, refresh.
+
 
     el = pl.get('EL');
     prop = pl.get('PROP');
@@ -161,7 +171,9 @@ function resize(pl, varargin)
     %
     % RESIZE(PL) resizes the plot PL.
     %
-    % See also draw.
+    % RESIZE(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=1.4).
+    %
+    % See also draw, update, refresh.
     
     el = pl.get('EL');
     prop = pl.get('PROP');
@@ -206,9 +218,11 @@ function resize(pl, varargin)
     end
 end
 function refresh(pl)
-    %REFRESH recalculates the size and values of the parent.
+    %REFRESH updates and resizes parent and siblings.
     %
-    % REFRESH(PL) recalculates the size and values of the parent.
+    % REFRESH(PL) updates and resizes parent and siblings.
+    %
+    % See also draw, update, resize.
     
     pp = pl.pp;
     f = get(pp, 'Parent');
@@ -226,32 +240,36 @@ function cb_button_cb(pl)
     %
     % CB_BUTTON_CB(PL) executes callback for button callback.
 
-    warning('TBI')
-    % GUI(el.getr(prop).get('EL'))
+    el = pl.get('EL');
+    prop = pl.get('PROP');
+    
+    GUI(el.getr(prop).get('EL'))
 end
 function cb_button_calc(pl)
     %CB_BUTTON_CALC executes callback for button calculate.
     %
     % CB_BUTTON_CALC(PL) executes callback for button calculate.
+    %
+    % See also cb_button_del.
 
     el = pl.get('EL');
     prop = pl.get('PROP');
 
     el.memorize(prop);
 
-    pl.update()
-    pl.refresh() % includes pl.resize()
+    pl.refresh() % includes pl.update() and pl.resize()
 end
 function cb_button_del(pl)
     %CB_BUTTON_DEL executes callback for button delete.
     %
     % CB_BUTTON_DEL(PL) executes callback for button delete.
+    %
+    % See also cb_button_calc.
 
     el = pl.get('EL');
     prop = pl.get('PROP');
     
     el.set(prop, NoValue.getNoValue())
 
-    pl.update()
-    pl.refresh() % includes pl.resize()
+    pl.refresh() % includes pl.update() and pl.resize()
 end

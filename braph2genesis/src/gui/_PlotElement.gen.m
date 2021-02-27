@@ -3,6 +3,10 @@ PlotElement < Plot (pl, plot element) is a plot of an element.
 
 %%% ¡description!
 PlotElement plots all properties of an element in a resizable scrollable panel.
+The high-level graphical panel F has fixed dimensions and contains a scollable panel
+(i.e., a panel P and a slider S). P contains a series of stacked property panels,
+one for each property of the element EL being plotted.
+Each time that F is resized or S scrolled, all contents of P are resized as well.
 
 %%% ¡seealso!
 GUI, PlotProp

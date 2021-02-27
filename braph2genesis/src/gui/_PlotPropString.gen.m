@@ -26,7 +26,7 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also resize, settings, uipanel, isgraphics.
+    % see also update, resize, refresh, settings, uipanel, isgraphics.
 
     el = pl.get('EL');
     prop = pl.get('PROP');
@@ -59,6 +59,11 @@ function h_panel = draw(pl, varargin)
     end
 end
 function update(pl)
+    %UPDATE updates the content of the property graphical panel.
+    %
+    % UPDATE(PL) updates the content of the property graphical panel.
+    %
+    % See also draw, resize, refresh.
 
     update@PlotProp(pl)
     
@@ -102,7 +107,9 @@ function resize(pl, varargin)
     %
     % RESIZE(PL) resizes the plot PL.
     %
-    % See also draw.
+    % RESIZE(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    %
+    % See also draw, update, refresh.
     
     pl.resize@PlotProp('Height', 3.33)
 end
