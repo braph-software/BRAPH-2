@@ -51,7 +51,7 @@ function h_panel = draw(pl, varargin)
         if isa(value, 'NoValue')
             GUI(el.getPropDefault(prop))
         else
-            GUI(el.get(prop).tostring())
+            GUI(el.get(prop))
         end
     end
 
@@ -74,7 +74,7 @@ function update(pl)
     
     set(pl.pushbutton_value, ...
         'String', el.get(prop).tostring(), ...
-        'Tooltip', regexprep(el.tree(), {'<strong>', '</strong>'}, {'' ''}) ...
+        'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
         )
 end
 function resize(pl, varargin)
