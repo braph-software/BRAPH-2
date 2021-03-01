@@ -26,7 +26,7 @@ MultiplexWD
 
 %% ¡props!
 %%% ¡prop! 
-LIMIT (parameter, SCALAR) is the maximum size of modularity matrix.
+LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
 %%%% ¡default!
 10000
 
@@ -46,22 +46,22 @@ gamma (parameter, SCALAR) is the resolution parameter.
 1
 
 %%% ¡prop! 
-omega (parameter, SCALAR) is the interlayer weight parameter.
+omega (parameter, SCALAR) is the inter-layer coupling parameter.
 %%%% ¡default!
 1
 
 %%% ¡prop! 
-S0 (data, rvector) is the initial partition size of the modularity matrix.
+S0 (data, rvector) is the initial partition size of the multilayer modularity matrix.
 %%%% ¡default!
 []
 
 %%% ¡prop! 
-OM (data, MATRIX) is the modularity matrix
+OM (data, MATRIX) is the multilayer modularity matrix
 %%%% ¡default!
 []
 
 %%% ¡prop! 
-quality_function (data, MATRIX) is the modularity matrix
+quality_function (data, MATRIX) is the multilayer modularity matrix
 %%%% ¡default!
 []
 
@@ -73,7 +73,7 @@ M (result, cell) is the multilayer community structure.
 g = m.get('G');  % graph from measure class
 N = g.nodenumber();
 L = g.layernumber();  % number of layers
-limit = m.get('LIMIT');  % set default for maximum size of modularity matrix
+limit = m.get('LIMIT');  % set default for maximum size of multilayer modularity matrix
 randord = m.get('randord');  % set randperm
 randmove = m.get('randmove');  % set move function
 gamma = m.get('gamma');
@@ -117,16 +117,13 @@ if isempty(OM)
             A_hold = g.get('A');
             A(i) = {A_hold{i, i}};
         end
-%         for i=1:L
-%             A(i) = {g.getA(i)};
-%         end
         if directionality_firstlayer == Graph.UNDIRECTED  % undirected
             [OM, twom] = m.multicat_undirected(A, gamma, omega, N(1), L);
         else  % directed
             [OM, twom] = m.multicat_directed(A, gamma, omega, N(1), L);
         end
     elseif g.is_ordered_multiplex(g) || g.is_ordered_multilayer(g)
-        A = g.getA();  % 2D-cell array
+        A = g.get('A'); % 2D-cell array
         if directionality_firstlayer == Graph.UNDIRECTED  % undirected
             [OM, twom] = m.multiord_undirected(A, gamma, omega, N(1), L);
         else  % directed
