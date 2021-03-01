@@ -34,7 +34,7 @@ MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)
 M (result, cell) is the multirichness.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-multirichness = calculateValue@Multirichness(m, prop);
+richness = calculateValue@Richness(m, prop);
 L = g.layernumber();
 
 if L == 0
@@ -118,7 +118,7 @@ B = {B11 B22};
 known_multirichness = {[1 0 5/3 5/3]'};
 
 g = MultiplexBD('B', B);
-multirichness = Multirichness('G', g).get('M');
+multirichness = Multirichness('G', g, 'MULTIRICHNESS_COEFFICIENTS', [2/3, 1/3]).get('M');
 
 assert(isequal(multirichness, known_multirichness), ...
     [BRAPH2.STR ':Multirichness:' BRAPH2.BUG_ERR], ...
@@ -145,7 +145,7 @@ B = {B11 B22};
 known_multirichness = {[3/40 0 5/4 21/20]'};  
 
 g = MultiplexWU('B', B);
-multirichness = Multirichness('G', g).get('M');
+multirichness = Multirichness('G', g, 'MULTIRICHNESS_COEFFICIENTS', [3/4, 1/4]).get('M');
 
 assert(isequal(multirichness, known_multirichness), ...
     [BRAPH2.STR ':Multirichness:' BRAPH2.BUG_ERR], ...
@@ -172,7 +172,7 @@ B = {B11 B22};
 known_multirichness = {[3/5 0 3/2 7/8]'};
 
 g = MultiplexWD('B', B);
-multirichness = Multirichness('G', g).get('M');
+multirichness = Multirichness('G', g, 'MULTIRICHNESS_COEFFICIENTS', [2/4, 2/4]).get('M');
 
 assert(isequal(multirichness, known_multirichness), ...
     [BRAPH2.STR ':Multirichness:' BRAPH2.BUG_ERR], ...
