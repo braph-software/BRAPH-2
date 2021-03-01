@@ -29,8 +29,6 @@ MultiplexWU
 %% ¡props!
 %%% ¡prop! 
 EDGESNUMBER (DATA, CELL) is a cell of the number of edges matrix
-%%%% ¡default!
-{}
 
 %% ¡props_update!
 
