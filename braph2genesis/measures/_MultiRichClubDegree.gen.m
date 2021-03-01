@@ -1,10 +1,11 @@
 %% ¡header!
-MultiRichClubDegree < RichClubDegree (m, multi rich-club degree) is the graph multi rich-club  degree.
+MultiRichClubDegree < RichClubDegree (m, multi rich-club degree) is the graph multi rich-club degree.
 
 %%% ¡description!
-The rich-club degree of a node at level k is the sum of 
-the edges that connect nodes of degree k or higher within a layer. 
-k is set by the user; the default value is equal to 1. 
+The multi rich-club degree of a node at level k is the sum of 
+the edges that connect nodes of degree k or higher in all layers. 
+The relevance of each layer is controlled by the coefficients c that are 
+between 0 and 1; the default coefficients are (1/layernumber).
 
 %%% ¡shape!
 shape = Measure.NODAL;
