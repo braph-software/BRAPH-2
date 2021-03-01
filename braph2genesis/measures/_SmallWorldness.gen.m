@@ -1,5 +1,5 @@
 %% ¡header!
-SmallWorldness < PathLengthAv (m, small worldness) is the graph small worldness.
+SmallWorldness < PathLengthAv (m, small-worldness) is the graph small-worldness.
 
 %%% ¡description!
 The small-worldness coefficient is the fraction of the clustering coefficient 
