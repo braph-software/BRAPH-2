@@ -49,8 +49,8 @@ for li = 1:1:L
     else %% directed graphs    
         in_degree = InDegree('G', g).get('M');
         out_degree = OutDegree('G', g).get('M');
-        directed_triangles_rule = Triangles.RULES(m.get('rule'));
-        switch lower(directed_triangles_rule{1})
+        directed_triangles_rule = m.get('rule');
+        switch lower(directed_triangles_rule)
             case {'all'}  % all rule
                 clustering_layer = triangles{li} ./ ((out_degree{li} + in_degree{li}) .* (out_degree{li} + in_degree{li} - 1) - 2 * diag(Aii^2));
             case {'middleman'}  % middleman rule
@@ -99,7 +99,7 @@ B_BD = [
     ];
 clustering_BD_out = {[0 0 0]'};  % out rule
 g = GraphBD('B', B_BD);
-clustering_1 = Clustering('G', g, 'rule', find(contains(Triangles.RULES, 'out'))).get('M');
+clustering_1 = Clustering('G', g, 'rule', 'out').get('M');
 clustering_2 = clustering_BD_out;
 assert(isequal(clustering_1, clustering_2), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
@@ -157,8 +157,8 @@ known_clustering = {
                  [1 1 1]'
                  }; 
 
-g = MultiplexBD('B', B);
-clustering = Clustering('G', g, 'rule', find(contains(Triangles.RULES, 'cycle')));
+g = MultiplexGraphBD('B', B);
+clustering = Clustering('G', g, 'rule', 'cycle');
 
 assert(isequal(clustering.get('M'), known_clustering), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...

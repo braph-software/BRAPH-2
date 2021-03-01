@@ -69,7 +69,7 @@ B_BD = [
     ];
 clustering_BD_out = [0 0 0];  % out rule
 g = GraphBD('B', B_BD);
-clustering_1 = ClusteringAv('G', g, 'rule', find(contains(Triangles.RULES, 'out'))).get('M');
+clustering_1 = ClusteringAv('G', g, 'rule', 'out').get('M');
 clustering_2 = {mean(clustering_BD_out)};
 assert(isequal(clustering_1, clustering_2), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
