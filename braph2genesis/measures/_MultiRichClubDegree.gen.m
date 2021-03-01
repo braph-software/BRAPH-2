@@ -147,7 +147,7 @@ B = {B11 B22};
 known_multi_rich_club_degree = {[9/4 9/4 2 1/2]'};   
 
 g = MultiplexWU('B', B);
-multi_rich_club_degree = MultiRichClubDegree('G', g).get('M');
+multi_rich_club_degree = MultiRichClubDegree('G', g, 'MULTIRICHCLUB_COEFFICIENTS', [3/4, 1/4]).get('M');
 
 assert(isequal(multi_rich_club_degree, known_multi_rich_club_degree), ...
     [BRAPH2.STR ':MultiRichClubDegree:' BRAPH2.BUG_ERR], ...
@@ -176,7 +176,7 @@ mrich(:, 1, 2) = [5/4 5/4 1/2 0]';
 known_multi_rich_club_degree = {mrich};
 
 g = MultiplexWD('B', B);
-multi_rich_club_degree = MultiRichClubDegree('G', g).get('M');
+multi_rich_club_degree = MultiRichClubDegree('G', g, 'PARAMETRIC_VALUE', 2, 'MULTIRICHCLUB_COEFFICIENTS', [3/4, 1/4]).get('M');
 
 assert(isequal(multi_rich_club_degree, known_multi_rich_club_degree), ...
     [BRAPH2.STR ':MultiRichClubDegree:' BRAPH2.BUG_ERR], ...
