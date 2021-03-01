@@ -17,11 +17,12 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWD
 GraphWU
-MultiplexGraphWU
-MultiplexGraphWD
+MultiplexWU
+MultiplexWD
 
 %% ¡props!
 %%% ¡prop! 
+SCoreThreshold (parameter, scalar) is the threshold.
 SCoreThreshold (parameter, scalar) is the strength threshold.
 %%%% ¡default!
 1
@@ -126,7 +127,7 @@ assert(isequal(score, known_score), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 A11 = [
     0   .5  1  0; 
@@ -156,9 +157,9 @@ known_score(2, 1) = {[
                 0   0   0  0
                 ]};            
 
-g = MultiplexGraphWU('B', A);
+g = MultiplexWU('B', A);
 score = Score('G', g, 'SCoreThreshold', 1.5).get('M');
 
 assert(isequal(score, known_score), ...
     [BRAPH2.STR ':SCore:' BRAPH2.BUG_ERR], ...
-    'SCore is not being calculated correctly for MultiplexGraphWU.')
+    'SCore is not being calculated correctly for MultiplexWU.')

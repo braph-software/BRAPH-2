@@ -18,8 +18,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphBU
 GraphWU
-MultiplexGraphBU
-MultiplexGraphWU
+MultiplexBU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -30,7 +30,6 @@ g = m.get('G');  % graph from measure class
 L = g.layernumber();
 
 clustering_av = ClusteringAv('G', g).get('M');
-path_length_av = calculateValue@PathLengthAv(m, prop);
 
 M = 100;  % number of random graphs
 clustering_av_random = cell(1, M);
@@ -39,7 +38,7 @@ for r = 1:1:M
     g_random = g.randomize();
 
     clustering_av_random(r) = {ClusteringAv('G', g_random).get('M')};
-    path_length_av_random(r) = {PathLengthAv('G', g_random).get('M')};
+    path_length_av_random(r) = {calculateValue@PathLengthAv(m, prop)}; 
     
 end
 path_length_av_random = cellfun(@(x) cell2mat(x), path_length_av_random, 'UniformOutput', false);
@@ -77,7 +76,7 @@ assert(isequal(smallworldness, known_smallworldness), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 A11 = rand(20);
 
@@ -89,13 +88,13 @@ known_smallworldness = {
                        1
                        };
 
-g = MultiplexGraphWU('B', A);
+g = MultiplexWU('B', A);
 smallworldness = SmallWorldness('G', g).get('M');
 smallworldness = cellfun(@(s) round(s, 1), smallworldness, 'UniformOutput', false);
 
 assert(isequal(smallworldness, known_smallworldness), ...
     [BRAPH2.STR ':SmallWorldness:' BRAPH2.BUG_ERR], ...
-    'SmallWorldness is not being calculated correctly for MultiplexGraphWU.')
+    'SmallWorldness is not being calculated correctly for MultiplexWU.')
 
 %%% ¡test!
 %%%% ¡name!

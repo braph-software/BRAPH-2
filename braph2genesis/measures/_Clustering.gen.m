@@ -157,7 +157,7 @@ known_clustering = {
                  [1 1 1]'
                  }; 
 
-g = MultiplexGraphBD('B', B);
+g = MultiplexBD('B', B);
 clustering = Clustering('G', g, 'rule', 'cycle');
 
 assert(isequal(clustering.get('M'), known_clustering), ...

@@ -1,5 +1,5 @@
 %% ¡header!
-WeightedRichClub < Strength (m, weighted rich-club) is the graph weighted rich-club.
+WeightedRichClub < Strength (m, weighted rich club) is the graph weighted rich club.
 
 %%% ¡description!
 The weighted rich-club of a node at level s is the fraction of the
@@ -19,9 +19,9 @@ parametricity = Measure.PARAMETRIC;
 
 %%% ¡compatible_graphs!
 GraphWU
-GraphWD
-MultiplexGraphWU
-MultiplexGraphWD
+GraphWU
+MultiplexWU
+MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
@@ -31,11 +31,12 @@ WRC_PARAMETER (parameter, RVECTOR) is the threshold
 
 %% ¡props_update!
 %%% ¡prop!
-M (result, cell) is the weighted rich-club.
+M (result, cell) is the weighted rich club.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc
 L = g.layernumber();
+N = g.nodenumber();
 
 weighted_rich_club = cell(L, 1);
 directionality_type =  g.getDirectionalityType(L);
@@ -114,7 +115,7 @@ assert(isequal(round(weighted_rich_club{1}, 10), round(known_weighted_rich_club{
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 A11 = [
     0   .1  1  0; 
@@ -136,16 +137,16 @@ known_weighted_rich_club = {
                            1
                            };      
 
-g = MultiplexGraphWU('B', A);
+g = MultiplexWU('B', A);
 weighted_rich_club = WeightedRichClub('G', g).get('M');
 
 assert(isequal(round(weighted_rich_club{1}, 10), round(known_weighted_rich_club{1}, 10)), ...
     [BRAPH2.STR ':WeightedRichClub:' BRAPH2.BUG_ERR], ...
-    'WeightedRichClub is not being calculated correctly for MultiplexGraphWU.')
+    'WeightedRichClub is not being calculated correctly for MultiplexWU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 
 A11 = [
@@ -173,9 +174,9 @@ known_weighted_rich_club = {
                  wrichclub_l2
                  };             
 
-g = MultiplexGraphWD('B', A);
+g = MultiplexWD('B', A);
 weighted_rich_club = WeightedRichClub('G', g, 'WRC_PARAMETER', [1.5, 2]).get('M');
 
 assert(isequal(weighted_rich_club, known_weighted_rich_club), ...
     [BRAPH2.STR ':WeightedRichClub:' BRAPH2.BUG_ERR], ...
-    'WeightedRichClub is not being calculated correctly for MultiplexGraphWD.')
+    'WeightedRichClub is not being calculated correctly for MultiplexWD.')

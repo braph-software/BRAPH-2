@@ -26,6 +26,12 @@ MultiplexBU
 MultiplexWD
 MultiplexWU
 
+%% ¡props!
+%%% ¡prop! 
+EDGESNUMBER (DATA, CELL) is a cell of the number of edges matrix
+%%%% ¡default!
+{}
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -90,6 +96,9 @@ function weighted_distance = getWeightedCalculation(m, A)
         end
     end
     % m.B = B;
+    cell_B = m.get('EDGESNUMBER');
+    cell_B{end+1} = B;
+    m.set('EDGESNUMBER', cell_B);
     weighted_distance = D;
 end
 function binary_distance = getBinaryCalculation(m, A)

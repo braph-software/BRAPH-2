@@ -16,8 +16,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphBU
 GraphWU
-MultiplexGraphBU
-MultiplexGraphWU
+MultiplexBU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -57,7 +57,7 @@ assert(isequal(path_length_av, known_path_length_av), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 A11 = [
       0   .1  0   0
@@ -78,9 +78,10 @@ known_path_length_av = {
                        mean([2 4/3 4/3 2])
                        };
 
-g = MultiplexGraphBU('B', A);
+g = MultiplexBU('B', A);
 path_length_av = PathLengthAv('G', g).get('M');
 
 assert(isequal(path_length_av, known_path_length_av), ...
     [BRAPH2.STR ':PathLengthAv:' BRAPH2.BUG_ERR], ...
-    'PathLengthAv is not being calculated correctly for MultiplexGraphBU.')
+    'PathLengthAv is not being calculated correctly for MultiplexBU.')
+    
