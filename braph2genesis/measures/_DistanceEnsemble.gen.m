@@ -12,10 +12,10 @@ GraphWDEnsemble
 GraphWUEnsemble
 MultigraphBUTEnsemble
 MultigraphBUDEnsemble
-MultiplexGraphBDEnsemble
-MultiplexGraphBUEnsemble
-MultiplexGraphWDEnsemble
-MultiplexGraphWUEnsemble
+MultiplexBDEnsemble
+MultiplexBUEnsemble
+MultiplexWDEnsemble
+MultiplexWUEnsemble
 
 %% ¡props_update!
 
@@ -188,7 +188,7 @@ assert(isequal(m_inside_g.get('M'), known_distance), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBUEnsemble
+MultiplexBUEnsemble
 B11 = [
     0	1   1  0    0;
     1   0   0  0	0; 
@@ -222,10 +222,10 @@ known_distance = {
     ]
     };
 
-ge = MultiplexGraphBUEnsemble();
+ge = MultiplexBUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphBU( ...
+    g = MultiplexBU( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
@@ -236,11 +236,11 @@ distance = DistanceEnsemble('G', ge);
 
 assert(isequal(distance.get('M'), known_distance), ...
     [BRAPH2.STR ':DistanceEnsemble:' BRAPH2.BUG_ERR], ...
-    'DistanceEnsemble is not being calculated correctly for MultiplexGraphBUEnsemble.')
+    'DistanceEnsemble is not being calculated correctly for MultiplexBUEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBDEnsemble
+MultiplexBDEnsemble
 B11 = [
     0	1   1   1   0;
     1   0   0   0	0; 
@@ -273,10 +273,10 @@ known_distance = {
     ]
     };
 
-ge = MultiplexGraphBDEnsemble();
+ge = MultiplexBDEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphBD( ...
+    g = MultiplexBD( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
@@ -287,11 +287,11 @@ distance = DistanceEnsemble('G', ge);
 
 assert(isequal(distance.get('M'), known_distance), ...
     [BRAPH2.STR ':DistanceEnsemble:' BRAPH2.BUG_ERR], ...
-    'DistanceEnsemble is not being calculated correctly for MultiplexGraphBDEnsemble.')
+    'DistanceEnsemble is not being calculated correctly for MultiplexBDEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWUEnsemble
+MultiplexWUEnsemble
 B11 = [
     0       .1  .2  .25  0;
     .125    0   0   0    0;
@@ -325,10 +325,10 @@ known_distance = {
 	]
     };
 
-ge = MultiplexGraphWUEnsemble();
+ge = MultiplexWUEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphWU( ...
+    g = MultiplexWU( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
@@ -339,11 +339,11 @@ distance = DistanceEnsemble('G', ge);
 
 assert(isequal(distance.get('M'), known_distance), ...
     [BRAPH2.STR ':DistanceEnsemble:' BRAPH2.BUG_ERR], ...
-    'DistanceEnsemble is not being calculated correctly for MultiplexGraphWUEnsemble.')
+    'DistanceEnsemble is not being calculated correctly for MultiplexWUEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWDEnsemble
+MultiplexWDEnsemble
 B11 = [
     0       .1  .2  .25  0;
     .125    0   0   0    0;
@@ -377,10 +377,10 @@ known_distance = {
     ]
     };
 
-ge = MultiplexGraphWDEnsemble();
+ge = MultiplexWDEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphWD( ...
+    g = MultiplexWD( ...
         'ID', ['g ' int2str(i)], ...
         'B', B ...
         );
@@ -391,4 +391,4 @@ distance = DistanceEnsemble('G', ge);
 
 assert(isequal(distance.get('M'), known_distance), ...
     [BRAPH2.STR ':DistanceEnsemble:' BRAPH2.BUG_ERR], ...
-    'DistanceEnsemble is not being calculated correctly for MultiplexGraphWDEnsemble.')
+    'DistanceEnsemble is not being calculated correctly for MultiplexWDEnsemble.')

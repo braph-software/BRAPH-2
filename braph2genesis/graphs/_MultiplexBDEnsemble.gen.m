@@ -1,10 +1,10 @@
 %% ¡header!
-MultiplexGraphBUEnsemble < MultiplexGraphBU (ge, ensemble of multiplex binary undirected graph) is a multiplex binary undirected graph.
+MultiplexBDEnsemble < MultiplexBD (ge, ensemble of multiplex binary directed graph) is a multiplex binary directed graph.
 
 %%% ¡description!
-In an ensemble of multiplex binary undirected (BU) graph, 
+In an ensemble of multiplex binary directed (BD) graph, 
 the edges are associated with a real number 0 or 1 
-indicating connection, and are undirected.
+indicating connection, and are directed.
 
 %%% ¡ensemble!
 true
@@ -12,14 +12,14 @@ true
 %% ¡props_update!
 
 %%% ¡prop!
-G_DICT (data, idict) contains the ensemble of multiplex binary undirected graph.
+G_DICT (data, idict) contains the ensemble of multiplex binary directed graph.
 %%%% ¡settings!
-'MultiplexGraphBU'
+'MultiplexBD'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexGraphBU', 'IT_KEY', 1)
+IndexedDictionary('IT_CLASS', 'MultiplexBD', 'IT_KEY', 1)
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary undirected graph.
+A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary directed graph.
 %%%% ¡calculate!
 A_list = cellfun(@(x) cell2mat(x.get('A')), ge.get('G_DICT').getItems, 'UniformOutput', false);
 A = mean(cat(3, A_list{:}), 3);
@@ -37,11 +37,11 @@ value = A;
 %%%% ¡name!
 Constructor
 %%%% ¡code!
-ge = MultiplexGraphBUEnsemble();
+ge = MultiplexBDEnsemble();
 
 dict = ge.get('G_DICT');
 for i = 1:1:10
-    g = MultiplexGraphBU( ...
+    g = MultiplexBD( ...
         'ID', ['g ' int2str(i)], ...
         'B', {rand(10), rand(10)} ...
         );
@@ -50,5 +50,5 @@ end
 ge.set('g_dict', dict);
 
 assert(ge.get('G_DICT').length == 10, ...
-    [BRAPH2.STR ':MultiplexGraphBUEnsemble:' BRAPH2.BUG_ERR], ...
-    'MultiplexGraphBUEnsemble is not constructing well.')
+    [BRAPH2.STR ':MultiplexBDEnsemble:' BRAPH2.BUG_ERR], ...
+    'MultiplexBDEnsemble is not constructing well.')

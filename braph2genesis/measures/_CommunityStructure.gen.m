@@ -24,44 +24,32 @@ GraphWD
 GraphBU
 GraphBD
 
-%% ¡constants!
-RULES = { ... % vector of triangles rules
-    'louvain' ...
-    'newman' ...
-    };
-
-OM_TYPE_OPTIONS = { ...
-    'modularity' ...
-    'potts' ...
-    'negative_sym' ...
-    'negative_asym'
-    };
 
 %% ¡props!
 %%% ¡prop! 
-rule (metadata, OPTION) 
+rule (parameter, OPTION) is the community structure algorithm.
 %%%% ¡settings!
 { 'louvain' 'newman'}
 %%%% ¡default!
 'louvain'
 
 %%% ¡prop! 
-gamma (metadata, SCALAR) 
+gamma (parameter, SCALAR) is the resolution parameter.
 %%%% ¡default!
 1
 
 %%% ¡prop! 
-M0 (metadata, rvector) 
+M0 (data, rvector) is the initial community affiliation vector.
 %%%% ¡default!
 []
 
 %%% ¡prop! 
-OM (metadata, MATRIX) 
+OM (data, MATRIX) is the custom objective matrix.
 %%%% ¡default!
 []
 
 %%% ¡prop! 
-OM_TYPE (metadata, OPTION) 
+OM_TYPE (data, OPTION) is the objective-function type algorithm.
 %%%% ¡settings!
 {'modularity' 'potts' 'negative_sym' 'negative_asym'}
 %%%% ¡default!

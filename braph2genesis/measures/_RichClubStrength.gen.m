@@ -19,8 +19,8 @@ parametricity = Measure.PARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWD
 GraphWU
-MultiplexGraphWD
-MultiplexGraphWU
+MultiplexWD
+MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
@@ -134,7 +134,7 @@ assert(isequal(rich_club_strength, known_rich_club_strength), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 
 A11 = [
@@ -162,9 +162,9 @@ known_rich_club_strength = {
                  w_richness_l2
                  };            
 
-g = MultiplexGraphWD('B', A);
+g = MultiplexWD('B', A);
 rich_club_strength = RichClubStrength('G', g, 'PARAMETRIC_VALUE', [1.5, 2]).get('M');
 
 assert(isequal(rich_club_strength, known_rich_club_strength), ...
     [BRAPH2.STR ':RichClubStrength:' BRAPH2.BUG_ERR], ...
-    'RichClubStrength is not being calculated correctly for MultiplexGraphWD.')
+    'RichClubStrength is not being calculated correctly for MultiplexWD.')

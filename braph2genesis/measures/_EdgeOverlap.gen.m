@@ -15,10 +15,10 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexGraphBD
-MultiplexGraphBU
-MultiplexGraphWD
-MultiplexGraphWU
+MultiplexBD
+MultiplexBU
+MultiplexWD
+MultiplexWU
 
 %% ¡props_update!
 
@@ -47,7 +47,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
     0   1   1
@@ -67,16 +67,16 @@ known_edge_overlap = {[
     .5  .5  0
     ]};
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 edge_overlap = EdgeOverlap('G', g);
  
 assert(isequal(edge_overlap.get('M'), known_edge_overlap), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for MultiplexGraphBU.')
+    'EdgeOverlap is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 B11 = [
     0   1   0
@@ -96,16 +96,16 @@ known_edge_overlap = {[
     .5  .5  0
     ]};
 
-g = MultiplexGraphBD('B', B);
+g = MultiplexBD('B', B);
 edge_overlap = EdgeOverlap('G', g);
 
 assert(isequal(edge_overlap.get('M'), known_edge_overlap), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for MultiplexGraphBD')
+    'EdgeOverlap is not being calculated correctly for MultiplexBD')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
     0   .2  1
@@ -125,16 +125,16 @@ known_edge_overlap = {[
     .5  .5  0
     ]};
 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 edge_overlap = EdgeOverlap('G', g);
 
 assert(isequal(edge_overlap.get('M'), known_edge_overlap), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for MultiplexGraphWU')
+    'EdgeOverlap is not being calculated correctly for MultiplexWU')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 B11 = [
     0   .2  0
@@ -154,9 +154,9 @@ known_edge_overlap = {[
     .5  .5  0
     ]};
 
-g = MultiplexGraphWD('B', B);
+g = MultiplexWD('B', B);
 edge_overlap = EdgeOverlap('G', g);
 
 assert(isequal(edge_overlap.get('M'), known_edge_overlap), ...
     [BRAPH2.STR ':EdgeOverlap:' BRAPH2.BUG_ERR], ...
-    'EdgeOverlap is not being calculated correctly for MultiplexGraphWD')
+    'EdgeOverlap is not being calculated correctly for MultiplexWD')

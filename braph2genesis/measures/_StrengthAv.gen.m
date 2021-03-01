@@ -16,7 +16,7 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 GraphWU
-MultiplexGraphWU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -54,7 +54,7 @@ assert(isequal(s_outside_g.get('M'), known_strength_av), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
     0  .2 1
@@ -73,9 +73,9 @@ known_strength_av = {
                  mean([1   1.4 .4]')
                  };
                                 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 strength_av = StrengthAv('G', g);
 
 assert(isequal(strength_av.get('M'), known_strength_av), ...
     [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
-    'StrengthAV is not being calculated correctly for MultiplexGraphWU.')
+    'StrengthAV is not being calculated correctly for MultiplexWU.')
