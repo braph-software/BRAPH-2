@@ -5,7 +5,7 @@ OutOutAssortativity < Measure (m, out-out-assortativity) is the graph out-out-as
 The out-out-assortativity coefficient of a graph is the correlation coefficient between
 the degrees/strengths of all nodes on two opposite ends of an edge within a layer.
 The corresponding coefficient for directed and weighted networks is calculated by using
-the weighted and directed variants of out-degree/out-strength.'...
+the weighted and directed variants of out-degree/out-strength.
 
 %%% ¡shape!
 shape = Measure.GLOBAL;
@@ -25,7 +25,7 @@ MultiplexWD
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the richness.
+M (result, cell) is the out-out-assortativity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

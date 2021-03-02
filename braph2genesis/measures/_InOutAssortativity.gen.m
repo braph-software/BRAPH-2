@@ -25,7 +25,7 @@ MultiplexWD
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the richness.
+M (result, cell) is the in-out-assortativity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
