@@ -19,6 +19,8 @@ GraphWU
 GraphBU
 MultigraphBUD
 MultigraphBUT
+MultiplexBU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -26,7 +28,7 @@ MultigraphBUT
 M (result, cell) is the degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
 degree = cell(g.layernumber(), 1);
 
@@ -148,3 +150,59 @@ m_inside_g = g.getMeasure('Degree');
 assert(isequal(m_inside_g.get('M'), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
     'Degree is not being calculated correctly for MultigraphBUD.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBU
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+B = {B11 B22};
+
+known_degree = {
+    [2 1 1]'
+    [1 2 1]'
+    };
+
+g = MultiplexBU('B', B);
+degree = Degree('G', g);
+
+assert(isequal(degree.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
+    'Degree is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexWU
+%%%% ¡code!
+B11 = [
+    0   .2  1
+    .2  0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   .3
+    0   .3  0
+    ];
+B= {B11 B22};
+
+known_degree = {
+    [2 1 1]'
+    [1 2 1]'
+    };
+
+g = MultiplexWU('B', B);
+degree = Degree('G', g);
+
+assert(isequal(degree.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
+    'Degree is not being calculated correctly for MultiplexWU.')

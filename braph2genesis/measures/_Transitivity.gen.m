@@ -19,10 +19,10 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
-MultiplexGraphWU
-MultiplexGraphWD
-MultiplexGraphBU
-MultiplexGraphBD
+MultiplexWU
+MultiplexWD
+MultiplexBU
+MultiplexBD
 
 %% ¡props_update!
 
@@ -30,7 +30,7 @@ MultiplexGraphBD
 M (result, cell) is the transitivity.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-A = g.get('A');  % cell array with adjacency matrix 
+A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
 L = g.layernumber();
 
@@ -83,7 +83,7 @@ assert(isequal(transitivity.get('M'), known_transitivity), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 A11 = [
       0 1 1 1;
@@ -97,13 +97,16 @@ A22 = [
       1 1 0 1;
       1 0 1 0
       ];
-A = {A11  A22};
+A = {A11 A22};
 
-known_transitivity = {3/4; 3/4};      
+known_transitivity = {
+                 3/4
+                 3/4
+                 };      
 
-g = MultiplexGraphBU('B', A);
-transitivity = Transitivity('G', g).get('M');
+g = MultiplexBU('B', A);
+transitivity = Transitivity('G', g);
 
-assert(isequal(transitivity, known_transitivity), ...
+assert(isequal(transitivity.get('M'), known_transitivity), ...
     [BRAPH2.STR ':Transitivity:' BRAPH2.BUG_ERR], ...
-    'Transitivity is not being calculated correctly for MultiplexGraphBU.')
+    'Transitivity is not being calculated correctly for MultiplexBU.')

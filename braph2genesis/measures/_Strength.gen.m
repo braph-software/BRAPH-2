@@ -16,7 +16,7 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 GraphWU
-MultiplexGraphWU
+MultiplexWU
 
 %% ¡props_update!
 
@@ -24,7 +24,7 @@ MultiplexGraphWU
 M (result, cell) is the strength.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-A = g.get('A');  % cell array with adjacency matrix 
+A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
 strength = cell(g.layernumber(), 1);
 
@@ -55,7 +55,7 @@ assert(isequal(s_outside_g.get('M'), known_strength), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWU
+MultiplexWU
 %%%% ¡code!
 B11 = [
     0  .2 1
@@ -74,9 +74,9 @@ known_strength = {
                  [1   1.4 .4]'
                  };
                                 
-g = MultiplexGraphWU('B', B);
+g = MultiplexWU('B', B);
 strength = Strength('G', g);
 
 assert(isequal(strength.get('M'), known_strength), ...
     [BRAPH2.STR ':Strength:' BRAPH2.BUG_ERR], ...
-    'Strength is not being calculated correctly for MultiplexGraphWU.')
+    'Strength is not being calculated correctly for MultiplexWU.')

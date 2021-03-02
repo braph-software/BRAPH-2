@@ -23,23 +23,15 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
-MultiplexGraphWU
-MultiplexGraphWD
-MultiplexGraphBU
-MultiplexGraphBD
-
-%% ¡constants!
-RULES = { ... % vector of triangles rules
-    'all' ...
-    'middleman' ...
-    'in' ...
-    'out' ...
-    'cycle' ...
-    };
+MultiplexWU
+MultiplexWD
+MultiplexBU
+MultiplexBD
 
 %% ¡props!
+
 %%% ¡prop! 
-rule (metadata, OPTION) 
+rule (metadata, OPTION) is the rule to determine what is a triangle.
 %%%% ¡settings!
 {'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!
@@ -51,7 +43,7 @@ rule (metadata, OPTION)
 M (result, cell) is the triangles.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-A = g.get('A');  % cell array with adjacency matrix 
+A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.) 
 L = g.layernumber();
 
 triangles = cell(g.layernumber(), 1);
@@ -83,7 +75,6 @@ for li = 1:1:L
     end
 end
 value = triangles;
-
 
 %% ¡tests!
 
@@ -170,7 +161,7 @@ assert(isequal(triangles.get('M'), known_triangles_all), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBU
+MultiplexBU
 %%%% ¡code!
 B11 = [
       0 1 1 1;
@@ -191,9 +182,9 @@ known_triangles = {
                  [2 1 2 1]'
                  };      
 
-g = MultiplexGraphBU('B', B);
+g = MultiplexBU('B', B);
 triangles = Triangles('G', g);
 
 assert(isequal(triangles.get('M'), known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
-    'Triangles is not being calculated correctly for MultiplexGraphBU.')
+    'Triangles is not being calculated correctly for MultiplexBU.')

@@ -17,8 +17,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWD
 GraphBD
-MultiplexGraphWD
-MultiplexGraphBD
+MultiplexWD
+MultiplexBD
 
 %% ¡props_update!
 
@@ -26,7 +26,7 @@ MultiplexGraphBD
 M (result, cell) is the in-degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % cell matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
 in_degree = cell(g.layernumber(), 1);
 
@@ -90,7 +90,7 @@ assert(isequal(m_inside_g.get('M'), known_in_degree), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphBD
+MultiplexBD
 %%%% ¡code!
 B11 = [
       0  1  1
@@ -109,21 +109,21 @@ known_in_degree = {
                   [2 2 1]'
                   };
 
-g = MultiplexGraphBD('B', B);
+g = MultiplexBD('B', B);
 
 m_outside_g = InDegree('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree), ...
     [BRAPH2.STR ':InDegree:' BRAPH2.BUG_ERR], ...
-    'InDegree is not being calculated correctly for MultiplexGraphBD.')
+    'InDegree is not being calculated correctly for MultiplexBD.')
 
 m_inside_g = g.getMeasure('InDegree');
 assert(isequal(m_inside_g.get('M'), known_in_degree), ...
     [BRAPH2.STR ':InDegree:' BRAPH2.BUG_ERR], ...
-    'InDegree is not being calculated correctly for MultiplexGraphBD.')
+    'InDegree is not being calculated correctly for MultiplexBD.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexGraphWD
+MultiplexWD
 %%%% ¡code!
 B11 = [
       0   .2  1
@@ -142,14 +142,14 @@ known_in_degree = {
                   [1 2 2]'
                   };
 
-g = MultiplexGraphWD('B', B);
+g = MultiplexWD('B', B);
 
 m_outside_g = InDegree('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_degree), ...
     [BRAPH2.STR ':InDegree:' BRAPH2.BUG_ERR], ...
-    'InDegree is not being calculated correctly for MultiplexGraphWD.')
+    'InDegree is not being calculated correctly for MultiplexWD.')
 
 m_inside_g = g.getMeasure('InDegree');
 assert(isequal(m_inside_g.get('M'), known_in_degree), ...
     [BRAPH2.STR ':InDegree:' BRAPH2.BUG_ERR], ...
-    'InDegree is not being calculated correctly for MultiplexGraphWD.')
+    'InDegree is not being calculated correctly for MultiplexWD.')

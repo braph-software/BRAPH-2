@@ -15,12 +15,20 @@ scope = Measure.UNILAYER;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-GraphWD
-GraphWU
 GraphBD
 GraphBU
+GraphWD
+GraphWU
 MultigraphBUD
 MultigraphBUT
+MultiplexBD
+MultiplexBU
+MultiplexWD
+MultiplexWU
+
+%% ¡props!
+%%% ¡prop! 
+EDGESNUMBER (DATA, CELL) is a cell of the number of edges matrix
 
 %% ¡props_update!
 
@@ -28,7 +36,7 @@ MultigraphBUT
 M (result, cell) is the distance.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multiplex)
+A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 
 distance = cell(g.layernumber(), 1);
 connectivity_type =  g.getConnectivityType(g.layernumber());
@@ -86,6 +94,9 @@ function weighted_distance = getWeightedCalculation(m, A)
         end
     end
     % m.B = B;
+    cell_B = m.get('EDGESNUMBER');
+    cell_B{end+1} = B;
+    m.set('EDGESNUMBER', cell_B);
     weighted_distance = D;
 end
 function binary_distance = getBinaryCalculation(m, A)
@@ -330,3 +341,174 @@ m_inside_g = g.getMeasure('Distance');
 assert(isequal(m_inside_g.get('M'), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
     'Distance is not being calculated correctly for MultigraphBUD.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBU
+B11 = [
+    0	1   1  0    0;
+    1   0   0  0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
+B22 = [
+    0   1   1   1   0; 
+    1   0   0   0   0;
+    1   1   0   1   0;
+    1   1   0   0   0;
+    0   0   0   0   0;
+    ];
+B = {B11 B22};
+
+known_distance = {
+    [
+    0   1   1   1   Inf;
+    1   0   1   1   Inf;
+    1   1   0   1   Inf;
+    1   1   1   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   1   1   1   Inf;
+    1   0   1   1   Inf;
+    1   1   0   1   Inf;
+    1   1   1   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
+
+g = MultiplexBU('B', B);
+distance = Distance('G', g);
+
+assert(isequal(distance.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBD
+B11 = [
+    0	1   1   1   0;
+    1   0   0   0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
+B22 = [
+    0	1   1   1   0;
+    1   0   0   0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
+B = {B11 B22};
+known_distance = {
+    [
+    0   1   1   1   Inf;
+    1   0   2   2   Inf;
+    1   1   0   1   Inf;
+    1   1   2   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   1   1   1   Inf;
+    1   0   2   2   Inf;
+    1   1   0   1   Inf;
+    1   1   2   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
+
+g = MultiplexBD('B', B);
+distance = Distance('G', g);
+
+assert(isequal(distance.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultiplexBD.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexWU
+B11 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B22 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B = {B11 B22};
+
+known_distance = {
+    [
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+	]
+    [
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+	]
+    };
+
+g = MultiplexWU('B', B);
+distance = Distance('G', g);
+
+assert(isequal(distance.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultiplexWU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexWD
+B11 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B22 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B = {B11 B22};
+
+known_distance = {
+    [
+    0   5   5   4   Inf;
+    8   0   13  12  Inf;
+    5   2   0   4   Inf;
+    8   1   13  0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   5   5   4   Inf;
+    8   0   13  12  Inf;
+    5   2   0   4   Inf;
+    8   1   13  0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
+
+g = MultiplexWD('B', B);
+distance = Distance('G', g);
+
+assert(isequal(distance.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultiplexWD.')
