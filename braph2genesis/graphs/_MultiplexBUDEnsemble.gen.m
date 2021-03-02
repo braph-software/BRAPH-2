@@ -28,7 +28,8 @@ if isempty(A)
     A = {A};
 else
     L = length(ge.get('G_DICT').getItems{1}.get('B'));
-    A = mat2cell(A, size(A)/L, size(A)/L);
+    num_densities = length(ge.get('G_DICT').getItems{1}.get('DENSITIES'));
+    A = mat2cell(A, size(A)/(L*num_densities), size(A)/(L*num_densities));
 end
 value = A;
 
@@ -39,16 +40,6 @@ value = A;
 Constructor
 %%%% ¡code!
 ge = MultiplexBUDEnsemble();
-% A = [
-%      0 .1 .2 .3 .4
-%     .1  0 .5 .6 .7
-%     .2 .5  0 .8 .9
-%     .3 .6 .8  0  1
-%     .4 .7 .9  1  0
-%     ];
-% B = {A, A};
-% 
-% g = MultiplexBUD('B', B, 'DENSITIES', [0 55 100]);
 
 dict = ge.get('G_DICT');
 for i = 1:1:10
@@ -60,3 +51,7 @@ for i = 1:1:10
     dict.add(g);   
 end
 ge.set('g_dict', dict);
+
+assert(ge.get('G_DICT').length == 10, ...
+    [BRAPH2.STR ':MultiplexBUDEnsemble:' BRAPH2.BUG_ERR], ...
+    'MultiplexBUDEnsemble is not constructing well.')
