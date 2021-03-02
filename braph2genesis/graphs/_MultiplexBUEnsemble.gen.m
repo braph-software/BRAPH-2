@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexBUEnsemble < MultiplexBU (ge, ensemble of multiplex binary undirected graph) is a multiplex binary undirected graph.
+MultiplexBUEnsemble < MultiplexBU (ge, ensemble of binary undirected multiplexes) is an ensemble of binary undirected multiplexes.
 
 %%% ¡description!
-In an ensemble of multiplex binary undirected (BU) graph, 
+In an ensemble of binary undirected (BU) multiplexes, 
 the edges are associated with a real number 0 or 1 
 indicating connection, and are undirected.
 
@@ -12,7 +12,7 @@ true
 %% ¡props_update!
 
 %%% ¡prop!
-G_DICT (data, idict) contains the ensemble of multiplex binary undirected graph.
+G_DICT (data, idict) contains the ensemble of binary undirected multiplexes.
 %%%% ¡settings!
 'MultiplexBU'
 %%%% ¡default!

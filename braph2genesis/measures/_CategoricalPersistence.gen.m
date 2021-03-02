@@ -22,6 +22,12 @@ MultiplexBU
 MultiplexBD
 
 %% ¡props!
+
+%%% ¡prop! 
+Ci (data, rvector) is the given multilayer community structure 
+%%%% ¡default!
+[]
+
 %%% ¡prop! 
 rule (metadata, OPTION) 
 %%%% ¡settings!
@@ -45,7 +51,7 @@ N = N(1);
 
 S = MultilayerCommunityStructure('G', g).get('M');
 S = cell2mat(S');
-m.Ci = S;
+Ci = S;
 
 S = {S};
 all2all = N*[(-L+1):-1,1:(L-1)];
@@ -62,7 +68,7 @@ value = categorical_persistence;
 
 %%% ¡test!
 %%%% ¡name!
-GraphBU
+MultiplexBU
 %%%% ¡code!
 A11 = [
       0 1 1 1;
@@ -86,11 +92,11 @@ categorical_persistence = CategoricalPersistence('G', g).get('M');
 
 assert(isequal(categorical_persistence, known_categorical_persistence), ...
     [BRAPH2.STR ':CategoricalPersistence:' BRAPH2.BUG_ERR], ...
-    'CategoricalPersistence is not being calculated correctly for MultiplexGraphBU.')
+    'CategoricalPersistence is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
 %%%% ¡name!
-GraphBD
+MultiplexWD
 %%%% ¡code!
 A11 = [
       0  1 1 .5;
@@ -113,4 +119,4 @@ categorical_persistence = CategoricalPersistence('G', g).get('M');
 
 assert(isequal(categorical_persistence, known_categorical_persistence), ...
     [BRAPH2.STR ':CategoricalPersistence:' BRAPH2.BUG_ERR], ...
-    'CategoricalPersistence is not being calculated correctly for MultiplexGraphWD.')
+    'CategoricalPersistence is not being calculated correctly for MultiplexWD.')
