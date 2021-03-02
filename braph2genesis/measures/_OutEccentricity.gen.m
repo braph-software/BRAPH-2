@@ -25,7 +25,6 @@ M (result, cell) is the out-eccentricity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 L = g.layernumber();
-A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc
 
 D = Distance('G', g).get('M'); 
 eccentricity_rule = m.get('rule');
