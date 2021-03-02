@@ -1,5 +1,5 @@
 %% ¡header!
-RichClubStrength < Strength (m, rich club strength) is the graph rich club strength.
+RichClubStrength < Strength (m, rich-club strength) is the graph rich-club strength.
 
 %%% ¡description!
 The rich-club strength of a node at level s is the sum of the weighted edges 
@@ -31,7 +31,7 @@ PARAMETRIC_VALUE (parameter, RVECTOR)
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the rich club strength.
+M (result, cell) is the rich-club strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
