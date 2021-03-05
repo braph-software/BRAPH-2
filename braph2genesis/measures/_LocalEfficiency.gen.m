@@ -38,7 +38,7 @@ for li = 1:1:L
         nodes = find(Aii(i, :)  | Aii(:, i).');  % neighbours of u
         if numel(nodes) > 1
             sub_graph = g.subgraph(g, nodes);
-            global_efficiency = GlobalEfficiency(sub_graph, g.getSettings()).getValue();
+            global_efficiency = GlobalEfficiency('G', sub_graph).get('M');
             local_efficiency_layer(i) = mean(global_efficiency{li});
         end
     end
