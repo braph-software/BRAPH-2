@@ -749,16 +749,15 @@ switch Graph.getGraphType(g)
         
     otherwise  % multigraph, multiplex and multilayer
         for li = 1:1:L
-            for lj = 1:1:L
-                Aij = A{li, lj};
-                if ~isempty(Aij)
-                    A(li, lj) = {Aij(nodes{li}, nodes{lj})};
-                end
+            Aij = A{li};
+            if ~isempty(Aij)
+                A(li) = {Aij(nodes{li})};
             end
         end
 end
 
-sg = eval([g.getClass() '(''B'', a)'])
+sg = eval([g.getClass() '(''B'', A)']);
+
 end
 
 %% ¡methods!
