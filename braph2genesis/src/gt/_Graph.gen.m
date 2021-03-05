@@ -726,6 +726,40 @@ function checkNegativity(negativity_type, A)
         end
     end
 end
+% subgraphs
+function sg = subgraph(g, nodes)
+% SUBGRAPH extracts subgraph
+%
+% SG = SUBGRAPH(G, NODES) extracts the graph SG as a subgraph of G
+% containing only the nodes specified by NODES.
+% If NODES is a vector, the specified nodes are removed from
+% all layers. If NODES is a cell array of vectors, the
+% specified nodes are removed from each layer.
+
+A = g.get('B');
+L = g.layernumber();
+
+if ~iscell(nodes)
+    nodes = repmat({nodes}, 1, L);
+end
+
+switch Graph.getGraphType(g)
+    case Graph.GRAPH
+        A = A(nodes{1}, nodes{1});
+        
+    otherwise  % multigraph, multiplex and multilayer
+        for li = 1:1:L
+            for lj = 1:1:L
+                Aij = A{li, lj};
+                if ~isempty(Aij)
+                    A(li, lj) = {Aij(nodes{li}, nodes{lj})};
+                end
+            end
+        end
+end
+
+sg = eval([g.getClass() '(''B'', a)'])
+end
 
 %% ¡methods!
 function n = nodenumber(g)
