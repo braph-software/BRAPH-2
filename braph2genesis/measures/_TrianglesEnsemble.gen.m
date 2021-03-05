@@ -39,7 +39,7 @@ value = triangles_ensemble;
 %%%% ¡name!
 GraphBUEnsemble
 %%%% ¡code!
-B_BU = [
+B = [
      0 1 1 1;
     1 0 1 0;
     1 1 0 1;
@@ -73,7 +73,7 @@ assert(isequal(m_inside_g.get('M'), known_triangles), ...
 %%%% ¡name!
 GraphBDEnsemble
 %%%% ¡code!
-B_BU = [
+B = [
      0 0 1; 
     1 0 0; 
     0 1 0 

@@ -34,7 +34,7 @@ value = pathlengthav_ensemble;
 %%%% ¡name!
 GraphBUEnsemble
 %%%% ¡code!
-B_BU = [
+B = [
     0   .1  0   0
     .2  0   .1  0
     0   .1  0   .2

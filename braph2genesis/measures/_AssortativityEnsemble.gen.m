@@ -36,7 +36,7 @@ value = assortativity_ensemble;
 %%%% ¡name!
 GraphBUEnsemble
 %%%% ¡code!
-B_BU = [
+B = [
     1 1 0 0 1;
     1 1 1 1 0;
     0 1 1 1 0;
