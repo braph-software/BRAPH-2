@@ -374,6 +374,5 @@ et = ETA( ...
 
 pl = PlotElement('EL', et);
 pl.draw()
-% pl.settings()
 
-% close(fig)
+close(fig)
