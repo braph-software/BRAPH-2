@@ -204,6 +204,27 @@ disp('REDRAW F')
         pl.get('PP_DICT').getItem(prop).redraw('Width', w(f) - 2 * dw - w_s)
     end
     
+    % redraw panel and place prop panels
+    dh = pl.get('DH');
+
+    h_pp = cellfun(@(x) h(x), pp_list);
+    x0_pp = dw;
+    y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
+
+    % p, s
+    h_p = sum(h_pp + dh) + dh;
+    if h_p > h(f)
+        for prop = 1:1:length(pp_list)
+            pp = pp_list{prop};
+            set(pp, 'Position', [x0_pp y0_pp(prop) w(pp) h(pp)])
+        end
+    else
+        for prop = 1:1:length(pp_list)
+            set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w(pp) h(pp)])
+        end
+    end    
+    
+    % slide and adjust panel
     pl.slide()
     
     set(f, 'Units', units)
@@ -239,16 +260,12 @@ disp('SLIDE F')
     units = get(f, 'Units');
     set(f, 'Units', 'character')
     
-    dw = pl.get('DW');
-    dh = pl.get('DH');
     w_s = pl.get('WSLIDER');
 
+    dh = pl.get('DH');
     h_pp = cellfun(@(x) h(x), pp_list);
-    x0_pp = dw;
-    y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
-
-    % p, s
     h_p = sum(h_pp + dh) + dh;
+
     if h_p > h(f)
         offset = get(s, 'Value');
         set(p, 'Position', [0 h(f)-h_p-offset w(f) h_p])
@@ -259,19 +276,10 @@ disp('SLIDE F')
             'Min', h(f) - h(p), ...
             'Value', max(get(s, 'Value'), h(f) - h(p)) ...
             );
-
-        for prop = 1:1:length(pp_list)
-            pp = pp_list{prop};
-            set(pp, 'Position', [x0_pp y0_pp(prop) w(pp) h(pp)])
-        end
     else
         set(p, 'Position', [0 0 w(f) h(f)])
 
         set(s, 'Visible', 'off')            
-
-        for prop = 1:1:length(pp_list)
-            set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w(pp) h(pp)])
-        end
     end
     
     set(f, 'Units', units)
