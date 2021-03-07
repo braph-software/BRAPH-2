@@ -218,7 +218,8 @@ function redraw(pl)
         end
     else
         for prop = 1:1:length(pp_list)
-            set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w(pp) h(pp)])
+            pp = pp_list{prop};
+            set(pp, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w(pp) h(pp)])
         end
     end    
     
