@@ -1345,7 +1345,7 @@ generate_gui()
         end
         g(1, 'methods % GUI')
             if ~(numel(gui) == 1 && isempty(gui{1}))
-                g(2, 'function pl = getPlotElement(el, varargin)')
+                g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
                 gs(3, {
                      '%GETPLOTELEMENT returns the element plot.'
                      '%'
@@ -1360,7 +1360,7 @@ generate_gui()
                 g(2, 'end')
             end
             if any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
-                g(2, 'function pl = getPlotProp(el, prop, varargin)')
+                g(2, ['function pl = getPlotProp(' moniker ', prop, varargin)'])
                     gs(3, {
                          '%GETPLOTPROP returns a prop plot.'
                          '%'
@@ -1389,7 +1389,7 @@ generate_gui()
                             end
                         end
                         g(4, 'otherwise')
-                            gs(5, {['pl = getPropPlot@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
+                            gs(5, {['pl = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
                     g(3, 'end')
                 g(2, 'end')                
             end

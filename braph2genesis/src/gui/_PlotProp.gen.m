@@ -48,8 +48,6 @@ function h_panel = draw(pl, varargin)
     %
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
-disp(['DRAW Prop ' tostring(pl.get('PROP'))])
-    
     pl.pp = draw@Plot(pl, ...
         varargin{:}, ...
         'Units', 'character', ...
@@ -181,8 +179,6 @@ function redraw(pl, varargin)
     %
     % See also draw, update, refresh.
 
-disp(['REDRAW Prop ' tostring(pl.get('PROP'))])
-    
     el = pl.get('EL');
     prop = pl.get('PROP');
     

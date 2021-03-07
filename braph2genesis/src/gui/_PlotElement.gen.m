@@ -181,8 +181,6 @@ function redraw(pl)
     %
     % See also draw, update, slide.
 
-disp('REDRAW F')
-
     f = pl.f;
     pp_list = pl.pp_list;
     
@@ -249,8 +247,6 @@ function slide(pl)
     % SLIDE(PL) slides the panel vertically, without redrawing the prop panels.
     %
     % See also draw, update, redraw.
-
-disp('SLIDE F')
 
     f = pl.f;
     p = pl.p;
