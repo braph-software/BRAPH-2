@@ -46,7 +46,7 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also update, resize, refresh, settings, uipanel, isgraphics.
+    % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
 disp(['DRAW Prop ' tostring(pl.get('PROP'))])
     
@@ -138,7 +138,7 @@ function update(pl)
     %
     % UPDATE(PL) updates the content of the property graphical panel.
     %
-    % See also draw, resize, refresh.
+    % See also draw, redraw, refresh.
 
 
     el = pl.get('EL');
@@ -176,6 +176,8 @@ function redraw(pl, varargin)
     % REDRAW(PL) redraws (including resizing) the plot PL.
     %
     % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=1.4).
+    %
+    % REDRAW(PL, 'Width', WIDTH) sets the width of PL (by default the width does not change).
     %
     % See also draw, update, refresh.
 
@@ -228,7 +230,7 @@ function refresh(pl)
     %
     % REFRESH(PL) updates and resizes parent and siblings.
     %
-    % See also draw, update, resize.
+    % See also draw, update, redraw.
     
     pp = pl.pp;
     p = get(pp, 'Parent');
