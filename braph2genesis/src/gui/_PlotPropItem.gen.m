@@ -1,8 +1,8 @@
 %% ¡header!
-PlotPropIDict < PlotProp (pl, plot property idict) is a plot of a property idict.
+PlotPropItem < PlotProp (pl, plot property item) is a plot of a property item.
 
 %%% ¡description!
-PlotProp plots a property idict of an element in a panel.
+PlotProp plots a property item of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
@@ -13,11 +13,11 @@ pushbutton_value
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
-    %DRAW draws the idict property graphical panel.
+    %DRAW draws the item property graphical panel.
     %
-    % DRAW(PL) draws the idict property graphical panel.
+    % DRAW(PL) draws the item property graphical panel.
     %
-    % H = DRAW(PL) returns a handle to the idict property graphical panel.
+    % H = DRAW(PL) returns a handle to the item property graphical panel.
     %
     % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
     %  panel with custom property-value couples.
@@ -26,7 +26,7 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also update, resize, refresh, settings, uipanel, isgraphics.
+    % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     el = pl.get('EL');
     prop = pl.get('PROP');
@@ -51,7 +51,7 @@ function h_panel = draw(pl, varargin)
         if isa(value, 'NoValue')
             GUI(el.getPropDefault(prop))
         else
-            GUI(el.get(prop).tostring())
+            GUI(el.get(prop))
         end
     end
 
@@ -65,7 +65,7 @@ function update(pl)
     %
     % UPDATE(PL) updates the content of the property graphical panel.
     %
-    % See also draw, resize, refresh.
+    % See also draw, redraw, refresh.
 
     update@PlotProp(pl)
     
@@ -77,14 +77,14 @@ function update(pl)
         'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
         )
 end
-function resize(pl, varargin)
-    %RESIZE resizes the element graphical panel.
+function redraw(pl, varargin)
+    %REDRAW redraws the element graphical panel.
     %
-    % RESIZE(PL) resizes the plot PL.
+    % REDRAW(PL) redraws the plot PL.
     %
-    % RESIZE(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
     %
     % See also draw, update, refresh.
     
-    pl.resize@PlotProp('Height', 3.33)
+    pl.redraw@PlotProp('Height', 3.33, varargin{:})
 end

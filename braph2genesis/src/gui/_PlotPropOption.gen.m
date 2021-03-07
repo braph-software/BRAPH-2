@@ -1,23 +1,23 @@
 %% ¡header!
-PlotPropScalar < PlotProp (pl, plot property scalar) is a plot of a property scalar.
+PlotPropOption < PlotProp (pl, plot property option) is a plot of a property option.
 
 %%% ¡description!
-PlotProp plots a property scalar of an element in a panel.
+PlotProp plots a property option of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
 
 %% ¡properties!
 pp
-edit_value
+popupmenu_value
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
-    %DRAW draws the scalar property graphical panel.
+    %DRAW draws the option property graphical panel.
     %
-    % DRAW(PL) draws the scalar property graphical panel.
+    % DRAW(PL) draws the option property graphical panel.
     %
-    % H = DRAW(PL) returns a handle to the scalar property graphical panel.
+    % H = DRAW(PL) returns a handle to the option property graphical panel.
     %
     % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
     %  panel with custom property-value couples.
@@ -26,29 +26,31 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also update, resize, refresh, settings, uipanel, isgraphics.
+    % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     el = pl.get('EL');
     prop = pl.get('PROP');
     
     pl.pp = draw@PlotProp(pl, varargin{:});
     
-    if isempty(pl.edit_value) || ~isgraphics(pl.edit_value, 'edit')
-        pl.edit_value = uicontrol( ...
-            'Style', 'edit', ...
+    if isempty(pl.popupmenu_value) || ~isgraphics(pl.popupmenu_value, 'edit')
+        pl.popupmenu_value = uicontrol( ...
+            'Style', 'popupmenu', ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
-            'Position', [.01 .10 .29 .40], ...
+            'Position', [.01 .10 .98 .45], ...
+            'String', el.getPropSettings(prop), ...
             'HorizontalAlignment', 'left', ...
             'BackgroundColor', 'w', ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'Callback', {@cb_edit_value} ...
+            'Callback', {@cb_popupmenu_value} ...
             );
     end
 
     % callback
-    function cb_edit_value(src, ~)
-        el.set(prop, str2double(get(src, 'String')))
+    function cb_popupmenu_value(src, ~)
+        options = el.getPropSettings(prop);
+        el.set(prop, options{get(src, 'Value')})
    
         pl.update()
     end
@@ -63,7 +65,7 @@ function update(pl)
     %
     % UPDATE(PL) updates the content of the property graphical panel.
     %
-    % See also draw, resize, refresh.
+    % See also draw, redraw, refresh.
 
     update@PlotProp(pl)
     
@@ -71,45 +73,46 @@ function update(pl)
     prop = pl.get('PROP');
     
     if el.isLocked(prop)
-        set(pl.edit_value, 'Enable', pl.get('ENABLE'))
+        set(pl.popupmenu_value, 'Enable', pl.get('ENABLE'))
     end
 
+    options = el.getPropSettings(prop);
     switch el.getPropCategory(prop)
         case Category.METADATA
-            set(pl.edit_value, 'String', mat2str(el.get(prop)))
+            set(pl.popupmenu_value, 'Value', find(cellfun(@(x) strcmpi(el.get(prop), x), options)))
 
         case {Category.PARAMETER, Category.DATA}
-            set(pl.edit_value, 'String', mat2str(el.get(prop)))
+            set(pl.popupmenu_value, 'Value', find(cellfun(@(x) strcmpi(el.get(prop), x), options)))
 
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pl.edit_value, 'Enable', pl.get('ENABLE'))
+                set(pl.popupmenu_value, 'Enable', pl.get('ENABLE'))
             end
 
         case Category.RESULT
             value = el.getr(prop);
 
             if isa(value, 'NoValue')
-                set(pl.edit_value, ...
-                    'String', mat2str(el.getPropDefault(prop)), ...
+                set(pl.popupmenu_value, ...
+                    'Value', find(cellfun(@(x) strcmpi(el.getPropDefault(prop), x), options)), ...
                     'Enable', pl.get('ENABLE') ...
                     )
             else
-                set(pl.edit_value, ...
-                    'String', mat2str(el.get(prop)), ...
+                set(pl.popupmenu_value, ...
+                    'Value', find(cellfun(@(x) strcmpi(el.get(prop), x), options)), ...
                     'Enable', pl.get('ENABLE') ...
                     )
             end
     end
 end
-function resize(pl, varargin)
-    %RESIZE resizes the element graphical panel.
+function redraw(pl, varargin)
+    %REDRAW redraws the element graphical panel.
     %
-    % RESIZE(PL) resizes the plot PL.
+    % REDRAW(PL) redraws the plot PL.
     %
-    % RESIZE(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
     %
     % See also draw, update, refresh.
     
-    pl.resize@PlotProp('Height', 2.50)
+    pl.redraw@PlotProp('Height', 3.50, varargin{:})
 end

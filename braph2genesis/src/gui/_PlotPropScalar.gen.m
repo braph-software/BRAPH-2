@@ -1,23 +1,23 @@
 %% ¡header!
-PlotPropLogical < PlotProp (pl, plot property logical) is a plot of a property logical.
+PlotPropScalar < PlotProp (pl, plot property scalar) is a plot of a property scalar.
 
 %%% ¡description!
-PlotProp plots a property logical of an element in a panel.
+PlotProp plots a property scalar of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
 
 %% ¡properties!
 pp
-checkbox_value
+edit_value
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
-    %DRAW draws the logical property graphical panel.
+    %DRAW draws the scalar property graphical panel.
     %
-    % DRAW(PL) draws the logical property graphical panel.
+    % DRAW(PL) draws the scalar property graphical panel.
     %
-    % H = DRAW(PL) returns a handle to the logical property graphical panel.
+    % H = DRAW(PL) returns a handle to the scalar property graphical panel.
     %
     % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
     %  panel with custom property-value couples.
@@ -26,29 +26,29 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also update, resize, refresh, settings, uipanel, isgraphics.
+    % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     el = pl.get('EL');
     prop = pl.get('PROP');
     
     pl.pp = draw@PlotProp(pl, varargin{:});
     
-    if isempty(pl.checkbox_value) || ~isgraphics(pl.checkbox_value, 'checkbox')
-        pl.checkbox_value = uicontrol( ...
-            'Style', 'checkbox', ...
+    if isempty(pl.edit_value) || ~isgraphics(pl.edit_value, 'edit')
+        pl.edit_value = uicontrol( ...
+            'Style', 'edit', ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
             'Position', [.01 .10 .29 .40], ...
-            'HorizontalAlignment', 'center', ...
-            'BackgroundColor', pl.get('BKGCOLOR'), ...
+            'HorizontalAlignment', 'left', ...
+            'BackgroundColor', 'w', ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'Callback', {@cb_checkbox_value} ...
+            'Callback', {@cb_edit_value} ...
             );
     end
 
     % callback
-    function cb_checkbox_value(src, ~)
-        el.set(prop, logical(get(src, 'Value')))
+    function cb_edit_value(src, ~)
+        el.set(prop, str2double(get(src, 'String')))
    
         pl.update()
     end
@@ -63,7 +63,7 @@ function update(pl)
     %
     % UPDATE(PL) updates the content of the property graphical panel.
     %
-    % See also draw, resize, refresh.
+    % See also draw, redraw, refresh.
 
     update@PlotProp(pl)
     
@@ -71,45 +71,45 @@ function update(pl)
     prop = pl.get('PROP');
     
     if el.isLocked(prop)
-        set(pl.checkbox_value, 'Enable', pl.get('ENABLE'))
+        set(pl.edit_value, 'Enable', pl.get('ENABLE'))
     end
 
     switch el.getPropCategory(prop)
         case Category.METADATA
-            set(pl.checkbox_value, 'Value', el.get(prop))
+            set(pl.edit_value, 'String', mat2str(el.get(prop)))
 
         case {Category.PARAMETER, Category.DATA}
-            set(pl.checkbox_value, 'Value', el.get(prop))
+            set(pl.edit_value, 'String', mat2str(el.get(prop)))
 
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pl.checkbox_value, 'Enable', pl.get('ENABLE'))
+                set(pl.edit_value, 'Enable', pl.get('ENABLE'))
             end
 
         case Category.RESULT
             value = el.getr(prop);
 
             if isa(value, 'NoValue')
-                set(pl.checkbox_value, ...
-                    'Value', el.getPropDefault(prop), ...
+                set(pl.edit_value, ...
+                    'String', mat2str(el.getPropDefault(prop)), ...
                     'Enable', pl.get('ENABLE') ...
                     )
             else
-            set(pl.checkbox_value, ...
-                'Value', el.get(prop), ...
-                'Enable', pl.get('ENABLE') ...
-                )
+                set(pl.edit_value, ...
+                    'String', mat2str(el.get(prop)), ...
+                    'Enable', pl.get('ENABLE') ...
+                    )
             end
     end
 end
-function resize(pl, varargin)
-    %RESIZE resizes the element graphical panel.
+function redraw(pl, varargin)
+    %REDRAW redraws the element graphical panel.
     %
-    % RESIZE(PL) resizes the plot PL.
+    % REDRAW(PL) redraws the plot PL.
     %
-    % RESIZE(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
     %
     % See also draw, update, refresh.
     
-    pl.resize@PlotProp('Height', 2.5)
+    pl.redraw@PlotProp('Height', 2.50, varargin{:})
 end

@@ -26,7 +26,7 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also update, resize, refresh, settings, uipanel, isgraphics.
+    % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
 %     el = pl.get('EL');
 %     prop = pl.get('PROP');
@@ -62,7 +62,7 @@ function update(pl)
     %
     % UPDATE(PL) updates the content of the property graphical panel.
     %
-    % See also draw, resize, refresh.
+    % See also draw, redraw, refresh.
 
     update@PlotProp(pl)
     
@@ -151,12 +151,12 @@ function update(pl)
 %             end
 %     end
 end
-function resize(pl, varargin)
-    %RESIZE resizes the element graphical panel.
+function redraw(pl, varargin)
+    %REDRAW redraws the element graphical panel.
     %
-    % RESIZE(PL) resizes the plot PL.
+    % REDRAW(PL) redraws the plot PL.
     %
-    % RESIZE(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
     %
     % See also draw, update, refresh.
     
@@ -165,14 +165,14 @@ function resize(pl, varargin)
 
     value = el.getr(prop);
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        pl.resize@PlotProp('Height', 1.8)
+        pl.redraw@PlotProp('Height', 1.8, varargin{:})
     else
         value_cell = el.get(prop);
 
         if isempty(value_cell)
-            pl.resize@PlotProp('Height', 1.8)
+            pl.redraw@PlotProp('Height', 1.8, varargin{:})
         else
-            pl.resize@PlotProp('Height', 21.8)
+            pl.redraw@PlotProp('Height', 21.8, varargin{:})
         end
         
         for i = 1:1:size(value_cell, 1)
