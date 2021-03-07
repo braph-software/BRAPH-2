@@ -110,10 +110,10 @@ function h_panel = draw(pl, varargin)
     pl.f = draw@Plot(pl, ...
         'Visible', 'off', ...
         varargin{:}, ...
-        'SizeChangedFcn', {@resize} ...
+        'SizeChangedFcn', {@redraw} ...
         );
-    function resize(~, ~)
-        pl.resize()
+    function redraw(~, ~)
+        pl.redraw()
     end
 
     if isempty(pl.p) || ~isgraphics(pl.p, 'uipanel')
@@ -148,143 +148,149 @@ function h_panel = draw(pl, varargin)
             pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
     end
     
-%     pl.update()
-
-    set(pl.f, 'Visible', 'on') % calls resize()
+    set(pl.f, ...
+        'UserData', 'update', ... % calls update(), through redraw()
+        'Visible', 'on' ... % calls redraw() and slide()
+        )
     
     % output
     if nargout > 0
         h_panel = pl.f;
     end
 end
-% function update(pl)
-% 
-%     for prop = 1:1:pl.get('PP_DICT').length()
-%         pl.get('PP_DICT').getItem(prop).update()
-%     end
-% end
-function resize(pl)
+function update(pl)
+
+    for prop = 1:1:pl.get('PP_DICT').length()
+        pl.get('PP_DICT').getItem(prop).update()
+    end
+end
+function redraw(pl)
     %RESIZE resizes the element graphical panel.
     %
     % RESIZE(PL) resizes the plot PL.
     %
     % See also draw.
 
-disp('RESIZE F')
+disp('REDRAW F')
 
     f = pl.f;
-%     p = pl.p;
-% 	s = pl.s;
-%     pp_list = pl.pp_list;
-% 
-%     if strcmpi(get(f, 'UserData'), 'ignore')
-%         set(f, 'UserData', [])
-%         return
-%     elseif strcmpi(get(f, 'UserData'), 'update')
-%         set(f, 'UserData', [])
-%         pl.update()
-%     end
+    pp_list = pl.pp_list;
+
+    if strcmpi(get(f, 'UserData'), 'ignore')
+        set(f, 'UserData', [])
+        return
+    elseif strcmpi(get(f, 'UserData'), 'update')
+        set(f, 'UserData', [])
+        pl.update()
+    end
     
-    units = get(f, 'Units');
-    set(f, 'Units', 'character')
+    % redraw prop panels
+    for prop = 1:1:length(pp_list)
+        pl.get('PP_DICT').getItem(prop).redraw()
+    end
     
-%     dw = pl.get('DW');
-%     dh = pl.get('DH');
-%     w_s = 5; % defines slider width
-% 
-%     % prop panels
-%     for prop = 1:1:length(pp_list)
-%         pl.get('PP_DICT').getItem(prop).resize()
-%     end
-%     w_pp = w(f) - 2 * dw - w_s;
-%     h_pp = cellfun(@(x) h(x), pp_list);
-%     x0_pp = dw;
-%     y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
-% 
-%     % p, s
-%     h_p = sum(h_pp + dh) + dh;
-%     if h_p > h(f)
-%         offset = get(s, 'Value');
-%         set(p, 'Position', [0 h(f)-h_p-offset w(f) h_p])
-% 
-%         set(s, ...
-%             'Position', [w(f)-w_s 0 w_s h(f)], ...
-%             'Visible', 'on', ...
-%             'Min', h(f) - h(p), ...
-%             'Value', max(get(s, 'Value'), h(f) - h(p)) ...
-%             );
-% 
-%         for prop = 1:1:length(pp_list)
-%             set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop) w_pp h_pp(prop)])
-%         end
-%     else
-%         set(p, 'Position', [0 0 w(f) h(f)])
-% 
-%         set(s, 'Visible', 'off')            
-% 
-%         for prop = 1:1:length(pp_list)
-%             set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w_pp h_pp(prop)])
-%         end
-%     end
-    
-    set(f, 'Units', units)
-    
-%     % auxiliary functions
-%     function r = x0(h)
-%         r = Plot.x0(h);
-%     end
-%     function r = y0(h)
-%         r = Plot.y0(h);
-%     end
-%     function r = w(h)
-%         r = Plot.w(h);
-%     end
-%     function r = h(h)
-%         r = Plot.h(h);
-%     end
+    pl.slide()
 end
 function slide(pl)
 
 disp('SLIDE F')
 
+    f = pl.f;
+    p = pl.p;
+	s = pl.s;
+    pp_list = pl.pp_list;
+
+    units = get(f, 'Units');
+    set(f, 'Units', 'character')
+    
+    w_s = 5; % defines slider width
+    dw = pl.get('DW');
+    dh = pl.get('DH');
+
+    w_pp = w(f) - 2 * dw - w_s;
+    h_pp = cellfun(@(x) h(x), pp_list);
+    x0_pp = dw;
+    y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
+
+    % p, s
+    h_p = sum(h_pp + dh) + dh;
+    if h_p > h(f)
+        offset = get(s, 'Value');
+        set(p, 'Position', [0 h(f)-h_p-offset w(f) h_p])
+
+        set(s, ...
+            'Position', [w(f)-w_s 0 w_s h(f)], ...
+            'Visible', 'on', ...
+            'Min', h(f) - h(p), ...
+            'Value', max(get(s, 'Value'), h(f) - h(p)) ...
+            );
+
+        for prop = 1:1:length(pp_list)
+            set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop) w_pp h_pp(prop)])
+        end
+    else
+        set(p, 'Position', [0 0 w(f) h(f)])
+
+        set(s, 'Visible', 'off')            
+
+        for prop = 1:1:length(pp_list)
+            set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w_pp h_pp(prop)])
+        end
+    end
+    
+    set(f, 'Units', units)
+    
+    % auxiliary functions
+    function r = x0(h)
+        r = Plot.x0(h);
+    end
+    function r = y0(h)
+        r = Plot.y0(h);
+    end
+    function r = w(h)
+        r = Plot.w(h);
+    end
+    function r = h(h)
+        r = Plot.h(h);
+    end
 end
 
-% %% ¡tests!
-% 
-% %%% ¡test!
-% %%%% ¡name!
-% Basics
-% %%%% ¡code!
-% fig = figure();
-% 
-% et = ETA( ...
-%     'PROP_STRING_M', 'mmm', ...
-%     'PROP_STRING_P', 'ppp', ...
-%     'PROP_STRING_D', 'ddd', ...
-%     'PROP_LOGICAL_M', true, ...
-%     'PROP_LOGICAL_P', false, ...
-%     'PROP_LOGICAL_D', false, ...
-%     'PROP_SCALAR_M', 1, ...
-%     'PROP_SCALAR_P', 3, ...
-%     'PROP_SCALAR_D', 10, ...
-%     'PROP_RVECTOR_M', ones(1, 10), ...
-%     'PROP_RVECTOR_P', zeros(1, 10), ...
-%     'PROP_RVECTOR_D', rand(1, 10), ...
-%     'PROP_CVECTOR_M', ones(10, 1), ...
-%     'PROP_CVECTOR_P', zeros(10, 1), ...
-%     'PROP_CVECTOR_D', rand(10, 1), ...
-%     'PROP_MATRIX_M', zeros(8,10), ...
-%     'PROP_MATRIX_P', randn(10), ...
-%     'PROP_MATRIX_D', rand(12), ...
-%     'PROP_SMATRIX_M', eye(4), ...
-%     'PROP_SMATRIX_P', randn(3), ...
-%     'PROP_SMATRIX_D', rand(5), ...
-%     'PROP_CELL_M', {randn(4), randn(4), randn(4); randn(4), randn(4), randn(4); randn(4), randn(4), randn(4)}, ...
-%     'PROP_CELL_P', {eye(10)}, ...
-%     'PROP_CELL_D', {randn(2), randn(2); randn(2), randn(2)} ...
-%     );
-% 
-% pl = PlotElement('EL', et);
-% pl.draw()
-% 
-% % close(fig)
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Basics
+%%%% ¡code!
+fig = figure();
+
+et = ETA( ...
+    'PROP_STRING_M', 'mmm', ...
+    'PROP_STRING_P', 'ppp', ...
+    'PROP_STRING_D', 'ddd', ...
+    'PROP_LOGICAL_M', true, ...
+    'PROP_LOGICAL_P', false, ...
+    'PROP_LOGICAL_D', false, ...
+    'PROP_SCALAR_M', 1, ...
+    'PROP_SCALAR_P', 3, ...
+    'PROP_SCALAR_D', 10, ...
+    'PROP_RVECTOR_M', ones(1, 10), ...
+    'PROP_RVECTOR_P', zeros(1, 10), ...
+    'PROP_RVECTOR_D', rand(1, 10), ...
+    'PROP_CVECTOR_M', ones(10, 1), ...
+    'PROP_CVECTOR_P', zeros(10, 1), ...
+    'PROP_CVECTOR_D', rand(10, 1), ...
+    'PROP_MATRIX_M', zeros(8,10), ...
+    'PROP_MATRIX_P', randn(10), ...
+    'PROP_MATRIX_D', rand(12), ...
+    'PROP_SMATRIX_M', eye(4), ...
+    'PROP_SMATRIX_P', randn(3), ...
+    'PROP_SMATRIX_D', rand(5), ...
+    'PROP_CELL_M', {randn(4), randn(4), randn(4); randn(4), randn(4), randn(4); randn(4), randn(4), randn(4)}, ...
+    'PROP_CELL_P', {eye(10)}, ...
+    'PROP_CELL_D', {randn(2), randn(2); randn(2), randn(2)} ...
+    );
+
+pl = PlotElement('EL', et);
+pl.draw()
+
+% close(fig)
