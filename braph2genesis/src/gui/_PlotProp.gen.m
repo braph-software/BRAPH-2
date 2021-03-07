@@ -186,8 +186,9 @@ disp(['REDRAW Prop ' tostring(pl.get('PROP'))])
     
     pp = pl.pp;
 
+    w_pp = get_from_varargin(w(pp), 'Width', varargin);
     h_pp = get_from_varargin(1.4, 'Height', varargin);
-    set(pp, 'Position', [x0(pp) y0(pp) w(pp) h_pp])
+    set(pp, 'Position', [x0(pp) y0(pp) w_pp h_pp])
 
     set(pl.text_tag, 'Position', [0 h(pp)-1 w(pp) 1]);
 

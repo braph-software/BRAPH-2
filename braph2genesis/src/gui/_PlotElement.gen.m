@@ -24,6 +24,11 @@ DH (metadata, scalar) is the margin along the height in character units.
 .5
 
 %%% ¡prop!
+WSLIDER (metadata, scalar) is the slider width in character units.
+%%%% ¡default!
+5
+
+%%% ¡prop!
 MCOLOR (metadata, rvector) is background color of the metadata properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
@@ -175,6 +180,9 @@ disp('REDRAW F')
 
     f = pl.f;
     pp_list = pl.pp_list;
+    
+    units = get(f, 'Units');
+    set(f, 'Units', 'character')    
 
     if strcmpi(get(f, 'UserData'), 'ignore')
         set(f, 'UserData', [])
@@ -185,11 +193,29 @@ disp('REDRAW F')
     end
     
     % redraw prop panels
+    dw = pl.get('DW');   
+    w_s = pl.get('WSLIDER');
     for prop = 1:1:length(pp_list)
-        pl.get('PP_DICT').getItem(prop).redraw()
+        pl.get('PP_DICT').getItem(prop).redraw('Width', w(f) - 2 * dw - w_s)
     end
     
     pl.slide()
+    
+    set(f, 'Units', units)
+    
+    % auxiliary functions
+    function r = x0(h)
+        r = Plot.x0(h);
+    end
+    function r = y0(h)
+        r = Plot.y0(h);
+    end
+    function r = w(h)
+        r = Plot.w(h);
+    end
+    function r = h(h)
+        r = Plot.h(h);
+    end    
 end
 function slide(pl)
 
@@ -203,11 +229,10 @@ disp('SLIDE F')
     units = get(f, 'Units');
     set(f, 'Units', 'character')
     
-    w_s = 5; % defines slider width
     dw = pl.get('DW');
     dh = pl.get('DH');
+    w_s = pl.get('WSLIDER');
 
-    w_pp = w(f) - 2 * dw - w_s;
     h_pp = cellfun(@(x) h(x), pp_list);
     x0_pp = dw;
     y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
@@ -226,7 +251,8 @@ disp('SLIDE F')
             );
 
         for prop = 1:1:length(pp_list)
-            set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop) w_pp h_pp(prop)])
+            pp = pp_list{prop};
+            set(pp, 'Position', [x0_pp y0_pp(prop) w(pp) h(pp)])
         end
     else
         set(p, 'Position', [0 0 w(f) h(f)])
@@ -234,7 +260,7 @@ disp('SLIDE F')
         set(s, 'Visible', 'off')            
 
         for prop = 1:1:length(pp_list)
-            set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w_pp h_pp(prop)])
+            set(pp_list{prop}, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w(pp) h(pp)])
         end
     end
     
