@@ -322,6 +322,11 @@ generate_header()
              '%  getFormatSettings - returns the settings for a format'
              '%  getFormatDefault - returns the default value for a format'
              '%  checkFormat - returns whether a value format is correct/error'
+             '%'
+            ['% ' class_name ' methods (GUI):']
+             '%  getGUI - returns figure with element GUI'
+             '%  getPlotElement - returns the element plot'
+             '%  getPropPanel - returns a prop plot'
             })
         if ~isempty(seealso)
             gs(1, {
