@@ -819,8 +819,7 @@ switch Graph.getGraphType(g)
             end
         end
 end
-
-ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
+ga = eval([g.getClass()  '(''B'', A)']);
 end
 function ga = edgeattack(g, nodes1, nodes2, layernumbers1, layernumbers2)
 % EDGEATTACK removes given edges from a graph
@@ -886,8 +885,7 @@ switch Graph.getGraphType(g)
             end
         end
 end
-
-ga = Graph.getGraph(Graph.getClass(g), A, g.getSettings());
+ga = eval([g.getClass()  '(''B'', A)']);
 end
 
 %% ¡methods!
