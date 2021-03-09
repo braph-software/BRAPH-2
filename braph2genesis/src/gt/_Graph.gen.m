@@ -736,7 +736,7 @@ function sg = subgraph(g, nodes)
 % all layers. If NODES is a cell array of vectors, the
 % specified nodes are removed from each layer.
 
-A = g.get('B');
+A = g.get('A');
 L = g.layernumber();
 
 if ~iscell(nodes)
@@ -745,13 +745,16 @@ end
 
 switch Graph.getGraphType(g)
     case Graph.GRAPH
+        if iscell(A)
+            A = A{1};
+        end
         A = A(nodes{1}, nodes{1});
         
     otherwise  % multigraph, multiplex and multilayer
         for li = 1:1:L
-            Aij = A{li};
+            Aij = A{li, li};
             if ~isempty(Aij)
-                A(li) = {Aij(nodes{li})};
+                A(li) = {Aij(nodes{li}, nodes{li})};
             end
         end
 end
