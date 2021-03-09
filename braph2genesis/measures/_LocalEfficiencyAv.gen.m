@@ -54,8 +54,8 @@ g = GraphBU('B', A);
 local_efficiency_av = LocalEfficiencyAv('G', g).get('M');
 
 assert(isequal(local_efficiency_av, known_local_efficiency_av), ...
-    [BRAPH2.STR ':LocalEfficiency:' BRAPH2.BUG_ERR], ...
-    'LocalEfficiency is not being calculated correctly for GraphBU.')
+    [BRAPH2.STR ':LocalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'LocalEfficiencyAv is not being calculated correctly for GraphBU.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -72,9 +72,9 @@ known_local_efficiency_av = {mean([1/4 1/5 .1222 1/5])};
 
 g = GraphWU('B', A);
 local_efficiency_av = LocalEfficiencyAv('G', g).get('M');
-assert(isequal(round(local_efficiency_av{1}, 4), known_local_efficiency_av{1}), ...
-    [BRAPH2.STR ':LocalEfficiency:' BRAPH2.BUG_ERR], ...
-    'LocalEfficiency is not being calculated correctly for GraphWU.')
+assert(isequal(round(local_efficiency_av{1}, 3), round(known_local_efficiency_av{1}, 3)), ...
+    [BRAPH2.STR ':LocalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'LocalEfficiencyAv is not being calculated correctly for GraphWU.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -104,8 +104,8 @@ g = MultiplexBU('B', A);
 local_efficiency_av = LocalEfficiencyAv('G', g).get('M');
 
 assert(isequal(local_efficiency_av, known_local_efficiency_av), ...
-    [BRAPH2.STR ':LocalEfficiency:' BRAPH2.BUG_ERR], ...
-    'LocalEfficiency is not being calculated correctly for MultiplexBU.')
+    [BRAPH2.STR ':LocalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'LocalEfficiencyAv is not being calculated correctly for MultiplexBU.')
 
 
 %%% ¡test!
@@ -128,14 +128,14 @@ A22 = [
 A = {A11 A22};
 
 known_local_efficiency_av = {
-                         mean([1/4 1/5 .1222 1/5])
-                         mean([1/4 1/5 .1222 1/5])
+                         round(mean([1/4 1/5 .1222 1/5]), 3)
+                         round(mean([1/4 1/5 .1222 1/5]), 3)
                          };
 
-g = MultiplexGraphWU('B', A);
+g = MultiplexWU('B', A);
 local_efficiency_av = LocalEfficiencyAv('G', g).get('M');
-local_efficiency_av = cellfun(@(s) round(s, 4), local_efficiency_av, 'UniformOutput', false);
+local_efficiency_av = cellfun(@(s) round(s, 3), local_efficiency_av, 'UniformOutput', false);
 
 assert(isequal(local_efficiency_av, known_local_efficiency_av), ...
-    [BRAPH2.STR ':LocalEfficiency:' BRAPH2.BUG_ERR], ...
-    'LocalEfficiency is not being calculated correctly for MultiplexGraphWU.')
+    [BRAPH2.STR ':LocalEfficiencyAv:' BRAPH2.BUG_ERR], ...
+    'LocalEfficiencyAv is not being calculated correctly for MultiplexWU.')
