@@ -144,7 +144,7 @@ known_local_efficiency = {
                          [1/4 1/5 .1222 1/5]'
                          };
 
-g = MultiplexGraphWU('B', A);
+g = MultiplexWU('B', A);
 local_efficiency = LocalEfficiency('G', g).get('M');
 local_efficiency = cellfun(@(s) round(s, 4), local_efficiency, 'UniformOutput', false);
 
