@@ -33,6 +33,8 @@ pl = PlotPropBAIDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 SURF (data, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
+%%%% ¡gui!
+pl = PlotPropBA('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
 %% ¡tests!
 
@@ -134,7 +136,7 @@ assert(isequal(ba.get('BR_DICT'), idict_1), ...
 
 %%% ¡test!
 %%%% ¡name!
-Plot Brain Regions Idict
+Plot Brain Atlas GUI
 %%%% ¡code!
 br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
 br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
