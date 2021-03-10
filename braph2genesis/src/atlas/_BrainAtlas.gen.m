@@ -34,7 +34,9 @@ SURF (data, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
 %%%% ¡gui!
-pl = PlotPropBA('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
+surf = get_from_varargin('human_ICBM152.nv', 'SURF', varargin{:});
+pl = PlotBrainAtlas('ATLAS', ba, 'EL', ba, 'PROP', BrainAtlas.SURF, ...
+    'Surf', ImporterBrainSurfaceNV('FILE', surf).get('SURF'), varargin{:});
 
 %% ¡tests!
 

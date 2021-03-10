@@ -1,5 +1,5 @@
 %% ¡header!
-PlotBrainSurface < Plot (pl, plot brain surface) is a plot of a brain surfce.
+PlotBrainSurface < PlotProp (pl, plot brain surface) is a plot of a brain surfce.
 
 %%% ¡description!
 PlotBrainSurface manages the brain surface choosen by the user. 
@@ -71,7 +71,7 @@ VIEW_AZEL = { ... % vector of view azimutal and polar angle
 
 %% ¡properties!
 h_axes % handle for the axes
-h_brain % handle for brain surface
+pp % handle for brain surface
 
 %% ¡props!
 
@@ -196,7 +196,7 @@ function h_panel = draw(pl, varargin)
     %
     % see also settings, uipanel, isgraphics.
 
-    h = draw@Plot(pl, varargin{:});
+    h = draw@PlotProp(pl, varargin{:});
 
     % axes
     if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
@@ -205,10 +205,10 @@ function h_panel = draw(pl, varargin)
     
     % brain
     if pl.get('BRAIN')
-        if isempty(pl.h_brain) || ~isgraphics(pl.h_brain, 'patch')
+        if isempty(pl.pp) || ~isgraphics(pl.pp, 'patch')
             triangles = pl.get('SURF').get('TRIANGLES');
             coordinates = pl.get('SURF').get('COORDINATES');
-            pl.h_brain = trisurf( ...
+            pl.pp = trisurf( ...
                 triangles, ...
                 coordinates(:, 1), ...
                 coordinates(:, 2), ...
@@ -216,7 +216,7 @@ function h_panel = draw(pl, varargin)
                 'Parent', pl.h_axes ...
                 );
         end
-        set(pl.h_brain, ...
+        set(pl.pp, ...
             'Visible', 'on', ...
             'EdgeColor', pl.get('EDGECOLOR'), ...
             'EdgeAlpha', pl.get('EDGEALPHA'), ...
@@ -236,8 +236,8 @@ function h_panel = draw(pl, varargin)
             shading(pl.h_axes, pl.get('SHADING'))
         end
     else
-        if ~isempty(pl.h_brain) && isgraphics(pl.h_brain, 'patch')
-            set(pl.h_brain, 'Visible', 'off')
+        if ~isempty(pl.pp) && isgraphics(pl.pp, 'patch')
+            set(pl.pp, 'Visible', 'off')
         end
     end
     
