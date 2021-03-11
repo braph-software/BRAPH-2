@@ -1,5 +1,5 @@
 %% ¡header!
-PlotBrainSurface < PlotProp (pl, plot brain surface) is a plot of a brain surfce.
+PlotBrainSurface < Plot (pl, plot brain surface) is a plot of a brain surfce.
 
 %%% ¡description!
 PlotBrainSurface manages the brain surface choosen by the user. 
@@ -71,7 +71,8 @@ VIEW_AZEL = { ... % vector of view azimutal and polar angle
 
 %% ¡properties!
 h_axes % handle for the axes
-pp % handle for brain surface
+h_brain % handle for brain surface
+pp  % handle for panel
 
 %% ¡props!
 
@@ -196,19 +197,19 @@ function h_panel = draw(pl, varargin)
     %
     % see also settings, uipanel, isgraphics.
 
-    h = draw@PlotProp(pl, varargin{:});
+    pl.pp = draw@Plot(pl, varargin{:});
 
     % axes
     if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
-        pl.h_axes = axes(h);
+        pl.h_axes = axes(pl.pp);
     end
     
     % brain
     if pl.get('BRAIN')
-        if isempty(pl.pp) || ~isgraphics(pl.pp, 'patch')
+        if isempty(pl.h_brain) || ~isgraphics(pl.pp, 'patch')
             triangles = pl.get('SURF').get('TRIANGLES');
             coordinates = pl.get('SURF').get('COORDINATES');
-            pl.pp = trisurf( ...
+            pl.h_brain = trisurf( ...
                 triangles, ...
                 coordinates(:, 1), ...
                 coordinates(:, 2), ...
@@ -216,7 +217,7 @@ function h_panel = draw(pl, varargin)
                 'Parent', pl.h_axes ...
                 );
         end
-        set(pl.pp, ...
+        set(pl.h_brain, ...
             'Visible', 'on', ...
             'EdgeColor', pl.get('EDGECOLOR'), ...
             'EdgeAlpha', pl.get('EDGEALPHA'), ...
@@ -236,8 +237,8 @@ function h_panel = draw(pl, varargin)
             shading(pl.h_axes, pl.get('SHADING'))
         end
     else
-        if ~isempty(pl.pp) && isgraphics(pl.pp, 'patch')
-            set(pl.pp, 'Visible', 'off')
+        if ~isempty(pl.h_brain) && isgraphics(pl.h_brain, 'patch')
+            set(pl.h_brain, 'Visible', 'off')
         end
     end
     
@@ -274,7 +275,7 @@ function h_panel = draw(pl, varargin)
     
     % output
     if nargout > 0
-        h_panel = h;
+        h_panel = pl.pp;
     end
 end
 function f_settings = settings(pl, varargin)

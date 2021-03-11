@@ -62,6 +62,7 @@ f_sphs_settings
 f_ids_settings
 f_labs_settings
 
+pp
 %% ¡props!
 
 %%% ¡prop!
@@ -268,15 +269,15 @@ function h_panel = draw(pl, varargin)
 %
 % see also settings, uipanel, isgraphics.
 
-h = draw@PlotBrainSurface(pl, varargin{:});
+pl.pp = draw@PlotBrainSurface(pl, varargin{:});
 
 h_axes = [];
 if isempty(h_axes) || ~isgraphics(h_axes, 'axes')
-    h_axes = axes(h);
+    h_axes = axes(pl.pp);
 end
 
 % close function
-set(h, 'DeleteFcn', {@close_f_settings}, ...
+set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
     varargin{:})
 
     function close_f_settings(~, ~)
@@ -504,7 +505,7 @@ end
 
 % output
 if nargout > 0
-    h_panel = h;
+    h_panel = pl.pp;
 end
 end
 function f_settings = settings(pl, varargin)
@@ -566,12 +567,6 @@ function f_settings = settings(pl, varargin)
         function cb_labs_figure_settings(~, ~) % (src, event)
             pl.f_labs_settings = pl.labs_settings();
         end
-end
-function update(pl)
-update@PlotProp(pl)
-end
-function redraw(pl, varargin)
-pl.redraw@PlotProp('Height', 50, varargin{:});
 end
 function f_out = syms_settings(pl)
     % SYMS_SETTINGS panel to set symbols properties
