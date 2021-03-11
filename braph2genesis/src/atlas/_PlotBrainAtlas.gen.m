@@ -71,6 +71,9 @@ ATLAS (metadata, item) is the brain atlas with the brain regions
 'BrainAtlas'
 
 %%% ¡prop!
+Parent (data, item) is the plot parent figure
+
+%%% ¡prop!
 SYMS (metadata, cvector) is symbol visibility.
 %%%% ¡check_value!
 check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
@@ -273,7 +276,7 @@ pl.pp = draw@PlotBrainSurface(pl, varargin{:});
 
 h_axes = [];
 if isempty(h_axes) || ~isgraphics(h_axes, 'axes')
-    h_axes = axes(pl.pp);
+    h_axes =  get(pl.pp, 'Children');
 end
 
 % close function

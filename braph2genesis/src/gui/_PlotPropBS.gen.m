@@ -11,6 +11,7 @@ GUI, PlotElement, PlotProp, BrainAtlas
 pp
 plot_brain_atlas
 
+
 %% ¡methods!
 function h_panel = draw(pl, varargin)
 %DRAW draws the idict for brain atlas property graphical panel.
@@ -29,13 +30,16 @@ function h_panel = draw(pl, varargin)
 % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
 el = pl.get('EL');
-prop = pl.get('PROP');
-
 pl.pp = draw@PlotProp(pl, varargin{:});
 
-if isempty(pl.plot_brain_atlas) || ~isgraphics(pl.plot_brain_atlas, 'patch')    
-    pl.plot_brain_atlas = PlotBrainAtlas('Parent', axes(pl.pp), varargin{:});
+if isempty(pl.plot_brain_atlas) || ~isgraphics(pl.plot_brain_atlas, 'patch')
+    if isempty(el.get('surf').get('id'))
+        surf = ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF');
+    end
+    plba =  PlotBrainAtlas('ATLAS', el, 'Surf', surf);
+    pl.plot_brain_atlas = plba.draw('Parent', pl.pp);
 end
+
 
 % output
 if nargout > 0
