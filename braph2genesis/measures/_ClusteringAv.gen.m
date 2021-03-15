@@ -19,6 +19,8 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
+MultigraphBUD
+MultigraphBUT
 MultiplexBD
 MultiplexBU
 MultiplexWD
@@ -74,6 +76,30 @@ clustering_2 = {mean(clustering_BD_out)};
 assert(isequal(clustering_1, clustering_2), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
     'ClusteringAv(''Rule'', ''out'') is not being calculated correctly for GraphBD')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0 1 1 1; 
+    1 0 1 0; 
+    1 1 0 1; 
+    1 0 1 0
+    ];
+
+thresholds = [0 1];
+
+known_clustering = { ...
+    mean([2/3 1 2/3 1])
+    0
+    };
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+clustering_1 = ClusteringAv('G', g).get('M');
+assert(isequal(clustering_1, known_clustering), ...
+    [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
+    'ClusteringAv is not being calculated correctly for MultigraphBUT')
 
 %%% ¡test!
 %%%% ¡name!
