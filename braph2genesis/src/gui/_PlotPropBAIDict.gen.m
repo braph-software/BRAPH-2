@@ -152,12 +152,12 @@ init_table()
         
         pl.selected = (1:1:ba_idict.length())';
         pl.update()
-        %                 update_figure_brainview()
+        update_brain_surface();
     end
     function cb_table_clearselection(~, ~)  % (src, event)
         pl.selected = [];
         pl.update()
-        %                 update_figure_brainview()
+        update_brain_surface();
     end
     function cb_table_add(~, ~)  % (src, event)
         br_id = 1;
@@ -172,32 +172,43 @@ init_table()
             'Z', 0);
         ba_idict.add(br);
         pl.update()
-        %                 create_figure()
+        update_brain_surface();
     end
     function cb_table_remove(~, ~)  % (src, event)
         pl.selected = ba_idict.remove_all(pl.selected);
         pl.update()
-        %                 create_figure()
+        update_brain_surface();
     end
     function cb_table_moveup(~, ~)  % (src, event)
         pl.selected = ba_idict.move_up(pl.selected);
         pl.update()
-        %                 create_figure()
+        update_brain_surface();
     end
     function cb_table_movedown(~, ~)  % (src, event)
         pl.selected = ba_idict.move_down(pl.selected);
         pl.update()
-        %                 create_figure()
+        update_brain_surface();
     end
     function cb_table_move2top(~, ~)  % (src, event)
         pl.selected = ba_idict.move_to_top(pl.selected);
         pl.update()
-        %                 create_figure()
+        update_brain_surface();
     end
     function cb_table_move2bottom(~, ~)  % (src, event)
         pl.selected = ba_idict.move_to_bottom(pl.selected);
         pl.update()
-        %                 create_figure()
+        update_brain_surface();
+    end
+    function update_brain_surface()
+        figHandles = findobj('Type', 'figure');
+        for i = 1:1:length(figHandles)
+            fig_h = figHandles(i);
+            if isequal(fig_h.Name, 'Brain Atlas - BRAPH2')
+                fig_h_children = get(fig_h, 'Children');
+                update_btn = fig_h_children(2);
+                feval(get(update_btn, 'Callback'), update_btn, []);
+            end
+        end
     end
 
 % output
@@ -253,13 +264,16 @@ else
 end
 end
 function redraw(pl, varargin)
-    %REDRAW redraws the element graphical panel.
-    %
-    % REDRAW(PL) redraws the plot PL.
-    %
-    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
-    %
-    % See also draw, update, refresh.
-    
-    pl.redraw@PlotProp('Height', 20, varargin{:});    
+%REDRAW redraws the element graphical panel.
+%
+% REDRAW(PL) redraws the plot PL.
+%
+% REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+%
+% See also draw, update, refresh.
+
+pl.redraw@PlotProp('Height', 20, varargin{:});
+end
+function selected = getSelected(pl)
+selected = pl.selected;
 end

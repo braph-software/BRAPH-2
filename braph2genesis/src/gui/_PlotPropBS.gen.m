@@ -9,7 +9,8 @@ GUI, PlotElement, PlotProp, BrainAtlas
 
 %% ¡properties!
 pp
-plot_brain_atlas
+plot_brain_atlas_btn
+plot_ba
 
 
 %% ¡methods!
@@ -34,18 +35,18 @@ pl.pp = draw@PlotProp(pl, varargin{:});
 plba = [];
 second_figure = [];
 
-if isempty(pl.plot_brain_atlas) || ~isgraphics(pl.plot_brain_atlas, 'edit')
+if isempty(pl.plot_brain_atlas_btn) || ~isgraphics(pl.plot_brain_atlas_btn, 'edit')
     if isempty(el.get('surf').get('id'))
         surf = ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF');
     end
     plba =  PlotBrainAtlas('ATLAS', el, 'Surf', surf);
     
-    pl.plot_brain_atlas = uicontrol(...
+    pl.plot_brain_atlas_btn = uicontrol(...
         'Style', 'pushbutton', ...
         'Parent', pl.pp, ...
         'Units', 'normalized', ...
         'String', 'Plot Brain Atlas', ...
-        'Position', [.11 .6 .3 .2], ...
+        'Position', [.11 .6 .3 .1], ...
         'Callback', {@cb_pushbutton_brain_atlas} ...
         );
     
@@ -54,7 +55,7 @@ if isempty(pl.plot_brain_atlas) || ~isgraphics(pl.plot_brain_atlas, 'edit')
         'Parent', pl.pp, ...
         'Units', 'normalized', ...
         'String', 'Close Plot Brain Atlas', ...
-        'Position', [.61 .6 .3 .2], ...
+        'Position', [.61 .6 .3 .1], ...
         'Callback', {@cb_pushbutton_close_ba} ...
         );
 end
@@ -70,12 +71,25 @@ end
             'Color', [.98 .95 .95] ...
             );
         
+        update_tbn = uicontrol('Style', 'pushbutton', ...
+            'Parent', second_figure, ...
+            'Units', 'normalized', ...
+            'Visible', 'off', ...
+            'String', 'Hidden button', ...
+            'Position', [.01 .01 .01 .01], ...
+            'Callback', {@cb_pushbutton_update} ...
+            );
+        
         plba.draw('Parent', second_figure);
         plba.settings();
     end
-
     function cb_pushbutton_close_ba(~, ~)
         close(second_figure);
+    end
+    function cb_pushbutton_update(~, ~)
+        close(second_figure);
+        delete(second_figure);
+        feval(get(pl.plot_brain_atlas_btn, 'Callback'), pl.plot_brain_atlas_btn, []);
     end
 
 % output
@@ -91,7 +105,7 @@ function update(pl)
 % See also draw, redraw, refresh.
 
 update@PlotProp(pl)
-    
+
 end
 function redraw(pl, varargin)
 %REDRAW redraws the element graphical panel.
