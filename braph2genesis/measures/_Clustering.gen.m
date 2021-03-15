@@ -21,6 +21,8 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
+MultigraphBUD
+MultigraphBUT
 MultiplexWU
 MultiplexWD
 MultiplexBU
@@ -104,6 +106,31 @@ clustering_2 = clustering_BD_out;
 assert(isequal(clustering_1, clustering_2), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
     'Clustering(''DirectedTrianglesRule'', ''out'') is not being calculated correctly for GraphBD')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0 1 1 1; 
+    1 0 1 0; 
+    1 1 0 1; 
+    1 0 1 0
+    ];
+
+thresholds = [0 1];
+
+known_clustering = { ...
+    [2/3 1 2/3 1]'
+    [0   0 0   0]'
+    };
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+
+clustering_1 = Clustering('G', g).get('M');
+assert(isequal(clustering_1, known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for MultigraphBUT')
 
 %%% ¡test!
 %%%% ¡name!
