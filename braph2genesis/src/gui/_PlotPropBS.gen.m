@@ -87,9 +87,7 @@ end
         close(second_figure);
     end
     function cb_pushbutton_update(~, ~)
-        close(second_figure);
-        delete(second_figure);
-        feval(get(pl.plot_brain_atlas_btn, 'Callback'), pl.plot_brain_atlas_btn, []);
+        plba.draw('Parent', second_figure);
     end
 
 % output

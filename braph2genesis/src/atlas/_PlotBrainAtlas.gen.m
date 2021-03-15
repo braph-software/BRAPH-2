@@ -305,19 +305,19 @@ set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
     end
 
 % initialization
-if isempty(pl.h_syms) || length(pl.h_syms.h) ~= pl.get('ATLAS').get('BR_DICT').length)
+if isempty(pl.h_syms) || length(pl.h_syms.h) ~= pl.get('ATLAS').get('BR_DICT').length
     pl.h_syms.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
 end
 
-if isempty(pl.h_sphs) || length(pl.h_sphs.h) ~= pl.get('ATLAS').get('BR_DICT').length)
+if isempty(pl.h_sphs) || length(pl.h_sphs.h) ~= pl.get('ATLAS').get('BR_DICT').length
     pl.h_sphs.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
 end
 
-if isempty(pl.h_ids) || length(pl.h_ids.h) ~= pl.get('ATLAS').get('BR_DICT').length)
+if isempty(pl.h_ids) || length(pl.h_ids.h) ~= pl.get('ATLAS').get('BR_DICT').length
     pl.h_ids.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
 end
 
-if isempty(pl.h_labs) || length(pl.h_labs.h) ~= pl.get('ATLAS').get('BR_DICT').length)
+if isempty(pl.h_labs) || length(pl.h_labs.h) ~= pl.get('ATLAS').get('BR_DICT').length
     pl.h_labs.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
 end
 
