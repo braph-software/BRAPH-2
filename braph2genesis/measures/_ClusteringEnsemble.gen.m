@@ -27,8 +27,8 @@ M (result, cell) is the ensemble-averaged clustering.
 ge = m.get('G'); % graph ensemble from measure class
 
 clustering_ensemble = cell(ge.layernumber(), 1);
-
-clustering_list = cellfun(@(x) x.getMeasure('Clustering').get('M'), ge.get('G_DICT').getItems, 'UniformOutput', false);
+directed_triangles_rule = m.get('rule');
+clustering_list = cellfun(@(x) x.getMeasure('Clustering', 'rule', directed_triangles_rule).get('M'), ge.get('G_DICT').getItems, 'UniformOutput', false);
 for li = 1:1:ge.layernumber()
     clustering_li_list = cellfun(@(x) x{li}, clustering_list, 'UniformOutput', false);
     clustering_ensemble{li} = mean(cat(3, clustering_li_list{:}), 3);
