@@ -10,6 +10,8 @@ by using the weighted and directed variants of degree/strength.
 %%% ¡compatible_graphs!
 GraphBUEnsemble
 GraphWUEnsemble
+MultigraphBUDEnsemble
+MultigraphBUTEnsemble
 MultiplexBUEnsemble
 MultiplexWUEnsemble
 
@@ -65,6 +67,45 @@ m_inside_g = ge.getMeasure('AssortativityEnsemble');
 assert(isequal(m_inside_g.get('M'), known_assortativity), ...
     [BRAPH2.STR ':AssortativityEnsemble:' BRAPH2.BUG_ERR], ...
     'AssortativityEnsemble is not being calculated correctly for GraphBUEnsemble.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUTEnsemble
+%%%% ¡code!
+B = [
+    1 1 0 0 1;
+    1 1 1 1 0;
+    0 1 1 1 0;
+    0 1 1 1 1;
+    1 0 0 1 0];
+
+thresholds = [0 1];
+
+ge = MultigraphBUTEnsemble('THRESHOLDS', thresholds);
+dict = ge.get('G_DICT');
+for i = 1:1:10
+    g = MultigraphBUT( ...
+        'ID', ['g ' int2str(i)], ...
+        'THRESHOLDS', ge.get('THRESHOLDS'), ...
+        'B', B ...
+        );
+    dict.add(g)
+end
+ge.set('g_dict', dict);
+
+known_assortativity = {...
+    (37/6-(15/6)^2)/(39/6-(15/6)^2)
+    0};
+
+m_outside_g = AssortativityEnsemble('G', ge);
+assert(isequal(m_outside_g.get('M'), known_assortativity), ...
+    [BRAPH2.STR ':AssortativityEnsemble:' BRAPH2.BUG_ERR], ...
+    'AssortativityEnsemble is not being calculated correctly for MultigraphBUTEnsemble.')
+
+m_inside_g = ge.getMeasure('AssortativityEnsemble');
+assert(isequal(m_inside_g.get('M'), known_assortativity), ...
+    [BRAPH2.STR ':AssortativityEnsemble:' BRAPH2.BUG_ERR], ...
+    'AssortativityEnsemble is not being calculated correctly for MultigraphBUTEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!

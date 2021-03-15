@@ -12,6 +12,8 @@ GraphBUEnsemble
 GraphWUEnsemble
 GraphBDEnsemble
 GraphWDEnsemble
+MultigraphBUDEnsemble
+MultigraphBUTEnsemble
 MultiplexBUEnsemble
 MultiplexWUEnsemble
 MultiplexBDEnsemble
@@ -61,12 +63,12 @@ end
 ge.set('g_dict', dict);
 
 m_outside_g = ClusteringEnsemble('G', ge);
-assert(isequal(m_outside_g.get('M'), known_clustering), ...
+assert(isequal(round(cell2mat(m_outside_g.get('M')), 5), round(cell2mat(known_clustering), 5)), ...
     [BRAPH2.STR ':ClusteringEnsemble:' BRAPH2.BUG_ERR], ...
     'ClusteringEnsemble is not being calculated correctly for GraphBUEnsemble.')
 
 m_inside_g = ge.getMeasure('ClusteringEnsemble');
-assert(isequal(m_inside_g.get('M'), known_clustering), ...
+assert(isequal(round(cell2mat(m_inside_g.get('M')), 5), round(cell2mat(known_clustering), 5)), ...
     [BRAPH2.STR ':ClusteringEnsemble:' BRAPH2.BUG_ERR], ...
     'ClusteringEnsemble is not being calculated correctly for GraphBUEnsemble.')
 
@@ -93,7 +95,7 @@ for i = 1:1:10
 end
 ge.set('g_dict', dict);
 
-m_outside_g = ClusteringEnsemble('G', ge);
+m_outside_g = ClusteringEnsemble('G', ge, 'rule', 'out');
 assert(isequal(m_outside_g.get('M'), known_clustering), ...
     [BRAPH2.STR ':ClusteringEnsemble:' BRAPH2.BUG_ERR], ...
     'ClusteringEnsemble is not being calculated correctly for GraphBDEnsemble.')
@@ -102,6 +104,46 @@ m_inside_g = ge.getMeasure('ClusteringEnsemble');
 assert(isequal(m_inside_g.get('M'), known_clustering), ...
     [BRAPH2.STR ':ClusteringEnsemble:' BRAPH2.BUG_ERR], ...
     'ClusteringEnsemble is not being calculated correctly for GraphBDEnsemble.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUTEnsemble
+%%%% ¡code!
+B = [
+    0 1 1 1;
+    1 0 1 0;
+    1 1 0 1;
+    1 0 1 0;
+    ];
+
+known_clustering = {
+    [2/3 1 2/3 1]'
+    [0   0 0   0]'
+    };
+
+ge = MultigraphBUTEnsemble('THRESHOLDS', thresholds);
+dict = ge.get('G_DICT');
+for i = 1:1:10
+    g = MultigraphBUT( ...
+        'ID', ['g ' int2str(i)], ...
+        'THRESHOLDS', ge.get('THRESHOLDS'), ...
+        'B', B ...
+        );
+    dict.add(g)
+end
+ge.set('g_dict', dict);
+
+
+m_outside_g = ClusteringEnsemble('G', ge);
+assert(isequal(round(cell2mat(m_outside_g.get('M')), 5), round(cell2mat(known_clustering), 5)), ...
+    [BRAPH2.STR ':ClusteringEnsemble:' BRAPH2.BUG_ERR], ...
+    'ClusteringEnsemble is not being calculated correctly for MultigraphBUTEnsemble.')
+
+m_inside_g = ge.getMeasure('ClusteringEnsemble');
+assert(isequal(round(cell2mat(m_inside_g.get('M')), 5), round(cell2mat(known_clustering), 5)), ...
+    [BRAPH2.STR ':ClusteringEnsemble:' BRAPH2.BUG_ERR], ...
+    'ClusteringEnsemble is not being calculated correctly for MultigraphBUTEnsemble.')
+
 
 %%% ¡test!
 %%%% ¡name!

@@ -19,6 +19,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphBU
+MultigraphBUD
+MultigraphBUT
 MultiplexWU
 MultiplexBU
 
@@ -78,7 +80,6 @@ assortativity_BU = (37/6-(15/6)^2)/(39/6-(15/6)^2);
 g = GraphBU('B', B_BU);
 
 assortativity_1 = Assortativity('G', g).get('M');
-assortativity_2 = assortativity_BU;
 assert(isequal(round(assortativity_1{1}, 3), round(assortativity_BU, 3)), ...
     [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
     'Assortativity is not being calculated correctly for GraphBU')
@@ -102,6 +103,31 @@ assortativity_1 = Assortativity('G', g).get('M');
 assert(isequal(round(assortativity_1{1}, 3), round(assortativity_WU_compress, 3)), ...
     [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
     'Assortativity is not being calculated correctly for GraphBU')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B_BU = [
+    1 1 0 0 1;
+    1 1 1 1 0;
+    0 1 1 1 0;
+    0 1 1 1 1;
+    1 0 0 1 0];
+
+thresholds = [0 1];
+
+known_assortativity = { ...
+    (37/6-(15/6)^2)/(39/6-(15/6)^2)
+    0 
+    };
+
+g = MultigraphBUT('B', B_BU, 'THRESHOLDS', thresholds);
+
+assortativity_1 = Assortativity('G', g).get('M');
+assert(isequal(round(cell2mat(assortativity_1), 3), round(cell2mat(known_assortativity), 3)), ...
+    [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
+    'Assortativity is not being calculated correctly for MultigraphBUT')
 
 %%% ¡test!
 %%%% ¡name!

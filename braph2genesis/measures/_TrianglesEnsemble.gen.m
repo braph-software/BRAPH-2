@@ -11,6 +11,8 @@ GraphBUEnsemble
 GraphWUEnsemble
 GraphBDEnsemble
 GraphWDEnsemble
+MultigraphBUDEnsemble
+MultigraphBUTEnsemble
 MultiplexBUEnsemble
 MultiplexWUEnsemble
 MultiplexBDEnsemble
@@ -101,6 +103,45 @@ m_inside_g = ge.getMeasure('TrianglesEnsemble');
 assert(isequal(m_inside_g.get('M'), known_triangles), ...
     [BRAPH2.STR ':TrianglesEnsemble:' BRAPH2.BUG_ERR], ...
     'TrianglesEnsemble is not being calculated correctly for GraphBDEnsemble.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUTEnsemble
+%%%% ¡code!
+B = [
+     0 1 1 1;
+    1 0 1 0;
+    1 1 0 1;
+    1 0 1 0;
+    ];
+
+known_triangles = {
+    [2 1 2 1]'
+    [0 0 0 0]'};
+
+thresholds = [0 1];
+
+ge = MultigraphBUTEnsemble('THRESHOLDS', thresholds);
+dict = ge.get('G_DICT');
+for i = 1:1:10
+    g = MultigraphBUT( ...
+        'ID', ['g ' int2str(i)], ...
+        'THRESHOLDS', ge.get('THRESHOLDS'), ...
+        'B', B ...
+        );
+    dict.add(g)
+end
+ge.set('g_dict', dict);
+
+m_outside_g = TrianglesEnsemble('G', ge);
+assert(isequal(m_outside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':TrianglesEnsemble:' BRAPH2.BUG_ERR], ...
+    'TrianglesEnsemble is not being calculated correctly for MultigraphBUTEnsemble.')
+
+m_inside_g = ge.getMeasure('TrianglesEnsemble');
+assert(isequal(m_inside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':TrianglesEnsemble:' BRAPH2.BUG_ERR], ...
+    'TrianglesEnsemble is not being calculated correctly for MultigraphBUTEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!

@@ -8,6 +8,8 @@ other nodes within a layer.
 %%% ¡compatible_graphs!
 GraphBUEnsemble
 GraphWUEnsemble
+MultigraphBUDEnsemble
+MultigraphBUTEnsemble
 MultiplexBUEnsemble
 MultiplexWUEnsemble
 
@@ -55,14 +57,54 @@ end
 ge.set('g_dict', dict);
 
 m_outside_g = PathLengthEnsemble('G', ge);
-assert(isequal(m_outside_g.get('M'), known_pathlength), ...
+assert(isequal(round(cell2mat(m_outside_g.get('M')), 5), round(cell2mat(known_pathlength), 5)), ...
     [BRAPH2.STR ':PathLengthEnsemble:' BRAPH2.BUG_ERR], ...
     'PathLengthEnsemble is not being calculated correctly for GraphBUEnsemble.')
 
 m_inside_g = ge.getMeasure('PathLengthEnsemble');
-assert(isequal(m_inside_g.get('M'), known_pathlength), ...
+assert(isequal(round(cell2mat(m_inside_g.get('M')), 5), round(cell2mat(known_pathlength), 5)), ...
     [BRAPH2.STR ':PathLengthEnsemble:' BRAPH2.BUG_ERR], ...
     'PathLengthEnsemble is not being calculated correctly for GraphBUEnsemble.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUTEnsemble
+%%%% ¡code!
+B = [
+    0   .1  0   0
+    .2  0   .1  0
+    0   .1  0   .2
+    0   0   .1  0
+    ];
+
+thresholds = [0 1];
+
+ge = MultigraphBUTEnsemble('THRESHOLDS', thresholds);
+dict = ge.get('G_DICT');
+for i = 1:1:10
+    g = MultigraphBUT( ...
+        'ID', ['g ' int2str(i)], ...
+        'THRESHOLDS', ge.get('THRESHOLDS'), ...
+        'B', B ...
+        );
+    dict.add(g)
+end
+ge.set('g_dict', dict);
+
+known_pathlength = {
+    [2    4/3  4/3  2]'
+    [Inf  Inf  Inf  Inf]'
+    };
+
+m_outside_g = PathLengthEnsemble('G', ge);
+assert(isequal(round(cell2mat(m_outside_g.get('M')), 5), round(cell2mat(known_pathlength), 5)), ...
+    [BRAPH2.STR ':PathLengthEnsemble:' BRAPH2.BUG_ERR], ...
+    'PathLengthEnsemble is not being calculated correctly for MultigraphBUTEnsemble.')
+
+m_inside_g = ge.getMeasure('PathLengthEnsemble');
+assert(isequal(round(cell2mat(m_inside_g.get('M')), 5), round(cell2mat(known_pathlength), 5)), ...
+    [BRAPH2.STR ':PathLengthEnsemble:' BRAPH2.BUG_ERR], ...
+    'PathLengthEnsemble is not being calculated correctly for MultigraphBUTEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -100,6 +142,6 @@ end
 ge.set('g_dict', dict);
 pathlength = PathLengthEnsemble('G', ge);
 
-assert(isequal(pathlength.get('M'), known_pathlength), ...
+assert(isequal(round(cell2mat(pathlength.get('M')), 5), round(cell2mat(known_pathlength), 5)), ...
     [BRAPH2.STR ':PathLengthEnsemble:' BRAPH2.BUG_ERR], ...
     'PathLengthEnsemble is not being calculated correctly for MultiplexBUEnsemble.')
