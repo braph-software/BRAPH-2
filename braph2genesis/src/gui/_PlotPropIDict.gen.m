@@ -26,7 +26,7 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also update, resize, refresh, settings, uipanel, isgraphics.
+    % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     el = pl.get('EL');
     prop = pl.get('PROP');
@@ -65,26 +65,61 @@ function update(pl)
     %
     % UPDATE(PL) updates the content of the property graphical panel.
     %
-    % See also draw, resize, refresh.
+    % See also draw, redraw, refresh.
 
     update@PlotProp(pl)
     
     el = pl.get('EL');
     prop = pl.get('PROP');
     
-    set(pl.pushbutton_value, ...
-        'String', el.get(prop).tostring(), ...
-        'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
-        )
+    if el.isLocked(prop)
+        set(pl.pushbutton_value, 'Enable', pl.get('ENABLE'))
+    end
+    
+    switch el.getPropCategory(prop)
+        case Category.METADATA
+            set(pl.pushbutton_value, ...
+                'String', el.get(prop).tostring(), ...
+                'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
+                )
+            
+        case {Category.PARAMETER, Category.DATA}
+            set(pl.pushbutton_value, ...
+                'String', el.get(prop).tostring(), ...
+                'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
+                )
+            
+            value = el.getr(prop);
+            if isa(value, 'Callback')
+                set(pl.pushbutton_value, 'Enable', pl.get('ENABLE'))
+            end
+
+        case Category.RESULT
+            value = el.getr(prop);
+            
+            if isa(value, 'NoValue')
+                set(pl.pushbutton_value, ...
+                    'String', el.getPropDefault(prop).tostring(), ...
+                    'Tooltip', regexprep(el.getPropDefault(prop).tree(), {'<strong>', '</strong>'}, {'' ''}), ...
+                    'Enable', pl.get('ENABLE') ...
+                    )
+            else
+                set(pl.pushbutton_value, ...
+                    'String', el.get(prop).tostring(), ...
+                    'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}), ...
+                    'Enable', pl.get('ENABLE') ...
+                    )
+            end
+    end
 end
-function resize(pl, varargin)
-    %RESIZE resizes the element graphical panel.
+function redraw(pl, varargin)
+    %REDRAW redraws the element graphical panel.
     %
-    % RESIZE(PL) resizes the plot PL.
+    % REDRAW(PL) redraws the plot PL.
     %
-    % RESIZE(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
     %
     % See also draw, update, refresh.
     
-    pl.resize@PlotProp('Height', 3.33)
+    pl.redraw@PlotProp('Height', 3.33, varargin{:})
 end

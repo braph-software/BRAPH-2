@@ -43,7 +43,7 @@ f = init();
     end
 
 %% Plot Element
-pl = PlotElement('EL', el);
+pl = el.getPlotElement();
 pl.draw('Parent', f)
 
 %% Menu

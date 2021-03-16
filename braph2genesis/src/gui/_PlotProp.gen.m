@@ -46,17 +46,17 @@ function h_panel = draw(pl, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle to the brain surface graphical panel H.
     %
-    % see also update, resize, refresh, settings, uipanel, isgraphics.
+    % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
-    el = pl.get('EL');
-    prop = pl.get('PROP');
-    
     pl.pp = draw@Plot(pl, ...
         varargin{:}, ...
         'Units', 'character', ...
         'BackgroundColor', pl.get('BKGCOLOR'), ...
         'BorderType', 'none' ...
         );
+
+    el = pl.get('EL');
+    prop = pl.get('PROP');
     
     if isempty(pl.text_tag) || ~isgraphics(pl.text_tag, 'text')
         pl.text_tag =  uicontrol( ...
@@ -116,9 +116,6 @@ function h_panel = draw(pl, varargin)
     end
     
     % callback
-    function resize(~, ~)
-        pl.resize()
-    end
     function cb_button_cb(~, ~)
         pl.cb_button_cb()
     end
@@ -139,7 +136,7 @@ function update(pl)
     %
     % UPDATE(PL) updates the content of the property graphical panel.
     %
-    % See also draw, resize, refresh.
+    % See also draw, redraw, refresh.
 
 
     el = pl.get('EL');
@@ -171,22 +168,25 @@ function update(pl)
             end
     end
 end
-function resize(pl, varargin)
-    %RESIZE resizes the element graphical panel.
+function redraw(pl, varargin)
+    %REDRAW redraws the element graphical panel.
     %
-    % RESIZE(PL) resizes the plot PL.
+    % REDRAW(PL) redraws (including resizing) the plot PL.
     %
-    % RESIZE(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=1.4).
+    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=1.4).
+    %
+    % REDRAW(PL, 'Width', WIDTH) sets the width of PL (by default the width does not change).
     %
     % See also draw, update, refresh.
-    
+
     el = pl.get('EL');
     prop = pl.get('PROP');
-
+    
     pp = pl.pp;
-    h_pp = get_from_varargin(1.4, 'Height', varargin);
 
-    set(pp, 'Position', [x0(pp) y0(pp) w(pp) h_pp])
+    w_pp = get_from_varargin(w(pp), 'Width', varargin);
+    h_pp = get_from_varargin(1.4, 'Height', varargin);
+    set(pp, 'Position', [x0(pp) y0(pp) w_pp h_pp])
 
     set(pl.text_tag, 'Position', [0 h(pp)-1 w(pp) 1]);
 
@@ -204,7 +204,6 @@ function resize(pl, varargin)
 
         case Category.RESULT
             set(pl.button_calc, 'Position', [w(pp)-7.5 h(pp)-1.2 3 1])
-
             set(pl.button_del, 'Position', [w(pp)-4 h(pp)-1.2 3 1])
     end
     
@@ -227,17 +226,17 @@ function refresh(pl)
     %
     % REFRESH(PL) updates and resizes parent and siblings.
     %
-    % See also draw, update, resize.
+    % See also draw, update, redraw.
     
     pp = pl.pp;
-    f = get(pp, 'Parent');
-    if isgraphics(f, 'uipanel')
-        f = get(f, 'Parent');
+    p = get(pp, 'Parent');
+    if isgraphics(p, 'uipanel')
+        f = get(p, 'Parent');
         units = get(f, 'Units');
         position = get(f, 'Position');
         set(f, 'Units', 'pixels') 
         set(f, 'UserData', 'ignore', 'Position', get(f, 'Position') + [0 0 0 -10])
-        set(f, 'UserData', 'update', 'Units', units, 'Position', position)
+        set(f, 'UserData', 'update', 'Units', units, 'Position', position) % triggers call to calls update and redraw on f
     end
 end
 function cb_button_cb(pl)
@@ -262,7 +261,7 @@ function cb_button_calc(pl)
 
     el.memorize(prop);
 
-    pl.refresh() % includes pl.update() and pl.resize()
+    pl.refresh() % includes pl.update() and pl.redraw(), also one level up
 end
 function cb_button_del(pl)
     %CB_BUTTON_DEL executes callback for button delete.
@@ -276,5 +275,5 @@ function cb_button_del(pl)
     
     el.set(prop, NoValue.getNoValue())
 
-    pl.refresh() % includes pl.update() and pl.resize()
+    pl.refresh() % includes pl.update() and pl.redraw(), also one level up
 end
