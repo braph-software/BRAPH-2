@@ -26,7 +26,7 @@ ge = m.get('G'); % graph ensemble from measure class
 
 clustering_av_ensemble = cell(ge.layernumber(), 1);
 
-clustering_list = cellfun(@(x) x.getMeasure('ClusteringAv').get('M'), ge.get('G_DICT').getItems, 'UniformOutput', false);
+clustering_list = cellfun(@(x) x.getMeasure('ClusteringAv', 'rule', m.get('rule')).get('M'), ge.get('G_DICT').getItems, 'UniformOutput', false);
 for li = 1:1:ge.layernumber()
     clustering_li_list = cellfun(@(x) x{li}, clustering_list, 'UniformOutput', false);
     clustering_av_ensemble{li} = mean(cat(3, clustering_li_list{:}), 3);
@@ -118,6 +118,8 @@ known_clustering = {
     mean([2/3 1 2/3 1])
     0  
     };
+
+thresholds = [0 1];
 
 ge = MultigraphBUTEnsemble('THRESHOLDS', thresholds);
 dict = ge.get('G_DICT');

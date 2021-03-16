@@ -43,7 +43,7 @@ B = [
     0     0     0   0    0
     ];
 
-known_diameter_subgraphs = {1};
+known_diameter_subgraphs = {5};
 
 ge = GraphWUEnsemble();
 dict = ge.get('G_DICT');

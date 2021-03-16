@@ -122,7 +122,7 @@ known_betweennesscentrality = {
     [0   1/2 0]'
     };
 
-ge = MultiplexWUEnsemble();
+ge = MultiplexWDEnsemble();
 dict = ge.get('G_DICT');
 for i = 1:1:10
     g = MultiplexWD( ...

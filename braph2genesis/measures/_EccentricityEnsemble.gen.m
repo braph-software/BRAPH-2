@@ -91,6 +91,7 @@ B = {
 
 known_eccentricity_default = {
                              [Inf Inf Inf Inf Inf]'
+                             [Inf Inf Inf Inf Inf]'
                              };
 
 ge = MultiplexWUEnsemble();
@@ -104,7 +105,7 @@ for i = 1:1:10
 end
 ge.set('g_dict', dict);
 
-m_outside_g = EccentricityEnsemble('G', ge, 'rule', 'subgraphs');
+m_outside_g = EccentricityEnsemble('G', ge, 'rule', 'all');
 assert(isequal(m_outside_g.get('M'), known_eccentricity_default), ...
     [BRAPH2.STR ':EccentricityEnsemble:' BRAPH2.BUG_ERR], ...
     'EccentricityEnsemble is not being calculated correctly for GraphWUEnsemble.')

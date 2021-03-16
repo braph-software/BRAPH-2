@@ -121,6 +121,8 @@ known_clustering = {
     [0   0 0   0]'
     };
 
+thresholds = [0 1];
+
 ge = MultigraphBUTEnsemble('THRESHOLDS', thresholds);
 dict = ge.get('G_DICT');
 for i = 1:1:10
