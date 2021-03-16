@@ -72,6 +72,7 @@ VIEW_AZEL = { ... % vector of view azimutal and polar angle
 %% ¡properties!
 h_axes % handle for the axes
 h_brain % handle for brain surface
+pp  % handle for panel
 
 %% ¡props!
 
@@ -196,16 +197,16 @@ function h_panel = draw(pl, varargin)
     %
     % see also settings, uipanel, isgraphics.
 
-    h = draw@Plot(pl, varargin{:});
+    pl.pp = draw@Plot(pl, varargin{:});
 
     % axes
     if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
-        pl.h_axes = axes(h);
+        pl.h_axes = axes(pl.pp);
     end
     
     % brain
     if pl.get('BRAIN')
-        if isempty(pl.h_brain) || ~isgraphics(pl.h_brain, 'patch')
+        if isempty(pl.h_brain) || ~isgraphics(pl.pp, 'patch')
             triangles = pl.get('SURF').get('TRIANGLES');
             coordinates = pl.get('SURF').get('COORDINATES');
             pl.h_brain = trisurf( ...
@@ -274,7 +275,7 @@ function h_panel = draw(pl, varargin)
     
     % output
     if nargout > 0
-        h_panel = h;
+        h_panel = pl.pp;
     end
 end
 function f_settings = settings(pl, varargin)
@@ -286,13 +287,164 @@ function f_settings = settings(pl, varargin)
     % F = SETTINGS(PL) returns a handle to the brain surface property editor GUI.
     %
     % SETTINGS(PL, 'Property', VALUE, ...) sets the properties of the brain
-    %  surface property editor GUI with custom property-value couples. 
+    %  surface property editor GUI with custom property-value couples.
     %  All standard plot properties of figure can be used.
     %
     % See also draw, figure, isgraphics.
 
     f = settings@Plot(pl, varargin{:});
 
+    % toolbar
+    set(f, 'Toolbar', 'figure')
+
+    ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+    ui_toolbar_3D = uipushtool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'TooltipString', PlotBrainSurface.VIEW_3D_CMD, ...
+        'CData', imread('icon_view_3d.png'), ...
+        'ClickedCallback', {@cb_toolbar_3D});
+
+        function cb_toolbar_3D(~, ~)  % (src, event)
+            pl.set('VIEW', PlotBrainSurface.VIEW_3D_AZEL)
+            pl.draw()
+        end
+
+    ui_toolbar_SL = uipushtool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'TooltipString', PlotBrainSurface.VIEW_SL_CMD, ...
+        'CData', imread('icon_view_sl.png'), ...
+        'ClickedCallback', {@cb_toolbar_SL});
+
+        function cb_toolbar_SL(~, ~)  % (src, event)
+            pl.set('VIEW', PlotBrainSurface.VIEW_SL_AZEL)
+            pl.draw()
+        end
+
+    ui_toolbar_SR = uipushtool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'TooltipString', PlotBrainSurface.VIEW_SR_CMD, ...
+        'CData', imread('icon_view_sr.png'), ...
+        'ClickedCallback', {@cb_toolbar_SR});
+
+        function cb_toolbar_SR(~, ~)  % (src, event)
+            pl.set('VIEW', PlotBrainSurface.VIEW_SR_AZEL)
+            pl.draw()
+        end
+
+    ui_toolbar_AD = uipushtool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'TooltipString', PlotBrainSurface.VIEW_AD_CMD, ...
+        'CData', imread('icon_view_ad.png'), ...
+        'ClickedCallback', {@cb_toolbar_AD});
+
+        function cb_toolbar_AD(~, ~)  % (src, event)
+            pl.set('VIEW', PlotBrainSurface.VIEW_AD_AZEL)
+            pl.draw()
+        end
+
+    ui_toolbar_AV = uipushtool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'TooltipString', PlotBrainSurface.VIEW_AD_CMD, ...
+        'CData', imread('icon_view_av.png'), ...
+        'ClickedCallback', {@cb_toolbar_AV});
+
+        function cb_toolbar_AV(~, ~)  % (src, event)
+            pl.set('VIEW', PlotBrainSurface.VIEW_AV_AZEL)
+            pl.draw()
+        end
+
+    ui_toolbar_CA = uipushtool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'TooltipString', PlotBrainSurface.VIEW_AD_CMD, ...
+        'CData', imread('icon_view_ca.png'), ...
+        'ClickedCallback', {@cb_toolbar_CA});
+
+        function cb_toolbar_CA(~, ~)  % (src, event)
+            pl.set('VIEW', PlotBrainSurface.VIEW_CA_AZEL)
+            pl.draw()
+        end
+
+    ui_toolbar_CP = uipushtool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'TooltipString', PlotBrainSurface.VIEW_AD_CMD, ...
+        'CData', imread('icon_view_cp.png'), ...
+        'ClickedCallback', {@cb_toolbar_CP});
+
+        function cb_toolbar_CP(~, ~)  % (src, event)
+            pl.set('VIEW', PlotBrainSurface.VIEW_CP_AZEL)
+            pl.draw()
+        end
+    
+    ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
+
+    ui_toolbar_brain = uitoggletool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'State', 'on', ...
+        'TooltipString', 'Show Brain', ...
+        'CData', imread('icon_brain.png'), ...
+        'OnCallback', {@cb_toolbar_brain_on}, ...
+        'OffCallback', {@cb_toolbar_brain_off});
+
+        function cb_toolbar_brain_on(~, ~)  % (src, event)
+            pl.set('BRAIN', true)
+            pl.draw()
+        end
+        function cb_toolbar_brain_off(~, ~)  % (src, event)
+            pl.set('BRAIN', false)
+            pl.draw()
+        end
+
+    ui_toolbar_axis = uitoggletool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'State', 'on', ...
+        'TooltipString', 'Show axis', ...
+        'CData', imread('icon_axis.png'), ...
+        'OnCallback', {@cb_toolbar_axis_on}, ...
+        'OffCallback', {@cb_toolbar_axis_off});
+
+        function cb_toolbar_axis_on(~, ~)  % (src, event)
+            pl.set('axis', true);
+            pl.draw();
+        end
+        function cb_toolbar_axis_off(~, ~)  % (src, event)
+            pl.set('axis', false);
+            pl.draw();
+        end
+
+    ui_toolbar_grid = uitoggletool(ui_toolbar, ...
+        'Separator', 'off', ...
+        'State', 'on', ...
+        'TooltipString', 'Show grid', ...
+        'CData', imread('icon_grid.png'), ...
+        'OnCallback', {@cb_toolbar_grid_on}, ...
+        'OffCallback', {@cb_toolbar_grid_off});
+
+        function cb_toolbar_grid_on(~, ~)  % (src, event)
+            pl.set('grid', true);
+            pl.draw();
+        end
+        function cb_toolbar_grid_off(~, ~)  % (src, event)
+            pl.set('grid', false);
+            pl.draw();
+        end
+
+    init_toolbar()
+        function init_toolbar()
+            delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
+            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
+            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
+            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
+            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
+            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
+            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
+            delete(findall(ui_toolbar, 'ToolTipString', 'Save Figure'))
+            delete(findall(ui_toolbar, 'ToolTipString', 'Open File'))
+        end
+
+    % panel
     % background color
     ui_button_backgroundcolor = uicontrol(f, 'Style', 'pushbutton', ...
         'Units','normalized', ...
@@ -301,14 +453,14 @@ function f_settings = settings(pl, varargin)
         'HorizontalAlignment', 'center', ...
         'TooltipString', 'Image background color', ...
         'Callback', {@cb_backgroundcolor});
-    
-    function cb_backgroundcolor(~, ~) % (src, event)
-        color = uisetcolor;
-        if length(color) == 3
-            pl.set('AXESCOLOR', color)
-            pl.draw()
+
+        function cb_backgroundcolor(~, ~) % (src, event)
+            color = uisetcolor;
+            if length(color) == 3
+                pl.set('AXESCOLOR', color)
+                pl.draw()
+            end
         end
-    end
 
     % brain color and transparency
     ui_text_transparency = uicontrol(f, 'Style', 'text', ...
@@ -370,41 +522,41 @@ function f_settings = settings(pl, varargin)
         'TooltipString', 'Brain surface edge transparency', ...
         'Callback', {@cb_edgealpha});
 
-    function cb_color(~, ~) % (src, event)
-        color = uisetcolor;
-        if length(color) == 3
-            pl.set('FACECOLOR', color, 'EDGECOLOR', color)
+        function cb_color(~, ~) % (src, event)
+            color = uisetcolor;
+            if length(color) == 3
+                pl.set('FACECOLOR', color, 'EDGECOLOR', color)
+                pl.draw()
+            end
+        end
+        function cb_alpha(~, ~)  % (src, event)
+            pl.set('FACEALPHA', get(ui_slider_alpha, 'Value'), 'EDGEALPHA', get(ui_slider_alpha, 'Value'))
+            pl.draw()
+            set(ui_slider_facealpha, 'Value', get(ui_slider_alpha, 'Value'))
+            set(ui_slider_edgealpha, 'Value', get(ui_slider_alpha, 'Value'))
+        end
+        function cb_facecolor(~, ~)  % (src, event)
+            color = uisetcolor;
+            if length(color) == 3
+                pl.set('FACECOLOR', color)
+                pl.draw()
+            end
+        end
+        function cb_facealpha(~, ~)  % (src, event)
+            pl.set('FACEALPHA', get(ui_slider_facealpha, 'Value'))
             pl.draw()
         end
-    end
-    function cb_alpha(~, ~)  % (src, event)
-        pl.set('FACEALPHA', get(ui_slider_alpha, 'Value'), 'EDGEALPHA', get(ui_slider_alpha, 'Value'))
-        pl.draw()
-        set(ui_slider_facealpha, 'Value', get(ui_slider_alpha, 'Value'))
-        set(ui_slider_edgealpha, 'Value', get(ui_slider_alpha, 'Value'))
-    end
-    function cb_facecolor(~, ~)  % (src, event)
-        color = uisetcolor;
-        if length(color) == 3
-            pl.set('FACECOLOR', color)
+        function cb_edgecolor(~, ~)  % (src, event)
+            color = uisetcolor;
+            if length(color) == 3
+                pl.set('EDGECOLOR', color)
+                pl.draw()
+            end
+        end
+        function cb_edgealpha(~, ~)  % (src, event)
+            pl.set('EDGEALPHA', get(ui_slider_edgealpha, 'Value'))
             pl.draw()
         end
-    end
-    function cb_facealpha(~, ~)  % (src, event)
-        pl.set('FACEALPHA', get(ui_slider_facealpha, 'Value'))
-        pl.draw()
-    end
-    function cb_edgecolor(~, ~)  % (src, event)
-        color = uisetcolor;
-        if length(color) == 3
-            pl.set('EDGECOLOR', color)
-            pl.draw()
-        end
-    end
-    function cb_edgealpha(~, ~)  % (src, event)
-        pl.set('EDGEALPHA', get(ui_slider_edgealpha, 'Value'))
-        pl.draw()
-    end
 
     % lightining
     ui_text_lighting = uicontrol(f, 'Style', 'text', ...
@@ -423,12 +575,12 @@ function f_settings = settings(pl, varargin)
         'HorizontalAlignment', 'center', ...
         'Callback', {@cb_lighting});
 
-    function cb_lighting(~, ~)  % (src, event)
-        val = ui_popup_lighting.Value;
-        str = ui_popup_lighting.String;
-        pl.set('LIGHTING', str{val})
-        pl.draw()
-    end
+        function cb_lighting(~, ~)  % (src, event)
+            val = ui_popup_lighting.Value;
+            str = ui_popup_lighting.String;
+            pl.set('LIGHTING', str{val})
+            pl.draw()
+        end
 
     % material
     ui_text_material = uicontrol(f, 'Style', 'text', ...
@@ -437,7 +589,7 @@ function f_settings = settings(pl, varargin)
         'String', 'material', ...
         'Position', [.65 .55 .10 .15], ...
         'HorizontalAlignment', 'center', ...
-        'FontWeight', 'bold');       
+        'FontWeight', 'bold');
 
     ui_popup_material = uicontrol(f, 'Style', 'popupmenu', ...
         'Units', 'normalized', ...
@@ -447,12 +599,12 @@ function f_settings = settings(pl, varargin)
         'HorizontalAlignment', 'center', ...
         'Callback', {@cb_material});
 
-    function cb_material(~, ~)  % (src, event)
-        val = ui_popup_material.Value;
-        str = ui_popup_material.String;
-        pl.set('MATERIAL', str{val})
-        pl.draw()
-    end
+        function cb_material(~, ~)  % (src, event)
+            val = ui_popup_material.Value;
+            str = ui_popup_material.String;
+            pl.set('MATERIAL', str{val})
+            pl.draw()
+        end
 
     % camlight
     ui_text_camlight = uicontrol(f, 'Style', 'text', ...
@@ -471,12 +623,12 @@ function f_settings = settings(pl, varargin)
         'HorizontalAlignment', 'center', ...
         'Callback', {@cb_camlight});
 
-    function cb_camlight(~, ~)  % (src, event)
-        val = ui_popup_camlight.Value;
-        str = ui_popup_camlight.String;
-        pl.set('CAMLIGHT', str{val})
-        pl.draw()
-    end
+        function cb_camlight(~, ~)  % (src, event)
+            val = ui_popup_camlight.Value;
+            str = ui_popup_camlight.String;
+            pl.set('CAMLIGHT', str{val})
+            pl.draw()
+        end
 
     % shading
     ui_text_shading = uicontrol(f, 'Style', 'text', ...
@@ -495,12 +647,12 @@ function f_settings = settings(pl, varargin)
         'HorizontalAlignment', 'center', ...
         'Callback', {@cb_shading});
 
-    function cb_shading(~, ~)  % (src, event)
-        val = ui_popup_shading.Value;
-        str = ui_popup_shading.String;
-        pl.set('SHADING', str{val})
-        pl.draw()
-    end
+        function cb_shading(~, ~)  % (src, event)
+            val = ui_popup_shading.Value;
+            str = ui_popup_shading.String;
+            pl.set('SHADING', str{val})
+            pl.draw()
+        end
 
     % colormap
     ui_text_colormap = uicontrol(f, 'Style', 'text', ...
@@ -515,17 +667,17 @@ function f_settings = settings(pl, varargin)
         'Units', 'normalized', ...
         'Position', [.75 .10 .20 .15], ...
         'String', {'parula', 'jet', 'hsv', 'hot', 'cool', 'spring', ...
-            'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', ...
-            'pink', 'lines', 'colorcube', 'prism', 'flag', 'white'}, ... % set(ui_popup_colormap, 'Value', find(strcmpi(bs.Colormap, get(ui_popup_colormap, 'String'))))
+        'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', ...
+        'pink', 'lines', 'colorcube', 'prism', 'flag', 'white'}, ... % set(ui_popup_colormap, 'Value', find(strcmpi(bs.Colormap, get(ui_popup_colormap, 'String'))))
         'HorizontalAlignment', 'center', ...
-    	'Callback', {@cb_colormap});
+        'Callback', {@cb_colormap});
 
-    function cb_colormap(~, ~)  % (src, event)
-        val = ui_popup_colormap.Value;
-        str = ui_popup_colormap.String;
-        pl.set('COLORMAP', eval(str{val}))
-        pl.draw()
-    end
+        function cb_colormap(~, ~)  % (src, event)
+            val = ui_popup_colormap.Value;
+            str = ui_popup_colormap.String;
+            pl.set('COLORMAP', eval(str{val}))
+            pl.draw()
+        end
 
     % output
     if nargout > 0
