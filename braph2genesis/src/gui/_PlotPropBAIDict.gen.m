@@ -69,7 +69,7 @@ function h_panel = draw(pl, varargin)
                 data{sub, 7} = value_idict_ba.getItem(sub).get('Notes');
             end
             set(pl.table_value_idict, 'Data', data);
-            set(ui_table_table, 'ColumnWidth', 'auto')
+            set(pl.table_value_idict, 'ColumnWidth', 'auto')
         end
     end
 
