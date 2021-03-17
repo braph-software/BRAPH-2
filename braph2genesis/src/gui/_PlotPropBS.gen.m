@@ -53,12 +53,33 @@ function h_panel = draw(pl, varargin)
     end
 
         function cb_pushbutton_brain_atlas(~, ~)
+
+            parent_position = get_figure_position();
+            x = parent_position(1);
+            y = parent_position(2);
+            w = parent_position(3);
+            h = parent_position(4);
+
+            screen_size = get(0,'screensize');
+
+            if w >= screen_size(3)/2
+                y2 = screen_size(3)/2 - 1;
+                w2 = screen_size(3)/2 - 1;
+            elseif h == screen_size(4)
+                y2 = 1;
+                h2 = screen_size(4);
+            else
+                x2 = x+w+2;
+                y2 = y;
+                w2 = w;
+                h2 = h /2;
+            end
+
             second_figure =  figure( ...
                 'Visible', 'on', ...
                 'NumberTitle', 'off', ...
                 'Name', ['Brain Atlas - ' BRAPH2.STR], ...
-                'Units', 'normalized', ...
-                'Units', 'character', ...
+                'Position', [x2 y2 w2 h2], ...
                 'MenuBar', 'none', ...
                 'Color', [.98 .95 .95] ...
                 );
@@ -75,9 +96,17 @@ function h_panel = draw(pl, varargin)
             plba.draw('Parent', second_figure);
             plba.settings();
         end
-
         function cb_pushbutton_update(~, ~)
             plba.draw('Parent', second_figure);
+        end
+        function position = get_figure_position()
+            figHandles = findobj('Type', 'figure');
+            for i = 1:1:length(figHandles)
+                fig_h = figHandles(i);
+                if isequal(fig_h.Name, 'BrainAtlas - BA1 - BRAPH2')
+                    position = getpixelposition(fig_h);
+                end
+            end
         end
 
     % output
