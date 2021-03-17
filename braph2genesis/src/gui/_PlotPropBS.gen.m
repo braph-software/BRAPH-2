@@ -49,36 +49,37 @@ function h_panel = draw(pl, varargin)
             'Position', [.05 .1 .9 .65], ...
             'Callback', {@cb_pushbutton_brain_atlas} ...
             );
-
+        
     end
-
+    
         function cb_pushbutton_brain_atlas(~, ~)
 
-            parent_position = get_figure_position();
-            x = parent_position(1);
-            y = parent_position(2);
-            w = parent_position(3);
-            h = parent_position(4);
+            [parent_position_pixels, normalized] = get_figure_position();
+            x = parent_position_pixels(1);
+            y = parent_position_pixels(2);
+            w = parent_position_pixels(3);
+            h = parent_position_pixels(4);
 
             screen_size = get(0,'screensize');
 
             if w >= screen_size(3)/2
-                y2 = screen_size(3)/2 - 1;
-                w2 = screen_size(3)/2 - 1;
+                x2 = normalized(1) / 2;
+                w2 = normalized(3) / 2 - .01;
             elseif h == screen_size(4)
-                y2 = 1;
-                h2 = screen_size(4);
+                y2 = normalized(2);
+                h2 = normalized(4)/2;
             else
-                x2 = x+w+2;
-                y2 = y;
-                w2 = w;
-                h2 = h /2;
+                x2 = normalized(1)+normalized(3)+.005;
+                y2 = normalized(2);
+                w2 = normalized(3);
+                h2 = normalized(4) /2;
             end
 
             second_figure =  figure( ...
                 'Visible', 'on', ...
                 'NumberTitle', 'off', ...
                 'Name', ['Brain Atlas - ' BRAPH2.STR], ...
+                'Units', 'normalized', ...
                 'Position', [x2 y2 w2 h2], ...
                 'MenuBar', 'none', ...
                 'Color', [.98 .95 .95] ...
@@ -94,17 +95,21 @@ function h_panel = draw(pl, varargin)
                 );
 
             plba.draw('Parent', second_figure);
+            plba.set('SETPOS', [x2+w2+.01 y2 w2 h2/2.2]);
             plba.settings();
         end
         function cb_pushbutton_update(~, ~)
             plba.draw('Parent', second_figure);
         end
-        function position = get_figure_position()
+        function [pixels, normalized] = get_figure_position()
             figHandles = findobj('Type', 'figure');
             for i = 1:1:length(figHandles)
                 fig_h = figHandles(i);
                 if isequal(fig_h.Name, 'BrainAtlas - BA1 - BRAPH2')
-                    position = getpixelposition(fig_h);
+                    set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+                    pixels = getpixelposition(fig_h);
+                    normalized = get(fig_h, 'Position');
+                    set(fig_h, 'Units', 'characters'); % go back
                 end
             end
         end
