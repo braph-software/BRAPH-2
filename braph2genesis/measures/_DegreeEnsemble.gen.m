@@ -7,6 +7,7 @@ Connection weights are ignored in calculations.
 
 %%% ¡compatible_graphs!
 GraphWUEnsemble
+MultigraphBUDEnsemble
 MultigraphBUTEnsemble
 MultiplexBUEnsemble
 MultiplexWUEnsemble
