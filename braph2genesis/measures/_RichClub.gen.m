@@ -1,5 +1,5 @@
 %% ¡header!
-RichClub < Degree (m, rich club) is the graph rich club.
+RichClub < Degree (m, rich-club) is the graph rich-club.
 
 %%% ¡description!
 The rich-club of a node at level k is the fraction of the
@@ -35,7 +35,7 @@ PARAMETRIC_VALUE (parameter, SCALAR)
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the rich club.
+M (result, cell) is the rich-club.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

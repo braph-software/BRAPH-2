@@ -1,5 +1,5 @@
 %% ¡header!
-RichClubEnsemble < RichClub (m, rich club of a graph ensemble) is the rich club of a graph ensemble.
+RichClubEnsemble < RichClub (m, rich-club of a graph ensemble) is the rich-club of a graph ensemble.
 
 %%% ¡description!
 The rich-club of a node at level k is the fraction of the
@@ -22,7 +22,7 @@ MultiplexWUEnsemble
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, measure) is the ensemble-averaged rich club.
+M (result, measure) is the ensemble-averaged rich-club.
 %%%% ¡calculate!
 ge = m.get('G'); % graph ensemble from measure class
 
