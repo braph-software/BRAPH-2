@@ -8,8 +8,6 @@ a single layer community to the total number of edges that forms within the whol
 %%% ¡compatible_graphs!
 GraphBDEnsemble
 GraphBUEnsemble
-MultigraphBUDEnsemble
-MultigraphBUTEnsemble
 GraphWDEnsemble
 GraphWUEnsemble
 MultiplexBDEnsemble
@@ -121,45 +119,6 @@ m_outside_g = ParticipationEnsemble('G', ge, 'rule', 'in');
 assert(isequal(round(cell2mat(m_outside_g.get('M')), 5), round(cell2mat(known_participation_in), 5)), ...
     [BRAPH2.STR ':ParticipationEnsemble:' BRAPH2.BUG_ERR], ...
     'ParticipationEnsemble is not being calculated correctly for GraphBDEnsemble.')
-
-%%% ¡test!
-%%%% ¡name!
-MultigraphBUTEnsemble
-%%%% ¡code!
-B = [
-    0 1 1 1 0 0 0 0;
-    0 0 1 0 1 0 0 0;
-    0 0 0 0 1 0 0 0;
-    0 0 1 0 1 0 0 0;
-    0 0 0 0 0 1 1 0;
-    0 0 0 0 0 0 0 1;
-    0 0 0 0 0 0 0 1;
-    0 0 0 0 0 0 0 0
-    ];
-
-thresholds = [0 1];
-
-known_participation = { ...
-    [0 4/9 3/8 4/9 12/25 0 0 0]'
-    [0 0   0   0   0     0 0 0]'
-    };
-
-ge = MultigraphBUTEnsemble('THRESHOLDS', thresholds);
-dict = ge.get('G_DICT');
-for i = 1:1:10
-    g = MultigraphBUT( ...
-        'ID', ['g ' int2str(i)], ...
-        'THRESHOLDS', ge.get('THRESHOLDS'), ...
-        'B', B ...
-        );
-    dict.add(g)
-end
-ge.set('g_dict', dict);
-
-m_outside_g = ParticipationEnsemble('G', ge);
-assert(isequal(round(cell2mat(m_outside_g.get('M')), 5), round(cell2mat(known_participation), 5)), ...
-    [BRAPH2.STR ':ParticipationEnsemble:' BRAPH2.BUG_ERR], ...
-    'ParticipationEnsemble is not being calculated correctly for MultigraphBUTEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!

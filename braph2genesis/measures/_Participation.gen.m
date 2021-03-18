@@ -53,7 +53,7 @@ connectivity_type =  g.getConnectivityType(L);
 for li = 1:1:L
    connectivity_layer = connectivity_type(li, li);
    directionality_layer = directionality_type(li, li);
-    if L == 1
+    if L == 1 
         S = CommunityStructure('G', g).get('M');
     else
         S = MultilayerCommunityStructure('G', g).get('M');
@@ -129,6 +129,36 @@ participation = Participation('G', g).get('M');
 assert(isequal(participation, known_participation), ...
     [BRAPH2.STR ':Participation:' BRAPH2.BUG_ERR], ...
     'Participation is not being calculated correctly for GraphBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+
+A = [
+    0 1 1 1 0 0 0 0;
+    0 0 1 0 1 0 0 0;
+    0 0 0 0 1 0 0 0;
+    0 0 1 0 1 0 0 0;
+    0 0 0 0 0 1 1 0;
+    0 0 0 0 0 0 0 1;
+    0 0 0 0 0 0 0 1;
+    0 0 0 0 0 0 0 0
+    ];
+
+thresholds = [0 1];
+
+known_participation = { ...
+    [0 4/9 3/8 4/9 12/25 0 0 0]'
+    [0 0   0   0   0     0 0 0]'
+    };
+
+g = MultigraphBUT('B', A, 'THRESHOLDS', thresholds);
+participation = Participation('G', g).get('M');
+
+assert(isequal(participation, known_participation), ...
+    [BRAPH2.STR ':Participation:' BRAPH2.BUG_ERR], ...
+    'Participation is not being calculated correctly for MultigraphBUT.')
 
 %%% ¡test!
 %%%% ¡name!
