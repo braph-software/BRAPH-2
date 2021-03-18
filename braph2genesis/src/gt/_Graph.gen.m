@@ -747,21 +747,19 @@ end
 
 switch Graph.getGraphType(g)
     case Graph.GRAPH
-        if iscell(A)
-            A = A{1};
-        end
-        A = A(nodes{1}, nodes{1});
+        B = A{1};
+        B = B(nodes{1}, nodes{1});
         
-    otherwise  % multigraph, multiplex and multilayer
+    otherwise  % multigraph, multiplex 
         for li = 1:1:L
             Aii = A{li, li};
-            if ~isempty(Aij)
-                A(li, li) = {Aii(nodes{li}, nodes{li})};
+            if ~isempty(Aii)
+                B(li) = {Aii(nodes{li}, nodes{li})};
             end
         end
 end
 
-sg = eval([g.getClass() '(''B'', A)']);
+sg = eval([g.getClass() '(''B'', B)']);
 
 end
 function ga = nodeattack(g, nodes, layernumbers)
