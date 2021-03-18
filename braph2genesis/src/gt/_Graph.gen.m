@@ -732,7 +732,7 @@ function sg = subgraph(g, nodes)
     %
     % SG = SUBGRAPH(G, NODES) extracts the graph SG as a subgraph of G
     %  containing only the nodes specified by NODES.
-    %  If NODES is a vector, the specified nodes are removed from
+    %  If NODES is a vector, the specified nodes are kept from
     %  all layers. If NODES is a cell array of vectors, the
     %  specified nodes are removed from each layer.
     % 
