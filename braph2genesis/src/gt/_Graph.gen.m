@@ -734,7 +734,7 @@ function sg = subgraph(g, nodes)
     %  containing only the nodes specified by NODES.
     %  If NODES is a vector, the specified nodes are kept from
     %  all layers. If NODES is a cell array of vectors, the
-    %  specified nodes are removed from each layer.
+    %  specified nodes are kept from each layer.
     % 
     % see also nodeattack, edgeattack.
 
