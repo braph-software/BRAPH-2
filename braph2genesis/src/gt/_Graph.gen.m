@@ -754,9 +754,9 @@ switch Graph.getGraphType(g)
         
     otherwise  % multigraph, multiplex and multilayer
         for li = 1:1:L
-            Aij = A{li, li};
+            Aii = A{li, li};
             if ~isempty(Aij)
-                A(li) = {Aij(nodes{li}, nodes{li})};
+                A(li, li) = {Aii(nodes{li}, nodes{li})};
             end
         end
 end
