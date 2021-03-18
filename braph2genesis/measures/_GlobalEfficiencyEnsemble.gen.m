@@ -1,5 +1,5 @@
 %% ¡header!
-GlobalEfficiencyEnsemble < GlobalEfficiency (m, average global efficiency of a graph ensemble) is the average global efficiency of a graph ensemble.
+GlobalEfficiencyEnsemble < GlobalEfficiency (m, global efficiency of a graph ensemble) is the global efficiency of a graph ensemble.
 
 %%% ¡description!
 The global efficiency is the average inverse shortest path length within each layer.
