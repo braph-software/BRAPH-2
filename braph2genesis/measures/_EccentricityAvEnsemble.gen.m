@@ -60,13 +60,13 @@ m_outside_g = EccentricityAvEnsemble('G', ge, 'rule', 'subgraphs');
 tol = 5 * eps(cell2mat(m_outside_g.get('M'))); % A very small value for comparing two floating-point numbers if they are close enough
 assert(ismembertol(cell2mat(m_outside_g.get('M')), cell2mat(known_eccentricity_av_subgraphs), tol), ...
     [BRAPH2.STR ':EccentricityAvEnsemble:' BRAPH2.BUG_ERR], ...
-    'EccentricityAvEnsemble is not being calculated correctly for GraphWUEnsemble.')
+    'EccentricityAvEnsemble is not being calculated correctly for GraphBUEnsemble.')
 
 m_inside_g = ge.getMeasure('EccentricityAvEnsemble', 'rule', 'subgraphs');
 tol = 5 * eps(cell2mat(m_outside_g.get('M'))); % A very small value for comparing two floating-point numbers if they are close enough
 assert(ismembertol(cell2mat(m_inside_g.get('M')), cell2mat(known_eccentricity_av_subgraphs), tol), ...
     [BRAPH2.STR ':EccentricityAvEnsemble:' BRAPH2.BUG_ERR], ...
-    'EccentricityAvEnsemble is not being calculated correctly for GraphWUEnsemble.')
+    'EccentricityAvEnsemble is not being calculated correctly for GraphBUEnsemble.')
 
 
 %%% ¡test!
