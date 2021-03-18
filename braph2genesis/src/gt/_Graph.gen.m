@@ -728,15 +728,15 @@ function checkNegativity(negativity_type, A)
 end
 % subgraphs
 function sg = subgraph(g, nodes)
-% SUBGRAPH extracts subgraph
-%
-% SG = SUBGRAPH(G, NODES) extracts the graph SG as a subgraph of G
-% containing only the nodes specified by NODES.
-% If NODES is a vector, the specified nodes are removed from
-% all layers. If NODES is a cell array of vectors, the
-% specified nodes are removed from each layer.
-% 
-% see also nodeattack, edgeattack.
+    %SUBGRAPH extracts subgraph
+    %
+    % SG = SUBGRAPH(G, NODES) extracts the graph SG as a subgraph of G
+    %  containing only the nodes specified by NODES.
+    %  If NODES is a vector, the specified nodes are removed from
+    %  all layers. If NODES is a cell array of vectors, the
+    %  specified nodes are removed from each layer.
+    % 
+    % see also nodeattack, edgeattack.
 
 A = g.get('A');
 L = g.layernumber();
@@ -765,21 +765,21 @@ sg = eval([g.getClass() '(''B'', A)']);
 
 end
 function ga = nodeattack(g, nodes, layernumbers)
-% NODEATTACK removes given nodes from a graph
-%
-% GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
-% the nodes specified by NODES from G. For non single layer
-% graphs, it removes NODES in every layer.
-%
-% GA = NODEATTACK(G, NODES, LAYERNUMBERS) creates the graph GA
-% resulting by removing the nodes specified by NODES from G.
-% For non single layer graphs, it removes NODES in the layers
-% specified by LAYERNUMBERS.
-%
-% NODES are removed by setting all the connections from and to
-% the nodes in the connection matrix to 0.
-%
-% See also edgeattack, subgraphs.
+    %NODEATTACK removes given nodes from a graph
+    %
+    % GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
+    %  the nodes specified by NODES from G. For non single layer
+    %  graphs, it removes NODES in every layer.
+    %
+    % GA = NODEATTACK(G, NODES, LAYERNUMBERS) creates the graph GA
+    %  resulting by removing the nodes specified by NODES from G.
+    %  For non single layer graphs, it removes NODES in the layers
+    %  specified by LAYERNUMBERS.
+    %
+    % NODES are removed by setting all the connections from and to
+    %  the nodes in the connection matrix to 0.
+    %
+    % See also edgeattack, subgraphs.
 
 if nargin < 3
     layernumbers = 1:1:g.layernumber();
@@ -789,12 +789,10 @@ A = g.get('A');
 
 switch Graph.getGraphType(g)
     case Graph.GRAPH
-        if iscell(A)
-            A = A{1};
-        end
+        A = A{1};
         A(nodes(:), :) = 0;
         A(:, nodes(:)) = 0;
-        
+      
     otherwise
         for li = layernumbers
             Aii = A{li, li};
@@ -822,30 +820,30 @@ end
 ga = eval([g.getClass()  '(''B'', A)']);
 end
 function ga = edgeattack(g, nodes1, nodes2, layernumbers1, layernumbers2)
-% EDGEATTACK removes given edges from a graph
-%
-% GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
-% by removing the edges going from NODES1 to NODES2 from G. For
-% non single layer graphs, it removes the edges from NODES1 to
-% NODES2 in every layer.
-%
-% GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I) creates the graph GA
-% resulting by removing the edges going from NODES1 to NODES2 from G.
-% For non single layer graphs, it removes the edges from NODES1 to
-% NODES2 in the layers specified by LAYERNUMBERS.
-%
-% GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I, LAYERNUMBERS_J)
-% creates the graph GA resulting by removing the edges going
-% from NODES1 to NODES2 from G. For non single layer graphs, it
-% removes the edges from NODES1 to NODES2 in and between the layers
-% specified by LAYERNUMBERS_I and LAYERNUMBERS_J.
-%
-% EDGES are removed by setting all the connections from NODES1 to
-% NODES2 in the connection matrix to 0.
-%
-% NODES1 and NODES2 must have the same dimensions.
-%
-% See also nodeattack, subgraphs.
+    %EDGEATTACK removes given edges from a graph
+    %
+    % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
+    %  by removing the edges going from NODES1 to NODES2 from G. For
+    %  non single layer graphs, it removes the edges from NODES1 to
+    %  NODES2 in every layer.
+    %
+    % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I) creates the graph GA
+    %  resulting by removing the edges going from NODES1 to NODES2 from G.
+    %  For non single layer graphs, it removes the edges from NODES1 to
+    %  NODES2 in the layers specified by LAYERNUMBERS.
+    %
+    % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I, LAYERNUMBERS_J)
+    %  creates the graph GA resulting by removing the edges going
+    %  from NODES1 to NODES2 from G. For non single layer graphs, it
+    %  removes the edges from NODES1 to NODES2 in and between the layers
+    %  specified by LAYERNUMBERS_I and LAYERNUMBERS_J.
+    %
+    % EDGES are removed by setting all the connections from NODES1 to
+    %  NODES2 in the connection matrix to 0.
+    %
+    % NODES1 and NODES2 must have the same dimensions.
+    %
+    % See also nodeattack, subgraphs.
 
 if nargin < 4
     layernumbers1 = 1:1:g.layernumber();
