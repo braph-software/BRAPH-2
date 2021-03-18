@@ -1,8 +1,8 @@
 %% ¡header!
-PlotPropBAIDict < PlotProp (pl, plot property of brain atlas idict) is a plot of brain atlas idict.
+PPBrainAtlasIDict < PlotProp (pl, plot property of brain atlas idict) is a plot of brain atlas idict.
 
 %%% ¡description!
-PlotPropBAIDict plots an IndexedDictionary for Brain Atlas brain regions.
+PPBrainAtlasIDict plots an IndexedDictionary for Brain Atlas brain regions.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, BrainAtlas

@@ -1,8 +1,8 @@
 %% ¡header!
-PlotPropBS < PlotProp (pl, plot property of brain atlas surface) is a plot of brain atlas surface.
+PPBrainSurf < PlotProp (pl, plot property of brain atlas surface) is a plot of brain atlas surface.
 
 %%% ¡description!
-PlotPropBS plots for Brain Atlas surface.
+PPBrainSurf plots for Brain Atlas surface.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, BrainAtlas
