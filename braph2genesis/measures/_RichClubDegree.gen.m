@@ -151,15 +151,17 @@ A22 = [
     ];
 A = {A11 A22};
 
-richness_l1(:, 1, 1) = [5/2 3 2 3/2]';
-richness_l1(:, 1, 2) = [1 1 0 0]';
+clear richclub_l1;
+clear richclub_l2;
+richclub_l1(:, 1, 1) = [5/2 3 2 3/2]';
+richclub_l1(:, 1, 2) = [1 1 0 0]';
 
-richness_l2(:, 1, 1) = [5/2 3 5/2 2]';
-richness_l2(:, 1, 2) = [2 2 2 0]';
+richclub_l2(:, 1, 1) = [5/2 3 5/2 2]';
+richclub_l2(:, 1, 2) = [2 2 2 0]';
 
 known_richclubdegree = {
-                 richness_l1
-                 richness_l2
+                 richclub_l1
+                 richclub_l2
                  };      
 
 g = MultiplexBD('B', A);

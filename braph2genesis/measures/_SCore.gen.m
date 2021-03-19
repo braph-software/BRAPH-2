@@ -1,5 +1,5 @@
 %% ¡header!
-Score < Measure (m, s-core) is the graph s-core.
+SCore < Measure (m, s-core) is the graph s-core.
 
 %%% ¡description!
 The s-core of a graph is the largest subnetwork comprising nodes of strength
@@ -22,7 +22,6 @@ MultiplexWD
 
 %% ¡props!
 %%% ¡prop! 
-SCoreThreshold (parameter, scalar) is the threshold.
 SCoreThreshold (parameter, scalar) is the strength threshold.
 %%%% ¡default!
 1

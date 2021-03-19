@@ -126,7 +126,7 @@ assert(isequal(k_coreness_centrality, known_k_coreness_centrality), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexBU
+MultiplexBD
 %%%% ¡code!
 A11 = [
     0  1  1  1; 
@@ -153,7 +153,7 @@ k_coreness_centrality = KCorenessCentrality('G', g).get('M');
 
 assert(isequal(k_coreness_centrality, known_k_coreness_centrality), ...
     [BRAPH2.STR ':KCorenessCentrality:' BRAPH2.BUG_ERR], ...
-    'KCorenessCentrality is not being calculated correctly for MultiplexGraphBD.')
+    'KCorenessCentrality is not being calculated correctly for MultiplexBD.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -184,4 +184,4 @@ k_coreness_centrality = KCorenessCentrality('G', g).get('M');
 
 assert(isequal(k_coreness_centrality, known_k_coreness_centrality), ...
     [BRAPH2.STR ':KCorenessCentrality:' BRAPH2.BUG_ERR], ...
-    'KCorenessCentrality is not being calculated correctly for MultiplexGraphWU.')
+    'KCorenessCentrality is not being calculated correctly for MultiplexWU.')
