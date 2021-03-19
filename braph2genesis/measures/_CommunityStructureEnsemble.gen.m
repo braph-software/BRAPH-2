@@ -1,5 +1,5 @@
 %% ¡header!
-CommunityStructureEnsemble < CommunityStructure (m, community structure) is the community structure of a graph ensemble.
+CommunityStructureEnsemble < CommunityStructure (m, community structure of a graph ensemble) is the community structure of a graph ensemble.
 
 %%% ¡description!
 The community structure of a graph is a subdivision of the network into
