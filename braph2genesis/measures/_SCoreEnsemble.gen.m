@@ -93,8 +93,8 @@ for i = 1:1:10
 end
 ge.set('g_dict', dict);
 
-s_core_ensemble = SCoreEnsemble('G', ge, 'SCoreThreshold', 3);
-assert(isequal(s_core_ensemble.get('M'), known_s_core), ...
+s_core_ensemble = SCoreEnsemble('G', ge, 'SCoreThreshold', 3).get('M');
+assert(isequal(round(cell2mat(s_core_ensemble), 5), round(cell2mat(known_s_core), 5)), ...
     [BRAPH2.STR ':SCoreEnsemble:' BRAPH2.BUG_ERR], ...
     'SCoreEnsemble is not being calculated correctly for GraphWDEnsemble.')
 
