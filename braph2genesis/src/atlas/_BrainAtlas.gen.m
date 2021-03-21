@@ -27,15 +27,14 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
 %%%% ¡gui!
-pl = PlotPropBAIDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
+pl = PPBrainAtlasIDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 
 %%% ¡prop!
 SURF (data, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
 %%%% ¡gui!
-surf = get_from_varargin('human_ICBM152.nv', 'SURF', varargin{:});
-pl = PlotPropBS('EL', ba, 'PROP', BrainAtlas.SURF);
+pl = PPBrainSurf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
 %% ¡tests!
 
