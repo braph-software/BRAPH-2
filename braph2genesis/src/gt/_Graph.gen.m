@@ -726,6 +726,163 @@ function checkNegativity(negativity_type, A)
         end
     end
 end
+% subgraphs
+function sg = subgraph(g, nodes)
+    %SUBGRAPH extracts subgraph
+    %
+    % SG = SUBGRAPH(G, NODES) extracts the graph SG as a subgraph of G
+    %  containing only the nodes specified by NODES.
+    %  If NODES is a vector, the specified nodes are kept from
+    %  all layers. If NODES is a cell array of vectors, the
+    %  specified nodes are kept from each layer.
+    % 
+    % see also nodeattack, edgeattack.
+
+A = g.get('A');
+L = g.layernumber();
+
+if ~iscell(nodes)
+    nodes = repmat({nodes}, 1, L);
+end
+
+switch Graph.getGraphType(g)
+    case Graph.GRAPH
+        B = A{1};
+        B = B(nodes{1}, nodes{1});
+        
+    otherwise  % multigraph, multiplex 
+        for li = 1:1:L
+            Aii = A{li, li};
+            if ~isempty(Aii)
+                B(li) = {Aii(nodes{li}, nodes{li})};
+            end
+        end
+end
+
+sg = eval([g.getClass() '(''B'', B)']);
+
+end
+function ga = nodeattack(g, nodes, layernumbers)
+    %NODEATTACK removes given nodes from a graph
+    %
+    % GA = NODEATTACK(G, NODES) creates the graph GA resulting by removing
+    %  the nodes specified by NODES from G. For non single layer
+    %  graphs, it removes NODES in every layer.
+    %
+    % GA = NODEATTACK(G, NODES, LAYERNUMBERS) creates the graph GA
+    %  resulting by removing the nodes specified by NODES from G.
+    %  For non single layer graphs, it removes NODES in the layers
+    %  specified by LAYERNUMBERS.
+    %
+    % NODES are removed by setting all the connections from and to
+    %  the nodes in the connection matrix to 0.
+    %
+    % See also edgeattack, subgraphs.
+
+if nargin < 3
+    layernumbers = 1:1:g.layernumber();
+end
+
+A = g.get('A');
+
+switch Graph.getGraphType(g)
+    case Graph.GRAPH
+        A = A{1};
+        A(nodes(:), :) = 0;
+        A(:, nodes(:)) = 0;
+      
+    otherwise
+        for li = layernumbers
+            Aii = A{li, li};
+            Aii(nodes(:), :) = 0;
+            Aii(:, nodes(:)) = 0;
+            A(li, li) = {Aii};
+            if Graph.getGraphType(g) ~= Graph.MULTIGRAPH
+                for lj = 1:1:g.layernumber()
+                    Aij = A{li, lj};  % li cell row
+                    Aji = A{lj, li};  % li cell column
+                    if isempty(Aij) == 0
+                        Aij(nodes(:), :) = 0;
+                        Aij(:, nodes(:)) = 0;
+                    end
+                    if isempty(Aji) == 0
+                        Aji(nodes(:), :) = 0;
+                        Aji(:, nodes(:)) = 0;
+                    end
+                    A(li, lj) = {Aij};
+                    A(lj, li) = {Aji};
+                end
+            end
+        end
+end
+ga = eval([g.getClass()  '(''B'', A)']);
+end
+function ga = edgeattack(g, nodes1, nodes2, layernumbers1, layernumbers2)
+    %EDGEATTACK removes given edges from a graph
+    %
+    % GA = EDGEATTACK(G, NODES1, NODES2) creates the graph GA resulting
+    %  by removing the edges going from NODES1 to NODES2 from G. For
+    %  non single layer graphs, it removes the edges from NODES1 to
+    %  NODES2 in every layer.
+    %
+    % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I) creates the graph GA
+    %  resulting by removing the edges going from NODES1 to NODES2 from G.
+    %  For non single layer graphs, it removes the edges from NODES1 to
+    %  NODES2 in the layers specified by LAYERNUMBERS.
+    %
+    % GA = EDGEATTACK(G, NODES1, NODES2, LAYERNUMBERS_I, LAYERNUMBERS_J)
+    %  creates the graph GA resulting by removing the edges going
+    %  from NODES1 to NODES2 from G. For non single layer graphs, it
+    %  removes the edges from NODES1 to NODES2 in and between the layers
+    %  specified by LAYERNUMBERS_I and LAYERNUMBERS_J.
+    %
+    % EDGES are removed by setting all the connections from NODES1 to
+    %  NODES2 in the connection matrix to 0.
+    %
+    % NODES1 and NODES2 must have the same dimensions.
+    %
+    % See also nodeattack, subgraphs.
+
+if nargin < 4
+    layernumbers1 = 1:1:g.layernumber();
+end
+
+if nargin < 5
+    layernumbers2 = layernumbers1;
+end
+
+A = g.get('A');
+
+switch Graph.getGraphType(g)
+    case Graph.GRAPH
+        if iscell(A)
+            A = A{1};
+        end
+        A(sub2ind(size(A), nodes1, nodes2)) = 0;
+        
+        if g.is_undirected(g)
+            A(sub2ind(size(A), nodes2, nodes1)) = 0;
+        end
+        
+    otherwise
+        directionality = g.getDirectionalityType(g.layernumber());
+        for n = 1:1:length(layernumbers1)
+            li = layernumbers1(n);
+            lj = layernumbers2(n);
+            
+            Aij = A{li, lj};
+            Aij(sub2ind(size(Aij), nodes1, nodes2)) = 0;
+            A(li, lj) = {Aij};
+            
+            if directionality(li, lj) == Graph.UNDIRECTED
+                Aji = A{lj, li};
+                Aji(sub2ind(size(Aji), nodes2, nodes1)) = 0;
+                A(lj, li) = {Aji};
+            end
+        end
+end
+ga = eval([g.getClass()  '(''B'', A)']);
+end
 
 %% ¡methods!
 function n = nodenumber(g)
