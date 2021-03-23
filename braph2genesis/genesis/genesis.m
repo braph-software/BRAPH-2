@@ -65,6 +65,9 @@ disp('¡! created dir structure - GRAPHS')
 
 % measures
 mkdir([target_dir fp 'measures'])
+mkdir([target_dir fp 'measures' fp 'MEX_SRC'])
+mkdir([target_dir fp 'measures' fp 'MEX_SRC' fp 'matlab_matrix'])
+mkdir([target_dir fp 'measures' fp 'private'])
 
 disp('¡! created dir structure - MEASURES')
 
@@ -141,6 +144,23 @@ copyfile([source_dir fp 'src' fp 'gt' fp 'test_standardize.m'], [target_dir fp '
 copyfile([source_dir fp 'src' fp 'gt' fp 'symmetrize.m'], [target_dir fp 'src' fp 'gt' fp 'symmetrize.m'])
 copyfile([source_dir fp 'src' fp 'gt' fp 'test_symmetrize.m'], [target_dir fp 'src' fp 'gt' fp 'test_symmetrize.m'])
 disp('¡! copied ready files - gt')
+
+copyfile([source_dir fp 'measures' fp 'MEX_SRC' fp 'group_handler.cpp'], [target_dir fp 'measures' fp 'MEX_SRC' fp 'group_handler.cpp'])
+copyfile([source_dir fp 'measures' fp 'MEX_SRC' fp 'group_handler.h'], [target_dir fp 'measures' fp 'MEX_SRC' fp 'group_handler.h'])
+copyfile([source_dir fp 'measures' fp 'MEX_SRC' fp 'group_index.cpp'], [target_dir fp 'measures' fp 'MEX_SRC' fp 'group_index.cpp'])
+copyfile([source_dir fp 'measures' fp 'MEX_SRC' fp 'group_index.h'], [target_dir fp 'measures' fp 'MEX_SRC' fp 'group_index.h'])
+copyfile([source_dir fp 'measures' fp 'MEX_SRC' fp 'metanetwork_reduce.cpp'], [target_dir fp 'measures' fp 'MEX_SRC' fp 'metanetwork_reduce.cpp'])
+copyfile([source_dir fp 'measures' fp 'MEX_SRC' fp 'mex.xcconfig'], [target_dir fp 'measures' fp 'MEX_SRC' fp 'mex.xcconfig'])
+copyfile([source_dir fp 'measures' fp 'MEX_SRC' fp 'matlab_matrix' fp 'full.cpp'], [target_dir fp 'measures' fp 'MEX_SRC' fp 'matlab_matrix' fp 'full.cpp'])
+copyfile([source_dir fp 'measures' fp 'MEX_SRC' fp 'matlab_matrix' fp 'matlab_matrix.h'], [target_dir fp 'measures' fp 'MEX_SRC' fp 'matlab_matrix' fp 'matlab_matrix.h'])
+copyfile([source_dir fp 'measures' fp 'MEX_SRC' fp 'matlab_matrix' fp 'sparse.cpp'], [target_dir fp 'measures' fp 'MEX_SRC' fp 'matlab_matrix' fp 'sparse.cpp'])
+copyfile([source_dir fp 'measures' fp 'private' fp 'group_handler.mexa64'], [target_dir fp 'measures' fp 'private' fp 'group_handler.mexa64'])
+copyfile([source_dir fp 'measures' fp 'private' fp 'group_handler.mexmaci64'], [target_dir fp 'measures' fp 'private' fp 'group_handler.mexmaci64'])
+copyfile([source_dir fp 'measures' fp 'private' fp 'group_handler.mexw64'], [target_dir fp 'measures' fp 'private' fp 'group_handler.mexw64'])
+copyfile([source_dir fp 'measures' fp 'private' fp 'metanetwork_reduce.mexa64'], [target_dir fp 'measures' fp 'private' fp 'metanetwork_reduce.mexa64'])
+copyfile([source_dir fp 'measures' fp 'private' fp 'metanetwork_reduce.mexmaci64'], [target_dir fp 'measures' fp 'private' fp 'metanetwork_reduce.mexmaci64'])
+copyfile([source_dir fp 'measures' fp 'private' fp 'metanetwork_reduce.mexw64'], [target_dir fp 'measures' fp 'private' fp 'metanetwork_reduce.mexw64'])
+disp('¡! copied ready files - measures')
 
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'Correlation.m'], [target_dir fp 'src' fp 'analysis' fp 'Correlation.m'])
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'test_Correlation.m'], [target_dir fp 'src' fp 'analysis' fp 'test_Correlation.m'])
@@ -287,23 +307,23 @@ for run = 1:1:run_number
     % for i = 1:1:numel(analysis_gen_list)
     %     create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
     % end
+    
+    % graphs
+    graphs_gen_list = getGenerators([source_dir fp 'graphs']);
+    for i = 1:1:numel(graphs_gen_list)
+        create_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
+    end
+    
+    % measures
+    measures_gen_list = getGenerators([source_dir fp 'measures']);
+    for i = 1:1:numel(measures_gen_list)
+        create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
+    end
 
     gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
     for i = 1:1:numel(gui_gen_list)
         create_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
     end
-
-    % % graphs
-    % graphs_gen_list = getGenerators([source_dir fp 'graphs']);
-    % for i = 1:1:numel(graphs_gen_list)
-    %     create_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
-    % end
-
-    % % measures
-    % measures_gen_list = getGenerators([source_dir fp 'measures']);
-    % for i = 1:1:numel(measures_gen_list)
-    %     create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
-    % end
     
     % workflows
     wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
@@ -364,22 +384,22 @@ end
 %     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
 % end
 
+% graphs
+graphs_gen_list = getGenerators([source_dir fp 'graphs']);
+for i = 1:1:numel(graphs_gen_list)
+    create_test_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
+end
+
+% measures
+measures_gen_list = getGenerators([source_dir fp 'measures']);
+for i = 1:1:numel(measures_gen_list)
+    create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
+end
+
 gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
 for i = 1:1:numel(gui_gen_list)
     create_test_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
 end
-
-% % graphs
-% graphs_gen_list = getGenerators([source_dir fp 'graphs']);
-% for i = 1:1:numel(graphs_gen_list)
-%     create_test_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
-% end
-
-% % measures
-% measures_gen_list = getGenerators([source_dir fp 'measures']);
-% for i = 1:1:numel(measures_gen_list)
-%     create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
-% end
 
 % workflows
 wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
