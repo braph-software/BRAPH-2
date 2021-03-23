@@ -105,7 +105,7 @@ function h_panel = draw(pl, varargin)
             figHandles = findobj('Type', 'figure');
             for i = 1:1:length(figHandles)
                 fig_h = figHandles(i);
-                if isequal(fig_h.Name, 'BrainAtlas - BA1 - BRAPH2')
+                if contains(fig_h.Name, 'BrainAtlas - ')
                     set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
                     pixels = getpixelposition(fig_h);
                     normalized = get(fig_h, 'Position');
