@@ -60,12 +60,12 @@ ge.set('g_dict', dict);
 m_outside_g = EccentricityEnsemble('G', ge, 'rule', 'subgraphs');
 assert(isequal(m_outside_g.get('M'), known_eccentricity_subgraphs), ...
     [BRAPH2.STR ':EccentricityEnsemble:' BRAPH2.BUG_ERR], ...
-    'EccentricityEnsemble is not being calculated correctly for GraphWUEnsemble.')
+    'EccentricityEnsemble is not being calculated correctly for GraphBUEnsemble.')
 
 m_inside_g = ge.getMeasure('EccentricityEnsemble', 'rule', 'subgraphs');
 assert(isequal(m_inside_g.get('M'), known_eccentricity_subgraphs), ...
     [BRAPH2.STR ':EccentricityEnsemble:' BRAPH2.BUG_ERR], ...
-    'EccentricityEnsemble is not being calculated correctly for GraphWUEnsemble.')
+    'EccentricityEnsemble is not being calculated correctly for GraphBUEnsemble.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -105,12 +105,12 @@ for i = 1:1:10
 end
 ge.set('g_dict', dict);
 
-m_outside_g = EccentricityEnsemble('G', ge, 'rule', 'all');
+m_outside_g = EccentricityEnsemble('G', ge);
 assert(isequal(m_outside_g.get('M'), known_eccentricity_default), ...
     [BRAPH2.STR ':EccentricityEnsemble:' BRAPH2.BUG_ERR], ...
-    'EccentricityEnsemble is not being calculated correctly for GraphWUEnsemble.')
+    'EccentricityEnsemble is not being calculated correctly for MultiplexWUEnsemble.')
 
-m_inside_g = ge.getMeasure('EccentricityEnsemble', 'rule', 'all');
+m_inside_g = ge.getMeasure('EccentricityEnsemble');
 assert(isequal(m_inside_g.get('M'), known_eccentricity_default), ...
     [BRAPH2.STR ':EccentricityEnsemble:' BRAPH2.BUG_ERR], ...
-    'EccentricityEnsemble is not being calculated correctly for GraphWUEnsemble.')
+    'EccentricityEnsemble is not being calculated correctly for MultiplexWUEnsemble.')
