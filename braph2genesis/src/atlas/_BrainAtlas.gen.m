@@ -34,7 +34,7 @@ SURF (data, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
 %%%% ¡gui!
-pl = PPBrainSurf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
+pl = PPBrainAtlasSurf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
 %% ¡tests!
 
