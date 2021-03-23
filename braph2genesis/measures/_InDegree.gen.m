@@ -1,5 +1,5 @@
 %% ¡header!
-InDegree < Measure (m, degree) is the graph in-degree.
+InDegree < Measure (m, in-degree) is the graph in-degree.
 
 %%% ¡description!
 The in-degree of a node is the number of inward edges connected to a node within a layer.
