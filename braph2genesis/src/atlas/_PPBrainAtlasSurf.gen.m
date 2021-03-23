@@ -1,8 +1,8 @@
 %% ¡header!
-PPBrainSurf < PlotProp (pl, plot property of brain atlas surface) is a plot of brain atlas surface.
+PPBrainAtlasSurf < PlotProp (pl, plot property of brain atlas surface) is a plot of brain atlas surface.
 
 %%% ¡description!
-PPBrainSurf plots for Brain Atlas surface.
+PPBrainAtlasSurf plots for Brain Atlas surface.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, BrainAtlas
@@ -34,6 +34,8 @@ function h_panel = draw(pl, varargin)
     pl.pp = draw@PlotProp(pl, varargin{:});
     plba = [];
     second_figure = [];
+    hSource = getGUIFigureObj();
+    addlistener(hSource, 'ObjectBeingDestroyed', @cb_close_newfigures);
 
     if isempty(pl.plot_brain_atlas_btn) || ~isgraphics(pl.plot_brain_atlas_btn, 'edit')
         if isempty(el.get('surf').get('id'))
@@ -82,7 +84,7 @@ function h_panel = draw(pl, varargin)
                 'Units', 'normalized', ...
                 'Position', [x2 y2 w2 h2], ...
                 'MenuBar', 'none', ...
-                'Color', [.98 .95 .95] ...
+                'Color', 'w' ...
                 );
 
             update_tbn = uicontrol('Style', 'pushbutton', ...
@@ -102,16 +104,23 @@ function h_panel = draw(pl, varargin)
             plba.draw('Parent', second_figure);
         end
         function [pixels, normalized] = get_figure_position()
+            fig_h = getGUIFigureObj();
+            set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+            pixels = getpixelposition(fig_h);
+            normalized = get(fig_h, 'Position');
+            set(fig_h, 'Units', 'characters'); % go back
+        end
+        function obj = getGUIFigureObj()
             figHandles = findobj('Type', 'figure');
             for i = 1:1:length(figHandles)
                 fig_h = figHandles(i);
                 if contains(fig_h.Name, 'BrainAtlas - ')
-                    set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
-                    pixels = getpixelposition(fig_h);
-                    normalized = get(fig_h, 'Position');
-                    set(fig_h, 'Units', 'characters'); % go back
+                    obj = fig_h;
                 end
             end
+        end
+        function cb_close_newfigures(~, ~)
+            close(second_figure);
         end
 
     % output
