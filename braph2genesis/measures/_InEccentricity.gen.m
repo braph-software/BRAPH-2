@@ -2,7 +2,8 @@
 InEccentricity < Eccentricity (m, in-eccentricity) is the graph in-eccentricity.
 
 %%% ¡description!
-The in-eccentricity of a node is the maximal shortest in-path length between a node and any other node within a layer.
+The in-eccentricity of a node is the maximal shortest in-path length 
+between a node and any other node within a layer.
 
 %%% ¡shape!
 shape = Measure.NODAL;
@@ -69,13 +70,13 @@ assert(isequal(m_inside_g.get('M'), known_in_eccentricity_subgraphs), ...
     'InEccentricity is not being calculated correctly for GraphBD.')
 
 g = GraphBD('B', B);
-m_outside_g = InEccentricity('G', g, 'rule', 'all');
+m_outside_g = InEccentricity('G', g);
 assert(isequal(m_outside_g.get('M'), known_in_eccentricity_default), ...
     [BRAPH2.STR ':InEccentricity:' BRAPH2.BUG_ERR], ...
     'InEccentricity is not being calculated correctly for GraphBD.')
 
 g = GraphBD('B', B);
-m_inside_g = g.getMeasure('InEccentricity', 'rule', 'all');
+m_inside_g = g.getMeasure('InEccentricity');
 assert(isequal(m_inside_g.get('M'), known_in_eccentricity_default), ...
     [BRAPH2.STR ':InEccentricity:' BRAPH2.BUG_ERR], ...
     'InEccentricity is not being calculated correctly for GraphBD.')
@@ -137,9 +138,7 @@ B22 = [
     0    0 .1   0   0
     0    0  0   0   0
       ];
-B = {
-    B11 B22
-    };
+B = {B11 B22};
 
 known_in_eccentricity_subgraphs = { 
                                 [1 1 1 1 0]'
@@ -192,9 +191,7 @@ B22 = [
     0    0 .1   0   0
     0    0  0   0   0
       ];
-B = {
-    B11 B22
-    };
+B = {B11 B22};
 
 known_in_eccentricity_subgraphs = {
                                 [5 10 10 5 0]'

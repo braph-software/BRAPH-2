@@ -2,7 +2,8 @@
 OutEccentricity < Eccentricity (m, out-eccentricity) is the graph out-eccentricity.
 
 %%% ¡description!
-The out-eccentricity of a node is the maximal shortest out-path length between a node and any other node within a layer.
+The out-eccentricity of a node is the maximal shortest out-path length 
+between a node and any other node within a layer.
 
 %%% ¡shape!
 shape = Measure.NODAL;

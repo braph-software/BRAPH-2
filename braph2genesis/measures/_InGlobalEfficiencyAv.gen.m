@@ -40,7 +40,7 @@ value = in_global_efficiency_av;
 
 %%% ¡test!
 %%%% ¡name!
-GraphWD
+GraphBD
 %%%% ¡code!
 B = [
     0   .1  0   0   0
@@ -50,18 +50,18 @@ B = [
     0   0   0   0   0
     ];
 
-known_in_global_efficiency = {mean([1/4 1/4 1/4 1/4 0])};
+known_in_global_efficiency_av = {mean([1/4 1/4 1/4 1/4 0])};
 
 g = GraphBD('B', B);
 in_global_efficiency = InGlobalEfficiencyAv('G', g).get('M');
 
-assert(isequal(in_global_efficiency, known_in_global_efficiency), ...
+assert(isequal(in_global_efficiency, known_in_global_efficiency_av), ...
     [BRAPH2.STR ':InGlobalEfficiency:' BRAPH2.BUG_ERR], ...
     'InGlobalEfficiency is not being calculated correctly for GraphBU.')
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexWD
+MultiplexBD
 %%%% ¡code!
 B11 = [
       0   .1  0   0   0
@@ -80,7 +80,7 @@ B22 = [
       ];
 B = {B11  B22};
 
-known_in_global_efficiency = {
+known_in_global_efficiency_av = {
                         mean([1/4 1/4 1/4 1/4 0])
                         mean([1/4 1/4 1/4 1/4 0])
                         };
@@ -89,6 +89,6 @@ known_in_global_efficiency = {
 g = MultiplexBD('B', B);
 in_global_efficiency = InGlobalEfficiencyAv('G', g).get('M');
 
-assert(isequal(in_global_efficiency, known_in_global_efficiency), ...
+assert(isequal(in_global_efficiency, known_in_global_efficiency_av), ...
     [BRAPH2.STR ':InGlobalEfficiency:' BRAPH2.BUG_ERR], ...
     'InGlobalEfficiency is not being calculated correctly for MultiplexBU.')

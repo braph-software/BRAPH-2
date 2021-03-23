@@ -53,7 +53,7 @@ connectivity_type =  g.getConnectivityType(L);
 for li = 1:1:L
    connectivity_layer = connectivity_type(li, li);
    directionality_layer = directionality_type(li, li);
-    if L == 1
+    if L == 1 
         S = CommunityStructure('G', g).get('M');
     else
         S = MultilayerCommunityStructure('G', g).get('M');

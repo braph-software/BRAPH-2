@@ -53,16 +53,16 @@ value = local_efficiency;
 %%%% ¡name!
 GraphBU
 %%%% ¡code!
-A = [
-    0   .2  .2  .1
-    .2  0   .3  0
-    .2  .3  0   .3
-    .1  0   .3  0
+B = [
+    0  1  1  1
+    1  0  1  0
+    1  1  0  1
+    1  0  1  0
     ];
 
 known_local_efficiency = {[5/6 1 5/6 1]'};
 
-g = GraphBU('B', A);
+g = GraphBU('B', B);
 local_efficiency = LocalEfficiency('G', g).get('M');
 
 assert(isequal(local_efficiency, known_local_efficiency), ...
@@ -71,9 +71,9 @@ assert(isequal(local_efficiency, known_local_efficiency), ...
 
 %%% ¡test!
 %%%% ¡name!
-GraphBD
+GraphWU
 %%%% ¡code!
-A = [
+B = [
     0   .2  .2  .1
     .2  0   .3  0
     .2  .3  0   .3
@@ -82,7 +82,7 @@ A = [
 
 known_local_efficiency = {[1/4 1/5 .1222 1/5]'};
 
-g = GraphWU('B', A);
+g = GraphWU('B', B);
 local_efficiency = LocalEfficiency('G', g).get('M');
 assert(isequal(round(local_efficiency{1}, 4), known_local_efficiency{1}), ...
     [BRAPH2.STR ':LocalEfficiency:' BRAPH2.BUG_ERR], ...
@@ -92,27 +92,27 @@ assert(isequal(round(local_efficiency{1}, 4), known_local_efficiency{1}), ...
 %%%% ¡name!
 MultiplexBU
 %%%% ¡code!
-A11 = [
-      0   .2  .2  .1
-      .2  0   .3  0
-      .2  .3  0   .3
-      .1  0   .3  0
+B11 = [
+       0  1  1  1
+       1  0  1  0
+       1  1  0  1
+       1  0  1  0
       ];
 
-A22 = [
-      0   .2  .2  .1
-      .2  0   .3  0
-      .2  .3  0   .3
-      .1  0   .3  0
+B22 = [
+       0  1  1  1
+       1  0  1  0
+       1  1  0  1
+       1  0  1  0
       ];
-A = {A11 A22};
+B = {B11 B22};
 
 known_local_efficiency = {
                          [5/6 1 5/6 1]'
                          [5/6 1 5/6 1]'
                          };
 
-g = MultiplexBU('B', A);
+g = MultiplexBU('B', B);
 local_efficiency = LocalEfficiency('G', g).get('M');
 
 assert(isequal(local_efficiency, known_local_efficiency), ...
@@ -124,27 +124,27 @@ assert(isequal(local_efficiency, known_local_efficiency), ...
 %%%% ¡name!
 MultiplexWU
 %%%% ¡code!
-A11 = [
+B11 = [
       0   .2  .2  .1
       .2  0   .3  0
       .2  .3  0   .3
       .1  0   .3  0
       ];
 
-A22 = [
+B22 = [
       0   .2  .2  .1
       .2  0   .3  0
       .2  .3  0   .3
       .1  0   .3  0
       ];
-A = {A11 A22};
+B = {B11 B22};
 
 known_local_efficiency = {
                          [1/4 1/5 .1222 1/5]'
                          [1/4 1/5 .1222 1/5]'
                          };
 
-g = MultiplexWU('B', A);
+g = MultiplexWU('B', B);
 local_efficiency = LocalEfficiency('G', g).get('M');
 local_efficiency = cellfun(@(s) round(s, 4), local_efficiency, 'UniformOutput', false);
 

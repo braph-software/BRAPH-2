@@ -44,7 +44,7 @@ B = [
     0  0  .8
     1  0  0
     ];
-known_in_strength_av = {mean([1.2 0.8 1])'};
+known_in_strength_av = {mean([[1 0.2 1.8]])'};
 g = GraphWD('B', B);
 s_outside_g = InStrengthAv('G', g);
 
@@ -69,8 +69,8 @@ B22 = [
 B = {B11 B22};
 
 known_in_strength_av = {
-                 mean([1.2 .8  1])
-                 mean([1.6 1.4 .4])
+                 mean([1 .2  1.8])
+                 mean([1 1.4 1])
                  };
                                 
 g = MultiplexWD('B', B);

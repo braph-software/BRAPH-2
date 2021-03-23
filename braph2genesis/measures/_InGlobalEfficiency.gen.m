@@ -89,7 +89,6 @@ known_in_global_efficiency = {
                         [1/4 1/4 1/4 1/4 0]'
                         };
 
-
 g = MultiplexBD('B', B);
 in_global_efficiency = InGlobalEfficiency('G', g).get('M');
 

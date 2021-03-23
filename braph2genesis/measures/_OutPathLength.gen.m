@@ -77,11 +77,11 @@ value = out_path_length;
 GraphBD
 %%%% ¡code!
 A = [
-    0     .1  .2  .25  0;
-    .125  0   0   0    0;
-    .2    .5  0   .25  0;
-    .125  10  0   0    0;
-    0     0   0   0    0 
+    0  1  1  1  0;
+    1  0  0  0  0;
+    1  1  0  1  0;
+    1  1  0  0  0;
+    0  0  0  0  0
     ];
 
 known_out_path_length = {[Inf Inf Inf Inf Inf]'};
@@ -91,26 +91,26 @@ out_path_length = OutPathLength('G', g).get('M');
 
 assert(isequal(out_path_length, known_out_path_length), ...
     [BRAPH2.STR ':OutPathLength:' BRAPH2.BUG_ERR], ...
-    'OutPathLength is not beoutg calculated correctly for GraphBD.')
+    'OutPathLength is not being calculated correctly for GraphBD.')
 
 %%% ¡test!
 %%%% ¡name!
 MultiplexBD
 %%%% ¡code!
 A11 = [
-      0     .1  .2  .25  0;
-      .125  0   0   0    0;
-      .2    .5  0   .25  0;
-      .125  10  0   0    0;
-      0     0   0   0    0 
+      0  1  1  1  0;
+      1  0  0  0  0;
+      1  1  0  1  0;
+      1  1  0  0  0;
+      0  0  0  0  0
       ];
 
 A22 = [
-      0     .1  .2  .25  0;
-      .125  0   0   0    0;
-      .2    .5  0   .25  0;
-      .125  10  0   0    0;
-      0     0   0   0    0 
+      0  1  1  1  0;
+      1  0  0  0  0;
+      1  1  0  1  0;
+      1  1  0  0  0;
+      0  0  0  0  0
       ];
 A = {A11  A22};
 
@@ -124,4 +124,4 @@ out_path_length = OutPathLength('G', g).get('M');
 
 assert(isequal(out_path_length, known_out_path_length), ...
     [BRAPH2.STR ':OutPathLength:' BRAPH2.BUG_ERR], ...
-    'OutPathLength is not beoutg calculated correctly for MultiplexBD.')
+    'OutPathLength is not being calculated correctly for MultiplexBD.')

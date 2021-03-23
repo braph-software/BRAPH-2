@@ -2,7 +2,8 @@
 InEccentricityAv < InEccentricity (m, average in-eccentricity) is the graph average in-eccentricity.
 
 %%% ¡description!
-The average in-eccentricity of a node is the sum of the nodal in-eccentricities divided by their number within a layer.
+The average in-eccentricity of a node is the sum of the nodal 
+in-eccentricities divided by their number within a layer.
 
 %%% ¡shape!
 shape = Measure.NODAL;
