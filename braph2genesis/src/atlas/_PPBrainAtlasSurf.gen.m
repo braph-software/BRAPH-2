@@ -120,7 +120,9 @@ function h_panel = draw(pl, varargin)
             end
         end
         function cb_close_newfigures(~, ~)
+            warning('off')
             close(second_figure);
+            warning('on')
         end
 
     % output
