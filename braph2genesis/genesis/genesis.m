@@ -47,8 +47,9 @@ mkdir([target_dir fp 'src' fp 'util'])
 mkdir([target_dir fp 'src' fp 'ds'])
 mkdir([target_dir fp 'src' fp 'atlas'])
 mkdir([target_dir fp 'src' fp 'cohort'])
-mkdir([target_dir fp 'src' fp 'analysis'])
 mkdir([target_dir fp 'src' fp 'gt'])
+mkdir([target_dir fp 'src' fp 'analysis'])
+mkdir([target_dir fp 'src' fp 'gui'])
 
 disp('¡! created dir structure - SRC')
 
@@ -101,6 +102,24 @@ copyfile([source_dir fp 'src' fp 'util' fp 'copy_varargin.m'], [target_dir fp 's
 copyfile([source_dir fp 'src' fp 'util' fp 'test_copy_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_copy_varargin.m'])
 copyfile([source_dir fp 'src' fp 'util' fp 'get_from_varargin.m'], [target_dir fp 'src' fp 'util' fp 'get_from_varargin.m'])
 copyfile([source_dir fp 'src' fp 'util' fp 'test_get_from_varargin.m'], [target_dir fp 'src' fp 'util' fp 'test_get_from_varargin.m'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_axis.png'], [target_dir fp 'src' fp 'util' fp 'icon_axis.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_br.png'], [target_dir fp 'src' fp 'util' fp 'icon_br.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_brain.png'], [target_dir fp 'src' fp 'util' fp 'icon_brain.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_grid.png'], [target_dir fp 'src' fp 'util' fp 'icon_grid.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_id.png'], [target_dir fp 'src' fp 'util' fp 'icon_id.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_label.png'], [target_dir fp 'src' fp 'util' fp 'icon_label.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_settings.png'], [target_dir fp 'src' fp 'util' fp 'icon_settings.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_sphere.png'], [target_dir fp 'src' fp 'util' fp 'icon_sphere.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_symbol.png'], [target_dir fp 'src' fp 'util' fp 'icon_symbol.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_3d.png'], [target_dir fp 'src' fp 'util' fp 'icon_view_3d.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_ad.png'], [target_dir fp 'src' fp 'util' fp 'icon_view_ad.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_av.png'], [target_dir fp 'src' fp 'util' fp 'icon_view_av.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_ca.png'], [target_dir fp 'src' fp 'util' fp 'icon_view_ca.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_cp.png'], [target_dir fp 'src' fp 'util' fp 'icon_view_cp.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_sl.png'], [target_dir fp 'src' fp 'util' fp 'icon_view_sl.png'])
+copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_sr.png'], [target_dir fp 'src' fp 'util' fp 'icon_view_sr.png'])
+
+
 disp('¡! copied ready files - util')
 
 copyfile([source_dir fp 'src' fp 'ds' fp 'Category.m'], [target_dir fp 'src' fp 'ds' fp 'Category.m'])
@@ -158,6 +177,9 @@ disp('¡! copied ready files - measures')
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'quantiles.m'])
 % copyfile([source_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'])
 % disp('¡! copied ready files - analysis')
+
+copyfile([source_dir fp 'src' fp 'gui' fp 'GUI.m'], [target_dir fp 'src' fp 'gui' fp 'GUI.m'])
+disp('¡! copied ready files - gt')
 
 disp(' ')
 
@@ -297,6 +319,11 @@ for run = 1:1:run_number
     for i = 1:1:numel(measures_gen_list)
         create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
     end
+
+    gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
+    for i = 1:1:numel(gui_gen_list)
+        create_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
+    end
     
     % workflows
     wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
@@ -351,7 +378,7 @@ gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
 for i = 1:1:numel(gt_gen_list)
     create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
 end
-% 
+
 % analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
 % for i = 1:1:numel(analysis_gen_list)
 %     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
@@ -367,6 +394,11 @@ end
 measures_gen_list = getGenerators([source_dir fp 'measures']);
 for i = 1:1:numel(measures_gen_list)
     create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
+end
+
+gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
+for i = 1:1:numel(gui_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
 end
 
 % workflows

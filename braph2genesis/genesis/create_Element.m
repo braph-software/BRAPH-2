@@ -44,6 +44,11 @@ function create_Element(generator_file, target_dir)
 %   Measure parametricity (PARAMETRIC, NONPARAMETRIC).
 %  <strong>%%% ¡compatible_graphs!</strong>
 %  Lis of compatible graphs with the measure.
+%
+% <strong>%%% ¡gui!</strong>
+%  GUI code to represent the panel of the element. 
+%  Can be on multiple lines.
+%  Should return a Plot object in 'pl'.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
@@ -76,6 +81,10 @@ function create_Element(generator_file, target_dir)
 %   Code to calculate prop results (only for category RESULT).
 %   Can be on multiple lines.
 %   The result should be in variable 'value'.
+%  <strong>%%% ¡gui!</strong>
+%   GUI code for representing the panel of the prop.
+%   Can be on multiple lines.
+%   Should return a Plot object in 'pl'.
 % <strong>%%% ¡prop!</strong>
 %   <tag2> ...
 % 
@@ -96,6 +105,8 @@ function create_Element(generator_file, target_dir)
 %   Updated default.
 %  <strong>%%%% ¡calculate!</strong>
 %   Updated calculation.
+%  <strong>%%%% ¡gui!</strong>
+%   Updated GUI.
 % <strong>%%% ¡prop!</strong>
 %  <tag2> ...
 % 
@@ -133,8 +144,8 @@ txt = fileread(generator_file);
 disp('¡! generator file read')
 
 %% Analysis
-[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso] = analyze_header();
-    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso] = analyze_header()
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui] = analyze_header();
+    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui] = analyze_header()
         header = getToken(txt, 'header');
         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
         class_name = res.class_name;
@@ -148,6 +159,8 @@ disp('¡! generator file read')
         description = splitlines(getToken(txt, 'header', 'description'));
         
         seealso = getToken(txt, 'header', 'seealso');        
+
+        gui = splitlines(getToken(txt, 'header', 'gui'));
     end
 
 [ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
@@ -190,6 +203,7 @@ disp('¡! generator file read')
             props{i}.check_value = splitlines(getToken(props{i}.token, 'check_value'));
             props{i}.default = getToken(props{i}.token, 'default');
             props{i}.calculate = splitlines(getToken(props{i}.token, 'calculate'));
+            props{i}.gui = splitlines(getToken(props{i}.token, 'gui'));
         end
         props_update = getTokens(txt, 'props_update', 'prop');
         for i = 1:1:numel(props_update)
@@ -211,6 +225,7 @@ disp('¡! generator file read')
             props_update{i}.check_value = splitlines(getToken(props_update{i}.token, 'check_value'));
             props_update{i}.default = getToken(props_update{i}.token, 'default');
             props_update{i}.calculate = splitlines(getToken(props_update{i}.token, 'calculate'));
+            props_update{i}.gui = splitlines(getToken(props_update{i}.token, 'gui'));
         end
     end
 
@@ -267,7 +282,7 @@ generate_header()
         gs(1, cellfun(@(x) ['%  ' x], fc_prop_list_txt, 'UniformOutput', false))
         gs(1, {
              '%'
-            ['% ' class_name ' constructor:']
+            ['% ' class_name ' methods (constructor):']
             ['%  ' class_name ' - constructor']
             })
         if element_class_created
@@ -346,6 +361,11 @@ generate_header()
              '%  getFormatSettings - returns the settings for a format'
              '%  getFormatDefault - returns the default value for a format'
              '%  checkFormat - returns whether a value format is correct/error'
+             '%'
+            ['% ' class_name ' methods (GUI):']
+             '%  getGUI - returns figure with element GUI'
+             '%  getPlotElement - returns the element plot'
+             '%  getPropPanel - returns a prop plot'
             })
         if ~isempty(seealso)
             gs(1, {
@@ -1338,6 +1358,66 @@ generate_methods()
         end
         g(1, 'methods % methods')
             gs(2, methods)
+        g(1, 'end')
+    end
+
+generate_gui()
+    function generate_gui()
+        if (numel(gui) == 1 && isempty(gui{1})) && ...
+                all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) && ...
+                all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
+            return
+        end
+        g(1, 'methods % GUI')
+            if ~(numel(gui) == 1 && isempty(gui{1}))
+                g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
+                gs(3, {
+                     '%GETPLOTELEMENT returns the element plot.'
+                     '%'
+                     '% PL = GETPLOTELEMENT(EL) returns the plot of element EL.'
+                     '%'
+                     '% PL = GETPLOTELEMENT(EL, ''Name'', Value, ...) sets the settings of PlotElement.'
+                     '%'
+                     '% See also PlotElement.'
+                     ''
+                    })
+                    gs(3, gui)
+                g(2, 'end')
+            end
+            if any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
+                g(2, ['function pl = getPlotProp(' moniker ', prop, varargin)'])
+                    gs(3, {
+                         '%GETPLOTPROP returns a prop plot.'
+                         '%'
+                         '% PL = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.'
+                         '%'
+                         '% PL = GETPLOTPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
+                         '%'
+                         '% See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,'
+                         '%  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,'
+                         '%  PlotPropMatrix, PlotPropOption, PlotPropScalar, PlotPropString.'
+                         ''
+                        })
+                    g(3, 'switch prop')
+                        for i = 1:1:numel(props)
+                            if numel(props{i}.gui) > 1 || ~isempty(props{i}.gui{1})
+                                g(4, ['case ' class_name '.' props{i}.TAG])
+                                    gs(5, props{i}.gui)
+                                    g(5, '')
+                            end
+                        end
+                        for i = 1:1:numel(props_update)
+                            if numel(props_update{i}.gui) > 1 || ~isempty(props_update{i}.gui{1})
+                                g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                    gs(5, props_update{i}.gui)
+                                    g(5, '')
+                            end
+                        end
+                        g(4, 'otherwise')
+                            gs(5, {['pl = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
+                    g(3, 'end')
+                g(2, 'end')                
+            end
         g(1, 'end')
     end
 
