@@ -196,7 +196,7 @@ function bool = is_ensemble(g)
     if strcmp(Element.getClass(g), 'Graph')
         bool = false;
     else
-        bool = eval([Element.is_ensemble(g) '.is_ensemble()']);
+        bool = eval([Element.getClass(g) '.is_ensemble()']);
     end    
 end
 function graph_type = getGraphType(g)
