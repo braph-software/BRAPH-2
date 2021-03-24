@@ -32,15 +32,7 @@ function h_panel = draw(pl, varargin)
     el = pl.get('EL');
     prop = pl.get('PROP');
     pl.selected = [];
-    ba_idict = el.getr(prop);
-    if isa(ba_idict, 'NoValue')      
-        ba_idict = IndexedDictionary( ...
-            'id', 'idict', ...
-            'it_class', 'BrainRegion', ...
-            'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY) ...
-            );
-        el.set(prop, ba_idict);
-    end
+    ba_idict = el.getr(prop);    
 
     pl.pp = draw@PlotProp(pl, varargin{:});
 

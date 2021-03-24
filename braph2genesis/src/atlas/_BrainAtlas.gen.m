@@ -27,6 +27,15 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
 %%%% ¡gui!
+ba_idict = ba.getr('BR_DICT');
+if isa(ba_idict, 'NoValue')
+    ba_idict = IndexedDictionary( ...
+        'id', 'idict', ...
+        'it_class', 'BrainRegion', ...
+        'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY) ...
+        );
+    ba.set('BR_DICT', ba_idict);
+end
 pl = PPBrainAtlasIDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 
 %%% ¡prop!
