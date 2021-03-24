@@ -1122,6 +1122,19 @@ generate_header_graph() % only for graphs
             g(1, 'methods (Static) %% graph methods')
                 if ~isempty(ensemble)
                     g(2, 'function bool = is_ensemble()')
+%                         if element_class_created
+%                             gs(3, {
+%                                 
+%                                 ['%IS_ENSEMBLE returns true because ' descriptive_name ' is an ensemble.']
+%                                 '%'
+%                                 ['% TRUE = ' descriptive_name '.IS_ENSEMBLE() returns true if it is an ensemble graph.']
+%                                 '%'
+%                                 ['% FALSE = ' descriptive_name '.IS_ENSEMBLE() returns false if it is not an ensemble graph.']
+%                                 '%'
+%                                 '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+%                                 ''
+%                                 })
+%                         end
                         g(3, ['bool = ' ensemble ';'])
                     g(2, 'end')
                 end

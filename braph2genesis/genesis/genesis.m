@@ -28,7 +28,7 @@ if nargin < 2 || isempty(source_dir)
 end
 
 if nargin < 1 || isempty(target_dir)
-    target_dir = [fileparts(source_dir) fp 'braph2tmp'];
+    target_dir = [fileparts(source_dir) fp 'braph2'];
 end
 
 disp('¡ BRAPH 2.0 Genesis')

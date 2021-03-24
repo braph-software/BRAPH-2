@@ -20,7 +20,7 @@ warning('off', 'MATLAB:RMDIR:RemovedFromPath')
 addpath(fileparts(which('braph2genesis')))
 addpath([fileparts(which('braph2genesis')) filesep 'genesis'])
 
-target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2tmp']; % TODO change to braph2
+target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2'];
 if exist(target_dir, 'dir') 
     rmdir(target_dir, 's')
 end
