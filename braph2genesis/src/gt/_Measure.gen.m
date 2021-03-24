@@ -233,13 +233,13 @@ function bool = is_bilayer(m)
 
     bool = Measure.getMeasureScope(m) == Measure.BILAYER;
 end
-function parametricity = getParametricity(m)
-    %GETPARAMETRICITY returns the parametricity of the measure.
+function parametricity = getMeasureParametricity(m)
+    %GETMEASUREPARAMETRICITY returns the parametricity of the measure.
     %
-    % PARAMETRICITY = GETPARAMETRICITY(M) returns the parametricity of measure
+    % PARAMETRICITY = GETMEASUREPARAMETRICITY(M) returns the parametricity of measure
     %  M (e.g., NONPARAMETRIC, PARAMETRIC).
     %
-    % PARAMETRICITY = GETPARAMETRICITY(MEASURE_CLASS) returns the parametricity
+    % PARAMETRICITY = GETMEASUREPARAMETRICITY(MEASURE_CLASS) returns the parametricity
     %  of the measure whose class is MEASURE_CLASS (e.g., NONPARAMETRIC,
     %  PARAMETRIC).
     %
@@ -248,7 +248,7 @@ function parametricity = getParametricity(m)
     if strcmp(Element.getClass(m), 'Measure')
         parametricity = Measure.NONPARAMETRIC;
     else
-        parametricity = eval([Element.getClass(m) '.getParametricity()']);
+        parametricity = eval([Element.getClass(m) '.getMeasureParametricity()']);
     end
 end
 function bool = is_parametric(m)
@@ -260,9 +260,9 @@ function bool = is_parametric(m)
     % BOOL = IS_PARAMETRIC(MEASURE_CLASS) returns true if the measure whose
     %  class is MEASURE_CLASS is parametric and false otherwise.
     %
-    % See also getParametricity, is_nonparametric.
+    % See also getMeasureParametricity, is_nonparametric.
 
-    bool = Measure.getParametricity(m) == Measure.PARAMETRIC;
+    bool = Measure.getMeasureParametricity(m) == Measure.PARAMETRIC;
 end
 function bool = is_nonparametric(m)
     %IS_NONPARAMETRIC checks if measure is non-parametric.
@@ -273,9 +273,9 @@ function bool = is_nonparametric(m)
     % BOOL = IS_NONPARAMETRIC(MEASURE_CLASS) returns true if the measure whose
     %  class is MEASURE_CLASS is non-parametric and false otherwise.
     %
-    % See also getParametricity, is_parametric.
+    % See also getMeasureParametricity, is_parametric.
 
-    bool = Measure.getParametricity(m) == Measure.NONPARAMETRIC;
+    bool = Measure.getMeasureParametricity(m) == Measure.NONPARAMETRIC;
 end
 function list = getCompatibleGraphList(m)
     %GETCOMPATIBLEGRAPHLIST returns the list of graphs.
