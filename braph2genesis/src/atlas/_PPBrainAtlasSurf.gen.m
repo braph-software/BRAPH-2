@@ -76,6 +76,8 @@ function h_panel = draw(pl, varargin)
                 w2 = normalized(3);
                 h2 = normalized(4) /2;
             end
+            
+            close(second_figure);
 
             second_figure =  figure( ...
                 'Visible', 'on', ...
