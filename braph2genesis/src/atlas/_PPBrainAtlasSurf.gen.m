@@ -1,8 +1,8 @@
 %% ¡header!
-PPBrainSurf < PlotProp (pl, plot property of brain atlas surface) is a plot of brain atlas surface.
+PPBrainAtlasSurf < PlotProp (pl, plot property of brain atlas surface) is a plot of brain atlas surface.
 
 %%% ¡description!
-PPBrainSurf plots for Brain Atlas surface.
+PPBrainAtlasSurf plots for Brain Atlas surface.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, BrainAtlas
@@ -34,6 +34,8 @@ function h_panel = draw(pl, varargin)
     pl.pp = draw@PlotProp(pl, varargin{:});
     plba = [];
     second_figure = [];
+    hSource = getGUIFigureObj();
+    addlistener(hSource, 'ObjectBeingDestroyed', @cb_close_newfigures);
 
     if isempty(pl.plot_brain_atlas_btn) || ~isgraphics(pl.plot_brain_atlas_btn, 'edit')
         if isempty(el.get('surf').get('id'))
@@ -74,16 +76,34 @@ function h_panel = draw(pl, varargin)
                 w2 = normalized(3);
                 h2 = normalized(4) /2;
             end
-
+            
+            close(second_figure);
+            
             second_figure =  figure( ...
                 'Visible', 'on', ...
                 'NumberTitle', 'off', ...
-                'Name', ['Brain Atlas - ' BRAPH2.STR], ...
+                'Name', ['Brain Surface - ' BRAPH2.STR], ...
                 'Units', 'normalized', ...
                 'Position', [x2 y2 w2 h2], ...
                 'MenuBar', 'none', ...
-                'Color', [.98 .95 .95] ...
+                'Toolbar', 'figure', ...
+                'Color', 'w' ...
                 );
+            
+            ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');
+            
+            delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
+            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
+            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
+            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
+            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
+            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
+            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
             update_tbn = uicontrol('Style', 'pushbutton', ...
                 'Parent', second_figure, ...
@@ -102,16 +122,25 @@ function h_panel = draw(pl, varargin)
             plba.draw('Parent', second_figure);
         end
         function [pixels, normalized] = get_figure_position()
+            fig_h = getGUIFigureObj();
+            set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+            pixels = getpixelposition(fig_h);
+            normalized = get(fig_h, 'Position');
+            set(fig_h, 'Units', 'characters'); % go back
+        end
+        function obj = getGUIFigureObj()
             figHandles = findobj('Type', 'figure');
             for i = 1:1:length(figHandles)
                 fig_h = figHandles(i);
-                if isequal(fig_h.Name, 'BrainAtlas - BA1 - BRAPH2')
-                    set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
-                    pixels = getpixelposition(fig_h);
-                    normalized = get(fig_h, 'Position');
-                    set(fig_h, 'Units', 'characters'); % go back
+                if contains(fig_h.Name, 'BrainAtlas - ')
+                    obj = fig_h;
                 end
             end
+        end
+        function cb_close_newfigures(~, ~)
+            warning('off')
+            close(second_figure);
+            warning('on')
         end
 
     % output
