@@ -60,7 +60,7 @@ function [l, ls] = layernumber(g)
     % See also nodenumber.
 
     l = length(g.get('A'));
-    ls = [1:1:l];
+    ls = ones(1, l);
 end
 
 %% ¡tests!
