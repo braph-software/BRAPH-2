@@ -88,12 +88,12 @@ function [a1_perm, a2_perm] = getPerm(c, i)
         [subs1_gs1_perm, subs2_gs2_perm] = permutation(subs1_gs1, subs2_gs2, c.get('LONGITUDINAL'));
 
         a1_perm = c.memorize('A_CLONE').clone();
-        a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs1_gs1))
-        a1_perm.get('G').get('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs1_gs1))
+        a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs1_gs1_perm))
+        a1_perm.get('G').get('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs1_gs1_perm))
 
         a2_perm = c.memorize('A_CLONE').clone();
-        a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs2_gs2))
-        a2_perm.get('G').get('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs2_gs2))
+        a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs2_gs2_perm))
+        a2_perm.get('G').get('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs2_gs2_perm))
     else
         subs1 = c.get('A1').get('GR').get('SUB_DICT').get('IT_LIST');
         subs2 = c.get('A2').get('GR').get('SUB_DICT').get('IT_LIST');
