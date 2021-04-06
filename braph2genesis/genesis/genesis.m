@@ -119,7 +119,6 @@ copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_cp.png'], [target_dir fp '
 copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_sl.png'], [target_dir fp 'src' fp 'util' fp 'icon_view_sl.png'])
 copyfile([source_dir fp 'src' fp 'util' fp 'icon_view_sr.png'], [target_dir fp 'src' fp 'util' fp 'icon_view_sr.png'])
 
-
 disp('¡! copied ready files - util')
 
 copyfile([source_dir fp 'src' fp 'ds' fp 'Category.m'], [target_dir fp 'src' fp 'ds' fp 'Category.m'])
@@ -162,21 +161,21 @@ copyfile([source_dir fp 'measures' fp 'private' fp 'metanetwork_reduce.mexmaci64
 copyfile([source_dir fp 'measures' fp 'private' fp 'metanetwork_reduce.mexw64'], [target_dir fp 'measures' fp 'private' fp 'metanetwork_reduce.mexw64'])
 disp('¡! copied ready files - measures')
 
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'Correlation.m'], [target_dir fp 'src' fp 'analysis' fp 'Correlation.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'test_Correlation.m'], [target_dir fp 'src' fp 'analysis' fp 'test_Correlation.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'permutation.m'], [target_dir fp 'src' fp 'analysis' fp 'permutation.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'test_permutation.m'], [target_dir fp 'src' fp 'analysis' fp 'test_permutation.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'pvalue1.m'], [target_dir fp 'src' fp 'analysis' fp 'pvalue1.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'test_pvalue1.m'], [target_dir fp 'src' fp 'analysis' fp 'test_pvalue1.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'pvalue2.m'], [target_dir fp 'src' fp 'analysis' fp 'pvalue2.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'test_pvalue2.m'], [target_dir fp 'src' fp 'analysis' fp 'test_pvalue2.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'bonferroni.m'], [target_dir fp 'src' fp 'analysis' fp 'bonferroni.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'test_bonferroni.m'], [target_dir fp 'src' fp 'analysis' fp 'test_bonferroni.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'fdr.m'], [target_dir fp 'src' fp 'analysis' fp 'fdr.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'test_fdr.m'], [target_dir fp 'src' fp 'analysis' fp 'test_fdr.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'quantiles.m'])
-% copyfile([source_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'])
-% disp('¡! copied ready files - analysis')
+copyfile([source_dir fp 'src' fp 'analysis' fp 'Correlation.m'], [target_dir fp 'src' fp 'analysis' fp 'Correlation.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'test_Correlation.m'], [target_dir fp 'src' fp 'analysis' fp 'test_Correlation.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'permutation.m'], [target_dir fp 'src' fp 'analysis' fp 'permutation.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'test_permutation.m'], [target_dir fp 'src' fp 'analysis' fp 'test_permutation.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'pvalue1.m'], [target_dir fp 'src' fp 'analysis' fp 'pvalue1.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'test_pvalue1.m'], [target_dir fp 'src' fp 'analysis' fp 'test_pvalue1.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'pvalue2.m'], [target_dir fp 'src' fp 'analysis' fp 'pvalue2.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'test_pvalue2.m'], [target_dir fp 'src' fp 'analysis' fp 'test_pvalue2.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'bonferroni.m'], [target_dir fp 'src' fp 'analysis' fp 'bonferroni.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'test_bonferroni.m'], [target_dir fp 'src' fp 'analysis' fp 'test_bonferroni.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'fdr.m'], [target_dir fp 'src' fp 'analysis' fp 'fdr.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'test_fdr.m'], [target_dir fp 'src' fp 'analysis' fp 'test_fdr.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'quantiles.m'])
+copyfile([source_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'], [target_dir fp 'src' fp 'analysis' fp 'test_quantiles.m'])
+disp('¡! copied ready files - analysis')
 
 copyfile([source_dir fp 'src' fp 'gui' fp 'GUI.m'], [target_dir fp 'src' fp 'gui' fp 'GUI.m'])
 disp('¡! copied ready files - gt')
@@ -303,10 +302,10 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
     end
     
-    % analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-    % for i = 1:1:numel(analysis_gen_list)
-    %     create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
-    % end
+    analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
+    for i = 1:1:numel(analysis_gen_list)
+        create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
+    end
     
     % graphs
     graphs_gen_list = getGenerators([source_dir fp 'graphs']);
@@ -379,10 +378,10 @@ for i = 1:1:numel(gt_gen_list)
     create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
 end
 
-% analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-% for i = 1:1:numel(analysis_gen_list)
-%     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
-% end
+analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
+for i = 1:1:numel(analysis_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
+end
 
 % graphs
 graphs_gen_list = getGenerators([source_dir fp 'graphs']);
