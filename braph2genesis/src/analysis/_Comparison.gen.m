@@ -41,16 +41,6 @@ A2 (data, item) is the second analysis to compare.
 check = isa(value, c.get('A1').getClass());
 
 %%% ¡prop!
-A_CLONE (result, item) is a cloned analysis.
-%%%% ¡settings!
-'Analysis'
-%%%% ¡calculate!
-a1_clone = c.get('A1').clone();
-sub_dict_clone = a1_clone.get('GR').get('SUB_DICT');
-sub_dict_clone.remove_all([1:1:sub_dict_clone.length]);
-value = a1_clone;
-
-%%% ¡prop!
 PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
 %%%% ¡calculate!
 value = randi(intmax('uint32'), 1, c.get('P'));
@@ -69,12 +59,23 @@ A2_PERM (result, idict) is the list of permuted analyses for the second analysis
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'Analysis', 'IT_KEY', 1);
 
+%% ¡properties!
+a_clone
+gr1_clone
+gr1_sub_dict_clone
+g1_clone
+g1_g_dict_clone
+gr2_clone
+gr2_sub_dict_clone
+g2_clone
+g2_g_dict_clone
+
 %% ¡methods!
 function [a1_perm, a2_perm] = getPerm(c, i)
 
     seeds = c.get('PERM_SEEDS');
     rng(seeds(i), 'twister')
-
+    
     if c.get('A1').get('G').is_ensemble()
         subs1 = c.get('A1').get('GR').get('SUB_DICT').get('IT_LIST');
         subs2 = c.get('A2').get('GR').get('SUB_DICT').get('IT_LIST');
@@ -87,12 +88,32 @@ function [a1_perm, a2_perm] = getPerm(c, i)
 
         [subs1_gs1_perm, subs2_gs2_perm] = permutation(subs1_gs1, subs2_gs2, c.get('LONGITUDINAL'));
 
-        a1_perm = c.memorize('A_CLONE').clone();
+        if isempty(c.a_clone)
+            c.a_clone = c.get('A1').clone();
+            c.gr1_clone = c.get('A1').get('GR').clone();
+            c.gr1_sub_dict_clone = c.get('A1').get('GR').get('SUB_DICT').clone();
+            c.g1_clone = c.get('A1').get('G').clone();
+            c.g1_g_dict_clone = c.get('A1').get('G').get('G_DICT').clone();
+            c.gr2_clone = c.get('A1').get('GR').clone();
+            c.gr2_sub_dict_clone = c.get('A2').get('GR').get('SUB_DICT').clone();
+            c.g2_clone = c.get('A2').get('G').clone();
+            c.g2_g_dict_clone = c.get('A2').get('G').get('G_DICT').clone();
+        end
+
+        a1_perm = c.a_clone.clone();
+        a1_perm.set('GR', c.gr1_clone.clone())
+        a1_perm.get('GR').set('SUB_DICT', c.gr1_sub_dict_clone.clone())
         a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs1_gs1_perm))
+        a1_perm.set('G', c.g1_clone.clone())
+        a1_perm.get('G').set('G_DICT', c.g1_g_dict_clone.clone())
         a1_perm.get('G').get('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs1_gs1_perm))
 
-        a2_perm = c.memorize('A_CLONE').clone();
+        a2_perm = c.a_clone.clone();
+        a2_perm.set('GR', c.gr2_clone.clone())
+        a2_perm.get('GR').set('SUB_DICT', c.gr2_sub_dict_clone.clone())
         a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs2_gs2_perm))
+        a2_perm.set('G', c.g2_clone.clone())
+        a2_perm.get('G').set('G_DICT', c.g2_g_dict_clone.clone())
         a2_perm.get('G').get('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs2_gs2_perm))
     else
         subs1 = c.get('A1').get('GR').get('SUB_DICT').get('IT_LIST');
@@ -100,14 +121,26 @@ function [a1_perm, a2_perm] = getPerm(c, i)
 
         [subs1_perm, subs2_perm] = permutation(subs1, subs2, c.get('LONGITUDINAL'));
 
-        a1_perm = c.memorize('A_CLONE').clone();
+        if isempty(c.a_clone)
+            c.a_clone = c.get('A1').clone();
+            c.gr1_clone = c.get('A1').get('GR').clone();
+            c.gr1_sub_dict_clone = c.get('A1').get('GR').get('SUB_DICT').clone();
+            c.gr2_clone = c.get('A1').get('GR').clone();
+            c.gr2_sub_dict_clone = c.get('A2').get('GR').get('SUB_DICT').clone();
+        end
+        
+        a1_perm = c.a_clone.clone();
+        a1_perm.set('GR', c.gr1_clone.clone())
+        a1_perm.get('GR').set('SUB_DICT', c.gr1_sub_dict_clone.clone())
         a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', subs1_perm)
 
-        a2_perm = c.memorize('A_CLONE').clone();
+        a2_perm = c.a_clone.clone();
+        a2_perm.set('GR', c.gr2_clone.clone())
+        a2_perm.get('GR').set('SUB_DICT', c.gr2_sub_dict_clone.clone())
         a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', subs2_perm)
     end
 end
-function [p1, p2] = getComparison(c, measure_code, varargin)
+function [p1, p2, ci_lower, ci_upper, m1, m2, diff, m1_perms, m2_perms, diff_perms] = getComparison(c, measure_code, varargin)
 
     verbose = get_from_varargin(false, 'Verbose', varargin{:});
     interruptible = get_from_varargin(0.001, 'Interruptible', varargin{:});
@@ -142,80 +175,18 @@ function [p1, p2] = getComparison(c, measure_code, varargin)
     end
 
     % Statistical analysis
-    p1 = pvalue1(diff, cellfun(@(x) x, diff_perms));
-    p2 = pvalue2(diff, cellfun(@(x) x, diff_perms));
-%     p1 = cell(size(diff));
-%     p2 =  cell(size(diff));
-%     qtl = cell(size(diff));
-%     ci_lower = cell(size(diff));
-%     ci_upper =  cell(size(diff));
-%     for i = 1:1:size(diff, 1)
-%         for j = 1:1:size(diff, 1)
-% %pvalue1(diff, cellfun(@(x) x, diff_perms))
-% %            p1(i, j) = {pvalue1(diff{i, j}, diff_perms(i * j, :))};  % singe tail
-% %         p2(i, j) = {pvalue2(difference_mean{i, j}, difference_all_permutations(i*j, :))};  % double tail
-% %         qtl(i, j) = {quantiles(difference_all_permutations(i*j, :), 40)};
-% %         ci_lower(i, j) = {cellfun(@(x) x(2), qtl{i, j})};
-% %         ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})}; % or 39?
-%         end
-%     end
-
-% measurements_1 = analysis.getMeasurement(measure_code, group_1, varargin{:});
-% value_1 = measurements_1.getMeasureValue();
-% 
-% measurements_2 = analysis.getMeasurement(measure_code, group_2, varargin{:});
-% value_2 = measurements_2.getMeasureValue();
-% 
-% difference_mean = cellfun(@(x, y) y - x, value_1, value_2, 'UniformOutput', false);
-% 
-% subjects_1 = group_1.getSubjects();
-% subjects_2 = group_2.getSubjects();
-% 
-% % Permutations
-% all_permutations_1 = cell(1, M);
-% all_permutations_2 = cell(1, M);
-% 
-% start = tic;
-% for i = 1:1:M
-%     if verbose
-%         disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(M) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start),1)*10) 's'])
-%     end
-% 
-%     [permutation_subjects_1, permutation_subjects_2] = permutation(subjects_1, subjects_2, is_longitudinal);
-% 
-%     graph_permutated_1 = analysis.get_graph_for_subjects(permutation_subjects_1, varargin{:});
-%     measure_permutated_1 = Measure.getMeasure(measure_code, graph_permutated_1, varargin{:});
-%     measure_permutated_value_1 = measure_permutated_1.getValue();
-% 
-%     graph_permutated_2 = analysis.get_graph_for_subjects(permutation_subjects_2, varargin{:});
-%     measure_permutated_2 = Measure.getMeasure(measure_code, graph_permutated_2, varargin{:});
-%     measure_permutated_value_2 = measure_permutated_2.getValue();
-% 
-%     all_permutations_1{1, i} = measure_permutated_value_1;
-%     all_permutations_2{1, i} = measure_permutated_value_2;
-% 
-%     if interruptible
-%         pause(interruptible)
-%     end
-% end
-% 
-% difference_all_permutations = cell(rows*columns, M);
-% p1 = cell(rows, columns);
-% p2 =  cell(rows, columns);
-% qtl = cell(rows, columns);
-% ci_lower = cell(rows, columns);
-% ci_upper =  cell(rows, columns);
-% 
-% for i=1:rows
-%     for j=1:columns
-%         difference_all_permutations(i*j, :) = cellfun(@(x, y) y{i, j} - x{i, j}, all_permutations_1, all_permutations_2, 'UniformOutput', false);
-%         % Statistical analysis
-%         p1(i, j) = {pvalue1(difference_mean{i, j}, difference_all_permutations(i*j, :))};  % singe tail,
-%         p2(i, j) = {pvalue2(difference_mean{i, j}, difference_all_permutations(i*j, :))};  % double tail
-%         qtl(i, j) = {quantiles(difference_all_permutations(i*j, :), 40)};
-%         ci_lower(i, j) = {cellfun(@(x) x(2), qtl{i, j})};
-%         ci_upper(i, j)  = {cellfun(@(x) x(40), qtl{i, j})}; % or 39?
-%     end
-% end
-            
+    p1 = cell(size(diff));
+    p2 = cell(size(diff));
+    ci_lower = cell(size(diff));
+    ci_upper = cell(size(diff));
+    for i = 1:1:size(diff, 1)
+        for j = 1:1:size(diff, 2)
+            p1(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
+            p2(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
+            qtl = quantiles(cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false), 40);
+            ci_lower(i, j) = {cellfun(@(x) x(2), qtl)};
+            ci_upper(i, j) = {cellfun(@(x) x(40), qtl)};
+        end
+    end
+    
 end
