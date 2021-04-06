@@ -896,14 +896,19 @@ function n = nodenumber(g)
     A = g.get('A'); %#ok<PROP>
     n = cellfun(@(a) length(a), A(1:length(A)+1:end)); %#ok<PROP>
 end
-function n = layernumber(g)
+function [l, ls] = layernumber(g)
     %LAYERNUMBER returns the number of layers in the graph.
     %
-    % N = LAYERNUMBER(G) returns the number of layers in graph G.
+    % L = LAYERNUMBER(G) returns the number of layers in graph G. L is a scalar.
+    %
+    % [~, LS] = LAYERNUMBER(G) returns the number of layers in the partitions
+    %  of graph G. LS is a vector of integers. By default LS = L, but this
+    %  method should be redefined where needed.
     %
     % See also nodenumber.
 
-    n = length(g.get('A'));
+    l = length(g.get('A'));
+    ls = l;
 end
 function m = getMeasure(g, measure_class, varargin)
     %GETMEASURE returns measure.
