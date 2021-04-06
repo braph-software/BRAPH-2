@@ -69,7 +69,7 @@ function [l, ls] = layernumber(g)
 
     l = length(g.get('A'));
     thresholds = g.get('THRESHOLDS');
-    ls = ones(1, l/length(thresholds));
+    ls = ones(1, length(thresholds))*l/length(thresholds);
 end
 
 %% ¡tests!
@@ -79,13 +79,14 @@ end
 Constructor
 %%%% ¡code!
 A = [
-    0 .1 .2 .3 .4
+     0 .1 .2 .3 .4 
     .1 0 .1 .2 .3
     .2 .1 0 .1 .2
     .3 .2 .1 0 .1
     .4 .3 .2 .1 0
     ];
 B = {A, A};
+
 g = MultiplexBUT('B', B, 'THRESHOLDS', [0 .1 .2 .3 .4]);
 
 A = g.get('A');

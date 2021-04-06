@@ -69,7 +69,7 @@ function [l, ls] = layernumber(g)
 
     l = length(g.get('A'));
     densities = g.get('DENSITIES');
-    ls = ones(1, l/length(densities));
+    ls = ones(1, length(densities))*l/length(densities);
 end
 
 %% ¡tests!
