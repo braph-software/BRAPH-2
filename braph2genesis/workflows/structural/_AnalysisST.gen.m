@@ -16,10 +16,10 @@ G_CLASS (parameter, option) is the graph class.
 'GraphWU'
 
 %%% ¡prop!
-THRESHOLDS (data, rvector) is the vector of thresholds.
+THRESHOLDS (parameter, rvector) is the vector of thresholds.
 
 %%% ¡prop!
-DENSITIES (data, rvector) is the vector of densities.
+DENSITIES (parameter, rvector) is the vector of densities.
 
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type.
