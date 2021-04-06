@@ -23,7 +23,7 @@ MultiplexWU
 %%% ¡prop!
 M (result, cell) is the overlapping degree.
 %%%% ¡calculate!
-g = m.get('G');  % graph from measure class
+g = m.get('G'); % graph from measure class
 L = g.layernumber();
 
 if L == 0
