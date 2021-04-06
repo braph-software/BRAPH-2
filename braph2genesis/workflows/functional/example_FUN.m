@@ -1,37 +1,125 @@
-%EXAMPLE_FUN
-% Script example workflow Functional WU
-
-clear
+% Script example workflow FUN
+clear variables
 
 %% Load BrainAtlas
-[file, path, filterindex] = uigetfile('*.xlsx');
-if filterindex
-    atlas_file = fullfile(path, file);
-else
-    atlas_file = [fileparts(which('example_FUN.m')) filesep 'example data FUN (fMRI)' filesep 'desikan_atlas.xlsx'];
-end
-clear file filterindex path
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_FUN')) filesep 'example data FNC (fMRI)' filesep 'desikan_atlas.xlsx']);
 
-ba_loaded = ImporterBrainAtlasXLS('File', atlas_file).get('BA');
+ba = im_ba.get('BA');
 
-disp(['Loaded BrainAtlas: ' ba_loaded.tostring()])
+%% Load Groups of SubjectFUN
+im_gr1 = ImporterGroupSubjectFUNXLS( ...
+    'DIRECTORY', [fileparts(which('example_FUN')) filesep 'example data FUN (fMRI)' filesep 'xls' filesep 'GroupName1'], ...
+    'BA', ba ...
+    );
 
-%% Load FNC Subject Data for group 1 from XLSX
-group_1_dir = uigetdir('Select directory');
-if ~isfolder(group_1_dir)
-    group_1_dir = [fileparts(which('example_FUN.m')) filesep 'example data FNC (fMRI)'  filesep 'xls' filesep 'GroupName1'];
-end
+gr1 = im_gr1.get('GR');
 
-gr_loaded_1 = ImporterGroupSubjectFUNXLS('DIRECTORY', group_1_dir, 'BA', ba_loaded).get('GR');
+im_gr2 = ImporterGroupSubjectFUNXLS( ...
+    'DIRECTORY', [fileparts(which('example_FUN')) filesep 'example data FUN (fMRI)' filesep 'xls' filesep 'GroupName2'], ...
+    'BA', ba ...
+    );
 
-disp(['Loaded Group 1: ' gr_loaded_1.tostring()])
+gr2 = im_gr2.get('GR');
 
-%% Load FNC Subject Data for group 2 from XLSX
-group_2_dir = uigetdir('Select directory');
-if ~isfolder(group_2_dir)
-    group_2_dir = [fileparts(which('example_FUN.m')) filesep 'example data FNC (fMRI)'  filesep 'xls' filesep 'GroupName2'];
-end
+%% Analysis WU
+a_WU1 = AnalysisFUN( ...
+    'G_CLASS', 'GraphWUEnsemble', ...
+    'GR', gr1 ...
+    );
 
-gr_loaded_2 = ImporterGroupSubjectFUNXLS('DIRECTORY', group_2_dir, 'BA', ba_loaded).get('GR');
+a_WU2 = AnalysisFUN( ...
+    'G_CLASS', 'GraphWUEnsemble', ...
+    'GR', gr2 ...
+    );
 
-disp(['Loaded Group 2: ' gr_loaded_2.tostring()])
+% measure calculation
+g_WU1 = a_WU1.get('G');
+degree_WU1 = g_WU1.getMeasure('Degree').get('M');
+degree_av_WU1 = g_WU1.getMeasure('DegreeAv').get('M');
+distance_WU1 = g_WU1.getMeasure('Distance').get('M');
+
+g_WU2 = a_WU2.get('G');
+degree_WU1 = g_WU2.getMeasure('Degree').get('M');
+degree_av_WU1 = g_WU2.getMeasure('DegreeAv').get('M');
+distance_WU1 = g_WU2.getMeasure('Distance').get('M');
+
+% comparison
+c_WU = Comparison( ...
+    'P', 10, ...
+    'A1', a_WU1, ...
+    'A2', a_WU2 ...
+    );
+
+[degree_WU_p1, degree_WU_p2] = c_WU.getComparison('Degree', 'verbose', true);
+[degree_av_WU_p1, degree_av_WU_p2] = c_WU.getComparison('DegreeAv', 'verbose', true);
+[distance_WU_p1, distance_WU_p2] = c_WU.getComparison('Distance', 'verbose', true);
+
+%% Analysis BUT
+a_BUT1 = AnalysisFUN( ...
+    'G_CLASS', 'MultigraphBUTEnsemble', ...
+    'THRESHOLDS', [0 .1 .5 1], ...
+    'GR', gr1 ...
+    );
+
+a_BUT2 = AnalysisFUN( ...
+    'G_CLASS', 'MultigraphBUTEnsemble', ...
+    'THRESHOLDS', [0 .1 .5 1], ...
+    'GR', gr2 ...
+    );
+
+% measure calculation
+g_BUT1 = a_BUT1.get('G');
+degree_BUT1 = g_BUT1.getMeasure('Degree').get('M');
+degree_av_BUT1 = g_BUT1.getMeasure('DegreeAv').get('M');
+distance_BUT1 = g_BUT1.getMeasure('Distance').get('M');
+
+g_BUT2 = a_BUT2.get('G');
+degree_BUT2 = g_BUT2.getMeasure('Degree').get('M');
+degree_av_BUT2 = g_BUT2.getMeasure('DegreeAv').get('M');
+distance_BUT2 = g_BUT2.getMeasure('Distance').get('M');
+
+% comparison
+c_BUT = Comparison( ...
+    'P', 10, ...
+    'A1', a_BUT1, ...
+    'A2', a_BUT2 ...
+    );
+
+[degree_BUT_p1, degree_BUT_p2] = c_BUT.getComparison('Degree', 'verbose', true);
+[degree_av_BUT_p1, degree_av_BUT_p2] = c_BUT.getComparison('DegreeAv', 'verbose', true);
+[distance_BUT_p1, distance_BUT_p2] = c_BUT.getComparison('Distance', 'verbose', true);
+
+%% Analysis BUD - measure calculation
+a_BUD1 = AnalysisFUN( ...
+    'G_CLASS', 'MultigraphBUDEnsemble', ...
+    'DENSITIES', [0 10 50 100], ...
+    'GR', gr1 ...
+    );
+
+a_BUD2 = AnalysisFUN( ...
+    'G_CLASS', 'MultigraphBUDEnsemble', ...
+    'DENSITIES', [0 10 50 100], ...
+    'GR', gr2 ...
+    );
+
+% measure calculation
+g_BUD1 = a_BUD1.get('G');
+degree_BUD1 = g_BUD1.getMeasure('Degree').get('M');
+degree_av_BUD1 = g_BUD1.getMeasure('DegreeAv').get('M');
+distance_BUD1 = g_BUD1.getMeasure('Distance').get('M');
+
+g_BUD2 = a_BUD2.get('G');
+degree_BUD2 = g_BUD2.getMeasure('Degree').get('M');
+degree_av_BUD2 = g_BUD2.getMeasure('DegreeAv').get('M');
+distance_BUD2 = g_BUD2.getMeasure('Distance').get('M');
+
+% comparison
+c_BUD = Comparison( ...
+    'P', 10, ...
+    'A1', a_BUD1, ...
+    'A2', a_BUD2 ...
+    );
+
+[degree_BUD_p1, degree_BUD_p2] = c_BUD.getComparison('Degree', 'verbose', true);
+[degree_av_BUD_p1, degree_av_BUD_p2] = c_BUD.getComparison('DegreeAv', 'verbose', true);
+[distance_BUD_p1, distance_BUD_p2] = c_BUD.getComparison('Distance', 'verbose', true);
