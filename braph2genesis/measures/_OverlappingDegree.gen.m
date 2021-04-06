@@ -16,6 +16,8 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWU
 
 %% ¡props_update!
@@ -24,19 +26,25 @@ MultiplexWU
 M (result, cell) is the overlapping degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-L = g.layernumber();
+[ls, l] = g.layernumber();
 
-if L == 0
+if ls == 0
     value = {};
 else
     N = g.nodenumber();
     degree = calculateValue@Degree(m, prop);
-    overlapping_degree = zeros(N(1), 1);
-
-    for li = 1:1:L  
-        overlapping_degree = overlapping_degree + degree{li};
+    overlapping_degree = cell(length(l), 1);
+    
+    count = 1;
+    for i = 1:1:length(l)
+        overlapping_degree_partition = zeros(N(1), 1);
+        for li = count:1:l(i) + count - 1
+            overlapping_degree_partition = overlapping_degree_partition + degree{li};
+        end
+        count = count + l(i);
+        overlapping_degree(i) = {overlapping_degree_partition};
     end
-    value = {overlapping_degree};
+    value = overlapping_degree;
 end
 
 %% ¡tests!
@@ -65,6 +73,62 @@ overlapping_degree = OverlappingDegree('G', g);
 assert(isequal(overlapping_degree.get('M'), known_overlapping_degree), ...
     [BRAPH2.STR ':OverlappingDegree:' BRAPH2.BUG_ERR], ...
     'OverlappingDegree is not being calculated correctly for MultiplexBU')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUD
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+B = {B11 B22};
+
+known_overlapping_degree = { ...
+                            [0, 0, 0]'
+                            [6, 6, 6]'
+                            };
+
+g = MultiplexBUD('B', B, 'DENSITIES', [0 100]);
+overlapping_degree = OverlappingDegree('G', g);
+                 
+assert(isequal(overlapping_degree.get('M'), known_overlapping_degree), ...
+    [BRAPH2.STR ':OverlappingDegree:' BRAPH2.BUG_ERR], ...
+    'OverlappingDegree is not being calculated correctly for MultiplexBUD')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+B = {B11 B22};
+
+known_overlapping_degree = { ...
+                            [3, 3, 2]'
+                            [0, 0, 0]'
+                            };
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+overlapping_degree = OverlappingDegree('G', g);
+                 
+assert(isequal(overlapping_degree.get('M'), known_overlapping_degree), ...
+    [BRAPH2.STR ':OverlappingDegree:' BRAPH2.BUG_ERR], ...
+    'OverlappingDegree is not being calculated correctly for MultiplexBUT')
 
 %%% ¡test!
 %%%% ¡name!
