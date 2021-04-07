@@ -20,6 +20,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 MultiplexBD
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWD
 MultiplexWU
 
@@ -29,21 +31,21 @@ MultiplexWU
 M (result, cell) is the multiplex core periphery.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-multiplex_core_periphery = calculateValue@Multirichness(m, prop);
-L = g.layernumber();
+multirichness = calculateValue@Multirichness(m, prop);
+[l, ls] = g.layernumber();
 
-if L == 0
+if l == 0
     value = {};
 else
     N = g.nodenumber();
 
     multirichness_coefficients = m.get('MULTIRICHNESS_COEFFICIENTS');
-    assert(length(multirichness_coefficients) == L || all(multirichness_coefficients == 0), ...
+    assert(length(multirichness_coefficients) == ls(1) || all(multirichness_coefficients == 0), ...
         [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
         ['Multirichness coefficients must have the same length than the ' ...
-        'number of layers (' tostring(L) ') while its length is ' tostring(length(multirichness_coefficients))])
+        'number of layers (' tostring(ls(1)) ') while its length is ' tostring(length(multirichness_coefficients))])
 
-    if length(multirichness_coefficients) == L
+    if length(multirichness_coefficients) == ls(1)
         assert(all(multirichness_coefficients <= 1) && all(multirichness_coefficients >= 0), ...
             [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
             ['Multirichness coefficients must be between 0 and 1 ' ...
@@ -51,48 +53,53 @@ else
         c = multirichness_coefficients;
 
     else  % same relevance for each layer
-        c = ones(1, L)/L;
+        c = ones(1, l)/ls(1);
     end
 
-    directionality_layer =  g.getDirectionalityType(L);
-    connectivity_layer =  g.getConnectivityType(L);
-    overlapping_coefficients = zeros(N(1), 1);
-    for li = 1:1:L
-        if connectivity_layer == Graph.WEIGHTED  % weighted graphs
-            if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                
-                strength = Strength('G', g).get('M');
-                deg = strength{li};
-                
-            else  % directed graphs
+    directionality_layer =  g.getDirectionalityType(l);
+    connectivity_layer =  g.getConnectivityType(l);
+    multiplex_core_periphery = cell(length(ls), 1);
+    count = 1;
+    for i = 1:1:length(ls)
+        overlapping_coefficients = zeros(N(1), 1);
+        multiplex_core_periphery_partition = zeros(N(1), 1);
+        for li = count:1:ls(i) + count - 1
+            if connectivity_layer == Graph.WEIGHTED  % weighted graphs
+                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
 
-                in_strength = InStrength('G', g).get('M');
-                out_strength = OutStrength('G', g).get('M');
-                deg = (in_strength{li} + out_strength{li})/2;
-            end
-            
-        else  % binary graphs
-            if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-                
-                degree = Degree('G', g).get('M');
-                deg = degree{li};
-                
-            else  % directed graphs
+                    strength = Strength('G', g).get('M');
+                    deg = strength{li};
 
-                in_degree = InDegree('G', g).get('M');
-                out_degree = OutDegree('G', g).get('M');
-                deg = (in_degree{li} + out_degree{li})/2;
+                else  % directed graphs
+
+                    in_strength = InStrength('G', g).get('M');
+                    out_strength = OutStrength('G', g).get('M');
+                    deg = (in_strength{li} + out_strength{li})/2;
+                end
+
+            else  % binary graphs
+                if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+
+                    degree = Degree('G', g).get('M');
+                    deg = degree{li};
+
+                else  % directed graphs
+
+                    in_degree = InDegree('G', g).get('M');
+                    out_degree = OutDegree('G', g).get('M');
+                    deg = (in_degree{li} + out_degree{li})/2;
+                end
             end
+            overlapping_coefficients = overlapping_coefficients + c(li)*deg;
         end
-        overlapping_coefficients = overlapping_coefficients + c(li)*deg;
+        [~, rankingInd] = sort(overlapping_coefficients, 'descend');
+        multirichness_partition = multirichness{i};
+        [~, rankOfMaxMultirichness] = max(multirichness_partition(rankingInd));  
+        multiplex_core_periphery_partition(rankingInd(1:rankOfMaxMultirichness)) = 1;
+        count = count + ls(i);
+        multiplex_core_periphery(i) = {multiplex_core_periphery_partition};
     end
-    
-    [~, rankingInd] = sort(overlapping_coefficients, 'descend');
-    multiplex_core_periphery = multiplex_core_periphery{1};
-    [~, rankOfMaxMultirichness] = max(multiplex_core_periphery(rankingInd));
-    multiplex_core_periphery = zeros(N(1), 1);
-    multiplex_core_periphery(rankingInd(1:rankOfMaxMultirichness)) = 1;
-    value = {multiplex_core_periphery};
+    value = multiplex_core_periphery;
 end
 
 %% ¡tests!
@@ -124,6 +131,36 @@ multiplex_core_periphery = MultiplexCorePeriphery('G', g).get('M');
 assert(isequal(multiplex_core_periphery, known_multiplex_core_periphery), ...
     [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.BUG_ERR], ...
     'MultiplexCorePeriphery is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+    0  1  1  0; 
+    1  0  1  1; 
+    1  1  0  0;
+    0  1  0  0
+    ];
+
+B22 = [
+    0  1  1  1; 
+    1  0  1  1; 
+    1  1  0  0;
+    1  1  0  0
+    ];
+B = {B11 B22};
+
+known_multiplex_core_periphery = {
+                                 [1 1 1 0]'
+                                 [1 0 0 0]'}; 
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+multiplex_core_periphery = MultiplexCorePeriphery('G', g).get('M');
+
+assert(isequal(multiplex_core_periphery, known_multiplex_core_periphery), ...
+    [BRAPH2.STR ':MultiplexCorePeriphery:' BRAPH2.BUG_ERR], ...
+    'MultiplexCorePeriphery is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!
