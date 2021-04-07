@@ -1,5 +1,5 @@
-%EXAMPLE_ST
-% Script example workflow ST
+%EXAMPLE_ST_WU
+% Script example workflow ST WU
 
 clear variables %#ok<*NASGU>
 
