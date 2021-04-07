@@ -55,4 +55,4 @@ value = g;
 %%%% ¡name!
 Example
 %%%% ¡code!
-% example_ST_WU
+example_ST_WU
