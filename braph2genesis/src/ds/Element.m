@@ -1506,18 +1506,20 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             el_clone = eval(el.getClass());
             
-            for prop = 1:1:el.getPropNumber()
-                switch el.getPropCategory(prop)
+            for prop = 1:1:el_clone.getPropNumber()
+                switch el_clone.getPropCategory(prop)
                     case {Category.METADATA, Category.PARAMETER}
                         value = el.getr(prop);
                         
                         if isa(value, 'Element')
-                            el.props{prop}.value = value.clone();
+                            el_clone.props{prop}.value = value.clone();
                         elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
-                            el.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
+                            el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
+                        else
+                            el_clone.props{prop}.value = value;
                         end
                     case {Category.DATA, Category.RESULT}
-                        el.props{prop}.value = NoValue.getNoValue();
+                        el_clone.props{prop}.value = NoValue.getNoValue();
                 end
             end
         end
