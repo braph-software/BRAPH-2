@@ -69,7 +69,7 @@ function [l, ls] = layernumber(g)
 
     l = length(g.get('A'));
     thresholds = g.get('THRESHOLDS');
-    ls = ones(1, length(thresholds))*l/length(thresholds);
+    ls = ones(1, length(thresholds)) * l / length(thresholds);
 end
 
 %% ¡tests!

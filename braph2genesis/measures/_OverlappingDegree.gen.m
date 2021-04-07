@@ -26,22 +26,22 @@ MultiplexWU
 M (result, cell) is the overlapping degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-[ls, l] = g.layernumber();
+[l, ls] = g.layernumber();
 
 if ls == 0
     value = {};
 else
     N = g.nodenumber();
     degree = calculateValue@Degree(m, prop);
-    overlapping_degree = cell(length(l), 1);
+    overlapping_degree = cell(length(ls), 1);
     
     count = 1;
-    for i = 1:1:length(l)
+    for i = 1:1:length(ls)
         overlapping_degree_partition = zeros(N(1), 1);
-        for li = count:1:l(i) + count - 1
+        for li = count:1:ls(i) + count - 1
             overlapping_degree_partition = overlapping_degree_partition + degree{li};
         end
-        count = count + l(i);
+        count = count + ls(i);
         overlapping_degree(i) = {overlapping_degree_partition};
     end
     value = overlapping_degree;
