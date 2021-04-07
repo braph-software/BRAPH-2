@@ -63,11 +63,9 @@ value = IndexedDictionary('IT_CLASS', 'Analysis', 'IT_KEY', 1);
 a_clone
 gr1_clone
 gr1_sub_dict_clone
-g1_clone
 g1_g_dict_clone
 gr2_clone
 gr2_sub_dict_clone
-g2_clone
 g2_g_dict_clone
 
 %% ¡methods!
@@ -92,11 +90,9 @@ function [a1_perm, a2_perm] = getPerm(c, i)
             c.a_clone = c.get('A1').clone();
             c.gr1_clone = c.get('A1').get('GR').clone();
             c.gr1_sub_dict_clone = c.get('A1').get('GR').get('SUB_DICT').clone();
-            c.g1_clone = c.get('A1').get('G').clone();
             c.g1_g_dict_clone = c.get('A1').get('G').get('G_DICT').clone();
             c.gr2_clone = c.get('A1').get('GR').clone();
             c.gr2_sub_dict_clone = c.get('A2').get('GR').get('SUB_DICT').clone();
-            c.g2_clone = c.get('A2').get('G').clone();
             c.g2_g_dict_clone = c.get('A2').get('G').get('G_DICT').clone();
         end
 
@@ -104,7 +100,7 @@ function [a1_perm, a2_perm] = getPerm(c, i)
         a1_perm.set('GR', c.gr1_clone.clone())
         a1_perm.get('GR').set('SUB_DICT', c.gr1_sub_dict_clone.clone())
         a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs1_gs1_perm))
-        a1_perm.set('G', c.g1_clone.clone())
+        a1_perm.memorize('G');
         a1_perm.get('G').set('G_DICT', c.g1_g_dict_clone.clone())
         a1_perm.get('G').get('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs1_gs1_perm))
 
@@ -112,7 +108,7 @@ function [a1_perm, a2_perm] = getPerm(c, i)
         a2_perm.set('GR', c.gr2_clone.clone())
         a2_perm.get('GR').set('SUB_DICT', c.gr2_sub_dict_clone.clone())
         a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs2_gs2_perm))
-        a2_perm.set('G', c.g2_clone.clone())
+        a2_perm.memorize('G');
         a2_perm.get('G').set('G_DICT', c.g2_g_dict_clone.clone())
         a2_perm.get('G').get('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs2_gs2_perm))
     else
