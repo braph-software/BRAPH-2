@@ -22,8 +22,6 @@ function create_Element(generator_file, target_dir)
 %  Related functions and classes is a single line.
 %
 % Only for graphs:
-%  <strong>%%% ¡ensemble!</strong>
-%   Whether graph is ensemble graph (false or true).
 %  <strong>%%% ¡graph!</strong>
 %   Graph type (GRAPH, MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER, MULTILAYER).
 %  <strong>%%% ¡connectivity!</strong>
@@ -163,9 +161,8 @@ disp('¡! generator file read')
         gui = splitlines(getToken(txt, 'header', 'gui'));
     end
 
-[ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
-    function [ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph()
-        ensemble = getToken(txt, 'header', 'ensemble');
+[graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
+    function [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph()
         graph = getToken(txt, 'header', 'graph');
         connectivity = splitlines(getToken(txt, 'header', 'connectivity'));
         directionality = splitlines(getToken(txt, 'header', 'directionality'));
@@ -1113,39 +1110,12 @@ generate_header_graph() % only for graphs
             '\tlayernumber = varargin{1};'
             'end'
             ''};
-        if ~isempty(ensemble) || ...
-                ~isempty(graph) || ...
+        if ~isempty(graph) || ...
                 ~(numel(connectivity) == 1 && isempty(connectivity{1})) || ...
                 ~(numel(directionality) == 1 && isempty(directionality{1})) || ...
                 ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1})) || ...
                 ~(numel(negativity) == 1 && isempty(negativity{1}))
             g(1, 'methods (Static) %% graph methods')
-                if ~isempty(ensemble)
-                    g(2, 'function bool = is_ensemble()')
-                        if element_class_created
-                            if Graph.is_ensemble(class_name)
-                                gs(3, {
-                                     '%IS_ENSEMBLE returns true.'
-                                     '%'
-                                    ['% TRUE = ' class_name '.IS_ENSEMBLE() returns true because ' descriptive_name ' is an ensemble of graphs.']
-                                     '%'
-                                     '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
-                                     ''
-                                    })
-                            else
-                                gs(3, {
-                                     '%IS_ENSEMBLE returns false.'
-                                     '%'
-                                    ['% FALSE = ' class_name '.IS_ENSEMBLE() returns false because ' descriptive_name ' is not an ensemble of graphs.']
-                                     '%'
-                                     '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
-                                     ''
-                                    })
-                            end
-                        end
-                        g(3, ['bool = ' ensemble ';'])
-                    g(2, 'end')
-                end
                 if ~isempty(graph)
                     g(2, 'function graph = getGraphType()')
                         if element_class_created
@@ -1157,7 +1127,7 @@ generate_header_graph() % only for graphs
                                  '%'
                                 ['% ' int2str(graph_type) ' = ' class_name '.GETGRAPHTYPE() returns the type of graph (' graph_type_name ').']
                                  '%'
-                                 '% See also is_ensemble, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+                                 '% See also getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
                                  ''
                                 })
                         end                    
@@ -1178,7 +1148,7 @@ generate_header_graph() % only for graphs
                                 ['% ' int2str(graph_connectivity) ' = ' class_name '.GETCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix with the ']
                                  '%  connectivity type of each layer in a multiple layer graph.'
                                  '%'
-                                '% See also is_ensemble, getGraphType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+                                '% See also getGraphType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
                                 ''
                                 })
                         end
@@ -1201,7 +1171,7 @@ generate_header_graph() % only for graphs
                                 ['% ' int2str(graph_directionality) ' = ' class_name '.GETDIRECTIONALITYTYPE(LAYERNUMBER) returns a matrix with ']
                                  '%  the directionality type of each layer.'
                                  '%'
-                                 '% See also is_ensemble, getGraphType, getConnectivityType, getSelfConnectivityType, getNegativityType.'
+                                 '% See also getGraphType, getConnectivityType, getSelfConnectivityType, getNegativityType.'
                                  ''
                                 })    
                         end
@@ -1223,7 +1193,7 @@ generate_header_graph() % only for graphs
                                 ['% ' int2str(graph_selfconnectivity) ' = ' class_name '.GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix ']
                                  '%  with the self-connectivity type of each layer.'
                                  '%'
-                                 '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
+                                 '% See also getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
                                  ''
                                 })
                         end
@@ -1245,7 +1215,7 @@ generate_header_graph() % only for graphs
                                 ['% ' int2str(graph_negativity) ' = ' class_name '.GETNEGATIVITYTYPE(LAYERNUMBER) returns a matrix ']
                                  '%  with the negativity type of each layer.'
                                  '%'
-                                 '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType.'
+                                 '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType.'
                                  ''
                                 })
                         end

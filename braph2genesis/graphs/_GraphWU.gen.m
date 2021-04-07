@@ -1,13 +1,11 @@
 %% ¡header!
-GraphWD < Graph (g, weighted directed graph) is a weighted directed graph.
+GraphWU < Graph (g, weighted undirected graph) is a weighted undirected graph.
 
 %%% ¡description!
-In a weighted directed (WD) graph, 
+In a weighted undirected (WU) graph, 
 the edges are associated with a real number between 0 and 1 
-indicating the strength of the connection, and they are directed.
-
-%%% ¡ensemble!
-false
+indicating the strength of the connection, and are undirected.
+The connectivity matrix is symmetric.
 
 %%% ¡graph!
 graph = Graph.GRAPH;
@@ -16,7 +14,7 @@ graph = Graph.GRAPH;
 connectivity = Graph.WEIGHTED;
 
 %%% ¡directionality!
-directionality = Graph.DIRECTED;
+directionality = Graph.UNDIRECTED;
 
 %%% ¡selfconnectivity!
 selfconnectivity = Graph.NONSELFCONNECTED;
@@ -32,11 +30,12 @@ B (data, smatrix) is the input graph adjacency matrix.
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, cell) is the non-negative adjacency matrix of the weighted directed graph.
+A (result, cell) is the symmetric non-negative adjacency matrix of the weighted undirected graph.
 %%%% ¡calculate!
 B = g.get('B');
 
-varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, standardize
+varargin = {}; %% TODO add props to manage the relevant properties of symmetrize, dediagonalize, semipositivize, standardize
+B = symmetrize(B, varargin{:}); %% enforces symmetry of adjacency matrix
 B = dediagonalize(B, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
 B = semipositivize(B, varargin{:}); %% removes negative weights
 B = standardize(B, varargin{:}); %% ensures all weights are between 0 and 1
@@ -51,10 +50,10 @@ value = A;
 Constructor
 %%%% ¡code!
 B = rand(randi(10));
-g = GraphWD('B', B);
+g = GraphWU('B', B);
 
-A = {standardize(semipositivize(dediagonalize(B)))};
+A = {standardize(symmetrize(semipositivize(dediagonalize(B))))};
 
 assert(isequal(g.get('A'), A), ...
-    [BRAPH2.STR ':GraphWD:' BRAPH2.BUG_ERR], ...
-    'GraphWD is not constructing well.')
+    [BRAPH2.STR ':GraphWU:' BRAPH2.BUG_ERR], ...
+    'GraphWU is not constructing well.')

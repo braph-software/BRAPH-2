@@ -1,20 +1,16 @@
 %% ¡header!
-GraphBD < Graph (g, binary directed graph) is a binary directed graph.
+GraphWD < Graph (g, weighted directed graph) is a weighted directed graph.
 
 %%% ¡description!
-In a binary directed (BD) graph, 
-the edges can be either 0 (absence of connection) 
-or 1 (existence of connection), 
-and they are directed.
-
-%%% ¡ensemble!
-false
+In a weighted directed (WD) graph, 
+the edges are associated with a real number between 0 and 1 
+indicating the strength of the connection, and they are directed.
 
 %%% ¡graph!
 graph = Graph.GRAPH;
 
 %%% ¡connectivity!
-connectivity = Graph.BINARY;
+connectivity = Graph.WEIGHTED;
 
 %%% ¡directionality!
 directionality = Graph.DIRECTED;
@@ -33,14 +29,14 @@ B (data, smatrix) is the input graph adjacency matrix.
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, cell) is the binary adjacency matrix of the binary directed graph.
+A (result, cell) is the non-negative adjacency matrix of the weighted directed graph.
 %%%% ¡calculate!
 B = g.get('B');
 
-varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, binarize
+varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, standardize
 B = dediagonalize(B, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
 B = semipositivize(B, varargin{:}); %% removes negative weights
-B = binarize(B, varargin{:}); %% enforces binary adjacency matrix
+B = standardize(B, varargin{:}); %% ensures all weights are between 0 and 1
 
 A = {B};
 value = A;
@@ -52,10 +48,10 @@ value = A;
 Constructor
 %%%% ¡code!
 B = rand(randi(10));
-g = GraphBD('B', B);
+g = GraphWD('B', B);
 
-A = {binarize(semipositivize(dediagonalize(B)))};
+A = {standardize(semipositivize(dediagonalize(B)))};
 
 assert(isequal(g.get('A'), A), ...
-    [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_ERR], ...
-    'GraphBD is not constructing well.')
+    [BRAPH2.STR ':GraphWD:' BRAPH2.BUG_ERR], ...
+    'GraphWD is not constructing well.')
