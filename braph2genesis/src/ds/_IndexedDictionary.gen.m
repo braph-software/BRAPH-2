@@ -16,12 +16,12 @@ Element
 ID (data, string) is a few-letter code.
 
 %%% ¡prop!
-IT_CLASS (data, class) is the class of the item elements.
+IT_CLASS (parameter, class) is the class of the item elements.
 %%%% ¡default!
 'IndexedDictionary'
 
 %%% ¡prop!
-IT_KEY (data, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string).
+IT_KEY (parameter, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string).
 %%%% ¡default!
 1
 %%%% ¡check_value!
