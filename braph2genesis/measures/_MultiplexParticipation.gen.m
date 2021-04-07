@@ -21,6 +21,8 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWU
 
 %% ¡props_update!
@@ -29,23 +31,28 @@ MultiplexWU
 M (result, cell) is the multiplex participation.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-L = g.layernumber();
+[l, ls] = g.layernumber();
 
-if L == 0
+if l == 0
     value = {};
 else
-    
     N = g.nodenumber();
     degree = Degree('G', g).get('M');
     overlapping_degree = OverlappingDegree('G', g).get('M'); 
-    multiplex_participation =  zeros(N(1), 1);
+    multiplex_participation = cell(length(ls), 1);
 
-    for li = 1:1:L
-        multiplex_participation = multiplex_participation + (degree{li}./overlapping_degree{1}).^2;
+    count = 1;
+    for i = 1:1:length(ls)
+        multiplex_participation_partition = zeros(N(1), 1);
+        for li = count:1:ls(i) + count - 1
+            multiplex_participation_partition = multiplex_participation_partition + (degree{li}./overlapping_degree{i}).^2;
+        end
+        multiplex_participation_partition = ls(i) / (ls(i) - 1) * (1 - multiplex_participation_partition);
+        multiplex_participation_partition(isnan(multiplex_participation_partition)) = 0;  % Should return zeros, since NaN happens when strength = 0 and overlapping strength = 0 for all regions
+        count = count + ls(i);
+        multiplex_participation(i) = {multiplex_participation_partition};
     end
-    multiplex_participation = L / (L - 1) * (1 - multiplex_participation);
-    multiplex_participation(isnan(multiplex_participation)) = 0;  % Should return zeros, since NaN happens when strength = 0 and overlapping strength = 0 for all regions
-    value = {multiplex_participation};
+    value = multiplex_participation;
 end
 
 %% ¡tests!
@@ -69,11 +76,39 @@ B = {B11  B22};
 known_multiplex_participation = {[8/9 8/9 1]'};
 
 g = MultiplexBU('B', B);
-multiplex_participation = MultiplexParticipation('G', g);
+multiplex_participation_partition = MultiplexParticipation('G', g);
 
-assert(isequal(multiplex_participation.get('M'), known_multiplex_participation), ...
+assert(isequal(multiplex_participation_partition.get('M'), known_multiplex_participation), ...
     [BRAPH2.STR ':MultiplexParticipation:' BRAPH2.BUG_ERR], ...
     'MultiplexParticipation is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+B = {B11  B22};
+
+known_multiplex_participation = {...
+                                [8/9 8/9 1]'
+                                [0, 0, 0]'
+                                };
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+multiplex_participation_partition = MultiplexParticipation('G', g);
+
+assert(isequal(multiplex_participation_partition.get('M'), known_multiplex_participation), ...
+    [BRAPH2.STR ':MultiplexParticipation:' BRAPH2.BUG_ERR], ...
+    'MultiplexParticipation is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -94,8 +129,8 @@ B = {B11  B22};
 known_multiplex_participation = {[8/9 8/9 1]'};
 
 g = MultiplexWU('B', B);
-multiplex_participation = MultiplexParticipation('G', g);
+multiplex_participation_partition = MultiplexParticipation('G', g);
 
-assert(isequal(multiplex_participation.get('M'), known_multiplex_participation), ...
+assert(isequal(multiplex_participation_partition.get('M'), known_multiplex_participation), ...
     [BRAPH2.STR ':MultiplexParticipation:' BRAPH2.BUG_ERR], ...
     'MultiplexParticipation is not being calculated correctly for MultiplexWU.')

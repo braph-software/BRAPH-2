@@ -16,6 +16,8 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWU
 
 %% ¡props_update!
@@ -24,9 +26,20 @@ MultiplexWU
 M (result, cell) is the average multiplex participation.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
+[l, ls] = g.layernumber();
 
-multiplex_participation_av = calculateValue@MultiplexParticipation(m, prop);	
-value = {mean(cell2mat(multiplex_participation_av))};
+if l == 0
+    value = {};
+else
+    multiplex_participation = calculateValue@MultiplexParticipation(m, prop);
+    multiplex_participation_av = cell(length(ls), 1);
+
+    for i=1:length(ls)
+        multiplex_participation_av(i) = {mean(multiplex_participation{i})};
+    end
+    value = multiplex_participation_av;
+end
+
 
 %% ¡tests!
 
@@ -54,6 +67,34 @@ multiplex_participation_av = MultiplexParticipationAv('G', g);
 assert(isequal(multiplex_participation_av.get('M'), known_multiplex_participation_av), ...
     [BRAPH2.STR ':MultiplexParticipationAv:' BRAPH2.BUG_ERR], ...
     'MultiplexParticipationAv is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+B = {B11  B22};
+
+known_multiplex_participation_av = {...
+                                mean([8/9 8/9 1])
+                                0
+                                };
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+multiplex_participation_partition_av = MultiplexParticipationAv('G', g);
+
+assert(isequal(multiplex_participation_partition_av.get('M'), known_multiplex_participation_av), ...
+    [BRAPH2.STR ':MultiplexParticipationAv:' BRAPH2.BUG_ERR], ...
+    'MultiplexParticipationAv is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!

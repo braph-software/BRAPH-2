@@ -28,7 +28,7 @@ M (result, cell) is the overlapping degree.
 g = m.get('G'); % graph from measure class
 [l, ls] = g.layernumber();
 
-if ls == 0
+if l == 0
     value = {};
 else
     N = g.nodenumber();
