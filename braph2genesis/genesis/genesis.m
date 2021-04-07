@@ -203,7 +203,9 @@ disp('¡! copied ready files - brainsurf')
 disp(' ')
 
 % workflows
-copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST.m'])
+copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST_WU.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST_WU.m'])
+% copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST_BUT.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST_BUT.m'])
+% copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST_BUD.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST_BUD.m'])
 mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)'])
 copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'])
 mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'xls'])
@@ -214,7 +216,9 @@ copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' f
 copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'txt' fp 'ST_group2.txt'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'txt' fp 'ST_group2.txt'])
 disp('¡! copied ready files - workflow structural')
 
-copyfile([source_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'], [target_dir fp 'workflows' fp 'functional' fp 'example_FUN.m'])
+% copyfile([source_dir fp 'workflows' fp 'functional' fp 'example_FUN_WU.m'], [target_dir fp 'workflows' fp 'functional' fp 'example_FUN_WU.m'])
+% copyfile([source_dir fp 'workflows' fp 'functional' fp 'example_FUN_BUT.m'], [target_dir fp 'workflows' fp 'functional' fp 'example_FUN_BUT.m'])
+% copyfile([source_dir fp 'workflows' fp 'functional' fp 'example_FUN_BUD.m'], [target_dir fp 'workflows' fp 'functional' fp 'example_FUN_BUD.m'])
 mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)'])
 copyfile([source_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'desikan_atlas.xlsx'])
 mkdir([target_dir fp 'workflows' fp 'functional' fp 'example data FUN (fMRI)' fp 'xls'])
@@ -237,7 +241,9 @@ for i = 11:1:20
 end
 disp('¡! copied ready files - workflow functional')
 
-copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON.m'])
+% copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_WU.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_WU.m'])
+% copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUT.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUT.m'])
+% copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUD.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUD.m'])
 mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)'])
 copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'])
 mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls'])
