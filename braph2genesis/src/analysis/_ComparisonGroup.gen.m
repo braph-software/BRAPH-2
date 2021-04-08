@@ -118,7 +118,7 @@ function [p1, p2, ci_lower, ci_upper, m1, m2, diff, m1_perms, m2_perms, diff_per
             a1_perm = a1_perm_dict.getItem(i);
             a2_perm = a2_perm_dict.getItem(i);
         else    
-            % perutation
+            % permutation
             seeds = c.get('PERM_SEEDS');
             rng(seeds(i), 'twister')
 
