@@ -19,10 +19,14 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
-MultiplexBD
-MultiplexBU
-MultiplexWD
+MultigraphBUD
+MultigraphBUT
 MultiplexWU
+MultiplexWD
+MultiplexBU
+MultiplexBUD
+MultiplexBUT
+MultiplexBD
 
 %% ¡props_update!
 
@@ -33,7 +37,7 @@ g = m.get('G'); % graph from measure class
 clustering  = calculateValue@Clustering(m, prop);
 
 clustering_av = cell(g.layernumber(), 1);
-for li = 1:1:length(clustering_av)
+for li = 1:1:length(clustering)
     clustering_av(li) = {mean(clustering{li})};
 end
 
@@ -77,6 +81,31 @@ assert(isequal(clustering_1, clustering_2), ...
 
 %%% ¡test!
 %%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0 1 1 1; 
+    1 0 1 0; 
+    1 1 0 1; 
+    1 0 1 0
+    ];
+
+thresholds = [0 1];
+
+known_clustering_av = {
+    mean([2/3 1 2/3 1])
+    0   
+    };
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+
+clustering_av = ClusteringAv('G', g).get('M');
+assert(isequal(clustering_av, known_clustering_av), ...
+    [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
+    'ClusteringAv is not being calculated correctly for MultigraphBUT')
+
+%%% ¡test!
+%%%% ¡name!
 MultiplexBU
 %%%% ¡code!
 B11 = [
@@ -104,3 +133,36 @@ clustering_av = ClusteringAv('G', g);
 assert(isequal(clustering_av.get('M'), known_clustering_av), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
     'ClusteringAv is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B22 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B  = {B11 B22};
+
+thresholds = [0 1];
+known_clustering_av = {
+                 mean([2/3 1 2/3 1])
+                 mean([2/3 1 2/3 1])
+                 0 
+                 0 
+                 };      
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', thresholds);
+clustering_av = ClusteringAv('G', g);
+
+assert(isequal(clustering_av.get('M'), known_clustering_av), ...
+    [BRAPH2.STR ':ClusteringAv:' BRAPH2.BUG_ERR], ...
+    'ClusteringAv is not being calculated correctly for MultiplexBUT.')

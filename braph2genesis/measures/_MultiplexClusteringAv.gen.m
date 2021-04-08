@@ -27,11 +27,20 @@ MultiplexBU
 %%% ¡prop!
 M (result, cell) is the average multiplex clustering.
 %%%% ¡calculate!
-multiplex_clustering = calculateValue@MultiplexClustering(m, prop);
+g = m.get('G');  % graph from measure class
+[l, ls] = g.layernumber();
 
-multiplex_clustering_av = {mean(cell2mat(multiplex_clustering))};
+if l == 0
+    value = {};
+else
+    multiplex_clustering = calculateValue@MultiplexClustering(m, prop);
+    multiplex_clustering_av = cell(length(ls), 1);
 
-value = multiplex_clustering_av;
+    for i=1:length(ls)
+        multiplex_clustering_av(i) = {mean(multiplex_clustering{i})};
+    end
+    value = multiplex_clustering_av;
+end
 
 %% ¡tests!
 
@@ -65,6 +74,38 @@ multiplex_clustering_av = MultiplexClusteringAv('G', g);
 assert(isequal(multiplex_clustering_av.get('M'), known_multiplex_clustering_av), ...
     [BRAPH2.STR ':MultiplexClusteringAv:' BRAPH2.BUG_ERR], ...
     'MultiplexClusteringAv is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 0;
+      1 0 0 0
+      ];
+B22 = [
+      0 1 1 1;
+      1 0 0 0;
+      1 0 0 0;
+      1 0 0 0
+      ];
+B = {B11 B22};
+
+known_multiplex_clustering = [2 2 2 0]'./ [12, 2, 2, 0]';
+known_multiplex_clustering(isnan(known_multiplex_clustering)) = 0;
+known_multiplex_clustering_av = {
+                 mean(known_multiplex_clustering)
+                 0
+                 };      
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+multiplex_clustering_av = MultiplexClusteringAv('G', g);
+
+assert(isequal(multiplex_clustering_av.get('M'), known_multiplex_clustering_av), ...
+    [BRAPH2.STR ':MultiplexClusteringAv:' BRAPH2.BUG_ERR], ...
+    'MultiplexClusteringAv is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!

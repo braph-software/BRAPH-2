@@ -22,6 +22,8 @@ MultigraphBUD
 MultigraphBUT
 MultiplexWU
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 
 %% ¡props_update!
 
@@ -101,7 +103,7 @@ B = [
 
 thresholds = [0 .5 1];
 
-known_degree = { ...
+known_degree_av = { ...
     mean([2 1 1])
     mean([1 0 1])
     mean([0 0 0])
@@ -110,12 +112,12 @@ known_degree = { ...
 g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
 
 m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
+assert(isequal(m_outside_g.get('M'), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
     'DegreeAv is not being calculated correctly for MultigraphBUT.')
 
 m_inside_g = g.getMeasure('DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
+assert(isequal(m_inside_g.get('M'), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
     'DegreeAv is not being calculated correctly for MultigraphBUT.')
 
@@ -131,7 +133,7 @@ B = [
 
 densities = [0 33 67 100];
 
-known_degree = { ...
+known_degree_av = { ...
     mean([0 0 0])
     mean([1 0 1])
     mean([2 1 1])
@@ -141,12 +143,12 @@ known_degree = { ...
 g = MultigraphBUD('B', B, 'DENSITIES', densities);
 
 m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
+assert(isequal(m_outside_g.get('M'), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
     'DegreeAv is not being calculated correctly for MultigraphBUD.')
 
 m_inside_g = g.getMeasure('DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
+assert(isequal(m_inside_g.get('M'), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
     'DegreeAv is not being calculated correctly for MultigraphBUD.')
 
@@ -166,7 +168,7 @@ B22 = [
     ];
 B = {B11 B22};
 
-known_degree = {
+known_degree_av = {
     mean([2 1 1])
     mean([1 2 1])
     };
@@ -174,9 +176,39 @@ known_degree = {
 g = MultiplexBU('B', B);
 degree_av = DegreeAv('G', g);
 
-assert(isequal(degree_av.get('M'), known_degree), ...
+assert(isequal(degree_av.get('M'), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
     'DegreeAv is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+B = {B11 B22};
+
+known_degree_av = {
+    mean([2 1 1])
+    mean([1 2 1])
+    0
+    0
+    };
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+degree_av = DegreeAv('G', g);
+
+assert(isequal(degree_av.get('M'), known_degree_av), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
+    'DegreeAv is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -194,7 +226,7 @@ B22 = [
     ];
 B= {B11 B22};
 
-known_degree = {
+known_degree_av = {
     mean([2 1 1])
     mean([1 2 1])
     };
@@ -202,6 +234,6 @@ known_degree = {
 g = MultiplexWU('B', B);
 degree_av = DegreeAv('G', g);
 
-assert(isequal(degree_av.get('M'), known_degree), ...
+assert(isequal(degree_av.get('M'), known_degree_av), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
     'DegreeAv is not being calculated correctly for MultiplexWU.')

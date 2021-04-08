@@ -21,9 +21,13 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
+MultigraphBUD
+MultigraphBUT
 MultiplexWU
 MultiplexWD
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexBD
 
 %% ¡props_update!
@@ -107,6 +111,31 @@ assert(isequal(clustering_1, clustering_2), ...
 
 %%% ¡test!
 %%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0 1 1 1; 
+    1 0 1 0; 
+    1 1 0 1; 
+    1 0 1 0
+    ];
+
+thresholds = [0 1];
+
+known_clustering = {
+    [2/3 1 2/3 1]'
+    [0   0 0   0]'
+    };
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+
+clustering = Clustering('G', g).get('M');
+assert(isequal(clustering, known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for MultigraphBUT')
+
+%%% ¡test!
+%%%% ¡name!
 MultiplexBU
 %%%% ¡code!
 B11 = [
@@ -134,6 +163,39 @@ clustering = Clustering('G', g);
 assert(isequal(clustering.get('M'), known_clustering), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
     'Clustering is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B22 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B  = {B11 B22};
+
+thresholds = [0 1];
+known_clustering = {
+                 [2/3 1 2/3 1]'
+                 [2/3 1 2/3 1]'
+                 [0 0 0 0]'
+                 [0 0 0 0]'
+                 };      
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', thresholds);
+clustering = Clustering('G', g);
+
+assert(isequal(clustering.get('M'), known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.BUG_ERR], ...
+    'Clustering is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!

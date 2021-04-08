@@ -18,10 +18,14 @@ parametricity = Measure.PARAMETRIC;
 %%% ¡compatible_graphs!
 GraphBD
 GraphBU
+MultigraphBUD
+MultigraphBUT
 GraphWD
 GraphWU
 MultiplexBD
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWD
 MultiplexWU
 
@@ -110,6 +114,27 @@ assert(isequal(richclubdegree.get('M'), known_richclubdegree), ...
     [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
     'RichClubDegree is not being calculated correctly for GraphBU.')
 
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+     0  1  1  0; 
+    1  0  1  1; 
+    1  1  0  0;
+    0  1  0  0
+    ];
+
+known_richclubdegree = {
+                        [2 2 2 0]'
+                        [0 0 0 0]'};
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', [0 1]);
+
+richclubdegree = RichClubDegree('G', g);
+assert(isequal(richclubdegree.get('M'), known_richclubdegree), ...
+    [BRAPH2.STR ':RichClubDegree:' BRAPH2.BUG_ERR], ...
+    'RichClubDegree is not being calculated correctly for MultigraphBUT.')
 
 %%% ¡test!
 %%%% ¡name!

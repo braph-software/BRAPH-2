@@ -23,6 +23,8 @@ MultigraphBUD
 MultigraphBUT
 MultiplexWU
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 
 %% ¡props_update!
 
@@ -158,6 +160,38 @@ assortativity = Assortativity('G', g);
 assert(isequal(assortativity.get('M'), known_assortativity), ...
     [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
     'Assortativity is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+      1  1  0  0  1;
+      1  1  1  1  0;
+      0  1  1  1  0;
+      0  1  1  1  1;
+      1  0  0  1  0];
+B22 = [
+      1  1  0  0  1;
+      1  1  1  1  0;
+      0  1  1  1  0;
+      0  1  1  1  1;
+      1  0  0  1  0];
+B = {B11 B22};
+
+known_assortativity = {
+                    (37/6-(15/6)^2)/(39/6-(15/6)^2)
+                    (37/6-(15/6)^2)/(39/6-(15/6)^2)
+                    0
+                    0
+                    };
+                
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+assortativity = Assortativity('G', g);
+
+assert(isequal(assortativity.get('M'), known_assortativity), ...
+    [BRAPH2.STR ':Assortativity:' BRAPH2.BUG_ERR], ...
+    'Assortativity is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!
