@@ -7,9 +7,6 @@ the edges can be either 0 (absence of connection)
 or 1 (existence of connection), and they are undirected. 
 The connectivity matrix is symmetric.
 
-%%% ¡ensemble!
-false
-
 %%% ¡graph!
 graph = Graph.GRAPH;
 
