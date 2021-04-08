@@ -19,6 +19,8 @@ parametricity = Measure.PARAMETRIC;
 %%% ¡compatible_graphs!
 MultiplexBD
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWD
 MultiplexWU
 
@@ -36,9 +38,9 @@ M (result, cell) is the multi rich-club degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 rich_club_degree = calculateValue@RichClubDegree(m, prop);   
-L = g.layernumber();
+[l, ls] = g.layernumber();
 
-if L == 0
+if l == 0
     value = {};
 else
     
@@ -47,7 +49,7 @@ else
     richclub_threshold = m.get('PARAMETRIC_VALUE'); % klevel
 
     multirichclub_coefficients = m.get('MULTIRICHCLUB_COEFFICIENTS');
-    if length(multirichclub_coefficients) == L
+    if length(multirichclub_coefficients) == ls(1)
         assert(all(multirichclub_coefficients <= 1) && all(multirichclub_coefficients >= 0), ...
             [BRAPH2.STR ':MultiRichClubDegree:' BRAPH2.WRONG_INPUT], ...
             ['MultiRichClubDegree coefficients must be between 0 and 1 ' ...
@@ -55,18 +57,24 @@ else
         c = multirichclub_coefficients;
 
     else  % same relevance for each layer
-        c = ones(1, L)/L;
+        c = ones(1, l)/ls(1);
     end
 
-    multi_rich_club_degree = zeros(N(1), 1, richclub_threshold);
-    for li = 1:1:L
-        ri = rich_club_degree{li};  % to fix when making this measure also parametric
-        % loop over the 3rd dimension of rich club degree (k_level)
-        for k = 1:1:richclub_threshold
-            multi_rich_club_degree(:, :, k) = multi_rich_club_degree(:, :, k) + c(li)*ri(:, :, k);
+    multi_rich_club_degree = cell(length(ls), 1);
+    count = 1;
+    for i = 1:1:length(ls)
+        multi_rich_club_degree_partition = zeros(N(1), 1, richclub_threshold);
+        for li = count:1:ls(i) + count - 1
+            ri = rich_club_degree{li};  % to fix when making this measure also parametric
+            % loop over the 3rd dimension of rich club degree (k_level)
+            for k = 1:1:richclub_threshold
+                multi_rich_club_degree_partition(:, :, k) = multi_rich_club_degree_partition(:, :, k) + c(li)*ri(:, :, k);
+            end
         end
+        count = count + ls(i);
+        multi_rich_club_degree(i) = {multi_rich_club_degree_partition};
     end
-    value = {multi_rich_club_degree};
+    value = multi_rich_club_degree;
 end
 
 %% ¡tests!
@@ -97,6 +105,35 @@ multi_rich_club_degree = MultiRichClubDegree('G', g).get('M');
 assert(isequal(multi_rich_club_degree, known_multi_rich_club_degree), ...
     [BRAPH2.STR ':MultiRichClubDegree:' BRAPH2.BUG_ERR], ...
     'MultiRichClubDegree is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+    0  1  1  0; 
+    1  0  1  1; 
+    1  1  0  0;
+    0  1  0  0
+    ];
+B22 = [
+    0  1  1  1; 
+    1  0  1  1; 
+    1  1  0  0;
+    1  1  0  0
+    ];
+B = {B11 B22};
+
+known_multi_rich_club_degree = {
+                                [5/2 5/2  2  1]'
+                                [0   0    0  0]'};
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+multi_rich_club_degree = MultiRichClubDegree('G', g).get('M');
+
+assert(isequal(multi_rich_club_degree, known_multi_rich_club_degree), ...
+    [BRAPH2.STR ':MultiRichClubDegree:' BRAPH2.BUG_ERR], ...
+    'MultiRichClubDegree is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!

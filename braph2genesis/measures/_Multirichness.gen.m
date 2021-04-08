@@ -19,6 +19,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 MultiplexBD
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWD
 MultiplexWU
 
@@ -35,20 +37,20 @@ M (result, cell) is the multirichness.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 richness = calculateValue@Richness(m, prop);
-L = g.layernumber();
+[l, ls] = g.layernumber();
 
-if L == 0
+if l == 0
     value = {};
 else
     N = g.nodenumber();
 
     multirichness_coefficients = m.get('MULTIRICHNESS_COEFFICIENTS');
-    assert(length(multirichness_coefficients) == L || all(multirichness_coefficients == 0), ...
+    assert(length(multirichness_coefficients) == ls(1) || all(multirichness_coefficients == 0), ...
         [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
         ['Multirichness coefficients must have the same length than the ' ...
-        'number of layers (' tostring(L) ') while its length is ' tostring(length(multirichness_coefficients))])
+        'number of layers (' tostring(ls(1)) ') while its length is ' tostring(length(multirichness_coefficients))])
 
-    if length(multirichness_coefficients) == L
+    if length(multirichness_coefficients) == ls(1)
         assert(all(multirichness_coefficients <= 1) && all(multirichness_coefficients >= 0), ...
             [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
             ['Multirichness coefficients must be between 0 and 1 ' ...
@@ -56,14 +58,19 @@ else
         c = multirichness_coefficients;
 
     else  % same relevance for each layer
-        c = ones(1, L)/L;
+        c = ones(1, l)/ls(1);
     end
-
-    multirichness = zeros(N(1), 1);
-    for li = 1:1:L
-        multirichness = multirichness + c(li)*richness{li};  
+    multirichness = cell(length(ls), 1);
+    count = 1;
+    for i = 1:1:length(ls)
+        multirichness_partition = zeros(N(1), 1);
+        for li = count:1:ls(i) + count - 1
+            multirichness_partition = multirichness_partition + c(li)*richness{li};
+        end
+        count = count + ls(i);
+        multirichness(i) = {multirichness_partition};
     end
-    value = {multirichness};
+    value = multirichness;
 end
 
 %% ¡tests!
@@ -95,6 +102,37 @@ multirichness = Multirichness('G', g).get('M');
 assert(isequal(multirichness, known_multirichness), ...
     [BRAPH2.STR ':Multirichness:' BRAPH2.BUG_ERR], ...
     'Multirichness is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+    0  1  1  0; 
+    1  0  1  1; 
+    1  1  0  0;
+    0  1  0  0
+    ];
+
+B22 = [
+    0  1  1  1; 
+    1  0  1  1; 
+    1  1  0  0;
+    1  1  0  0
+    ];
+B = {B11 B22};
+
+known_multirichness = {
+                        [1/2  0   3/2  3/2]'
+                        [0    0   0    0]'
+                        };      
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+multirichness = Multirichness('G', g).get('M');
+
+assert(isequal(multirichness, known_multirichness), ...
+    [BRAPH2.STR ':Multirichness:' BRAPH2.BUG_ERR], ...
+    'Multirichness is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!

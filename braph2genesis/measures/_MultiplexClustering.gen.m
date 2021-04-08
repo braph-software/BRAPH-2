@@ -21,6 +21,8 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 MultiplexWU
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 
 %% ¡props_update!
 
@@ -29,26 +31,32 @@ M (result, cell) is the multiplex clustering.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.) 
-L = g.layernumber();
+[l, ls] = g.layernumber();
 
-if L == 0
+if l == 0
     value = {};
 else
     N = g.nodenumber();            
     multiplex_triangles = calculateValue@MultiplexTriangles(m, prop);
     degree = Degree('G', g).get('M');
-
-    multiplex_clustering_degree = zeros(N(1), 1);
-    for i=1:1:L-1
-        k1 = degree{i};
-        for j=i+1:1:L
-            k2 = degree{j};
-            multiplex_clustering_degree = multiplex_clustering_degree + (k1 .* (k1 - 1) + k2 .* (k2 - 1));
+    
+    multiplex_clustering = cell(length(ls), 1);
+    count = 1;
+    for p = 1:1:length(ls)
+        multiplex_clustering_degree = zeros(N(1), 1);
+        for i = count:1:ls(p) + count - 2
+            k1 = degree{i};
+            for j=i+1:1:ls(p)
+                k2 = degree{j};
+                multiplex_clustering_degree = multiplex_clustering_degree + (k1 .* (k1 - 1) + k2 .* (k2 - 1));
+            end
         end
+        multiplex_clustering_partition = multiplex_triangles{p}./ ((ls(p)-1)*multiplex_clustering_degree);
+        multiplex_clustering_partition(isnan(multiplex_clustering_partition)) = 0;  % Should return zeros, not NaN
+        count = count + ls(p);
+        multiplex_clustering(p) = {multiplex_clustering_partition};
     end
-    multiplex_clustering = multiplex_triangles{1}./ ((L-1)*multiplex_clustering_degree);
-    multiplex_clustering(isnan(multiplex_clustering)) = 0;  % Should return zeros, not NaN
-    value = {multiplex_clustering}; 
+    value = multiplex_clustering; 
 end
 
 %% ¡tests!
@@ -83,6 +91,38 @@ multiplex_clustering = MultiplexClustering('G', g);
 assert(isequal(multiplex_clustering.get('M'), known_multiplex_clustering), ...
     [BRAPH2.STR ':MultiplexClustering:' BRAPH2.BUG_ERR], ...
     'MultiplexClustering is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 0;
+      1 0 0 0
+      ];
+B22 = [
+      0 1 1 1;
+      1 0 0 0;
+      1 0 0 0;
+      1 0 0 0
+      ];
+B = {B11 B22};
+
+known_multiplex_clustering = [2 2 2 0]'./ [12, 2, 2, 0]';
+known_multiplex_clustering(isnan(known_multiplex_clustering)) = 0;
+known_multiplex_clustering = {
+                 known_multiplex_clustering
+                 [0 0 0 0]'
+                 };      
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+multiplex_clustering = MultiplexClustering('G', g);
+
+assert(isequal(multiplex_clustering.get('M'), known_multiplex_clustering), ...
+    [BRAPH2.STR ':MultiplexClustering:' BRAPH2.BUG_ERR], ...
+    'MultiplexClustering is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!

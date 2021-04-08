@@ -17,10 +17,14 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphBD
 GraphBU
+MultigraphBUD
+MultigraphBUT
 GraphWD
 GraphWU
 MultiplexBD
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWD
 MultiplexWU
 
@@ -88,7 +92,7 @@ value = richness;
 %%%% ¡name!
 GraphBU
 %%%% ¡code!
-A = [
+B = [
     0  1  1  0; 
     1  0  1  1; 
     1  1  0  0;
@@ -97,12 +101,35 @@ A = [
 
 known_richness = {[1 0 1 1]'};
 
-g = GraphBU('B', A);
+g = GraphBU('B', B);
+
 richness = Richness('G', g).get('M');
 
 assert(isequal(richness, known_richness), ...
     [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
     'Richness is not being calculated correctly for GraphBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0  1  1  0; 
+    1  0  1  1; 
+    1  1  0  0;
+    0  1  0  0
+    ];
+
+known_richness = {
+                 [1 0 1 1]'
+                 [0 0 0 0]'};
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', [0 1]);
+richness = Richness('G', g).get('M');
+
+assert(isequal(richness, known_richness), ...
+    [BRAPH2.STR ':Richness:' BRAPH2.BUG_ERR], ...
+    'Richness is not being calculated correctly for MultigraphBUT.')
 
 %%% ¡test!
 %%%% ¡name!
