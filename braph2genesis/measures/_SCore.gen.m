@@ -93,7 +93,7 @@ known_score = {[
                 ]};
 
 g = GraphWU('B', A);
-score = Score('G', g, 'SCoreThreshold', 1.5).get('M');
+score = SCore('G', g, 'SCoreThreshold', 1.5).get('M');
 
 assert(isequal(score, known_score), ...
     [BRAPH2.STR ':SCore:' BRAPH2.BUG_ERR], ...
@@ -118,7 +118,7 @@ known_score = {[
                 ]};
 
 g = GraphWD('B', A);
-score = Score('G', g, 'SCoreThreshold', 3).get('M');
+score = SCore('G', g, 'SCoreThreshold', 3).get('M');
 
 assert(isequal(score, known_score), ...
     [BRAPH2.STR ':SCore:' BRAPH2.BUG_ERR], ...
@@ -157,7 +157,7 @@ known_score(2, 1) = {[
                 ]};            
 
 g = MultiplexWU('B', A);
-score = Score('G', g, 'SCoreThreshold', 1.5).get('M');
+score = SCore('G', g, 'SCoreThreshold', 1.5).get('M');
 
 assert(isequal(score, known_score), ...
     [BRAPH2.STR ':SCore:' BRAPH2.BUG_ERR], ...
