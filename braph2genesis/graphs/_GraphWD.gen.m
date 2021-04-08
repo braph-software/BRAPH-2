@@ -6,9 +6,6 @@ In a weighted directed (WD) graph,
 the edges are associated with a real number between 0 and 1 
 indicating the strength of the connection, and they are directed.
 
-%%% ¡ensemble!
-false
-
 %%% ¡graph!
 graph = Graph.GRAPH;
 
