@@ -26,7 +26,9 @@ C (data, item) is the group-based comparison.
 'CompareGroup'
 
 %%% ¡prop!
-MEASURE_CODE (data, string) is the measure code.
+MEASURE (data, class) is the measure code.
+%%%% ¡settings!
+'Measure'
 
 %%% ¡prop!
 P1 (result, cell) is the one-tailed p-value.
