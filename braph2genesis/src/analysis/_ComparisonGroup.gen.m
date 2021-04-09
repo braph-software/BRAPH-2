@@ -4,7 +4,7 @@ ComparisonGroup < Element (cp, group-based comparison results) contains the resu
 %%% ¡description!
 ComparisonGroup contains the results of a group-based comparison for a given measure.
 Specifically, it contains the one-tailed and two-tailed p-values 
-and the 95\% confidence interval.
+and the 95-percent confidence interval.
 
 %%% ¡seealso!
 CompareGroup, AnalyzeGroup
@@ -37,7 +37,7 @@ P1 (data, cell) is the one-tailed p-value.
 P2 (data, cell) is the two-tailed p-value.
 
 %%% ¡prop!
-CIL (data, cell) is the lower value of the 95\% confidence interval.
+CIL (data, cell) is the lower value of the 95-percent confidence interval.
 
 %%% ¡prop!
-CIU (data, cell) is the upper value of the 95\% confidence interval.
+CIU (data, cell) is the upper value of the 95-percent confidence interval.
