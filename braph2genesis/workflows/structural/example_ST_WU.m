@@ -43,20 +43,21 @@ distance_WU2 = g_WU2.getMeasure('Distance').get('M');
 c_WU = CompareGroup( ...
     'P', 10, ...
     'A1', a_WU1, ...
-    'A2', a_WU2 ...
+    'A2', a_WU2, ...
+    'VERBOSE', true ...
     );
 
-degree_WU_p1 = c_WU.getComparison('Degree', 'verbose', true).get('P1');
-degree_WU_p2 = c_WU.getComparison('Degree', 'verbose', true).get('P2');
-degree_WU_cil = c_WU.getComparison('Degree', 'verbose', true).get('CIL');
-degree_WU_ciu = c_WU.getComparison('Degree', 'verbose', true).get('CIU');
+degree_WU_p1 = c_WU.getComparison('Degree').get('P1');
+degree_WU_p2 = c_WU.getComparison('Degree').get('P2');
+degree_WU_cil = c_WU.getComparison('Degree').get('CIL');
+degree_WU_ciu = c_WU.getComparison('Degree').get('CIU');
 
-degree_av_WU_p1 = c_WU.getComparison('DegreeAv', 'verbose', true).get('P1');
-degree_av_WU_p2 = c_WU.getComparison('DegreeAv', 'verbose', true).get('P2');
-degree_av_WU_cil = c_WU.getComparison('DegreeAv', 'verbose', true).get('CIL');
-degree_av_WU_ciu = c_WU.getComparison('DegreeAv', 'verbose', true).get('CIU');
+degree_av_WU_p1 = c_WU.getComparison('DegreeAv').get('P1');
+degree_av_WU_p2 = c_WU.getComparison('DegreeAv').get('P2');
+degree_av_WU_cil = c_WU.getComparison('DegreeAv').get('CIL');
+degree_av_WU_ciu = c_WU.getComparison('DegreeAv').get('CIU');
 
-distance_WU_p1 = c_WU.getComparison('Distance', 'verbose', true).get('P1');
-distance_WU_p2 = c_WU.getComparison('Distance', 'verbose', true).get('P2');
-distance_WU_cil = c_WU.getComparison('Distance', 'verbose', true).get('CIL');
-distance_WU_ciu = c_WU.getComparison('Distance', 'verbose', true).get('CIU');
+distance_WU_p1 = c_WU.getComparison('Distance').get('P1');
+distance_WU_p2 = c_WU.getComparison('Distance').get('P2');
+distance_WU_cil = c_WU.getComparison('Distance').get('CIL');
+distance_WU_ciu = c_WU.getComparison('Distance').get('CIU');
