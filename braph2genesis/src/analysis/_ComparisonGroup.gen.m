@@ -21,31 +21,23 @@ LABEL (metadata, string) is an extended label of the group-based comparison resu
 NOTES (metadata, string) are some specific notes about the group-based comparison results.
 
 %%% ¡prop!
+MEASURE (data, class) is the measure class.
+%%%% ¡settings!
+'Measure'
+
+%%% ¡prop!
 C (data, item) is the group-based comparison.
 %%%% ¡settings!
 'CompareGroup'
 
 %%% ¡prop!
-MEASURE (data, class) is the measure code.
-%%%% ¡settings!
-'Measure'
+P1 (data, cell) is the one-tailed p-value.
 
 %%% ¡prop!
-P1 (result, cell) is the one-tailed p-value.
-%%%% ¡calculate!
-value = {};
+P2 (data, cell) is the two-tailed p-value.
 
 %%% ¡prop!
-P2 (result, cell) is the two-tailed p-value.
-%%%% ¡calculate!
-value = {};
+CIL (data, cell) is the lower value of the 95\% confidence interval.
 
 %%% ¡prop!
-CIL (result, cell) is the lower value of the 95\% confidence interval.
-%%%% ¡calculate!
-value = {};
-
-%%% ¡prop!
-CIU (result, cell) is the upper value of the 95\% confidence interval.
-%%%% ¡calculate!
-value = {};
+CIU (data, cell) is the upper value of the 95\% confidence interval.
