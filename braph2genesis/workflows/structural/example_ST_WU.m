@@ -24,9 +24,9 @@ im_gr2 = ImporterGroupSubjectSTXLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis ST WU
-a_WU1 = AnalysisGroup_ST_WU('GR', gr1);
+a_WU1 = AnalyzeGroup_ST_WU('GR', gr1);
 
-a_WU2 = AnalysisGroup_ST_WU('GR', gr2);
+a_WU2 = AnalyzeGroup_ST_WU('GR', gr2);
 
 % measure calculation
 g_WU1 = a_WU1.get('G');
@@ -40,7 +40,7 @@ degree_av_WU2 = g_WU2.getMeasure('DegreeAv').get('M');
 distance_WU2 = g_WU2.getMeasure('Distance').get('M');
 
 % comparison
-c_WU = ComparisonGroup( ...
+c_WU = CompareGroup( ...
     'P', 10, ...
     'A1', a_WU1, ...
     'A2', a_WU2 ...

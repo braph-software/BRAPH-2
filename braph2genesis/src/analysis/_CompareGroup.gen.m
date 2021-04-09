@@ -1,8 +1,8 @@
 %% ¡header!
-ComparisonGroup < Element (c, group-based comparison) is a comparison between two group-based analyses.
+CompareGroup < Element (c, group-based comparison) is a comparison between two group-based analyses.
 
 %%% ¡description!
-ComparisonGroup compares two group-based analyses, 
+CompareGroup compares two group-based analyses, 
 which need to be of the same class.
 
 %% ¡props!
@@ -29,14 +29,14 @@ LONGITUDINAL (parameter, logical) determines whether the comparison is longitudi
 %%% ¡prop!
 A1 (data, item) is the first analysis to compare.
 %%%% ¡settings!
-'AnalysisGroup'
+'AnalyzeGroup'
 %%%% ¡check_value!
 check = isa(value, c.get('A2').getClass());
 
 %%% ¡prop!
 A2 (data, item) is the second analysis to compare.
 %%%% ¡settings!
-'AnalysisGroup'
+'AnalyzeGroup'
 %%%% ¡check_value!
 check = isa(value, c.get('A1').getClass());
 
@@ -48,16 +48,16 @@ value = randi(intmax('uint32'), 1, c.get('P'));
 %%% ¡prop!
 A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
 %%%% ¡settings!
-'AnalysisGroup'
+'AnalyzeGroup'
 %%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'AnalysisGroup', 'IT_KEY', 1);
+value = IndexedDictionary('IT_CLASS', 'AnalyzeGroup', 'IT_KEY', 1);
 
 %%% ¡prop!
 A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
 %%%% ¡settings!
-'AnalysisGroup'
+'AnalyzeGroup'
 %%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'AnalysisGroup', 'IT_KEY', 1);
+value = IndexedDictionary('IT_CLASS', 'AnalyzeGroup', 'IT_KEY', 1);
 
 %% ¡methods!
 function [p1, p2, ci_lower, ci_upper, m1, m2, diff, m1_perms, m2_perms, diff_perms] = getComparison(c, measure_code, varargin)

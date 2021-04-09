@@ -1,8 +1,8 @@
 %% ¡header!
-AnalysisGroup < Element (a, group-based graph analysis) is a group-based graph analysis.
+AnalyzeGroup < Element (a, group-based graph analysis) is a group-based graph analysis.
 
 %%% ¡description!
-AnalysisGroup provides the methods necessary for all group-based analysis subclasses.
+AnalyzeGroup provides the methods necessary for all group-based analysis subclasses.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
