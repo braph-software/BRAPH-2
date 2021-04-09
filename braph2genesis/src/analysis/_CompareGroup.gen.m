@@ -139,6 +139,10 @@ function cp = getComparison(c, measure_class, varargin)
             'CIL', ci_lower, ...
             'CIU', ci_upper ...
             );
+        cp.lock('P1')
+        cp.lock('P2')
+        cp.lock('CIL')
+        cp.lock('CIU')
         cp_dict.add(cp);
     end
     
