@@ -21,9 +21,7 @@ LABEL (metadata, string) is an extended label of the group-based comparison resu
 NOTES (metadata, string) are some specific notes about the group-based comparison results.
 
 %%% ¡prop!
-MEASURE (data, class) is the measure class.
-%%%% ¡settings!
-'Measure'
+MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
 C (data, item) is the group-based comparison.
