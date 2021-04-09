@@ -5,6 +5,9 @@ CompareGroup < Element (c, group-based comparison) is a comparison between two g
 CompareGroup compares two group-based analyses, 
 which need to be of the same class.
 
+%%% ¡seealso!
+AnalyzeGroup, ComparisonGroup
+
 %% ¡props!
 
 %%% ¡prop!

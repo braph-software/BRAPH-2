@@ -6,6 +6,9 @@ AnalyzeGroup provides the methods necessary for all group-based analysis subclas
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
+%%% ¡seealso!
+CompareGroup
+
 %% ¡props!
 
 %%% ¡prop!
