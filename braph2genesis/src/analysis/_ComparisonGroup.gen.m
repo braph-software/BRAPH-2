@@ -61,8 +61,16 @@ function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     %  interval CIL, and the the upper bound of the confidence interval.
     %  Typically, this methos is only called internally.
 
-    c = cp.get('C');
     measure_class = cp.get('MEASURE');
+    if isempty(cp.get('MEASURE'))
+        p1 = {};
+        p2 = {};
+        ci_lower = {};
+        ci_upper = {};
+        return
+    end
+    
+    c = cp.get('C');
     verbose = c.get('VERBOSE');
     interruptible = c.get('INTERRUPTIBLE');
     memorize = c.get('MEMORIZE');
