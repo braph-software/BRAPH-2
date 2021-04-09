@@ -67,7 +67,7 @@ CP_DICT (result, idict) contains the results of the comparison.
 %%%% ¡settings!
 'ComparisonGroup'
 %%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 4);
+value = IndexedDictionary('IT_CLASS', 'ComparisonGroup', 'IT_KEY', 4);
 
 %% ¡methods!
 function cp = getComparison(c, measure_class, varargin)
