@@ -83,8 +83,8 @@ function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     for i = 1:1:P
         [a1_perm, a2_perm] = get_perm(i);
 
-        m1_perms{1, i} = a1_perm.get('G').getMeasure(measure_class).memorize('M');
-        m2_perms{1, i} = a2_perm.get('G').getMeasure(measure_class).memorize('M');
+        m1_perms{1, i} = a1_perm.memorize('G').getMeasure(measure_class).memorize('M');
+        m2_perms{1, i} = a2_perm.memorize('G').getMeasure(measure_class).memorize('M');
         diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
 
         if interruptible
