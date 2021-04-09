@@ -62,9 +62,9 @@ function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     %  Typically, this methos is only called internally.
 
     c = cp.get('C');
-    measure_class = c.get('MEASURE');
+    measure_class = cp.get('MEASURE');
     verbose = c.get('VERBOSE');
-    interruptible = c.get('INTERRUPTBLE');
+    interruptible = c.get('INTERRUPTIBLE');
     memorize = c.get('MEMORIZE');
 
     % Measure for groups 1 and 2, and their difference
