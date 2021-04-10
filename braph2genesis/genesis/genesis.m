@@ -204,7 +204,7 @@ disp(' ')
 
 % workflows
 copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST_WU.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST_WU.m'])
-% copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST_BUT.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST_BUT.m'])
+copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST_BUT.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST_BUT.m'])
 % copyfile([source_dir fp 'workflows' fp 'structural' fp 'example_ST_BUD.m'], [target_dir fp 'workflows' fp 'structural' fp 'example_ST_BUD.m'])
 mkdir([target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)'])
 copyfile([source_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'structural' fp 'example data ST (MRI)' fp 'desikan_atlas.xlsx'])
