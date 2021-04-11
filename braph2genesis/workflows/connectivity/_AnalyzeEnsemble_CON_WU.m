@@ -38,4 +38,4 @@ value = g_dict;
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_CON_WU
+% example_CON_WU
