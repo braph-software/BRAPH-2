@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_CON_WU < Analysis (a, graph analysis with connectivity data) is a graph analysis using connectivity data.
+AnalyzeEnsemble_CON_WU < AnalyzeEnsemble (a, graph analysis with connectivity data) is a graph analysis using connectivity data.
 
 %% ¡description!
 This graph analysis uses connectivity data and analyzes them using weighted undirected graphs,
@@ -38,4 +38,4 @@ value = g_dict;
 %%%% ¡name!
 Example
 %%%% ¡code!
-% example_CON_WU
+example_CON_WU
