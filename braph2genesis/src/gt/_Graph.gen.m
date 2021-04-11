@@ -894,7 +894,7 @@ function m = getMeasure(g, measure_class, varargin)
     %GETMEASURE returns measure.
     %
     % M = GETMEASURE(G, MEASURE_CLASS) checks if the measure exists in the
-    %  property MDICT. If not it creates a new measure M of class MEASURE_CLASS
+    %  property M_DICT. If not it creates a new measure M of class MEASURE_CLASS
     %  with properties defined by the graph settings. The user must call
     %  getValue() for the new measure M to retrieve the value of measure M.
 
