@@ -76,8 +76,8 @@ function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     memorize = c.get('MEMORIZE');
 
     % Measure for groups 1 and 2, and their difference
-    m1 = c.get('A1').get('G').getMeasure(measure_class).memorize('M');
-    m2 = c.get('A2').get('G').getMeasure(measure_class).memorize('M');
+    m1 = c.get('A1').getMeasureEnsemble(measure_class).memorize('M');
+    m2 = c.get('A2').getMeasureEnsemble(measure_class).memorize('M');
     diff = cellfun(@(x, y) y - x, m1, m2, 'UniformOutput', false);
 
     % Permutations
@@ -91,8 +91,8 @@ function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     for i = 1:1:P
         [a1_perm, a2_perm] = c.getPerm(i, memorize);
 
-        m1_perms{1, i} = a1_perm.memorize('G').getMeasure(measure_class).memorize('M');
-        m2_perms{1, i} = a2_perm.memorize('G').getMeasure(measure_class).memorize('M');
+        m1_perms{1, i} = a1_perm.getMeasureEnsemble(measure_class).memorize('M');
+        m2_perms{1, i} = a2_perm.getMeasureEnsemble(measure_class).memorize('M');
         diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
 
         if interruptible

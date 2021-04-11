@@ -17,6 +17,8 @@ Group('SUB_CLASS', 'SubjectCON')
 G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
+%%%% ¡default!
+IndexedDictionary('IT_CLASS', 'GraphWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
 

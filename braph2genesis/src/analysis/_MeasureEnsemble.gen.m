@@ -38,7 +38,7 @@ else
     for i = 1:1:size(m_list{1}, 1)
         for j = 1:1:size(m_list{1}, 2)
             m_ij_list = cellfun(@(x) x{i, j}, m_list, 'UniformOutput', false);
-            m_av{i, j} = mean(cat(ndims(m_ij_list{1}), m_ij_list{:}), ndims(m_ij_list{1}));
+            m_av{i, j} = mean(cat(ndims(m_ij_list{1}) + 1, m_ij_list{:}), ndims(m_ij_list{1}) + 1);
         end
     end
 end
