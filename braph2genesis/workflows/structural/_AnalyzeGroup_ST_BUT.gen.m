@@ -22,6 +22,8 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %%% ¡prop!
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
+%%%% ¡default!
+0
 
 %% ¡props_update!
 
@@ -43,6 +45,9 @@ data = cat(2, data_list{:})'; % correlation is a column based operation
 
 A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
 
+threshold = a.get('THRESHOLDS'); % this is a vector
+A = binarize(A, 'THRESHOLDS', threshold);
+            
 g = GraphBU( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A ...
