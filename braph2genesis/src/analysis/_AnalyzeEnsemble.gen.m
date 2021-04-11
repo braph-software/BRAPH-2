@@ -37,7 +37,7 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 %%%% ¡settings!
 'MeasureEnsemble'
 %%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', 1);
+value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', 4);
 
 %% ¡methods!
 function me = getMeasureEnsemble(a, measure_class, varargin)
@@ -52,24 +52,10 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
     if me_dict.containsKey(measure_class)
         me = me_dict.getItem(measure_class);
     else
-        m_list = cellfun(@(x) x.get('M'), a.get('G_DICT').getItems, 'UniformOutput', false);
-
-        if isempty(m_list)
-            m_av = {};
-        else
-            m_av = cell(size(m_list{1}));
-            for i = 1:1:size(m_list{1}, 1)
-                for j = 1:1:size(m_list{1}, 2)
-                    m_ij_list = cellfun(@(x) x{i, j}, m_list, 'UniformOutput', false);
-                    m_av{i, j} = mean(cat(ndims(m_ij_list{1}), m_ij_list{:}), ndims(m_ij_list{1}));
-                end
-            end
-        end
-       
         me = MeasureEnsemble( ...
             'ID', measure_class, ...
-            'A', g, ...
-            'M', m_av, ...
+            'A', a, ...
+            'MEASURE', measure_class, ...
             varargin{:} ...
             );
         me_dict.add(me);

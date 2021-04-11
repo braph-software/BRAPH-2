@@ -4,20 +4,20 @@
 clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_CON')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx']);
 
 ba = im_ba.get('BA');
 
 %% Load Groups of SubjectCON
 im_gr1 = ImporterGroupSubjectCONXLS( ...
-    'DIRECTORY', [fileparts(which('example_CON')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName1'], ...
+    'DIRECTORY', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName1'], ...
     'BA', ba ...
     );
 
 gr1 = im_gr1.get('GR');
 
 im_gr2 = ImporterGroupSubjectCONXLS( ...
-    'DIRECTORY', [fileparts(which('example_CON')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName2'], ...
+    'DIRECTORY', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName2'], ...
     'BA', ba ...
     );
 
@@ -33,13 +33,13 @@ a_WU2 = AnalyzeEnsemble_CON_WU( ...
     );
 
 % measure calculation
-degree_WU1 = a_WU1.getMeasureEnsemble('DegreeEnsemble').get('M');
-degree_av_WU1 = a_WU1.getMeasureEnsemble('DegreeAvEnsemble').get('M');
-distance_WU1 = a_WU1.getMeasureEnsemble('DistanceEnsemble').get('M');
+degree_WU1 = a_WU1.getMeasureEnsemble('Degree').get('M');
+degree_av_WU1 = a_WU1.getMeasureEnsemble('DegreeAv').get('M');
+distance_WU1 = a_WU1.getMeasureEnsemble('Distance').get('M');
 
-degree_WU1 = a_WU2.getMeasureEnsemble('DegreeEnsemble').get('M');
-degree_av_WU1 = a_WU2.getMeasureEnsemble('DegreeAvEnsemble').get('M');
-distance_WU1 = a_WU2.getMeasureEnsemble('DistanceEnsemble').get('M');
+degree_WU1 = a_WU2.getMeasureEnsemble('Degree').get('M');
+degree_av_WU1 = a_WU2.getMeasureEnsemble('DegreeAv').get('M');
+distance_WU1 = a_WU2.getMeasureEnsemble('Distance').get('M');
 
 % % comparison
 % c_WU = Comparison( ...
