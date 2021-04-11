@@ -35,13 +35,13 @@ a_WU2 = AnalysisCON( ...
     );
 
 % measure calculation
-degree_WU1 = a_WU1.getMeasure('DegreeEnsemble').get('M');
-degree_av_WU1 = a_WU1.getMeasure('DegreeAvEnsemble').get('M');
-distance_WU1 = a_WU1.getMeasure('DistanceEnsemble').get('M');
+degree_WU1 = a_WU1.getMeasureEnsemble('DegreeEnsemble').get('M');
+degree_av_WU1 = a_WU1.getMeasureEnsemble('DegreeAvEnsemble').get('M');
+distance_WU1 = a_WU1.getMeasureEnsemble('DistanceEnsemble').get('M');
 
-degree_WU1 = a_WU2.getMeasure('DegreeEnsemble').get('M');
-degree_av_WU1 = a_WU2.getMeasure('DegreeAvEnsemble').get('M');
-distance_WU1 = a_WU2.getMeasure('DistanceEnsemble').get('M');
+degree_WU1 = a_WU2.getMeasureEnsemble('DegreeEnsemble').get('M');
+degree_av_WU1 = a_WU2.getMeasureEnsemble('DegreeAvEnsemble').get('M');
+distance_WU1 = a_WU2.getMeasureEnsemble('DistanceEnsemble').get('M');
 
 % % comparison
 % c_WU = Comparison( ...
