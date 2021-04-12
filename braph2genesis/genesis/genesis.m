@@ -241,7 +241,7 @@ for i = 11:1:20
 end
 disp('¡! copied ready files - workflow functional')
 
-% copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_WU.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_WU.m'])
+copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_WU.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_WU.m'])
 % copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUT.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUT.m'])
 % copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUD.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUD.m'])
 mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)'])
