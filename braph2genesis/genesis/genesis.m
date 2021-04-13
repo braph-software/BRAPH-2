@@ -349,27 +349,39 @@ for run = 1:1:run_number
     for i = 1:1:numel(measures_gen_list)
         create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
     end
-
+    
+    % gui
     gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
     for i = 1:1:numel(gui_gen_list)
         create_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
     end
     
     % workflows
-    wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
-    for i = 1:1:numel(wf_structural_gen_list)
-        create_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
+    workflows_contents = dir([source_dir fp 'workflows']);  % get the folder contents
+    workflows_dir_list = workflows_contents([workflows_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
+    workflows_dir_list = workflows_dir_list(~ismember({workflows_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+    for i = 1:1:length(workflows_dir_list)
+        wf_name = workflows_dir_list(i).name;
+        wf_gen_list = getGenerators([source_dir fp 'workflows' fp wf_name]);
+        for j = 1:1:numel(wf_gen_list)
+            create_Element([source_dir fp 'workflows' fp wf_name fp wf_gen_list{j}], [target_dir fp 'workflows' fp wf_name])
+        end
     end
     
-    wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
-    for i = 1:1:numel(wf_functional_gen_list)
-        create_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
-    end
-    
-    wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
-    for i = 1:1:numel(wf_connectivity_gen_list)
-        create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
-    end
+%     wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
+%     for i = 1:1:numel(wf_structural_gen_list)
+%         create_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
+%     end
+%     
+%     wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
+%     for i = 1:1:numel(wf_functional_gen_list)
+%         create_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
+%     end
+%     
+%     wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
+%     for i = 1:1:numel(wf_connectivity_gen_list)
+%         create_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
+%     end
     
     % LOAD BRAPH2
     addpath(target_dir)
@@ -426,25 +438,37 @@ for i = 1:1:numel(measures_gen_list)
     create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
 end
 
+% gui
 gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
 for i = 1:1:numel(gui_gen_list)
     create_test_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
 end
 
 % workflows
-wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
-for i = 1:1:numel(wf_structural_gen_list)
-    create_test_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
+workflows_contents = dir([source_dir fp 'workflows']);  % get the folder contents
+workflows_dir_list = workflows_contents([workflows_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
+workflows_dir_list = workflows_dir_list(~ismember({workflows_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+for i = 1:1:length(workflows_dir_list)
+    wf_name = workflows_dir_list(i).name;
+    wf_gen_list = getGenerators([source_dir fp 'workflows' fp wf_name]);
+    for j = 1:1:numel(wf_gen_list)
+        create_test_Element([source_dir fp 'workflows' fp wf_name fp wf_gen_list{j}], [target_dir fp 'workflows' fp wf_name])
+    end
 end
 
-wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
-for i = 1:1:numel(wf_functional_gen_list)
-    create_test_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
-end
-
-wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
-for i = 1:1:numel(wf_connectivity_gen_list)
-    create_test_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
-end
+% wf_structural_gen_list = getGenerators([source_dir fp 'workflows' fp 'structural']);
+% for i = 1:1:numel(wf_structural_gen_list)
+%     create_test_Element([source_dir fp 'workflows' fp 'structural' fp wf_structural_gen_list{i}], [target_dir fp 'workflows' fp 'structural'])
+% end
+% 
+% wf_functional_gen_list = getGenerators([source_dir fp 'workflows' fp 'functional']);
+% for i = 1:1:numel(wf_functional_gen_list)
+%     create_test_Element([source_dir fp 'workflows' fp 'functional' fp wf_functional_gen_list{i}], [target_dir fp 'workflows' fp 'functional'])
+% end
+% 
+% wf_connectivity_gen_list = getGenerators([source_dir fp 'workflows' fp 'connectivity']);
+% for i = 1:1:numel(wf_connectivity_gen_list)
+%     create_test_Element([source_dir fp 'workflows' fp 'connectivity' fp wf_connectivity_gen_list{i}], [target_dir fp 'workflows' fp 'connectivity'])
+% end
 
 end
