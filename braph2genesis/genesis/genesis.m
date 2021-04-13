@@ -85,6 +85,7 @@ disp(' ')
 copyfile([source_dir fp 'braph2' fp 'braph2.m'], [target_dir fp 'braph2.m'])
 copyfile([source_dir fp 'license.rtf'], [target_dir fp 'license.rtf'])
 disp('¡! copied ready files - braph2')
+disp(' ')
 
 % src
 copydir([source_dir fp 'src' fp 'util'], [target_dir fp 'src' fp 'util'])
@@ -106,6 +107,7 @@ disp(' ')
 % graphs
 copydir([source_dir fp 'graphs'], [target_dir fp 'graphs'], Inf)
 disp('¡! copied ready files - graphs')
+disp(' ')
 
 % measures
 copydir([source_dir fp 'measures'], [target_dir fp 'measures'], Inf)
