@@ -8,15 +8,15 @@ or binary undirected multigraphs with fixed densities.
 
 %% ¡props!
 %%% ¡prop!
-REPETITION(parameter, number)is the number of repetitions
+REPETITION(parameter, scalar)is the number of repetitions
 %%%% ¡default!
 1
 %%% ¡prop!
-FRECUENCYRULEMIN(parameter, number)is the minimum frecuency value
+FRECUENCYRULEMIN(parameter, scalar)is the minimum frecuency value
 %%%% ¡default!
 0
 %%% ¡prop!
-FRECUENCYRULEMAX(parameter, number)is the maximum frecuency value
+FRECUENCYRULEMAX(parameter, scalar)is the maximum frecuency value
 %%%% ¡default!
 Inf
 
@@ -37,12 +37,12 @@ IndexedDictionary('IT_CLASS', 'GraphWU')
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
 
 gr = a.get('GR');
-fmax = a.get('REPETITION');
+T = a.get('REPETITION');
 fmin = a.get('FRECUENCYRULEMIN');
 fmax = a.get('FRECUENCYRULEMAX');
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
-    data = Callback('EL', sub, 'TAG', 'FUN');
+    data = sub.getr('FUN');
     fs = 1 / T;
     
     if fmax > fmin && T > 0
