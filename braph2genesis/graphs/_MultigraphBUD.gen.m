@@ -8,9 +8,6 @@ derived from the same weighted connectivity matrix
 binarized at different densities.
 There are no connections between layers.
 
-%%% ¡ensemble!
-false
-
 %%% ¡graph!
 graph = Graph.MULTIGRAPH;
 
