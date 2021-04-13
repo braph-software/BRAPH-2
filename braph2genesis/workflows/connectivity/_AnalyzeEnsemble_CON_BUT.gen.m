@@ -23,7 +23,7 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
+G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
 %%%% ¡settings!
 'MultigraphBUT'
 %%%% ¡default!

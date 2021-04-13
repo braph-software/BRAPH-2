@@ -41,7 +41,7 @@ distance_BUT1 = a_BUT1.getMeasureEnsemble('Distance').get('M');
 
 degree_BUT2 = a_BUT2.getMeasureEnsemble('Degree').get('M');
 degree_av_BUT2 = a_BUT2.getMeasureEnsemble('DegreeAv').get('M');
-degree_av_BUT2 = a_BUT2.getMeasureEnsemble('Distance').get('M');
+distance_BUT2 = a_BUT2.getMeasureEnsemble('Distance').get('M');
 
 % comparison
 c_BUT = CompareEnsemble( ...
