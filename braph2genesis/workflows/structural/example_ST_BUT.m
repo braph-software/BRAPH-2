@@ -24,9 +24,9 @@ im_gr2 = ImporterGroupSubjectSTXLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis BUT
-a_WU1 = AnalyzeGroup_ST_BUT('GR', gr1, 'Thresholds', .5);
+a_WU1 = AnalyzeGroup_ST_BUT('GR', gr1, 'Thresholds', [.5 .6]);
 
-a_WU2 = AnalyzeGroup_ST_BUT('GR', gr2, 'Thresholds', .5);
+a_WU2 = AnalyzeGroup_ST_BUT('GR', gr2, 'Thresholds', [.5 .6]);
 
 % measure calculation
 g_WU1 = a_WU1.get('G');

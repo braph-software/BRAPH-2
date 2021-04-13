@@ -4,6 +4,9 @@ AnalyzeGroup_ST_BUT < AnalyzeGroup (a, graph analysis with structural data of fi
 %% ¡description!
 This graph analysis uses structural data of fixed threshold and analyzes them using binary undirected graphs.
 
+%%% ¡seealso!
+AnalyzeGroup_ST_WU, Subject_ST, MultigraphBUT.
+
 %% ¡props!
 
 %%% ¡prop!
@@ -35,9 +38,9 @@ Group('SUB_CLASS', 'SubjectST')
 %%% ¡prop!
 G (result, item) is the graph obtained from this analysis.
 %%%% ¡settings!
-'GraphBU'
+'MultigraphBUT'
 %%%% ¡default!
-GraphBU()
+MultigraphBUT()
 %%%% ¡calculate!
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -45,12 +48,12 @@ data = cat(2, data_list{:})'; % correlation is a column based operation
 
 A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
 
-threshold = a.get('THRESHOLDS'); % this is a vector
-A = binarize(A, 'THRESHOLDS', threshold);
+thresholds = a.get('THRESHOLDS'); 
             
-g = GraphBU( ...
+g = MultigraphBUT( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', A ...
+    'B', A, ...
+    'THRESHOLDS', thresholds ...
     );
 
 value = g;
