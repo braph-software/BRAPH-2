@@ -25,26 +25,26 @@ gr2 = im_gr2.get('GR');
 
 %% Analysis BUD
 densities = [0 100];
-a_BUD_1 = AnalyzeGroup_ST_BUD('GR', gr1, 'DENSITIES', densities);
+a_BUD1 = AnalyzeGroup_ST_BUD('GR', gr1, 'DENSITIES', densities);
 
-a_BUD_2 = AnalyzeGroup_ST_BUD('GR', gr2, 'DENSITIES', densities);
+a_BUD2 = AnalyzeGroup_ST_BUD('GR', gr2, 'DENSITIES', densities);
 
 % measure calculation
-g_BUD_1 = a_BUD_1.get('G');
-degree_BUD_1 = g_BUD_1.getMeasure('Degree').get('M');
-degree_av_BUD_1 = g_BUD_1.getMeasure('DegreeAv').get('M');
-distance_BUD_1 = g_BUD_1.getMeasure('Distance').get('M');
+g_BUD1 = a_BUD1.get('G');
+degree_BUD_1 = g_BUD1.getMeasure('Degree').get('M');
+degree_av_BUD_1 = g_BUD1.getMeasure('DegreeAv').get('M');
+distance_BUD_1 = g_BUD1.getMeasure('Distance').get('M');
 
-g_BUD_2 = a_BUD_2.get('G');
-degree_BUD_2 = g_BUD_2.getMeasure('Degree').get('M');
-degree_av_BUD_2 = g_BUD_2.getMeasure('DegreeAv').get('M');
-distance_BUD_2 = g_BUD_2.getMeasure('Distance').get('M');
+g_BUD2 = a_BUD2.get('G');
+degree_BUD_2 = g_BUD2.getMeasure('Degree').get('M');
+degree_av_BUD_2 = g_BUD2.getMeasure('DegreeAv').get('M');
+distance_BUD_2 = g_BUD2.getMeasure('Distance').get('M');
 
 % comparison
 c_BUD = CompareGroup( ...
     'P', 10, ...
-    'A1', a_BUD_1, ...
-    'A2', a_BUD_2 ...
+    'A1', a_BUD1, ...
+    'A2', a_BUD2 ...
     );
 
 degree_BUD_p1 = c_BUD.getComparison('Degree').get('P1');

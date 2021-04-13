@@ -243,7 +243,7 @@ disp('¡! copied ready files - workflow functional')
 
 copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_WU.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_WU.m'])
 % copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUT.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUT.m'])
-% copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUD.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUD.m'])
+copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUD.m'], [target_dir fp 'workflows' fp 'connectivity' fp 'example_CON_BUD.m'])
 mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)'])
 copyfile([source_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'], [target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'desikan_atlas.xlsx'])
 mkdir([target_dir fp 'workflows' fp 'connectivity' fp 'example data CON (DTI)' fp 'xls'])
