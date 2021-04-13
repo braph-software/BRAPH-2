@@ -280,17 +280,59 @@ generate_header()
             ['%  ' class_name ' - constructor']
             })
         if element_class_created
-            gs(1, {'%', ['% ' class_name ' methods (class-specific).']})
+            gs(1, {'%', ['% ' class_name ' methods (Static):']})
             metaclass = eval(['?' class_name]);
-% class-specific methods
-% m = methods('Element')
-% m = methods('Element', '-full')
-% txt = help('Plot.set')
-% class-specific static methods
+            method_list = metaclass.MethodList;
+            for i = 1:1:length(method_list)
+                method = method_list(i);
+                definingclass = method.DefiningClass.Name;
+                if all(~strcmp(definingclass, {'handle', 'matlab.mixin.Copyable', 'Category', 'Format', 'Element'})) ...
+                        && ~strcmp(definingclass, method.Name) ...
+                        && strcmp(method.Access, 'public') ...
+                        && method.Static
+
+                    help_txt = eval(['help(''' class_name '.' method.Name ''')']);
+                    help_txt = splitlines(help_txt);
+                    help_txt = help_txt{1};
+                    if ~strcmp(method.Name, 'empty')
+                        help_txt = strtrim(help_txt(length(method.Name) + 2:end));
+                    else
+                        help_txt = ['r' help_txt(2:end) '.'];
+                    end
+
+                    g(1, ['%  ' method.Name ' - ' help_txt])
+                end
+            end
         end
         gs(1, {
              '%'
             ['% ' class_name ' methods:']
+            })
+        if element_class_created
+            metaclass = eval(['?' class_name]);
+            method_list = metaclass.MethodList;
+            for i = 1:1:length(method_list)
+                method = method_list(i);
+                definingclass = method.DefiningClass.Name;
+                if all(~strcmp(definingclass, {'handle', 'matlab.mixin.Copyable', 'Category', 'Format', 'Element'})) ...
+                        && ~strcmp(definingclass, method.Name) ...
+                        && strcmp(method.Access, 'public') ...
+                        && ~method.Static
+
+                    help_txt = eval(['help(''' class_name '.' method.Name ''')']);
+                    help_txt = splitlines(help_txt);
+                    help_txt = help_txt{1};
+                    if ~strcmp(method.Name, 'empty')
+                        help_txt = strtrim(help_txt(length(method.Name) + 2:end));
+                    else
+                        help_txt = ['r' help_txt(2:end) '.'];
+                    end
+
+                    g(1, ['%  ' method.Name ' - ' help_txt])
+                end
+            end
+        end
+        gs(1, {
              '%  set - sets the value of a property'
              '%  check - checks the values of all properties'
              '%  getr - returns the raw value of a property'
