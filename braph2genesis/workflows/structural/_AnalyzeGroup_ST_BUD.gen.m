@@ -35,9 +35,9 @@ Group('SUB_CLASS', 'SubjectST')
 %%% ¡prop!
 G (result, item) is the graph obtained from this analysis.
 %%%% ¡settings!
-'GraphBU'
+'MultigraphBUD'
 %%%% ¡default!
-GraphBU()
+MultigraphBUD()
 %%%% ¡calculate!
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
