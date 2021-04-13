@@ -249,7 +249,6 @@ measures_gen_list = getGenerators([source_dir fp 'measures']);
 for i = 1:1:numel(measures_gen_list)
     create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
 end
-
 % gui
 gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
 for i = 1:1:numel(gui_gen_list)
