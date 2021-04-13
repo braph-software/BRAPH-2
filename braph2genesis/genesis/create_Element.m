@@ -289,7 +289,7 @@ generate_header()
             for i = 1:1:length(property_list)
                 property = property_list(i);
                 if property.Constant
-                    g(1, ['% ' property.Name ' - ' property.DefaultValue])
+                    g(1, ['% ' property.Name ' - ' tostring(property.DefaultValue)])
                 end
             end
         end       
