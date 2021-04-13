@@ -269,9 +269,6 @@ generate_header()
              '%'
             })
         gs(1, cellfun(@(x) ['% ' x], description, 'UniformOutput', false))
-        if element_class_created
-% element-specific constants
-        end       
         gs(1, {
              '%'
             ['% The list of ' class_name ' properties is:']
@@ -282,6 +279,20 @@ generate_header()
             ['% ' class_name ' methods (constructor):']
             ['%  ' class_name ' - constructor']
             })
+        if element_class_created
+            gs(1, {
+                 '%'
+                ['% ' class_name ' properties (Constant).']
+                })
+            metaclass = eval(['?' class_name]);
+            property_list = metaclass.PropertyList;
+            for i = 1:1:length(property_list)
+                property = property_list(i);
+                if property.Constant
+                    g(1, ['% ' property.Name ' - ' property.DefaultValue])
+                end
+            end
+        end       
         if element_class_created
 % class-specific methods
 % m = methods('Element')
