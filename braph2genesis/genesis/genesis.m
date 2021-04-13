@@ -73,9 +73,13 @@ disp('¡! created dir structure - MEASURES')
 
 % workflows
 mkdir([target_dir fp 'workflows'])
-mkdir([target_dir fp 'workflows' fp 'structural'])
-mkdir([target_dir fp 'workflows' fp 'functional'])
-mkdir([target_dir fp 'workflows' fp 'connectivity'])
+
+workflows_contents = dir([source_dir fp 'workflows']);  % get the folder contents
+workflows_dir_list = workflows_contents([workflows_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
+workflows_dir_list = workflows_dir_list(~ismember({workflows_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+for i = 1:1:length(workflows_dir_list)
+    mkdir([target_dir fp 'workflows' fp workflows_dir_list(i).name])
+end
 
 disp('¡! created dir structure - WORKFLOWS')
 
