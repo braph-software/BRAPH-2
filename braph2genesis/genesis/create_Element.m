@@ -296,11 +296,8 @@ generate_header()
                     help_txt = help_txt{1};
                     if ~strcmp(method.Name, 'empty')
                         help_txt = strtrim(help_txt(length(method.Name) + 2:end));
-                    else
-                        help_txt = ['r' help_txt(2:end) '.'];
+                        g(1, ['%  ' method.Name ' - ' help_txt])
                     end
-
-                    g(1, ['%  ' method.Name ' - ' help_txt])
                 end
             end
         end
@@ -324,11 +321,8 @@ generate_header()
                     help_txt = help_txt{1};
                     if ~strcmp(method.Name, 'empty')
                         help_txt = strtrim(help_txt(length(method.Name) + 2:end));
-                    else
-                        help_txt = ['r' help_txt(2:end) '.'];
+                        g(1, ['%  ' method.Name ' - ' help_txt])
                     end
-
-                    g(1, ['%  ' method.Name ' - ' help_txt])
                 end
             end
         end
