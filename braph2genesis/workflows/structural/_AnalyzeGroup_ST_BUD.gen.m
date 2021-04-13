@@ -4,6 +4,9 @@ AnalyzeGroup_ST_BUD < AnalyzeGroup (a, graph analysis with structural data of fi
 %% ¡description!
 This graph analysis uses structural data of fixed density and analyzes them using binary undirected graphs.
 
+%%% ¡seealso!
+AnalyzeGroup_ST_WU, AnalyzeGroup_ST_BUT, Subject_ST, MultigraphBUD.
+
 %% ¡props!
 
 %%% ¡prop!
