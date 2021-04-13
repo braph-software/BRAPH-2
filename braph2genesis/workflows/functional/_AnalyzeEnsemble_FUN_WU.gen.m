@@ -20,6 +20,20 @@ FRECUENCYRULEMAX(parameter, scalar)is the maximum frecuency value
 %%%% ¡default!
 Inf
 
+%%% ¡prop!
+CORRELATION_RULE (parameter, option) is the correlation type.
+%%%% ¡settings!
+Correlation.CORRELATION_RULE_LIST
+%%%% ¡default!
+Correlation.CORRELATION_RULE_LIST{1}
+
+%%% ¡prop!
+NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+%%%% ¡settings!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST
+%%%% ¡default!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -53,9 +67,11 @@ for i = 1:1:gr.get('SUB_DICT').length()
         data = ifft(ft, NFFT);
     end
     
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+    
     g = GraphWU( ...
         'ID', ['g ' sub.get('ID')], ...
-        'B', data ...
+        'B', A ...
         );
     g_dict.add(g)
 end
