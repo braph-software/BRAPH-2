@@ -279,27 +279,6 @@ generate_header()
             ['% ' class_name ' methods (constructor):']
             ['%  ' class_name ' - constructor']
             })
-        if element_class_created
-            gs(1, {
-                 '%'
-                ['% ' class_name ' properties (Constant).']
-                })
-            metaclass = eval(['?' class_name]);
-            property_list = metaclass.PropertyList;
-            for i = 1:1:length(property_list)
-                property = property_list(i);
-                if property.Constant
-                    g(1, ['% ' property.Name ' - ' tostring(property.DefaultValue)])
-                end
-            end
-        end       
-        if element_class_created
-% class-specific methods
-% m = methods('Element')
-% m = methods('Element', '-full')
-% txt = help('Plot.set')
-% class-specific static methods
-        end
         gs(1, {
              '%'
             ['% ' class_name ' methods:']
@@ -375,6 +354,27 @@ generate_header()
              '%  getPlotElement - returns the element plot'
              '%  getPlotProp - returns a prop plot'
             })
+        if element_class_created
+            gs(1, {
+                 '%'
+                ['% ' class_name ' properties (Constant).']
+                })
+            metaclass = eval(['?' class_name]);
+            property_list = metaclass.PropertyList;
+            for i = 1:1:length(property_list)
+                property = property_list(i);
+                if property.Constant
+                    g(1, ['% ' property.Name ' - ' tostring(property.DefaultValue)])
+                end
+            end
+        end
+        if element_class_created
+% class-specific methods
+% m = methods('Element')
+% m = methods('Element', '-full')
+% txt = help('Plot.set')
+% class-specific static methods
+        end
         if ~isempty(seealso)
             gs(1, {
                  '%'
