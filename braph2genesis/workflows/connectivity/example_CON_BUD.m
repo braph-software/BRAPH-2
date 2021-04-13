@@ -41,7 +41,7 @@ distance_BUD1 = a_BUD1.getMeasureEnsemble('Distance').get('M');
 
 degree_BUD2 = a_BUD2.getMeasureEnsemble('Degree').get('M');
 degree_av_BUD2 = a_BUD2.getMeasureEnsemble('DegreeAv').get('M');
-distance_av_BUD2 = a_BUD2.getMeasureEnsemble('Distance').get('M');
+distance_BUD2 = a_BUD2.getMeasureEnsemble('Distance').get('M');
 
 % comparison
 c_BUD = CompareEnsemble( ...
