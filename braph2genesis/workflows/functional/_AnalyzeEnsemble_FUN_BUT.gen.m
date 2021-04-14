@@ -5,7 +5,7 @@ AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble (a, graph analysis with functional dat
 This graph analysis uses functional data of fixed threshold and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
-AnalyzeGroup_FUN_WU, AnalyzeGroup_FUN_BUD, Subject_FUN, MultigraphBUT.
+AnalyzeEnsemble_FUN_WU, AnalyzeEnsemble_FUN_BUD, Subject_FUN, MultigraphBUT.
 
 %% ¡props!
 %%% ¡prop!
