@@ -5,7 +5,7 @@ AnalyzeEnsemble_FUN_BUD < AnalyzeEnsemble (a, graph analysis with functional dat
 This graph analysis uses functional data of fixed density and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
-AnalyzeGroup_FUN_WU, AnalyzeGroup_FUN_BUD, Subject_FUN, MultigraphBUD.
+AnalyzeEnsemble_FUN_WU, AnalyzeEnsemble_FUN_BUT, Subject_FUN, MultigraphBUD.
 
 %% ¡props!
 %%% ¡prop!
