@@ -37,6 +37,11 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 %%%% ¡default!
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
+%%% ¡prop!
+DENSITIES (parameter, rvector) is the vector of densities.
+%%%% ¡default!
+0
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -55,8 +60,8 @@ g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
 
 gr = a.get('GR');
 T = a.get('REPETITION');
-fmin = a.get('FRECUENCYRULEMIN');
-fmax = a.get('FRECUENCYRULEMAX');
+fmin = a.get('FREQUENCYRULEMIN');
+fmax = a.get('FREQUENCYRULEMAX');
 densities = a.get('DENSITIES'); % this is a vector
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
