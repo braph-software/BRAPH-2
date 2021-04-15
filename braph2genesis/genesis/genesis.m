@@ -50,6 +50,7 @@ mkdir([target_dir fp 'src' fp 'cohort'])
 mkdir([target_dir fp 'src' fp 'gt'])
 mkdir([target_dir fp 'src' fp 'analysis'])
 mkdir([target_dir fp 'src' fp 'gui'])
+mkdir([target_dir fp 'src' fp 'nn'])
 
 disp('¡! created dir structure - SRC')
 
@@ -102,6 +103,8 @@ copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis']
 disp('¡! copied ready files - analysis')
 copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
 disp('¡! copied ready files - gui')
+copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
+disp('¡! copied ready files - nn')
 disp(' ')
 
 % graphs
@@ -163,6 +166,11 @@ for run = 1:1:run_number
     analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
     for i = 1:1:numel(analysis_gen_list)
         create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
+    end
+    
+    nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
+    for i = 1:1:numel(nn_gen_list)
+        create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
     end
     
     % graphs
@@ -236,6 +244,11 @@ end
 analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
 for i = 1:1:numel(analysis_gen_list)
     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
+end
+
+nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
+for i = 1:1:numel(nn_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
 end
 
 % graphs

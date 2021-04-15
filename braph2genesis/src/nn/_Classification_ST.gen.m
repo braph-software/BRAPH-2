@@ -1,5 +1,5 @@
 %% ¡header!
-ClassificationST < Classification (nn, graph analysis with structural data) is a graph analysis using structural data.
+ClassificationST < ClassificationNN (nn, graph analysis with structural data) is a graph analysis using structural data.
 
 %% ¡description!
 This is a classification for structural data
@@ -9,25 +9,39 @@ This is a classification for structural data
 %%% ¡prop!
 CLASSNAMES (parameter, cell) is the correlation type.
 
-%% ¡props_update!ö
-
 %%% ¡prop!
-GR (data, item) is the subject group, which also defines the subject class SubjectST.
+FILE (metadata, string) is the file path, this has to change to gr eventually.
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectST')
+''
+
+%% ¡props_update!
 
 %%% ¡prop!
 A (result, item) is the graph obtained from this analysis.
 %%%% ¡default!
 0
 %%%% ¡calculate!
-gr = a.get('GR');
-data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-data = cat(2, data_list{:})'; % correlation is a column based operation
+% gr = a.get('GR');
+% data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
+% data = cat(2, data_list{:})'; % correlation is a column based operation
 
+% import the data
+filename = nn.get('FILE');
+tbl = readtable(filename, 'TextType','String');
+
+% covert the label into categorical in order for prediction
+labelName = "DX";
+tbl = convertvars(tbl,labelName, 'categorical');
+
+% show table
+tbl = splitvars(tbl);
+head(tbl)
 
 % show classes name
-classNames = nn.get('CLASSNAMES');
+classNames = categories(tbl{:,labelName})
+
+% % show classes name
+% classNames = nn.get('CLASSNAMES');
 
 % split the data into training set and test set (90:10)
 numObservations = size(tbl, 1);

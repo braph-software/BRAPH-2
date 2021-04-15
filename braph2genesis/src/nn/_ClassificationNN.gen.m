@@ -1,8 +1,8 @@
 %% ¡header!
-Classification < Element (nn, classification neural network) is a classification neural network.
+ClassificationNN < Element (nn, classification neural network) is a classification neural network.
 
 %%% ¡description!
-Classification provides the methods necessary for all classification neural networks.
+ClassificationNN provides the methods necessary for all classification neural networks.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
