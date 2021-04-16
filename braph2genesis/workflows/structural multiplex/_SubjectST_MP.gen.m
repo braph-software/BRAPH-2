@@ -1,9 +1,9 @@
 %% ¡header!
-SubjectST < Subject (sub, subject with structural data) is a subject with structural data (e.g. sMRI).
+SubjectST_MP < Subject (sub, subject with structural multiplex data) is a subject with structural multiplex data (e.g. multiplex sMRI).
 
 %%% ¡description!
-Subject with structural data (e.g. cortical thickness) for each brain region.
-For example, structural data can be structural MRI.
+Subject with structural N layers multiplex data (e.g. cortical thickness) for each brain region.
+For example, structural multiplex data can be structural MRI.
 
 %%% ¡seealso!
 Element, Subject
@@ -16,12 +16,17 @@ BA (data, item) is a brain atlas.
 'BrainAtlas'
 
 %%% ¡prop!
-ST (data, cvector) is a column vector with data for each brain region.
+N (data, scalar) is the number of multiplex layers of subject.
+%%%% ¡default!
+2
+
+%%% ¡prop!
+ST_MP (data, cell) is a cell containing N vectors with data for each brain region.
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').length();
-check = (iscolumn(value) && isequal(size(value), [br_number, 1])) || (isempty(value) && br_number == 0); % Format.checkFormat(Format.CVECTOR, value) already checked
+check = (iscell(value) && isequal(length(value), N)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, N)*br_number)) || (isempty(value) && br_number == 0); 
 if check
     msg = 'All ok!';
 else   
-    msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
+    msg = ['ST_MP must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
