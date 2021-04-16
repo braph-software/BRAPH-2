@@ -55,8 +55,8 @@ if isfolder(directory)
         % brain atlas
         ba = im.get('BA');
         raw_tmp = xlsread(fullfile(directory, files(1).name));
-        br_number = size(raw_tmp, 2) - 3;
-        subjects_number = size(raw_tmp, 1) - 3;
+        br_number = size(raw_tmp, 2) ;
+        subjects_number = size(raw_tmp, 1);
         if ba.get('BR_DICT').length ~= br_number
             ba = BrainAtlas();
             idict = ba.get('BR_DICT');
@@ -76,22 +76,22 @@ if isfolder(directory)
         layers_number = length(files);
         
         for i = 1:1:length(files)
-            raw = xlsread(fullfile(directory, files(i).name));
+            [~, ~, raw] = xlsread(fullfile(directory, files(i).name));
             if i == 1  % just 1 time
                 % info
-                subjects_info(:, :) = raw{:, 1:3};
+                subjects_info(:, :) = raw(2:end, 1:3);
                 % covariates = xlsread(fullfile(directory, files(k).name), 'Sheet', 2, 'ReadVariableNames', 1);
             end
             % multiplex data
-            data = raw{:, 4: size(raw_tmp, 2)};  % we remove id, lbl, notes (column 1 to 3)
-            all_subjects_data(i, :, :) = reshape(num2cell(data), [1 subjects_number br_number]);
+            data = raw(2:end, 4: size(raw, 2));  % we remove id, labl, notes (column 1 to 3)
+            all_subjects_data(i, :, :) = reshape(data, [1 subjects_number br_number]);
         end
         
         % cycle over subjects, add subjects
         for i = 1:1:size(all_subjects_data, 2)
             layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
             for l = 1:1:layers_number
-                ST_MP(l) = {layer_subject(l, :)'};
+                ST_MP(l) = {cell2mat(layer_subject(l, :)')};
             end
             
             % transform covariates table to useful arrays
@@ -104,12 +104,12 @@ if isfolder(directory)
             
             % create subject
             sub = SubjectST_MP( ...
-                'ID', subjects_info(i, 1), ...
-                'LABEL', subjects_info(i, 2), ...
-                'NOTES', subjects_info(i, 3), ...
+                'ID', subjects_info{i, 1}, ...
+                'LABEL', subjects_info{i, 2}, ...
+                'NOTES', subjects_info{i, 3}, ...
                 'BA', ba, ...
-                'ST_MP', ST_MP, ...
-                'N', layers_number ...
+                'N', layers_number, ...
+                'ST_MP', ST_MP ...
             );
             subdict.add(sub);
         end

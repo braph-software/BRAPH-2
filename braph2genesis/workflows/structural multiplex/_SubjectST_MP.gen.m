@@ -24,7 +24,8 @@ N (data, scalar) is the number of multiplex layers of subject.
 ST_MP (data, cell) is a cell containing N vectors with data for each brain region.
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').length();
-check = (iscell(value) && isequal(length(value), N)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, N)*br_number)) || (isempty(value) && br_number == 0); 
+num_layers = sub.get('N');
+check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, num_layers)*br_number)) || (isempty(value) && br_number == 0); 
 if check
     msg = 'All ok!';
 else   
