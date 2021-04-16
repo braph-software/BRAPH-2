@@ -1,10 +1,10 @@
 %% ¡header!
-AnalyzeGroup_ST_WU < AnalyzeGroup (a, graph analysis with structural data) is a graph analysis using structural data.
+AnalyzeGroup_ST_MP_WU < AnalyzeGroup (a, graph analysis with structural multiplex data) is a graph analysis using structural multiplex data.
 
 %% ¡description!
-This graph analysis uses structural data and analyzes them using weighted undirected graphs,
-binary undirected multigraphs with fixed thresholds,
-or binary undirected multigraphs with fixed densities.
+This graph analysis uses structural multiplex data and analyzes them using 
+weighted undirected multiplexes, binary undirected multiplexes with fixed thresholds,
+or binary undirected multiplexes with fixed densities.
 
 %% ¡props!
 
@@ -25,24 +25,25 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %% ¡props_update!
 
 %%% ¡prop!
-GR (data, item) is the subject group, which also defines the subject class SubjectST.
+GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectST')
+Group('SUB_CLASS', 'SubjectST_MP')
 
 %%% ¡prop!
 G (result, item) is the graph obtained from this analysis.
 %%%% ¡settings!
-'GraphWU'
+'MultiplexWU'
 %%%% ¡default!
-GraphWU()
+MultiplexWU()
 %%%% ¡calculate!
 gr = a.get('GR');
-data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
+data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 data = cat(2, data_list{:})'; % correlation is a column based operation
 
+% loop through layers 
 A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
 
-g = GraphWU( ...
+g = MultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A ...
     );
@@ -55,4 +56,4 @@ value = g;
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_ST_WU
+example_ST_MP_WU
