@@ -8,7 +8,7 @@ im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_ST_MP_WU')) file
 
 ba = im_ba.get('BA');
 
-%% Load Groups of SubjectST
+%% Load Groups of SubjectST_MP
 
 im_gr1 = ImporterGroupSubjectSTMPXLS( ...
     'DIRECTORY', [fileparts(which('example_ST_MP_WU')) filesep 'example data ST_MP (MRI)' filesep 'xls' filesep 'GroupName1'], ...
