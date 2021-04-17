@@ -1,24 +1,24 @@
 %% ¡header!
-MultiplexWU < Graph (g, multiplex weighted undirected graph) is a multiplex weighted undirected graph.
+MultiplexBU < Graph (g, multiplex binary undirected graph) is a multiplex binary undirected graph.
 
 %%% ¡description!
-In a multiplex weighted undirected (WU) graph, 
-the edges are associated with a real number between 0 and 1 
-indicating the strength of the connection, and they are undirected.
-The connectivity matrix is symmetric.
+In a multiplex binary undirected (BU) graph, 
+the edges can be either 0 (absence of connection) 
+or 1 (existence of connection), and they are undirected.
+The connectivity matrices are symmetric.
 
 %%% ¡graph!
 graph = Graph.MULTIPLEX;
 
 %%% ¡connectivity!
-connectivity = Graph.WEIGHTED * ones(layernumber);
+connectivity = Graph.BINARY * ones(layernumber);
 
 %%% ¡directionality!
 directionality = Graph.UNDIRECTED * ones(layernumber);
 
 %%% ¡selfconnectivity!
 selfconnectivity = Graph.SELFCONNECTED * ones(layernumber);
-selfconnectivity(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
+selfconnectivity(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
 
 %%% ¡negativity!
 negativity = Graph.NONNEGATIVE * ones(layernumber);
@@ -33,7 +33,7 @@ B (data, cell) is the input cell containing the multiplex adjacency matrices on 
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted undirected graph.
+A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary undirected graph.
 %%%% ¡calculate!
 B = g.get('B');
 L = length(B); %% number of layers
@@ -44,7 +44,7 @@ for layer = 1:1:L
     M = symmetrize(B{layer}, varargin{:}); %% enforces symmetry of adjacency matrix
     M = dediagonalize(M, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
     M = semipositivize(M, varargin{:}); %% removes negative weights
-    M = standardize(M, varargin{:}); %% enforces binary adjacency matrix
+    M = binarize(M, varargin{:}); %% enforces binary adjacency matrix
     A(layer, layer) = {M};
 end
 if ~isempty(A{1, 1})
@@ -65,11 +65,12 @@ Constructor
 %%%% ¡code!
 A = rand(randi(10));
 B = {A, A};
-g = MultiplexWU('B', B);
+g = MultiplexBU('B', B);
 
-A1 = symmetrize(standardize(semipositivize(dediagonalize(A))));
+A1 = symmetrize(binarize(semipositivize(dediagonalize(A))));
 A = {A1, eye(length(A)); eye(length(A)), A1};
 
 assert(isequal(g.get('A'), A), ...
-    [BRAPH2.STR ':MultiplexWU:' BRAPH2.BUG_ERR], ...
-    'MultiplexWU is not constructing well.')
+    [BRAPH2.STR ':MultiplexBU:' BRAPH2.BUG_ERR], ...
+    'MultiplexBU is not constructing well.')
+

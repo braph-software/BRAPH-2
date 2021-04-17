@@ -38,10 +38,22 @@ MultiplexWU()
 %%%% ¡calculate!
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-data = cat(2, data_list{:})'; % correlation is a column based operation
+N = gr.get('SUB_DICT').getItem(1).get('N');  % number of layers
+br_number = gr.get('SUB_DICT').getItem(1).get('ba').get('BR_DICT').length();  % number of regions
+data = cell(N, 1);
+for i=1:N
+    data_layer = zeros(length(data_list), br_number);
+    for j=1:length(data_list)
+        sub_cell = data_list{j};
+        data_layer(j, :) = sub_cell{i}';
+    end
+    data(i) = {data_layer};
+end
 
-% loop through layers 
-A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+A = cell(1, N);
+for i = 1:N
+    A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
+end
 
 g = MultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
