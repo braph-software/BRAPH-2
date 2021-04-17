@@ -6,6 +6,9 @@ This graph analysis uses structural multiplex data and analyzes them using
 weighted undirected multiplexes, binary undirected multiplexes with fixed thresholds,
 or binary undirected multiplexes with fixed densities.
 
+%%% ¡seealso!
+AnalyzeGroup_ST_MP_BUD, AnalyzeGroup_ST_MP_BUT, Subject_ST_MP, MultiplexWU.
+
 %% ¡props!
 
 %%% ¡prop!
