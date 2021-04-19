@@ -6,9 +6,6 @@ In a multiplex weighted directed (WD) graph,
 the edges are associated with a real number between 0 and 1 
 indicating the strength of the connection, and they are directed.
 
-%%% ¡ensemble!
-false
-
 %%% ¡graph!
 graph = Graph.MULTIPLEX;
 
@@ -42,20 +39,19 @@ L = length(B); %% number of layers
 A = cell(L, L);
 
 varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, binarize
-for layer = 1:1:L
-    M = dediagonalize(B{layer}, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
+for i = 1:1:L
+    M = dediagonalize(B{i}, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
     M = semipositivize(M, varargin{:}); %% removes negative weights
     M = standardize(M, varargin{:}); %% enforces binary adjacency matrix
-    A(layer, layer) = {M};
-end
-if ~isempty(A{1, 1})
-    for i = 1:1:L
+    A(i, i) = {M};
+    if ~isempty(A{1, 1})
         for j = i+1:1:L
             A(i, j) = {eye(length(A{1, 1}))};
             A(j, i) = {eye(length(A{1, 1}))};
         end
     end
 end
+
 value = A;
 
 %% ¡tests!

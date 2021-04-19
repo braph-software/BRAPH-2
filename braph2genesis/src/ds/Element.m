@@ -1483,19 +1483,43 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also copy.
             
-            el_clone = el.copy();
+            % el_clone = el.copy();
+            % 
+            % el_list = el_clone.getElementList();
+            % for i = 1:1:length(el_list)
+            %     el = el_list{i};
+            %     for prop = 1:1:el.getPropNumber()
+            %         switch el.getPropCategory(prop)
+            %             case {Category.METADATA, Category.PARAMETER}
+            %             case {Category.DATA, Category.RESULT}
+            %                 el.props{prop}.value = NoValue.getNoValue();
+            %         end
+            %         el.props{prop}.seed = randi(intmax('uint32'));
+            %         el.props{prop}.locked = false;
+            %     end
+            % end
             
-            el_list = el_clone.getElementList();
-            for i = 1:1:length(el_list)
-                el = el_list{i};
-                for prop = 1:1:el.getPropNumber()
-                    switch el.getPropCategory(prop)
-                        case {Category.METADATA, Category.PARAMETER}
-                        case {Category.DATA, Category.RESULT}
-                        el.props{prop}.value = NoValue.getNoValue();
-                    end
-                    el.props{prop}.seed = randi(intmax('uint32'));
-                    el.props{prop}.locked = false;
+            if isa(el, 'NoValue')
+                el_clone = NoValue.getNoValue();
+                return
+            end
+            
+            el_clone = eval(el.getClass());
+            
+            for prop = 1:1:el_clone.getPropNumber()
+                switch el_clone.getPropCategory(prop)
+                    case {Category.METADATA, Category.PARAMETER}
+                        value = el.getr(prop);
+                        
+                        if isa(value, 'Element')
+                            el_clone.props{prop}.value = value.clone();
+                        elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
+                            el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
+                        else
+                            el_clone.props{prop}.value = value;
+                        end
+                    case {Category.DATA, Category.RESULT}
+                        el_clone.props{prop}.value = NoValue.getNoValue();
                 end
             end
         end

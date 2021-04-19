@@ -7,9 +7,6 @@ the edges are associated with a real number between 0 and 1
 indicating the strength of the connection, and are undirected.
 The connectivity matrix is symmetric.
 
-%%% ¡ensemble!
-false
-
 %%% ¡graph!
 graph = Graph.GRAPH;
 

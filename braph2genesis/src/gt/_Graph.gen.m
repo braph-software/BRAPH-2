@@ -21,11 +21,6 @@ LABEL (metadata, string) is an extended label of the graph.
 NOTES (metadata, string) are some specific notes about the graph.
 
 %%% ¡prop!
-G_DICT (data, idict) contains an ensemble of graphs (only used by graph ensembles).
-%%%% ¡settings!
-'Graph'
-
-%%% ¡prop!
 A (result, cell) is the graph adjacency matrix. 
 %%%% ¡calculate!
 value = {};
@@ -184,21 +179,6 @@ NEGATIVITY_TYPE_DESCRIPTION = {
 
 %% ¡staticmethods!
 % basic methods
-function bool = is_ensemble(g)
-    %IS_ENSEMBLE returns whther a graph is an ensemble of graphs.
-    %
-    % BOOL = IS_ENSEMBLE(G) returns whether the instance of the concrete graph
-    %  G is an ensemble of graphs. 
-    %
-    % BOOL = IS_ENSEMBLE(GRAPH_CLASS) returns true if graph whose class is
-    % GRAPH_CLASS is an ensemble of graphs.
-
-    if strcmp(Element.getClass(g), 'Graph')
-        bool = false;
-    else
-        bool = eval([Element.getClass(g) '.is_ensemble()']);
-    end    
-end
 function graph_type = getGraphType(g)
     %GETGRAPHTYPE returns the graph type.
     %
@@ -914,9 +894,9 @@ function m = getMeasure(g, measure_class, varargin)
     %GETMEASURE returns measure.
     %
     % M = GETMEASURE(G, MEASURE_CLASS) checks if the measure exists in the
-    % property MDICT. If not it creates a new measure M of class MEASURE_CLASS
-    % with properties defined by the graph settings. The user must call
-    % getValue() for the new measure M to retrieve the value of measure M.
+    %  property M_DICT. If not it creates a new measure M of class MEASURE_CLASS
+    %  with properties defined by the graph settings. The user must call
+    %  getValue() for the new measure M to retrieve the value of measure M.
 
     m_dict = g.memorize('M_DICT');
     if m_dict.containsKey(measure_class)
