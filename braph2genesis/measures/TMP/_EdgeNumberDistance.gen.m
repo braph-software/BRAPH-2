@@ -25,13 +25,56 @@ MultiplexWU
 %%% ¡prop!
 M (result, cell) is the edge number distance.
 %%%% ¡calculate!
-g = m.get('G');
-distance = Distance('G', g);
-distance.get('M');
-edge_number_distance = distance.get('EDGESNUMBER');
+g = m.get('G'); % graph from measure class
+A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
+
+edge_number_distance = cell(g.layernumber(), 1);
+
+for li = 1:1:g.layernumber()
+    Aii = A{li, li};
+    edge_number_distance(li) = {m.getEdgeNumberDistance(Aii)};
+end
 
 value = edge_number_distance;
 
+%% ¡methods!
+function edge_number_distance = getEdgeNumberDistance(m, A)
+    %GETEDGENUMBERDISTANCE calculates the edge distance number of a graph.
+
+    ind = A~=0;
+    A(ind) = A(ind).^-1;
+    n = length(A);
+    D = inf(n);
+    D(1:n+1:end) = 0; % distance matrix
+    B = zeros(n); % number of edges matrix
+
+    for u = 1:n
+        S = true(1, n); % distance permanence (true is temporary)
+        L1 = A;
+        V = u;
+
+        while 1
+            S(V) = 0; % distance u->V is now permanent
+            L1(:, V) = 0; % no in-edges as already shortest
+
+            for v = V
+                T = find(L1(v, :)); % neighbours of shortest nodes
+                [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
+                D(u, T) = d; % smallest of old/new path lengths
+                ind = T(wi==2); % indices of lengthened paths
+                B(u, ind) = B(u, v) + 1; % increment no. of edges in lengthened paths
+            end
+
+            minD = min(D(u, S));
+            if isempty(minD) || isinf(minD) % isempty: all nodes reached;
+                break % isinf: some nodes cannot be reached
+            end
+
+            V = find(D(u,:)==minD);
+        end
+    end
+    edge_number_distance = B;
+end
 %% ¡tests!
 
 %%% ¡test!
@@ -99,6 +142,6 @@ known_value = {[
 g = MultiplexWD('B', A);
 edge_number_distance = EdgeNumberDistance('G', g).get('M');
 
-assert(isequal(edge_number_distance, known_value'), ...
+assert(isequal(edge_number_distance, known_value), ...
     [BRAPH2.STR ':EdgeNumberDistance:' BRAPH2.BUG_ERR], ...
     'EdgeNumberDistance is not being calculated correctly for MultiplexGraphWD.')
