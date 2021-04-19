@@ -52,9 +52,8 @@ if isfolder(directory)
     if length(files) > 0
         % brain atlas
         ba = im.get('BA');
-        %raw_tmp = xlsread(fullfile(directory, files(1).name));
         raw_tmp = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
-        br_number = size(raw_tmp, 2) ;
+        br_number = size(raw_tmp, 2) - 3;
         subjects_number = size(raw_tmp, 1);
         if ba.get('BR_DICT').length ~= br_number
             ba = BrainAtlas();
@@ -75,17 +74,16 @@ if isfolder(directory)
         layers_number = length(files);
         
         for i = 1:1:length(files)
-            % [~, ~, raw] = xlsread(fullfile(directory, files(i).name));
-            raw = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
+            raw = readtable(fullfile(directory, files(i).name), 'Delimiter', '	');
             if i == 1  % just 1 time
                 % info
-                subjects_info(:, :) = raw(2:end, 1:3);
+                subjects_info(:, :) = table2cell(raw(:, 1:3));
             end
             % multiplex data
-            data = raw(2:end, 4: size(raw, 2));  % we remove id, labl, notes (column 1 to 3)
+            data = table2cell(raw(:, 4: size(raw, 2)));  % we remove id, labl, notes (column 1 to 3)
             all_subjects_data(i, :, :) = reshape(data, [1 subjects_number br_number]);
         end
-        
+                            
         % cycle over subjects, add subjects
         for i = 1:1:size(all_subjects_data, 2)
             layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
@@ -101,7 +99,7 @@ if isfolder(directory)
                 'BA', ba, ...
                 'N', layers_number, ...
                 'ST_MP', ST_MP ...
-            );
+                );
             subdict.add(sub);
         end
         gr.set('sub_dict', subdict);
