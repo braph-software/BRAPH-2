@@ -7,9 +7,6 @@ all the layers consist of binary undirected (BU) multiplex graphs
 derived from the same weighted supra-connectivity matrices 
 binarized at different densities.
 
-%%% ¡ensemble!
-false
-
 %%% ¡graph!
 graph = Graph.MULTIPLEX;
 

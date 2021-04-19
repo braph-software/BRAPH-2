@@ -18,13 +18,13 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphBU
-%% ¡---!
-MultigraphBUD
-MultigraphBUT
 MultiplexWU
 MultiplexBU
 MultiplexBUD
 MultiplexBUT
+%% ¡---!
+MultigraphBUD
+MultigraphBUT
 
 %% ¡props_update!
 
@@ -153,58 +153,58 @@ assert(isequal(m_inside_g.get('M'), known_degree_av), ...
 %     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
 %     'DegreeAv is not being calculated correctly for MultigraphBUD.')
 % 
-% %%% ¡test!
-% %%%% ¡name!
-% MultiplexBU
-% %%%% ¡code!
-% B11 = [
-%     0   1   1
-%     1   0   0
-%     1   0   0
-%     ];
-% B22 = [
-%     0   1   0
-%     1   0   1
-%     0   1   0
-%     ];
-% B = {B11 B22};
-% 
-% known_degree = {
-%     mean([2 1 1])
-%     mean([1 2 1])
-%     };
-% 
-% g = MultiplexBU('B', B);
-% degree_av = DegreeAv('G', g);
-% 
-% assert(isequal(degree_av.get('M'), known_degree), ...
-%     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
-%     'DegreeAv is not being calculated correctly for MultiplexBU.')
-% 
-% %%% ¡test!
-% %%%% ¡name!
-% MultiplexWU
-% %%%% ¡code!
-% B11 = [
-%     0   .2  1
-%     .2  0   0
-%     1   0   0
-%     ];
-% B22 = [
-%     0   1   0
-%     1   0   .3
-%     0   .3  0
-%     ];
-% B= {B11 B22};
-% 
-% known_degree = {
-%     mean([2 1 1])
-%     mean([1 2 1])
-%     };
-% 
-% g = MultiplexWU('B', B);
-% degree_av = DegreeAv('G', g);
-% 
-% assert(isequal(degree_av.get('M'), known_degree), ...
-%     [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
-%     'DegreeAv is not being calculated correctly for MultiplexWU.')
+%%% ¡test!
+%%%% ¡name!
+MultiplexBU
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+B = {B11 B22};
+
+known_degree = {
+    mean([2 1 1])
+    mean([1 2 1])
+    };
+
+g = MultiplexBU('B', B);
+degree_av = DegreeAv('G', g);
+
+assert(isequal(degree_av.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
+    'DegreeAv is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexWU
+%%%% ¡code!
+B11 = [
+    0   .2  1
+    .2  0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   .3
+    0   .3  0
+    ];
+B= {B11 B22};
+
+known_degree = {
+    mean([2 1 1])
+    mean([1 2 1])
+    };
+
+g = MultiplexWU('B', B);
+degree_av = DegreeAv('G', g);
+
+assert(isequal(degree_av.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.BUG_ERR], ...
+    'DegreeAv is not being calculated correctly for MultiplexWU.')
