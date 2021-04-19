@@ -3,9 +3,10 @@ ExporterGroupSubjectSTMPXLS < Exporter (ex, exporter of ST MP subject group in X
 
 %%% ¡description!
 ExporterGroupSubjectSTMPXLS exports a group of subjects with structural multiplex data to an XLSX file.
-The XLS/XLSX file consists of of the following columns:
+The files from the same group containing the data from N layers are saved in the same folder.
+Each XLS/XLSX file consists of the following columns: 
 Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
-BrainRegions (column 4-end; one brainregion value per column).
+BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!

@@ -3,9 +3,10 @@ ImporterGroupSubjectSTMPTXT < Importer (im, importer of ST MP subject group from
 
 %%% ¡description!
 ImporterGroupSubjectSTMPTXT imports a group of subjects with structural multiplex data from an TXT file.
-The TXT file consists of the following columns: 
+The files from the same group containing the data from N layers must be in the same folder.
+Each TXT file consists of the following columns: 
 Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
-BrainRegions (column 4-end; one brainregion value per column).
+BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
