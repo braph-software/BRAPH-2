@@ -135,7 +135,7 @@ end
 end
 
 %% ¡methods!
-function random_g = randomize(g, varargin)
+function random_g = randomize(g)
 % RANDOMIZE returns a randomized graph and the correlation coefficients
 %
 % RANDOM_G = RANDOMIZE(G) returns the randomized graph

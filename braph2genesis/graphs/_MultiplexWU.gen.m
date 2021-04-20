@@ -67,7 +67,7 @@ end
 value = A;
 
 %% ¡methods!
-function random_g = randomize(g, varargin)
+function random_g = randomize(g)
 % RANDOMIZE returns a randomized graph
 %
 % RANDOMIZED_G = RANDOMIZE(G) returns the randomized
