@@ -96,12 +96,12 @@ end
 % get A
 A = g.get('A');
 L = g.layernumber();
-random_multi_A = A;
+random_multi_A = cell(1, size(A, 1));
 
 for li = 1:1:L
     Aii = A{li, li};
     random_A = GraphWD.randomize_A(Aii, attempts_per_edge, number_of_weights);
-    random_multi_A(li, li) = {random_A};
+    random_multi_A(li) = {random_A};
 end
 random_g = MultiplexWD('B', random_multi_A);
 end
