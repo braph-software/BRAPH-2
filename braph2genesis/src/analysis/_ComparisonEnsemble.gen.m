@@ -74,6 +74,10 @@ function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     verbose = c.get('VERBOSE');
     interruptible = c.get('INTERRUPTIBLE');
     memorize = c.get('MEMORIZE');
+
+    % Pre-calculate and save measures of all subjects
+    ms1 = cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
+    ms2 = cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
     
     % Measure for groups 1 and 2, and their difference
     m1 = c.get('A1').getMeasureEnsemble(measure_class).memorize('M');
@@ -88,8 +92,6 @@ function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     diff_perms = cell(1, P);
 
     start = tic;
-    ms1 = cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
-    ms2 = cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
     seeds = c.memorize('PERM_SEEDS');
     for p = 1:1:P
         % [a1_perm, a2_perm] = c.getPerm(i, memorize);
