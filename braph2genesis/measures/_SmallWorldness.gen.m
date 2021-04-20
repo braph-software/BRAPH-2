@@ -27,9 +27,14 @@ MultiplexWU
 M (result, cell) is the small worldness
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
+if isempty(g.get('A'))
+    value = {};
+    return;
+end
 L = g.layernumber();
 
 clustering_av = ClusteringAv('G', g).get('M');
+path_length_av = PathLengthAv('G', g).get('M');
 
 M = 100;  % number of random graphs
 clustering_av_random = cell(1, M);
@@ -55,7 +60,6 @@ for li = 1:1:L
 end
 
 value = small_worldness;
-
 
 %% ¡tests!
 
@@ -104,7 +108,7 @@ A = rand(20);
 
 known_smallworldness = {1};
 
-g = GraphBU(A);
+g = GraphBU('B', A);
 smallworldness = SmallWorldness('G', g, 'rule', 'subgraphs').get('M');
 
 assert(isequal(smallworldness, known_smallworldness), ...
