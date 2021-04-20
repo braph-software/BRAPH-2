@@ -93,6 +93,10 @@ function cp = getComparison(c, measure_class, varargin)
     if cp_dict.containsKey(measure_class)
         cp = cp_dict.getItem(measure_class);
     else
+        % pre-saves the measures so that they don't need to be recalculated for each permutation
+        cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
+        cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
+        % calculates comparison ensemble
         cp = ComparisonEnsemble( ...
             'ID', [measure_class ' comparison ' c.get('A1').get('ID') ' vs. ' c.get('A2').get('ID')], ...
             'MEASURE', measure_class, ...
