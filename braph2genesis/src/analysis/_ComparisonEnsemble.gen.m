@@ -75,6 +75,10 @@ function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     interruptible = c.get('INTERRUPTIBLE');
     memorize = c.get('MEMORIZE');
 
+    % Pre-calculate and save measures of all subjects
+    ms1 = cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
+    ms2 = cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
+    
     % Measure for groups 1 and 2, and their difference
     m1 = c.get('A1').getMeasureEnsemble(measure_class).memorize('M');
     m2 = c.get('A2').getMeasureEnsemble(measure_class).memorize('M');
@@ -88,18 +92,39 @@ function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     diff_perms = cell(1, P);
 
     start = tic;
-    for i = 1:1:P
-        [a1_perm, a2_perm] = c.getPerm(i, memorize);
-
-        m1_perms{1, i} = a1_perm.getMeasureEnsemble(measure_class).memorize('M');
-        m2_perms{1, i} = a2_perm.getMeasureEnsemble(measure_class).memorize('M');
-        diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
+    seeds = c.memorize('PERM_SEEDS');
+    for p = 1:1:P
+        % [a1_perm, a2_perm] = c.getPerm(i, memorize);
+        % 
+        % m1_perms{1, i} = a1_perm.getMeasureEnsemble(measure_class).memorize('M');
+        % m2_perms{1, i} = a2_perm.getMeasureEnsemble(measure_class).memorize('M');
+        % diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
+        
+        rng(seeds(p), 'twister')
+        
+        [ms1_perm, ms2_perm] = permutation(ms1, ms2, c.get('LONGITUDINAL'));
+        
+        ms1_av = cell(size(ms1_perm{1}));
+        ms2_av = cell(size(ms1_perm{1}));
+        for i = 1:1:size(ms1_perm{1}, 1)
+            for j = 1:1:size(ms1_perm{1}, 2)
+                
+                ms1_perm_ij = cellfun(@(x) x{i, j}, ms1_perm, 'UniformOutput', false);
+                ms1_av{i, j} = mean(cat(ndims(ms1_perm_ij{1}) + 1, ms1_perm_ij{:}), ndims(ms1_perm_ij{1}) + 1);
+                
+                ms2_perm_ij = cellfun(@(x) x{i, j}, ms2_perm, 'UniformOutput', false);
+                ms2_av{i, j} = mean(cat(ndims(ms2_perm_ij{1}) + 1, ms2_perm_ij{:}), ndims(ms2_perm_ij{1}) + 1);
+            end
+        end
+        m1_perms{1, p} = ms1_av;
+        m2_perms{1, p} = ms2_av;
+        diff_perms{1, p} = cellfun(@(x, y) y - x, m1_perms{1, p}, m2_perms{1, p}, 'UniformOutput', false);
 
         if interruptible
             pause(interruptible)
         end
         if verbose
-            disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
+            disp(['** PERMUTATION TEST - sampling #' int2str(p) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
         end
     end
 
