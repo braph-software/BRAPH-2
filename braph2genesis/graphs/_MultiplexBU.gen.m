@@ -92,7 +92,7 @@ end
 % get A
 A = g.get('A');
 L = g.layernumber();
-random_multi_A = cell(1, size(A, 1));
+random_multi_A = cell(1, L);
 
 for li = 1:1:L
     Aii = A{li, li};

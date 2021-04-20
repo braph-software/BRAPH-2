@@ -61,7 +61,6 @@ end
 
 value = small_worldness;
 
-
 %% ¡tests!
 
 %%% ¡test!
