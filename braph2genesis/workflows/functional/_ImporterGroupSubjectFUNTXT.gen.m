@@ -50,18 +50,6 @@ if isfolder(directory)
     if length(files) > 0
         % brain atlas
         ba = im.get('BA');
-        raw = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
-        br_number = size(raw, 1);  
-        if ba.get('BR_DICT').length ~= br_number
-            ba = BrainAtlas();
-            idict = ba.get('BR_DICT');
-            for j = 1:1:br_number
-                br_id = ['br' int2str(j)];
-                br = BrainRegion('ID', br_id);
-                idict.add(br)
-            end
-            ba.set('br_dict', idict);
-        end
 
         subdict = gr.get('SUB_DICT');
         
@@ -72,9 +60,13 @@ if isfolder(directory)
             [~, sub_id] = fileparts(files(i).name);
             sub = SubjectFUN( ...
                 'ID', sub_id, ...
-                'BA', ba, ...
-                'FUN', FUN ...
+                'BA', ba ...
             );
+            if br_number == size(FUN, 1)
+                sub.set('FUN', FUN');
+            elseif br_number == size(FUN, 2)
+                sub.set('FUN', FUN);
+            end
             subdict.add(sub);
         end
         gr.set('sub_dict', subdict);

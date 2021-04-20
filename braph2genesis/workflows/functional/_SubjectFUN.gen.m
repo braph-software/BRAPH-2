@@ -16,12 +16,12 @@ BA (data, item) is a brain atlas.
 'BrainAtlas'
 
 %%% ¡prop!
-FUN (data, matrix) is a matrix with each row corresponding to the time series of a brain region.
+FUN (data, matrix) is a matrix with each column corresponding to the time series of a brain region.
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').length();
-check = size(value, 1) == br_number; % Format.checkFormat(Format.MATRIX, value) already checked
+check = size(value, 2) == br_number; % Format.checkFormat(Format.MATRIX, value) already checked
 if check
     msg = 'All ok!';
 else   
-    msg = ['FUN must be a matrix with the same number of rows as the brain regions (' int2str(br_number) ').'];
+    msg = ['FUN must be a matrix with the same number of columns as the brain regions (' int2str(br_number) ').'];
 end
