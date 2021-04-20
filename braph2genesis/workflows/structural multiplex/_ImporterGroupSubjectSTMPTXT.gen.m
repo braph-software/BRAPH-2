@@ -3,7 +3,7 @@ ImporterGroupSubjectSTMPTXT < Importer (im, importer of ST MP subject group from
 
 %%% ¡description!
 ImporterGroupSubjectSTMPTXT imports a group of subjects with structural multiplex data from an TXT file.
-The files from the same group containing the data from N layers must be in the same folder.
+The files from the same group containing the data from L layers must be in the same folder.
 Each TXT file consists of the following columns: 
 Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
@@ -15,7 +15,7 @@ Element, Importer, ExporterGroupSubjectSTMPTXT
 %% ¡props!
 
 %%% ¡prop!
-DIRECTORY (data, string) is the directory containing the ST MP subject group files from which to load the N layers of the subject group.
+DIRECTORY (data, string) is the directory containing the ST MP subject group files from which to load the L layers of the subject group.
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -98,7 +98,7 @@ if isfolder(directory)
                 'LABEL', subjects_info{i, 2}, ...
                 'NOTES', subjects_info{i, 3}, ...
                 'BA', ba, ...
-                'N', layers_number, ...
+                'L', layers_number, ...
                 'ST_MP', ST_MP ...
                 );
             subdict.add(sub);
@@ -111,7 +111,7 @@ value = gr;
 
 %% ¡methods!
 function uigetdir(im)
-    % UIGETDIR opens a dialog box to set the directory from where to load the TXT files of the ST MP subject group.
+    % UIGETDIR opens a dialog box to set the directory from where to load the TXT files of the ST MP subject group with L layers.
 
     directory = uigetdir('Select directory');
     if isfolder(directory)
