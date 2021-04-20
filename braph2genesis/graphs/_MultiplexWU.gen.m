@@ -68,44 +68,44 @@ value = A;
 
 %% ¡methods!
 function random_g = randomize(g)
-% RANDOMIZE returns a randomized graph
-%
-% RANDOMIZED_G = RANDOMIZE(G) returns the randomized
-% graph RANDOM_G obtained with a randomized correlation
-% matrix via the static function randomize_A while preserving
-% degree distributions. The randomization it is done layer by
-% layer and then integrated in the 2-D supra-adjacency matrix
-% cell array.
-%
-% RANDOMIZED_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE)
-% returns the randomized graph RANDOM_G obtained with a
-% randomized correlation matrix via the static function
-% randomize_A while preserving  degree distributions.
-% The multiplex is randomized layer by layer where randomized
-% adjacency matrix of each layer are then integrated in the
-% 2-D supra-adjacency matrix cell array.
-%
-% See also GraphBD
+    % RANDOMIZE returns a randomized graph
+    %
+    % RANDOMIZED_G = RANDOMIZE(G) returns the randomized
+    % graph RANDOM_G obtained with a randomized correlation
+    % matrix via the static function randomize_A while preserving
+    % degree distributions. The randomization it is done layer by
+    % layer and then integrated in the 2-D supra-adjacency matrix
+    % cell array.
+    %
+    % RANDOMIZED_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE)
+    % returns the randomized graph RANDOM_G obtained with a
+    % randomized correlation matrix via the static function
+    % randomize_A while preserving  degree distributions.
+    % The multiplex is randomized layer by layer where randomized
+    % adjacency matrix of each layer are then integrated in the
+    % 2-D supra-adjacency matrix cell array.
+    %
+    % See also GraphBD
 
-% get rules
-number_of_weights = g.get('NUMBEROFWEIGHTS');
-attempts_per_edge = g.get('ATTEMPTSPEREDGE');
+    % get rules
+    number_of_weights = g.get('NUMBEROFWEIGHTS');
+    attempts_per_edge = g.get('ATTEMPTSPEREDGE');
 
-if nargin<2
-    attempts_per_edge = 5;
-end
+    if nargin<2
+        attempts_per_edge = 5;
+    end
 
-% get A
-A = g.get('A');
-L = g.layernumber();
-random_multi_A = cell(1, L);
+    % get A
+    A = g.get('A');
+    L = g.layernumber();
+    random_multi_A = cell(1, L);
 
-for li = 1:1:L
-    Aii = A{li, li};
-    random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
-    random_multi_A(li) = {random_A};
-end
-random_g = MultiplexWU('B', random_multi_A);
+    for li = 1:1:L
+        Aii = A{li, li};
+        random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
+        random_multi_A(li) = {random_A};
+    end
+    random_g = MultiplexWU('B', random_multi_A);
 end
 
 
