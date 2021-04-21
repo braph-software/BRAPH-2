@@ -41,21 +41,26 @@ MultiplexWU()
 %%%% ¡calculate!
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-L = gr.get('SUB_DICT').getItem(1).get('L');  % number of layers
-br_number = gr.get('SUB_DICT').getItem(1).get('ba').get('BR_DICT').length();  % number of regions
-data = cell(L, 1);
-for i=1:L
-    data_layer = zeros(length(data_list), br_number);
-    for j=1:length(data_list)
-        sub_cell = data_list{j};
-        data_layer(j, :) = sub_cell{i}';
-    end
-    data(i) = {data_layer};
-end
 
-A = cell(1, L);
-for i = 1:L
-    A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
+if isempty(data_list)
+    A ={[], []};
+else
+    L = gr.get('SUB_DICT').getItem(1).get('L');  % number of layers
+    br_number = gr.get('SUB_DICT').getItem(1).get('ba').get('BR_DICT').length();  % number of regions
+    data = cell(L, 1);
+    for i=1:L
+        data_layer = zeros(length(data_list), br_number);
+        for j=1:length(data_list)
+            sub_cell = data_list{j};
+            data_layer(j, :) = sub_cell{i}';
+        end
+        data(i) = {data_layer};
+    end
+
+    A = cell(1, L);
+    for i = 1:L
+        A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
+    end
 end
 
 g = MultiplexWU( ...

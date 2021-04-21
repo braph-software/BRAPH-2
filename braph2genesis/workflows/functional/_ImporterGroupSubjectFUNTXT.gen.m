@@ -57,16 +57,29 @@ if isfolder(directory)
         for i = 1:1:length(files)
             % read file
             FUN = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
+            
+            % brain atlas
+            ba = im.get('BA');
+            br_number = size(FUN, 2);   
+            if ba.get('BR_DICT').length ~= br_number
+                ba = BrainAtlas();
+                idict = ba.get('BR_DICT');
+                for j = 1:1:br_number
+                    br_id = ['br' int2str(j)];
+                    br = BrainRegion('ID', br_id);
+                    idict.add(br)
+                end
+                ba.set('br_dict', idict);
+            end
+            subdict = gr.get('SUB_DICT');
+            
             [~, sub_id] = fileparts(files(i).name);
             sub = SubjectFUN( ...
                 'ID', sub_id, ...
                 'BA', ba ...
-            );
-            if br_number == size(FUN, 1)
-                sub.set('FUN', FUN');
-            elseif br_number == size(FUN, 2)
-                sub.set('FUN', FUN);
-            end
+                );
+            
+            sub.set('FUN', FUN);
             subdict.add(sub);
         end
         gr.set('sub_dict', subdict);
