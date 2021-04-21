@@ -50,7 +50,7 @@ if isfolder(directory)
     if length(files) > 0
         % brain atlas
         ba = im.get('BA');
-
+        br_number = ba.get('BR_DICT').length;
         subdict = gr.get('SUB_DICT');
         
         % adds subjects
