@@ -19,6 +19,11 @@ FILE (data, string) is the XLS/XLSX file from where to load the ST subject group
 ''
 
 %%% ¡prop!
+FILE_COVARIATES (data, string) is the XLS/XLSX file from where to load the covariates age and sex of the ST subject group.
+%%%% ¡default!
+''
+
+%%% ¡prop!
 BA (data, item) is a brain atlas.
 %%%% ¡settings!
 'BrainAtlas'
@@ -40,9 +45,22 @@ gr = Group( ...
 
 % analyzes file
 file = im.memorize('FILE');
+file_covariates = im.memorize('FILE_COVARIATES');
 if isfile(file)
     [~, ~, raw] = xlsread(file);
-
+    
+    % Check if there are covariates to add (age and sex)
+    if isfile(file_covariates)
+        [~, ~, raw_covariates] = xlsread(file_covariates);
+        age = raw_covariates(2:end, 2);
+        sex = raw_covariates(2:end, 3);
+    else
+        age = {[0]};
+        age = age(ones(50,1));
+        unassigned =  {'unassigned'};
+        sex = unassigned(ones(50, 1));
+    end
+    
     % sets group props
     [~, name, ext] = fileparts(file);
     gr.set( ...
@@ -78,8 +96,10 @@ if isfile(file)
             'LABEL', raw{i, 2}, ...
             'NOTES', raw{i, 3}, ...
             'BA', ba, ...
-            'ST', ST ...
-        );
+            'ST', ST, ...
+            'age', age{i-1}, ...
+            'sex', sex{i-1} ...
+            );
         subdict.add(sub);
     end
     gr.set('sub_dict', subdict);
