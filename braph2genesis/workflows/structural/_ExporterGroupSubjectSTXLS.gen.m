@@ -8,7 +8,7 @@ Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
 The XLS/XLSX file containing the covariates consists of of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
+Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
@@ -55,10 +55,9 @@ if isfolder(fileparts(file))
             num2cell([1:1:ba.get('BR_DICT').length()]), 'UniformOutput', false);
         br_labels = cellfun(@(br) br.get('LABEL'), br_list, 'UniformOutput', false);
         
-        tab = cell(1 + sub_number, 3 + numel(br_labels));
         age = cell(sub_number, 1);
         sex = cell(sub_number, 1);
-
+        tab = cell(1 + sub_number, 3 + numel(br_labels));
         tab{1, 1} = 'ID';
         tab{1, 2} = 'Label';
         tab{1, 3} = 'Notes';
@@ -80,7 +79,6 @@ if isfolder(fileparts(file))
                 tab{1 + i, 3 + j} = sub_ST(j);
             end
         end
-
     end
 
     % save
