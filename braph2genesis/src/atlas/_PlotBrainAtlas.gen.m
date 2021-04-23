@@ -331,7 +331,7 @@ LABS = cellfun(@(x) x.get('LABEL'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'
 % get values & complete vector size
 % symbols
 SYMS_SHOW = pl.get('SYMS');
-if length(SYMS_SHOW) == 1
+if SYMS_SHOW
     SYMS_SHOW = repmat(SYMS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
@@ -352,7 +352,7 @@ end
 
 % spheres
 SPHS_SHOW = pl.get('SPHS');
-if length(SPHS_SHOW) == 1
+if SPHS_SHOW
     SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
@@ -383,7 +383,7 @@ end
 
 % ids
 IDS_SHOW = pl.get('IDS');
-if length(IDS_SHOW) == 1
+if IDS_SHOW
     IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
@@ -399,7 +399,7 @@ end
 
 % labs
 LABS_SHOW = pl.get('LABS');
-if length(LABS_SHOW) == 1
+if LABS_SHOW
     LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
@@ -420,6 +420,8 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
         % plotting
         if ~ishandle(pl.h_syms.h(i))
             pl.h_syms.h(i) = plot3(h_axes, X{i}, Y{i}, Z{i});
+        else
+            set(pl.h_syms.h(i), 'Xdata',X{i}, 'Ydata', Y{i}, 'Zdata', Z{i})
         end
         % set
         m = PlotBrainAtlas.PLOT_SYMBOL_TAG(pl.get('syms_marker'));

@@ -146,16 +146,20 @@ function h_panel = draw(pl, varargin)
                     end
                 case 3
                     ba_idict.getItem(i).set('Label', newdata)
+                    update_brain_surface()
                 case 4
                     ba_idict.getItem(i).set('X', newdata)
+                    update_brain_surface()
                 case 5
                     ba_idict.getItem(i).set('Y', newdata)
+                    update_brain_surface()
                 case 6
                     ba_idict.getItem(i).set('Z', newdata)
+                    update_brain_surface()
                 case 7
                     ba_idict.getItem(i).set('Notes', newdata)
             end
-            pl.update()
+            pl.update()            
         end
         function cb_table_selectall(~, ~)  % (src, event)
             checkIdict();
