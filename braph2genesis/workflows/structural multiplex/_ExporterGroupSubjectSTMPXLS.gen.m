@@ -141,7 +141,7 @@ end
 %%%% ¡name!
 Delete file TBE
 %%%% ¡code!
-delete([fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_covs_most_likely_to_be_erased.xlsx'])
+delete([fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_MP_covs_most_likely_to_be_erased.xlsx'])
 
 %%% ¡test!
 %%%% ¡name!
@@ -233,7 +233,7 @@ if ~exist(directory, 'dir')
     mkdir(directory)
 end
 
-file_covs = [fileparts(which('test_braph2')) filesep 'trial_covariates_group_subjects_ST_to_be_erased.xlsx'];
+file_covs = [fileparts(which('test_braph2')) filesep 'trial_covariates_group_subjects_ST_MP_to_be_erased.xlsx'];
 
 ex = ExporterGroupSubjectSTMPXLS( ...
     'DIRECTORY', directory, ...

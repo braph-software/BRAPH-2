@@ -22,7 +22,7 @@ Element, Importer, ExporterGroupSubjectSTMPTXT
 DIRECTORY (data, string) is the directory containing the ST MP subject group files from which to load the L layers of the subject group.
 
 %%% ¡prop!
-FILE_COVARIATES (data, string) is the TXT file from where to load the covariates age and sex of the ST subject group.
+FILE_COVARIATES (data, string) is the TXT file from where to load the covariates age and sex of the ST MP subject group.
 %%%% ¡default!
 ''
 
