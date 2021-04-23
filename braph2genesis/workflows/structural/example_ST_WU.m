@@ -11,6 +11,7 @@ ba = im_ba.get('BA');
 %% Load Groups of SubjectST
 im_gr1 = ImporterGroupSubjectSTXLS( ...
     'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
+    'FILE_COVARIATES', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'covariates_age_sex' filesep 'ST_group1_age_sex.xlsx'], ...
     'BA', ba ...
     );
 
@@ -18,15 +19,17 @@ gr1 = im_gr1.get('GR');
 
 im_gr2 = ImporterGroupSubjectSTXLS( ...
     'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group2.xlsx'], ...
+    'FILE_COVARIATES', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'covariates_age_sex' filesep 'ST_group2_age_sex.xlsx'], ...
     'BA', ba ...
     );
 
 gr2 = im_gr2.get('GR');
 
 %% Analysis ST WU
-a_WU1 = AnalyzeGroup_ST_WU('GR', gr1);
+use_covariates_in_analysis = 'True';
+a_WU1 = AnalyzeGroup_ST_WU('GR', gr1, use_covariates_in_analysis);
 
-a_WU2 = AnalyzeGroup_ST_WU('GR', gr2);
+a_WU2 = AnalyzeGroup_ST_WU('GR', gr2, use_covariates_in_analysis);
 
 % measure calculation
 g_WU1 = a_WU1.get('G');

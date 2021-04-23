@@ -2,10 +2,14 @@
 ImporterGroupSubjectSTXLS < Importer (im, importer of ST subject group from XLS/XLSX) imports a group of subjects with structural data from an XLS/XLSX file.
 
 %%% ¡description!
-ImporterGroupSubjectSTXLS imports a group of subjects with structural data from an XLS/XLSX file.
+ImporterGroupSubjectSTXLS imports a group of subjects with structural data from an XLS/XLSX file and their covariates from another XLS/XLSX file.
 The XLS/XLSX file consists of the following columns: 
-Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
+Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
+The first row contains the headers and each subsequent row the values for each subject.
+The XLS/XLSX file containing the covariates must be inside a folder in the same directory 
+than file with data and consists of of the following columns:
+Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!

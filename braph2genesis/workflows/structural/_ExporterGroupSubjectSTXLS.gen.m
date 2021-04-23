@@ -2,10 +2,13 @@
 ExporterGroupSubjectSTXLS < Exporter (ex, exporter of ST subject group in XLS/XLSX) exports a group of subjects with structural data to an XLSX file.
 
 %%% ¡description!
-ExporterGroupSubjectSTXLS exports a group of subjects with structural data to an XLSX file.
-The XLS/XLSX file consists of of the following columns:
-Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
+ExporterGroupSubjectSTXLS exports a group of subjects with structural data to an XLSX file and their covariates age and sex (if existing) to another XLSX file.
+The XLS/XLSX file containing the data consists of of the following columns:
+Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
+The first row contains the headers and each subsequent row the values for each subject.
+The XLS/XLSX file containing the covariates consists of of the following columns:
+Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
@@ -28,9 +31,15 @@ FILE (data, string) is the file name where to save the group of subjects with st
 [fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_most_likely_to_be_erased.xlsx']
 
 %%% ¡prop!
+FILE_COVARIATES (data, string) is the file name where to save the covariates of the group of subjects with structural data.
+%%%% ¡default!
+[fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_covs_most_likely_to_be_erased.xlsx']
+
+%%% ¡prop!
 SAVE (result, empty) saves the group of subjects with structural data in the selected XLS/XLSX file.
 %%%% ¡calculate!
 file = ex.get('FILE');
+file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(fileparts(file))
     gr = ex.get('GR');
@@ -45,8 +54,11 @@ if isfolder(fileparts(file))
         br_list = cellfun(@(i) ba.get('BR_DICT').getItem(i), ...
             num2cell([1:1:ba.get('BR_DICT').length()]), 'UniformOutput', false);
         br_labels = cellfun(@(br) br.get('LABEL'), br_list, 'UniformOutput', false);
-
+        
         tab = cell(1 + sub_number, 3 + numel(br_labels));
+        age = cell(sub_number, 1);
+        sex = cell(sub_number, 1);
+
         tab{1, 1} = 'ID';
         tab{1, 2} = 'Label';
         tab{1, 3} = 'Notes';
@@ -60,18 +72,34 @@ if isfolder(fileparts(file))
             tab{1 + i, 1} = sub.get('ID');
             tab{1 + i, 2} = sub.get('LABEL');
             tab{1 + i, 3} = sub.get('NOTES');
-
+            age{i} =  sub.get('AGE');
+            sex{i} =  sub.get('SEX');
+            
             sub_ST = sub.get('ST');
             for j = 1:1:length(sub_ST)
                 tab{1 + i, 3 + j} = sub_ST(j);
             end
         end
 
-        tab = table(tab);
     end
 
     % save
-    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+    writetable(table(tab), file, 'Sheet', 1, 'WriteVariableNames', 0);
+    
+    % if covariates save them in another file
+    if isfolder(fileparts(file_covariates))
+        tab2 = cell(1 + sub_number, 3);
+        tab2{1, 1} = 'ID';
+        tab2{1, 2} = 'Age';
+        tab2{1, 3} = 'Sex';
+        tab2(2:end, 1) = tab(2:end, 1);
+        tab2(2:end, 2) = age;
+        tab2(2:end, 3) = sex;
+        tab2 = table(tab2);
+        
+        % save
+        writetable(tab2, file_covariates, 'Sheet', 1, 'WriteVariableNames', 0);
+    end
 
     % sets value to empty
     value = [];
@@ -97,6 +125,7 @@ end
 Delete file TBE
 %%%% ¡code!
 delete([fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_most_likely_to_be_erased.xlsx'])
+delete([fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_covs_most_likely_to_be_erased.xlsx'])
 
 %%% ¡test!
 %%%% ¡name!
@@ -181,9 +210,11 @@ gr = Group( ...
     );
 
 file = [fileparts(which('test_braph2')) filesep 'trial_group_subjects_ST_to_be_erased.xlsx'];
+file_covs = [fileparts(which('test_braph2')) filesep 'trial_covariates_group_subjects_ST_to_be_erased.xlsx'];
 
 ex = ExporterGroupSubjectSTXLS( ...
     'FILE', file, ...
+    'FILE_COVARIATES', file_covs, ...
     'GR', gr ...
     );
 ex.get('SAVE');
@@ -191,6 +222,7 @@ ex.get('SAVE');
 % import with same brain atlas
 im1 = ImporterGroupSubjectSTXLS( ...
     'FILE', file, ...
+    'FILE_COVARIATES', file_covs, ...
     'BA', ba ...
     );
 gr_loaded1 = im1.get('GR');
@@ -206,6 +238,8 @@ for i = 1:1:max(gr.get('SUB_DICT').length(), gr_loaded1.get('SUB_DICT').length()
         isequal(sub.get('LABEL'), sub_loaded.get('LABEL')) & ...
         isequal(sub.get('NOTES'), sub_loaded.get('NOTES')) & ...
         isequal(sub.get('BA'), sub_loaded.get('BA')) & ...
+        isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ...
+        isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
         isequal(sub.get('ST'), sub_loaded.get('ST')), ...
         [BRAPH2.STR ':ExporterGroupSubjectSTXLS:' BRAPH2.BUG_IO], ...
         'Problems saving or loading a group.')    
