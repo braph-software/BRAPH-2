@@ -2,11 +2,14 @@
 ExporterGroupSubjectSTMPXLS < Exporter (ex, exporter of ST MP subject group in XLS/XLSX) exports a group of subjects with structural multiplex data to an XLSX file.
 
 %%% ¡description!
-ExporterGroupSubjectSTMPXLS exports a group of subjects with structural multiplex data to an XLSX file.
+ExporterGroupSubjectSTMPXLS exports a group of subjects with structural multiplex data to an XLSX file and their covariates age and sex (if existing) to another XLSX file.
 The files from the same group containing the data from L layers are saved in the same folder.
 Each XLS/XLSX file consists of the following columns: 
-Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
+Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
+The first row contains the headers and each subsequent row the values for each subject.
+The XLS/XLSX file containing the covariates consists of of the following columns:
+Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
@@ -29,9 +32,15 @@ DIRECTORY (data, string) is the directory name where to save the group of subjec
 fileparts(which('test_braph2'))
 
 %%% ¡prop!
+FILE_COVARIATES (data, string) is the file name where to save the covariates of the group of subjects with structural multiplex data.
+%%%% ¡default!
+[fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_MP_covs_most_likely_to_be_erased.xlsx']
+
+%%% ¡prop!
 SAVE (result, empty) saves the group of subjects with structural multiplex data in XLS/XLSX files in the selected directory.
 %%%% ¡calculate!
 directory = ex.get('DIRECTORY');
+file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(directory)
     gr = ex.get('GR');
@@ -54,12 +63,16 @@ if isfolder(directory)
         br_number = length(br_labels);
         all_data = cell(layers_number, sub_number, br_number);
         subjects_info = cell(sub_number, 3);
+        age = cell(sub_number, 1);
+        sex = cell(sub_number, 1);
         
         for i = 1:1:sub_number
             sub = sub_dict.getItem(i);
             subjects_info{i, 1} = sub.get('ID');
             subjects_info{i, 2} = sub.get('LABEL');
             subjects_info{i, 3} = sub.get('NOTES');
+            age{i} =  sub.get('AGE');
+            sex{i} =  sub.get('SEX');
             
             for k = 1:1:layers_number
                 data_val = sub.get('ST_MP');
@@ -81,6 +94,21 @@ if isfolder(directory)
         end
     end
     
+    % if covariates save them in another file
+    if isfolder(fileparts(file_covariates))
+        tab2 = cell(1 + sub_number, 3);
+        tab2{1, 1} = 'ID';
+        tab2{1, 2} = 'Age';
+        tab2{1, 3} = 'Sex';
+        tab2(2:end, 1) = tab(2:end, 1);
+        tab2(2:end, 2) = age;
+        tab2(2:end, 3) = sex;
+        tab2 = table(tab2);
+        
+        % save
+        writetable(tab2, file_covariates, 'Sheet', 1, 'WriteVariableNames', 0);
+    end
+    
     % sets value to empty
     value = [];
 else
@@ -97,7 +125,23 @@ function uigetdir(ex)
     end
 end
 
+function uiputfile(ex)
+    % UIPUTFILE opens a dialog box to set the XLS/XLSX file where to save the group of subjects with structural multiplex data.
+
+    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+    if filterindex
+        file = [filepath filename];
+        ex.set('FILE', file);
+    end
+end
+
 %% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Delete file TBE
+%%%% ¡code!
+delete([fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_covs_most_likely_to_be_erased.xlsx'])
 
 %%% ¡test!
 %%%% ¡name!
@@ -189,8 +233,11 @@ if ~exist(directory, 'dir')
     mkdir(directory)
 end
 
+file_covs = [fileparts(which('test_braph2')) filesep 'trial_covariates_group_subjects_ST_to_be_erased.xlsx'];
+
 ex = ExporterGroupSubjectSTMPXLS( ...
     'DIRECTORY', directory, ...
+    'FILE_COVARIATES', file_covs, ...
     'GR', gr ...
     );
 ex.get('SAVE');
@@ -198,6 +245,7 @@ ex.get('SAVE');
 % import with same brain atlas
 im1 = ImporterGroupSubjectSTMPXLS( ...
     'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
+    'FILE_COVARIATES', file_covs, ...
     'BA', ba ...
     );
 gr_loaded1 = im1.get('GR');
@@ -213,6 +261,8 @@ for i = 1:1:max(gr.get('SUB_DICT').length(), gr_loaded1.get('SUB_DICT').length()
         isequal(sub.get('LABEL'), sub_loaded.get('LABEL')) & ...
         isequal(sub.get('NOTES'), sub_loaded.get('NOTES')) & ...
         isequal(sub.get('BA'), sub_loaded.get('BA')) & ...
+        isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ...
+        isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
         isequal(sub.get('L'), sub_loaded.get('L')) & ...
         isequal(sub.get('ST_MP'), sub_loaded.get('ST_MP')), ...
         [BRAPH2.STR ':ExporterGroupSubjectSTMPXLS:' BRAPH2.BUG_IO], ...
