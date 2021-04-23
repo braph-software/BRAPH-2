@@ -122,7 +122,7 @@ SPHS (metadata, cvector) is sphere visibility.
 %%%% ¡check_value!
 check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
 %%%% ¡default!
-1
+0
 
 %%% ¡prop!
 SPHS_SIZE (metadata, cvector) is the sphere size.
@@ -175,7 +175,7 @@ IDS (metadata, cvector) is the ids visibility.
 %%%% ¡check_value!
 check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
 %%%% ¡default!
-1
+0
 
 %%% ¡prop!
 IDS_SIZE (metadata, cvector) is the ids size.
@@ -217,7 +217,7 @@ LABS (metadata, cvector) is the labs visibility.
 %%%% ¡check_value!
 check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
 %%%% ¡default!
-1
+0
 
 %%% ¡prop!
 LABS_SIZE (metadata, cvector) is the labs size.
