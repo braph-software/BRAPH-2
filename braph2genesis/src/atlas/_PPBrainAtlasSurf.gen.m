@@ -71,13 +71,11 @@ function h_panel = draw(pl, varargin)
                 y2 = normalized(2);
                 h2 = normalized(4)/2;
             else
-                x2 = normalized(1)+normalized(3)+.005;
-                y2 = normalized(2);
+                x2 = normalized(1)+normalized(3);
+                y2 = (normalized(4) / 2) + normalized(2);
                 w2 = normalized(3);
-                h2 = normalized(4) /2;
+                h2 = normalized(4) / 2;
             end
-            
-            close(second_figure);
             
             second_figure =  figure( ...
                 'Visible', 'on', ...
@@ -89,6 +87,7 @@ function h_panel = draw(pl, varargin)
                 'Toolbar', 'figure', ...
                 'Color', 'w' ...
                 );
+            addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);
             
             ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');
             
@@ -115,8 +114,9 @@ function h_panel = draw(pl, varargin)
                 );
 
             plba.draw('Parent', second_figure);
-            plba.set('SETPOS', [x2+w2+.01 y2 w2 h2/2.2]);
+            plba.set('SETPOS', [x2 normalized(2) w2 h2*.835]);
             plba.settings();
+            set(pl.plot_brain_atlas_btn, 'Enable', 'off');
         end
         function cb_pushbutton_update(~, ~)
             plba.draw('Parent', second_figure);
@@ -141,6 +141,9 @@ function h_panel = draw(pl, varargin)
             warning('off')
             close(second_figure);
             warning('on')
+        end
+        function cb_close_atlas_srf(~, ~)
+            set(pl.plot_brain_atlas_btn, 'Enable', 'on');
         end
 
     % output
