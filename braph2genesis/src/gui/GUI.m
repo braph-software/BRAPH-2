@@ -1,4 +1,13 @@
 function GUI(el, varargin)
+%GUI creates and displays GUI for an element.
+%
+% GUI(EL) creates and displays GUI for element EL.
+%
+% GUI(EL, 'Name', NAME, 'Position', POSITION, 'BackgroundColor',
+%  BACKGROUNDCOLOR) sets the GUI name, position, and background color. All
+%  these settings are optional and can be in any order.
+%
+% See also Element.
 
 %% Parameters
 
@@ -59,10 +68,14 @@ menu()
             'Callback', {@close})
         
         ui_menu_about = uimenu(f, 'Label', 'About');
+        uimenu(ui_menu_license, ...
+            'Label', 'License ...', ...
+            'Callback', {@license})
         uimenu(ui_menu_about, ...
             'Label', 'About ...', ...
             'Callback', {@about})
-        % License ...
+    end
+    function license(~, ~)
     end
     function about(~, ~)
         msgbox({'' ...
