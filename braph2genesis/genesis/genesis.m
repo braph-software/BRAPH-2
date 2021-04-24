@@ -83,7 +83,7 @@ disp(' ')
 %% COPY READY FILES
 % braph2.m and license.rtf
 copyfile([source_dir fp 'braph2' fp 'braph2.m'], [target_dir fp 'braph2.m'])
-copyfile([source_dir fp 'license.rtf'], [target_dir fp 'license.rtf'])
+copyfile([source_dir fp 'braph2license.rtf'], [target_dir fp 'braph2license.rtf'])
 disp('¡! copied ready files - braph2')
 disp(' ')
 
