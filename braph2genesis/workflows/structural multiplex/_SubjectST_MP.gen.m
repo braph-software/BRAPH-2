@@ -41,3 +41,5 @@ age (data, scalar) is a scalar number containing the age of the subject.
 sex (data, option) is an option containing the sex of the subject (female/male).
 %%%% ¡default!
 'unassigned'
+%%%% ¡settings!
+{'Female', 'Male', 'unassigned'}
