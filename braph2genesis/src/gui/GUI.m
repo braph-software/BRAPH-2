@@ -76,7 +76,7 @@ menu()
             'Callback', {@about})
     end
     function license(~, ~)
-        CreateStruct.WindowStyle = 'non-modal';        
+        CreateStruct.WindowStyle = 'modal';        
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
@@ -93,7 +93,7 @@ menu()
             CreateStruct)
     end
     function about(~, ~)
-        CreateStruct.WindowStyle = 'non-modal';        
+        CreateStruct.WindowStyle = 'modal';        
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
