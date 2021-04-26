@@ -95,12 +95,12 @@ if isfolder(directory)
     end
     
     % if covariates save them in another file
-    if isfolder(fileparts(file_covariates))
+    if isfolder(fileparts(file_covariates)) && sub_number ~= 0
         tab2 = cell(1 + sub_number, 3);
         tab2{1, 1} = 'ID';
         tab2{1, 2} = 'Age';
         tab2{1, 3} = 'Sex';
-        tab2(2:end, 1) = tab(2:end, 1);
+        tab2(2:end, 1) = tab_id{:, 1};
         tab2(2:end, 2) = age;
         tab2(2:end, 3) = sex;
         tab2 = table(tab2);

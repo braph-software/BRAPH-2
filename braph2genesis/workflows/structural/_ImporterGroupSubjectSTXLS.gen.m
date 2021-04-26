@@ -60,9 +60,9 @@ if isfile(file)
         sex = raw_covariates(2:end, 3);
     else
         age = {[0]};
-        age = age(ones(50,1));
+        age = age(ones(size(raw, 1)-1,1));
         unassigned =  {'unassigned'};
-        sex = unassigned(ones(50, 1));
+        sex = unassigned(ones(size(raw, 1)-1, 1));
     end
     
     % sets group props

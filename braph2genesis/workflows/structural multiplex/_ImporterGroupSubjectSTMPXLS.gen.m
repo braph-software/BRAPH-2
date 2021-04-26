@@ -49,18 +49,6 @@ gr = Group( ...
 directory = im.get('DIRECTORY');
 file_covariates = im.memorize('FILE_COVARIATES');
 if isfolder(directory)
-    % Check if there are covariates to add (age and sex)
-    if isfile(file_covariates)
-        [~, ~, raw_covariates] = xlsread(file_covariates);
-        age = raw_covariates(2:end, 2);
-        sex = raw_covariates(2:end, 3);
-    else
-        age = {[0]};
-        age = age(ones(50,1));
-        unassigned =  {'unassigned'};
-        sex = unassigned(ones(50, 1));
-    end
-    
     % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...
@@ -92,6 +80,18 @@ if isfolder(directory)
         end
 
         subdict = gr.get('SUB_DICT');
+        
+        % Check if there are covariates to add (age and sex)
+        if isfile(file_covariates)
+            [~, ~, raw_covariates] = xlsread(file_covariates);
+            age = raw_covariates(2:end, 2);
+            sex = raw_covariates(2:end, 3);
+        else
+            age = {[0]};
+            age = age(ones(subjects_number, 1));
+            unassigned =  {'unassigned'};
+            sex = unassigned(ones(subjects_number, 1));
+        end
         
         % multiplex data, subjects, number of layers
         all_subjects_data = cell(length(files), subjects_number, br_number);

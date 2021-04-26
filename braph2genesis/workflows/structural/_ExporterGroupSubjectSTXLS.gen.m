@@ -47,7 +47,7 @@ if isfolder(fileparts(file))
     sub_number = sub_dict.length();
 
     if sub_number == 0
-        tab = table({'ID', 'Label', 'Notes'});
+        tab = {'ID', 'Label', 'Notes'};
     else
         sub = sub_dict.getItem(1);
         ba = sub.get('BA');
@@ -80,12 +80,12 @@ if isfolder(fileparts(file))
             end
         end
     end
-
+    
     % save
     writetable(table(tab), file, 'Sheet', 1, 'WriteVariableNames', 0);
     
     % if covariates save them in another file
-    if isfolder(fileparts(file_covariates))
+    if isfolder(fileparts(file_covariates)) && sub_number ~= 0
         tab2 = cell(1 + sub_number, 3);
         tab2{1, 1} = 'ID';
         tab2{1, 2} = 'Age';

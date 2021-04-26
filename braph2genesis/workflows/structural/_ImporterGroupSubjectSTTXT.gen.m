@@ -57,14 +57,13 @@ if isfile(file)
     
     % Check if there are covariates to add (age and sex)
     if isfile(file_covariates)
-        [~, ~, raw_covariates] = readtable(file_covariates, 'Delimiter', '\t');
-        age = raw_covariates(:, 2);
-        sex = raw_covariates(:, 3);
+        raw_covariates = readtable(file_covariates, 'Delimiter', '\t');
+        age = raw_covariates{:, 2};
+        sex = raw_covariates{:, 3};
     else
-        age = {[0]};
-        age = age(ones(50,1));
+        age = ones(size(raw2, 1),1);
         unassigned =  {'unassigned'};
-        sex = unassigned(ones(50, 1));
+        sex = unassigned(ones(size(raw2, 1), 1));
     end
     
     % sets group props
@@ -103,8 +102,8 @@ if isfile(file)
             'NOTES', char(raw2{i, 3}), ...
             'BA', ba, ...
             'ST', ST, ...
-            'age', age{i-1}, ...
-            'sex', sex{i-1} ...
+            'age', age(i), ...
+            'sex', sex{i} ...
             );
         subdict.add(sub);
     end

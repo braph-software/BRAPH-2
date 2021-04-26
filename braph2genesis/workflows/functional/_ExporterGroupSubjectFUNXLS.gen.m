@@ -49,19 +49,20 @@ if isfolder(directory)
     
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();
+    sub_id = cell(sub_number, 1);
     age = cell(sub_number, 1);
     sex = cell(sub_number, 1);
         
     for i = 1:1:sub_number
         sub = sub_dict.getItem(i);
-        sub_id = sub.get('ID');
+        sub_id(i) = {sub.get('ID')};
         sub_FUN = sub.get('FUN');
         age{i} =  sub.get('AGE');
         sex{i} =  sub.get('SEX'); 
 
         tab = table(sub_FUN);
 
-        sub_file = [gr_directory filesep() sub_id '.xlsx'];
+        sub_file = [gr_directory filesep() sub_id{i} '.xlsx'];
 
         % save file
         writetable(tab, sub_file, 'Sheet', 1, 'WriteVariableNames', 0);
@@ -73,7 +74,7 @@ if isfolder(directory)
         tab2{1, 1} = 'ID';
         tab2{1, 2} = 'Age';
         tab2{1, 3} = 'Sex';
-        tab2(2:end, 1) = tab(2:end, 1);
+        tab2(2:end, 1) = sub_id;
         tab2(2:end, 2) = age;
         tab2(2:end, 3) = sex;
         tab2 = table(tab2);

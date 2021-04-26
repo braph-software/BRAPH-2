@@ -46,29 +46,28 @@ gr = Group( ...
 directory = im.get('DIRECTORY');
 file_covariates = im.memorize('FILE_COVARIATES');
 if isfolder(directory)
-    % Check if there are covariates to add (age and sex)
-    if isfile(file_covariates)
-        [~, ~, raw_covariates] = readtable(file_covariates, 'Delimiter', '\t');
-        age = raw_covariates(:, 2);
-        sex = raw_covariates(:, 3);
-    else
-        age = {[0]};
-        age = age(ones(50,1));
-        unassigned =  {'unassigned'};
-        sex = unassigned(ones(50, 1));
-    end
-    
     % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
         'LABEL', name, ...
         'NOTES', ['Group loaded from ' directory] ...
-    );
-
+        );
+    
     % analyzes file
     files = dir(fullfile(directory, '*.txt'));
-
+    
+    % Check if there are covariates to add (age and sex)
+    if isfile(file_covariates)
+        raw_covariates = readtable(file_covariates, 'Delimiter', '	');
+        age = raw_covariates{:, 2};
+        sex = raw_covariates{:, 3};
+    else
+        age = ones(length(files), 1);
+        unassigned =  {'unassigned'};
+        sex = unassigned(ones(length(files), 1));
+    end
+    
     if length(files) > 0
         % brain atlas
         ba = im.get('BA');
@@ -99,7 +98,7 @@ if isfolder(directory)
             sub = SubjectFUN( ...
                 'ID', sub_id, ...
                 'BA', ba, ...
-                'age', age{i}, ...
+                'age', age(i), ...
                 'sex', sex{i} ...
                 );
             

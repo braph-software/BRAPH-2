@@ -45,19 +45,7 @@ gr = Group( ...
 
 directory = im.get('DIRECTORY');
 file_covariates = im.memorize('FILE_COVARIATES');
-if isfolder(directory)
-    % Check if there are covariates to add (age and sex)
-    if isfile(file_covariates)
-        [~, ~, raw_covariates] = xlsread(file_covariates);
-        age = raw_covariates(2:end, 2);
-        sex = raw_covariates(2:end, 3);
-    else
-        age = {[0]};
-        age = age(ones(50,1));
-        unassigned =  {'unassigned'};
-        sex = unassigned(ones(50, 1));
-    end
-    
+if isfolder(directory)    
     % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...
@@ -70,7 +58,19 @@ if isfolder(directory)
     files_XLSX = dir(fullfile(directory, '*.xlsx'));
     files_XLS = dir(fullfile(directory, '*.xls'));
     files = [files_XLSX; files_XLS];
-
+    
+    % Check if there are covariates to add (age and sex)
+    if isfile(file_covariates)
+        [~, ~, raw_covariates] = xlsread(file_covariates);
+        age = raw_covariates(2:end, 2);
+        sex = raw_covariates(2:end, 3);
+    else
+        age = {[0]};
+        age = age(ones(length(files), 1));
+        unassigned =  {'unassigned'};
+        sex = unassigned(ones(length(files), 1));
+    end
+    
     if length(files) > 0
         % brain atlas
         ba = im.get('BA');
