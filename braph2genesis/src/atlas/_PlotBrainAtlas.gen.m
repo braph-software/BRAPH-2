@@ -354,6 +354,8 @@ end
 SPHS_SHOW = pl.get('SPHS');
 if SPHS_SHOW
     SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+else
+    SPHS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_SIZE = pl.get('SPHS_SIZE');
@@ -385,6 +387,8 @@ end
 IDS_SHOW = pl.get('IDS');
 if IDS_SHOW
     IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+else
+    IDS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 IDS_SIZE = pl.get('IDS_SIZE');
@@ -401,6 +405,8 @@ end
 LABS_SHOW = pl.get('LABS');
 if LABS_SHOW
     LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+else
+    LABS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 LABS_SIZE = pl.get('LABS_SIZE');
