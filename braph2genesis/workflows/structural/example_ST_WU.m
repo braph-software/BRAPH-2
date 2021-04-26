@@ -26,10 +26,10 @@ im_gr2 = ImporterGroupSubjectSTXLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis ST WU
-use_covariates_in_analysis = 'True';
-a_WU1 = AnalyzeGroup_ST_WU('GR', gr1, use_covariates_in_analysis);
+use_covariates_in_analysis = true;
+a_WU1 = AnalyzeGroup_ST_WU('GR', gr1, 'CORRELATION_RULE', 'partial pearson', 'USE_COVARIATES', use_covariates_in_analysis);
 
-a_WU2 = AnalyzeGroup_ST_WU('GR', gr2, use_covariates_in_analysis);
+a_WU2 = AnalyzeGroup_ST_WU('GR', gr2, 'CORRELATION_RULE', 'partial pearson', 'USE_COVARIATES', use_covariates_in_analysis);
 
 % measure calculation
 g_WU1 = a_WU1.get('G');

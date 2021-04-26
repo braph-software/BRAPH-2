@@ -9,6 +9,7 @@ The TXT file containing the covariates must be inside another folder in the same
 than file with data and consists of of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
+
 %%% ¡seealso!
 Element, Importer, ExporterGroupSubjectFUNTXT
 
@@ -56,6 +57,7 @@ if isfolder(directory)
         unassigned =  {'unassigned'};
         sex = unassigned(ones(50, 1));
     end
+    
     % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...
