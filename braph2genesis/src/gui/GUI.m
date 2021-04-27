@@ -65,15 +65,15 @@ menu()
         uimenu(ui_menu_file, ...
             'Label', 'Open ...', ...
             'Accelerator', 'O', ...
-            'Callback', {@open})
+            'Callback', {@cb_open})
         uimenu(ui_menu_file, ...
             'Label', 'Save', ...
             'Accelerator', 'O', ...
-            'Callback', {@save})
+            'Callback', {@cb_save})
         uimenu(ui_menu_file, ...
             'Label', 'Save as ...', ...
             'Accelerator', 'O', ...
-            'Callback', {@saveas})
+            'Callback', {@cb_saveas})
         %%% ---
         uimenu(ui_menu_file, ...
             'Label', 'Close', ...
@@ -101,27 +101,27 @@ menu()
             'Callback', {@about})
     end
 
-    function open(~, ~)
+    function cb_open(~, ~)
         % select file
         [file, path, filterindex] = uigetfile('.mat', ['Select the ' el.getName() ' file.']);
         if filterindex
             filename = fullfile(path, file);
             tmp = load(filename, '-mat', 'el');
             el_path = filename;
-            if isa(tmp, el)
+            if isa(tmp.el, [el.getClass()])
                 el = tmp.el;
                 plot();
             end
         end
     end
-    function save(~, ~)
+    function cb_save(~, ~)
         if isempty(el_path)
             cb_saveas();
         else
             save(el_path, 'el');
         end
     end
-    function saveas(~, ~)
+    function cb_saveas(~, ~)
          % select file
         [file, path, filterindex] = uiputfile('.mat', ['Select the ' el.getName() ' file.']);
         % save file
