@@ -57,9 +57,9 @@ if a.get('USE_COVARIATES')
             case 'female'
                 sex(i) = 1;
             case 'male'
-                sex(i) = 0;
-            otherwise
                 sex(i) = -1;
+            otherwise
+                sex(i) = 0;
         end
     end
     covariates = [age, sex];
