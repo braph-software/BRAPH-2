@@ -5,6 +5,7 @@ classdef BRAPH2
     % Properties (Constant) - BRAPH2 ID Card:
     %  NAME         - BRAPH2 full name
     %  VERSION      - BRAPH2 version
+    %  WEB          - BRAPH2 website
     %  STR          - BRAPH2 sort string
     %  BUILD        - BRAPH2 build number
     %  AUTHORS      - BRAPH2 authors
@@ -21,9 +22,10 @@ classdef BRAPH2
     properties (Constant) % BRAPH2 ID Card
         NAME = 'Braph 2.0' % BRAPH2 full name
         VERSION = '2.0' % BRAPH2 version
+        WEB = 'braph.org' % BRAPH2 website
         STR = 'BRAPH2' % BRAPH2 sort string
         BUILD = 1 % BRAPH2 build number
-        AUTHORS = 'Giovanni Volpe, Mite Mijalkov, Ehsan Kakaei, Joana Braga Pereira, Eric Westman, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, et al.'
+        AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]        
     end
     properties (Constant) % BRAPH2 error codes
