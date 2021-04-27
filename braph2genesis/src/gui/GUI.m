@@ -134,8 +134,12 @@ menu()
     function import_json(~,~)
         [file,path,filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
         if filterindex
-            filename = fullfile(path, file);
-            tmp_el = Element.decodeJSON(filename);
+            filename = fullfile(path, file);           
+            fid = fopen(filename);
+            raw = fread(fid,inf);
+            str = char(raw');
+            fclose(fid);
+            tmp_el = Element.decodeJSON(str);
             el = tmp_el;
             plot();
         end
