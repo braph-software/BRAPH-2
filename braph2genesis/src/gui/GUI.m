@@ -187,7 +187,7 @@ f_close = [];
         
         function cb_open_via_exporter(hObject, ~)
             object_name = hObject.String;
-            exmp_el = eval([object_name '(' field ',' el ')']);
+             exmp_el = eval([object_name '(' '''' field '''' ', el)']);
             exmp_el.uiputfile();
             exmp_el.get('SAVE');
             delete(f_close);
