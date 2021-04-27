@@ -88,7 +88,13 @@ toolbar()
         set(f, 'Toolbar', 'figure')
 
         ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
-
+        if ~ismethod(el, 'getImporters')
+           delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen')) 
+        end
+        
+        if ~ismethod(el, 'getExporters')
+            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure')) 
+        end
         delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))        
         delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
