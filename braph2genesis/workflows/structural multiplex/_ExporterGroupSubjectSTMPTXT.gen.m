@@ -95,7 +95,7 @@ if isfolder(directory)
     end
         
     % if covariates save them in another file
-    if isfolder(fileparts(file_covariates)) && sub_number ~= 0
+    if isfolder(fileparts(file_covariates)) && sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
         tab2 = cell(1 + sub_number, 3);
         tab2{1, 1} = 'ID';
         tab2{1, 2} = 'Age';
@@ -277,8 +277,8 @@ end
 
 % import with new brain atlas
 im2 = ImporterGroupSubjectSTMPTXT( ...
-    'DIRECTORY', [directory filesep() gr.get(Group.ID)] ...
-    'FILE_COVARIATES', file_covs, ...
+    'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
+    'FILE_COVARIATES', file_covs ...
     );
 gr_loaded2 = im2.get('GR');
 
