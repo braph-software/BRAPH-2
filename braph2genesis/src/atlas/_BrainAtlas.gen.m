@@ -36,6 +36,18 @@ SURF (data, item) contains the brain surface of the brain atlas.
 %%%% ¡gui!
 pl = PPBrainAtlasSurf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
+%% ¡staticmethods!
+function [imp, field] = getImporters()
+    % info pending
+    imp = {'ImporterBrainAtlasTXT', 'ImporterBrainAtlasXLS'};
+    field = 'BA';
+end
+function [imp, field] = getExporters()
+    % info pending
+    imp = {'ExporterBrainAtlasTXT', 'ExporterBrainAtlasXLS'};
+    field = 'BA';
+end
+
 %% ¡tests!
 
 %%% ¡test!
