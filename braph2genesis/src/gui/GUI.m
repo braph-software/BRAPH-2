@@ -100,6 +100,35 @@ menu()
             'Callback', {@about})
     end
 
+    function open(~, ~)
+        % select file
+        [file, path, filterindex] = uigetfile('.mat', ['Select the ' el.getName() ' file.']);
+        if filterindex
+            filename = fullfile(path, file);
+            tmp = load(filename, '-mat', 'el');
+            if isa(tmp, el)
+                el = tmp.el;
+                plot();
+            end
+        end
+    end
+    function save(~, ~)        
+        filename = get(name, 'String');
+        if isempty(filename)
+            cb_saveas();
+        else
+            save(filename, 'el');
+        end
+    end
+    function saveas(~, ~)
+         % select file
+        [file, path, filterindex] = uiputfile('.mat', ['Select the ' el.getName() ' file.']);
+        % save file
+        if filterindex
+            filename = fullfile(path, file);
+            save(filename, 'el');
+        end
+    end
     function import_json(~,~)
         [file,path,filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
         if filterindex
