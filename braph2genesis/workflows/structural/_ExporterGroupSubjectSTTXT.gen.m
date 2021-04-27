@@ -123,7 +123,6 @@ end
 Delete file TBE
 %%%% ¡code!
 delete([fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_group_ST_most_likely_to_be_erased.txt'])
-delete([fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_group_ST_covs_most_likely_to_be_erased.txt'])
 
 %%% ¡test!
 %%%% ¡name!
@@ -251,8 +250,8 @@ end
 
 % import with new brain atlas
 im2 = ImporterGroupSubjectSTTXT( ...
-    'FILE', file ...
-    'FILE_COVARIATES', file_covs, ...
+    'FILE', file, ...
+    'FILE_COVARIATES', file_covs ...
     );
 gr_loaded2 = im2.get('GR');
 

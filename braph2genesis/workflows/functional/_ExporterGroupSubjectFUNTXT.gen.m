@@ -113,12 +113,6 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-Delete file TBE
-%%%% ¡code!
-delete([fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_group_FUN_covs_most_likely_to_be_erased.txt'])
-
-%%% ¡test!
-%%%% ¡name!
 export and import
 %%%% ¡code!
 br1 = BrainRegion( ...
