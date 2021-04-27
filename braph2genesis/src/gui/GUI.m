@@ -52,9 +52,11 @@ f = init();
     end
 
 %% Plot Element
-pl = el.getPlotElement();
-pl.draw('Parent', f)
-
+plot()
+    function plot()        
+        pl = el.getPlotElement();
+        pl.draw('Parent', f);
+    end
 %% Menu
 menu()
     function menu()
@@ -96,6 +98,22 @@ menu()
         uimenu(ui_menu_about, ...
             'Label', 'About ...', ...
             'Callback', {@about})
+    end
+
+    function import_json(~,~)
+        [file,path,filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
+        if filterindex
+            filename = fullfile(path, file);
+            tmp_el = Element.decodeJSON(filename);
+            el = tmp_el;
+            plot();
+        end
+    end
+    function export_json(~,~)
+        [file, path, ~] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+        filename = fullfile(path, file);
+        [json, ~, ~] = encodeJSON(el);
+        save(filename, 'json');
     end
     function license(~, ~)
         CreateStruct.WindowStyle = 'modal';        
