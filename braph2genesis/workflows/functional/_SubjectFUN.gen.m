@@ -25,3 +25,15 @@ if check
 else   
     msg = ['FUN must be a matrix with the same number of columns as the brain regions (' int2str(br_number) ').'];
 end
+ 
+%%% ¡prop!
+age (data, scalar) is a scalar number containing the age of the subject.
+%%%% ¡default!
+0
+
+%%% ¡prop!
+sex (data, option) is an option containing the sex of the subject (female/male).
+%%%% ¡default!
+'unassigned'
+%%%% ¡settings!
+{'Female', 'Male', 'unassigned'}

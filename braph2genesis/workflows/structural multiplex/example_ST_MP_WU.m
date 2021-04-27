@@ -12,6 +12,7 @@ ba = im_ba.get('BA');
 
 im_gr1 = ImporterGroupSubjectSTMPXLS( ...
     'DIRECTORY', [fileparts(which('example_ST_MP_WU')) filesep 'example data ST_MP (MRI)' filesep 'xls' filesep 'GroupName1'], ...
+    'FILE_COVARIATES', [fileparts(which('example_ST_MP_WU')) filesep 'example data ST_MP (MRI)' filesep 'xls' filesep 'covariates_age_sex' filesep 'ST_MP_group1_age_sex.xlsx'], ...
     'BA', ba ...
     );
 
@@ -19,15 +20,16 @@ gr1 = im_gr1.get('GR');
 
 im_gr2 = ImporterGroupSubjectSTMPXLS( ...
     'DIRECTORY', [fileparts(which('example_ST_MP_WU')) filesep 'example data ST_MP (MRI)' filesep 'xls' filesep 'GroupName2'], ...
+    'FILE_COVARIATES', [fileparts(which('example_ST_MP_WU')) filesep 'example data ST_MP (MRI)' filesep 'xls' filesep 'covariates_age_sex' filesep 'ST_MP_group2_age_sex.xlsx'], ...
     'BA', ba ...
     );
 
 gr2 = im_gr2.get('GR');
 
 %% Analysis ST MP WU
-a_WU1 = AnalyzeGroup_ST_MP_WU('GR', gr1);
-
-a_WU2 = AnalyzeGroup_ST_MP_WU('GR', gr2);
+use_covariates_in_analysis = true;
+a_WU1 = AnalyzeGroup_ST_MP_WU('GR', gr1, 'CORRELATION_RULE', 'partial pearson', 'USE_COVARIATES', use_covariates_in_analysis);
+a_WU2 = AnalyzeGroup_ST_MP_WU('GR', gr2, 'CORRELATION_RULE', 'partial pearson', 'USE_COVARIATES', use_covariates_in_analysis);
 
 % measure calculation
 g_WU1 = a_WU1.get('G');

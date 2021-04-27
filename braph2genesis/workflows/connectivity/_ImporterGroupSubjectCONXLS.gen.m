@@ -2,9 +2,13 @@
 ImporterGroupSubjectCONXLS < Importer (im, importer of CON subject group from XLS/XLSX) imports a group of subjects with connectivity data from a series of XLS/XLSX file.
 
 %%% ¡description!
-ImporterGroupSubjectCONXLS imports a group of subjects with connectivity data from a series of XLS/XLSX file.
+ImporterGroupSubjectCONXLS imports a group of subjects with connectivity data from a series of XLS/XLSX file and their covariates from another XLS/XLSX file.
 All these files must be in the same folder; also, no other files should be in the folder.
 Each file contains a table of values corresponding to the adjacency matrix.
+The XLS/XLSX file containing the covariates must be inside another folder in the same directory 
+than file with data and consists of of the following columns:
+Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
+The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Element, Importer, ExporterGroupSubjectCONXLS
@@ -13,6 +17,11 @@ Element, Importer, ExporterGroupSubjectCONXLS
 
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
+
+%%% ¡prop!
+FILE_COVARIATES (data, string) is the XLS/XLSX file from where to load the covariates age and sex of the CON subject group.
+%%%% ¡default!
+''
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -35,7 +44,8 @@ gr = Group( ...
     );
 
 directory = im.get('DIRECTORY');
-if isfolder(directory)
+file_covariates = im.memorize('FILE_COVARIATES');
+if isfolder(directory)    
     % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...
@@ -48,7 +58,19 @@ if isfolder(directory)
     files_XLSX = dir(fullfile(directory, '*.xlsx'));
     files_XLS = dir(fullfile(directory, '*.xls'));
     files = [files_XLSX; files_XLS];
-
+    
+    % Check if there are covariates to add (age and sex)
+    if isfile(file_covariates)
+        [~, ~, raw_covariates] = xlsread(file_covariates);
+        age = raw_covariates(2:end, 2);
+        sex = raw_covariates(2:end, 3);
+    else
+        age = {[0]};
+        age = age(ones(length(files), 1));
+        unassigned =  {'unassigned'};
+        sex = unassigned(ones(length(files), 1));
+    end
+    
     if length(files) > 0
         % brain atlas
         ba = im.get('BA');
@@ -74,6 +96,8 @@ if isfolder(directory)
             sub = SubjectCON( ...
                 'ID', sub_id, ...
                 'BA', ba, ...
+                'age', age{i}, ...
+                'sex', sex{i}, ...
                 'CON', CON ...
             );
             subdict.add(sub);
@@ -91,5 +115,15 @@ function uigetdir(im)
     directory = uigetdir('Select directory');
     if isfolder(directory)
         im.set('DIRECTORY', directory);
+    end
+end
+
+function uigetfile(im)
+    % UIGETFILE opens a dialog box to set the XLS/XLSX file from where to load the covariates of CON subject group.
+    
+    [filename, filepath, filterindex] = uigetfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+    if filterindex
+        file = [filepath filename];
+        im.set('FILE', file);
     end
 end
