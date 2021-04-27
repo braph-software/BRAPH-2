@@ -48,6 +48,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %
     % Element methods (copy):
     %  copy - copies the element
+    %  deepclone - deep-clones the element
     %  clone - clones the element
     %
     % Element methods (inspection, Static):
@@ -87,7 +88,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % Element methods (GUI):
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
-    %  getPropPanel - returns a prop plot
+    %  getPlotProp - returns a prop plot
     %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
@@ -1434,7 +1435,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % EL_COPY = COPYELEMENT(EL) copies the element EL making a deep copy of all
             %  its properties.
             %
-            % See also copy, clone.
+            % See also copy, clone, deepclone.
 
             el_list = el.getElementList();
             
@@ -1481,7 +1482,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  The properties with Category.DATA and Category.RESULT are set to
             %  NoValue, the seeds are randomized, and all properties are unlocked.
             %
-            % See also copy.
+            % See also deepclone, copy.
             
             % el_clone = el.copy();
             % 
@@ -1519,6 +1520,41 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             el_clone.props{prop}.value = value;
                         end
                     case {Category.DATA, Category.RESULT}
+                        el_clone.props{prop}.value = NoValue.getNoValue();
+                end
+            end
+        end
+        function el_clone = deepclone(el)
+            %DEEPCLONE deep-clones the element.
+            %
+            % EL_COPY = DEEPCLONE(EL) deep-clones the element EL. The deep-cloning
+            %  operation makes a deep copy of the element including all properties with
+            %  Category.METADATA, Category.PARAMETER, and Category.DATA and the checked status.
+            %  The properties with Category.RESULT are set to NoValue, the seeds are
+            %  randomized, and all properties are unlocked.
+            %
+            % See also clone, copy.
+            
+            if isa(el, 'NoValue')
+                el_clone = NoValue.getNoValue();
+                return
+            end
+            
+            el_clone = eval(el.getClass());
+            
+            for prop = 1:1:el_clone.getPropNumber()
+                switch el_clone.getPropCategory(prop)
+                    case {Category.METADATA, Category.PARAMETER, Category.DATA}
+                        value = el.getr(prop);
+                        
+                        if isa(value, 'Element')
+                            el_clone.props{prop}.value = value.clone();
+                        elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
+                            el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
+                        else
+                            el_clone.props{prop}.value = value;
+                        end
+                    case Category.RESULT
                         el_clone.props{prop}.value = NoValue.getNoValue();
                 end
             end

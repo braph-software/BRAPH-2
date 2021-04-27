@@ -358,6 +358,7 @@ generate_header()
              '%'
             ['% ' class_name ' methods (copy):']
             ['%  copy - copies the ' class_name]
+            ['%  deepclone - deep-clones the ' class_name]
             ['%  clone - clones the ' class_name]
             '%'
             ['% ' class_name ' methods (inspection, Static):']
