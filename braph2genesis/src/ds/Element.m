@@ -48,6 +48,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %
     % Element methods (copy):
     %  copy - copies the element
+    %  deepclone - deep-clones the element
     %  clone - clones the element
     %
     % Element methods (inspection, Static):
