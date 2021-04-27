@@ -58,6 +58,7 @@ plot()
         pl.draw('Parent', f);
     end
 %% Menu
+el_path = [];
 menu()
     function menu()
         ui_menu_file = uimenu(f, 'Label', 'File');
@@ -106,18 +107,18 @@ menu()
         if filterindex
             filename = fullfile(path, file);
             tmp = load(filename, '-mat', 'el');
+            el_path = filename;
             if isa(tmp, el)
                 el = tmp.el;
                 plot();
             end
         end
     end
-    function save(~, ~)        
-        filename = get(name, 'String');
-        if isempty(filename)
+    function save(~, ~)
+        if isempty(el_path)
             cb_saveas();
         else
-            save(filename, 'el');
+            save(el_path, 'el');
         end
     end
     function saveas(~, ~)
@@ -127,6 +128,7 @@ menu()
         if filterindex
             filename = fullfile(path, file);
             save(filename, 'el');
+            el_path = filename;
         end
     end
     function import_json(~,~)
