@@ -88,7 +88,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % Element methods (GUI):
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
-    %  getPropPanel - returns a prop plot
+    %  getPlotProp - returns a prop plot
     %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
