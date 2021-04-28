@@ -20,6 +20,8 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexBD
 MultiplexWU
 MultiplexWD

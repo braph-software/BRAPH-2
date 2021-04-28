@@ -17,8 +17,12 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphBU
+MultigraphBUD
+MultigraphBUT
 MultiplexWU
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 
 %% ¡props_update!
 

@@ -18,6 +18,8 @@ GraphBU
 GraphBD
 GraphWU
 GraphWD
+MultigraphBUD
+MultigraphBUT
 
 %% ¡props_update!
 %%% ¡prop!
