@@ -37,7 +37,7 @@ f = init();
             'Units', 'character', ...
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
-            'Color', BKGCOLOR, ... 
+            'Color', BKGCOLOR, ...
             'CloseRequestFcn', {@cb_close} ...
             );
     end
@@ -54,13 +54,28 @@ f = init();
     end
 
 %% Plot Element
+container = uipanel( ...
+    'Parent', f, ...
+    'Position', [0.001 .02 .999 .98] ...
+    );
 plot()
-    function plot()        
+    function plot()
         pl = el.getPlotElement();
-        pl.draw('Parent', f);
+        pl.draw('Parent', container);
+    end
+
+%% Text File Name
+ui_text_filename = uicontrol('Parent', f, 'Style','text');
+init_filename()
+    function init_filename()
+        set(ui_text_filename, 'Units', 'normalized')
+        set(ui_text_filename, 'Position', [.01 .001 .5 .02])
+        set(ui_text_filename, 'HorizontalAlignment', 'left')
+    end
+    function update_filename(filename)
+        set(ui_text_filename, 'String', filename)
     end
 %% Menu
-el_path = [];
 menu()
     function menu()
         ui_menu_file = uimenu(f, 'Label', 'File');
@@ -88,7 +103,7 @@ menu()
             'Label', 'Import JSON ...', ...
             'Accelerator', 'O', ...
             'Callback', {@cb_import_json})
-
+        
         ui_menu_export = uimenu(f, 'Label', 'Export');
         uimenu(ui_menu_export, ...
             'Label', 'Export JSON ...', ...
@@ -110,34 +125,35 @@ menu()
         if filterindex
             filename = fullfile(path, file);
             tmp = load(filename, '-mat', 'el');
-            el_path = filename;
             if isa(tmp.el, [el.getClass()]) %#ok<NBRAK>
                 el = tmp.el;
                 plot();
+                update_filename(filename);
             end
         end
     end
     function cb_save(~, ~)
-        if isempty(el_path)
+        fn = get(ui_text_filename, 'String');
+        if isempty(fn)
             cb_saveas();
         else
-            save(el_path, 'el');
+            save(fn, 'el');
         end
     end
     function cb_saveas(~, ~)
-         % select file
+        % select file
         [file, path, filterindex] = uiputfile('.mat', ['Select the ' el.getName() ' file.']);
         % save file
         if filterindex
             filename = fullfile(path, file);
             save(filename, 'el');
-            el_path = filename;
+            update_filename(filename);
         end
     end
     function cb_import_json(~,~)
         [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
         if filterindex
-            filename = fullfile(path, file);           
+            filename = fullfile(path, file);
             fid = fopen(filename);
             raw = fread(fid, inf);
             str = char(raw');
@@ -145,20 +161,27 @@ menu()
             tmp_el = Element.decodeJSON(str);
             el = tmp_el;
             plot();
+            update_filename(filename);
         end
     end
     function cb_export_json(~,~)
-        [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
-        if filterindex
-            filename = fullfile(path, file);
-            [json, ~, ~] = encodeJSON(el);
-            fid = fopen(filename, 'w');
-            fprintf(fid, json);
-            fclose(fid);
+        fn = get(ui_text_filename, 'String');
+        if isempty(fn)
+            [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+            if filterindex
+                filename = fullfile(path, file);
+                [json, ~, ~] = encodeJSON(el);
+                fid = fopen(filename, 'w');
+                fprintf(fid, json);
+                fclose(fid);
+            end
+        else
+            save(fn, 'el');
         end
+        
     end
     function cb_license(~, ~)
-        CreateStruct.WindowStyle = 'modal';        
+        CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
@@ -175,7 +198,7 @@ menu()
             CreateStruct)
     end
     function cb_about(~, ~)
-        CreateStruct.WindowStyle = 'modal';        
+        CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
@@ -195,10 +218,9 @@ menu()
 toolbar()
     function toolbar()
         set(f, 'Toolbar', 'figure')
-
-        ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
-
-        delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
+        
+        ui_toolbar = findall(f, 'Tag', 'FigureToolBar');        
+        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
