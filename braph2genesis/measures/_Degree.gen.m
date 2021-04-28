@@ -17,13 +17,12 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphWU
 GraphBU
+MultigraphBUD
+MultigraphBUT
 MultiplexBU
 MultiplexBUD
 MultiplexBUT
 MultiplexWU
-%% ¡---!
-MultigraphBUD
-MultigraphBUT
 
 %% ¡props_update!
 
@@ -93,67 +92,67 @@ assert(isequal(m_inside_g.get('M'), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
     'Degree is not being calculated correctly for GraphWU.')
 
-% %%% ¡test!
-% %%%% ¡name!
-% MultigraphBUT
-% %%%% ¡code!
-% B = [
-%     0   .2   .7
-%     .2   0   0
-%     .7   0   0
-%     ];
-% 
-% thresholds = [0 .5 1];
-% 
-% known_degree = { ...
-%     [2 1 1]'
-%     [1 0 1]'
-%     [0 0 0]'
-%     };
-% 
-% g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
-% 
-% m_outside_g = Degree('G', g);
-% assert(isequal(m_outside_g.get('M'), known_degree), ...
-%     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-%     'Degree is not being calculated correctly for MultigraphBUT.')
-% 
-% m_inside_g = g.getMeasure('Degree');
-% assert(isequal(m_inside_g.get('M'), known_degree), ...
-%     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-%     'Degree is not being calculated correctly for MultigraphBUT.')
-% 
-% %%% ¡test!
-% %%%% ¡name!
-% MultigraphBUD
-% %%%% ¡code!
-% B = [
-%     0   .2   .7
-%     .2   0   .1
-%     .7  .1   0
-%     ];
-% 
-% densities = [0 33 67 100];
-% 
-% known_degree = { ...
-%     [0 0 0]'
-%     [1 0 1]'
-%     [2 1 1]'
-%     [2 2 2]'
-%     };
-% 
-% g = MultigraphBUD('B', B, 'DENSITIES', densities);
-% 
-% m_outside_g = Degree('G', g);
-% assert(isequal(m_outside_g.get('M'), known_degree), ...
-%     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-%     'Degree is not being calculated correctly for MultigraphBUD.')
-% 
-% m_inside_g = g.getMeasure('Degree');
-% assert(isequal(m_inside_g.get('M'), known_degree), ...
-%     [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
-%     'Degree is not being calculated correctly for MultigraphBUD.')
-% 
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   0
+    .7   0   0
+    ];
+
+thresholds = [0 .5 1];
+
+known_degree = { ...
+    [2 1 1]'
+    [1 0 1]'
+    [0 0 0]'
+    };
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
+    'Degree is not being calculated correctly for MultigraphBUT.')
+
+m_inside_g = g.getMeasure('Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
+    'Degree is not being calculated correctly for MultigraphBUT.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUD
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+densities = [0 33 67 100];
+
+known_degree = { ...
+    [0 0 0]'
+    [1 0 1]'
+    [2 1 1]'
+    [2 2 2]'
+    };
+
+g = MultigraphBUD('B', B, 'DENSITIES', densities);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
+    'Degree is not being calculated correctly for MultigraphBUD.')
+
+m_inside_g = g.getMeasure('Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.BUG_ERR], ...
+    'Degree is not being calculated correctly for MultigraphBUD.')
+
 %%% ¡test!
 %%%% ¡name!
 MultiplexBU

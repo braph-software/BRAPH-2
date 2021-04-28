@@ -17,15 +17,14 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphBD
 GraphBU
+MultigraphBUD
+MultigraphBUT
 GraphWD
 GraphWU
 MultiplexBD
 MultiplexBU
 MultiplexWD
 MultiplexWU
-%% ¡---!
-MultigraphBUD
-MultigraphBUT
 
 %% ¡props_update!
 
@@ -243,95 +242,95 @@ assert(isequal(m_inside_g.get('M'), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
     'Distance is not being calculated correctly for GraphWD.')
 
-% %%% ¡test!
-% %%%% ¡name!
-% MultigraphBUT
-% %%%% ¡code!
-% B = [
-%     0   .2   .7
-%     .2   0   0
-%     .7   0   0
-%     ];
-% 
-% thresholds = [0 .5 1];
-% 
-% known_distance = {
-%     [
-%     0   1   1
-%     1   0   2
-%     1   2   0
-%     ]
-%     [
-%     0   Inf 1
-%     Inf 0   Inf
-%     1 Inf 0
-%     ]
-%     [
-%     0   Inf Inf
-%     Inf 0   Inf
-%     Inf Inf 0
-%     ]
-%     };
-% 
-% g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
-% 
-% m_outside_g = Distance('G', g);
-% assert(isequal(m_outside_g.get('M'), known_distance), ...
-%     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-%     'Distance is not being calculated correctly for MultigraphBUT.')
-% 
-% m_inside_g = g.getMeasure('Distance');
-% assert(isequal(m_inside_g.get('M'), known_distance), ...
-%     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-%     'Distance is not being calculated correctly for MultigraphBUT.')
-% 
-% %%% ¡test!
-% %%%% ¡name!
-% MultigraphBUD
-% %%%% ¡code!
-% B = [
-%     0   .2   .7
-%     .2   0   .1
-%     .7  .1   0
-%     ];
-% 
-% densities = [0 33 67 100];
-% 
-% known_distance = {
-%     [
-%     0   Inf Inf
-%     Inf 0   Inf
-%     Inf Inf 0    
-%     ]
-%     [
-%     0   Inf 1
-%     Inf 0   Inf
-%     1   Inf 0
-%     ]
-%     [
-%     0   1   1
-%     1   0   2
-%     1   2   0
-%     ]
-%     [
-%     0   1   1
-%     1   0   1
-%     1   1   0
-%     ]
-%     };
-% 
-% g = MultigraphBUD('B', B, 'DENSITIES', densities);
-% 
-% m_outside_g = Distance('G', g);
-% assert(isequal(m_outside_g.get('M'), known_distance), ...
-%     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-%     'Distance is not being calculated correctly for MultigraphBUD.')
-% 
-% m_inside_g = g.getMeasure('Distance');
-% assert(isequal(m_inside_g.get('M'), known_distance), ...
-%     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
-%     'Distance is not being calculated correctly for MultigraphBUD.')
-% 
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   0
+    .7   0   0
+    ];
+
+thresholds = [0 .5 1];
+
+known_distance = {
+    [
+    0   1   1
+    1   0   2
+    1   2   0
+    ]
+    [
+    0   Inf 1
+    Inf 0   Inf
+    1 Inf 0
+    ]
+    [
+    0   Inf Inf
+    Inf 0   Inf
+    Inf Inf 0
+    ]
+    };
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultigraphBUT.')
+
+m_inside_g = g.getMeasure('Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultigraphBUT.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUD
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+densities = [0 33 67 100];
+
+known_distance = {
+    [
+    0   Inf Inf
+    Inf 0   Inf
+    Inf Inf 0    
+    ]
+    [
+    0   Inf 1
+    Inf 0   Inf
+    1   Inf 0
+    ]
+    [
+    0   1   1
+    1   0   2
+    1   2   0
+    ]
+    [
+    0   1   1
+    1   0   1
+    1   1   0
+    ]
+    };
+
+g = MultigraphBUD('B', B, 'DENSITIES', densities);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultigraphBUD.')
+
+m_inside_g = g.getMeasure('Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
+    'Distance is not being calculated correctly for MultigraphBUD.')
+
 %%% ¡test!
 %%%% ¡name!
 MultiplexBU
