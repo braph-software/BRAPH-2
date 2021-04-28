@@ -36,10 +36,10 @@ f = init();
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
             'Color', BKGCOLOR, ... 
-            'CloseRequestFcn', {@close} ...
+            'CloseRequestFcn', {@cb_close} ...
             );
     end
-    function close(~, ~)
+    function cb_close(~, ~)
         selection = questdlg(['Do you want to close ' name '?'], ...
             ['Close ' name], ...
             'Yes', 'No', 'Yes');
@@ -76,29 +76,30 @@ menu()
             'Callback', {@cb_saveas})
         %%% ---
         uimenu(ui_menu_file, ...
+            'Separator', 'on', ...
             'Label', 'Close', ...
             'Accelerator', 'C', ...
-            'Callback', {@close})
+            'Callback', {@cb_close})
         
         ui_menu_import = uimenu(f, 'Label', 'Import');
         uimenu(ui_menu_import, ...
             'Label', 'Import JSON ...', ...
             'Accelerator', 'O', ...
-            'Callback', {@import_json})
+            'Callback', {@cb_import_json})
 
         ui_menu_export = uimenu(f, 'Label', 'Export');
         uimenu(ui_menu_export, ...
             'Label', 'Export JSON ...', ...
             'Accelerator', 'O', ...
-            'Callback', {@export_json})
+            'Callback', {@cb_export_json})
         
         ui_menu_about = uimenu(f, 'Label', 'About');
         uimenu(ui_menu_about, ...
             'Label', 'License ...', ...
-            'Callback', {@license})
+            'Callback', {@cb_license})
         uimenu(ui_menu_about, ...
             'Label', 'About ...', ...
-            'Callback', {@about})
+            'Callback', {@cb_about})
     end
 
     function cb_open(~, ~)
@@ -108,7 +109,7 @@ menu()
             filename = fullfile(path, file);
             tmp = load(filename, '-mat', 'el');
             el_path = filename;
-            if isa(tmp.el, [el.getClass()])
+            if isa(tmp.el, [el.getClass()]) %#ok<NBRAK>
                 el = tmp.el;
                 plot();
             end
@@ -131,12 +132,12 @@ menu()
             el_path = filename;
         end
     end
-    function import_json(~,~)
-        [file,path,filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
+    function cb_import_json(~,~)
+        [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
         if filterindex
             filename = fullfile(path, file);           
             fid = fopen(filename);
-            raw = fread(fid,inf);
+            raw = fread(fid, inf);
             str = char(raw');
             fclose(fid);
             tmp_el = Element.decodeJSON(str);
@@ -144,13 +145,17 @@ menu()
             plot();
         end
     end
-    function export_json(~,~)
-        [file, path, ~] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
-        filename = fullfile(path, file);
-        [json, ~, ~] = encodeJSON(el);
-        save(filename, 'json');
+    function cb_export_json(~,~)
+        [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+        if filterindex
+            filename = fullfile(path, file);
+            [json, ~, ~] = encodeJSON(el);
+            fid = fopen(filename, 'w');
+            fprintf(fid, json);
+            fclose(fid);
+        end
     end
-    function license(~, ~)
+    function cb_license(~, ~)
         CreateStruct.WindowStyle = 'modal';        
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
@@ -167,7 +172,7 @@ menu()
             [BRAPH2.STR ' License'], ...
             CreateStruct)
     end
-    function about(~, ~)
+    function cb_about(~, ~)
         CreateStruct.WindowStyle = 'modal';        
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
