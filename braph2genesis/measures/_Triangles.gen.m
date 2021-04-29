@@ -22,10 +22,14 @@ parametricity = Measure.NONPARAMETRIC;
 GraphWU
 GraphWD
 GraphBU
+MultigraphBUD
+MultigraphBUT
 GraphBD
 MultiplexWU
 MultiplexWD
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexBD
 
 %% ¡props!
@@ -98,6 +102,31 @@ assert(isequal(triangles.get('M'), known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
     'Triangles is not being calculated correctly for GraphBU.')
 
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0 1 1 1;
+    1 0 1 0;
+    1 1 0 1;
+    1 0 1 0
+    ];
+
+thresholds = [0 1];
+
+known_triangles = { ...
+    [2 1 2 1]'
+    [0 0 0 0]'
+    };
+
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+triangles = Triangles('G', g);
+
+assert(isequal(triangles.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.BUG_ERR], ...
+    'Triangles is not being calculated correctly for MultigraphBUT.')
 
 %%% ¡test!
 %%%% ¡name!
