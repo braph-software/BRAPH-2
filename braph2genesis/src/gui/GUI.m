@@ -52,8 +52,30 @@ f = init();
     end
 
 %% Plot Element
-pl = el.getPlotElement();
-pl.draw('Parent', f)
+plot()
+    function plot()
+        pl = el.getPlotElement();
+        pl.draw('Parent', f)
+    end
+
+% check for importer / exporter
+el_path = dir(fileparts(which(el.getClass())));
+importers = el_path(contains({el_path(:).name}, {['Importer' el.getClass()]}) & ~contains({el_path(:).name}, {'test'}));
+exporters = el_path(contains({el_path(:).name}, {['Exporter' el.getClass()]}) & ~contains({el_path(:).name}, {'test'}));
+
+field = [];
+for i = 1:1:length(importers)
+    imp_class = erase(importers(i).name, '.m');
+    imp_obj = eval([imp_class '()']);
+    imp_props = imp_obj.getProps();
+    for j = 1:length(imp_props)
+        p = imp_props(j);
+        default_p = imp_obj.getPropDefault(p);
+        if isa(default_p, [el.getClass()])
+            field = imp_obj.getPropTag(p);
+        end
+    end    
+end
 
 %% Menu
 menu()
@@ -66,6 +88,26 @@ menu()
             'Label', 'Close', ...
             'Accelerator', 'C', ...
             'Callback', {@close})
+        
+        if ~isempty(importers)
+            ui_menu_importers = uimenu(f, 'Label', 'Importers');
+            for k = 1:length(importers)
+                imp = erase(importers(k).name, '.m');
+                uimenu(ui_menu_importers, ...
+                    'Label', imp, ...
+                    'Callback', {@cb_importers});
+            end
+        end
+        
+        if ~isempty(exporters)
+            ui_menu_exporters = uimenu(f, 'Label', 'Exporters');
+            for k = 1:length(exporters)
+                exp = erase(exporters(k).name, '.m');
+                uimenu(ui_menu_exporters, ...
+                    'Label', exp, ...
+                    'Callback', {@cb_exporters});
+            end
+        end
         
         ui_menu_about = uimenu(f, 'Label', 'About');
         uimenu(ui_menu_about, ...
@@ -107,6 +149,19 @@ menu()
             ''}, ...
             ['About ' BRAPH2.STR], ...
             CreateStruct)
+    end
+    function cb_importers(hObject, ~)
+        object_name = hObject.Text;
+        imp_el = eval([object_name '()']);
+        imp_el.uigetfile();
+        el = imp_el.get(field);
+        plot();
+    end
+    function cb_exporters(hObject, ~)
+        object_name = hObject.Text;
+        exmp_el = eval([object_name '(' '''' field '''' ', el)']);
+        exmp_el.uiputfile();
+        exmp_el.get('SAVE');
     end
 
 %% Toolbar
