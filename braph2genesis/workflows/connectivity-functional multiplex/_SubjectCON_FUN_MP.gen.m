@@ -27,11 +27,11 @@ CON_FUN_MP (data, cell) is a cell containing 2 matrices with connectivity and fu
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').length();
 num_layers = sub.get('L');
-check = (iscell(value) && isequal(length(value), num_layers)  && isequal(size(value{1}), [br_number, br_number]) && isequal(size(value{2}, 2), br_number) || (isempty(value) && br_number == 0); 
+check = (iscell(value) && isequal(length(value), num_layers)  && isequal(size(value{1}), [br_number, br_number]) && isequal(size(value{2}, 2), br_number)) || (isempty(value) && br_number == 0); 
 if check
     msg = 'All ok!';
 else   
-    msg = ['CON_FUN_MP must be a cell with two matrices, the first with the same number of rows and columns as the brain regions and the second with' ...
+    msg = ['CON_FUN_MP must be a cell with two matrices, the first with the same number of rows and columns as the brain regions and the second with ' ...
         'the same number of columns as the brain regions (' int2str(br_number) ').'];
 end
  

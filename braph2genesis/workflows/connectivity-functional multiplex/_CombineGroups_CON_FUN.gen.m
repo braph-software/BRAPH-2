@@ -12,15 +12,11 @@ Element
 
 %%% ¡prop!
 GR1 (data, item) is a group of subjects with connectivity data.
-%%%% ¡settings!
-'Group'
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
 GR2 (data, item) is a group of subjects with functional data.
-%%%% ¡settings!
-'Group'
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN')
 
@@ -50,7 +46,6 @@ assert(isequal(group1.get('SUB_DICT').length(), group2.get('SUB_DICT').length())
     'group 1 has ' tostring(group1.get('SUB_DICT').length()) 'subjects and group 2 has ' tostring(group2.get('SUB_DICT').length())])
 
 % sets group props
-[~, name] = fileparts(directory);
 gr.set( ...
     'ID', group1.get('ID'), ...
     'LABEL', group1.get('LABEL'), ...
@@ -62,19 +57,23 @@ subdict_gr1 = group1.get('SUB_DICT');
 subdict_gr2 = group2.get('SUB_DICT');
 
 for i = 1:1:group1.get('SUB_DICT').length()
+    sub1 = subdict_gr1.getItem(i);
+    sub2 = subdict_gr2.getItem(i);
     CON_FUN_MP = cell(2, 1);
-    CON_FUN_MP(1) = {subdict_gr1.get('CON')};
-    CON_FUN_MP(2) = {subdict_gr2.get('FUN')};
+    CON_FUN_MP(1) = {sub1.get('CON')};
+    CON_FUN_MP(2) = {sub2.get('FUN')};
     
     % add CON_FUN_MP subject
-    sub = SubjectCON( ...
-        'ID', subdict_gr1.get('ID'), ...
-        'BA', subdict_gr1.get('BA'), ...
+    sub = SubjectCON_FUN_MP( ...
+        'ID', sub1.get('ID'), ...
+        'BA', sub1.get('BA'), ...
         'L', 2, ...
         'CON_FUN_MP', CON_FUN_MP, ...
-        'age', subdict_gr1.get('age'), ...
-        'sex', subdict_gr1.get('sex') ...
+        'age', sub1.get('age'), ...
+        'sex', sub1.get('sex') ...
         );
     subdict.add(sub);
 end
 gr.set('sub_dict', subdict);
+
+value = gr;
