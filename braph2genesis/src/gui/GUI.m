@@ -52,23 +52,33 @@ f = init();
     end
 
 %% Plot Element
-container = uipanel( ...
-    'Parent', f, ...
-    'Position', [0.001 .02 .999 .98] ...
-    );
 plot()
     function plot()
+        el_panel = uipanel( ...
+            'Parent', f, ...
+            'BorderType', 'none' ...
+            );
+        set(f, 'SizeChangedFcn', {@resize})
+        function resize(~, ~)
+            set(f, 'Units', 'character')    
+            set(el_panel, ...
+                'Units', 'Character', ...
+                'Position', [0 1 w(f) h(f)-1] ...
+                );
+            set(ui_text_filename, 'Position', [0 0 w(f) 1])
+        end
+        
         pl = el.getPlotElement();
-        pl.draw('Parent', container)
+        pl.draw('Parent', el_panel)
     end
 
 %% Text File Name
 ui_text_filename = uicontrol('Parent', f, 'Style','text');
 init_filename()
     function init_filename()
-        set(ui_text_filename, 'Units', 'normalized')
-        set(ui_text_filename, 'Position', [.01 .001 .5 .02])
-        set(ui_text_filename, 'HorizontalAlignment', 'left')
+        set(ui_text_filename, ...
+            'Units', 'character', ...
+            'HorizontalAlignment', 'left')
     end
     function update_filename(filename)
         set(ui_text_filename, 'String', filename)
