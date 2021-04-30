@@ -32,7 +32,7 @@ DIRECTORY (data, string) is the directory name where to save the group of subjec
 fileparts(which('test_braph2'))
 
 %%% ¡prop!
-FILE_COVARIATES (data, string) is the file name where to save the covariates of the group of subjects with structural data.
+FILE_COVARIATES (data, string) is the file name where to save the covariates of the group of subjects with structural multiplex data.
 %%%% ¡default!
 [fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_group_ST_MP_covs_most_likely_to_be_erased.txt']
 

@@ -4,7 +4,7 @@ ExporterGroupSubjectFUNTXT < Exporter (ex, exporter of FUN subject group in TXT)
 %%% ¡description!
 ExporterGroupSubjectFUNTXT exports a group of subjects with functional data to a series of TXT file and their covariates age and sex (if existing) to another TXT file.
 All these files are saved in the same folder.
-Each file contains a table with each row correspoding to a brain region and each column to a time.
+Each file contains a table with each row correspoding to a time serie and each column to a brain region.
 The TXT file containing the covariates consists of of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.

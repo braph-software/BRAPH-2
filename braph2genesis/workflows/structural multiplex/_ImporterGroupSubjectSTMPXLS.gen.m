@@ -1,5 +1,5 @@
 %% ¡header!
-ImporterGroupSubjectSTMPXLS < Importer (im, importer of ST MP subject group from XLS/XLSX) imports a group of subjects with structural multiplex data from an XLS/XLSX file.
+ImporterGroupSubjectSTMPXLS < Importer (im, importer of ST MP subject group from XLS/XLSX) imports a group of subjects with structural multiplex data from a series of XLS/XLSX file.
 
 %%% ¡description!
 ImporterGroupSubjectSTMPXLS imports a group of subjects with structural multiplex data from a series of XLS/XLSX file and their covariates from another XLS/XLSX file.
