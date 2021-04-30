@@ -22,6 +22,8 @@ end
 f_position = get_from_varargin([.02 .30 .30 .80], 'Position', varargin);
 
 BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
+OPEN_TP = el.getName();
+SAVE_TP = el.getName();
 
 %% Initialize GUI
 f = init();
@@ -36,10 +38,10 @@ f = init();
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
             'Color', BKGCOLOR, ... 
-            'CloseRequestFcn', {@close} ...
+            'CloseRequestFcn', {@cb_close} ...
             );
     end
-    function close(~, ~)
+    function cb_close(~, ~)
         selection = questdlg(['Do you want to close ' name '?'], ...
             ['Close ' name], ...
             'Yes', 'No', 'Yes');
@@ -52,8 +54,27 @@ f = init();
     end
 
 %% Plot Element
-pl = el.getPlotElement();
-pl.draw('Parent', f)
+container = uipanel( ...
+    'Parent', f, ...
+    'Position', [0.001 .02 .999 .98] ...
+    );
+plot()
+    function plot()
+        pl = el.getPlotElement();
+        pl.draw('Parent', container)
+    end
+
+%% Text File Name
+ui_text_filename = uicontrol('Parent', f, 'Style','text');
+init_filename()
+    function init_filename()
+        set(ui_text_filename, 'Units', 'normalized')
+        set(ui_text_filename, 'Position', [.01 .001 .5 .02])
+        set(ui_text_filename, 'HorizontalAlignment', 'left')
+    end
+    function update_filename(filename)
+        set(ui_text_filename, 'String', filename)
+    end
 
 %% Menu
 menu()
@@ -63,20 +84,112 @@ menu()
         % Save
         % Save as ...
         uimenu(ui_menu_file, ...
+            'Label', 'Open ...', ...
+            'Accelerator', 'O', ...
+            'Callback', {@cb_open})
+        uimenu(ui_menu_file, ...
+            'Label', 'Save', ...
+            'Accelerator', 'S', ...
+            'Callback', {@cb_save})
+        uimenu(ui_menu_file, ...
+            'Label', 'Save as ...', ...
+            'Accelerator', 'A', ...
+            'Callback', {@cb_saveas})
+        %%% ---
+        uimenu(ui_menu_file, ...
+            'Separator', 'on', ...
             'Label', 'Close', ...
             'Accelerator', 'C', ...
-            'Callback', {@close})
+            'Callback', {@cb_close})
+        
+        ui_menu_figure = uimenu(f, 'Label', 'Figure');
+        uimenu(ui_menu_figure, ...
+            'Label', 'Save figures ...', ...
+            'Accelerator', 'M', ...
+            'Callback', {@cb_save_image})
+        
+        ui_menu_import = uimenu(f, 'Label', 'Import');
+        uimenu(ui_menu_import, ...
+            'Label', 'Import JSON ...', ...
+            'Accelerator', 'I', ...
+            'Callback', {@cb_import_json})
+        
+        ui_menu_export = uimenu(f, 'Label', 'Export');
+        uimenu(ui_menu_export, ...
+            'Label', 'Export JSON ...', ...
+            'Accelerator', 'E', ...
+            'Callback', {@cb_export_json})
         
         ui_menu_about = uimenu(f, 'Label', 'About');
         uimenu(ui_menu_about, ...
             'Label', 'License ...', ...
-            'Callback', {@license})
+            'Callback', {@cb_license})
         uimenu(ui_menu_about, ...
             'Label', 'About ...', ...
-            'Callback', {@about})
+            'Callback', {@cb_about})
     end
-    function license(~, ~)
-        CreateStruct.WindowStyle = 'modal';        
+    function cb_open(~, ~)
+        % select file
+        [file, path, filterindex] = uigetfile('.mat', ['Select the ' el.getName() ' file.']);
+        if filterindex
+            filename = fullfile(path, file);
+            tmp = load(filename, '-mat', 'el');
+            if isa(tmp.el, [el.getClass()]) %#ok<NBRAK>
+                el = tmp.el;
+                plot();
+                update_filename(filename);
+            end
+        end
+    end
+    function cb_save(~, ~)
+        fn = get(ui_text_filename, 'String');
+        if isempty(fn)
+            cb_saveas();
+        else
+            save(fn, 'el');
+        end
+    end
+    function cb_saveas(~, ~)
+        % select file
+        [file, path, filterindex] = uiputfile('.mat', ['Select the ' el.getName() ' file.']);
+        % save file
+        if filterindex
+            filename = fullfile(path, file);
+            save(filename, 'el');
+            update_filename(filename);
+        end
+    end
+    function cb_import_json(~,~)
+        [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
+        if filterindex
+            filename = fullfile(path, file);
+            fid = fopen(filename);
+            raw = fread(fid, inf);
+            str = char(raw');
+            fclose(fid);
+            tmp_el = Element.decodeJSON(str);
+            el = tmp_el;
+            plot();
+            update_filename(filename);
+        end
+    end
+    function cb_export_json(~,~)
+        fn = get(ui_text_filename, 'String');
+        if isempty(fn)
+            [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+            if filterindex
+                filename = fullfile(path, file);
+                [json, ~, ~] = encodeJSON(el);
+                fid = fopen(filename, 'w');
+                fprintf(fid, json);
+                fclose(fid);
+            end
+        else
+            save(fn, 'el');
+        end
+    end
+    function cb_license(~, ~)
+        CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
@@ -92,8 +205,8 @@ menu()
             [BRAPH2.STR ' License'], ...
             CreateStruct)
     end
-    function about(~, ~)
-        CreateStruct.WindowStyle = 'modal';        
+    function cb_about(~, ~)
+        CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
