@@ -89,6 +89,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
     %  getPlotProp - returns a prop plot
+    %  getGUIMenuImport - returns an import menu
+    %  getGUIMenuExport - returns an export menu
     %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
@@ -1698,6 +1700,60 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         'PROP', prop, ...
                         varargin{:});
             end
+        end
+        function figure_menu = getGUIMenuImport(el, f)
+            %GETGUIMENUIMPORT returns the import menu gui.
+            % 
+            % menu = GETGUIMENUIMPORT(EL, FIG) sets and returns the import menu for the
+            %  figure FIG.
+            % 
+            % See also getGUI, getGUIMenuExport.
+            
+            ui_menu_import = uimenu(f, 'Label', 'Import');
+            uimenu(ui_menu_import, ...
+                'Label', 'Import JSON ...', ...
+                'Accelerator', 'I', ...
+                'Callback', {@cb_import_json})
+        
+            function cb_import_json(~,~)
+                [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    fid = fopen(filename);
+                    raw = fread(fid, inf);
+                    str = char(raw');
+                    fclose(fid);
+                    tmp_el = Element.decodeJSON(str);
+                    f.el = tmp_el;
+                    f.plot();
+                end
+            end
+        end
+        function figure_menu = getGUIMenuExport(el, f)
+            %GETGUIMENUEXPORT returns the export menu gui.
+            % 
+            % menu = GETGUIMENUEXPORT(EL, FIG) sets and returns the export menu for the 
+            %  figure FIG.
+            % 
+            % See also getGUI, getGUIMenuImport.
+            
+            ui_menu_export = uimenu(f, 'Label', 'Export');
+            uimenu(ui_menu_export, ...
+                'Label', 'Export JSON ...', ...
+                'Accelerator', 'E', ...
+                'Callback', {@cb_export_json})
+            
+            function cb_export_json(~,~)
+                [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    [json, ~, ~] = encodeJSON(el);
+                    fid = fopen(filename, 'w');
+                    fprintf(fid, json);
+                    fclose(fid);
+                end
+            end
+            
         end
     end
 end
