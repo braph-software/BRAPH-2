@@ -89,6 +89,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
     %  getPlotProp - returns a prop plot
+    %  getGUIMenuImport - returns an import menu
+    %  getGUIMenuExport - returns an export menu
     %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
@@ -1698,6 +1700,26 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         'PROP', prop, ...
                         varargin{:});
             end
+        end
+        function figure_menu = getGUIMenuImport(el, varargin)
+            % GETGUIMENUIMPORT returns the import menu gui.
+            % 
+            % figure_menu = GETGUIMENUIMPORT(EL, 'PARENT', FIG, ...)
+            %  returns and sets the import menu to the figure FIG.
+            % 
+            % See also getGUI, getGUIMenuExport.
+            
+            figure_menu = FigMenuImport('el', el, varargin{:});
+        end
+        function figure_menu = getGUIMenuExport(el, varargin)
+            % GETGUIMENUEXPORT returns the export menu gui.
+            % 
+            % figure_menu = GETGUIMENUEXPORT(EL, 'PARENT', FIG, ...)
+            %  returns and sets the export menu to the figure FIG.
+            % 
+            % See also getGUI, getGUIMenuImport.
+            
+            figure_menu = FigMenuExport('el', el, varargin{:});
         end
     end
 end
