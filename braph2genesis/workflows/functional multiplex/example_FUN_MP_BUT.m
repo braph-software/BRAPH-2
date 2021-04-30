@@ -27,23 +27,21 @@ im_gr2 = ImporterGroupSubjectFUNMPXLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis FUN MP BUT
-a_BUT1 = AnalyzeGroup_FUN_MP_BUT('GR', gr1);
+a_BUT1 = AnalyzeEnsemble_FUN_MP_BUT('GR', gr1);
 
-a_BUT2 = AnalyzeGroup_FUN_MP_BUT('GR', gr2);
+a_BUT2 = AnalyzeEnsemble_FUN_MP_BUT('GR', gr2);
 
 % measure calculation
-g_BUT1 = a_BUT1.get('G');
-degree_BUT1 = g_BUT1.getMeasure('Degree').get('M');
-degree_av_BUT1 = g_BUT1.getMeasure('DegreeAv').get('M');
-distance_BUT1 = g_BUT1.getMeasure('Distance').get('M');
+degree_BUT1 = a_BUT1.getMeasureEnsemble('Degree').get('M');
+degree_av_BUT1 = a_BUT1.getMeasureEnsemble('DegreeAv').get('M');
+distance_BUT1 = a_BUT1.getMeasureEnsemble('Distance').get('M');
 
-g_BUT2 = a_BUT2.get('G');
-degree_BUT2 = g_BUT2.getMeasure('Degree').get('M');
-degree_av_BUT2 = g_BUT2.getMeasure('DegreeAv').get('M');
-distance_BUT2 = g_BUT2.getMeasure('Distance').get('M');
+degree_BUT2 = a_BUT2.getMeasureEnsemble('Degree').get('M');
+degree_av_BUT2 = a_BUT2.getMeasureEnsemble('DegreeAv').get('M');
+distance_BUT2 = a_BUT2.getMeasureEnsemble('Distance').get('M');
 
 % comparison
-c_BUT = CompareGroup( ...
+c_BUT = CompareEnsemble( ...
     'P', 10, ...
     'A1', a_BUT1, ...
     'A2', a_BUT2, ...

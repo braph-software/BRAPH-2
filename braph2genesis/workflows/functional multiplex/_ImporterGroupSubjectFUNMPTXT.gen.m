@@ -1,25 +1,25 @@
 %% ¡header!
-ImporterGroupSubjectFUNMPXLS < Importer (im, importer of FUN MP subject group from XLS/XLSX) imports a group of subjects with functional multiplex data from a series of XLS/XLSX file.
+ImporterGroupSubjectFUNMPTXT < Importer (im, importer of FUN MP subject group from TXT) imports a group of subjects with functional multiplex data from an TXT file.
 
 %%% ¡description!
-ImporterGroupSubjectFUNMPXLS imports a group of subjects with functional multiplex data from a series of XLS/XLSX file and their covariates from another XLS/XLSX file.
+ImporterGroupSubjectFUNMPTXT imports a group of subjects with functional multiplex data from an TXT file and their covariates from another TXT file.
 All these files must be in the same folder; also, no other files should be in the folder.
-Each file contains a table with each row correspoding to a time serie and each column to a brain region.
-The XLS/XLSX file containing the covariates must be inside another folder in the same directory 
+Each TXT file contains a table with each row correspoding to a time serie and each column to a brain region.
+The TXT file containing the covariates must be inside another folder in the same directory 
 than file with data and consists of of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
-Element, Importer, ExporterGroupSubjectFUNMPXLS
+Element, Importer, ExporterGroupSubjectFUNMPTXT
 
 %% ¡props!
 
 %%% ¡prop!
-DIRECTORY (data, string) is the directory containing the FUN MP subject group files from which to load the subject group.
+DIRECTORY (data, string) is the directory containing the FUN MP subject group files from which to load the L layers of the subject group.
 
 %%% ¡prop!
-FILE_COVARIATES (data, string) is the XLS/XLSX file from where to load the covariates age and sex of the FUN MP subject group.
+FILE_COVARIATES (data, string) is the TXT file from where to load the covariates age and sex of the FUN MP subject group.
 %%%% ¡default!
 ''
 
@@ -61,28 +61,25 @@ if isfolder(directory)
     if length(subject_folders) > 0
         % Check if there are covariates to add (age and sex)
         if isfile(file_covariates)
-            [~, ~, raw_covariates] = xlsread(file_covariates);
-            age = raw_covariates(2:end, 2);
-            sex = raw_covariates(2:end, 3);
+            raw_covariates = readtable(file_covariates, 'Delimiter', '\t');
+            age = raw_covariates{:, 2};
+            sex = raw_covariates{:, 3};
         else
-            age = {[0]};
-            age = age(ones(length(files), 1));
+            age = ones(subjects_number,1);
             unassigned =  {'unassigned'};
-            sex = unassigned(ones(1, length(subject_folders)));
+            sex = unassigned(ones(length(subject_folders), 1));
         end
         
         % get all layers per subject folder
         for i = 1:1:length(subject_folders)
             subjects_paths = [directory filesep() subject_folders(i).name];
             % analyzes file
-            files_XLSX = dir(fullfile(subjects_paths, '*.xlsx'));
-            files_XLS = dir(fullfile(subjects_paths, '*.xls'));
-            files = [files_XLSX; files_XLS];
+            files = dir(fullfile(subjects_paths, '*.txt'));
             
             FUN_MP = cell(1, length(files));
             % get all layers per subject folder
             for j = 1:1:length(files)
-                FUN_MP(j) = {xlsread(fullfile(subjects_paths, files(j).name))};
+                FUN_MP(j) = {table2array(readtable(fullfile(subjects_paths, files(j).name), 'Delimiter', '	'))};
             end
             
             % brain atlas
@@ -106,7 +103,7 @@ if isfolder(directory)
                 'BA', ba, ...
                 'L', length(files), ...
                 'FUN_MP', FUN_MP, ...
-                'age', age{i}, ...
+                'age', age(i), ...
                 'sex', sex{i} ...
                 );
 
@@ -121,7 +118,7 @@ value = gr;
 
 %% ¡methods!
 function uigetdir(im)
-    % UIGETDIR opens a dialog box to set the directory from where to load the XLS/XLSX files of the FUN MP subject group with L layers.
+    % UIGETDIR opens a dialog box to set the directory from where to load the TXT files of the FUN MP subject group with L layers.
 
     directory = uigetdir('Select directory');
     if isfolder(directory)
@@ -130,9 +127,9 @@ function uigetdir(im)
 end
 
 function uigetfile(im)
-    % UIGETFILE opens a dialog box to set the XLS/XLSX file from where to load the covariates of FUN MP subject group.
+    % UIGETFILE opens a dialog box to set the TXT file from where to load the FUN MP subject group.
     
-    [filename, filepath, filterindex] = uigetfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+    [filename, filepath, filterindex] = uigetfile('*.txt', 'Select TXT file');
     if filterindex
         file = [filepath filename];
         im.set('FILE', file);

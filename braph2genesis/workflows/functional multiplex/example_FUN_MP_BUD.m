@@ -27,23 +27,21 @@ im_gr2 = ImporterGroupSubjectFUNMPXLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis FUN MP BUD
-a_BUD1 = AnalyzeGroup_FUN_MP_BUD('GR', gr1);
+a_BUD1 = AnalyzeEnsemble_FUN_MP_BUD('GR', gr1);
 
-a_BUD2 = AnalyzeGroup_FUN_MP_BUD('GR', gr2);
+a_BUD2 = AnalyzeEnsemble_FUN_MP_BUD('GR', gr2);
 
 % measure calculation
-g_BUD1 = a_BUD1.get('G');
-degree_BUD1 = g_BUD1.getMeasure('Degree').get('M');
-degree_av_BUD1 = g_BUD1.getMeasure('DegreeAv').get('M');
-distance_BUD1 = g_BUD1.getMeasure('Distance').get('M');
+degree_BUD1 = a_BUD1.getMeasureEnsemble('Degree').get('M');
+degree_av_BUD1 = a_BUD1.getMeasureEnsemble('DegreeAv').get('M');
+distance_BUD1 = a_BUD1.getMeasureEnsemble('Distance').get('M');
 
-g_BUD2 = a_BUD2.get('G');
-degree_BUD2 = g_BUD2.getMeasure('Degree').get('M');
-degree_av_BUD2 = g_BUD2.getMeasure('DegreeAv').get('M');
-distance_BUD2 = g_BUD2.getMeasure('Distance').get('M');
+degree_BUD2 = a_BUD2.getMeasureEnsemble('Degree').get('M');
+degree_av_BUD2 = a_BUD2.getMeasureEnsemble('DegreeAv').get('M');
+distance_BUD2 = a_BUD2.getMeasureEnsemble('Distance').get('M');
 
 % comparison
-c_BUD = CompareGroup( ...
+c_BUD = CompareEnsemble( ...
     'P', 10, ...
     'A1', a_BUD1, ...
     'A2', a_BUD2, ...
