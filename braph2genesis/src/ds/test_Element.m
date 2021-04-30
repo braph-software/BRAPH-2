@@ -387,3 +387,29 @@ for i = 1:1:length(el_class_list)
         [BRAPH2.STR ':' el_class ':' BRAPH2.BUG_JSON], ...
         [el_class '.encodeJSON() or ' el_class '.decodeJSON does not work. A JSON encoded/decoded element must have the same property values of the original element.'])
 end
+
+%% Test 6: Known Bugs - BrainAtlas decodeJSON
+path = fileparts(which('test_braph2'));
+file = 'atlas_json';
+filename = fullfile(path, file);
+
+% Load BrainAtlas
+br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+items = {br1};
+idict_1 = IndexedDictionary( ...
+    'id', 'idict', ...
+    'it_class', 'BrainRegion', ...
+    'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+    'it_list', items ...
+    );
+ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
+
+% save to json
+[json, ~, ~] = encodeJSON(ba);
+
+% import from json
+tmp_ba = Element.decodeJSON(json);
+
+assert(isequal(ba, tmp_ba), ...
+    [BRAPH2.STR ':JSON:' BRAPH2.BUG_JSON], ...
+    'Error in JSON encode/decode');
