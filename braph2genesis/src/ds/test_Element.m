@@ -388,28 +388,20 @@ for i = 1:1:length(el_class_list)
         [el_class '.encodeJSON() or ' el_class '.decodeJSON does not work. A JSON encoded/decoded element must have the same property values of the original element.'])
 end
 
-%% Test 6: Known Bugs - BrainAtlas decodeJSON
-path = fileparts(which('test_braph2'));
-file = 'atlas_json';
-filename = fullfile(path, file);
-
-% Load BrainAtlas
-br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
-items = {br1};
-idict_1 = IndexedDictionary( ...
+%% Test 6: JSON encode-decode with ITEMLIST
+idict = IndexedDictionary( ...
     'id', 'idict', ...
-    'it_class', 'BrainRegion', ...
-    'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
-    'it_list', items ...
+    'it_class', 'ETA', ...
+    'it_key', 17, ...
+    'it_list', {ETA()} ...
     );
-ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
 
-% save to json
-[json, ~, ~] = encodeJSON(ba);
+% encode to json
+[json, ~, ~] = encodeJSON(idict);
 
-% import from json
-tmp_ba = Element.decodeJSON(json);
+% decode from json
+idict_decoded = Element.decodeJSON(json);
 
-assert(isequal(ba, tmp_ba), ...
+assert(iscell(idict_decoded.getr('IT_LIST')), ...
     [BRAPH2.STR ':JSON:' BRAPH2.BUG_JSON], ...
-    'Error in JSON encode/decode');
+    'Error in JSON encode/decode because the decoded IT_LIST is not a cell.')
