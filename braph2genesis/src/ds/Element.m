@@ -1394,11 +1394,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 for prop = 1:1:el.getPropNumber()
                     value = struct{i}.props(prop).value;
                     if isnumeric(value)
-                        if length(value) == 1 % also case {Format.ITEM, Format.IDICT}
-                            el.props{prop}.value = el_list{value};
-                        else % also case Format.ITEMLIST
+                        if isequal(el.getPropFormat(prop), Format.ITEMLIST) & ~isa(el_list{value}, 'NoValue') %#ok<AND2> % also case Format.ITEMLIST
                             indices = value;
                             el.props{prop}.value = el_list(indices)';
+                        else  % also case {Format.ITEM, Format.IDICT}
+                            el.props{prop}.value = el_list{value};
                         end
                     else
                         switch el.getPropFormat(prop)
