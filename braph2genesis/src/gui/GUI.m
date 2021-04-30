@@ -174,18 +174,13 @@ menu()
         end
     end
     function cb_export_json(~,~)
-        fn = get(ui_text_filename, 'String');
-        if isempty(fn)
-            [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
-            if filterindex
-                filename = fullfile(path, file);
-                [json, ~, ~] = encodeJSON(el);
-                fid = fopen(filename, 'w');
-                fprintf(fid, json);
-                fclose(fid);
-            end
-        else
-            save(fn, 'el');
+        [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+        if filterindex
+            filename = fullfile(path, file);
+            [json, ~, ~] = encodeJSON(el);
+            fid = fopen(filename, 'w');
+            fprintf(fid, json);
+            fclose(fid);
         end
     end
     function cb_license(~, ~)
@@ -229,9 +224,7 @@ toolbar()
 
         ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
 
-        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
+        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))        
         delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
@@ -243,7 +236,13 @@ toolbar()
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
         
         % Open
+        ui_toolbar_open = findall(ui_toolbar, 'Tag', 'Standard.FileOpen');
+        set(ui_toolbar_open, 'TooltipString', OPEN_TP);
+        set(ui_toolbar_open, 'ClickedCallback', {@cb_open})
         % Save
+        ui_toolbar_save = findall(ui_toolbar, 'Tag', 'Standard.SaveFigure');
+        set(ui_toolbar_save, 'TooltipString', SAVE_TP);
+        set(ui_toolbar_save, 'ClickedCallback', {@cb_save})
         
         % Copy
         % Clone
