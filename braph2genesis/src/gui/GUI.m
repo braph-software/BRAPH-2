@@ -106,14 +106,14 @@ menu()
             'Accelerator', 'C', ...
             'Callback', {@cb_close})
               
-        % ui_menu_import = el.getGUIMenuImport()
+        % ui_menu_import = el.getGUIMenuImport(f)
 %         ui_menu_import = uimenu(f, 'Label', 'Import');
 %         uimenu(ui_menu_import, ...
 %             'Label', 'Import JSON ...', ...
 %             'Accelerator', 'I', ...
 %             'Callback', {@cb_import_json})
 
-        % ui_menu_import = el.getGUIMenuExport()
+        % ui_menu_import = el.getGUIMenuExport(f)
 %         ui_menu_export = uimenu(f, 'Label', 'Export');
 %         uimenu(ui_menu_export, ...
 %             'Label', 'Export JSON ...', ...
@@ -136,11 +136,11 @@ menu()
     end
     function cb_open(~, ~)
         % select file
-        [file, path, filterindex] = uigetfile('', ['Select the ' el.getName() ' file.']);
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
         if filterindex
             filename = fullfile(path, file);
             tmp = load(filename, '-mat', 'el');
-            if isa(tmp.el, [el.getClass()]) %#ok<NBRAK>
+            if isa(tmp.el, el.getClass())
                 el = tmp.el;
                 plot();
                 update_filename(filename);
@@ -157,11 +157,12 @@ menu()
     end
     function cb_saveas(~, ~)
         % select file
-        [file, path, filterindex] = uiputfile('.mat', ['Select the ' el.getName() ' file.']);
+        [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
         % save file
         if filterindex
             filename = fullfile(path, file);
-            save(filename, 'el');
+            build = BRAPH2.BUILD;
+            save(filename, 'el', 'build');
             update_filename(filename);
         end
     end
