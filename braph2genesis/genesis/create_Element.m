@@ -1602,7 +1602,7 @@ generate_gui()
                     g(3, 'end')
                 g(2, 'end')                
             end
-            if any(cellfun(@(x) ~isempty(x), gui_import) || cellfun(@(x) ~isempty(x), gui_export)) %#ok<SHOCIRAA>
+            if any(cellfun(@(x) ~isempty(x), gui_import))
                 g(2, ['function f_m = getGUIMenuImporter(' moniker ')'])
                     gs(3, {
                          '%getGUIMenuImporter returns a figure menu.'
@@ -1612,9 +1612,11 @@ generate_gui()
                          '% See also getGUIMenuExporter.'
                          ''
                         })
-                    g(3, gui_import{1})
+                    gs(3, gui_import{1})
                     g(3, '')
                 g(2, 'end')
+            end
+            if  any(cellfun(@(x) ~isempty(x), gui_export))
                 g(2, ['function f_m = getGUIMenuExporter(' moniker ')'])
                     gs(3, {
                          '%getGUIMenuExporter returns a figure menu.'
@@ -1624,7 +1626,7 @@ generate_gui()
                          '% See also getGUIMenuImporter.'
                          ''
                         })
-                        g(3, gui_export{1})
+                        gs(3, gui_export{1})
                         g(3, '')
                 g(2, 'end')
             end

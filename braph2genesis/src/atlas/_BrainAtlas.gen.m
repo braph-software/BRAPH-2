@@ -13,10 +13,10 @@ Element, BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT
 
 %%% ¡gui!
 %%%% ¡menu_importer!
-a=0;
+
 
 %%%% ¡menu_exporter!
-disp('hello');
+
 
 %% ¡props!
 
