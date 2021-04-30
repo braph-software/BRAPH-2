@@ -4,7 +4,7 @@ ImporterGroupSubjectFUNMPXLS < Importer (im, importer of FUN MP subject group fr
 %%% ¡description!
 ImporterGroupSubjectFUNMPXLS imports a group of subjects with functional multiplex data from a series of XLS/XLSX file and their covariates from another XLS/XLSX file.
 All these files must be in the same folder; also, no other files should be in the folder.
-Each file contains a table with each column correspoding to a brain region and each row to a time.
+Each file contains a table with each row correspoding to a time serie and each column to a brain region.
 The XLS/XLSX file containing the covariates must be inside another folder in the same directory 
 than file with data and consists of of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
@@ -68,7 +68,7 @@ if isfolder(directory)
             age = {[0]};
             age = age(ones(length(files), 1));
             unassigned =  {'unassigned'};
-            sex = unassigned(ones(length(files), 1));
+            sex = unassigned(ones(1, length(files)));
         end
         
         % get all layers per subject folder
@@ -82,7 +82,7 @@ if isfolder(directory)
             FUN_MP = cell(length(files), 1);
             % get all layers per subject folder
             for j = 1:1:length(files)
-                FUN_MP(j) = xlsread(fullfile(subjects_paths, files(j).name));
+                FUN_MP(j) = {xlsread(fullfile(subjects_paths, files(j).name))};
             end
             
             % brain atlas
@@ -104,10 +104,10 @@ if isfolder(directory)
             sub = SubjectFUN_MP( ...
                 'ID', subject_folders(i).name, ...
                 'BA', ba, ...
-                'L', length(subject_folders), ...
+                'L', length(files), ...
                 'FUN_MP', FUN_MP, ...
-                'age', age{j}, ...
-                'sex', sex{j} ...
+                'age', age{i}, ...
+                'sex', sex{i} ...
                 );
 
             subdict.add(sub);

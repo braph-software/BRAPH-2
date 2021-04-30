@@ -4,7 +4,7 @@ ImporterGroupSubjectFUNXLS < Importer (im, importer of FUN subject group from XL
 %%% ¡description!
 ImporterGroupSubjectFUNXLS imports a group of subjects with functional data from a series of XLS/XLSX file and their covariates from another XLS/XLSX file.
 All these files must be in the same folder; also, no other files should be in the folder.
-Each file contains a table with each column correspoding to a brain region and each row to a time.
+Each file contains a table with each row correspoding to a time serie and each column to a brain region.
 The XLS/XLSX file containing the covariates must be inside another folder in the same directory 
 than file with data and consists of of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
