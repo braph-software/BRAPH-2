@@ -1702,10 +1702,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
         function figure_menu = getGUIMenuImport(el, f)
-            % GETGUIMENUIMPORT returns the import menu gui.
+            %GETGUIMENUIMPORT returns the import menu gui.
             % 
-            % figure_menu = GETGUIMENUIMPORT(EL, FIG)
-            %  returns and sets the import menu to the figure FIG.
+            % menu = GETGUIMENUIMPORT(EL, FIG) sets and returns the import menu for the
+            %  figure FIG.
             % 
             % See also getGUI, getGUIMenuExport.
             
@@ -1716,7 +1716,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 'Callback', {@cb_import_json})
         
             function cb_import_json(~,~)
-                [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
+                [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
                 if filterindex
                     filename = fullfile(path, file);
                     fid = fopen(filename);
@@ -1726,19 +1726,14 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     tmp_el = Element.decodeJSON(str);
                     f.el = tmp_el;
                     f.plot();
-                    f.update_filename(filename);
                 end
-            end
-            
-            if nargout > 0
-                figure_menu = ui_menu_import;
             end
         end
         function figure_menu = getGUIMenuExport(el, f)
-            % GETGUIMENUEXPORT returns the export menu gui.
+            %GETGUIMENUEXPORT returns the export menu gui.
             % 
-            % figure_menu = GETGUIMENUEXPORT(EL, FIG, ...)
-            %  returns and sets the export menu to the figure FIG.
+            % menu = GETGUIMENUEXPORT(EL, FIG) sets and returns the export menu for the 
+            %  figure FIG.
             % 
             % See also getGUI, getGUIMenuImport.
             
@@ -1759,9 +1754,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
             
-            if nargout > 0
-                figure_menu = ui_menu_export;
-            end
         end
     end
 end
