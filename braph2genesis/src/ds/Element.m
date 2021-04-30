@@ -1701,7 +1701,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         varargin{:});
             end
         end
-        function figure_menu = getGUIMenuImport(el, f)
+        function ui_menu_import = getGUIMenuImport(el, f)
             %GETGUIMENUIMPORT returns the import menu gui.
             % 
             % menu = GETGUIMENUIMPORT(EL, FIG) sets and returns the import menu for the
@@ -1729,7 +1729,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
         end
-        function figure_menu = getGUIMenuExport(el, f)
+        function ui_menu_export = getGUIMenuExport(el, f)
             %GETGUIMENUEXPORT returns the export menu gui.
             % 
             % menu = GETGUIMENUEXPORT(EL, FIG) sets and returns the export menu for the 
