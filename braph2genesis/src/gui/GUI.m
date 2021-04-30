@@ -88,9 +88,6 @@ init_filename()
 menu()
     function menu()
         ui_menu_file = uimenu(f, 'Label', 'File');
-        % Open ...
-        % Save
-        % Save as ...
         uimenu(ui_menu_file, ...
             'Label', 'Open ...', ...
             'Accelerator', 'O', ...
@@ -103,31 +100,32 @@ menu()
             'Label', 'Save as ...', ...
             'Accelerator', 'A', ...
             'Callback', {@cb_saveas})
-        %%% ---
         uimenu(ui_menu_file, ...
             'Separator', 'on', ...
             'Label', 'Close', ...
             'Accelerator', 'C', ...
             'Callback', {@cb_close})
+              
+        % ui_menu_import = el.getGUIMenuImport()
+%         ui_menu_import = uimenu(f, 'Label', 'Import');
+%         uimenu(ui_menu_import, ...
+%             'Label', 'Import JSON ...', ...
+%             'Accelerator', 'I', ...
+%             'Callback', {@cb_import_json})
+
+        % ui_menu_import = el.getGUIMenuExport()
+%         ui_menu_export = uimenu(f, 'Label', 'Export');
+%         uimenu(ui_menu_export, ...
+%             'Label', 'Export JSON ...', ...
+%             'Accelerator', 'E', ...
+%             'Callback', {@cb_export_json})
         
         ui_menu_figure = uimenu(f, 'Label', 'Figure');
         uimenu(ui_menu_figure, ...
             'Label', 'Save figures ...', ...
             'Accelerator', 'M', ...
             'Callback', {@cb_save_image})
-        
-        ui_menu_import = uimenu(f, 'Label', 'Import');
-        uimenu(ui_menu_import, ...
-            'Label', 'Import JSON ...', ...
-            'Accelerator', 'I', ...
-            'Callback', {@cb_import_json})
-        
-        ui_menu_export = uimenu(f, 'Label', 'Export');
-        uimenu(ui_menu_export, ...
-            'Label', 'Export JSON ...', ...
-            'Accelerator', 'E', ...
-            'Callback', {@cb_export_json})
-        
+
         ui_menu_about = uimenu(f, 'Label', 'About');
         uimenu(ui_menu_about, ...
             'Label', 'License ...', ...
@@ -138,7 +136,7 @@ menu()
     end
     function cb_open(~, ~)
         % select file
-        [file, path, filterindex] = uigetfile('.mat', ['Select the ' el.getName() ' file.']);
+        [file, path, filterindex] = uigetfile('', ['Select the ' el.getName() ' file.']);
         if filterindex
             filename = fullfile(path, file);
             tmp = load(filename, '-mat', 'el');
@@ -167,30 +165,30 @@ menu()
             update_filename(filename);
         end
     end
-    function cb_import_json(~,~)
-        [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
-        if filterindex
-            filename = fullfile(path, file);
-            fid = fopen(filename);
-            raw = fread(fid, inf);
-            str = char(raw');
-            fclose(fid);
-            tmp_el = Element.decodeJSON(str);
-            el = tmp_el;
-            plot();
-            update_filename(filename);
-        end
-    end
-    function cb_export_json(~,~)
-        [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
-        if filterindex
-            filename = fullfile(path, file);
-            [json, ~, ~] = encodeJSON(el);
-            fid = fopen(filename, 'w');
-            fprintf(fid, json);
-            fclose(fid);
-        end
-    end
+%     function cb_import_json(~,~)
+%         [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
+%         if filterindex
+%             filename = fullfile(path, file);
+%             fid = fopen(filename);
+%             raw = fread(fid, inf);
+%             str = char(raw');
+%             fclose(fid);
+%             tmp_el = Element.decodeJSON(str);
+%             el = tmp_el;
+%             plot();
+%             update_filename(filename);
+%         end
+%     end
+%     function cb_export_json(~,~)
+%         [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+%         if filterindex
+%             filename = fullfile(path, file);
+%             [json, ~, ~] = encodeJSON(el);
+%             fid = fopen(filename, 'w');
+%             fprintf(fid, json);
+%             fclose(fid);
+%         end
+%     end
     function cb_license(~, ~)
         CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
