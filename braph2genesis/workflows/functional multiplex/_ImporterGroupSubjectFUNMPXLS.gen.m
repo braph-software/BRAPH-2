@@ -79,7 +79,7 @@ if isfolder(directory)
             files_XLS = dir(fullfile(subjects_paths, '*.xls'));
             files = [files_XLSX; files_XLS];
             
-            FUN_MP = cell(length(files), 1);
+            FUN_MP = cell(1, length(files));
             % get all layers per subject folder
             for j = 1:1:length(files)
                 FUN_MP(j) = {xlsread(fullfile(subjects_paths, files(j).name))};
