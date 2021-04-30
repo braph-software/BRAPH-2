@@ -11,6 +11,10 @@ classdef BRAPH2
     %  AUTHORS      - BRAPH2 authors
     %  COPYRIGHT    - BRAPH2 copyright
     %
+    % Properties (Constant) - BRAPH2 extensions
+    %  EXT_ELEMENT  - BRAPH2 element extension
+    %  EXT_WORKFLOW - BRAPH2 workflow extentsion
+    %
     % Properties (Constant) - BRAPH2 error codes:
     %  WRONG_INPUT  - wrong input value or format in a function
     %  WRONG_OUTPUT - wrong output value or format in a function
@@ -27,6 +31,10 @@ classdef BRAPH2
         BUILD = 1 % BRAPH2 build number
         AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]        
+    end
+    properties (Constant) % BRAPH2 extensions
+        EXT_ELEMENT = '*.b2e' % BRAPH2 element extension
+        EXT_WORKFLOW = '*.braph2' % BRAPH2 workflow extentsion
     end
     properties (Constant) % BRAPH2 error codes
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function

@@ -36,10 +36,10 @@ f = init();
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
             'Color', BKGCOLOR, ... 
-            'CloseRequestFcn', {@close} ...
+            'CloseRequestFcn', {@cb_close} ...
             );
     end
-    function close(~, ~)
+    function cb_close(~, ~)
         selection = questdlg(['Do you want to close ' name '?'], ...
             ['Close ' name], ...
             'Yes', 'No', 'Yes');
@@ -52,31 +52,146 @@ f = init();
     end
 
 %% Plot Element
-pl = el.getPlotElement();
-pl.draw('Parent', f)
+plot()
+    function plot()
+        el_panel = uipanel( ...
+            'Parent', f, ...
+            'BorderType', 'none' ...
+            );
+        set(f, 'SizeChangedFcn', {@resize})
+        function resize(~, ~)
+            set(f, 'Units', 'character')    
+            set(el_panel, ...
+                'Units', 'Character', ...
+                'Position', [0 1 Plot.w(f) Plot.h(f)-1] ...
+                );
+            set(ui_text_filename, 'Position', [0 0 Plot.w(f) 1])
+        end
+        
+        pl = el.getPlotElement();
+        pl.draw('Parent', el_panel)
+    end
+
+%% Text File Name
+ui_text_filename = uicontrol('Parent', f, 'Style','text');
+init_filename()
+    function init_filename()
+        set(ui_text_filename, ...
+            'Units', 'character', ...
+            'HorizontalAlignment', 'left')
+    end
+    function update_filename(filename)
+        set(ui_text_filename, 'String', filename)
+    end
 
 %% Menu
 menu()
     function menu()
         ui_menu_file = uimenu(f, 'Label', 'File');
-        % Open ...
-        % Save
-        % Save as ...
         uimenu(ui_menu_file, ...
+            'Label', 'Open ...', ...
+            'Accelerator', 'O', ...
+            'Callback', {@cb_open})
+        uimenu(ui_menu_file, ...
+            'Label', 'Save', ...
+            'Accelerator', 'S', ...
+            'Callback', {@cb_save})
+        uimenu(ui_menu_file, ...
+            'Label', 'Save as ...', ...
+            'Accelerator', 'A', ...
+            'Callback', {@cb_saveas})
+        uimenu(ui_menu_file, ...
+            'Separator', 'on', ...
             'Label', 'Close', ...
             'Accelerator', 'C', ...
-            'Callback', {@close})
+            'Callback', {@cb_close})
+              
+        % ui_menu_import = el.getGUIMenuImport(f)
+%         ui_menu_import = uimenu(f, 'Label', 'Import');
+%         uimenu(ui_menu_import, ...
+%             'Label', 'Import JSON ...', ...
+%             'Accelerator', 'I', ...
+%             'Callback', {@cb_import_json})
+
+        % ui_menu_import = el.getGUIMenuExport(f)
+%         ui_menu_export = uimenu(f, 'Label', 'Export');
+%         uimenu(ui_menu_export, ...
+%             'Label', 'Export JSON ...', ...
+%             'Accelerator', 'E', ...
+%             'Callback', {@cb_export_json})
         
+        ui_menu_figure = uimenu(f, 'Label', 'Figure');
+        uimenu(ui_menu_figure, ...
+            'Label', 'Save figures ...', ...
+            'Accelerator', 'M', ...
+            'Callback', {@cb_save_image})
+
         ui_menu_about = uimenu(f, 'Label', 'About');
         uimenu(ui_menu_about, ...
             'Label', 'License ...', ...
-            'Callback', {@license})
+            'Callback', {@cb_license})
         uimenu(ui_menu_about, ...
             'Label', 'About ...', ...
-            'Callback', {@about})
+            'Callback', {@cb_about})
     end
-    function license(~, ~)
-        CreateStruct.WindowStyle = 'modal';        
+    function cb_open(~, ~)
+        % select file
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+        if filterindex
+            filename = fullfile(path, file);
+            tmp = load(filename, '-mat', 'el');
+            if isa(tmp.el, el.getClass())
+                el = tmp.el;
+                plot();
+                update_filename(filename);
+            end
+        end
+    end
+    function cb_save(~, ~)
+        fn = get(ui_text_filename, 'String');
+        if isempty(fn)
+            cb_saveas();
+        else
+            save(fn, 'el');
+        end
+    end
+    function cb_saveas(~, ~)
+        % select file
+        [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+        % save file
+        if filterindex
+            filename = fullfile(path, file);
+            build = BRAPH2.BUILD;
+            save(filename, 'el', 'build');
+            update_filename(filename);
+        end
+    end
+%     function cb_import_json(~,~)
+%         [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName  ' file location.']);
+%         if filterindex
+%             filename = fullfile(path, file);
+%             fid = fopen(filename);
+%             raw = fread(fid, inf);
+%             str = char(raw');
+%             fclose(fid);
+%             tmp_el = Element.decodeJSON(str);
+%             el = tmp_el;
+%             plot();
+%             update_filename(filename);
+%         end
+%     end
+%     function cb_export_json(~,~)
+%         [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+%         if filterindex
+%             filename = fullfile(path, file);
+%             [json, ~, ~] = encodeJSON(el);
+%             fid = fopen(filename, 'w');
+%             fprintf(fid, json);
+%             fclose(fid);
+%         end
+%     end
+    function cb_license(~, ~)
+        CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
@@ -92,8 +207,8 @@ menu()
             [BRAPH2.STR ' License'], ...
             CreateStruct)
     end
-    function about(~, ~)
-        CreateStruct.WindowStyle = 'modal';        
+    function cb_about(~, ~)
+        CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
         msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
@@ -116,9 +231,7 @@ toolbar()
 
         ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
 
-        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
+        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))        
         delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
@@ -130,7 +243,15 @@ toolbar()
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
         
         % Open
+        ui_toolbar_open = findall(ui_toolbar, 'Tag', 'Standard.FileOpen');
+        set(ui_toolbar_open, ...
+            'TooltipString', ['Open ' el.getName()], ...
+            'ClickedCallback', {@cb_open})
         % Save
+        ui_toolbar_save = findall(ui_toolbar, 'Tag', 'Standard.SaveFigure');
+        set(ui_toolbar_save, ...
+            'TooltipString', ['Save ' el.getName()], ...
+            'ClickedCallback', {@cb_save})
         
         % Copy
         % Clone
