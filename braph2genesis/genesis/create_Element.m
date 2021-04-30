@@ -142,8 +142,8 @@ txt = fileread(generator_file);
 disp('¡! generator file read')
 
 %% Analysis
-[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui] = analyze_header();
-    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui] = analyze_header()
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header();
+    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header()
         header = getToken(txt, 'header');
         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
         class_name = res.class_name;
@@ -159,6 +159,8 @@ disp('¡! generator file read')
         seealso = getToken(txt, 'header', 'seealso');        
 
         gui = splitlines(getToken(txt, 'header', 'gui'));
+        gui_import = splitlines(getToken(txt, 'header', 'gui', 'menu_importer'));        
+        gui_export = splitlines(getToken(txt, 'header', 'gui', 'menu_exporter'));
     end
 
 [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
@@ -1550,7 +1552,8 @@ generate_gui()
             return
         end
         g(1, 'methods % GUI')
-            if ~(numel(gui) == 1 && isempty(gui{1}))
+            if ~(numel(gui) == 1 && isempty(gui{1})) && ...
+                    any(cellfun(@(x) isempty(x), gui_import) || cellfun(@(x) isempty(x), gui_export))
                 g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
                 gs(3, {
                      '%GETPLOTELEMENT returns the element plot.'
@@ -1598,6 +1601,32 @@ generate_gui()
                             gs(5, {['pl = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
                     g(3, 'end')
                 g(2, 'end')                
+            end
+            if any(cellfun(@(x) ~isempty(x), gui_import) || cellfun(@(x) ~isempty(x), gui_export)) %#ok<SHOCIRAA>
+                g(2, ['function f_m = getGUIMenuImporter(' moniker ')'])
+                    gs(3, {
+                         '%getGUIMenuImporter returns a figure menu.'
+                         '%'
+                         '% f_m = getGUIMenuImporter(EL) returns the figure menus.'
+                         '%'
+                         '% See also getGUIMenuExporter.'
+                         ''
+                        })
+                    g(3, gui_import{1})
+                    g(3, '')
+                g(2, 'end')
+                g(2, ['function f_m = getGUIMenuExporter(' moniker ')'])
+                    gs(3, {
+                         '%getGUIMenuExporter returns a figure menu.'
+                         '%'
+                         '% f_m = getGUIMenuExporter(EL) returns the figure menus.'
+                         '%'
+                         '% See also getGUIMenuImporter.'
+                         ''
+                        })
+                        g(3, gui_export{1})
+                        g(3, '')
+                g(2, 'end')
             end
         g(1, 'end')
     end
