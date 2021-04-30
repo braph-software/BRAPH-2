@@ -22,8 +22,6 @@ end
 f_position = get_from_varargin([.02 .30 .30 .80], 'Position', varargin);
 
 BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
-OPEN_TP = el.getName();
-SAVE_TP = el.getName();
 
 %% Initialize GUI
 f = init();
@@ -237,12 +235,14 @@ toolbar()
         
         % Open
         ui_toolbar_open = findall(ui_toolbar, 'Tag', 'Standard.FileOpen');
-        set(ui_toolbar_open, 'TooltipString', OPEN_TP);
-        set(ui_toolbar_open, 'ClickedCallback', {@cb_open})
+        set(ui_toolbar_open, ...
+            'TooltipString', ['Open ' el.getName()], ...
+            'ClickedCallback', {@cb_open})
         % Save
         ui_toolbar_save = findall(ui_toolbar, 'Tag', 'Standard.SaveFigure');
-        set(ui_toolbar_save, 'TooltipString', SAVE_TP);
-        set(ui_toolbar_save, 'ClickedCallback', {@cb_save})
+        set(ui_toolbar_save, ...
+            'TooltipString', ['Save ' el.getName()], ...
+            'ClickedCallback', {@cb_save})
         
         % Copy
         % Clone
