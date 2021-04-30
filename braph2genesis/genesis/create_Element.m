@@ -48,9 +48,11 @@ function create_Element(generator_file, target_dir)
 %  Can be on multiple lines.
 %  Should return a Plot object in 'pl'
 %  <strong>%%% ¡menu_importer!</strong>
-%  Menu Importer of the GUI figure
+%  Menu Importer of the GUI figure.
+%  Should return a menu for figure f.
 %  <strong>%%% ¡menu_exporter!</strong>
 %  Menu Exporter of the GUI figure.
+%  Should return a menu for figure f.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
