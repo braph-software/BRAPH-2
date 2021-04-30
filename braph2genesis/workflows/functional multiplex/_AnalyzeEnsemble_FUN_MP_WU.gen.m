@@ -52,3 +52,45 @@ G_DICT (result, idict) is the graph (MultiplexWU) ensemble obtained from this an
 IndexedDictionary('IT_CLASS', 'MultiplexWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'MultiplexWU');
+
+gr = a.get('GR');
+T = a.get('REPETITION');
+fmin = a.get('FREQUENCYRULEMIN');
+fmax = a.get('FREQUENCYRULEMAX');
+for i = 1:1:gr.get('SUB_DICT').length()
+    A = cell(1, 2);
+	sub = gr.get('SUB_DICT').getItem(i);
+    FUN_MP = sub.getr('FUN_MP');
+    L = sub.get('L');
+    
+    for j = 1:1:L
+        data = FUN_MP{j};
+        fs = 1 / T;
+        
+        if fmax > fmin && T > 0
+            NFFT = 2 * ceil(size(data, 1) / 2);
+            ft = fft(data, NFFT);  % Fourier transform
+            f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+            ft(f < fmin | f > fmax, :) = 0;
+            data = ifft(ft, NFFT);
+        end
+        
+        A(j) = {Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
+    end
+    
+    g = MultiplexWU( ...
+        'ID', ['g ' sub.get('ID')], ...
+        'B', A ...
+        );
+    g_dict.add(g)
+end
+
+value = g_dict;
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡code!
+example_FUN_MP_WU
