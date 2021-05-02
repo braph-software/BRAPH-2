@@ -1714,7 +1714,23 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 'Label', 'Import JSON ...', ...
                 'Accelerator', 'I', ...
                 'Callback', {@cb_import_json})
-        
+            
+            if ismethod(el.getClass(), 'getGUIMenuImporter')
+                importers = el.getGUIMenuImporter();                
+                for k = 1:length(importers)
+                    imp = importers{k};
+                    uimenu(import_menu, ...
+                        'Label', imp, ...
+                        'Callback', {@cb_importers});
+                end
+            end
+            function cb_importers(hObject, ~)
+                object_name = hObject.Text;
+                imp_el = eval([object_name '()']);
+                imp_el.uigetfile();
+                f.el = imp_el.get(field);
+                f.plot();
+            end
             function cb_import_json(~,~)
                 [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
                 if filterindex
@@ -1742,7 +1758,21 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 'Label', 'Export JSON ...', ...
                 'Accelerator', 'E', ...
                 'Callback', {@cb_export_json})
-            
+            if ismethod(el.getClass(), 'getGUIMenuExporter')
+                exporters = el.getGUIMenuExporter();      
+                for k = 1:length(exporters)
+                    exp = exporters{k};
+                    uimenu(export_menu, ...
+                        'Label', exp, ...
+                        'Callback', {@cb_exporters});
+                end
+            end
+            function cb_exporters(hObject, ~)
+                object_name = hObject.Text;
+                exmp_el = eval([object_name '(' '''' field '''' ', el)']);
+                exmp_el.uiputfile();
+                exmp_el.get('SAVE');
+            end   
             function cb_export_json(~,~)
                 [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
                 if filterindex
