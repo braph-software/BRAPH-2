@@ -4,7 +4,7 @@ ImporterGroupSubjectFUNTXT < Importer (im, importer of FUN subject group from TX
 %%% ¡description!
 ImporterGroupSubjectFUNTXT imports a group of subjects with connectivity data from a series of TXT file and their covariates from another TXT file.
 All these files must be in the same folder; also, no other files should be in the folder.
-Each file contains a table with each row correspoding to a brain region and each column to a time.
+Each file contains a table with each row correspoding to a time serie and each column to a brain region.
 The TXT file containing the covariates must be inside another folder in the same directory 
 than file with data and consists of of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).

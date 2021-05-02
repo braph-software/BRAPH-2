@@ -46,7 +46,11 @@ function create_Element(generator_file, target_dir)
 % <strong>%%% ¡gui!</strong>
 %  GUI code to represent the panel of the element. 
 %  Can be on multiple lines.
-%  Should return a Plot object in 'pl'.
+%  Should return a Plot object in 'pl'
+%  <strong>%%% ¡menu_importer!</strong>
+%   Menu Import for the GUI figure. The menus is ui_menu_import.
+%  <strong>%%% ¡menu_exporter!</strong>
+%   Menu Export for the GUI figure. The menus is ui_menu_export.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
@@ -401,6 +405,8 @@ generate_header()
              '%  getGUI - returns figure with element GUI'
              '%  getPlotElement - returns the element plot'
              '%  getPlotProp - returns a prop plot'
+             '%  getGUIMenuImport - returns an import menu'
+             '%  getGUIMenuExport - returns an export menu'
             })
         if element_class_created
             gs(1, {'%', ['% ' class_name ' properties (Constant).']})
