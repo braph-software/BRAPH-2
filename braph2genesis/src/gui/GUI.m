@@ -1,4 +1,4 @@
-function GUI(el, varargin)
+function GUI(el, close_option, varargin)
 %GUI creates and displays GUI for an element.
 %
 % GUI(EL) creates and displays GUI for element EL.
@@ -19,6 +19,10 @@ else
     name = get_from_varargin(el.getClass(), 'Name', varargin);
 end
 
+if nargin < 2 
+    close_option = false;
+end
+
 f_position = get_from_varargin([.02 .30 .30 .80], 'Position', varargin);
 
 BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
@@ -35,9 +39,11 @@ f = init();
             'Units', 'character', ...
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
-            'Color', BKGCOLOR, ... 
-            'CloseRequestFcn', {@cb_close} ...
+            'Color', BKGCOLOR ...             
             );
+        if ~close_option
+            set(f, 'CloseRequestFcn', {@cb_close})
+        end
     end
     function cb_close(~, ~)
         selection = questdlg(['Do you want to close ' name '?'], ...
