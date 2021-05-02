@@ -1728,8 +1728,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 object_name = hObject.Text;
                 imp_el = eval([object_name '()']);
                 imp_el.uigetfile();
-                f.el = imp_el.get(field);
-                f.plot();
+                tmp_el = imp_el.get(field);
+                delete(gcf)
+                GUI(tmp_el)
             end
             function cb_import_json(~,~)
                 [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
@@ -1740,8 +1741,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     str = char(raw');
                     fclose(fid);
                     tmp_el = Element.decodeJSON(str);
-                    f.el = tmp_el;
-                    f.plot();
+                    delete(gcf)
+                    GUI(tmp_el)
                 end
             end
         end

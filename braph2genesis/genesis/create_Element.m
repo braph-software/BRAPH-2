@@ -1559,7 +1559,7 @@ generate_gui()
         end
         g(1, 'methods % GUI')
             if ~(numel(gui) == 1 && isempty(gui{1})) && ...
-                    any(cellfun(@(x) isempty(x), gui_import) || cellfun(@(x) isempty(x), gui_export))
+                    any(cellfun(@(x) isempty(x), gui_import) | cellfun(@(x) isempty(x), gui_export))
                 g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
                 gs(3, {
                      '%GETPLOTELEMENT returns the element plot.'
@@ -1614,12 +1614,12 @@ generate_gui()
                          '%getGUIMenuImporter returns a figure menu.'
                          '%'
                          '% [importers, tag] = getGUIMenuImporter(EL) returns the figure menus.'
-                         '%  The tag should be ' moniker '.'
+                         ['%  The tag should be ' moniker '.']
                          '%'
                          '% See also getGUIMenuExporter.'
                          ''
                         })
-                    gs(3, gui_import{1})
+                    gs(3, gui_import)
                     g(3, '')
                 g(2, 'end')
             end
@@ -1629,11 +1629,11 @@ generate_gui()
                          '%getGUIMenuExporter returns a figure menu.'
                          '%'
                          '% [exporters, tag] = getGUIMenuExporter(EL) returns the figure menus.'
-                         '%  The tag should be ' moniker '.'
+                         ['%  The tag should be ' moniker '.']
                          '% See also getGUIMenuImporter.'
                          ''
                         })
-                        gs(3, gui_export{1})
+                        gs(3, gui_export)
                         g(3, '')
                 g(2, 'end')
             end
