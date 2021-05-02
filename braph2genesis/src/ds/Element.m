@@ -1716,10 +1716,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 'Callback', {@cb_import_json})
             
             if ismethod(el.getClass(), 'getGUIMenuImporter')
-                importers = el.getGUIMenuImporter();                
+                [importers, field] = el.getGUIMenuImporter();                
                 for k = 1:length(importers)
                     imp = importers{k};
-                    uimenu(import_menu, ...
+                    uimenu(ui_menu_import, ...
                         'Label', imp, ...
                         'Callback', {@cb_importers});
                 end
@@ -1759,10 +1759,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 'Accelerator', 'E', ...
                 'Callback', {@cb_export_json})
             if ismethod(el.getClass(), 'getGUIMenuExporter')
-                exporters = el.getGUIMenuExporter();      
+                [exporters, field] = el.getGUIMenuExporter();      
                 for k = 1:length(exporters)
                     exp = exporters{k};
-                    uimenu(export_menu, ...
+                    uimenu(ui_menu_export, ...
                         'Label', exp, ...
                         'Callback', {@cb_exporters});
                 end

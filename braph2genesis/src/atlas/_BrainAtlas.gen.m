@@ -14,9 +14,11 @@ Element, BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT
 %%% ¡gui!
 %%%% ¡menu_importer!
 importers = {'ImportBrainAtlasTXT', 'ImportBrainAtlasXLS'};
+tag = 'ba';
 
 %%%% ¡menu_exporter!
 exporters = {'ExportBrainAtlasTXT', 'ExportBrainAtlasXLS'};
+tag = 'ba';
 
 %% ¡props!
 

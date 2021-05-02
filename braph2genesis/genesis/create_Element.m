@@ -1609,11 +1609,12 @@ generate_gui()
                 g(2, 'end')                
             end
             if any(cellfun(@(x) ~isempty(x), gui_import))
-                g(2, ['function f_m = getGUIMenuImporter(' moniker ')'])
+                g(2, ['function [importers, tag] = getGUIMenuImporter(' moniker ')'])
                     gs(3, {
                          '%getGUIMenuImporter returns a figure menu.'
                          '%'
-                         '% f_m = getGUIMenuImporter(EL) returns the figure menus.'
+                         '% [importers, tag] = getGUIMenuImporter(EL) returns the figure menus.'
+                         '%  The tag should be ' moniker '.'
                          '%'
                          '% See also getGUIMenuExporter.'
                          ''
@@ -1623,12 +1624,12 @@ generate_gui()
                 g(2, 'end')
             end
             if  any(cellfun(@(x) ~isempty(x), gui_export))
-                g(2, ['function f_m = getGUIMenuExporter(' moniker ')'])
+                g(2, ['function [exporters, tag] = getGUIMenuExporter(' moniker ')'])
                     gs(3, {
                          '%getGUIMenuExporter returns a figure menu.'
                          '%'
-                         '% f_m = getGUIMenuExporter(EL) returns the figure menus.'
-                         '%'
+                         '% [exporters, tag] = getGUIMenuExporter(EL) returns the figure menus.'
+                         '%  The tag should be ' moniker '.'
                          '% See also getGUIMenuImporter.'
                          ''
                         })
