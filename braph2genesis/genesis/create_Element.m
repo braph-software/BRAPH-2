@@ -22,8 +22,6 @@ function create_Element(generator_file, target_dir)
 %  Related functions and classes is a single line.
 %
 % Only for graphs:
-%  <strong>%%% ¡ensemble!</strong>
-%   Whether graph is ensemble graph (false or true).
 %  <strong>%%% ¡graph!</strong>
 %   Graph type (GRAPH, MULTIGRAPH, ORDERED_MULTIPLEX, MULTIPLEX, ORDERED_MULTILAYER, MULTILAYER).
 %  <strong>%%% ¡connectivity!</strong>
@@ -48,7 +46,11 @@ function create_Element(generator_file, target_dir)
 % <strong>%%% ¡gui!</strong>
 %  GUI code to represent the panel of the element. 
 %  Can be on multiple lines.
-%  Should return a Plot object in 'pl'.
+%  Should return a Plot object in 'pl'
+%  <strong>%%% ¡menu_importer!</strong>
+%   Menu Import for the GUI figure. The menus is ui_menu_import.
+%  <strong>%%% ¡menu_exporter!</strong>
+%   Menu Export for the GUI figure. The menus is ui_menu_export.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
@@ -163,9 +165,8 @@ disp('¡! generator file read')
         gui = splitlines(getToken(txt, 'header', 'gui'));
     end
 
-[ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
-    function [ensemble, graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph()
-        ensemble = getToken(txt, 'header', 'ensemble');
+[graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
+    function [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph()
         graph = getToken(txt, 'header', 'graph');
         connectivity = splitlines(getToken(txt, 'header', 'connectivity'));
         directionality = splitlines(getToken(txt, 'header', 'directionality'));
@@ -272,9 +273,6 @@ generate_header()
              '%'
             })
         gs(1, cellfun(@(x) ['% ' x], description, 'UniformOutput', false))
-        if element_class_created
-% element-specific constants
-        end       
         gs(1, {
              '%'
             ['% The list of ' class_name ' properties is:']
@@ -286,15 +284,53 @@ generate_header()
             ['%  ' class_name ' - constructor']
             })
         if element_class_created
-% class-specific methods
-% m = methods('Element')
-% m = methods('Element', '-full')
-% txt = help('Plot.set')
-% class-specific static methods
+            gs(1, {'%', ['% ' class_name ' methods (Static):']})
+            metaclass = eval(['?' class_name]);
+            method_list = metaclass.MethodList;
+            for i = 1:1:length(method_list)
+                method = method_list(i);
+                definingclass = method.DefiningClass.Name;
+                if all(~strcmp(definingclass, {'handle', 'matlab.mixin.Copyable', 'Category', 'Format', 'Element'})) ...
+                        && ~strcmp(definingclass, method.Name) ...
+                        && strcmp(method.Access, 'public') ...
+                        && method.Static
+
+                    help_txt = eval(['help(''' class_name '.' method.Name ''')']);
+                    help_txt = splitlines(help_txt);
+                    help_txt = help_txt{1};
+                    if ~strcmp(method.Name, 'empty')
+                        help_txt = strtrim(help_txt(length(method.Name) + 2:end));
+                        g(1, ['%  ' method.Name ' - ' help_txt])
+                    end
+                end
+            end
         end
         gs(1, {
              '%'
             ['% ' class_name ' methods:']
+            })
+        if element_class_created
+            metaclass = eval(['?' class_name]);
+            method_list = metaclass.MethodList;
+            for i = 1:1:length(method_list)
+                method = method_list(i);
+                definingclass = method.DefiningClass.Name;
+                if all(~strcmp(definingclass, {'handle', 'matlab.mixin.Copyable', 'Category', 'Format', 'Element'})) ...
+                        && ~strcmp(definingclass, method.Name) ...
+                        && strcmp(method.Access, 'public') ...
+                        && ~method.Static
+
+                    help_txt = eval(['help(''' class_name '.' method.Name ''')']);
+                    help_txt = splitlines(help_txt);
+                    help_txt = help_txt{1};
+                    if ~strcmp(method.Name, 'empty')
+                        help_txt = strtrim(help_txt(length(method.Name) + 2:end));
+                        g(1, ['%  ' method.Name ' - ' help_txt])
+                    end
+                end
+            end
+        end
+        gs(1, {
              '%  set - sets the value of a property'
              '%  check - checks the values of all properties'
              '%  getr - returns the raw value of a property'
@@ -326,6 +362,7 @@ generate_header()
              '%'
             ['% ' class_name ' methods (copy):']
             ['%  copy - copies the ' class_name]
+            ['%  deepclone - deep-clones the ' class_name]
             ['%  clone - clones the ' class_name]
             '%'
             ['% ' class_name ' methods (inspection, Static):']
@@ -366,7 +403,20 @@ generate_header()
              '%  getGUI - returns figure with element GUI'
              '%  getPlotElement - returns the element plot'
              '%  getPlotProp - returns a prop plot'
+             '%  getGUIMenuImport - returns an import menu'
+             '%  getGUIMenuExport - returns an export menu'
             })
+        if element_class_created
+            gs(1, {'%', ['% ' class_name ' properties (Constant).']})
+            metaclass = eval(['?' class_name]);
+            property_list = metaclass.PropertyList;
+            for i = 1:1:length(property_list)
+                property = property_list(i);
+                if property.Constant
+                    g(1, ['%  ' property.Name ' - ' tostring(property.DefaultValue)])
+                end
+            end
+        end
         if ~isempty(seealso)
             gs(1, {
                  '%'
@@ -1113,39 +1163,12 @@ generate_header_graph() % only for graphs
             '\tlayernumber = varargin{1};'
             'end'
             ''};
-        if ~isempty(ensemble) || ...
-                ~isempty(graph) || ...
+        if ~isempty(graph) || ...
                 ~(numel(connectivity) == 1 && isempty(connectivity{1})) || ...
                 ~(numel(directionality) == 1 && isempty(directionality{1})) || ...
                 ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1})) || ...
                 ~(numel(negativity) == 1 && isempty(negativity{1}))
             g(1, 'methods (Static) %% graph methods')
-                if ~isempty(ensemble)
-                    g(2, 'function bool = is_ensemble()')
-                        if element_class_created
-                            if Graph.is_ensemble(class_name)
-                                gs(3, {
-                                     '%IS_ENSEMBLE returns true.'
-                                     '%'
-                                    ['% TRUE = ' class_name '.IS_ENSEMBLE() returns true because ' descriptive_name ' is an ensemble of graphs.']
-                                     '%'
-                                     '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
-                                     ''
-                                    })
-                            else
-                                gs(3, {
-                                     '%IS_ENSEMBLE returns false.'
-                                     '%'
-                                    ['% FALSE = ' class_name '.IS_ENSEMBLE() returns false because ' descriptive_name ' is not an ensemble of graphs.']
-                                     '%'
-                                     '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
-                                     ''
-                                    })
-                            end
-                        end
-                        g(3, ['bool = ' ensemble ';'])
-                    g(2, 'end')
-                end
                 if ~isempty(graph)
                     g(2, 'function graph = getGraphType()')
                         if element_class_created
@@ -1157,7 +1180,7 @@ generate_header_graph() % only for graphs
                                  '%'
                                 ['% ' int2str(graph_type) ' = ' class_name '.GETGRAPHTYPE() returns the type of graph (' graph_type_name ').']
                                  '%'
-                                 '% See also is_ensemble, getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+                                 '% See also getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
                                  ''
                                 })
                         end                    
@@ -1178,7 +1201,7 @@ generate_header_graph() % only for graphs
                                 ['% ' int2str(graph_connectivity) ' = ' class_name '.GETCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix with the ']
                                  '%  connectivity type of each layer in a multiple layer graph.'
                                  '%'
-                                '% See also is_ensemble, getGraphType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+                                '% See also getGraphType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
                                 ''
                                 })
                         end
@@ -1201,7 +1224,7 @@ generate_header_graph() % only for graphs
                                 ['% ' int2str(graph_directionality) ' = ' class_name '.GETDIRECTIONALITYTYPE(LAYERNUMBER) returns a matrix with ']
                                  '%  the directionality type of each layer.'
                                  '%'
-                                 '% See also is_ensemble, getGraphType, getConnectivityType, getSelfConnectivityType, getNegativityType.'
+                                 '% See also getGraphType, getConnectivityType, getSelfConnectivityType, getNegativityType.'
                                  ''
                                 })    
                         end
@@ -1223,7 +1246,7 @@ generate_header_graph() % only for graphs
                                 ['% ' int2str(graph_selfconnectivity) ' = ' class_name '.GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix ']
                                  '%  with the self-connectivity type of each layer.'
                                  '%'
-                                 '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
+                                 '% See also getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
                                  ''
                                 })
                         end
@@ -1245,7 +1268,7 @@ generate_header_graph() % only for graphs
                                 ['% ' int2str(graph_negativity) ' = ' class_name '.GETNEGATIVITYTYPE(LAYERNUMBER) returns a matrix ']
                                  '%  with the negativity type of each layer.'
                                  '%'
-                                 '% See also is_ensemble, getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType.'
+                                 '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType.'
                                  ''
                                 })
                         end

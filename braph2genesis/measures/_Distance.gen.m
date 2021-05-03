@@ -17,18 +17,16 @@ parametricity = Measure.NONPARAMETRIC;
 %%% ¡compatible_graphs!
 GraphBD
 GraphBU
-GraphWD
-GraphWU
 MultigraphBUD
 MultigraphBUT
+GraphWD
+GraphWU
 MultiplexBD
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWD
 MultiplexWU
-
-%% ¡props!
-%%% ¡prop! 
-EDGESNUMBER (DATA, CELL) is a cell of the number of edges matrix
 
 %% ¡props_update!
 
@@ -66,7 +64,6 @@ function weighted_distance = getWeightedCalculation(m, A)
     n = length(A);
     D = inf(n);
     D(1:n+1:end) = 0; % distance matrix
-    B = zeros(n); % number of edges matrix
 
     for u = 1:n
         S = true(1, n); % distance permanence (true is temporary)
@@ -82,7 +79,6 @@ function weighted_distance = getWeightedCalculation(m, A)
                 [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
                 D(u, T) = d; % smallest of old/new path lengths
                 ind = T(wi==2); % indices of lengthened paths
-                B(u, ind) = B(u, v) + 1; % increment no. of edges in lengthened paths
             end
 
             minD = min(D(u, S));
@@ -93,10 +89,6 @@ function weighted_distance = getWeightedCalculation(m, A)
             V = find(D(u,:)==minD);
         end
     end
-    % m.B = B;
-    cell_B = m.get('EDGESNUMBER');
-    cell_B{end+1} = B;
-    m.set('EDGESNUMBER', cell_B);
     weighted_distance = D;
 end
 function binary_distance = getBinaryCalculation(m, A)
@@ -293,7 +285,6 @@ m_inside_g = g.getMeasure('Distance');
 assert(isequal(m_inside_g.get('M'), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.BUG_ERR], ...
     'Distance is not being calculated correctly for MultigraphBUT.')
-
 
 %%% ¡test!
 %%%% ¡name!

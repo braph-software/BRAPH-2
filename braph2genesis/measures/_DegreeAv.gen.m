@@ -22,6 +22,8 @@ MultigraphBUD
 MultigraphBUT
 MultiplexWU
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 
 %% ¡props_update!
 

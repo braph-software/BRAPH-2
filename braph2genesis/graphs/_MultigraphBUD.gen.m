@@ -8,9 +8,6 @@ derived from the same weighted connectivity matrix
 binarized at different densities.
 There are no connections between layers.
 
-%%% ¡ensemble!
-false
-
 %%% ¡graph!
 graph = Graph.MULTIGRAPH;
 
@@ -47,6 +44,21 @@ for i = 1:1:length(densities)
 end
 
 value = A;
+
+%% ¡methods!
+function [l, ls] = layernumber(g)
+    %LAYERNUMBER returns the number of layers in the graph.
+    %
+    % L = LAYERNUMBER(G) returns the number of layers in graph G. L is a scalar.
+    %
+    % [~, LS] = LAYERNUMBER(G) returns the number of layers in the partitions
+    %  of graph G. LS is a vector of integers.
+    %
+    % See also nodenumber.
+
+    l = length(g.get('A'));
+    ls = ones(1, l);
+end
 
 %% ¡tests!
 
