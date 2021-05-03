@@ -69,7 +69,12 @@ plot()
         end
         
         pl = el.getPlotElement();
-        pl.draw('Parent', el_panel)
+        position = get_from_varargin([], 'Postion', varargin{:});
+        if ~isempty(position)
+            pl.draw('Parent', el_panel, 'Position', position);
+        else
+            pl.draw('Parent', el_panel);
+        end
     end
 
 %% Text File Name

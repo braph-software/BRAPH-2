@@ -122,8 +122,12 @@ function h_panel = draw(pl, varargin)
             pl.update()
         end
         function cb_table_get_subject(~, ~)  % (src, event)
+            if isempty(index)
+                index = get(pl.table_value_idict, 'Value');
+            end
             subject = subjects_idict.getItem(index);
-            GUI(subject, true);
+            [~, norm] = get_figure_position();
+            GUI(subject, true, 'Position', [norm(1)+.05 norm(2) norm(3) norm(4)]);
         end
         function cb_table_add(~, ~)  % (src, event)
             checkIdict();
@@ -163,7 +167,7 @@ function h_panel = draw(pl, varargin)
             pl.selected = subjects_idict.move_to_bottom(index);
             pl.update();           
         end
-        function checkIdict() 
+        function checkIdict()
             if isa(subjects_idict, 'NoValue')
                 subjects_idict = IndexedDictionary( ...
                     'id', 'idict', ...
@@ -172,6 +176,22 @@ function h_panel = draw(pl, varargin)
                     );
                 el.set('SUB_DICT', subjects_idict);
             end
+        end
+        function obj = getGUIFigureObj()
+            figHandles = findobj('Type', 'figure');
+            for i = 1:1:length(figHandles)
+                fig_h = figHandles(i);
+                if contains(fig_h.Name, 'Group - ')
+                    obj = fig_h;
+                end
+            end
+        end
+        function [pixels, normalized] = get_figure_position()
+            fig_h = getGUIFigureObj();
+            set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+            pixels = getpixelposition(fig_h);
+            normalized = get(fig_h, 'Position');
+            set(fig_h, 'Units', 'characters'); % go back
         end
 
     % output
