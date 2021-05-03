@@ -70,11 +70,13 @@ function h_panel = draw(pl, varargin)
             elseif h == screen_size(4)
                 y2 = normalized(2);
                 h2 = normalized(4)/2;
-            else
+            else % golden ratio 
+                % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
                 x2 = normalized(1)+normalized(3);
-                y2 = (normalized(4) / 2) + normalized(2);
-                w2 = normalized(3);
-                h2 = normalized(4) / 2;
+                h2 = normalized(4) / 1.61;
+                y2 = normalized(2) + h2 -.195;
+                w2 = normalized(3)*1.61;
+               
             end
             
             second_figure =  figure( ...
@@ -114,7 +116,7 @@ function h_panel = draw(pl, varargin)
                 );
 
             plba.draw('Parent', second_figure);
-            plba.set('SETPOS', [x2 normalized(2) w2 h2*.835]);
+            plba.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.07]); % height has to be correcter for the toolbar and menu
             plba.settings();
             set(pl.plot_brain_atlas_btn, 'Enable', 'off');
         end
