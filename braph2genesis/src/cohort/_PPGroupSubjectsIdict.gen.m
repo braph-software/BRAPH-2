@@ -135,10 +135,11 @@ function h_panel = draw(pl, varargin)
             while subjects_idict.containsKey(num2str(sub_id))
                 sub_id = sub_id + 1;
             end
-            % must change since we dont have Subject subclass
-            sub = Subject('ID', num2str(sub_id), ...
-                'Label', '', ...
-                'Notes', '');
+            % lock subject_class
+            if ~el.isLocked('SUB_CLASS')
+                el.lock('SUB_CLASS');
+            end            
+            sub = eval([subject_class '('  '''ID''' ', ' '''' num2str(sub_id) '''' ',' '''Label''' ',' '''''' ',' '''Notes''' ',' '''''' ')']);
             subjects_idict.add(sub);
             pl.update();
         end
@@ -227,7 +228,8 @@ function update(pl)
 
         set(pl.table_value_idict, ...
             'String', data, ...
-            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
+            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+            'Value', 1 ...
             )
 
     end
