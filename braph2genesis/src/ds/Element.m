@@ -89,8 +89,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
     %  getPlotProp - returns a prop plot
-    %  getGUIMenuImport - returns a base import menu
-    %  getGUIMenuExport - returns a base export menu
+    %  getGUIMenuImport - returns a basic import menu
+    %  getGUIMenuExport - returns a basic export menu
     %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
