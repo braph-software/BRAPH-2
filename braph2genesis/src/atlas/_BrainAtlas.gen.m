@@ -21,9 +21,9 @@ for k = 1:length(importers_names)
         'Callback', {@cb_importers});
 end
 
-function cb_importers(hObject, ~)
-    object_name = hObject.Text;
-    imp_el = eval([object_name '()']);
+function cb_importers(src, ~)
+    src_name = src.Text;
+    imp_el = eval([src_name '()']);
     imp_el.uigetfile();
     tmp_el = imp_el.get('BA');
     delete(gcf)
@@ -38,9 +38,9 @@ for k = 1:length(exporters_names)
         'Label', exp, ...
         'Callback', {@cb_exporters});
 end
-function cb_exporters(hObject, ~)
-    object_name = hObject.Text;
-    exmp_el = eval([object_name '(' ''' BA ''' ', el)']);
+function cb_exporters(src, ~)
+    src_name = src.Text;
+    exmp_el = eval([src_name '(' ''' BA ''' ', el)']);
     exmp_el.uiputfile();
     exmp_el.get('SAVE');
 end
