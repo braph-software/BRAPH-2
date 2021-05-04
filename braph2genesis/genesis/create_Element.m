@@ -146,8 +146,8 @@ txt = fileread(generator_file);
 disp('¡! generator file read')
 
 %% Analysis
-[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui] = analyze_header();
-    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui] = analyze_header()
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header();
+    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header()
         header = getToken(txt, 'header');
         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
         class_name = res.class_name;
@@ -163,6 +163,8 @@ disp('¡! generator file read')
         seealso = getToken(txt, 'header', 'seealso');        
 
         gui = splitlines(getToken(txt, 'header', 'gui'));
+        gui_import = splitlines(getToken(txt, 'header', 'gui', 'menu_importer'));        
+        gui_export = splitlines(getToken(txt, 'header', 'gui', 'menu_exporter'));
     end
 
 [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
@@ -1556,7 +1558,9 @@ generate_gui()
             return
         end
         g(1, 'methods % GUI')
-            if ~(numel(gui) == 1 && isempty(gui{1}))
+            if ~(numel(gui) == 1 && isempty(gui{1})) && ...
+                    any(cellfun(@(x) isempty(x), gui_import)) && ...
+                    any(cellfun(@(x) isempty(x), gui_export))
                 g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
                 gs(3, {
                      '%GETPLOTELEMENT returns the element plot.'
@@ -1573,37 +1577,67 @@ generate_gui()
             end
             if any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
                 g(2, ['function pl = getPlotProp(' moniker ', prop, varargin)'])
-                    gs(3, {
-                         '%GETPLOTPROP returns a prop plot.'
-                         '%'
-                         '% PL = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.'
-                         '%'
-                         '% PL = GETPLOTPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
-                         '%'
-                         '% See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,'
-                         '%  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,'
-                         '%  PlotPropMatrix, PlotPropOption, PlotPropScalar, PlotPropString.'
-                         ''
-                        })
-                    g(3, 'switch prop')
-                        for i = 1:1:numel(props)
-                            if numel(props{i}.gui) > 1 || ~isempty(props{i}.gui{1})
-                                g(4, ['case ' class_name '.' props{i}.TAG])
-                                    gs(5, props{i}.gui)
-                                    g(5, '')
-                            end
-                        end
-                        for i = 1:1:numel(props_update)
-                            if numel(props_update{i}.gui) > 1 || ~isempty(props_update{i}.gui{1})
-                                g(4, ['case ' class_name '.' props_update{i}.TAG])
-                                    gs(5, props_update{i}.gui)
-                                    g(5, '')
-                            end
-                        end
-                        g(4, 'otherwise')
-                            gs(5, {['pl = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
-                    g(3, 'end')
-                g(2, 'end')                
+                gs(3, {
+                    '%GETPLOTPROP returns a prop plot.'
+                    '%'
+                    '% PL = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.'
+                    '%'
+                    '% PL = GETPLOTPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
+                    '%'
+                    '% See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,'
+                    '%  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,'
+                    '%  PlotPropMatrix, PlotPropOption, PlotPropScalar, PlotPropString.'
+                    ''
+                    })
+                g(3, 'switch prop')
+                for i = 1:1:numel(props)
+                    if numel(props{i}.gui) > 1 || ~isempty(props{i}.gui{1})
+                        g(4, ['case ' class_name '.' props{i}.TAG])
+                        gs(5, props{i}.gui)
+                        g(5, '')
+                    end
+                end
+                for i = 1:1:numel(props_update)
+                    if numel(props_update{i}.gui) > 1 || ~isempty(props_update{i}.gui{1})
+                        g(4, ['case ' class_name '.' props_update{i}.TAG])
+                        gs(5, props_update{i}.gui)
+                        g(5, '')
+                    end
+                end
+                g(4, 'otherwise')
+                gs(5, {['pl = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
+                g(3, 'end')
+                g(2, 'end')
+            end
+            if any(cellfun(@(x) ~isempty(x), gui_import))
+                g(2, ['function ui_menu_import = getGUIMenuImport(' moniker ', f)'])
+                gs(3, {
+                    '%GETGUIMENUIMPORT returns a figure menu.'
+                    '%'
+                    '% menu_import = GETGUIMENUIMPORT(EL) returns the figure menus.'
+                    '%'
+                    '% See also getGUIMenuExporter.'
+                    ''
+                    ['ui_menu_import = getGUIMenuImport@Element(' moniker ', f);']
+                    })
+                gs(3, gui_import)
+                g(3, '')
+                g(2, 'end')
+            end
+            if  any(cellfun(@(x) ~isempty(x), gui_export))
+                g(2, ['function ui_menu_export = getGUIMenuExport(' moniker ', f)'])
+                gs(3, {
+                    '%GETGUIMENUEXPORT returns a figure menu.'
+                    '%'
+                    '% [exporters, tag] = getGUIMenuExporter(EL) returns the figure menus.'
+                    '%'
+                    '% See also getGUIMenuImporter.'
+                    ''
+                    ['ui_menu_export = getGUIMenuExport@Element(' moniker ', f);']
+                    })
+                gs(3, gui_export)
+                g(3, '')
+                g(2, 'end')
             end
         g(1, 'end')
     end
