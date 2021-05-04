@@ -1619,6 +1619,7 @@ generate_gui()
                     '% See also getGUIMenuExporter.'
                     ''
                     ['ui_menu_import = getGUIMenuImport@Element(' moniker ', f);']
+                    ''
                     })
                 gs(3, gui_import)
                 g(3, '')
@@ -1634,6 +1635,7 @@ generate_gui()
                     '% See also getGUIMenuImporter.'
                     ''
                     ['ui_menu_export = getGUIMenuExport@Element(' moniker ', f);']
+                    ''
                     })
                 gs(3, gui_export)
                 g(3, '')
