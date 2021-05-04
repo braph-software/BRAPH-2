@@ -13,12 +13,38 @@ Element, BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT
 
 %%% ¡gui!
 %%%% ¡menu_importer!
-importers = {'ImporterBrainAtlasTXT', 'ImporterBrainAtlasXLS'};
-tag = 'ba';
+importers_names = {'ImporterBrainAtlasTXT', 'ImporterBrainAtlasXLS'};
+
+for k = 1:length(importers_names)
+    imp = importers_names{k};
+    uimenu(ui_menu_import, ...
+        'Label', imp, ...
+        'Callback', {@cb_importers});
+end
+
+function cb_importers(hObject, ~)
+    object_name = hObject.Text;
+    imp_el = eval([object_name '()']);
+    imp_el.uigetfile();
+    tmp_el = imp_el.get('BA');
+    delete(gcf)
+    GUI(tmp_el)
+end
 
 %%%% ¡menu_exporter!
-exporters = {'ExporterBrainAtlasTXT', 'ExporterBrainAtlasXLS'};
-tag = 'ba';
+exporters_names = {'ExporterBrainAtlasTXT', 'ExporterBrainAtlasXLS'};
+for k = 1:length(exporters_names)
+    exp = exporters_names{k};
+    uimenu(ui_menu_export, ...
+        'Label', exp, ...
+        'Callback', {@cb_exporters});
+end
+function cb_exporters(hObject, ~)
+    object_name = hObject.Text;
+    exmp_el = eval([object_name '(' ''' BA ''' ', el)']);
+    exmp_el.uiputfile();
+    exmp_el.get('SAVE');
+end
 
 %% ¡props!
 

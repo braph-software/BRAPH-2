@@ -89,8 +89,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
     %  getPlotProp - returns a prop plot
-    %  getGUIMenuImport - returns an import menu
-    %  getGUIMenuExport - returns an export menu
+    %  getGUIMenuImport - returns a base import menu
+    %  getGUIMenuExport - returns a base export menu
     %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
@@ -1712,26 +1712,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             ui_menu_import = uimenu(f, 'Label', 'Import');
             uimenu(ui_menu_import, ...
                 'Label', 'Import JSON ...', ...
-                'Accelerator', 'I', ...
                 'Callback', {@cb_import_json})
             
-            if ismethod(el.getClass(), 'getGUIMenuImporter')
-                [importers, field] = el.getGUIMenuImporter();                
-                for k = 1:length(importers)
-                    imp = importers{k};
-                    uimenu(ui_menu_import, ...
-                        'Label', imp, ...
-                        'Callback', {@cb_importers});
-                end
-            end
-            function cb_importers(hObject, ~)
-                object_name = hObject.Text;
-                imp_el = eval([object_name '()']);
-                imp_el.uigetfile();
-                tmp_el = imp_el.get(field);
-                delete(gcf)
-                GUI(tmp_el)
-            end
             function cb_import_json(~,~)
                 [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
                 if filterindex
@@ -1757,23 +1739,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             ui_menu_export = uimenu(f, 'Label', 'Export');
             uimenu(ui_menu_export, ...
                 'Label', 'Export JSON ...', ...
-                'Accelerator', 'E', ...
                 'Callback', {@cb_export_json})
-            if ismethod(el.getClass(), 'getGUIMenuExporter')
-                [exporters, field] = el.getGUIMenuExporter();      
-                for k = 1:length(exporters)
-                    exp = exporters{k};
-                    uimenu(ui_menu_export, ...
-                        'Label', exp, ...
-                        'Callback', {@cb_exporters});
-                end
-            end
-            function cb_exporters(hObject, ~)
-                object_name = hObject.Text;
-                exmp_el = eval([object_name '(' '''' field '''' ', el)']);
-                exmp_el.uiputfile();
-                exmp_el.get('SAVE');
-            end   
+              
             function cb_export_json(~,~)
                 [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
                 if filterindex
@@ -1783,8 +1750,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     fprintf(fid, json);
                     fclose(fid);
                 end
-            end
-            
+            end            
         end
     end
 end

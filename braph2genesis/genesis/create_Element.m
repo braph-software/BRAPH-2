@@ -1559,7 +1559,8 @@ generate_gui()
         end
         g(1, 'methods % GUI')
             if ~(numel(gui) == 1 && isempty(gui{1})) && ...
-                    any(cellfun(@(x) isempty(x), gui_import) | cellfun(@(x) isempty(x), gui_export))
+                    any(cellfun(@(x) isempty(x), gui_import)) && ...
+                    any(cellfun(@(x) isempty(x), gui_export))
                 g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
                 gs(3, {
                      '%GETPLOTELEMENT returns the element plot.'
@@ -1609,29 +1610,30 @@ generate_gui()
                 g(2, 'end')                
             end
             if any(cellfun(@(x) ~isempty(x), gui_import))
-                g(2, ['function [importers, tag] = getGUIMenuImporter(' moniker ')'])
+                g(2, ['function ui_menu_import = getGUIMenuImport(' moniker ', f)'])
                     gs(3, {
-                         '%getGUIMenuImporter returns a figure menu.'
+                         '%GETGUIMENUIMPORT returns a figure menu.'
                          '%'
-                         '% [importers, tag] = getGUIMenuImporter(EL) returns the figure menus.'
-                         ['%  The tag should be ' moniker '.']
+                         '% menu_import = GETGUIMENUIMPORT(EL) returns the figure menus.'
                          '%'
                          '% See also getGUIMenuExporter.'
                          ''
+                         ['ui_menu_import = getGUIMenuImport@Element(' moniker ', f);']
                         })
                     gs(3, gui_import)
                     g(3, '')
                 g(2, 'end')
             end
             if  any(cellfun(@(x) ~isempty(x), gui_export))
-                g(2, ['function [exporters, tag] = getGUIMenuExporter(' moniker ')'])
+                g(2, ['function ui_menu_export = getGUIMenuExport(' moniker ', f)'])
                     gs(3, {
-                         '%getGUIMenuExporter returns a figure menu.'
+                         '%GETGUIMENUEXPORT returns a figure menu.'
                          '%'
                          '% [exporters, tag] = getGUIMenuExporter(EL) returns the figure menus.'
-                         ['%  The tag should be ' moniker '.']
+                         '%'
                          '% See also getGUIMenuImporter.'
                          ''
+                         ['ui_menu_export = getGUIMenuExport@Element(' moniker ', f);']
                         })
                         gs(3, gui_export)
                         g(3, '')
