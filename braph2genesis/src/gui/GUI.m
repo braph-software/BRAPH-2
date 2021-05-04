@@ -40,6 +40,13 @@ f = init();
             'DockControls', 'off', ...
             'Color', BKGCOLOR ...             
             );
+        
+        warning('off')
+        javaFrame    = get(f, 'JavaFrame'); %#ok<JAVFM>
+        iconFilePath = [fileparts(which('braph2')) filesep 'src' filesep 'util' filesep 'icon_brain.png'];
+        javaFrame.setFigureIcon(javax.swing.ImageIcon(iconFilePath));
+        warning('on')
+        
         if close_request
             set(f, 'CloseRequestFcn', {@cb_close})
         end
