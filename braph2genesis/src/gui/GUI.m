@@ -3,9 +3,10 @@ function GUI(el, varargin)
 %
 % GUI(EL) creates and displays GUI for element EL.
 %
-% GUI(EL, 'Name', NAME, 'Position', POSITION, 'BackgroundColor',
-%  BACKGROUNDCOLOR) sets the GUI name, position, and background color. All
-%  these settings are optional and can be in any order.
+% GUI(EL, 'CloseRequest', CLOSE_REQUEST, 'Name', NAME, 'Position', 
+%  POSITION, 'BackgroundColor', BACKGROUNDCOLOR) sets the GUI close request, 
+%  name, position, and background color. All these settings are optional 
+%  and can be in any order.
 %
 % See also Element.
 
@@ -19,7 +20,7 @@ else
     name = get_from_varargin(el.getClass(), 'Name', varargin);
 end
 
-close_request = get_from_varargin(true, 'CloseRequest', varargin{:});
+close_request = get_from_varargin(true, 'CloseRequest', varargin);
 
 f_position = get_from_varargin([.02 .30 .30 .80], 'Position', varargin);
 
