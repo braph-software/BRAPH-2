@@ -119,7 +119,6 @@ function h_panel = draw(pl, varargin)
     % callbacks
         function cb_table_idict_value(~, ~)
             index = get(pl.table_value_idict, 'Value');
-            pl.update()
         end
         function cb_table_get_subject(~, ~)  % (src, event)
             if isempty(index)
@@ -135,10 +134,13 @@ function h_panel = draw(pl, varargin)
             while subjects_idict.containsKey(num2str(sub_id))
                 sub_id = sub_id + 1;
             end
-            % must change since we dont have Subject subclass
-            sub = Subject('ID', num2str(sub_id), ...
-                'Label', '', ...
-                'Notes', '');
+            % lock subject_class
+            subject_class = el.getr('SUB_CLASS');
+            if ~el.isLocked('SUB_CLASS')
+                el.lock('SUB_CLASS');
+                disableSubClassObj()
+            end
+            sub = eval([subject_class '('  '''ID''' ', ' '''' num2str(sub_id) '''' ',' '''Label''' ',' '''''' ',' '''Notes''' ',' '''''' ')']);
             subjects_idict.add(sub);
             pl.update();
         end
@@ -193,6 +195,17 @@ function h_panel = draw(pl, varargin)
             normalized = get(fig_h, 'Position');
             set(fig_h, 'Units', 'characters'); % go back
         end
+        function  disableSubClassObj()
+            control_handles = findobj('Type', 'UIControl');
+            for j = 1:length(control_handles)
+                ctrl_h = control_handles(j);
+                if contains(ctrl_h.String, 'SUB_CLASS')
+                    set(ctrl_h, 'Enable', 'off');
+                    ctrl_slider = control_handles(j-2);
+                    set(ctrl_slider, 'Enable', 'off');
+                end
+            end
+        end
 
     % output
     if nargout > 0
@@ -227,7 +240,8 @@ function update(pl)
 
         set(pl.table_value_idict, ...
             'String', data, ...
-            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
+            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+            'Value', 1 ...
             )
 
     end
