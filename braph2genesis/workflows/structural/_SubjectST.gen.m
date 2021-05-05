@@ -26,7 +26,7 @@ else
     msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-PPSubjectData('EL', sub, 'PROP', SubjectST.ST, varargin{:});
+pl = PPSubjectData('EL', sub, 'PROP', SubjectST.ST, varargin{:});
 
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
