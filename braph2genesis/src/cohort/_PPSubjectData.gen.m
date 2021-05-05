@@ -30,33 +30,33 @@ function h_panel = draw(pl, varargin)
 
     el = pl.get('EL');
     prop = pl.get('PROP');
-    sub_data = el.getr(prop);   
-    sub_data_format = el.getPropFormat(prop);
-    sub_data_tag = el.getPropTag(prop);
-    sub_ba = el.getr('BA'); 
+    sub_data = el.get(prop);
+    sub_br_dict = el.get('BA').get('BR_DICT');
 
     pl.pp = draw@PlotProp(pl, varargin{:});
+    
+    if isequal(el.getPropTag(prop), 'ST')
+        sub_data = sub_data';
+    end
 
     if isempty(pl.table_values) || ~isgraphics(pl.table_values, 'uitable')
         % construct a data holder
-        value_subject_data = sub_data;
-        br_idict = sub_ba.getr('BR_DICT');
-        brs_labels = cellfun(@(x) x.get('Label'), br_idict.getItems());
-
+        
         pl.table_values = uitable();
         set( pl.table_values, ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .96 .7], ...
-            'ColumnName', brs_labels, ...
             'ColumnFormat', {'numeric'}, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
             'ColumnEditable', true, ...
             'CellEditCallback', {@cb_table_values} ...
             );
-
-        if ~isequal(value_subject_data, NoValue)            
-            set(pl.table_values, 'Data', value_subject_data);
+        
+        if ~isempty(sub_data)
+            brs_labels = cellfun(@(x) x.get('Label'), sub_br_dict.getItems());
+            set(pl.table_values, 'ColumnName', brs_labels)
+            set(pl.table_values, 'Data', sub_data);
             set(pl.table_values, 'ColumnWidth', 'auto')
         end
     end
@@ -88,7 +88,10 @@ function update(pl)
     prop = pl.get('PROP');
 
     value = el.getr(prop);
-
+    
+    if isequal(el.getPropTag(prop), 'ST')
+        value = value';
+    end
 
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         %
@@ -98,10 +101,12 @@ function update(pl)
             pl.table_values = cell(size(value, 1), size(value, 2));
         end
 
-        set(pl.table_values, ...
-            'Data', value, ...
-            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
-            )
+        if ~isequal(value, NoValue)
+            set(pl.table_values, ...
+                'Data', value, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
+                )
+        end
 
     end
 end

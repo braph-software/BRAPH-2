@@ -39,3 +39,20 @@ sex (data, option) is an option containing the sex of the subject (female/male).
 'unassigned'
 %%%% ¡settings!
 {'Female', 'Male', 'unassigned'}
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
+ba = im_ba.get('BA');
+im_gr1 = ImporterGroupSubjectSTXLS( ...
+    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
+    'FILE_COVARIATES', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'covariates_age_sex' filesep 'ST_group1_age_sex.xlsx'], ...
+    'BA', ba ...
+    );
+gr1 = im_gr1.get('GR');
+GUI(gr1, 'CloseRequest', false)
+close(gcf)

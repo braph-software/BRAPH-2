@@ -25,6 +25,8 @@ if check
 else   
     msg = ['FUN must be a matrix with the same number of columns as the brain regions (' int2str(br_number) ').'];
 end
+%%%% ¡gui!
+pl = PPSubjectData('EL', sub, 'PROP', SubjectFUN.FUN, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
