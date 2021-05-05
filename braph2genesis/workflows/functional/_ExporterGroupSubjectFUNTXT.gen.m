@@ -2,9 +2,12 @@
 ExporterGroupSubjectFUNTXT < Exporter (ex, exporter of FUN subject group in TXT) exports a group of subjects with functional data to a series of TXT file.
 
 %%% ¡description!
-ExporterGroupSubjectFUNTXT exports a group of subjects with functional data to a series of TXT file.
+ExporterGroupSubjectFUNTXT exports a group of subjects with functional data to a series of TXT file and their covariates age and sex (if existing) to another TXT file.
 All these files are saved in the same folder.
-Each file contains a table with each row correspoding to a brain region and each column to a time.
+Each file contains a table with each row correspoding to a time serie and each column to a brain region.
+The TXT file containing the covariates consists of of the following columns:
+Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
+The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Element, Exporter, ImporterGroupSubjectFUNTXT
@@ -26,9 +29,15 @@ DIRECTORY (data, string) is the directory name where to save the group of subjec
 fileparts(which('test_braph2'))
 
 %%% ¡prop!
+FILE_COVARIATES (data, string) is the file name where to save the covariates of the group of subjects with functional data.
+%%%% ¡default!
+[fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_group_FUN_covs_most_likely_to_be_erased.txt']
+
+%%% ¡prop!
 SAVE (result, empty) saves the group of subjects with functional data in TXT files in the selected directory.
 %%%% ¡calculate!
 directory = ex.get('DIRECTORY');
+file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(directory)
     gr = ex.get('GR');
@@ -40,17 +49,38 @@ if isfolder(directory)
 
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();
+    sub_id = cell(sub_number, 1);
+    age = cell(sub_number, 1);
+    sex = cell(sub_number, 1);
+    
     for i = 1:1:sub_number
         sub = sub_dict.getItem(i);
-        sub_id = sub.get('ID');
+        sub_id(i) = {sub.get('ID')};
         sub_FUN = sub.get('FUN');
-
+        age{i} =  sub.get('AGE');
+        sex{i} =  sub.get('SEX');
+                
         tab = table(sub_FUN);
-
-        sub_file = [gr_directory filesep() sub_id '.txt'];
+        
+        sub_file = [gr_directory filesep() sub_id{i} '.txt'];
 
         % save file
         writetable(tab, sub_file, 'Delimiter', '\t', 'WriteVariableNames', 0);
+    end
+    
+    % if covariates save them in another file
+    if isfolder(fileparts(file_covariates)) && sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+        tab2 = cell(1 + sub_number, 3);
+        tab2{1, 1} = 'ID';
+        tab2{1, 2} = 'Age';
+        tab2{1, 3} = 'Sex';
+        tab2(2:end, 1) = sub_id;
+        tab2(2:end, 2) = age;
+        tab2(2:end, 3) = sex;
+        tab2 = table(tab2);
+        
+        % save
+        writetable(tab2, file_covariates, 'Delimiter', '\t', 'WriteVariableNames', 0);
     end
     
     % sets value to empty
@@ -66,6 +96,16 @@ function uigetdir(ex)
     directory = uigetdir('Select directory');
     if isfolder(directory)
         ex.set('DIRECTORY', directory);
+    end
+end
+
+function uiputfile(ex)
+    % UIPUTFILE opens a dialog box to set the TXT file where to save the group of subjects with functional data.
+
+    [filename, filepath, filterindex] = uiputfile('*.txt', 'Select TXT file');
+    if filterindex
+        file = [filepath filename];
+        ex.set('FILE', file);
     end
 end
 
@@ -128,6 +168,8 @@ sub1 = SubjectFUN( ...
     'LABEL', 'Subejct FUN 1', ...
     'NOTES', 'Notes on subject FUN 1', ...
     'BA', ba, ...
+    'age', 75, ...
+    'sex', 'female', ...
     'FUN', rand(10, ba.get('BR_DICT').length()) ...
     );
 sub2 = SubjectFUN( ...
@@ -135,6 +177,8 @@ sub2 = SubjectFUN( ...
     'LABEL', 'Subejct FUN 2', ...
     'NOTES', 'Notes on subject FUN 2', ...
     'BA', ba, ...
+    'age', 70, ...
+    'sex', 'male', ...
     'FUN', rand(10, ba.get('BR_DICT').length()) ...
     );
 sub3 = SubjectFUN( ...
@@ -142,6 +186,8 @@ sub3 = SubjectFUN( ...
     'LABEL', 'Subejct FUN 3', ...
     'NOTES', 'Notes on subject FUN 3', ...
     'BA', ba, ...
+    'age', 50, ...
+    'sex', 'female', ...
     'FUN', rand(10, ba.get('BR_DICT').length()) ...
     );
 
@@ -158,8 +204,11 @@ if ~exist(directory, 'dir')
     mkdir(directory)
 end
 
+file_covs = [fileparts(which('test_braph2')) filesep 'trial_covariates_group_subjects_FUN_to_be_erased.txt'];
+
 ex = ExporterGroupSubjectFUNTXT( ...
     'DIRECTORY', directory, ...
+    'FILE_COVARIATES', file_covs, ...
     'GR', gr ...
     );
 ex.get('SAVE');
@@ -167,6 +216,7 @@ ex.get('SAVE');
 % import with same brain atlas
 im1 = ImporterGroupSubjectFUNTXT( ...
     'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
+    'FILE_COVARIATES', file_covs, ...
     'BA', ba ...
     );
 gr_loaded1 = im1.get('GR');
@@ -180,6 +230,8 @@ for i = 1:1:max(gr.get('SUB_DICT').length(), gr_loaded1.get('SUB_DICT').length()
     assert( ...
         isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
         isequal(sub.get('BA'), sub_loaded.get('BA')) & ...
+        isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ...
+        isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
         isequal(round(sub.get('FUN'), 10), round(sub_loaded.get('FUN'), 10)), ...
         [BRAPH2.STR ':ExporterGroupSubjectFUNTXT:' BRAPH2.BUG_IO], ...
         'Problems saving or loading a group.')    
@@ -188,6 +240,7 @@ end
 % import with new brain atlas
 im2 = ImporterGroupSubjectFUNTXT( ...
     'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
+    'FILE_COVARIATES', file_covs, ...
     'BA', ba ...
     );
 gr_loaded2 = im2.get('GR');

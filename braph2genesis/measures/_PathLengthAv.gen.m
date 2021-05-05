@@ -14,9 +14,13 @@ scope = Measure.UNILAYER;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-GraphBU
 GraphWU
+GraphBU
+MultigraphBUD
+MultigraphBUT
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWU
 
 %% ¡props_update!

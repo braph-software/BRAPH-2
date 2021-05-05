@@ -16,8 +16,12 @@ parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
 GraphBU
+MultigraphBUD
+MultigraphBUT
 GraphWU
 MultiplexBU
+MultiplexBUD
+MultiplexBUT
 MultiplexWU
 
 %% ¡props!
@@ -91,6 +95,32 @@ path_length = PathLength('G', g).get('M');
 assert(isequal(path_length, known_path_length), ...
     [BRAPH2.STR ':PathLength:' BRAPH2.BUG_ERR], ...
     'PathLength is not being calculated correctly for GraphBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0   .1  0   0
+    .2  0   .1  0
+    0   .1  0   .2
+    0   0   .1  0
+    ];
+
+thresholds = [0 1];
+
+known_path_length = { ...
+    [2   4/3  4/3  2]'
+    [Inf Inf  Inf  Inf]'
+    };
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+
+path_length = PathLength('G', g).get('M');
+
+assert(isequal(path_length, known_path_length), ...
+    [BRAPH2.STR ':PathLength:' BRAPH2.BUG_ERR], ...
+    'PathLength is not being calculated correctly for MultigraphBUT.')
 
 %%% ¡test!
 %%%% ¡name!

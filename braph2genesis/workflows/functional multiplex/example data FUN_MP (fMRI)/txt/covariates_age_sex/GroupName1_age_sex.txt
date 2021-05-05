@@ -1,0 +1,4 @@
+  ID          age         sex
+ ID1   62.105477354302    Male
+ ID2   75.185506922716    Male
+ ID3   92.515279628944   Female

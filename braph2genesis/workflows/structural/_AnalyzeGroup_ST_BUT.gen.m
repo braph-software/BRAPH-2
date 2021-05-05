@@ -24,6 +24,11 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %%% ¡prop!
+USE_COVARIATES (parameter, logical) determines the use of covariates in the analysis.
+%%%% ¡default!
+false
+
+%%% ¡prop!
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡default!
 0
@@ -46,7 +51,25 @@ gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 data = cat(2, data_list{:})'; % correlation is a column based operation
 
-A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+if a.get('USE_COVARIATES')
+    age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
+    age = cat(2, age_list{:})';
+    sex_list = cellfun(@(x) x.get('sex'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
+    sex = zeros(size(age));
+    for i=1:length(sex_list)
+        switch lower(sex_list{i})
+            case 'female'
+                sex(i) = 1;
+            case 'male'
+                sex(i) = 0;
+            otherwise
+                sex(i) = -1;
+        end
+    end
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), [age, sex]);
+else
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+end
 
 thresholds = a.get('THRESHOLDS'); 
             
