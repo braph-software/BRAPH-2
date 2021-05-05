@@ -56,11 +56,10 @@ function h_panel = draw(pl, varargin)
             data = cell(subjects_idict.length(), 1);
             for i = 1:1:subjects_idict.length() %#ok<FXUP>
                 sub = subjectS_idict.getItem(i);
-                subjects_ids{i} = sub.get('ID');
+                subjects_ids{i} = sub.tostring();
             end
             set(pl.table_value_idict, 'String', subjects_ids)
         else
-            set(pl.table_value_idict, 'String', 'empty')
         end
     end
 
@@ -231,7 +230,7 @@ function update(pl)
         % construct a data holder
         data = cell(value.length(), 1);
         for i = 1:1:value.length()            
-            data{i, 1} = value.getItem(i).get('ID');
+            data{i, 1} = value.getItem(i).tostring();
         end
 
         if isempty(pl.table_value_idict)
