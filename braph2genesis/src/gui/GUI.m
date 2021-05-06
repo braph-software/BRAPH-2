@@ -68,13 +68,8 @@ plot()
             set(ui_text_filename, 'Position', [0 0 Plot.w(f) 1])
         end
         
-        pl = el.getPlotElement();
-        position = get_from_varargin([], 'Postion', varargin{:});
-        if ~isempty(position)
-            pl.draw('Parent', el_panel, 'Position', position);
-        else
-            pl.draw('Parent', el_panel);
-        end
+        pl = el.getPlotElement();        
+        pl.draw('Parent', el_panel);
     end
 
 %% Text File Name

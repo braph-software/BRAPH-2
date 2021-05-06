@@ -131,17 +131,23 @@ function h_panel = draw(pl, varargin)
         end
 
     % callbacks
-        function cb_table_idict_value(~, ~)
+        function cb_table_idict_value(src, event)
             index = get(pl.table_value_idict, 'Value');
+            if isempty(click_time)
+                click_time = tic();
+            else
+                time_between_clicks = toc( click_time );
+                click_time = tic();
+                if time_between_clicks < click_threshold_s
+                    get_subject_gui()
+                end
+            end
         end
         function cb_table_get_subject(~, ~)  % (src, event)
             if isempty(index)
                 index = get(pl.table_value_idict, 'Value');
             end
-            subject = subjects_idict.getItem(index);
-            [~, norm] = get_figure_position();
-            GUI(subject, 'CloseRequest', false, 'Position', [norm(1)+.05 norm(2) norm(3) norm(4)]);
-            subjects_gui_h = getGUISubjects();
+            get_subject_gui()
         end
         function cb_table_add(~, ~)  % (src, event)
             checkIdict();
@@ -205,6 +211,7 @@ function h_panel = draw(pl, varargin)
         end
         function objs = getGUISubjects()
             figHandles = findobj('Type', 'figure');
+            objs = cell(subjects_idict.length(), 1);
             for k = 1:1:length(figHandles)
                 fig_h = figHandles(k);
                 if contains(fig_h.Name, 'Subject')
@@ -230,6 +237,25 @@ function h_panel = draw(pl, varargin)
                     set(ctrl_slider, 'Enable', 'off');
                 end
             end
+        end
+        function get_subject_gui()
+            subject = subjects_idict.getItem(index);
+            [~, norm] = get_figure_position();
+            subjects_with_gui = getGUISubjects();
+            
+            if ~any(cellfun(@(x) contains(x, subject.get('ID')), subjects_with_gui)))
+                x = norm(1) + norm(3);
+                y = norm(2)-.05*k;
+                w = norm(3);
+                h = norm(4);
+                GUI(subject, 'CloseRequest', false, 'Position', [x y w h]);
+            else
+                index = find(contains(subjects_with_gui, subject.get('ID'))
+                sub_h = subjects_with_gui{index};
+                figure(sub_h);
+            end
+            
+            subjects_gui_h = getGUISubjects();
         end
 
     % output
