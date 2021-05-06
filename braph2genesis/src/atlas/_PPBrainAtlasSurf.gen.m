@@ -38,7 +38,7 @@ function h_panel = draw(pl, varargin)
         varargin{:})
     
     function close_f_settings(~,~)
-        if ~isempty(second_figure)            
+        if ~isempty(second_figure) && isgraphics(second_figure)           
            close(second_figure)               
         end
     end
@@ -122,7 +122,7 @@ function h_panel = draw(pl, varargin)
                 );
 
             plba.draw('Parent', second_figure);
-            plba.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.07]); % height has to be correcter for the toolbar and menu
+            plba.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
             plba.settings();
             set(pl.plot_brain_atlas_btn, 'Enable', 'off');
         end

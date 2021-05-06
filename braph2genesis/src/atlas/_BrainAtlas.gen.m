@@ -17,12 +17,12 @@ importers_names = {'ImporterBrainAtlasTXT', 'ImporterBrainAtlasXLS'};
 for k = 1:length(importers_names)
     imp = importers_names{k};
     uimenu(ui_menu_import, ...
-        'Label', imp, ...
+        'Label', [imp ' ...'], ...
         'Callback', {@cb_importers});
 end
 
 function cb_importers(src, ~)
-    src_name = src.Text;
+    src_name = erase(src.Text, ' ...');
     imp_el = eval([src_name '()']);
     imp_el.uigetfile();
     tmp_el = imp_el.get('BA');
@@ -35,11 +35,11 @@ exporters_names = {'ExporterBrainAtlasTXT', 'ExporterBrainAtlasXLS'};
 for k = 1:length(exporters_names)
     exp = exporters_names{k};
     uimenu(ui_menu_export, ...
-        'Label', exp, ...
+        'Label', [exp ' ...'], ...
         'Callback', {@cb_exporters});
 end
 function cb_exporters(src, ~)
-    src_name = src.Text;
+    src_name = erase(src.Text, ' ...');
     exmp_el = eval([src_name '(' ''' BA ''' ', el)']);
     exmp_el.uiputfile();
     exmp_el.get('SAVE');
