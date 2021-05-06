@@ -40,7 +40,7 @@ for k = 1:length(exporters_names)
 end
 function cb_exporters(src, ~)
     src_name = erase(src.Text, ' ...');
-    exmp_el = eval([src_name '(' '''BA''' ', el)']);
+    exmp_el = eval([src_name '(' '''BA''' ', ba)']);
     exmp_el.uiputfile();
     exmp_el.get('SAVE');
 end

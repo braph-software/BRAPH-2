@@ -78,10 +78,10 @@ function h_panel = draw(pl, varargin)
                 h2 = normalized(4)/2;
             else % golden ratio 
                 % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-                x2 = normalized(1)+normalized(3);
+                x2 = normalized(1)+ normalized(3);
                 h2 = normalized(4) / 1.61;
-                y2 = normalized(2) + h2 -.195;
-                w2 = normalized(3)*1.61;
+                y2 = normalized(2) + h2 - .195;
+                w2 = normalized(3) * 1.61;
                
             end
             

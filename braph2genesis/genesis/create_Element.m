@@ -1626,7 +1626,7 @@ generate_gui()
                 g(2, 'end')
             end
             if  any(cellfun(@(x) ~isempty(x), gui_export))
-                g(2, ['function ui_menu_export = getGUIMenuExport(el, f)'])
+                g(2, ['function ui_menu_export = getGUIMenuExport(' moniker ', f)'])
                 gs(3, {
                     '%GETGUIMENUEXPORT returns a figure menu.'
                     '%'
@@ -1634,7 +1634,7 @@ generate_gui()
                     '%'
                     '% See also getGUIMenuImporter.'
                     ''
-                    ['ui_menu_export = getGUIMenuExport@Element(el, f);']
+                    ['ui_menu_export = getGUIMenuExport@Element(' moniker ', f);']
                     ''
                     })
                 gs(3, gui_export)
