@@ -33,8 +33,21 @@ function h_panel = draw(pl, varargin)
     prop = pl.get('PROP');
     pl.selected = [];
     subjects_idict = el.getr(prop);    
+    subjects_gui_h = [];
 
     pl.pp = draw@PlotProp(pl, varargin{:});
+    
+    set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
+        varargin{:})
+    
+    function close_f_settings(~,~)
+        if ~isempty(subjects_gui_h)
+            for k = 1:length(subjects_gui_h)
+                sub_gui_h = subjects_gui_h{k};
+                close(sub_gui_h)
+            end
+        end
+    end
 
     if isempty(pl.table_value_idict) || ~isgraphics(pl.table_value_idict, 'listbox')
         % construct a data holder
@@ -125,7 +138,8 @@ function h_panel = draw(pl, varargin)
             end
             subject = subjects_idict.getItem(index);
             [~, norm] = get_figure_position();
-            GUI(subject, true, 'Position', [norm(1)+.05 norm(2) norm(3) norm(4)]);
+            GUI(subject, 'CloseRequest', false, 'Position', [norm(1)+.05 norm(2) norm(3) norm(4)]);
+            subjects_gui_h = getGUISubjects();
         end
         function cb_table_add(~, ~)  % (src, event)
             checkIdict();
@@ -186,6 +200,16 @@ function h_panel = draw(pl, varargin)
                     obj = fig_h;
                 end
             end
+        end
+        function objs = getGUISubjects()
+            figHandles = findobj('Type', 'figure');
+            for k = 1:1:length(figHandles)
+                fig_h = figHandles(k);
+                if contains(fig_h.Name, 'Subject')
+                    objs{k} = fig_h;
+                end
+            end
+            objs = objs(~cellfun(@isempty, objs));
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();
