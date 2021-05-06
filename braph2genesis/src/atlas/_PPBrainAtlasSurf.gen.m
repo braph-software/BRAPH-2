@@ -34,8 +34,14 @@ function h_panel = draw(pl, varargin)
     pl.pp = draw@PlotProp(pl, varargin{:});
     plba = [];
     second_figure = [];
-    hSource = getGUIFigureObj();
-    addlistener(hSource, 'ObjectBeingDestroyed', @cb_close_newfigures);
+    set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
+        varargin{:})
+    
+    function close_f_settings(~,~)
+        if ~isempty(second_figure)            
+           close(second_figure)               
+        end
+    end
 
     if isempty(pl.plot_brain_atlas_btn) || ~isgraphics(pl.plot_brain_atlas_btn, 'edit')
         if isempty(el.get('surf').get('id'))
@@ -138,12 +144,7 @@ function h_panel = draw(pl, varargin)
                     obj = fig_h;
                 end
             end
-        end
-        function cb_close_newfigures(~, ~)
-            warning('off')
-            close(second_figure);
-            warning('on')
-        end
+        end        
         function cb_close_atlas_srf(~, ~)
             set(pl.plot_brain_atlas_btn, 'Enable', 'on');
         end
