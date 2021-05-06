@@ -34,6 +34,8 @@ function h_panel = draw(pl, varargin)
     pl.selected = [];
     subjects_idict = el.getr(prop);    
     subjects_gui_h = [];
+    click_time = [];
+    click_threshold_s = 0.5;
 
     pl.pp = draw@PlotProp(pl, varargin{:});
     
@@ -131,7 +133,7 @@ function h_panel = draw(pl, varargin)
         end
 
     % callbacks
-        function cb_table_idict_value(src, event)
+        function cb_table_idict_value(~, ~)
             index = get(pl.table_value_idict, 'Value');
             if isempty(click_time)
                 click_time = tic();
@@ -227,7 +229,7 @@ function h_panel = draw(pl, varargin)
             normalized = get(fig_h, 'Position');
             set(fig_h, 'Units', 'characters'); % go back
         end
-        function  disableSubClassObj()
+        function disableSubClassObj()
             control_handles = findobj('Type', 'UIControl');
             for j = 1:length(control_handles)
                 ctrl_h = control_handles(j);
@@ -242,19 +244,21 @@ function h_panel = draw(pl, varargin)
             subject = subjects_idict.getItem(index);
             [~, norm] = get_figure_position();
             subjects_with_gui = getGUISubjects();
-            
-            if ~any(cellfun(@(x) contains(x, subject.get('ID')), subjects_with_gui)))
-                x = norm(1) + norm(3);
-                y = norm(2)-.05*k;
+            subjects_with_gui_names = cellfun(@(x) erase(erase(x.Name, ' - BRAPH2'), [el.get('SUB_CLASS') ' - ']), subjects_with_gui, 'UniformOutput', false);
+
+            if ~any(cellfun(@(x) contains(x, subject.get('ID')), subjects_with_gui_names))
+                idx = length(subjects_with_gui);
+                x = norm(1) + norm(3) + .02 * idx;
+                y = norm(2) - .02 * idx;
                 w = norm(3);
                 h = norm(4);
                 GUI(subject, 'CloseRequest', false, 'Position', [x y w h]);
             else
-                index = find(contains(subjects_with_gui, subject.get('ID'))
-                sub_h = subjects_with_gui{index};
+                idx = find(contains(subjects_with_gui_names, subject.get('ID')));
+                sub_h = subjects_with_gui{idx};
                 figure(sub_h);
             end
-            
+
             subjects_gui_h = getGUISubjects();
         end
 
