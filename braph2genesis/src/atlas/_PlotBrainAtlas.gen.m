@@ -122,7 +122,7 @@ SPHS (metadata, cvector) is sphere visibility.
 %%%% ¡check_value!
 check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
 %%%% ¡default!
-1
+0
 
 %%% ¡prop!
 SPHS_SIZE (metadata, cvector) is the sphere size.
@@ -175,7 +175,7 @@ IDS (metadata, cvector) is the ids visibility.
 %%%% ¡check_value!
 check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
 %%%% ¡default!
-1
+0
 
 %%% ¡prop!
 IDS_SIZE (metadata, cvector) is the ids size.
@@ -217,7 +217,7 @@ LABS (metadata, cvector) is the labs visibility.
 %%%% ¡check_value!
 check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
 %%%% ¡default!
-1
+0
 
 %%% ¡prop!
 LABS_SIZE (metadata, cvector) is the labs size.
@@ -331,7 +331,7 @@ LABS = cellfun(@(x) x.get('LABEL'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'
 % get values & complete vector size
 % symbols
 SYMS_SHOW = pl.get('SYMS');
-if length(SYMS_SHOW) == 1
+if SYMS_SHOW
     SYMS_SHOW = repmat(SYMS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
@@ -352,8 +352,10 @@ end
 
 % spheres
 SPHS_SHOW = pl.get('SPHS');
-if length(SPHS_SHOW) == 1
+if SPHS_SHOW
     SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+else
+    SPHS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_SIZE = pl.get('SPHS_SIZE');
@@ -383,8 +385,10 @@ end
 
 % ids
 IDS_SHOW = pl.get('IDS');
-if length(IDS_SHOW) == 1
+if IDS_SHOW
     IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+else
+    IDS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 IDS_SIZE = pl.get('IDS_SIZE');
@@ -399,8 +403,10 @@ end
 
 % labs
 LABS_SHOW = pl.get('LABS');
-if length(LABS_SHOW) == 1
+if LABS_SHOW
     LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+else
+    LABS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 LABS_SIZE = pl.get('LABS_SIZE');
@@ -420,6 +426,8 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
         % plotting
         if ~ishandle(pl.h_syms.h(i))
             pl.h_syms.h(i) = plot3(h_axes, X{i}, Y{i}, Z{i});
+        else
+            set(pl.h_syms.h(i), 'Xdata',X{i}, 'Ydata', Y{i}, 'Zdata', Z{i})
         end
         % set
         m = PlotBrainAtlas.PLOT_SYMBOL_TAG(pl.get('syms_marker'));
