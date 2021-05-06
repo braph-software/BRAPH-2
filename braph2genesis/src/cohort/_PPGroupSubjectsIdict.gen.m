@@ -42,9 +42,11 @@ function h_panel = draw(pl, varargin)
     
     function close_f_settings(~,~)
         if ~isempty(subjects_gui_h)
-            for k = 1:length(subjects_gui_h)
+            for k = 1:length(subjects_gui_h)                
                 sub_gui_h = subjects_gui_h{k};
-                close(sub_gui_h)
+                if isgraphics(sub_gui_h)
+                    close(sub_gui_h)
+                end
             end
         end
     end
