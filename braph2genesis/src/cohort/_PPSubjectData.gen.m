@@ -35,7 +35,7 @@ function h_panel = draw(pl, varargin)
 
     pl.pp = draw@PlotProp(pl, varargin{:});
     
-    if isequal(el.getPropTag(prop), 'ST')
+    if isequal(upper(el.getPropTag(prop)), 'ST')
         sub_data = sub_data';
     end
 
