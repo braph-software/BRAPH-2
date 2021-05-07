@@ -72,7 +72,7 @@ function h_panel = draw(pl, varargin)
         if ~isequal(subjects_idict, NoValue)
             data = cell(subjects_idict.length(), 1);
             for i = 1:1:subjects_idict.length() %#ok<FXUP>
-                sub = subjectS_idict.getItem(i);
+                sub = subjects_idict.getItem(i);
                 subjects_ids{i} = sub.tostring();
             end
             set(pl.table_value_idict, 'String', subjects_ids)
