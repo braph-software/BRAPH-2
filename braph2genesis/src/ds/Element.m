@@ -1709,8 +1709,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % 
             % See also getGUI, getGUIMenuExport.
             
-            ui_menu_import = uimenu(f, 'Label', 'Import');
-            uimenu(ui_menu_import, ...
+            uimenu(f, ...
                 'Label', 'Import JSON ...', ...
                 'Callback', {@cb_import_json})
         
@@ -1727,6 +1726,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     f.plot();
                 end
             end
+            
+            ui_menu_import = f;
         end
         function ui_menu_export = getGUIMenuExport(el, f)
             %GETGUIMENUEXPORT returns the export menu gui.
@@ -1736,8 +1737,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % 
             % See also getGUI, getGUIMenuImport.
             
-            ui_menu_export = uimenu(f, 'Label', 'Export');
-            uimenu(ui_menu_export, ...
+            uimenu(f, ...
                 'Label', 'Export JSON ...', ...
                 'Callback', {@cb_export_json})
             
@@ -1752,6 +1752,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
             
+            ui_menu_export = f;            
         end
     end
 end
