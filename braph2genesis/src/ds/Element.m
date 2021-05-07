@@ -89,8 +89,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
     %  getPlotProp - returns a prop plot
-    %  getGUIMenuImport - returns an import menu
-    %  getGUIMenuExport - returns an export menu
+    %  getGUIMenuImport - returns a basic import menu
+    %  getGUIMenuExport - returns a basic export menu
     %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
@@ -1712,7 +1712,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             ui_menu_import = uimenu(f, 'Label', 'Import');
             uimenu(ui_menu_import, ...
                 'Label', 'Import JSON ...', ...
-                'Accelerator', 'I', ...
                 'Callback', {@cb_import_json})
         
             function cb_import_json(~,~)
@@ -1740,7 +1739,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             ui_menu_export = uimenu(f, 'Label', 'Export');
             uimenu(ui_menu_export, ...
                 'Label', 'Export JSON ...', ...
-                'Accelerator', 'E', ...
                 'Callback', {@cb_export_json})
             
             function cb_export_json(~,~)

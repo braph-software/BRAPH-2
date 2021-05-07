@@ -33,28 +33,28 @@ MCOLOR (metadata, rvector) is background color of the metadata properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[.87 .95 .85]
+[.745 .839 .902]
 
 %%% ¡prop!
 PCOLOR (metadata, rvector) is background color of the parameter properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[.86 .92 .97]
+[.38 .514 .6]
 
 %%% ¡prop!
 DCOLOR (metadata, rvector) is background color of the data properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[1 .96 .79]
+[.902 .835 .745] 
 
 %%% ¡prop!
 RCOLOR (metadata, rvector) is background color of the result properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[1 .89 .84]
+[.62 .545 .439]
 
 %%% ¡prop!
 EL (metadata, item) is the element to be plotted.
