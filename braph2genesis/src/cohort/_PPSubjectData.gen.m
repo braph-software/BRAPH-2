@@ -54,7 +54,7 @@ function h_panel = draw(pl, varargin)
             );
         
         if ~isempty(sub_data)
-            brs_labels = cellfun(@(x) x.get('Label'), sub_br_dict.getItems(), 'UniformOutput', false);
+            brs_labels = cellfun(@(x) x.get('ID'), sub_br_dict.getItems(), 'UniformOutput', false);
             set(pl.table_values, 'ColumnName', brs_labels)
             set(pl.table_values, 'Data', sub_data);
             set(pl.table_values, 'ColumnWidth', 'auto')
@@ -89,7 +89,7 @@ function update(pl)
 
     value = el.getr(prop);
     
-    if isequal(el.getPropTag(prop), 'ST')
+    if isequal(upper(el.getPropTag(prop)), 'ST')
         value = value';
     end
 
