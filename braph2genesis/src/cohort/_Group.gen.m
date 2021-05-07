@@ -13,7 +13,7 @@ Element, Subject, IndexedDictionary
 %%% ¡gui!
 %%%% ¡menu_importer!
 el_path = dir(fileparts(which(gr.get('SUB_CLASS'))));
-importers = el_path(contains({el_path(:).name}, {['ImporterGroup' gr.get('SUB_CLASS')]}) ...
+importers = el_path(contains({el_path(:).name}, {erase(['ImporterGroup' gr.get('SUB_CLASS')], '_')}) ...
     & ~contains({el_path(:).name}, {'test'}));
 
 for k = 1:length(importers)
@@ -38,7 +38,7 @@ end
 
 %%%% ¡menu_exporter!
 el_path = dir(fileparts(which(gr.get('SUB_CLASS'))));
-exporters = el_path(contains({el_path(:).name}, {['ExporterGroup' gr.get('SUB_CLASS')]}) ...
+exporters = el_path(contains({el_path(:).name}, {erase(['ExporterGroup' gr.get('SUB_CLASS')], '_')}) ...
     & ~contains({el_path(:).name}, {'test'}));
 for k = 1:length(exporters)
     exp = erase(exporters(k).name, '.m');
