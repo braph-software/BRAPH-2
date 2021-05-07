@@ -247,7 +247,7 @@ function h_panel = draw(pl, varargin)
                 y = norm(2) - y_offset;
                 w = norm(3);
                 h = norm(4);
-                if y
+                
                 GUI(subject, 'CloseRequest', false, 'Position', [x y w h]);
             else
                 idx = find(contains(subjects_with_gui_names, subject.get('ID')));
