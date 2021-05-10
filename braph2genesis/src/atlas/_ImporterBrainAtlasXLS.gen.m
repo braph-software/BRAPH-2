@@ -61,9 +61,11 @@ if isfile(file)
     end
     ba.set('br_dict', idict);
 end
-waitbar(1, f, 'Finishing')
-pause(.5)
-close(f)
+if exists(f, 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = ba;
 
 %% ¡methods!

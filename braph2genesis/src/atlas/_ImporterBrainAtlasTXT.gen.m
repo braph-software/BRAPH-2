@@ -63,7 +63,7 @@ if isfile(file)
     ba.set('br_dict', idict);
 end
 
-if ~isempty(f)
+if exists(f, 'var')
     waitbar(1, f, 'Finishing')
     pause(.5)
     close(f)
