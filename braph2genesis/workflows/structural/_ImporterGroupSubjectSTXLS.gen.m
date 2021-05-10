@@ -7,7 +7,7 @@ The XLS/XLSX file consists of the following columns (Sheet 1):
 Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The covariates must be on the second Sheet of the same XLS/XLSX file. Sheet 2 consists of of the following columns:
+The covariates must be on the second Sheet of the same XLS/XLSX file. Sheet 2 consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -48,9 +48,9 @@ if isfile(file)
     [~, ~, raw] = xlsread(file);
     
     % Check if there are covariates to add (age and sex)
-    [~, sheet_name] = xlsfinfo('filename.xlsx');
-    if length(sheet_name) > 1
-        [~, ~, raw_covariates] = xlsread(file, sheet_name{2});
+    sheets = sheetnames(file);
+    if length(sheets) > 1
+        [~, ~, raw_covariates] = xlsread(file, 2);
         age = raw_covariates(2:end, 2);
         sex = raw_covariates(2:end, 3);
     else
