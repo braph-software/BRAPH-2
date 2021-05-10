@@ -53,7 +53,7 @@ function h_panel = draw(pl, varargin)
             'CellEditCallback', {@cb_table_values} ...
             );
         
-        if ~isempty(sub_data)
+        if ~isempty(sub_data) && ~isa(sub_data, 'NoValue')
             brs_labels = cellfun(@(x) x.get('ID'), sub_br_dict.getItems(), 'UniformOutput', false);
             set(pl.table_values, 'ColumnName', brs_labels)
             set(pl.table_values, 'Data', sub_data);
@@ -101,7 +101,7 @@ function update(pl)
             pl.table_values = cell(size(value, 1), size(value, 2));
         end
 
-        if ~isempty(value)
+        if ~isempty(value) && ~isa(value, 'NoValue')
             set(pl.table_values, ...
                 'Data', value, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...

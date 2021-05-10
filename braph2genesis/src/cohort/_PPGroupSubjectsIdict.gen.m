@@ -146,7 +146,7 @@ function h_panel = draw(pl, varargin)
                 sub_id = sub_id + 1;
             end
             % lock subject_class
-            subject_class = el.getr('SUB_CLASS');
+            subject_class = el.get('SUB_CLASS');
             if ~el.isLocked('SUB_CLASS')
                 el.lock('SUB_CLASS');
                 disableSubClassObj()
