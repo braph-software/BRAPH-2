@@ -51,6 +51,7 @@ file_covariates = im.memorize('FILE_COVARIATES');
 if isfolder(directory)
     % sets group props
     f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    change_figure_icon(f)
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -136,7 +137,7 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 end
-if ~isempty(f)
+if exist('f', 'var')
     waitbar(1, f, 'Finishing')
     pause(.5)
     close(f)

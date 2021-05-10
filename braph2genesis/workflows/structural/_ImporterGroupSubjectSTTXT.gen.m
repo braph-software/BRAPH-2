@@ -116,7 +116,7 @@ if isfile(file)
     end
     gr.set('sub_dict', subdict);
 end
-if exists(f, 'var')
+if exist('f', 'var')
     waitbar(1, f, 'Finishing')
     pause(.5)
     close(f)

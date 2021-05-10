@@ -120,7 +120,7 @@ if isfolder(directory)
         
     end
 end
-if ~isempty(f)
+if exist('f', 'var')
     waitbar(1, f, 'Finishing')
     pause(.5)
     close(f)

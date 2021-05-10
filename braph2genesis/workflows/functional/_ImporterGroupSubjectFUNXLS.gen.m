@@ -71,7 +71,7 @@ if isfolder(directory)
         age = age(ones(length(files), 1));
         unassigned =  {'unassigned'};
         sex = unassigned(ones(length(files), 1));
-    end'
+    end
     waitbar(.15, f, 'Loading your data ...');
 
     if length(files) > 0
@@ -116,7 +116,7 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 end
-if exists(f, 'var')
+if exist('f', 'var')
     waitbar(1, f, 'Finishing')
     pause(.5)
     close(f)

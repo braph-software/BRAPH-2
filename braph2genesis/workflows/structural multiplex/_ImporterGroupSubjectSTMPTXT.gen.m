@@ -133,7 +133,7 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 end
-if ~isempty(f)
+if exist('f', 'var')
     waitbar(1, f, 'Finishing')
     pause(.5)
     close(f)
