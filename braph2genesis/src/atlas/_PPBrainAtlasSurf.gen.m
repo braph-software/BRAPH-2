@@ -34,8 +34,14 @@ function h_panel = draw(pl, varargin)
     pl.pp = draw@PlotProp(pl, varargin{:});
     plba = [];
     second_figure = [];
-    hSource = getGUIFigureObj();
-    addlistener(hSource, 'ObjectBeingDestroyed', @cb_close_newfigures);
+    set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
+        varargin{:})
+    
+    function close_f_settings(~,~)
+        if ~isempty(second_figure) && isgraphics(second_figure)           
+           close(second_figure)               
+        end
+    end
 
     if isempty(pl.plot_brain_atlas_btn) || ~isgraphics(pl.plot_brain_atlas_btn, 'edit')
         if isempty(el.get('surf').get('id'))
@@ -70,14 +76,14 @@ function h_panel = draw(pl, varargin)
             elseif h == screen_size(4)
                 y2 = normalized(2);
                 h2 = normalized(4)/2;
-            else
-                x2 = normalized(1)+normalized(3)+.005;
-                y2 = normalized(2);
-                w2 = normalized(3);
-                h2 = normalized(4) /2;
+            else % golden ratio 
+                % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
+                x2 = normalized(1)+ normalized(3);
+                h2 = normalized(4) / 1.61;
+                y2 = normalized(2) + h2 - .195;
+                w2 = normalized(3) * 1.61;
+               
             end
-            
-            close(second_figure);
             
             second_figure =  figure( ...
                 'Visible', 'on', ...
@@ -89,6 +95,7 @@ function h_panel = draw(pl, varargin)
                 'Toolbar', 'figure', ...
                 'Color', 'w' ...
                 );
+            addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);
             
             ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');
             
@@ -115,8 +122,9 @@ function h_panel = draw(pl, varargin)
                 );
 
             plba.draw('Parent', second_figure);
-            plba.set('SETPOS', [x2+w2+.01 y2 w2 h2/2.2]);
+            plba.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
             plba.settings();
+            set(pl.plot_brain_atlas_btn, 'Enable', 'off');
         end
         function cb_pushbutton_update(~, ~)
             plba.draw('Parent', second_figure);
@@ -136,11 +144,9 @@ function h_panel = draw(pl, varargin)
                     obj = fig_h;
                 end
             end
-        end
-        function cb_close_newfigures(~, ~)
-            warning('off')
-            close(second_figure);
-            warning('on')
+        end        
+        function cb_close_atlas_srf(~, ~)
+            set(pl.plot_brain_atlas_btn, 'Enable', 'on');
         end
 
     % output

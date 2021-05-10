@@ -48,6 +48,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %
     % Element methods (copy):
     %  copy - copies the element
+    %  deepclone - deep-clones the element
     %  clone - clones the element
     %
     % Element methods (inspection, Static):
@@ -87,7 +88,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % Element methods (GUI):
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
-    %  getPropPanel - returns a prop plot
+    %  getPlotProp - returns a prop plot
+    %  getGUIMenuImport - returns a basic import menu
+    %  getGUIMenuExport - returns a basic export menu
     %
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.
 
@@ -684,7 +687,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 [BRAPH2.STR ':' class(el)], ...
                                 [BRAPH2.STR ':' class(el) ' ' ... 
                                 'Attempt to set the values of a LOCKED property (' el.getPropTag(prop) '), which was obviously not done. ' ...
-                                'Hopefully this won''t create probblems, but your code shouldn''t let this happen!'] ...
+                                'Hopefully this won''t create problems, but your code shouldn''t let this happen!'] ...
                                 )                            
                         end
                        
@@ -1393,9 +1396,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 for prop = 1:1:el.getPropNumber()
                     value = struct{i}.props(prop).value;
                     if isnumeric(value)
-                        if length(value) == 1 % also case {Format.ITEM, Format.IDICT}
+                        if ~isequal(el.getPropFormat(prop), Format.ITEMLIST) || (numel(value) == 1 && isa(el_list{value}, 'NoValue'))
                             el.props{prop}.value = el_list{value};
-                        else % also case Format.ITEMLIST
+                        else % case Format.ITEMLIST
                             indices = value;
                             el.props{prop}.value = el_list(indices)';
                         end
@@ -1434,7 +1437,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % EL_COPY = COPYELEMENT(EL) copies the element EL making a deep copy of all
             %  its properties.
             %
-            % See also copy, clone.
+            % See also copy, clone, deepclone.
 
             el_list = el.getElementList();
             
@@ -1481,7 +1484,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  The properties with Category.DATA and Category.RESULT are set to
             %  NoValue, the seeds are randomized, and all properties are unlocked.
             %
-            % See also copy.
+            % See also deepclone, copy.
             
             % el_clone = el.copy();
             % 
@@ -1519,6 +1522,41 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             el_clone.props{prop}.value = value;
                         end
                     case {Category.DATA, Category.RESULT}
+                        el_clone.props{prop}.value = NoValue.getNoValue();
+                end
+            end
+        end
+        function el_clone = deepclone(el)
+            %DEEPCLONE deep-clones the element.
+            %
+            % EL_COPY = DEEPCLONE(EL) deep-clones the element EL. The deep-cloning
+            %  operation makes a deep copy of the element including all properties with
+            %  Category.METADATA, Category.PARAMETER, and Category.DATA and the checked status.
+            %  The properties with Category.RESULT are set to NoValue, the seeds are
+            %  randomized, and all properties are unlocked.
+            %
+            % See also clone, copy.
+            
+            if isa(el, 'NoValue')
+                el_clone = NoValue.getNoValue();
+                return
+            end
+            
+            el_clone = eval(el.getClass());
+            
+            for prop = 1:1:el_clone.getPropNumber()
+                switch el_clone.getPropCategory(prop)
+                    case {Category.METADATA, Category.PARAMETER, Category.DATA}
+                        value = el.getr(prop);
+                        
+                        if isa(value, 'Element')
+                            el_clone.props{prop}.value = value.clone();
+                        elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
+                            el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
+                        else
+                            el_clone.props{prop}.value = value;
+                        end
+                    case Category.RESULT
                         el_clone.props{prop}.value = NoValue.getNoValue();
                 end
             end
@@ -1662,6 +1700,58 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         'PROP', prop, ...
                         varargin{:});
             end
+        end
+        function ui_menu_import = getGUIMenuImport(el, f)
+            %GETGUIMENUIMPORT returns the import menu gui.
+            % 
+            % menu = GETGUIMENUIMPORT(EL, FIG) sets and returns the import menu for the
+            %  figure FIG.
+            % 
+            % See also getGUI, getGUIMenuExport.
+            
+            ui_menu_import = uimenu(f, 'Label', 'Import');
+            uimenu(ui_menu_import, ...
+                'Label', 'Import JSON ...', ...
+                'Callback', {@cb_import_json})
+        
+            function cb_import_json(~,~)
+                [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    fid = fopen(filename);
+                    raw = fread(fid, inf);
+                    str = char(raw');
+                    fclose(fid);
+                    tmp_el = Element.decodeJSON(str);
+                    f.el = tmp_el;
+                    f.plot();
+                end
+            end
+        end
+        function ui_menu_export = getGUIMenuExport(el, f)
+            %GETGUIMENUEXPORT returns the export menu gui.
+            % 
+            % menu = GETGUIMENUEXPORT(EL, FIG) sets and returns the export menu for the 
+            %  figure FIG.
+            % 
+            % See also getGUI, getGUIMenuImport.
+            
+            ui_menu_export = uimenu(f, 'Label', 'Export');
+            uimenu(ui_menu_export, ...
+                'Label', 'Export JSON ...', ...
+                'Callback', {@cb_export_json})
+            
+            function cb_export_json(~,~)
+                [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    [json, ~, ~] = encodeJSON(el);
+                    fid = fopen(filename, 'w');
+                    fprintf(fid, json);
+                    fclose(fid);
+                end
+            end
+            
         end
     end
 end
