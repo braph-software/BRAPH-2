@@ -50,6 +50,8 @@ directory = im.get('DIRECTORY');
 file_covariates = im.memorize('FILE_COVARIATES');
 if isfolder(directory)
     % sets group props
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    change_figure_icon(f)
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -76,7 +78,7 @@ if isfolder(directory)
             end
             ba.set('br_dict', idict);
         end
-
+        waitbar(.15, f, 'Loading your data ...');
         subdict = gr.get('SUB_DICT');
         
         % Check if there are covariates to add (age and sex)
@@ -91,6 +93,7 @@ if isfolder(directory)
         end
 
         % multiplex data, subjects, number of layers
+        waitbar(.45, f, 'Processing your data ...')
         all_subjects_data = cell(length(files), subjects_number, br_number);
         subjects_info = cell(subjects_number, 3);
         layers_number = length(files);
@@ -108,6 +111,7 @@ if isfolder(directory)
                             
         % cycle over subjects, add subjects
         for i = 1:1:size(all_subjects_data, 2)
+            waitbar(.70, f, 'Almost there ...')
             layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
             for l = 1:1:layers_number
                 ST_MP(l) = {cell2mat(layer_subject(l, :)')};
@@ -129,7 +133,11 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 end
-
+if ~isempty(f)
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = gr;
 
 %% ¡methods!

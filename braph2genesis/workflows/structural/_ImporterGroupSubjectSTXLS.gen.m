@@ -51,6 +51,8 @@ gr = Group( ...
 file = im.memorize('FILE');
 file_covariates = im.memorize('FILE_COVARIATES');
 if isfile(file)
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    change_figure_icon(f)
     [~, ~, raw] = xlsread(file);
     
     % Check if there are covariates to add (age and sex)
@@ -66,6 +68,7 @@ if isfile(file)
     end
     
     % sets group props
+    waitbar(.15, f, 'Loading your data ...');
     [~, name, ext] = fileparts(file);
     gr.set( ...
         'ID', name, ...
@@ -74,6 +77,7 @@ if isfile(file)
     );
 
     % brain atlas
+    waitbar(.45, f, 'Processing your data ...')
     ba = im.get('BA');
     br_number = size(raw, 2) - 3;
     if ba.get('BR_DICT').length ~= br_number
@@ -91,6 +95,9 @@ if isfile(file)
     
     % adds subjects
     for i = 2:1:size(raw, 1)
+        if i == floor(size(raw, 1)/2)
+            waitbar(.70, f, 'Almost there ...')
+        end
         ST = zeros(br_number, 1);
         for j = 1:1:length(ST)
             ST(j) = raw{i, 3 + j};
@@ -108,7 +115,11 @@ if isfile(file)
     end
     gr.set('sub_dict', subdict);
 end
-
+if ~isempty(f)
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = gr;
 
 %% ¡methods!
