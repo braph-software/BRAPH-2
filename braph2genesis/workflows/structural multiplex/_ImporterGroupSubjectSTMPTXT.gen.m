@@ -9,7 +9,7 @@ Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
 The TXT file containing the covariates must be inside another folder in the same group directory 
-than file with data and consists of of the following columns:
+than file with data and consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 

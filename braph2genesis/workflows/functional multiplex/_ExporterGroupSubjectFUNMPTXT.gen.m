@@ -5,7 +5,7 @@ ExporterGroupSubjectFUNMPTXT < Exporter (ex, exporter of FUN MP subject group in
 ExporterGroupSubjectFUNMPTXT exports a group of subjects with functional multiplex data to a series of TXT file.
 All these files are saved in the same folder.
 Each file contains a table with each row correspoding to a time serie and each column to a brain region.
-The TXT file containing the covariates consists of of the following columns:
+The TXT file containing the covariates consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 

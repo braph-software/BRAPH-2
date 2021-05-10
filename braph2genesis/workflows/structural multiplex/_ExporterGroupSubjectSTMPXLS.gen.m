@@ -8,8 +8,7 @@ Each XLS/XLSX file consists of the following columns:
 Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The covariates must be on the second Sheet of the XLS/XLSX file containing data from layer 1. 
-Sheet 2 consists of the following columns:
+The XLS/XLSX file containing the covariates consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
