@@ -2,7 +2,7 @@
 ExporterGroupSubjectFUNXLS < Exporter (ex, exporter of FUN subject group in XLS/XLSX) exports a group of subjects with functional data to a series of XLSX file.
 
 %%% ¡description!
-ExporterGroupSubjectFUNXLS exports a group of subjects with functional data to a series of XLSX file  and their covariates (if existing).
+ExporterGroupSubjectFUNXLS exports a group of subjects with functional data to a series of XLSX file and their covariates (if existing).
 All these files are saved in the same folder.
 Each file contains a table with each row correspoding to a time serie and each column to a brain region.
 The XLS/XLSX file containing the covariates consists of the following columns:
