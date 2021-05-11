@@ -43,6 +43,8 @@ directory = ex.get('DIRECTORY');
 file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(directory)
+    f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
+    change_figure_icon(f)
     gr = ex.get('GR');
 
     gr_directory = [directory filesep() gr.get('ID')];
@@ -52,7 +54,7 @@ if isfolder(directory)
 
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();
-
+    waitbar(.15, f, 'Organizing Info ...');
     if sub_number ~= 0
         sub = sub_dict.getItem(1);
         ba = sub.get('BA');
@@ -80,6 +82,8 @@ if isfolder(directory)
             end             
         end
         
+        waitbar(.55, f, 'Saving Info ...');
+
         for j = 1:1:layers_number
             gr_id = gr.get('ID');
             % save id label notes
@@ -113,6 +117,11 @@ if isfolder(directory)
     value = [];
 else
     value = ex.getr('SAVE');    
+end
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
 end
 
 %% ¡methods!

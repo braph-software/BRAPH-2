@@ -40,6 +40,8 @@ directory = ex.get('DIRECTORY');
 file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(directory)
+    f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
+    change_figure_icon(f)
     gr = ex.get('GR');
 
     gr_directory = [directory filesep() gr.get('ID')];
@@ -52,8 +54,11 @@ if isfolder(directory)
     sub_id = cell(sub_number, 1);
     age = cell(sub_number, 1);
     sex = cell(sub_number, 1);
-    
+    waitbar(.15, f, 'Organizing Info ...');
     for i = 1:1:sub_number
+        if i == floor(sub_number/2)
+            waitbar(.55, f, 'Saving Info ...');
+        end
         sub = sub_dict.getItem(i);
         sub_id(i) = {sub.get('ID')};
         sub_FUN = sub.get('FUN');
@@ -87,6 +92,11 @@ if isfolder(directory)
     value = [];
 else
     value = ex.getr('SAVE');    
+end
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
 end
 
 %% ¡methods!
