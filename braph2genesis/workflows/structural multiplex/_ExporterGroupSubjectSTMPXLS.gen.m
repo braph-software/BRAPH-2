@@ -2,13 +2,13 @@
 ExporterGroupSubjectSTMPXLS < Exporter (ex, exporter of ST MP subject group in XLS/XLSX) exports a group of subjects with structural multiplex data to an XLSX file.
 
 %%% ¡description!
-ExporterGroupSubjectSTMPXLS exports a group of subjects with structural multiplex data to an XLSX file and their covariates age and sex (if existing) to another XLSX file.
+ExporterGroupSubjectSTMPXLS exports a group of subjects with structural multiplex data  and their covariates (if existing) to an XLSX file.
 The files from the same group containing the data from L layers are saved in the same folder.
 Each XLS/XLSX file consists of the following columns: 
 Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The XLS/XLSX file containing the covariates consists of of the following columns:
+The XLS/XLSX file containing the covariates consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -32,15 +32,9 @@ DIRECTORY (data, string) is the directory name where to save the group of subjec
 fileparts(which('test_braph2'))
 
 %%% ¡prop!
-FILE_COVARIATES (data, string) is the file name where to save the covariates of the group of subjects with structural multiplex data.
-%%%% ¡default!
-[fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_MP_covs_most_likely_to_be_erased.xlsx']
-
-%%% ¡prop!
 SAVE (result, empty) saves the group of subjects with structural multiplex data in XLS/XLSX files in the selected directory.
 %%%% ¡calculate!
 directory = ex.get('DIRECTORY');
-file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(directory)
     gr = ex.get('GR');
@@ -95,7 +89,7 @@ if isfolder(directory)
     end
     
     % if covariates save them in another file
-    if isfolder(fileparts(file_covariates)) && sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+    if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
         tab2 = cell(1 + sub_number, 3);
         tab2{1, 1} = 'ID';
         tab2{1, 2} = 'Age';
@@ -106,7 +100,8 @@ if isfolder(directory)
         tab2 = table(tab2);
         
         % save
-        writetable(tab2, file_covariates, 'Sheet', 1, 'WriteVariableNames', 0);
+        writetable(tab2, [gr_directory filesep() gr_id  '_1.xlsx'], 'Sheet', 2, 'WriteVariableNames', 0);
+        warning('off', 'MATLAB:xlswrite:AddSheet');
     end
     
     % sets value to empty
@@ -122,16 +117,6 @@ function uigetdir(ex)
     directory = uigetdir('Select directory');
     if isfolder(directory)
         ex.set('DIRECTORY', directory);
-    end
-end
-
-function uiputfile(ex)
-    % UIPUTFILE opens a dialog box to set the XLS/XLSX file where to save the group of subjects with structural multiplex data.
-
-    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
-    if filterindex
-        file = [filepath filename];
-        ex.set('FILE', file);
     end
 end
 
@@ -233,11 +218,8 @@ if ~exist(directory, 'dir')
     mkdir(directory)
 end
 
-file_covs = [fileparts(which('test_braph2')) filesep 'trial_covariates_group_subjects_ST_MP_to_be_erased.xlsx'];
-
 ex = ExporterGroupSubjectSTMPXLS( ...
     'DIRECTORY', directory, ...
-    'FILE_COVARIATES', file_covs, ...
     'GR', gr ...
     );
 ex.get('SAVE');
@@ -245,7 +227,6 @@ ex.get('SAVE');
 % import with same brain atlas
 im1 = ImporterGroupSubjectSTMPXLS( ...
     'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
-    'FILE_COVARIATES', file_covs, ...
     'BA', ba ...
     );
 gr_loaded1 = im1.get('GR');
@@ -271,8 +252,7 @@ end
 
 % import with new brain atlas
 im2 = ImporterGroupSubjectSTMPXLS( ...
-    'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
-    'FILE_COVARIATES', file_covs ...
+    'DIRECTORY', [directory filesep() gr.get(Group.ID)] ...
     );
 gr_loaded2 = im2.get('GR');
 

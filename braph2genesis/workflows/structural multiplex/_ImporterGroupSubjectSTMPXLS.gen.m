@@ -2,14 +2,14 @@
 ImporterGroupSubjectSTMPXLS < Importer (im, importer of ST MP subject group from XLS/XLSX) imports a group of subjects with structural multiplex data from a series of XLS/XLSX file.
 
 %%% ¡description!
-ImporterGroupSubjectSTMPXLS imports a group of subjects with structural multiplex data from a series of XLS/XLSX file and their covariates from another XLS/XLSX file.
+ImporterGroupSubjectSTMPXLS imports a group of subjects with structural multiplex data and their covariates (optional) from a series of XLS/XLSX file.
 The files from the same group containing the data from L layers must be in the same folder.
 Each XLS/XLSX file consists of the following columns: 
 Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The XLS/XLSX file containing the covariates must be inside another folder in the same directory 
-than file with data and consists of of the following columns:
+The covariates must be on the second Sheet of the XLS/XLSX file containing data from layer 1. 
+Sheet 2 consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -20,11 +20,6 @@ Element, Importer, ExporterGroupSubjectSTMPXLS
 
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the ST MP subject group files from which to load the L layers of the subject group.
-
-%%% ¡prop!
-FILE_COVARIATES (data, string) is the XLS/XLSX file from where to load the covariates age and sex of the ST MP subject group.
-%%%% ¡default!
-''
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -47,7 +42,7 @@ gr = Group( ...
     );
 
 directory = im.get('DIRECTORY');
-file_covariates = im.memorize('FILE_COVARIATES');
+
 if isfolder(directory)
     % sets group props
     [~, name] = fileparts(directory);
@@ -82,8 +77,9 @@ if isfolder(directory)
         subdict = gr.get('SUB_DICT');
         
         % Check if there are covariates to add (age and sex)
-        if isfile(file_covariates)
-            [~, ~, raw_covariates] = xlsread(file_covariates);
+        sheets = sheetnames(fullfile(directory, files(1).name));
+        if length(sheets) > 1
+            [~, ~, raw_covariates] = xlsread(fullfile(directory, files(1).name), 2);
             age = raw_covariates(2:end, 2);
             sex = raw_covariates(2:end, 3);
         else
@@ -143,15 +139,5 @@ function uigetdir(im)
     directory = uigetdir('Select directory');
     if isfolder(directory)
         im.set('DIRECTORY', directory);
-    end
-end
-
-function uigetfile(im)
-    % UIGETFILE opens a dialog box to set the XLS/XLSX file from where to load the covariates of ST MP subject group.
-    
-    [filename, filepath, filterindex] = uigetfile({'*.xlsx';'*.xls'}, 'Select Excel file');
-    if filterindex
-        file = [filepath filename];
-        im.set('FILE', file);
     end
 end

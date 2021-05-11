@@ -2,10 +2,10 @@
 ExporterGroupSubjectFUNXLS < Exporter (ex, exporter of FUN subject group in XLS/XLSX) exports a group of subjects with functional data to a series of XLSX file.
 
 %%% ¡description!
-ExporterGroupSubjectFUNXLS exports a group of subjects with functional data to a series of XLSX file.
+ExporterGroupSubjectFUNXLS exports a group of subjects with functional data to a series of XLSX file and their covariates (if existing).
 All these files are saved in the same folder.
 Each file contains a table with each row correspoding to a time serie and each column to a brain region.
-The XLS/XLSX file containing the covariates consists of of the following columns:
+The XLS/XLSX file containing the covariates consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -29,15 +29,9 @@ DIRECTORY (data, string) is the directory name where to save the group of subjec
 fileparts(which('test_braph2'))
 
 %%% ¡prop!
-FILE_COVARIATES (data, string) is the file name where to save the covariates of the group of subjects with functional data.
-%%%% ¡default!
-[fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_FUN_covs_most_likely_to_be_erased.xlsx']
-
-%%% ¡prop!
 SAVE (result, empty) saves the group of subjects with functional data in XLS/XLSX files in the selected directory.
 %%%% ¡calculate!
 directory = ex.get('DIRECTORY');
-file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(directory)
     gr = ex.get('GR');
@@ -69,7 +63,7 @@ if isfolder(directory)
     end
     
     % if covariates save them in another file
-    if isfolder(fileparts(file_covariates)) && sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+    if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
         tab2 = cell(1 + sub_number, 3);
         tab2{1, 1} = 'ID';
         tab2{1, 2} = 'Age';
@@ -80,7 +74,11 @@ if isfolder(directory)
         tab2 = table(tab2);
         
         % save
-        writetable(tab2, file_covariates, 'Sheet', 1, 'WriteVariableNames', 0);
+        cov_directory = [gr_directory filesep() 'covariates'];
+        if ~exist(cov_directory, 'dir')
+            mkdir(cov_directory)
+        end
+        writetable(tab2, [cov_directory filesep() gr.get('ID') '_covariates.xlsx'], 'Sheet', 1, 'WriteVariableNames', 0);
     end
     
     % sets value to empty
@@ -96,16 +94,6 @@ function uigetdir(ex)
     directory = uigetdir('Select directory');
     if isfolder(directory)
         ex.set('DIRECTORY', directory);
-    end
-end
-
-function uiputfile(ex)
-    % UIPUTFILE opens a dialog box to set the XLS/XLSX file where to save the group of subjects with functional data.
-
-    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
-    if filterindex
-        file = [filepath filename];
-        ex.set('FILE', file);
     end
 end
 
@@ -204,11 +192,8 @@ if ~exist(directory, 'dir')
     mkdir(directory)
 end
 
-file_covs = [fileparts(which('test_braph2')) filesep 'trial_covariates_group_subjects_FUN_to_be_erased.xlsx'];
-
 ex = ExporterGroupSubjectFUNXLS( ...
     'DIRECTORY', directory, ...
-    'FILE_COVARIATES', file_covs, ...
     'GR', gr ...
     );
 ex.get('SAVE');
@@ -216,7 +201,6 @@ ex.get('SAVE');
 % import with same brain atlas
 im1 = ImporterGroupSubjectFUNXLS( ...
     'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
-    'FILE_COVARIATES', file_covs, ...
     'BA', ba ...
     );
 gr_loaded1 = im1.get('GR');
@@ -240,7 +224,6 @@ end
 % import with new brain atlas
 im2 = ImporterGroupSubjectFUNXLS( ...
     'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
-    'FILE_COVARIATES', file_covs, ...
     'BA', ba ...
     );
 gr_loaded2 = im2.get('GR');
