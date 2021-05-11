@@ -8,8 +8,8 @@ Each TXT file consists of the following columns:
 Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The TXT file containing the covariates must be inside another folder in the same directory 
-than file with data and consists of of the following columns:
+The TXT file containing the covariates must be inside another folder in the same group directory 
+than file with data and consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -20,11 +20,6 @@ Element, Importer, ExporterGroupSubjectSTMPTXT
 
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the ST MP subject group files from which to load the L layers of the subject group.
-
-%%% ¡prop!
-FILE_COVARIATES (data, string) is the TXT file from where to load the covariates age and sex of the ST MP subject group.
-%%%% ¡default!
-''
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -47,7 +42,7 @@ gr = Group( ...
     );
 
 directory = im.get('DIRECTORY');
-file_covariates = im.memorize('FILE_COVARIATES');
+
 if isfolder(directory)
     % sets group props
     [~, name] = fileparts(directory);
@@ -80,8 +75,11 @@ if isfolder(directory)
         subdict = gr.get('SUB_DICT');
         
         % Check if there are covariates to add (age and sex)
-        if isfile(file_covariates)
-            raw_covariates = readtable(file_covariates, 'Delimiter', '\t');
+        cov_folder = dir(directory);
+        cov_folder = cov_folder([cov_folder(:).isdir] == 1);
+        cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
+        if isfolder([directory filesep() cov_folder.name])
+            raw_covariates = readtable([directory filesep() cov_folder.name filesep() name '_covariates.txt'], 'Delimiter', '\t');
             age = raw_covariates{:, 2};
             sex = raw_covariates{:, 3};
         else
