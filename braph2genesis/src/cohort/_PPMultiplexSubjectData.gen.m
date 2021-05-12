@@ -64,7 +64,8 @@ function update(pl)
                     pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
                 end
                 if isequal(upper(el.getPropTag(prop)), 'ST_MP')
-                    value_cell{i, j} = value_cell{i, j}';
+                    val = value_cell{i, j};
+                    value_cell{i, j} = val';
                 end
                 set(pl.table_value_cell{i, j}, ...
                     'Data', value_cell{i, j}, ...
@@ -73,8 +74,16 @@ function update(pl)
                     'CellEditCallback', {@cb_matrix_value, i, j} ...
                     )
             end
-        end
+        end        
+    end
+    function cb_matrix_value(src, event, i, j)
+        value = el.get(prop);
+        value_ij = value{i, j};
+        value_ij(event.Indices(1), event.Indices(2)) = event.NewData;
+        value{i, j} = value_ij;
+        el.set(prop, value)
         
+        pl.update()
     end
 end
 function redraw(pl, varargin)
@@ -86,7 +95,35 @@ function redraw(pl, varargin)
     %
     % See also draw, update, refresh.
 
-    pl.redraw@PlotProp('Height', 20, varargin{:});
+    el = pl.get('EL');
+    prop = pl.get('PROP');
+    value = el.getr(prop);
+    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
+        pl.redraw@PlotProp('Height', 1.8, varargin{:})
+    else
+        value_cell = el.get(prop);
+        
+        if isempty(value_cell)
+            pl.redraw@PlotProp('Height', 1.8, varargin{:})
+        else
+            pl.redraw@PlotProp('Height', 21.8, varargin{:})
+        end
+        
+        for i = 1:1:size(value_cell, 1)
+            for j = 1:1:size(value_cell, 2)
+                set(pl.table_value_cell{i, j}, ...
+                    'Units', 'character', ...
+                    'Position', ...
+                    [ ...
+                    (0.01 + (i - 1) * 0.98 / size(pl.table_value_cell, 1)) * Plot.w(pl.pp) ...
+                    (0.01 + (j - 1) * 0.98 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) - 1.8) ...
+                    0.98 / size(pl.table_value_cell, 1) * Plot.w(pl.pp) ...
+                    0.98 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) - 1.8) ...
+                    ] ...
+                    )
+            end
+        end
+    end
 end
 function selected = getSelected(pl)
     selected = pl.selected;
