@@ -36,10 +36,12 @@ SAVE (result, empty) saves the group of subjects with structural data in the sel
 file = ex.get('FILE');
 
 if isfolder(fileparts(file))
+    f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     gr = ex.get('GR');
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();
-
+    waitbar(.15, f, 'Organizing Info ...');
     if sub_number == 0
         tab = {'ID', 'Label', 'Notes'};
     else
@@ -76,6 +78,7 @@ if isfolder(fileparts(file))
     end
 
     % save
+    waitbar(.55, f, 'Saving Info ...');
     writetable(table(tab), file, 'Delimiter', '\t', 'WriteVariableNames', 0);
     
     % if covariates save them in another file
@@ -99,6 +102,11 @@ if isfolder(fileparts(file))
     value = [];
 else
     value = ex.getr('SAVE');
+end
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
 end
 
 %% ¡methods!

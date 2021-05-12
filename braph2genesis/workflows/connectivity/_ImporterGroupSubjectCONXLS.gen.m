@@ -43,6 +43,8 @@ directory = im.get('DIRECTORY');
 
 if isfolder(directory)    
     % sets group props
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -73,6 +75,7 @@ if isfolder(directory)
         sex = unassigned(ones(length(files), 1));
     end
     
+    waitbar(.15, f, 'Loading your data ...');
     if length(files) > 0
         % brain atlas
         ba = im.get('BA');
@@ -92,6 +95,9 @@ if isfolder(directory)
         
         % adds subjects
         for i = 1:1:length(files)
+            if i == floor(length(files)/2)
+                waitbar(.70, f, 'Almost there ...')
+            end
             % read file
             CON = xlsread(fullfile(directory, files(i).name));
             [~, sub_id] = fileparts(files(i).name);
@@ -107,7 +113,11 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 end
-
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = gr;
 
 %% ¡methods!

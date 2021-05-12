@@ -42,6 +42,8 @@ directory = im.get('DIRECTORY');
 
 if isfolder(directory)    
     % sets group props
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -54,6 +56,7 @@ if isfolder(directory)
     subject_folders = subject_folders(~ismember({subject_folders(:).name}, {'.', '..'}));
     
     if length(subject_folders) > 0
+        waitbar(.15, f, 'Loading your data ...');
         % Check if there are covariates to add (age and sex)
         file_cov = dir(fullfile(directory, '*.txt'));
         if isfile(fullfile(directory, file_cov.name))
@@ -67,7 +70,11 @@ if isfolder(directory)
         end
         
         % get all layers per subject folder
+        waitbar(.45, f, 'Processing your data ...')
         for i = 1:1:length(subject_folders)
+            if i == floor(length(subjects_folders)/2)
+                 waitbar(.70, f, 'Almost there ...')  
+            end
             subjects_paths = [directory filesep() subject_folders(i).name];
             % analyzes file
             files = dir(fullfile(subjects_paths, '*.txt'));
@@ -109,7 +116,11 @@ if isfolder(directory)
         
     end
 end
-
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = gr;
 
 %% ¡methods!

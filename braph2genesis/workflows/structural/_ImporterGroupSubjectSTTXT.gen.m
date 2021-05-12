@@ -46,6 +46,8 @@ gr = Group( ...
 file = im.get('FILE');
 
 if isfile(file)
+    f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     raw = textread(file, '%s', 'delimiter', '\t', 'whitespace', '');
     raw = raw(~cellfun('isempty', raw));  % remove empty cells
     raw2 = readtable(file, 'Delimiter', '\t');
@@ -63,6 +65,7 @@ if isfile(file)
     end
     
     % sets group props
+    waitbar(.15, f, 'Loading your data ...');
     [~, name, ext] = fileparts(file);
     gr.set( ...
         'ID', name, ...
@@ -71,6 +74,7 @@ if isfile(file)
     );
 
     % brain atlas
+    waitbar(.45, f, 'Processing your data ...')
     ba = im.get('BA');
     br_number = size(raw2, 2) - 3;
     if ba.get('BR_DICT').length ~= br_number
@@ -88,6 +92,9 @@ if isfile(file)
     
     % adds subjects
     for i = 1:1:size(raw2, 1)
+        if i == floor(size(raw2, 1)/2)
+            waitbar(.70, f, 'Almost there ...')
+        end
         ST = zeros(br_number, 1);
         for j = 1:1:length(ST)
             ST(j) = raw2{i, 3 + j};
@@ -105,7 +112,11 @@ if isfile(file)
     end
     gr.set('sub_dict', subdict);
 end
-
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = gr;
 
 %% ¡methods!

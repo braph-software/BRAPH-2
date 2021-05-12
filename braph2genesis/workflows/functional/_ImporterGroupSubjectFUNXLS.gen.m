@@ -41,6 +41,8 @@ gr = Group( ...
 directory = im.get('DIRECTORY');
 
 if isfolder(directory)    
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...
@@ -71,11 +73,18 @@ if isfolder(directory)
         unassigned =  {'unassigned'};
         sex = unassigned(ones(length(files), 1));
     end
+    waitbar(.15, f, 'Loading your data ...');
 
     if length(files) > 0
         
         % adds subjects
         for i = 1:1:length(files)
+            if i == 1
+                waitbar(.45, f, 'Processing your data ...')
+            elseif i == floor(length(files)/2)
+                waitbar(.70, f, 'Almost there ...')
+            end
+            
             % read file
             FUN = xlsread(fullfile(directory, files(i).name));
             
@@ -93,7 +102,7 @@ if isfolder(directory)
                 ba.set('br_dict', idict);
             end
             subdict = gr.get('SUB_DICT');
-            
+            waitbar(.45, f, 'Processing your data ...')
             [~, sub_id] = fileparts(files(i).name);
             sub = SubjectFUN( ...
                 'ID', sub_id, ...
@@ -108,7 +117,11 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 end
-
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = gr;
 
 %% ¡methods!

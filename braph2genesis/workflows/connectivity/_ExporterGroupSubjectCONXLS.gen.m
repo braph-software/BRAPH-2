@@ -34,13 +34,15 @@ SAVE (result, empty) saves the group of subjects with connectivity data in XLS/X
 directory = ex.get('DIRECTORY');
 
 if isfolder(directory)
+    f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     gr = ex.get('GR');
 
     gr_directory = [directory filesep() gr.get('ID')];
     if ~exist(gr_directory, 'dir')
         mkdir(gr_directory)
     end
-
+    waitbar(.15, f, 'Organizing Info ...');
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();
     sub_id = cell(sub_number, 1);
@@ -48,6 +50,9 @@ if isfolder(directory)
     sex = cell(sub_number, 1);
 
     for i = 1:1:sub_number
+        if i == floor(sub_number/2)
+            waitbar(.55, f, 'Saving Info ...');
+        end
         sub = sub_dict.getItem(i);
         sub_id(i) = {sub.get('ID')};
         sub_CON = sub.get('CON');
@@ -85,6 +90,11 @@ if isfolder(directory)
     value = [];
 else
     value = ex.getr('SAVE');    
+end
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
 end
 
 %% ¡methods!

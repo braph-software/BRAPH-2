@@ -25,6 +25,8 @@ SAVE (result, empty) saves the brain atlas in the selected XLS/XLSX file.
 file = ex.get('FILE');
 
 if isfolder(fileparts(file))
+    f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     ba = ex.get('BA');
     ba_id = ba.get('ID');
     if ~isempty(ba.get('LABEL'))
@@ -39,6 +41,7 @@ if isfolder(fileparts(file))
     end
 
     % gets brain region data
+    waitbar(.15, f, 'Organizing Info ...');
     br_dict = ba.get('BR_DICT');
     br_ids = cell(br_dict.length(), 1);
     br_labels = cell(br_dict.length(), 1);
@@ -74,12 +77,18 @@ if isfolder(fileparts(file))
         ];
 
     % save
+    waitbar(.55, f, 'Saving Info ...');
     writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
 
-    % sets value to empty
+    % sets value to empty    
     value = [];
 else
     value = ex.getr('SAVE');
+end
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
 end
 
 %% ¡methods!

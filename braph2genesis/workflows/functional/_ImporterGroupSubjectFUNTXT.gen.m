@@ -42,6 +42,8 @@ directory = im.get('DIRECTORY');
 
 if isfolder(directory)
     % sets group props
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -67,7 +69,8 @@ if isfolder(directory)
         sex = unassigned(ones(length(files), 1));
     end
     
-    if length(files) > 0
+    waitbar(.15, f, 'Loading your data ...');
+    if length(files) > 0        
         % brain atlas
         ba = im.get('BA');
         br_number = ba.get('BR_DICT').length;
@@ -75,6 +78,9 @@ if isfolder(directory)
         
         % adds subjects
         for i = 1:1:length(files)
+            if i == floor(length(files)/2)
+                waitbar(.70, f, 'Almost there ...')
+            end
             % read file
             FUN = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
             
@@ -107,7 +113,11 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 end
-
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = gr;
 
 %% ¡methods!
