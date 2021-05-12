@@ -2,12 +2,12 @@
 ExporterGroupSubjectSTTXT < Exporter (ex, exporter of ST subject group in TXT) exports a group of subjects with structural data to an TXT file.
 
 %%% ¡description!
-ExporterGroupSubjectSTTXT exports a group of subjects with structural data to an TXT file and their covariates age and sex (if existing) to another TXT file.
+ExporterGroupSubjectSTTXT exports a group of subjects with structural data to an TXT file and their covariates (if existing) to another TXT file.
 The TXT file consists of 6 columns. It reads as follows: 
 Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The TXT file containing the covariates consists of of the following columns:
+The TXT file containing the covariates consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -31,15 +31,9 @@ FILE (data, string) is the file name where to save the group of subjects with st
 [fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_group_ST_most_likely_to_be_erased.txt']
 
 %%% ¡prop!
-FILE_COVARIATES (data, string) is the file name where to save the covariates of the group of subjects with structural data.
-%%%% ¡default!
-[fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_group_ST_covs_most_likely_to_be_erased.txt']
-
-%%% ¡prop!
 SAVE (result, empty) saves the group of subjects with structural data in the selected TXT file.
 %%%% ¡calculate!
 file = ex.get('FILE');
-file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(fileparts(file))
     f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
@@ -88,7 +82,7 @@ if isfolder(fileparts(file))
     writetable(table(tab), file, 'Delimiter', '\t', 'WriteVariableNames', 0);
     
     % if covariates save them in another file
-    if isfolder(fileparts(file_covariates)) && sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+    if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
         tab2 = cell(1 + sub_number, 3);
         tab2{1, 1} = 'ID';
         tab2{1, 2} = 'Age';
@@ -99,7 +93,9 @@ if isfolder(fileparts(file))
         tab2 = table(tab2);
         
         % save
-        writetable(tab2, file_covariates, 'Delimiter', '\t', 'WriteVariableNames', 0);
+        [filepath, filename, ~] = fileparts(file);
+        writetable(tab2, [filepath filesep() filename '_covariates.txt'], 'Delimiter', '	', 'WriteVariableNames', 0);
+        warning('off', 'MATLAB:xlswrite:AddSheet');
     end
     
     % sets value to empty
@@ -221,11 +217,9 @@ gr = Group( ...
     );
 
 file = [fileparts(which('test_braph2')) filesep 'trial_group_subjects_ST_to_be_erased.txt'];
-file_covs = [fileparts(which('test_braph2')) filesep 'trial_covariates_group_subjects_ST_to_be_erased.txt'];
 
 ex = ExporterGroupSubjectSTTXT( ...
     'FILE', file, ...
-    'FILE_COVARIATES', file_covs, ...
     'GR', gr ...
     );
 ex.get('SAVE');
@@ -233,7 +227,6 @@ ex.get('SAVE');
 % import with same brain atlas
 im1 = ImporterGroupSubjectSTTXT( ...
     'FILE', file, ...
-    'FILE_COVARIATES', file_covs, ...
     'BA', ba ...
     );
 gr_loaded1 = im1.get('GR');
@@ -258,8 +251,7 @@ end
 
 % import with new brain atlas
 im2 = ImporterGroupSubjectSTTXT( ...
-    'FILE', file, ...
-    'FILE_COVARIATES', file_covs ...
+    'FILE', file ...
     );
 gr_loaded2 = im2.get('GR');
 

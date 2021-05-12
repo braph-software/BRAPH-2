@@ -29,8 +29,16 @@ if isfolder(fileparts(file))
     set_icon(f)
     ba = ex.get('BA');
     ba_id = ba.get('ID');
-    ba_label = ba.get('LABEL');
-    ba_notes = ba.get('NOTES');
+    if ~isempty(ba.get('LABEL'))
+        ba_label = ba.get('LABEL');
+    else
+        ba_label = ' ';
+    end
+    if ~isempty(ba.get('NOTES'))
+        ba_notes = ba.get('NOTES');
+    else
+        ba_notes = ' ';
+    end
 
     % gets brain region data
     waitbar(.15, f, 'Organizing Info ...');
@@ -44,8 +52,16 @@ if isfolder(fileparts(file))
     for i = 1:1:br_dict.length()
         br = br_dict.getItem(i);
         br_ids{i} = br.get('ID');
-        br_labels{i} = br.get('LABEL');
-        br_notes{i} = br.get('NOTES');
+        if ~isempty(br.get('LABEL'))
+            br_labels{i} = br.get('LABEL');
+        else
+            br_labels{i} = ' ';
+        end
+        if ~isempty(br.get('NOTES'))
+            br_notes{i} = br.get('NOTES');
+        else
+            br_notes{i} = ' ';
+        end
         br_x{i} = br.get('X');
         br_y{i} = br.get('Y');
         br_z{i} = br.get('Z');

@@ -2,13 +2,12 @@
 ImporterGroupSubjectSTXLS < Importer (im, importer of ST subject group from XLS/XLSX) imports a group of subjects with structural data from an XLS/XLSX file.
 
 %%% ¡description!
-ImporterGroupSubjectSTXLS imports a group of subjects with structural data from an XLS/XLSX file and their covariates from another XLS/XLSX file.
-The XLS/XLSX file consists of the following columns: 
+ImporterGroupSubjectSTXLS imports a group of subjects with structural data and their covariates (optional) from an XLS/XLSX file.
+The XLS/XLSX file consists of the following columns (Sheet 1): 
 Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The XLS/XLSX file containing the covariates must be inside a folder in the same directory 
-than file with data and consists of of the following columns:
+The covariates must be on the second Sheet of the same XLS/XLSX file. Sheet 2 consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -19,11 +18,6 @@ Element, Importer, ExporterGroupSubjectSTXLS
 
 %%% ¡prop!
 FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.
-%%%% ¡default!
-''
-
-%%% ¡prop!
-FILE_COVARIATES (data, string) is the XLS/XLSX file from where to load the covariates age and sex of the ST subject group.
 %%%% ¡default!
 ''
 
@@ -49,15 +43,16 @@ gr = Group( ...
 
 % analyzes file
 file = im.memorize('FILE');
-file_covariates = im.memorize('FILE_COVARIATES');
+
 if isfile(file)
     f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
     set_icon(f)
     [~, ~, raw] = xlsread(file);
     
     % Check if there are covariates to add (age and sex)
-    if isfile(file_covariates)
-        [~, ~, raw_covariates] = xlsread(file_covariates);
+    sheets = sheetnames(file);
+    if length(sheets) > 1
+        [~, ~, raw_covariates] = xlsread(file, 2);
         age = raw_covariates(2:end, 2);
         sex = raw_covariates(2:end, 3);
     else

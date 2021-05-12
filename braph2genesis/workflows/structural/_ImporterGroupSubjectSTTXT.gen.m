@@ -7,8 +7,8 @@ The TXT file consists of the following columns:
 Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The TXT file containing the covariates must be inside a folder in the same directory 
-than file with data and consists of of the following columns:
+The TXT file containing the covariates must be in the same directory and have the name as: groupname_covariates.txt
+where groupname corresponds to the name of the file containing the data. It consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -19,11 +19,6 @@ Element, Importer, ExporterGroupSubjectSTTXT
 
 %%% ¡prop!
 FILE (data, string) is the TXT file from where to load the ST subject group.
-%%%% ¡default!
-''
-
-%%% ¡prop!
-FILE_COVARIATES (data, string) is the TXT file from where to load the covariates age and sex of the ST subject group.
 %%%% ¡default!
 ''
 
@@ -49,7 +44,7 @@ gr = Group( ...
 
 % analyzes file
 file = im.get('FILE');
-file_covariates = im.memorize('FILE_COVARIATES');
+
 if isfile(file)
     f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
     set_icon(f)
@@ -58,8 +53,9 @@ if isfile(file)
     raw2 = readtable(file, 'Delimiter', '\t');
     
     % Check if there are covariates to add (age and sex)
-    if isfile(file_covariates)
-        raw_covariates = readtable(file_covariates, 'Delimiter', '\t');
+    [filepath, filename, ~] = fileparts(file);
+    if isfile([filepath filesep() filename '_covariates.txt'])
+        raw_covariates = readtable([filepath filesep() filename '_covariates.txt'], 'Delimiter', '\t');
         age = raw_covariates{:, 2};
         sex = raw_covariates{:, 3};
     else

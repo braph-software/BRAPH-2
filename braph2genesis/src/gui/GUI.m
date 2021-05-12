@@ -41,7 +41,7 @@ f = init();
             'Color', BKGCOLOR ...             
             );
         
-        change_figure_icon(f)
+        set_icon(f)
         
         if close_request
             set(f, 'CloseRequestFcn', {@cb_close})
