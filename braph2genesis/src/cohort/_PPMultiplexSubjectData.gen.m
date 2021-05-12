@@ -70,6 +70,7 @@ function update(pl)
                 set(pl.table_value_cell{i, j}, ...
                     'Data', value_cell{i, j}, ...
                     'ColumnName', brs_labels, ...
+                    'ColumnEditable', true, ...
                     'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                     'CellEditCallback', {@cb_matrix_value, i, j} ...
                     )
@@ -79,10 +80,15 @@ function update(pl)
     function cb_matrix_value(src, event, i, j)
         value = el.get(prop);
         value_ij = value{i, j};
-        value_ij(event.Indices(1), event.Indices(2)) = event.NewData;
-        value{i, j} = value_ij;
-        el.set(prop, value)
+        if isequal(upper(el.getPropTag(prop)), 'ST_MP')
+            value_ij(event.Indices(2), event.Indices(1)) = event.NewData;
+            value{i, j} = value_ij;
+        else
+            value_ij(event.Indices(1), event.Indices(2)) = event.NewData;
+            value{i, j} = value_ij;
+        end
         
+        el.set(prop, value)        
         pl.update()
     end
 end
