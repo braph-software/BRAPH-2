@@ -26,6 +26,8 @@ if check
 else   
     msg = ['CON must be a square matrix with the dimensiton equal to the number of brain regions (' int2str(br_number) ').'];
 end
+%%%% ¡gui!
+pl = PPSubjectData('EL', sub, 'PROP', SubjectCON.CON, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
@@ -38,3 +40,20 @@ sex (data, option) is an option containing the sex of the subject (female/male).
 'unassigned'
 %%%% ¡settings!
 {'Female', 'Male', 'unassigned'}
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx']);
+ba = im_ba.get('BA');
+im_gr1 = ImporterGroupSubjectCONXLS( ...
+    'DIRECTORY', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName1'], ...
+    'FILE_COVARIATES', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'covariates_age_sex' filesep 'GroupName1_age_sex.xlsx'], ...
+    'BA', ba ...
+    );
+gr1 = im_gr1.get('GR');
+GUI(gr1, 'CloseRequest', false)
+close(gcf)

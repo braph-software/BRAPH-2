@@ -10,6 +10,55 @@ whose methods can be used to inspect, add or remove subjects.
 %%% ¡seealso!
 Element, Subject, IndexedDictionary
 
+%%% ¡gui!
+%%%% ¡menu_importer!
+el_path = dir(fileparts(which(gr.get('SUB_CLASS'))));
+importers = el_path(contains({el_path(:).name}, {erase(['ImporterGroup' gr.get('SUB_CLASS')], '_')}) ...
+    & ~contains({el_path(:).name}, {'test'}));
+
+for k = 1:length(importers)
+    imp = erase(importers(k).name, '.m');
+    uimenu(ui_menu_import, ...
+        'Label', [imp ' ...'], ...
+        'Callback', {@cb_importers});
+end
+
+function cb_importers(src, ~)
+    src_name = erase(src.Text, ' ...');
+    imp_el = eval([src_name '()']);
+    if isequal(gr.get('SUB_CLASS'), 'SubjectST')        
+        imp_el.uigetfile();
+    else
+        imp_el.uigetdir();
+    end
+    tmp_el = imp_el.get('GR');
+    delete(gcf)
+    GUI(tmp_el)
+end
+
+%%%% ¡menu_exporter!
+el_path = dir(fileparts(which(gr.get('SUB_CLASS'))));
+exporters = el_path(contains({el_path(:).name}, {erase(['ExporterGroup' gr.get('SUB_CLASS')], '_')}) ...
+    & ~contains({el_path(:).name}, {'test'}));
+for k = 1:length(exporters)
+    exp = erase(exporters(k).name, '.m');
+    uimenu(ui_menu_export, ...
+        'Label', [exp ' ...'], ...
+        'Callback', {@cb_exporters});
+end
+function cb_exporters(src, ~)
+    src_name = erase(src.Text, ' ...');
+    exmp_el = eval([src_name '(' '''GR''' ', gr)']);
+    if isequal(gr.get('SUB_CLASS'), 'SubjectST')        
+        exmp_el.uiputfile();
+    else
+        exmp_el.uigetdir();
+    end
+    exmp_el.uiputfile();
+    exmp_el.uigetdir();
+    exmp_el.get('SAVE');
+end
+
 %% ¡props!
 
 %%% ¡prop!
@@ -30,6 +79,8 @@ SUB_CLASS (parameter, class) is the class of the subjects of the group.
 SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
 %%%% ¡settings!
 'Subject'
+%%%% ¡gui!
+pl = PPGroupSubjectsIdict('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
 
 %% ¡tests!
 

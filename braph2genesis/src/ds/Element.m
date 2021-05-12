@@ -1701,16 +1701,14 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         varargin{:});
             end
         end
-        function ui_menu_import = getGUIMenuImport(el, f)
-            %GETGUIMENUIMPORT returns the import menu gui.
+        function getGUIMenuImport(el, ui_menu)
+            %GETGUIMENUIMPORT sets the import submenu gui json.
             % 
-            % menu = GETGUIMENUIMPORT(EL, FIG) sets and returns the import menu for the
-            %  figure FIG.
+            % GETGUIMENUIMPORT(EL, UI_MENU) sets the import submenu json for the menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuExport.
             
-            ui_menu_import = uimenu(f, 'Label', 'Import');
-            uimenu(ui_menu_import, ...
+            uimenu(ui_menu, ...
                 'Label', 'Import JSON ...', ...
                 'Callback', {@cb_import_json})
         
@@ -1723,21 +1721,19 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     str = char(raw');
                     fclose(fid);
                     tmp_el = Element.decodeJSON(str);
-                    f.el = tmp_el;
-                    f.plot();
+                    ui_menu.el = tmp_el;
+                    ui_menu.plot();
                 end
             end
         end
-        function ui_menu_export = getGUIMenuExport(el, f)
-            %GETGUIMENUEXPORT returns the export menu gui.
+        function getGUIMenuExport(el, ui_menu)
+            %GETGUIMENUEXPORT sets the export submenu gui json.
             % 
-            % menu = GETGUIMENUEXPORT(EL, FIG) sets and returns the export menu for the 
-            %  figure FIG.
+            % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuImport.
             
-            ui_menu_export = uimenu(f, 'Label', 'Export');
-            uimenu(ui_menu_export, ...
+            uimenu(ui_menu, ...
                 'Label', 'Export JSON ...', ...
                 'Callback', {@cb_export_json})
             
@@ -1751,7 +1747,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     fclose(fid);
                 end
             end
-            
         end
     end
 end

@@ -22,7 +22,7 @@ end
 
 close_request = get_from_varargin(true, 'CloseRequest', varargin);
 
-f_position = get_from_varargin([.02 .30 .30 .80], 'Position', varargin);
+f_position = get_from_varargin([.02 .15 .30 .80], 'Position', varargin);
 
 BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
 
@@ -76,8 +76,8 @@ plot()
             set(ui_text_filename, 'Position', [0 0 Plot.w(f) 1])
         end
         
-        pl = el.getPlotElement();
-        pl.draw('Parent', el_panel)
+        pl = el.getPlotElement();        
+        pl.draw('Parent', el_panel);
     end
 
 %% Text File Name
@@ -93,6 +93,8 @@ init_filename()
     end
 
 %% Menu
+ui_menu_import = [];
+ui_menu_export = [];
 menu()
     function menu()
         ui_menu_file = uimenu(f, 'Label', 'File');
@@ -113,10 +115,14 @@ menu()
             'Label', 'Close', ...
             'Accelerator', 'C', ...
             'Callback', {@cb_close})
-              
-        ui_menu_import = el.getGUIMenuImport(f); %#ok<NASGU>
-
-        ui_menu_import = el.getGUIMenuExport(f); %#ok<NASGU>
+        
+        ui_menu_import = uimenu(f, ...
+            'Label', 'Import', ...
+            'Callback', {@cb_refresh});
+        
+        ui_menu_export = uimenu(f, ...
+            'Label', 'Export', ...
+            'Callback', {@cb_refresh});        
         
         ui_menu_figure = uimenu(f, 'Label', 'Figure');
         uimenu(ui_menu_figure, ...
@@ -131,6 +137,20 @@ menu()
         uimenu(ui_menu_about, ...
             'Label', 'About ...', ...
             'Callback', {@cb_about})
+    end
+    function sub_menus()
+        imp_sub_menus = get(ui_menu_import, 'Children');
+        for i = 1:length(imp_sub_menus)           
+            delete(imp_sub_menus(i));
+        end
+        
+        exp_sub_menus = get(ui_menu_export, 'Children');
+        for i = 1:length(exp_sub_menus)
+            delete(exp_sub_menus(i));
+        end
+        
+        el.getGUIMenuImport(ui_menu_import);
+        el.getGUIMenuExport(ui_menu_export); 
     end
     function cb_open(~, ~)
         % select file
@@ -196,6 +216,9 @@ menu()
             ''}, ...
             ['About ' BRAPH2.STR], ...
             CreateStruct)
+    end
+    function cb_refresh(~,~)
+        sub_menus()
     end
 
 %% Toolbar
