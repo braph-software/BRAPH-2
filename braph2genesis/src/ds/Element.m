@@ -1701,11 +1701,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         varargin{:});
             end
         end
-        function ui_menu_import = getGUIMenuImport(el, ui_menu)
-            %GETGUIMENUIMPORT returns the import submenu gui json.
+        function getGUIMenuImport(el, ui_menu)
+            %GETGUIMENUIMPORT sets the import submenu gui json.
             % 
-            % menu = GETGUIMENUIMPORT(EL, UI_MENU) sets and returns the import submenu json for the
-            %  menu UI_MENU.
+            % GETGUIMENUIMPORT(EL, UI_MENU) sets the import submenu json for the menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuExport.
             
@@ -1726,14 +1725,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     ui_menu.plot();
                 end
             end
-            
-            ui_menu_import = ui_menu;
         end
-        function ui_menu_export = getGUIMenuExport(el, ui_menu)
-            %GETGUIMENUEXPORT returns the export submenu gui json.
+        function getGUIMenuExport(el, ui_menu)
+            %GETGUIMENUEXPORT sets the export submenu gui json.
             % 
-            % menu = GETGUIMENUEXPORT(EL, UI_MENU) sets and returns the export submenu for the 
-            %  ui menu UI_MENU.
+            % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuImport.
             
@@ -1751,8 +1747,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     fclose(fid);
                 end
             end
-            
-            ui_menu_export = ui_menu;            
         end
     end
 end
