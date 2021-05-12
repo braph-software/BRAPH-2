@@ -34,6 +34,8 @@ else
     msg = ['CON_FUN_MP must be a cell with two matrices, the first with the same number of rows and columns as the brain regions and the second with ' ...
         'the same number of columns as the brain regions (' int2str(br_number) ').'];
 end
+%%%% ¡gui!
+pl = PPMultiplexSubjectData('EL', sub, 'PROP', SubjectCON_FUN_MP.CON_FUN_MP, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
