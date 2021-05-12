@@ -52,7 +52,7 @@ file = im.memorize('FILE');
 file_covariates = im.memorize('FILE_COVARIATES');
 if isfile(file)
     f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
-    change_figure_icon(f)
+    set_icon(f)
     [~, ~, raw] = xlsread(file);
     
     % Check if there are covariates to add (age and sex)

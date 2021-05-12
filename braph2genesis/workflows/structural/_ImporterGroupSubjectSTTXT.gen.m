@@ -52,7 +52,7 @@ file = im.get('FILE');
 file_covariates = im.memorize('FILE_COVARIATES');
 if isfile(file)
     f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
-    change_figure_icon(f)
+    set_icon(f)
     raw = textread(file, '%s', 'delimiter', '\t', 'whitespace', '');
     raw = raw(~cellfun('isempty', raw));  % remove empty cells
     raw2 = readtable(file, 'Delimiter', '\t');

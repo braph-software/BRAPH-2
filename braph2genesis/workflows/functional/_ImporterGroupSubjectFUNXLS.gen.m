@@ -47,7 +47,7 @@ directory = im.get('DIRECTORY');
 file_covariates = im.memorize('FILE_COVARIATES');
 if isfolder(directory)    
     f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
-    change_figure_icon(f)
+    set_icon(f)
     % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...

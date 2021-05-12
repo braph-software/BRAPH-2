@@ -26,7 +26,7 @@ file = ex.get('FILE');
 
 if isfolder(fileparts(file))
     f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
-    change_figure_icon(f)
+    set_icon(f)
     ba = ex.get('BA');
     ba_id = ba.get('ID');
     ba_label = ba.get('LABEL');

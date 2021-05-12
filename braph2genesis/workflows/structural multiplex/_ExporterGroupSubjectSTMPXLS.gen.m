@@ -44,7 +44,7 @@ file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(directory)
     f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
-    change_figure_icon(f)
+    set_icon(f)
     gr = ex.get('GR');
 
     gr_directory = [directory filesep() gr.get('ID')];

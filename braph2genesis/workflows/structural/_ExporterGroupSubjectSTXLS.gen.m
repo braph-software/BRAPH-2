@@ -43,7 +43,7 @@ file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(fileparts(file))
     f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
-    change_figure_icon(f)
+    set_icon(f)
     gr = ex.get('GR');
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();

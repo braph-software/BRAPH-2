@@ -30,7 +30,7 @@ ba = BrainAtlas();
 file = im.memorize('FILE');
 if isfile(file)
     f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
-    change_figure_icon(f)
+    set_icon(f)
     [~, ~, raw] = xlsread(file);
 
     % adds props
