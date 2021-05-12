@@ -97,8 +97,6 @@ init_filename()
     end
 
 %% Menu
-ui_menu_import = [];
-ui_menu_export = [];
 menu()
     function menu()
         ui_menu_file = uimenu(f, 'Label', 'File');
@@ -120,14 +118,9 @@ menu()
             'Accelerator', 'C', ...
             'Callback', {@cb_close})
         
-        ui_menu_import = uimenu(f, ...
-            'Label', 'Import', ...
-            'Callback', {@cb_refresh});
-        
-        ui_menu_export = uimenu(f, ...
-            'Label', 'Export', ...
-            'Callback', {@cb_refresh});        
-        
+        ui_menu_import = el.getGUIMenuImport(ui_menu_import);
+        ui_menu_export = el.getGUIMenuExport(ui_menu_export);
+
         ui_menu_figure = uimenu(f, 'Label', 'Figure');
         uimenu(ui_menu_figure, ...
             'Label', 'Save figures ...', ...
@@ -141,20 +134,6 @@ menu()
         uimenu(ui_menu_about, ...
             'Label', 'About ...', ...
             'Callback', {@cb_about})
-    end
-    function sub_menus()
-        imp_sub_menus = get(ui_menu_import, 'Children');
-        for i = 1:length(imp_sub_menus)           
-            delete(imp_sub_menus(i));
-        end
-        
-        exp_sub_menus = get(ui_menu_export, 'Children');
-        for i = 1:length(exp_sub_menus)
-            delete(exp_sub_menus(i));
-        end
-        
-        el.getGUIMenuImport(ui_menu_import);
-        el.getGUIMenuExport(ui_menu_export); 
     end
     function cb_open(~, ~)
         % select file
@@ -220,9 +199,6 @@ menu()
             ''}, ...
             ['About ' BRAPH2.STR], ...
             CreateStruct)
-    end
-    function cb_refresh(~,~)
-        sub_menus()
     end
 
 %% Toolbar
