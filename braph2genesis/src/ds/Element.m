@@ -1701,15 +1701,15 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         varargin{:});
             end
         end
-        function ui_menu_import = getGUIMenuImport(el, f)
-            %GETGUIMENUIMPORT returns the import menu gui.
+        function ui_menu_import = getGUIMenuImport(el, ui_menu)
+            %GETGUIMENUIMPORT returns the import submenu gui json.
             % 
-            % menu = GETGUIMENUIMPORT(EL, FIG) sets and returns the import menu for the
-            %  figure FIG.
+            % menu = GETGUIMENUIMPORT(EL, UI_MENU) sets and returns the import submenu for the
+            %  menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuExport.
             
-            uimenu(f, ...
+            uimenu(ui_menu, ...
                 'Label', 'Import JSON ...', ...
                 'Callback', {@cb_import_json})
         
@@ -1722,14 +1722,14 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     str = char(raw');
                     fclose(fid);
                     tmp_el = Element.decodeJSON(str);
-                    f.el = tmp_el;
-                    f.plot();
+                    ui_menu.el = tmp_el;
+                    ui_menu.plot();
                 end
             end
             
-            ui_menu_import = f;
+            ui_menu_import = ui_menu;
         end
-        function ui_menu_export = getGUIMenuExport(el, f)
+        function ui_menu_export = getGUIMenuExport(el, ui_menu)
             %GETGUIMENUEXPORT returns the export menu gui.
             % 
             % menu = GETGUIMENUEXPORT(EL, FIG) sets and returns the export menu for the 
@@ -1737,7 +1737,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % 
             % See also getGUI, getGUIMenuImport.
             
-            uimenu(f, ...
+            uimenu(ui_menu, ...
                 'Label', 'Export JSON ...', ...
                 'Callback', {@cb_export_json})
             
@@ -1752,7 +1752,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
             
-            ui_menu_export = f;            
+            ui_menu_export = ui_menu;            
         end
     end
 end
