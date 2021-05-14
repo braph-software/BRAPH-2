@@ -1610,33 +1610,43 @@ generate_gui()
                 g(2, 'end')
             end
             if any(cellfun(@(x) ~isempty(x), gui_import))
-                g(2, ['function ui_menu_import = getGUIMenuImport(' moniker ', f)'])
+                g(2, ['function getGUIMenuImport(' moniker ', f)'])
                 gs(3, {
-                    '%GETGUIMENUIMPORT returns a figure menu.'
+                    '%GETGUIMENUIMPORT sets a figure menu.'
                     '%'
-                    '% menu_import = GETGUIMENUIMPORT(EL) returns the figure menus.'
+                    '% GETGUIMENUIMPORT(EL) sets the figure menus.'
                     '%'
                     '% See also getGUIMenuExporter.'
                     ''
-                    ['ui_menu_import = getGUIMenuImport@Element(' moniker ', f);']
-                    ''
                     })
+                if isequal(moniker, 'gr')
+                else
+                    gs(3, {
+                        ['getGUIMenuImport@Element(' moniker ', f);']
+                        ''
+                        })
+                end
                 gs(3, gui_import)
                 g(3, '')
                 g(2, 'end')
             end
             if  any(cellfun(@(x) ~isempty(x), gui_export))
-                g(2, ['function ui_menu_export = getGUIMenuExport(' moniker ', f)'])
+                g(2, ['function getGUIMenuExport(' moniker ', f, varargin)'])
                 gs(3, {
-                    '%GETGUIMENUEXPORT returns a figure menu.'
+                    '%GETGUIMENUEXPORT sets a figure menu.'
                     '%'
-                    '% [exporters, tag] = getGUIMenuExporter(EL) returns the figure menus.'
+                    '% [exporters, tag] = getGUIMenuExporter(EL) sets the figure menus.'
                     '%'
                     '% See also getGUIMenuImporter.'
                     ''
-                    ['ui_menu_export = getGUIMenuExport@Element(' moniker ', f);']
-                    ''
                     })
+                if isequal(moniker, 'gr')
+                else
+                    gs(3, {
+                        ['getGUIMenuExport@Element(' moniker ', f);']
+                        ''
+                        })
+                end
                 gs(3, gui_export)
                 g(3, '')
                 g(2, 'end')

@@ -7,6 +7,40 @@ For example, functional multiplex data can be fMRI or EEG.
 
 %%% ¡seealso!
 Element, Subject
+%%% ¡gui!
+%%%% ¡menu_importer!
+importers = {'ImporterGroupSubjectFUNMPTXT', 'ImporterGroupSubjectFUNMPXLS'};
+
+for k = 1:length(importers)
+    imp = importers{k};
+    uimenu(f, ...
+        'Label', [imp ' ...'], ...
+        'Callback', {@cb_importers});
+end
+function cb_importers(src, ~)
+    src_name = erase(src.Text, ' ...');
+    imp_el = eval([src_name '()']);          
+    imp_el.uigetfile();
+    tmp_el = imp_el.get('GR');
+    delete(gcf)
+    GUI(tmp_el)
+end
+
+%%%% ¡menu_exporter!
+exporters = {'ExporterGroupSubjectFUNMPTXT', 'ExporterGroupSubjectFUNMPXLS'};
+gr = varargin{1};
+for k = 1:length(exporters)
+    exp = exporters{k};
+    uimenu(f, ...
+        'Label', [exp ' ...'], ...
+        'Callback', {@cb_exporters});
+end
+function cb_exporters(src, ~)
+    src_name = erase(src.Text, ' ...');
+    exmp_el = eval([src_name '(' '''GR''' ', gr)']);    
+    exmp_el.uigetdir();
+    exmp_el.get('SAVE');
+end
 
 %% ¡props!
 
