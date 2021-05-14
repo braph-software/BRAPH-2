@@ -12,9 +12,17 @@ Element, Subject, IndexedDictionary
 
 %%% ¡gui!
 %%%% ¡menu_importer!
-eval([el.get('SUB_CLASS') '.getGUIMenuImport(el, ui_menu_import)']);
+imp_sub_menus = get(ui_menu_import, 'Children');
+for i = 1:length(imp_sub_menus)
+    delete(imp_sub_menus(i));
+end
+eval([el.get('SUB_CLASS') '.getGUIMenuImport(el, ui_menu_import, plot_element)']);
 
 %%%% ¡menu_exporter!
+exp_sub_menus = get(ui_menu_export, 'Children');
+for i = 1:length(exp_sub_menus)
+    delete(exp_sub_menus(i));
+end
 eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, ui_menu_export)']);
 
 %% ¡props!

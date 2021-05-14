@@ -20,7 +20,7 @@ end
 function cb_importers(src, ~)
     src_name = erase(src.Text, ' ...');
     imp_el = eval([src_name '()']);          
-    imp_el.uigetfile();
+    imp_el.uigetdir();
     tmp_el = imp_el.get('GR');
     delete(gcf)
     GUI(tmp_el)
