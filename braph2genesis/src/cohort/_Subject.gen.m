@@ -9,12 +9,6 @@ Use one of its subelements instead.
 %%% ¡seealso!
 Element, BrainAtlas, Group
 
-%%% ¡gui!
-%%%% ¡menu_importer!
-% call the super
-%%%% ¡menu_exporter!
-% call the super
-
 %% ¡props!
 
 %%% ¡prop!
