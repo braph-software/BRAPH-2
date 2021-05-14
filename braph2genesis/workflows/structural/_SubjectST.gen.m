@@ -11,7 +11,6 @@ Element, Subject
 %%% ¡gui!
 %%%% ¡menu_importer!
 importers = {'ImporterGroupSubjectSTTXT', 'ImporterGroupSubjectSTXLS'};
-
 for k = 1:length(importers)
     imp = importers{k};
     uimenu(ui_menu_import, ...
@@ -38,11 +37,10 @@ for k = 1:length(exporters)
 end
 function cb_exporters(src, ~)
     src_name = erase(src.Text, ' ...');
-    exmp_el = eval([src_name '(' '''GR''' ', el)']);    
+    exmp_el = eval([src_name '(' '''GR''' ', el)']); % el is a group passed from Group   
     exmp_el.uiputfile();
     exmp_el.get('SAVE');
 end
-
 
 %% ¡props!
 
