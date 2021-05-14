@@ -8,6 +8,39 @@ For example, functional data can be fMRI or EEG.
 %%% ¡seealso!
 Element, Subject
 
+%%% ¡gui!
+%%%% ¡menu_importer!
+importers = {'ImporterGroupSubjectFUNTXT', 'ImporterGroupSubjectFUNXLS'};
+for k = 1:length(importers)
+    imp = importers{k};
+    uimenu(ui_menu_import, ...
+        'Label', [imp ' ...'], ...
+        'Callback', {@cb_importers});
+end
+function cb_importers(src, ~)
+    src_name = erase(src.Text, ' ...');
+    imp_el = eval([src_name '()']);          
+    imp_el.uigetfile();
+    tmp_el = imp_el.get('GR');
+    delete(gcf)
+    GUI(tmp_el)
+end
+
+%%%% ¡menu_exporter!
+exporters = {'ExporterGroupSubjectFUNTXT', 'ExporterGroupSubjectFUNXLS'};
+for k = 1:length(exporters)
+    exp = exporters{k};
+    uimenu(ui_menu_export, ...
+        'Label', [exp ' ...'], ...
+        'Callback', {@cb_exporters});
+end
+function cb_exporters(src, ~)
+    src_name = erase(src.Text, ' ...');
+    exmp_el = eval([src_name '(' '''GR''' ', el)']); % el is a group passed from Group 
+    exmp_el.uigetdir();
+    exmp_el.get('SAVE');
+end
+
 %% ¡props!
 
 %%% ¡prop!

@@ -143,14 +143,13 @@ menu()
         for i = 1:length(imp_sub_menus)           
             delete(imp_sub_menus(i));
         end
+        eval([el.getClass() '.getGUIMenuImport(el, ui_menu_import)']);
         
         exp_sub_menus = get(ui_menu_export, 'Children');
         for i = 1:length(exp_sub_menus)
             delete(exp_sub_menus(i));
         end
-        
-        el.getGUIMenuImport(ui_menu_import);
-        el.getGUIMenuExport(ui_menu_export); 
+        eval([el.getClass() '.getGUIMenuExport(el, ui_menu_export)']);
     end
     function cb_open(~, ~)
         % select file
