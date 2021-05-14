@@ -7,13 +7,13 @@ Subject with a connectivity matrix (e.g. obtained from DTI).
 %%% ¡seealso!
 Element, Subject
 
-%%% ¡gui_static!
+%%% ¡gui!
 %%%% ¡menu_importer!
 importers = {'ImporterGroupSubjectCONTXT', 'ImporterGroupSubjectCONXLS'};
 
 for k = 1:length(importers)
     imp = importers{k};
-    uimenu(ui_menu, ...
+    uimenu(ui_menu_importer, ...
         'Label', [imp ' ...'], ...
         'Callback', {@cb_importers});
 end
@@ -28,16 +28,15 @@ end
 
 %%%% ¡menu_exporter!
 exporters = {'ExporterGroupSubjectCONTXT', 'ExporterGroupSubjectCONXLS'};
-gr = sub;
 for k = 1:length(exporters)
     exp = exporters{k};
-    uimenu(ui_menu, ...
+    uimenu(ui_menu_exporter, ...
         'Label', [exp ' ...'], ...
         'Callback', {@cb_exporters});
 end
 function cb_exporters(src, ~)
     src_name = erase(src.Text, ' ...');
-    exmp_el = eval([src_name '(' '''GR''' ', gr)']);    
+    exmp_el = eval([src_name '(' '''GR''' ', el)']);    
     exmp_el.uigetdir();
     exmp_el.get('SAVE');
 end

@@ -43,18 +43,14 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%% ¡compatible_graphs!</strong>
 %  Lis of compatible graphs with the measure.
 %
-% <strong>%%% ¡gui_static!</strong>
-%  GUI code to represent the panel of a static element. 
-%  Can be on multiple lines.
-%
 % <strong>%%% ¡gui!</strong>
 %  GUI code to represent the panel of the element. 
 %  Can be on multiple lines.
 %  Should return a Plot object in 'pl'
 %  <strong>%%% ¡menu_importer!</strong>
-%   Menu Import for the GUI figure. The menus is ui_menu_import.
+%   Menu Import for the GUI figure. The menus is ui_menu_importer.
 %  <strong>%%% ¡menu_exporter!</strong>
-%   Menu Export for the GUI figure. The menus is ui_menu_export.
+%   Menu Export for the GUI figure. The menus is ui_menu_exporter.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
@@ -150,8 +146,8 @@ txt = fileread(generator_file);
 disp('¡! generator file read')
 
 %% Analysis
-[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_static, gui_import, gui_export] = analyze_header();
-    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_static, gui_import, gui_export] = analyze_header()
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header();
+    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header()
         header = getToken(txt, 'header');
         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
         class_name = res.class_name;
@@ -168,9 +164,8 @@ disp('¡! generator file read')
 
         gui = splitlines(getToken(txt, 'header', 'gui'));
         
-        gui_static = splitlines(getToken(txt, 'header', 'gui_static'));
-        gui_import = splitlines(getToken(txt, 'header', 'gui_static', 'menu_importer'));        
-        gui_export = splitlines(getToken(txt, 'header', 'gui_static', 'menu_exporter'));
+        gui_import = splitlines(getToken(txt, 'header', 'gui', 'menu_importer'));        
+        gui_export = splitlines(getToken(txt, 'header', 'gui', 'menu_exporter'));
     end
 
 [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
@@ -413,8 +408,8 @@ generate_header()
              '%  getPlotProp - returns a prop plot'
              '%'
             ['% ' class_name ' methods (GUI, Static):']
-             '%  getGUIMenuImport - returns an import menu'
-             '%  getGUIMenuExport - returns an export menu'
+             '%  getGUIMenuImport - returns an importer menu'
+             '%  getGUIMenuExport - returns an exporter menu'
             })
         if element_class_created
             gs(1, {'%', ['% ' class_name ' properties (Constant).']})
@@ -1622,16 +1617,18 @@ generate_gui()
 
 generate_gui_static()
     function generate_gui_static()
-        if numel(gui_static) == 1 && isempty(gui_static{1})
+        if(numel(gui) == 1 && isempty(gui{1})) && ...
+                all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) && ...
+                all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
             return
         end
         g(1, 'methods (Static) % GUI static methods')
         if any(cellfun(@(x) ~isempty(x), gui_import))
-            g(2, ['function getGUIMenuImport(' moniker ', ui_menu)'])
+            g(2, 'function getGUIMenuImport(el, ui_menu_importer)')
             gs(3, {
                 '%GETGUIMENUIMPORT sets a figure menu.'
                 '%'
-               ['% GETGUIMENUIMPORT(' moniker ', ui_menu) sets the figure menus.']
+               '% GETGUIMENUIMPORT(el, ui_menu_importer) sets the figure menus.'
                 '%'
                 '% See also getGUIMenuExporter.'
                 ''
@@ -1639,7 +1636,7 @@ generate_gui_static()
             if isequal(moniker, 'gr')
             else
                 gs(3, {
-                    ['Element.getGUIMenuImport(' moniker ', ui_menu);']
+                    'Element.getGUIMenuImport(el, ui_menu_importer);'
                     ''
                     })
             end
@@ -1648,11 +1645,11 @@ generate_gui_static()
             g(2, 'end')
         end
         if  any(cellfun(@(x) ~isempty(x), gui_export))
-            g(2, ['function getGUIMenuExport(' moniker ', ui_menu, varargin)'])
+            g(2, 'function getGUIMenuExport(el, ui_menu_exporter, varargin)')
             gs(3, {
                 '%GETGUIMENUEXPORT sets a figure menu.'
                 '%'
-                ['% GETGUIMENUIMPORT(' moniker ', ui_menu, GROUP) sets the figure menus.']
+                '% GETGUIMENUIMPORT(el, ui_menu_exporter, GROUP) sets the figure menus.'
                 '%'
                 '% See also getGUIMenuImporter.'
                 ''
@@ -1660,7 +1657,7 @@ generate_gui_static()
             if isequal(moniker, 'gr')
             else
                 gs(3, {
-                    ['Element.getGUIMenuExport(' moniker ', ui_menu);']
+                    'Element.getGUIMenuExport(el, ui_menu_exporter);'
                     ''
                     })
             end

@@ -148,9 +148,11 @@ menu()
         for i = 1:length(exp_sub_menus)
             delete(exp_sub_menus(i));
         end
-        element_class = el.getClass();
-        eval([element_class '.getGUIMenuImport(el, ui_menu_import)']);
-        eval([element_class '.getGUIMenuExport(el, ui_menu_export)']);
+%         element_class = el.getClass();
+        Element.getGUIMenuImport(el, ui_menu_import);
+        Element.getGUIMenuExport(el, ui_menu_export);
+%         eval([element_class '.getGUIMenuImport(el, ui_menu_import)']);
+%         eval([element_class '.getGUIMenuExport(el, ui_menu_export)']);
     end
     function cb_open(~, ~)
         % select file

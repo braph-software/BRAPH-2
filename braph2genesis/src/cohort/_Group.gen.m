@@ -10,12 +10,12 @@ whose methods can be used to inspect, add or remove subjects.
 %%% ¡seealso!
 Element, Subject, IndexedDictionary
 
-%%% ¡gui_static!
+%%% ¡gui!
 %%%% ¡menu_importer!
-eval([gr.get('SUB_CLASS') '.getGUIMenuImport(gr, ui_menu)']);
+eval([gr.get('SUB_CLASS') '.getGUIMenuImport(el, ui_menu_importer)']);
 
 %%%% ¡menu_exporter!
-eval([gr.get('SUB_CLASS') '.getGUIMenuExport(gr, ui_menu)']);
+eval([gr.get('SUB_CLASS') '.getGUIMenuExport(el, ui_menu_exporter)']);
 
 %% ¡props!
 
