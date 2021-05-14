@@ -89,6 +89,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
     %  getPlotProp - returns a prop plot
+    %
+    % Element methods (GUI, Static):
     %  getGUIMenuImport - returns a basic import menu
     %  getGUIMenuExport - returns a basic export menu
     %
