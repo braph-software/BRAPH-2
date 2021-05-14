@@ -14,7 +14,7 @@ importers = {'ImporterGroupSubjectFUNTXT', 'ImporterGroupSubjectFUNXLS'};
 
 for k = 1:length(importers)
     imp = importers{k};
-    uimenu(f, ...
+    uimenu(ui_menu, ...
         'Label', [imp ' ...'], ...
         'Callback', {@cb_importers});
 end
@@ -29,10 +29,10 @@ end
 
 %%%% ¡menu_exporter!
 exporters = {'ExporterGroupSubjectFUNTXT', 'ExporterGroupSubjectFUNXLS'};
-gr = varargin{1};
+gr = sub;
 for k = 1:length(exporters)
     exp = exporters{k};
-    uimenu(f, ...
+    uimenu(ui_menu, ...
         'Label', [exp ' ...'], ...
         'Callback', {@cb_exporters});
 end

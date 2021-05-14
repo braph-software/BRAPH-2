@@ -1701,6 +1701,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         varargin{:});
             end
         end
+    end
+    methods (Static) % GUI Static
         function getGUIMenuImport(el, ui_menu)
             %GETGUIMENUIMPORT sets the import submenu gui json.
             % 

@@ -8,13 +8,13 @@ For example, structural data can be structural MRI.
 %%% ¡seealso!
 Element, Subject
 
-%%% ¡gui!
+%%% ¡gui_static!
 %%%% ¡menu_importer!
 importers = {'ImporterGroupSubjectSTTXT', 'ImporterGroupSubjectSTXLS'};
 
 for k = 1:length(importers)
     imp = importers{k};
-    uimenu(f, ...
+    uimenu(ui_menu, ...
         'Label', [imp ' ...'], ...
         'Callback', {@cb_importers});
 end
@@ -30,10 +30,10 @@ end
 
 %%%% ¡menu_exporter!
 exporters = {'ExporterGroupSubjectSTTXT', 'ExporterGroupSubjectSTXLS'};
-gr = varargin{1};
+gr = sub;
 for k = 1:length(exporters)
     exp = exporters{k};
-    uimenu(f, ...
+    uimenu(ui_menu, ...
         'Label', [exp ' ...'], ...
         'Callback', {@cb_exporters});
 end

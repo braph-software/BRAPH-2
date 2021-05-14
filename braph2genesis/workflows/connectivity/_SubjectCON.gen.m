@@ -6,13 +6,14 @@ Subject with a connectivity matrix (e.g. obtained from DTI).
 
 %%% ¡seealso!
 Element, Subject
-%%% ¡gui!
+
+%%% ¡gui_static!
 %%%% ¡menu_importer!
 importers = {'ImporterGroupSubjectCONTXT', 'ImporterGroupSubjectCONXLS'};
 
 for k = 1:length(importers)
     imp = importers{k};
-    uimenu(f, ...
+    uimenu(ui_menu, ...
         'Label', [imp ' ...'], ...
         'Callback', {@cb_importers});
 end
@@ -27,10 +28,10 @@ end
 
 %%%% ¡menu_exporter!
 exporters = {'ExporterGroupSubjectCONTXT', 'ExporterGroupSubjectCONXLS'};
-gr = varargin{1};
+gr = sub;
 for k = 1:length(exporters)
     exp = exporters{k};
-    uimenu(f, ...
+    uimenu(ui_menu, ...
         'Label', [exp ' ...'], ...
         'Callback', {@cb_exporters});
 end
