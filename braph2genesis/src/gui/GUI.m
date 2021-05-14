@@ -60,8 +60,8 @@ f = init();
     end
 
 %% Plot Element
-plot()
-    function plot()
+pl = plot();
+    function pl = plot()
         el_panel = uipanel( ...
             'Parent', f, ...
             'BorderType', 'none' ...
