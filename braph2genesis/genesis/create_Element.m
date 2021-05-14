@@ -47,10 +47,10 @@ function create_Element(generator_file, target_dir)
 %  GUI code to represent the panel of the element. 
 %  Can be on multiple lines.
 %  Should return a Plot object in 'pl'
-%  <strong>%%% ¡menu_importer!</strong>
-%   Menu Import for the GUI figure. The menus is ui_menu_importer.
-%  <strong>%%% ¡menu_exporter!</strong>
-%   Menu Export for the GUI figure. The menus is ui_menu_exporter.
+%  <strong>%%% ¡menu_import!</strong>
+%   Menu Import for the GUI figure. The menus is ui_menu_import.
+%  <strong>%%% ¡menu_export!</strong>
+%   Menu Export for the GUI figure. The menus is ui_menu_export.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
@@ -146,7 +146,7 @@ txt = fileread(generator_file);
 disp('¡! generator file read')
 
 %% Analysis
-[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header();
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_menu_import, gui_menu_export] = analyze_header();
     function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header()
         header = getToken(txt, 'header');
         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
@@ -1562,8 +1562,8 @@ generate_gui()
         end
         g(1, 'methods % GUI')
             if ~(numel(gui) == 1 && isempty(gui{1})) && ...
-                    any(cellfun(@(x) isempty(x), gui_import)) && ...
-                    any(cellfun(@(x) isempty(x), gui_export))
+                    any(cellfun(@(x) isempty(x), gui_menu_import)) && ...
+                    any(cellfun(@(x) isempty(x), gui_menu_export))
                 g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
                 gs(3, {
                      '%GETPLOTELEMENT returns the element plot.'
@@ -1617,51 +1617,44 @@ generate_gui()
 
 generate_gui_static()
     function generate_gui_static()
-        if(numel(gui) == 1 && isempty(gui{1})) && ...
-                all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) && ...
-                all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
+        if (numel(gui_menu_import) == 1 && isempty(gui_menu_import{1})) && ...
+                numel(gui_menu_export) == 1 && isempty(gui_menu_export{1}))
             return
         end
         g(1, 'methods (Static) % GUI static methods')
-        if any(cellfun(@(x) ~isempty(x), gui_import))
-            g(2, 'function getGUIMenuImport(el, ui_menu_importer)')
+        if any(cellfun(@(x) ~isempty(x), gui_menu_import))
+            g(2, 'function getGUIMenuImport(el, ui_menu_import)')
             gs(3, {
                 '%GETGUIMENUIMPORT sets a figure menu.'
                 '%'
-               '% GETGUIMENUIMPORT(el, ui_menu_importer) sets the figure menus.'
+                '% GETGUIMENUIMPORT(EL, MENU) sets the figure menu import which operates on the element EL.'
                 '%'
                 '% See also getGUIMenuExporter.'
                 ''
                 })
-            if isequal(moniker, 'gr')
-            else
                 gs(3, {
-                    'Element.getGUIMenuImport(el, ui_menu_importer);'
+                    'Element.getGUIMenuImport(el, ui_menu_import);'
                     ''
                     })
-            end
-            gs(3, gui_import)
+            gs(3, gui_menu_import)
             g(3, '')
             g(2, 'end')
         end
-        if  any(cellfun(@(x) ~isempty(x), gui_export))
-            g(2, 'function getGUIMenuExport(el, ui_menu_exporter, varargin)')
+        if  any(cellfun(@(x) ~isempty(x), gui_menu_export))
+            g(2, 'function getGUIMenuExport(el, ui_menu_export)')
             gs(3, {
                 '%GETGUIMENUEXPORT sets a figure menu.'
                 '%'
-                '% GETGUIMENUIMPORT(el, ui_menu_exporter, GROUP) sets the figure menus.'
+                '% GETGUIMENUIMPORT(EL, MENU) sets the figure menu export which operates on the element EL.'
                 '%'
                 '% See also getGUIMenuImporter.'
                 ''
                 })
-            if isequal(moniker, 'gr')
-            else
                 gs(3, {
-                    'Element.getGUIMenuExport(el, ui_menu_exporter);'
+                    'Element.getGUIMenuExport(el, ui_menu_export);'
                     ''
                     })
-            end
-            gs(3, gui_export)
+            gs(3, gui_menu_export)
             g(3, '')
             g(2, 'end')
         end
