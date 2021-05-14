@@ -8,7 +8,7 @@ For example, structural multiplex data can be structural MRI.
 %%% ¡seealso!
 Element, Subject
 
-%%% ¡gui!
+%%% ¡gui_static!
 %%%% ¡menu_importer!
 importers = {'ImporterGroupSubjectSTMPTXT', 'ImporterGroupSubjectSTMPXLS'};
 

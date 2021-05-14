@@ -8,7 +8,7 @@ For example, functional data can be fMRI or EEG.
 %%% ¡seealso!
 Element, Subject
 
-%%% ¡gui!
+%%% ¡gui_static!
 %%%% ¡menu_importer!
 importers = {'ImporterGroupSubjectFUNTXT', 'ImporterGroupSubjectFUNXLS'};
 
