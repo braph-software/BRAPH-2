@@ -12,10 +12,10 @@ Element, Subject, IndexedDictionary
 
 %%% ¡gui!
 %%%% ¡menu_importer!
-eval([gr.get('SUB_CLASS') '.getGUIMenuImport(el, ui_menu_importer)']);
+eval([el.get('SUB_CLASS') '.getGUIMenuImport(el, ui_menu_importer)']);
 
 %%%% ¡menu_exporter!
-eval([gr.get('SUB_CLASS') '.getGUIMenuExport(el, ui_menu_exporter)']);
+eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, ui_menu_exporter)']);
 
 %% ¡props!
 
