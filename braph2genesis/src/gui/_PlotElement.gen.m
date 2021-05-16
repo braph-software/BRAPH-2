@@ -295,6 +295,22 @@ function slide(pl)
         r = Plot.h(h);
     end
 end
+function reinit(pl)
+    %REINIT sets el
+    %
+    %REINIT sets el in each PlotProp of PlotElement
+    %
+    % See also update, draw, redraw.
+    if ~isempty(pl.pp_list) || any(cellfun(@(x) isgraphics(x, 'uipanel'), pl.pp_list))
+        pp_dict = pl.get('PP_DICT');
+        for i = 1:pp_dict.length()
+            pp = pp_dict.getItem(i);
+            el = pl.get('EL');
+            pp.set('EL', el);
+        end
+    end
+    pl.update()
+end
 
 %% ¡tests!
 
