@@ -706,6 +706,33 @@ function checkNegativity(negativity_type, A)
         end
     end
 end
+function list = getCompatibleMeasureList(g)
+    % GETCOMPATIBLEMEASURELIST returns the list of measures
+    %
+    % CELL ARRAY = GETCOMPATIBLEMEASURELIST(G) returns a cell array of
+    % compatible measures to the concrete graph G.
+    %
+    % CELL ARRAY = GETCOMPATIBLEMEASURELIST(GRAPH_CLASS) returns a
+    % cell array of compatible measures to a graph whose class is
+    % GRAPH_CLASS.
+    %
+    % See also Measure.
+
+    graph_class = Graph.getClass(g);
+
+    measure_code_list = Measure.getList();
+
+    list = cell(1, length(measure_code_list));
+    for i = 1:1:length(measure_code_list)
+        measure_code = measure_code_list{i};
+        compatible_graph_list = Measure.getCompatibleGraphList(measure_code);
+
+        if any(strcmp(compatible_graph_list, graph_class))
+            list{i} = measure_code;
+        end
+    end
+    list(cellfun('isempty', list)) = [];
+end
 % subgraphs
 function sg = subgraph(g, nodes)
     %SUBGRAPH extracts subgraph
