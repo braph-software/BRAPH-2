@@ -1705,17 +1705,17 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods (Static) % GUI Static
-        function getGUIMenuImport(el, ui_menu)
+        function getGUIMenuImport(el, ui_menu_import, plot_element)
             %GETGUIMENUIMPORT sets the import submenu gui json.
             % 
             % GETGUIMENUIMPORT(EL, UI_MENU) sets the import submenu json for the menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuExport.
             
-            uimenu(ui_menu, ...
+            uimenu(ui_menu_import, ...
                 'Label', 'Import JSON ...', ...
                 'Callback', {@cb_import_json})
-        
+                 
             function cb_import_json(~,~)
                 [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
                 if filterindex
@@ -1725,22 +1725,22 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     str = char(raw');
                     fclose(fid);
                     tmp_el = Element.decodeJSON(str);
-                    ui_menu.el = tmp_el;
-                    ui_menu.plot();
+                    plot_element.set('El', tmp_el); 
+                    plot_element.redraw();
                 end
             end
         end
-        function getGUIMenuExport(el, ui_menu)
+        function getGUIMenuExport(el, ui_menu_export)
             %GETGUIMENUEXPORT sets the export submenu gui json.
             % 
             % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuImport.
-            
-            uimenu(ui_menu, ...
+                     
+            uimenu(ui_menu_export, ...
                 'Label', 'Export JSON ...', ...
                 'Callback', {@cb_export_json})
-            
+          
             function cb_export_json(~,~)
                 [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
                 if filterindex

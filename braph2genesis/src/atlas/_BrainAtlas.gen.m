@@ -12,7 +12,7 @@ BrainAtlas can be imported/exported to .txt, .xls and .json files.
 Element, BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS, ExporterBrainAtlasTXT
 
 %%% ¡gui!
-%%%% ¡menu_import!
+%%%% ¡menu_importer!
 importers_names = {'ImporterBrainAtlasTXT', 'ImporterBrainAtlasXLS'};
 for k = 1:length(importers_names)
     imp = importers_names{k};
@@ -26,11 +26,11 @@ function cb_importers(src, ~)
     imp_el = eval([src_name '()']);
     imp_el.uigetfile();
     tmp_el = imp_el.get('BA');
-    delete(gcf)
-    GUI(tmp_el)
+    plot_element.set('El', tmp_el); 
+    plot_element.redraw();
 end
 
-%%%% ¡menu_export!
+%%%% ¡menu_exporter!
 exporters_names = {'ExporterBrainAtlasTXT', 'ExporterBrainAtlasXLS'};
 for k = 1:length(exporters_names)
     exp = exporters_names{k};
