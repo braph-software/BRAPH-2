@@ -307,3 +307,16 @@ function n = getCompatibleGraphNumber(m)
     list = Measure.getCompatibleGraphList(m);
     n = numel(list);
 end
+function list = getList()
+    % GETLIST returns the list of measures
+    %
+    % MEASURE_LIST = GETLIST() returns the list of measures (cell array)
+    % that are subclasses of Measure.
+    %
+    % See also getClass, Measure.
+
+    list = subclasses( ...
+        'Measure', ...
+        [fileparts(which('braph2')) filesep 'measures'] ...
+        );
+end
