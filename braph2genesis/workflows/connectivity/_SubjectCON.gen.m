@@ -22,7 +22,7 @@ function cb_importers(src, ~)
     imp_el.uigetdir();
     tmp_el = imp_el.get('GR');
     plot_element.set('El', tmp_el); 
-    plot_element.redraw();
+    plot_element.reinit();
 end
 
 %%%% ¡menu_exporter!

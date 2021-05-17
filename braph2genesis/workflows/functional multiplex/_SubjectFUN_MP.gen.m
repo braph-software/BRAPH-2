@@ -22,8 +22,8 @@ function cb_importers(src, ~)
     imp_el = eval([src_name '()']);          
     imp_el.uigetdir();
     tmp_el = imp_el.get('GR');
-    delete(gcf)
-    GUI(tmp_el)
+    plot_element.set('El', tmp_el); 
+    plot_element.reinit();
 end
 
 %%%% ¡menu_exporter!
