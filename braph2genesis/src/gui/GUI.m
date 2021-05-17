@@ -143,7 +143,7 @@ menu()
         for i = 1:length(imp_sub_menus)           
             delete(imp_sub_menus(i));
         end
-        eval([el.getClass() '.getGUIMenuImport(el, ui_menu_import)']);
+        eval([el.getClass() '.getGUIMenuImport(el, ui_menu_import, pl)']);
         
         exp_sub_menus = get(ui_menu_export, 'Children');
         for i = 1:length(exp_sub_menus)

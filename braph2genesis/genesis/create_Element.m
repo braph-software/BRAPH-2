@@ -1618,16 +1618,16 @@ generate_gui()
 generate_gui_static()
     function generate_gui_static()
         if (numel(gui_menu_import) == 1 && isempty(gui_menu_import{1})) && ...
-                numel(gui_menu_export) == 1 && isempty(gui_menu_export{1}))
+                numel(gui_menu_export) == 1 && isempty(gui_menu_export{1})
             return
         end
         g(1, 'methods (Static) % GUI static methods')
         if any(cellfun(@(x) ~isempty(x), gui_menu_import))
-            g(2, 'function getGUIMenuImport(el, ui_menu_import)')
+            g(2, 'function getGUIMenuImport(el, ui_menu_import, plot_element)')
             gs(3, {
                 '%GETGUIMENUIMPORT sets a figure menu.'
                 '%'
-                '% GETGUIMENUIMPORT(EL, MENU) sets the figure menu import which operates on the element EL.'
+                '% GETGUIMENUIMPORT(EL, MENU, PLOTELEMENT) sets the figure menu import which operates on the element EL.'
                 '%'
                 '% See also getGUIMenuExporter.'
                 ''
