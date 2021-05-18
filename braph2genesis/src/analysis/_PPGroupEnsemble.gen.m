@@ -154,9 +154,10 @@ function h_panel = draw(pl, varargin)
             pl.update()
         end
         function cb_table_calculate(~, ~)
-            mlist = Graph.getCompatibleMeasureList();
-            calculate_measure_list = mlist{pl.selected};
-            cellfun(@(x) el.getMeasure(x).get('M'), calculate_measure_list)
+            mlist = Graph.getCompatibleMeasureList(graph);
+            calculate_measure_list = mlist(pl.selected);
+            g = el.get('G');
+            cellfun(@(x) g.getMeasure(x).get('M'), calculate_measure_list, 'UniformOutput', false);
         end
         function cb_table_adj_matrix(~, ~)
             adj_matrix = el.get('G');
