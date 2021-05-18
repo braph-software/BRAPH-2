@@ -32,7 +32,7 @@ function h_panel = draw(pl, varargin)
     el = pl.get('EL');
     prop = pl.get('PROP');
     pl.selected = [];
-    graph = el.getr(prop); 
+    graph = el.getPropDefault(prop); 
     adj_matrix_figure = [];
 
     pl.pp = draw@PlotProp(pl, varargin{:});
@@ -51,7 +51,7 @@ function h_panel = draw(pl, varargin)
             'Units', 'normalized', ...
             'Position', [.3 .8 .3 .1], ...
             'Style', 'Text', ...
-            'String', graph ...
+            'String', graph.getClass() ...
             )
         
         pl.measure_tbl = uitable();
@@ -62,12 +62,12 @@ function h_panel = draw(pl, varargin)
             'ColumnName', {'', 'ID', 'Shape', 'Scope', 'Notes'}, ...
             'ColumnFormat', {'logical', 'char', 'char', 'char', 'char'}, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'ColumnEditable', [1 0 0 0 0], ...
+            'ColumnEditable', [true false false false false], ...
             'CellEditCallback', {@cb_measure_selection} ...
-            
+            )            
         
         % get compatible measures for specific graph
-        mlist = Graph.getMeasureCompatibleList(graph);
+        mlist = Graph.getCompatibleMeasureList(graph);
         if ~isa(graph, 'Graph')
             data = cell(length(mlist), 5);
             for mi = 1:1:length(mlist)
@@ -78,19 +78,19 @@ function h_panel = draw(pl, varargin)
                 end
                 data{mi, 2} = mlist{mi};
                 if Measure.is_nodal(mlist{mi})
-                    data{mi, 3} = TAB_NODAL;
+                    data{mi, 3} = 'NODAL';
                 elseif Measure.is_global(mlist{mi})
-                    data{mi, 3} = TAB_GLOBAL;
+                    data{mi, 3} = 'GLOBAL';
                 else
-                    data{mi, 3} = TAB_BINODAL;
+                    data{mi, 3} = 'BINODAL';
                 end
                 
                 if Measure.is_superglobal(mlist{mi})
-                    data{mi, 4} = TAB_SUPERGLOBAL;
+                    data{mi, 4} = 'SUPERGLOBAL';
                 elseif Measure.is_unilayer(mlist{mi})
-                    data{mi, 4} = TAB_UNILAYER;
+                    data{mi, 4} = 'UNILAYER';
                 else
-                    data{mi, 4} = TAB_BILAYER;
+                    data{mi, 4} = 'BILAYER';
                 end
                 
                 data{mi, 5} = eval([mlist{mi} '.getDescription()']);
@@ -325,37 +325,46 @@ function update(pl)
     el = pl.get('EL');
     prop = pl.get('PROP');
 
-    value = el.getr(prop);
+    value = el.getPropDefault(prop);
 
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         %
     else
-        value_idict_ba = el.get(prop);
         % construct a data holder
-        data = cell(value_idict_ba.length(), 7);
-        for i = 1:1:value_idict_ba.length()
-            if any(pl.selected == i)
-                data{i, 1} = true;
-            else
-                data{i, 1} = false;
-            end
-            data{i, 2} = value_idict_ba.getItem(i).get('ID');
-            data{i, 3} = value_idict_ba.getItem(i).get('Label');
-            data{i, 4} = value_idict_ba.getItem(i).get('X');
-            data{i, 5} = value_idict_ba.getItem(i).get('Y');
-            data{i, 6} = value_idict_ba.getItem(i).get('Z');
-            data{i, 7} = value_idict_ba.getItem(i).get('Notes');
+        if ~isa(graph, 'Graph')            
+            mlist = Graph.getCompatibleMeasureList(value);
+            data = cell(length(mlist), 5);
+            for mi = 1:1:length(mlist)
+                if any(pl.selected == mi)
+                    data{mi, 1} = true;
+                else
+                    data{mi, 1} = false;
+                end
+                data{mi, 2} = mlist{mi};
+                if Measure.is_nodal(mlist{mi})
+                    data{mi, 3} = 'NODAL';
+                elseif Measure.is_global(mlist{mi})
+                    data{mi, 3} = 'GLOBAL';
+                else
+                    data{mi, 3} = 'BINODAL';
+                end
+                
+                if Measure.is_superglobal(mlist{mi})
+                    data{mi, 4} = 'SUPERGLOBAL';
+                elseif Measure.is_unilayer(mlist{mi})
+                    data{mi, 4} = 'UNILAYER';
+                else
+                    data{mi, 4} = 'BILAYER';
+                end
+                
+                data{mi, 5} = eval([mlist{mi} '.getDescription()']);
+            end            
+
+            set(pl.measure_tbl, ...
+                'Data', data, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
+                )
         end
-
-
-        if isempty(pl.table_value_idict)
-            pl.table_value_idict = cell(value_idict_ba.length(), 7); % {'logical', 'char', 'char', 'numeric', 'numeric', 'numeric', 'char'})
-        end
-
-        set(pl.table_value_idict, ...
-            'Data', data, ...
-            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
-            )
 
     end
 end

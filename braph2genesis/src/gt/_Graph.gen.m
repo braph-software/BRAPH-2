@@ -718,7 +718,7 @@ function list = getCompatibleMeasureList(g)
     %
     % See also Measure.
 
-    graph_class = Graph.getClass();
+    graph_class = g.getClass();
 
     measure_code_list = Measure.getList();
 
