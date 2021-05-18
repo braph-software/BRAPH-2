@@ -71,6 +71,8 @@ g = GraphWU( ...
     );
 
 value = g;
+%%%% ¡gui!
+pl = PPGroupEnsemble('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
 %% ¡tests!
 

@@ -81,8 +81,7 @@ function h_panel = draw(pl, varargin)
                 x2 = normalized(1)+ normalized(3);
                 h2 = normalized(4) / 1.61;
                 y2 = normalized(2) + h2 - .195;
-                w2 = normalized(3) * 1.61;
-               
+                w2 = normalized(3) * 1.61;               
             end
             
             second_figure =  figure( ...
@@ -95,7 +94,6 @@ function h_panel = draw(pl, varargin)
                 'Toolbar', 'figure', ...
                 'Color', 'w' ...
                 );
-            addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);
             
             ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');
             
