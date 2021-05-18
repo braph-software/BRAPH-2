@@ -34,6 +34,7 @@ function h_panel = draw(pl, varargin)
     pl.selected = [];
     graph = el.getPropDefault(prop); 
     adj_matrix_figure = [];
+    handle_plot = [];
 
     pl.pp = draw@PlotProp(pl, varargin{:});
     set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
@@ -153,7 +154,7 @@ function h_panel = draw(pl, varargin)
             pl.update()
         end
         function cb_table_calculate(~, ~)
-            mlist = Graph.getMeasureCompatibleList();
+            mlist = Graph.getCompatibleMeasureList();
             calculate_measure_list = mlist{pl.selected};
             cellfun(@(x) el.getMeasure(x).get('M'), calculate_measure_list)
         end
@@ -206,12 +207,12 @@ function h_panel = draw(pl, varargin)
             delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
             
             % adjmatrix plot
-            A = el.get('G').get('A');
+            A = cell2mat(el.get('G').get('A'));
             br_dict = el.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
-            labels = cellfun(@(x) x.get('ID'), br_dict.getItems());
+            labels = cellfun(@(x) x.get('ID'), br_dict.getItems(), 'UniformOutput', false);
             
             handle_plot = plotw( ...
-                A, adj_matrix_figure, ...
+                A, ...
                 'xlabels', labels', ...
                 'ylabels', labels ...
                 );
@@ -227,12 +228,12 @@ function h_panel = draw(pl, varargin)
             figHandles = findobj('Type', 'figure');
             for i = 1:1:length(figHandles)
                 fig_h = figHandles(i);
-                if contains(fig_h.Name, 'AnalyzeGroup - ')
+                if contains(fig_h.Name, 'AnalyzeGroup')
                     obj = fig_h;
                 end
             end
         end
-        function h = plotw(A, figure, varargin)
+        function h = plotw(A, varargin)
             % PLOTW plots a weighted matrix
             %
             % H = PLOTW(A) plots the weighted matrix A and returns the handle to
@@ -279,7 +280,7 @@ function h_panel = draw(pl, varargin)
             axis equal square tight
             grid off
             box on
-            set(figure, ...
+            set(gca, ...
                 'XAxisLocation', 'top', ...
                 'XTick', (1:1:N) - .5, ...
                 'XTickLabel', {}, ...
