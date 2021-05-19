@@ -44,9 +44,7 @@ function h_panel = draw(pl, varargin)
         varargin{:})
     
     function close_f_settings(~,~)
-        if ~isempty(adj_matrix_figure) && isgraphics(adj_matrix_figure)           
-           close(adj_matrix_figure)               
-        end
+        
     end
 
     if isempty(pl.measure_tbl) || ~isgraphics(pl.measure_tbl, 'uitable')
@@ -73,7 +71,7 @@ function h_panel = draw(pl, varargin)
         % get compatible measures for specific graph
         mlist = Graph.getCompatibleMeasureList(graph);
         if ~isa(graph, 'Graph')
-            [parent_position_pixels, normalized] = get_figure_position()
+            [~, normalized] = get_figure_position();
             data = cell(length(mlist), 5);
             for mi = 1:1:length(mlist)
                 if any(pl.selected == mi)
@@ -101,7 +99,7 @@ function h_panel = draw(pl, varargin)
                 data{mi, 5} = eval([mlist{mi} '.getDescription()']);
             end
             set(pl.measure_tbl, 'Data', data)
-            set(pl.measure_tbl, 'ColumnWidth', ['auto' 'auto' 'auto' 'auto' normalized(3)*.9*.2])
+            set(pl.measure_tbl, 'ColumnWidth', ['auto' 'auto' 'auto' 'auto' normalized(3)*.9*.3])
         end
     end
     
@@ -333,12 +331,29 @@ function update(pl)
     prop = pl.get('PROP');
 
     value = el.getPropDefault(prop);
+    function [pixels, normalized] = get_figure_position()
+        fig_h = getGUIFigureObj();
+        set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+        pixels = getpixelposition(fig_h);
+        normalized = get(fig_h, 'Position');
+        set(fig_h, 'Units', 'characters'); % go back
+    end
+    function obj = getGUIFigureObj()
+        figHandles = findobj('Type', 'figure');
+        for i = 1:1:length(figHandles)
+            fig_h = figHandles(i);
+            if contains(fig_h.Name, 'AnalyzeGroup')
+                obj = fig_h;
+            end
+        end
+    end
 
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         %
     else
         % construct a data holder
-        if ~isa(graph, 'Graph')            
+        if ~isa(graph, 'Graph')  
+            [parent_position_pixels, ~] = get_figure_position();
             mlist = Graph.getCompatibleMeasureList(value);
             data = cell(length(mlist), 5);
             for mi = 1:1:length(mlist)
@@ -371,6 +386,7 @@ function update(pl)
                 'Data', data, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
                 )
+            set(pl.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', parent_position_pixels(3)})
         end
 
     end
